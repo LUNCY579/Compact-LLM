@@ -30,7 +30,7 @@ def fixture(root):
     profiles['qualification_reducer_overhead']['reducer_work_bytes_upper'] = 10 ** 7
     spec = {'schema': a.SPEC, 'owned_directory': str(root / 'ledger'),
         'ingestion_receipt_sha256': receipt['receipt_sha256'], 'operation_profiles': profiles,
-        'setup_bounds': dict(profiles['input_io']), 'global_caps': cap,
+        'setup_bounds': dict(profiles['input_io']), 'global_caps': cap, 'physical_wall_seconds_upper': 10000,
         'stage_caps': {stage: dict(cap, max_attempts=2) for stage in a.q.STAGES},
         'ingestion_bootstrap_ref': {'path': str(root / 'fixture-bootstrap.json'), 'sha256': 'b' * 64, 'bytes': 10}}
     recipe = bindings['recipe']
@@ -40,6 +40,8 @@ def fixture(root):
         'bindings': {'recipe': {'recipe': recipe}, 'anchors': bindings['anchors'],
             'source': {'code_sha256': {'synthetic-fixture': 'c' * 64}}, 'runtime': bindings['runtime'],
             'scope': {'native_backend': {'output_directory': str(root)}, 'qualifier_accounting': spec,
+                'qualifier_bootstrap': {'schema': 'CE8-BOOTSTRAP-SPEC-1', 'owned_directory': str(root / 'bootstrap'),
+                    'caps': dict(cap), 'self_bounds': dict({key: 10 ** 9 for key in a.COST_FIELDS}, wall_seconds_upper=1000), 'physical_wall_seconds_upper': 10000},
                 'qualifier_execution': {'all_witness_ids': [r['id'] for r in rows],
                     'gradient_batch_ids': [r['id'] for r in rows[:8]],
                     'adam_batches': [[r['id'] for r in rows[:8]], [r['id'] for r in rows[8:]]]}}}}
@@ -62,6 +64,55 @@ class Tests(unittest.TestCase):
             ledger.begin_stage(stage, 'fixture/' + stage)
             ledger.finish_stage([self.raw(stage)])
 
+    def test_native_services_and_handle_truthiness_are_untouched_before_registry_refusal(self):
+        class BoolTrap:
+            def __bool__(self): raise AssertionError('handle truthiness before admission')
+        class ServiceTrap:
+            def __getattribute__(self, key): raise AssertionError('service dereferenced before admission')
+        for services in (ServiceTrap(), {'bootstrap_handle': BoolTrap(), 'bootstrap_verifier': BoolTrap()}):
+            context = {'schema': 'CE8-OUTER-ADMISSION-CONTEXT-1', 'native_services': services, 'bindings': ServiceTrap()}
+            with self.subTest(service_type=type(services).__name__), patch.object(Path, 'open', side_effect=AssertionError('unapproved FS')):
+                with self.assertRaisesRegex(ValueError, 'verifier is unregistered'):
+                    a.QualificationAccounting(context, None, {}, {}, bootstrap_handle=BoolTrap())
+
+    def test_advancing_clock_end_uses_one_retained_tick_without_stale_timestamp(self):
+        class AdvancingClock:
+            value = 100.0
+            def __call__(self):
+                self.value += .001
+                return self.value
+        clock = AdvancingClock()
+        ledger = a.QualificationAccounting(self.context, None, self.proof, self.receipt, clock=clock)
+        ledger.end()
+        ending = ledger.events[-1]
+        self.assertEqual(ending['kind'], 'end')
+        self.assertEqual(ending['payload']['monotonic'], ledger.last_clock)
+        self.assertFalse(ledger.worker_open)
+
+    def test_actual_monotonic_constructor_idle_stage_and_end_wall_are_retained(self):
+        class Clock:
+            value = 100.0
+            def __call__(self): return self.value
+        clock = Clock()
+        ledger = a.QualificationAccounting(self.context, None, self.proof, self.receipt, clock=clock)
+        self.assertEqual(ledger.actual_wall_seconds, 0)
+        clock.value += 7.5; ledger.tick_wall()
+        self.assertEqual(ledger.actual_wall_seconds, 7.5)
+        ledger.begin_stage('runtime_anchor', 'fixture/anchor')
+        clock.value += 2.25; ledger.operation('input_io', 'started', 'read')
+        ledger.operation('input_io', 'returned', 'read', wall_s=0)
+        ledger.finish_stage([self.raw()])
+        clock.value += 1.0; ledger.end()
+        self.assertEqual(ledger.actual_wall_seconds, 10.75)
+        self.assertFalse(ledger.worker_open)
+        self.assertTrue(ledger.snapshot()['complete_wall_accounting'])
+        with self.assertRaisesRegex(ValueError, 'worker wall interval already ended'):
+            ledger.tick_wall()
+        wall = [event['payload'] for event in ledger.events if event['kind'] == 'wall']
+        self.assertEqual(sum(event['elapsed_delta'] for event in wall), 10.75)
+        with self.assertRaisesRegex(ValueError, 'monotonic identity'):
+            ledger._prepare('end', {'worker_identity_sha256': self.proof['worker_identity_sha256'], 'monotonic': 999.0})
+
     def test_unissued_native_scope_refuses_before_path_or_proof_access(self):
         class Trap:
             def __getattribute__(self, name): raise AssertionError('unadmitted access')
@@ -77,7 +128,7 @@ class Tests(unittest.TestCase):
         reserved = dict(ledger.cumulative)
         ledger.operation('model_load', 'failed', 'load', error_type='fixture')
         self.assertTrue(all(ledger.cumulative[k] >= v for k, v in reserved.items()))
-        ledger.fail_stage(RuntimeError('fixture failed'))
+        ledger.fail_stage(RuntimeError('fixture failed')); ledger.end()
         reopened = self.make()
         self.assertTrue(all(reopened.cumulative[k] >= ledger.cumulative[k] for k in a.COST_FIELDS))
         self.assertEqual(reopened.attempts[0]['status'], 'FAILED')
@@ -156,26 +207,32 @@ class Tests(unittest.TestCase):
         spec = self.context['bindings']['scope']['qualifier_accounting']
         saved = copy.deepcopy(spec['global_caps'])
         spec['global_caps']['metadata_bytes_upper'] = 1
-        with patch.object(Path, 'open', side_effect=AssertionError('IO before setup cap')):
+        original_open = Path.open
+        def guarded(path, *args, **kwargs):
+            if str(self.root / 'ledger') in str(path): raise AssertionError('inner IO before setup cap')
+            return original_open(path, *args, **kwargs)
+        with patch.object(Path, 'open', guarded):
             with self.assertRaisesRegex(ValueError, 'global qualification ceiling'):
                 self.make()
         self.assertFalse((self.root / 'ledger').exists())
         spec['global_caps'] = saved
         ledger = self.make()
         spec['setup_bounds']['read_bytes_upper'] = 1
-        with patch.object(Path, 'open', side_effect=AssertionError('read before replay envelope')):
+        with patch.object(Path, 'open', guarded):
             with self.assertRaisesRegex(ValueError, 'bounded paid replay'):
                 self.make()
         self.assertFalse(ledger.fatal)
 
     def test_replay_preserves_header_and_old_charges_and_corrupt_tail_fails_closed(self):
         ledger = self.make()
+        ledger.end()
         old = copy.deepcopy(ledger.cumulative)
         header_cost = len(ledger.header_path.read_bytes())
         self.assertGreaterEqual(old['metadata_bytes_upper'], header_cost)
         reopened = self.make()
         self.assertGreater(reopened.cumulative['io_read_bytes_upper'], old['io_read_bytes_upper'])
         self.assertTrue(all(reopened.cumulative[k] >= old[k] for k in a.COST_FIELDS))
+        reopened.end()
         with reopened.path.open('ab') as stream: stream.write(b'{')
         corrupt = reopened.path.read_bytes()
         with self.assertRaisesRegex(ValueError, 'partial qualification tail'):
@@ -193,10 +250,11 @@ class Tests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'lifetime cleanup'):
             ledger.seal()
         ledger.operation('cleanup', 'returned', 'cleanup', wall_s=.1)
+        ledger.end()
         sealed = ledger.seal()
         self.assertEqual(sealed['status'], 'FIXTURE_SEALED_UNQUALIFIED')
         self.assertFalse(sealed['native_qualified'])
-        self.assertFalse(sealed['complete_wall_accounting'])
+        self.assertTrue(sealed['complete_wall_accounting'])
 
     def test_lifetime_cleanup_returns_across_completed_stage_without_refund(self):
         ledger = self.make(); ledger.begin_stage('runtime_anchor', 'fixture/anchor')

@@ -1,0 +1,16 @@
+{
+  "schema": "CE8-READONLY-WORKER-PROBE-FAILURE-1",
+  "utc": "2026-10-01T22:34:27.1482691Z",
+  "status": "FAILED",
+  "exit_code": 1,
+  "completed_worker_proof": false,
+  "error_type": "WorkerEvidenceError",
+  "error": "worker executable image mismatch",
+  "source_candidate_sha256": "81d13eab34627f908685c77861e48e6c8a6e9ffe1d8c4b9eea85a1716a92074f",
+  "checker": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\run_ce_worker_readonly_probe.py",
+  "evidence": "Actual tool execution ended rc1; Windows process image did not match sys.executable virtual-environment launcher. No completed probe artifact was emitted.",
+  "model_loads": 0,
+  "native_execution_authorized": false,
+  "native_qualified": false,
+  "next_action": "Bind and hash the launcher and actual process image separately; keep exact OS image/argv checks."
+}

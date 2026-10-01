@@ -1,0 +1,254 @@
+"""Read-only Windows resource observations and native permit-bound barriers.
+
+Samples are observations at declared barriers, not a continuous free-memory
+claim. OS peak working set and the CUDA allocator peak are recorded separately.
+No sampler, input flag or reduction here grants native execution or PASS.
+"""
+from __future__ import annotations
+
+import csv
+import copy
+import ctypes
+import hashlib
+import math
+import os
+from pathlib import Path
+import re
+import shutil
+import subprocess
+import sys
+import time
+import uuid
+
+from . import ce_native_authority as authority
+
+SCHEMA = 'CE8-RESOURCE-OBSERVATION-1'
+SPEC = 'CE8-RESOURCE-PROBE-SPEC-1'
+GIB = 1024 ** 3
+CHUNK = 1024 ** 2
+MAX_OUTPUT = 4096
+UUID_PATTERN = r'GPU-[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}'
+require = authority.require
+
+
+def _number(value):
+    return type(value) in (int, float) and math.isfinite(value) and value >= 0
+
+
+def parse_gpu(raw, expected_uuid):
+    require(type(raw) is str and len(raw.encode('utf8')) <= MAX_OUTPUT, 'bounded GPU query output')
+    lines = list(csv.reader(raw.splitlines()))
+    require(len(lines) == 1 and len(lines[0]) == 6, 'one exact GPU query row')
+    index, identity, total, free, used, reserved = [cell.strip() for cell in lines[0]]
+    require(index == '0' and identity == expected_uuid
+            and re.fullmatch(UUID_PATTERN, identity) is not None,
+            'exact declared physical GPU0 identity')
+    require(all(re.fullmatch(r'[0-9]+', value) for value in (total, free, used, reserved)), 'integer GPU MiB observations')
+    total, free, used, reserved = [int(value) * 1024 ** 2 for value in (total, free, used, reserved)]
+    require(total > 0 and all(0 <= value <= total for value in (free, used, reserved))
+            and abs(total - free - used - reserved) <= 2 * 1024 ** 2, 'coherent GPU memory observations')
+    return {'gpu_uuid': identity, 'gpu_total_bytes': total, 'gpu_free_bytes': free,
+            'gpu_used_bytes': used, 'gpu_driver_reserved_bytes': reserved,
+            'gpu_memory_units': 'nvidia-smi integer MiB, <=2 MiB total rounding allowance'}
+
+
+def validate_spec(spec):
+    require(type(spec) is dict and spec.get('schema') == SPEC, 'explicit resource probe specification')
+    tool = spec.get('nvidia_smi_ref')
+    require(type(tool) is dict and set(tool) == {'path', 'sha256', 'bytes'}
+            and type(tool['path']) is str and Path(tool['path']).is_absolute()
+            and authority._hex(tool['sha256']) and type(tool['bytes']) is int and 0 < tool['bytes'] <= 64 * CHUNK,
+            'bounded pinned nvidia-smi binary reference')
+    require(type(spec.get('output_root')) is str and Path(spec['output_root']).is_absolute()
+            and type(spec.get('gpu_uuid')) is str
+            and re.fullmatch(UUID_PATTERN, spec['gpu_uuid']) is not None,
+            'explicit output volume and physical GPU identity')
+    require(spec.get('cuda_visible_devices') in (None, '0')
+            and type(spec.get('query_timeout_seconds')) in (int, float)
+            and 0 < spec['query_timeout_seconds'] <= 10, 'bounded query and physical/logical GPU0 mapping')
+    bounds = spec.get('probe_bounds')
+    require(type(bounds) is dict and set(bounds) == {'read_bytes_upper', 'identity_hash_attempts_upper',
+            'identity_hash_bytes_upper', 'wall_s_upper'}
+            and all(type(bounds[key]) is int and bounds[key] >= 0 for key in bounds if key != 'wall_s_upper')
+            and _number(bounds['wall_s_upper']) and bounds['wall_s_upper'] > 0
+            and bounds['read_bytes_upper'] >= tool['bytes'] + 1
+            and bounds['identity_hash_attempts_upper'] >= 1
+            and bounds['identity_hash_bytes_upper'] >= tool['bytes'] + 1,
+            'resource binary verification must be prepaid')
+    return spec
+
+
+class _Memory(ctypes.Structure):
+    _fields_ = [('length', ctypes.c_ulong), ('load', ctypes.c_ulong),
+        ('total', ctypes.c_ulonglong), ('available', ctypes.c_ulonglong),
+        ('page_total', ctypes.c_ulonglong), ('page_available', ctypes.c_ulonglong),
+        ('virtual_total', ctypes.c_ulonglong), ('virtual_available', ctypes.c_ulonglong),
+        ('extended', ctypes.c_ulonglong)]
+
+
+class _ProcessMemory(ctypes.Structure):
+    _fields_ = [('cb', ctypes.c_ulong), ('page_faults', ctypes.c_ulong),
+        ('peak_working_set', ctypes.c_size_t), ('working_set', ctypes.c_size_t),
+        ('peak_paged', ctypes.c_size_t), ('paged', ctypes.c_size_t),
+        ('peak_nonpaged', ctypes.c_size_t), ('nonpaged', ctypes.c_size_t),
+        ('pagefile', ctypes.c_size_t), ('peak_pagefile', ctypes.c_size_t)]
+
+
+def windows_memory():
+    require(os.name == 'nt', 'actual Windows resource API required')
+    memory = _Memory(); memory.length = ctypes.sizeof(memory)
+    require(ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(memory)), 'host memory observation failed')
+    process = _ProcessMemory(); process.cb = ctypes.sizeof(process)
+    current = ctypes.windll.kernel32.GetCurrentProcess
+    current.restype = ctypes.c_void_p
+    query = ctypes.windll.psapi.GetProcessMemoryInfo
+    query.argtypes = (ctypes.c_void_p, ctypes.POINTER(_ProcessMemory), ctypes.c_ulong)
+    query.restype = ctypes.c_int
+    require(query(current(), ctypes.byref(process), process.cb), 'current process memory observation failed')
+    require(memory.available <= memory.total and process.working_set <= process.peak_working_set,
+            'coherent actual Windows memory values')
+    return {'host_total_bytes': int(memory.total), 'host_free_bytes': int(memory.available),
+            'worker_id': os.getpid(), 'worker_working_set_bytes': int(process.working_set),
+            'worker_peak_working_set_bytes': int(process.peak_working_set),
+            'worker_memory_primitive': 'GetProcessMemoryInfo WorkingSetSize/PeakWorkingSetSize'}
+
+
+def _failed(operation, identifier, start, error, **fields):
+    try:
+        operation('resource_probe', 'failed', operation_id=identifier,
+                  wall_s=time.monotonic() - start, error_type=type(error).__name__, **fields)
+    except BaseException as accounting:
+        error.accounting_failure = {'type': type(accounting).__name__, 'message': str(accounting)[:1000]}
+        raise error from accounting
+
+
+def readonly_sample(spec, operation):
+    """Current-process-only OS observation; caller must retain prepayments.
+
+    This also supports an explicitly non-native metadata probe. It imports no
+    framework, initializes no CUDA and starts only the pinned query utility.
+    """
+    validate_spec(spec); require(callable(operation), 'resource pre-reservation observer required')
+    identifier, start = uuid.uuid4().hex, time.monotonic()
+    operation('resource_probe', 'started', operation_id=identifier, **spec['probe_bounds'])
+    try:
+        require(os.name == 'nt' and os.environ.get('CUDA_VISIBLE_DEVICES') == spec['cuda_visible_devices'],
+                'Windows and declared GPU visibility required')
+        reference = spec['nvidia_smi_ref']; path = Path(reference['path'])
+        require(path.is_file() and not path.is_symlink() and path.stat().st_size == reference['bytes'], 'pinned GPU utility path/size')
+        hashed, read = hashlib.sha256(), 0
+        with path.open('rb') as stream:
+            while block := stream.read(min(CHUNK, reference['bytes'] + 1 - read)):
+                read += len(block); require(read <= reference['bytes'], 'GPU utility grew'); hashed.update(block)
+        require(read == reference['bytes'] and hashed.hexdigest() == reference['sha256'], 'GPU utility raw hash drift')
+        result = subprocess.run([str(path), '--id=0', '--query-gpu=index,uuid,memory.total,memory.free,memory.used,memory.reserved',
+            '--format=csv,noheader,nounits'], capture_output=True, text=True,
+            timeout=spec['query_timeout_seconds'], shell=False, creationflags=subprocess.CREATE_NO_WINDOW)
+        require(result.returncode == 0 and len(result.stderr.encode('utf8')) <= MAX_OUTPUT, 'GPU query failed')
+        sample = windows_memory()
+        sample.update(parse_gpu(result.stdout, spec['gpu_uuid']))
+        root = Path(spec['output_root'])
+        while not root.exists():
+            parent = root.parent; require(parent != root, 'output volume unavailable'); root = parent
+        sample.update(schema=SCHEMA, perf=time.monotonic(), disk_free_bytes=shutil.disk_usage(root).free,
+            output_volume_path=str(root.resolve()), native_qualified=False,
+            classification='actual read-only current-process resource sample; no model/native fit proof')
+        elapsed = time.monotonic() - start
+        require(elapsed <= spec['probe_bounds']['wall_s_upper'], 'resource probe wall upper exceeded')
+    except BaseException as error:
+        _failed(operation, identifier, start, error); raise
+    operation('resource_probe', 'returned', operation_id=identifier, wall_s=elapsed,
+              bytes_read=read, identity_hash_attempts_actual=1, identity_hash_bytes_actual=read,
+              resource_observation=sample)
+    return sample
+
+
+def enforce(sample, limits, *, launch=False):
+    """Exact barriers; a failed gate is never weakened or repaired here."""
+    require(type(sample) is dict and sample.get('schema') == SCHEMA, 'actual resource sample shape')
+    require(type(limits) is dict and set(limits) == {'launch_host_gib', 'ongoing_host_gib', 'max_worker_gib',
+            'gpu_free_gib', 'allocator_fraction', 'reserved_fraction_limit', 'disk_floor_bytes',
+            'launch_disk_bytes', 'active_storage_reserve_bytes'}, 'all resource barriers explicitly declared')
+    require(all(_number(limits[key]) for key in ('launch_host_gib', 'ongoing_host_gib', 'max_worker_gib',
+            'gpu_free_gib', 'allocator_fraction', 'reserved_fraction_limit'))
+            and all(type(sample.get(key)) is int and sample[key] >= 0 for key in
+                ('host_free_bytes', 'worker_peak_working_set_bytes', 'gpu_free_bytes', 'disk_free_bytes')),
+            'strict finite resource barrier values and integer OS bytes')
+    require(limits['launch_host_gib'] >= 5.5 and limits['ongoing_host_gib'] >= 1
+            and 0 < limits['max_worker_gib'] <= 4.5 and limits['gpu_free_gib'] >= .5
+            and limits['allocator_fraction'] == .78 and limits['reserved_fraction_limit'] == .95
+            and type(limits['disk_floor_bytes']) is int and limits['disk_floor_bytes'] >= 14 * GIB
+            and type(limits['launch_disk_bytes']) is int and limits['launch_disk_bytes'] >= 32 * GIB
+            and type(limits['active_storage_reserve_bytes']) is int and limits['active_storage_reserve_bytes'] >= 0,
+            'registered resource barriers cannot be lowered')
+    threshold = limits['launch_host_gib'] if launch else limits['ongoing_host_gib']
+    require(sample['host_free_bytes'] >= threshold * GIB
+            and sample['worker_peak_working_set_bytes'] <= limits['max_worker_gib'] * GIB,
+            'host/worker peak memory barrier')
+    if 'cuda_free_bytes' in sample:
+        require(type(sample['cuda_free_bytes']) is int and sample['cuda_free_bytes'] >= 0, 'integer exact CUDA free bytes')
+        free_lower = sample['cuda_free_bytes']
+    else:
+        # The command renders integer MiB. One MiB of conservative uncertainty
+        # prevents a rounded display at512 MiB from admitting <.5 GiB free.
+        free_lower = max(0, sample['gpu_free_bytes'] - 1024 ** 2)
+    require(free_lower >= limits['gpu_free_gib'] * GIB, 'GPU free-memory barrier')
+    disk = limits['launch_disk_bytes'] if launch else limits['disk_floor_bytes'] + limits['active_storage_reserve_bytes']
+    require(sample['disk_free_bytes'] >= disk, 'disk floor and active reservation barrier')
+    if 'cuda_peak_reserved_bytes' in sample:
+        require(type(sample['cuda_peak_reserved_bytes']) is int and sample['cuda_peak_reserved_bytes'] >= 0
+                and type(sample.get('cuda_total_bytes')) is int and sample['cuda_total_bytes'] > 0,
+                'integer actual CUDA allocator bytes')
+        require(sample['cuda_peak_reserved_bytes'] <= .95 * .78 * sample['cuda_total_bytes'], 'CUDA allocator peak ceiling')
+    return sample
+
+
+class NativeResourceRecorder:
+    """Permit-bound actual sampling; no native authority or service registry."""
+    def __init__(self, context, permit, operation):
+        authority.require_execution_permit(permit, context, 'resource_io_measurement', operation=operation)
+        spec = context['bindings']['scope'].get('qualifier_resources')
+        validate_spec(spec)
+        self.context, self.permit, self.operation, self.spec = context, permit, operation, spec
+        self.framework = None; self.samples = []
+
+    def sample(self, stage):
+        authority.require_execution_permit(self.permit, self.context, 'resource_io_measurement', operation=self.operation)
+        sample = readonly_sample(self.spec, self.operation)
+        sample['stage'] = stage
+        if self.framework is not None and self.framework.cuda.is_initialized():
+            require(self.framework is sys.modules.get('torch'), 'actual already pinned framework module required')
+            bounds = self.spec.get('cuda_probe_bounds')
+            require(type(bounds) is dict and set(bounds) == {'wall_s_upper'}
+                    and _number(bounds['wall_s_upper']) and bounds['wall_s_upper'] > 0, 'explicit CUDA observation wall reservation')
+            identifier, start = uuid.uuid4().hex, time.monotonic()
+            self.operation('resource_cuda_probe', 'started', operation_id=identifier, **bounds)
+            try:
+                free, total = self.framework.cuda.mem_get_info(0)
+                require(self.framework.cuda.device_count() == 1, 'qualified single-visible-GPU runtime required')
+                sample.update(cuda_free_bytes=free, cuda_total_bytes=total,
+                    cuda_reserved_bytes=self.framework.cuda.memory_reserved(0),
+                    cuda_peak_reserved_bytes=self.framework.cuda.max_memory_reserved(0))
+                elapsed = time.monotonic() - start
+                require(elapsed <= bounds['wall_s_upper'], 'CUDA observation wall reservation exceeded')
+            except BaseException as error:
+                try: self.operation('resource_cuda_probe', 'failed', operation_id=identifier, error_type=type(error).__name__)
+                except BaseException as accounting:
+                    error.accounting_failure = {'type': type(accounting).__name__, 'message': str(accounting)[:1000]}
+                    raise error from accounting
+                raise
+            self.operation('resource_cuda_probe', 'returned', operation_id=identifier, wall_s=elapsed,
+                           resource_observation=sample)
+        self.samples.append(sample)
+        return copy.deepcopy(sample)
+
+    def observations(self):
+        authority.require_execution_permit(self.permit, self.context, 'resource_io_measurement', operation=self.operation)
+        require(self.samples and any('cuda_peak_reserved_bytes' in sample for sample in self.samples), 'actual CUDA-phase resource samples required')
+        # Callback IO/timing/worker verification and raw publication come from
+        # the surrounding service. Samples alone cannot satisfy native PASS.
+        return {'samples': copy.deepcopy(self.samples), 'peak_worker_working_set_gib': max(s['worker_peak_working_set_bytes'] for s in self.samples) / GIB,
+            'peak_reserved_gib': max(s.get('cuda_peak_reserved_bytes', 0) for s in self.samples) / GIB,
+            'min_sampled_gpu_free_gib': min(s['gpu_free_bytes'] for s in self.samples) / GIB,
+            'gpu_observation_scope': 'declared barriers; no continuous minimum assertion',
+            'native_qualified': False, 'execution_verified': False}

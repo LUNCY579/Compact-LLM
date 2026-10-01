@@ -29,7 +29,7 @@ KINDS = ce.NATIVE_KINDS | frozenset(('journal_construct', 'qualification_mask',
     'qualification_reference_forward', 'qualification_candidate_forward',
     'qualification_backward', 'qualification_gradient_validation', 'qualification_rng',
     'qualification_tensor_write', 'qualification_artifact', 'qualification_checkpoint_configuration',
-    'qualification_artifact_readback', 'qualification_reducer_overhead'))
+    'qualification_artifact_readback', 'qualification_reducer_overhead', 'resource_probe', 'resource_cuda_probe'))
 COST_FIELDS = q.COST_FIELDS
 canonical, digest, require = q.canonical, q.digest, q.require
 
@@ -58,7 +58,52 @@ def _add(left, right): return {key: left.get(key, 0) + right.get(key, 0) for key
 
 
 class QualificationAccounting:
-    def __init__(self, context, permit, proof, prepared_receipt=None):
+    def __init__(self, context, permit, proof, prepared_receipt=None, *,
+                 bootstrap_handle=None, bootstrap_verifier=None, clock=None):
+        from . import ce_bootstrap_accounting as boot
+        fixture = type(context) is dict and context.get('schema') == FIXTURE
+        if not fixture:
+            # Registry refusal precedes context/header/replay hashes and paths.
+            services = context.get('native_services', {}) if type(context) is dict else {}
+            if type(services) is not dict: services = {}
+            if bootstrap_handle is None: bootstrap_handle = services.get('bootstrap_handle')
+            if bootstrap_verifier is None: bootstrap_verifier = services.get('bootstrap_verifier')
+            boot.require_registered_verifier(bootstrap_verifier)
+            owner = context.get('bindings', {}).get('scope', {}).get('qualifier_accounting_owner') if type(context) is dict else None
+            boot.verify_prepayment(bootstrap_handle, context, proof, owner, verifier=bootstrap_verifier)
+            require(clock is None, 'native qualification monotonic clock cannot be injected')
+        self.clock = time.monotonic if clock is None else clock
+        require(callable(self.clock), 'explicit monotonic clock source')
+        self._wall_origin = self.clock()
+        require(q.finite(self._wall_origin), 'finite qualification monotonic origin')
+        self._wall_ready = False
+        self.actual_wall_seconds, self.last_clock, self.worker_open = 0.0, self._wall_origin, False
+        if fixture and bootstrap_handle is None:
+            outer = boot.BootstrapAccounting(context, None, proof, clock=self.clock)
+            spec = context['bindings']['scope']['qualifier_accounting']
+            bounds = _price(spec['setup_bounds'])
+            bounds['metadata_bytes_upper'] = MAX_LINE * 2
+            owner = {'accounting_spec_sha256': digest(spec), 'prepared_receipt_sha256': prepared_receipt['receipt_sha256']}
+            bootstrap_handle = outer.reserve_setup(owner, bounds)
+            boot.verify_prepayment(bootstrap_handle, context, proof, owner)
+        require(type(bootstrap_handle) is boot.PrepaymentHandle, 'actual outer prepayment handle required')
+        self.bootstrap_handle = bootstrap_handle
+        self.bootstrap_handle.begin()
+        try:
+            self._initialize(context, permit, proof, prepared_receipt)
+            expected_owner = {'accounting_spec_sha256': digest(self.spec), 'prepared_receipt_sha256': prepared_receipt['receipt_sha256']}
+            require(self.bootstrap_handle.evidence['owner'] == expected_owner, 'prepaid owner differs from actual constructor specification')
+            self._wall_ready = True
+            if not self.unknown_wall: self.tick_wall()
+            self.bootstrap_handle.complete()
+        except BaseException as error:
+            try: self.bootstrap_handle.fail(error)
+            except BaseException as record_error:
+                error.bootstrap_accounting_failure = {'type': type(record_error).__name__, 'message': str(record_error)[:1000]}
+                raise error from record_error
+            raise
+
+    def _initialize(self, context, permit, proof, prepared_receipt=None):
         # No path/proof traversal or IO before the native capability check.
         fixture = type(context) is dict and context.get('schema') == FIXTURE
         if fixture:
@@ -92,6 +137,7 @@ class QualificationAccounting:
         require(type(spec.get('stage_caps')) is dict and set(spec['stage_caps']) == set(q.STAGES), 'all exact qualification stage caps required')
         for value in spec['stage_caps'].values(): q._costs(value, stage=True)
         _profile(spec.get('setup_bounds'))
+        require(q.finite(spec.get('physical_wall_seconds_upper'), True), 'explicit physical qualification deadline')
         execution = scope.get('qualifier_execution')
         require(type(execution) is dict, 'qualification batch plan required')
         rows = prepared_receipt.get('prepared_row_bindings')
@@ -124,7 +170,6 @@ class QualificationAccounting:
         self._spec_sha256, self._profiles_sha256 = digest(self.spec), digest(self.profiles)
         self.native_activation_gaps = {
             'outer_setup_reservation': 'A registered outer bootstrap ledger must permanently reserve constructor/header/replay work before these files exist.',
-            'complete_wall_accounting': 'Operation upper reservations omit independent measured constructor/replay/interoperation/terminal wall coverage.',
             'directory_publication': 'File fsync is implemented; platform-specific parent-directory publication durability still needs verified native service evidence.'}
         predecessor = spec.get('ingestion_bootstrap_ref')
         if not fixture:
@@ -157,7 +202,9 @@ class QualificationAccounting:
             'static_recipe_sha256': context['static_recipe_sha256'], 'specification': self.spec,
             'prepared_receipt_sha256': prepared_receipt['receipt_sha256'], 'recipe': self.recipe,
             'anchors': _clone(context['bindings']['anchors']), 'source': _clone(context['bindings'].get('source', {})),
-            'runtime': _clone(context['bindings'].get('runtime', {}))}
+            'runtime': _clone(context['bindings'].get('runtime', {})),
+            'bootstrap_owner': self.bootstrap_handle.evidence['owner'],
+            'wall_rule': 'source-owned time.monotonic intervals with same-boot worker/end evidence'}
         self.binding_sha256 = digest(self.header)
         self._make_ce_state(context, rows)
         setup = self.spec['setup_bounds']
@@ -204,7 +251,7 @@ class QualificationAccounting:
             with self.path.open('xb') as stream: stream.flush(); os.fsync(stream.fileno())
             self._known_size = 0
         self._event('setup', {'profile': setup, 'header_costs': header_costs if self._header_cost_prepaid else {}})
-        self._event('worker', {'proof': self.proof})
+        self._event('worker', {'proof': self.proof, 'monotonic': self._wall_origin})
 
     def _make_ce_state(self, context, rows):
         # Protected pure helper composition AFTER the outer admission. No base
@@ -253,6 +300,7 @@ class QualificationAccounting:
         if stage is not None: self.by_stage[stage] = _add(self.by_stage[stage], amounts)
     def _event(self, kind, payload):
         self._admit()
+        if self._wall_ready and kind not in ('wall', 'worker', 'end'): self.tick_wall()
         body = {'seq': len(self.events), 'previous': self._head(), 'binding_sha256': self.binding_sha256,
                 'kind': kind, 'payload': _clone(payload)}
         raw = canonical(dict(body, sha256=digest(body))) + b'\n'
@@ -282,18 +330,34 @@ class QualificationAccounting:
             amount = _price(payload['profile'])
             if not self._header_cost_prepaid: amount = _add(amount, payload.get('header_costs', {}))
             return None, amount, lambda: setattr(self, '_header_cost_prepaid', False)
+        if kind == 'wall':
+            require(payload['boot_identity_sha256'] == self._current_proof['boot_identity_sha256']
+                    and payload['worker_identity_sha256'] == self._current_proof['worker_identity_sha256']
+                    and q.finite(payload['monotonic']) and payload['monotonic'] >= self.last_clock
+                    and payload['elapsed_delta'] == payload['monotonic'] - self.last_clock, 'same-boot exact qualification wall interval')
+            def apply():
+                self.last_clock = payload['monotonic']; self.actual_wall_seconds += payload['elapsed_delta']
+            return payload['stage'], {'wall_seconds_upper': payload['elapsed_delta']}, apply
+        if kind == 'end':
+            require(self.active is None and not any(op['phase'] == 'started' and op['worker_id'] == self._current_proof['worker_identity_sha256']
+                    for op in self.operations.values()), 'all current worker operations must return before wall end')
+            require(payload['worker_identity_sha256'] == self._current_proof['worker_identity_sha256']
+                    and q.finite(payload.get('monotonic')) and payload['monotonic'] == self.last_clock,
+                    'exact wall end worker/monotonic identity')
+            return None, {}, lambda: setattr(self, 'worker_open', False)
         if kind == 'worker':
             def apply():
-                if self.active is not None or any(op['phase'] == 'started' for op in self.operations.values()):
+                if self.worker_open or self.active is not None or any(op['phase'] == 'started' for op in self.operations.values()):
                     if self.active is not None: self.active['status'] = 'INTERRUPTED'
                     self.active = None
                     self._ce.requires_restore = True; self.unknown_wall = True
                 self._current_proof = payload['proof']
+                self.last_clock = payload['monotonic']; self.worker_open = True
                 self._ce.current_invocation = payload['proof']['worker_identity_sha256']
             return None, {}, apply
         if kind == 'begin':
             stage = payload['stage']
-            require(stage in q.STAGES and self.active is None and type(payload['attempt_id']) is str and payload['attempt_id'], 'one explicit stage/attempt')
+            require(self.worker_open and stage in q.STAGES and self.active is None and type(payload['attempt_id']) is str and payload['attempt_id'], 'one explicit stage/attempt')
             require(not any(a['attempt_id'] == payload['attempt_id'] for a in self.attempts), 'attempt identity reused')
             count = sum(a['stage'] == stage for a in self.attempts)
             require(count < self.spec['stage_caps'][stage]['max_attempts'], 'stage attempt ceiling')
@@ -334,7 +398,7 @@ class QualificationAccounting:
         kind, phase, oid, fields = payload['kind'], payload['phase'], payload['id'], _normalize(payload['fields'])
         require(kind in self.profiles and phase in ('started', 'returned', 'failed') and type(oid) is str and oid, 'declared qualification operation')
         if phase == 'started':
-            require(self.active is not None and oid not in self.operations, 'active unique physical qualification attempt')
+            require(self.worker_open and self.active is not None and oid not in self.operations, 'active unique physical qualification attempt')
             stage, aid = self.active['stage'], self.active['attempt_id']
             for key, expected in (('qualification_stage', stage), ('attempt_id', aid), ('worker_id', self._current_proof['worker_identity_sha256'])):
                 require(key not in fields or fields[key] == expected, 'qualification callback identity changed')
@@ -384,6 +448,26 @@ class QualificationAccounting:
         else: ce_action = lambda: None
         def apply(): ce_action(); previous.update(phase=phase, result=fields, returned_seq=len(self.events))
         return previous['stage'], {}, apply
+    def tick_wall(self):
+        self._admit()
+        require(self.worker_open, 'qualification worker wall interval already ended')
+        now = self.clock()
+        require(q.finite(now) and now >= self.last_clock, 'qualification monotonic clock regressed')
+        deadline = self.spec.get('physical_wall_seconds_upper')
+        require(q.finite(deadline, True) and now - self._wall_origin <= deadline, 'qualification physical deadline')
+        if now > self.last_clock:
+            stage = self.active['stage'] if self.active is not None else None
+            self._event('wall', {'stage': stage, 'boot_identity_sha256': self._current_proof['boot_identity_sha256'],
+                'worker_identity_sha256': self._current_proof['worker_identity_sha256'], 'monotonic': now,
+                'elapsed_delta': now - self.last_clock})
+        return self.actual_wall_seconds
+    def end(self):
+        self.tick_wall()
+        self._event('end', {'worker_identity_sha256': self._current_proof['worker_identity_sha256'],
+                           'monotonic': self.last_clock})
+        self._wall_ready = False
+        return self.snapshot()
+
     def begin_stage(self, stage, attempt_id):
         return self._event('begin', {'stage': stage, 'attempt_id': attempt_id})
     def operation(self, kind, phase, operation_id, **fields):
@@ -444,7 +528,8 @@ class QualificationAccounting:
                 and not self._ce.active_attempt and not self.requires_restore and not self.restore_pending
                 and not any(op['phase'] == 'started' and op['worker_id'] == self.proof['worker_identity_sha256']
                             for op in self.operations.values()), 'all stages and lifetime cleanup must return before seal')
-        require(self.fixture, 'UNSUPPORTED_UNMEASURED: native setup/wall/directory evidence is not implemented')
+        require(not self.worker_open, 'qualification wall end must be retained before seal')
+        require(self.fixture, 'UNSUPPORTED_UNMEASURED: native publication/execution verifier evidence is not implemented')
         return dict(self.snapshot(), status='FIXTURE_SEALED_UNQUALIFIED', native_qualified=False)
 
     def snapshot(self):
@@ -457,10 +542,46 @@ class QualificationAccounting:
             'fatal': self.fatal, 'unknown_wall': self.unknown_wall, 'progress': self.progress_record(),
             'reservation_rule': 'permanent full upper charges; failed/unknown/restarted work never refunded',
             'cost_scope': 'declared callback upper reservations and serialized journal costs; not complete native measured totals',
-            'complete_wall_accounting': False,
+            'complete_wall_accounting': not self.worker_open and not self.unknown_wall,
+            'actual_wall_seconds': self.actual_wall_seconds, 'last_monotonic': self.last_clock, 'worker_open': self.worker_open,
+            'bootstrap_prepayment': self.bootstrap_handle.evidence,
             'native_accounting_status': 'FIXTURE_UNQUALIFIED' if self.fixture else 'UNSUPPORTED_UNMEASURED',
             'native_activation_gaps': _clone(self.native_activation_gaps)}
 
 
-def create_accounting(context, permit, proof, prepared_receipt):
-    return QualificationAccounting(context, permit, proof, prepared_receipt)
+def create_accounting(context, permit, proof, prepared_receipt, *, bootstrap_handle=None, bootstrap_verifier=None):
+    return QualificationAccounting(context, permit, proof, prepared_receipt,
+        bootstrap_handle=bootstrap_handle, bootstrap_verifier=bootstrap_verifier)
+
+
+def replay_state(context, header, prepared_receipt):
+    """Framework-free, no-IO event shadow for an independently prepaid verifier.
+
+    It issues no permit, performs no native construction and cannot seal native
+    execution. Caller must first bind/read header and prepared bytes under its
+    own source-owned verification prepayment.
+    """
+    state = object.__new__(QualificationAccounting)
+    state.fixture, state.permit, state.context = header['fixture'], None, context
+    state.spec, state.recipe = _clone(header['specification']), _clone(header['recipe'])
+    state.profiles = state.spec['operation_profiles']
+    rows = prepared_receipt['prepared_row_bindings']
+    state.census = {row['id']: _clone(row) for row in rows}
+    execution = context['bindings']['scope']['qualifier_execution']
+    state.allowed_rows, state.adam_batches = set(execution['all_witness_ids']), _clone(execution['adam_batches'])
+    state.request_sha256, state.scope_sha256 = header['request_sha256'], header['scope_sha256']
+    state.scope_role = 'qualification_only'
+    state.header, state.binding_sha256 = _clone(header), digest(header)
+    state.directory = Path(state.spec['owned_directory'])
+    state.metadata_root = Path(context['bindings']['scope']['native_backend']['output_directory'])
+    state.external_predecessors = {'ingestion_tokenizer'} if state.spec.get('ingestion_bootstrap_ref') else set()
+    state.fatal = state.unknown_wall = False
+    state.active, state.operations, state.attempts, state.events, state.metadata_ids = None, {}, [], [], set()
+    state.cumulative = dict.fromkeys(COST_FIELDS, 0)
+    state.by_stage = {stage: dict.fromkeys(COST_FIELDS, 0) for stage in q.STAGES}
+    state.reducer_reserved_bytes, state.reducer_by_stage = 0, dict.fromkeys(q.STAGES, 0)
+    state.worker_open, state.last_clock, state.actual_wall_seconds = False, 0.0, 0.0
+    state._current_proof, state.proof = {}, {}
+    state._header_cost_prepaid, state._wall_ready = False, False
+    state._make_ce_state(context, rows)
+    return state

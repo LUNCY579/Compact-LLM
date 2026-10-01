@@ -291,6 +291,48 @@ Fresh OS checkpoint workers and resource measurement adapters are unimplemented.
 The unapproved registration proposal requires a new source freeze and concrete
 qualification accounting/execution artifacts before any native dispatch.
 
+## OS evidence and outer accounting
+
+`ce_bootstrap_accounting.py` retains opaque, source-bound setup prepayments
+before dependent constructor work. Duplicate or invalid ticket transitions
+refuse before append. The qualification ledger records actual monotonic time
+through setup, replay, API barriers, idle intervals and explicit end. Actual
+elapsed time and upper reservations are both charged; the physical deadline
+remains separate. Interrupted unknown time prevents further work.
+
+`ce_worker_evidence.py` reads actual Windows PID, creation time, boot GUID,
+executable image and command line through retained process handles. Live proofs
+recheck the handle; termination requires a signaled handle and OS exit code.
+The virtual environment launcher and base process image are pinned separately.
+Current-process metadata probes explicitly leave native freshness, execution
+verification and qualification false.
+
+`ce_resource_evidence.py` samples current-process working set, host RAM, disk
+and a pinned NVIDIA query utility. Driver-reserved memory is included in the
+six-column GPU record. Barriers use exact CUDA free bytes when available and
+a conservative lower bound for rounded CLI values otherwise. Launch disk must
+cover both its fixed floor and the declared active reservation. Sampled minima
+are labeled as observations at barriers, with no continuous minimum claim.
+
+`ce_execution_verifier.py` derives cost totals, pending and failed reservations,
+stage order, wall state and seal consistency from original retained journal
+rows. It uses the raw numeric reducers and rejects supplied worker flags.
+Results remain **UNQUALIFIED** until actual source-issued worker handles,
+bootstrap/clock verification and remaining execution services are verified.
+
+The combined service suite passed **144/144 controls** with unchanged source,
+zero skips/errors and no ML framework imports. A real read-only resource probe
+and a current-process Windows probe also completed without models. Worker probe
+V1/V2 failed on the virtual environment redirector's image/argv assumptions;
+their failure records are retained beside the corrected V3 evidence. Resource
+probe V2's exact source snapshot is retained as text for provenance.
+See `evidence/CE8_OS_SERVICES_SOURCE_CHECKS_20261001.json` and the probe receipts.
+
+All execution/observation/bootstrap verifier registries remain closed. Native
+launch/RPC, fresh-process checkpoint comparisons, platform publication
+durability and final service/producer integration remain required. The warm
+study's stop and pending operator choice still govern any new native treatment.
+
 The qualification producer remains **DRAFT_UNQUALIFIED**. Its native verifier
 registry is empty; flipping an activation flag or providing stage booleans,
 unrelated blob hashes or a caller-supplied verifier cannot produce native PASS.
