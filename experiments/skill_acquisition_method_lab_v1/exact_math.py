@@ -121,10 +121,13 @@ def rejection_mixture(pass_rates: list[float], rho: list[float], n: int) -> dict
     if not a:
         return {"acceptance": 0.0, "status": "NO_ACCEPTED_GROUPS"}
     conditional = [g/m if m else None for g, m in zip(unconditioned, acceptance)]
+    impossible = [i for i, probability in enumerate(acceptance) if probability == 0]
     return {"acceptance": a, "accepted_prompt_distribution": [w*m/a for w, m in zip(rho, acceptance)],
             "fixed_proposal_expected_gradient": fsum(w*g for w, g in zip(rho, unconditioned)),
             "global_rejection_expected_gradient": fsum(w*g for w, g in zip(rho, unconditioned))/a,
-            "per_prompt_quota_expected_gradient": fsum(w*g for w, g in zip(rho, conditional) if g is not None),
+            "per_prompt_quota_status": "IMPOSSIBLE_UNIFORM_PROMPT" if impossible else "FEASIBLE",
+            "impossible_prompt_indices": impossible,
+            "per_prompt_quota_expected_gradient": None if impossible else fsum(w*g for w, g in zip(rho, conditional)),
             "conditional_gradients": conditional,
             "expected_proposal_groups_per_accepted": 1/a}
 

@@ -329,6 +329,9 @@ asynchrony, weighting by variable accepted counts, or updating while refilling
 requires a fresh calculation. If only one prompt is repeatedly retried,
 conditional normalization is prompt-specific and (17) is not the same
 training design.
+If a positive-weight prompt has a(x)=0, a required mixed-group quota for that
+prompt cannot finish; its conditional gradient is undefined. Global rejection
+can still finish using other prompts when total acceptance is positive.
 
 ## 6. Bounded adaptive stopping: cost and estimator bias
 
@@ -829,6 +832,15 @@ use development triggers and retain selection/tuning costs in the ledger.
 
 ## 14. Cost, seeds, memberships, and auditable hypotheses
 
+The matrix above describes the core treatment factors, not the complete arm
+count of the governing COMP-RS amendment. Its atomic-P trained non-partner,
+P_R/SP/RP, admissible R_N/S_N magnitude twins, full-strength comparators, MT,
+MT_cal, R_prime/S_prime replication, S shortcut floor and H3b lookup-use
+calibration remain required under that registration. Seven unique core
+operating models does not waive these ancillary controls or the sealed-read
+and stop rules. New mechanism panels require their own frozen bounds and do
+not amend those controls by implication.
+
 Independent donors and sequential orders each acquire two skills, but their
 resource paths differ. A sequential final state has two stages; dense RS
 uses two independently trained donors plus composition/evaluation work.
@@ -907,9 +919,9 @@ analytical audits do not make them sealed or certify real-world retention.
 The companion audit reports EXACT_TOY_IDENTITIES_PASS for 572 finite-group
 cases and 72 blockwise stopping cases. Zero-epsilon MaxRL enumeration agrees
 with its closed-form Bernoulli-logit expectation to a maximum absolute error
-of 8.92e-16. The associated mathematical suite reported 46 passing tests.
-The create-only [audit receipt](evidence/exact-20260930/RECEIPT.json) binds the
-code and output hashes; the [complete result](evidence/exact-20260930/EXACT_AUDIT.json)
+of 8.92e-16. The associated mathematical suite reported 48 passing tests.
+The create-only [audit receipt](evidence/exact-20260930-v2/RECEIPT.json) binds the
+code and output hashes; the [complete result](evidence/exact-20260930-v2/EXACT_AUDIT.json)
 contains the source evidence references, control cases and full tables.
 The [enumerator](exact_math.py), [audit entrypoint](run_audit.py), and
 [mathematical tests](tests/test_exact_math.py) specify the actual toy estimators.
@@ -932,7 +944,7 @@ at an unchanged success-only objective. Comparing raw variances across
 different expected-gradient scales is not a direct ranking of training
 quality; objective weight, normalized signal/noise, optimizer behavior,
 prompt mixture, and model geometry differ. The
-[finite-group table](evidence/exact-20260930/fixed_group_expectations.csv)
+[finite-group table](evidence/exact-20260930-v2/fixed_group_expectations.csv)
 includes both epsilon settings and both standard-deviation conventions.
 
 For same-snapshot failure continuation with n = 4, L = 4, gamma = 1 and
@@ -942,7 +954,7 @@ fixed-N = 16 practical MaxRL gives 0.50987333. Thus the random-total pool
 does not inherit the fixed-maximum-group objective. This comparison verifies
 an estimator distinction; it does not establish superior improvement per
 compute. See the
-[stopping table](evidence/exact-20260930/stopped_sampling_cost.csv).
+[stopping table](evidence/exact-20260930-v2/stopped_sampling_cost.csv).
 The scalar first-success calculation (20)–(23) is an additional analytical
 derivation; the 72 receipt cases enumerate blockwise continuation rather
 than claiming coverage of every scalar stopping variant.

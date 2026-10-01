@@ -66,6 +66,7 @@ def main():
             "python":platform.python_version(),"native_models_run":0,"source_evidence":source,
             "identity_max_abs_error":max_error,"fixed_group_rows":rows,"stopped_sampling":stopped,
             "rejection_mixture":m.rejection_mixture([.02,.5],[.5,.5],8),
+            "rejection_uniform_prompt":m.rejection_mixture([0,.5],[.5,.5],8),
             "signal_window":signal,"sequential_counterexample":m.sequential_counterexample(),
             "composition_counterexample":m.composition_counterexample(),
             "dual_fisher_proxy":m.dual_fisher_allocation([1]*4,[9,8,4,1],[10,1,0,0],2,1),

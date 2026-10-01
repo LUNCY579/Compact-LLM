@@ -2,6 +2,8 @@
   "experiment": "SKILL-ACQUISITION-METHOD-LAB-001",
   "status": "MATHEMATICAL_AND_DESIGN_EVIDENCE_NATIVE_ARMS_NOT_RUN",
   "training_grant": false,
+  "governing_study": "COMP_RS_001_AMENDMENT_1.md sections1-18; this matrix does not replace its registered arms, CALIBRATION/DEV/TEST rules, placebo labels, exact tests or stop gates.",
+  "registered_controls_retained": ["atomic-P trained non-partner", "P_R/SP/RP size-matched trained non-partner arms", "R_N/S_N magnitude twins when admissible", "full-strength R/S/RS comparators", "MT and MT_cal", "R_prime/S_prime and RS_a100_prime", "S shortcut floor and H3b lookup-use null calibration"],
   "current_acquisition_bottleneck": "Plain Supa had zero strict successes and zero mixed groups on the registered full R/S/P source screen. A common 600-row warm-start anchor is registered; its durable execution is being qualified.",
   "shared_readouts": [
     "strict verifier and bounded content correctness separately",
@@ -37,7 +39,7 @@
       "id": "A2_DENSE_COMPOSITION",
       "priority": 1,
       "arms_within_each_objective": ["B", "R_at_alphaR", "S_at_alphaS", "RS_at_alphaR_alphaS"],
-      "unique_models_with_shared_anchor": 7,
+      "unique_core_models_with_shared_anchor_excluding_registered_ancillary_controls": 7,
       "registered_coefficient_rule": "Grid0.125/0.25/0.375/0.50/0.75/1.00; alpha_star is smallest maximum; select median on nine-row plateau, lower median if even (governing COMP-RS section4).",
       "prerequisites": ["both donors pass actual skill-positive gates", "independent coefficient plateaus selected on registered CALIBRATION", "all held-out arms frozen"],
       "hypothesis": "The dependent RS composite improves over both solo controls while meeting declared atomic and legacy loss margins.",

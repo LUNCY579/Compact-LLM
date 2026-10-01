@@ -49,6 +49,15 @@ def test_optional_stopping_does_not_inherit_fixed_n_objective():
     assert mixture["per_prompt_quota_expected_gradient"] != pytest.approx(mixture["global_rejection_expected_gradient"])
 
 
+@pytest.mark.parametrize("uniform", [0,1])
+def test_uniform_prompt_cannot_fill_a_mixed_group_quota(uniform):
+    result = m.rejection_mixture([uniform,.5],[.5,.5],8)
+    assert result["acceptance"] > 0  # Global proposals can accept the other prompt.
+    assert result["per_prompt_quota_status"] == "IMPOSSIBLE_UNIFORM_PROMPT"
+    assert result["per_prompt_quota_expected_gradient"] is None
+    assert result["impossible_prompt_indices"] == [0]
+
+
 def test_orthogonal_gradient_order_commutator_and_curvature():
     result = m.sequential_counterexample()
     assert result["gradient_dot"] == 0

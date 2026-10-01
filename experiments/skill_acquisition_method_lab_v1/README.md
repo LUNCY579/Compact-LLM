@@ -10,12 +10,16 @@ native signal gate.
   assumptions, primary citations, and controls for each proposed combination.
 - [Design matrix](DESIGN_MATRIX.json): primary objective/donor/composition/order
   panels, then conditional sampler, retention, Fisher and teacher follow-ups.
-- [Exact audit](evidence/exact-20260930/EXACT_AUDIT.json): 572 finite-group cases,
+- [Exact audit](evidence/exact-20260930-v2/EXACT_AUDIT.json): 572 finite-group cases,
   72 bounded stopping cases, and quadratic, covariance, LoRA and Fisher controls.
-- [Audit receipt](evidence/exact-20260930/RECEIPT.json): code/output hashes.
-- [Scientific figure PDF](evidence/exact-20260930/method_mechanics.pdf).
+- [Audit receipt](evidence/exact-20260930-v2/RECEIPT.json): code/output hashes.
+- [Scientific figure PDF](evidence/exact-20260930-v2/method_mechanics.pdf).
 
-![Exact toy mechanisms](evidence/exact-20260930/method_mechanics.png)
+![Exact toy mechanisms](evidence/exact-20260930-v2/method_mechanics.png)
+
+Version2 adds a boundary check: a fixed mixed-group quota cannot finish for a
+positive-weight prompt with p=0 or p=1. Global rejection can still accept other
+prompts. Version1's interior-probability tables remain preserved unchanged.
 
 ## Reproduce
 
