@@ -18,6 +18,7 @@ from . import ce_plan, ce_update
 
 SCHEMA = 'CE8-INGESTION-1'
 SOURCE_SCHEMA = 'CE8-INGESTION-SOURCES-1'
+QUALIFICATION_ROWS_SCHEMA = 'CE8-QUALIFICATION-ROW-DECLARATION-1'
 ADMISSION_SCHEMA = 'CE8-OUTER-ADMISSION-1'
 ADMISSION_FIELDS = ('schema', 'mode', 'admitted', 'request_sha256', 'scope_sha256', 'phase', 'arm',
                     'static_recipe_sha256', 'source_sha256', 'runtime_sha256')
@@ -44,6 +45,9 @@ def _admit(callback, stage, refs):
         require(isinstance(permit, NativeStagePermit)
                 and permit.matches(stage, refs, value['request_sha256'], value['scope_sha256']),
                 'registered outer stage permit mismatch')
+        if stage == 'ingestion_qualification_rows':
+            # The opaque issuer supplies row scope; receipt/caller flags cannot.
+            value = dict(value, qualification_rows=copy.deepcopy(permit.qualification_rows))
     return copy.deepcopy(value)
 
 
@@ -101,7 +105,7 @@ class VerifiedSources:
     @property
     def declared_census(self): return copy.deepcopy(self._expected_census)
 
-    def _target(self, row_id, operation, gate):
+    def _target(self, row_id, operation, gate, *, stage='ingestion_boundary'):
         entry = self._index[row_id]; path = Path(self._target_ref['path'])
         require(path.is_file() and not path.is_symlink() and path.stat().st_size == self._target_ref['bytes'],
                 'teacher file path/size changed')
@@ -111,7 +115,7 @@ class VerifiedSources:
             require(len(raw) == entry['bytes'] and hashlib.sha256(raw).hexdigest() == entry['line_sha256'],
                     'teacher row changed after source verification')
             return ce_plan._json(raw)
-        return _io(operation, gate, 'ingestion_boundary', {'path': str(path), 'row_id': row_id,
+        return _io(operation, gate, stage, {'path': str(path), 'row_id': row_id,
             'read_bytes_upper': entry['bytes'], 'write_bytes_upper': 0,
             'identity_hash_attempts_upper': 1, 'identity_hash_bytes_upper': entry['bytes']}, read)
 
@@ -258,6 +262,7 @@ class PreparedRows:
         self.verified, self.tokenizer, self.renderer = verified, tokenizer, renderer
         self.outer_admission, self.operation, self.gate = outer_admission, operation, gate
         self._cache, self._cache_boundary, self._bindings = [], None, {}
+        self._cache_qualification_key = None
         ids = [rid for batch in verified._plan['ordered_plan'] for rid in batch['row_ids']]
         sequences, renders = hashlib.sha256(b'['), hashlib.sha256(b'[')
         Ps, Cs, witness = [], [], []
@@ -306,9 +311,10 @@ class PreparedRows:
                          (item['prompt_ids'], item['completion_ids'], prepared))
         return dict(ce_update.prepared_row_binding(item), render_sha256=item['render_sha256'],
                     target_sha256=item['target_sha256'], prepared_hash_bytes_upper=hash_bytes)
-    def _render(self, row_id):
-        target = self.verified._target(row_id, self.operation, self.gate)
-        item = _observe(self.operation, self.gate, 'ingestion_tokenizer', {'kind': 'tokenizer_render',
+    def _render(self, row_id, *, stage=None):
+        target = self.verified._target(row_id, self.operation, self.gate,
+                                       stage=stage or 'ingestion_boundary')
+        item = _observe(self.operation, self.gate, stage or 'ingestion_tokenizer', {'kind': 'tokenizer_render',
             'row_id': row_id, 'target_sha256': target['target_sha256']}, lambda: self.renderer(self.tokenizer, target))
         require(type(item) is dict and item['id'] == row_id and item['target_sha256'] == target['target_sha256']
                 and ce_plan._hex(item.get('render_sha256')), 'rendered source identity/content drift')
@@ -325,7 +331,7 @@ class PreparedRows:
         batches = self.verified._plan['ordered_plan']
         require(type(C) is int and 0 <= C < len(batches), 'exact boundary cursor')
         if self._cache_boundary != C:
-            self._cache = []; self._cache_boundary = None
+            self._cache = []; self._cache_boundary = None; self._cache_qualification_key = None
             items = []
             for row_id in batches[C]['row_ids']:
                 item = self._render(row_id)
@@ -333,4 +339,59 @@ class PreparedRows:
                 items.append({'id': item['id'], 'prompt_ids': list(item['prompt_ids']), 'completion_ids': list(item['completion_ids'])})
             require(len(items) == 8, 'one full eight-row cache required')
             self._cache, self._cache_boundary = items, C
+        return copy.deepcopy(self._cache)
+
+    def _qualification_declaration(self, admission):
+        require(admission['phase'] == 'qualification', 'qualification rows require separately admitted qualification phase')
+        value = admission.get('qualification_rows')
+        fields = {'schema', 'witness_row_ids', 'gradient_row_ids', 'declaration_sha256'}
+        bound_fields = fields | {'scope_sha256', 'request_sha256', 'adam_batches'}
+        require(type(value) is dict and set(value) in (fields, bound_fields)
+                and (admission['mode'] != 'registered_scope' or set(value) == bound_fields)
+                and value.get('schema') == QUALIFICATION_ROWS_SCHEMA
+                and ce_plan._hex(value.get('declaration_sha256'))
+                and value['declaration_sha256'] == digest({k: v for k, v in value.items() if k != 'declaration_sha256'}),
+                'exact scope-bound qualification row declaration required')
+        all_ids = [rid for batch in self.verified._plan['ordered_plan'] for rid in batch['row_ids']]
+        witnesses = {rid for witness in self._receipt['witnesses'].values() for rid in witness['row_ids']}
+        require(value['witness_row_ids'] == [rid for rid in all_ids if rid in witnesses],
+                'qualification witnesses differ from actual exposure-ordered maximum union')
+        gradient = value['gradient_row_ids']
+        require(type(gradient) is list and len(gradient) == 8 and all(type(rid) is str and rid in self._bindings for rid in gradient)
+                and len(set(gradient)) == 8, 'exact eight distinct scope-bound gradient-reference IDs required')
+        if set(value) == bound_fields:
+            batches = value['adam_batches']
+            require(value['scope_sha256'] == admission['scope_sha256']
+                    and value['request_sha256'] == admission['request_sha256']
+                    and set(gradient) <= witnesses and type(batches) is list and 2 <= len(batches) <= 8
+                    and all(type(batch) is list and len(batch) == 8 and all(type(rid) is str and rid in witnesses for rid in batch)
+                            and len(set(batch)) == 8 for batch in batches),
+                    'qualification request/scope/Adam declaration drift')
+        return value
+
+    def iter_ids(self, row_ids):
+        """Return one <=8-row qualification token batch from its admitted row set.
+
+        The registered outer issuer binds all maximum witnesses and the exact
+        eight-row gradient reference. Caller IDs cannot expand that scope.
+        This API creates no teacher exposure and never advances production C/U.
+        """
+        stage = 'ingestion_qualification_rows'
+        admission = _admit(self.outer_admission, stage, self.verified._refs)
+        require(all(admission[k] == self.verified._admission[k] for k in ADMISSION_FIELDS),
+                'qualification rows outer scope changed')
+        declaration = self._qualification_declaration(admission)
+        allowed = set(declaration['witness_row_ids']) | set(declaration['gradient_row_ids'])
+        require(type(row_ids) is list and 1 <= len(row_ids) <= 8
+                and all(type(rid) is str and rid in self._bindings and rid in allowed for rid in row_ids)
+                and len(set(row_ids)) == len(row_ids), 'one bounded unique declared qualification row batch required')
+        key = (tuple(row_ids), declaration['declaration_sha256'])
+        if self._cache_qualification_key != key:
+            self._cache = []; self._cache_boundary = None; self._cache_qualification_key = None
+            items = []
+            for row_id in row_ids:
+                item = self._render(row_id, stage=stage)
+                require(self._binding(item) == self._bindings[row_id], 'qualification row rendering changed after full census')
+                items.append({'id': item['id'], 'prompt_ids': list(item['prompt_ids']), 'completion_ids': list(item['completion_ids'])})
+            self._cache, self._cache_qualification_key = items, key
         return copy.deepcopy(self._cache)

@@ -4,6 +4,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 from experiments.skill_acquisition_native_v1 import ce_controller as c
 
@@ -61,7 +62,8 @@ class Services:
         self.events.append('sources'); return {'verified': True}
     def verify_worker(self, context):
         self.events.append('worker')
-        return {'fresh_process': True, 'boot_verified': True, 'boot_identity_sha256': 'e' * 64}
+        return {'fresh_process': True, 'boot_verified': True, 'boot_identity_sha256': 'e' * 64,
+                'worker_identity_sha256': 'f' * 64}
     @contextmanager
     def lease(self, context):
         self.events.append('lease_enter')
@@ -79,7 +81,7 @@ class Services:
             if self.sealed: raise AssertionError('watchdog exit after terminal seal')
             self.events.append('watchdog_exit')
             if self.failure == 'watchdog_exit': raise RuntimeError('physical watchdog close failure')
-    def configure_runtime(self, context): self.events.append('configure')
+    def configure_preparation(self, context): self.events.append('configure')
     def prepare_rows(self, verified, context, outer):
         outer('ingestion_tokenizer', {'preparation': self.req['preparation_ref'], 'plan': self.req['plan_ref'], 'arm': self.req['arm']})
         self.events.append('prepare')
@@ -107,6 +109,12 @@ class Factory:
 
 class Backend:
     def __init__(self, services): self.services = services
+    def begin_qualification(self, context, prepared, proof, observer, outer):
+        self.services.events.append('qualification_accounting')
+        c.require(proof['boot_identity_sha256'] == 'e' * 64 and callable(observer)
+                  and isinstance(outer, c.OuterAdmission), 'fixture worker/observer/authority linkage')
+        self.services.journal = SimpleNamespace(classification='fixture qualification accounting, no native grant')
+        return self.services.journal
     def qualify_stage(self, name, prepared, artifacts, context):
         self.services.events.append('work:' + name)
         if name == self.services.failure: raise RuntimeError('physical fixture failure')
@@ -124,6 +132,70 @@ class Backend:
 
 
 class ControllerTests(unittest.TestCase):
+    def test_outer_metadata_copy_does_not_clone_live_permit_or_services(self):
+        class Opaque:
+            def __deepcopy__(self, memo): raise AssertionError('live capability copied as JSON evidence')
+        value = request(); services = Services(value); context = services.admit_request(value)
+        context.update(native_execution_permit=Opaque(), native_services=Opaque())
+        outer = services.make_outer_admission(value, context)
+        self.assertNotIn('native_execution_permit', outer.context)
+        self.assertNotIn('native_services', outer.context)
+        original = context['stage_plan'][0]['stage']
+        context['stage_plan'][0]['stage'] = 'mutated'
+        self.assertEqual(outer.context['stage_plan'][0]['stage'], original)
+
+    def test_worker_process_identity_is_required_before_preparation(self):
+        class MissingProcessIdentity(Services):
+            def verify_worker(self, context):
+                proof = super().verify_worker(context); proof.pop('worker_identity_sha256'); return proof
+        services = MissingProcessIdentity(request())
+        with self.assertRaisesRegex(c.AdmissionError, 'boot/process'):
+            c.run_controller(services.req, services, Factory(services), synthetic_fixture=True)
+        self.assertNotIn('configure', services.events)
+        self.assertFalse(services.sealed)
+
+    def test_qualification_row_declaration_is_complete_and_not_execution_authority(self):
+        context = {'phase': 'qualification', 'request_sha256': 'a' * 64, 'scope_sha256': 'b' * 64,
+                   'bindings': {'scope': {'qualifier_execution': {'all_witness_ids': ['r%d' % i for i in range(90)],
+                        'gradient_batch_ids': ['r%d' % i for i in range(8)],
+                        'adam_batches': [['r%d' % i for i in range(8)], ['r%d' % i for i in range(8, 16)]]}}}}
+        rows = c.qualification_row_declaration(context)
+        self.assertEqual(len(rows['witness_row_ids']), 90)
+        self.assertEqual(rows['declaration_sha256'], c.digest({k: v for k, v in rows.items() if k != 'declaration_sha256'}))
+        rows['gradient_row_ids'][0] = 'changed'
+        self.assertEqual(context['bindings']['scope']['qualifier_execution']['gradient_batch_ids'][0], 'r0')
+        for key in ('all_witness_ids', 'gradient_batch_ids', 'adam_batches'):
+            broken = copy.deepcopy(context); broken['bindings']['scope']['qualifier_execution'][key] = []
+            with self.subTest(key=key), self.assertRaises(c.AdmissionError): c.qualification_row_declaration(broken)
+        broken = copy.deepcopy(context); broken['phase'] = 'training'
+        with self.assertRaises(c.AdmissionError): c.qualification_row_declaration(broken)
+        broken = copy.deepcopy(context); broken['bindings']['scope']['qualifier_execution']['adam_batches'][0][0] = 'outside'
+        with self.assertRaises(c.AdmissionError): c.qualification_row_declaration(broken)
+        self.assertFalse(c._REGISTERED_OUTER_AUTHORITY_VERIFIERS)
+
+    def test_cuda_configuration_owner_is_reserved_before_preparation_and_model(self):
+        for value in (True, 1, None):
+            framework = SimpleNamespace(cuda=SimpleNamespace(is_initialized=lambda: value))
+            with patch.dict(c.sys.modules, {'torch': framework}):
+                services = Services(request())
+                with self.assertRaisesRegex(c.AdmissionError, 'sole backend configuration owner'):
+                    c.run_controller(services.req, services, Factory(services), synthetic_fixture=True)
+                self.assertNotIn('configure', services.events)
+                self.assertNotIn('prepare', services.events)
+                self.assertNotIn('factory', services.events)
+        class EarlyCudaServices(Services):
+            def configure_preparation(self, context):
+                super().configure_preparation(context)
+                initialized[0] = True
+        initialized = [False]
+        framework = SimpleNamespace(cuda=SimpleNamespace(is_initialized=lambda: initialized[0]))
+        with patch.dict(c.sys.modules, {'torch': framework}):
+            services = EarlyCudaServices(request())
+            with self.assertRaisesRegex(c.AdmissionError, 'sole backend configuration owner'):
+                c.run_controller(services.req, services, Factory(services), synthetic_fixture=True)
+            self.assertNotIn('prepare', services.events)
+            self.assertFalse(services.sealed)
+
     def test_explicit_checkpoint_schedule_includes_first_update_without_cadence_rounding(self):
         schedule = [0, 1, 75, 150, 225, 300, 375]
         self.assertEqual(c.checkpoint_boundaries({'boundaries': 375, 'checkpoint_boundaries': schedule}), tuple(schedule))
@@ -157,6 +229,9 @@ class ControllerTests(unittest.TestCase):
         self.assertLess(events.index('worker'), events.index('lease_enter'))
         self.assertLess(events.index('lease_enter'), events.index('configure'))
         self.assertLess(events.index('prepare'), events.index('factory'))
+        self.assertLess(events.index('worker'), events.index('qualification_accounting'))
+        self.assertLess(events.index('qualification_accounting'), events.index('runtime_anchor:started'))
+        self.assertIsNotNone(services.journal)
         self.assertLess(events.index('ingestion_tokenizer:returned'), events.index('runtime_anchor:started'))
         self.assertLess(events.index('cleanup'), events.index('publication'))
         self.assertLess(events.index('cleanup'), events.index('watchdog_exit'))

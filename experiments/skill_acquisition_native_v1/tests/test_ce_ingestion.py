@@ -93,6 +93,129 @@ class PureTests(unittest.TestCase):
         return ing.verify_sources(self.prep_ref, self.plan_refs[arm], arm, self.admit,
                                   operation=self.operation, gate=self.gates.append)
 
+    def qualification_prepared(self):
+        prepared = ing.PreparedRows(self.verify(), 'fixture', outer_admission=self.admit,
+                                   operation=self.operation, gate=self.gates.append, renderer=fake_render)
+        all_ids = [row['id'] for row in self.target_records['canonical']]
+        witnesses = {rid for value in prepared.witnesses.values() for rid in value['row_ids']}
+        declaration = {'schema': ing.QUALIFICATION_ROWS_SCHEMA,
+                       'witness_row_ids': [rid for rid in all_ids if rid in witnesses],
+                       'gradient_row_ids': all_ids[-8:]}
+        declaration['declaration_sha256'] = ing.digest(declaration)
+        def admitted(stage, refs):
+            value = self.admit(stage, refs)
+            if stage == 'ingestion_qualification_rows': value['qualification_rows'] = copy.deepcopy(declaration)
+            return value
+        prepared.outer_admission = admitted
+        return prepared, declaration
+
+    def test_declared_qualification_ids_revalidate_copy_cache_and_keep_boundary_order(self):
+        prepared, declaration = self.qualification_prepared()
+        planned = copy.deepcopy(prepared.verified._plan)
+        ids = [declaration['gradient_row_ids'][-1], declaration['witness_row_ids'][-1]]
+        self.assertTrue(set(ids).isdisjoint(row['id'] for row in self.target_records['canonical'][:8]))
+        rendered = []
+        def counted(tokenizer, row):
+            rendered.append(row['id']); return fake_render(tokenizer, row)
+        prepared.renderer = counted
+        first = prepared.iter_ids(ids)
+        self.assertEqual([row['id'] for row in first], ids)
+        self.assertEqual(rendered, ids); self.assertEqual(prepared.cached_rows, 2)
+        first[0]['prompt_ids'][0] = 123
+        self.assertNotEqual(first, prepared.iter_ids(ids)); self.assertEqual(rendered, ids)
+        boundary = prepared.iter_boundary(0)
+        self.assertEqual([row['id'] for row in boundary], [row['id'] for row in self.target_records['canonical'][:8]])
+        self.assertEqual(prepared.cached_rows, 8)
+        roundtrip = prepared.iter_ids(ids)
+        self.assertEqual([row['id'] for row in roundtrip], ids)
+        for row in roundtrip:
+            self.assertEqual(ing.ce_update.prepared_row_binding(row)['prepared_row_sha256'],
+                             prepared._bindings[row['id']]['prepared_row_sha256'])
+        self.assertEqual(rendered[-2:], ids); self.assertEqual(len(rendered), 12)
+        self.assertEqual(prepared.verified._plan, planned)
+        self.assertEqual(self.admissions[-1][0], 'ingestion_qualification_rows')
+        self.assertIn('ingestion_qualification_rows', self.gates)
+        self.assertFalse(prepared.receipt['training_authorized'])
+
+    def test_qualification_batch_denies_empty_large_duplicate_unknown_and_outside_scope_before_render(self):
+        prepared, declaration = self.qualification_prepared()
+        allowed = set(declaration['witness_row_ids']) | set(declaration['gradient_row_ids'])
+        outside = next(rid for rid in prepared._bindings if rid not in allowed)
+        declared = declaration['gradient_row_ids'][0]
+        prepared.renderer = lambda *args: self.fail('rendered undeclared qualification rows')
+        for ids in ([], declaration['witness_row_ids'][:9], [declared, declared], ['unknown-id'], [outside], [True], (declared,)):
+            with self.subTest(ids=ids), self.assertRaisesRegex(ValueError, 'bounded unique declared'):
+                prepared.iter_ids(ids)
+        self.assertEqual(prepared.cached_rows, 0)
+
+    def test_qualification_declaration_must_bind_full_witness_union_and_exact_gradient_batch(self):
+        prepared, declaration = self.qualification_prepared()
+        valid = copy.deepcopy(declaration)
+        def reset():
+            declaration.clear(); declaration.update(copy.deepcopy(valid))
+        def rehash():
+            declaration['declaration_sha256'] = ing.digest({key: value for key, value in declaration.items() if key != 'declaration_sha256'})
+        prepared.renderer = lambda *args: self.fail('render before declared scope validation')
+        mutations = (lambda: declaration.pop('declaration_sha256'),
+                     lambda: declaration['witness_row_ids'].pop(),
+                     lambda: declaration['gradient_row_ids'].pop(),
+                     lambda: declaration['gradient_row_ids'].__setitem__(0, 'unknown-id'),
+                     lambda: declaration['gradient_row_ids'].__setitem__(0, declaration['gradient_row_ids'][1]))
+        for index, mutate in enumerate(mutations):
+            reset(); mutate()
+            if index: rehash()
+            with self.subTest(mutation=index), self.assertRaises(ValueError):
+                prepared.iter_ids([valid['witness_row_ids'][0]])
+        reset()
+        def missing(stage, refs): return self.admit(stage, refs)
+        prepared.outer_admission = missing
+        with self.assertRaisesRegex(ValueError, 'qualification row declaration'):
+            prepared.iter_ids([valid['witness_row_ids'][0]])
+        self.assertEqual(prepared.cached_rows, 0)
+
+    def test_full_shaped_qualification_declaration_binds_scope_request_and_adam_witnesses(self):
+        prepared, declaration = self.qualification_prepared()
+        declaration['gradient_row_ids'] = declaration['witness_row_ids'][:8]
+        declaration.update(scope_sha256='b' * 64, request_sha256='a' * 64,
+                           adam_batches=[declaration['witness_row_ids'][:8], declaration['witness_row_ids'][8:16]])
+        def rehash():
+            declaration['declaration_sha256'] = ing.digest({key: value for key, value in declaration.items() if key != 'declaration_sha256'})
+        rehash()
+        self.assertEqual(len(prepared.iter_ids(declaration['gradient_row_ids'])), 8)
+        for field in ('scope_sha256', 'request_sha256'):
+            old = declaration[field]
+            declaration[field] = '0' * 64; rehash()
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, 'request/scope/Adam declaration'):
+                prepared.iter_ids(declaration['gradient_row_ids'])
+            declaration[field] = old
+        declaration['adam_batches'][0][0] = 'unknown-id'; rehash()
+        with self.assertRaisesRegex(ValueError, 'request/scope/Adam declaration'):
+            prepared.iter_ids(declaration['gradient_row_ids'])
+
+    def test_qualification_ids_forged_native_row_flags_do_not_supply_opaque_permit(self):
+        prepared, declaration = self.qualification_prepared()
+        def forged(stage, refs):
+            value = self.admit(stage, refs)
+            value.update(mode='registered_scope', approved=True, training_authorized=True,
+                         qualification_rows=copy.deepcopy(declaration))
+            return value
+        prepared.outer_admission = forged
+        prepared.renderer = lambda *args: self.fail('native rendering before opaque permit')
+        with self.assertRaisesRegex(ValueError, 'opaque outer stage capability'):
+            prepared.iter_ids(declaration['gradient_row_ids'])
+        self.assertEqual(prepared.cached_rows, 0)
+
+    def test_qualification_ids_reject_content_drift_without_retaining_partial_batch(self):
+        prepared, declaration = self.qualification_prepared()
+        def changed(tokenizer, row):
+            item = fake_render(tokenizer, row); item['prompt_ids'][0] += 1; return item
+        prepared.renderer = changed
+        with self.assertRaisesRegex(ValueError, 'qualification row rendering changed'):
+            prepared.iter_ids(declaration['gradient_row_ids'])
+        self.assertEqual(prepared.cached_rows, 0)
+        self.assertIsNone(prepared._cache_boundary)
+        self.assertIsNone(prepared._cache_qualification_key)
+
     def test_unapproved_scope_denied_before_path_io_or_framework(self):
         before = set(sys.modules) & {'torch', 'numpy', 'transformers', 'safetensors'}
         class PathTrap:

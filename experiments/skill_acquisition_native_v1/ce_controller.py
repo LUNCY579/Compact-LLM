@@ -12,6 +12,7 @@ import hashlib
 import json
 import math
 import re
+import sys
 import uuid
 
 SCHEMA = 'CE8-CONTROLLER-REQUEST-1'
@@ -57,6 +58,14 @@ def canonical(value):
 
 
 def digest(value): return hashlib.sha256(canonical(value)).hexdigest()
+
+
+def require_preparation_cuda_uninitialized():
+    """Safe initialization query only; never import Torch or start CUDA here."""
+    framework = sys.modules.get('torch')
+    if framework is not None:
+        require(framework.cuda.is_initialized() is False,
+                'preparation initialized CUDA before the sole backend configuration owner')
 
 
 def checkpoint_boundaries(execution):
@@ -138,12 +147,35 @@ _PERMIT_SEAL = object()
 
 class NativeStagePermit:
     """Opaque permit for a scoped metadata/source/tokenizer stage, not model work."""
-    __slots__ = ('_stage', '_refs', '_request', '_scope')
-    def __init__(self, stage, refs, request_hash, scope_hash, *, seal):
+    __slots__ = ('_stage', '_refs', '_request', '_scope', '_qualification_rows')
+    def __init__(self, stage, refs, request_hash, scope_hash, *, seal, qualification_rows=None):
         require(seal is _PERMIT_SEAL, 'permits are issued only by the bound outer adapter')
         self._stage, self._refs, self._request, self._scope = stage, digest(refs), request_hash, scope_hash
+        self._qualification_rows = copy.deepcopy(qualification_rows)
     def matches(self, stage, refs, request_hash, scope_hash):
         return (stage, digest(refs), request_hash, scope_hash) == (self._stage, self._refs, self._request, self._scope)
+    @property
+    def qualification_rows(self):
+        require(self._stage == 'ingestion_qualification_rows' and type(self._qualification_rows) is dict,
+                'permit has no qualification row declaration')
+        return copy.deepcopy(self._qualification_rows)
+
+
+def qualification_row_declaration(context):
+    """Pure interpretation of frozen scope, never an execution grant."""
+    require(type(context) is dict and context.get('phase') == 'qualification', 'qualification-only row scope')
+    execution = context.get('bindings', {}).get('scope', {}).get('qualifier_execution')
+    require(type(execution) is dict, 'explicit frozen qualification execution rows required')
+    witnesses, gradient, batches = (execution.get(key) for key in ('all_witness_ids', 'gradient_batch_ids', 'adam_batches'))
+    valid_ids = lambda value: type(value) is list and all(type(rid) is str and rid for rid in value) and len(set(value)) == len(value)
+    require(valid_ids(witnesses) and len(witnesses) == 90 and valid_ids(gradient) and len(gradient) == 8
+            and set(gradient) <= set(witnesses) and type(batches) is list and 2 <= len(batches) <= 8
+            and all(valid_ids(batch) and len(batch) == 8 and set(batch) <= set(witnesses) for batch in batches),
+            'exact all-witness/gradient/Adam row declarations')
+    declaration = {'schema': 'CE8-QUALIFICATION-ROW-DECLARATION-1', 'scope_sha256': context.get('scope_sha256'),
+                   'request_sha256': context.get('request_sha256'), 'witness_row_ids': copy.deepcopy(witnesses),
+                   'gradient_row_ids': copy.deepcopy(gradient), 'adam_batches': copy.deepcopy(batches)}
+    return dict(declaration, declaration_sha256=digest(declaration))
 
 
 class OuterAdmission:
@@ -159,7 +191,8 @@ class OuterAdmission:
                 'opaque scope capability required, not JSON flags')
         require(callable(reserve) and callable(verify_authority), 'bound reservation/authority services required')
         require(type(context) is dict and context.get('mode') in ('synthetic_fixture', 'registered_scope'), 'outer mode')
-        self.request, self.context, self.authority = copy.deepcopy(request), copy.deepcopy(context), authority
+        from .ce_native_authority import context_preimage
+        self.request, self.context, self.authority = copy.deepcopy(request), copy.deepcopy(context_preimage(context)), authority
         self.reserve, self.verify_authority, self.bootstrap = reserve, verify_authority, bootstrap
         self._verify_issuer()
 
@@ -194,10 +227,11 @@ class OuterAdmission:
     def native_permit(self, stage, refmap):
         self._verify_scope(stage, refmap)
         require(self.context['mode'] == 'registered_scope' and stage in
-                ('qualification_metadata', 'ingestion_sources', 'ingestion_tokenizer', 'ingestion_boundary'),
+                ('qualification_metadata', 'ingestion_sources', 'ingestion_tokenizer', 'ingestion_boundary', 'ingestion_qualification_rows'),
                 'outer permit cannot authorize model work')
+        rows = qualification_row_declaration(self.context) if stage == 'ingestion_qualification_rows' else None
         return NativeStagePermit(stage, refmap, digest(request_preimage(self.request)),
-                                 self.request['scope_ref']['sha256'], seal=_PERMIT_SEAL)
+                                 self.request['scope_ref']['sha256'], seal=_PERMIT_SEAL, qualification_rows=rows)
 
 
 def build_backend_command(request, context, request_ref, *, resume=False, reason=None, synthetic_fixture=False):
@@ -287,13 +321,17 @@ def run_controller(request, services, backend_factory=None, *, synthetic_fixture
         verified = _stage(observer, 'ingestion_sources', lambda: services.verify_sources(request, context, outer), request_hash)
         proof = _stage(observer, 'fresh_worker_boot', lambda: services.verify_worker(context), request_hash)
         require(type(proof) is dict and proof.get('fresh_process') is True and proof.get('boot_verified') is True
-                and _hex(proof.get('boot_identity_sha256')), 'fresh worker and verified boot evidence required')
+                and _hex(proof.get('boot_identity_sha256')) and _hex(proof.get('worker_identity_sha256')),
+                'fresh worker and verified boot/process evidence required')
         def admitted_work():
             nonlocal backend, journal
             work_error = None
             try:
-                _stage(observer, 'framework_setup', lambda: services.configure_runtime(context), request_hash)
+                require_preparation_cuda_uninitialized()
+                _stage(observer, 'framework_setup', lambda: services.configure_preparation(context), request_hash)
+                require_preparation_cuda_uninitialized()
                 prepared = _stage(observer, 'ingestion_tokenizer', lambda: services.prepare_rows(verified, context, outer), request_hash)
+                require_preparation_cuda_uninitialized()
                 services.guard(context, 'before_model')
                 backend = backend_factory(context)  # pure factory; qualified model work is a later stage
                 if request['phase'] == 'qualification':
@@ -304,6 +342,9 @@ def run_controller(request, services, backend_factory=None, *, synthetic_fixture
                                     and type(stage.get('caps')) is dict
                                     for index, (stage, name) in enumerate(zip(stages, QUALIFICATION_STAGES))),
                             'bounded qualification stage plan')
+                    journal = _stage(observer, 'qualification_accounting',
+                        lambda: backend.begin_qualification(context, prepared, proof, observer, outer), request_hash)
+                    require(journal is not None, 'qualification requires retained accounting before model work')
                     artifacts = {'ingestion_tokenizer': prepared.receipt}
                     for name in QUALIFICATION_STAGES[1:]:
                         services.guard(context, name)

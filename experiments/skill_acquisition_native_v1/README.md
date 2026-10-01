@@ -247,6 +247,50 @@ work. These bounds omit additional work and cannot supply measured upper prices.
 When admission expires after prepaid allocation cleanup, held references are
 still released and the admission failure remains the primary error.
 
+## Qualification executor and raw readback
+
+`ce_native_qualification.py` contains delayed stage bodies for the common warm
+runtime, all 90 maximum-length witnesses, cached versus bulk likelihood,
+independent equal-row gradients, declared Adam/clipping batches and saved delta
+roundtrip. The independent gradient path disables decoder/head checkpointing;
+the candidate uses the registered checkpointed path. Both replay the same RNG
+and module modes on the separately declared eight rows. Raw F32 vectors, token
+arrays, modes, RNG and operation-order records support later recomputation.
+CUDA spans synchronize after the backend's sole runtime configuration.
+
+The controller passes verified worker identity, observer and outer admission to
+`begin_qualification` before model loading. Preparation must leave CUDA
+uninitialized. Live permit/service objects are excluded from JSON evidence
+copies. `PreparedRows.iter_ids` revalidates separately authorized qualification
+rows, retains at most eight token rows and preserves training boundary order.
+
+`ce_qualification_artifacts.py` independently recomputes masks, EOS positions,
+likelihood errors and streamed F32 gradient L2/coordinate errors. It requires
+all 90 witnesses for masks and likelihood, and eight exact rows for gradients.
+Its explicit analytical budgets cover raw IO/hash, parsing, arithmetic and
+additional hashes. Results establish numeric/artifact consistency and explicitly
+leave actual execution verification false.
+
+`ce_qualification_accounting.py` maintains a separate hash-chained qualification
+ledger. Explicit qualification Adam batches have their own C/U history. Failed
+and pending reservations survive replay; verified CE causal proofs govern
+commits. Stage, worker, source, recipe and artifact bindings are retained, with
+owned metadata, clipping-order readback and lifetime cleanup accounting.
+
+The combined source suite passed **105/105 controls** without ML framework
+imports, models, optimizer execution, skips or errors. Source remained unchanged.
+See `evidence/CE8_QUALIFICATION_SOURCE_CHECKS_20261001.json`. These include real
+temporary-file readback and durable metadata fixtures; they are not native
+numerical or process qualification.
+
+All factory/issuer/adapter/verifier registries remain empty. Native accounting
+sealing is explicitly **UNSUPPORTED_UNMEASURED**: durable outer setup admission,
+complete constructor/replay/interoperation/terminal wall coverage, platform
+directory publication and actual execution verification are still required.
+Fresh OS checkpoint workers and resource measurement adapters are unimplemented.
+The unapproved registration proposal requires a new source freeze and concrete
+qualification accounting/execution artifacts before any native dispatch.
+
 The qualification producer remains **DRAFT_UNQUALIFIED**. Its native verifier
 registry is empty; flipping an activation flag or providing stage booleans,
 unrelated blob hashes or a caller-supplied verifier cannot produce native PASS.
