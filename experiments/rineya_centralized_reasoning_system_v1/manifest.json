@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_kind": "descriptive_design_metadata_not_a_launcher",
+  "track_id": "CRS-001",
+  "title": "Rineya Centralized Reasoning System",
+  "created_on": "2026-10-01",
+  "repository": "LUNCY579/ChatBubble",
+  "branch": "research/rineya-centralized-reasoning-system-v1",
+  "base_ref": "research/post-training-mimo-centralized-v1",
+  "base_commit": "19551ddebc87c93161c303865ce6d0f130de0093",
+  "base_tree": "d2ed2805e79d226639bb75d951e79d15a944bf25",
+  "status": "DESIGN_RECORDED_EXECUTION_NOT_AUTHORIZED",
+  "delivery_scope": "documentation_and_descriptive_manifest_only",
+  "charter_path": "RINEYA_CENTRALIZED_REASONING_SYSTEM.md",
+  "package_path": "experiments/rineya_centralized_reasoning_system_v1",
+  "owner_decision": {
+    "id": "CRS-ADR-001",
+    "complementary_to_existing_discoveries": true,
+    "replaces_existing_research": false,
+    "automatic_expiry": null,
+    "casual_obsolescence_allowed": false,
+    "retirement_requires_explicit_owner_approval": true,
+    "archival_requires_explicit_owner_approval": true,
+    "preserve_negative_results_and_history": true,
+    "branch_deletion_authorized": false,
+    "force_push_authorized": false,
+    "github_branch_protection_configured_by_this_change": false
+  },
+  "proposed_components": [
+    "immutable_evidence_store",
+    "bounded_instance_working_state",
+    "typed_operation_executor",
+    "bounded_controller",
+    "versioned_verified_procedure_library"
+  ],
+  "scoreboards": ["model_only", "tool_assisted_system", "distilled_model"],
+  "proposed_pilot": {
+    "question": "Does reusable procedure memory improve long-context state tracking beyond matched retrieval and primitive tools?",
+    "primary_contrast": "C_frozen_procedure_library_minus_B_no_persisted_procedures",
+    "primary_unit": "answerable_parent_with_paired_length_versions",
+    "reader_development_cases": 16,
+    "development_parents": 64,
+    "evaluation_parents": 128,
+    "source_token_targets": [4096, 16384],
+    "active_call_window_tokens_proposed": [2048, 4096],
+    "dataset_created": false,
+    "protocol_finalized": false,
+    "procedure_snapshot_sha256": null,
+    "model_binding": null,
+    "qualified_resource_profile": null,
+    "frozen_call_token_time_budgets": null,
+    "evaluation_memory_writes_allowed": false
+  },
+  "execution": {
+    "runtime_implemented": false,
+    "cpu_runtime_tests_run": false,
+    "native_qualified": false,
+    "native_launch_authorized": false,
+    "training_authorized": false,
+    "paid_services_authorized": false,
+    "model_upload_authorized": false,
+    "check_open": false,
+    "final_open": false,
+    "model_loads": 0,
+    "inference_calls": 0,
+    "training_steps": 0
+  },
+  "claims": {
+    "system_gain_established": false,
+    "native_model_gain_established": false,
+    "distillation_gain_established": false,
+    "preservation_established": false,
+    "hardware_fit_established": false,
+    "procedure_discovery_established": false
+  },
+  "paper_references": [
+    "arXiv:2504.01538v2",
+    "arXiv:2512.24601v3",
+    "arXiv:2507.02259v2"
+  ],
+  "benchmark_candidates": ["RULER", "BABILong", "OOLONG", "LongBench v2"],
+  "next_milestone": "separately_scoped_cpu_reference_harness_before_any_native_reader_screen"
+}
