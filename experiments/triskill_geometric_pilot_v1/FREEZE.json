@@ -1,0 +1,46 @@
+{
+  "experiment": "TRISKILL-GEO-001",
+  "implementation_commit": "b7bd8da548906ce5d6384df8f657c5b7530e8c3a",
+  "source_commit": "01f47694988a85bdedab7831d1652f0b9bf07e9f",
+  "files": {
+    "geometry.py": "45fb2dc9fbc434411d007f0b3a30be8ad75bec0d5839661b90e357524dd5c132",
+    "worker.py": "d88affe9516512c30ce3a29081ed16e9b46b036dcb8c8f82eb3fe4c8ae94d0c8",
+    "benchmark.py": "6fc9485b7d3bc02744aedbd9b39ed20d7057a427549799a4769cb06a293a9363",
+    "test_geometry.py": "d65103b0b2e87f2bf2e1a5cc71ad3f62984031725ee17a598c046fc462c6a3df",
+    "test_worker.py": "7c2ce8ffc92a21bf134aade59f33c97ff1a272412f0b50c000789714af4d3f60",
+    "test_benchmark.py": "8acf62f739fdaac2b0580265fcec2c8ef0f32f2ecd78f9e396ef8480ebb7aec0",
+    "PREREG.md": "7d3821ceba47919395ecc7fd22e4293b6576021766e55b21b7dcff7f5d44567c",
+    "BENCHMARK_MATRIX.md": "c1a22674df5f3d0e2fec02b7db75965963a80ab04d3060ad32efac16869f4d16",
+    "geometry.npz": "52563d5ba4b230f01053cef0c2330645861e20de6ce66be71336ced235c78f7c",
+    "geometry.json": "c1483105104e6bfe38320d9696a9364aa958b9d8b3a082e4fdd0f04090c8fc4a",
+    "screen.json": "d2fbd00d91e110fd39bc1024ea57f3b8001686f0e7abed54b6263f02221be862",
+    "development.json": "cb5f263f1cdc2e4b774a3a0ed7f0e64b57b61cfcac93d15728c731758762659d",
+    "conjunction_development.json": "5b4571213012ba61f5a3c1e29798aa2ced71d43d63de8a2420ac676c7ae74acc",
+    "CPU_TESTS.log": "c05ff5dbcd91ad321ef786080ed0e4312661cf4454f28a688d3b53c951170b1c",
+    "CPU_VALIDATION.json": "e697c71a72a65498a54295b274bc45e22ec0329932eb18b2dd9415f2d7a977f9"
+  },
+  "source_sidecars": {
+    "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+  },
+  "runtime_packages": {
+    "numpy": "2.4.6",
+    "tokenizers": "0.22.2",
+    "psutil": "7.2.2",
+    "torch": "2.6.0+cu124",
+    "transformers": "5.14.1"
+  },
+  "native_budget": {
+    "screen_generations_max": 64,
+    "model_forwards_max": 1600,
+    "token_positions_including_padding_max": 20000,
+    "hard_wall_seconds_max": 600
+  },
+  "native_execution_status": "BLOCKED",
+  "quality_claim": false,
+  "effective_task_model_settings_independently_verified": false
+}

@@ -1,0 +1,242 @@
+[
+  {
+    "row_id": "development-T-ledger_replay",
+    "split": "development",
+    "family": "state_tracking",
+    "task_kind": "transition_parent",
+    "system": "Apply one event to the supplied account balances. If status is not posted, leave all balances unchanged. add: add amount to account. scale: multiply account by amount. transfer: subtract amount from account and add it to other, simultaneously. Return only the complete resulting balances as a JSON object.",
+    "user": "{\"before\":{\"A\":14,\"B\":-27,\"C\":8,\"D\":31},\"event\":{\"account\":\"C\",\"amount\":-9,\"kind\":\"transfer\",\"other\":\"A\",\"status\":\"posted\",\"tick\":41}}",
+    "expected": "{\"A\":5,\"B\":-27,\"C\":17,\"D\":31}",
+    "output_kind": "json_object",
+    "world_signature": "4cf55004d44275bde8e8dcca19edb467b8753a280c244f46034bd6ee9c3107a3",
+    "state_signature": "af7d7699c439b4c87b5c9c96c3f057be7b8b5622a56548e5ba48ca61977b6863",
+    "rule_signature": "fe30706eea77b68eae4f0907a1f6539972dd78a3aea2c7ba9bf4b29df267f9cc",
+    "metadata": {
+      "parent": "T",
+      "native_contract": true,
+      "transition_family": "ledger_replay",
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  },
+  {
+    "row_id": "development-T-register_machine",
+    "split": "development",
+    "family": "state_tracking",
+    "task_kind": "transition_parent",
+    "system": "Apply one instruction to the supplied registers. Registers are integers modulo 97. swap exchanges register and other simultaneously. add adds value to register. mix adds (2 times other plus value) to register. conditional adds value if other is greater than threshold, otherwise subtracts value. Reduce updated numeric registers modulo 97; preserve other registers. Return only the complete resulting registers as a JSON object.",
+    "user": "{\"before\":{\"X\":19,\"Y\":62,\"Z\":8},\"event\":{\"kind\":\"mix\",\"other\":\"X\",\"register\":\"Y\",\"value\":-7}}",
+    "expected": "{\"X\":19,\"Y\":93,\"Z\":8}",
+    "output_kind": "json_object",
+    "world_signature": "cc95a11eeacb04d618feabb1f99cd20f709cd31958988b2e65d7d2fabcc05628",
+    "state_signature": "e166c60694213775621c6d218dbd23681243304bb0420a165777181323b2202f",
+    "rule_signature": "58b3baaec34740328dfed7a27e58a51b5aef5220128d57cad780e9d89a848b4e",
+    "metadata": {
+      "parent": "T",
+      "native_contract": true,
+      "transition_family": "register_machine",
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  },
+  {
+    "row_id": "development-H-answerable",
+    "split": "development",
+    "family": "answerability_abstention",
+    "task_kind": "answerability_parent",
+    "system": "Use only the supplied complete notes. Return exactly one integer if the requested value is established. If it cannot be determined, return exactly UNKNOWN. Do not infer unstated facts.",
+    "user": "Complete notes for Birch: The Birch seal has code 6. The seal is stored beside the crate. What is the Birch seal's code?",
+    "expected": "6",
+    "output_kind": "integer_or_unknown",
+    "world_signature": "2e35df9f51f659f1564bb2edfd587ad5d205889123bd8b44c836496d192de440",
+    "state_signature": "e7d8379525cf7cccc28d628c4e076f56047f1fa0998ae9e99c488433cba07d6b",
+    "rule_signature": "488d41d4853f9d5796bda910c7c41de4e020e42f2a65cd260d4b4b98302c6bcd",
+    "metadata": {
+      "parent": "H",
+      "native_contract": false,
+      "format_modified_diagnostic": true,
+      "answerable": true,
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  },
+  {
+    "row_id": "development-H-missing",
+    "split": "development",
+    "family": "answerability_abstention",
+    "task_kind": "answerability_parent",
+    "system": "Use only the supplied complete notes. Return exactly one integer if the requested value is established. If it cannot be determined, return exactly UNKNOWN. Do not infer unstated facts.",
+    "user": "Complete notes for Cedar: The Cedar crate has code 28. The seal is stored beside the crate. What is the Cedar seal's code?",
+    "expected": "UNKNOWN",
+    "output_kind": "integer_or_unknown",
+    "world_signature": "ff26d3982cb983eb116c170c3f3da5e116bf4e17fa8552ec83eeb6dd39c9c075",
+    "state_signature": "a14e7cdcf9498a086e081c0fd142ced8be0587c316dbf383cbe3e73c34768608",
+    "rule_signature": "770ad8ad867db5a7081ba16015a651d230cc2844785041a602d41cbdc9905609",
+    "metadata": {
+      "parent": "H",
+      "native_contract": false,
+      "format_modified_diagnostic": true,
+      "answerable": false,
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  },
+  {
+    "row_id": "development-C-missing_erased",
+    "split": "development",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Return only the common final integer, or UNKNOWN if final values differ.",
+    "user": "Complete records for amber:\nRecord A: the initial amber register value is not recorded.\nRule definitions:\nAMBER_1(x) = (3 * x + (1)) modulo 97.\nAMBER_2(x) = (0 * x + (4)) modulo 97.\nAMBER_3(x) = (2 * x + (-2)) modulo 97.\nInstruction log: apply AMBER_1, then AMBER_2, then AMBER_3 to the amber register.\nRecord B: a separate marker has value 23; it supplies no initial amber value.\nWhat is the final amber register value?",
+    "expected": "6",
+    "output_kind": "integer_or_unknown",
+    "world_signature": "a59215c8e969d7f4d9063c484d453c61887b4ec30fff221a3eac59f0b89b52b0",
+    "state_signature": "9909eb85fb2f0b86758d05988f6824646950b77d362cdd4722b7a892d333ae36",
+    "rule_signature": "d71261cd1bae153be957f73ee76c545e54a6b0d3b2ddb272ef4845ea70418433",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": true,
+      "initial_conflict": false,
+      "reset_present": true,
+      "outcome_count": 1,
+      "rules": [
+        [
+          3,
+          1
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          2,
+          -2
+        ]
+      ],
+      "initial": null,
+      "answerable": true,
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  },
+  {
+    "row_id": "development-C-conflict_erased",
+    "split": "development",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Return only the common final integer, or UNKNOWN if final values differ.",
+    "user": "Complete records for brass:\nRecord A: the initial brass register value is 1.\nRule definitions:\nBRASS_1(x) = (2 * x + (-3)) modulo 97.\nBRASS_2(x) = (0 * x + (5)) modulo 97.\nBRASS_3(x) = (-1 * x + (2)) modulo 97.\nInstruction log: apply BRASS_1, then BRASS_2, then BRASS_3 to the brass register.\nRecord B: the initial brass register value is 4.\nWhat is the final brass register value?",
+    "expected": "94",
+    "output_kind": "integer_or_unknown",
+    "world_signature": "05c3e3e9a453689048128090a123d327bbfda562669d0af4bf84fd91282f9f2a",
+    "state_signature": "7b23a844ed7d1d7add9d27dc2613cbdd6c87b7d6d965258c2774f76811b8599a",
+    "rule_signature": "b5b6c5af1bdc651e94af071d6a3e7c70fb9470ed49fa0485b7e761a860eb7ecc",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": false,
+      "initial_conflict": true,
+      "reset_present": true,
+      "outcome_count": 1,
+      "rules": [
+        [
+          2,
+          -3
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          -1,
+          2
+        ]
+      ],
+      "initial": [
+        1,
+        4
+      ],
+      "answerable": true,
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  },
+  {
+    "row_id": "development-C-missing_survives",
+    "split": "development",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Return only the common final integer, or UNKNOWN if final values differ.",
+    "user": "Complete records for cobalt:\nRecord A: the initial cobalt register value is not recorded.\nRule definitions:\nCOBALT_1(x) = (3 * x + (2)) modulo 97.\nCOBALT_2(x) = (1 * x + (-1)) modulo 97.\nInstruction log: apply COBALT_1, then COBALT_2 to the cobalt register.\nRecord B: a separate marker has value 23; it supplies no initial cobalt value.\nWhat is the final cobalt register value?",
+    "expected": "UNKNOWN",
+    "output_kind": "integer_or_unknown",
+    "world_signature": "5a0907bd4e0ab063faa93a537b1f40022096f6545a421e86b145df4aa56e5260",
+    "state_signature": "672278346a4b7909fcb49c1d687fc6b23e7edf05858840a2db010f14afb5b3d2",
+    "rule_signature": "0261735ed5406990dbef9c8563b5f62deafdcd783e6a22d1f02c889a2bfb9594",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": true,
+      "initial_conflict": false,
+      "reset_present": false,
+      "outcome_count": 97,
+      "rules": [
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          -1
+        ]
+      ],
+      "initial": null,
+      "answerable": false,
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  },
+  {
+    "row_id": "development-C-conflict_survives",
+    "split": "development",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Return only the common final integer, or UNKNOWN if final values differ.",
+    "user": "Complete records for dusk:\nRecord A: the initial dusk register value is 96.\nRule definitions:\nDUSK_1(x) = (1 * x + (6)) modulo 97.\nDUSK_2(x) = (2 * x + (-4)) modulo 97.\nInstruction log: apply DUSK_1, then DUSK_2 to the dusk register.\nRecord B: the initial dusk register value is 3.\nWhat is the final dusk register value?",
+    "expected": "UNKNOWN",
+    "output_kind": "integer_or_unknown",
+    "world_signature": "dfa42ce890de4e8c5203f1e58b68b5bab5a5f29c3963e034a90a1df004d04de2",
+    "state_signature": "d42ed430469d4a47b24f0ed302bee2fdde6f1b54b30877260108c2d862f07b12",
+    "rule_signature": "0a62b125769f07c380063c3904f0f3fbcd6d58d5006d4b2b7af973309ffa1c4d",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": false,
+      "initial_conflict": true,
+      "reset_present": false,
+      "outcome_count": 2,
+      "rules": [
+        [
+          1,
+          6
+        ],
+        [
+          2,
+          -4
+        ]
+      ],
+      "initial": [
+        96,
+        3
+      ],
+      "answerable": false,
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  }
+]

@@ -1,0 +1,667 @@
+{
+  "tests": 22,
+  "failures": 0,
+  "errors": 0,
+  "elapsed_seconds": 0.11947790000067471,
+  "python": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+  "model_loads": 0,
+  "model_forwards": 0,
+  "training_examples": 0,
+  "membership": {
+    "local_disjoint": true,
+    "checks": {
+      "row_id": true,
+      "world_signature": true,
+      "state_signature": true,
+      "rule_signature": true
+    },
+    "legacy_exclusion_verified": false,
+    "protected_confirmation": false,
+    "development_n": 8,
+    "screen_n": 8
+  },
+  "max_input_tokens_including_prompt_control": 239,
+  "max_reference_output_tokens": 21,
+  "token_counts": [
+    {
+      "arm": "BASE",
+      "row_id": "development-T-ledger_replay",
+      "input_tokens": 125
+    },
+    {
+      "arm": "BASE",
+      "row_id": "development-T-register_machine",
+      "input_tokens": 132
+    },
+    {
+      "arm": "BASE",
+      "row_id": "development-H-answerable",
+      "input_tokens": 81
+    },
+    {
+      "arm": "BASE",
+      "row_id": "development-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "BASE",
+      "row_id": "development-C-missing_erased",
+      "input_tokens": 222
+    },
+    {
+      "arm": "BASE",
+      "row_id": "development-C-conflict_erased",
+      "input_tokens": 215
+    },
+    {
+      "arm": "BASE",
+      "row_id": "development-C-missing_survives",
+      "input_tokens": 205
+    },
+    {
+      "arm": "BASE",
+      "row_id": "development-C-conflict_survives",
+      "input_tokens": 194
+    },
+    {
+      "arm": "BASE",
+      "row_id": "screen-T-ledger_replay",
+      "input_tokens": 127
+    },
+    {
+      "arm": "BASE",
+      "row_id": "screen-T-register_machine",
+      "input_tokens": 139
+    },
+    {
+      "arm": "BASE",
+      "row_id": "screen-H-answerable",
+      "input_tokens": 84
+    },
+    {
+      "arm": "BASE",
+      "row_id": "screen-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "BASE",
+      "row_id": "screen-C-missing_erased",
+      "input_tokens": 219
+    },
+    {
+      "arm": "BASE",
+      "row_id": "screen-C-known_chain",
+      "input_tokens": 222
+    },
+    {
+      "arm": "BASE",
+      "row_id": "screen-C-missing_survives",
+      "input_tokens": 205
+    },
+    {
+      "arm": "BASE",
+      "row_id": "screen-C-conflict_survives",
+      "input_tokens": 227
+    },
+    {
+      "arm": "T",
+      "row_id": "development-T-ledger_replay",
+      "input_tokens": 125
+    },
+    {
+      "arm": "T",
+      "row_id": "development-T-register_machine",
+      "input_tokens": 132
+    },
+    {
+      "arm": "T",
+      "row_id": "development-H-answerable",
+      "input_tokens": 81
+    },
+    {
+      "arm": "T",
+      "row_id": "development-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "T",
+      "row_id": "development-C-missing_erased",
+      "input_tokens": 222
+    },
+    {
+      "arm": "T",
+      "row_id": "development-C-conflict_erased",
+      "input_tokens": 215
+    },
+    {
+      "arm": "T",
+      "row_id": "development-C-missing_survives",
+      "input_tokens": 205
+    },
+    {
+      "arm": "T",
+      "row_id": "development-C-conflict_survives",
+      "input_tokens": 194
+    },
+    {
+      "arm": "T",
+      "row_id": "screen-T-ledger_replay",
+      "input_tokens": 127
+    },
+    {
+      "arm": "T",
+      "row_id": "screen-T-register_machine",
+      "input_tokens": 139
+    },
+    {
+      "arm": "T",
+      "row_id": "screen-H-answerable",
+      "input_tokens": 84
+    },
+    {
+      "arm": "T",
+      "row_id": "screen-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "T",
+      "row_id": "screen-C-missing_erased",
+      "input_tokens": 219
+    },
+    {
+      "arm": "T",
+      "row_id": "screen-C-known_chain",
+      "input_tokens": 222
+    },
+    {
+      "arm": "T",
+      "row_id": "screen-C-missing_survives",
+      "input_tokens": 205
+    },
+    {
+      "arm": "T",
+      "row_id": "screen-C-conflict_survives",
+      "input_tokens": 227
+    },
+    {
+      "arm": "H",
+      "row_id": "development-T-ledger_replay",
+      "input_tokens": 125
+    },
+    {
+      "arm": "H",
+      "row_id": "development-T-register_machine",
+      "input_tokens": 132
+    },
+    {
+      "arm": "H",
+      "row_id": "development-H-answerable",
+      "input_tokens": 81
+    },
+    {
+      "arm": "H",
+      "row_id": "development-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "H",
+      "row_id": "development-C-missing_erased",
+      "input_tokens": 222
+    },
+    {
+      "arm": "H",
+      "row_id": "development-C-conflict_erased",
+      "input_tokens": 215
+    },
+    {
+      "arm": "H",
+      "row_id": "development-C-missing_survives",
+      "input_tokens": 205
+    },
+    {
+      "arm": "H",
+      "row_id": "development-C-conflict_survives",
+      "input_tokens": 194
+    },
+    {
+      "arm": "H",
+      "row_id": "screen-T-ledger_replay",
+      "input_tokens": 127
+    },
+    {
+      "arm": "H",
+      "row_id": "screen-T-register_machine",
+      "input_tokens": 139
+    },
+    {
+      "arm": "H",
+      "row_id": "screen-H-answerable",
+      "input_tokens": 84
+    },
+    {
+      "arm": "H",
+      "row_id": "screen-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "H",
+      "row_id": "screen-C-missing_erased",
+      "input_tokens": 219
+    },
+    {
+      "arm": "H",
+      "row_id": "screen-C-known_chain",
+      "input_tokens": 222
+    },
+    {
+      "arm": "H",
+      "row_id": "screen-C-missing_survives",
+      "input_tokens": 205
+    },
+    {
+      "arm": "H",
+      "row_id": "screen-C-conflict_survives",
+      "input_tokens": 227
+    },
+    {
+      "arm": "TH",
+      "row_id": "development-T-ledger_replay",
+      "input_tokens": 125
+    },
+    {
+      "arm": "TH",
+      "row_id": "development-T-register_machine",
+      "input_tokens": 132
+    },
+    {
+      "arm": "TH",
+      "row_id": "development-H-answerable",
+      "input_tokens": 81
+    },
+    {
+      "arm": "TH",
+      "row_id": "development-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "TH",
+      "row_id": "development-C-missing_erased",
+      "input_tokens": 222
+    },
+    {
+      "arm": "TH",
+      "row_id": "development-C-conflict_erased",
+      "input_tokens": 215
+    },
+    {
+      "arm": "TH",
+      "row_id": "development-C-missing_survives",
+      "input_tokens": 205
+    },
+    {
+      "arm": "TH",
+      "row_id": "development-C-conflict_survives",
+      "input_tokens": 194
+    },
+    {
+      "arm": "TH",
+      "row_id": "screen-T-ledger_replay",
+      "input_tokens": 127
+    },
+    {
+      "arm": "TH",
+      "row_id": "screen-T-register_machine",
+      "input_tokens": 139
+    },
+    {
+      "arm": "TH",
+      "row_id": "screen-H-answerable",
+      "input_tokens": 84
+    },
+    {
+      "arm": "TH",
+      "row_id": "screen-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "TH",
+      "row_id": "screen-C-missing_erased",
+      "input_tokens": 219
+    },
+    {
+      "arm": "TH",
+      "row_id": "screen-C-known_chain",
+      "input_tokens": 222
+    },
+    {
+      "arm": "TH",
+      "row_id": "screen-C-missing_survives",
+      "input_tokens": 205
+    },
+    {
+      "arm": "TH",
+      "row_id": "screen-C-conflict_survives",
+      "input_tokens": 227
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "development-T-ledger_replay",
+      "input_tokens": 125
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "development-T-register_machine",
+      "input_tokens": 132
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "development-H-answerable",
+      "input_tokens": 81
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "development-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "development-C-missing_erased",
+      "input_tokens": 222
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "development-C-conflict_erased",
+      "input_tokens": 215
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "development-C-missing_survives",
+      "input_tokens": 205
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "development-C-conflict_survives",
+      "input_tokens": 194
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "screen-T-ledger_replay",
+      "input_tokens": 127
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "screen-T-register_machine",
+      "input_tokens": 139
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "screen-H-answerable",
+      "input_tokens": 84
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "screen-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "screen-C-missing_erased",
+      "input_tokens": 219
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "screen-C-known_chain",
+      "input_tokens": 222
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "screen-C-missing_survives",
+      "input_tokens": 205
+    },
+    {
+      "arm": "IDENTITY",
+      "row_id": "screen-C-conflict_survives",
+      "input_tokens": 227
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "development-T-ledger_replay",
+      "input_tokens": 125
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "development-T-register_machine",
+      "input_tokens": 132
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "development-H-answerable",
+      "input_tokens": 81
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "development-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "development-C-missing_erased",
+      "input_tokens": 222
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "development-C-conflict_erased",
+      "input_tokens": 215
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "development-C-missing_survives",
+      "input_tokens": 205
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "development-C-conflict_survives",
+      "input_tokens": 194
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "screen-T-ledger_replay",
+      "input_tokens": 127
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "screen-T-register_machine",
+      "input_tokens": 139
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "screen-H-answerable",
+      "input_tokens": 84
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "screen-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "screen-C-missing_erased",
+      "input_tokens": 219
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "screen-C-known_chain",
+      "input_tokens": 222
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "screen-C-missing_survives",
+      "input_tokens": 205
+    },
+    {
+      "arm": "ROTATION",
+      "row_id": "screen-C-conflict_survives",
+      "input_tokens": 227
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "development-T-ledger_replay",
+      "input_tokens": 125
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "development-T-register_machine",
+      "input_tokens": 132
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "development-H-answerable",
+      "input_tokens": 81
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "development-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "development-C-missing_erased",
+      "input_tokens": 222
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "development-C-conflict_erased",
+      "input_tokens": 215
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "development-C-missing_survives",
+      "input_tokens": 205
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "development-C-conflict_survives",
+      "input_tokens": 194
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "screen-T-ledger_replay",
+      "input_tokens": 127
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "screen-T-register_machine",
+      "input_tokens": 139
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "screen-H-answerable",
+      "input_tokens": 84
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "screen-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "screen-C-missing_erased",
+      "input_tokens": 219
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "screen-C-known_chain",
+      "input_tokens": 222
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "screen-C-missing_survives",
+      "input_tokens": 205
+    },
+    {
+      "arm": "RANDOM",
+      "row_id": "screen-C-conflict_survives",
+      "input_tokens": 227
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "development-T-ledger_replay",
+      "input_tokens": 125
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "development-T-register_machine",
+      "input_tokens": 132
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "development-H-answerable",
+      "input_tokens": 81
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "development-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "development-C-missing_erased",
+      "input_tokens": 234
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "development-C-conflict_erased",
+      "input_tokens": 227
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "development-C-missing_survives",
+      "input_tokens": 217
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "development-C-conflict_survives",
+      "input_tokens": 206
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "screen-T-ledger_replay",
+      "input_tokens": 127
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "screen-T-register_machine",
+      "input_tokens": 139
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "screen-H-answerable",
+      "input_tokens": 84
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "screen-H-missing",
+      "input_tokens": 82
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "screen-C-missing_erased",
+      "input_tokens": 231
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "screen-C-known_chain",
+      "input_tokens": 234
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "screen-C-missing_survives",
+      "input_tokens": 217
+    },
+    {
+      "arm": "PROMPT",
+      "row_id": "screen-C-conflict_survives",
+      "input_tokens": 239
+    }
+  ]
+}
