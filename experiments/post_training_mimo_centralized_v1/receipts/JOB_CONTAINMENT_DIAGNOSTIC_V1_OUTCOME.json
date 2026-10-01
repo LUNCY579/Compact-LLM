@@ -1,0 +1,98 @@
+{
+  "E1_authorized": false,
+  "Torch_imports": 0,
+  "V1_all_13_artifacts_unchanged": true,
+  "actual_controller_member": false,
+  "actual_controller_pid": 62032,
+  "actual_interpreter_created_utc_ns": 1790878989056471100,
+  "at_utc": "2026-10-01T18:35:34.209760+00:00",
+  "cleanup_api_error": "QueryFullProcessImageNameW returned 0/GetLastError31 while exiting; subsequent read-only PID check found both62032 and73968 absent.",
+  "cleanup_status_as_recorded": "BLOCKED_OWNED_CLEANUP",
+  "controller_launcher_pid": 73968,
+  "evidence_files": [
+    {
+      "bytes": 1434,
+      "original_path": "C:\\Users\\clclc\\Documents\\Codex\\2026-10-01\\task\\ChatBubble-mimo-job-containment\\artifacts\\mimo_central\\job_containment_diagnostic_v1_20261001_outer\\BOOT_API.jsonl",
+      "sha256": "e408d5813f84c03a15f41159a494ce7e42e9be1bef7958327bd0fc0f169fa25b",
+      "tracked_path": "experiments/post_training_mimo_centralized_v1/results/job_containment_diagnostic_v1_20261001/outer/BOOT_API.jsonl"
+    },
+    {
+      "bytes": 1009,
+      "original_path": "C:\\Users\\clclc\\Documents\\Codex\\2026-10-01\\task\\ChatBubble-mimo-job-containment\\artifacts\\mimo_central\\job_containment_diagnostic_v1_20261001_outer\\BOOT_READY.json",
+      "sha256": "085e84b70bbb9f9d68e1f1ee9d8d6d3db90dd3bacacc8bdf01edf6b4bdebf31e",
+      "tracked_path": "experiments/post_training_mimo_centralized_v1/results/job_containment_diagnostic_v1_20261001/outer/BOOT_READY.json"
+    },
+    {
+      "bytes": 11373,
+      "original_path": "C:\\Users\\clclc\\Documents\\Codex\\2026-10-01\\task\\ChatBubble-mimo-job-containment\\artifacts\\mimo_central\\job_containment_diagnostic_v1_20261001_outer\\OUTER_API.jsonl",
+      "sha256": "050220845c446acecde9abf0b65e900255a0c9fa4db96fdb7a2f85d4823729f4",
+      "tracked_path": "experiments/post_training_mimo_centralized_v1/results/job_containment_diagnostic_v1_20261001/outer/OUTER_API.jsonl"
+    },
+    {
+      "bytes": 184,
+      "original_path": "C:\\Users\\clclc\\Documents\\Codex\\2026-10-01\\task\\ChatBubble-mimo-job-containment\\artifacts\\mimo_central\\job_containment_diagnostic_v1_20261001_outer\\OUTER_CLEANUP.json",
+      "sha256": "2eb9a1d059abeb3816428baa82c351e424413e519236b243bb92d8ebe801effb",
+      "tracked_path": "experiments/post_training_mimo_centralized_v1/results/job_containment_diagnostic_v1_20261001/outer/OUTER_CLEANUP.json"
+    },
+    {
+      "bytes": 1261,
+      "original_path": "C:\\Users\\clclc\\Documents\\Codex\\2026-10-01\\task\\ChatBubble-mimo-job-containment\\artifacts\\mimo_central\\job_containment_diagnostic_v1_20261001_outer\\OUTER_LAUNCH.json",
+      "sha256": "1d2d60725a1aacccbf398ac9f10aa25a255225b4e63c593e89d17bb1a3e2181d",
+      "tracked_path": "experiments/post_training_mimo_centralized_v1/results/job_containment_diagnostic_v1_20261001/outer/OUTER_LAUNCH.json"
+    },
+    {
+      "bytes": 515,
+      "original_path": "C:\\Users\\clclc\\Documents\\Codex\\2026-10-01\\task\\ChatBubble-mimo-job-containment\\artifacts\\mimo_central\\job_containment_diagnostic_v1_20261001_outer\\OUTER_RESULT.json",
+      "sha256": "b3bd7d816e72fc7a58d5b261b52be3ebecf8e3a1546b605ee9c78ec78474e287",
+      "tracked_path": "experiments/post_training_mimo_centralized_v1/results/job_containment_diagnostic_v1_20261001/outer/OUTER_RESULT.json"
+    },
+    {
+      "bytes": 0,
+      "original_path": "C:\\Users\\clclc\\Documents\\Codex\\2026-10-01\\task\\ChatBubble-mimo-job-containment\\artifacts\\mimo_central\\job_containment_diagnostic_v1_20261001_outer\\stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tracked_path": "experiments/post_training_mimo_centralized_v1/results/job_containment_diagnostic_v1_20261001/outer/stderr.log"
+    },
+    {
+      "bytes": 0,
+      "original_path": "C:\\Users\\clclc\\Documents\\Codex\\2026-10-01\\task\\ChatBubble-mimo-job-containment\\artifacts\\mimo_central\\job_containment_diagnostic_v1_20261001_outer\\stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tracked_path": "experiments/post_training_mimo_centralized_v1/results/job_containment_diagnostic_v1_20261001/outer/stdout.log"
+    },
+    {
+      "bytes": 240,
+      "original_path": "C:\\Users\\clclc\\Documents\\Codex\\2026-10-01\\task\\ChatBubble-mimo-job-containment\\artifacts\\mimo_central\\job_containment_diagnostic_v1_20261001_preflight.json",
+      "sha256": "23028196556b0ca1a0bf7eca250217da921fc61fd4a12887f640b8f82474512a",
+      "tracked_path": "experiments/post_training_mimo_centralized_v1/results/job_containment_diagnostic_v1_20261001/PREFLIGHT.json"
+    }
+  ],
+  "experimental_cases_started": 0,
+  "experimental_worker_roots": 0,
+  "gpu_operations": 0,
+  "interpretation": [
+    "A late launcher assignment gap is physically reproduced in the instrumented CPU bootstrap: the actual interpreter already existed before assignment and was not in that Job.",
+    "The exact original V1 predicate cause remains historically unwitnessed.",
+    "Error5 proves later assignment was denied; nested Job hierarchy is a possible explanation, not independently proved.",
+    "Do not relabel recorded cleanup failure as a pass; both owned PIDs were subsequently observed absent."
+  ],
+  "interpreter_created_before_launcher_assignment_ns": 15621700,
+  "later_actual_assignment_api_return": 0,
+  "later_actual_assignment_last_error": 5,
+  "launcher_job_assignment_started_utc_ns": 1790878989072092800,
+  "model_operations": 0,
+  "native_capture_authorized": false,
+  "next_cpu_only_registration": "Create the pinned launcher suspended, assign and verify the specific Job before resuming its uniquely owned initial thread; qualify membership and owned cleanup, including the exiting-image query race.",
+  "outer_controller_processes_created": 2,
+  "peak_observed_cpu_tree_rss_bytes": 24469504,
+  "read_only_post_stop_check": {
+    "both_absent": true,
+    "pids_checked": [
+      62032,
+      73968
+    ]
+  },
+  "source_sha": "3b747dc9b50e3b9a480f57ff49f590084845b623",
+  "specific_membership_api_return": 1,
+  "specific_membership_last_error": 0,
+  "status": "BLOCKED_CPU_DIAGNOSTIC_BOOTSTRAP_BEFORE_REGISTERED_PROBES",
+  "watchdog_elapsed_seconds": 0.75
+}

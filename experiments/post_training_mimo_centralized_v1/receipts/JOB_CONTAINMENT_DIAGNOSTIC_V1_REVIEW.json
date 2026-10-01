@@ -1,0 +1,21 @@
+{
+  "phase": "PRE_LAUNCH",
+  "reviewer": "/root/exact_prefix_review",
+  "requested_model": "gpt-6.1-sol",
+  "requested_reasoning": "max",
+  "service_tier_verified": false,
+  "status": "PASS_TWO_REGISTERED_CPU_DIAGNOSTIC_CASES",
+  "reviewed_source": "3b747dc9b50e3b9a480f57ff49f590084845b623",
+  "unresolved_blocking_findings": [],
+  "CPU_fixtures_passed": 73,
+  "V1_13_original_and_tracked_files_hashes_verified": true,
+  "model_operations": 0,
+  "gpu_operations": 0,
+  "native_capture_authorized": false,
+  "limitations": [
+    "Physical Windows behavior had not been tested at the time of this pre-launch verdict.",
+    "Strict polling could block on a transient process exit.",
+    "Diagnostic instrumentation changes timing and cannot establish missing historical V1 witnesses.",
+    "Reviewer service-tier enforcement is not exposed through the collaboration tool."
+  ]
+}
