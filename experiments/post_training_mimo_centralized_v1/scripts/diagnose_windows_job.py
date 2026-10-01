@@ -302,6 +302,7 @@ def main():
         finally:
             boot_kernel.close(duplicate)
             boot_kernel.close(parent)
+        require(not boot_kernel.logging_errors, 'CPU bootstrap cleanup evidence logging failed')
         return guarded_supervise()
     require(args.case_path is not None and args.supervisor_pid and args.token and len(args.token) == 32, 'owned CPU worker arguments required')
     return worker(args)

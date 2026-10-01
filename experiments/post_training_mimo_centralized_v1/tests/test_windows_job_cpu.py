@@ -187,6 +187,31 @@ class CPUJobControls(unittest.TestCase):
                     probe.worker(args)
             self.assertFalse((directory / 'WORKER_RESULT.json').exists())
 
+    def test_bootstrap_close_log_failure_blocks_before_experimental_workers(self):
+        class BootKernel:
+            def __init__(self): self.logging_errors = []
+            def current(self): return 1
+            def identity(self, handle, pid): return {'pid': pid, 'created_filetime': 123, 'image_path': 'python.exe'}
+            def lineage(self, pid, parent): return [{'pid': pid}, {'pid': parent}]
+            def open(self, pid, rights): return 10
+            def call(self, name, *args):
+                args[3]._obj.value = 2
+                return 1, 0
+            def membership(self, handle, job, label): return membership_result(1, 0, 1)
+            def close(self, handle): self.logging_errors.append('injected bootstrap close log loss')
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp) / 'owned'
+            output.with_name('owned_outer').mkdir()
+            go = {'token': 'a' * 32, 'identity': BootKernel().identity(1, probe.os.getpid()),
+                  'sources': {'fixed': 'digest'}, 'job_handle': 99}
+            args = ['probe', '--supervise', '--outer-pid', '123', '--outer-token', 'a' * 32]
+            with patch.object(probe, 'OUTPUT', output), patch.object(probe, 'Kernel', return_value=BootKernel()), \
+                 patch.object(probe, 'sources', return_value=go['sources']), patch.object(probe, 'wait_file', return_value=go), \
+                 patch.object(probe.sys, 'argv', args), patch.object(probe, 'guarded_supervise') as launch:
+                with self.assertRaisesRegex(RuntimeError, 'bootstrap cleanup evidence'):
+                    probe.main()
+                launch.assert_not_called()
+
 
 if __name__ == '__main__':
     unittest.main()
