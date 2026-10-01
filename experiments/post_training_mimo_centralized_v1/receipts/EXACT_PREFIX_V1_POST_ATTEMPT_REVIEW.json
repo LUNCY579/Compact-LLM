@@ -1,0 +1,61 @@
+{
+  "accounting_assessment": "Zero counts are supported by the traceback and source execution order; missing EVENTS alone would be insufficient.",
+  "attempts_consumed": 1,
+  "bulk_failure_unchanged": true,
+  "capture_qualified": false,
+  "cause_assessment": {
+    "membership_query_success_with_member_false": "UNPROVEN",
+    "missing_diagnostics": [
+      "IsProcessInJob return value",
+      "Windows last-error value on API failure",
+      "Actual worker PID/create-time and launch timeline"
+    ],
+    "venv_shim_pre_assignment_race": "PLAUSIBLE_UNPROVEN"
+  },
+  "evidence_sha256": {
+    "COST_LEDGER.json": "a5812519f072df8f4af966bc7e2337a5a1c7524288942b42aa3a72f17db49062",
+    "FAILURE_RECEIPT.json_and_CAPTURE_RESULT.json": "437a1414737f65159c43099e802e5f22702abfd50f691404e5153587e1de6177"
+  },
+  "limitations": [
+    "Live cleanup state was not independently inspected in this review",
+    "No replacement launcher or containment correction was executed",
+    "Standard service tier remains unverifiable through available tools"
+  ],
+  "model_work": {
+    "backward_calls": 0,
+    "constructs": 0,
+    "forward_input_positions": 0,
+    "forwards": 0,
+    "generated_tokens": 0,
+    "optimizer_steps": 0,
+    "pretrained_loads": 0,
+    "teacher_calls": 0,
+    "tensor_copies": 0,
+    "training_positions": 0
+  },
+  "new_authority": false,
+  "next_bounded_step": [
+    "Prospectively register a CPU-only containment diagnostic with no Torch/GPU/model work",
+    "Record actual process lineage and separate API failure from nonmembership",
+    "If a launch race is confirmed, assign the Job before resuming a suspended launcher, or explicitly join only the verified owned worker before framework import",
+    "Require actual specific-Job membership before any successor model attempt"
+  ],
+  "peak_process_tree_rss_bytes": 51752960,
+  "proven": [
+    "Source/config, ancestry and lease guards completed",
+    "Specific supervisor Job handle duplication succeeded",
+    "Specific-Job membership predicate rejected execution",
+    "Worker code did not reach framework import or operation accounting",
+    "Failure/result receipts are byte-identical",
+    "All canonical recovery receipts match their preserved recovery copies"
+  ],
+  "requested_model": "gpt-6.1-sol",
+  "requested_reasoning": "max",
+  "review_transcribed_by_root": true,
+  "reviewer": "/root/exact_prefix_review",
+  "source_commit": "fa36c38d467f7c48711dbee3823c1bac1cb9c93d",
+  "status": "BLOCKED_PRE_FRAMEWORK_CONTAINMENT_CHECK",
+  "supervisor_elapsed_seconds": 1.2189999999991414,
+  "unchanged_v1_rerun_recommended": false,
+  "worker_exit_code": 1
+}

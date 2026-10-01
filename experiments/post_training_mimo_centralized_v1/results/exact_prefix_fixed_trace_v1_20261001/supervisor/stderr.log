@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\clclc\Documents\Codex\2026-10-01\task\ChatBubble-mimo-exact-prefix\experiments\post_training_mimo_centralized_v1\scripts\qualify_exact_prefix.py", line 436, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\Users\clclc\Documents\Codex\2026-10-01\task\ChatBubble-mimo-exact-prefix\experiments\post_training_mimo_centralized_v1\scripts\qualify_exact_prefix.py", line 432, in main
+    return supervise(args, cfg, capture, source, root) if args.supervise else run(args, cfg, capture, source, root, preserved_bulk)
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\Documents\Codex\2026-10-01\task\ChatBubble-mimo-exact-prefix\experiments\post_training_mimo_centralized_v1\scripts\qualify_exact_prefix.py", line 228, in run
+    owner = verify_worker_owner(old.parse(args.go_path.read_bytes()), source, root, supervision)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\Documents\Codex\2026-10-01\task\ChatBubble-mimo-exact-prefix\experiments\post_training_mimo_centralized_v1\scripts\qualify_exact_prefix.py", line 118, in verify_worker_owner
+    control.require(bool(kernel.IsProcessInJob(kernel.GetCurrentProcess(), copied_job, c.byref(member)))
+  File "C:\Users\clclc\Documents\Codex\2026-10-01\task\ChatBubble-mimo-exact-prefix\experiments\post_training_mimo_centralized_v1\scripts\greedy_capture.py", line 19, in require
+    raise RuntimeError(message)
+RuntimeError: worker is not in the specific supervisor Job

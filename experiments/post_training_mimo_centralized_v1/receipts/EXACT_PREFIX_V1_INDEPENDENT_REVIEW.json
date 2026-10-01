@@ -1,0 +1,47 @@
+{
+  "status": "PASS_PRE_NATIVE_INDEPENDENT_REVIEW_ONLY",
+  "recommendation": "ONE_REGISTERED_CONTAINED_ATTEMPT_AFTER_FRESH_ADMISSION",
+  "reviewed_commit": "fa36c38d467f7c48711dbee3823c1bac1cb9c93d",
+  "branch": "codex/mimo-exact-prefix-capture-20261001",
+  "verified_base": "19551ddebc87c93161c303865ce6d0f130de0093",
+  "git_clean": true,
+  "source_snapshot_sha256": "b227db61a4e08a9945995b74b67fa1a09703bff5f189f89c0201982423304de5",
+  "unresolved_blocking_findings": [],
+  "resolved_findings": [
+    "Watchdog termination reconstructs durable costs and retains pending/tail uncertainty",
+    "Worker checks live lease and process identities plus membership in the specific supervisor Job",
+    "GO and returned receipts bind the same source/config snapshot",
+    "Malformed journals report unknown generation costs"
+  ],
+  "validation": {
+    "independent_updated_stdlib_tests_passed": 58,
+    "independent_final_recovery_regressions_passed": 2,
+    "final_preserved_suite_tests_passed": 58,
+    "pinned_source_files_verified": 23,
+    "installed_runtime_source_files_verified": 2,
+    "final_cpu_receipt_and_raw_logs_match": true,
+    "final_cpu_receipt_sha256": "be818d51ef6e2780888b9f2ae9d4bbbfc82f147b3c11bdf4d238217da178a910",
+    "frozen_dependencies_unchanged": true,
+    "five_unpublished_commits_absent_from_current_ancestry": true
+  },
+  "reviewed_file_sha256": {
+    "AMENDMENT_022.md": "fc3a52f2ad829e202b23a42342aac287e5ca70bb889921f175de8c004393e80f",
+    "configs/CAPTURE_EXACT_PREFIX_FIXED_TRACE_V1.json": "b1b5348680f7c2bf09272ed81e504d95ae60cbbef97a85763f4ac4da9311cb9b",
+    "scripts/exact_prefix_capture.py": "85fdd9a50b964ba51b97dce61a36ee7bed1b561b907cc080c9c60d98fb8aa175",
+    "scripts/qualify_exact_prefix.py": "8d82d8b105035b9ede96abedde95a1b09b6a5eb6237815ad557c74a14f1b97c8",
+    "tests/test_exact_prefix_capture.py": "a83283b90aac0f9db9fbe7af8f81819f33f1c020d6bee7cf860fe57face0423e"
+  },
+  "preserved_bulk_failure": {
+    "max_abs": 0.04143241047859192,
+    "mean_abs": 0.02629935139945398,
+    "passed": false,
+    "max_tolerance": 0.03125,
+    "mean_tolerance": 0.01
+  },
+  "reviewer_actions": {"repository_edits": false, "torch_or_transformers_imported": false, "native_or_gpu_tests_run": false, "global_settings_changed": false},
+  "reviewer_agent": "/root/exact_prefix_review",
+  "requested_model": "gpt-6.1-sol",
+  "requested_reasoning_effort": "max",
+  "settings_limitation": "Tools expose no service-tier override; Standard-tier enforcement cannot be verified.",
+  "limitations": ["Actual Windows Job API and native CUDA behavior remain untested by this review.", "CPU checks establish orchestration controls only.", "Any native pass remains specific to this three-token fixture.", "Bulk equivalence, general capture, DEV, capability and E1 authority remain unqualified."]
+}
