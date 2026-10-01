@@ -62,6 +62,21 @@ These tests verify actual gradients, EOS/length masks, frozen state, donor
 extraction, parameters/Adam/RNG resume, and corrupt-checkpoint refusal. Passing
 them does not constitute qualification on the registered CUDA model.
 
+## Prospective supervised core
+
+`ce_update.py` supplies the common eight-row teacher-CE boundary for the
+unapproved R oracle-supervision alternatives. It uses a labeled-token mean per
+row, equal row weights, one-shift target/EOS masks, global norm clipping before
+Adam, and frozen-state/U proofs. Reset and failure cleanup remain observable;
+an exception after an Adam attempt requires discarding or restoring live state.
+
+Its five pure and nine actual tiny CPU checks passed. It always refuses native
+execution before model access, including forged approval flags. It has no model
+loader, experiment driver, evaluation, target policy, retry defaults or grant.
+The existing B2 checkpoint/progress adapter must not be presented as a qualified
+CE8 adapter. Full integration and native qualification still require the new
+operator decision and a separately registered scope.
+
 ## Production interface
 
 ```powershell
