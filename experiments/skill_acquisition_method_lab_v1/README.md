@@ -4,7 +4,8 @@ This lab extends the R/S study with primary-paper mathematics, exact toy
 enumeration, and a staged combination/permutation design. It does not issue a
 training grant or claim native skill acquisition. The original source screen
 had 0/3,600 strict successes. The common warm-start completed 600 rows and 75
-updates; its full registered competence read remains pending.
+updates; its full 450-prompt competence read ended **STOP_NO_SIGNAL** because R
+had 5/150 mixed groups, below the required 15. The original study path stops.
 
 - [Mathematical analysis](MATHEMATICAL_ANALYSIS.md): original derivations,
   assumptions, primary citations, and controls for each proposed combination.
@@ -12,12 +13,18 @@ updates; its full registered competence read remains pending.
   panels, then conditional sampler, retention, Fisher and teacher follow-ups.
 - [Measured warm/C geometry](evidence/MEASURED_GEOMETRY_20260930.json): streamed
   parameter statistics, row-coordinate controls, and verified output bindings.
+- [Completed warm competence receipt](evidence/NATIVE_WARM_COMPETENCE_20261001.json):
+  R/S/P strict successes 6/179/285 out of 1,200 samples each; full gate and canaries.
+- [New oracle-supervision proposal](R_ORACLE_SUPERVISION_PROPOSAL.md): unapproved
+  separate experiment with 3,000 verified R TRAIN labels and matched token census.
 - [Exact audit](evidence/exact-20260930-v2/EXACT_AUDIT.json): 572 finite-group cases,
   72 bounded stopping cases, and quadratic, covariance, LoRA and Fisher controls.
 - [Audit receipt](evidence/exact-20260930-v2/RECEIPT.json): code/output hashes.
 - [Scientific figure PDF](evidence/exact-20260930-v2/method_mechanics.pdf).
 
 ![Exact toy mechanisms](evidence/exact-20260930-v2/method_mechanics.png)
+
+![Completed native warm-anchor screen](evidence/native_warm_signal_20261001.png)
 
 Version2 adds a boundary check: a fixed mixed-group quota cannot finish for a
 positive-weight prompt with p=0 or p=1. Global rejection can still accept other
