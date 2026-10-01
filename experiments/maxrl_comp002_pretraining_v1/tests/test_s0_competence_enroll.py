@@ -25,7 +25,7 @@ import pytest
 import torch
 from safetensors.torch import save_file
 
-from experiments.maxrl_comp002_pretraining_v1 import canary, scoped_scorer
+from experiments.maxrl_comp002_pretraining_v1 import arm_build, canary, scoped_scorer
 from experiments.maxrl_comp002_pretraining_v1 import s0_churn as churn
 from experiments.maxrl_comp002_pretraining_v1 import s0_competence as comp
 from experiments.maxrl_comp002_pretraining_v1 import s0_enroll as enroll
@@ -797,7 +797,7 @@ def _enroll_plan(tokenizer, oracles, guard_rows, cal_rows):
             cal_rows[0]['id']: ref_ids(tokenizer, oracles, cal_rows[0]) + [ENDOFTEXT]}
 
 
-def _run_enroll(root, run, tiny_dir, injector, host=None, lease=None, name=None):
+def _run_enroll(root, run, tiny_dir, injector, host=None, lease=None, name=None, extra=()):
     host, lease = host or FakeHost(), lease or FakeLease()
     out = root / (name or 'S0_ENROLL_RUN%d.json' % run)
     with pytest.MonkeyPatch.context() as mp:
@@ -805,7 +805,8 @@ def _run_enroll(root, run, tiny_dir, injector, host=None, lease=None, name=None)
         mp.setattr(enroll, 'guard_dev_plan', guard_subset)
         mp.setattr(g, 'greedy_decode', injector.greedy_decode)
         recording_writes(mp, lease)
-        code = enroll.main(common_argv(tiny_dir, out, '--run', str(run)), lease_module=lease, host_module=host)
+        code = enroll.main(common_argv(tiny_dir, out, '--run', str(run), *extra), lease_module=lease,
+                           host_module=host)
     return SimpleNamespace(code=code, out=out, journal=out.with_suffix('.jsonl'), host=host, lease=lease,
                            injector=injector)
 
@@ -1131,3 +1132,173 @@ def test_c13_samples_are_sequential_single_calls_with_registered_seeds(tmp_path,
         assert line['sample_seeds'] == [comp.sample_seed(line['id'], k) for k in range(line['group_size'])]
         assert line['sampling'] == 'C13 sequential single-sample calls'
     assert comp.sample_seed('MC2-a', 0) != comp.sample_seed('MC2-a', 1) != comp.comp_seed('MC2-a')
+
+
+# ------------------------------------------------------------------------------------------ theta0' (section 18)
+def _anchor_freeze(root, tiny_dir, delta, name='S0_RUNTIME_FREEZE_WARM.json', **over):
+    """A test-mode runtime freeze naming theta0' = tiny Supa + delta (the delta written create-only under root)."""
+    root.mkdir(parents=True, exist_ok=True)
+    path = root / 'delta_warm.safetensors'
+    delta_sha = arm_build.write_delta(path, delta)
+    s0.configure('cpu')
+    model, _ = s0.load_model_fp32(tiny_dir.root, 'cpu', tiny_dir.asset)
+    s0.add_delta(model, delta)
+    arm = s0.anchor_digest(model)
+    del model
+    anchor = dict({'base_weights_sha256': tiny_dir.weights_sha256, 'delta_path': str(path),
+                   'delta_sha256': delta_sha, 'arm_sha256': arm, 'warmstart_receipt_sha256': 'f' * 64}, **over)
+    freeze, _ = _cpu_freeze(root, name, anchor=anchor)
+    return freeze, anchor
+
+
+def _bound(anchor):
+    return {key: anchor[key] for key in s0.ANCHOR_KEYS}
+
+
+def test_competence_on_an_anchored_tiny_model_binds_the_anchor(tmp_path, tiny_dir, tokenizer, cal, oracles):
+    freeze, anchor = _anchor_freeze(tmp_path / 'freeze', tiny_dir, {'model.norm.weight': torch.full((32,), 0.5)})
+    run = _run_competence(tmp_path / 'records', tiny_dir, tokenizer, cal, oracles,
+                          extra=('--runtime-freeze', str(freeze)))
+    receipt = _receipt(run.out)
+    assert run.code == 0 and receipt['completed'] is True
+    identity = receipt['identity']
+    assert identity['anchor'] == receipt['anchor'] == _bound(anchor)
+    assert identity['state_fingerprint'] == anchor['arm_sha256'] != identity['base']['state_fingerprint']
+    assert identity['anchor_digest_rule'] == s0.ANCHOR_DIGEST_RULE and identity['anchor_delta']['tensors'] == 1
+    assert receipt['journal']['bind']['anchor'] == _bound(anchor)
+    assert all(line['anchor'] == _bound(anchor) for line in _lines(run.journal))
+    assert receipt['runtime_freeze']['anchor'] == anchor and receipt['fingerprint_unchanged'] is True
+    # the run metadata names the model read: theta0', not the Supa weights file
+    assert receipt['run_meta']['model_sha256'] == anchor['arm_sha256'] != tiny_dir.weights_sha256
+    assert receipt['scoring']['batches'][0]['canary_overall'] == 'PASS'
+
+
+def test_the_supa_read_binds_an_anchor_with_no_delta(competence_run, tiny_dir):
+    receipt = competence_run.receipt
+    supa = {'base_weights_sha256': tiny_dir.weights_sha256, 'delta_path': None, 'delta_sha256': None,
+            'arm_sha256': None}
+    assert receipt['anchor'] == receipt['identity']['anchor'] == receipt['journal']['bind']['anchor'] == supa
+    assert 'base' not in receipt['identity'] and receipt['runtime_freeze'] is None
+
+
+def test_a_journal_is_never_resumed_across_anchors(tmp_path, tiny_dir, tokenizer, cal, oracles):
+    """A zero delta leaves every weight bit, so the arm and weights digests agree: only the anchor bind separates
+    a Supa journal from a theta0' one, in both directions."""
+    rows = cal_subset(cal['rows_by_skill'])
+    plan = _competence_plan(tokenizer, oracles, rows)
+    freeze, anchor = _anchor_freeze(tmp_path / 'freeze', tiny_dir, {'model.norm.weight': torch.zeros(32)})
+    s0.configure('cpu')
+    _, plain = s0.load_model_fp32(tiny_dir.root, 'cpu', tiny_dir.asset)
+    assert anchor['arm_sha256'] == plain['state_fingerprint']
+    warm = ('--runtime-freeze', str(freeze))
+    for name, first, second in (('supa_first', (), warm), ('warm_first', warm, ())):
+        root = tmp_path / name
+        with pytest.raises(RuntimeError, match='simulated crash'):
+            _run_competence(root, tiny_dir, tokenizer, cal, oracles, extra=first,
+                            injector=Injector(tokenizer, rows, plan, fail_at=3))
+        journal = root / 'S0_COMPETENCE.jsonl'
+        kept = journal.read_bytes()
+        assert len(_lines(journal)) == 1
+        with pytest.raises(ValueError, match='bind field anchor differs'):
+            _run_competence(root, tiny_dir, tokenizer, cal, oracles, extra=second,
+                            injector=Injector(tokenizer, rows, plan))
+        assert journal.read_bytes() == kept and not (root / 'S0_COMPETENCE.json').exists()
+
+
+def test_a_freeze_naming_other_base_weights_is_refused_after_the_load(tmp_path, tiny_dir, tokenizer, cal, oracles):
+    freeze, _ = _anchor_freeze(tmp_path / 'freeze', tiny_dir, {'model.norm.weight': torch.full((32,), 0.5)},
+                               base_weights_sha256='e' * 64)
+    with pytest.raises(ValueError, match='the loaded anchor differs from the runtime freeze'):
+        _run_competence(tmp_path / 'records', tiny_dir, tokenizer, cal, oracles,
+                        extra=('--runtime-freeze', str(freeze)))
+    assert not (tmp_path / 'records' / 'S0_COMPETENCE.jsonl').exists()
+
+
+def test_enroll_on_an_anchored_tiny_model_binds_the_anchor(tmp_path, tiny_dir, tokenizer, cal, guard_bank, oracles):
+    freeze, anchor = _anchor_freeze(tmp_path / 'freeze', tiny_dir, {'model.norm.weight': torch.full((32,), 0.5)})
+    guard_rows, cal_rows = guard_subset(guard_bank), cal_subset(cal['rows_by_skill'])
+    injector = Injector(tokenizer, guard_rows + cal_rows, _enroll_plan(tokenizer, oracles, guard_rows, cal_rows))
+    run = _run_enroll(tmp_path / 'records', 1, tiny_dir, injector, name='S0_ENROLL_RUN1_WARM.json',
+                      extra=('--runtime-freeze', str(freeze)))
+    receipt = _receipt(run.out)
+    assert run.code == 0 and receipt['anchor'] == receipt['journal']['bind']['anchor'] == _bound(anchor)
+    assert receipt['run_meta']['model_sha256'] == anchor['arm_sha256']
+    assert receipt['calibration_scoring']['scoring']['run'] == receipt['run_meta']
+    assert run.journal.name == 'S0_ENROLL_RUN1_WARM.jsonl'
+
+
+def _registered_freeze(root, name, anchor=None):
+    preimage = {'schema': 'COMP-RS-001-S0-DECODING-1', 'device': 'cuda:0', 'dtype': 'float32'}
+    return _write_json(root / name, {
+        'stage': 'S0_RUNTIME_FREEZE', 'test_mode': False, 'registered_run': True, 'decoding_preimage': preimage,
+        'decoding_sha256': s0.decoding_sha256(preimage), 'host_floor_gib': 2.5,
+        'scoring_code_bundle_sha256': comp.live_bundle(), 'inventory': {'name': 'PENDING'}, 'anchor': anchor})
+
+
+REGISTERED_ANCHOR = {'base_weights_sha256': 'b' * 64, 'delta_path': r'C:\records\delta_warm.safetensors',
+                     'delta_sha256': 'c' * 64, 'arm_sha256': 'd' * 64, 'warmstart_receipt_sha256': 'e' * 64}
+
+
+def test_registered_names_carry_the_warm_suffix_for_an_anchored_freeze(tmp_path, monkeypatch, no_pinned):
+    records = tmp_path / 'records'
+    records.mkdir()
+    monkeypatch.setattr(s0, 'RECORDS', records)
+    warm = _registered_freeze(tmp_path, 'F_WARM.json', REGISTERED_ANCHOR)
+    supa = _registered_freeze(tmp_path, 'F.json')
+
+    def competence(freeze, *extra):
+        return comp._competence_config(comp._parser().parse_args(['--runtime-freeze', str(freeze), *extra]),
+                                       None, None)
+    cfg = competence(warm)
+    assert (cfg['out'].name, cfg['journal'].name, cfg['attempts'].name) == (
+        'S0_COMPETENCE_WARM.json', 'S0_COMPETENCE_WARM.jsonl', 'S0_COMPETENCE_WARM.attempts.jsonl')
+    assert cfg['out'].parent == records.resolve() and cfg['anchor'] == REGISTERED_ANCHOR
+    assert competence(supa)['out'].name == 'S0_COMPETENCE.json' and competence(supa)['anchor'] is None
+    assert competence(warm, '--out', str(records / 'S0_COMPETENCE_R2_WARM.json'))['out'].name == \
+        'S0_COMPETENCE_R2_WARM.json'
+    for freeze, name in ((warm, 'S0_COMPETENCE.json'), (supa, 'S0_COMPETENCE_WARM.json')):
+        with pytest.raises(SystemExit, match='_WARM receipt name'):
+            competence(freeze, '--out', str(records / name))
+    for run in (1, 2):
+        args = enroll._parser().parse_args(['--run', str(run), '--runtime-freeze', str(warm)])
+        cfg = enroll._config(args, None, None)
+        assert (cfg['out'].name, cfg['journal'].name) == ('S0_ENROLL_RUN%d_WARM.json' % run,
+                                                          'S0_ENROLL_RUN%d_WARM.jsonl' % run)
+        args = enroll._parser().parse_args(['--run', str(run), '--runtime-freeze', str(supa)])
+        assert enroll._config(args, None, None)['out'].name == 'S0_ENROLL_RUN%d.json' % run
+    warm_freeze, supa_freeze = comp.read_freeze(warm, registered=True), comp.read_freeze(supa, registered=True)
+    assert churn.registered_out(None, warm_freeze) == records / 'S0_CHURN_WARM.json'
+    assert churn.registered_out(None, supa_freeze) == records / 'S0_CHURN.json'
+    with pytest.raises(SystemExit, match='_WARM receipt name'):
+        churn.registered_out(records / 'S0_CHURN.json', warm_freeze)
+    assert list(records.iterdir()) == []
+
+
+def test_compare_runs_asserts_the_frozen_anchor(tmp_path):
+    bound = _bound(REGISTERED_ANCHOR)
+    supa_bound = dict(bound, delta_path=None, delta_sha256=None, arm_sha256=None)
+    warm_freeze = {'decoding_sha256': 'd' * 64, 'scoring_code_bundle_sha256': 'b' * 64, 'anchor': REGISTERED_ANCHOR}
+    supa_freeze = dict(warm_freeze, anchor=None)
+    warm = [_synthetic_run(tmp_path / 'w', run, ['a', 'b'], bind_changes={'anchor': bound}) for run in (1, 2)]
+    supa = [_synthetic_run(tmp_path / 's', run, ['a', 'b'], bind_changes={'anchor': supa_bound}) for run in (1, 2)]
+    result = churn.compare_runs(*warm, registered=False, freeze=warm_freeze)
+    assert result['churn'] == 0 and result['bind']['anchor'] == bound
+    assert churn.compare_runs(*supa, registered=False, freeze=supa_freeze)['churn'] == 0
+    for runs, freeze in ((warm, supa_freeze), (supa, warm_freeze),
+                         (warm, dict(warm_freeze, anchor=dict(REGISTERED_ANCHOR, arm_sha256='0' * 64)))):
+        with pytest.raises(ValueError, match='another anchor than the runtime freeze'):
+            churn.compare_runs(*runs, registered=False, freeze=freeze)
+    with pytest.raises(ValueError, match='bind fields differ: anchor'):
+        churn.compare_runs(supa[0], warm[1], registered=False)
+
+
+def test_anchor_helpers():
+    assert comp.anchor_arguments(None) == {}
+    assert comp.anchor_arguments(REGISTERED_ANCHOR) == {'delta_path': REGISTERED_ANCHOR['delta_path'],
+                                                        'delta_sha256': 'c' * 64, 'arm_sha256': 'd' * 64}
+    bound = _bound(REGISTERED_ANCHOR)
+    supa = dict(bound, delta_path=None, delta_sha256=None, arm_sha256=None)
+    assert comp.anchor_matches(bound, REGISTERED_ANCHOR) and not comp.anchor_matches(supa, REGISTERED_ANCHOR)
+    assert comp.anchor_matches(supa, None) and comp.anchor_matches(None, None)
+    assert not comp.anchor_matches(bound, None) and not comp.anchor_matches(None, REGISTERED_ANCHOR)
+    assert not comp.anchor_matches(dict(bound, base_weights_sha256='0' * 64), REGISTERED_ANCHOR)

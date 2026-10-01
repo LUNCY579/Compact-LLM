@@ -21,8 +21,10 @@ registered, no OS process (pid + creation time) appears in both either; test mod
 runs share the pytest process.
 Consistency: where the token IDs agree, the stop reason and the response text must agree too (the response rule is
 a function of the IDs). With zero churn, the runs' strict scores must agree as well. Otherwise the stage raises.
-Registered mode also asserts the runtime freeze: its decoding_sha256 and scorer bundle equal both runs'. The
-receipt S0_CHURN is create-only. Exit status: 0 for CHURN_ZERO, 2 for STOP_NONDETERMINISTIC.
+Registered mode also asserts the runtime freeze: its decoding_sha256 and scorer bundle equal both runs', and both
+runs' bound anchor is the one it names (s0_competence.anchor_matches; section 18). The receipt S0_CHURN is
+create-only; for an anchored (theta0') freeze its registered name is S0_CHURN_WARM.json. Exit status: 0 for
+CHURN_ZERO, 2 for STOP_NONDETERMINISTIC.
 """
 from __future__ import annotations
 
@@ -112,6 +114,8 @@ def compare_runs(run1, run2, *, registered: bool, freeze: dict | None = None) ->
     if freeze is not None:
         require(freeze['decoding_sha256'] == bind1['decoding_sha256'],
                 'decoding_sha256 differs from the runtime freeze')
+        require(all(comp.anchor_matches(bind.get('anchor'), freeze.get('anchor')) for bind in (bind1, bind2)),
+                'a run read another anchor than the runtime freeze names')
         for entry in (first, second):
             require(entry['receipt']['scorer_bundle']['expected'] == freeze['scoring_code_bundle_sha256'],
                     'a run scored with another scorer bundle than the runtime freeze')
@@ -154,6 +158,17 @@ def compare_runs(run1, run2, *, registered: bool, freeze: dict | None = None) ->
             'separate_processes_required': registered}
 
 
+def registered_out(out, freeze: dict) -> Path:
+    """The registered receipt path: RECORDS/S0_CHURN.json, or S0_CHURN_WARM.json when the freeze has an anchor.
+    An explicit --out must carry the _WARM suffix exactly when the freeze is anchored."""
+    anchored = freeze['anchor'] is not None
+    target = Path(out) if out is not None else s0.RECORDS / s0.anchored_name(STAGE + '.json', anchored)
+    if anchored != target.stem.endswith(s0.WARM_SUFFIX):
+        raise SystemExit("a theta0' (anchored) churn writes to a *%s receipt name and a Supa churn does not: %s"
+                         % (s0.WARM_SUFFIX, target.name))
+    return target
+
+
 def _parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(prog='s0_churn', description='COMP-RS-001 S0-E churn floor.')
     ap.add_argument('--run1', type=Path, required=True)
@@ -174,13 +189,15 @@ def main(argv=None) -> int:
             raise SystemExit('the registered churn asserts the S0 runtime freeze (--runtime-freeze)')
         if not comp._same_path(args.repo, comp.REPO):
             raise SystemExit('the registered churn binds the checkout that holds this code: ' + str(comp.REPO))
-        out = args.out if args.out is not None else s0.RECORDS / (STAGE + '.json')
-        if not comp._same_path(Path(out).resolve().parent, s0.RECORDS):
+        if args.out is not None and not comp._same_path(Path(args.out).resolve().parent, s0.RECORDS):
             raise SystemExit('registered records are written to ' + str(s0.RECORDS))
+        freeze = comp.read_freeze(args.runtime_freeze, registered=True)
+        out = registered_out(args.out, freeze)
     else:
         if args.out is None:
             raise SystemExit('--test-mode needs --out')
         out = args.out
+        freeze = comp.read_freeze(args.runtime_freeze, registered=False) if args.runtime_freeze else None
     target = s0.assert_outside_checkout(out, args.repo)
     if target.exists():
         raise SystemExit('receipt exists (create-only): ' + str(target))
@@ -190,7 +207,6 @@ def main(argv=None) -> int:
     else:
         runtime = {'python_executable': sys.executable, 'python': platform.python_version(), 'asserted': False}
         checkout = {'checked': False, 'reason': 'test mode'}
-    freeze = comp.read_freeze(args.runtime_freeze, registered=registered) if args.runtime_freeze else None
     result = compare_runs(args.run1, args.run2, registered=registered, freeze=freeze)
     receipt = {'experiment': 'COMP-RS-001', 'stage': STAGE, 'schema': SCHEMA, 'registration': REGISTRATION,
                'test_mode': not registered, 'registered_run': registered,

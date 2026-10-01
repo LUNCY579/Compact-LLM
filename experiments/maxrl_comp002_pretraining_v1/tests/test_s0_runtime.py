@@ -23,7 +23,7 @@ from safetensors.torch import load_file, save_file
 
 from experiments.maxrl_comp002_pretraining_v1 import arm_build
 from experiments.maxrl_comp002_pretraining_v1 import s0_runtime as s0
-from experiments.maxrl_comp002_pretraining_v1.preflight import read_json, sha
+from experiments.maxrl_comp002_pretraining_v1.preflight import digest, read_json, sha
 
 REPO = Path(__file__).resolve().parents[3]
 Q2_SELECTION = s0.HERE / 'evidence' / 'Q2_SOURCE_SMOKE_SELECTION.json'
@@ -400,6 +400,150 @@ def test_state_fingerprint_covers_every_parameter_buffer_and_alias(tmp_path, tin
         with torch.no_grad():
             tensor.view(-1)[0] -= 1.0
         assert s0.state_fingerprint(model) == base
+
+
+# --------------------------------------------------------------------------------------- anchor (section 18)
+DELTA_KEYS = ('model.embed_tokens.weight', 'model.layers.1.mlp.down_proj.weight', 'model.norm.weight')
+
+
+def _delta(tiny_state, keys=DELTA_KEYS, seed=7) -> dict:
+    generator = torch.Generator().manual_seed(seed)
+    return {key: torch.randn(tiny_state[key].shape, generator=generator) * 1e-2 for key in keys}
+
+
+def _full_state(model) -> dict:
+    named = dict(model.named_parameters(remove_duplicate=False))
+    named.update(model.named_buffers(remove_duplicate=False))
+    return {name: tensor.detach().clone() for name, tensor in named.items()}
+
+
+@pytest.fixture
+def anchor_case(tmp_path, tiny_state):
+    """A tiny Supa, an FP32 delta over three of its parameters (the tied embedding included), and the expected
+    anchor digest computed independently: plain FP32 state + delta, hashed with arm_build.state_digest."""
+    root = tmp_path / 'tiny'
+    receipt = write_tiny(root, tiny_state)
+    delta = _delta(tiny_state)
+    (tmp_path / 'delta').mkdir()
+    path = tmp_path / 'delta' / 'delta_warm.safetensors'
+    delta_sha = arm_build.write_delta(path, delta)
+    plain, plain_identity = s0.load_model_fp32(root, 'cpu', receipt)
+    expected = _full_state(plain)
+    for name in expected:
+        source = s0.TIED[1] if name == s0.TIED[0] else name
+        if source in delta:
+            expected[name] = expected[name] + delta[source]
+    return SimpleNamespace(root=root, receipt=receipt, delta=delta, path=path, delta_sha=delta_sha, plain=plain,
+                           plain_identity=plain_identity, expected=expected,
+                           arm=arm_build.state_digest(expected))
+
+
+def test_load_anchor_rebuilds_supa_plus_delta_with_both_digests(anchor_case):
+    case = anchor_case
+    model, identity = s0.load_anchor(case.root, 'cpu', case.receipt, delta_path=case.path,
+                                     delta_sha256=case.delta_sha, arm_sha256=case.arm)
+    assert identity['anchor'] == {'base_weights_sha256': case.receipt['assets']['model.safetensors']['sha256'],
+                                  'delta_path': str(case.path), 'delta_sha256': case.delta_sha,
+                                  'arm_sha256': case.arm}
+    assert set(s0.ANCHOR_KEYS) == set(identity['anchor'])
+    # one convention: the anchor digest is the full-state fingerprint of the rebuilt model
+    assert s0.anchor_digest(model) == case.arm == identity['state_fingerprint'] == s0.state_fingerprint(model)
+    assert case.arm != case.plain_identity['state_fingerprint']
+    assert identity['anchor_digest_rule'] == s0.ANCHOR_DIGEST_RULE
+    # the stored-name digest is the section 2 arm the streaming builder makes from the same files
+    built = arm_build.build_arm_streaming(case.root / 'model.safetensors', [('W', case.path, 1.0)], order=('W',))
+    assert identity['arm_sha256'] == built[1]['arm_sha256'] != case.plain_identity['arm_sha256']
+    assert identity['base'] == {'arm_sha256': case.plain_identity['arm_sha256'],
+                                'state_fingerprint': case.plain_identity['state_fingerprint'],
+                                'note': 'plain Supa as loaded and T1-verified, before the delta'}
+    assert identity['anchor_delta']['tensors'] == 3
+    assert identity['anchor_delta']['keys_sha256'] == digest(sorted(DELTA_KEYS))
+    # the delta tensors moved by exactly delta, the tied head followed its embedding, nothing else changed
+    state = _full_state(model)
+    assert set(state) == set(case.expected)
+    assert all(torch.equal(state[name], case.expected[name]) for name in state)
+    plain_digests, digests = s0.state_digests(case.plain), s0.state_digests(model)
+    changed = sorted(name for name in digests if digests[name] != plain_digests[name])
+    assert changed == sorted(set(DELTA_KEYS) | {s0.TIED[0]})
+    assert model.lm_head.weight is model.model.embed_tokens.weight and not model.training
+    assert all(p.dtype == torch.float32 for p in model.parameters())
+    # every other identity field is the Supa load's
+    skip = {'anchor', 'anchor_delta', 'anchor_digest_rule', 'base', 'arm_sha256', 'state_fingerprint'}
+    assert {k: v for k, v in identity.items() if k not in skip} == {
+        k: v for k, v in case.plain_identity.items() if k not in skip}
+
+
+def test_load_anchor_without_a_delta_is_plain_supa(anchor_case):
+    case = anchor_case
+    model, identity = s0.load_anchor(case.root, 'cpu', case.receipt)
+    assert identity == dict(case.plain_identity, anchor={
+        'base_weights_sha256': case.plain_identity['weights_sha256'], 'delta_path': None, 'delta_sha256': None,
+        'arm_sha256': None})
+    assert s0.state_fingerprint(model) == case.plain_identity['state_fingerprint']
+    for partial in ({'delta_path': case.path}, {'delta_path': case.path, 'delta_sha256': case.delta_sha},
+                    {'arm_sha256': case.arm}):
+        with pytest.raises(ValueError, match='together'):
+            s0.load_anchor(case.root, 'cpu', case.receipt, **partial)
+
+
+@pytest.mark.parametrize('edit, error, match', [
+    ('delta_sha', ValueError, 'data-section digest mismatch'),
+    ('arm_sha', arm_build.ArmRebuildStop, 'STOP'),
+    ('unknown', ValueError, 'not a model parameter'),
+    ('buffer', ValueError, 'is a buffer'),
+    ('alias', ValueError, 'tied alias'),
+    ('shape', ValueError, 'delta shape != parameter shape'),
+    ('missing', ValueError, 'delta file missing'),
+    ('digest_format', ValueError, 'lowercase sha256')])
+def test_load_anchor_refuses(anchor_case, tmp_path, edit, error, match):
+    case = anchor_case
+    kwargs = {'delta_path': case.path, 'delta_sha256': case.delta_sha, 'arm_sha256': case.arm}
+    stray = {'unknown': ('model.layers.0.extra.weight', torch.zeros(4)),
+             'buffer': ('model.rotary_emb.inv_freq', torch.zeros(4)),
+             'alias': ('lm_head.weight', torch.zeros(case.delta['model.embed_tokens.weight'].shape)),
+             'shape': ('model.norm.weight', torch.zeros(33))}
+    if edit == 'delta_sha':
+        kwargs['delta_sha256'] = '0' * 64
+    elif edit == 'arm_sha':
+        kwargs['arm_sha256'] = case.plain_identity['state_fingerprint']
+    elif edit == 'missing':
+        kwargs['delta_path'] = tmp_path / 'absent.safetensors'
+    elif edit == 'digest_format':
+        kwargs['arm_sha256'] = case.arm.upper()
+    else:
+        key, tensor = stray[edit]
+        path = tmp_path / ('delta_%s.safetensors' % edit)
+        kwargs['delta_sha256'] = arm_build.write_delta(path, dict(case.delta, **{key: tensor}))
+        kwargs['delta_path'] = path
+    with pytest.raises(error, match=match) as raised:
+        s0.load_anchor(case.root, 'cpu', case.receipt, **kwargs)
+    if edit == 'arm_sha':
+        assert raised.value.actual == case.arm and raised.value.expected == kwargs['arm_sha256']
+
+
+def test_add_delta_checks_every_key_before_the_first_add(anchor_case):
+    case = anchor_case
+    before = s0.state_fingerprint(case.plain)
+    good = case.delta['model.norm.weight']              # sorts before the bad key: it would be added first
+    for bad in ({'model.norm.weight': good, 'model.zz.weight': torch.zeros(3)},
+                {'model.norm.weight': good, 'model.zz.weight': torch.zeros(3, dtype=torch.float64)},
+                {'model.norm.weight': good, 'model.zz.weight': torch.full((3,), float('nan'))},
+                {'model.norm.weight': good, 'model.norm.weight2': torch.zeros(3)},
+                {'model.norm.weight': good.to(torch.bfloat16)},
+                {'model.norm.weight': torch.full(good.shape, float('inf'))}, {}):
+        with pytest.raises(ValueError):
+            s0.add_delta(case.plain, bad)
+        assert s0.state_fingerprint(case.plain) == before
+
+
+def test_anchored_name_adds_the_warm_suffix():
+    assert s0.anchored_name('S0_COMPETENCE.json', True) == 'S0_COMPETENCE_WARM.json'
+    assert s0.anchored_name('S0_COMPETENCE.json', False) == 'S0_COMPETENCE.json'
+    assert s0.anchored_name('S0_ENROLL_RUN1.json', True) == 'S0_ENROLL_RUN1_WARM.json'
+    for bad in (('S0_COMPETENCE_WARM.json', True), ('S0_COMPETENCE.jsonl', True), ('x/y.json', False),
+                ('S0.json', 1)):
+        with pytest.raises(ValueError):
+            s0.anchored_name(*bad)
 
 
 # ------------------------------------------------------------------------------------ pinned imports, lease

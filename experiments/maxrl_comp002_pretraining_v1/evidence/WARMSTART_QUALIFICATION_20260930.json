@@ -1,0 +1,134 @@
+{
+  "schema": "COMP-RS-001-WARMSTART-QUALIFICATION-20260930",
+  "created_utc": "2026-10-01T01:13:18.308581+00:00",
+  "status": "READY_FOR_NATIVE_RESOURCE_ADMISSION",
+  "native_warmstart_started": false,
+  "governing_registration": "COMP_RS_001_AMENDMENT_1.md section18, under sections12 and16",
+  "full_suite": {
+    "tests": 851,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 1,
+    "passed": 850,
+    "seconds": 249.053,
+    "skips": [
+      {
+        "test": "experiments.maxrl_comp002_pretraining_v1.tests.test_s0pre_stats.test_cp_bounds_match_scipy_beta",
+        "reason": "could not import 'scipy.stats': No module named 'scipy'"
+      }
+    ],
+    "xml": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\logs\\FINAL_FULL_SUITE_20260930_v2.xml",
+    "xml_sha256": "386b20bafd103ed7bc8079606331ea42d53631e64626a581d1d6c25f4d2fab6e",
+    "log_sha256": "cef99bfd4b073ea003a5716ca7569dbf15f60b8ec30e731adf8d7ccd73ab8075"
+  },
+  "source_snapshot": {
+    "created_utc": "2026-10-01T01:08:02.945112+00:00",
+    "head_before_qualification": "47e417278e09545b41f1282fb3e0aa1bccb9fcb7",
+    "source_sha256": {
+      "experiments/maxrl_comp002_pretraining_v1/arm_build.py": "a1b0a0f099de6e2765c1915915f4b4e22b4e3bec89f876bd9e445991c1af1598",
+      "experiments/maxrl_comp002_pretraining_v1/canary.py": "82cc8df002cf545110895f374182fba08fa6f2ac2403ad55cb3743e947e97a64",
+      "experiments/maxrl_comp002_pretraining_v1/content_scoring.py": "df51285c05fb7d4d0b56287b7f6d4913943888fa67b6e7ceaf037617dfab9a1b",
+      "experiments/maxrl_comp002_pretraining_v1/data_gates.py": "fe72c3ba4cdeb7b6fda9519b627ffe82c69a46dc9ad6f31309dd14c70f311d37",
+      "experiments/maxrl_comp002_pretraining_v1/failure_taxonomy.py": "f89ca68c6d631918828677d2ca8ff88bc1d854da1b4ee795eb67482a5379e2e5",
+      "experiments/maxrl_comp002_pretraining_v1/h3b_null_cell.py": "670170c7543e2c80cfe2ac9b3fc2130763341302ef82684e9419557f2e2cbd0f",
+      "experiments/maxrl_comp002_pretraining_v1/mechanics.py": "e643eb196341e65f926733f22a2d23f668d8c09f046ebc5ae1d6561471cb0e88",
+      "experiments/maxrl_comp002_pretraining_v1/preflight.py": "e6f0e53d34929c53c9db35d3e99b27a521f6a934717de107bd3c8464590544e8",
+      "experiments/maxrl_comp002_pretraining_v1/q1_assets.py": "b47af0ce00c178ba8b71aa5451383512cd721c8101196aeb6d4a778bcdb31b2c",
+      "experiments/maxrl_comp002_pretraining_v1/q1_dev_scope.py": "435cadd7ac0f856d480fe1ffa68d930e0d4badc87257eef5d6964d249b926333",
+      "experiments/maxrl_comp002_pretraining_v1/q1_native_loader.py": "c83def7112f77fdc7f9ef8f9a3427e0c1ed15e038d232e195fdc833cabae5798",
+      "experiments/maxrl_comp002_pretraining_v1/q1_native_wait.py": "f4b1315d3fb6aa697c2b541b6c91f1c238c0c9e45b884547b0abbc72a73df272",
+      "experiments/maxrl_comp002_pretraining_v1/q1_tokenizer.py": "312413068abd65f38aca97ef1d500a17637fec9b7d3138298c1210669ffb962b",
+      "experiments/maxrl_comp002_pretraining_v1/q2_select_source_smoke.py": "b988dafa2903608fd7c2483dc466d262ef91e2945e499c1fcb52ecf9792a7bf4",
+      "experiments/maxrl_comp002_pretraining_v1/rs_repairs.py": "e3121fa1f3456f1af78e9053db26baa0b121ec9d1f1572941e8c47f528454506",
+      "experiments/maxrl_comp002_pretraining_v1/s0_churn.py": "8e7473152f936fb4965abaef1b38e099b3b3a4dd9c7672a3c8d8ccf1ceb37062",
+      "experiments/maxrl_comp002_pretraining_v1/s0_competence.py": "05a70d8b7248f0c54b27e7dc286259e16d7365fe640ebb44e1f834151188067e",
+      "experiments/maxrl_comp002_pretraining_v1/s0_enroll.py": "b48ae3b55aab4a28dc1c55a5a226567ded61c826d8f492160a8be344082cb8ae",
+      "experiments/maxrl_comp002_pretraining_v1/s0_freeze.py": "c11594492363b151a0921f0b2e0a22b433ca187dc3463177e5507bdd5db69d37",
+      "experiments/maxrl_comp002_pretraining_v1/s0_generate.py": "60ba77eb8f688347b7852bb9b53f2728b8b1250578d1b36c0e210b6e3e7b3457",
+      "experiments/maxrl_comp002_pretraining_v1/s0_pilot.py": "7ae20fda82fc3084b9a60634d213b7a62a7a494b64760e09710ca893c769e04c",
+      "experiments/maxrl_comp002_pretraining_v1/s0_q1_fp32.py": "4c7af10214c2eb0f5fa1296a42344b8635383d4b503cb012bfd1d2b175ae1c87",
+      "experiments/maxrl_comp002_pretraining_v1/s0_runtime.py": "739f97eda8688ffc32ab6683a6e98c4c2589a6bf2adc01bd18aabf10bca330bf",
+      "experiments/maxrl_comp002_pretraining_v1/s0_warmstart.py": "504cd98a2377f93e35c8dd94f2e982d91e4acfac3d08f40f8c31a4ad557c1b9d",
+      "experiments/maxrl_comp002_pretraining_v1/s0pre_evidence.py": "440dbbd3b6ca82cbe94f9aabc93fac0ad039572d6c0bfb638e8c2b120ec6288e",
+      "experiments/maxrl_comp002_pretraining_v1/s0pre_test_scope_runner.py": "8de27752b2efd322f2847fd4eda7fe2c87f035acd78bcc1fbd439ead75b3ab9a",
+      "experiments/maxrl_comp002_pretraining_v1/scope_receipt.py": "d755a2690083e31733dd47e08786c1f35f7c2459ce3b93a42c06f2519ca22419",
+      "experiments/maxrl_comp002_pretraining_v1/scoped_scorer.py": "761bea1c66418e04ff3e7409ac9b8a90418f8274ac7474398bd7f5a304a4643d",
+      "experiments/maxrl_comp002_pretraining_v1/stats_exact.py": "30e8e0868f7dbbd8d6a9833210424faf794df3082076d290fb7903013d9775df",
+      "experiments/maxrl_comp002_pretraining_v1/tests/conftest.py": "484cefe9d8408281d022a1ae7e279a8c61f68e3582fac25fd96fc9019b96a1b6",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_content_scoring.py": "3f352a8b325aadedd40281a98aba9ef0c5193fbd2276781379a007f699638b03",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_q1_native_loader.py": "c3eb8c127f930cb188044156463db1b6f634da08c15fc5323ede1f27929b7162",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_qualification.py": "238cea03c1513aacdefeaf2220b4ab6829b1edd67277fec8685c9ddeb8280693",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_rs_repairs.py": "c8b0af6de492d9e6e423ca65f4177fd4ae90bf7a80e7ef8160f123e9cb1eb1f0",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_s0_competence_enroll.py": "10aaf03a15484a8af7f90f6b0684c8c40560ba2708b59c408c7871ba64ceb4f6",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_s0_freeze.py": "c76ee8f39e6cfb8179c74a4aa2e064823a9e8feaf12876dd860666662a557531",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_s0_generate.py": "7af8eef4ec41808b885478e3fb164b0a7c4517c849ad743e2ea902548d474b49",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_s0_pilot.py": "bcda2d56384217908d556f9382cf03b6cf6a4b467b2cf8ca48edc8473109d69e",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_s0_q1_fp32.py": "49ee7d5f1d0b4433a8b9f7778d0272b9f6f6673f905ecbd31f8a6f9abeec6e36",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_s0_runtime.py": "63a39387dba07300f129d955212421d6fd4207659f78e355627e9f0cd956bfb7",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_s0_warmstart.py": "b005e15a19e5ab1dcfa7688f6aee3e6fc5fa1b92e3c109b22001e54448b612e8",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_s0pre_arm_build.py": "36d89d874051187a52cb1ab0948e2635543a6c3492de5542a1e3314336cbc1e5",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_s0pre_canary.py": "43c936d7b47a57649babdadbad516d948b8942f8c952b6993c5121b8c3402284",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_s0pre_content_taxonomy.py": "e016113990305085c9129c272d090478af36fbaf60224afc4c3c53cf64157bec",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_s0pre_data_gates.py": "1e4f4318bab64e030590b632cc891b7544367ada95ffdd4bc721531a153c4cd0",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_s0pre_scoped_scorer.py": "251c4c6bcc1c4b13c6ff4fd5d526e9e241f91acff5b36a2898d4af486ead1da9",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_s0pre_stats.py": "ec60f9da63bed3b0ab28fef89f386b0931b35eabce585368b9fe7ffbe0672a7d",
+      "experiments/maxrl_comp002_pretraining_v1/tests/test_warmstart_checkpoint.py": "c7c4a2ea410ab7f1ba10577835e8e263698c41ba8d5ba5ffced099e0dc17ad53",
+      "experiments/maxrl_comp002_pretraining_v1/warmstart_checkpoint.py": "5e9dbb5b84de522cb200e986bccdc6262ee4516c4b60baab0acc4ab063af4998",
+      "experiments/skill_acquisition_method_lab_v1/__init__.py": "d5bcb33f36a3683d433a7c8b00ada1d13e0913cc17c56284d2bcb23224b6a4ad",
+      "experiments/skill_acquisition_method_lab_v1/exact_math.py": "1dc760958a7039f12511248a8ef77ca6c182ba4f342b79ed5cf369b1c8b5c906",
+      "experiments/skill_acquisition_method_lab_v1/plot_audit.py": "3c805a5b7808b5f46581bb0ce7bf523073cef590aa756c8cfaf0124d063e5fc0",
+      "experiments/skill_acquisition_method_lab_v1/run_audit.py": "be94b26ac9bc3ed54609477db477fd1709d44f8a21c12b55b6af4599e957ec87",
+      "experiments/skill_acquisition_method_lab_v1/source_evidence.py": "efb2f601f9852e2854cb2214e07dee76efd66af31aa3c3ead1b531f83e0a12d5",
+      "experiments/skill_acquisition_method_lab_v1/tests/test_exact_math.py": "6fd75c5b4dd723b38a768d061f0acbb57102c520b7c9db3a5b6f2b2fb4bc7a40"
+    },
+    "native_model_loads": 0,
+    "native_training_started": false,
+    "receipt_path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\logs\\FINAL_SOURCE_BEFORE_20260930_v2.json",
+    "receipt_sha256": "4259f9b2aeeb9cdab2e31ee6fd8bc4c3c4be7cc686dc43b1263607c94c5131f4",
+    "changed_during_full_suite": []
+  },
+  "targeted_acceptance": {
+    "warmstart_and_checkpoint": {
+      "passed": 47,
+      "skipped": 0,
+      "seconds": 50.66
+    },
+    "freeze": {
+      "passed": 65,
+      "skipped": 0,
+      "seconds": 4.58
+    },
+    "resume_fixture": {
+      "applied_updates": 75,
+      "interruption_after_attempted_update": 37,
+      "restored_cursor": 36,
+      "spent_updates": 76,
+      "spent_row_forwards": 608,
+      "parameters_optimizer_all_rng_equal_uninterrupted": true,
+      "scope": "CPU acceptance fixture, not native candidate efficacy"
+    }
+  },
+  "independent_reviews": {
+    "warmstart_checkpoint": "No remaining parameter or dose integrity blocker; bound journals/checkpoints, exact applied dose, explicit uncertain costs, streamed delta and no-step recovery verified.",
+    "freeze": "Exact common anchor preserved; completed600/75 warm receipt, SIGNAL provenance, A/B ancestry and host-floor maximum checked.",
+    "freeze_sha256": "c11594492363b151a0921f0b2e0a22b433ca187dc3463177e5507bdd5db69d37"
+  },
+  "orchestration": {
+    "warm_pilot": "Launch only after warmed S0-C outcome SIGNAL",
+    "warm_enrollment": "Use adopted S0_RUNTIME_FREEZE_PILOT_WARM successor after the pilot ladder",
+    "source_rule": "Clean committed checkout for every native attempt/resume; no commits between an attempt and resume",
+    "wall_reporting": "Invocation wall_known_s is a lower bound ending before terminal receipt and checkpoint cleanup; external detached worker elapsed includes that tail."
+  },
+  "detachment": {
+    "probe_receipt_sha256": "fbe0ad50dbdc93eb3380c78f8cd14cb90caa22ef8af4a1fc272719e62f8d707e",
+    "helper_path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\run_owned_detached.py",
+    "helper_sha256": "d61f9d5e9386a572bdafff72677cf6a461085191fcb647ec9b3775a362478ecf",
+    "probe_rc": 0,
+    "probe_seconds": 20.061999999999898
+  },
+  "original_full_suite_abort": {
+    "receipt": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\logs\\FINAL_FULL_SUITE_20260930.aborted.json",
+    "reason": "Test changed during qualification; superseded by stable full-suite v2."
+  },
+  "interpretation": "Mechanics qualification only. Native candidate training, warmed signal and skill acquisition are not yet measured."
+}

@@ -7,6 +7,15 @@ The source (arm B: Supa streamed into FP32) samples G = 8 completions for every 
 (150 each). Every attempt is kept, with no refill. Nothing here trains, saves weights, or opens DEV, TEST,
 CHALLENGE or guard_test.
 
+- Anchor (section 18, Amendment 2). The source is the anchor the runtime freeze names: plain Supa for the
+  section 16 freeze (anchor None), theta0' = Supa + delta_warm for S0_RUNTIME_FREEZE_WARM.json. It is loaded by
+  s0_runtime.load_anchor (delta digest and arm digest asserted), and identity['anchor'] must match the freeze's
+  anchor (anchor_matches). identity['anchor'] is a journal bind field and is recorded in the receipt, so a journal
+  made on Supa is never resumed on theta0' or the reverse. For an anchored freeze the registered default receipt
+  and journal names carry s0_runtime.WARM_SUFFIX (S0_COMPETENCE_WARM.json / .jsonl), and a registered --out must
+  too (a Supa read may not use a _WARM name). run_meta's model_sha256 is the anchor arm digest for theta0' (the
+  Supa weights file sha for plain Supa).
+
 - Rows. canonical/calibration.jsonl comes through scoped_scorer.load_role (manifest sha, file sha, row count).
   For each of R, S and P, the core rows' sorted ids and parents must reproduce the ids_sha256, parents_sha256,
   rows and parents of evidence/S0PRE_CALIBRATION_SCOPE.json (file sha pinned). The whole R/S/P core scope must
@@ -25,10 +34,10 @@ CHALLENGE or guard_test.
 - Reward. scoped_scorer.score_one, the scorer's per-row strict path: strict = the unchanged corpus.reward, plus
   bounded content, the normalization, format_only_failure and the failure_taxonomy subtype.
 - Journal (section 12 reads). One line per prompt group is appended to <out>.jsonl through
-  s0_generate.ResumableJsonl (row hash, fsync). Every line carries the bind fields: arm and weights digests,
-  decoding_sha256, the generation contract, the plan digest, the tokenizer receipt, the code bundle and the
-  group size. A launch resumes at the first missing row and refuses a journal that is not a prefix of the plan
-  or that has a different bind. <out>.attempts.jsonl logs a start event and an end event per launch (outcome
+  s0_generate.ResumableJsonl (row hash, fsync). Every line carries the bind fields: the anchor, the arm and
+  weights digests, decoding_sha256, the generation contract, the plan digest, the tokenizer receipt, the code
+  bundle and the group size. A launch resumes at the first missing row and refuses a journal that is not a
+  prefix of the plan or that has a different bind. <out>.attempts.jsonl logs a start event and an end event per launch (outcome
   complete, aborted or error), so an interruption stays documented. hostbudget.guard runs before every prompt.
 - Final scoring (section 8.5). Once the journal is complete, each sample index k = 0..G-1 is one batch of the
   plan's rows, scored through canary.score_with_canary. That runs the canary on CALIBRATION plus guard_dev,
@@ -103,6 +112,7 @@ HEX = frozenset('0123456789abcdef')
 FREEZE_STAGE = 'S0_RUNTIME_FREEZE'
 FREEZE_FIELDS = ('decoding_preimage', 'decoding_sha256', 'host_floor_gib', 'scoring_code_bundle_sha256',
                  'inventory')
+FREEZE_ANCHOR_KEYS = s0.ANCHOR_KEYS + ('warmstart_receipt_sha256',)   # absent or None: the Supa freeze
 UNRENDERABLE = '<|unrenderable:%d|>'
 RESPONSE_RULE = (
     "Strict body. For stop_reason 'eos' the completion must hold exactly one EOS (151645 or 151643), as its last "
@@ -129,7 +139,7 @@ COMMON_TEST_OPTIONS = ('model_dir', 'asset_receipt', 'host_floor_gib')
 def code_files(*own: str) -> dict:
     """Repo-relative name -> path of every source file on the read and scoring path (own: the stage module)."""
     names = {PACKAGE + name for name in ('s0_competence.py', 's0_runtime.py', 's0_generate.py', 'mechanics.py',
-                                         'canary.py', 'preflight.py')}
+                                         'canary.py', 'preflight.py', 'arm_build.py')}
     names |= set(own) | set(scoped_scorer.CODE_FILES) | {'experiments/maxrl_verifiable_data_v1/maxrl.py',
                                                          'experiments/maxrl_verifiable_data_v1/specs.py'}
     return {name: REPO / name for name in sorted(names)}
@@ -372,8 +382,38 @@ def live_bundle() -> str:
     return digest(scoped_scorer.code_sha256())
 
 
+def _freeze_anchor(value: dict):
+    """The freeze's anchor block (FREEZE_ANCHOR_KEYS), or None for the Supa freeze (key absent or None)."""
+    anchor = value.get('anchor')
+    if anchor is None:
+        return None
+    require(type(anchor) is dict and set(anchor) == set(FREEZE_ANCHOR_KEYS),
+            'runtime freeze anchor must hold exactly: ' + ', '.join(FREEZE_ANCHOR_KEYS))
+    require(all(_hex64(anchor[key]) for key in FREEZE_ANCHOR_KEYS if key != 'delta_path'),
+            'runtime freeze anchor digests')
+    require(type(anchor['delta_path']) is str and anchor['delta_path'], 'runtime freeze anchor delta_path')
+    return dict(anchor)
+
+
+def anchor_arguments(anchor) -> dict:
+    """s0_runtime.load_anchor keyword arguments for a freeze anchor (none for plain Supa)."""
+    if anchor is None:
+        return {}
+    return {'delta_path': anchor['delta_path'], 'delta_sha256': anchor['delta_sha256'],
+            'arm_sha256': anchor['arm_sha256']}
+
+
+def anchor_matches(bound, frozen) -> bool:
+    """True iff an identity/bind anchor is the freeze's: its ANCHOR_KEYS for theta0', no delta for plain Supa."""
+    if frozen is None:
+        return bound is None or (type(bound) is dict and all(bound.get(key) is None for key in
+                                                              ('delta_path', 'delta_sha256', 'arm_sha256')))
+    return type(bound) is dict and bound == {key: frozen[key] for key in s0.ANCHOR_KEYS}
+
+
 def read_freeze(path, *, registered: bool) -> dict:
-    """The S0-F runtime freeze (FREEZE_FIELDS): the preimage must reproduce its decoding_sha256."""
+    """The S0-F runtime freeze (FREEZE_FIELDS): the preimage must reproduce its decoding_sha256. 'anchor' is the
+    theta0' block (FREEZE_ANCHOR_KEYS) or None for the Supa freeze."""
     value, file_sha = json_file(path, 'runtime freeze')
     require(value.get('stage') == FREEZE_STAGE, 'not an ' + FREEZE_STAGE + ' receipt')
     missing = [key for key in FREEZE_FIELDS if key not in value]
@@ -385,13 +425,14 @@ def read_freeze(path, *, registered: bool) -> dict:
     floor = value['host_floor_gib']
     require(type(floor) in (int, float) and math.isfinite(floor) and floor > 0, 'runtime freeze host floor')
     require(_hex64(value['scoring_code_bundle_sha256']), 'runtime freeze scorer code bundle')
+    anchor = _freeze_anchor(value)
     if registered:
         require(value.get('test_mode', False) is False and value.get('registered_run', True) is True,
                 'the runtime freeze is not a registered run')
         require(preimage.get('device') == REGISTERED['device'], 'the registered runtime freeze is not for cuda:0')
     return {'path': str(Path(path).resolve()), 'sha256': file_sha, 'decoding_sha256': decoding,
             'host_floor_gib': float(floor), 'scoring_code_bundle_sha256': value['scoring_code_bundle_sha256'],
-            'inventory': value['inventory']}
+            'inventory': value['inventory'], 'anchor': anchor}
 
 
 # ------------------------------------------------------------------------------------------ rules
@@ -505,9 +546,14 @@ def common_config(args, lease_module, host_module, *, stage: str, label: str, de
             raise SystemExit('the registered stage asserts the S0 runtime freeze (--runtime-freeze)')
         if not _same_path(args.repo, REPO):
             raise SystemExit('the registered stage binds the checkout that holds this code: ' + str(REPO))
-        out = args.out if args.out is not None else s0.RECORDS / default_name
-        if not _same_path(Path(out).resolve().parent, s0.RECORDS):
+        if args.out is not None and not _same_path(Path(args.out).resolve().parent, s0.RECORDS):
             raise SystemExit('registered records are written to ' + str(s0.RECORDS))
+        freeze = read_freeze(args.runtime_freeze, registered=True)
+        anchored = freeze['anchor'] is not None
+        out = args.out if args.out is not None else s0.RECORDS / s0.anchored_name(default_name, anchored)
+        if anchored != Path(out).stem.endswith(s0.WARM_SUFFIX):
+            raise SystemExit("a theta0' (anchored) read writes to a *%s receipt name and a Supa read does not: %s"
+                             % (s0.WARM_SUFFIX, Path(out).name))
         model_dir, asset_receipt = s0.MODEL_DIR, s0.ASSET_RECEIPT
     else:
         if args.device != 'cpu':
@@ -519,6 +565,7 @@ def common_config(args, lease_module, host_module, *, stage: str, label: str, de
         out = args.out
         model_dir = s0.MODEL_DIR if args.model_dir is None else args.model_dir
         asset_receipt = s0.ASSET_RECEIPT if args.asset_receipt is None else args.asset_receipt
+        freeze = read_freeze(args.runtime_freeze, registered=False) if args.runtime_freeze is not None else None
     if not (math.isfinite(args.lease_timeout_s) and args.lease_timeout_s > 0):
         raise SystemExit('lease timeout must be > 0')
     if args.host_floor_gib is not None and not (math.isfinite(args.host_floor_gib) and args.host_floor_gib > 0):
@@ -531,7 +578,8 @@ def common_config(args, lease_module, host_module, *, stage: str, label: str, de
     return {'out': target, 'journal': target.with_suffix('.jsonl'),
             'attempts': target.with_name(target.stem + '.attempts.jsonl'), 'model_dir': Path(model_dir),
             'asset_receipt': Path(asset_receipt), 'device': s0.DEVICES[args.device], 'stage': stage, 'label': label,
-            'test_mode': bool(args.test_mode), 'max_new_tokens': s0.MAX_NEW_TOKENS}
+            'test_mode': bool(args.test_mode), 'max_new_tokens': s0.MAX_NEW_TOKENS, 'freeze': freeze,
+            'anchor': None if freeze is None else freeze['anchor']}
 
 
 def launch_snapshot(host) -> dict:
@@ -545,9 +593,10 @@ def launch_snapshot(host) -> dict:
 
 
 def prepare_launch(args, cfg: dict, host) -> dict:
-    """Launch floor (hostbudget.require), runtime and checkout checks, receipt pins, the freeze and the bundle."""
+    """Launch floor (hostbudget.require), runtime and checkout checks, receipt pins, the freeze and the bundle
+    (the freeze was read by common_config)."""
     launch = launch_snapshot(host)
-    freeze = read_freeze(args.runtime_freeze, registered=not args.test_mode) if args.runtime_freeze else None
+    freeze = cfg['freeze']
     if args.host_floor_gib is not None:
         floor = {'floor_gib': float(args.host_floor_gib), 'source': '--host-floor-gib (test mode)'}
     else:
@@ -575,8 +624,11 @@ def prepare_launch(args, cfg: dict, host) -> dict:
 
 
 def run_meta(identity: dict, decoding_sha256: str) -> dict:
-    """behaviour.validate_meta's three run hashes (tokenizer: TOKENIZER_SHA_RULE)."""
-    meta = {'model_sha256': identity['weights_sha256'], 'tokenizer_sha256': s0.TOKENIZER_RECEIPT_SHA,
+    """behaviour.validate_meta's three run hashes (tokenizer: TOKENIZER_SHA_RULE). model_sha256 is the model read:
+    the Supa weights file sha for plain Supa, the anchor arm digest (ANCHOR_DIGEST_RULE) for theta0'."""
+    anchor = identity.get('anchor')
+    model = identity['weights_sha256'] if anchor is None or anchor['arm_sha256'] is None else anchor['arm_sha256']
+    meta = {'model_sha256': model, 'tokenizer_sha256': s0.TOKENIZER_RECEIPT_SHA,
             'decoding_sha256': decoding_sha256}
     require(all(_hex64(value) for value in meta.values()), 'run metadata hashes')
     return meta
@@ -635,15 +687,19 @@ def _read(cfg: dict, host, state: dict, prompts: list, bind_extra: dict, decode_
         require(freeze['decoding_sha256'] == decoding, 'decoding_sha256 differs from the runtime freeze')
     contract = g.generation_contract(cfg['max_new_tokens'])
     state['generation_contract'] = contract
-    model, identity = s0.load_model_fp32(cfg['model_dir'], cfg['device'], cfg['asset_receipt'])
+    model, identity = s0.load_anchor(cfg['model_dir'], cfg['device'], cfg['asset_receipt'],
+                                     **anchor_arguments(cfg['anchor']))
     device = next(model.parameters()).device
     try:
+        require(anchor_matches(identity['anchor'], cfg['anchor']),
+                'the loaded anchor differs from the runtime freeze')
         require(identity['attn_implementation'] == preimage['attn_implementation'], 'attention implementation drift')
         state['identity'] = {k: v for k, v in identity.items()
                              if k not in ('stored_tensor_sha256', 'parameter_inventory')}
         state['run_meta'] = run_meta(identity, decoding)
         planned = [item['id'] for item in prompts]
-        bind = dict({'stage': cfg['stage'], 'test_mode': cfg['test_mode'], 'arm_sha256': identity['arm_sha256'],
+        bind = dict({'stage': cfg['stage'], 'test_mode': cfg['test_mode'], 'anchor': identity['anchor'],
+                     'arm_sha256': identity['arm_sha256'],
                      'weights_sha256': identity['weights_sha256'], 'decoding_sha256': decoding,
                      'generation_contract_sha256': contract['contract_sha256'], 'plan_sha256': digest(planned),
                      'tokenizer_sha256': s0.TOKENIZER_RECEIPT_SHA, 'code_sha256': digest(cfg['code']),
@@ -753,6 +809,7 @@ def base_receipt(args, cfg: dict, state: dict, *, schema: str, registration: str
             'scorer_bundle': state['bundle'], 'decoding_preimage': state.get('decoding_preimage'),
             'decoding_sha256': state.get('decoding_sha256'), 'generation_contract': state.get('generation_contract'),
             'identity': state.get('identity'), 'run_meta': state.get('run_meta'),
+            'anchor': (state.get('identity') or {}).get('anchor'), 'anchor_digest_rule': s0.ANCHOR_DIGEST_RULE,
             'tokenizer_sha256_rule': TOKENIZER_SHA_RULE, 'response_rule': RESPONSE_RULE,
             'fingerprint_unchanged': state.get('fingerprint_unchanged'), 'resources': state.get('resources'),
             'journal': journal_record(cfg, state), 'attempts': attempts_record(cfg, state),

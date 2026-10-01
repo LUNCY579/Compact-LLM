@@ -885,6 +885,10 @@ def test_cli_runs_the_whole_pilot_on_cpu(tmp_path, tiny_dir, comp_rs_data, token
     assert receipt['completed'] is True and receipt['error'] is None and receipt['oom'] is None
     assert receipt['test_mode'] is True and receipt['registered_run'] is False and receipt['stage'] == 'S0_PILOT_A'
     assert receipt['schema'] == pilot.SCHEMA and receipt['argv'] == result.argv
+    # without --runtime-freeze the pilot runs on plain Supa: no freeze, no delta
+    assert receipt['anchor'] is None and receipt['runtime_freeze'] is None
+    assert receipt['identity']['anchor'] == {'base_weights_sha256': sha(tiny_dir.root / 'model.safetensors'),
+                                             'delta_path': None, 'delta_sha256': None, 'arm_sha256': None}
     assert receipt['decision']['host_ok'] is True and receipt['decision']['inventory_fits'] is None
     # selection and seeds
     ids = selected.inputs['selected_ids'][:2]

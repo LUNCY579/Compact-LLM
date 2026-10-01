@@ -28,6 +28,13 @@ reads a bank; the stage entrypoints do that on top of it.
   the section 2 identity of arm B (= build_arm_streaming(model.safetensors, [])['arm_sha256']), and
   state_fingerprint(model) is the same construction over every parameter and buffer name of the model,
   tied alias and non-persistent buffers included.
+- Anchor (section 18, Amendment 2). load_anchor loads Supa with load_model_fp32 and, given a delta, reads it
+  with arm_build.read_delta (its data-section digest must reproduce delta_sha256), adds it in FP32 in place
+  (add_delta: keys a subset of the model's parameter names, the tied lm_head alias and buffers refused, shapes
+  equal, nothing else touched) and requires anchor_digest(model) == arm_sha256 (ANCHOR_DIGEST_RULE), else
+  arm_build.ArmRebuildStop. identity['anchor'] holds ANCHOR_KEYS (delta fields None for plain Supa); on an
+  anchored model identity['arm_sha256'] and identity['state_fingerprint'] describe the anchored state and
+  identity['base'] keeps plain Supa's. anchored_name adds WARM_SUFFIX to a stage file name.
 - Tokenizer. load_tokenizer loads local files only, no remote code, and checks the chat-template sha, the
   class and the special IDs against the tokenizer receipt (and, given the asset receipt, the six asset file
   hashes). render() renders policy messages with add_generation_prompt=True, enable_thinking=False,
@@ -112,6 +119,20 @@ ARCHITECTURE_KEYS = ('architectures', 'model_type', 'num_hidden_layers', 'tie_wo
 TIED = ('lm_head.weight', 'model.embed_tokens.weight')
 CHUNK = 1 << 22
 GIB = 1024 ** 3
+HEX = frozenset('0123456789abcdef')
+
+# Section 18: theta0' = Supa 1.7 + delta_warm, identified by one digest convention (s0_warmstart uses it too).
+ANCHOR_KEYS = ('base_weights_sha256', 'delta_path', 'delta_sha256', 'arm_sha256')
+ANCHOR_DIGEST_RULE = (
+    "anchor arm_sha256 = anchor_digest(model) = state_fingerprint(model): sha256 over the sorted names of EVERY "
+    "parameter and buffer of the model (named_parameters and named_buffers, remove_duplicate=False: the tied "
+    "lm_head.weight alias and the non-persistent model.rotary_emb.inv_freq included) of name + NUL + "
+    "arm_build.tensor_digest(tensor) + LF, i.e. arm_build.state_digest of that full name -> tensor map, FP32, "
+    "as the tensors sit on the device. It is taken on the REBUILT model: Supa loaded by the S0 FP32 loader, then "
+    "the delta file as read back by arm_build.read_delta added in FP32 in place (param.add_(delta), which is "
+    "bitwise arm_build's fl32(arm + fl32(1.0 * delta))). Never on the trained FP32 master weights: "
+    "fl32(base + fl32(final - base)) need not equal final.")
+WARM_SUFFIX = '_WARM'
 
 _PINNED: dict = {}
 
@@ -481,6 +502,104 @@ def load_model_fp32(model_dir, device, asset_receipt, *, attn_implementation: st
     del state
     model.eval()
     return model, _identity(model, assets, dev)
+
+
+# ------------------------------------------------------------------------------------------------- anchor
+def _hex64(value) -> bool:
+    return type(value) is str and len(value) == 64 and not set(value) - HEX
+
+
+def anchor_digest(model) -> str:
+    """The theta0' arm digest under ANCHOR_DIGEST_RULE (the one convention; s0_warmstart calls this too)."""
+    return state_fingerprint(model)
+
+
+def add_delta(model, delta) -> dict:
+    """Add an FP32 delta to the model's parameters in place, in FP32; nothing else is touched.
+
+    Every key must name a model parameter (not a buffer; the tied alias lm_head.weight is refused, its storage
+    is model.embed_tokens.weight), every tensor must be FP32, finite and of the parameter's shape. All keys are
+    checked before the first add, so a refused delta leaves the model as it was."""
+    import torch
+    require(isinstance(delta, Mapping) and delta, 'empty delta')
+    params = dict(model.named_parameters(remove_duplicate=False))
+    buffers = {name for name, _ in model.named_buffers(remove_duplicate=False)}
+    for key in sorted(delta, key=str):
+        require(type(key) is str and key, 'invalid delta key: ' + repr(key))
+        require(key != TIED[0], 'delta key is the tied alias lm_head.weight (its storage is %s)' % TIED[1])
+        require(key not in buffers, 'delta key is a buffer, not a parameter: ' + key)
+        require(key in params, 'delta key is not a model parameter: ' + key)
+        tensor, parameter = delta[key], params[key]
+        require(isinstance(tensor, torch.Tensor) and tensor.dtype == torch.float32, 'delta not FP32: ' + key)
+        require(tuple(tensor.shape) == tuple(parameter.shape), 'delta shape != parameter shape: ' + key)
+        require(parameter.dtype == torch.float32, 'parameter not FP32: ' + key)
+        require(bool(torch.isfinite(tensor).all()), 'nonfinite delta: ' + key)
+    numel = 0
+    with torch.no_grad():
+        for key in sorted(delta):
+            parameter = params[key]
+            parameter.add_(delta[key].to(parameter.device))
+            require(bool(torch.isfinite(parameter).all()), 'nonfinite anchored parameter: ' + key)
+            numel += parameter.numel()
+    return {'tensors': len(delta), 'numel': numel, 'keys_sha256': digest(sorted(delta)),
+            'arithmetic': 'param.add_(delta) in FP32, in place, sorted key order'}
+
+
+def load_anchor(model_dir, device, asset_receipt, *, delta_path=None, delta_sha256=None, arm_sha256=None,
+                attn_implementation: str = ATTN_IMPLEMENTATION):
+    """(model, identity) of the section 18 anchor: plain Supa, or Supa + a delta rebuilt and verified.
+
+    Supa is loaded by load_model_fp32 (T1 identity against the stored tensors). With a delta: read_delta
+    refuses a file whose data section does not reproduce delta_sha256; add_delta adds it in FP32; then
+    anchor_digest(model) must equal arm_sha256 (ANCHOR_DIGEST_RULE), else arm_build.ArmRebuildStop (section 2:
+    a rebuild must reproduce the digest, or STOP) and no model is returned. identity['anchor'] =
+    {base_weights_sha256, delta_path, delta_sha256, arm_sha256}, the delta fields None for plain Supa. For an
+    anchored model identity['arm_sha256'] (the stored names, the arm-builder convention) and
+    identity['state_fingerprint'] (= anchor arm_sha256) are recomputed on the anchored state; identity['base']
+    keeps plain Supa's two digests, and every other field describes the Supa load."""
+    given = [value is not None for value in (delta_path, delta_sha256, arm_sha256)]
+    require(all(given) or not any(given), 'an anchor delta needs delta_path, delta_sha256 and arm_sha256 together')
+    if any(given):
+        require(isinstance(delta_path, (str, Path)) and str(delta_path), 'anchor delta path')
+        require(_hex64(delta_sha256), 'anchor delta_sha256 must be a lowercase sha256 hex digest')
+        require(_hex64(arm_sha256), 'anchor arm_sha256 must be a lowercase sha256 hex digest')
+        require(Path(delta_path).is_file(), 'anchor delta file missing: ' + str(delta_path))
+    model, identity = load_model_fp32(model_dir, device, asset_receipt, attn_implementation=attn_implementation)
+    anchor = {'base_weights_sha256': identity['weights_sha256'], 'delta_path': None, 'delta_sha256': None,
+              'arm_sha256': None}
+    if not any(given):
+        return model, dict(identity, anchor=anchor)
+    from . import arm_build
+    try:
+        delta = arm_build.read_delta(delta_path, delta_sha256)
+        applied = add_delta(model, delta)
+        delta.clear()
+        del delta
+        digests = state_digests(model)
+        actual = combine(digests)
+        if actual != arm_sha256:
+            raise arm_build.ArmRebuildStop(arm_sha256, {'arm_sha256': actual, 'rule': ANCHOR_DIGEST_RULE,
+                                                        'delta_path': str(delta_path),
+                                                        'delta_sha256': delta_sha256})
+    except BaseException:
+        del model
+        raise
+    stored = sorted(identity['stored_tensor_sha256'])
+    anchor.update(delta_path=str(delta_path), delta_sha256=delta_sha256, arm_sha256=arm_sha256)
+    return model, dict(identity, anchor=anchor, anchor_delta=applied, anchor_digest_rule=ANCHOR_DIGEST_RULE,
+                       base={'arm_sha256': identity['arm_sha256'], 'state_fingerprint': identity['state_fingerprint'],
+                             'note': 'plain Supa as loaded and T1-verified, before the delta'},
+                       arm_sha256=combine({name: digests[name] for name in stored}), state_fingerprint=actual)
+
+
+def anchored_name(name: str, anchored: bool) -> str:
+    """A stage file name for the anchor: 'S0_COMPETENCE.json' -> 'S0_COMPETENCE_WARM.json' when anchored."""
+    require(type(name) is str and name.endswith('.json') and len(name) > 5 and '/' not in name and '\\' not in name,
+            'stage file name')
+    require(type(anchored) is bool, 'anchored flag')
+    stem = name[:-5]
+    require(not stem.endswith(WARM_SUFFIX), 'the base stage name already carries ' + WARM_SUFFIX)
+    return stem + WARM_SUFFIX + '.json' if anchored else name
 
 
 # ---------------------------------------------------------------------------------------------- tokenizer

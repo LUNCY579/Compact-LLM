@@ -3,11 +3,13 @@
 python -m experiments.maxrl_comp002_pretraining_v1.s0_enroll --run 1 --runtime-freeze RECORDS\\S0_RUNTIME_FREEZE.json
 python -m experiments.maxrl_comp002_pretraining_v1.s0_enroll --run 2 --runtime-freeze RECORDS\\S0_RUNTIME_FREEZE.json
     [--out RECORDS\\S0_ENROLL_RUN<n>.json] [--lease-timeout-s 900]
+(theta0': --runtime-freeze RECORDS\\S0_RUNTIME_FREEZE_WARM.json; the default out is RECORDS\\S0_ENROLL_RUN<n>_WARM.json)
 
-Each run greedy-decodes the source (arm B: Supa streamed into FP32) with batch size 1 (section 8.1). The order is
-all 1,200 guard_dev rows in bank order, then the 450 CALIBRATION core R, S and P rows (R, S, P, each sorted by
-id). Run 2 decodes the same rows in a separate process; s0_churn compares the two runs' token IDs. Nothing here
-trains, saves weights, or opens DEV, TEST, CHALLENGE or guard_test.
+Each run greedy-decodes the source with batch size 1 (section 8.1): arm B (Supa streamed into FP32), or theta0' =
+Supa + delta_warm (section 18) when the runtime freeze carries an anchor, loaded, bound and named as in
+s0_competence. The order is all 1,200 guard_dev rows in bank order, then the 450 CALIBRATION core R, S and P rows
+(R, S, P, each sorted by id). Run 2 decodes the same rows in a separate process; s0_churn compares the two runs'
+token IDs. Nothing here trains, saves weights, or opens DEV, TEST, CHALLENGE or guard_test.
 
 - Rows. guard_dev comes from scoped_scorer.load_role (manifest sha, file sha, row count). CALIBRATION comes from
   s0_competence.load_calibration, with every skill asserted against evidence/S0PRE_CALIBRATION_SCOPE.json. Policy
@@ -18,13 +20,14 @@ trains, saves weights, or opens DEV, TEST, CHALLENGE or guard_test.
   the token IDs, the response text (s0_competence.RESPONSE_RULE), the stop reason, the generated tokens, the raw
   step logprobs, the decoder record, the wall and the process.
 - Journal (section 12). <out>.jsonl through s0_generate.ResumableJsonl (row hash, fsync). The bind fields are
-  the arm and weights digests, decoding_sha256, the generation contract, the plan digest, the tokenizer receipt,
-  the code bundle and the run number. A launch resumes at the first missing row. <out>.attempts.jsonl records
-  every launch. hostbudget.guard runs before every row.
+  the anchor, the arm and weights digests, decoding_sha256, the generation contract, the plan digest, the
+  tokenizer receipt, the code bundle and the run number. A launch resumes at the first missing row.
+  <out>.attempts.jsonl records every launch. hostbudget.guard runs before every row.
 - After completion:
   - guard_dev. behaviour.enroll(data, 'guard_dev', responses, run_meta) runs unchanged on the full bank. The
     responses are exactly {id, prompt_hash, response, generated_tokens}, in bank order. run_meta:
-    - model_sha256 = the asset receipt's model.safetensors sha (the loader checks the bytes against it);
+    - model_sha256 = the asset receipt's model.safetensors sha (the loader checks the bytes against it) for plain
+      Supa, the anchor arm digest (s0_runtime.ANCHOR_DIGEST_RULE) for theta0' (s0_competence.run_meta);
     - tokenizer_sha256 = the tokenizer receipt's file sha (s0_competence.TOKENIZER_SHA_RULE);
     - decoding_sha256 = s0_runtime.decoding_sha256 of the section 8.2 preimage.
     The same responses are also scored through scoped_scorer with canary.score_with_canary (legacy section), and
@@ -261,7 +264,7 @@ def main(argv=None, *, lease_module=None, host_module=None) -> int:
                        max_new_tokens=cfg['max_new_tokens'],
                        decoder=comp.distinct_decoders(rows, 'decoder', cfg['max_new_tokens']),
                        completed=True, code_sha256=_IMPORT_CODE, native_outputs_scored=True, **scored,
-                       note='Greedy batch-1 reads of arm B; run 1 is the guard_dev enrollment of record, run 2 the '
+                       note='Greedy batch-1 reads of the anchor; run 1 is the guard_dev enrollment of record, run 2 the '
                             'churn replicate (s0_churn).')
         return {'rows': len(rows), 'summary': scored['summary'], 'status': scored['guard_dev_enrollment_status'],
                 'sha256': comp.write_stage_receipt(cfg, receipt, args.repo, CODE_FILES, _IMPORT_CODE)}

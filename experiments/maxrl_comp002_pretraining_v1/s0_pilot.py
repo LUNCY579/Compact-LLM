@@ -8,6 +8,15 @@ python -m experiments.maxrl_comp002_pretraining_v1.s0_pilot --inventory B --a-re
 The pilot measures cost and memory. It fixes no training recipe, and its weights are discarded: nothing here
 saves a model, a delta or an optimizer state.
 
+- Anchor (section 18, Amendment 2: the pilot ladder is re-run on theta0'). --runtime-freeze (optional) names the
+  S0 runtime freeze to run under. Its anchor is loaded by s0_runtime.load_anchor (plain Supa when it is None;
+  theta0' = Supa + delta_warm with the delta and arm digests asserted), identity['anchor'] must match it, the live
+  decoding_sha256 must equal the freeze's, and its host floor is the launch floor (it replaces --q1-receipt, which
+  is then refused). The receipt records the freeze and 'anchor' (the freeze's anchor block, None for Supa); a B
+  pilot's A receipt must carry the same anchor. With an anchored freeze the registered default receipt is
+  S0_PILOT_<inventory>_WARM.json, and a registered --out must carry the _WARM suffix (a Supa pilot may not).
+  Without --runtime-freeze the pilot runs on plain Supa exactly as before (anchor None).
+
 - Prompts. 25 atomic_R TRAIN groups: the ids of manifests/atomic_R.json sorted by
   SHA256('COMP-RS-001-S0-PILOT|' + id).hexdigest() (ties broken by id), first 25. The rows come from
   canonical/train.jsonl, streamed once and hash-checked against the dataset manifest (itself checked against
@@ -143,6 +152,7 @@ LENIENT_RULE = ('lenient_reward = corpus.reward(row, lenient_response) where len
                 'differs from the strict body), else None; diagnostic only, never feeds the advantages')
 CODE_FILES = {'s0_pilot.py': Path(__file__).resolve(), 's0_runtime.py': Path(s0.__file__).resolve(),
               's0_generate.py': (s0.HERE / 's0_generate.py').resolve(),
+              'arm_build.py': (s0.HERE / 'arm_build.py').resolve(),
               's0_competence.py': (s0.HERE / 's0_competence.py').resolve(),
               'mechanics.py': Path(mechanics.__file__).resolve(), 'preflight.py': Path(preflight.__file__).resolve(),
               'maxrl_composable_skills_v2/corpus.py': Path(corpus.__file__).resolve(),
@@ -601,6 +611,8 @@ def _parser() -> argparse.ArgumentParser:
     ap.add_argument('--q1-receipt', type=Path)
     ap.add_argument('--q1-peak-rss-key')
     ap.add_argument('--a-receipt', type=Path, help='the S0_PILOT_A receipt (RERUN_WITH_B); required for registered B')
+    ap.add_argument('--runtime-freeze', type=Path,
+                    help="an S0 runtime freeze: its anchor (theta0' or Supa), decoding_sha256 and host floor")
     ap.add_argument('--lease-timeout-s', type=float, default=900.0)
     ap.add_argument('--test-mode', action='store_true')
     ap.add_argument('--groups', type=int)
@@ -632,8 +644,9 @@ def q1_floor(path, key: str) -> dict:
             'source': 'S0-Q1 peak worker RSS + 1.0 GiB'}
 
 
-def a_pilot(path, registered: bool) -> dict:
-    """The A pilot receipt a B pilot runs after: stage S0_PILOT_A, this schema, outcome RERUN_WITH_B."""
+def a_pilot(path, registered: bool, anchor=None) -> dict:
+    """The A pilot receipt a B pilot runs after: stage S0_PILOT_A, this schema, outcome RERUN_WITH_B, run on the
+    same anchor (its 'anchor' field; absent or None = plain Supa)."""
     receipt, receipt_sha = _receipt_file(path, 'S0_PILOT_A')
     require(receipt.get('stage') == 'S0_PILOT_A' and receipt.get('schema') == SCHEMA, 'not an S0_PILOT_A receipt')
     decision = receipt.get('decision')
@@ -642,8 +655,9 @@ def a_pilot(path, registered: bool) -> dict:
     if registered:
         require(receipt.get('registered_run') is True and receipt.get('test_mode') is False,
                 'the A receipt is not a registered run')
+    require(receipt.get('anchor') == anchor, 'the A pilot ran on another anchor than this B pilot')
     return {'path': str(Path(path).resolve()), 'sha256': receipt_sha, 'outcome': decision['outcome'],
-            'registered_run': receipt.get('registered_run')}
+            'registered_run': receipt.get('registered_run'), 'anchor': receipt.get('anchor')}
 
 
 def _same_path(a, b) -> bool:
@@ -653,6 +667,9 @@ def _same_path(a, b) -> bool:
 def _config(args, lease_module, host_module) -> dict:
     """Validate the command line and return the effective settings (refuses before any heavy work)."""
     inventory = INVENTORIES[args.inventory]
+    if args.runtime_freeze is not None and (args.q1_receipt is not None or args.q1_peak_rss_key is not None):
+        raise SystemExit('--runtime-freeze carries the launch floor (the S0-Q1 peak worker RSS + 1.0 GiB): do not '
+                         'also give --q1-receipt/--q1-peak-rss-key')
     if not args.test_mode:
         given = [name for name in TEST_OPTIONS if getattr(args, name) is not None]
         if given:
@@ -661,16 +678,24 @@ def _config(args, lease_module, host_module) -> dict:
             raise SystemExit('the registered pilot runs on cuda')
         if lease_module is not None or host_module is not None:
             raise SystemExit('injected lease/host modules are test-mode only')
-        if args.q1_receipt is None or args.q1_peak_rss_key is None:
-            raise SystemExit('the registered launch floor needs --q1-receipt and --q1-peak-rss-key')
+        if args.runtime_freeze is None and (args.q1_receipt is None or args.q1_peak_rss_key is None):
+            raise SystemExit('the registered launch floor needs --q1-receipt and --q1-peak-rss-key '
+                             '(or --runtime-freeze)')
         if not _same_path(args.repo, REPO):
             raise SystemExit('the registered pilot binds the checkout that holds this code: ' + str(REPO))
         if args.inventory == 'B' and args.a_receipt is None:
             raise SystemExit('registered B runs only after the registered A pilot decided RERUN_WITH_B '
                              '(--a-receipt)')
-        out = args.out if args.out is not None else s0.RECORDS / ('S0_PILOT_%s.json' % args.inventory)
-        if not _same_path(Path(out).resolve().parent, s0.RECORDS):
+        if args.out is not None and not _same_path(Path(args.out).resolve().parent, s0.RECORDS):
             raise SystemExit('registered receipts are written to ' + str(s0.RECORDS))
+        freeze = None if args.runtime_freeze is None else _competence().read_freeze(args.runtime_freeze,
+                                                                                    registered=True)
+        anchored = freeze is not None and freeze['anchor'] is not None
+        out = (args.out if args.out is not None
+               else s0.RECORDS / s0.anchored_name('S0_PILOT_%s.json' % args.inventory, anchored))
+        if anchored != Path(out).stem.endswith(s0.WARM_SUFFIX):
+            raise SystemExit("a theta0' (anchored) pilot writes to a *%s receipt name and a Supa pilot does not: %s"
+                             % (s0.WARM_SUFFIX, Path(out).name))
         sizes = dict(groups=REGISTERED['groups'], group_size=REGISTERED['group_size'],
                      max_new_tokens=REGISTERED['max_new_tokens'], blocks=list(inventory['blocks']))
         model_dir, asset_receipt = s0.MODEL_DIR, s0.ASSET_RECEIPT
@@ -679,9 +704,13 @@ def _config(args, lease_module, host_module) -> dict:
             raise SystemExit('--test-mode is refused with --device cuda: a GPU pilot is always a registered run')
         if args.out is None:
             raise SystemExit('--test-mode needs --out')
-        if args.host_floor_gib is None and (args.q1_receipt is None or args.q1_peak_rss_key is None):
-            raise SystemExit('--test-mode needs --host-floor-gib or --q1-receipt with --q1-peak-rss-key')
+        if (args.host_floor_gib is None and args.runtime_freeze is None
+                and (args.q1_receipt is None or args.q1_peak_rss_key is None)):
+            raise SystemExit('--test-mode needs --host-floor-gib, --q1-receipt with --q1-peak-rss-key, or '
+                             '--runtime-freeze')
         out = args.out
+        freeze = None if args.runtime_freeze is None else _competence().read_freeze(args.runtime_freeze,
+                                                                                    registered=False)
 
         def pick(value, default):
             return default if value is None else value
@@ -700,10 +729,11 @@ def _config(args, lease_module, host_module) -> dict:
         raise SystemExit('receipt exists (create-only): ' + str(target))
     if args.a_receipt is not None and args.inventory != 'B':
         raise SystemExit('--a-receipt belongs to a B pilot')
-    after = a_pilot(args.a_receipt, not args.test_mode) if args.a_receipt is not None else None
+    anchor = None if freeze is None else freeze['anchor']
+    after = a_pilot(args.a_receipt, not args.test_mode, anchor) if args.a_receipt is not None else None
     return dict(sizes, out=target, model_dir=Path(model_dir), asset_receipt=Path(asset_receipt),
                 device=s0.DEVICES[args.device], label='comp-rs-001-s0-pilot-' + args.inventory.lower(),
-                stage='S0_PILOT_' + args.inventory, after=after)
+                stage='S0_PILOT_' + args.inventory, after=after, freeze=freeze, anchor=anchor)
 
 
 def launch_snapshot(host) -> dict:
@@ -817,11 +847,18 @@ def _pilot(args, cfg, host, state) -> dict:
     state['settings'] = s0.configure(cfg['device'])
     preimage = s0.decoding_preimage(cfg['device'])
     state['decoding_preimage'], state['decoding_sha256'] = preimage, s0.decoding_sha256(preimage)
+    if cfg['freeze'] is not None:
+        require(cfg['freeze']['decoding_sha256'] == state['decoding_sha256'],
+                'decoding_sha256 differs from the runtime freeze')
     marks = Marks(cfg['device'], host)
     state['marks'] = marks
     state['model_load_started_utc'] = _now()
-    model, identity = s0.load_model_fp32(cfg['model_dir'], cfg['device'], cfg['asset_receipt'])
+    competence = _competence()
+    model, identity = s0.load_anchor(cfg['model_dir'], cfg['device'], cfg['asset_receipt'],
+                                     **competence.anchor_arguments(cfg['anchor']))
     device = _model_device(model)
+    require(competence.anchor_matches(identity['anchor'], cfg['anchor']),
+            'the loaded anchor differs from the runtime freeze')
     require(identity['attn_implementation'] == preimage['attn_implementation'], 'attention implementation drift')
     state['identity'] = {k: v for k, v in identity.items() if k not in ('stored_tensor_sha256', 'parameter_inventory')}
     first, last = cfg['blocks']
@@ -937,7 +974,7 @@ def _receipt(args, cfg, state) -> dict:
         'started_utc': state['started_utc'], 'finished_utc': _now(),
         'wall_s': time.perf_counter() - state['t0'], 'completed': bool(state['completed']),
         'error': state.get('error'), 'oom': state['oom'], 'abort': state['abort'], 'decision': decision,
-        'after_a_pilot': cfg['after'],
+        'after_a_pilot': cfg['after'], 'anchor': cfg['anchor'], 'runtime_freeze': cfg['freeze'],
         'runtime': state['runtime'], 'settings': state.get('settings'), 'checkout': state['checkout'],
         'code_sha256': _IMPORT_CODE, 'lease': state['lease'], 'launch': state['launch'],
         'decoding_preimage': state.get('decoding_preimage'), 'decoding_sha256': state.get('decoding_sha256'),
@@ -979,8 +1016,11 @@ def main(argv=None, *, lease_module=None, host_module=None) -> int:
     launch = launch_snapshot(host)   # before anything imports torch (this module imports none)
     if args.q1_receipt is not None:
         floor = q1_floor(args.q1_receipt, args.q1_peak_rss_key)
-    else:
+    elif args.host_floor_gib is not None:
         floor = {'floor_gib': float(args.host_floor_gib), 'source': '--host-floor-gib (test mode)'}
+    else:
+        floor = {'floor_gib': cfg['freeze']['host_floor_gib'], 'source': 'S0_RUNTIME_FREEZE host_floor_gib',
+                 'freeze_sha256': cfg['freeze']['sha256']}
     launch['floor'] = floor
     launch['require'] = s0.host_require(floor['floor_gib'], cfg['label'], module=host)
     if args.test_mode:
