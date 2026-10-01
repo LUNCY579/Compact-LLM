@@ -102,7 +102,7 @@ def _finite_inventory(named,optimizer,torch):
                 for start in range(0,value.numel(),update.CHUNK_BYTES//4):
                     piece=value.reshape(-1)[start:start+update.CHUNK_BYTES//4]
                     require(bool(torch.isfinite(piece).all()),'nonfinite Adam moment')
-                if key=='exp_avg_sq':require(bool((piece>=0).all()),'negative Adam second moment')
+                    if key=='exp_avg_sq':require(bool((piece>=0).all()),'negative Adam second moment')
 
 
 def _mark_restore(error,attempted):

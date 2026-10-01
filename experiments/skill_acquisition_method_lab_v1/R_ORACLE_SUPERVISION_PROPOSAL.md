@@ -115,8 +115,11 @@ this new 3,000-row common-anchor SFT experiment. A separately registered narrow
 trainer and approved measured limits remain necessary.
 
 The shared prospective CE boundary is now implemented in
-`../skill_acquisition_native_v1/ce_update.py`. Five pure controls and nine actual
-tiny CPU model controls passed, including the independent gradient reference,
-clipping/Adam order and post-step cleanup failure. This core admits synthetic
+`../skill_acquisition_native_v1/ce_update.py`. Five pure controls and ten actual
+CPU model controls passed in the superseding CE-core V2 receipt, including the
+independent gradient reference, clipping/Adam order, post-step cleanup failure,
+and rejection of an earlier negative second-moment chunk before model work.
+Review prompted the chunk-validation fix; the prior receipt is preserved.
+This core admits synthetic
 CPU fixtures only. It does not implement the native SFT driver or qualify the
 existing B2 checkpoint plan for CE8 boundaries, and grants no new training.

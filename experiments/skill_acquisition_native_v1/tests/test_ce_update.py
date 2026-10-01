@@ -318,5 +318,40 @@ class TinyCPU(unittest.TestCase):
         self.assertTrue(any(k=='gradient_cleanup' and p=='failed' for k,p,_ in events))
         original(set_to_none=True)
 
+    def test_earlier_second_moment_chunk_corruption_rejected_before_work_nonnegative_control(self):
+        torch=self.torch;model=self.model()
+        # 513*512 exceeds the 262144-FP32-element chunk. A nonnegative tail
+        # cannot hide a negative entry at the first element of the first chunk.
+        model.model.embed_tokens=torch.nn.Embedding(32,512)
+        model.model.layers[0].linear=torch.nn.Linear(512,513)
+        model.lm_head=torch.nn.Linear(513,32,bias=False)
+        for name,parameter in model.named_parameters():parameter.requires_grad_(name.startswith('model.layers.'))
+        data,r=self.inputs(model);opt=self.optimizer(model,r)
+        for parameter in model.parameters():
+            if parameter.requires_grad:parameter.grad=torch.full_like(parameter,.001)
+        opt.step();opt.zero_grad(set_to_none=True)
+        r['U_before']=1;r['start_policy_id']=self.runtime.anchor_digest(model)
+        weight=model.model.layers[0].linear.weight
+        moment=opt.state[weight]['exp_avg_sq']
+        chunk=ce.update.CHUNK_BYTES//4
+        self.assertGreater(moment.numel(),chunk)
+        self.assertTrue(bool((moment.reshape(-1)[chunk:]>=0).all()))
+        saved_first=moment.reshape(-1)[0].clone()
+        moment.reshape(-1)[0]=-.25
+        before_parameters={n:p.detach().clone() for n,p in model.named_parameters()}
+        before_state={p:{key:value.detach().clone() for key,value in state.items()} for p,state in opt.state.items()}
+        events=[]
+        with self.assertRaisesRegex(ValueError,'negative Adam second moment'):
+            ce.boundary_update(model,opt,data,r,lambda k,p,**m:events.append((k,p,m)))
+        self.assertFalse(any(k in ('loss_forward','backward','gradient_clipping','optimizer') for k,p,_ in events))
+        self.assertTrue(all(torch.equal(parameter,before_parameters[n]) for n,parameter in model.named_parameters()))
+        for parameter,state in opt.state.items():
+            for key,value in state.items():self.assertTrue(torch.equal(value,before_state[parameter][key]))
+        self.assertEqual({int(state['step']) for state in opt.state.values()},{1})
+        self.assertTrue(all(p.grad is None for p in model.parameters()));self.assertFalse(model.training)
+        moment.reshape(-1)[0].copy_(saved_first)
+        control=ce.boundary_update(model,opt,data,r,lambda *args,**kwargs:None)
+        self.assertTrue(control['updated']);self.assertEqual((control['U_before'],control['U_after']),(1,2))
+
 
 if __name__=='__main__':unittest.main()

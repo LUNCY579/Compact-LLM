@@ -70,7 +70,13 @@ row, equal row weights, one-shift target/EOS masks, global norm clipping before
 Adam, and frozen-state/U proofs. Reset and failure cleanup remain observable;
 an exception after an Adam attempt requires discarding or restoring live state.
 
-Its five pure and nine actual tiny CPU checks passed. It always refuses native
+Its five pure and ten actual CPU checks passed in the superseding
+`evidence/CE_CORE_CPU_CHECKS_V2_20261001.json` receipt. Review found and fixed a
+second-moment sign check that covered only the final chunk. The new multi-chunk
+regression proves earlier corruption is rejected before forward, clipping or
+Adam work, preserves parameters and optimizer state, and admits the repaired
+nonnegative control. The earlier 14-check receipt is retained as historical
+evidence. It always refuses native
 execution before model access, including forged approval flags. It has no model
 loader, experiment driver, evaluation, target policy, retry defaults or grant.
 The existing B2 checkpoint/progress adapter must not be presented as a qualified
