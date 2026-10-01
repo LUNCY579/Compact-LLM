@@ -299,7 +299,13 @@ class PreparedRows:
     @property
     def cached_rows(self): return len(self._cache)
     def _binding(self, item):
-        return dict(ce_update.prepared_row_binding(item), render_sha256=item['render_sha256'], target_sha256=item['target_sha256'])
+        # Hash input bytes depend on token magnitudes, id escaping and JSON
+        # framing, so preserve their exact total while these arrays are live.
+        prepared = {key: item[key] for key in ('id', 'prompt_ids', 'completion_ids')}
+        hash_bytes = sum(len(canonical(value)) for value in
+                         (item['prompt_ids'], item['completion_ids'], prepared))
+        return dict(ce_update.prepared_row_binding(item), render_sha256=item['render_sha256'],
+                    target_sha256=item['target_sha256'], prepared_hash_bytes_upper=hash_bytes)
     def _render(self, row_id):
         target = self.verified._target(row_id, self.operation, self.gate)
         item = _observe(self.operation, self.gate, 'ingestion_tokenizer', {'kind': 'tokenizer_render',

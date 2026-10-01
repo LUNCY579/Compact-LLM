@@ -24,6 +24,8 @@ from . import ce_plan
 SCHEMA = 'CE8-SYNTHETIC-DURABLE-JOURNAL-1'
 CAP_SCHEMA = 'CE8-SYNTHETIC-CAPS-1'
 SCOPE = 'CE8_SYNTHETIC_CPU_DURABLE_1'
+NATIVE_SCOPE = 'CE8_NATIVE_DURABLE_1'
+NATIVE_CAP_SCHEMA = 'CE8-NATIVE-CAPS-1'
 HEADER = 'CE_LEDGER_BINDINGS.json'
 JOURNAL = 'CE_PHYSICAL_COSTS.jsonl'
 MAX_LINE = 4 * 1024 ** 2
@@ -31,6 +33,13 @@ KINDS = frozenset(('fingerprint', 'checkpoint_configuration', 'gradient_reset',
     'loss_forward', 'backward', 'gradient_validation', 'gradient_clipping',
     'optimizer', 'gradient_cleanup', 'checkpoint_save', 'checkpoint_restore',
     'checkpoint_construct', 'checkpoint_adapter_io', 'input_io', 'receipt_write'))
+NATIVE_KINDS = KINDS | frozenset(('module_import', 'configured_runtime', 'process_rng_seed',
+    'tokenizer_load', 'tokenizer_render', 'model_load', 'inventory_configuration',
+    'donor_reference', 'donor_write', 'donor_roundtrip', 'donor_chunk', 'cleanup'))
+RESTORE_KINDS = frozenset(('checkpoint_restore', 'fingerprint', 'checkpoint_adapter_io',
+                          'checkpoint_construct', 'input_io'))
+NATIVE_RESUME_BOOTSTRAP = frozenset(('cleanup', 'module_import', 'configured_runtime',
+    'process_rng_seed', 'tokenizer_load', 'model_load', 'inventory_configuration'))
 PROFILE = ('read_bytes_upper', 'write_bytes_upper', 'identity_hash_attempts_upper',
            'identity_hash_bytes_upper', 'wall_s_upper')
 COUNTERS = ('forward_selected_tokens', 'forward_sequence_tokens',
@@ -72,48 +81,95 @@ def _json(raw):
 
 class CeJournal:
     def __init__(self, directory, plan, bindings, caps, *, synthetic_cpu,
-                 resume=False, clock=time.perf_counter):
+                 resume=False, clock=time.perf_counter, native_permit=None):
         # These checks precede path conversion, file access and helper imports.
-        require(synthetic_cpu is True and type(plan) is dict
-                and plan.get('mode') == 'synthetic_fixture', 'native/proposal CE journal scope denied')
+        require(type(synthetic_cpu) is bool, 'native/proposal CE journal scope denied; explicit device flag required')
+        self.synthetic_cpu, self.native_permit = synthetic_cpu, native_permit
+        if not synthetic_cpu:
+            from .ce_native_authority import NativeExecutionPermit
+            require(type(native_permit) is NativeExecutionPermit, 'native/proposal CE journal scope denied')
+            context = native_permit.context
+            native_permit.require('journal_construct', static_recipe_sha256=context['static_recipe_sha256'])
+            artifact = context.get('bindings', {}).get('native_ledger')
+            reference = context.get('refs', {}).get('native_ledger_ref')
+            require(type(artifact) is dict and artifact.get('schema') == 'CE8-NATIVE-LEDGER-SPEC-1'
+                    and type(reference) is dict and reference == context['bindings']['scope'].get('native_ledger_ref'),
+                    'registered native ledger artifact/reference required')
+            require(artifact.get('plan') == plan and artifact.get('bindings') == bindings and artifact.get('caps') == caps,
+                    'native journal plan/data/prices/caps differ from admitted artifact')
+            require(type(artifact.get('owned_directory')) is str
+                    and str(Path(directory).resolve()) == str(Path(artifact['owned_directory']).resolve()),
+                    'native journal owner differs from admitted artifact')
+            admitted = context['bindings']
+            output_directory = admitted['scope'].get('native_backend', {}).get('output_directory')
+            require(type(output_directory) is str and Path(output_directory).is_absolute()
+                    and bindings.get('metadata_roots') == [output_directory]
+                    and Path(directory).resolve().is_relative_to(Path(output_directory).resolve()),
+                    'native metadata owner differs from admitted output root')
+            require(plan == admitted.get('plan')
+                    and bindings.get('source') == admitted['source'].get('code_sha256')
+                    and bindings.get('runtime') == admitted['runtime'].get('decoding_preimage')
+                    and bindings.get('anchors') == {key: admitted['anchors'][key] for key in ('own_start_sha256', 'common_anchor_sha256')}
+                    and bindings.get('recipe') == admitted['recipe'].get('recipe'),
+                    'native journal scope/source/runtime/anchor/recipe binding drift')
+            ingestion = admitted.get('ingestion')
+            require(type(ingestion) is dict and artifact.get('ingestion_receipt_sha256') == ingestion.get('receipt_sha256')
+                    and bindings.get('prepared_rows') == ingestion.get('prepared_row_bindings'),
+                    'native journal prepared census differs from verified ingestion')
+        require(type(plan) is dict and plan.get('mode') == ('synthetic_fixture' if synthetic_cpu else 'unapproved_proposal'),
+                'native/proposal CE journal scope denied')
         self.plan_rows = [list(rows) for rows in ce_plan.validate_plan(plan)]
-        require(type(bindings) is dict and bindings.get('scope') == SCOPE,
-                'explicit synthetic CE journal bindings')
+        require(type(bindings) is dict and bindings.get('scope') == (SCOPE if synthetic_cpu else NATIVE_SCOPE),
+                'explicit CE journal bindings')
         from . import ce_update
         recipe = bindings.get('recipe')
         dynamic = {'boundary_id', 'generation', 'symbolic_snapshot', 'start_policy_id', 'U_before'}
         require(type(recipe) is dict and not dynamic.intersection(recipe), 'static CE recipe only')
         ce_update.validate_recipe(dict(recipe, boundary_id=0, generation=0, U_before=0,
-            symbolic_snapshot='0' * 64, start_policy_id='0' * 64))
+            symbolic_snapshot='0' * 64, start_policy_id='0' * 64), native_permit=native_permit)
+        require(recipe['synthetic_cpu'] is synthetic_cpu, 'recipe/journal device scope differs')
         anchors = bindings.get('anchors')
         require(type(anchors) is dict and set(anchors) == {'own_start_sha256', 'common_anchor_sha256'}
                 and all(ce_plan._hex(v) for v in anchors.values()), 'actual fixture start/reference hashes')
         source, runtime = bindings.get('source'), bindings.get('runtime')
         require(type(source) is dict and source and all(type(k) is str and k and ce_plan._hex(v)
                 for k, v in source.items()), 'source digest mapping')
-        require(type(runtime) is dict and runtime.get('device') == 'cpu'
-                and runtime.get('dtype') == 'float32' and runtime.get('cuda_initialized') is False,
-                'synthetic CPU runtime binding')
+        require(type(runtime) is dict and runtime.get('device') == ('cpu' if synthetic_cpu else 'cuda:0')
+                and runtime.get('dtype') == 'float32'
+                and (not synthetic_cpu or runtime.get('cuda_initialized') is False), 'CE runtime binding')
         prepared = bindings.get('prepared_rows')
         ids = [rid for boundary in self.plan_rows for rid in boundary]
         require(type(prepared) is list and [row.get('id') if type(row) is dict else None for row in prepared] == ids,
                 'exact ordered prepared fixture rows')
         targets = {rid: target for entry in plan['label_binding']['boundaries'] for rid, target in entry['row_target_pairs']}
         census = {}
-        for i in range(0, len(prepared), 8): ce_update.validate_rows(prepared[i:i + 8], recipe)
+        if synthetic_cpu:
+            for i in range(0, len(prepared), 8): ce_update.validate_rows(prepared[i:i + 8], recipe)
         for row in prepared:
             require(row.get('target_sha256') == targets[row['id']], 'prepared target differs from label plan')
-            census[row['id']] = ce_update.prepared_row_binding(row)
-        require(type(caps) is dict and caps.get('schema') == CAP_SCHEMA and caps.get('synthetic_cpu') is True,
-                'explicit synthetic cap schema')
+            if synthetic_cpu:
+                census[row['id']] = ce_update.prepared_row_binding(row)
+            else:
+                fields = ('id', 'prompt_tokens', 'labeled_tokens', 'full_sequence_tokens',
+                          'prompt_ids_sha256', 'completion_ids_sha256', 'prepared_row_sha256')
+                require(all(_int(row.get(key), 1) for key in fields[1:4])
+                        and row['full_sequence_tokens'] == row['prompt_tokens'] + row['labeled_tokens']
+                        and row['labeled_tokens'] <= recipe['max_target_tokens']
+                        and all(ce_plan._hex(row.get(key)) for key in fields[4:])
+                        and ce_plan._hex(row.get('render_sha256'))
+                        and _int(row.get('prepared_hash_bytes_upper'), 1), 'native prepared row binding/cost schema')
+                census[row['id']] = {key: row[key] for key in fields}
+        require(type(caps) is dict and caps.get('schema') == (CAP_SCHEMA if synthetic_cpu else NATIVE_CAP_SCHEMA)
+                and caps.get('synthetic_cpu') is synthetic_cpu, 'explicit CE cap schema')
+        self.allowed_kinds = KINDS if synthetic_cpu else NATIVE_KINDS
         starts = caps.get('operation_starts')
-        require(type(starts) is dict and set(starts) == KINDS and all(_int(v, 1) for v in starts.values()),
+        require(type(starts) is dict and set(starts) == self.allowed_kinds and all(_int(v, 1) for v in starts.values()),
                 'finite start ceilings for every operation kind')
         require(all(_int(caps.get(k), 0 if k == 'resumes' else 1) for k in COUNTERS if k != 'wall_seconds')
                 and _finite(caps.get('wall_seconds'), True) and caps['metadata_reserved_bytes'] >= 64 * 1024 ** 2,
                 'explicit token/hash/IO/metadata/invocation/wall ceilings')
         profiles = bindings.get('operation_bounds')
-        require(type(profiles) is dict and set(profiles) == KINDS, 'all synthetic operation profiles required')
+        require(type(profiles) is dict and set(profiles) == self.allowed_kinds, 'all CE operation profiles required')
         for value in profiles.values(): _profile(value)
         setup = _profile(bindings.get('setup_bounds'))
         self.bindings, self.plan, self.caps = _clone(bindings), _clone(plan), _clone(caps)
@@ -121,10 +177,11 @@ class CeJournal:
         self.census, self.profiles = census, self.bindings['operation_bounds']
         self.clock = clock
         self.directory = Path(directory).resolve()
+        self.metadata_roots = [self.directory] if synthetic_cpu else [Path(output_directory).resolve()]
         require(not self.directory.is_symlink(), 'owned journal directory')
         self.path, self.header_path = self.directory / JOURNAL, self.directory / HEADER
         self.counters = {key: 0 for key in COUNTERS}
-        self.starts = {kind: 0 for kind in KINDS}
+        self.starts = {kind: 0 for kind in self.allowed_kinds}
         self.operations, self.events, self.invocations = {}, [], {}
         self.used_restores, self.metadata_ids = set(), set()
         self.active_attempt, self.current_invocation = None, None
@@ -133,7 +190,8 @@ class CeJournal:
         self._known_size = 0
         self.progress = {'C': 0, 'U': 0, 'history': [], 'generation': 0}
         self.progress['snapshot'] = digest(dict(self.progress, plan_sha256=plan['plan_sha256']))
-        self.header = {'schema': SCHEMA, 'classification': 'synthetic CPU mechanics only; no native grant or measurement',
+        self.header = {'schema': SCHEMA, 'classification': 'synthetic CPU mechanics only; no native grant or measurement' if synthetic_cpu
+                       else 'opaque-permit-bound native CE reservations; qualification evidence remains separate',
             'plan': self.plan, 'bindings': self.bindings, 'token_census': census, 'caps': self.caps}
         self.binding_sha256 = digest(self.header)
         raw_header = canonical(self.header) + b'\n'
@@ -213,7 +271,7 @@ class CeJournal:
         for key, amount in changes.items():
             require(_finite(amount) and (key == 'wall_seconds' or type(amount) is int), 'nonnegative finite cost')
             if key.startswith('start:'):
-                kind = key[6:]; require(kind in KINDS, 'unknown operation kind'); starts[kind] += amount
+                kind = key[6:]; require(kind in self.allowed_kinds, 'unknown operation kind'); starts[kind] += amount
                 require(starts[kind] <= self.caps['operation_starts'][kind], 'operation start ceiling: ' + kind)
             else:
                 updated[key] += amount; require(updated[key] <= self.caps[key], 'cumulative ceiling: ' + key)
@@ -270,8 +328,9 @@ class CeJournal:
                 require(self.progress['C'] == len(self.plan_rows) and self.active_attempt is None
                         and not any((self.requires_restore, self.restore_pending, self.unknown_wall, self.fatal))
                         and not any(op['phase'] == 'started' and op['invocation'] == self.current_invocation
-                                    and op['generation'] == self.generation and op['snapshot'] == self.symbolic_snapshot
-                                    and op['attempt'] is not None for op in self.operations.values()), 'complete consistent CE plan/fence required')
+                                    and (not self.synthetic_cpu or
+                                         op['generation'] == self.generation and op['snapshot'] == self.symbolic_snapshot
+                                         and op['attempt'] is not None) for op in self.operations.values()), 'complete consistent CE plan/fence required')
             def apply():
                 invocation['ended'] = True; invocation['outcome'] = payload['outcome']
                 if self.current_invocation == payload['id']: self.current_invocation = None; self._last_wall = None
@@ -283,7 +342,7 @@ class CeJournal:
                     and payload['class'] in {'checkpoint_json', 'checkpoint_journal', 'runner_receipt'}
                     and _int(payload['bytes_upper'], 1), 'permanent unique metadata reservation')
             target = Path(payload['path']).resolve()
-            require(target.is_relative_to(self.directory) and target != self.directory, 'owned metadata path')
+            require(any(target.is_relative_to(root) and target != root for root in self.metadata_roots), 'owned metadata path')
             return {'metadata_reserved_bytes': payload['bytes_upper'], 'io_write_bytes': payload['bytes_upper']}, lambda: self.metadata_ids.add(payload['write_id'])
         if kind == 'operation': return self._prepare_operation(payload)
         if kind == 'commit': return self._prepare_commit(payload['result'])
@@ -292,13 +351,15 @@ class CeJournal:
 
     def _prepare_operation(self, payload):
         kind, phase, oid, fields = payload['operation'], payload['phase'], payload['id'], payload['fields']
-        require(kind in KINDS and phase in ('started', 'returned', 'failed') and type(oid) is str and oid,
+        require(kind in self.allowed_kinds and phase in ('started', 'returned', 'failed') and type(oid) is str and oid,
                 'known physical operation/phase/identity')
         if phase != 'started':
             previous = self.operations.get(oid)
             require(previous and previous['kind'] == kind and previous['phase'] == 'started'
                     and previous['invocation'] == self.current_invocation, 'matching current-worker returned operation')
-            if kind != 'checkpoint_restore': require(previous['generation'] == self.generation and previous['snapshot'] == self.symbolic_snapshot, 'stale operation return after restore')
+            lifetime_cleanup = not self.synthetic_cpu and kind == 'cleanup' and previous['attempt'] is None
+            if kind != 'checkpoint_restore' and not lifetime_cleanup:
+                require(previous['generation'] == self.generation and previous['snapshot'] == self.symbolic_snapshot, 'stale operation return after restore')
             for actual, upper in (('bytes_read', 'read_bytes_upper'), ('known_bytes_read', 'read_bytes_upper'),
                 ('bytes_written', 'write_bytes_upper'), ('known_bytes_written', 'write_bytes_upper'),
                 ('identity_hash_attempts_actual', 'identity_hash_attempts_upper'), ('identity_hash_bytes_actual', 'identity_hash_bytes_upper')):
@@ -314,7 +375,8 @@ class CeJournal:
                 if phase == 'failed' and previous['attempt'] is not None: self.requires_restore = True; self.active_attempt['failed'] = True
             return {}, apply
         self._work()
-        require(not self.restore_pending or kind in ('checkpoint_construct', 'checkpoint_restore', 'fingerprint', 'checkpoint_adapter_io', 'input_io'), 'restore fence pending')
+        restore_kinds = RESTORE_KINDS | (NATIVE_RESUME_BOOTSTRAP if not self.synthetic_cpu else frozenset())
+        require(not self.restore_pending or kind in restore_kinds, 'restore fence pending')
         require(oid not in self.operations, 'duplicate operation identity')
         pre = kind == 'fingerprint' and fields.get('reason') == 'ce_pre_boundary_identity'
         scoped = 'boundary_id' in fields and kind not in ('checkpoint_save', 'checkpoint_restore')
@@ -323,7 +385,7 @@ class CeJournal:
         elif scoped:
             require(self.active_attempt is not None and (not self.active_attempt['failed'] or kind == 'gradient_cleanup'), 'active CE attempt required')
         elif kind == 'checkpoint_save': require(self.active_attempt is None and not self.requires_restore, 'cannot save unfinished CE live state')
-        elif self.requires_restore: require(kind in ('checkpoint_restore', 'fingerprint', 'checkpoint_adapter_io', 'checkpoint_construct', 'input_io'), 'restore required before work')
+        elif self.requires_restore: require(kind in restore_kinds, 'restore required before work')
         if scoped:
             require(type(fields.get('boundary_id')) is int and type(fields.get('generation')) is int
                     and fields.get('boundary_id') == self.progress['C'] and fields.get('generation') == self.generation
@@ -338,8 +400,9 @@ class CeJournal:
                     and profile['identity_hash_bytes_upper'] >= fields['state_bytes'] + fields.get('identity_hash_bytes_upper', 0), 'opaque fingerprint profile below raw/framing lower')
             if pre:
                 batch = self.bindings['prepared_rows'][self.progress['C'] * 8:(self.progress['C'] + 1) * 8]
-                binding_bytes = sum(sum(len(canonical(v)) for v in (r['prompt_ids'], r['completion_ids'],
+                binding_bytes = (sum(sum(len(canonical(v)) for v in (r['prompt_ids'], r['completion_ids'],
                     {k: r[k] for k in ('id', 'prompt_ids', 'completion_ids')})) for r in batch)
+                    if self.synthetic_cpu else sum(r['prepared_hash_bytes_upper'] for r in batch))
                 require(profile['identity_hash_attempts_upper'] >= 26
                         and profile['identity_hash_bytes_upper'] >= fields['state_bytes'] + binding_bytes + len(canonical(self.bindings['recipe'])),
                         'pre-CE profile must reserve recipe and eight row-binding hash triples before computation')
@@ -359,8 +422,9 @@ class CeJournal:
             if cursor: require(self.operations[self.active_attempt['row_ops'][-1]]['phase'] == 'returned', 'prior row work must return before next start')
             if kind == 'loss_forward':
                 raw_row = self.bindings['prepared_rows'][self.progress['C'] * 8 + cursor // 2]
-                lower = sum(len(canonical(v)) for v in (raw_row['prompt_ids'], raw_row['completion_ids'],
+                lower = (sum(len(canonical(v)) for v in (raw_row['prompt_ids'], raw_row['completion_ids'],
                     {k: raw_row[k] for k in ('id', 'prompt_ids', 'completion_ids')}))
+                    if self.synthetic_cpu else raw_row['prepared_hash_bytes_upper'])
                 require(profile['identity_hash_attempts_upper'] >= 3 and profile['identity_hash_bytes_upper'] >= lower, 'prepared-row hash profile lower')
             prefix = 'forward' if kind == 'loss_forward' else 'backward'
             changes[prefix + '_selected_tokens'] = row['labeled_tokens']; changes[prefix + '_sequence_tokens'] = row['full_sequence_tokens']
@@ -408,7 +472,7 @@ class CeJournal:
         active = self.active_attempt
         require(active and not active['failed'] and active['cursor'] == 16 and not self.restore_pending, 'one complete nonfailed CE attempt')
         C, U, aid = self.progress['C'], self.progress['U'], active['id']
-        require(result.get('schema') == 'SKILL-ACQUISITION-CE-BOUNDARY-RESULT-1' and result.get('synthetic_cpu') is True
+        require(result.get('schema') == 'SKILL-ACQUISITION-CE-BOUNDARY-RESULT-1' and result.get('synthetic_cpu') is self.synthetic_cpu
                 and result.get('objective') == 'SUPERVISED_EQUAL_ROW_TOKEN_MEAN_CE'
                 and result.get('loss_reduction') == self.bindings['recipe']['loss_reduction'] and result.get('accumulation_rows') == 8
                 and all(type(result.get(k)) is int for k in ('boundary_id', 'U_before', 'U_after', 'generation'))
@@ -506,6 +570,8 @@ class CeJournal:
     def end_invocation(self, outcome):
         self.tick_wall(); self._event('invocation_end', {'id': self.current_invocation, 'outcome': outcome})
     def operation(self, kind, phase, operation_id, **fields):
+        if not self.synthetic_cpu:
+            self.native_permit.require('journal_operation', static_recipe_sha256=self.static_recipe_sha256)
         try:
             self.tick_wall()
             self._event('operation', {'operation': kind, 'phase': phase, 'id': operation_id, 'fields': fields})
@@ -514,14 +580,20 @@ class CeJournal:
             raise
     __call__ = operation
     def reserve_metadata(self, kind, bytes_upper, *, write_id, path):
+        if not self.synthetic_cpu:
+            self.native_permit.require('journal_operation', static_recipe_sha256=self.static_recipe_sha256)
         self.tick_wall(); self._event('metadata', {'class': kind, 'bytes_upper': bytes_upper, 'write_id': write_id, 'path': str(Path(path).resolve())})
     def commit_boundary(self, result):
+        if not self.synthetic_cpu:
+            self.native_permit.require('journal_operation', static_recipe_sha256=self.static_recipe_sha256)
         self.tick_wall(); self._event('commit', {'result': result})
     def install_restore(self, restored):
+        if not self.synthetic_cpu:
+            self.native_permit.require('journal_restore', static_recipe_sha256=self.static_recipe_sha256)
         self.tick_wall(); self._event('restore', {'record': restored})
     def progress_record(self): return _clone(self.progress)
     def snapshot(self):
-        return {'schema': SCHEMA, 'synthetic_cpu': True, 'native_qualified': False, 'binding_sha256': self.binding_sha256,
+        return {'schema': SCHEMA, 'synthetic_cpu': self.synthetic_cpu, 'native_qualified': False, 'binding_sha256': self.binding_sha256,
             'events': len(self.events), 'head': self._head(), 'progress': self.progress_record(),
             'cumulative': dict(self.counters), 'operation_starts': dict(self.starts), 'requires_restore': self.requires_restore,
             'active_attempt': self.active_attempt['id'] if self.active_attempt else None,

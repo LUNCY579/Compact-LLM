@@ -1,8 +1,8 @@
-"""Shared dormant CE8 process/lifecycle coordinator; no native backend or grant.
+"""Shared dormant CE8 process/lifecycle coordinator; no native registration/grant.
 
 Qualification and training are distinct authorized scopes. The current proposal
 route refuses before IO/imports/writes. A future registered backend must supply
-the listed capabilities; the current CPU-only core/checkpoint/journal cannot.
+the listed capabilities and actually qualify the delayed native implementation.
 Service/backend injection tests sequencing, not native execution or efficacy.
 """
 from __future__ import annotations
@@ -27,9 +27,9 @@ QUALIFICATION_STAGES = ('ingestion_tokenizer', 'runtime_anchor', 'longest_masks'
     'likelihood_gradient_parity', 'adam_clipping', 'checkpoint_resume', 'delta_roundtrip',
     'resource_io_measurement')
 ACTIVATION_GAPS = {
-    'native_ce8_update': 'ce_update currently refuses native mode before model access',
-    'native_ce8_checkpoint': 'CECheckpoints currently requires CPU and zero CUDA streams',
-    'native_ce8_journal_bootstrap': 'CeJournal currently denies proposal/native scope; bootstrap and prepared census need linked admission',
+    'native_ce8_update': 'native core requires an opaque permit; issuer registry remains empty and parity is unqualified',
+    'native_ce8_checkpoint': 'delayed NativeCECheckpoints requires a permit and fresh-process CUDA restore qualification',
+    'native_ce8_journal_bootstrap': 'native ledger artifact, stable dispatcher and admitted prepared census require registered verification',
     'outer_setup_hash_pricing': 'native setup/source/tokenizer/hash work needs bound admission and measured production prices',
     'fresh_process_boot_resources': 'verified OS boot identity, fresh worker, lease, host/GPU/disk guards and watchdog must be bound',
     'full_source_ingestion': 'canonical/policy TRAIN, label plans and actual token census must be revalidated',
@@ -57,6 +57,16 @@ def canonical(value):
 
 
 def digest(value): return hashlib.sha256(canonical(value)).hexdigest()
+
+
+def checkpoint_boundaries(execution):
+    require(type(execution) is dict and type(execution.get('boundaries')) is int
+            and execution['boundaries'] == 375, 'frozen 3000-row/375-boundary CE8 execution recipe')
+    schedule = execution.get('checkpoint_boundaries')
+    require(type(schedule) is list and schedule and all(type(value) is int and 0 <= value <= 375 for value in schedule)
+            and schedule == sorted(set(schedule)) and schedule[0] == 0 and schedule[-1] == 375,
+            'explicit sorted checkpoint boundaries including C0 and final C375')
+    return tuple(schedule)
 def _hex(value): return type(value) is str and len(value) == 64 and not set(value) - set('0123456789abcdef')
 def request_preimage(request): return {k: v for k, v in request.items() if k != 'scope_authorization_ref'}
 
@@ -301,11 +311,9 @@ def run_controller(request, services, backend_factory=None, *, synthetic_fixture
                             lambda name=name: backend.qualify_stage(name, prepared, artifacts, context), request_hash)
                     return artifacts
                 execution = context.get('execution')
-                require(type(execution) is dict and type(execution.get('boundaries')) is int and execution['boundaries'] == 375
-                        and type(execution.get('checkpoint_cadence')) is int and execution['checkpoint_cadence'] > 0,
-                        'frozen 3000-row/375-boundary CE8 execution recipe')
-                _stage(observer, 'runtime_anchor', lambda: backend.load(context, prepared, observer), request_hash)
+                schedule = checkpoint_boundaries(execution)
                 journal = services.open_journal(context, prepared, proof, resume, reason)
+                _stage(observer, 'runtime_anchor', lambda: backend.load(context, prepared, observer), request_hash)
                 checkpoints = services.checkpoints(context, backend, journal)
                 if resume:
                     restored = _stage(observer, 'checkpoint_restore', lambda: backend.restore(checkpoints, journal), request_hash)
@@ -321,7 +329,7 @@ def run_controller(request, services, backend_factory=None, *, synthetic_fixture
                     journal.commit_boundary(result)
                     progress = journal.progress_record()
                     require(progress['C'] == C + 1 and progress['U'] == C + 1, 'one proved CE8 boundary/update')
-                    if progress['C'] % execution['checkpoint_cadence'] == 0:
+                    if progress['C'] in schedule:
                         backend.save(checkpoints, journal); last_saved = digest(progress)
                 if digest(journal.progress_record()) != last_saved: backend.save(checkpoints, journal)
                 return _stage(observer, 'donor_publish_verify', lambda: backend.donor(context, journal), request_hash)

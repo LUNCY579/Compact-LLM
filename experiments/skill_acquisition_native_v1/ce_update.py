@@ -41,10 +41,14 @@ def prepared_row_binding(row):
             'prepared_row_sha256': update.digest(prepared)}
 
 
-def validate_recipe(recipe):
+def validate_recipe(recipe, *, native_permit=None):
     require(type(recipe) is dict and recipe.get('schema')==SCHEMA,'explicit CE recipe schema')
     require(type(recipe.get('synthetic_cpu')) is bool,'explicit synthetic CPU flag')
-    require(recipe['synthetic_cpu'],'native CE has no separately admitted SFT scope; execution denied before model access')
+    if not recipe['synthetic_cpu']:
+        require(native_permit is not None,'native CE has no separately admitted SFT scope; execution denied before model access')
+        from .ce_native_authority import NativeExecutionPermit
+        require(type(native_permit) is NativeExecutionPermit,'opaque native CE permit required before model access')
+        native_permit.require('ce_boundary',static_recipe_sha256=static_recipe_sha256(recipe))
     require(recipe.get('accumulation_rows')==ROWS and type(recipe['accumulation_rows']) is int
             and recipe.get('microbatch_rows')==1 and type(recipe['microbatch_rows']) is int
             and recipe.get('loss_reduction')==REDUCTION,'fixed eight-row mean CE contract')
@@ -77,7 +81,8 @@ def validate_recipe(recipe):
             and opt['lr']>0 and opt['eps']>0 and opt['weight_decay']==0,'finite positive Adam lr/eps and zero decay')
     require(type(opt['betas']) is list and len(opt['betas'])==2 and all(type(v) in (int,float)
             and math.isfinite(v) and 0<=v<1 for v in opt['betas'])
-            and opt['foreach'] is False and opt['capturable'] is False,'explicit supported CPU Adam beta/variant')
+            and opt['foreach'] is False and opt['capturable'] is (not recipe['synthetic_cpu']),
+            'explicit supported Adam beta/device variant')
     return recipe
 
 
@@ -147,19 +152,22 @@ def _cleanup(model,optimizer,torch):
     if clear_error is not None:raise clear_error
 
 
-def boundary_update(model,optimizer,rows,recipe,operation):
+def boundary_update(model,optimizer,rows,recipe,operation, *, native_permit=None):
     """One CE optimizer boundary. Caller commits progress only after this returns.
 
     Every row's backward returns before the next forward. A physical Adam start
     makes any subsequent exception require restoring/discarding live state.
     Failed attempts remain observable; this core never retries or rewinds costs.
     """
-    validate_recipe(recipe)
+    validate_recipe(recipe,native_permit=native_permit)
     validate_rows(rows,recipe)
     recipe_sha256=static_recipe_sha256(recipe)
     require(callable(operation),'physical operation observer required')
+    if not recipe['synthetic_cpu']:
+        native_permit.require('ce_boundary',static_recipe_sha256=static_recipe_sha256(recipe),operation=operation)
     devices={p.device for p in model.parameters()}
-    require(len(devices)==1 and next(iter(devices)).type=='cpu','synthetic CPU CE fixtures only')
+    expected_device='cpu' if recipe['synthetic_cpu'] else 'cuda'
+    require(len(devices)==1 and next(iter(devices)).type==expected_device,'CE device differs from admitted scope')
     device=next(iter(devices))
     import torch
     from experiments.maxrl_comp002_pretraining_v1 import s0_runtime as runtime,s0_generate as generate,s0_pilot as pilot
@@ -192,7 +200,7 @@ def boundary_update(model,optimizer,rows,recipe,operation):
         with update._span(operation,'gradient_reset',metadata,device):
             optimizer.zero_grad(set_to_none=True)
             model.train()
-        result={'schema':'SKILL-ACQUISITION-CE-BOUNDARY-RESULT-1',**metadata,'synthetic_cpu':True,
+        result={'schema':'SKILL-ACQUISITION-CE-BOUNDARY-RESULT-1',**metadata,'synthetic_cpu':recipe['synthetic_cpu'],
                 'accumulation_rows':ROWS,'loss_reduction':REDUCTION,'U_before':U,'U_after':U,
                 'frozen_state_sha256':frozen_sha,'identity_operation':pre,'rows':[],
                 'checkpointing':checkpointing,'optimizer_recipe':dict(recipe['optimizer']),

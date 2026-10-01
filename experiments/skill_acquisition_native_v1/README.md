@@ -131,7 +131,7 @@ do not constitute a native recipe, measured resource envelope or learning result
 
 ## Synthetic durable CE accounting
 
-`ce_journal.py` is a separate CPU mechanics prototype. It binds an explicit
+The verified CPU route in `ce_journal.py` binds an explicit
 synthetic fixture plan, prepared token/target rows, static recipe, source/runtime
 references, anchors and finite declared limits. Proposal/native scope is denied
 before path access. Hash-chained, fsynced rows preserve admitted operation,
@@ -196,14 +196,62 @@ loaded no tokenizer/model and read no held-out model outputs. See
 Actual maximum prompt, target-plus-EOS and total sequence lengths are selected
 independently from rendered row bindings: the prepared ceilings are 1,259, 29
 and 1,287 respectively. They need not share a row and must not be combined into
-an invented longest example. Tokenizer rendering and native qualification were
-not performed by this source verification.
+an invented longest example. That source-only verification performed neither
+tokenizer rendering nor native qualification.
+
+Subsequent tokenizer-only runs re-rendered all 6,000 targets with the pinned
+local tokenizer, without loading a model or initializing CUDA. The actual max
+prompt and max total share one row; 89 rows per arm attain max target-plus-EOS.
+V2 retains exact prepared-hash input costs: **20,311,962 bytes per arm**.
+Both witness receipts are preserved under `evidence/`; they establish row
+identities and lengths, and provide no native resource or learning measurement.
+
+## Delayed native implementation
+
+`ce_native_authority.py` and `ce_native_backend.py` now contain source for the
+common warm FP32 load, fresh CUDA Adam, CE8 update, native checkpoints, durable
+journal linkage, restored-policy fingerprints, donor extraction and failure
+cleanup. Native permits bind the recipe, source, runtime, anchors, phase, arm
+and concrete observer/resource callbacks. All issuer and dispatch registries
+remain empty. Dictionary flags and counterfeit permits refuse before model/IO
+work. Source presence does not establish that these operations fit or work on
+the GPU.
+
+Native journals require the exact admitted ledger artifact, compact prepared
+row bindings and hash-byte costs. Metadata roots must equal the admitted output
+directory, so checkpoint metadata and the ledger share the same owned scope.
+Restore-required native workers may load the fresh model needed for restoration;
+CE updates, checkpoint saves and donor publication still require the installed
+restore proof. Prepaid lifetime cleanup can finish after progress or restore
+fences change; its original invocation and reservation remain binding.
+
+The controller links the journal before model loading and reads an explicit
+checkpoint boundary list. The proposed list is C0, 1, 75, 150, 225, 300, 375.
+Proposed budgets and the exact evaluation populations are in
+`../skill_acquisition_method_lab_v1/CE8_REGISTRATION_PROPOSAL_20261001.md` and its
+JSON. Both operator choices remain unselected and all execution grants false.
+
+The combined regression passed **147/147 checks**, including **33 actual CPU
+cases**, with zero skips/errors, unchanged Python source and uninitialized CUDA.
+It covers the existing CE8 update/checkpoint/journal paths, legacy B2/donor
+behavior and the new refusal/lifecycle rules. The original test receipt and a
+classification correction are preserved as
+`evidence/CE8_NATIVE_HOOKS_CPU_CHECKS_20261001.json` and
+`evidence/CE8_NATIVE_HOOKS_CPU_CLASSIFICATION_20261001.json`: the checker initially
+classified seven `NativeCPUTests` as pure tests; execution and pass counts were
+unaffected. No optional rerun was needed for that reporting correction.
+
+Pinned raw asset metadata now supplies conservative lower bounds for unavoidable
+loader reads and hashes. Zero or undersized profiles fail before asset/model
+work. These bounds omit additional work and cannot supply measured upper prices.
+When admission expires after prepaid allocation cleanup, held references are
+still released and the admission failure remains the primary error.
 
 The qualification producer remains **DRAFT_UNQUALIFIED**. Its native verifier
 registry is empty; flipping an activation flag or providing stage booleans,
 unrelated blob hashes or a caller-supplied verifier cannot produce native PASS.
-Actual execution handles, observation/artifact linkage, retained-ledger replay,
-verification pricing and native backend/capability activation remain required
+Actual qualification stage execution, execution handles, observation/artifact
+linkage, retained-ledger replay, verification pricing and capability activation remain required
 after the new experiment decision and registration. Acquisition, composition
 and functional retention remain unproven.
 

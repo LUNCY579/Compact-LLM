@@ -42,7 +42,7 @@ class Services:
             'production_training_authorized': True,
             'stage_plan': [{'stage': name, 'ordinal': i, 'caps': {key: 1 for key in c.BOUND_FIELDS}}
                            for i, name in enumerate(c.QUALIFICATION_STAGES)],
-            'execution': {'boundaries': 375, 'checkpoint_cadence': 125}}
+            'execution': {'boundaries': 375, 'checkpoint_boundaries': [0, 125, 250, 375]}}
     def observer(self, context):
         def observe(name, phase, **fields):
             if self.sealed: raise AssertionError('operation after terminal seal')
@@ -124,6 +124,13 @@ class Backend:
 
 
 class ControllerTests(unittest.TestCase):
+    def test_explicit_checkpoint_schedule_includes_first_update_without_cadence_rounding(self):
+        schedule = [0, 1, 75, 150, 225, 300, 375]
+        self.assertEqual(c.checkpoint_boundaries({'boundaries': 375, 'checkpoint_boundaries': schedule}), tuple(schedule))
+        for bad in (None, [], [0, 75, 75, 375], [0, True, 375], [0, 375, 1], [1, 375], [0, 374]):
+            with self.subTest(schedule=bad), self.assertRaises(c.AdmissionError):
+                c.checkpoint_boundaries({'boundaries': 375, 'checkpoint_boundaries': bad})
+
     def test_unapproved_and_forged_native_backend_refuse_before_any_service(self):
         class Trap:
             def __getattribute__(self, key): raise AssertionError('service before admission')

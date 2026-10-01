@@ -119,6 +119,9 @@ class PureTests(unittest.TestCase):
         prepared = ing.PreparedRows(verified, 'fixture', outer_admission=self.admit,
                                    operation=self.operation, gate=self.gates.append, renderer=fake_render)
         self.assertEqual(prepared.census['rows'], 3000); self.assertEqual(prepared.cached_rows, 0)
+        first_render = fake_render('fixture', self.target_records['canonical'][0])
+        self.assertEqual(prepared.receipt['prepared_row_bindings'][0], prepared._binding(first_render))
+        self.assertTrue(all(row['prepared_hash_bytes_upper'] > 0 for row in prepared.receipt['prepared_row_bindings']))
         self.assertEqual(prepared.census['sequence_ids_sha256'], self.preparation['census']['canonical']['sequence_ids_sha256'])
         self.assertLess(prepared.census['max_sequence_positions'],
                         prepared.census['max_prompt_tokens'] + prepared.census['max_labeled_tokens'])
@@ -183,6 +186,21 @@ class PureTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'changed after source verification'):
                 verified._target(row_id, self.operation, self.gates.append)
         finally: path.write_bytes(original)
+
+    def test_exact_row_hash_bytes_include_token_width_and_json_framing(self):
+        prepared = object.__new__(ing.PreparedRows)
+        rows = [{'id': 'row/\u00e9', 'prompt_ids': [token], 'completion_ids': [7, 151645],
+                 'render_sha256': 'a' * 64, 'target_sha256': 'b' * 64}
+                for token in (1, 100000)]
+        bindings = [prepared._binding(row) for row in rows]
+        for row, binding in zip(rows, bindings):
+            values = (row['prompt_ids'], row['completion_ids'],
+                      {key: row[key] for key in ('id', 'prompt_ids', 'completion_ids')})
+            self.assertEqual(binding['prepared_hash_bytes_upper'], sum(len(ing.canonical(value)) for value in values))
+            self.assertNotIn('prompt_ids', binding)
+            self.assertNotIn('completion_ids', binding)
+        self.assertEqual(bindings[0]['full_sequence_tokens'], bindings[1]['full_sequence_tokens'])
+        self.assertEqual(bindings[1]['prepared_hash_bytes_upper'] - bindings[0]['prepared_hash_bytes_upper'], 10)
 
     def test_producer_source_budget_denial_precedes_source_read_hash_and_receipt(self):
         source = Path(ing.__file__)

@@ -163,8 +163,12 @@ def _span(operation, kind, metadata, device=None):
             import torch
             torch.cuda.synchronize(device)
     except BaseException as error:
-        operation(kind, "failed", operation_id=identifier, wall_s=time.perf_counter() - started,
-                  error_type=type(error).__name__, error=str(error)[:1000], **metadata)
+        try:
+            operation(kind, "failed", operation_id=identifier, wall_s=time.perf_counter() - started,
+                      error_type=type(error).__name__, error=str(error)[:1000], **metadata)
+        except BaseException as observer_error:
+            error.accounting_failure = {"type": type(observer_error).__name__, "message": str(observer_error)[:1000]}
+            raise error from observer_error
         raise
     else:
         record["wall_s"] = time.perf_counter() - started
@@ -449,7 +453,7 @@ def _file_sha(path):
     return result.hexdigest()
 
 
-def extract_donor(model, baseweights, warmdelta, names, out, bindings):
+def extract_donor(model, baseweights, warmdelta, names, out, bindings, *, native_permit=None):
     """Stream final - exact rebuilt common warm anchor, and prove deployment.
 
     bindings holds explicit hashes plus operation/gate callbacks. Sequential
@@ -461,7 +465,15 @@ def extract_donor(model, baseweights, warmdelta, names, out, bindings):
     require(type(bindings) is dict and bindings.get("schema") == DONOR_SCHEMA, "donor binding schema")
     require(type(bindings.get("synthetic_cpu")) is bool, "donor synthetic_cpu flag")
     if not bindings["synthetic_cpu"]:
-        require(bindings.get("approved") is True and bindings.get("training_authorized") is True, "donor extraction admission")
+        if native_permit is None:
+            require(bindings.get("approved") is True and bindings.get("training_authorized") is True, "donor extraction admission")
+        else:
+            from .ce_native_authority import NativeExecutionPermit
+            require(type(native_permit) is NativeExecutionPermit, "opaque native CE donor permit required")
+            context = native_permit.context
+            stage = "delta_roundtrip" if context["phase"] == "qualification" else "donor_publish_verify"
+            native_permit.require(stage, static_recipe_sha256=context["static_recipe_sha256"],
+                                  operation=bindings.get("operation"), gate=bindings.get("gate"))
     hashes = ("base_weights_sha256", "warm_delta_file_sha256", "warm_delta_data_sha256", "warm_delta_state_sha256",
               "common_anchor_sha256", "own_start_sha256", "final_master_sha256", "frozen_state_sha256", "trainable_names_sha256")
     require(all(_hex(bindings.get(key)) for key in hashes), "explicit donor/reference hashes")

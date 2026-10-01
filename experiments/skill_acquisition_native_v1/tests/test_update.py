@@ -92,6 +92,16 @@ class PureTests(unittest.TestCase):
                 raise ValueError("example")
         self.assertEqual(events[-1][1], "failed")
 
+    def test_failed_receipt_preserves_physical_work_error(self):
+        physical = ValueError('physical backward failure')
+        def observer(kind, phase, **metadata):
+            if phase == 'failed': raise RuntimeError('failed receipt write')
+        with self.assertRaises(ValueError) as captured:
+            with u._span(observer, 'backward', {}): raise physical
+        self.assertIs(captured.exception, physical)
+        self.assertEqual(physical.accounting_failure, {'type': 'RuntimeError', 'message': 'failed receipt write'})
+        self.assertIsInstance(physical.__cause__, RuntimeError)
+
 
 @unittest.skipUnless(os.environ.get("COMP_RS_RUN_NATIVE_CPU_TESTS") == "1", "CPU framework tests await explicit resource clearance")
 class TinyCPU(unittest.TestCase):
