@@ -212,7 +212,12 @@ class NativeCheckpoints:
                     self._io['bytes_written'] += count
                 stream.flush()
                 os.fsync(stream.fileno())
-            require(self._read_json(temporary) == value, 'metadata write/readback mismatch')
+            observed = self._read_bytes(temporary)
+            # RNG tuples intentionally become JSON arrays. Compare their JSON
+            # meaning while also proving the exact serialized bytes, rather
+            # than comparing Python tuple/list container types.
+            require(observed == raw and canonical(_json(observed)) == raw[:-1],
+                    'metadata write/readback mismatch')
             os.link(temporary, path)
         finally:
             if temporary.exists():

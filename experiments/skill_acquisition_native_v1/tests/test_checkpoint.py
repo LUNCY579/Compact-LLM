@@ -207,6 +207,36 @@ class MetadataTests(unittest.TestCase):
                 cp.NativeCheckpoints(target, self.bindings(), 2, lambda stage: None, metadata_reserve=None)
             self.assertFalse(target.exists())
 
+    def test_nested_python_rng_tuple_publication_preserves_bytes_and_rejects_changed_value(self):
+        value = {'rng': {'python': random.Random(1701).getstate()}}
+        encoded = cp.canonical(value) + b'\n'
+        self.assertIsInstance(value['rng']['python'], tuple)
+        with tempfile.TemporaryDirectory(prefix='comp-rs-rng-json-') as directory:
+            with mock.patch.object(cp.NativeCheckpoints, '_check_gate', return_value={}):
+                adapter = cp.NativeCheckpoints(directory, self.bindings(), 2, lambda stage: None,
+                                               metadata_reserve=self.Budget())
+                target = adapter.directory / 'RNG.json'
+                adapter._publish_json(target, value)
+                self.assertEqual(target.read_bytes(), encoded)
+                parsed = adapter._read_json(target)
+                self.assertIsInstance(parsed['rng']['python'], list)
+                self.assertEqual(cp.canonical(parsed), cp.canonical(value))
+                self.assertEqual(cp.digest(parsed), cp.digest(value))
+                original = adapter._read_bytes
+                def changed(path, *args, **kwargs):
+                    raw = original(path, *args, **kwargs)
+                    if str(path).endswith('.partial'):
+                        parsed = cp._json(raw)
+                        parsed['rng']['python'][1][1] ^= 1
+                        return cp.canonical(parsed) + b'\n'
+                    return raw
+                corrupted = adapter.directory / 'CHANGED_RNG.json'
+                with mock.patch.object(adapter, '_read_bytes', side_effect=changed):
+                    with self.assertRaisesRegex(ValueError, 'readback mismatch'):
+                        adapter._publish_json(corrupted, value)
+                self.assertFalse(corrupted.exists())
+                self.assertFalse(list(adapter.directory.glob('*.partial')))
+
 
 @unittest.skipUnless(os.environ.get('COMP_RS_RUN_NATIVE_CPU_TESTS') == '1',
                      'tiny Torch CPU tests await root resource clearance')
@@ -418,8 +448,27 @@ class NativeCPUTests(unittest.TestCase):
         self.assertEqual(report['counts']['checkpoint_save_returned'], 1)
         restored = reopened.restore(model, optimizer)
         self.assertEqual((restored['C'], restored['U']), (0, 0))
-        self.assertIn('write_bytes_upper', next(event for event in reopened.events
-                                               if event.get('phase') == 'failed'))
+        failed_save = next(event for event in reopened.events
+                           if event.get('operation') == 'checkpoint_save' and event.get('phase') == 'failed')
+        started_save = next(event for event in reopened.events
+                            if event.get('operation') == 'checkpoint_save' and event.get('phase') == 'started'
+                            and event['operation_id'] == failed_save['operation_id'])
+        self.assertEqual(failed_save['write_bytes_upper'], started_save['write_bytes_upper'])
+        self.assertEqual(failed_save['read_bytes_upper'], started_save['read_bytes_upper'])
+        self.assertGreater(failed_save['write_bytes_upper'], 0)
+        self.assertLessEqual(failed_save['known_bytes_written'], started_save['write_bytes_upper'])
+        failed_hash = next(event for event in reopened.events
+                           if event.get('operation') == 'fingerprint' and event.get('phase') == 'failed')
+        started_hash = next(event for event in reopened.events
+                            if event.get('operation') == 'fingerprint' and event.get('phase') == 'started'
+                            and event['operation_id'] == failed_hash['operation_id'])
+        self.assertEqual(started_hash['reason'], 'checkpoint_streamed_publication')
+        self.assertEqual(started_hash['identity_hash_attempts_upper'], 2)
+        self.assertGreater(started_hash['state_bytes'], 0)
+        self.assertFalse(failed_hash['identity_hash_actual_known'])
+        self.assertEqual(failed_hash['uncertainty_rule'], 'entire admitted hash work remains charged')
+        self.assertNotIn('identity_hash_attempts_actual', failed_hash)
+        self.assertNotIn('identity_hash_bytes_actual', failed_hash)
         self.assertEqual(cp.CHUNK, 1024 ** 2)
 
     def test_actual_large_tensor_io_calls_never_exceed_one_MiB(self):
