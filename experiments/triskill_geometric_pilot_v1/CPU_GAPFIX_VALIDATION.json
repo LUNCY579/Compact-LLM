@@ -1,0 +1,138 @@
+{
+  "utc": "2026-10-01T23:53:02.628736+00:00",
+  "status": "CPU_VERIFIED_NATIVE_UNMEASURED",
+  "implementation_commit": "ef1fcbef18d92195375be0fdbb3ff1f05f786e9e",
+  "freeze_sha256": "2b65dd960a0e48f02f2c3c078b1cc98875b309442b9a7c02c8af510d1892cb7a",
+  "frozen_local_artifacts": 30,
+  "dependency_roles": {
+    "schema": 1,
+    "roles": {
+      "worker": {
+        "kind": "code",
+        "path": "experiments/triskill_geometric_pilot_v1/worker.py",
+        "sha256": "8002dadd72be49e34344f06e50a7736d0038d3409d1162b0210812f0fa80ab4e"
+      },
+      "geometry": {
+        "kind": "code",
+        "path": "experiments/triskill_geometric_pilot_v1/geometry.py",
+        "sha256": "45fb2dc9fbc434411d007f0b3a30be8ad75bec0d5839661b90e357524dd5c132"
+      },
+      "benchmark": {
+        "kind": "code",
+        "path": "experiments/triskill_geometric_pilot_v1/benchmark.py",
+        "sha256": "54c37047fe3c21aad38d53ae1df50d43c270959ac6a7f96537379b121c994127"
+      },
+      "binding": {
+        "kind": "code",
+        "path": "experiments/triskill_geometric_pilot_v1/dependency_binding.py",
+        "sha256": "8b1f2d03ef2362557c5fe8e72b224a8660cf18f4615f3061da0c6756fa1fccec"
+      },
+      "renderer": {
+        "kind": "code",
+        "path": "experiments/fresh_dual_skill_instrument_v1/score_arms.py",
+        "sha256": "30b1791e1c30afb9f1cb40b0e57b3c8c62d6c39c23a8e3f20af2e17cfc1c937b"
+      },
+      "renderer_fixture": {
+        "kind": "fixture",
+        "path": "C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/qwen001-20260918/render-process/prompts.jsonl",
+        "sha256": "46d95c672b7805872ebdc79dd45a688fbd59e4038eeea4ea6216b5ad82c4435f"
+      }
+    },
+    "execution": "verified source bytes; immutable DEV fixture snapshot"
+  },
+  "production_renderer_selftest": "template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)",
+  "source_fixture_read_scope": "exact existing DEV render-process fixture only; no protected bank opened",
+  "historical_artifacts_hash_unchanged": [
+    "geometry.py",
+    "geometry.npz",
+    "geometry.json",
+    "screen.json",
+    "development.json",
+    "conjunction_development.json",
+    "PREREG.md",
+    "BENCHMARK_MATRIX.md",
+    "CPU_TESTS.log",
+    "CPU_VALIDATION.json"
+  ],
+  "screen_n": 8,
+  "development_n": 8,
+  "conjunction_development_n": 2,
+  "format_development_n": 24,
+  "semantic_format_clusters": 6,
+  "local_membership": {
+    "local_disjoint": true,
+    "checks": {
+      "row_id": true,
+      "world_signature": true,
+      "state_signature": true,
+      "rule_signature": true
+    },
+    "legacy_exclusion_verified": false,
+    "protected_confirmation": false,
+    "development_n": 8,
+    "screen_n": 8
+  },
+  "legacy_freeze_rejected": true,
+  "unqualified_native_entry_gate": "STOP_CONTAINMENT_INTEGRATION_UNQUALIFIED",
+  "native_output_created": false,
+  "lease_created": false,
+  "max_input_tokens_including_prompt_control": 239,
+  "max_reference_output_tokens": 21,
+  "planned_generation_counts": {
+    "BASE": 8,
+    "T": 8,
+    "H": 8,
+    "TH": 8,
+    "IDENTITY": 4,
+    "ROTATION": 8,
+    "RANDOM": 8,
+    "PROMPT": 8,
+    "REVERSE": 4
+  },
+  "planned_max_forwards": 1552,
+  "planned_max_token_positions": 18892,
+  "tests": {
+    "count": 67,
+    "failures": 0,
+    "errors": 0,
+    "runner_seconds": 1.798,
+    "log": "CPU_GAPFIX_TESTS.log"
+  },
+  "synthetic_uncertainty_canary": {
+    "gains": 3,
+    "losses": 0,
+    "paired_n": 3,
+    "exact_two_sided_p": 0.25000000000000006,
+    "paired_net_rate_interval": {
+      "net_rate": 1.0,
+      "interval": [
+        -0.5358411166387222,
+        1.0
+      ],
+      "gain_probability_interval": [
+        0.23207944168063893,
+        1.0
+      ],
+      "loss_probability_interval": [
+        0.0,
+        0.7679205583193611
+      ],
+      "confidence_level_under_iid": 0.95,
+      "method": "Bonferroni simultaneous Clopper-Pearson marginal difference bounds",
+      "interpretation": "descriptive for fixed fixtures; coverage requires iid paired cases"
+    },
+    "actual_model_predictions": false
+  },
+  "native_behavioral_panels": "ALL_UNMEASURED",
+  "natural_causal_mechanism_claim": false,
+  "quality_claim": false,
+  "model_loads": 0,
+  "model_forwards": 0,
+  "native_generations": 0,
+  "training_examples": 0,
+  "paid_grader_calls": 0,
+  "torch_imported": false,
+  "transformers_imported": false,
+  "checkpoint_weight_reads": 0,
+  "CPU_provenance_reference_pin_checked": true
+}
