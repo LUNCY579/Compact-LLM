@@ -56,6 +56,18 @@ watchdog and Windows kill-on-close Job containment with a 600-second hard worker
 ceiling. Fresh research-worker/GPU/lease overlap checks and the shared central
 GPU lease precede launch. Never stop another job or user application.
 
+Pre-native independent review requires two additional ownership/evidence controls.
+The supervisor decorates the existing, byte-unchanged Windows Job factory to bind
+GO to its reviewed source snapshot, live PID/creation time, unique lease token,
+assigned worker-root PID/creation time and specific held Job handle. Before any
+framework import, the worker verifies ancestor and lease identities, duplicates
+that exact Job handle and verifies its membership in that Job. The supervisor
+then validates returned source/config receipts and rechecks source after completion.
+After an external stop it reads at most 8 MiB of journal metadata, reconstructs
+complete durable records and retains partial-tail/pending uncertainty. Matching
+recovery failure/result/cost receipts preserve existing worker receipts and fill
+missing terminal records. No unrecorded operation completion is inferred.
+
 Commit the registration and reviewed clean source before native execution.
 Bind the exact runtime, assets, failed bulk receipt and passed D2 prerequisite;
 recheck source/HEAD, frozen base, assets and raw journal after the run. Focused
