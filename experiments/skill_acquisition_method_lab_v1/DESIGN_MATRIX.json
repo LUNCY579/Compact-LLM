@@ -1,0 +1,109 @@
+{
+  "experiment": "SKILL-ACQUISITION-METHOD-LAB-001",
+  "status": "MATHEMATICAL_AND_DESIGN_EVIDENCE_NATIVE_ARMS_NOT_RUN",
+  "training_grant": false,
+  "current_acquisition_bottleneck": "Plain Supa had zero strict successes and zero mixed groups on the registered full R/S/P source screen. A common 600-row warm-start anchor is registered; its durable execution is being qualified.",
+  "shared_readouts": [
+    "strict verifier and bounded content correctness separately",
+    "actual atomic acquisition over source and shortcut floors",
+    "composition-only dependent RS repairs and joint damage",
+    "lost source-correct and acquired-skill memberships with denominators",
+    "per-parent clustered uncertainty plus independent training-seed variation",
+    "all attempted prompt-prefill, generation, loss, replay and teacher token costs",
+    "model/runtime/source hashes, effective deltas, per-delta coefficients, norm and cross terms"
+  ],
+  "panels": [
+    {
+      "id": "A0_COMMON_ANCHOR_SIGNAL",
+      "priority": 0,
+      "arms": ["registered warm-start theta0_prime", "plain Supa descriptive cost control"],
+      "prerequisites": ["warm-start manifest/target hashes", "completion/EOS masking", "checkpoint and resume acceptance", "registered disk and physical memory gates"],
+      "question": "Does the common warm-start produce useful mixed strict-reward groups for both R and S?",
+      "decision_rule_source": "COMP_RS_001_AMENDMENT_1.md section18 and unchanged S0-C m_min=0.10",
+      "confound_control": "The same theta0_prime becomes the anchor for every subsequent donor, baseline and enrollment; individual warm-starts cannot silently create different anchors.",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "A1_OBJECTIVE_DONORS",
+      "priority": 1,
+      "factors": {"objective": ["GRPO sample-SD", "practical centered MaxRL"], "atomic_bank": ["R", "S"]},
+      "arms": ["GRPO_R", "GRPO_S", "MaxRL_R", "MaxRL_S"],
+      "prerequisites": ["A0 signal gate", "measured inventory and update memory", "complete zero-churn source enrollment", "frozen optimizer and compute ceilings"],
+      "hypothesis": "At matched attempted compute and tuning allowance, objective choice changes meaningful atomic acquisition.",
+      "confound_control": "Full-trajectory score sums; identical fixed group size, epsilon convention, clipping, optimizer, parameter inventory, anchor, seed policy and explicit cost ceilings. N=2 is excluded as an objective-discrimination design because the mixed-group updates differ only by scale at epsilon0.",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "A2_DENSE_COMPOSITION",
+      "priority": 1,
+      "arms_within_each_objective": ["B", "R_at_alphaR", "S_at_alphaS", "RS_at_alphaR_alphaS"],
+      "unique_models_with_shared_anchor": 7,
+      "registered_coefficient_rule": "Grid0.125/0.25/0.375/0.50/0.75/1.00; alpha_star is smallest maximum; select median on nine-row plateau, lower median if even (governing COMP-RS section4).",
+      "prerequisites": ["both donors pass actual skill-positive gates", "independent coefficient plateaus selected on registered CALIBRATION", "all held-out arms frozen"],
+      "hypothesis": "The dependent RS composite improves over both solo controls while meeting declared atomic and legacy loss margins.",
+      "confound_control": "No normalization of the sum; the solo controls retain exactly the composition coefficients. Enroll operating-dose acquired membership separately from full-dose sequential membership.",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "A3_SEQUENTIAL_PERMUTATIONS",
+      "priority": 1,
+      "factors": {"objective": ["GRPO", "MaxRL"], "order": ["R_then_S", "S_then_R"]},
+      "prerequisites": ["A1 positive donors", "frozen second-stage optimizer reset/carry convention and matched budgets"],
+      "hypothesis": "Order changes previously acquired membership or joint RS behavior beyond run variation.",
+      "confound_control": "Both orders; measured update-map/Jacobian effects are distinct from independent same-anchor deltas. Do not infer commutativity from global cosine.",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "B1_BOUNDED_SAMPLER",
+      "priority": 2,
+      "factors": {"objective": ["GRPO", "MaxRL"], "sampling": ["fixed_groups", "one bounded same-snapshot continuation recipe"]},
+      "prerequisites": ["A1 useful signal and actual sparse-group bottleneck", "frozen continuation probability and cap", "all-failure attempt costs kept", "native probability/logprob parity"],
+      "hypothesis": "Bounded adaptive allocation improves atomic acquisition per attempted compute.",
+      "confound_control": "Run only one selected atomic bank first. Variable outcome-dependent group length changes the estimator; it cannot be advertised as unchanged fixed-N MaxRL. Actual NGU requires its policy-age/async controls; this same-snapshot variant is labeled NGU-inspired.",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "B2_RETENTION_SIGNAL",
+      "priority": 2,
+      "factors": {"order": ["R_then_S", "S_then_R"], "preservation": ["none", "one separately weighted supervised-replay or reference-KL recipe"]},
+      "prerequisites": ["measured sequential damage", "frozen earlier-skill reference and replay-only TRAIN bank", "independent additional token/teacher budget"],
+      "hypothesis": "A real preservation loss reduces earlier-skill losses within declared later-skill acquisition cost.",
+      "confound_control": "Uniform-success centered RL replay supplies zero correctness advantage. Keep a separate preservation loss and preserve the binary acquisition reward; anchor retention and acquired-donor retention use different references.",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "B3_DELTA_ALLOCATION",
+      "priority": 2,
+      "arms": ["dense offending donor", "fixed-density magnitude mask", "fixed-density delta-Wanda", "fixed-density Fisher row allocation"],
+      "prerequisites": ["A2 dense baseline", "identified damaging donor", "native calibration activations/per-example Fisher", "same keep count and coefficients"],
+      "hypothesis": "A calibrated allocation improves donor acquisition versus composition/legacy damage relative to simple masking and attenuation.",
+      "confound_control": "Retest every masked donor alone and keep the other donor unchanged. A positive row multiplier cannot alter within-row rankings if row keep counts are fixed. The published full-weight F-WANDA method and a two-distribution delta-retention proxy are distinct methods.",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "B4_MIMO_DENSE_SUPERVISION",
+      "priority": 3,
+      "arms": ["same-anchor verified-target SFT", "teacher-prefix or on-policy multi-teacher distillation with explicit teacher budget"],
+      "prerequisites": ["qualified raw prefix/bulk likelihood capture", "verified successful trajectories", "source/teacher/prompt hashes and leakage review", "independent teacher and student token costs"],
+      "hypothesis": "Dense qualified supervision creates atomic competence from which binary RL can improve, without silently importing dependent RS training.",
+      "confound_control": "Central MiMo CE512 mechanics and quarantined environment specifications establish no acquisition effect. Capture discrepancy is fixed or remains blocked; tolerances are not loosened. Distillation, RL and task-vector composition are separate interventions.",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "C1_VALIDATED_COMBINATION",
+      "priority": 4,
+      "arms": ["Y00 baseline", "Y10 validated sampler only", "Y01 validated preservation only", "Y11 both"],
+      "prerequisites": ["B1 and B2 each independently validated", "frozen two-factor protocol", "same total cost reporting and independent seeds"],
+      "hypothesis": "The combined intervention has positive acquisition/composition interaction without exceeding retention margins.",
+      "interaction": "Y11 - Y10 - Y01 + Y00",
+      "confound_control": "Report interaction and uncertainty separately for acquisition, dependent RS, lost memberships and compute. Improvement of Y11 over Y00 alone does not prove synergy.",
+      "native_status": "NOT_RUN"
+    }
+  ],
+  "order_identities_and_nonidentities": [
+    {"operation": "fixed linear projection before versus after summation", "identity": "P(a*dR+b*dS)=a*P(dR)+b*P(dS)", "implication": "Any observed difference must come from rounding, changing projection, allocation or execution, not fixed linear order."},
+    {"operation": "fixed coordinate mask before versus after summation", "identity": "M(a*dR+b*dS)=a*M(dR)+b*M(dS)", "implication": "A mask selected from the sum is a different allocation treatment, not this fixed-mask identity."},
+    {"operation": "sequential gradient acquisition", "leading_order": "etaR*etaS*(H_S*g_R-H_R*g_S)", "implication": "R_then_S and S_then_R are required even for orthogonal initial gradients; multiple Adam steps need effective update-map Jacobians."},
+    {"operation": "LoRA merge", "identity": "Effective BA is gauge-invariant; averaging A/B factors is not", "implication": "Materialize or apply weighted effective deltas with declared scaling, and verify tied parameter/scope identity."}
+  ]
+}

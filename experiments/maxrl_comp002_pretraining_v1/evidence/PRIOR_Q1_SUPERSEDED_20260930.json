@@ -1,0 +1,31 @@
+{
+  "record": "PRIOR_Q1_SUPERSESSION",
+  "checked_utc": "2026-10-01T00:39:57.041737+00:00",
+  "old_waiter_process_missing_at_revalidation": true,
+  "old_waiter_log": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\logs\\Q1_NATIVE_WAIT_INTERRUPTED_20260926.log",
+  "old_waiter_log_sha256": "6fedb60536792ce63f2b32d7cad082ea3e9d91b938f84713a075a55d94097588",
+  "old_waiter_native_launches": 0,
+  "replacement_native_q1": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1\\experiments\\maxrl_comp002_pretraining_v1\\evidence\\S0_Q1_FP32.json",
+    "sha256": "b1fa6d660abc89b889b914834bc01fc4c9dba8df31b4df5eea24692e7e47094e",
+    "passed": true,
+    "counts": {
+      "backward_calls": 1,
+      "decoder_forwards": 311,
+      "generated_tokens": 138,
+      "generations": 8,
+      "lm_forwards": 300,
+      "model_loads": 1,
+      "optimizer_steps": 0,
+      "optimizers_at_end": 0
+    }
+  },
+  "current_source_competence": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1\\experiments\\maxrl_comp002_pretraining_v1\\evidence\\S0_COMPETENCE.json",
+    "sha256": "da13ab06f2b6822afb3687a7d73a28d6b801d9d09b8e3cd62863464f8691e425",
+    "outcome": "STOP_NO_SIGNAL",
+    "strict_successes": 0,
+    "samples": 3600
+  },
+  "action": "Do not restart the obsolete BF16 Q1 waiter. Continue registered FP32 warmstart and source-signal gates."
+}

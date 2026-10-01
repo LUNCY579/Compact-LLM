@@ -1,5 +1,15 @@
 # COMP-RS-001 qualification status — 2026-09-26
 
+**Superseded on 2026-09-30.** The interrupted waiter had no launch line and
+its process is absent. Its log was preserved outside the checkout. The amended
+FP32 native harness subsequently passed S0-Q1 (receipt SHA-256 `b1fa6d660a…`),
+then full source competence ended `STOP_NO_SIGNAL`: strict 0/3,600 on R/S/P,
+zero mixed groups. The current next step is the registered common 600-row
+warm-start in `COMP_RS_001_AMENDMENT_1.md` §18, followed by the same signal
+gate. Its recovery/disk implementation is being qualified before launch.
+See `evidence/PRIOR_Q1_SUPERSEDED_20260930.json` for exact evidence bindings.
+The remainder of this file preserves the September 26 handoff history.
+
 The full R/S study is **in progress**. No native source response, donor training,
 composition arm or retention result exists. The Q0 `training_authorized=false`
 status remains in force.
