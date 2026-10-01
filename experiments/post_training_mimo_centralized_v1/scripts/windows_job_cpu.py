@@ -63,6 +63,12 @@ class JobPids(c.Structure):
     _fields_ = [('assigned', w.DWORD), ('returned', w.DWORD), ('pids', c.c_size_t * 8)]
 
 
+class ThreadEntry(c.Structure):
+    _fields_ = [('dwSize', w.DWORD), ('cntUsage', w.DWORD),
+                ('th32ThreadID', w.DWORD), ('th32OwnerProcessID', w.DWORD),
+                ('tpBasePri', c.c_long), ('tpDeltaPri', c.c_long), ('dwFlags', w.DWORD)]
+
+
 def membership_result(api_return, last_error, output):
     """A failed query has no valid membership output, even if its buffer is truthy."""
     return {"api_return": int(api_return), "last_error": int(last_error),
@@ -82,6 +88,12 @@ class Kernel:
             'CreateToolhelp32Snapshot': ([w.DWORD, w.DWORD], w.HANDLE),
             'Process32FirstW': ([w.HANDLE, c.POINTER(ProcessEntry)], w.BOOL),
             'Process32NextW': ([w.HANDLE, c.POINTER(ProcessEntry)], w.BOOL),
+            'Thread32First': ([w.HANDLE, c.POINTER(ThreadEntry)], w.BOOL),
+            'Thread32Next': ([w.HANDLE, c.POINTER(ThreadEntry)], w.BOOL),
+            'OpenThread': ([w.DWORD, w.BOOL, w.DWORD], w.HANDLE),
+            'GetProcessIdOfThread': ([w.HANDLE], w.DWORD),
+            'GetThreadTimes': ([w.HANDLE, *([c.POINTER(w.FILETIME)] * 4)], w.BOOL),
+            'ResumeThread': ([w.HANDLE], w.DWORD),
             'CreateJobObjectW': ([c.c_void_p, w.LPCWSTR], w.HANDLE),
             'SetInformationJobObject': ([w.HANDLE, c.c_int, c.c_void_p, w.DWORD], w.BOOL),
             'QueryInformationJobObject': ([w.HANDLE, c.c_int, c.c_void_p, w.DWORD, c.POINTER(w.DWORD)], w.BOOL),
@@ -173,6 +185,30 @@ class Kernel:
             pid = table.get(pid, 0)
         raise RuntimeError('CPU worker is not a descendant of its owned supervisor')
 
+    def thread_ids(self, owned_pid):
+        snapshot, error = self.call('CreateToolhelp32Snapshot', 4, 0)
+        require(snapshot and snapshot != c.c_void_p(-1).value, f'owned thread snapshot failed: {error}')
+        selected, count = [], 0
+        try:
+            entry = ThreadEntry()
+            entry.dwSize = c.sizeof(entry)
+            c.set_last_error(0)
+            result = self.dll.Thread32First(snapshot, c.byref(entry))
+            require(result, f'owned thread enumeration failed: {c.get_last_error()}')
+            while result:
+                count += 1
+                if entry.th32OwnerProcessID == owned_pid:
+                    selected.append(int(entry.th32ThreadID))
+                c.set_last_error(0)
+                result = self.dll.Thread32Next(snapshot, c.byref(entry))
+            last = c.get_last_error()
+            require(last == 18, f'owned thread enumeration incomplete: {last}')
+            self.record({'event': 'owned_thread_snapshot', 'owned_pid': owned_pid,
+                         'owned_thread_ids': selected, 'entries_count': count, 'terminal_error': last})
+            return selected
+        finally:
+            self.close(snapshot)
+
     def membership(self, process_handle, job_handle, label):
         output = w.BOOL(-1)
         result, error = self.call('IsProcessInJob', process_handle, job_handle, c.byref(output), context=label)
@@ -238,9 +274,9 @@ def validate_owned_identity(expected, observed, lineage, supervisor_pid, root_pi
             'owned CPU worker lineage mismatch')
 
 
-def cleanup_owned(kernel, job, children, process, supervisor_pid):
+def cleanup_owned(kernel, job, children, process, supervisor_pid, manual_fallback=True):
     """Attempt every owned cleanup even after an API, logging or identity failure."""
-    errors, witnesses = [], []
+    errors, witnesses, fallbacks = [], [], []
     if job is not None:
         try:
             job.close()
@@ -249,15 +285,24 @@ def cleanup_owned(kernel, job, children, process, supervisor_pid):
     for item in children.values():
         handle, identity = item['handle'], item['identity']
         try:
-            wait, _ = kernel.call('WaitForSingleObject', handle, 0)
+            wait, _ = kernel.call('WaitForSingleObject', handle, 2000)
             require(wait in (0, WAIT_TIMEOUT), 'owned process wait query failed')
             if wait == WAIT_TIMEOUT:
                 # Cached lineage was verified while the launcher was live. The held
                 # handle identifies the same object even after its parent exits.
-                validate_owned_identity(identity, kernel.identity(handle, identity['pid']),
-                                        item['lineage'], supervisor_pid, process.pid)
+                try:
+                    observed = kernel.identity(handle, identity['pid'])
+                except Exception as query_error:
+                    exited, _ = kernel.call('WaitForSingleObject', handle, 2000)
+                    require(exited == 0, 'unverified live identity after image query failure: ' + str(query_error))
+                    witnesses.append({'identity': identity, 'wait_return': exited,
+                                      'exit_during_identity_query': str(query_error)})
+                    continue
+                validate_owned_identity(identity, observed, item['lineage'], supervisor_pid, process.pid)
+                require(manual_fallback, 'Job cleanup left an active owned process')
                 result, error = kernel.call('TerminateProcess', handle, 2, context=identity)
                 require(result, f'owned CPU process termination failed: {error}')
+                fallbacks.append(identity['pid'])
             wait, _ = kernel.call('WaitForSingleObject', handle, 2000)
             witnesses.append({'identity': identity, 'wait_return': wait})
             require(wait == 0, 'owned CPU process survived cleanup')
@@ -271,10 +316,21 @@ def cleanup_owned(kernel, job, children, process, supervisor_pid):
     if process is not None:
         try:
             if process.poll() is None:
+                wait, _ = kernel.call('WaitForSingleObject', int(process._handle), 2000)
+                require(wait in (0, WAIT_TIMEOUT), 'owned launcher wait failed')
+            else:
+                wait = 0
+            if wait == WAIT_TIMEOUT:
+                require(manual_fallback, 'Job cleanup left an active owned launcher')
                 process.kill()  # Original Popen object/handle; never an enumerated PID kill.
+                fallbacks.append(process.pid)
             process.wait(timeout=2)
-            witnesses.append({'role': 'launcher', 'pid': process.pid, 'exit_code': process.returncode})
+            final_wait, _ = kernel.call('WaitForSingleObject', int(process._handle), 0)
+            require(final_wait == 0, 'owned launcher handle not signaled after wait')
+            witnesses.append({'role': 'launcher', 'pid': process.pid, 'exit_code': process.returncode,
+                              'wait_return': final_wait})
         except Exception as error:
             errors.append('owned launcher cleanup: ' + str(error))
     return {'status': 'OWNED_CPU_PROCESSES_EXITED' if not errors else 'BLOCKED_OWNED_CLEANUP',
-            'processes': witnesses, 'errors': errors, 'logging_errors': list(kernel.logging_errors)}
+            'processes': witnesses, 'errors': errors, 'logging_errors': list(kernel.logging_errors),
+            'owned_process_fallback_pids': fallbacks}

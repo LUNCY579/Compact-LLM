@@ -14,6 +14,7 @@ from experiments.post_training_mimo_centralized_v1.scripts.windows_job_cpu impor
 
 class FakeProcess:
     pid = 99
+    _handle = 99
     returncode = None
     def poll(self):
         return self.returncode
@@ -34,6 +35,8 @@ class FakeKernel:
             self.terminated.append(handle)
             return 1, 0
         if name == 'WaitForSingleObject':
+            if handle == 99:
+                return (0 if args[0] == 0 else 258), 0
             return (0 if handle in self.terminated else 258), 0
         raise AssertionError(name)
     def close(self, handle):
