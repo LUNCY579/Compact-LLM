@@ -197,12 +197,21 @@ def actual_ready(tree, ready, token, frozen, cfg):
     return item, member
 
 
+def serialize_job_handle(handle):
+    value = handle.value if isinstance(handle, w.HANDLE) else handle
+    pointer_max = (1 << (8 * c.sizeof(w.HANDLE))) - 1
+    require(type(value) is int and 0 < value < pointer_max and value != pointer_max - 1,
+            'CPU specific Job handle must be a non-null integer or HANDLE value')
+    return value
+
+
 def publish_go(directory, name, token, identity, frozen, kernel, job_handle, source_sha):
+    serialized_handle = serialize_job_handle(job_handle)
     parent_identity = kernel.identity(kernel.current(), os.getpid())
     require(not kernel.logging_errors, 'CPU GO evidence incomplete')
     write(directory / name, {'token': token, 'identity': identity, 'sources': frozen,
           'supervisor_pid': os.getpid(), 'supervisor_identity': parent_identity,
-          'job_handle': int(job_handle), 'source_sha': source_sha})
+          'job_handle': serialized_handle, 'source_sha': source_sha})
     require(not kernel.logging_errors, 'CPU GO identity evidence incomplete')
 
 
@@ -474,6 +483,8 @@ def controller(args):
 def outer():
     started = time.monotonic()
     require(len(sys.argv) == 1 and os.name == 'nt' and not metadata.forbidden_modules(), 'CPU outer has no overrides/frameworks')
+    require(not (PACKAGE / 'receipts/SUSPENDED_JOB_CPU_V1_OUTCOME.json').exists(),
+            'CPU V1 registration consumed; a separately registered successor is required')
     cfg, frozen = config(), sources()
     require(Path(sys.executable).resolve() == Path(cfg['executable']).resolve(), 'CPU outer pinned venv required')
     for path_key, hash_key in [('executable', 'executable_sha256'), ('cpu_interpreter', 'cpu_interpreter_sha256')]:

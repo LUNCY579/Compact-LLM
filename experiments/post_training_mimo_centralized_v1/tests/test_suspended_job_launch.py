@@ -368,6 +368,39 @@ class SuspendedLaunchControls(unittest.TestCase):
             self.assertEqual(accounting['complete_receipt_os_process_lower_bound'], 3)
             self.assertEqual(accounting['case_receipts_missing'], ['TERMINATE_ACTIVE_TREE'])
 
+    def test_go_serializes_both_integer_and_real_ctypes_handle_wrappers(self):
+        class GoKernel:
+            logging_errors = []
+            def current(self): return 1
+            def identity(self, handle, pid): return {'pid': pid, 'created_filetime': 123, 'image_path': 'fixture.exe'}
+        with tempfile.TemporaryDirectory() as temp:
+            for index, handle in enumerate((616, qual.w.HANDLE(616))):
+                directory = Path(temp) / str(index)
+                directory.mkdir()
+                qual.publish_go(directory, 'GO.json', 'a' * 32, {'pid': 99}, {}, GoKernel(), handle, 'fixed')
+                value = qual.read(directory / 'GO.json')
+                self.assertEqual(value['job_handle'], 616)
+                self.assertIs(type(value['job_handle']), int)
+
+    def test_null_pseudo_and_malformed_handle_values_are_rejected(self):
+        pointer_max = (1 << (8 * qual.c.sizeof(qual.w.HANDLE))) - 1
+        for handle in (None, qual.w.HANDLE(), 0, qual.w.HANDLE(0), -1, qual.w.HANDLE(-1),
+                       qual.w.HANDLE(-2), False, True, '616', b'616', [], {}, pointer_max + 1):
+            with self.subTest(handle=handle), self.assertRaisesRegex(RuntimeError, 'non-null integer or HANDLE'):
+                qual.serialize_job_handle(handle)
+
+    def test_consumed_v1_manifest_blocks_before_any_kernel_or_process_creation(self):
+        with tempfile.TemporaryDirectory() as temp:
+            package = Path(temp)
+            (package / 'receipts').mkdir()
+            qual.write(package / 'receipts/SUSPENDED_JOB_CPU_V1_OUTCOME.json', {'status': 'CONSUMED'})
+            with patch.object(qual, 'PACKAGE', package), patch.object(qual.sys, 'argv', ['qualifier']), \
+                 patch.object(qual, 'Kernel') as kernel, patch.object(qual.subprocess, 'Popen') as popen, \
+                 self.assertRaisesRegex(RuntimeError, 'V1 registration consumed'):
+                qual.outer()
+            kernel.assert_not_called()
+            popen.assert_not_called()
+
 
 if __name__ == '__main__':
     unittest.main()
