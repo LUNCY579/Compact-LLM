@@ -7,6 +7,12 @@ composition, and retention on one exact Rineya anchor. Equations identified as
 original derivations below are calculations for this study; cited experiments
 remain evidence about their original models and tasks.
 
+Current-state reconciliation: 2026-10-01. The native warmstart and full warmed
+competence screen have completed. The registered outcome is STOP_NO_SIGNAL;
+the original acquisition path stopped under amendment section 18. Historical
+receipts remain unchanged. The mathematical and CPU mechanics evidence below
+does not establish successful skill acquisition, retention or composition.
+
 ## 1. Current evidence and the common anchor
 
 The completed source competence receipt contains 450 CALIBRATION prompts,
@@ -26,18 +32,32 @@ that the recorded groups supply no centered GRPO/MaxRL acquisition update.
 Changing the diagnostic parser into a reward after seeing this result would
 change the experiment.
 
-The proposed common warmstart is one epoch of supervised training on the
+The completed common warmstart is one epoch of supervised training on the
 audited 600-row WARMSTART bank, with 75 accumulated updates under the declared
-recipe. Its native outcome remains pending in this analysis. Implementation
-and synthetic tests are not evidence that it repairs the source's strict
-competence. Its eight-prompt envelope check is descriptive and cannot stand
-for a complete competence or preservation enrollment. See the
+recipe. The full warmed read measured 450 CALIBRATION prompts and 3,600 samples:
+
+| Skill | Mixed groups / 150 | Strict/content successes / 1,200 |
+| --- | ---: | ---: |
+| R | 5 | 6 |
+| S | 72 | 179 |
+| P | 50 | 285 |
+
+R and S each required at least 15 mixed groups. R failed that fixed gate; P is
+descriptive. The result is **STOP_NO_SIGNAL**, not an acquisition or preservation
+pass. The [complete native receipt](evidence/NATIVE_WARM_COMPETENCE_20261001.json)
+has SHA256 `dceec5aba2cf06645f19ebb9c9afc0f10ebd618c4cd3fd625af88b3de0999784`.
+Its full panel supersedes the earlier eight-prompt descriptive envelope check.
+No further pilot, enrollment or acquisition followed this stop. See the
 [warmstart implementation](C:/Users/clclc/.codex/worktrees/comp-rs-native-q1/ChatBubble-titan-model-soup-mini-v1/experiments/maxrl_comp002_pretraining_v1/s0_warmstart.py)
 and [source snapshot](C:/Users/clclc/.codex/worktrees/comp-rs-native-q1/ChatBubble-titan-model-soup-mini-v1/experiments/maxrl_comp002_pretraining_v1/evidence/WARMSTART_SOURCE_SNAPSHOT_20260930.json).
 
-Let the original source be theta_b. If the common warmstart completes and its
-rebuild is qualified, define theta_a = theta_b + delta_warm as the immutable
-acquisition anchor. Otherwise theta_a has not been established. Every compared
+Let the original source be theta_b. Define theta_a = theta_b + delta_warm using
+the completed deployed FP32 rebuild, whose full parameter/buffer fingerprint is
+`ff516ff86259c101a8cf55b4bf548e267f74719dc450ad34538f4383ca55d84b`.
+This establishes an immutable common anchor; it supplies no new training grant
+after the failed signal screen. The deployed rebuild, rather than the trained
+master, defines the reference because FP32 subtraction and re-addition need not
+recover every master value bit for bit. Every compared
 R and S donor must start from the same theta_a, not separately warmstarted
 states. Define delta_R = theta_R - theta_a and delta_S = theta_S - theta_a.
 The intended composition is
@@ -992,6 +1012,12 @@ These checks establish algebra for defined scalar/quadratic examples and
 executable estimator conventions. The receipt records native_models_run = 0.
 It cannot validate the native loader, on-policy collector, warmstart efficacy,
 learned donor competence, real-model curvature, allocation causality, or any
-retention margin. The native source remains 0/3,600 strict successes and the
-common warmstart outcome remains pending until separate native evidence
-changes that status.
+retention margin. The historical plain source remains 0/3,600 strict successes.
+The separate full warmed native read is now complete: R 6, S 179 and P 285
+strict/content successes out of 1,200 each, with mixed groups 5/72/50. Its
+STOP_NO_SIGNAL outcome stops the original path under section 18. The prepared
+[R oracle-supervision alternatives](R_ORACLE_SUPERVISION_PROPOSAL.md) await a new
+operator decision, frozen scope and native qualification. Their verified TRAIN
+labels, matched census, permutation analysis and synthetic CPU mechanics do not
+answer the still-unperformed acquisition, functional retention or composition
+comparisons in [the design matrix](DESIGN_MATRIX.json).
