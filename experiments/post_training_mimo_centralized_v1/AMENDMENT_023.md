@@ -37,6 +37,14 @@ metadata/log file. Per readiness/GO phase at most five seconds; 100 ms superviso
 poll, process-tree RSS <=0.5 GiB and host reserve >=1.25 GiB, disk >=4 GiB.
 Prelaunch reuse two >=3.3125 GiB RAM observations two seconds apart. An external
 45-second invocation ceiling is a backup; no other process may be stopped.
+The backup is a separate CPU-only controller Job. Before either probe it joins
+only the verified owned diagnostic supervisor, identified by held handle, native
+creation time, image, lineage, source and token, and publishes bootstrap GO only
+after successful specific membership. Its inherited nested Job supplies the
+external 45-second kill-on-close bound even when a probe is outside its own inner
+Job. Controller processes are separate from the two experimental worker roots;
+at most four OS processes may be active in the controller Job at once. This CPU
+bootstrap is not a native launch qualification or a change to V1.
 On cleanup close/terminate only the owned Job and, if an interpreter is proved
 outside it, use only a held handle whose PID, creation time, image and descendant
 lineage match this CPU attempt. Confirm all held owned processes have exited.
