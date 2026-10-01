@@ -1,0 +1,67 @@
+{
+  "schema": "R-ORACLE-CE8-PLAN-PREPARATION-1",
+  "utc": "2026-10-01T17:28:11.682254+00:00",
+  "source_sha256": "8f197c8aea3d2b0c7542ad9acb0593ffd407d7759e61dd8d84400c129b20d3e7",
+  "source_unchanged": true,
+  "preparation": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\PREPARATION.json",
+    "sha256": "260534c1962d50be243ef86bc22f631dfa791185c4936d49fd9f0ab4c0e8de3e"
+  },
+  "anchors": {
+    "own_start_sha256": "ff516ff86259c101a8cf55b4bf548e267f74719dc450ad34538f4383ca55d84b",
+    "common_anchor_sha256": "ff516ff86259c101a8cf55b4bf548e267f74719dc450ad34538f4383ca55d84b",
+    "deployed_anchor_rule": "warm receipt rebuilt full FP32 model state, not trained master",
+    "warm_receipt": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\S0_WARMSTART.json",
+      "sha256": "5f5992dcd5ba166f3823219876bae3158f87b2802cf4f34e810e62c89a4b8e78"
+    },
+    "base_weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "warm_delta_data_sha256": "09911292ff466e40c81308d6181c25f6c7cb998500bb6476ed0bf19769050d95"
+  },
+  "plans": {
+    "canonical": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\CE8_CANONICAL_PLAN_20261001.json",
+      "bytes": 902563,
+      "file_sha256": "269a0a26450d878aa6f868aa858b886663a790762bb4bca6f7b49ebe0a4fd2cd",
+      "plan_sha256": "85616f700a250242764ae5b2b17c9d1cbae8366dbaea0899dda4ff10d9d24e03",
+      "shared_exposure_sha256": "02ee750c4914f41d60a2099b6bb1b852742a48f74d00119156bdab828ee58f0c",
+      "ordered_row_ids_sha256": "8613e5257f3213e8977f41ca72a882036ecf6b3f19809016790a2b99bfc95867",
+      "boundary_labels_sha256": "8010ef89449c50f31ae9d2e21e7c42b56f1fe3e215a33bbf5ec3739d05c98660",
+      "boundaries": 375,
+      "rows": 3000,
+      "unbound_reference_fields": [
+        "recipe",
+        "runtime",
+        "source"
+      ]
+    },
+    "permuted": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\CE8_PERMUTED_PLAN_20261001.json",
+      "bytes": 902673,
+      "file_sha256": "2d9b94adf2a507224eeed14e6d11cc9cf6a8e879f3c9751a67756fdf096323b2",
+      "plan_sha256": "81a6ea023f2d03bba4486fb6d74362814cba6aab78902a81cc71a15393909c9f",
+      "shared_exposure_sha256": "02ee750c4914f41d60a2099b6bb1b852742a48f74d00119156bdab828ee58f0c",
+      "ordered_row_ids_sha256": "8613e5257f3213e8977f41ca72a882036ecf6b3f19809016790a2b99bfc95867",
+      "boundary_labels_sha256": "d8d0ac8153ed5eb258fe4cecf8819aaaf65955a99a86e933690b97cd661543da",
+      "boundaries": 375,
+      "rows": 3000,
+      "unbound_reference_fields": [
+        "recipe",
+        "runtime",
+        "source"
+      ]
+    }
+  },
+  "same_ordered_exposure_plan": true,
+  "distinct_label_bindings": true,
+  "verified_row_slots": 6000,
+  "framework_imports": [],
+  "elapsed_s": 0.6853850000006787,
+  "classification": "Pure proposal bindings against existing TRAIN labels; native experiment choice remains pending",
+  "data_revalidation": "Pinned preparation references canonical/policy TRAIN hashes; this builder rereads both target files and the atomic R manifest. Future native ingestion must revalidate all source files.",
+  "native_training_authorized": false,
+  "model_loads": 0,
+  "optimizer_steps": 0,
+  "heldout_model_outputs_read": false,
+  "native_driver_and_durable_CE_ledger_qualified": false
+}

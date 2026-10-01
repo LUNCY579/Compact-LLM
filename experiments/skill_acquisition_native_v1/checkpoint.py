@@ -147,7 +147,7 @@ class NativeCheckpoints:
         require(_hex(self.bindings.get('own_start_sha256', self.bindings.get('start_anchor_sha256')))
                 and _hex(self.bindings.get('common_anchor_sha256', self.bindings.get('reference_anchor_sha256'))),
                 'start/reference anchor identities required')
-        self.plan_rows = _plan_rows(self.bindings)
+        self.plan_rows = self._extract_plan_rows(self.bindings)
         self.numel, self.gate, self.ledger = numel, gate, None
         self.binding_sha256 = digest(self.bindings)
         self.events, self._io, self._generation = [], {'bytes_read': 0, 'bytes_written': 0}, 0
@@ -160,6 +160,14 @@ class NativeCheckpoints:
         else:
             self._publish_json(binding_path, self.bindings)
         self._read_journal()
+
+    def _extract_plan_rows(self, bindings):
+        """Instance scope hook; the default remains the exact ordered B2 plan."""
+        return _plan_rows(bindings)
+
+    def _validate_progress(self, progress):
+        """Instance scope hook; the default preserves generic separate C/U."""
+        return validate_progress(progress, self.plan_rows)
 
     def attach_ledger(self, ledger):
         """Attach before restore. Costs are never restored from a checkpoint."""
@@ -453,7 +461,7 @@ class NativeCheckpoints:
     def save(self, model, optimizer, progress, ledger):
         self.attach_ledger(ledger)
         progress = _json(canonical(progress))
-        validate_progress(progress, self.plan_rows)
+        self._validate_progress(progress)
         require(progress['generation'] >= self._generation, 'runner has not installed the restored generation fence')
         operation_id, start = uuid.uuid4().hex, time.perf_counter()
         before_io = dict(self._io)
@@ -589,7 +597,7 @@ class NativeCheckpoints:
                    and event['sequence'] == manifest['sequence']]
         require(len(intents) == 1 and intents[0]['manifest_sha256'] == manifest['manifest_sha256']
                 and intents[0]['operation_id'] == manifest['save_operation_id'], 'manifest differs from durable publication intent')
-        progress = validate_progress(manifest['progress'], self.plan_rows)
+        progress = self._validate_progress(manifest['progress'])
         require(type(manifest['Adam_scalar_steps']) is int and manifest['Adam_scalar_steps'] == progress['U'], 'Adam metadata differs from U')
         parameters, inventory, groups, device = self._scope(model, optimizer)
         require(inventory == manifest['inventory'] and digest(inventory) == manifest['inventory_sha256']

@@ -1,0 +1,206 @@
+{
+  "derivation": "For n distinct items, depth k has n!/(n-k)! order prefixes. Nodes=sum(k=0..n)n!/(n-k)!, edges=nodes-1, leaves=n!.",
+  "edge_ratio_to_one_teacher_item_path": {
+    "denominator": 3,
+    "numerator": 1246957
+  },
+  "finite_checks": [
+    {
+      "closed_form_equal": true,
+      "enumerated_paths": 1,
+      "enumerated_prefixes": 2,
+      "nodes_by_depth": [
+        1,
+        1
+      ],
+      "set_size": 1
+    },
+    {
+      "closed_form_equal": true,
+      "enumerated_paths": 2,
+      "enumerated_prefixes": 5,
+      "nodes_by_depth": [
+        1,
+        2,
+        2
+      ],
+      "set_size": 2
+    },
+    {
+      "closed_form_equal": true,
+      "enumerated_paths": 6,
+      "enumerated_prefixes": 16,
+      "nodes_by_depth": [
+        1,
+        3,
+        6,
+        6
+      ],
+      "set_size": 3
+    },
+    {
+      "closed_form_equal": true,
+      "enumerated_paths": 24,
+      "enumerated_prefixes": 65,
+      "nodes_by_depth": [
+        1,
+        4,
+        12,
+        24,
+        24
+      ],
+      "set_size": 4
+    },
+    {
+      "closed_form_equal": true,
+      "enumerated_paths": 120,
+      "enumerated_prefixes": 326,
+      "nodes_by_depth": [
+        1,
+        5,
+        20,
+        60,
+        120,
+        120
+      ],
+      "set_size": 5
+    },
+    {
+      "closed_form_equal": true,
+      "enumerated_paths": 720,
+      "enumerated_prefixes": 1957,
+      "nodes_by_depth": [
+        1,
+        6,
+        30,
+        120,
+        360,
+        720,
+        720
+      ],
+      "set_size": 6
+    }
+  ],
+  "framework_imports": [],
+  "heldout_model_outputs_read": false,
+  "limitations": [
+    "Item-order prefixes are not tokenizer-prefix counts; token boundaries may cross JSON/item boundaries.",
+    "No model timing, IO, KV-memory or efficacy was measured.",
+    "Counts cover compact fixed-EOS answer permutations, not the entire strict-verifier event.",
+    "One fixed hash-permutation label per row does not enumerate or marginalize all valid orders."
+  ],
+  "model_loads": 0,
+  "native_training_authorized": false,
+  "optimizer_steps": 0,
+  "preparation": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\PREPARATION.json",
+    "sha256": "260534c1962d50be243ef86bc22f631dfa791185c4936d49fd9f0ab4c0e8de3e"
+  },
+  "same_subset_counterexample": {
+    "conclusion": "A general autoregressive model need not be Markov in the visited subset. Exact subset-only merging requires an additional proven state-equivalence property.",
+    "conditional_valid_next_probabilities": [
+      {
+        "denominator": 10,
+        "numerator": 9
+      },
+      {
+        "denominator": 10,
+        "numerator": 1
+      }
+    ],
+    "prefixes": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "required_remaining_item": 2,
+    "same_visited_subset": [
+      0,
+      1
+    ]
+  },
+  "schema": "R-ORACLE-PERMUTATION-COMPLEXITY-1",
+  "source": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930\\experiments\\skill_acquisition_method_lab_v1\\permutation_complexity.py",
+    "sha256": "cac5e57f39b4385cd3476a7150a1b0cc2c3b1f4b0daf3cb41cf6228359ea52cf"
+  },
+  "train_panel": {
+    "classification": "combinatorial representation counts only; no native runtime/IO/memory estimate",
+    "item_prefix_edges_total": 9975656000,
+    "item_prefix_nodes_total_including_roots": 9975659000,
+    "prompt_rows": 3000,
+    "single_teacher_item_edges_total": 24000,
+    "strata": [
+      {
+        "item_prefix_edges": 1956,
+        "item_prefix_nodes_by_depth": [
+          1,
+          6,
+          30,
+          120,
+          360,
+          720,
+          720
+        ],
+        "item_prefix_nodes_including_root": 1957,
+        "prompt_rows": 1000,
+        "set_size": 6,
+        "single_teacher_item_edges": 6,
+        "subset_states_including_empty": 64,
+        "unit": "complete-item order prefixes, not tokenizer prefixes or model operations",
+        "valid_compact_orderings": 720
+      },
+      {
+        "item_prefix_edges": 109600,
+        "item_prefix_nodes_by_depth": [
+          1,
+          8,
+          56,
+          336,
+          1680,
+          6720,
+          20160,
+          40320,
+          40320
+        ],
+        "item_prefix_nodes_including_root": 109601,
+        "prompt_rows": 1000,
+        "set_size": 8,
+        "single_teacher_item_edges": 8,
+        "subset_states_including_empty": 256,
+        "unit": "complete-item order prefixes, not tokenizer prefixes or model operations",
+        "valid_compact_orderings": 40320
+      },
+      {
+        "item_prefix_edges": 9864100,
+        "item_prefix_nodes_by_depth": [
+          1,
+          10,
+          90,
+          720,
+          5040,
+          30240,
+          151200,
+          604800,
+          1814400,
+          3628800,
+          3628800
+        ],
+        "item_prefix_nodes_including_root": 9864101,
+        "prompt_rows": 1000,
+        "set_size": 10,
+        "single_teacher_item_edges": 10,
+        "subset_states_including_empty": 1024,
+        "unit": "complete-item order prefixes, not tokenizer prefixes or model operations",
+        "valid_compact_orderings": 3628800
+      }
+    ],
+    "valid_compact_orderings_total": 3669840000
+  },
+  "utc": "2026-10-01T17:21:23.739841+00:00"
+}

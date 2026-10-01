@@ -93,6 +93,30 @@ These identities use full sequence NLL. The proposed row-token mean divides by
 the number of labeled tokens; actual tokenizer lengths must be checked before
 asserting equivalence across target permutations.
 
+The exact item-order trie further separates a single teacher path from exhaustive
+permutation likelihood. Depth k has n!/(n-k)! distinct ordered prefixes, so its
+node count is the sum over k=0..n:
+
+| Resolved set size | Compact orderings | Item-prefix nodes, including root |
+| --- | ---: | ---: |
+| 6 | 720 | 1,957 |
+| 8 | 40,320 | 109,601 |
+| 10 | 3,628,800 | 9,864,101 |
+
+Across the measured 1,000/1,000/1,000 TRAIN histogram, this gives 3,669,840,000
+prompt–answer order pairs and 9,975,656,000 item-prefix edges, counted separately
+for each prompt; one teacher per row
+uses 24,000 item transitions. `permutation_complexity.py` audits the closed form
+against explicit tries for sizes 1..6. These are combinatorial counts. Actual
+token-prefix counts, KV memory and runtime need separate measurements.
+
+Subset-only merging additionally requires a proven state-equivalence property.
+For example, prefixes [0,1] and [1,0] visit the same subset, but a general
+autoregressive model can assign probabilities .9 and .1 to the required next
+item 2. The oracle's subset state does not establish equality of the model's
+continuation distributions. The exact audit is retained in
+`evidence/R_PERMUTATION_COMPLEXITY_20261001.json`.
+
 ## Evaluation and scope before execution
 
 Register exact baseline/donor reads before any new model output:
@@ -123,3 +147,19 @@ Review prompted the chunk-validation fix; the prior receipt is preserved.
 This core admits synthetic
 CPU fixtures only. It does not implement the native SFT driver or qualify the
 existing B2 checkpoint plan for CE8 boundaries, and grants no new training.
+
+A separate synthetic CPU CE8 checkpoint adapter now exists. Its two actual
+integration cases passed within a 43-check combined CE/legacy-storage suite:
+stochastic fresh-object resume reproduces the uninterrupted second update bit
+for bit, and latest-payload corruption fails without mutation or fallback.
+The comparison runs within one OS process and uses an in-memory fixture observer.
+It does not qualify durable production CE accounting, a fresh-process native
+resume, the proposed 3,000-row experiment, acquisition or retention.
+
+The pure CE8 planner now binds both verified 3,000-row target files to 375
+identical exposure boundaries and separate label digests. Independent exports
+pin the actual completed warm-anchor receipt. Recipe, native runtime and full
+trainer-source references remain unresolved; every execution/grant flag remains
+false and proposal plans cannot export synthetic checkpoint scope. Full
+canonical/policy TRAIN files must be revalidated at future native ingestion.
+Receipts are retained under `../skill_acquisition_native_v1/evidence/`.
