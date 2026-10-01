@@ -26,6 +26,9 @@ A completed donor file is not evidence that its skill was acquired.
 | `plan.py` | Fix exposure order, sample seeds, and separate exposure count C from applied Adam count U. |
 | `ce_plan.py` | Bind unapproved 3,000-row CE8 exposure/label plans; permit checkpoint metadata export only for explicit synthetic fixtures. |
 | `ce_journal.py` | Persist synthetic CPU CE8 reservations, observed update proofs, C/U and restore fences; refuse native/proposal execution. |
+| `ce_controller.py` | Prepare distinct qualification/training requests and shared lifecycle wiring; empty native registries keep execution dormant. |
+| `ce_ingestion.py` | Revalidate complete TRAIN/teacher sources, stream tokenizer census and retain at most eight prepared token rows. |
+| `ce_qualification.py` | Validate scope-bound qualification metadata and numerical observations; preserve DRAFT_UNQUALIFIED until a real native verifier exists. |
 | `protocol.py` | Validate authorization, S0 ancestry, source/runtime bindings, qualification, and measured budgets. |
 | `update.py` | Verify sampled-policy identity and raw log probabilities; apply the proposed MaxRL loss; extract a donor relative to the actual warm anchor. |
 | `checkpoint.py` | Stream parameters, Adam state, module modes, and process RNG state into two verified rolling checkpoints. |
@@ -160,6 +163,49 @@ work, a verified boot identity, actual process/resource guards, full data
 revalidation and a separately registered experiment. Reopening uses fresh
 objects in one OS process. These controls do not qualify native/full-unit costs,
 a fresh-process trainer, acquisition, composition, retention or a training grant.
+
+## Dormant native preparation
+
+The shared controller distinguishes a separately authorized qualification scope
+from production training. Qualification has no dependency on an already passed
+qualification receipt. Training requires its own scope and qualified evidence.
+No native backend or outer authority verifier is registered in this source.
+Unapproved requests and invented native factories/permits refuse before work.
+
+The orchestration code admits bootstrap/setup work before its callbacks, binds
+the concrete stage/refmap outer adapter, orders source verification, fresh-worker
+boot proof, lease, resource guards and watchdog, then checkpoint/update/restore
+and publication. Cleanup, watchdog exit and lease release precede the terminal
+seal. Failed or suppressed work cannot publish a successful completion.
+Injected service fixtures exercise that wiring; they are not process/resource
+measurements or an actual native controller implementation.
+
+The new three-module source suite passed **30/30 framework-free tests**, including
+cross-module request identity/null qualification-output handling, L2 gradient
+criteria, complete summed token census and label binding, source/recipe admission,
+failure preservation and lifecycle ordering. See
+`evidence/CE8_NATIVE_PREPARATION_SOURCE_CHECKS_20261001.json`.
+
+The actual existing canonical and permuted R teachers were independently
+reverified against all source TRAIN/policy data, atomic identities, declared
+oracle policy, strict verifier and corpus reward: **6,000 teacher rows checked**.
+That run used explicit non-native metadata admission, imported no framework,
+loaded no tokenizer/model and read no held-out model outputs. See
+`evidence/CE8_REAL_TRAIN_INGESTION_20261001.json`.
+
+Actual maximum prompt, target-plus-EOS and total sequence lengths are selected
+independently from rendered row bindings: the prepared ceilings are 1,259, 29
+and 1,287 respectively. They need not share a row and must not be combined into
+an invented longest example. Tokenizer rendering and native qualification were
+not performed by this source verification.
+
+The qualification producer remains **DRAFT_UNQUALIFIED**. Its native verifier
+registry is empty; flipping an activation flag or providing stage booleans,
+unrelated blob hashes or a caller-supplied verifier cannot produce native PASS.
+Actual execution handles, observation/artifact linkage, retained-ledger replay,
+verification pricing and native backend/capability activation remain required
+after the new experiment decision and registration. Acquisition, composition
+and functional retention remain unproven.
 
 ## Production interface
 

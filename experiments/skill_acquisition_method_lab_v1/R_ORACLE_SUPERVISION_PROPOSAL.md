@@ -176,3 +176,13 @@ This is preparation for both treatment choices. Synthetic declared profiles,
 bounded bootstrap validation and resume within one OS process do not supply a
 native execution grant, measured full-unit budgets, outer setup/hash admission,
 a qualified process/resource controller or scientific learning evidence.
+
+Dormant qualification/training lifecycle, source ingestion and qualification
+metadata components now support both proposed teacher policies. Thirty pure
+source tests passed, and actual full TRAIN/teacher revalidation checked 6,000
+rows without a tokenizer, model or framework import. No native backend/authority
+verifier is registered; the qualification producer remains DRAFT_UNQUALIFIED.
+The 1,259/29/1,287 prompt/target/sequence maxima require independently identified
+actual row witnesses. Source/service fixtures do not supply native process,
+resource or learning evidence. The operator decision and frozen registration
+still precede any native qualification or training.
