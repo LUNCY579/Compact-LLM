@@ -1,5 +1,5 @@
 import unittest
-from worker import Budget, MAX_FORWARDS, MAX_GENERATIONS, MAX_TOKEN_POSITIONS, prompt_system, validate_containment, validate_freeze
+from worker import Budget, MAX_FORWARDS, MAX_GENERATIONS, MAX_TOKEN_POSITIONS, prompt_system, validate_containment, validate_freeze, screen_schedule, directional_rotation, ARMS
 from benchmark import build_screen
 import json
 import tempfile
@@ -37,6 +37,29 @@ class BudgetTests(unittest.TestCase):
         for row in rows:
             self.assertEqual(prompt_system(row,"TH"),row.system)
             self.assertEqual(prompt_system(row,"PROMPT") != row.system,"rules" in row.metadata)
+
+    def test_direction_control_preserves_budget_and_endpoint_coverage(self):
+        rows=build_screen()
+        schedule=screen_schedule(rows)
+        self.assertEqual(sum(len(unit_rows) for _,unit_rows in schedule),64)
+        self.assertEqual([arm for arm,_ in schedule[:3]],["BASE","T","H"])
+        self.assertTrue(all(row.task_kind.endswith("parent") for _,unit_rows in schedule[:3] for row in unit_rows))
+        coverage={arm:set() for arm in ARMS}
+        for arm,unit_rows in schedule:
+            coverage[arm].update(row.row_id for row in unit_rows)
+        dependent={row.row_id for row in rows if row.metadata.get("transfer_endpoint")}
+        self.assertEqual(len(dependent),3)
+        self.assertTrue(all(dependent <= present for present in coverage.values()))
+        self.assertEqual(len(coverage["IDENTITY"]),4)
+        self.assertEqual(len(coverage["REVERSE"]),4)
+        self.assertEqual(len(coverage["ROTATION"]),8)
+
+    def test_reverse_uses_transpose_without_choosing_from_outcomes(self):
+        import numpy as np
+        r=np.array([[0.,-1.],[1.,0.]])
+        np.testing.assert_array_equal(directional_rotation(r,"REVERSE"),r.T)
+        np.testing.assert_array_equal(directional_rotation(r,"ROTATION"),r)
+        self.assertIsNone(directional_rotation(r,"IDENTITY"))
 
     def test_unqualified_containment_cannot_start_native(self):
         with self.assertRaisesRegex(RuntimeError,"CONTAINMENT_INTEGRATION_UNQUALIFIED"):

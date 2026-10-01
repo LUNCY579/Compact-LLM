@@ -6,7 +6,7 @@ against protected, training, or spent banks. See BENCHMARK_MATRIX.md.
 """
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 import hashlib
 import json
 import math
@@ -40,6 +40,26 @@ TRANSFER_SYSTEM = (
     "equally. Apply every instruction in order to each admissible value, reducing modulo 97 "
     "after each step. Return only the common final integer, or UNKNOWN if final values differ."
 )
+ATOM_OUTPUT_KINDS = ("integer_or_unknown", "answer_json", "answer_tag", "fenced_atom")
+FORMAT_CONTRACTS = {
+    "integer_or_unknown": (
+        "Return only one integer in decimal notation, or exactly UNKNOWN. "
+        "No labels, prose, tags, JSON, or code fences."
+    ),
+    "answer_json": (
+        'Return only a JSON object with exactly one key, "answer". Its value must be '
+        'an integer, or the string "UNKNOWN". No other keys, prose, or code fences.'
+    ),
+    "answer_tag": (
+        "Return only <answer> followed by one integer in decimal notation or exactly "
+        "UNKNOWN, followed by </answer>. No other tags, prose, JSON, or code fences."
+    ),
+    "fenced_atom": (
+        "Return only a three-line text code fence: the first line is ```text, the "
+        "second line is one integer in decimal notation or exactly UNKNOWN, and the "
+        "third line is ```. No labels, prose, tags, or JSON."
+    ),
+}
 
 
 def canonical(value: Any) -> str:
@@ -233,6 +253,55 @@ def build_screen() -> tuple[BenchmarkRow, ...]:
     return _build("screen")
 
 
+def build_format_variants() -> tuple[BenchmarkRow, ...]:
+    """DEVELOPMENT-only format fixtures, outside the frozen native screen.
+
+    Four contracts share each existing H/C semantic case and gold atom. These
+    are correlated variants, not 24 independent ability observations. No native
+    format panel is authorized or measured; no operator, layer, angle, or stopping
+    choice may use their C outcomes. Native use requires a separate protocol.
+    """
+    rows = []
+    for source in build_development():
+        if source.output_kind != "integer_or_unknown":
+            continue
+        if source.task_kind == "answerability_parent":
+            old_contract = (
+                "Return exactly one integer if the requested value is established. "
+                "If it cannot be determined, return exactly UNKNOWN."
+            )
+            semantic_contract = (
+                "The answer is the established requested integer; if the requested "
+                "value cannot be determined, the answer is UNKNOWN. "
+            )
+        else:
+            old_contract = (
+                "Return only the common final integer, or UNKNOWN if final values differ."
+            )
+            semantic_contract = (
+                "The answer is the common final integer if all admissible final values "
+                "agree; otherwise the answer is UNKNOWN. "
+            )
+        if source.system.count(old_contract) != 1:
+            raise ValueError("format source has an unexpected output contract")
+        for output_kind in ATOM_OUTPUT_KINDS:
+            contract = FORMAT_CONTRACTS[output_kind]
+            rows.append(replace(
+                source, row_id=f"{source.row_id}-format-{output_kind}",
+                system=source.system.replace(old_contract, semantic_contract + contract),
+                output_kind=output_kind,
+                metadata={**source.metadata,
+                          "semantic_case_id": source.row_id,
+                          "format_source_row_id": source.row_id,
+                          "format_variant": output_kind,
+                          "strict_format_contract": contract,
+                          "format_panel_scoring_unit": "semantic_case_cluster",
+                          "native_format_panel": "unmeasured_not_authorized",
+                          "operator_selection_allowed": False},
+            ))
+    return tuple(rows)
+
+
 def build_conjunction_controls() -> tuple[BenchmarkRow, ...]:
     """Optional DEVELOPMENT-only tasks; not part of the native eight-row budget.
 
@@ -335,6 +404,9 @@ def _semantic_text(text: str) -> str:
     diagnostic deliberately rejects reasoning plus a final-answer line.
     """
     stripped = text.strip()
+    tagged = re.fullmatch(r"<answer>(.*?)</answer>", stripped, re.S)
+    if tagged:
+        return tagged.group(1).strip()
     fence = re.fullmatch(r"```(?:json|text)?\s*\n?(.*?)\n?```", stripped, re.I | re.S)
     if fence:
         return fence.group(1).strip()
@@ -346,8 +418,38 @@ def _semantic_text(text: str) -> str:
     return stripped
 
 
+def _strict_answer_atom(output_kind: str, response: str) -> str | None:
+    """Validate a whole-answer contract, without accepting competing claims."""
+    stripped = response.strip()
+    if output_kind == "integer_or_unknown":
+        return _atom(stripped, strict=True)
+    if output_kind == "answer_json":
+        try:
+            wrapped = _json_load(stripped)
+        except (ValueError, TypeError):
+            return None
+        if type(wrapped) is dict and set(wrapped) == {"answer"}:
+            value = wrapped["answer"]
+            if type(value) is int:
+                return str(value)
+            if value == UNKNOWN and type(value) is str:
+                return UNKNOWN
+        return None
+    if output_kind == "answer_tag":
+        wrapped = re.fullmatch(r"<answer>(.*?)</answer>", stripped, re.S)
+    elif output_kind == "fenced_atom":
+        wrapped = re.fullmatch(r"```text\r?\n([^\r\n]*)\r?\n```", stripped)
+    else:
+        raise ValueError("unsupported atom output schema")
+    return _atom(wrapped.group(1), strict=True) if wrapped else None
+
+
 def score_response(row: BenchmarkRow, response: str) -> dict[str, Any]:
-    """Strict correctness is primary. Wrapper semantics is a separate diagnostic."""
+    """Score semantic correctness separately from row-specific strict formatting.
+
+    A semantic wrapper must contain the whole answer; prefix prose, duplicate
+    keys, additional answers, and mixed claims are never silently discarded.
+    """
     if not isinstance(response, str):
         raise TypeError("response must be text")
     strict_value, semantic_value = None, None
@@ -364,8 +466,8 @@ def score_response(row: BenchmarkRow, response: str) -> dict[str, Any]:
         strict_correct = _same_typed_json(strict_value, expected)
         semantic_correct = _same_typed_json(semantic_value, expected)
         strict_valid = _same_schema(strict_value, expected)
-    elif row.output_kind == "integer_or_unknown":
-        strict_value = _atom(response, strict=True)
+    elif row.output_kind in ATOM_OUTPUT_KINDS:
+        strict_value = _strict_answer_atom(row.output_kind, response)
         semantic_text = _semantic_text(response)
         semantic_value = _atom(semantic_text, strict=False)
         if semantic_value is None:
@@ -401,6 +503,105 @@ def wilson_interval(correct: int, total: int, z: float = 1.959963984540054) -> l
     return [max(0.0, center - radius), min(1.0, center + radius)]
 
 
+def _valid_count(value: int) -> bool:
+    return type(value) is int and value >= 0
+
+
+def _binomial_cdf(k: int, n: int, p: float) -> float:
+    """Stdlib binomial CDF using log probabilities, never 2**n division."""
+    if k < 0:
+        return 0.0
+    if k >= n or p == 0.0:
+        return 1.0
+    if p == 1.0:
+        return 0.0
+    log_p, log_q = math.log(p), math.log1p(-p)
+    log_factorial_n = math.lgamma(n + 1)
+    logs = [log_factorial_n - math.lgamma(i + 1) - math.lgamma(n - i + 1)
+            + i * log_p + (n - i) * log_q for i in range(k + 1)]
+    largest = max(logs)
+    result = math.exp(largest) * math.fsum(math.exp(value - largest) for value in logs)
+    return min(1.0, max(0.0, result))
+
+
+def exact_paired_mcnemar(gains: int, losses: int) -> float:
+    """Two-sided exact conditional binomial McNemar p-value.
+
+    Conditional on discordance, the null assigns gain/loss probability 1/2.
+    No discordance returns 1; absence of measured pairs is handled by the caller.
+    Three gains and zero losses gives 0.25, not confirmation.
+    """
+    if not _valid_count(gains) or not _valid_count(losses):
+        raise ValueError("invalid paired counts")
+    discordant = gains + losses
+    return min(1.0, 2 * _binomial_cdf(min(gains, losses), discordant, 0.5)) if discordant else 1.0
+
+
+def clopper_pearson_interval(correct: int, total: int,
+                             alpha: float = 0.05) -> list[float] | None:
+    """Exact binomial interval by 64-step monotone tail inversion.
+
+    Coverage concerns independent samples from a common Bernoulli distribution;
+    for our fixed generated fixtures this is a descriptive uncertainty diagnostic.
+    """
+    if not _valid_count(correct) or not _valid_count(total) or correct > total:
+        raise ValueError("invalid binomial count")
+    if not 0 < alpha < 1:
+        raise ValueError("alpha must be in (0, 1)")
+    if total == 0:
+        return None
+    tail = alpha / 2
+    lower, upper = 0.0, 1.0
+    if correct:
+        lo, hi = 0.0, 1.0
+        for _ in range(64):
+            mid = (lo + hi) / 2
+            # P_p(X >= correct) = P_(1-p)(X <= total-correct).
+            if _binomial_cdf(total - correct, total, 1 - mid) < tail:
+                lo = mid
+            else:
+                hi = mid
+        lower = (lo + hi) / 2
+    if correct < total:
+        lo, hi = 0.0, 1.0
+        for _ in range(64):
+            mid = (lo + hi) / 2
+            if _binomial_cdf(correct, total, mid) > tail:
+                lo = mid
+            else:
+                hi = mid
+        upper = (lo + hi) / 2
+    return [lower, upper]
+
+
+def paired_net_rate_interval(gains: int, losses: int, total: int,
+                              alpha: float = 0.05) -> dict[str, Any]:
+    """Conservative simultaneous binomial bounds for p_gain - p_loss.
+
+    Each marginal Clopper-Pearson interval has confidence 1-alpha/2. Bonferroni
+    gives joint coverage >=1-alpha under iid paired-case sampling, regardless
+    of dependence between gains and losses. Difference bounds are deliberately
+    broad. Correlated format variants require semantic-case cluster analysis;
+    a fixed tiny generated screen provides no population or retention claim.
+    """
+    if any(not _valid_count(value) for value in (gains, losses, total)) or gains + losses > total:
+        raise ValueError("invalid paired counts")
+    if not 0 < alpha < 1:
+        raise ValueError("alpha must be in (0, 1)")
+    gain_interval = clopper_pearson_interval(gains, total, alpha / 2)
+    loss_interval = clopper_pearson_interval(losses, total, alpha / 2)
+    net_interval = ([max(-1.0, gain_interval[0] - loss_interval[1]),
+                     min(1.0, gain_interval[1] - loss_interval[0])]
+                    if total else None)
+    return {"net_rate": (gains - losses) / total if total else None,
+            "interval": net_interval,
+            "gain_probability_interval": gain_interval,
+            "loss_probability_interval": loss_interval,
+            "confidence_level_under_iid": 1 - alpha,
+            "method": "Bonferroni simultaneous Clopper-Pearson marginal difference bounds",
+            "interpretation": "descriptive for fixed fixtures; coverage requires iid paired cases"}
+
+
 def compare_outputs(rows: Sequence[BenchmarkRow], source: Mapping[str, str],
                     candidate: Mapping[str, str]) -> dict[str, Any]:
     """Paired damage and gain; absent calls stay unmeasured, empty text fails.
@@ -419,6 +620,8 @@ def compare_outputs(rows: Sequence[BenchmarkRow], source: Mapping[str, str],
         paired = source_measured and candidate_measured
         gain = paired and not left["strict_correct"] and right["strict_correct"]
         damage = paired and left["strict_correct"] and not right["strict_correct"]
+        semantic_gain = paired and not left["semantic_correct"] and right["semantic_correct"]
+        semantic_damage = paired and left["semantic_correct"] and not right["semantic_correct"]
         record = {"row_id": row.row_id, "family": row.family, "task_kind": row.task_kind,
                   "source_correct": left["strict_correct"] if source_measured else None,
                   "candidate_correct": right["strict_correct"] if candidate_measured else None,
@@ -429,9 +632,11 @@ def compare_outputs(rows: Sequence[BenchmarkRow], source: Mapping[str, str],
                   "strict_format_damage": paired and left["strict_valid"] and not right["strict_valid"],
                   "source_correct_format_damage": paired and left["strict_correct"] and not right["strict_valid"],
                   "gain": gain, "source_correct_damage": damage,
+                  "semantic_gain": semantic_gain, "source_semantic_correct_damage": semantic_damage,
+                  "format_repair_only": gain and left["semantic_correct"] and right["semantic_correct"],
                   "source_missing": not source_measured, "candidate_missing": not candidate_measured,
                   "paired_measured": paired}
-        if row.output_kind == "integer_or_unknown":
+        if row.output_kind in ATOM_OUTPUT_KINDS:
             expected_unknown = row.expected == UNKNOWN
             record["answerable"] = not expected_unknown
             record["candidate_false_abstention"] = (candidate_measured and not expected_unknown
@@ -455,13 +660,36 @@ def compare_outputs(rows: Sequence[BenchmarkRow], source: Mapping[str, str],
         paired_source_correct = sum(item["source_correct"] is True and item["paired_measured"] for item in items)
         gains = sum(item["gain"] for item in items)
         damage = sum(item["source_correct_damage"] for item in items)
-        discordant = gains + damage
-        mcnemar_p = (min(1.0, 2 * sum(math.comb(discordant, index) for index in
-                       range(min(gains, damage) + 1)) / (2 ** discordant)) if discordant else 1.0)
+        def paired_endpoint(source_key: str, candidate_key: str) -> dict[str, Any]:
+            table = {f"n{left}{right}": sum(
+                item["paired_measured"] and item[source_key] is bool(left)
+                and item[candidate_key] is bool(right) for item in items)
+                for left in (0, 1) for right in (0, 1)}
+            endpoint_gains, endpoint_losses = table["n01"], table["n10"]
+            uncertainty = paired_net_rate_interval(endpoint_gains, endpoint_losses, paired_n)
+            return {**table, "gains": endpoint_gains, "losses": endpoint_losses,
+                    "net_gain": endpoint_gains - endpoint_losses,
+                    "paired_net_rate": uncertainty["net_rate"],
+                    "paired_net_rate_interval_95": uncertainty["interval"],
+                    "paired_net_rate_uncertainty": uncertainty,
+                    "exact_mcnemar_p_two_sided": exact_paired_mcnemar(endpoint_gains, endpoint_losses)
+                    if paired_n else None}
+
+        strict_paired = paired_endpoint("source_correct", "candidate_correct")
+        semantic_paired = paired_endpoint("source_semantic_correct", "candidate_semantic_correct")
         return {"n": n, "source_measured_n": source_n, "candidate_measured_n": candidate_n,
                 "paired_measured_n": paired_n, "source_correct": source_correct,
                 "candidate_correct": candidate_correct, "paired_source_correct": paired_source_correct,
                 "gains": gains, "source_correct_damage": damage, "net_gain": gains - damage,
+                "paired_net_rate": strict_paired["paired_net_rate"],
+                "strict_paired": strict_paired, "semantic_paired": semantic_paired,
+                "source_semantic_correct": sum(item["source_semantic_correct"] is True for item in items),
+                "candidate_semantic_correct": sum(item["candidate_semantic_correct"] is True for item in items),
+                "semantic_gains": semantic_paired["gains"],
+                "source_semantic_correct_damage": semantic_paired["losses"],
+                "semantic_net_gain": semantic_paired["net_gain"],
+                "semantic_paired_net_rate": semantic_paired["paired_net_rate"],
+                "format_repair_only": sum(item["format_repair_only"] for item in items),
                 "source_correct_damage_rate": damage / paired_source_correct if paired_source_correct else None,
                 "source_correct_damage_interval_95": wilson_interval(damage, paired_source_correct),
                 "candidate_accuracy_interval_95": wilson_interval(candidate_correct, candidate_n),
@@ -471,7 +699,9 @@ def compare_outputs(rows: Sequence[BenchmarkRow], source: Mapping[str, str],
                 "candidate_strict_valid_n": sum(item["candidate_strict_valid"] is True for item in items),
                 "strict_format_damage": sum(item["strict_format_damage"] for item in items),
                 "source_correct_format_damage": sum(item["source_correct_format_damage"] for item in items),
-                "exact_paired_mcnemar_p_two_sided": mcnemar_p if paired_n else None}
+                "exact_paired_mcnemar_p_two_sided": strict_paired["exact_mcnemar_p_two_sided"],
+                "semantic_exact_paired_mcnemar_p_two_sided": semantic_paired["exact_mcnemar_p_two_sided"],
+                "accuracy_damage_interval_interpretation": "descriptive Wilson intervals, not paired net-gain intervals"}
 
     return {"overall": summary(records), "by_task_kind": {key: summary(value) for key, value in grouped.items()},
             "by_family": {key: summary(value) for key, value in families.items()},

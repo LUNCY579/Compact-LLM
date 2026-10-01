@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import ast
 import json
+import math
 from pathlib import Path
 import sys
 import unittest
@@ -125,6 +126,151 @@ class BenchmarkTests(unittest.TestCase):
         self.assertTrue(all(row.metadata["new_task_structure"] is False for row in rows))
         self.assertEqual(json.loads(rows[0].expected), {"state": 28, "fact": "UNKNOWN"})
         self.assertTrue(all(b.score_response(row, row.expected)["strict_correct"] for row in rows))
+
+    def test_format_variants_preserve_semantic_cases_and_stay_development_only(self):
+        screen_before = b.build_screen()
+        sources = {row.row_id: row for row in b.build_development()
+                   if row.output_kind == "integer_or_unknown"}
+        variants = b.build_format_variants()
+        self.assertEqual(len(variants), 24)
+        self.assertEqual(len({row.row_id for row in variants}), 24)
+        self.assertEqual({row.metadata["semantic_case_id"] for row in variants}, set(sources))
+        for case_id, source in sources.items():
+            linked = [row for row in variants if row.metadata["semantic_case_id"] == case_id]
+            self.assertEqual({row.output_kind for row in linked}, set(b.ATOM_OUTPUT_KINDS))
+            for row in linked:
+                self.assertEqual(row.expected, source.expected)
+                self.assertEqual(row.user, source.user)
+                self.assertEqual(row.world_signature, source.world_signature)
+                self.assertEqual(row.state_signature, source.state_signature)
+                self.assertEqual(row.rule_signature, source.rule_signature)
+                self.assertEqual(row.task_kind, source.task_kind)
+                self.assertEqual(row.split, "development")
+                self.assertEqual(row.metadata["format_source_row_id"], source.row_id)
+                self.assertEqual(row.metadata["format_panel_scoring_unit"], "semantic_case_cluster")
+                self.assertEqual(row.metadata["native_format_panel"], "unmeasured_not_authorized")
+                self.assertFalse(row.metadata["operator_selection_allowed"])
+                self.assertFalse(row.metadata["training"])
+                self.assertIn(row.metadata["strict_format_contract"], row.system)
+                if row.task_kind == "answerability_parent":
+                    self.assertIn("if the requested value cannot be determined", row.system)
+                else:
+                    self.assertIn("if all admissible final values agree", row.system)
+        self.assertEqual(b.build_screen(), screen_before)
+
+    def test_explicit_format_contracts_separate_semantics_from_strict_format(self):
+        for row in b.build_format_variants():
+            atom = row.expected
+            answer = atom if atom == b.UNKNOWN else int(atom)
+            responses = {
+                "integer_or_unknown": atom,
+                "answer_json": json.dumps({"answer": answer}),
+                "answer_tag": f"<answer>{atom}</answer>",
+                "fenced_atom": f"```text\n{atom}\n```",
+            }
+            for contract, response in responses.items():
+                scored = b.score_response(row, response)
+                self.assertTrue(scored["semantic_correct"], (row.row_id, response))
+                self.assertEqual(scored["strict_valid"], contract == row.output_kind)
+                self.assertEqual(scored["strict_correct"], contract == row.output_kind)
+            for response in (
+                f"The answer is 86.\n<answer>{atom}</answer>",
+                f"<answer>{atom}</answer><answer>86</answer>",
+                f"```text\n{atom}\n```\n86",
+                f'{{"answer": "{atom}", "other": 86}}',
+                f'{{"answer":86,"answer":"{atom}"}}',
+            ):
+                scored = b.score_response(row, response)
+                self.assertFalse(scored["semantic_correct"], response)
+                self.assertFalse(scored["strict_valid"], response)
+        number_row = next(row for row in b.build_format_variants()
+                          if row.output_kind == "answer_json" and row.expected != b.UNKNOWN)
+        numeric_string = b.score_response(number_row, json.dumps({"answer": number_row.expected}))
+        self.assertTrue(numeric_string["semantic_correct"])
+        self.assertFalse(numeric_string["strict_valid"])
+        for response in ('{"answer":true}', '{"answer":6.0}', '{"answer":NaN}'):
+            self.assertFalse(b.score_response(number_row, response)["strict_valid"])
+
+    def test_semantic_gains_and_format_repairs_are_distinct(self):
+        rows = b.build_screen()[4:]
+        source = {row.row_id: row.expected for row in rows}
+        candidate = dict(source)
+        source[rows[0].row_id] = f"Answer: {rows[0].expected}"
+        source[rows[1].row_id] = "UNKNOWN"
+        candidate[rows[2].row_id] = "86"
+        result = b.compare_outputs(rows, source, candidate)["overall"]
+        self.assertEqual(result["gains"], 2)
+        self.assertEqual(result["source_correct_damage"], 1)
+        self.assertEqual(result["semantic_gains"], 1)
+        self.assertEqual(result["source_semantic_correct_damage"], 1)
+        self.assertEqual(result["semantic_net_gain"], 0)
+        self.assertEqual(result["format_repair_only"], 1)
+        self.assertEqual(result["strict_paired"]["n01"], 2)
+        self.assertEqual(result["semantic_paired"]["n01"], 1)
+        self.assertEqual(result["semantic_paired"]["n10"], 1)
+        self.assertEqual(result["semantic_paired"]["n11"], 2)
+        self.assertEqual(result["semantic_paired"]["n00"], 0)
+        self.assertEqual(result["paired_net_rate"], 0.25)
+        self.assertEqual(result["semantic_paired_net_rate"], 0)
+
+    def test_paired_tables_and_three_wins_do_not_confirm(self):
+        rows = [row for row in b.build_screen() if row.metadata.get("transfer_endpoint")]
+        self.assertEqual(len(rows), 3)
+        source = {row.row_id: "" for row in rows}
+        candidate = {row.row_id: row.expected for row in rows}
+        result = b.compare_outputs(rows, source, candidate)["overall"]
+        for endpoint in ("strict_paired", "semantic_paired"):
+            summary = result[endpoint]
+            self.assertEqual({key: summary[key] for key in ("n00", "n01", "n10", "n11")},
+                             {"n00": 0, "n01": 3, "n10": 0, "n11": 0})
+            self.assertEqual(sum(summary[key] for key in ("n00", "n01", "n10", "n11")), 3)
+            self.assertEqual(summary["paired_net_rate"], 1)
+            self.assertAlmostEqual(summary["exact_mcnemar_p_two_sided"], 0.25)
+            self.assertLess(summary["paired_net_rate_interval_95"][0], 0)
+            self.assertEqual(summary["paired_net_rate_interval_95"][1], 1)
+        self.assertAlmostEqual(b.exact_paired_mcnemar(3, 0), 0.25)
+        self.assertAlmostEqual(b.exact_paired_mcnemar(0, 3), 0.25)
+        self.assertEqual(b.exact_paired_mcnemar(0, 0), 1)
+        self.assertEqual(b.exact_paired_mcnemar(2, 2), 1)
+        # Counts large enough to overflow a float conversion of 2**n remain finite.
+        large_p = b.exact_paired_mcnemar(2100, 1900)
+        self.assertTrue(math.isfinite(large_p))
+        self.assertGreater(large_p, 0)
+        self.assertLess(large_p, 0.01)
+        for gains, losses in ((-1, 0), (0, -1), (1.0, 0), (True, 0)):
+            with self.assertRaises(ValueError):
+                b.exact_paired_mcnemar(gains, losses)
+
+    def test_paired_uncertainty_is_conservative_and_empty_is_unmeasured(self):
+        diagnostic = b.paired_net_rate_interval(3, 0, 3)
+        # Bonferroni uses alpha/4=.0125 in each marginal tail.
+        lower_gain = 0.0125 ** (1 / 3)
+        self.assertAlmostEqual(diagnostic["gain_probability_interval"][0], lower_gain)
+        self.assertAlmostEqual(diagnostic["loss_probability_interval"][1], 1 - lower_gain)
+        self.assertAlmostEqual(diagnostic["interval"][0], 2 * lower_gain - 1)
+        self.assertEqual(diagnostic["interval"][1], 1)
+        self.assertIn("iid", diagnostic["interpretation"])
+        empty = b.paired_net_rate_interval(0, 0, 0)
+        self.assertIsNone(empty["net_rate"])
+        self.assertIsNone(empty["interval"])
+        self.assertIsNone(b.clopper_pearson_interval(0, 0))
+        self.assertEqual(b.clopper_pearson_interval(0, 3)[0], 0)
+        self.assertEqual(b.clopper_pearson_interval(3, 3)[1], 1)
+        for counts in ((1, 1, 1), (-1, 0, 1), (0, 0, -1), (0.0, 0, 0)):
+            with self.assertRaises(ValueError):
+                b.paired_net_rate_interval(*counts)
+        for alpha in (-0.1, 0, 1, 1.1):
+            with self.assertRaises(ValueError):
+                b.clopper_pearson_interval(0, 3, alpha)
+        variants = b.build_format_variants()
+        no_calls = b.compare_outputs(variants, {}, {})["overall"]
+        self.assertEqual(no_calls["paired_measured_n"], 0)
+        self.assertEqual(no_calls["semantic_gains"], 0)
+        self.assertIsNone(no_calls["semantic_paired_net_rate"])
+        for endpoint in ("strict_paired", "semantic_paired"):
+            self.assertIsNone(no_calls[endpoint]["paired_net_rate_interval_95"])
+            self.assertIsNone(no_calls[endpoint]["exact_mcnemar_p_two_sided"])
+            self.assertEqual(sum(no_calls[endpoint][key] for key in ("n00", "n01", "n10", "n11")), 0)
 
     def test_paired_gain_damage_missing_output_and_uncertainty(self):
         rows = b.build_screen()[4:]

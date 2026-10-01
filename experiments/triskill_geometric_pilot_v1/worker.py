@@ -8,11 +8,14 @@ from __future__ import annotations
 
 import argparse
 import gc
+import hashlib
 import importlib.metadata
+import importlib.util
 import datetime as dt
 import json
 import os
 import shutil
+import stat
 import subprocess
 import sys
 import time
@@ -20,10 +23,68 @@ import uuid
 from contextlib import contextmanager
 from pathlib import Path
 
-from geometry import HERE, LAYER, SOURCES, TensorFile, sha256
+HERE = Path(os.path.abspath(__file__)).parent
+
+
+def sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(8 << 20), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
+def _reject_bootstrap_path_substitution(path: Path):
+    # Check before resolving paths so a link/junction cannot hide its target.
+    path = Path(os.path.abspath(path))
+    for component in reversed((path, *path.parents)):
+        try:
+            info = component.lstat()
+        except OSError as exc:
+            raise ValueError(f"prospective source missing/inaccessible: {path}") from exc
+        if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+            raise ValueError(f"prospective source path substitution: {component}")
+    if not stat.S_ISREG(path.lstat().st_mode):
+        raise ValueError(f"prospective source is not a regular file: {path}")
+
+
+def _load_binding(freeze):
+    """Bootstrap only the precisely named, supervisor-pinned binding source."""
+    entry = freeze.get("dependency_binding", {}).get("roles", {}).get("binding", {})
+    path = HERE / "dependency_binding.py"
+    relative = "experiments/triskill_geometric_pilot_v1/dependency_binding.py"
+    if entry.get("kind") != "code" or entry.get("path") != relative:
+        raise ValueError("incomplete prospective dependency binding")
+    _reject_bootstrap_path_substitution(path)
+    source = path.read_bytes()
+    digest = hashlib.sha256(source).hexdigest()
+    if entry.get("sha256") != digest:
+        raise ValueError("prospective binding source digest mismatch")
+    existing = sys.modules.get("dependency_binding")
+    if existing is not None:
+        origin = getattr(existing, "__file__", None)
+        spec_origin = getattr(getattr(existing, "__spec__", None), "origin", None)
+        if not origin or os.path.normcase(os.path.abspath(origin)) != os.path.normcase(str(path)) or (spec_origin and os.path.normcase(os.path.abspath(spec_origin)) != os.path.normcase(str(path))):
+            raise ValueError("cached binding module path mismatch")
+    name = f"_triskill_pilot_binding_{digest}"
+    spec = importlib.util.spec_from_file_location(name, path)
+    if spec is None:
+        raise ValueError("binding module spec unavailable")
+    module = importlib.util.module_from_spec(spec)
+    module._triskill_source_binding = (str(path), digest)
+    sys.modules[name] = module
+    try:
+        exec(compile(source, str(path), "exec"), module.__dict__)
+    except BaseException:
+        sys.modules.pop(name, None)
+        raise
+    _reject_bootstrap_path_substitution(path)
+    if sha256(path) != digest:
+        raise ValueError("binding source changed during validation")
+    return module
 
 LOCK = Path("C:/Users/clclc/AppData/Local/Temp/rineya-gpu-0.lock")
-ARMS = ("BASE", "T", "H", "TH", "IDENTITY", "ROTATION", "RANDOM", "PROMPT")
+ARMS = ("BASE", "T", "H", "TH", "IDENTITY", "ROTATION", "RANDOM", "PROMPT", "REVERSE")
 MAX_GENERATIONS = 64
 MAX_FORWARDS = 1600
 MAX_TOKEN_POSITIONS = 20000
@@ -146,28 +207,77 @@ def prompt_system(row, arm):
     return PROMPT_COMPOSITION+row.system if arm == "PROMPT" and "rules" in row.metadata else row.system
 
 
-def validate_freeze(path: Path, expected_sha: str):
-    if not expected_sha or sha256(path) != expected_sha:
+def directional_rotation(rotation, arm):
+    """Reversing parent order inverts the operator, not the behavioral answer."""
+    if arm == "REVERSE":
+        return rotation.T
+    if arm in ("ROTATION", "RANDOM"):
+        return rotation
+    return None
+
+
+def screen_schedule(rows):
+    """Nine controls within the original 64-generation envelope.
+
+    Identity and reverse are measured on four chain rows only; their parent
+    retention remains unmeasured. All comparisons preserve explicit coverage.
+    """
+    parent_rows=tuple(row for row in rows if row.task_kind in ("transition_parent","answerability_parent"))
+    chain_rows=tuple(row for row in rows if "rules" in row.metadata)
+    if len(parent_rows) != 4 or len(chain_rows) != 4 or len(rows) != 8:
+        raise ValueError("frozen screening allocation changed")
+    schedule=[(arm,parent_rows) for arm in ("BASE","T","H")]
+    schedule += [(arm,chain_rows if arm in ("BASE","T","H","IDENTITY","REVERSE") else rows) for arm in ARMS]
+    if sum(len(unit_rows) for _,unit_rows in schedule) != MAX_GENERATIONS:
+        raise ValueError("control allocation exceeds the original generation envelope")
+    return tuple(schedule)
+
+
+def _validate_freeze(path: Path, expected_sha: str):
+    _reject_bootstrap_path_substitution(path)
+    freeze_source=path.read_bytes()
+    if not expected_sha or hashlib.sha256(freeze_source).hexdigest() != expected_sha:
         raise ValueError("supervisor-pinned prospective freeze digest required")
-    freeze=json.loads(path.read_text(encoding="utf-8"))
-    required={"worker.py","geometry.py","benchmark.py","geometry.npz","geometry.json",
-              "screen.json","development.json","PREREG.md","BENCHMARK_MATRIX.md"}
+    freeze=json.loads(freeze_source)
+    required={"worker.py","geometry.py","benchmark.py","dependency_binding.py","geometry.npz","geometry.json",
+              "screen.json","development.json","PREREG.md","BENCHMARK_MATRIX.md",
+              "FOLLOWUP_PREREG.md","FUTURE_PROTOCOL.md","SOURCES_VERIFIED.md"}
     if not required <= set(freeze.get("files",{})):
         raise ValueError("incomplete prospective freeze membership")
     for relative,expected in freeze["files"].items():
-        target=(HERE/relative).resolve()
-        if target.parent != HERE or sha256(target) != expected:
+        # Local artifacts remain local: the dependency manifest alone admits
+        # the two precisely identified renderer/DEV-fixture paths.
+        if not isinstance(relative,str) or Path(relative).name != relative:
+            raise ValueError(f"prospective freeze path mismatch: {relative}")
+        target=HERE/relative
+        _reject_bootstrap_path_substitution(target)
+        if sha256(target) != expected:
             raise ValueError(f"prospective freeze mismatch: {relative}")
+    binding=_load_binding(freeze)
+    bound=binding.validate_dependencies(freeze.get("dependency_binding"))
+    geometry=bound.load_local("geometry")
     required_assets={"config.json","generation_config.json","tokenizer.json","tokenizer_config.json","vocab.json","merges.txt"}
     if not required_assets <= set(freeze.get("source_sidecars",{})):
         raise ValueError("source tokenizer/config freeze missing")
     for name,expected in freeze["source_sidecars"].items():
-        if name not in required_assets or sha256(SOURCES["BASE"][0].parent/name) != expected:
+        if name not in required_assets:
+            raise ValueError(f"source sidecar changed: {name}")
+        sidecar=geometry.SOURCES["BASE"][0].parent/name
+        _reject_bootstrap_path_substitution(sidecar)
+        if sha256(sidecar) != expected:
             raise ValueError(f"source sidecar changed: {name}")
     for package,expected in freeze.get("runtime_packages",{}).items():
         if importlib.metadata.version(package) != expected:
             raise ValueError(f"runtime package changed: {package}")
-    return freeze
+    # Reject mutation during the checks, before any renderer fixture self-test.
+    bound.verify_current()
+    if sha256(path) != expected_sha:
+        raise ValueError("prospective freeze changed during validation")
+    return freeze,bound,geometry
+
+
+def validate_freeze(path: Path, expected_sha: str):
+    return _validate_freeze(path,expected_sha)[0]
 
 
 @contextmanager
@@ -176,7 +286,7 @@ def exclusive_lease():
     token = uuid.uuid4().hex
     now = time.time()
     rec = {"created": now, "pid": os.getpid(), "token": token, "label": "triskill-geo001",
-           "job": "8x8 bounded zero-training screen", "worker_pids": [os.getpid()],
+           "job": "nine-arm 64-generation bounded zero-training screen", "worker_pids": [os.getpid()],
            "orphan_after_unix": now + 900, "cleanup_complete": False}
     with LOCK.open("x", encoding="utf-8") as stream:
         json.dump(rec, stream)
@@ -191,10 +301,10 @@ def exclusive_lease():
             pass
 
 
-def load_arm_weights(model, arm, torch):
+def load_arm_weights(model, arm, torch, geometry):
     """Replace only in-memory parameters; H uses the realized compressed update."""
-    target = "TH" if arm in ("TH", "IDENTITY", "ROTATION", "RANDOM", "PROMPT") else arm
-    files = {name: TensorFile(path) for name, (path, _) in SOURCES.items()}
+    target = "TH" if arm in ("TH", "IDENTITY", "ROTATION", "REVERSE", "RANDOM", "PROMPT") else arm
+    files = {name: geometry.TensorFile(path) for name, (path, _) in geometry.SOURCES.items()}
     try:
         with torch.no_grad():
             for name, param in model.named_parameters():
@@ -211,24 +321,54 @@ def load_arm_weights(model, arm, torch):
 
 def run_screen(out: Path, containment_path: Path, containment_sha: str, freeze_path: Path,
                freeze_sha: str, owner_verifier=None):
+    """Narrow bootstrap: native functions come only from pinned source bytes.
+
+    The qualified supervisor must pin this bootstrap source before executing
+    it. Self-validation does not authenticate an arbitrary malicious bootstrap.
+    Same-path imported worker objects are never used as native implementations.
+    """
+    started=time.monotonic()
+    _reject_bootstrap_path_substitution(freeze_path)
+    source=freeze_path.read_bytes()
+    if not freeze_sha or hashlib.sha256(source).hexdigest() != freeze_sha:
+        raise ValueError("supervisor-pinned prospective freeze digest required")
+    freeze=json.loads(source)
+    binding=_load_binding(freeze)
+    bound=binding.validate_dependencies(freeze.get("dependency_binding"))
+    worker=bound.load_worker()
+    bound.verify_worker_execution(worker)
+    return worker._run_bound_screen(out,containment_path,containment_sha,freeze_path,freeze_sha,
+                                    owner_verifier=owner_verifier,_started=started)
+
+
+def _run_bound_screen(out: Path, containment_path: Path, containment_sha: str, freeze_path: Path,
+                      freeze_sha: str, owner_verifier=None, _started=None):
     """Single model load; all arms share padded greedy fixed-slot inference."""
-    import numpy as np
-    from benchmark import build_development, build_screen, score_response, compare_outputs
+    module=sys.modules.get(__name__)
+    if module is None or getattr(module,"_triskill_source_binding",None) != (str(HERE/"worker.py"),sha256(HERE/"worker.py")):
+        raise RuntimeError("STOP_UNBOUND_NATIVE_WORKER")
     budget = Budget()  # External supervisor ceiling also includes startup and load.
+    if _started is not None: budget.started=_started
+    budget.check()
     containment = validate_containment(containment_path, containment_sha, owner_verifier)
-    freeze = validate_freeze(freeze_path,freeze_sha)
+    freeze,bound,geometry = _validate_freeze(freeze_path,freeze_sha)
+    bound.verify_worker_execution(module)
+    benchmark=bound.load_local("benchmark")
+    build_development,build_screen=benchmark.build_development,benchmark.build_screen
+    score_response,compare_outputs=benchmark.score_response,benchmark.compare_outputs
+    import numpy as np
     snapshot = preflight()
     if snapshot["blockers"]: raise RuntimeError(json.dumps(snapshot))
     if out.exists(): raise FileExistsError("create-only screen output exists")
     geo_receipt = json.loads((HERE / "geometry.json").read_text(encoding="utf-8"))
     if geo_receipt["status"] != "PREPARED" or sha256(HERE / "geometry.npz") != geo_receipt["geometry_sha256"]:
         raise ValueError("geometry is absent/commuting/unverified")
-    for path, expected in SOURCES.values():
+    for path, expected in geometry.SOURCES.values():
         if sha256(path) != expected: raise ValueError("source weight digest changed")
     data = np.load(HERE / "geometry.npz", allow_pickle=False)
-    sys.path.insert(0, str(HERE.parent / "fresh_dual_skill_instrument_v1"))
-    from score_arms import render, template_selftest
-    template_selftest()  # Only old development rendering fixtures; no protected bank.
+    renderer=bound.load_renderer()
+    renderer.template_selftest()  # Pinned original DEV bytes; no protected bank.
+    render=renderer.render
     rows = build_screen()
     if len(rows) != 8: raise ValueError("screen membership changed")
     if [row.to_dict() for row in rows] != json.loads((HERE/"screen.json").read_text(encoding="utf-8")):
@@ -240,10 +380,13 @@ def run_screen(out: Path, containment_path: Path, containment_sha: str, freeze_p
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.backends.cudnn.allow_tf32 = False
     torch.use_deterministic_algorithms(True)
-    result = {"experiment": "TRISKILL-GEO-001", "status": "STARTED", "confirmation": False,
+    result = {"experiment": "TRISKILL-GEO-001-GAPFIX", "status": "STARTED", "confirmation": False,
+              "study_mode": "mechanical_exploratory", "natural_causal_mechanism_claim": False,
+              "construction_uses_C_labels": False, "direction_selection_adapted_from_C": False,
               "quality_claim": False, "training_examples": 0, "model_loads": 0,
               "resources_before": snapshot, "containment": containment, "arms": {},
               "freeze_sha256": sha256(freeze_path), "geometry_sha256": geo_receipt["geometry_sha256"],
+              "dependency_binding": bound.receipt(),
               "runtime": {"torch": torch.__version__, "transformers": transformers.__version__,
                           "dtype": "float32", "attention": "eager", "fixed_input_slots": INPUT_SLOTS,
                           "fixed_output_slots": OUTPUT_SLOTS, "greedy": True, "tf32": False}}
@@ -256,11 +399,13 @@ def run_screen(out: Path, containment_path: Path, containment_sha: str, freeze_p
         if resources["blockers"]: raise RuntimeError(json.dumps(resources))
         if torch.cuda.mem_get_info()[0] / 2**30 < 6: raise RuntimeError("GPU changed before load")
         result["model_load_attempts"]=1
-        model = AutoModelForCausalLM.from_pretrained(str(SOURCES["BASE"][0].parent),
+        # Recheck bindings at the last boundary before the native load.
+        bound.verify_current()
+        model = AutoModelForCausalLM.from_pretrained(str(geometry.SOURCES["BASE"][0].parent),
                     torch_dtype=torch.float32, attn_implementation="eager", local_files_only=True,
                     low_cpu_mem_usage=True, device_map={"": "cuda"}).eval()
         result["model_loads"] = 1
-        tok = AutoTokenizer.from_pretrained(str(SOURCES["BASE"][0].parent), local_files_only=True)
+        tok = AutoTokenizer.from_pretrained(str(geometry.SOURCES["BASE"][0].parent), local_files_only=True)
         device = next(model.parameters()).device
         b = torch.as_tensor(data["basis"], dtype=torch.float32, device=device)
         random_b = torch.as_tensor(data["random_basis"], dtype=torch.float32, device=device)
@@ -277,7 +422,7 @@ def run_screen(out: Path, containment_path: Path, containment_sha: str, freeze_p
             changed = hidden + delta
             return (changed, *output[1:]) if isinstance(output, tuple) else changed
 
-        handle = model.model.layers[LAYER].register_forward_hook(hook)
+        handle = model.model.layers[geometry.LAYER].register_forward_hook(hook)
 
         def decode(system, user, padded=True, slots=OUTPUT_SLOTS):
             # Fixed padding and slots match attention/decode compute across arms.
@@ -321,15 +466,14 @@ def run_screen(out: Path, containment_path: Path, containment_sha: str, freeze_p
                 parity.append(unpadded == padded)
             result["development_padding_parity"] = parity
             if not all(parity): raise RuntimeError("STOP_NATIVE_MECHANICS_PADDING")
-            parent_rows=tuple(row for row in rows if row.task_kind in ("transition_parent","answerability_parent"))
-            third_rows=tuple(row for row in rows if "rules" in row.metadata)
-            schedule=[(arm,parent_rows) for arm in ("BASE","T","H")]
-            schedule += [(arm,third_rows if arm in ("BASE","T","H") else rows) for arm in ARMS]
+            schedule=screen_schedule(rows)
+            result["screen_allocation"]=[{"arm":arm,"row_ids":[row.row_id for row in unit_rows]} for arm,unit_rows in schedule]
             for unit_index,(arm,unit_rows) in enumerate(schedule):
                 budget.check()
-                load_arm_weights(model,arm,torch)
+                load_arm_weights(model,arm,torch,geometry)
                 state["basis"] = random_b if arm == "RANDOM" else b
-                state["change"] = r-torch.eye(len(r),device=device) if arm in ("ROTATION","RANDOM") else torch.zeros_like(r)
+                selected_rotation=directional_rotation(r,arm)
+                state["change"] = selected_rotation-torch.eye(len(r),device=device) if selected_rotation is not None else torch.zeros_like(r)
                 state["energy"] = state["displacement"] = 0.
                 prior=result["arms"].get(arm,{})
                 outputs, scores = dict(prior.get("outputs",{})), dict(prior.get("scores",{}))
@@ -355,11 +499,14 @@ def run_screen(out: Path, containment_path: Path, containment_sha: str, freeze_p
                                    not result["arms"][parent]["scores"][row.row_id]["strict_correct"] for row in relevant)
                         if parent_n < 1 or parent_n <= base_n or damage:
                             raise RuntimeError(f"STOP_SCREEN_NO_PARENT_SIGNAL:{parent}")
-                if arm == "IDENTITY" and outputs != result["arms"]["TH"]["outputs"]:
+                if arm == "IDENTITY" and any(text != result["arms"]["TH"]["outputs"].get(row_id) for row_id,text in outputs.items()):
                     raise RuntimeError("STOP_IDENTITY_CANARY")
+                if arm == "IDENTITY":
+                    result["identity_canary_row_ids"]=list(outputs)
+                    result["identity_parent_retention"]="unmeasured"
             result["comparisons"] = {
                 control: compare_outputs(rows,result["arms"][control]["outputs"],result["arms"]["ROTATION"]["outputs"])
-                for control in ("BASE","T","H","TH","IDENTITY","RANDOM","PROMPT")}
+                for control in ("BASE","T","H","TH","IDENTITY","RANDOM","PROMPT","REVERSE")}
             result["status"] = "SCREEN_COMPLETE_NOT_CONFIRMATION"
         except Exception as exc:
             result["status"] = str(exc)
@@ -396,7 +543,7 @@ if __name__ == "__main__":
     parser.add_argument("--out",type=Path,default=HERE/"native_screen.json")
     parser.add_argument("--containment-receipt",type=Path)
     parser.add_argument("--containment-sha256")
-    parser.add_argument("--freeze",type=Path,default=HERE/"FREEZE.json")
+    parser.add_argument("--freeze",type=Path,default=HERE/"FREEZE_GAPFIX.json")
     parser.add_argument("--freeze-sha256")
     args=parser.parse_args()
     if args.command == "preflight":
