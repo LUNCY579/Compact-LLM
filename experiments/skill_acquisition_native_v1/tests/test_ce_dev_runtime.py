@@ -44,6 +44,30 @@ def context_fixture():
 
 
 class Tests(unittest.TestCase):
+    def test_permit_recheck_reservation_precedes_first_digest_and_verifier(self):
+        events=[];context={'scope_sha256':'a'*64,'request_sha256':'b'*64}
+        operation=lambda kind,phase,**fields:events.append((kind,phase))
+        gate=lambda stage:None;worker=object();lease=object()
+        price=dict(read_bytes_upper=0,write_bytes_upper=0,identity_hash_attempts_upper=64,
+            identity_hash_bytes_upper=256*d.raw.CHUNK,wall_s_upper=5)
+        issuer=SimpleNamespace(dev_verify_profile=price)
+        def verifier(*args):events.append('verify');return True
+        permit=object.__new__(d.DevReadPermit)
+        values=dict(_seal=d._SEAL,_context=d.digest(context),_issuer=issuer,_verifier=verifier,
+            _operation=operation,_gate=gate,_worker=worker,_lease=lease,_verify_profile=copy.deepcopy(price))
+        for key,value in values.items():object.__setattr__(permit,key,value)
+        original=d.digest
+        def digest(value):events.append('digest');return original(value)
+        with patch.object(d,'_REGISTERED_DEV_VERIFIERS',frozenset((verifier,))),patch.object(d,'digest',side_effect=digest):
+            permit.require(context,operation,gate,worker,lease)
+            self.assertEqual(events[0],('dev_entry_verify','started'));self.assertEqual(events[1:3],['digest','verify'])
+            events.clear();issuer.dev_verify_profile=dict(price,wall_s_upper=4)
+            with self.assertRaisesRegex(ValueError,'immutable verification'):permit.require(context,operation,gate,worker,lease)
+            self.assertNotIn('digest',events);self.assertIn(('dev_entry_verify','failed'),events)
+            events.clear()
+            with self.assertRaisesRegex(ValueError,'owned lease'):permit.require(context,operation,gate,worker,object())
+            self.assertEqual(events,[])
+
     def test_default_closed_before_context_hash_io_framework_or_model(self):
         class Trap:
             def __getattribute__(self,name):raise AssertionError('unadmitted source access')

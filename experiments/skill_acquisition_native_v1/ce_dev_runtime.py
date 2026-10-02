@@ -96,7 +96,7 @@ def validate_context(context):
 
 
 class DevReadPermit:
-    __slots__ = ('_seal','_context','_issuer','_verifier','_operation','_gate','_worker','_lease')
+    __slots__ = ('_seal','_context','_issuer','_verifier','_operation','_gate','_worker','_lease','_verify_profile')
     def __init__(self, context, issuer, verifier, operation, gate):
         require(any(verifier is value for value in _REGISTERED_DEV_VERIFIERS), 'source DEV verifier remains closed')
         require(issuer is not None and not isinstance(issuer,(dict,list,str,int,float,bool)), 'original source entry issuer')
@@ -104,17 +104,23 @@ class DevReadPermit:
         require(callable(operation) and callable(gate) and issuer.operation is operation and issuer.gate is gate
                 and type(issuer.dev_worker_handle) is worker.WinWorkerHandle and issuer.dev_lease_owner is not None
                 and not isinstance(issuer.dev_lease_owner,(dict,list,str,int,float,bool)), 'source-owned DEV worker/lease/observer identities')
+        from .ce_native_services import _profile
+        profile=copy.deepcopy(_profile(issuer.dev_verify_profile))
         preimage = digest(context_preimage(context))
         require(verifier(issuer,preimage,context['scope_sha256'],context['request_sha256']) is True, 'fixed source DEV issuer verification')
         for key,value in {'_seal':_SEAL,'_context':preimage,'_issuer':issuer,'_verifier':verifier,'_operation':operation,
                 '_gate':gate,'_worker':issuer.dev_worker_handle,'_lease':issuer.dev_lease_owner}.items(): object.__setattr__(self,key,value)
+        object.__setattr__(self,'_verify_profile',profile)
     def __setattr__(self,name,value): raise AttributeError('immutable source DEV permit')
     def require(self,context,operation,gate,worker_handle,lease_owner):
         require(self._seal is _SEAL and any(self._verifier is value for value in _REGISTERED_DEV_VERIFIERS)
-                and operation is self._operation and gate is self._gate and worker_handle is self._worker and lease_owner is self._lease
-                and digest(context_preimage(context)) == self._context, 'same source context/actual worker/owned lease before DEV work')
-        require(self._verifier(self._issuer,self._context,context['scope_sha256'],context['request_sha256']) is True,
-                'source DEV worker/lease remains admitted')
+                and operation is self._operation and gate is self._gate and worker_handle is self._worker and lease_owner is self._lease,
+                'same source actual worker/owned lease before DEV work')
+        with update._span(self._operation,'dev_entry_verify',dict(self._verify_profile)):
+            require(self._verify_profile==self._issuer.dev_verify_profile
+                and digest(context_preimage(context))==self._context,'same source context and immutable verification envelope')
+            require(self._verifier(self._issuer,self._context,context['scope_sha256'],context['request_sha256']) is True,
+                    'source DEV worker/lease remains admitted')
 
 
 def model_load_steps(model_name):
