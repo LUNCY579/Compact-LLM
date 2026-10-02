@@ -10,6 +10,7 @@ from unittest.mock import patch
 
 from experiments.skill_acquisition_native_v1 import ce_registration as r
 from experiments.skill_acquisition_native_v1 import ce_native_backend as b
+from experiments.skill_acquisition_native_v1 import ce_native_services as services, ce_service_bootstrap_verifier as replay
 
 
 class RegistrationTests(unittest.TestCase):
@@ -115,6 +116,54 @@ class RegistrationTests(unittest.TestCase):
             self.assertEqual(set(request['preparation_ref']),{'path','sha256'})
         self.assertFalse(r.authority._REGISTERED_NATIVE_AUTHORITY_VERIFIERS)
         self.assertFalse(r.controller._REGISTERED_NATIVE_FACTORIES)
+
+    def test_actual_full_source_file_census_fits_source_reservations_and_raw_replay(self):
+        # Exercise the same real _Budget/_file calls that exhausted attempt1,
+        # against source-built profiles/caps, without worker/OS/native authority.
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp); spec=copy.deepcopy(self.documents()['SERVICE_SPEC.json']['bootstrap'])
+            spec['owned_directory']=str(root/'service')
+            self.assertEqual(spec['explicit_reservation_kinds'],['input_io','worker_source_verification'])
+            maximum=spec['operation_profiles']['worker_source_verification']
+            self.assertEqual(maximum['write_bytes_upper'],0)
+            ledger=services.BootstrapLedger(spec,'a'*64,synthetic_fixture=True,clock=lambda:100.)
+            budget=services.worker._Budget({'bounds':{'operation_attempts_upper':100000,'io_read_bytes_upper':4*r.GIB,
+                'identity_hash_attempts_upper':100000,'identity_hash_bytes_upper':4*r.GIB,'wall_seconds_upper':120}},ledger.operation)
+            source=r.source_snapshot(self.root);references=list(source['source_files'].values())
+            references.extend((self.worker['spec']['python_ref'],self.worker['spec']['process_image_ref'],self.decision_ref))
+            self.assertGreater(len(references),65) # the old4GiB write cap failed at61source starts
+            before=dict(ledger.counters)
+            for reference in references:services.worker._file(reference,budget)
+            self.assertEqual(ledger.counters['read_bytes']-before['read_bytes'],sum(ref['bytes']+1 for ref in references))
+            self.assertLess(ledger.counters['write_bytes']-before['write_bytes'],16*r.MIB)
+            starts=[entry for entry in ledger.events if entry['kind']=='operation' and entry['payload']['phase']=='started']
+            for entry,reference in zip(starts,references):
+                profile=entry['payload']['reservation_profile']
+                self.assertEqual(profile['read_bytes_upper'],reference['bytes']+1)
+                self.assertEqual(profile['identity_hash_attempts_upper'],1)
+                self.assertEqual(profile['identity_hash_bytes_upper'],reference['bytes']+1)
+                self.assertEqual(profile['write_bytes_upper'],0)
+            # Default-zero metadata wrappers may perform implicit identity
+            # arithmetic; preserve their full hash ceiling rather than zero.
+            budget.run('worker_source_verification',lambda:None)
+            self.assertEqual(ledger.events[-2]['payload']['reservation_profile']['identity_hash_attempts_upper'],maximum['identity_hash_attempts_upper'])
+            self.assertEqual(ledger.events[-2]['payload']['reservation_profile']['identity_hash_bytes_upper'],maximum['identity_hash_bytes_upper'])
+            legacy=copy.deepcopy(spec);legacy.pop('explicit_reservation_kinds')
+            self.assertEqual(services.reservation_profile(legacy,'worker_source_verification',
+                {'io_read_bytes_upper':17,'identity_hash_attempts_upper':1,'identity_hash_bytes_upper':17}),maximum)
+            opaque=services.reservation_profile(spec,'worker_source_verification',
+                {'io_read_bytes_upper':17,'identity_hash_attempts_upper':1,'identity_hash_bytes_upper':17,'opaque_source_verification':True})
+            self.assertEqual(opaque['identity_hash_bytes_upper'],maximum['identity_hash_bytes_upper'])
+            ledger.end();evidence=ledger.inspect_evidence()
+            binding={'stage':'service_bootstrap_verification','request_sha256':'a'*64,'scope_sha256':'b'*64,
+                'static_recipe_sha256':'c'*64,'code_sha256':source['code_sha256'],'worker_identity_sha256':'d'*64,'attempt_id':'source-census-replay'}
+            reader=replay.raw.RawEvidenceReader(lambda *args,**kwargs:None,
+                {key:10**12 for key in replay.raw.BUDGET_FIELDS},root)
+            result=replay.verify_service_bootstrap({'mode':'synthetic_fixture','request_sha256':'a'*64,'verification_binding':binding},
+                spec,evidence['header_ref'],evidence['journal_ref'],evidence['seal_ref'],reader=reader,outer_preflight=lambda *args:None)
+            self.assertEqual(result['derived_totals'],ledger.counters)
+            self.assertFalse(result['native_qualified']);self.assertFalse(result['execution_verified'])
+            self.assertNotIn('torch',sys.modules);self.assertNotIn('transformers',sys.modules)
 
 
 if __name__=='__main__': unittest.main()

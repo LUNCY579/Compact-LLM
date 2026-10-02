@@ -77,6 +77,9 @@ def reservation_profile(spec,kind,fields):
     maximum=_profile(spec['operation_profiles'][kind]);reserved=copy.deepcopy(maximum)
     rule=spec.get('operation_profile_rule')
     require(rule in (None,INPUT_RESERVATION_RULE),'unknown source service reservation rule')
+    explicit_kinds=spec.get('explicit_reservation_kinds',['input_io'])
+    require(type(explicit_kinds) is list and explicit_kinds in (['input_io'],['input_io','worker_source_verification']),
+            'exact finite source explicit reservation kinds')
     row_wall=spec.get('input_io_row_wall_s_upper')
     if row_wall is not None:
         require(rule==INPUT_RESERVATION_RULE and type(row_wall) in (int,float) and row_wall==5
@@ -103,15 +106,18 @@ def reservation_profile(spec,kind,fields):
         if field in fields:
             require(type(fields[field]) is int and 0<=fields[field]<=maximum[field.replace('_lower','_upper')],
                     'bootstrap profile below declared opaque lower work')
-    if kind=='input_io' and rule==INPUT_RESERVATION_RULE:
+    if kind in explicit_kinds and rule==INPUT_RESERVATION_RULE:
         for field in aliases:
             if field in declared:reserved[field]=declared[field]
         hash_fields=('identity_hash_attempts_upper','identity_hash_bytes_upper')
         opaque=any(key.endswith('_lower') and key.startswith('identity_hash_') or key.startswith('opaque_') for key in fields)
-        if not opaque and all(field in declared for field in hash_fields):
+        file_read=(kind!='worker_source_verification' or declared.get('read_bytes_upper',0)>0
+            and declared.get('identity_hash_attempts_upper',0)>0
+            and declared.get('identity_hash_bytes_upper',0)>=declared.get('read_bytes_upper',0))
+        if not opaque and file_read and all(field in declared for field in hash_fields):
             require((declared[hash_fields[0]]==0)==(declared[hash_fields[1]]==0),'coherent explicit input hash reservation')
             for field in hash_fields:reserved[field]=declared[field]
-        small_row=(row_wall is not None and type(fields.get('row_id')) is str and fields['row_id']
+        small_row=(kind=='input_io' and row_wall is not None and type(fields.get('row_id')) is str and fields['row_id']
             and not opaque and all(field in declared for field in PROFILE[:-1])
             and declared['write_bytes_upper']==0 and declared['read_bytes_upper']<=INPUT_ROW_BYTES
             and declared['identity_hash_attempts_upper']<=4 and declared['identity_hash_bytes_upper']<=INPUT_ROW_BYTES
@@ -162,6 +168,9 @@ class BootstrapLedger:
         # the service permit alone is not prepayment.
         _profile(spec.get('setup_bounds'))
         require(spec.get('operation_profile_rule') in (None,INPUT_RESERVATION_RULE),'unknown source service reservation rule')
+        require(type(spec.get('explicit_reservation_kinds',['input_io'])) is list
+                and spec.get('explicit_reservation_kinds',['input_io']) in (['input_io'],['input_io','worker_source_verification']),
+                'exact finite source explicit reservation kinds')
         if spec.get('input_io_row_wall_s_upper') is not None:
             reservation_profile(spec,'input_io',{})
         if not synthetic_fixture:

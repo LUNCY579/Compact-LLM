@@ -304,6 +304,7 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
                  'process_launch_parent','process_launch','process_launch_child','process_launch_child_census'):
         service_profiles[kind]=profile(wall=60)
     service_profiles['input_io']=profile(128*MIB,64*MIB,20000,256*MIB,60)
+    service_profiles['worker_source_verification']['write_bytes_upper']=0
     for kind in ('process_owned_stop','process_rpc_receive','process_rpc_send','process_terminal'):
         service_profiles[kind]['wall_s_upper']=19200
     service={'schema':'CE8-NATIVE-CONTROLLER-SERVICES-1','approved_code_sha256':source['code_sha256'],
@@ -318,6 +319,7 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
         'bootstrap':{'owned_directory':str(output_root/'service-bootstrap'),
             'setup_bounds':profile(metadata,metadata,10000,metadata,60),
             'operation_profile_rule':'CE8-INPUT-IO-EXPLICIT-RESERVATIONS-1',
+            'explicit_reservation_kinds':['input_io','worker_source_verification'],
             'input_io_row_wall_s_upper':5,
             'physical_wall_seconds_upper':19200,
             'finalization_bounds':profile(128*MIB,4*MIB,32,256*MIB,120),
