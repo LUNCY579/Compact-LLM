@@ -180,6 +180,53 @@ class NativeTests(unittest.TestCase):
             sample.update(host_available_gib=4, disk_free_gib=10, process_inventory_available=True)
             self.assertIn("telemetry stale or future-dated", native.admission_reasons(self.cfg, sample, current_time=1007))
 
+    def test_only_exact_owned_job_flags_license_worker_containment(self):
+        native.validate_owned_job_flags(0x2000, True)
+        for flags, member in ((0x3000, True), (0x2800, True), (0, True), (0x2000, False)):
+            with self.assertRaises(native.NativeBlocked):
+                native.validate_owned_job_flags(flags, member)
+
+    @unittest.skipUnless(os.name == "nt", "actual duplicated Windows Job query control")
+    def test_exact_query_handle_closes_before_framework_and_parent_close_kills_tree(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = native.exact_job_query_cpu_probe(self.cfg, Path(tmp) / "valid")
+            witness = result["child"]["witness"]
+            self.assertEqual(witness["exact_owned_limit_flags"], 0x2000)
+            self.assertTrue(witness["in_exact_supervisor_job"])
+            self.assertFalse(witness["query_handle_inheritable"])
+            self.assertTrue(witness["query_handle_closed_before_framework"])
+            self.assertFalse(result["child"]["handle_usable_after_witness"])
+            self.assertTrue(result["parent_last_handle_close_terminated_tree"])
+            self.assertGreaterEqual(len(result["members_before_parent_handle_close"]), 4)
+            self.assertEqual(result["model_loads"], result["gpu_calls"])
+
+    @unittest.skipUnless(os.name == "nt", "actual rejected Windows Job query control")
+    def test_query_handle_closes_on_target_pid_or_creation_rejection(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            for rejection in ("target_pid", "target_creation"):
+                result = native.exact_job_query_cpu_probe(self.cfg, Path(tmp) / rejection, rejection=rejection)
+                self.assertEqual(result["child"]["status"], "REJECTED_BEFORE_FRAMEWORK")
+                self.assertFalse(result["child"]["handle_usable_after_witness"])
+                self.assertFalse(result["child"]["framework_imported"])
+                self.assertTrue(result["parent_last_handle_close_terminated_tree"])
+
+    @unittest.skipUnless(os.name == "nt", "Windows GO rejection boundary")
+    def test_go_fence_rejection_closes_unconsumed_query_transfer(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); output = root / "results" / "invalid-go"
+            output.mkdir(parents=True)
+            go = output / "GO.json"
+            go.write_text(json.dumps({"contract_sha256": "a" * 64, "owner": "wrong-owner", "fence": 1,
+                                      "own_job_query_handle": 1234}))
+            args = SimpleNamespace(output=output, go_path=go, host_db=root / "state.sqlite3",
+                                   contract_sha256="a" * 64, owner="expected-owner", fence=1)
+            with patch.object(native, "PACKAGE", root), patch.object(native, "host_state_path", return_value=args.host_db), \
+                 patch.object(native, "close_unconsumed_query_handle") as close_transfer:
+                with self.assertRaisesRegex(native.NativeBlocked, "GO mismatch"):
+                    native.worker(args, self.cfg)
+                close_transfer.assert_called_once_with(1234)
+            self.assertFalse(args.host_db.exists())
+
     def test_oom_attempt_is_accounted_and_failed_not_zero_work(self):
         events = []
         accounting = CallAccounting(lambda kind, **detail: events.append({"kind": kind, **detail}),

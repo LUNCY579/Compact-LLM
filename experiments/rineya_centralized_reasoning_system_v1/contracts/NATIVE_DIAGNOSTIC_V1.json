@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "contract_id": "CRS-NATIVE-D2-V1",
-  "status": "CPU_TESTED_REPAIR_ROUND_1_READY_FOR_INDEPENDENT_NATIVE_REVIEW",
+  "status": "CPU_TESTED_OPERATIONAL_REVISION_2_REVIEW_PENDING",
   "diagnostic_scope": "Four non-evaluation fixed-shape131-token forwards of historical failed trace; no generation/training",
   "builder": "runtime_audit",
   "independent_review_required": true,
@@ -31,7 +31,7 @@
     }
   },
   "source_sha256": {
-    "experiments/rineya_centralized_reasoning_system_v1/native.py": "183a177417b81ea938e2476bb49e8e739dd0316e42479bd11f6b5818e5061782",
+    "experiments/rineya_centralized_reasoning_system_v1/native.py": "b94b4dc2ce9e6c041efecaff84a885e6b4fa6e6986d85832d6aa019128d7a852",
     "experiments/rineya_centralized_reasoning_system_v1/operations.py": "ba27ec8a31437459b956a5642e6ece4838f0584602db2c93ff7bc61437806e30",
     "experiments/post_training_mimo_centralized_v1/scripts/stream_checkpoint.py": "434c62698c2e397048db0d88a7959e34d5b8afb93f90cdf86f2aba852922c67f",
     "experiments/post_training_mimo_centralized_v1/scripts/qualify_native.py": "a0fbbbb67dcb7136270dd01efed16cccffc62b09342863f05d03d845805bf941",
@@ -244,11 +244,11 @@
   "interpretation_limit": "Only trace-local equal-shape causality; successful D2 is not capture, reader, training, acquisition or retention qualification. Next exact-prefix scoring successor must retain original bulk failure.",
   "containment": "CREATE_SUSPENDED before venv launcher can spawn; assign exact pinned WindowsJob, verify no children/root exactJobmembership, resume one suspended primary thread. Verify pinned complete Job PID list beforeGO and duringwatchdog. Before exit proof terminate only ownedJob and verify PID list empty. Internal worker validates supervised ancestry/currentJob kill-on-close with no breakaway before framework imports.",
   "cpu_tests": {
-    "tests": 23,
-    "passed": 23,
-    "native_calls": 0,
-    "seconds": 1.147,
-    "claim_scope": "CPU rejection/accounting interfaces and actual stdlib-only Windows containment; no model/framework/CUDA execution"
+    "tests": 27,
+    "passed": 27,
+    "seconds": 2.962,
+    "native_model_calls": 0,
+    "scope": "No-model exact Windows Job query transfer/closure and inherited-tree/parent-last-handle closure; existing CPU rejection tests retained."
   },
   "process_attribution": "nvidia-smi process name, psutil executable path, then read-only CIM Name/ExecutablePath fallback without escalation; unknown identity blocks. Windows WDDM per-process GPU memory remains unavailable; GPU-wide free memory is measured.",
   "reader_interface": "validate_token_fields is syntax validation only; validate_reader_request always denies until an exact immutable independently reviewed576-token evidence bundle and reader executor exist. Caller status dictionaries cannot grant qualification.",
@@ -491,8 +491,46 @@
     "https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-queryinformationjobobject",
     "https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/ns-tlhelp32-threadentry32"
   ],
-  "tests_sha256": "9a5ae99fd421906eeff4fe4fe316eca6d1433e1fcd13768545cc83a0f6e264f2",
+  "tests_sha256": "800eb02ffa7ea4889496ef9d478199ab205fe08f9709d6e84ec8caba33087d5b",
   "telemetry_freshness": "GPU and compute-process query timestamps precede identity hashing/CIM; sampled_at remains oldest component time. collect_telemetry does not overwrite GPU/process age. Slow identity checks exceeding5seconds deny; no hash cache silently refreshes timestamps.",
   "raw_numerical_evidence": "Protected left/right raw tensorSHA required equal plus numeric max/mean0; torch.equal remains separate diagnostic. Full replayable causal BF16 mask words/hash and rotary int64 IDs/hash perforward; readonly reduction/splitK flags and Torch allocator peaks recorded.",
-  "launch_response_uncertainty": "LAUNCH_ATTEMPT persisted before Popen invocation. Missing creation response or missing owned-tree exit witness remains OUTCOME_UNKNOWN with full600-second reservation and no fabricated exit/no-dispatch proof; no automatic retry."
+  "launch_response_uncertainty": "LAUNCH_ATTEMPT persisted before Popen invocation. Missing creation response or missing owned-tree exit witness remains OUTCOME_UNKNOWN with full600-second reservation and no fabricated exit/no-dispatch proof; no automatic retry.",
+  "operational_revision": 2,
+  "parent_contract_sha256": "a57a7fa091aeda2a63e8b1452fdeed53474f627246a3f4429b62af924a45babe",
+  "operational_amendment_id": "CRS-NATIVE-OPERATIONAL-AMENDMENT-002",
+  "operational_revision_evidence": {
+    "raw_identity_probe": {
+      "path": "outputs/job_identity_probe_v1/NULL_VS_EXACT_OWN_JOB.json",
+      "sha256": "a2627233b14144547954f818d08aa50f7a2fd58b05eee5da9d08847599af9cb7",
+      "measured_null_flags": 12288,
+      "measured_exact_owned_flags": 8192,
+      "interpretation": "Different observed Job identities/limits; no assertion that NULL denotes an outer rather than an immediate nested Job."
+    },
+    "prior_failure": {
+      "source_commit": "9fd345d9bbcd0cdc6b300dcb07f6b68dbe8914ec",
+      "native_qualification_worker_seconds": 1.1090000000003783,
+      "model_loads": 0,
+      "model_forwards": 0,
+      "source_receipts": {
+        "results/d2_9fd345d9_epoch001_statechange2/stderr.log": "ff3f7abf0b7d8076343ed19b553f300546484f19d2059c0d6a34f7dd5dae7bb5",
+        "results/d2_9fd345d9_epoch001_statechange2/TREE_CONTAINMENT.json": "c97459083e511f77c6618dd5d352965f75090eb64d7d97d934fd6cd494728ae9",
+        "results/d2_9fd345d9_epoch001_statechange2/SUPERVISOR_RESULT.json": "cd5d726e26771f152602377ddf135128a6e143efcfc48d9e9dcae2db10c3da3b"
+      }
+    },
+    "repair_probes": {
+      "outputs/job_identity_probe_v2/target_creation/PROBE_RECEIPT.json": "f1b66d5c19f494807d5a880c7956f2819e6fa8b7bb967ab39cc19c927cdfd016",
+      "outputs/job_identity_probe_v2/target_pid/PROBE_RECEIPT.json": "32b5364cc6a76325b1a83309276507daf49b713cb4f0e7ef047e4a3451091bf6",
+      "outputs/job_identity_probe_v2/valid/PROBE_RECEIPT.json": "e19f52c58911cf902b157d58a30c66b5c58e91b8abdf85854949a4423844686a"
+    }
+  },
+  "exact_own_job_identity_contract": {
+    "duplicate_access_mask": 4,
+    "duplicate_access": "JOB_OBJECT_QUERY_ONLY",
+    "duplicate_inheritable": false,
+    "target_binding": "Exact observed pinned CPython PID+creationtime in owned Job; GO also retains owner/fence/supervisor ancestry binding.",
+    "required_owned_flags": "KILL_ON_JOB_CLOSE set; BREAKAWAY_OK and SILENT_BREAKAWAY_OK absent. Same rule applied to explicit own Job, never relaxed on NULL or parent Job.",
+    "lifetime": "Worker closes temporary query handle on success and every rejection before any framework import; no inherited child query handle.",
+    "parent_death": "Actual CPU controls show parent last-owned-handle close terminates all verified descendants after child query handle closes.",
+    "null_query": "Retain NULL/immediate nested Job flags as read-only diagnostic observation, not authorization or containment identity."
+  }
 }

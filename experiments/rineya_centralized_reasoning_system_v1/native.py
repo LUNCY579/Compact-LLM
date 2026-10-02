@@ -332,9 +332,21 @@ def training_eligibility(*_args, **_kwargs):
     return {"eligible": False, "reason": "native training, update scope, export and complete cross-process resume unqualified"}
 
 
-def current_windows_job_witness():
-    """Read current worker Job membership/limits before importing a framework."""
+def validate_owned_job_flags(flags, member):
+    require(type(flags) is int and member is True and flags & 0x2000 and not flags & (0x800 | 0x1000),
+            "exact owned worker Job lacks strict kill-on-close/no-breakaway")
+
+
+def current_windows_job_witness(query_handle, target_pid, target_creation_time):
+    """Verify exact supervisor Job, then close its temporary child query handle.
+
+    NULL resolves the process's immediate nested Job, which may be another Job.
+    Its flags are retained as observations and never substitute for own identity.
+    """
     require(os.name == "nt", "Windows Job containment required")
+    require(type(query_handle) is int and 0 < query_handle < 2 ** 64,
+            "valid duplicated Job query handle required")
+    import psutil
     import ctypes as c
     from ctypes import wintypes as w
     class Basic(c.Structure):
@@ -355,16 +367,74 @@ def current_windows_job_witness():
     kernel.IsProcessInJob.restype = w.BOOL
     kernel.QueryInformationJobObject.argtypes = [w.HANDLE, c.c_int, c.c_void_p, w.DWORD, c.c_void_p]
     kernel.QueryInformationJobObject.restype = w.BOOL
-    member = w.BOOL()
-    require(kernel.IsProcessInJob(kernel.GetCurrentProcess(), None, c.byref(member)) and member.value,
-            "worker not contained in Windows Job")
-    limits = Extended()
-    require(kernel.QueryInformationJobObject(None, 9, c.byref(limits), c.sizeof(limits), None),
-            "current Job limits unavailable")
-    flags = int(limits.BasicLimitInformation.LimitFlags)
-    require(flags & 0x2000 and not flags & (0x800 | 0x1000), "current worker Job lacks strict kill-on-close/no-breakaway")
-    return {"pid": os.getpid(), "in_current_job": True, "limit_flags": flags,
-            "kill_on_close": True, "observation_api": "IsProcessInJob/QueryInformationJobObject"}
+    kernel.GetHandleInformation.argtypes = [w.HANDLE, c.POINTER(w.DWORD)]
+    kernel.GetHandleInformation.restype = w.BOOL
+    kernel.CloseHandle.argtypes = [w.HANDLE]; kernel.CloseHandle.restype = w.BOOL
+    result = None
+    try:
+        require(type(target_pid) is int and target_pid == os.getpid(),
+                "query handle must belong to exact observed worker PID")
+        require(psutil.Process().create_time() == target_creation_time, "query handle target creation identity drift")
+        handle_flags = w.DWORD()
+        require(kernel.GetHandleInformation(query_handle, c.byref(handle_flags))
+                and not handle_flags.value & 1, "owned query handle must be noninheritable")
+        member = w.BOOL()
+        require(kernel.IsProcessInJob(kernel.GetCurrentProcess(), query_handle, c.byref(member)) and member.value,
+                "worker not contained in exact supervisor-owned Job")
+        limits = Extended()
+        require(kernel.QueryInformationJobObject(query_handle, 9, c.byref(limits), c.sizeof(limits), None),
+                "exact owned Job limits unavailable")
+        flags = int(limits.BasicLimitInformation.LimitFlags)
+        validate_owned_job_flags(flags, bool(member.value))
+        immediate = Extended()
+        immediate_ok = bool(kernel.QueryInformationJobObject(None, 9, c.byref(immediate), c.sizeof(immediate), None))
+        result = {"pid": os.getpid(), "creation_time": target_creation_time,
+                  "in_exact_supervisor_job": True, "exact_owned_limit_flags": flags,
+                  "kill_on_close": True, "breakaway_allowed": False, "query_handle_inheritable": False,
+                  "query_handle_access": "JOB_OBJECT_QUERY_ONLY",
+                  "immediate_null_query_ok": immediate_ok,
+                  "immediate_null_limit_flags": int(immediate.BasicLimitInformation.LimitFlags) if immediate_ok else None,
+                  "observation_api": "IsProcessInJob(explicit duplicate)/QueryInformationJobObject(explicit duplicate)"}
+    finally:
+        require(kernel.CloseHandle(query_handle), "owned query handle failed to close before framework")
+    result["query_handle_closed_before_framework"] = True
+    return result
+
+
+def close_unconsumed_query_handle(handle):
+    import ctypes as c
+    from ctypes import wintypes as w
+    require(type(handle) is int and 0 < handle < 2 ** 64, "invalid unconsumed query handle")
+    kernel = c.WinDLL("kernel32", use_last_error=True)
+    kernel.CloseHandle.argtypes = [w.HANDLE]; kernel.CloseHandle.restype = w.BOOL
+    require(kernel.CloseHandle(handle), "unconsumed owned query handle failed to close")
+
+
+def duplicate_owned_job_query_handle(job, target):
+    """Copy QUERY-only, noninheritable access into an identified own runtime."""
+    import ctypes as c
+    from ctypes import wintypes as w
+    import psutil
+    process = psutil.Process(target["pid"])
+    require(process.create_time() == target["creation_time"] and process.exe() == target["executable"],
+            "query-handle target process identity drift")
+    require(target["pid"] in job_process_ids(job), "query-handle target not in exact owned Job")
+    kernel = job.kernel
+    kernel.GetCurrentProcess.restype = w.HANDLE
+    kernel.OpenProcess.argtypes = [w.DWORD, w.BOOL, w.DWORD]; kernel.OpenProcess.restype = w.HANDLE
+    kernel.DuplicateHandle.argtypes = [w.HANDLE, w.HANDLE, w.HANDLE, c.POINTER(w.HANDLE), w.DWORD, w.BOOL, w.DWORD]
+    kernel.DuplicateHandle.restype = w.BOOL
+    receiver = kernel.OpenProcess(0x40, False, target["pid"])
+    require(receiver, "owned query-handle target OpenProcess failed")
+    duplicate = w.HANDLE()
+    try:
+        require(kernel.DuplicateHandle(kernel.GetCurrentProcess(), job.handle, receiver,
+                    c.byref(duplicate), 4, False, 0), "query-only Job handle duplication failed")
+    finally:
+        kernel.CloseHandle(receiver)
+    return {"own_job_query_handle": int(duplicate.value), "query_handle_target_pid": target["pid"],
+            "query_handle_target_creation_time": target["creation_time"],
+            "duplicate_access_mask": 4, "duplicate_inheritable": False}
 
 
 def job_process_ids(job):
@@ -508,6 +578,111 @@ def containment_cpu_smoke(cfg):
             process.kill(); process.wait(timeout=5)
 
 
+def exact_job_query_cpu_probe(cfg, output, *, rejection=None):
+    """Bounded real child query/close/parent-death control; no framework/model.
+
+    The child emits its receipt before sleeping. Parent closes its last owned Job
+    handle and observes every previously verified member exiting automatically.
+    """
+    require(os.name == "nt" and rejection in {None, "target_pid", "target_creation"}, "registered CPU probe mode")
+    import psutil
+    from experiments.opallo_native_collector_v1.supervisor import WindowsJob
+    output = Path(output).resolve(); output.mkdir(parents=True, exist_ok=False)
+    child_receipt = output / "CHILD_QUERY_RECEIPT.json"
+    child_code = r'''
+import ctypes as c,json,os,subprocess,sys,time
+from ctypes import wintypes as w
+from experiments.rineya_centralized_reasoning_system_v1.native import current_windows_job_witness,write_new
+info=json.loads(sys.stdin.readline());handle=info['own_job_query_handle']
+result={'pid':os.getpid(),'framework_imported':'torch' in sys.modules,'model_loads':0,'gpu_calls':0}
+try:
+ result['witness']=current_windows_job_witness(handle,info['query_handle_target_pid'],info['query_handle_target_creation_time'])
+ result['status']='EXACT_OWN_JOB_VERIFIED'
+except BaseException as error:
+ result['status']='REJECTED_BEFORE_FRAMEWORK';result['error']=type(error).__name__+': '+str(error)
+kernel=c.WinDLL('kernel32',use_last_error=True);kernel.GetHandleInformation.argtypes=[w.HANDLE,c.POINTER(w.DWORD)];kernel.GetHandleInformation.restype=w.BOOL
+flags=w.DWORD();result['handle_usable_after_witness']=bool(kernel.GetHandleInformation(handle,c.byref(flags)))
+result['handle_error_after_witness']=c.get_last_error()
+if result['status']=='EXACT_OWN_JOB_VERIFIED':
+ subprocess.Popen([sys.executable,'-B','-c','import time; time.sleep(30)'])
+write_new(info['child_receipt'],result)
+time.sleep(30)
+'''
+    process = job = None
+    evidence = {"scope": "ACTUAL_EXACT_JOB_QUERY_CPU_ONLY", "rejection_control": rejection,
+                "model_loads": 0, "framework_imports": 0, "gpu_calls": 0}
+    try:
+        process = subprocess.Popen([sys.executable, "-B", "-c", child_code], cwd=ROOT,
+                    stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
+                    creationflags=subprocess.CREATE_NEW_PROCESS_GROUP | 4)
+        job = WindowsJob(process)
+        evidence["before_resume"] = job_member_witness(job, cfg)
+        evidence["resume"] = resume_suspended_primary_thread(process)
+        deadline = time.monotonic() + 3
+        target = []
+        while time.monotonic() < deadline:
+            members = job_member_witness(job, cfg)
+            target = [m for m in members if Path(m["executable"]).resolve() == Path(sys._base_executable).resolve()]
+            if len(target) == 1:
+                break
+            time.sleep(.02)
+        require(len(target) == 1, "CPU query probe runtime target unavailable")
+        transfer = duplicate_owned_job_query_handle(job, target[0])
+        evidence["query_handle_transfer"] = transfer
+        sent = {**transfer, "child_receipt": str(child_receipt)}
+        if rejection == "target_pid": sent["query_handle_target_pid"] += 1
+        if rejection == "target_creation": sent["query_handle_target_creation_time"] -= 1
+        process.stdin.write(canonical(sent) + b"\n"); process.stdin.flush()
+        deadline = time.monotonic() + 5
+        while not child_receipt.exists() and time.monotonic() < deadline and process.poll() is None:
+            time.sleep(.02)
+        require(child_receipt.exists(), "CPU child query probe did not return bounded receipt")
+        observed = read_json(child_receipt)
+        evidence["child"] = observed
+        require(observed["handle_usable_after_witness"] is False and observed["handle_error_after_witness"] == 6,
+                "child query handle remained open before framework boundary")
+        expected = "EXACT_OWN_JOB_VERIFIED" if rejection is None else "REJECTED_BEFORE_FRAMEWORK"
+        require(observed["status"] == expected and not observed["framework_imported"], "CPU query probe unexpected outcome")
+        deadline = time.monotonic() + 3
+        while time.monotonic() < deadline:
+            verified_members = job_member_witness(job, cfg)
+            if rejection is not None or len(verified_members) >= 4:
+                break
+            time.sleep(.02)
+        require(rejection is not None or len(verified_members) >= 4, "post-query grandchild inheritance not observed")
+        evidence["members_before_parent_handle_close"] = verified_members
+        job.close()  # Last owned Job handle; must kill all members without explicit kill.
+        deadline = time.monotonic() + 5
+        remaining = []
+        while time.monotonic() < deadline:
+            remaining = []
+            for witness in verified_members:
+                try:
+                    member = psutil.Process(witness["pid"])
+                    if member.create_time() == witness["creation_time"] and member.is_running():
+                        remaining.append(member.pid)
+                except psutil.NoSuchProcess:
+                    pass
+            if not remaining:
+                break
+            time.sleep(.02)
+        require(not remaining, "last-handle close did not terminate complete owned tree")
+        process.wait(timeout=5)
+        evidence.update(status="PASS_EXACT_JOB_QUERY_CPU_ONLY", remaining_owned_pids=[],
+                        parent_last_handle_close_terminated_tree=True, child_receipt_sha256=sha(child_receipt))
+        write_new(output / "PROBE_RECEIPT.json", evidence)
+        return evidence
+    finally:
+        if job:
+            job.close()
+        if process is not None and process.poll() is None:
+            process.kill(); process.wait(timeout=5)
+        if process is not None:
+            for pipe in (process.stdin, process.stdout, process.stderr):
+                if pipe is not None:
+                    pipe.close()
+
+
 def worker(args, cfg):
     """Contained worker. Requires parent GO, committed review and fenced lease."""
     require(os.name == "nt", "Windows-only worker")
@@ -520,19 +695,27 @@ def worker(args, cfg):
         time.sleep(.02)
     require(args.go_path.exists(), "contained GO not received; no framework imported")
     go = read_json(args.go_path)
-    require(all(go.get(k) == v for k, v in {"contract_sha256": args.contract_sha256,
-                                          "owner": args.owner, "fence": args.fence}.items()),
-            "owned contained GO mismatch")
-    import psutil
-    ancestors = psutil.Process().parents()
-    require(go.get("supervisor_pid") in [p.pid for p in ancestors]
-            and go.get("worker_tree_pid") in [os.getpid()] + [p.pid for p in ancestors],
-            "worker ancestry differs from recorded supervisor/tree")
-    supervisor_command = psutil.Process(go["supervisor_pid"]).cmdline()
-    require("--supervise" in supervisor_command
-            and "experiments.rineya_centralized_reasoning_system_v1.native" in supervisor_command,
-            "direct worker invocation unsupported; registered supervisor command required")
-    containment = current_windows_job_witness()
+    query_handle = go.get("own_job_query_handle")
+    query_consumed = False
+    try:
+        require(all(go.get(k) == v for k, v in {"contract_sha256": args.contract_sha256,
+                                              "owner": args.owner, "fence": args.fence}.items()),
+                "owned contained GO mismatch")
+        import psutil
+        ancestors = psutil.Process().parents()
+        require(go.get("supervisor_pid") in [p.pid for p in ancestors]
+                and go.get("worker_tree_pid") in [os.getpid()] + [p.pid for p in ancestors],
+                "worker ancestry differs from recorded supervisor/tree")
+        supervisor_command = psutil.Process(go["supervisor_pid"]).cmdline()
+        require("--supervise" in supervisor_command
+                and "experiments.rineya_centralized_reasoning_system_v1.native" in supervisor_command,
+                "direct worker invocation unsupported; registered supervisor command required")
+        query_consumed = type(query_handle) is int and 0 < query_handle < 2 ** 64
+        containment = current_windows_job_witness(query_handle,
+                      go.get("query_handle_target_pid"), go.get("query_handle_target_creation_time"))
+    finally:
+        if not query_consumed and type(query_handle) is int and 0 < query_handle < 2 ** 64:
+            close_unconsumed_query_handle(query_handle)
     write_new(output / "CONTAINMENT_RECEIPT.json", {**containment, "supervisor_pid": go["supervisor_pid"],
                "worker_tree_pid": go["worker_tree_pid"], "contract_sha256": args.contract_sha256})
     snapshot = committed_snapshot()
@@ -791,10 +974,14 @@ def supervise(args, cfg):
                     break
                 time.sleep(.02)
             require(len(members) >= 2, "venv runtime child membership not observed before GO")
+            runtime_targets = [m for m in members if Path(m["executable"]).resolve() == Path(sys._base_executable).resolve()]
+            require(len(runtime_targets) == 1, "one exact CPython worker target required for Job query handle")
+            query_transfer = duplicate_owned_job_query_handle(job, runtime_targets[0])
             write_new(output / "TREE_CONTAINMENT.json", {"before_resume": before_resume,
-                       "resume": resumed, "before_go_members": members, "all_members_in_exact_owned_job": True})
+                       "resume": resumed, "before_go_members": members, "all_members_in_exact_owned_job": True,
+                       "query_handle_transfer": query_transfer})
             write_new(output / "GO.json", {"contract_sha256": args.contract_sha256, "owner": owner, "fence": lease["fence"],
-                       "supervisor_pid": os.getpid(), "worker_tree_pid": process.pid})
+                       "supervisor_pid": os.getpid(), "worker_tree_pid": process.pid, **query_transfer})
             def gpu_watch():
                 while not stopped.is_set():
                     try:
