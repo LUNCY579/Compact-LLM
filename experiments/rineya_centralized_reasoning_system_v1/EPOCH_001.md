@@ -220,3 +220,34 @@ prepared for an explicit owner exception to the review limit. No source is repai
 in place or existing evidence relabeled. Acquisition, retention, efficacy and
 learning efficiency remain unmeasured; prior trace-local numerical facts and the
 CRS track's restart questions are preserved.
+
+## Ordinary TRAIN data CPU qualification, 2026-10-02
+
+The separate supplied four-status ordinary-adaptation bank reached bounded CPU
+qualification at source837bd152 / tests60a9c59a / contract37f31697. It contains32
+unique TRAIN parents, draw101/order211, eight examples per compound family and
+two of every semantic status per family. It is answer-only supervision, not
+Rineya discovery, verified-procedure distillation or a retention panel.
+
+The initial32/32 identifier shortcut is retained in history/learning_data_draft001.
+The first repair removed that demonstrated shortcut but allowed caller-resealed
+family/parent/seed registrations; its17-test source and negative reviews remain
+in history/learning_data_repair1. The second repair checks actual grouping,
+strict seeds, derived identities and full canonical membership in the fixed bank.
+Final scientific review3 and operations review2 reproduce those closures.
+
+Root's durable23-test run passed in0.314s (subprocess wall0.475s including startup),
+with32 source/oracle and32 rename-invariance fixture cross-checks. Reconstructed
+bank hashes, complete order/lineage and all10 declared shortcut measurements
+match the frozen contract. Raw output and receipt are in
+evidence/learning_data_repair2_cpu_001; the separate transition is
+evidence/LEARNING_DATA_ACCEPTANCE_001.json. No source case, target or registered
+draw was resampled for the second repair. Shared supplied semantics and remaining
+shortcut uncertainty are explicit; these tests are infrastructure evidence.
+
+Actual tokenizer/template fit, input/target token counts and response-only masks
+remain unmeasured. Those are the next independently scoped CPU prerequisite.
+No model load/forward or optimizer update occurred in this milestone; cumulative
+native charge remains47.421s. Native/reader/probe quarantines and the unanswered
+owner-exception question remain in force. No learning, retention, calibration,
+mechanism or promotion result is established.

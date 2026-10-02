@@ -1,0 +1,89 @@
+{
+  "acceptance_id": "CRS-LEARNING-DATA-CPU-ACCEPTANCE-001",
+  "adjudicator": "/root",
+  "artifacts": {
+    "contract": {
+      "bytes": 31480,
+      "path": "contracts/LEARNING_DATA_V1.json",
+      "sha256": "37f316972afc6b1a43f9a1ef8f797b0452fb0de5706724c0fd49f8bf0470015a"
+    },
+    "operations_review_2": {
+      "bytes": 7392,
+      "path": "audits/LEARNING_DATA_OPERATIONAL_REVIEW_2.md",
+      "sha256": "f6a0e34ab6481b98ab5f46dd47d3eaeaf64ad4f87fbb37dee906a0d51093b6f8"
+    },
+    "root_cpu_receipt": {
+      "bytes": 2117,
+      "path": "evidence/learning_data_repair2_cpu_001/RECEIPT.json",
+      "sha256": "1a53c194ca92c529d3e8e1cbc094fde6f68490595f81e5f2b04d939469a310b8"
+    },
+    "scientific_review_3": {
+      "bytes": 6797,
+      "path": "audits/LEARNING_DATA_SCIENTIFIC_REVIEW_3.md",
+      "sha256": "c11afa33090b6898f210592ae788b71c993207a018f8f6630971934e36eba8cc"
+    },
+    "source": {
+      "bytes": 27914,
+      "path": "learning_data.py",
+      "sha256": "837bd152ba5aa9d1fc44a5991909cf4475394eaa42af739cca63ac3422ed3795"
+    },
+    "tests": {
+      "bytes": 17597,
+      "path": "tests/test_learning_data.py",
+      "sha256": "60a9c59ad0c25adb4356a354219652d5f7898254929606f0aa5bf2c3063cb587"
+    }
+  },
+  "authority": {
+    "existing_candidate_quarantines_changed": false,
+    "model_launch_authorized_by_receipt": false,
+    "native_eligible": false,
+    "new_holdouts_opened": false,
+    "owner_exception_received": false,
+    "procedure_discovery_or_distillation": false,
+    "retention_noninferiority_claim": false,
+    "training_eligible": false
+  },
+  "bank_hashes": {
+    "gold_sha256": "ee4aa273309e78642690d70c07d95f8d66d95199419ff35b94eb298fe9f2a8d3",
+    "latent_sha256": "5e35b7cc262386dcc06297ddd9dcf8d98d4f79677cb706fa01d67bb16a200b79",
+    "lineage_sha256": "a54ae7869dfbdfaf7a3968264c7ad64184ad331e6d3400727f10d477bb95f931",
+    "public_sha256": "03de77bdb793d078a5113600f8866f16c0b054a10cd4e9fd5e2b1925db4c55e3"
+  },
+  "builder": "/root/data_audit",
+  "frozen_contract_status_preserved": "SECOND_REPAIR_CPU_TESTED_FIXED_REGISTRATION_PENDING_FRESH_INDEPENDENT_REVIEW",
+  "known_limits": [
+    "Shared supplied grammar and concept semantics; separate latent oracle is engineering cross-check, not independent world or neural truth",
+    "Compound-template grouping is not semantic/pretraining/natural-language isolation",
+    "Known identifier shortcut removed; all shortcuts are not proven absent",
+    "One draw/order and32 optimizer parents are not a retention panel or precision design",
+    "Future consumers must bind exact source, contract, bank and registered input/target IDs"
+  ],
+  "model_forwards_during_this_milestone": 0,
+  "model_loads_during_this_milestone": 0,
+  "operations_reviewer": "/root/runtime_audit",
+  "optimizer_updates": 0,
+  "prior_negative_and_repair_histories_preserved": true,
+  "recorded_at_utc": "2026-10-02T09:31:55.752179+00:00",
+  "registered_cases": 32,
+  "remaining_consequential_findings_in_registered_CPU_scope": [],
+  "root_verification": "23 tests pass; reconstructed bank hashes/order/lineage/ten shortcut metrics match contract; source inspection confirms fixed bank anchor outside caller self-hashes",
+  "schema_version": 1,
+  "scientific_reviewer": "/root/scientific_audit",
+  "scope": "Exact registered supplied ordinary structured-answer TRAIN draw101/order211; explicit TRAIN-only target exposure; cooperative frozen-code provenance",
+  "status": "CPU_QUALIFIED_FIXED_TRAIN32_AND_TARGET_INTERFACE_ONLY",
+  "status_counts": {
+    "CONTRADICTORY": 8,
+    "REFUTED": 8,
+    "SUPPORTED": 8,
+    "UNKNOWN": 8
+  },
+  "third_scientific_review_complete": true,
+  "transition_record_is_separate_from_frozen_contract": true,
+  "unique_parents": 32,
+  "unmeasured": [
+    "actual tokenizer/template input and response counts",
+    "response-only loss masks and EOS policy",
+    "native serving and training numerical/sustained qualification",
+    "acquisition/transfer/calibration/retention and incumbent enrollment"
+  ]
+}

@@ -8,10 +8,10 @@ From this workspace, use the registered environment for the complete CPU suite
 (native-supervisor failure fixtures require psutil; they do not load a model):
 
 ```powershell
-& 'C:\Users\clclc\BusinessProject\.venv-mq001\Scripts\python.exe' -m experiments.rineya_centralized_reasoning_system_v1.runner qualify-cpu
-& 'C:\Users\clclc\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -m experiments.rineya_centralized_reasoning_system_v1.runner cpu-epoch
-& 'C:\Users\clclc\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -m experiments.rineya_centralized_reasoning_system_v1.runner resume
-& 'C:\Users\clclc\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -m experiments.rineya_centralized_reasoning_system_v1.runner status
+& 'C:\Users\clclc\BusinessProject\.venv-mq001\Scripts\python.exe' -m experiments.rineya_centralized_reasoning_system_v1.runner qualify-cpu --host-wide
+& 'C:\Users\clclc\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -m experiments.rineya_centralized_reasoning_system_v1.runner cpu-epoch --host-wide
+& 'C:\Users\clclc\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -m experiments.rineya_centralized_reasoning_system_v1.runner resume --host-wide
+& 'C:\Users\clclc\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -m experiments.rineya_centralized_reasoning_system_v1.runner status --host-wide
 ```
 
 `resume` reuses completed per-case receipts under identical bindings. A previous
@@ -130,9 +130,41 @@ and quarantined the candidate at its third round. No repair or collection is
 eligible under that exhausted milestone. Preserve all source, approval, failure
 and prior trace-local numerical evidence.
 
-The next dependent action is independent review of concrete proposed corrections
-under `resolution_proposals/author_exception_001/`, followed by an explicit owner
-exception for one additional bounded repair/review round and one newly registered
-60s no-model observation if its gates pass. Proposed patches or reviewer signatures
-grant no authority. Frozen files, numerical/resource limits, weights and protected
-banks remain unchanged. Independent TRAIN-data/atlas CPU work may continue.
+The concrete corrections under `resolution_proposals/author_exception_001/`
+have passed independent proposal review and real-interface CPU regressions.
+The next dependent action is the owner's decision on one additional bounded
+repair/review round and one newly registered 60s no-model observation if its
+unchanged gates pass. The question is already pending; no answer has been received
+(`authorization/PENDING_OWNER_EXCEPTION_001.json`). Proposed patches, elapsed
+time and reviewer signatures grant no authority. Frozen files, numerical/resource
+limits, weights and protected banks remain unchanged. Independent TRAIN-data/atlas
+CPU work may continue.
+
+Use the host-wide commands above for the campaign's completed CPU receipts and
+cumulative native ledger. The default local fixture database is a separate store;
+its empty jobs and zero budget are neither a resume record nor a native-budget
+reset. Resolve the host-wide path through the current environment rather than
+assuming an unvirtualized Windows AppData path.
+
+## Independent ordinary-adaptation data prerequisite
+
+`evidence/LEARNING_DATA_ACCEPTANCE_001.json` records final scientific/operations
+acceptance of exact source837bd152, tests60a9c59a and contract37f31697. Preserve
+the contract's frozen pending-review label; the separate acceptance receipt
+records the completed transition. The bank is32 TRAIN parents, draw101/order211,
+four statuses and four supplied compound-template families. No new holdout or
+model evidence follows from this acceptance.
+
+Reproduce the bounded CPU checks without a model:
+
+```powershell
+& 'C:\Users\clclc\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -m unittest experiments.rineya_centralized_reasoning_system_v1.tests.test_learning_data -v
+```
+
+The next independent prerequisite is separately reviewed CPU-only exact tokenizer/
+template, full-source fit, EOS and response-only causal loss-mask accounting.
+Bind accepted data/source/bank identities before intentional TRAIN targets are
+paired with inputs. Keep all32 cases visible, with no truncation, replacement draw
+or interpretation of model-max-length metadata as native qualification. Actual
+measurements require a frozen instrument, fresh scientific/operations review and
+reliable bounded CPU telemetry. Native training/serving gates remain closed.

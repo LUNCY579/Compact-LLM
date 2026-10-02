@@ -44,6 +44,17 @@ is inferred. Separate scorer/atlas v2 instruments fix format/semantics, duplicat
 observations, dose and unavailable-incumbent defects. Native efficiency remains
 unmeasured. Independent review accepted the new receipt-bound learning delta
 guard for same-panel arithmetic only; it attests no native execution or learning.
+The new supplied ordinary-adaptation TRAIN bank is CPU qualified for its exact
+32-parent draw101/order211 and intentional TRAIN-only target interface. Four
+compound families contain eight parents each and two of each semantic status.
+Final scientific review3 and operations review2 accepted the frozen source;
+23 tests pass. The initial perfect identifier shortcut and first-repair
+registration forgeries remain in history. Acceptance is a separate transition
+receipt, `evidence/LEARNING_DATA_ACCEPTANCE_001.json`, preserving the reviewed
+contract bytes. Shared grammar/semantics, possible remaining shortcuts and the
+small fixed draw limit interpretation. Actual token/template fit, loss masks,
+model adaptation and retention remain unmeasured. A separate CPU tokenizer/mask
+prerequisite is being scoped; it cannot reopen the quarantined runtime paths.
 The guard and exact-prefix reader qualifier passed24 lightweight tests. Reader
 review reproduced a completion-proof gap,
 so its native launch remains closed pending repair. The previous complete primary
@@ -77,9 +88,10 @@ byte-hash mismatch: its writer appends a newline and its validator hashes the
 parsed canonical object. Actual writer outputs therefore reject. The reader is
 quarantined; no serving or native DEV collection occurred. Counterexample bytes
 and adjudication are retained in `evidence/reader_final3_writer_binding_cpu_v1/`
-and `audits/FINAL_REVIEW_LIMIT_ADJUDICATION_001.md`. A concrete two-fix proposal
-and real-interface regressions are being prepared separately; no fourth repair,
-inference retry or gate broadening has been performed.
+and `audits/FINAL_REVIEW_LIMIT_ADJUDICATION_001.md`. The concrete two-fix proposal
+and real-interface regressions passed independent proposal review. The owner
+decision is pending in `authorization/PENDING_OWNER_EXCEPTION_001.json`; no answer,
+fourth repair, inference retry or gate broadening has occurred.
 
 Native admission first refused an unregistered game package before dispatch.
 After that process exited, clean reviewed source `9fd345d9` dispatched a contained
