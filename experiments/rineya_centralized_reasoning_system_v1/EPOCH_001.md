@@ -251,3 +251,11 @@ No model load/forward or optimizer update occurred in this milestone; cumulative
 native charge remains47.421s. Native/reader/probe quarantines and the unanswered
 owner-exception question remain in force. No learning, retention, calibration,
 mechanism or promotion result is established.
+
+The independent tokenization architecture is frozen at commitf46d2bf6. A separate
+direct-CPython/psutil process fixture completed in0.443s with four RSS samples and
+exit0, loading no tokenizer/model library. Its receipt72c28c08 and audit annotation
+preserve the limitation that requested sleep intervals are not observed sample
+gaps and sampled RSS is not an absolute peak. The new instrument's source/fixtures
+are being built; no actual token artifact, mask measurement or native launch has
+occurred. These CPU fixture costs do not reset the cumulative native budget.
