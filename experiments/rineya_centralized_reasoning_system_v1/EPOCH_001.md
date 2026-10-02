@@ -335,3 +335,40 @@ activation/reviewer bindings and fresh production resource admission. Any actual
 result needs independent evidence review. This source transition establishes
 no BPE IDs/fit/Jinja behavior, real peak/time, native qualification, model loss,
 learning or retention. Existing quarantines, native47.421s and training0 persist.
+
+## Actual CPU tokenizer/fit/mask study
+
+Clean source37ec9872 generated create-only activation8f4c9b84, Root SCI0472893d
+and Runtime OPS9355d022 launch bindings after the independent activation check.
+First production admission refused RAM below the fixed1.75GiB requirement before
+guard/output/worker creation. Its original RAM number is unavailable; later
+independent availability5.014GiB is not substituted for it. A genuine host change
+allowed the next complete admission to start exactly one registered CPU worker.
+
+The worker and supervisor returned32/32 successful cases,184 real encodes and
+one real tokenizer load. Prompt262..345, response/EOS10..14 and joined274..359
+positions fit the unchanged512/64/576 bounds without truncation/resampling.
+The retained joined lengths sum9993 and response labels384. These are prospective
+teacher-position counts from CPU IDs, not model forward execution. Actual
+manual/Jinja vectors, decode/control source assertions, prefix association,
+full-render/newline, EOS and shifted ownership replay under their fixed source.
+
+Supervisor time1.469s contains worker0.610s. Complete successful/refused command
+walls2.6044135/2.1502471s total4.7546606s; do not add nested times again. Ten samples
+record maxgap0.203s, sampled RSS100.949MiB, kernel working-set peak147.367MiB and
+minimum availability4.89653GiB. Total guarded output585734 bytes is below8MiB.
+Exit0, no unknown/cleanup errors and a post-validation final witness are retained.
+Independent pinned read-only process observation found the original PID gone.
+
+SCI actual reviewb44a9715 and OPS actual review1db6798b accepted exact CPU evidence
+after full184-vector/raw-reference and production terminal replay without relaunch.
+Qualification9a72e3e0 saves selected non-gold metadata/report copies; raw worker
+0b815130 remains in ignored output. Prior refusal, all costs and source failures
+remain preserved. The permanent key is terminal and not a retry key.
+
+Measured IDs now determine the existing prospective4/8-update dose plan:
+16/32 unique TRAIN parents,4874/9993 full teacher positions and192/384 supervised
+positions. No optimizer step, neural loss/gradient, acquisition, retention,
+calibration, transfer, native numerical/serving or model qualification occurred.
+Native budget47.421s is unchanged. The quarantined reader/probe exception still
+awaits the owner's explicit answer; source/CPU success grants no fourth repair.

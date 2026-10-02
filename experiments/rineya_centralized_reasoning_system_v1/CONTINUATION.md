@@ -221,3 +221,28 @@ there is no automatic retry, alternate-output bypass or fourth source repair.
 Preserve raw failures/unknowns/costs and request independent actual artifact
 review before claiming token fit/mask readiness. Native/reader/probe/training
 quarantines and the pending owner-exception decision remain unchanged.
+
+## Completed CPU token study; no redispatch
+
+The single CPU study actually completed under source commit37ec9872 and received
+independent SCI/OPS artifact acceptance. Qualification9a72e3e0 and selected
+non-gold raw metadata/report copies are retained in
+evidence/learning_tokenization_actual_cpu_001. The raw worker file remains in the
+ignored fixed output with physical SHA0b815130; it contains intentional TRAIN
+responses/token vectors and is not committed. Do not delete or retry its guard.
+
+All32 cases fit: prompts262..345, response/EOS10..14, joined274..359, total9993
+prospective teacher positions and384 supervised positions. The fixed4/8-update
+dose plan would consume16/32 parents and4874/9993 teacher positions,192/384
+supervised positions; actual optimizer updates remain0. This is planned arithmetic,
+not training. The first RAM admission refusal had no guard/worker/output; a later
+host change permitted one worker. Retain both command costs4.7546606s together,
+without adding nested supervisor1.469s/worker0.610s again.
+
+CLI source admission also binds its original clean37ec9872 commit. Later evidence/
+handoff commits are not new registrations; replay old raw receipts through their
+captured immutable attempt/admission and exact unchanged source pins. Do not alter
+activation, generate another key/output or relaunch to obtain a current HEAD match.
+The original owned PID was independently observed gone. Native charge47.421s,
+model forwards4 total and training0 remain unchanged. Whole native reader/runtime,
+maximum576 and sustained gradient/resume/export/retention gates remain closed.

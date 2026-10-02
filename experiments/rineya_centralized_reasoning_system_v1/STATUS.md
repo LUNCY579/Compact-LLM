@@ -62,9 +62,15 @@ those findings, but operations review reproduced worker-side Git subprocesses
 that violate its no-descendant policy. Final candidate3 source9ca855e3/testfe882958/
 closed contract50351601 passes33 synthetic tests and final SCI/OPS source review.
 `evidence/LEARNING_TOKENIZATION_SOURCE_ACCEPTANCE_001.json` records the narrow
-acceptance. A single CPU study is preregistered; actual activation, clean-commit
-attestations, fresh admission and measurement/evidence review remain pending.
-This work cannot reopen the quarantined runtime paths.
+acceptance. The one registered CPU study then completed and passed independent
+actual SCI/OPS evidence review:32/32 cases,184 encodes, one tokenizer load,
+prompts262..345, response/EOS10..14 and joined274..359 tokens. Full teacher-position
+lengths total9993; response supervision totals384. Supervisor1.469s, kernel
+working-set peak147.367MiB. The prior prelaunch RAM refusal remains recorded;
+no worker started then. Exact CPU bytes/fit/causal ownership are qualified in
+`evidence/learning_tokenization_actual_cpu_001/QUALIFICATION.json`. No neural
+forward, loss, training, learning or retention result follows. This work cannot
+reopen the quarantined runtime paths or retry its terminal CPU key.
 The guard and exact-prefix reader qualifier passed24 lightweight tests. Reader
 review reproduced a completion-proof gap,
 so its native launch remains closed pending repair. The previous complete primary
