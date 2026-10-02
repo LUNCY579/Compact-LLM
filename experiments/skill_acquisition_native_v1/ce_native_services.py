@@ -351,6 +351,9 @@ class StableDispatcher:
             target = self.bootstrap if kind in ('supervisor_lease','supervisor_lease_acquire','supervisor_lease_release','worker_os_binding','worker_handle_close','worker_handle_duplicate') else (
                 self.ledger if self.ledger is not None else self.bootstrap)
             if kind in ('resource_probe', 'resource_cuda_probe') and self.ledger is not None:
+                from .ce_journal import CeJournal
+                if type(self.ledger) is CeJournal and self.ledger.synthetic_cpu is False:
+                    target = self.bootstrap
                 if getattr(self.ledger, 'scope_role', None) == 'qualification_only' and (
                         getattr(self.ledger, 'active', None) is None or getattr(self.ledger, 'worker_open', True) is False):
                     target = self.bootstrap
@@ -474,15 +477,17 @@ class NativeControllerServices:
             # the retained actual handle; it cannot replace request or context.
             self.verify_worker(self.context)
             return self.context
-        if request['phase'] != 'qualification':
-            raise MissingServiceRole('separate raw production-scope/qualification-result verifier remains unimplemented')
         bootstrap_outer = self._role('bootstrap_outer')(request, self.operation, self.spec)
         from .runner import code_bundle, verify_module_origins
         code = self._span('source_verification', lambda: code_bundle(self.operation))
         require(code == self.spec['approved_code_sha256'], 'complete running service/source bundle drift')
         verify_module_origins(code)
-        context = self._span('scope_admission', lambda: qualification.admit_qualification(
-            request, code_sha256=code, outer_admission=bootstrap_outer, io_observer=self.operation))
+        if request['phase'] == 'qualification':
+            context = self._span('scope_admission', lambda: qualification.admit_qualification(
+                request, code_sha256=code, outer_admission=bootstrap_outer, io_observer=self.operation))
+        else:
+            admit = self._role('production_admission')
+            context = self._span('scope_admission', lambda: admit(request, code, bootstrap_outer, self.operation, self))
         require(type(context) is dict and context.get('admission_evidence_verified') is True
                 and context.get('request_sha256') == digest(controller.request_preimage(request)), 'raw new-operator/scope/source admission required')
         # admit_qualification verifies §18 choice and every raw scope/recipe/
@@ -551,6 +556,11 @@ class NativeControllerServices:
     @contextmanager
     def lease(self, context):
         self._admit()
+        if context is self.context and context.get('phase') == 'training':
+            from .ce_training_runtime import training_lease
+            with training_lease(self, context) as owner:
+                yield owner
+            return
         require(context is self.context and context.get('phase') == 'qualification', 'exact qualification supervisor context')
         permit=context.get('native_execution_permit')
         authority.require_execution_permit(permit,context,'checkpoint_resume',operation=self.operation,gate=self.gate)
