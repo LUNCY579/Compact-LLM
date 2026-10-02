@@ -149,8 +149,8 @@ def required_interfaces():
          'existing':'ce_native_backend.create_backend / ce_native_qualification.NativeQualificationExecutor','status':'composition factory not source-registered'},
         {'name':'accounting_factory','api':'context,permit,proof,prepared_receipt -> create_accounting(... actual bootstrap_handle, bootstrap_verifier)',
          'existing':'ce_qualification_accounting.create_accounting','status':'actual parent prepayment bridge required'},
-        {'name':'bootstrap_constructor_prepayment','api':'request,service_spec -> source-owned object.require_constructor(spec_sha,request_sha)',
-         'existing':'ce_native_services.BootstrapLedger','status':'source-issued constructor type/factory required'},
+        {'name':'bootstrap_constructor_prepayment','api':'request,service_spec,ControllerServicePermit -> source-owned object.require_constructor(spec_sha,request_sha)',
+         'existing':'ce_service_prepayment.bootstrap_constructor_prepayment','status':'concrete permanent reservation; exact source registration remains closed'},
         {'name':'outer_issuer/outer_verifier/outer_reservation','api':'actual metadata outer scope and permanent bounded stage reservation',
          'existing':'ce_controller.OuterAdmission','status':'reviewed source adapters/registration required'},
         {'name':'worker_observation','api':'context,stable operation -> exact paid current OS WorkerObservationPermit/spec',
@@ -225,7 +225,8 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
             'ingestion_receipt_sha256':receipt['receipt_sha256'],'operation_profiles':profiles,
             'setup_bounds':profile(64*MIB,64*MIB,16,64*MIB,30),'stage_caps':stage_caps,'global_caps':envelope,
             'physical_wall_seconds_upper':19200},
-        'resource_measurement':{'schema':measurement.SCHEMA,'required_barriers':['launch','runtime_anchor','resource_io_measurement'],
+        'resource_measurement':{'schema':measurement.SCHEMA,'required_barriers':['launch','before_model','after_runtime',
+            'after_update','after_checkpoint','after_delta','final','resource_io_measurement'],
             'measured_operation_kinds':['resource_probe','resource_cuda_probe'],'limits':limits,
             'owned_directory':str(output_root/'resource'),'json_bytes_upper':4*MIB,'reducer_work_bytes_upper':16*MIB},
         'checkpoint_qualification':{'schema':checkpoint.SPEC,'owned_directory':str(output_root/'checkpoints'),
@@ -252,25 +253,34 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
     pub={'schema':branch_publication.SPEC,'max_receipt_bytes':4*MIB,'bounds':pub_bounds,'reader_bounds':reader}
     scope['checkpoint_branch_publication']=pub
     scope['publication']={**pub,'schema':publication.SPEC,'owned_directory':str(output_root/'publication')}
+    scope['publication_owner']={'accounting_spec_sha256':digest(scope['publication']),
+                                'prepared_receipt_sha256':receipt['receipt_sha256']}
     templates={}
+    observer_module='experiments.skill_acquisition_native_v1.ce_child_scope_adapters'
+    observer_source=source['code_sha256'][observer_module.replace('.', '/')+'.py']
     for branch in checkpoint.BRANCHES:
         templates[branch]={'cwd':source['source_checkout'],'source_checkout':source['source_checkout'],
             'worker_module':'experiments.skill_acquisition_native_v1.ce_checkpoint_worker','worker_topology':'venv_redirector',
             'python_ref':worker_probe['spec']['python_ref'],'process_image_ref':worker_probe['spec']['process_image_ref'],
             'source_files':source['source_files'],'approved_code_sha256':source['code_sha256'],
+            'observation_factory_descriptor':{'module':observer_module,'symbol':'child_launch_observation','source_sha256':observer_source},
             'environment':child_environment(),
             'deadline_seconds':3600,'handshake_seconds':180,'rpc_seconds':3600,'terminate_grace_seconds':30,
             'max_message_bytes':MIB,'max_messages':8,'max_stderr_bytes':MIB,
             'bounds':{'operation_attempts_upper':10000,'io_read_bytes_upper':4*GIB,'identity_hash_attempts_upper':10000,
-                'identity_hash_bytes_upper':4*GIB,'wall_seconds_upper':3600}}
+                'identity_hash_bytes_upper':4*GIB,'wall_seconds_upper':3600},
+            'observation_bounds':{'operation_attempts_upper':100000,'io_read_bytes_upper':4*GIB,
+                'identity_hash_attempts_upper':100000,'identity_hash_bytes_upper':4*GIB,'wall_seconds_upper':3600}}
     scope['checkpoint_processes']={'schema':processes.SPEC,'owned_directory':str(output_root/'checkpoints/processes'),
-        'bounds':outer_bounds,'max_json_bytes':4*MIB,'reader_bounds':reader,'launch_templates':templates}
+        'bounds':outer_bounds,'max_json_bytes':4*MIB,'reader_bounds':reader,'launch_templates':templates,
+        'prefix_transfer_bounds':profile(metadata,metadata,64,256*MIB,60)}
     scope['checkpoint_processes_owner']={'accounting_spec_sha256':digest(scope['checkpoint_processes']),
                                        'prepared_receipt_sha256':receipt['receipt_sha256']}
     service_profiles={kind:profile(metadata,metadata,64,256*MIB,60) for kind in
         ('controller_stage','source_verification','scope_admission','framework_preparation','publication','interruption',
          'input_io','tokenizer_load','tokenizer_render','entry_preparation','entry_worker_binding','worker_runtime_binding',
-         'worker_source_verification','worker_os_binding','worker_handle_close','worker_handle_duplicate')}
+         'worker_source_verification','worker_os_binding','worker_handle_close','worker_handle_duplicate',
+         'scope_capsule','scope_metadata','outer_reservation','terminal_publication')}
     service_profiles['supervisor_lease']=scope['checkpoint_lease']['operation_bounds']['transfer']
     service_profiles['supervisor_lease_acquire']=scope['checkpoint_lease']['operation_bounds']['acquire']
     service_profiles['supervisor_lease_release']=scope['checkpoint_lease']['operation_bounds']['release']
@@ -280,14 +290,22 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
     service_profiles['entry_preparation']=profile(2*GIB,metadata,100000,4*GIB,1800)
     service={'schema':'CE8-NATIVE-CONTROLLER-SERVICES-1','approved_code_sha256':source['code_sha256'],
         'role_descriptors':{},'physical_deadline_seconds':19200,
+        'supervision':{'schema':'CE8-QUALIFICATION-SUPERVISION-SPEC-1',
+            'owned_directory':str(output_root/'supervision'),'max_json_bytes':4*MIB},
+        'constructor_prepayment':{'schema':'CE8-SERVICE-CONSTRUCTOR-PREPAYMENT-1',
+            'owned_directory':str(output_root/'service-bootstrap'),
+            'source_verifier_bounds':{'hash_attempts':5,'hash_bytes':32*MIB},
+            'bounds':{'read_bytes':2*metadata,'write_bytes':2*metadata,'hash_attempts':20000,
+                'hash_bytes':4*metadata,'metadata_bytes':2*metadata,'operation_attempts':4,'wall_seconds':120}},
         'bootstrap':{'owned_directory':str(output_root/'service-bootstrap'),
             'setup_bounds':profile(metadata,metadata,10000,metadata,60),
             'operation_profiles':service_profiles,'caps':{'read_bytes':64*GIB,'write_bytes':4*GIB,'hash_attempts':2000000,
                 'hash_bytes':256*GIB,'metadata_bytes':4*GIB,'operation_attempts':100000,'wall_seconds':256000}},
         'resource':{'limits':limits,'resource_probe':probe,
-            'host_transient_bytes':{kind:64*MIB for kind in runner.HOST_STAGES | set(qualification.STAGES) |
+            'host_transient_bytes':{kind:64*MIB for kind in runner.HOST_STAGES | set(qualification.STAGES) | accounting.KINDS |
                 {'before_framework','before_model','ingestion_sources','ingestion_tokenizer','ingestion_qualification_rows',
-                 'qualification_artifact','qualification_parent_release','qualification_state_fingerprint'}}}}
+                 'qualification_artifact','qualification_parent_release','qualification_state_fingerprint',
+                 'after_runtime','after_update','after_checkpoint','after_delta','final'}}}}
     expectation={'schema':'CE8-PREPARED-RECEIPT-EXPECTATION-1','observed_current_scope':False,
         'prior_observed_tokenizer_receipt_sha256':prior_receipt['receipt_sha256'], 'current_source_metadata_revalidated':True,
         'tokenizer_recomputed':False,'expected_receipt':receipt,
@@ -315,8 +333,8 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
             'checkpoint_processes':outer_bounds,'branch_publication_each':pub_bounds,
             'rule':'Separate retained owners; these additional ceilings require explicit review and are not part of the old57600 leaf-wall allowance.'},
         'required_source_interfaces':required_interfaces(),
-        'runtime_artifact_interfaces':{'ingestion_bootstrap_ref':'actual fresh prepaid preparation history after source entry',
-            'outer_setup_reservation_ref':'actual retained constructor reservation, before Q files',
+        'runtime_artifact_interfaces':{'ingestion_bootstrap_ref':'actual paid service capsule retained in top-level qualifier_setup_refs before permit freeze',
+            'outer_setup_reservation_ref':'actual paid constructor reservation capsule in top-level qualifier_setup_refs before Q files and permit freeze',
             'parent_child_observed_proofs':'actual paid OS identities after entry/launch, never static fakePID/hash',
             'source_launch_environment':'explicit minimal credential-free child environment; actual child must equal this frozen environment'},
         'unknowns_abort_policy':'Any profile/cap/deadline/identity/disk/host excess stops. No measured-price claim, smaller floor, fallback inventory, repeated stage or production/evaluation work.',

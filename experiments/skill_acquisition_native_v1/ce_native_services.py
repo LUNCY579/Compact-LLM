@@ -188,6 +188,10 @@ class StableDispatcher:
             # between and after Q stages; no caller-selected owner flags.
             target = self.bootstrap if kind in ('supervisor_lease','supervisor_lease_acquire','supervisor_lease_release','worker_os_binding','worker_handle_close','worker_handle_duplicate') else (
                 self.ledger if self.ledger is not None else self.bootstrap)
+            if kind in ('resource_probe', 'resource_cuda_probe') and self.ledger is not None:
+                if getattr(self.ledger, 'scope_role', None) == 'qualification_only' and (
+                        getattr(self.ledger, 'active', None) is None or getattr(self.ledger, 'worker_open', True) is False):
+                    target = self.bootstrap
             self.owners[operation_id] = (kind, target)
         else:
             require(operation_id in self.owners and self.owners[operation_id][0] == kind,
@@ -195,6 +199,16 @@ class StableDispatcher:
             target = self.owners[operation_id][1]
         return target.operation(kind, phase, operation_id=operation_id, **fields)
     operation = __call__
+    def resource_evidence(self, identifier):
+        require(identifier in self.owners, 'known physically reserved resource operation')
+        kind, owner = self.owners[identifier]
+        require(kind in ('resource_probe', 'resource_cuda_probe'), 'resource linkage cannot borrow another operation')
+        op = owner.operations[identifier]
+        require(op['phase'] == 'returned' and type(op.get('returned_seq')) is int, 'returned resource operation required')
+        row = owner.events[op['returned_seq']]
+        return {'operation_id': identifier, 'kind': kind, 'phase': op['phase'],
+            'owner_schema': owner.snapshot()['schema'], 'owner_binding_sha256': getattr(owner, 'binding_sha256', None),
+            'journal_path': str(owner.path), 'returned_seq': op['returned_seq'], 'returned_event_sha256': row['sha256']}
     def snapshot(self): return (self.ledger if self.ledger is not None else self.bootstrap).snapshot()
 
 
@@ -203,6 +217,7 @@ class NativeResourceGate:
     def __init__(self, spec, bootstrap):
         self.spec, self.bootstrap, self.framework = copy.deepcopy(spec), bootstrap, None
         self.supervisor = None
+        self.samples, self.recorder = [], None
         require(type(spec.get('limits')) is dict and type(spec.get('resource_probe')) is dict
                 and type(spec.get('host_transient_bytes')) is dict
                 and all(type(value) is int and value >= 0 for value in spec['host_transient_bytes'].values()), 'explicit resource limits/probe/transients')
@@ -223,32 +238,33 @@ class NativeResourceGate:
     def _sample(self, *, launch=False, stage=None):
         if self.supervisor is not None: self.supervisor.assert_parent_use()
         from .ce_resource_evidence import readonly_sample, enforce
-        sample = readonly_sample(self.spec['resource_probe'], self.bootstrap)
+        label = 'launch' if launch else stage
+        require(type(label) is str and label, 'explicit controller resource barrier label')
         limits = copy.deepcopy(self.spec['limits'])
         if stage is not None:
             require(stage in self.spec['host_transient_bytes'], 'unpriced service host transient: ' + stage)
             limits['ongoing_host_gib'] += self.spec['host_transient_bytes'][stage] / 1024 ** 3
-        # is_initialized does not initialize CUDA. Loader.configure remains the
-        # sole owner; OS/NVIDIA evidence supplies the earlier resource barrier.
-        if self.framework is not None and self.framework.cuda.is_initialized():
-            identifier, started = uuid.uuid4().hex, time.perf_counter()
-            self.bootstrap.operation('resource_cuda_probe', 'started', operation_id=identifier)
-            try:
-                free, total = self.framework.cuda.mem_get_info(0)
-                sample.update(cuda_free_bytes=int(free), cuda_total_bytes=int(total),
-                              cuda_peak_reserved_bytes=int(self.framework.cuda.max_memory_reserved(0)))
-            except BaseException as error:
-                try: self.bootstrap.operation('resource_cuda_probe', 'failed', operation_id=identifier, error=str(error)[:1000])
-                except BaseException as record_error:
-                    error.resource_accounting_failure = {'type': type(record_error).__name__, 'message': str(record_error)[:1000]}
-                    raise error from record_error
-                raise
-            self.bootstrap.operation('resource_cuda_probe', 'returned', operation_id=identifier, wall_s=time.perf_counter() - started)
+        if self.recorder is not None:
+            self.recorder.framework = self.framework
+            sample = self.recorder.sample(label)
+        else:
+            sample = readonly_sample(self.spec['resource_probe'], self.bootstrap, barrier=label)
+            sample['stage'] = label
+            evidence = getattr(self.bootstrap, 'resource_evidence', None)
+            if callable(evidence): sample['operation_links'] = [evidence(sample['resource_probe_operation'])]
+            self.samples.append(copy.deepcopy(sample))
         return enforce(sample, limits, launch=launch)
     def launch(self):
         return self._sample(launch=True)
     def __call__(self, stage):
         return self._sample(stage=stage)
+    def bind_recorder(self, recorder):
+        from .ce_resource_evidence import NativeResourceRecorder
+        require(type(recorder) is NativeResourceRecorder and self.recorder is None
+                and recorder.operation is self.bootstrap and recorder.spec == self.spec['resource_probe']
+                and recorder.samples is self.samples, 'exact one shared resource recorder/spec/dispatcher')
+        self.recorder = recorder
+        return recorder
 
 
 class NativeControllerServices:
@@ -259,12 +275,15 @@ class NativeControllerServices:
                 and type(spec.get('resource')) is dict and type(spec.get('role_descriptors')) is dict, 'complete frozen service specification')
         self.request, self.spec, self.permit = copy.deepcopy(request), copy.deepcopy(spec), service_permit
         prepay = resolve_role(spec['role_descriptors'].get('bootstrap_constructor_prepayment'), spec.get('approved_code_sha256', {}))
-        prepayment = prepay(request, spec)
+        prepayment = prepay(request, spec, service_permit)
+        self.constructor_prepayment = prepayment
         self.bootstrap = BootstrapLedger(spec['bootstrap'], digest(controller.request_preimage(request)), prepayment=prepayment)
         self.operation = StableDispatcher(self.bootstrap)
-        self.gate = NativeResourceGate(spec['resource'], self.bootstrap)
+        self.operation.service_owner = self
+        self.gate = NativeResourceGate(spec['resource'], self.operation)
         self.context, self.worker_handle, self.lease_token = None, None, None
         self.supervisor_lease = self.bound_backend = None
+        self.resource_recorder = None
     def _admit(self): _admit(self.permit, self.request, self.spec)
     def _role(self, name, context=None):
         self._admit(); descriptor = self.spec['role_descriptors'].get(name)
@@ -287,6 +306,12 @@ class NativeControllerServices:
         return self.bootstrap.snapshot()
     def admit_request(self, request):
         self._admit(); require(request == self.request, 'service request changed')
+        if self.context is not None:
+            # The owned entry observes this same worker before its ready RPC.
+            # Controller entry reuses that frozen admission after refreshing
+            # the retained actual handle; it cannot replace request or context.
+            self.verify_worker(self.context)
+            return self.context
         if request['phase'] != 'qualification':
             raise MissingServiceRole('separate raw production-scope/qualification-result verifier remains unimplemented')
         bootstrap_outer = self._role('bootstrap_outer')(request, self.operation, self.spec)
@@ -416,6 +441,16 @@ class NativeControllerServices:
         try: yield
         finally: timer.cancel()
     def guard(self, context, stage): self._admit(); return self.gate(stage)
+    def bind_resource_recorder(self, context, permit):
+        self._admit(); require(context is self.context and self.resource_recorder is None, 'one complete admitted resource context')
+        authority.require_execution_permit(permit, context, 'resource_io_measurement', operation=self.operation, gate=self.gate)
+        from .ce_resource_evidence import NativeResourceRecorder
+        recorder = NativeResourceRecorder(context, permit, self.operation, samples=self.gate.samples)
+        self.resource_recorder = self.gate.bind_recorder(recorder)
+        return self.resource_recorder
+    def resource_barrier(self, context, barrier):
+        self._admit(); require(context is self.context and self.resource_recorder is not None, 'bound native recorder before explicit barrier')
+        return self.gate(barrier)
     def open_journal(self, context, prepared, proof, resume, reason):
         self._admit()
         return self._role('native_journal', context)(context, prepared, proof, resume, reason, self.operation, self.gate)

@@ -140,6 +140,7 @@ def resource_adapter(context, permit, prepared, backend, accounting, proof, bind
             and spec['reducer_work_bytes_upper'] >= 4 * spec['json_bytes_upper']
             and type(spec.get('owned_directory')) is str and Path(spec['owned_directory']).is_absolute(), 'resource artifact size/owner declared')
     recorder.framework = backend.torch
+    recorder.sample('final')
     recorder.sample('resource_io_measurement')
     maximum = spec['json_bytes_upper']
     with update._span(backend.operation, 'qualification_reducer_overhead', {

@@ -248,6 +248,7 @@ class NativeQualificationExecutor:
     def _runtime(self):
         observed = self.backend.load(self.context, self.prepared, self.observer)
         self._cuda_ready = True
+        self.gate('after_runtime')
         reference = self._write_json('runtime_anchor', {'observations': observed,
             'identity': self.backend.identity, 'inventory': self.backend.inventory, 'worker_proof': self.proof}, 'runtime_anchor')
         return observed, [reference]
@@ -383,6 +384,7 @@ class NativeQualificationExecutor:
             rows = list(self._rows(ids))
             result = self.backend.update(rows, self.accounting)
             self.accounting.commit_boundary(result)
+            self.gate('after_update')
             results.append(result)
             clipping = self.accounting.operation_evidence(result['clipping_operation']['operation_id'])
             optimizer = self.accounting.operation_evidence(result['optimizer_operation']['operation_id'])
@@ -401,6 +403,7 @@ class NativeQualificationExecutor:
 
     def _delta(self):
         donor = self.backend.qualification_delta(self.context, self.accounting)
+        self.gate('after_delta')
         roundtrip = donor['roundtrip']
         observed = {'own_start_sha256': self.context['bindings']['anchors']['own_start_sha256'],
             'common_reference_sha256': self.context['bindings']['anchors']['common_anchor_sha256'],
@@ -420,6 +423,7 @@ class NativeQualificationExecutor:
                          self.proof, self._binding())
         require(type(result) is dict and type(result.get('raw_artifacts')) is list and result['raw_artifacts']
                 and type(result.get('observations')) is dict, 'retained actual service artifacts required')
+        if stage == 'checkpoint_resume': self.gate('after_checkpoint')
         # These callbacks need source-owned process/resource implementations and
         # independent artifact verification. The current empty registries make
         # flags/fixture callbacks unusable as substitutes for measured evidence.

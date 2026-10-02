@@ -153,6 +153,21 @@ class Tests(unittest.TestCase):
         self.assertFalse(derived['checkpoint_child_observed_lineage']['child_proof']['execution_verified'])
         self.assertTrue(derived['checkpoint_child_accounting']['specification']['owned_directory'].endswith('uninterrupted\\ledger'))
 
+    def test_child_accounting_keeps_actual_runtime_setup_refs_in_derived_owner(self):
+        common = copy.deepcopy(self.context)
+        scope = common['bindings']['scope']['qualifier_accounting']
+        scope['ingestion_bootstrap_ref'] = scope['outer_setup_reservation_ref'] = None
+        common['qualifier_setup_refs'] = {name: {'path': str(self.root / (name + '.json')), 'sha256': str(index) * 64, 'bytes': 12}
+            for index, name in enumerate(('ingestion_bootstrap_ref', 'outer_setup_reservation_ref'), 1)}
+        frozen = copy.deepcopy(common)
+        derived = local.derive_context(common, self.request, self.reference, self.proof, self.delegation, self.delegation_ref)
+        spec = derived['checkpoint_child_accounting']['specification']
+        self.assertEqual(common, frozen)
+        self.assertEqual(derived['bindings']['scope'], frozen['bindings']['scope'])
+        self.assertEqual(derived['qualifier_setup_refs'], common['qualifier_setup_refs'])
+        for name, reference in common['qualifier_setup_refs'].items(): self.assertEqual(spec[name], reference)
+        self.assertEqual(derived['checkpoint_child_accounting']['owner']['accounting_spec_sha256'], local.digest(spec))
+
     def test_foreign_worker_source_parent_rawrequest_or_delegation_ref_denied(self):
         for change in ('worker', 'source', 'parent', 'request', 'ref', 'path'):
             context, request, reference, proof, delegation, delegation_ref = copy.deepcopy(

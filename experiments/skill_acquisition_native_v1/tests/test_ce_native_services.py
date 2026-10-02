@@ -239,6 +239,63 @@ class NativeServicesTests(unittest.TestCase):
         with patch.object(r, 'readonly_sample', return_value=sample): gate('configured_runtime')
         self.assertEqual(events, [])
 
+    def test_resource_samples_keep_bootstrap_active_q_and_between_stage_owners_with_real_guards(self):
+        from . import test_ce_qualification_accounting as fixture
+        from experiments.skill_acquisition_native_v1 import ce_resource_evidence as resource
+        from experiments.skill_acquisition_native_v1 import ce_qualification_accounting as accounting
+        with tempfile.TemporaryDirectory(prefix='resource-owner-pure-') as directory:
+            root = Path(directory); context, proof, receipt = fixture.fixture(root)
+            ledger = accounting.QualificationAccounting(context, None, proof, receipt)
+            bootstrap = bootstrap_spec(root / 'service-bootstrap')
+            profile = {'read_bytes_upper': 101, 'write_bytes_upper': 0, 'identity_hash_attempts_upper': 1,
+                'identity_hash_bytes_upper': 101, 'wall_s_upper': 10}
+            bootstrap['operation_profiles']['resource_probe'] = profile
+            bootstrap['caps'].update(read_bytes=10**8, write_bytes=10**8, hash_attempts=10**6,
+                hash_bytes=10**8, metadata_bytes=10**8, operation_attempts=10000, wall_seconds=10000)
+            owner = s.BootstrapLedger(bootstrap, context['request_sha256'], synthetic_fixture=True)
+            dispatch = s.StableDispatcher(owner)
+            gate_spec = resource_spec(); gate_spec['host_transient_bytes'].update(before_framework=0, after_update=0, final=0)
+            gate = s.NativeResourceGate(gate_spec, dispatch)
+            serial = []
+            def observed(spec, operation, *, barrier=None):
+                identifier = 'sample-' + str(len(serial)); serial.append(identifier)
+                operation('resource_probe', 'started', operation_id=identifier, barrier=barrier, **spec['probe_bounds'])
+                value = {'schema': resource.SCHEMA, 'barrier': barrier, 'resource_probe_operation': identifier,
+                    'host_free_bytes': 8 * resource.GIB, 'worker_peak_working_set_bytes': resource.GIB,
+                    'gpu_free_bytes': resource.GIB, 'disk_free_bytes': 64 * resource.GIB, 'native_qualified': False,
+                    'classification': 'synthetic source sample; no OS measurement'}
+                operation('resource_probe', 'returned', operation_id=identifier, barrier=barrier, wall_s=0,
+                    bytes_read=0, bytes_written=0, identity_hash_attempts_actual=0, identity_hash_bytes_actual=0,
+                    resource_observation=value)
+                return value
+            with patch.object(resource, 'readonly_sample', side_effect=observed):
+                gate.launch(); gate('before_framework')
+                recorder = resource.NativeResourceRecorder.fixture_recorder(gate_spec['resource_probe'], dispatch, gate.samples)
+                gate.recorder = recorder  # explicit non-native composition fixture
+                dispatch.attach_qualification_accounting(ledger)
+                gate('configured_runtime')  # between stages: stays bootstrap
+                ledger.begin_stage('runtime_anchor', 'fixture/runtime')
+                gate('after_update')
+                raw_path = root / 'fixture-result.json'; raw_path.write_bytes(b'{"fixture":true}\n')
+                import hashlib
+                ledger.finish_stage([{'path': str(raw_path), 'sha256': hashlib.sha256(raw_path.read_bytes()).hexdigest(), 'bytes': raw_path.stat().st_size}])
+                gate('final'); ledger.end(); gate('final')
+            self.assertIs(recorder.samples, gate.samples)
+            targets = [dispatch.owners[identifier][1] for identifier in serial]
+            self.assertEqual(targets, [owner, owner, owner, ledger, owner, owner])
+            self.assertEqual([row['barrier'] for row in recorder.samples],
+                ['launch', 'before_framework', 'configured_runtime', 'after_update', 'final', 'final'])
+            self.assertEqual(recorder.samples[3]['operation_links'][0]['owner_schema'], accounting.SCHEMA)
+            self.assertEqual(recorder.samples[-1]['operation_links'][0]['owner_schema'], s.BOOTSTRAP)
+            self.assertNotIn(serial[-1], ledger.operations)
+            self.assertEqual(ledger.operations[serial[3]]['phase'], 'returned')
+
+    def test_missing_barrier_transient_refuses_before_resource_query(self):
+        from experiments.skill_acquisition_native_v1 import ce_resource_evidence as resource
+        gate = s.NativeResourceGate(resource_spec(), Trap())
+        with patch.object(resource, 'readonly_sample', side_effect=AssertionError('unpriced barrier queried')):
+            with self.assertRaisesRegex(ValueError, 'unpriced service host transient'): gate('missing')
+
     def test_resource_barriers_cannot_be_lowered_before_sampling(self):
         changes = {'launch_host_gib': 5, 'ongoing_host_gib': .5, 'max_worker_gib': 5,
                    'gpu_free_gib': .4, 'allocator_fraction': .8, 'reserved_fraction_limit': 1,

@@ -199,6 +199,13 @@ class AdapterControls(unittest.TestCase):
             self.assertEqual(events[-1][2]['bytes_read'],len(raw)); self.assertEqual(events[-1][2]['bytes_written'],len(raw))
             self.assertEqual(events[-1][2]['identity_hash_attempts_actual'],2)
 
+    def test_final_barrier_is_sampled_before_resource_reduction_capture(self):
+        with tempfile.TemporaryDirectory() as temp:
+            args = isolated_writer(Path(temp)); labels = []
+            args[0]['native_services']['resource_recorder'].sample = labels.append
+            with patch.object(a, 'require_execution_permit', return_value=None): q.resource_adapter(*args)
+            self.assertEqual(labels, ['final', 'resource_io_measurement'])
+
     def test_denied_publication_precedes_all_filesystem_work(self):
         with tempfile.TemporaryDirectory() as temp:
             args=isolated_writer(Path(temp)); args[3].operation.denied_kind='qualification_artifact'

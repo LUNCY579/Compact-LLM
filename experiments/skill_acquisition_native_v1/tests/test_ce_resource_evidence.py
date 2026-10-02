@@ -92,4 +92,19 @@ class Controls(unittest.TestCase):
         self.assertEqual(r.gpu_free_lower(exact),r.GIB//4)
         with self.assertRaisesRegex(ValueError, 'GPU free'): r.enforce(exact,limits())
 
+    def test_recorder_never_initializes_or_queries_uninitialized_cuda_and_keeps_labels(self):
+        from types import SimpleNamespace
+        calls = []
+        def forbidden(*args): raise AssertionError('uninitialized CUDA query')
+        fake = SimpleNamespace(cuda=SimpleNamespace(is_initialized=lambda: False, mem_get_info=forbidden,
+            device_count=forbidden, memory_reserved=forbidden, max_memory_reserved=forbidden, init=forbidden))
+        operation = lambda *args, **kwargs: calls.append(args)
+        recorder = r.NativeResourceRecorder.fixture_recorder(spec(), operation)
+        value = dict(sample(), barrier='before_model', resource_probe_operation='synthetic-returned-1')
+        with patch.dict(sys.modules, {'torch': fake}), patch.object(r, 'readonly_sample', return_value=value) as observed:
+            recorded = recorder.sample('before_model')
+        self.assertEqual(recorded['stage'], 'before_model')
+        self.assertNotIn('cuda_free_bytes', recorded); self.assertEqual(calls, [])
+        observed.assert_called_once_with(recorder.spec, operation, barrier='before_model')
+
 if __name__=='__main__': unittest.main()

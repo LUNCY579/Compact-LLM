@@ -122,15 +122,16 @@ def _failed(operation, identifier, start, error, **fields):
         raise error from accounting
 
 
-def readonly_sample(spec, operation):
+def readonly_sample(spec, operation, *, barrier=None):
     """Current-process-only OS observation; caller must retain prepayments.
 
     This also supports an explicitly non-native metadata probe. It imports no
     framework, initializes no CUDA and starts only the pinned query utility.
     """
     validate_spec(spec); require(callable(operation), 'resource pre-reservation observer required')
+    require(barrier is None or type(barrier) is str and 0 < len(barrier) <= 128, 'bounded explicit resource barrier label')
     identifier, start = uuid.uuid4().hex, time.monotonic()
-    operation('resource_probe', 'started', operation_id=identifier, **spec['probe_bounds'])
+    operation('resource_probe', 'started', operation_id=identifier, barrier=barrier, **spec['probe_bounds'])
     try:
         require(os.name == 'nt' and os.environ.get('CUDA_VISIBLE_DEVICES') == spec['cuda_visible_devices'],
                 'Windows and declared GPU visibility required')
@@ -150,14 +151,15 @@ def readonly_sample(spec, operation):
         root = Path(spec['output_root'])
         while not root.exists():
             parent = root.parent; require(parent != root, 'output volume unavailable'); root = parent
-        sample.update(schema=SCHEMA, perf=time.monotonic(), disk_free_bytes=shutil.disk_usage(root).free,
+        sample.update(schema=SCHEMA, perf=time.monotonic(), barrier=barrier, resource_probe_operation=identifier,
+            disk_free_bytes=shutil.disk_usage(root).free,
             output_volume_path=str(root.resolve()), native_qualified=False,
             classification='actual read-only current-process resource sample; no model/native fit proof')
         elapsed = time.monotonic() - start
         require(elapsed <= spec['probe_bounds']['wall_s_upper'], 'resource probe wall upper exceeded')
     except BaseException as error:
         _failed(operation, identifier, start, error); raise
-    operation('resource_probe', 'returned', operation_id=identifier, wall_s=elapsed,
+    operation('resource_probe', 'returned', operation_id=identifier, barrier=barrier, wall_s=elapsed,
               bytes_read=read, bytes_written=0, identity_hash_attempts_actual=1, identity_hash_bytes_actual=read,
               io_observation_scope='explicit Python file IO; external query utility OS IO is unmeasured',
               resource_observation=sample)
@@ -211,30 +213,55 @@ def gpu_free_lower(sample):
 
 class NativeResourceRecorder:
     """Permit-bound actual sampling; no native authority or service registry."""
-    def __init__(self, context, permit, operation):
+    def __init__(self, context, permit, operation, *, samples=None):
         authority.require_execution_permit(permit, context, 'resource_io_measurement', operation=operation)
         spec = context['bindings']['scope'].get('qualifier_resources')
         validate_spec(spec)
         self.context, self.permit, self.operation, self.spec = context, permit, operation, spec
-        self.framework = None; self.samples = []
+        require(samples is None or type(samples) is list, 'actual shared resource sample list')
+        self.framework = None; self.samples = [] if samples is None else samples
+
+    @classmethod
+    def fixture_recorder(cls, spec, operation, samples=None):
+        validate_spec(spec); require(callable(operation) and (samples is None or type(samples) is list), 'explicit pure recorder fixture')
+        value = object.__new__(_FixtureResourceRecorder)
+        value.context, value.permit, value.operation, value.spec = None, None, operation, copy.deepcopy(spec)
+        value.framework, value.samples = None, [] if samples is None else samples
+        return value
+
+    def _admit(self):
+        authority.require_execution_permit(self.permit, self.context, 'resource_io_measurement', operation=self.operation)
+        require(self.spec == self.context['bindings']['scope']['qualifier_resources'], 'frozen resource specification changed')
+
+    def retain(self, sample):
+        require(type(sample) is dict and type(sample.get('barrier')) is str and sample.get('resource_probe_operation'),
+                'actual labeled returned resource probe required')
+        evidence = getattr(self.operation, 'resource_evidence', None)
+        if callable(evidence):
+            sample['operation_links'] = [evidence(sample[key]) for key in ('resource_probe_operation', 'resource_cuda_operation') if key in sample]
+        self.samples.append(copy.deepcopy(sample))
+        return copy.deepcopy(sample)
 
     def sample(self, stage):
-        authority.require_execution_permit(self.permit, self.context, 'resource_io_measurement', operation=self.operation)
-        sample = readonly_sample(self.spec, self.operation)
+        self._admit()
+        require(type(stage) is str and 0 < len(stage) <= 128, 'explicit resource barrier label')
+        sample = readonly_sample(self.spec, self.operation, barrier=stage)
         sample['stage'] = stage
-        if self.framework is not None and self.framework.cuda.is_initialized():
-            require(self.framework is sys.modules.get('torch'), 'actual already pinned framework module required')
+        framework = self.framework if self.framework is not None else sys.modules.get('torch')
+        require(framework is None or framework is sys.modules.get('torch'), 'actual already pinned framework module required')
+        if framework is not None and framework.cuda.is_initialized():
+            require(framework is sys.modules.get('torch'), 'actual already pinned framework module required')
             bounds = self.spec.get('cuda_probe_bounds')
             require(type(bounds) is dict and set(bounds) == {'wall_s_upper'}
                     and _number(bounds['wall_s_upper']) and bounds['wall_s_upper'] > 0, 'explicit CUDA observation wall reservation')
             identifier, start = uuid.uuid4().hex, time.monotonic()
-            self.operation('resource_cuda_probe', 'started', operation_id=identifier, **bounds)
+            self.operation('resource_cuda_probe', 'started', operation_id=identifier, barrier=stage, **bounds)
             try:
-                free, total = self.framework.cuda.mem_get_info(0)
-                require(self.framework.cuda.device_count() == 1, 'qualified single-visible-GPU runtime required')
+                free, total = framework.cuda.mem_get_info(0)
+                require(framework.cuda.device_count() == 1, 'qualified single-visible-GPU runtime required')
                 sample.update(cuda_free_bytes=free, cuda_total_bytes=total,
-                    cuda_reserved_bytes=self.framework.cuda.memory_reserved(0),
-                    cuda_peak_reserved_bytes=self.framework.cuda.max_memory_reserved(0))
+                    cuda_reserved_bytes=framework.cuda.memory_reserved(0),
+                    cuda_peak_reserved_bytes=framework.cuda.max_memory_reserved(0), resource_cuda_operation=identifier)
                 elapsed = time.monotonic() - start
                 require(elapsed <= bounds['wall_s_upper'], 'CUDA observation wall reservation exceeded')
             except BaseException as error:
@@ -243,15 +270,14 @@ class NativeResourceRecorder:
                     error.accounting_failure = {'type': type(accounting).__name__, 'message': str(accounting)[:1000]}
                     raise error from accounting
                 raise
-            self.operation('resource_cuda_probe', 'returned', operation_id=identifier, wall_s=elapsed,
+            self.operation('resource_cuda_probe', 'returned', operation_id=identifier, barrier=stage, wall_s=elapsed,
                            bytes_read=0, bytes_written=0, identity_hash_attempts_actual=0,
                            identity_hash_bytes_actual=0, io_observation_scope='explicit Python file IO and hashes only',
                            resource_observation=sample)
-        self.samples.append(sample)
-        return copy.deepcopy(sample)
+        return self.retain(sample)
 
     def observations(self):
-        authority.require_execution_permit(self.permit, self.context, 'resource_io_measurement', operation=self.operation)
+        self._admit()
         require(self.samples and any('cuda_peak_reserved_bytes' in sample for sample in self.samples), 'actual CUDA-phase resource samples required')
         # Callback IO/timing/worker verification and raw publication come from
         # the surrounding service. Samples alone cannot satisfy native PASS.
@@ -259,4 +285,11 @@ class NativeResourceRecorder:
             'peak_reserved_gib': max(s.get('cuda_peak_reserved_bytes', 0) for s in self.samples) / GIB,
             'min_sampled_gpu_free_gib': min(gpu_free_lower(s) for s in self.samples) / GIB,
             'gpu_observation_scope': 'declared barrier-sampled lower bounds; no continuous minimum assertion',
+            'sample_operation_links': [copy.deepcopy(s.get('operation_links', [])) for s in self.samples],
             'native_qualified': False, 'execution_verified': False}
+
+
+class _FixtureResourceRecorder(NativeResourceRecorder):
+    """Pure controls only; strict native composition rejects this subclass."""
+    def _admit(self):
+        require(self.context is None and self.permit is None, 'explicit non-native resource recorder fixture')

@@ -182,7 +182,7 @@ def derive_context(common, request, reference, proof, delegation, delegation_ref
         checkpoint_child_lease_delegation=copy.deepcopy(delegation), checkpoint_child_delegation_ref=copy.deepcopy(delegation_ref),
         worker_proof_sha256=digest(proof), worker_identity_sha256=proof['worker_identity_sha256'])
     root = expected_path.parent; scope = context['bindings']['scope']
-    spec = dict(scope['qualifier_accounting'], owned_directory=str(root / 'ledger'))
+    spec = dict(accounting.accounting_specification(common), owned_directory=str(root / 'ledger'))
     context['checkpoint_child_accounting'] = {'specification': spec, 'owner': {
         'accounting_spec_sha256': digest(spec), 'prepared_receipt_sha256': spec['ingestion_receipt_sha256']}}
     context['checkpoint_child_bootstrap'] = dict(scope['qualifier_bootstrap'], owned_directory=str(root / 'bootstrap'))
@@ -280,6 +280,9 @@ class BoundedRPC:
 
 class LocalCheckpointIssuer:
     """Source singleton entry. It is intentionally absent from all registries."""
+    def __init__(self):
+        self._active_entry = self._active_context = self._active_proof = None
+        self._active_request = self._predecessor_readback = None
     def run_frozen_request(self, request_path, handler_type, command_validator):
         require(any(self is value for value in child._REGISTERED_LOCAL_ISSUERS)
                 and _SOURCE_ENTRY_PROVIDER is not None, 'source-owned checkpoint entry provider remains closed')
@@ -388,13 +391,20 @@ class LocalCheckpointIssuer:
                     and spec['operation_bounds']['identity_hash_bytes_upper'] >= context['bindings']['scope']['checkpoint_lease']['lock_bytes_upper'],
                     'full current supervisor lock verification prepayment')
             _paid(bootstrap_operation, spec['operation_bounds'], 'input_io', check_lock)
+            require(self._active_context is None, 'one source-owned active checkpoint child issuance')
+            self._active_entry, self._active_context = entry, context
+            self._active_proof, self._active_request = copy.deepcopy(proof), copy.deepcopy(request)
+            context['native_services'] = {'local_checkpoint_issuer': self, 'operation': operation, 'gate': gate}
             permit = _paid(bootstrap_operation, spec['operation_bounds'], 'input_io', lambda:
                 authority.NativeExecutionPermit(context, self, _AUTHORITY_VERIFIER, operation=operation, gate=gate))
             services = _paid(bootstrap_operation, spec['operation_bounds'], 'input_io', lambda:
                 self._services(entry, context, permit, proof, request))
             handler = handler_type(context, permit, entry['observation_permit'], handle, entry['prepared'], services)
             return handler.run(request, command)
-        return pipe.serve(request, run)
+        try: return pipe.serve(request, run)
+        finally:
+            self._active_entry = self._active_context = self._active_proof = None
+            self._active_request = self._predecessor_readback = None
 
     def _services(self, entry, context, permit, proof, request):
         from . import ce_bootstrap_accounting as boot, ce_qualification_accounting as accounting

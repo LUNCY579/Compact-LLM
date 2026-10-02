@@ -47,8 +47,24 @@ def checkpoint_child_declaration(payload):
 
 
 def accounting_specification(context):
-    """Pure exact child-owner derivation; never changes a frozen common scope."""
-    scope = context['bindings']['scope']; common = scope['qualifier_accounting']
+    """Derive runtime setup refs and child owner; raw common scope is unchanged.
+
+    Source adapters independently paid/read these actual capsules before the
+    complete context permit was frozen. Their refs belong at top level to avoid
+    a scopeSHA -> artifactSHA -> scopeSHA dependency; derived owner hashes bind
+    the resulting full accounting spec. This pure accessor grants no authority.
+    """
+    scope = context['bindings']['scope']; common = _clone(scope['qualifier_accounting'])
+    setup = context.get('qualifier_setup_refs')
+    if setup is not None:
+        keys = {'ingestion_bootstrap_ref', 'outer_setup_reservation_ref'}
+        require(type(setup) is dict and set(setup) == keys, 'exact two derived source setup refs')
+        for key, value in setup.items():
+            require(key not in common or common[key] is None, 'runtime setup may replace only unmaterialized interface')
+            require(type(value) is dict and set(value) == {'path', 'sha256', 'bytes'}
+                    and type(value['path']) is str and Path(value['path']).is_absolute()
+                    and q.hex64(value['sha256']) and q.integer(value['bytes'], 1), 'exact actual paid source setup capsule ref')
+            common[key] = _clone(value)
     child = context.get('checkpoint_child_accounting')
     if child is None: return _clone(common)
     require(type(child) is dict and set(child) == {'specification', 'owner'}, 'exact child accounting derivation')
@@ -220,7 +236,7 @@ class QualificationAccounting:
             if bootstrap_verifier is None: bootstrap_verifier = services.get('bootstrap_verifier')
             boot.require_registered_verifier(bootstrap_verifier)
             derived = context.get('checkpoint_child_accounting') if type(context) is dict else None
-            owner = derived.get('owner') if type(derived) is dict else context.get('bindings', {}).get('scope', {}).get('qualifier_accounting_owner')
+            owner = derived.get('owner') if type(derived) is dict else context.get('qualifier_accounting_owner', context.get('bindings', {}).get('scope', {}).get('qualifier_accounting_owner'))
             boot.verify_prepayment(bootstrap_handle, context, proof, owner, verifier=bootstrap_verifier)
             require(clock is None, 'native qualification monotonic clock cannot be injected')
         self.clock = time.monotonic if clock is None else clock

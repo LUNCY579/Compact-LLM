@@ -398,7 +398,9 @@ class CheckpointProcesses:
         with self.reader._overhead('checkpoint_launch_scope_derivation', work_bytes=32 * raw.MAX_JSON,
                 hash_attempts=8, hash_bytes=32 * raw.MAX_JSON):
             spec = child_launch_spec(context, branch, reference, self.proof)
-            launch_permit = launcher.NativeLaunchPermit(spec, self.launch_issuer, self.launch_verifier, self.operation)
+            require(self.launch_issuer is CheckpointProcesses, 'fixed source checkpoint launch issuer class marker')
+            self._active_launch_spec = copy.deepcopy(spec)
+            launch_permit = launcher.NativeLaunchPermit(spec, self, self.launch_verifier, self.operation)
         # Existing launch authority/observation-factory registration checks run
         # before any Popen call; neither raw JSON nor this class enables them.
         owned = launcher.launch_native(spec, launch_permit, self.operation)

@@ -101,6 +101,25 @@ class ClosedQualificationTests(unittest.TestCase):
         self.assertEqual(calls, ['cuda:0'])
         self.assertNotIn('torch', sys.modules)
 
+    def test_runtime_sample_follows_load_and_failure_prevents_success_artifact(self):
+        executor = object.__new__(q.NativeQualificationExecutor)
+        executor.context, executor.prepared, executor.observer, executor.proof = {}, object(), object(), {}
+        events = []
+        executor.backend = SimpleNamespace(load=lambda *args: events.append('loaded') or {'actual': 'fixture'},
+                                          identity={}, inventory=[])
+        executor._cuda_ready = False
+        executor._write_json = lambda *args: events.append('artifact') or {'role': 'fixture'}
+        executor.gate = lambda stage: events.append(stage)
+        executor._runtime()
+        self.assertEqual(events, ['loaded', 'after_runtime', 'artifact'])
+        events.clear()
+        def refused(stage):
+            events.append(stage)
+            raise RuntimeError('post-load resource floor')
+        executor.gate = refused
+        with self.assertRaisesRegex(RuntimeError, 'resource floor'): executor._runtime()
+        self.assertEqual(events, ['loaded', 'after_runtime'])
+
 
 class QualificationDeclarationTests(unittest.TestCase):
     def test_full_ninety_witnesses_and_separate_eight_gradient_rows_are_bound(self):

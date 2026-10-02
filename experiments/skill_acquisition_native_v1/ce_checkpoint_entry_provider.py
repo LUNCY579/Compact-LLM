@@ -358,6 +358,10 @@ def parent_observation_spec(configuration, retained_proof):
 
 
 class CheckpointEntryProvider:
+    def __init__(self):
+        self._active_configuration = self._active_runtime = self._active_payment = None
+        self._metadata_specs = {}
+
     def open_prepaid_entry(self, request_path):
         # Source registration and metadata authority are checked before even
         # inspecting a supplied path or a frozen configuration object.
@@ -367,12 +371,15 @@ class CheckpointEntryProvider:
                 and any(_METADATA_VERIFIER is value for value in worker._REGISTERED_METADATA_VERIFIERS),
                 'actual checkpoint metadata service/OS issuer remains unregistered')
         configuration = copy.deepcopy(validate_configuration(_SOURCE_CONFIGURATION))
+        require(self._active_runtime is None and self._active_configuration is None, 'one fixed child provider metadata entry')
+        self._active_configuration = copy.deepcopy(configuration)
         service_permit = services.ControllerServicePermit(configuration['controller_request'], configuration['service_spec'],
                                                          _SERVICE_ISSUER, _SERVICE_VERIFIER)
         # Existing constructor role owns permanent prepayment before mkdir,
         # initial journal/hash, clocks or any argv/OS/environment inspection.
         runtime = services.NativeControllerServices(configuration['controller_request'], service_permit, configuration['service_spec'])
         payment = MetadataEntryPayment(runtime, configuration)
+        self._active_runtime, self._active_payment = runtime, payment
         return self._open_after_payment(configuration, runtime, payment, request_path)
 
     def _open_after_payment(self, configuration, runtime, payment, request_path):
@@ -386,11 +393,13 @@ class CheckpointEntryProvider:
             request, common = read_static_inputs(configuration, bootstrap_operation)
             verify_environment_and_origins(configuration, request, common, bootstrap_operation)
             observation = current_observation_spec(configuration, runtime.operation)
+            self._metadata_specs[digest(observation)] = copy.deepcopy(observation)
             permit = worker.WorkerObservationPermit(observation, self, _METADATA_VERIFIER, runtime.operation)
             handle = worker.open_worker(observation, permit, runtime.operation); handles.append(handle)
             proof = handle.proof()
             payment.bind_worker(common, handle, permit, runtime.operation)
             parent_spec = parent_observation_spec(configuration, request['lineage_declaration']['parent_proof'])
+            self._metadata_specs[digest(parent_spec)] = copy.deepcopy(parent_spec)
             parent_permit = worker.WorkerObservationPermit(parent_spec, self, _METADATA_VERIFIER, runtime.operation)
             parent = worker.open_worker(parent_spec, parent_permit, runtime.operation); handles.append(parent)
             local.validate_parent_view(parent.proof(), request['lineage_declaration']['parent_proof'])
