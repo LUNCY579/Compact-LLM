@@ -222,7 +222,7 @@ def publication_role(context, donor, journal, service_snapshot, operation):
         references = {}; remaining = maximum
         for name, path, expected in (('donor', donor_path, donor['file_sha256']), ('header', journal.header_path, None), ('journal', journal.path, None)):
             reference = _stream_reference(path, remaining, expected); references[name] = reference; remaining -= reference['bytes']
-        journal.end_invocation('COMPLETED')
+        journal.end_invocation('COMPLETE')
         # End changes the journal: retain the actual ended bytes, not the live
         # prefix SHA read above. The second pass also requires prepaid capacity.
         end_size = journal.path.stat().st_size
