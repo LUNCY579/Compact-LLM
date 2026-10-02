@@ -1,0 +1,30 @@
+{
+  "new_tests": {
+    "tests": "62",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "4.201"
+  },
+  "inherited_subset": {
+    "status": "PASS_ISOLATED_SUBSET",
+    "passed": 3,
+    "failed": 0,
+    "functions": [
+      "test_known_contracting_trajectory",
+      "test_known_oscillating_trajectory",
+      "test_gold_does_not_misuse_keyword_as_exact_answer"
+    ],
+    "audited_git_blob_sha1": {
+      "src/armr/metrics.py": "0f09c20869372272fa78ef4193cf949a32af33db",
+      "tests/test_dynamics_and_gates.py": "ce2ded11bf0e659ff4e4461fa08a70b8e37afe07"
+    },
+    "full_suite_executed": false,
+    "limit": "Original function bodies and metric module; unrelated module imports and gate tests not executed."
+  },
+  "full_inherited_suite": "BLOCKED: complete inherited checkout and Transformers are unavailable; targeted full-module collection exited 2 due missing armr.reporting in the scoped materialization. No passing full-suite claim.",
+  "compileall_exit": 0,
+  "native_model_runs": 0,
+  "training_attempted": false,
+  "causal_diagnostic_guard": "Full-gold optional NLL disabled; no inherited global mutation; generation scores preserved; A5 has its own smoke gate."
+}

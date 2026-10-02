@@ -317,3 +317,30 @@ def test_complete_factorial_compute_ledger_and_no_native_claim(tmp_path):
     assert all(r['scheduler_capture_ratio'] is None for r in summary['headroom'] if not r['adaptive_headroom'])
     assert any(r['status']=='NOT_ENUMERATED_CAP' for r in summary['headroom'])
     with pytest.raises(FileExistsError):run_fixture_experiment(out)
+
+
+def test_generation_only_diagnostic_does_not_read_gold_or_mutate_inherited_module():
+    from types import FunctionType
+    from experiments.rineya_taps_adaptive_recurrence_v1.diagnostics import generation_only_evaluator
+    def body(case):
+        answer = canonical_answer(case)
+        return {"prediction": case["prompt"].upper(), "score": scorer(case), "gold_nll": None if answer is None else answer}
+    calls=[]
+    def gold(case):
+        calls.append("gold"); return case["secret_gold"]
+    original=FunctionType(body.__code__,{"canonical_answer":gold,"scorer":lambda c:c["score"]})
+    class NoGold(dict):
+        def __getitem__(self,key):
+            if key=="secret_gold": raise AssertionError("gold text entered controller diagnostic")
+            return super().__getitem__(key)
+    case=NoGold(prompt="hello",score=1)
+    adapted=generation_only_evaluator(original)
+    assert adapted(case)=={"prediction":"HELLO","score":1,"gold_nll":None}
+    assert calls==[] and original.__globals__["canonical_answer"] is gold
+    assert original({"prompt":"hello","score":1,"secret_gold":"gold"})["gold_nll"]=="gold"
+
+
+def test_generation_only_rejects_changed_inherited_contract():
+    from experiments.rineya_taps_adaptive_recurrence_v1.diagnostics import generation_only_evaluator
+    with pytest.raises(ValueError):generation_only_evaluator(lambda x:x)
+    with pytest.raises(TypeError):generation_only_evaluator(object())

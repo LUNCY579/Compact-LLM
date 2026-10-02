@@ -1,0 +1,23 @@
+{
+  "cuda_lane_qualified": false,
+  "native_runs": 0,
+  "note": "CPU FP32 lane; CUDA absence is reported, not the only blocker.",
+  "reasons": [
+    "Transformers is not installed",
+    "exact local canonical Supa checkpoint is absent/unconfigured",
+    "need 7945689498 free bytes; available 2378915840",
+    "historical ARMR Python 3.11.15 / torch 2.12.1+cu126 runtime not matched",
+    "RuntimeError: missing inherited source tree: src"
+  ],
+  "resources": {
+    "cuda_available": false,
+    "cuda_free_bytes": null,
+    "free_ram_bytes": 2378915840,
+    "python": "3.13.5",
+    "rss_bytes": 261722112,
+    "torch": "2.10.0+cpu",
+    "transformers_installed": false
+  },
+  "status": "BLOCKED",
+  "training_attempted": false
+}

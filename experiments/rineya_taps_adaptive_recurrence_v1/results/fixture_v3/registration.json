@@ -1,0 +1,189 @@
+{
+  "claim_ceiling": "NO_NATIVE_EFFICACY",
+  "config": {
+    "alpha_init": 1.0,
+    "alpha_max": 1.2,
+    "alpha_min": 0.8,
+    "beta": 0.8,
+    "enabled": true,
+    "eps": 1e-12,
+    "fixed_alpha": 1.0,
+    "gamma": 1.5,
+    "normalization_mode": "mean",
+    "random_pool": [],
+    "refresh_interval": 1,
+    "rho": 0.275,
+    "scheduler_mode": "taps",
+    "seed": 17,
+    "warmup_loops": 1
+  },
+  "dev_cases": [
+    {
+      "case_id": "DEV-monotone",
+      "label": [
+        0.0,
+        0.0
+      ],
+      "parent_id": "DEV-parent-monotone",
+      "payload": {
+        "attractor": [
+          0.0,
+          0.0
+        ],
+        "curvature": [
+          0.25,
+          0.25
+        ],
+        "initial": [
+          1.0,
+          0.4
+        ]
+      },
+      "split": "DEV",
+      "task": "monotone"
+    },
+    {
+      "case_id": "DEV-alternating",
+      "label": [
+        0.0,
+        0.0
+      ],
+      "parent_id": "DEV-parent-alternating",
+      "payload": {
+        "attractor": [
+          0.0,
+          0.0
+        ],
+        "curvature": [
+          1.75,
+          1.75
+        ],
+        "initial": [
+          1.0,
+          0.4
+        ]
+      },
+      "split": "DEV",
+      "task": "alternating"
+    },
+    {
+      "case_id": "DEV-two_mode",
+      "label": [
+        0.0,
+        0.0
+      ],
+      "parent_id": "DEV-parent-two_mode",
+      "payload": {
+        "attractor": [
+          0.0,
+          0.0
+        ],
+        "curvature": [
+          0.8333333333333334,
+          1.25
+        ],
+        "initial": [
+          1.0,
+          1.0
+        ]
+      },
+      "split": "DEV",
+      "task": "two_mode"
+    },
+    {
+      "case_id": "DEV-stable_wrong",
+      "label": [
+        0.0,
+        0.0
+      ],
+      "parent_id": "DEV-parent-stable_wrong",
+      "payload": {
+        "attractor": [
+          1.0,
+          1.0
+        ],
+        "curvature": [
+          0.25,
+          0.25
+        ],
+        "initial": [
+          0.8,
+          0.8
+        ]
+      },
+      "split": "DEV",
+      "task": "stable_wrong"
+    },
+    {
+      "case_id": "DEV-zero_gate",
+      "label": [
+        0.0,
+        0.0
+      ],
+      "parent_id": "DEV-parent-zero_gate",
+      "payload": {
+        "attractor": [
+          0.0,
+          0.0
+        ],
+        "curvature": [
+          0.0,
+          0.0
+        ],
+        "initial": [
+          1.0,
+          0.4
+        ]
+      },
+      "split": "DEV",
+      "task": "zero_gate"
+    }
+  ],
+  "evidence_kind": "synthetic_apparatus",
+  "extra_loops": [
+    0,
+    1,
+    2,
+    4
+  ],
+  "grid": [
+    0.8,
+    0.9,
+    1.0,
+    1.1,
+    1.2
+  ],
+  "oracle_cap": 25,
+  "seeds": [
+    17,
+    29
+  ],
+  "success_mse_threshold": 0.02,
+  "test_public_metadata": [
+    {
+      "case_id": "TEST-monotone",
+      "parent_id": "TEST-parent-monotone",
+      "task": "monotone"
+    },
+    {
+      "case_id": "TEST-alternating",
+      "parent_id": "TEST-parent-alternating",
+      "task": "alternating"
+    },
+    {
+      "case_id": "TEST-two_mode",
+      "parent_id": "TEST-parent-two_mode",
+      "task": "two_mode"
+    },
+    {
+      "case_id": "TEST-stable_wrong",
+      "parent_id": "TEST-parent-stable_wrong",
+      "task": "stable_wrong"
+    },
+    {
+      "case_id": "TEST-zero_gate",
+      "parent_id": "TEST-parent-zero_gate",
+      "task": "zero_gate"
+    }
+  ]
+}

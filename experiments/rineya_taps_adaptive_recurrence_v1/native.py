@@ -10,6 +10,7 @@ import sys
 import time
 from .experiment import GRID, SEEDS, csv_write
 from .integration import BlockRecurrence
+from .diagnostics import generation_only_evaluator
 from .scheduler import TAPSConfig
 from .safety import BASE, Journal, file_hash, native_preflight, runtime_guard, write_json
 
@@ -69,7 +70,8 @@ def run(out, source):
     sys.path[:0] = [str(ARMR/"src"), str(REPO/"Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src")]
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
-    from armr.evaluation import evaluate_case
+    from armr.evaluation import evaluate_case as inherited_evaluate_case
+    evaluate_case = generation_only_evaluator(inherited_evaluate_case)
     from armr.provenance import DATA, cases_from, checkpoint_files, state_hash
     from armr.hooks import Reapplication
     from armr.recurrence import FixedBlock
@@ -86,7 +88,7 @@ def run(out, source):
                "seeds": SEEDS, "native_layers": [12,13], "extra_loops": [0,1],
                "config": config, "dataset_sha256": file_hash(dev_path),
                "dataset_status": "previously inspected DEV; NOT protected TEST",
-               "training": False, "gate_interaction": "ungated ARMR host; no learned gate changed"})
+               "training": False, "gold_nll_status": "NOT_COLLECTED_CAUSAL_GUARD", "gate_interaction": "ungated ARMR host; no learned gate changed"})
     started = time.perf_counter(); model = None
     receipt = {"status": "FAIL", "native_model_loads": 0, "training": False, "sealed_read": False}
     before_files = checkpoint_files(source)
@@ -156,9 +158,13 @@ def run(out, source):
             pool = tuple(min(taps.alpha_max,max(taps.alpha_min,e["alpha"])) for e in traces) or (1.,)
             write_json(out/"frozen_dev_selection.json", {"alpha":best,"pool":pool,"config":asdict(taps),
                        "dataset_sha256":file_hash(dev_path),"native_TEST_authorized":False})
+            random_config = replace(taps,scheduler_mode="random",random_pool=pool)
+            random_smoke = [evaluate(c,"A5",random_config,1,17,"SMOKE")[0] for c in smoke]
+            if not smoke_gate(random_smoke,baseline_smoke,config)["go_fixed_smoke"]:
+                raise RuntimeError("random-control smoke gate failed; no A5 DEV run")
             for seed in SEEDS:
                 for c in dev:
-                    r,_ = evaluate(c,"A5",replace(taps,scheduler_mode="random",random_pool=pool),1,seed,"DEV"); rows.append(r)
+                    r,_ = evaluate(c,"A5",random_config,1,seed,"DEV"); rows.append(r)
             oracle_rows = []
             for seed in SEEDS:
                 for c in dev:
