@@ -162,10 +162,39 @@ def validate_backend_spec(context):
         require(all(profiles[kind][key] >= value for key, value in minimum.items()),
                 'native profile below known pinned loader work: ' + kind)
     require(type(spec.get('operation_bounds_status')) is str
-            and spec['operation_bounds_status'] in ('MEASURED_PRODUCTION', 'AUTHORIZED_QUALIFICATION_UPPER'),
+            and spec['operation_bounds_status'] in ('MEASURED_PRODUCTION', 'AUTHORIZED_QUALIFICATION_UPPER',
+                                                  'AUTHORIZED_BOUNDED_PRODUCTION_UPPER'),
             'unmeasured proposal profiles cannot execute')
-    require(context.get('phase') != 'training' or spec['operation_bounds_status'] == 'MEASURED_PRODUCTION',
-            'production requires measured operation prices')
+    if context.get('phase')=='training' and spec['operation_bounds_status']=='AUTHORIZED_BOUNDED_PRODUCTION_UPPER':
+        policy=scope.get('production_price_policy');justification=bindings.get('production_price_justification')
+        qualified=context.get('completed_qualification')
+        require(context.get('qualifiedreceipt_verified') is True and context.get('production_training_authorized') is True
+            and type(qualified) is dict and qualified.get('completed_pair_verified') is True
+            and scope.get('role')=='production_training' and scope.get('production_training_authorized') is True,
+            'bounded production requires actual verified qualification plus separate production scope')
+        require(type(policy) is dict and policy.get('schema')=='CE8-PRODUCTION-PRICE-POLICY-1'
+            and policy.get('approved') is True and policy.get('basis')=='AUTHORIZED_BOUNDED_PRODUCTION_UPPER'
+            and policy.get('measured_prices') is False and policy.get('operation_bounds_sha256')==authority.digest(profiles)
+            and type(justification) is dict and justification.get('schema')=='CE8-PRODUCTION-PRICE-JUSTIFICATION-1'
+            and justification.get('approved') is True and justification.get('production_training_authorized') is True
+            and justification.get('basis')==policy['basis'] and justification.get('measured_prices') is False
+            and justification.get('prices_are_measurements') is False
+            and justification.get('operation_bounds_sha256')==policy['operation_bounds_sha256']
+            and justification.get('static_recipe_sha256')==context['static_recipe_sha256']
+            and justification.get('source_code_sha256')==bindings['source']['code_sha256']
+            and justification.get('qualified_receipt_sha256')==qualified['receipt_ref']['sha256'],
+            'exact approved raw bounded production justification; hard uppers are not measured prices')
+        execution=scope.get('execution');budget=justification.get('production_budget')
+        require(type(execution) is dict and execution.get('rows')==3000 and execution.get('epochs')==1
+            and execution.get('boundaries')==375 and execution.get('run_seed')==spec['run_seed']
+            and type(budget) is dict and budget.get('rows')==3000 and budget.get('epochs')==1
+            and budget.get('updates')==375 and budget.get('checkpoint_boundaries')==[0,1,75,150,225,300,375],
+            'bounded full375 dose and seven publications explicitly frozen')
+    else:
+        require(spec['operation_bounds_status']!='AUTHORIZED_BOUNDED_PRODUCTION_UPPER',
+                'bounded production price policy cannot activate a qualification scope')
+        require(context.get('phase')!='training' or spec['operation_bounds_status']=='MEASURED_PRODUCTION',
+                'production requires measured prices or its explicit approved bounded policy')
     # Lexical checks do not touch the filesystem; the bound runtime performs the
     # resolved outside-checkout/regular-file proof inside observed work.
     require(Path(spec['source_checkout']) not in (Path(spec['output_directory']), *Path(spec['output_directory']).parents),

@@ -169,7 +169,7 @@ def required_interfaces():
 def child_environment():
     """Explicit minimal future child environment; no credential variables copied."""
     allowed=('SYSTEMROOT','WINDIR','COMSPEC','TEMP','TMP','PATH','USERPROFILE','LOCALAPPDATA','APPDATA',
-             'PROGRAMFILES','PROGRAMW6432')
+             'PROGRAMFILES','PROGRAMW6432','USERNAME')
     result={key:value for key in allowed if (value:=os.environ.get(key)) is not None}
     require(all(result.get(key) for key in ('SYSTEMROOT','TEMP','PATH')), 'explicit Windows child environment metadata missing')
     result.update(PYTHONHASHSEED='20261001',CUBLAS_WORKSPACE_CONFIG=':4096:8')
@@ -346,7 +346,7 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
                 'hash_bytes':256*GIB,'metadata_bytes':4*GIB,'operation_attempts':100000,'wall_seconds':512000}},
         'resource':{'limits':limits,'resource_probe':probe,
             'host_transient_bytes':{kind:64*MIB for kind in runner.HOST_STAGES | set(qualification.STAGES) | accounting.KINDS |
-                {'before_framework','before_model','ingestion_sources','ingestion_tokenizer','ingestion_qualification_rows',
+                {'before_framework','before_model','ingestion_sources','ingestion_tokenizer','ingestion_boundary','ingestion_qualification_rows',
                  'qualification_artifact','qualification_parent_release','qualification_state_fingerprint',
                  'after_runtime','after_update','after_checkpoint','after_delta','final'}}}}
     expectation={'schema':'CE8-PREPARED-RECEIPT-EXPECTATION-1','observed_current_scope':False,
