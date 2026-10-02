@@ -414,6 +414,9 @@ def main(argv=None):
 
 
 if __name__ == '__main__':
+    import importlib
     from .ce_qualification_adoption import adopt_source_paths
     adopt_source_paths()
-    raise SystemExit(main())
+    # Installers bind the canonical module's exact class/function identities
+    # and registry/cache slots. The -m __main__ copy must never consume them.
+    raise SystemExit(importlib.import_module(__package__ + '.ce_checkpoint_worker').main())

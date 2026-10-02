@@ -12,6 +12,27 @@ from experiments.skill_acquisition_native_v1 import ce_qualification_artifacts a
 
 
 class ChildContracts(unittest.TestCase):
+    def test_real_module_trampoline_uses_canonical_main_without_adopting_source_or_models(self):
+        import subprocess
+        script = '''import runpy,sys
+from experiments.skill_acquisition_native_v1 import ce_checkpoint_worker as canonical,ce_qualification_adoption as adoption
+called=[]
+adoption.adopt_source_paths=lambda:called.append("source-closed")
+def closed_main(argv=None):
+    called.append("canonical-main")
+    assert not canonical._REGISTERED_LOCAL_ISSUERS
+    assert not any(name in sys.modules for name in ("torch","transformers","numpy","safetensors"))
+    return 7
+canonical.main=closed_main
+try:runpy.run_module(canonical.__name__,run_name="__main__")
+except SystemExit as result:
+    assert result.code==7 and called==["source-closed","canonical-main"],(result.code,called)
+    print("canonical closed trampoline verified")
+'''
+        result = subprocess.run([sys.executable, '-c', script], capture_output=True, text=True, timeout=10)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('canonical closed trampoline verified', result.stdout)
+
     def test_service_requires_exact_registered_constructor_identity(self):
         class Registered: pass
         class Subclass(Registered): pass
