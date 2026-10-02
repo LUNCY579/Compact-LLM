@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "kind": "PRESERVED_PROBE_REPAIR_ROUND_2_SOURCE_BYTES",
+  "client_date": "2026-10-02",
+  "builder": "/root/scientific_audit",
+  "files": {
+    "owned_runtime_identity_probe.py": "946b4fbc6cbf013577b1a0e827e902c85a9cdef8382e9a5cb83c687f831d28e9",
+    "tests/test_owned_runtime_identity_probe.py": "da0c05c7319ec3f90368ed54057791b1a42ef072344f1327f24bed606d3df278",
+    "contracts/OWNED_RUNTIME_IDENTITY_DIAGNOSTIC_V1.json": "651cdc696eaa08e1c1b1564542d82238e7e9b57c5373516a8d508742114258f7"
+  },
+  "cpu_validation": {
+    "tests": 17,
+    "passed": 17,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 2.887,
+    "framework_imports": 0,
+    "model_calls": 0,
+    "canonical_host_database_access": false,
+    "CPU_fixture_temporary_SQLite": true,
+    "actual_suspended_exact_Job_no_framework_fatal_controls": 5,
+    "actual_import_probe_executed": false,
+    "actual_suspended_exact_Job_no_framework_deadline_controls": 1
+  },
+  "repair_validation_history": [
+    {
+      "tests": 13,
+      "passed": 13,
+      "seconds": 2.564
+    },
+    {
+      "tests": 13,
+      "passed": 13,
+      "seconds": 2.798
+    },
+    {
+      "tests": 15,
+      "passed": 15,
+      "seconds": 3.062
+    },
+    {
+      "result": "DISCOVERY_SYNTAX_ERROR_FIXED_BEFORE_TEST_EXECUTION",
+      "tests": 0,
+      "framework_imports": 0,
+      "tool_wall_seconds": 0.4386,
+      "reason": "CPU fixture exceeded static with-block nesting; replaced by ExitStack"
+    },
+    {
+      "tests": 17,
+      "passed": 17,
+      "seconds": 2.887
+    }
+  ],
+  "approvals_granted_by_archive": false,
+  "actual_import_probe_executed": false,
+  "native_source_sha256": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+  "native_contract_sha256": "d79f3b6a51e939d78a99c5c287ef6f33ef5979cfa50e76ba3d930ed3724f826a",
+  "native_whole_path_qualification": "QUARANTINED_AT_THREE_REVIEW_REPAIR_ROUNDS",
+  "next_repair_round": "FINAL_3_NO_FOURTH_CYCLE"
+}
