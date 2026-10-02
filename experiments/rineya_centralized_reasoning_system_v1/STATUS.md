@@ -59,9 +59,12 @@ synthetic tests, but fresh SCI/OPS reviews found receipt-vector association,
 resource, admission, activation and recovery defects. The exact first freeze and
 counterexamples are retained. Candidate2 passed31 synthetic tests and repaired
 those findings, but operations review reproduced worker-side Git subprocesses
-that violate its no-descendant policy. The final third source repair is underway
-(`audits/LEARNING_TOKENIZATION_ROUND2_ADJUDICATION.md`); actual token measurement
-remains closed. This work cannot reopen the quarantined runtime paths.
+that violate its no-descendant policy. Final candidate3 source9ca855e3/testfe882958/
+closed contract50351601 passes33 synthetic tests and final SCI/OPS source review.
+`evidence/LEARNING_TOKENIZATION_SOURCE_ACCEPTANCE_001.json` records the narrow
+acceptance. A single CPU study is preregistered; actual activation, clean-commit
+attestations, fresh admission and measurement/evidence review remain pending.
+This work cannot reopen the quarantined runtime paths.
 The guard and exact-prefix reader qualifier passed24 lightweight tests. Reader
 review reproduced a completion-proof gap,
 so its native launch remains closed pending repair. The previous complete primary

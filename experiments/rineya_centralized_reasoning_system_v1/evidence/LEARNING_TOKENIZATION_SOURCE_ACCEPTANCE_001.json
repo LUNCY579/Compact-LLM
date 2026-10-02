@@ -1,0 +1,55 @@
+{
+  "actual_activation_created": false,
+  "adjudicator": "/root",
+  "artifacts": {
+    "contract": {
+      "bytes": 24892,
+      "path": "contracts/LEARNING_TOKENIZATION_V1.json",
+      "sha256": "50351601c280c148b869f730329569a8b2345754ac28238e96338a17899254d3"
+    },
+    "operations": {
+      "bytes": 10791,
+      "path": "audits/LEARNING_TOKENIZATION_OPERATIONAL_REVIEW_3.md",
+      "sha256": "66cd1d93cf3dbf67df090e46c2a5ccf491a4c7785b1b9b337a51339270835fa1"
+    },
+    "root_tests": {
+      "bytes": 1396,
+      "path": "evidence/learning_tokenization_round3_cpu_001/RECEIPT.json",
+      "sha256": "f315170ef420640664153dae80dbdbfd1c0d6b120c37c56206cc9655e9dfeda2"
+    },
+    "science": {
+      "bytes": 8080,
+      "path": "audits/LEARNING_TOKENIZATION_SCIENTIFIC_REVIEW_3.md",
+      "sha256": "5a60ab7ddf6168a0dd445b7e64f88102bb91ff951494d510ee0d8a6480aa7224"
+    },
+    "source": {
+      "bytes": 56962,
+      "path": "learning_tokenization.py",
+      "sha256": "9ca855e3458fe4e9052448bd03577f723c502e867b593017c3c0d950a6844f0c"
+    },
+    "tests": {
+      "bytes": 40744,
+      "path": "tests/test_learning_tokenization.py",
+      "sha256": "fe882958591cc8d0e9fdb78cc2fa87c25789211b2b0766a4c7b7378366d4ea6d"
+    }
+  },
+  "builder": "/root/data_audit",
+  "claim_scope": "Synthetic code/interface/positional/vector/provenance checks only; actual backend/resource/artifact qualification not established",
+  "closed_source_contract_preserved": true,
+  "earlier_quarantines_changed": false,
+  "model_or_training_eligible": false,
+  "original_CPU_authorization_not_expanded": true,
+  "owner_exception_received": false,
+  "receipt_id": "CRS-LEARNING-TOKENIZATION-CPU-SOURCE-ACCEPTANCE-001",
+  "recorded_at_utc": "2026-10-02T10:54:52.756574+00:00",
+  "remaining_consequential_findings_in_CPU_source_scope": [],
+  "required_next": [
+    "clean committed exact source",
+    "separate create-only activation and reviewer-authored exact binding attestations",
+    "fresh production source/resource admission",
+    "one bounded CPU measurement",
+    "independent actual evidence review"
+  ],
+  "source_review_round": 3,
+  "status": "EXACT_CPU_SOURCE_ACCEPTED_ACTUAL_MEASUREMENT_UNPERFORMED"
+}

@@ -318,3 +318,20 @@ registered paired accuracy-difference endpoint. Variants do not add independent
 parents; source/incumbent evidence is unavailable. No new panel, policy, margin,
 promotion or preservation claim was introduced. Native cost47.421s and training
 updates0 remain unchanged; all actual model and tokenization results are pending.
+
+## Final token source acceptance
+
+Final candidate3 source9ca855e3/testsfe882958/closed contract50351601 passed33
+synthetic tests. Root's durable run took4.050s including startup (receiptf315170e).
+Final SCI report5a60ab7d and OPS report66cd1d93 accept only the exact CPU source;
+child main/worker file checks have no subprocess calls, while parent clean-commit
+observation and immutable child admission remain coupled. The earlier histories,
+counterexamples and raw receipts are retained under their original conclusions.
+
+Source acceptance2ba6dd1a is separate from the immutable closed contract. The
+single actual CPU study is preregistered in LEARNING_TOKENIZATION_ACTUAL_STUDY_001,
+with no activation created yet. It requires a clean reviewed commit, exact-byte
+activation/reviewer bindings and fresh production resource admission. Any actual
+result needs independent evidence review. This source transition establishes
+no BPE IDs/fit/Jinja behavior, real peak/time, native qualification, model loss,
+learning or retention. Existing quarantines, native47.421s and training0 persist.

@@ -197,3 +197,27 @@ binary-parent feasibility floors149/59 for2%/5% at one fixed95% look. These are
 not power targets, the paired accuracy-difference endpoint or observed retention.
 No panel was generated or opened, no multiplicity policy adopted, and no margin
 changed.32 optimizer parents remain TRAIN exposure, not retention enrollment.
+
+## Final token source and single CPU study
+
+Candidate3 source9ca855e3/testfe882958/closed contract50351601 received final
+SCI/OPS conditional source acceptance. All33 synthetic tests pass. The child
+checks actual selected bytes/admission and replays the bound parent observation
+without Git; the parent retains live clean-commit checks. See the separate
+source-acceptance receipt and contracts/LEARNING_TOKENIZATION_ACTUAL_STUDY_001.json.
+Neither record is actual backend/resource evidence or new native authority.
+
+Commit these exact reviewed files cleanly before creating the fixed ignored
+activation at outputs/learning_tokenization_cpu_activation_001.json. Construct
+only the reviewed activation_payload from the actual clean source binding; obtain
+Root science and Runtime operations author attestations bound to its physical
+SHA, fixed key/output and complete run_binding. The historical contract stays
+closed. Refuse any existing attempt/output, source drift, missing telemetry or
+resource gate; source review is not measured admission.
+
+Only after those conditions, the reviewed interface may admit its one60s CPU
+tokenizer/Jinja measurement. All32 cases and184 attempts remain accounted for;
+there is no automatic retry, alternate-output bypass or fourth source repair.
+Preserve raw failures/unknowns/costs and request independent actual artifact
+review before claiming token fit/mask readiness. Native/reader/probe/training
+quarantines and the pending owner-exception decision remain unchanged.
