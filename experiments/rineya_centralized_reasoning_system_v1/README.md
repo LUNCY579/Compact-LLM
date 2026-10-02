@@ -1,5 +1,13 @@
 # CRS-001: centralized reasoning and memory for the Rineya family
 
+**Implementation continuation, 2026-10-01:** the owner has now authorized isolated
+CPU work and gated local experiments in [amendment 001](AUTHORIZATION_2026-10-01.md).
+The source audit, controlled-grammar runtime, independent data/scorer, durable
+operations, public worker boundary, atlas analysis and contained native diagnostic
+are implemented. Read [STATUS](STATUS.md), [execution manifest](execution_manifest_v1.json)
+and [executable continuation](CONTINUATION.md) for current qualification and results.
+The founding status below remains historical; it is not rewritten into an execution receipt.
+
 **Status:** design recorded; runtime not implemented; native execution not
 authorized by this package; efficacy unmeasured.
 

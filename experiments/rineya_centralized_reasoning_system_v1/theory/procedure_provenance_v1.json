@@ -1,0 +1,21 @@
+{
+  "id": "ownership",
+  "version": 1,
+  "kind": "task_solving_procedure",
+  "representation": "restricted_typed_operation_graph",
+  "inputs": "public controlled-grammar case only",
+  "outputs": "explicit semantic status/value and source-dependent evidence IDs",
+  "proposer": "Codex coordinator",
+  "reviser": "Codex coordinator responding to adversarial counterexamples",
+  "selector": "Codex coordinator supplied reference policy; no Rineya selection",
+  "verifier": "independent latent oracle and hand controls; scientific reviewer separate pass",
+  "applicability": "ownership_remove_event_v1 with supplied complete coverage flag",
+  "dependencies": ["source UTF8 SHA256 and offsets", "controlled grammar", "TRACE_STATE supplied primitive", "CHECK source/schema consistency"],
+  "counterexamples_preserved": "audits/CPU_REVIEW_1.md",
+  "failure_behavior": "reject malformed references/operations; explicit UNKNOWN/CONTRADICTORY; budget stop never correct abstention",
+  "validation_scope": "CPU engineering fixtures only",
+  "neural_discovery": false,
+  "neural_internal_mechanism": false,
+  "native_procedure_memory_gain": "UNMEASURED",
+  "discovery_cost": "Codex engineering/review work; native model calls zero; not neural learning compute"
+}

@@ -1,5 +1,49 @@
 # CRS-001 status and continuation
 
+## Implementation epoch 001, authorized 2026-10-01
+
+The new owner request is retained byte-for-byte with a hash in
+`authorization/owner_request_receipt.json`; its scope is recorded in
+[AUTHORIZATION_2026-10-01.md](AUTHORIZATION_2026-10-01.md). The historical founding
+section below, charter and manifest are preserved. All central CHECK/FINAL remain closed.
+
+Current milestone: **IMPLEMENTED; independent CPU and operations review closure
+in progress; native launch awaits clean committed source and exact review.**
+The complete supplied AI-Newton paper, supplement and figures were inspected;
+18 pinned primary implementation files were source-verified. Exact external
+Titan/Sparse/Transition/Supa assets are inventoried read-only. Opallo binaries
+are missing at both named roots. No model has yet executed in CRS-001.
+
+Implemented: source-addressed evidence, four status states, stale dependency
+invalidation, restricted typed graphs, immutable procedure snapshots, public JSON
+worker boundary, original composition-family TRAIN/DEV generators, independent
+latent oracle and semantic/format scorer, SQLite DAG/leases/cumulative budgets,
+atomic receipts/recovery, atlas estimates/matrices/scheduler, prospective theory
+records, and an executable contained four-forward Titan engineering diagnostic.
+CPU fixtures establish infrastructure only. Supplied readers/controllers/solvers
+are labeled; no Rineya discovery or acquisition/retention gain is claimed.
+
+Reviewers reproduced and repaired consequential source-validation, unknown-state,
+aggregate-scoring, recovery/fencing and incomplete-provenance problems. Original
+findings remain in `audits/`; no vote or administrative signature establishes truth.
+Before dispatch, bind final source/test/review hashes and run the registered CPU
+epoch, then the native preflight. Hourly heartbeat
+`crs-001-hourly-research-supervisor` is active with quiet-on-unchanged behavior.
+
+Remaining gates: native numerical/capture and maximum576 reader qualification,
+16-case native diagnostic, actual B/C native experiment with meaningful irrelevant
+D content/token costs, separately qualified sustained training/resume/export,
+fresh confirmation precision and broad retention. Atlas native rows and all
+model/system/distilled scoreboards remain **UNMEASURED**. Historical Titan bulk
+likelihood failure is preserved. No final bank has been generated or opened.
+
+Restart commands and conditions: [CONTINUATION.md](CONTINUATION.md). Source changes
+create new registrations; completed or failed observations retain their identities.
+Unknown launch outcomes must be reconciled before another worker. Native budget
+consumption in this track is currently zero; no active model worker.
+
+## Historical founding state (preserved)
+
 **2026-10-01: DESIGN_RECORDED_EXECUTION_NOT_AUTHORIZED**
 
 The owner authorized a dedicated remote branch with specialized notes for a

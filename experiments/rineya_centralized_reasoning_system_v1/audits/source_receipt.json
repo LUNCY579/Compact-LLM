@@ -1,0 +1,226 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_kind": "CRS001_PRIMARY_SOURCE_READ_ONLY_AUDIT",
+  "client_date": "2026-10-01",
+  "observed_at_utc": "2026-10-02T03:59:01.4626417Z",
+  "reviewer": "/root/scientific_audit",
+  "repository_source_commit": "7459b614bcb017ae4f0160b15e0ccd53473bb990",
+  "primary_paper": {
+    "arxiv_id": "2504.01538v2",
+    "title": "AI-Newton: A Concept-Driven Physical Law Discovery System without Prior Physical Knowledge",
+    "authors": [
+      "You-Le Fang",
+      "Dong-Shan Jian",
+      "Xiang Li",
+      "Yan-Qing Ma"
+    ],
+    "version_submission_utc": "2025-12-11T14:46:15Z",
+    "supplied_path": "C:/Users/clclc/Downloads/AI-Newton.pdf",
+    "supplied_pdf_sha256": "bce6758e3ec33fe715b2df7132733107f98f1e928abb9ead89b9b7e2b3a8cdc1",
+    "verified_arxiv_pdf_url": "https://arxiv.org/pdf/2504.01538v2",
+    "verified_arxiv_pdf_sha256": "bce6758e3ec33fe715b2df7132733107f98f1e928abb9ead89b9b7e2b3a8cdc1",
+    "supplied_matches_arxiv_pdf": true,
+    "pages": 6,
+    "paper_license_recorded": "CC-BY-4.0",
+    "complete_text_read_by": [
+      "/root",
+      "/root/scientific_audit"
+    ],
+    "main_figures_1_2_3_visually_inspected_by": "/root",
+    "source_tar_url": "https://arxiv.org/src/2504.01538v2",
+    "source_tar_sha256": "b850366fcde85aacd479de33701ce39de01f9e5cbf3b655f9fbdffa5bac1e5a6",
+    "second_source_tar_fetch_sha256": "b850366fcde85aacd479de33701ce39de01f9e5cbf3b655f9fbdffa5bac1e5a6",
+    "main_tex_sha256": "1e89fde9e86d92b3fc47faa36f27def3067b8913924e30852c50a9d0d16ea306"
+  },
+  "supplement": {
+    "source_member": "AI-Newton-SM.pdf",
+    "sha256": "bbe80e5309a7aabf6a1319bf1a22f37463f3b0b760c44f026b1cf5297ba0319a",
+    "pages": 4,
+    "bytes": 1542007,
+    "member_equals_local_pdf": true,
+    "text_sha256": "e3e9796c262d3cd95fee32e2e758b623c16a6b46dc894f469da94226711877fa",
+    "complete_text_read_by": [
+      "/root",
+      "/root/scientific_audit"
+    ],
+    "all_pages_visually_inspected_by": "/root/scientific_audit",
+    "sections": [
+      "SM A physical DSL",
+      "SM B recommendation engine",
+      "SM C computational engine"
+    ]
+  },
+  "implementation": {
+    "repository": "https://github.com/Science-Discovery/AI-Newton",
+    "commit": "c143e865be42e067faf64cd8117cbeffd0fccfb6",
+    "commit_date_utc": "2026-01-27T12:54:19Z",
+    "actual_tree_from_commit": "4f4fc95916916f5f9e98af85616e8ad6dd18c848",
+    "tree_listing_complete": true,
+    "tree_receipt_sha256": "4b75b65d6c8a631b01fd85cd8e0760c85766f232133dbd089c9679f5bf47e8f5",
+    "license": "MIT",
+    "copyright": "Copyright (c) 2025 Science-Discovery",
+    "cached_files": [
+      {
+        "path": "Cargo.toml",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/Cargo.toml",
+        "bytes": 759,
+        "git_blob": "629f43a790a83bd2fa3525545a1e39e982f45b37",
+        "sha256": "434b6afe7a1cb4762499fb1caac290c7e404b2bf9afddf26f15da07e6563cc6f",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "LICENSE",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/LICENSE",
+        "bytes": 1074,
+        "git_blob": "6a3fa6134b85f30773e4a837d035568ce28dd76f",
+        "sha256": "aa7fdb73321d48d3b23f5235ac7844be4f1347b1418d146d2cd6911714b42002",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "README.md",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/README.md",
+        "bytes": 3238,
+        "git_blob": "635848d88a41dffb44490e47b4dbf1107ee17356",
+        "sha256": "e35a6fd49f3dfa9600b400d906ef46146e3ec9d0c179c985a313b89fbfe2a4ab",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "requirements.txt",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/requirements.txt",
+        "bytes": 120,
+        "git_blob": "63e41ad7905185cb674f927196b931077cd2ebc2",
+        "sha256": "b0553d986e391558c3bd957072a2cff4a5dfe578fd163ef3715b223ab2e967df",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "aiphy/diffalgservice.py",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/aiphy/diffalgservice.py",
+        "bytes": 6751,
+        "git_blob": "d3cdf5a1854f0f19eeb104465158e48ef19a025a",
+        "sha256": "148cb3977b23bac2c241d0de23d080c61fe41887c679c71c1d1cfd18b7debb2f",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "aiphy/general_model.py",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/aiphy/general_model.py",
+        "bytes": 67290,
+        "git_blob": "1a9d89e0d3b19e8e968b47343fdf474fc06a12ec",
+        "sha256": "8bf9437def252b4ea14ceb003b9874aa5ac387361c755e5a39a7ef2313e97c2f",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "aiphy/interface.py",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/aiphy/interface.py",
+        "bytes": 13470,
+        "git_blob": "36299635c4b88bf0d0f5fe525e7cdcf8d6538525",
+        "sha256": "236b8f21b235013f349dbc3f6f7a01fb97bbc440cdb659e7dfd78fcf502468df",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "aiphy/main.py",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/aiphy/main.py",
+        "bytes": 50161,
+        "git_blob": "ee61673ab63eb15ac6b3b26dcae86906a5259142",
+        "sha256": "0829820bba11afd3d7e3625a6e251e323cb082b1165e080a7a714c7f58d552a2",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "aiphy/manager.py",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/aiphy/manager.py",
+        "bytes": 23351,
+        "git_blob": "2311ace6f3b177a7f5babc27cf8b93a9dca4c10a",
+        "sha256": "e013ad8135e03f95c28226d40ff1b05ed81096e02caa8244c1d01b07d9be3396",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "aiphy/memory.py",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/aiphy/memory.py",
+        "bytes": 19646,
+        "git_blob": "bd2949b835df5fb671a183f6a622795b9f64e3a6",
+        "sha256": "23cdf3e1df0c2ddc67049d18b76a70678619f3cc0aa4c71d8313268ade120c20",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "aiphy/specific_model.py",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/aiphy/specific_model.py",
+        "bytes": 40363,
+        "git_blob": "5f96c00b19d1f1cc510674dc5758f20c429b5f37",
+        "sha256": "135a8e641fa128658a1f7bd8a81a1f9f8d5a42801f510a794373ce376985de41",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "aiphy/symbolic.py",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/aiphy/symbolic.py",
+        "bytes": 7562,
+        "git_blob": "3b363ac082d6e83aada37657310106b4455e9708",
+        "sha256": "ab7a9d21b23c73eac245c901d6dc713a2582f36c6fa75d852768f9d9d4f82162",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "aiphy/ucb.py",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/aiphy/ucb.py",
+        "bytes": 1282,
+        "git_blob": "3710f967df7e926f0300b25a7fc3439f4a4dfd27",
+        "sha256": "f1960ed22bad75cef2e9743a945e36ad7828222cd00d100bfb984d54d4ca5f7f",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "aiphy/recommendation_engine/concept_group.py",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/aiphy/recommendation_engine/concept_group.py",
+        "bytes": 1090,
+        "git_blob": "054c6cb0e6461b191b9b1240bfe5d6b512e85812",
+        "sha256": "782b58e7bf4e483b937fa8f24e0c5360cd854aed22c1ca300e26e96020abf549",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "aiphy/recommendation_engine/update_concept_group_policy.py",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/aiphy/recommendation_engine/update_concept_group_policy.py",
+        "bytes": 1576,
+        "git_blob": "0968b6eee95cfd5e0dcbd4b37d43a91658a01357",
+        "sha256": "3bf5b9017b623fd37c4268325ab2e76f116368ea45a6bc97de958cff64bdc457",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "src/knowledge.rs",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/src/knowledge.rs",
+        "bytes": 25605,
+        "git_blob": "38e03cdb8fc57330406eee5c786dd9721430c598",
+        "sha256": "3bf0863fd52cce0a7b580a803862ca63864b0e9f02045a0e7db6f8d8cb802942",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "src/semantic/generalize.rs",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/src/semantic/generalize.rs",
+        "bytes": 5143,
+        "git_blob": "de14c63d787f6cacf93a3fd34abd789d891bdd8d",
+        "sha256": "c37522d92d8f18be0d0b9b35b7de6b9535c309e35bd867c4a408fcf7d794a645",
+        "tree_binding_passed": true
+      },
+      {
+        "path": "src/semantic/specialize.rs",
+        "source_url": "https://raw.githubusercontent.com/Science-Discovery/AI-Newton/c143e865be42e067faf64cd8117cbeffd0fccfb6/src/semantic/specialize.rs",
+        "bytes": 6682,
+        "git_blob": "c604d4b4aae212ed528a777923ab070b33c5c5f6",
+        "sha256": "046d2d95367273a75f2fb56373a95a3c65d9f1d57caf457c7b49884ebae9c83f",
+        "tree_binding_passed": true
+      }
+    ],
+    "third_party_code_executed": false,
+    "third_party_code_imported": false,
+    "third_party_source_copied_into_crs_runtime": false,
+    "reported_paper_results_reproduced": false,
+    "dependencies_installed": false
+  },
+  "inspection_limits": [
+    "Subset of primary implementation statically inspected; not every source file or experiment log",
+    "Pinned code postdates the arXiv v2 paper; exact reported-run code not established",
+    "No native Rineya execution or protected-bank content access",
+    "Shared model lineage and workspace privileges; source agreement is not independent ground truth"
+  ],
+  "outputs": [
+    "SOURCE_AUDIT.md",
+    "PAPER_TO_DESIGN.md",
+    "audits/source_receipt.json"
+  ],
+  "cached_source_location": "audits/sources/"
+}

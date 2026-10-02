@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "contract_id": "CRS-OPS-001",
+  "status": "CPU_TESTED_REVIEW_REPAIR_ROUND_2",
+  "model_launcher_implemented": false,
+  "native_launch_gate": "CLOSED",
+  "native_gate_reasons": [
+    "Exact CRS checkpoint/loader/current-source qualification not complete",
+    "Historical Titan prefix-versus-bulk numerical blocker unresolved",
+    "Current host process/GPU reconciliation and contained watchdog path not qualified"
+  ],
+  "states": [
+    "PENDING",
+    "READY",
+    "BLOCKED",
+    "RESERVED",
+    "RUNNING",
+    "OUTCOME_UNKNOWN",
+    "SUCCEEDED",
+    "FAILED",
+    "ABORTED",
+    "SKIPPED"
+  ],
+  "dag": "Immutable job request hash includes payload, epoch and existing dependencies; only succeeded dependencies permit READY.",
+  "host_wide_state": {
+    "proposed_path": "%LOCALAPPDATA%/Rineya/CRS-001/host_state.sqlite3",
+    "state_created_by_this_delivery": false,
+    "integration_amendment_required_before_outside_write": true,
+    "production_requirement": "Every CRS worktree and coordinator shares the exact same local host database; per-worktree databases do not satisfy host-wide admission.",
+    "lease_kinds": [
+      "coordinator",
+      "model"
+    ],
+    "lease_maximum_seconds": 600,
+    "ownership": "owner, expiry, heartbeat and persistent strictly increasing fencing token",
+    "stale_rule": "Stale lease journals active jobs OUTCOME_UNKNOWN; reconcile every job and current process/GPU evidence before takeover. Expiry never permits an automatic duplicate dispatch.",
+    "containment_limit": "SQLite state and caller validation are cooperative contracts. A real worker must check fencing at every admitted operation and use qualified OS process containment. No OS isolation or hard kill/VRAM enforcement is provided by this module."
+  },
+  "budgets": {
+    "one_native_worker": true,
+    "epoch_native_seconds_maximum": 7200,
+    "rolling_24h_native_seconds_maximum": 14400,
+    "reservation_before_dispatch": true,
+    "unknown_costs": "Charge full reserved ceiling; active unknown reservations never age out merely because wall clock advances.",
+    "failed_known_costs": "Retain measured attempted-work costs and release only the unused remainder after identified reconciliation evidence.",
+    "overruns": "Preserve actual cost and violation flag even when it exceeds reservation; never reject the measurement or erase failure cost.",
+    "restart": "Epoch totals persist indefinitely; rolling totals include all active work and terminal work completed within the last 24h. New epoch names do not reset the rolling host budget."
+  },
+  "persistence": {
+    "sqlite": "BEGIN IMMEDIATE, WAL, synchronous FULL, integrity check; database corruption blocks opening and preserves bytes.",
+    "receipts": "Canonical JSON, stable kind/key name, create-only atomic same-volume hard-link publication after fsync; conflicting outcomes preserve original receipt.",
+    "interrupted_receipts": "Retain .partial-* files without advertising a completed result. Retry the same immutable request; publication refuses overwrite.",
+    "launch_idempotency": "Repeated key must match exact request and dependency hash; duplicate reserve returns persisted state and never dispatches. OUTCOME_UNKNOWN cannot transition to RUNNING without explicit outcome reconciliation.",
+    "orphan_workers": "Persist OUTCOME_UNKNOWN synthetic operations record charged at the full rolling ceiling until identified reconciliation; do not terminate unrelated processes.",
+    "outcome_reconciliation": "Require create-only hashed observation receipt bound to job key/request hash, model owner/fence and observed worker identity. RUNNING requires positive known cost or conservative unknown cost plus measured process exit. Zero only from RESERVED with no worker and explicit never-dispatched/no-launch-attempt proof. Stale resolution also requires a live coordinator lease.",
+    "logical_database_integrity": "Recompute request hash including dependencies and validate current state/result against durable latest event on job/budget/dependency access; corruption is preserved and blocks action. This does not attest against an attacker who can coherently rewrite both SQLite and receipt data."
+  },
+  "testing_scope": "All operations tests use temporary state and synthetic CPU process/telemetry witnesses. No native runtime, real workers or CUDA state are mocked into qualification evidence.",
+  "qualification_claims": {
+    "native_checkpoint_qualified": false,
+    "physical_resource_enforcement_qualified": false,
+    "cross_process_model_resume_qualified": false,
+    "acquisition_or_retention_measured": false
+  },
+  "validation_history": [
+    {
+      "command": "python -B -m unittest experiments.rineya_centralized_reasoning_system_v1.tests.test_operations -v",
+      "tests": 20,
+      "outcome": "FAILED",
+      "errors": 1,
+      "reason": "Windows corrupt-database constructor left an open SQLite handle; fixture cleanup exposed it. No model work."
+    },
+    {
+      "command": "python -B -m unittest experiments.rineya_centralized_reasoning_system_v1.tests.test_operations -v",
+      "tests": 20,
+      "outcome": "PASSED",
+      "seconds": 0.332,
+      "repair": "Close failed constructor connection before propagating error."
+    },
+    {
+      "tests": 26,
+      "outcome": "PASSED",
+      "seconds": 0.64,
+      "review_fixes": "Fenced exit/no-dispatch proof refs with immutable request/lease/worker binding, live coordinator lease for stale reconciliation, non-null host witnesses, CPU completion idempotency, logical SQLite request/dependency/state/event integrity."
+    },
+    {
+      "tests": 27,
+      "outcome": "PASSED",
+      "seconds": 0.548,
+      "review_fixes": "Bind actual cost/finished to durable outcome; reservation seconds/owner/fence/time to admission; worker identity to observation; creation time to origin. All charged rows validated; eight SQL accounting mutations fail closed."
+    }
+  ],
+  "code_sha256": "ba27ec8a31437459b956a5642e6ece4838f0584602db2c93ff7bc61437806e30",
+  "tests_sha256": "8b1b0166d82c874a6076742a1eea13025e886b513e42dfac791fdf503af1da48"
+}

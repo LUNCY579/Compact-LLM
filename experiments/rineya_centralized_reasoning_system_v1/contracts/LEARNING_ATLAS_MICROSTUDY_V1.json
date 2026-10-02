@@ -1,0 +1,18 @@
+{
+  "id": "CRS-LA-001-v1",
+  "status": "REGISTERED_PRELIMINARY_NATIVE_TRAINING_CLOSED",
+  "kind": "ordinary_adaptation_microstudy_not_validated_procedure_distillation",
+  "authority": "AUTHORIZATION_2026-10-01.md",
+  "source": "exact_qualified_Titan_BF16_external_read_only",
+  "arms": ["unchanged_source", "ordinary_qv_rank8_adapter"],
+  "data": {"train_parents_max": 32, "train_draw_seed": 101, "order_seed": 211, "max_epochs": 1, "confirmation_access": false},
+  "dose": {"checkpoints_updates": [0, 4, 8], "accumulation": 4, "batch": 1, "processed_tokens_max": 32768, "supervised_tokens_max": 8192},
+  "optimizer": {"name": "AdamW", "lr": 0.0001, "betas": [0.9, 0.999], "epsilon": 1e-8, "weight_decay": 0, "clip": 1, "schedule": "constant_8_updates"},
+  "adapter": {"rank": 8, "alpha": 16, "dropout": 0, "scope": "q_proj_v_proj", "base_frozen": true, "adapter_and_optimizer_dtype": "float32"},
+  "retention": {"original_source": true, "approved_incumbent": true, "source_correct_membership_frozen_at_update0": true, "aggregate_margin_pp": 2, "represented_family_margin_pp": 5, "noninferiority_claim_allowed_without_power": false, "language_long_context": "UNMEASURED_UNTIL_SEPARATE_QUALIFICATION"},
+  "replication": "one_draw_one_order_initially_underpowered_exploratory; no winner promotion",
+  "launch_conditions": ["exact loader/tokenizer/numerics/max actual forward shape", "finite confined gradients and zero adapter parity", "full-state resume including all RNG/cursor/accumulation", "export served behavior and small-update precision", "sustained resource envelope", "independent review of actual data masks scorers and source-correct enrollment", "measured host process/GPU telemetry and contained worker", "rolling and epoch budgets"],
+  "holdout": "no central CHECK/FINAL; fresh confirmation not generated",
+  "training_steps_executed": 0,
+  "interpretation": "efficient-learning frontier only within declared measured search space; CPU atlas functions are not acquisition or retention results"
+}

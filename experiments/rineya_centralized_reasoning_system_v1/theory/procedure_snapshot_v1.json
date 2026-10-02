@@ -1,0 +1,15 @@
+[
+  {
+    "id": "ownership",
+    "version": 1,
+    "origin": "CODEX_SUPPLIED",
+    "status": "FROZEN",
+    "applicability": "ownership_remove_event_v1",
+    "graph": [
+      {"id": "read", "op": "LOOKUP", "deps": [], "args": {}},
+      {"id": "answer", "op": "TRACE_STATE", "deps": ["read"], "args": {}},
+      {"id": "check", "op": "CHECK", "deps": ["answer"], "args": {}}
+    ],
+    "validation": "CPU_ONLY_NO_NATIVE_DISCOVERY"
+  }
+]

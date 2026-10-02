@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "audit_kind": "current_read_only_host_telemetry_not_launch_admission",
+  "sampled_at_utc": "2026-10-02T03:53:39.4468080Z",
+  "client_date": "2026-10-01",
+  "client_timezone": "America/Chicago",
+  "workspace": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1",
+  "os": {
+    "last_boot_utc": "2026-10-01T20:16:03.5000000Z",
+    "version": "10.0.26200",
+    "caption": "Microsoft Windows 11 Home"
+  },
+  "memory_samples": [
+    {
+      "sampled_at_utc": "2026-10-02T03:53:34.2166129Z",
+      "total_physical_bytes": 33520267264,
+      "available_physical_bytes": 6341255168,
+      "available_physical_gib": 5.905754
+    },
+    {
+      "sampled_at_utc": "2026-10-02T03:53:35.9014279Z",
+      "total_physical_bytes": 33520267264,
+      "available_physical_bytes": 6313189376,
+      "available_physical_gib": 5.879616
+    },
+    {
+      "sampled_at_utc": "2026-10-02T03:53:37.2611219Z",
+      "total_physical_bytes": 33520267264,
+      "available_physical_bytes": 6287351808,
+      "available_physical_gib": 5.855553
+    }
+  ],
+  "disks": [
+    {
+      "DeviceID": "C:",
+      "Size": 994613465088,
+      "FreeSpace": 65596243968
+    }
+  ],
+  "gpu": {
+    "full_table_raw": "Thu Oct  1 22:53:39 2026       \n+-----------------------------------------------------------------------------------------+\n| NVIDIA-SMI 566.07                 Driver Version: 566.07         CUDA Version: 12.7     |\n|-----------------------------------------+------------------------+----------------------+\n| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA GeForce RTX 4070 ...  WDDM  |   00000000:01:00.0  On |                  N/A |\n| N/A   69C    P0             23W /  113W |    1605MiB /   8188MiB |     33%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n                                                                                         \n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|    0   N/A  N/A      1940    C+G   ...0_x64__pzs8sxrjxfjjc\\app\\claude.exe      N/A      |\n|    0   N/A  N/A      7148    C+G   C:\\Windows\\explorer.exe                     N/A      |\n|    0   N/A  N/A      8784    C+G   ...on\\154.0.4258.48\\msedgewebview2.exe      N/A      |\n|    0   N/A  N/A     12440    C+G   ...cw5n1h2txyewy\\CrossDeviceResume.exe      N/A      |\n|    0   N/A  N/A     13472    C+G   ...siveControlPanel\\SystemSettings.exe      N/A      |\n|    0   N/A  N/A     15920    C+G   ...nt.CBS_cw5n1h2txyewy\\SearchHost.exe      N/A      |\n|    0   N/A  N/A     15944    C+G   ...2txyewy\\StartMenuExperienceHost.exe      N/A      |\n|    0   N/A  N/A     16268    C+G   ..._x64__cw5n1h2txyewy\\WidgetBoard.exe      N/A      |\n|    0   N/A  N/A     17048    C+G   ...t.LockApp_cw5n1h2txyewy\\LockApp.exe      N/A      |\n|    0   N/A  N/A     18304    C+G   ...ekyb3d8bbwe\\PhoneExperienceHost.exe      N/A      |\n|    0   N/A  N/A     19048    C+G   ...s\\System32\\ApplicationFrameHost.exe      N/A      |\n|    0   N/A  N/A     21560    C+G   ...CBS_cw5n1h2txyewy\\TextInputHost.exe      N/A      |\n|    0   N/A  N/A     22092    C+G   ...5n1h2txyewy\\ShellExperienceHost.exe      N/A      |\n|    0   N/A  N/A     24376    C+G   ..._x64__2p2nqsd0c76g0\\app\\ChatGPT.exe      N/A      |\n|    0   N/A  N/A     26488    C+G   ...oogle\\Chrome\\Application\\chrome.exe      N/A      |\n|    0   N/A  N/A     29776    C+G   ...ft\\x64\\codex-computer-use-swift.exe      N/A      |\n|    0   N/A  N/A     31104    C+G   C:\\Windows\\System32\\ShellHost.exe           N/A      |\n|    0   N/A  N/A     33140    C+G   ...oogle\\Chrome\\Application\\chrome.exe      N/A      |\n|    0   N/A  N/A     44384    C+G   ...4__8wekyb3d8bbwe\\EdgeGameAssist.exe      N/A      |\n|    0   N/A  N/A    246592    C+G   ...0_x64__pzs8sxrjxfjjc\\app\\claude.exe      N/A      |\n|    0   N/A  N/A    358476    C+G   ...\\bin\\windows\\codex-computer-use.exe      N/A      |\n|    0   N/A  N/A    520428    C+G   ...p Hero\\Builds\\MvpSteam\\FlipHero.exe      N/A      |\n+-----------------------------------------------------------------------------------------+",
+    "compute_processes_exit": 0,
+    "summary_raw": "NVIDIA GeForce RTX 4070 Laptop GPU, GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9, 566.07, 8188, 1605, 6344, 40",
+    "summary_exit": 0,
+    "compute_processes_raw": "2608, [Insufficient Permissions], [N/A]\n7148, C:\\Windows\\explorer.exe, [N/A]\n12440, C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe, [N/A]\n15944, C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe, [N/A]\n15920, C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe, [N/A]\n8784, C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.48\\msedgewebview2.exe, [N/A]\n18304, C:\\Program Files\\WindowsApps\\Microsoft.YourPhone_1.26072.257.0_x64__8wekyb3d8bbwe\\PhoneExperienceHost.exe, [N/A]\n21560, C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe, [N/A]\n22092, C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe, [N/A]\n16268, C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe, [N/A]\n17048, C:\\Windows\\SystemApps\\Microsoft.LockApp_cw5n1h2txyewy\\LockApp.exe, [N/A]\n24376, C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.928.3736.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe, [N/A]\n26156, [Insufficient Permissions], [N/A]\n26488, C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe, [N/A]\n29776, C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\154806497bb51bae\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe, [N/A]\n33140, C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe, [N/A]\n19048, C:\\Windows\\System32\\ApplicationFrameHost.exe, [N/A]\n13472, C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe, [N/A]\n44384, C:\\Program Files\\WindowsApps\\Microsoft.Edge.GameAssist_1.0.4019.0_x64__8wekyb3d8bbwe\\EdgeGameAssist.exe, [N/A]\n31104, C:\\Windows\\System32\\ShellHost.exe, [N/A]\n1940, C:\\Program Files\\WindowsApps\\Claude_2.19675.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe, [N/A]\n246592, C:\\Program Files\\WindowsApps\\Claude_2.19675.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe, [N/A]\n358476, C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\154806497bb51bae\\bin\\node_modules\\@oai\\sky\\bin\\windows\\codex-computer-use.exe, [N/A]\n365140, [Insufficient Permissions], [N/A]\n520428, C:\\Users\\clclc\\BusinessProject\\Flip Hero\\Builds\\MvpSteam\\FlipHero.exe, [N/A]"
+  },
+  "potential_model_and_gpu_processes": [
+    {
+      "ProcessId": 50664,
+      "ParentProcessId": 245388,
+      "Name": "python.exe",
+      "ExecutablePath": "C:\\Users\\clclc\\AppData\\Local\\Packages\\Claude_pzs8sxrjxfjjc\\LocalCache\\Roaming\\Claude\\Claude Extensions\\ant.dir.gh.blender.blender-mcp\\.venv\\Scripts\\python.exe",
+      "CommandLine": "\"C:\\Users\\clclc\\AppData\\Local\\Packages\\Claude_pzs8sxrjxfjjc\\LocalCache\\Roaming\\Claude\\Claude Extensions\\ant.dir.gh.blender.blender-mcp\\.venv\\Scripts\\python.exe\" \"C:\\Users\\clclc\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.gh.blender.blender-mcp\\.venv\\Scripts\\blender-mcp.exe\"",
+      "WorkingSetSize": 4784128,
+      "CreationDate": "2026-10-01T17:56:15.460963-05:00"
+    },
+    {
+      "ProcessId": 245476,
+      "ParentProcessId": 50664,
+      "Name": "python.exe",
+      "ExecutablePath": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\python.exe",
+      "CommandLine": "\"C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\python.exe\"  \"C:\\Users\\clclc\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.gh.blender.blender-mcp\\.venv\\Scripts\\blender-mcp.exe\"",
+      "WorkingSetSize": 8151040,
+      "CreationDate": "2026-10-01T17:56:15.560266-05:00"
+    },
+    {
+      "ProcessId": 247208,
+      "ParentProcessId": 247288,
+      "Name": "python.exe",
+      "ExecutablePath": "C:\\Users\\clclc\\AppData\\Local\\Packages\\Claude_pzs8sxrjxfjjc\\LocalCache\\Roaming\\Claude\\Claude Extensions\\ant.dir.gh.blender.blender-mcp\\.venv\\Scripts\\python.exe",
+      "CommandLine": "\"C:\\Users\\clclc\\AppData\\Local\\Packages\\Claude_pzs8sxrjxfjjc\\LocalCache\\Roaming\\Claude\\Claude Extensions\\ant.dir.gh.blender.blender-mcp\\.venv\\Scripts\\python.exe\" \"C:\\Users\\clclc\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.gh.blender.blender-mcp\\.venv\\Scripts\\blender-mcp.exe\"",
+      "WorkingSetSize": 4878336,
+      "CreationDate": "2026-10-01T17:56:18.990568-05:00"
+    },
+    {
+      "ProcessId": 247556,
+      "ParentProcessId": 247208,
+      "Name": "python.exe",
+      "ExecutablePath": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\python.exe",
+      "CommandLine": "\"C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\python.exe\"  \"C:\\Users\\clclc\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.gh.blender.blender-mcp\\.venv\\Scripts\\blender-mcp.exe\"",
+      "WorkingSetSize": 15233024,
+      "CreationDate": "2026-10-01T17:56:19.014009-05:00"
+    },
+    {
+      "ProcessId": 524468,
+      "ParentProcessId": 523724,
+      "Name": "python.exe",
+      "ExecutablePath": "C:\\Users\\clclc\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "CommandLine": "\"C:\\Users\\clclc\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe\" -m http.server 8741 --bind 127.0.0.1 --directory SourceArt/DLC",
+      "WorkingSetSize": 22704128,
+      "CreationDate": "2026-10-01T22:48:29.826136-05:00"
+    },
+    {
+      "ProcessId": 522760,
+      "ParentProcessId": 526948,
+      "Name": "python.exe",
+      "ExecutablePath": "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe",
+      "CommandLine": "\"C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe\" SourceArt/DLC/01_Hero_Atelier/tools/atelier.py --all",
+      "WorkingSetSize": 5234688,
+      "CreationDate": "2026-10-01T22:49:36.181328-05:00"
+    },
+    {
+      "ProcessId": 525492,
+      "ParentProcessId": 522760,
+      "Name": "python.exe",
+      "ExecutablePath": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11-windows-x86_64-none\\python.exe",
+      "CommandLine": "\"C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11-windows-x86_64-none\\python.exe\"  SourceArt/DLC/01_Hero_Atelier/tools/atelier.py --all",
+      "WorkingSetSize": 64262144,
+      "CreationDate": "2026-10-01T22:49:36.228773-05:00"
+    },
+    {
+      "ProcessId": 536080,
+      "ParentProcessId": 25308,
+      "Name": "pwsh.exe",
+      "ExecutablePath": "C:\\Users\\clclc\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "CommandLine": "\"C:\\Users\\clclc\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe\" -Command \"try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}\n$auditOut = Join-Path (Get-Location) 'experiments/rineya_centralized_reasoning_system_v1/audits/host_initial.json'\n$osInfo=Get-CimInstance Win32_OperatingSystem\n$memorySamples=@()\n1..3 | ForEach-Object { $osSample=Get-CimInstance Win32_OperatingSystem; $memorySamples += [pscustomobject]@{sampled_at_utc=[DateTime]::UtcNow.ToString('o');total_physical_bytes=[int64]$osSample.TotalVisibleMemorySize*1024;available_physical_bytes=[int64]$osSample.FreePhysicalMemory*1024;available_physical_gib=[math]::Round($osSample.FreePhysicalMemory/1048576,6)} }\n$processes=@(Get-CimInstance Win32_Process | Where-Object {$_.Name -match 'python|torch|nvidia|llama|vllm' -or $_.CommandLine -match 'qualify_native|supervise_native|rineya.*worker|rineya.*supervis' } | Select-Object ProcessId,ParentProcessId,Name,ExecutablePath,CommandLine,WorkingSetSize,CreationDate)\n$gpuSummary=& nvidia-smi --query-gpu=name,uuid,driver_version,memory.total,memory.used,memory.free,utilization.gpu --format=csv,noheader,nounits 2>&1\n$gpuExit=$LASTEXITCODE\n$gpuProcessQuery=& nvidia-smi --query-compute-apps=pid,process_name,used_memory --format=csv,noheader,nounits 2>&1\n$gpuProcessesExit=$LASTEXITCODE\n$gpuProcessTable=& nvidia-smi 2>&1\n$hostRecord=[ordered]@{schema_version=1;audit_kind='current_read_only_host_telemetry_not_launch_admission';sampled_at_utc=[DateTime]::UtcNow.ToString('o');client_date='2026-10-01';client_timezone='America/Chicago';workspace=(Get-Location).Path;os=@{caption=$osInfo.Caption;version=$osInfo.Version;last_boot_utc=$osInfo.LastBootUpTime.ToUniversalTime().ToString('o')};memory_samples=$memorySamples;disks=@(Get-CimInstance Win32_LogicalDisk -Filter 'DriveType = 3' | Select-Object DeviceID,Size,FreeSpace);gpu=@{summary_raw=($gpuSummary -join \\\"`n\\\");summary_exit=$gpuExit;compute_processes_raw=($gpuProcessQuery -join \\\"`n\\\");compute_processes_exit=$gpuProcessesExit;full_table_raw=($gpuProcessTable -join \\\"`n\\\")};potential_model_and_gpu_processes=$processes;model_loads_this_audit=0;native_calls_this_audit=0;training_steps_this_audit=0;telemetry_limitations=@('Three immediate CIM observations; sustained resources and process-tree peaks unmeasured.','Windows WDDM compute-app memory may be N/A; GPU-wide memory and process table must also be inspected.','Process list is a bounded snapshot and cannot prove absence between samples.','No host-wide CRS lease has been reconciled by this read-only audit; launch requires fresh lease and process checks.')}\n$hostRecord | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $auditOut -Encoding utf8\n[pscustomobject]@{output=$auditOut;memory=$memorySamples;gpu=$hostRecord.gpu;model_process_candidates=$processes;disks=$hostRecord.disks} | ConvertTo-Json -Depth 8\"",
+      "WorkingSetSize": 126025728,
+      "CreationDate": "2026-10-01T22:53:30.741478-05:00"
+    }
+  ],
+  "model_loads_this_audit": 0,
+  "native_calls_this_audit": 0,
+  "training_steps_this_audit": 0,
+  "telemetry_limitations": [
+    "Three immediate CIM observations; sustained resources and process-tree peaks unmeasured.",
+    "Windows WDDM compute-app memory may be N/A; GPU-wide memory and process table must also be inspected.",
+    "Process list is a bounded snapshot and cannot prove absence between samples.",
+    "No host-wide CRS lease has been reconciled by this read-only audit; launch requires fresh lease and process checks."
+  ],
+  "metadata_only_runtime_inventory": {
+    "executable": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "python": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "packages": {
+      "torch": "2.10.0+cu126",
+      "transformers": "4.57.1",
+      "safetensors": "0.7.0",
+      "tokenizers": "0.22.2",
+      "psutil": "7.2.2",
+      "numpy": "2.4.6",
+      "pytest": "9.0.2"
+    }
+  },
+  "framework_imported_this_audit": false,
+  "audit_source_sha256": {
+    "experiments/post_training_mimo_centralized_v1/scripts/qualify_native.py": "a0fbbbb67dcb7136270dd01efed16cccffc62b09342863f05d03d845805bf941",
+    "experiments/post_training_mimo_centralized_v1/scripts/stream_checkpoint.py": "434c62698c2e397048db0d88a7959e34d5b8afb93f90cdf86f2aba852922c67f",
+    "experiments/post_training_mimo_centralized_v1/scripts/qualify_capture.py": "53867509693361d92097b4cd7d19aa90cbd91470a45b5d0acd001e3a0cacd3fc",
+    "experiments/post_training_mimo_centralized_v1/scripts/greedy_capture.py": "8cc3d0a4e9e4d9d18b5ef9c7f62142f83f0fb84f1779bed389a7c5d99f8c3492",
+    "experiments/post_training_mimo_centralized_v1/scripts/qualify_native_backend.py": "f775b9df35a498886fc37b5a6d84076f82eea61f92b758afc6421dcd6b41809a",
+    "experiments/post_training_mimo_centralized_v1/scripts/native_training_backend.py": "587696b67614bb674efe3e382be5446708c5402d489273c2e04605012f4030f7",
+    "experiments/post_training_mimo_centralized_v1/scripts/supervise_native.py": "59bb53e2f38da968a910202c6372cd4d77e07dc4182043d6ee713421ea7cce3d",
+    "experiments/post_training_mimo_centralized_v1/RESOURCE_POLICY.md": "a257b742967213b334bb8c5648a391674c99195d84ffe5aac191e9658dcb1258",
+    "experiments/post_training_mimo_centralized_v1/manifests/RETENTION_REQUIREMENTS.json": "f7d57ab03323bb3ab52cfc6d2d5d11fa3756dc1803938ae32f29a1e8c063688a"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "track": "CRS-001",
+  "founding_manifest": "manifest.json",
+  "founding_status_preserved": "DESIGN_RECORDED_EXECUTION_NOT_AUTHORIZED",
+  "authority": "AUTHORIZATION_2026-10-01.md",
+  "status": "IMPLEMENTED_INDEPENDENT_CPU_REPAIR_REVIEW_PENDING",
+  "dag": [
+    {"id": "source_audit", "state": "COMPLETED_SOURCE_BOUND", "receipt": "audits/source_receipt.json"},
+    {"id": "cpu_pipeline", "state": "IMPLEMENTED_REPAIR_REVIEW", "dependencies": ["source_audit"]},
+    {"id": "native_D2", "state": "IMPLEMENTED_GATE_CLOSED", "dependencies": ["cpu_pipeline", "native_independent_review", "host_admission"]},
+    {"id": "native_reader_576", "state": "BLOCKED_EXACT_QUALIFICATION", "dependencies": ["native_D2"]},
+    {"id": "reader_dev16", "state": "DATA_BUILT_NATIVE_NOT_RUN", "dependencies": ["native_reader_576"]},
+    {"id": "procedure_dev64", "state": "CPU_FIXTURE_ONLY_NATIVE_NOT_RUN", "dependencies": ["reader_dev16"]},
+    {"id": "learning_atlas_microstudy", "state": "REGISTERED_TRAINING_QUALIFICATION_CLOSED", "dependencies": ["native_training_qualification"]},
+    {"id": "fresh_confirmation", "state": "NOT_GENERATED", "dependencies": ["valid_selected_candidate", "confirmation_precision_contract"]}
+  ],
+  "scoreboards": {"model_only": "UNMEASURED", "tool_assisted_native": "UNMEASURED", "distilled_model": "UNMEASURED", "CPU": "INFRASTRUCTURE_ONLY"},
+  "incumbent": {"experimental_model": null, "rollback_model": "read_only_source_checkpoint", "pipeline": "source-bound CPU candidate pending independent review"},
+  "central_CHECK": "CLOSED", "central_FINAL": "CLOSED",
+  "canonical_publication": "OWNER_DECISION_REQUIRED",
+  "restart": "CONTINUATION.md"
+}
