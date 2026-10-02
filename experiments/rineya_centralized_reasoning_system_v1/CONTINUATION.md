@@ -246,3 +246,24 @@ activation, generate another key/output or relaunch to obtain a current HEAD mat
 The original owned PID was independently observed gone. Native charge47.421s,
 model forwards4 total and training0 remain unchanged. Whole native reader/runtime,
 maximum576 and sustained gradient/resume/export/retention gates remain closed.
+
+## Conditional acquisition-panel feasibility lane
+
+Read ACQUISITION_PANEL_SCIENTIFIC_SCOPE_1, ACQUISITION_PANEL_OPERATIONAL_SCOPE_1
+and ACQUISITION_PANEL_COORDINATOR_SCOPE_1 before construction. The named LA-I1-002
+gap requires unused acquisition parents outside optimizer exposure. Calling the
+fixed optimizer constructor with new IDs/seeds supplies no such proof. The builder
+owns only acquisition_data.py, tests/test_acquisition_data.py and
+contracts/ACQUISITION_PANEL_V1.json: at most32 planned one-variant open-TRAIN probes,
+source<=8192 bytes,latent<=256 records,canonical<=4096 states,receipt<=8MiB,
+32 oracle/core comparisons plus32 rename checks, one draw/order and no resampling.
+
+This is a feasibility candidate. Actual ancestry and full/query-cone canonical
+checks must reject optimizer renames/siblings/counterfactuals and filler laundering.
+Substantive new trajectory axes may broaden the old fixed template/difficulty;
+register that distinction rather than claim exact matched-template acquisition.
+Original hypothesis and LA-I1-002 stay open pending independent validity review.
+Undersupply/ambiguous/rejected roots remain visible; do not relax proof or enlarge
+the population for a pass. Preserve original optimizer/data/token receipts and
+all native gates. No actual token/model/retention/confirmation operation is in
+this CPU lane, and any source candidate has the same maximum three repair rounds.
