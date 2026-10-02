@@ -55,6 +55,15 @@ class Tests(unittest.TestCase):
             self.assertGreaterEqual(read['policy']['operation_profiles']['dev_cleanup']['wall_s_upper'],read['policy']['physical_wall_seconds_upper'])
             for key,total in read['composition']['permanent_profile_totals_with_actual_wall_and_metadata'].items():
                 self.assertGreaterEqual(entry['bootstrap']['caps'][key],total)
+            parent=read['supervisor_spec'];parent_census=read['supervisor_census']
+            self.assertEqual(set(parent),{'schema','bootstrap','constructor_bounds','resource','current_worker','launch','reader_bounds'})
+            self.assertNotEqual(parent['bootstrap']['owned_directory'],entry['bootstrap']['owned_directory'])
+            self.assertNotEqual(parent_census['metadata_intake_slot'],parent_census['worker_metadata_intake_slot'])
+            self.assertEqual(parent_census['declared_callback_counts']['process_launch'],1)
+            self.assertEqual(parent_census['declared_callback_counts']['process_terminal'],4)
+            self.assertTrue(parent_census['same_handle_terminal_required'])
+            for key,total in parent_census['composition']['permanent_profile_totals_with_actual_wall_and_metadata'].items():
+                self.assertGreaterEqual(parent['bootstrap']['caps'][key],total)
         self.assertFalse(budget['unit_prices_measured']);self.assertFalse(budget['evaluation_authorized'])
         self.assertNotIn('torch',sys.modules);self.assertNotIn('transformers',sys.modules)
 
@@ -62,6 +71,7 @@ class Tests(unittest.TestCase):
         edits=(lambda b:b['reads']['Supa-read-1']['census']['runtime_starts'].update(dev_decode=1949),
             lambda b:b['reads']['Supa-read-1']['declared_callback_counts'].update(dev_decode=1949),
             lambda b:b['reads']['Supa-read-1']['entry_spec']['bootstrap']['caps'].update(read_bytes=1),
+            lambda b:b['reads']['Supa-read-1']['supervisor_spec']['bootstrap']['caps'].update(read_bytes=1),
             lambda b:b['reads']['Supa-read-1']['entry_spec']['training_reader_bounds'].update(io_read_bytes_upper=8388608),
             lambda b:b['reads']['Supa-read-1']['policy']['operation_profiles']['dev_cleanup'].update(wall_s_upper=1),
             lambda b:b.update(unit_prices_measured=True),lambda b:b['reads'].pop('CE375_donor-read-1'))
@@ -73,6 +83,9 @@ class Tests(unittest.TestCase):
         docs=self.documents();config=docs['DEV_ENTRY_CONFIGURATION_DRAFT.json']
         self.assertEqual(set(config),{'schema','context_refs','entry_specs','training_selection','training_selection_sha256','configuration_sha256'})
         self.assertIsNone(config['training_selection'])
+        parent=docs['DEV_SUPERVISOR_CONFIGURATION_DRAFT.json']
+        self.assertEqual(set(parent),{'schema','worker_configuration_ref','scope_receipt_ref','supervisor_specs','configuration_sha256'})
+        self.assertIsNone(parent['worker_configuration_ref'])
         for context in docs['DEV_CONTEXT_DRAFTS.json'].values():
             self.assertFalse(context['evaluation_authorized']);self.assertIsNone(context['model']);self.assertIsNone(context['runtime'])
             self.assertEqual(context['plan']['total_greedy_completions'],9750)
@@ -80,6 +93,8 @@ class Tests(unittest.TestCase):
             refs=registration.write_draft(docs,Path(temp))
             for reference in refs.values():
                 blob=Path(reference['path']).read_bytes();self.assertEqual(hashlib.sha256(blob).hexdigest(),reference['sha256'])
+            parent_file=json.loads(Path(refs['DEV_SUPERVISOR_CONFIGURATION_DRAFT.json']['path']).read_bytes())
+            self.assertEqual(parent_file['scope_receipt_ref'],refs['DEV_RSP_SCOPE_RECEIPT.json'])
             with self.assertRaisesRegex(ValueError,'create-only'):registration.write_draft(docs,Path(temp))
 
 

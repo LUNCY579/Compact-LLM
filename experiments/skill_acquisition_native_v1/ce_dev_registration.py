@@ -21,6 +21,8 @@ SCHEMA = 'CE8-DEV-REGISTRATION-DRAFT-1'
 BUDGET = 'CE8-DEV-EVALUATION-BUDGET-PROPOSAL-1'
 ENTRY = 'CE8-DEV-ENTRY-SPEC-1'
 CONFIG = 'CE8-DEV-SOURCE-CONFIGURATION-1'
+SUPERVISOR = 'CE8-DEV-SUPERVISION-SPEC-1'
+SUPERVISOR_CONFIG = 'CE8-DEV-SUPERVISOR-CONFIGURATION-1'
 ENTRY_KINDS = ('dev_entry_source', 'dev_entry_metadata', 'dev_entry_lease', 'dev_entry_lease_release', 'dev_entry_lease_assert', 'dev_entry_verify')
 WORKER_KINDS = ('worker_os_binding', 'worker_source_verification', 'worker_runtime_binding', 'worker_handle_close', 'worker_handle_duplicate')
 require, canonical, digest = raw.require, raw.canonical, raw.digest
@@ -89,6 +91,63 @@ def _compose(profiles, calls, setup, suffix, physical):
     for key, amount in margins.items(): counters[key] += amount
     caps = {key: 1 << max(0, int(value - 1).bit_length()) for key, value in counters.items()}
     return caps, {'permanent_profile_totals_with_actual_wall_and_metadata': counters, 'self_record_margins': margins}
+
+
+def _supervisor_budget(root, run_name, service, source, physical):
+    """Separate metadata owner for one actual launch and post-exit scoring."""
+    n = len(source['source_files'])
+    profiles = {kind: copy.deepcopy(service['bootstrap']['operation_profiles'][kind]) for kind in WORKER_KINDS}
+    process_kinds = ('process_launch_preflight','process_launch_parent','process_launch','process_launch_child',
+        'process_launch_child_census','process_owned_stop','process_rpc_receive','process_rpc_send','process_terminal')
+    for kind in process_kinds: profiles[kind] = copy.deepcopy(service['bootstrap']['operation_profiles'][kind])
+    profiles.update(resource_probe=copy.deepcopy(service['bootstrap']['operation_profiles']['resource_probe']),
+        resource_cuda_probe=common.profile(wall=5),
+        dev_supervisor_lifetime=common.profile(256 * raw.CHUNK, 64 * raw.CHUNK, 100000, 512 * raw.CHUNK, physical),
+        dev_supervisor_verify=common.profile(0, 0, 64, 64 * raw.MAX_JSON, 5),
+        dev_supervisor_metadata=common.profile(512 * raw.CHUNK, 16 * raw.CHUNK, 512, 1024 * raw.CHUNK, 120),
+        dev_supervisor_publication=common.profile(16 * raw.CHUNK + 1, 8 * raw.CHUNK, 32, 64 * raw.CHUNK, 120),
+        qualification_reducer_overhead=common.profile(0, 0, 2 * service_replay.MAX_EVENTS, 8 * 1024 ** 3, 120),
+        qualification_artifact_readback=common.profile(512 * raw.CHUNK + 1, 0, 1, 512 * raw.CHUNK + 1, 120))
+    # A launch polling bound is finite even when a child never becomes ready.
+    calls = {'process_launch_preflight': 4, 'process_launch_parent': 8, 'process_launch': 1,
+        'process_launch_child': 30000, 'process_launch_child_census': 7200, 'process_owned_stop': 1,
+        'process_rpc_receive': 4, 'process_rpc_send': 2, 'process_terminal': 4,
+        'worker_source_verification': 5 * n + 64, 'worker_os_binding': 128, 'worker_runtime_binding': 16,
+        'worker_handle_close': 32, 'worker_handle_duplicate': 8,
+        'resource_probe': 64, 'resource_cuda_probe': 64,
+        'dev_supervisor_lifetime': 1, 'dev_supervisor_verify': 2 * 128 + 4 * n + 64,
+        'dev_supervisor_metadata': 64, 'dev_supervisor_publication': 1,
+        'qualification_reducer_overhead': 128, 'qualification_artifact_readback': 32}
+    setup = common.profile(64 * raw.CHUNK, 64 * raw.CHUNK, 10000, 256 * raw.CHUNK, 120)
+    suffix = common.profile(8 * 1024 ** 3, 16 * raw.CHUNK, 64, 16 * 1024 ** 3, 120)
+    caps, composition = _compose(profiles, calls, setup, suffix, physical)
+    resource = copy.deepcopy(service['resource']); resource['sample_attempts_upper'] = 64
+    resource['resource_probe']['output_root'] = str(root)
+    resource['host_transient_bytes'].update({kind:64 * raw.CHUNK for kind in profiles})
+    # Worker service/token journals are bounded independently of constructor
+    # metadata. The scorer also reads only the two allowed canonical banks.
+    reader = {'operation_attempts_upper': 256, 'io_read_bytes_upper': 2 * 1024 ** 3,
+        'identity_hash_attempts_upper': 1048576, 'identity_hash_bytes_upper': 32 * 1024 ** 3,
+        'reducer_work_bytes_upper': 128 * 1024 ** 3}
+    return {'schema': SUPERVISOR, 'bootstrap': {'owned_directory': str(root / run_name / 'supervisor-bootstrap'),
+        'operation_profiles':profiles,'setup_bounds':setup,'finalization_bounds':suffix,'caps':caps,
+        'operation_profile_rule':services.INPUT_RESERVATION_RULE,'explicit_reservation_kinds':['input_io'],
+        'physical_wall_seconds_upper':physical},
+        'constructor_bounds':{'read_bytes':128 * raw.CHUNK,'write_bytes':128 * raw.CHUNK,'hash_attempts':20000,
+            'hash_bytes':512 * raw.CHUNK,'metadata_bytes':128 * raw.CHUNK,'operation_attempts':32,'wall_seconds':120},
+        'resource':resource,'current_worker':None,'launch':None,'reader_bounds':reader}, {
+        'declared_callback_counts':calls,'composition':composition,'metadata_intake_slot':'supervisor-' + run_name + '.jsonl',
+        'worker_metadata_intake_slot':run_name + '.jsonl', 'same_handle_terminal_required':True,
+        'source_completed_worker_close_required':True,'scoring_without_model_load':True,
+        'source_verification_arithmetic':{'current_supervisor_sources':2 * n,'launch_pinned_files':n,
+            'owned_child_monitor_sources':2 * n,'python_image_request_and_other_spare':64},
+        'completion_readback_callback_counts':{'qualification_reducer_overhead':96,'qualification_artifact_readback':24},
+        'scoring_callback_counts':{'qualification_reducer_overhead':32,'qualification_artifact_readback':8},
+        'reader_composition':{'completion_read_bytes_upper':1024 * raw.CHUNK,'scoring_read_bytes_upper':592 * raw.CHUNK,
+            'completion_hash_attempts_upper':2 * service_replay.MAX_EVENTS + 20000,'scoring_hash_attempts_upper':5000,
+            'completion_hash_bytes_upper':16 * service_replay.MAX_JOURNAL + 4 * 1024 ** 3,
+            'scoring_hash_bytes_upper':9 * 1024 ** 3,'completion_work_bytes_upper':64 * service_replay.MAX_JOURNAL + 16 * 1024 ** 3,
+            'scoring_work_bytes_upper':32 * 1024 ** 3,'preflights':['service_bootstrap_raw_verifier','completed_DEV_scoring']}}
 
 
 def propose_budget(proposal, documents, current_q_documents, *, output_root):
@@ -180,8 +239,13 @@ def propose_budget(proposal, documents, current_q_documents, *, output_root):
                     'operation_bounds': {'acquire': copy.deepcopy(bootstrap_profiles['dev_entry_lease']),
                         'release': copy.deepcopy(bootstrap_profiles['dev_entry_lease_release']),
                         'assert': copy.deepcopy(bootstrap_profiles['dev_entry_lease_assert'])}}, 'rpc_spec': None}}
+        parent, parent_census = _supervisor_budget(root, run_name, service, source, physical)
+        result['reads'][run_name]['supervisor_spec'] = parent
+        result['reads'][run_name]['supervisor_census'] = parent_census
     result['aggregate_separate_owner_caps'] = {key: sum(read['entry_spec']['bootstrap']['caps'][key] for read in result['reads'].values())
                                                for key in services.COUNTERS}
+    result['aggregate_supervisor_owner_caps'] = {key: sum(read['supervisor_spec']['bootstrap']['caps'][key] for read in result['reads'].values())
+                                                for key in services.COUNTERS}
     return result
 
 
@@ -224,6 +288,17 @@ def build_documents(scope_documents, budget, *, source):
             proposal['entry_spec']['bootstrap']['setup_bounds'], proposal['entry_spec']['bootstrap']['finalization_bounds'],
             proposal['policy']['physical_wall_seconds_upper'])
         require(proposal['entry_spec']['bootstrap']['caps'] == caps, 'no discounted DEV composed owner caps')
+        parent, parent_census = proposal['supervisor_spec'], proposal['supervisor_census']
+        require(set(parent) == {'schema','bootstrap','constructor_bounds','resource','current_worker','launch','reader_bounds'}
+                and parent['schema'] == SUPERVISOR and parent_census['metadata_intake_slot'] != parent_census['worker_metadata_intake_slot'],
+                'separate fixed parent supervisor metadata slot')
+        parent_caps, _ = _compose(parent['bootstrap']['operation_profiles'], parent_census['declared_callback_counts'],
+            parent['bootstrap']['setup_bounds'], parent['bootstrap']['finalization_bounds'], parent['bootstrap']['physical_wall_seconds_upper'])
+        require(parent_caps == parent['bootstrap']['caps'] and parent['bootstrap']['owned_directory'] != entry['bootstrap']['owned_directory']
+                and parent['resource']['sample_attempts_upper'] <= 100000, 'separate finite supervisor owner caps')
+        require(all(parent_census['declared_callback_counts'][kind] == parent_census['completion_readback_callback_counts'][kind]
+                + parent_census['scoring_callback_counts'][kind] for kind in ('qualification_reducer_overhead','qualification_artifact_readback')),
+                'completion and scoring callback reservations compose without reuse')
         contexts[read_id] = {'schema': runtime.CONTEXT, 'evaluation_authorized': False, 'production_training_authorized': False,
             'read_id': read_id, 'request_sha256': None, 'scope_sha256': digest(scope_value), 'scope': copy.deepcopy(scope_value),
             'plan': copy.deepcopy(plan), 'policy': copy.deepcopy(proposal['policy']), 'runtime': None, 'model': None,
@@ -233,6 +308,9 @@ def build_documents(scope_documents, budget, *, source):
         'DEV_ENTRY_CONFIGURATION_DRAFT.json': {'schema': CONFIG, 'context_refs': {name: None for name, _, _ in runtime.RUNS},
             'entry_specs': {name: copy.deepcopy(budget['reads'][name]['entry_spec']) for name, _, _ in runtime.RUNS},
             'training_selection': None, 'training_selection_sha256': None, 'configuration_sha256': None},
+        'DEV_SUPERVISOR_CONFIGURATION_DRAFT.json': {'schema': SUPERVISOR_CONFIG, 'worker_configuration_ref': None, 'scope_receipt_ref': None,
+            'supervisor_specs': {name:copy.deepcopy(budget['reads'][name]['supervisor_spec']) for name, _, _ in runtime.RUNS},
+            'configuration_sha256': None},
         'DEV_REGISTRATION_DRAFT.json': {'schema': SCHEMA, 'approved': False, 'evaluation_authorized': False,
             'dispatch_authorized': False, 'production_training_authorized': False, 'unit_prices_measured': False,
             'source_head_basis': source.get('source_head_basis'), 'source_freeze': False,
@@ -250,6 +328,9 @@ def write_draft(documents, directory):
     directory.mkdir(parents=True, exist_ok=True); refs = {}
     for name, value in documents.items():
         require(Path(name).name == name and name.endswith('.json'), 'fixed DEV metadata filename')
+        if name == 'DEV_SUPERVISOR_CONFIGURATION_DRAFT.json':
+            value = copy.deepcopy(value)
+            value['scope_receipt_ref'] = copy.deepcopy(refs['DEV_RSP_SCOPE_RECEIPT.json'])
         blob = canonical(value) + b'\n'; require(len(blob) <= 8 * raw.CHUNK, 'bounded DEV registration JSON')
         with (directory / name).open('xb') as stream:
             require(stream.write(blob) == len(blob), 'short DEV registration write'); stream.flush(); os.fsync(stream.fileno())

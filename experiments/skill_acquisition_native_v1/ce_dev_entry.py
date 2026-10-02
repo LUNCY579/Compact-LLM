@@ -91,8 +91,15 @@ def _configuration():
 
 
 def _fixed_read_id(argv):
-    parser=argparse.ArgumentParser();parser.add_argument('--read-id',required=True,choices=RUN_IDS)
+    parser=argparse.ArgumentParser();parser.add_argument('--read-id',required=True,choices=RUN_IDS);parser.add_argument('--request')
     return parser.parse_args(argv).read_id
+
+
+def _fixed_request(argv,config,role):
+    parser=argparse.ArgumentParser();parser.add_argument('--read-id',required=True,choices=RUN_IDS);parser.add_argument('--request')
+    args=parser.parse_args(argv)
+    require(args.read_id==role and (args.request is None or Path(args.request)==Path(config['context_refs'][role]['path'])),
+            'request argument must equal source-selected DEV context')
 
 
 def validate_configuration(value):
@@ -111,7 +118,8 @@ def validate_configuration(value):
             for key in services.COUNTERS if key!='wall_seconds') and type(bounds['wall_seconds']) in (int,float)
             and 0<bounds['wall_seconds']<float('inf'),'finite DEV constructor envelope')
         require(spec['worker']['entry_module']==ENTRY_MODULE and spec['worker']['request_ref']==value['context_refs'][role]
-            and spec['worker']['argv'][1:]==['-m',ENTRY_MODULE,'--read-id',role], 'fixed DEV raw context/entry/whole argv')
+            and spec['worker']['argv'][1:]==['-m',ENTRY_MODULE,'--request',value['context_refs'][role]['path'],'--read-id',role],
+            'fixed DEV raw context/entry/whole argv')
         rpc.validate_spec(spec['rpc_spec'])
         reader=spec['training_reader_bounds']
         require(type(reader) is dict and set(reader)==set(raw.BUDGET_FIELDS)
@@ -365,6 +373,7 @@ def serve_read(pipe,proof,read):
 
 def main(argv=None):
     config=_configuration();role=_fixed_read_id(sys.argv[1:] if argv is None else argv)
+    _fixed_request(sys.argv[1:] if argv is None else argv,config,role)
     worker._REGISTERED_METADATA_VERIFIERS|=frozenset((metadata_verifier,))
     runtime._REGISTERED_DEV_VERIFIERS|=frozenset((dev_verifier,))
     services._REGISTERED_BOOTSTRAP_PREPAYMENT_TYPES|=frozenset((DevConstructorPrepayment,))

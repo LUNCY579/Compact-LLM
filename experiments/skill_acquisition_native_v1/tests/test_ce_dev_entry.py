@@ -32,6 +32,12 @@ def metadata_owner(directory):
 
 
 class Tests(unittest.TestCase):
+    def test_request_argument_cannot_select_another_metadata_path(self):
+        role=e.RUN_IDS[0];path=str(Path(tempfile.gettempdir())/'fixed-context.json')
+        config={'context_refs':{role:{'path':path}}}
+        args=['--request',path,'--read-id',role]
+        self.assertEqual(e._fixed_read_id(args),role);e._fixed_request(args,config,role)
+        with self.assertRaisesRegex(ValueError,'source-selected'):e._fixed_request(['--request',path+'.other','--read-id',role],config,role)
     def test_default_closed_before_files_and_false_historical_pin(self):
         before=set(sys.modules)&{'torch','numpy','transformers','safetensors'}
         with patch.object(Path,'open',side_effect=AssertionError('unadmitted IO')):
