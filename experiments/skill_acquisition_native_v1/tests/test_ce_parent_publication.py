@@ -283,7 +283,8 @@ class Tests(unittest.TestCase):
             ref={'path':str(self.root/(branch+'.json')),'sha256':'f'*64,'bytes':10}
             branch_refs[branch]=ref;branch_bindings[branch]=child;terminal_refs[branch]=dict(ref,path=str(self.root/(branch+'-terminal.json')))
             terminal_proofs[branch]=terminal
-            records[branch]={'handle':handle,'binding':child,'proof':{'view':branch},'terminal':terminal,'raw_ref':terminal_refs[branch]}
+            records[branch]={'handle':handle,'binding':child,'proof':{'view':branch},'terminal':terminal,'raw_ref':terminal_refs[branch],
+                'terminal_observed_monotonic':100.0+index}
         owner.terminal_handle_records=records;owner.retained_terminal_handles=lambda:handles
         attempt={'stage':'checkpoint_resume','attempt_id':'original-cp','status':'RETURNED','evidence':{'raw_refs':[{'path':'bundle','bytes':10}]}}
         state=SimpleNamespace(attempts=[attempt]);attempt_workers={'original-cp':self.proof['worker_identity_sha256']}
@@ -301,6 +302,7 @@ class Tests(unittest.TestCase):
                 branch=next(name for name in records if records[name]['raw_ref']==ref)
                 return {'schema':'CE8-CHECKPOINT-RETAINED-TERMINAL-1','branch':branch,'binding':records[branch]['binding'],
                     'worker_proof':records[branch]['proof'],'terminal_proof':records[branch]['terminal'],
+                    'terminal_observed_monotonic':records[branch]['terminal_observed_monotonic'],
                     'native_qualified':False,'execution_verified':False}
             return {}
         def raw_child(reader,ref,child):

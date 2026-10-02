@@ -68,7 +68,7 @@ class SupervisionTests(unittest.TestCase):
         service = object.__new__(services.NativeControllerServices)
         service.request = {'scope_ref': {'sha256': 'b' * 64}}
         service.spec = {'approved_code_sha256': {'source.py': 'a' * 64}, 'supervision': {
-            'schema': supervisor.SPEC, 'owned_directory': str(Path(tempfile.gettempdir())), 'max_json_bytes': 1000}}
+            'schema': supervisor.SPEC, 'owned_directory': str(Path(tempfile.gettempdir())), 'max_json_bytes': 1000, 'finalizer': {}}}
         service._admit = lambda: None; service.operation = object(); service.gate = SimpleNamespace(launch=lambda: events.append('launch_floor'))
         service.bootstrap = SimpleNamespace(snapshot=lambda: {'prefix': 'fixture'})
         service.constructor_prepayment = SimpleNamespace(reference={'path': 'fixture'})
@@ -107,7 +107,7 @@ class SupervisionTests(unittest.TestCase):
         service = object.__new__(services.NativeControllerServices)
         service.request = {'scope_ref': {'sha256': 'b' * 64}}
         service.spec = {'approved_code_sha256': {'source.py': 'a' * 64}, 'supervision': {
-            'schema': supervisor.SPEC, 'owned_directory': str(Path(tempfile.gettempdir())), 'max_json_bytes': 1000}}
+            'schema': supervisor.SPEC, 'owned_directory': str(Path(tempfile.gettempdir())), 'max_json_bytes': 1000, 'finalizer': {}}}
         service._admit = lambda: None; service.operation = object(); service.gate = SimpleNamespace(launch=lambda: None)
         spec = {'worker_module': supervisor.ENTRY_MODULE, 'request_sha256': services.digest(services.controller.request_preimage(service.request)),
                 'scope_sha256': 'b' * 64, 'approved_code_sha256': service.spec['approved_code_sha256']}

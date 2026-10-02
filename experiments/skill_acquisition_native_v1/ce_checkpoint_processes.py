@@ -448,6 +448,13 @@ class CheckpointProcesses:
                     and all(terminal[key] == terminal_proof[key] for key in
                         ('worker_identity_sha256', 'request_sha256', 'scope_sha256', 'exit_code', 'exit_filetime_100ns')),
                     'actual same-handle successful checkpoint child terminal')
+            with self.reader._overhead('checkpoint_child_terminal_clock_observation',
+                    work_bytes=raw.MAX_JSON, hash_attempts=1, hash_bytes=raw.MAX_JSON):
+                terminal_observed_monotonic = time.monotonic()
+                require(math.isfinite(terminal_observed_monotonic) and terminal_observed_monotonic >= self.started,
+                        'actual child terminal observation uses original monotonic clock')
+            child_final_cost_clock_ref = self._file_ref(
+                initializer.child_directory(self.context, plan['branch']) / 'CHILD_FINAL_COST_CLOCK.json', raw.MAX_JSON)
             require(type(response) is dict and type(response.get('raw_artifact')) is dict,
                     'raw checkpoint branch artifact response; flags do not prove execution')
             binding = {'stage': 'checkpoint_resume', 'request_sha256': self.context['request_sha256'],
@@ -474,7 +481,8 @@ class CheckpointProcesses:
                 'payload': {'path': manifest['payload']['path'], 'sha256': manifest['payload']['file_sha256'], 'bytes': manifest['payload']['bytes']}}
             result = {'branch': plan['branch'], 'binding': binding, 'raw_ref': response['raw_artifact'],
                 'manifest': manifest, 'manifest_ref': payload['final_manifest_ref'], 'store_refs': refs,
-                'terminal_proof': terminal_proof, 'reduction': reduced, 'native_qualified': False}
+                'terminal_proof': terminal_proof, 'reduction': reduced, 'native_qualified': False,
+                'child_final_cost_clock_ref': child_final_cost_clock_ref}
             require(plan['branch'] not in self.terminal_handle_records, 'retain each actual terminal branch monitor once')
             final_clone = owned.monitor.retain_terminal()
             try:
@@ -484,9 +492,11 @@ class CheckpointProcesses:
                 terminal_ref = self.write_json(initializer.child_directory(self.context, plan['branch']) / 'RETAINED_TERMINAL.json',
                     {'schema': 'CE8-CHECKPOINT-RETAINED-TERMINAL-1', 'branch': plan['branch'], 'binding': binding,
                         'worker_proof': unit['live_proof'], 'terminal_proof': retained_terminal,
+                        'terminal_observed_monotonic': terminal_observed_monotonic,
                         'native_qualified': False, 'execution_verified': False})
                 self.terminal_handle_records[plan['branch']] = {'handle': final_clone, 'binding': copy.deepcopy(binding),
-                    'proof': copy.deepcopy(unit['live_proof']), 'terminal': copy.deepcopy(retained_terminal), 'raw_ref': terminal_ref}
+                    'proof': copy.deepcopy(unit['live_proof']), 'terminal': copy.deepcopy(retained_terminal), 'raw_ref': terminal_ref,
+                    'terminal_observed_monotonic': terminal_observed_monotonic}
             except BaseException as error:
                 try: final_clone.close()
                 except BaseException as closing: raw._accounting(error, closing); raise error from closing
@@ -590,6 +600,7 @@ class CheckpointProcesses:
             'parent_binding': binding, 'parent_ledger_refs': parent['ledger_refs'], 'parent_manifest_ref': parent['manifest_ref'],
             'parent_restore_record': self.restore_record, 'child_terminal_proofs': terminal_proofs,
             'child_terminal_refs': {key: value['raw_ref'] for key, value in self.terminal_handle_records.items()},
+            'child_final_cost_clock_refs': {value['branch']: value['child_final_cost_clock_ref'] for value in results},
             'parent_post_restore_snapshot_ref': post_refs['seal'], 'parent_post_restore_ledger_refs': post_refs,
             'outer_prepayment': self.handle.evidence,
             'native_qualified': False, 'execution_verified': False, 'classification': 'actual retained branch/replay/byte proofs; native qualification registry remains closed'}

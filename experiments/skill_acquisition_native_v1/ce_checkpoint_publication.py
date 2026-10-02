@@ -5,6 +5,7 @@ must independently verify termination. This source issues no native authority.
 """
 from __future__ import annotations
 
+import copy
 import hashlib
 import os
 from pathlib import Path
@@ -18,7 +19,73 @@ from . import ce_qualification_accounting as accounting, ce_execution_verifier a
 SPEC = 'CE8-CHECKPOINT-BRANCH-PUBLICATION-SPEC-1'
 RETAINED = 'CE8-CHECKPOINT-RETAINED-BRANCH-1'
 RESULT = 'CE8-CHECKPOINT-WORKER-RESULT-1'
+FINAL_COST_CLOCK = 'CE8-CHECKPOINT-CHILD-FINAL-COST-CLOCK-1'
+MAX_FINAL_COST_CLOCK = 512 * 1024
 require, digest, canonical = raw.require, raw.digest, raw.canonical
+
+
+def retain_child_final_cost_clock(entry):
+    """End original child owners after owned cleanup; never rewrites body refs.
+
+    Final footer work uses the permanent service finalization reservation. No
+    operation can start on an ended ledger; raw evidence remains unqualified.
+    """
+    from . import ce_native_services as services, ce_checkpoint_configuration as configuration
+    require(type(entry) is dict and type(entry.get('source_service_runtime')) is services.NativeControllerServices
+            and type(entry.get('child_scope_bootstrap')) is boot.BootstrapAccounting,
+            'actual original child scope/service accounting owners')
+    context, proof, request = entry['child_final_context'], entry['child_final_proof'], entry['child_final_request']
+    runtime, outer = entry['source_service_runtime'], entry['child_scope_bootstrap']
+    require(outer.context is context and outer.proof == proof and runtime.spec == entry['service_spec']
+            and entry['entry_prepayment'].status == 'RETURNED'
+            and all(value is None or value.closed for value in
+                (entry.get('worker_handle'), entry.get('parent_handle'), entry.get('prefix_handle'))),
+            'all original child handles/payment cleanup must finish before clock closure')
+    spec = runtime.bootstrap.spec
+    profile = services._profile(spec.get('finalization_bounds', spec['setup_bounds']))
+    require(profile['write_bytes_upper'] >= 2 * MAX_FINAL_COST_CLOCK + 1024 ** 2
+            and profile['read_bytes_upper'] >= 2 * MAX_FINAL_COST_CLOCK + 3 * 1024 ** 2
+            and profile['identity_hash_attempts_upper'] >= 8
+            and profile['identity_hash_bytes_upper'] >= 4 * MAX_FINAL_COST_CLOCK + 3 * 1024 ** 2,
+            'full final child footer write/hash/readback paid before owner end')
+    require(configuration._EVIDENCE is not None, 'actual source configuration intake evidence retained')
+    constructor = runtime.constructor_prepayment.evidence
+    outer.end(); scope_evidence = outer.inspect_evidence()
+    require(scope_evidence['snapshot']['body_completed'], 'all native child setup/publication tickets must return before footer')
+    runtime.bootstrap.end(); service_evidence = runtime.bootstrap.inspect_evidence()
+    footer = {'schema': FINAL_COST_CLOCK, 'branch': request['branch'],
+        'request_sha256': context['request_sha256'], 'scope_sha256': context['scope_sha256'],
+        'static_recipe_sha256': context['static_recipe_sha256'], 'worker_proof': copy.deepcopy(proof),
+        'branch_ref': copy.deepcopy(entry['child_result']['raw_artifact']),
+        'child_context_sha256': digest(authority.context_preimage(context)),
+        'scope_bootstrap_evidence': scope_evidence, 'service_bootstrap_evidence': service_evidence,
+        'service_specification': copy.deepcopy(entry['service_spec']), 'constructor_prepayment': constructor,
+        'entry_payment': copy.deepcopy(entry['entry_prepayment'].evidence),
+        'configuration_ref': copy.deepcopy(configuration._EVIDENCE['configuration_ref']),
+        'configuration_intake_evidence': copy.deepcopy(configuration._EVIDENCE),
+        'native_qualified': False, 'execution_verified': False, 'os_terminal_verified': False,
+        'classification': 'ended original child costs/clocks; separate parent retained terminal proof required'}
+    runtime.bootstrap._check_suffix()
+    blob = canonical(footer) + b'\n'
+    require(len(blob) <= MAX_FINAL_COST_CLOCK
+            and len(blob) + len(canonical(service_evidence['snapshot'])) + 1 <= 1024 ** 2,
+            'bounded child footer and service seal fit original metadata reservation')
+    path = Path(context['bindings']['scope']['checkpoint_qualification']['owned_directory']) / 'children' / request['branch'] / 'CHILD_FINAL_COST_CLOCK.json'
+    owner = Path(context['bindings']['scope']['native_backend']['output_directory'])
+    require(path.resolve().is_relative_to(owner.resolve()) and not path.is_symlink() and not os.path.lexists(path),
+            'create-only exact owned child final cost clock path')
+    temporary = path.parent / (path.name + '.' + uuid.uuid4().hex + '.partial')
+    with temporary.open('xb') as stream:
+        require(stream.write(blob) == len(blob), 'short child final cost clock write'); stream.flush(); os.fsync(stream.fileno())
+    with temporary.open('rb') as stream: observed = stream.read(len(blob) + 1)
+    require(observed == blob, 'child final cost clock temporary readback')
+    publication._atomic_no_replace(temporary, path, path.parent)
+    with path.open('r+b') as stream: os.fsync(stream.fileno()); observed = stream.read(len(blob) + 1)
+    require(observed == blob, 'child final cost clock final readback')
+    reference = {'path': str(path), 'sha256': hashlib.sha256(blob).hexdigest(), 'bytes': len(blob)}
+    runtime.bootstrap._check_suffix(); outer._check_final_suffix()
+    entry['child_final_cost_clock_ref'] = reference
+    return reference
 
 
 def publication_specification(context):

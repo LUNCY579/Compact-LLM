@@ -248,7 +248,9 @@ def _replay_retained_checkpoint_children(publisher,context,ledger,result,owner):
             child_issuer.validate_parent_view(child['lineage']['child_proof'],record['proof'])
         observed=execution._read_json(publisher.reader,record['raw_ref'],binding,'checkpoint_retained_terminal')
         expected={'schema':'CE8-CHECKPOINT-RETAINED-TERMINAL-1','branch':branch,'binding':record['binding'],
-            'worker_proof':record['proof'],'terminal_proof':record['terminal'],'native_qualified':False,'execution_verified':False}
+            'worker_proof':record['proof'],'terminal_proof':record['terminal'],
+            'terminal_observed_monotonic':record['terminal_observed_monotonic'],
+            'native_qualified':False,'execution_verified':False}
         require(observed==expected and payload['child_terminal_proofs'][branch]==record['terminal'],
                 'raw retained child terminal proof differs from exact original owner/bundle')
         handle=handles[record['binding']['worker_identity_sha256']]
@@ -257,7 +259,8 @@ def _replay_retained_checkpoint_children(publisher,context,ledger,result,owner):
         require(actual==record['terminal'] and type(actual.get('exit_code')) is int and actual['exit_code']==0
                 and actual.get('status_file_used') is False,'actual successful same-handle child terminal/source binding')
         terminal_results[branch]={'binding':copy.deepcopy(record['binding']),'terminal_ref':copy.deepcopy(record['raw_ref']),
-            'terminal_proof':copy.deepcopy(actual),'child_derived_reservations':copy.deepcopy(child['derived_costs'])}
+            'terminal_proof':copy.deepcopy(actual),'child_derived_reservations':copy.deepcopy(child['derived_costs']),
+            'terminal_observed_monotonic':record['terminal_observed_monotonic']}
     return {'schema':'CE8-PARENT-CHILD-TERMINAL-REPLAY-1','status':'UNQUALIFIED_CHILD_EVIDENCE_REPLAY',
         'parent_ledger_refs':copy.deepcopy(refs),'checkpoint_bundle_ref':copy.deepcopy(attempt['evidence']['raw_refs'][0]),
         'child_terminal_results':terminal_results,'child_os_terminal_verified':True,'parent_os_terminal_verified':False,

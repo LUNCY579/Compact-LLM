@@ -217,6 +217,12 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
         'production_training_authorized':False,'evaluation_authorized':False,'arm':'canonical','choice_sha256':decision_ref['sha256'],
         'static_recipe_sha256':proposal['static_recipe_sha256'],'native_execution_stages':sorted(authority.STAGES),
         'allowed_data_roles':['train'],'likelihood_tolerance_nats':.0001,
+        'qualification_claim_scope':{'native_numerical_mechanics':True,'native_checkpoint_and_delta_bytes':True,
+            'native_resource_fit':True,'cost_basis':'permanent finite hard upper reservations',
+            'measured_operation_kinds':['resource_probe','resource_cuda_probe'],
+            'measured_io_scope':'tracked Python file IO and registered resource probes',
+            'unit_prices_measured':False,'full_model_checkpoint_os_unit_prices':'NOT_MEASURED',
+            'production_training_authorized':False},
         'gradient_reference':copy.deepcopy(proposal['qualification']['criteria']['likelihood_gradient_parity']['gradient_reference']),
         'native_backend':model,'qualifier_resources':probe,
         'qualifier_execution':{'schema':executor.SCHEMA,'all_witness_ids':witness,'gradient_batch_ids':gradient,'adam_batches':batches,
@@ -307,10 +313,22 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
     service_profiles['worker_source_verification']['write_bytes_upper']=0
     for kind in ('process_owned_stop','process_rpc_receive','process_rpc_send','process_terminal'):
         service_profiles[kind]['wall_s_upper']=19200
+    service_profiles['qualification_finalizer_constructor']=profile(8*MIB,4*MIB,512,256*MIB,120)
+    finalizer_bounds=dict(costs(256*GIB,GIB,10000000,2048*GIB,GIB,100000,7200),
+                          reducer_work_bytes_upper=4096*GIB)
+    finalizer_suffix=dict(costs(128*MIB,4*MIB,32,256*MIB,4*MIB,1000,120),
+                          reducer_work_bytes_upper=GIB)
+    finalizer_reader={'operation_attempts_upper':100000,'io_read_bytes_upper':256*GIB,
+        'identity_hash_attempts_upper':10000000,'identity_hash_bytes_upper':2048*GIB,
+        'reducer_work_bytes_upper':4096*GIB}
     service={'schema':'CE8-NATIVE-CONTROLLER-SERVICES-1','approved_code_sha256':source['code_sha256'],
         'role_descriptors':{},'physical_deadline_seconds':19200,
         'supervision':{'schema':'CE8-QUALIFICATION-SUPERVISION-SPEC-1',
-            'owned_directory':str(output_root/'supervision'),'max_json_bytes':4*MIB},
+            'owned_directory':str(output_root/'supervision'),'max_json_bytes':4*MIB,
+            'finalizer':{'schema':'CE8-QUALIFICATION-FINALIZER-SPEC-1',
+                'owned_directory':str(output_root/'supervision/finalization'),'max_receipt_bytes':4*MIB,
+                'physical_wall_seconds_upper':7200,'self_bounds':finalizer_bounds,
+                'finalization_bounds':finalizer_suffix,'reader_bounds':finalizer_reader}},
         'constructor_prepayment':{'schema':'CE8-SERVICE-CONSTRUCTOR-PREPAYMENT-1',
             'owned_directory':str(output_root/'service-bootstrap'),
             'source_verifier_bounds':{'hash_attempts':5,'hash_bytes':32*MIB},
@@ -322,7 +340,7 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
             'explicit_reservation_kinds':['input_io','worker_source_verification'],
             'input_io_row_wall_s_upper':5,
             'physical_wall_seconds_upper':19200,
-            'finalization_bounds':profile(128*MIB,4*MIB,32,256*MIB,120),
+            'finalization_bounds':profile(128*MIB,16*MIB,32,256*MIB,120),
             'operation_profiles':service_profiles,'caps':{'read_bytes':64*GIB,'write_bytes':4*GIB,'hash_attempts':2000000,
                 'hash_bytes':256*GIB,'metadata_bytes':4*GIB,'operation_attempts':100000,'wall_seconds':512000}},
         'resource':{'limits':limits,'resource_probe':probe,

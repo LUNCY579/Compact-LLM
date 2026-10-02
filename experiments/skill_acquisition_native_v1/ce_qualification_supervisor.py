@@ -121,7 +121,7 @@ def main():
     service_permit = services.ControllerServicePermit(configuration['request'], spec, sys.modules[__name__], supervisor_service_verifier)
     service = services.NativeControllerServices(configuration['request'], service_permit, spec)
     budget = worker._Budget({'bounds': spec['scope_adapters']['worker']['bounds']}, service.operation)
-    api = budget.run('worker_os_binding', worker._WindowsOS); current = None; result = None; primary = None
+    api = budget.run('worker_os_binding', worker._WindowsOS); current = None; result = None; primary = None; final_owner = None
     try:
         def open_current():
             nonlocal current
@@ -135,14 +135,25 @@ def main():
         service._qualification_launch_spec = copy.deepcopy(prepared)
         permit = launch.NativeLaunchPermit(prepared, service, supervisor_launch_verifier, service.operation)
         result = supervise_qualification(service, prepared, permit)
-        # The current helper retains a real terminal clone for independent
-        # consumers. Close it before finalizing its original metadata owner.
+        from .ce_finalizer_accounting import FinalizerCostOwner
+        from . import ce_qualification_finalizer as finalizer
+        final_owner = FinalizerCostOwner(service)
+        verified = finalizer.verify_supervision(service, result, final_owner)
         result['terminal_handle'].close(); result['terminal_handle'] = None
-        service.bootstrap.end(); final = service.bootstrap.inspect_evidence()
-        result['supervisor_final_evidence'] = final
+        ended = final_owner.observe_supervisor_end(service)
+        result['supervisor_final_evidence'] = ended.evidence
+        candidate = finalizer.consume_verified(verified, ended)
+        costs = final_owner.close_and_seal()
+        result['qualification_finalization'] = finalizer.finish_cost_seal(candidate, final_owner, costs)
+        result['finalizer_cost_evidence'] = costs
         print(worker.canonical({k: v for k, v in result.items() if k != 'terminal_handle'}).decode('ascii'))
         return 0
-    except BaseException as error: primary = error; raise
+    except BaseException as error:
+        primary = error
+        if final_owner is not None:
+            try: final_owner.fail(primary)
+            except BaseException as failure: local.raw._accounting(primary, failure); raise primary from failure
+        raise
     finally:
         if current is not None:
             try: api.close(current)
@@ -298,7 +309,7 @@ def supervise_qualification(service, launch_spec, launch_permit):
             and launch_spec['approved_code_sha256'] == service.spec['approved_code_sha256'],
             'supervisor can launch only the exact admitted qualification entry/request/source')
     policy = service.spec.get('supervision')
-    require(type(policy) is dict and set(policy) == {'schema', 'owned_directory', 'max_json_bytes'}
+    require(type(policy) is dict and set(policy) == {'schema', 'owned_directory', 'max_json_bytes', 'finalizer'}
             and policy['schema'] == SPEC and type(policy['max_json_bytes']) is int
             and 0 < policy['max_json_bytes'] <= 4 * 1024 ** 2, 'explicit bounded supervisor publication policy')
     owned = retained = None; primary = None; completed = False
@@ -349,8 +360,11 @@ def supervise_qualification(service, launch_spec, launch_permit):
                 'production_training_authorized': False, 'status_file_used': False}
         reference = _retain(service, policy, envelope)
         completed = True
-        return {'raw_artifact': reference, 'terminal_handle': retained, 'envelope': envelope,
-                'native_qualified': False, 'execution_verified': False}
+        result = {'raw_artifact': reference, 'terminal_handle': retained, 'envelope': envelope,
+                  'native_qualified': False, 'execution_verified': False}
+        require(getattr(service, '_qualification_supervision_result', None) is None, 'one source-owned qualification supervision result')
+        service._qualification_supervision_result = result
+        return result
     except BaseException as error: primary = error; raise
     finally:
         failure = None

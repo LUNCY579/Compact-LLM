@@ -343,7 +343,10 @@ class LocalCheckpointIssuer:
                 {'accounting_spec_sha256': digest(spec), 'prepared_receipt_sha256':
                  entry['context']['bindings']['scope']['qualifier_accounting']['ingestion_receipt_sha256']})
             return self._run_entry(entry, spec, proof, handler_type, command_validator)
-        return entry_lifetime(payment, validate_and_run, close_entry)
+        result = entry_lifetime(payment, validate_and_run, close_entry)
+        from .ce_checkpoint_publication import retain_child_final_cost_clock
+        retain_child_final_cost_clock(entry)
+        return result
 
     def _run_entry(self, entry, spec, proof, handler_type, command_validator):
         operation, gate, handle = entry['operation'], entry['gate'], entry['worker_handle']
@@ -400,7 +403,11 @@ class LocalCheckpointIssuer:
             services = _paid(bootstrap_operation, spec['operation_bounds'], 'input_io', lambda:
                 self._services(entry, context, permit, proof, request))
             handler = handler_type(context, permit, entry['observation_permit'], handle, entry['prepared'], services)
-            return handler.run(request, command)
+            result = handler.run(request, command)
+            entry['child_result'] = result
+            entry['child_final_context'], entry['child_final_proof'] = context, copy.deepcopy(proof)
+            entry['child_final_request'] = copy.deepcopy(request)
+            return result
         try: return pipe.serve(request, run)
         finally:
             self._active_entry = self._active_context = self._active_proof = None
@@ -411,9 +418,12 @@ class LocalCheckpointIssuer:
         from . import ce_checkpoint_initializer as initializer, ce_checkpoint_publication as publication
         from . import ce_checkpoint_lease as lease
         outer = boot.BootstrapAccounting(context, permit, proof, native_issuer=_BOOTSTRAP_ISSUER)
+        entry['child_scope_bootstrap'] = outer
         receipt = entry['prepared'].receipt; spec = accounting.accounting_specification(context)
         owner = context['checkpoint_child_accounting']['owner']
-        payment = outer.reserve_setup(owner, spec['setup_bounds'])
+        setup_bounds = accounting._price(spec['setup_bounds'])
+        setup_bounds['metadata_bytes_upper'] = 2 * accounting.MAX_LINE
+        payment = outer.reserve_setup(owner, setup_bounds)
         cap = accounting.CheckpointChildAdmission(context, permit, proof,
                 context['checkpoint_child_observed_lineage'], verifier=_PREDECESSOR_VERIFIER)
         reader = raw.RawEvidenceReader(entry['operation'], context['bindings']['scope']['checkpoint_qualification']['child_initializer']['reader_bounds'],

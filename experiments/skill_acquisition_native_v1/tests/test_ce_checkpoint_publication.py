@@ -125,5 +125,53 @@ class Tests(unittest.TestCase):
             p.publication_specification(self.context)
         self.assertEqual(self.context['bindings']['scope'], common)
 
+    def final_entry(self):
+        from experiments.skill_acquisition_native_v1 import ce_bootstrap_accounting as boot, ce_native_services as services
+        from .test_ce_native_services import bootstrap_spec
+        serial = getattr(self, '_footer_case', 0) + 1; self._footer_case = serial
+        self.context['bindings']['scope']['qualifier_bootstrap']['owned_directory'] = str(self.root / ('final-bootstrap-' + str(serial)))
+        outer = boot.BootstrapAccounting(self.context, None, self.proof)
+        owner = {'accounting_spec_sha256': 'a' * 64, 'prepared_receipt_sha256': self.receipt['receipt_sha256']}
+        ticket = outer.reserve_setup(owner, dict.fromkeys(boot.COST_FIELDS, 1000)); ticket.begin(); ticket.complete()
+        source_spec = bootstrap_spec(self.root / ('service-final-' + str(serial)))
+        source_spec['caps'].update(read_bytes=10**9, write_bytes=10**9, hash_attempts=100000,
+            hash_bytes=10**9, metadata_bytes=10**9, operation_attempts=10000, wall_seconds=10000)
+        source_spec['finalization_bounds'] = {'read_bytes_upper': 128 * 1024 ** 2, 'write_bytes_upper': 16 * 1024 ** 2,
+            'identity_hash_attempts_upper': 32, 'identity_hash_bytes_upper': 256 * 1024 ** 2, 'wall_s_upper': 120}
+        service = services.BootstrapLedger(source_spec, self.context['request_sha256'], synthetic_fixture=True)
+        runtime = object.__new__(services.NativeControllerServices)
+        runtime.bootstrap, runtime.spec = service, {'bootstrap': source_spec}
+        runtime.constructor_prepayment = SimpleNamespace(evidence={'native_qualified': False, 'reservation_ref': {'fixture': True}})
+        payment = SimpleNamespace(status='RETURNED', evidence={'status': 'RETURNED', 'native': False})
+        path = self.root / 'checkpoints' / 'children' / 'prefix'; path.mkdir(parents=True, exist_ok=True)
+        return {'source_service_runtime': runtime, 'child_scope_bootstrap': outer, 'service_spec': runtime.spec,
+            'entry_prepayment': payment, 'worker_handle': SimpleNamespace(closed=True), 'parent_handle': SimpleNamespace(closed=True),
+            'child_final_context': self.context, 'child_final_proof': self.proof, 'child_final_request': {'branch': 'prefix'},
+            'child_result': {'raw_artifact': {'path': str(path / 'branch.json'), 'sha256': 'b' * 64, 'bytes': 100}}}
+
+    def test_actual_child_footer_ends_both_original_clocks_after_cleanup_and_retains_refs(self):
+        from experiments.skill_acquisition_native_v1 import ce_checkpoint_configuration as configuration
+        entry = self.final_entry()
+        with patch.object(configuration, '_EVIDENCE', {'configuration_ref': {'path': str(self.root / 'config.json'), 'sha256': 'c' * 64, 'bytes': 100}}), \
+                patch.object(p.publication, '_atomic_no_replace', self.link):
+            ref = p.retain_child_final_cost_clock(entry)
+        body = p.raw._json(Path(ref['path']).read_bytes())
+        self.assertEqual(body['schema'], p.FINAL_COST_CLOCK)
+        self.assertTrue(body['scope_bootstrap_evidence']['snapshot']['clock_recorded_end'])
+        self.assertTrue(body['service_bootstrap_evidence']['snapshot']['clock_ended'])
+        self.assertEqual(body['branch_ref'], entry['child_result']['raw_artifact'])
+        self.assertFalse(body['os_terminal_verified']); self.assertFalse(body['native_qualified'])
+        self.assertEqual(body['child_context_sha256'], p.digest(p.authority.context_preimage(self.context)))
+        self.assertLessEqual(ref['bytes'], p.MAX_FINAL_COST_CLOCK)
+
+    def test_unclosed_handle_or_short_finalization_budget_denies_before_clock_end(self):
+        for condition in ('handle', 'budget'):
+            entry = self.final_entry()
+            if condition == 'handle': entry['worker_handle'].closed = False
+            else: entry['source_service_runtime'].bootstrap.spec['finalization_bounds']['write_bytes_upper'] = 1
+            with self.subTest(condition=condition), self.assertRaises(ValueError): p.retain_child_final_cost_clock(entry)
+            self.assertFalse(entry['child_scope_bootstrap'].closed)
+            self.assertFalse(entry['source_service_runtime'].bootstrap.sealed)
+
 
 if __name__ == '__main__': unittest.main()

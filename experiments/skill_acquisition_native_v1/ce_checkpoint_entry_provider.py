@@ -430,6 +430,7 @@ class CheckpointEntryProvider:
                 'gate': runtime.gate, 'observer': runtime.observer(common), 'prepared': prepared,
                 'prefix_factory': prefix_factory, 'metadata_service_permit': service_permit,
                 'controller_request': configuration['controller_request'], 'service_spec': configuration['service_spec'],
+                'source_service_runtime': runtime,
                 'source_service_bootstrap': runtime.bootstrap.snapshot()}
         except BaseException as primary:
             for handle in reversed(handles):
