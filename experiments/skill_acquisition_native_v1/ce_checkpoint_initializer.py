@@ -18,6 +18,7 @@ from . import ce_native_authority as authority, ce_qualification_artifacts as ra
 from . import ce_qualification_accounting as accounting, ce_execution_verifier as replay
 from . import ce_checkpoint_qualification as cp, ce_checkpoint_worker as worker
 from . import ce_bootstrap_accounting as bootstrap
+from .ce_checkpoint_local_issuer import validate_parent_view
 
 SPEC = 'CE8-CHECKPOINT-CHILD-INITIALIZER-SPEC-1'
 require = authority.require
@@ -266,11 +267,12 @@ class CheckpointChildInitializer:
                 'existing exact source-issued child prefix admission required')
         if not fixture:
             from . import ce_worker_evidence as evidence
-            for handle, expected in ((parent_handle, payload['parent_proof']), (child_handle, proof)):
+            for role, handle, expected in (('parent', parent_handle, payload['parent_proof']), ('child', child_handle, proof)):
                 require(type(handle) is evidence.WinWorkerHandle, 'actual retained parent/child OS handle required')
                 actual = evidence.verify_worker_handle(handle, {k: expected[k] for k in
                     ('request_sha256', 'scope_sha256', 'worker_identity_sha256')}, require_native=True, terminal=False)
-                require(actual == expected, 'actual live parent/child proof differs from initializer lineage')
+                if role == 'parent': validate_parent_view(actual, expected)
+                else: require(actual == expected, 'actual current-child proof differs from initializer lineage')
         policy = context['bindings']['scope']['checkpoint_qualification'].get('child_initializer')
         require(type(policy) is dict and policy.get('schema') == SPEC
                 and type(policy.get('reader_bounds')) is dict and set(policy['reader_bounds']) == set(raw.BUDGET_FIELDS)

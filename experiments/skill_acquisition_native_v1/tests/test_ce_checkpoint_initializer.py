@@ -132,6 +132,25 @@ class Tests(unittest.TestCase):
         self.assertEqual(bound['source_worker_binding'], self.binding)
         op['worker_id'] = '0' * 64
         with self.assertRaisesRegex(ValueError, 'current-child'): i.bind_returned_restore(owner, restored, self.binding)
+
+    def test_parent_observer_views_share_only_exact_stable_os_and_raw_source_identity(self):
+        from experiments.skill_acquisition_native_v1 import ce_worker_evidence as evidence
+        ref = {'path': str(self.root / 'pinned.bin'), 'sha256': 'a' * 64, 'bytes': 10}
+        identity = {'schema': evidence.IDENTITY, 'pid': 11, 'creation_filetime_100ns': 100,
+            'boot_identity': 'fixture-boot', 'image_path': ref['path'], 'argv': ['python', '-m', 'fixture']}
+        sources = {'python_ref': ref, 'process_image_ref': ref, 'request_ref': ref,
+            'source_files': {'fixture.py': ref}, 'entry': 'fixture.py', 'entry_script_ref': None,
+            'runtime_launcher': 'parent-current', 'source_observation': 'current observer'}
+        retained = {'schema': evidence.PROOF, 'os_identity': identity, 'sources': sources,
+            'request_sha256': 'b' * 64, 'scope_sha256': 'c' * 64}
+        retained['worker_identity_sha256'] = evidence.digest(evidence.worker_identity_preimage(identity, sources, 'b' * 64, 'c' * 64))
+        remote = copy.deepcopy(retained); remote['sources'].update(runtime_launcher='remote-child', source_observation='remote observer')
+        self.assertEqual(i.validate_parent_view(remote, retained), remote)
+        for change in (lambda view: view['os_identity'].update(creation_filetime_100ns=101),
+                       lambda view: view['sources']['request_ref'].update(sha256='d' * 64),
+                       lambda view: view['sources']['source_files']['fixture.py'].update(bytes=11)):
+            bad = copy.deepcopy(remote); change(bad)
+            with self.assertRaisesRegex(ValueError, 'OS/source identity drift'): i.validate_parent_view(bad, retained)
     def parent_fixture(self):
         context, proof, receipt = qa.fixture(self.root)
         context['prepared_receipt'] = receipt

@@ -20,6 +20,7 @@ import time
 import uuid
 
 from . import ce_controller as controller, ce_qualification as qualification, ce_worker_evidence as worker
+from . import ce_native_authority as authority
 
 SCHEMA = 'CE8-NATIVE-CONTROLLER-SERVICES-1'
 BOOTSTRAP = 'CE8-SERVICES-BOOTSTRAP-1'
@@ -183,7 +184,10 @@ class StableDispatcher:
                 'explicit dispatch operation identity/phase')
         if phase == 'started':
             require(operation_id not in self.owners, 'dispatch operation identity reused')
-            target = self.ledger if self.ledger is not None else self.bootstrap
+            # Finite supervisor metadata kinds keep their original outer owner
+            # between and after Q stages; no caller-selected owner flags.
+            target = self.bootstrap if kind in ('supervisor_lease','worker_os_binding') else (
+                self.ledger if self.ledger is not None else self.bootstrap)
             self.owners[operation_id] = (kind, target)
         else:
             require(operation_id in self.owners and self.owners[operation_id][0] == kind,
@@ -198,6 +202,7 @@ class NativeResourceGate:
     """Actual RAM/disk/CUDA checks; numeric limits/transients all scope-supplied."""
     def __init__(self, spec, bootstrap):
         self.spec, self.bootstrap, self.framework = copy.deepcopy(spec), bootstrap, None
+        self.supervisor = None
         require(type(spec.get('limits')) is dict and type(spec.get('resource_probe')) is dict
                 and type(spec.get('host_transient_bytes')) is dict
                 and all(type(value) is int and value >= 0 for value in spec['host_transient_bytes'].values()), 'explicit resource limits/probe/transients')
@@ -216,6 +221,7 @@ class NativeResourceGate:
         from .ce_resource_evidence import validate_spec
         validate_spec(spec['resource_probe'])
     def _sample(self, *, launch=False, stage=None):
+        if self.supervisor is not None: self.supervisor.assert_parent_use()
         from .ce_resource_evidence import readonly_sample, enforce
         sample = readonly_sample(self.spec['resource_probe'], self.bootstrap)
         limits = copy.deepcopy(self.spec['limits'])
@@ -258,6 +264,7 @@ class NativeControllerServices:
         self.operation = StableDispatcher(self.bootstrap)
         self.gate = NativeResourceGate(spec['resource'], self.bootstrap)
         self.context, self.worker_handle, self.lease_token = None, None, None
+        self.supervisor_lease = self.bound_backend = None
     def _admit(self): _admit(self.permit, self.request, self.spec)
     def _role(self, name, context=None):
         self._admit(); descriptor = self.spec['role_descriptors'].get(name)
@@ -357,12 +364,48 @@ class NativeControllerServices:
     @contextmanager
     def lease(self, context):
         self._admit()
-        from experiments.maxrl_comp002_pretraining_v1 import s0_runtime as runtime
-        require(self.lease_token is None, 'no nested wait on already owned GPU lease')
-        with runtime.lease(self.spec['lease_label'], timeout_s=self.spec['lease_timeout_seconds']) as token:
-            self.lease_token = token
-            try: yield token
-            finally: self.lease_token = None
+        require(context is self.context and context.get('phase') == 'qualification', 'exact qualification supervisor context')
+        permit=context.get('native_execution_permit')
+        authority.require_execution_permit(permit,context,'checkpoint_resume',operation=self.operation,gate=self.gate)
+        require(self.supervisor_lease is None and self.lease_token is None and self.operation.ledger is None,
+                'one supervisor lease before Q attachment; no nested self-wait')
+        from .ce_checkpoint_lease import SupervisorGpuLease
+        owner=SupervisorGpuLease(context,permit,self.worker_handle,None,self.operation,self.gate)
+        primary=None
+        try:
+            owner.acquire()
+            self.supervisor_lease,self.lease_token=owner,owner.token
+            self.gate.supervisor=owner
+            services=context['native_services']
+            checkpoint=services.setdefault('checkpoint_qualification',{})
+            require(type(checkpoint) is dict and checkpoint.get('handoff') in (None,owner), 'foreign checkpoint lease holder')
+            checkpoint['handoff']=owner
+            yield owner
+        except BaseException as error:
+            primary=error
+            raise
+        finally:
+            if owner.release_seal is not None and not owner.closed:
+                try:
+                    try: owner.close()
+                    except BaseException as cleanup:
+                        if primary is not None:
+                            primary.supervisor_lease_cleanup_failure={'type':type(cleanup).__name__,'message':str(cleanup)[:1000]}
+                            raise primary from cleanup
+                        raise
+                finally:
+                    if owner.closed:
+                        self.lease_token=None; self.gate.supervisor=None
+
+    def bind_backend(self,context,backend):
+        self._admit(); require(context is self.context and self.supervisor_lease is not None
+                               and self.bound_backend is None, 'existing supervisor before one backend bind')
+        from .ce_native_backend import NativeCEBackend
+        from .ce_native_qualification import NativeQualificationExecutor
+        require(type(backend) in (NativeCEBackend,NativeQualificationExecutor), 'exact native backend/executor required')
+        target=backend.backend if type(backend) is NativeQualificationExecutor else backend
+        self.supervisor_lease.bind_backend(target)
+        self.bound_backend=target
     @contextmanager
     def watchdog(self, context):
         self._admit()
@@ -384,6 +427,12 @@ class NativeControllerServices:
             from .ce_native_backend import NativeCEBackend, _PREPAID_CLEANUP_SEAL
             from .ce_native_qualification import NativeQualificationExecutor
             target = backend.backend if type(backend) is NativeQualificationExecutor else backend
+            if (type(target) is NativeCEBackend and target.context is context and target.operation is self.operation
+                    and target.gate is self.gate and target.model is target.optimizer is target.tokenizer is target.torch is None):
+                # Close the already-created metadata object even if its service
+                # permission expires before first allocation; retain the denial.
+                target.closed=True
+                raise
             if type(target) is not NativeCEBackend or getattr(target, '_cleanup_seal', None) is not _PREPAID_CLEANUP_SEAL:
                 raise
             try: backend.cleanup()

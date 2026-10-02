@@ -207,7 +207,30 @@ class LeaseControls(unittest.TestCase):
         self.lease.acquire(); self.context['scope_sha256']='f'*64
         with self.assertRaisesRegex(ValueError,'frozen lease'): self.lease.close()
         self.assertEqual(self.module.releases,1); self.assertFalse(self.module.LOCK.exists())
-        self.assertEqual(self.observer.events[-1][:2],('qualification_lease','failed'))
+        self.assertEqual(self.observer.events[-1][:2],('supervisor_lease','failed'))
+
+    def test_lazy_backend_is_bound_once_after_lease_and_before_any_model_work(self):
+        lease=c.fixture_supervisor(self.context,None,self.parent,self.module,self.observer)
+        lease.acquire(); self.assertIsNone(lease.backend)
+        lease.assert_parent_use()
+        backend=SimpleNamespace(model=None,optimizer=None,tokenizer=None,torch=None,closed=False)
+        lease.bind_backend(backend); self.assertIs(lease.backend,backend)
+        with self.assertRaisesRegex(ValueError,'one metadata backend'): lease.bind_backend(backend)
+        lease.close()
+        another=c.fixture_supervisor(self.context,None,self.parent,self.module,self.observer)
+        another.acquire(); backend.model=object()
+        with self.assertRaisesRegex(ValueError,'metadata-only'): another.bind_backend(backend)
+        self.assertIsNone(another.backend); another.close()
+
+    def test_bad_child_evidence_stays_fatal_even_after_successful_os_exit(self):
+        ticket=self.suspend(); child=FixtureChild(self,'uninterrupted'); self.lease.bind_child(child,'uninterrupted',child.ref)
+        error=ValueError('raw branch digest mismatch')
+        self.lease.mark_child_evidence_failed(child,error)
+        child.signaled=True; self.lease.finish_child(child,child.terminal(1))
+        self.lease.reacquire_parent_lease(self.context,None,ticket)
+        with self.assertRaisesRegex(ValueError,'failed supervisor'): self.lease.assert_parent_use()
+        self.assertEqual(self.lease.evidence[-3]['action'],'child_evidence_failed')
+        self.lease.close()
 
     def test_incomplete_branch_unit_cannot_resume_parent_computation(self):
         ticket=self.suspend(); self.lease.reacquire_parent_lease(self.context,None,ticket)

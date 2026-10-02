@@ -70,6 +70,82 @@ class NativeServicesTests(unittest.TestCase):
             dispatcher('fixture', 'started', operation_id='before')
         with self.assertRaises(s.worker.WorkerEvidenceError): dispatcher.attach_qualification_accounting(ledger)
 
+    def test_supervisor_guards_and_release_keep_bootstrap_owner_after_q_end(self):
+        from .test_ce_checkpoint_lease import spec,proof,FixtureModule
+        from experiments.skill_acquisition_native_v1 import ce_checkpoint_lease as lease
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp); bootstrap=s.BootstrapLedger(bootstrap_spec(root/'bootstrap'),'a'*64,synthetic_fixture=True)
+            bound=spec(root)
+            bootstrap.spec['operation_profiles']['supervisor_lease']=dict(bound['operation_bounds']['release'])
+            # Explicit generous fixture budgets, never native measured prices.
+            bootstrap.spec['caps'].update(read_bytes=10**8,write_bytes=10**8,hash_bytes=10**8,metadata_bytes=10**8,hash_attempts=10000,wall_seconds=10000)
+            dispatch=s.StableDispatcher(bootstrap)
+            context={'schema':lease.FIXTURE,'mode':'synthetic_fixture','approved':False,'training_authorized':False,
+                'request_sha256':'a'*64,'scope_sha256':'b'*64,'bindings':{'scope':{'checkpoint_lease':bound}}}
+            owner=lease.fixture_supervisor(context,None,proof(111,'c'*64),FixtureModule(root/'rineya-gpu-0.lock'),dispatch)
+            owner.acquire(); original_owner=dispatch.owners[owner.release_id][1]
+            ended=SimpleNamespace(scope_role='qualification_only',operation=lambda *args,**kwargs: (_ for _ in ()).throw(AssertionError('Q already ended')))
+            dispatch.attach_qualification_accounting(ended)
+            owner.assert_parent_use(); owner.close()
+            self.assertIs(original_owner,bootstrap); self.assertIs(dispatch.owners[owner.release_id][1],bootstrap)
+            self.assertEqual(bootstrap.operations[owner.release_id]['phase'],'returned')
+            self.assertFalse(owner.module.LOCK.exists())
+            with self.assertRaises(AssertionError): dispatch('unknown_kind','started',operation_id='unknown')
+
+    def test_service_lease_uses_one_lazy_owner_and_preserves_primary_after_release(self):
+        from experiments.skill_acquisition_native_v1 import ce_checkpoint_lease as lease
+        services=object.__new__(s.NativeControllerServices); services._admit=lambda:None
+        services.context={'phase':'qualification','native_execution_permit':object(),'native_services':{}}
+        services.operation=SimpleNamespace(ledger=None); services.gate=SimpleNamespace(supervisor=None)
+        services.worker_handle=object(); services.supervisor_lease=services.lease_token=None
+        calls=[]
+        class Owner:
+            def __init__(self,*args):
+                self.token='one'; self.release_seal=None; self.closed=False; self.backend=None
+                self.native=True; self.context=args[0]; self.permit=args[1]; self.operation=args[4]; self.gate=args[5]
+                calls.append(('construct',args[3]))
+            def acquire(self): self.release_seal=object(); calls.append('acquire')
+            def close(self): self.closed=True; calls.append('close'); raise RuntimeError('secondary lease receipt failure')
+        original=RuntimeError('primary preparation failure')
+        with patch.object(s.authority,'require_execution_permit',return_value=None),patch.object(lease,'SupervisorGpuLease',Owner):
+            with self.assertRaisesRegex(RuntimeError,'primary preparation') as caught:
+                with services.lease(services.context):
+                    self.assertIs(services.context['native_services']['checkpoint_qualification']['handoff'],services.supervisor_lease)
+                    raise original
+        self.assertIs(caught.exception,original); self.assertEqual(calls,[('construct',None),'acquire','close'])
+        self.assertEqual(original.supervisor_lease_cleanup_failure['message'],'secondary lease receipt failure')
+        self.assertIsNone(services.lease_token); self.assertIsNone(services.gate.supervisor)
+
+    def test_metadata_backend_cleanup_closes_even_after_service_permission_failure(self):
+        from experiments.skill_acquisition_native_v1.ce_native_backend import NativeCEBackend
+        services=object.__new__(s.NativeControllerServices); context={}; services.operation=object(); services.gate=object()
+        failure=RuntimeError('service expired')
+        def refused(): raise failure
+        services._admit=refused
+        backend=object.__new__(NativeCEBackend); backend.context=context; backend.operation=services.operation; backend.gate=services.gate
+        backend.model=backend.optimizer=backend.tokenizer=backend.torch=None; backend.closed=False
+        with self.assertRaisesRegex(RuntimeError,'expired') as caught: services.cleanup(context,backend)
+        self.assertIs(caught.exception,failure); self.assertTrue(backend.closed)
+
+    def test_worker_os_refresh_keeps_exact_bootstrap_owner_after_q_end(self):
+        events=[]
+        bootstrap=SimpleNamespace(operation=lambda *args,**kwargs:events.append(('bootstrap',args)))
+        dispatch=s.StableDispatcher(bootstrap)
+        ended=SimpleNamespace(scope_role='qualification_only',operation=lambda *args,**kwargs:(_ for _ in ()).throw(AssertionError('ended Q')))
+        dispatch.attach_qualification_accounting(ended)
+        dispatch('worker_os_binding','started',operation_id='refresh')
+        dispatch('worker_os_binding','returned',operation_id='refresh')
+        self.assertEqual([owner for owner,_ in events],['bootstrap','bootstrap'])
+        self.assertIs(dispatch.owners['refresh'][1],bootstrap)
+
+    def test_resource_gate_checks_suspended_parent_before_resource_io(self):
+        from experiments.skill_acquisition_native_v1 import ce_resource_evidence as r
+        gate=s.NativeResourceGate(resource_spec(),Trap())
+        def denied(): raise RuntimeError('parent GPU use suspended')
+        gate.supervisor=SimpleNamespace(assert_parent_use=denied)
+        with patch.object(r,'readonly_sample',side_effect=AssertionError('IO before owner check')):
+            with self.assertRaisesRegex(RuntimeError,'suspended'): gate('configured_runtime')
+
     def test_actual_work_overrun_is_fatal_keeps_pending_reservation(self):
         for field, value in (('wall_s', 2), ('bytes_read', 1001), ('bytes_written', 1001),
                 ('identity_hash_attempts_actual', 11), ('identity_hash_bytes_actual', 1001), ('wall_s', True)):

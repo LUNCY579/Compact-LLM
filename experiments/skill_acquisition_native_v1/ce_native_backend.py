@@ -579,7 +579,7 @@ class NativeCEBackend:
             self.closed = True
             try:
                 gc.collect()
-                if self.torch is not None:
+                if self.torch is not None and self.torch.cuda.is_initialized():
                     self.torch.cuda.synchronize(0); self.torch.cuda.empty_cache()
             except BaseException as error:
                 if primary is None: primary = error

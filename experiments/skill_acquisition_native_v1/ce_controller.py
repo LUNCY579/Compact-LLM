@@ -308,7 +308,7 @@ def run_controller(request, services, backend_factory=None, *, synthetic_fixture
     """Own lifecycle wiring for a separately admitted registered worker.
 
     Services must implement preflight_bootstrap/admit_request/outer_admission,
-    observer/verify_sources/verify_worker/lease/guard/watchdog/configure_runtime/
+    observer/verify_sources/verify_worker/lease/bind_backend/guard/watchdog/configure_preparation/
     prepare_rows/open_journal/checkpoints/seal/interruption. Backend factories
     are metadata-only; model loading belongs to admitted runtime_anchor/load.
     No implementation of those native capabilities is supplied here.
@@ -352,6 +352,7 @@ def run_controller(request, services, backend_factory=None, *, synthetic_fixture
                 require_preparation_cuda_uninitialized()
                 services.guard(context, 'before_model')
                 backend = backend_factory(context)  # pure factory; qualified model work is a later stage
+                services.bind_backend(context,backend)
                 if request['phase'] == 'qualification':
                     stages = context.get('stage_plan')
                     require(type(stages) is list and len(stages) == len(QUALIFICATION_STAGES)
@@ -400,9 +401,20 @@ def run_controller(request, services, backend_factory=None, *, synthetic_fixture
                 # particular, an interrupted update cannot release ownership
                 # before its model resources have been closed.
                 if backend is not None:
+                    cleanup_called=False
+                    def physical_cleanup():
+                        nonlocal cleanup_called
+                        cleanup_called=True
+                        return services.cleanup(context,backend)
                     try:
-                        _stage(observer, 'controller_cleanup', lambda: services.cleanup(context, backend), request_hash)
+                        _stage(observer, 'controller_cleanup', physical_cleanup, request_hash)
                     except BaseException as cleanup_error:
+                        if not cleanup_called:
+                            # A refused controller receipt cannot prevent
+                            # source-owned cleanup of already-held resources.
+                            try: physical_cleanup()
+                            except BaseException as physical_error:
+                                cleanup_error.physical_cleanup_failure={'type':type(physical_error).__name__,'message':str(physical_error)[:1000]}
                         if work_error is not None:
                             work_error.cleanup_failure = {'type': type(cleanup_error).__name__, 'message': str(cleanup_error)[:1000]}
                             raise work_error from cleanup_error

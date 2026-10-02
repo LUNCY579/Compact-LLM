@@ -388,9 +388,9 @@ def checkpoint_adapter(context, permit, prepared, backend, accounting, proof, bi
     services = context.get('native_services', {}).get('checkpoint_qualification')
     require(type(services) is dict, 'explicit checkpoint process and lease handoff services')
     handoff, processes = services.get('handoff'), services.get('processes')
-    if not any(handoff is value for value in _REGISTERED_GPU_HANDOFF_SERVICES):
+    if not any(type(handoff) is value for value in _REGISTERED_GPU_HANDOFF_SERVICES):
         raise MissingCheckpointService('source-registered GPU lease handoff is missing; parent model remains allocated')
-    if not any(processes is value for value in _REGISTERED_CHECKPOINT_PROCESS_SERVICES):
+    if not any(type(processes) is value for value in _REGISTERED_CHECKPOINT_PROCESS_SERVICES):
         raise MissingCheckpointService('source-registered child process/request/handle service is missing; no parent release or launch')
     plans = branch_plan(context)
     # The process owner must use ce_process_launch.OwnedProcess and its exact
@@ -412,6 +412,7 @@ def checkpoint_adapter(context, permit, prepared, backend, accounting, proof, bi
             try:
                 owned.handshake()
                 response = owned.request('checkpoint_qualification', processes.bound_request(plan, parent, results))
+                owned.request('finish', {})
                 terminal = owned.terminal(processes.timeout_seconds(plan))
                 terminal_verified = True
                 # This operation consumes the retained OS handle, source-bound
@@ -426,6 +427,7 @@ def checkpoint_adapter(context, permit, prepared, backend, accounting, proof, bi
                                               terminal_already_verified=terminal_verified)
         handoff.reacquire_parent_lease(context, permit, lease)
         lease = None
+        handoff.assert_parent_use()
         reload_parent_model(context, permit, backend)
         restored, operation = processes.restore_parent(context, permit, backend, accounting, parent)
         validate_restore_fence(restored, accounting.progress_record(), operation, current_binding=binding)

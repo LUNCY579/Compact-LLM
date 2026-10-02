@@ -90,6 +90,9 @@ class Services:
     def open_journal(self, context, prepared, proof, resume, reason):
         self.events.append('journal'); self.journal = FixtureJournal(self.resume_C if resume else 0); return self.journal
     def checkpoints(self, context, backend, journal): self.events.append('checkpoints'); return object()
+    def bind_backend(self,context,backend):
+        self.events.append('bind_backend')
+        if self.failure == 'bind_backend': raise RuntimeError('physical metadata bind failure')
     def cleanup(self, context, backend):
         if self.sealed: raise AssertionError('cleanup after terminal seal')
         self.events.append('cleanup')
@@ -132,6 +135,40 @@ class Backend:
 
 
 class ControllerTests(unittest.TestCase):
+    def test_metadata_bind_failure_closes_backend_before_context_exit(self):
+        value=request(); services=Services(value,failure='bind_backend')
+        with self.assertRaisesRegex(RuntimeError,'metadata bind failure'):
+            c.run_controller(value,services,Factory(services),synthetic_fixture=True)
+        self.assertLess(services.events.index('factory'),services.events.index('bind_backend'))
+        self.assertLess(services.events.index('bind_backend'),services.events.index('cleanup'))
+        self.assertLess(services.events.index('cleanup'),services.events.index('lease_exit'))
+        self.assertNotIn('qualification_accounting',services.events)
+        self.assertNotIn('qualify:runtime_anchor',services.events)
+        self.assertFalse(services.sealed)
+
+    def test_cleanup_receipt_denial_does_not_prevent_owned_backend_cleanup(self):
+        value=request(); services=Services(value,denied='controller_cleanup',failure='adam_clipping')
+        with self.assertRaisesRegex(RuntimeError,'physical fixture failure') as caught:
+            c.run_controller(value,services,Factory(services),synthetic_fixture=True)
+        self.assertEqual(services.events.count('cleanup'),1)
+        self.assertLess(services.events.index('cleanup'),services.events.index('lease_exit'))
+        self.assertEqual(caught.exception.cleanup_failure['message'],'exhausted declared cap')
+        self.assertFalse(services.sealed)
+
+    def test_lease_entry_and_preparation_failures_create_no_backend(self):
+        class EnterFailed(Services):
+            @contextmanager
+            def lease(self,context):
+                self.events.append('lease_enter'); raise RuntimeError('physical lease enter failed'); yield
+        class PrepareFailed(Services):
+            def prepare_rows(self,*args): raise RuntimeError('physical preparation failed')
+        for kind in (EnterFailed,PrepareFailed):
+            services=kind(request())
+            with self.assertRaisesRegex(RuntimeError,'physical'):
+                c.run_controller(services.req,services,Factory(services),synthetic_fixture=True)
+            self.assertNotIn('factory',services.events); self.assertNotIn('bind_backend',services.events)
+            self.assertNotIn('cleanup',services.events); self.assertFalse(services.sealed)
+
     def test_factory_command_identity_is_json_and_still_requires_registered_source(self):
         descriptor = {'module': 'experiments.skill_acquisition_native_v1.ce_native_backend',
                       'symbol': 'create_backend', 'source_sha256': 'a' * 64}

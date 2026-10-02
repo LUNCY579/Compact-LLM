@@ -228,6 +228,7 @@ class NativeBindingTests(unittest.TestCase):
             backend.model, backend.tokenizer = object(), object()
             backend.optimizer = SimpleNamespace(zero_grad=lambda **kwargs: events.append(('optimizer', 'cleared')))
             backend.torch = SimpleNamespace(cuda=SimpleNamespace(
+                is_initialized=lambda: True,
                 synchronize=lambda index: events.append(('cuda_spy', 'synchronized')),
                 empty_cache=lambda: events.append(('cuda_spy', 'released'))))
             expected_error = a.NativeAdmissionError if failure.startswith('admission') else RuntimeError
@@ -239,6 +240,24 @@ class NativeBindingTests(unittest.TestCase):
             self.assertTrue(backend.closed); self.assertTrue(backend._cleanup_finished)
             self.assertIn(('cuda_spy', 'released'), events)
             self.assertEqual(sum(kind == 'cleanup' and phase == 'started' for kind, phase in events), 1)
+        self.assertNotIn('torch', sys.modules)
+
+    def test_cleanup_after_import_failure_does_not_initialize_cuda(self):
+        backend = object.__new__(b.NativeCEBackend)
+        backend._admit = lambda *args, **kwargs: None
+        backend.spec = {'operation_bounds': {'cleanup': dict.fromkeys(b.PROFILE_FIELDS, 0)}}
+        backend._cleanup_operation_id = backend._cleanup_reserved_at = None
+        backend._cleanup_reserved = backend._cleanup_finished = False
+        backend.model = backend.optimizer = backend.tokenizer = backend.torch = None
+        events = []; backend.operation = lambda kind, phase, **fields: events.append((kind, phase))
+        backend.gate = lambda stage: None; backend.closed = False
+        backend._reserve_cleanup()
+        def forbidden(*args): raise AssertionError('cleanup initialized CUDA after failed preparation')
+        backend.torch = SimpleNamespace(cuda=SimpleNamespace(is_initialized=lambda: False,
+            synchronize=forbidden, empty_cache=forbidden))
+        backend.cleanup()
+        self.assertTrue(backend.closed); self.assertTrue(backend._cleanup_finished)
+        self.assertEqual(events, [('cleanup', 'started'), ('cleanup', 'returned')])
         self.assertNotIn('torch', sys.modules)
 
 

@@ -12,6 +12,19 @@ from experiments.skill_acquisition_native_v1 import ce_qualification_artifacts a
 
 
 class ChildContracts(unittest.TestCase):
+    def test_service_requires_exact_registered_constructor_identity(self):
+        class Registered: pass
+        class Subclass(Registered): pass
+        value = Registered()
+        self.assertIs(w._service(value, (Registered,), 'pure constructor'), value)
+        for replacement in (Subclass(), object(), value):
+            registry = (Registered,) if replacement is not value else (value,)
+            with self.subTest(kind=type(replacement).__name__), self.assertRaises(w.MissingCheckpointWorkerService):
+                w._service(replacement, registry, 'pure constructor')
+        self.assertFalse(w._REGISTERED_CHILD_INITIALIZERS)
+        self.assertFalse(w._REGISTERED_CHILD_LEASE_SERVICES)
+        self.assertFalse(w._REGISTERED_CHILD_PUBLICATION_SERVICES)
+
     def setUp(self):
         batches = [['r%d' % i for i in range(8)], ['r%d' % i for i in range(8, 16)]]
         self.context = {'phase': 'qualification', 'request_sha256': '1' * 64, 'scope_sha256': '2' * 64,

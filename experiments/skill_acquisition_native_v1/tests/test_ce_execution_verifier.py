@@ -10,6 +10,8 @@ from experiments.skill_acquisition_native_v1 import ce_execution_verifier as v
 from experiments.skill_acquisition_native_v1 import ce_qualification_accounting as a
 from experiments.skill_acquisition_native_v1 import ce_qualification_artifacts as raw
 from .test_ce_qualification_accounting import fixture
+from . import test_ce_checkpoint_reduction as branches
+from . import test_ce_resource_qualification as resources
 
 
 class ReplayControls(unittest.TestCase):
@@ -137,6 +139,122 @@ class ReplayControls(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'scope denied'):
             self.verify(preflight=deny)
         self.assertEqual(self.operations, [])
+
+    def test_adam_artifact_is_recomputed_from_original_commits_and_order(self):
+        path = self.root / 'prior.json'; path.write_bytes(b'{"fixture":true}\n')
+        for stage in a.q.STAGES[1:a.q.STAGES.index('adam_clipping')]:
+            self.ledger.begin_stage(stage, 'prior/' + stage); self.ledger.finish_stage([self.ref(path)])
+        self.ledger.begin_stage('adam_clipping', 'adam-two')
+        helper = object.__new__(branches.ThreeBranchFixture); helper.serial = 0
+        helper.commit(self.ledger); helper.commit(self.ledger)
+        commits = [entry['payload']['result'] for entry in self.ledger.events if entry['kind'] == 'commit']
+        payload = {'boundaries': commits, 'progress': self.ledger.progress_record(),
+            'operation_order': [{'clipping': self.ledger.operation_evidence(result['clipping_operation']['operation_id']),
+                'optimizer': self.ledger.operation_evidence(result['optimizer_operation']['operation_id'])} for result in commits]}
+        binding = v._binding_for(self.context, {'stage': 'adam_clipping', 'attempt_id': 'adam-two'}, self.proof['worker_identity_sha256'])
+        observed = v._adam_readback(self.context, self.ledger, payload, binding)
+        self.assertEqual(observed['actual_optimizer_steps'], 2); self.assertTrue(observed['clip_before_adam'])
+        wrong = copy.deepcopy(payload); wrong['operation_order'][0]['clipping']['returned_seq'] = 0
+        with self.assertRaisesRegex(ValueError, 'operation order/history'):
+            v._adam_readback(self.context, self.ledger, wrong, binding)
+
+    def test_resource_readback_requires_original_probe_rows_and_unmodified_prefix_costs(self):
+        context, proof, receipt = fixture(self.root / 'resources')
+        context['prepared_receipt'] = receipt; proof['os_identity'] = {'pid': 1234}
+        scope = context['bindings']['scope']; scope['qualifier_resources'] = {'gpu_uuid': resources.GPU}
+        limits = resources.limits(); spec = {'required_barriers': ['launch', 'resource_io_measurement'],
+            'measured_operation_kinds': ['resource_probe'], 'limits': limits}
+        scope['resource_measurement'] = spec
+        ledger = a.QualificationAccounting(context, None, proof, receipt)
+        dummy = self.root / 'resources' / 'prior.json'; dummy.write_bytes(b'{"fixture":true}\n')
+        for stage in a.q.STAGES[1:a.q.STAGES.index('resource_io_measurement')]:
+            ledger.begin_stage(stage, 'prior/' + stage); ledger.finish_stage([self.ref(dummy)])
+        ledger.begin_stage('resource_io_measurement', 'resource-readback')
+        samples = resources.samples()
+        for index, sample in enumerate(samples):
+            oid = 'probe-%d' % index
+            ledger.operation('resource_probe', 'started', oid)
+            ledger.operation('resource_probe', 'returned', oid, bytes_read=100, bytes_written=0,
+                identity_hash_attempts_actual=1, identity_hash_bytes_actual=100, wall_s=.25,
+                resource_observation={key: value for key, value in sample.items() if key != 'stage'})
+        snapshot = ledger.snapshot()
+        observed = {}
+        observed.update(resources.q.reduce_samples(samples, spec['required_barriers'], worker_pid=1234,
+            gpu_uuid=resources.GPU, limits=limits))
+        observed.update(resources.q.reduce_operations(ledger.operations, spec['measured_operation_kinds'],
+            worker_identity_sha256=proof['worker_identity_sha256']))
+        payload = {'required_barriers': spec['required_barriers'], 'measured_operation_kinds': spec['measured_operation_kinds'],
+            'limits': limits, 'resource_samples': samples, 'raw_operations': copy.deepcopy(ledger.operations),
+            'accounting_snapshot': snapshot, 'worker_proof': copy.deepcopy(proof), 'observations': observed}
+        binding = v._binding_for(context, {'stage': 'resource_io_measurement', 'attempt_id': 'resource-readback'}, proof['worker_identity_sha256'])
+        reader = raw.RawEvidenceReader(lambda *args, **fields: None, {key: 10 ** 12 for key in raw.BUDGET_FIELDS}, self.root)
+        result = v._resource_readback(context, ledger, payload, binding, reader=reader, reference_bytes=len(raw.canonical(payload)))
+        self.assertEqual(result['peak_reserved_gib'], 2); self.assertEqual(result['operation_measurements'][0]['io_read_bytes'], 100)
+        changed = copy.deepcopy(payload); changed['resource_samples'][1]['cuda_peak_reserved_bytes'] -= 1
+        with self.assertRaisesRegex(ValueError, 'original returned probe'):
+            v._resource_readback(context, ledger, changed, binding, reader=reader, reference_bytes=len(raw.canonical(changed)))
+        changed = copy.deepcopy(payload); changed['accounting_snapshot']['cumulative']['io_read_bytes_upper'] -= 1
+        with self.assertRaisesRegex(ValueError, 'totals/refunds'):
+            v._resource_readback(context, ledger, changed, binding, reader=reader, reference_bytes=len(raw.canonical(changed)))
+
+    def test_checkpoint_bundle_replays_retained_parent_prefixes_and_all_three_children(self):
+        tree = object.__new__(branches.ThreeBranchFixture)
+        tree.root, tree.serial = self.root / 'bundle', 0
+        tree.root.mkdir()
+        tree.context, _, tree.receipt = fixture(tree.root / 'parent')
+        tree.context['prepared_receipt'] = tree.receipt
+        scope = tree.context['bindings']['scope']
+        scope['checkpoint_qualification'] = {'owned_directory': str(tree.root / 'checkpoint')}
+        scope['native_backend'].update(output_directory=str(tree.root), parameter_inventory=[{'name': 'w', 'shape': [2], 'dtype': 'F32'}])
+        tree.parent_proof = {'schema': a.PROOF, 'fresh_process': True, 'boot_verified': True,
+            'worker_identity_sha256': 'f' * 64, 'boot_identity_sha256': 'd' * 64, 'pid': 11, 'creation_filetime_100ns': 100,
+            'request_sha256': tree.context['request_sha256'], 'scope_sha256': tree.context['scope_sha256'],
+            'code_sha256': scope.get('code_sha256', tree.context['bindings']['source']['code_sha256'])}
+        parent = a.QualificationAccounting(tree.context, None, tree.parent_proof, tree.receipt)
+        dummy = tree.root / 'prior.json'; dummy.write_bytes(b'{"fixture":true}\n')
+        for stage in a.q.STAGES[1:a.q.STAGES.index('adam_clipping')]:
+            parent.begin_stage(stage, 'prior/' + stage); parent.finish_stage([tree.file_ref(dummy)])
+        parent.begin_stage('adam_clipping', 'parent-adam'); tree.commit(parent); tree.commit(parent)
+        parent.finish_stage([tree.file_ref(dummy)]); parent.begin_stage('checkpoint_resume', 'parent')
+        tree.parent_binding = tree.binding(tree.context, tree.parent_proof, 'parent')
+        parent.operation('checkpoint_save', 'started', 'parent-save')
+        manifest, manifest_ref, _ = tree.state_file(tree.root / 'parent', parent, tree.parent_binding, 'parent-save')
+        parent.operation('checkpoint_save', 'returned', 'parent-save', manifest_sha256=manifest['manifest_sha256'])
+        def retained(prefix):
+            directory = tree.root / prefix; directory.mkdir()
+            header = directory / 'header.json'; header.write_bytes(parent.header_path.read_bytes())
+            journal = directory / 'journal.jsonl'; journal.write_bytes(parent.path.read_bytes())
+            return {'header': tree.file_ref(header), 'journal': tree.file_ref(journal),
+                'seal': tree.write(directory / 'snapshot.json', parent.snapshot())}
+        original = retained('initial')
+        progress = parent.progress_record()
+        restored_progress = dict(copy.deepcopy(progress), generation=progress['generation'] + 1, snapshot='4' * 64, symbolic_snapshot='4' * 64)
+        restored = dict(restored_progress, schema=branches.r.checkpoint.RESTORE_SCHEMA, progress=restored_progress,
+            manifest_sha256=manifest['manifest_sha256'], install_fence_required=True, source_worker_binding=tree.parent_binding)
+        parent.operation('checkpoint_restore', 'started', 'parent-restore')
+        parent.operation('checkpoint_restore', 'returned', 'parent-restore', C=2, U=2, generation=restored_progress['generation'],
+            symbolic_snapshot='4' * 64, manifest_sha256=manifest['manifest_sha256'])
+        parent.install_restore(restored)
+        post = retained('post')
+        tree.branch_refs, tree.branch_bindings, tree.branches, tree.prefix = {}, {}, {}, None
+        for branch, identity in zip(branches.r.BRANCHES, ('1' * 64, '2' * 64, '3' * 64)):
+            tree.build_branch(branch, identity)
+        terminals = {name: {'worker_identity_sha256': binding['worker_identity_sha256'],
+            'request_sha256': tree.context['request_sha256'], 'scope_sha256': tree.context['scope_sha256'],
+            'status_file_used': False, 'exit_code': 0} for name, binding in tree.branch_bindings.items()}
+        bundle = {'schema': 'CE8-CHECKPOINT-BRANCHES-BUNDLE-1', 'parent_binding': tree.parent_binding,
+            'parent_ledger_refs': original, 'parent_post_restore_ledger_refs': post,
+            'parent_post_restore_snapshot_ref': post['seal'], 'parent_manifest_ref': manifest_ref,
+            'parent_restore_record': restored, 'branch_refs': tree.branch_refs, 'branch_bindings': tree.branch_bindings,
+            'child_terminal_proofs': terminals, 'native_qualified': False, 'execution_verified': False}
+        reader = raw.RawEvidenceReader(lambda *args, **fields: None, {key: 10 ** 12 for key in raw.BUDGET_FIELDS}, tree.root)
+        result = v._checkpoint_readback(tree.context, parent, bundle, tree.parent_binding,
+            reader=reader, outer_preflight=lambda *args: None)
+        self.assertTrue(result['observations']['parameters_bitwise']); self.assertFalse(result['execution_verified'])
+        wrong = copy.deepcopy(bundle); wrong['parent_restore_record']['manifest_sha256'] = '0' * 64
+        with self.assertRaisesRegex(ValueError, 'returned current-parent restore'):
+            v._checkpoint_readback(tree.context, parent, wrong, tree.parent_binding,
+                reader=reader, outer_preflight=lambda *args: None)
 
     def test_checkpoint_child_artifact_binds_separate_raw_request_to_same_study(self):
         attempt = {'stage': 'checkpoint_resume', 'attempt_id': 'parent-cp', 'status': 'RETURNED'}

@@ -496,6 +496,45 @@ pending selected experiment and frozen authorized scope. Acquisition, functional
 retention and independent skill composition remain unproved; the broader goal
 is active and incomplete.
 
+## Process and controller integration
+
+`ce_checkpoint_processes.py` supplies parent checkpoint capture, immutable
+branch requests, owned launch, exact command dispatch, same-handle terminal
+verification, parent restore and a parent-bound raw branch bundle. Growing
+parent journals are copied into retained create-only prefixes. Successful
+child saves and recovery fences are tied to their original operation rows.
+Both child-to-child and parent-to-child saved states must compare bitwise.
+
+`ce_checkpoint_local_issuer.py` implements bounded ready/run/artifact/finish
+RPC and paid request/common-scope/delegation derivation. A derived context is
+frozen after actual worker/delegation observation and before execution permit
+issuance. The native source entry provider is absent, and existing issuer and
+verifier registries remain empty. The real native entry path is unexecuted.
+
+Qualification controller services now acquire one lazy supervisor lease before
+preparation and bind the exact backend before loading. Supervisor lease and
+parent worker refresh costs remain in their original bootstrap owner between
+Q stages; child lease costs remain in active child accounting. Reload requires
+verified parent use. Imported but uninitialized Torch cannot start CUDA during
+cleanup after preparation failure.
+
+The final readback now independently derives Adam/clipping order and resource
+observations from original journal prefixes. It replays both retained parent
+checkpoint prefixes and all three raw child branches, ties parent/child saved
+manifests to publication/recovery, and compares the saved state bytes. Resource
+counter scopes remain explicit; complete native prices and OS execution are
+separate unverified requirements.
+
+The expanded source suite passed **299/299 controls**, with unchanged source,
+zero skips/errors and no framework imports, model loads or optimizer execution.
+See `evidence/CE8_PROCESS_INTEGRATION_SOURCE_CHECKS_20261002.json`.
+
+Actual source entry/bootstrap/launch issuers, constructor origin verification,
+full OS/source/clock/prepayment verification and measured native qualification
+remain required. No native work has run after the warm stop. The pending new
+experiment choice and frozen scope govern execution; the broader acquisition,
+retention, composition and method-combination objective remains incomplete.
+
 ## Production interface
 
 ```powershell

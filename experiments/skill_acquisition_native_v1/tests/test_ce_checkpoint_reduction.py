@@ -80,19 +80,19 @@ class ThreeBranchFixture:
             gradient_validation_operation=validation, clipping_operation=clip, raw_gradient_norm_float64=.5,
             clipped_gradient_norm_float64=.5, optimizer_recipe=ledger.recipe['optimizer'], gradient_clipping_recipe=ledger.recipe['gradient_clipping'])
         ledger.commit_boundary(result)
-    def restore(self, ledger):
+    def restore(self, ledger, manifest_sha256='a' * 64):
         self.serial += 1; oid = 'restore-%d' % self.serial
         before = ledger.progress_record(); progress = copy.deepcopy(before)
         progress.update(generation=before['generation'] + 1, snapshot=str((before['generation'] + 4) % 10) * 64)
         progress['symbolic_snapshot'] = progress['snapshot']
         record = dict(progress, progress=progress, symbolic_snapshot=progress['snapshot'],
-            manifest_sha256='a' * 64, install_fence_required=True)
+            manifest_sha256=manifest_sha256, install_fence_required=True)
         ledger.operation('checkpoint_restore', 'started', oid)
         ledger.operation('checkpoint_restore', 'returned', oid, C=progress['C'], U=progress['U'],
-            generation=progress['generation'], symbolic_snapshot=progress['snapshot'], manifest_sha256='a' * 64)
+            generation=progress['generation'], symbolic_snapshot=progress['snapshot'], manifest_sha256=manifest_sha256)
         ledger.install_restore(record)
         return record
-    def state_file(self, directory, ledger, binding):
+    def state_file(self, directory, ledger, binding, save_operation_id=None):
         U = ledger.progress_record()['U']
         tensors = {'param::w': ('F32', [2], struct.pack('<2f', 3, 4)),
             'exp_avg::w': ('F32', [2], struct.pack('<2f', .5, .25)),
@@ -111,13 +111,14 @@ class ThreeBranchFixture:
             'specifications': {name: [dtype, shape] for name, (dtype, shape, _) in tensors.items()},
             'Adam_initialized': ['w'], 'rng': {'python': [3, [1, 2], None], 'numpy': ['MT19937', [3, 4], 0, 0, 0.0],
                 'cuda_count': 1, 'numpy_version': 'fixture'}, 'optimizer_groups': [{'lr': 1e-5}], 'module_training': {'model': False}}
-        manifest = {'schema': r.checkpoint.CHECKPOINT_SCHEMA, 'bindings': original, 'bindings_sha256': r.digest(original),
+        manifest = {'schema': r.checkpoint.CHECKPOINT_SCHEMA, 'save_operation_id': save_operation_id,
+            'bindings': original, 'bindings_sha256': r.digest(original),
             'progress': ledger.progress_record(), **{key: value for key, value in descriptor.items() if key != 'tensor_hashes'},
             'Adam_scalar_steps': U, 'frozen_state_sha256': 'f' * 64,
             'payload': {'path': str(path), 'file_sha256': hashlib.sha256(blob).hexdigest(), 'bytes': len(blob)}}
         manifest['manifest_sha256'] = r.digest(manifest)
         return manifest, self.write(directory / 'manifest.json', manifest, binding, 'checkpoint_manifest'), descriptor
-    def negative(self, ledger, descriptor):
+    def negative(self, ledger, descriptor, manifest_sha256='a' * 64):
         fingerprint = r.digest(descriptor)
         def state():
             self.serial += 1; oid = 'state-%d' % self.serial
@@ -130,11 +131,11 @@ class ThreeBranchFixture:
         state()
         old = ledger.progress_record(); stale = dict(old, schema=r.checkpoint.RESTORE_SCHEMA,
             progress=dict(old, symbolic_snapshot=old['snapshot']), symbolic_snapshot=old['snapshot'],
-            manifest_sha256='a' * 64, install_fence_required=True)
+            manifest_sha256=manifest_sha256, install_fence_required=True)
         try: ledger.install_restore(stale)
         except ValueError as error: stale_error = {'type': type(error).__name__, 'message': str(error)}
         else: raise AssertionError('stale fence accepted')
-        state(); recovery = self.restore(ledger); state()
+        state(); recovery = self.restore(ledger, manifest_sha256); state()
         return dict.fromkeys(('before_state_sha256', 'after_corruption_state_sha256', 'after_stale_state_sha256', 'recovered_state_sha256'), fingerprint) | {
             'corruption_error': {'type': 'ValueError', 'message': 'latest checkpoint payload bytes corrupt'},
             'stale_fence_error': stale_error, 'corruption_restore_operation': rejected,
@@ -164,12 +165,14 @@ class ThreeBranchFixture:
         ledger.admit_checkpoint_child_prefix(lineage, admission_handle=cap)
         ledger.begin_stage('checkpoint_resume', branch)
         binding = self.binding(context, proof, branch)
-        if branch == 'resumed': self.restore(ledger)
+        if branch == 'resumed': self.restore(ledger, self.prefix['manifest']['manifest_sha256'])
         stop = 1 if branch == 'prefix' else 2
         while ledger.progress_record()['U'] < stop: self.commit(ledger)
-        _, _, descriptor = self.state_file(directory, ledger, binding)
-        controls = self.negative(ledger, descriptor)
-        manifest, manifest_ref, _ = self.state_file(directory, ledger, binding)
+        self.serial += 1; save_id = 'save-%d' % self.serial
+        ledger.operation('checkpoint_save', 'started', save_id)
+        manifest, manifest_ref, descriptor = self.state_file(directory, ledger, binding, save_id)
+        ledger.operation('checkpoint_save', 'returned', save_id, manifest_sha256=manifest['manifest_sha256'])
+        controls = self.negative(ledger, descriptor, manifest['manifest_sha256'])
         controls_ref = self.write(directory / 'controls.json', {'schema': r.raw.SCHEMA, **binding,
             'evidence_kind': 'checkpoint_negative_controls', 'payload': controls}, binding, 'checkpoint_negative_controls')
         ledger.finish_stage([manifest_ref, controls_ref]); ledger.end()
@@ -265,7 +268,7 @@ class Tests(unittest.TestCase):
                     child['payload']['observed_lineage']['parent_worker_identity_sha256'] = '0' * 64
                 fixture.refresh_result('resumed')
                 with self.assertRaises(ValueError): fixture.reduce()
-    def test_rehashed_foreign_endpoint_with_valid_file_and_manifest_hashes_fails_byte_comparison(self):
+    def test_rehashed_foreign_endpoint_fails_original_publication_or_byte_comparison(self):
         with tempfile.TemporaryDirectory(prefix='foreign-child-endpoint-') as directory:
             fixture = ThreeBranchFixture(Path(directory)); child = fixture.branches['resumed']
             manifest = copy.deepcopy(child['manifest']); path = Path(manifest['payload']['path'])
@@ -277,7 +280,7 @@ class Tests(unittest.TestCase):
             ref = fixture.write(child['directory'] / 'manifest.json', manifest, fixture.branch_bindings['resumed'], 'checkpoint_manifest')
             child['payload']['final_manifest_ref'] = ref
             fixture.refresh_result('resumed')
-            with self.assertRaisesRegex(ValueError, 'bytes differ'): fixture.reduce()
+            with self.assertRaisesRegex(ValueError, 'publication operation|bytes differ'): fixture.reduce()
     def test_four_actual_descriptors_and_restore_order_derive_negative_controls(self):
         state, controls = controls_fixture()
         observed = r.reduce_negative_controls(state, controls)

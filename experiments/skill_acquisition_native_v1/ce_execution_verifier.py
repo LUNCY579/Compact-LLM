@@ -181,7 +181,148 @@ def _binding_for(context, attempt, worker):
         'worker_identity_sha256': worker, 'attempt_id': attempt['attempt_id']}
 
 
-def _reductions(context, state, attempt_workers, reader, child_bindings, child_lineages):
+def _retained_prefix(context, original, snapshot):
+    """Replay a retained head of the already verified main journal."""
+    require(type(snapshot) is dict and raw._hex(snapshot.get('ledger_head'))
+            and raw._int(snapshot.get('events'), 1), 'exact retained main journal prefix head/count')
+    count = snapshot['events']
+    require(count <= len(original.events) and original.events[count - 1]['sha256'] == snapshot['ledger_head'],
+            'snapshot is not an actual ancestor of the verified main journal')
+    state = _shadow(context, original.header)
+    for entry in original.events[:count]:
+        if entry['kind'] == 'worker' and not state.proof:
+            state.proof = copy.deepcopy(entry['payload']['proof'])
+        state._apply(entry['kind'], entry['payload'], replay=True)
+        state.events.append(entry)
+    _seal(snapshot, state)
+    return state
+
+
+def _adam_readback(context, state, payload, binding):
+    batches = context['bindings']['scope']['qualifier_execution']['adam_batches']
+    commits = [entry['payload']['result'] for entry in state.events if entry['kind'] == 'commit'
+               and entry['payload']['result'].get('optimizer_operation', {}).get('operation_id') in state.operations
+               and state.operations[entry['payload']['result']['optimizer_operation']['operation_id']]['attempt_id'] == binding['attempt_id']]
+    require(type(payload) is dict and payload.get('boundaries') == commits and len(commits) == len(batches) == 2,
+            'exact two retained qualification Adam commits, not supplied optimizer flags')
+    orders = []
+    for index, result in enumerate(commits):
+        require([row['id'] for row in result['rows']] == batches[index]
+                and result['U_before'] == index and result['U_after'] == index + 1,
+                'raw Adam batches/update counters differ from declared qualification')
+        clip = state.operation_evidence(result['clipping_operation']['operation_id'])
+        optimizer = state.operation_evidence(result['optimizer_operation']['operation_id'])
+        require(clip['kind'] == 'gradient_clipping' and optimizer['kind'] == 'optimizer'
+                and clip['returned_seq'] < optimizer['started_seq'], 'actual returned clipping precedes retained Adam start')
+        orders.append({'clipping': clip, 'optimizer': optimizer})
+    require(payload.get('operation_order') == orders and type(payload.get('progress')) is dict
+            and payload['progress']['C'] == payload['progress']['U'] == 2
+            and payload['progress']['history'] == state.progress_record()['history'],
+            'raw Adam operation order/history differs from original replay')
+    observed = {'actual_optimizer_steps': 2, 'applied_U': [1, 2],
+        'finite_confined_gradients': all(result['gradient_validation_operation']['finite_confined'] is True for result in commits),
+        'frozen_state_unchanged': len({result['frozen_state_sha256'] for result in commits}) == 1,
+        'clip_before_adam': True, 'clip_max_norm': context['bindings']['recipe']['recipe']['gradient_clipping']['max_norm']}
+    q.validate_stage_observations(context, 'adam_clipping', observed, context['prepared_receipt'])
+    return observed
+
+
+def _resource_readback(context, state, payload, binding, *, reader, reference_bytes):
+    from . import ce_resource_qualification as resource
+    spec = context['bindings']['scope']['resource_measurement']
+    require(type(payload) is dict and payload.get('required_barriers') == spec['required_barriers']
+            and payload.get('measured_operation_kinds') == spec['measured_operation_kinds']
+            and payload.get('limits') == spec['limits'], 'raw resource scope differs from frozen measurement policy')
+    with reader._overhead('resource_original_journal_prefix', work_bytes=32 * reference_bytes + 32 * MAX_HEADER,
+                          hash_attempts=MAX_EVENTS, hash_bytes=8 * reference_bytes + MAX_HEADER):
+        prefix = _retained_prefix(context, state, payload.get('accounting_snapshot'))
+        require(payload.get('raw_operations') == prefix.operations and payload.get('worker_proof') == prefix._current_proof,
+                'resource operations/worker differ from independently replayed original head')
+        proof = prefix._current_proof
+        require(proof['worker_identity_sha256'] == binding['worker_identity_sha256'], 'resource prefix current worker mismatch')
+        samples = payload.get('resource_samples')
+        require(type(samples) is list and samples, 'actual retained barrier samples required')
+        recorded = [operation['result'].get('resource_observation') for operation in prefix.operations.values()
+                    if operation['kind'] in ('resource_probe', 'resource_cuda_probe') and operation['phase'] == 'returned']
+        require(all(sample in recorded or {key: value for key, value in sample.items() if key != 'stage'} in recorded
+                    for sample in samples), 'resource sample lacks its original returned probe operation')
+        observed = resource.reduce_samples(samples, spec['required_barriers'], worker_pid=proof['os_identity']['pid'],
+            gpu_uuid=context['bindings']['scope']['qualifier_resources']['gpu_uuid'], limits=spec['limits'])
+        observed.update(resource.reduce_operations(prefix.operations, spec['measured_operation_kinds'],
+            worker_identity_sha256=proof['worker_identity_sha256']))
+    require(payload.get('observations') == observed, 'supplied resource observations differ from raw recomputation')
+    q.validate_stage_observations(context, 'resource_io_measurement', observed, context['prepared_receipt'])
+    return observed
+
+
+def _checkpoint_prefix(context, original, refs, binding, reader):
+    require(type(refs) is dict and set(refs) == {'header', 'journal', 'seal'}, 'all retained parent checkpoint prefix refs')
+    header = _header(context, _read_json(reader, refs['header'], binding, 'qualification_header'))
+    prefix, workers, _ = _replay(reader, refs['journal'], binding, context, header, {binding['worker_identity_sha256']})
+    snapshot = _read_json(reader, refs['seal'], binding, 'qualification_seal')
+    _seal(snapshot, prefix)
+    require(prefix.header == original.header and prefix.events == original.events[:len(prefix.events)],
+            'retained checkpoint parent prefix is not the original verified journal')
+    require(not prefix.fatal and not prefix.unknown_wall and prefix.worker_open and prefix.active is not None
+            and prefix.active['stage'] == 'checkpoint_resume' and prefix.active['attempt_id'] == binding['attempt_id']
+            and prefix.progress_record()['C'] == prefix.progress_record()['U'] == 2
+            and not prefix.requires_restore and not prefix.restore_pending,
+            'exact live resolved parent U2 checkpoint stage in retained prefix')
+    require(all(operation.get('lifetime_cleanup') for operation in prefix.operations.values() if operation['phase'] == 'started'),
+            'unexpected pending parent operation in checkpoint prefix')
+    return prefix, snapshot
+
+
+def _checkpoint_readback(context, state, payload, binding, *, reader, outer_preflight):
+    from . import ce_checkpoint_reduction as reduction, ce_checkpoint_qualification as checkpoint
+    require(type(payload) is dict and payload.get('schema') == 'CE8-CHECKPOINT-BRANCHES-BUNDLE-1'
+            and payload.get('parent_binding') == binding
+            and payload.get('native_qualified') is False and payload.get('execution_verified') is False,
+            'exact unqualified parent-bound raw checkpoint bundle')
+    initial, _ = _checkpoint_prefix(context, state, payload.get('parent_ledger_refs'), binding, reader)
+    post, post_snapshot = _checkpoint_prefix(context, state, payload.get('parent_post_restore_ledger_refs'), binding, reader)
+    require(initial.events == post.events[:len(initial.events)]
+            and payload.get('parent_post_restore_snapshot_ref') == payload['parent_post_restore_ledger_refs']['seal'],
+            'post-restore parent prefix must retain exact original ancestry')
+    record = payload.get('parent_restore_record')
+    matches = [operation for operation in post.operations.values() if operation['kind'] == 'checkpoint_restore'
+        and operation['phase'] == 'returned' and operation.get('result', {}).get('manifest_sha256') == (record or {}).get('manifest_sha256')
+        and operation.get('worker_id') == binding['worker_identity_sha256'] and operation.get('attempt_id') == binding['attempt_id']]
+    require(len(matches) == 1, 'one actual returned current-parent restore operation')
+    bound_operation = dict(copy.deepcopy(matches[0]), source_worker_binding=copy.deepcopy(binding))
+    checkpoint.validate_restore_fence(record, initial.progress_record(), bound_operation, current_binding=binding)
+    require(post.progress_record() == record['progress'] and post_snapshot['progress'] == record['progress'],
+            'returned parent restore fence was not installed in original ledger')
+    parent_manifest = checkpoint._read_manifest(reader, payload['parent_manifest_ref'], binding)
+    require(record['manifest_sha256'] == parent_manifest['manifest_sha256'], 'parent restored a different saved endpoint')
+    reduced = reduction.reduce_checkpoint_branches(context, payload['branch_refs'], payload['branch_bindings'], binding,
+        reader=reader, outer_preflight=outer_preflight)
+    child_lineages = {child['binding']['worker_identity_sha256']: child['lineage'] for child in reduced['branches'].values()}
+    parent_comparison = checkpoint.compare_checkpoint_states(reader, payload['parent_manifest_ref'], binding,
+        reduced['branches']['uninterrupted']['manifest_ref'], reduced['branches']['uninterrupted']['binding'],
+        parameter_inventory=context['bindings']['scope']['native_backend']['parameter_inventory'],
+        parent_binding=binding, child_lineages=child_lineages)
+    terminals = payload.get('child_terminal_proofs')
+    require(type(terminals) is dict and set(terminals) == set(reduction.BRANCHES), 'all original child terminal records required')
+    for branch, terminal in terminals.items():
+        child = reduced['branches'][branch]
+        require(type(terminal) is dict and terminal.get('worker_identity_sha256') == child['binding']['worker_identity_sha256']
+                and terminal.get('request_sha256') == binding['request_sha256'] and terminal.get('scope_sha256') == binding['scope_sha256']
+                and terminal.get('status_file_used') is False and type(terminal.get('exit_code')) is int and terminal['exit_code'] == 0,
+                'child terminal metadata must match its exact raw branch; actual OS handles remain required')
+    saved = [operation for operation in initial.operations.values() if operation['kind'] == 'checkpoint_save' and operation['phase'] == 'returned']
+    observed = {'checkpoint_saves': len(saved) + sum(child['checkpoint_save_operations'] for child in reduced['branches'].values()),
+        'checkpoint_restores': len(matches) + sum(child['returned_restore_operations'] for child in reduced['branches'].values()),
+        **{key: value and parent_comparison[key] for key, value in reduced['U2_state_comparison'].items() if key.endswith('_bitwise')},
+        'fresh_fence_installed': True, 'stale_work_rejected': all(child['negative_controls_independently_recomputed'] for child in reduced['branches'].values()),
+        'corruption_fails_closed': all(child['failed_restore_operations'] >= 1 for child in reduced['branches'].values()),
+        'failed_unknown_costs_retained': True}
+    return {'observations': observed, 'raw_branches': reduced, 'parent_state_comparison': parent_comparison,
+            'parent_derived_reservations': post.cumulative,
+            'child_terminal_metadata_consistent': True, 'execution_verified': False, 'native_qualified': False}
+
+
+def _reductions(context, state, attempt_workers, reader, child_bindings, child_lineages, outer_preflight=None):
     reductions, gaps = {}, []
     receipt = context['prepared_receipt']; rows = {row['id']: row for row in receipt['prepared_row_bindings']}
     execution = context['bindings']['scope']['qualifier_execution']
@@ -216,6 +357,22 @@ def _reductions(context, state, attempt_workers, reader, child_bindings, child_l
                 context['bindings']['scope']['native_backend']['parameter_inventory'],
                 start_anchor_sha256=context['bindings']['anchors']['own_start_sha256'])['observations'])
             reductions[stage] = values
+        elif stage == 'adam_clipping':
+            require('adam_clipping' in by_role, 'raw Adam operation artifact required')
+            payload = reader._envelope(by_role['adam_clipping'], expected, 'adam_clipping', 'adam_clipping')
+            with reader._overhead('adam_original_operation_readback', work_bytes=32 * by_role['adam_clipping']['bytes']):
+                reductions[stage] = _adam_readback(context, state, payload, expected)
+        elif stage == 'resource_io_measurement':
+            require('resource_io' in by_role, 'raw barrier/operation resource artifact required')
+            payload = reader._envelope(by_role['resource_io'], expected, 'resource_io', 'resource_io')
+            reductions[stage] = _resource_readback(context, state, payload, expected, reader=reader,
+                reference_bytes=by_role['resource_io']['bytes'])
+            gaps.append('resource measurements retain their explicit IO subset; complete native unit prices and actual probe execution require verification')
+        elif stage == 'checkpoint_resume' and 'checkpoint_branches' in by_role:
+            require(callable(outer_preflight), 'independently priced checkpoint bundle reduction scope')
+            payload = reader._envelope(by_role['checkpoint_branches'], expected, 'checkpoint_branches', 'checkpoint_branches')
+            reductions[stage] = _checkpoint_readback(context, state, payload, expected, reader=reader, outer_preflight=outer_preflight)
+            gaps.append('checkpoint raw equality and terminal metadata need actual retained parent/child OS handles and outer prepayment verification')
         else:
             gaps.append(stage + ': dedicated raw runtime/state/CP/resource verification is still required; stage Boolean observations ignored')
     return reductions, gaps
@@ -272,7 +429,7 @@ def verify_qualification(context, header_ref, journal_ref, seal_ref, *, reader, 
     with reader._overhead('seal_and_stage_artifact_linkage', work_bytes=32 * seal_ref['bytes'] + 32 * journal_ref['bytes'],
                           hash_attempts=MAX_EVENTS, hash_bytes=8 * journal_ref['bytes']):
         complete, pending = _seal(seal, state)
-        reductions, gaps = _reductions(context, state, attempt_workers, reader, child_bindings, child_lineages)
+        reductions, gaps = _reductions(context, state, attempt_workers, reader, child_bindings, child_lineages, outer_preflight)
     gaps += _workers(worker_handles, workers, context)
     gaps += ['outer bootstrap/verification prepayment and full clock chain require independent registered-service verification',
              'this source does not activate a native execution/qualification verifier registry']

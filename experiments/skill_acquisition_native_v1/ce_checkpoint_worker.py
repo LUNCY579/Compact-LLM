@@ -99,7 +99,10 @@ def validate_observed_lineage(request, context, actual_proof):
 
 
 def _service(value, registry, name):
-    if not any(value is item for item in registry):
+    # These are exact source constructors. Subclasses and duck-typed objects
+    # cannot replace constructor admission; every constructor separately binds
+    # the full permit/context, real prepayment, OS handles and callbacks.
+    if not any(type(value) is item for item in registry if type(item) is type):
         raise MissingCheckpointWorkerService('source-registered checkpoint child ' + name + ' is missing before kernel')
     return value
 

@@ -163,6 +163,11 @@ def _branch(reader, context, reference, binding, parent_binding):
             and manifest['progress']['history'] == state.progress_record()['history']
             and manifest['progress']['C'] == manifest['progress']['U'] == expected_U,
             'original final checkpoint differs from replayed child endpoint/history')
+    save = state.operations.get(manifest.get('save_operation_id'))
+    require(type(save) is dict and save['kind'] == 'checkpoint_save' and save['phase'] == 'returned'
+            and save['worker_id'] == binding['worker_identity_sha256'] and save['attempt_id'] == binding['attempt_id']
+            and save.get('result', {}).get('manifest_sha256') == manifest['manifest_sha256'],
+            'saved child manifest lacks its actual returned checkpoint publication operation')
     controls_ref = payload.get('negative_controls_ref')
     controls = _json(reader, controls_ref, binding, 'checkpoint_negative_controls')
     require(controls.get('schema') == raw.SCHEMA and controls.get('evidence_kind') == 'checkpoint_negative_controls'
@@ -171,10 +176,16 @@ def _branch(reader, context, reference, binding, parent_binding):
     require(type(controls) is dict and all(raw._hex(controls.get(key)) for key in
         ('before_state_sha256', 'after_corruption_state_sha256', 'after_stale_state_sha256', 'recovered_state_sha256')),
         'all retained negative-control state fingerprints')
+    recovered = controls.get('recovery_restore_record')
+    require(type(recovered) is dict and recovered.get('manifest_sha256') == manifest['manifest_sha256']
+            and recovered.get('progress') == state.progress_record(),
+            'negative-control recovery must install the actual saved child endpoint')
     negative = reduce_negative_controls(state, controls, context['bindings']['scope']['native_backend']['parameter_inventory'], binding)
     return {'branch': name, 'binding': binding, 'lineage': lineage, 'manifest_ref': manifest_ref,
         'logical_inherited_U': inherited, 'physical_optimizer_updates': len(commits),
         'final_U': expected_U, 'derived_costs': copy.deepcopy(state.cumulative),
+        'checkpoint_save_operations': sum(op['kind'] == 'checkpoint_save' and op['phase'] == 'returned'
+                                          for op in state.operations.values()),
         'ledger_head': state._head(), **negative}
 
 

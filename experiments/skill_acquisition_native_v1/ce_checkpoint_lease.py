@@ -122,8 +122,8 @@ class SupervisorGpuLease:
     def __init__(self,context,permit,parent_handle,backend,operation,gate):
         authority.require_execution_permit(permit,context,'checkpoint_resume',operation=operation,gate=gate)
         from .ce_native_backend import NativeCEBackend
-        require(type(parent_handle) is worker.WinWorkerHandle and type(backend) is NativeCEBackend
-                and backend.permit is permit and backend.operation is operation and backend.gate is gate,
+        require(type(parent_handle) is worker.WinWorkerHandle and (backend is None or type(backend) is NativeCEBackend
+                and backend.permit is permit and backend.operation is operation and backend.gate is gate),
                 'exact source-owned parent worker/backend before lease construction')
         self._initialize(context,permit,parent_handle,backend,operation,gate,native=True)
 
@@ -136,6 +136,7 @@ class SupervisorGpuLease:
         self.state,self.fatal,self.closed='NEW',False,False
         self.token=self.cm=self.ticket=self.child=None
         self.completed=[]; self.evidence=[]; self.owner_marker=self.initial_lock_ref=None
+        self.last_finished_child=None
         self.release_id=self.release_started=self.release_seal=None
         self.seal=_SEAL if native else _FIXTURE_SEAL
 
@@ -165,7 +166,7 @@ class SupervisorGpuLease:
     @contextmanager
     def _span(self,action):
         try:
-            with update._span(self.operation,'qualification_lease',dict(self.spec['operation_bounds']['transfer'],lease_action=action)) as record:
+            with update._span(self.operation,'supervisor_lease',dict(self.spec['operation_bounds']['transfer'],lease_action=action)) as record:
                 yield record
         except BaseException:
             self.fatal=True
@@ -174,11 +175,11 @@ class SupervisorGpuLease:
     def acquire(self):
         self._admit(); require(self.state=='NEW', 'supervisor must not wait on its already-held lease')
         self.release_id,self.release_started=uuid.uuid4().hex,time.perf_counter()
-        self.operation('qualification_lease','started',operation_id=self.release_id,deferred_owned_lease_release=True,
+        self.operation('supervisor_lease','started',operation_id=self.release_id,deferred_owned_lease_release=True,
                        **self.spec['operation_bounds']['release'])
         self.release_seal=_RELEASE_SEAL
         try:
-            with update._span(self.operation,'qualification_lease',dict(self.spec['operation_bounds']['acquire'],lease_action='acquire')):
+            with update._span(self.operation,'supervisor_lease',dict(self.spec['operation_bounds']['acquire'],lease_action='acquire')):
                 parent=self._parent()
                 from experiments.maxrl_comp002_pretraining_v1 import s0_runtime as runtime
                 if self.native:
@@ -205,9 +206,22 @@ class SupervisorGpuLease:
             raise
         return self
 
+    def bind_backend(self,backend):
+        self._admit(); require(self.state=='PARENT' and self.backend is None, 'bind one metadata backend under the existing supervisor lease')
+        if self.native:
+            from .ce_native_backend import NativeCEBackend
+            require(type(backend) is NativeCEBackend and backend.permit is self.permit and backend.context is self.context
+                    and backend.operation is self.operation and backend.gate is self.gate,
+                    'exact same-scope native backend binding required')
+        require(backend.model is None and backend.optimizer is None and getattr(backend,'tokenizer',None) is None
+                and getattr(backend,'torch',None) is None and not getattr(backend,'closed',False),
+                'backend factory must remain metadata-only before supervisor binding')
+        self.backend=backend
+
     def release_parent_lease(self,context,permit,proof):
         self._admit(); require(context is self.context and permit is self.permit and self.state=='PARENT', 'one original parent lease suspension')
         with self._span('suspend_parent'):
+            require(self.backend is not None, 'bind actual parent backend before delegation')
             require(proof==self._parent(), 'caller parent flags cannot replace actual retained handle proof')
             require(self.backend.model is None and self.backend.optimizer is None, 'actual parent model/Adam must be released before transfer')
             self._released_cuda(self.spec['parent_released_cuda_bytes_upper'])
@@ -277,13 +291,22 @@ class SupervisorGpuLease:
                     'same retained OS-terminal child required; status/response flags cannot establish quiescence')
             _,before=self._lock([proof['os_identity']['pid']])
             self.module.set_workers(self.token,[]); _,after=self._lock([])
-            branch=self.child[2]['branch']; self.child=None; self.state='SUSPENDED'
+            branch=self.child[2]['branch']; self.last_finished_child=owned; self.child=None; self.state='SUSPENDED'
             self.evidence.append({'action':'child_terminal','branch':branch,'terminal':copy.deepcopy(actual),
                                   'before_lock_ref':before,'current_lock_ref':after,'native_qualified':False})
             if actual['exit_code']!=0:
                 self.fatal=True; raise authority.NativeAdmissionError('owned child exited unsuccessfully; no next child or parent model reload')
             self.completed.append(branch)
         return copy.deepcopy(actual)
+
+    def mark_child_evidence_failed(self,owned,error):
+        self._admit(recovery=True)
+        require(isinstance(error,BaseException) and (self.child is not None and owned is self.child[0]
+                or owned is self.last_finished_child and owned is not None), 'only exact owned child evidence failure may invalidate this unit')
+        self.fatal=True
+        with self._span('child_evidence_failed'):
+            self.evidence.append({'action':'child_evidence_failed','error':{'type':type(error).__name__,'message':str(error)[:1000]},
+                                  'native_qualified':False})
 
     def reacquire_parent_lease(self,context,permit,ticket):
         self._admit(recovery=True)
@@ -304,7 +327,8 @@ class SupervisorGpuLease:
         require(getattr(self,'seal',None) in (_SEAL,_FIXTURE_SEAL), 'source-owned lease release only')
         if self.closed: return
         require(self.child is None and self.state in ('NEW','PARENT','SUSPENDED'), 'live or unverified child keeps supervisor lock held')
-        require(self.backend.model is None and self.backend.optimizer is None, 'parent model/Adam must be released before shared lock release')
+        require(self.backend is None or self.backend.model is None and self.backend.optimizer is None,
+                'parent model/Adam must be released before shared lock release')
         require(self.release_seal is _RELEASE_SEAL and self.release_id is not None, 'physical lease release must be prepaid before acquisition')
         primary=None
         try: self._admit(recovery=True)
@@ -315,7 +339,9 @@ class SupervisorGpuLease:
             if primary is None: primary=error
             else: primary.lease_owner_failure=str(error)[:1000]
         if self.native and getattr(self.backend,'torch',None) is not None:
-            try: self._released_cuda(self.spec['parent_released_cuda_bytes_upper'])
+            try:
+                require(self.backend.torch is sys.modules.get('torch'), 'actual retained parent framework identity')
+                if self.backend.torch.cuda.is_initialized(): self._released_cuda(self.spec['parent_released_cuda_bytes_upper'])
             except BaseException as error:
                 # A live allocation forbids releasing exclusivity. The caller
                 # must finish source-owned backend cleanup; keep the lock held.
@@ -330,7 +356,7 @@ class SupervisorGpuLease:
             else: primary.lease_physical_release_failure=str(error)[:1000]
         self.closed=True; self.state='CLOSED'
         try:
-            self.operation('qualification_lease','failed' if primary else 'returned',operation_id=self.release_id,
+            self.operation('supervisor_lease','failed' if primary else 'returned',operation_id=self.release_id,
                 wall_s=time.perf_counter()-self.release_started,lease_action='release_original_supervisor',
                 error_type=type(primary).__name__ if primary else None,unknown_external_helper_IO=True)
         except BaseException as error:
