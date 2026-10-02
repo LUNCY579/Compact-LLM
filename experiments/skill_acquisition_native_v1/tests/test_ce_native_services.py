@@ -38,6 +38,20 @@ def resource_spec():
 
 
 class NativeServicesTests(unittest.TestCase):
+    def test_sample_attempt_ceiling_refuses_before_another_resource_query(self):
+        from experiments.skill_acquisition_native_v1 import ce_resource_evidence as resource
+        spec = resource_spec(); spec['sample_attempts_upper'] = 1
+        gate = s.NativeResourceGate(spec, lambda *args, **fields: None)
+        sample = {'schema': resource.SCHEMA, 'host_free_bytes': 8 * resource.GIB,
+            'worker_peak_working_set_bytes': resource.GIB, 'gpu_free_bytes': resource.GIB,
+            'disk_free_bytes': 64 * resource.GIB}
+        with patch.object(resource, 'readonly_sample', return_value=sample) as probe:
+            gate('configured_runtime')
+            with self.assertRaisesRegex(ValueError, 'attempt ceiling'):
+                gate('configured_runtime')
+            self.assertEqual(probe.call_count, 1)
+        self.assertEqual(gate.sample_attempts, 1)
+
     def test_closed_service_roles_and_constructor_before_io(self):
         self.assertFalse(s._REGISTERED_SERVICE_VERIFIERS); self.assertFalse(s._REGISTERED_ROLE_FACTORIES)
         self.assertFalse(s._REGISTERED_BOOTSTRAP_PREPAYMENT_TYPES)

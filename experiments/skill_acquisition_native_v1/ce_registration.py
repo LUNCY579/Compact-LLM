@@ -307,8 +307,9 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
     service_profiles['entry_preparation']=profile(2*GIB,metadata,100000,4*GIB,1800)
     service_profiles['controller_stage']['wall_s_upper']=19200
     service_profiles['tokenizer_render']=profile(0,0,32,4*analytical['max_prepared_hash_bytes'],5)
-    for kind in ('worker_os_binding','worker_runtime_binding','worker_handle_close','worker_handle_duplicate',
-                 'process_launch_parent','process_launch','process_launch_child','process_launch_child_census'):
+    for kind in ('worker_os_binding','worker_runtime_binding','worker_handle_close','worker_handle_duplicate'):
+        service_profiles[kind]=profile(wall=5)
+    for kind in ('process_launch_parent','process_launch','process_launch_child','process_launch_child_census'):
         service_profiles[kind]=profile(wall=60)
     service_profiles['input_io']=profile(128*MIB,64*MIB,20000,256*MIB,60)
     service_profiles['worker_source_verification']['write_bytes_upper']=0
@@ -343,8 +344,14 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
             'physical_wall_seconds_upper':19200,
             'finalization_bounds':profile(128*MIB,16*MIB,32,256*MIB,120),
             'operation_profiles':service_profiles,'caps':{'read_bytes':64*GIB,'write_bytes':4*GIB,'hash_attempts':2000000,
-                'hash_bytes':256*GIB,'metadata_bytes':4*GIB,'operation_attempts':100000,'wall_seconds':512000}},
+                'hash_bytes':256*GIB,'metadata_bytes':4*GIB,'operation_attempts':100000,'wall_seconds':768000},
+            'reservation_budget_basis':{'classification':'prospective hard uppers; not measured prices',
+                'preparation_rows':3000,'reservation_seconds_per_row':60,
+                'controller_starts_upper':14,'additional_resource_gates_upper':10000,
+                'additional_source_checks_upper':500,'misc_starts_upper':100,
+                'total_reserved_wall_upper':722085}},
         'resource':{'limits':limits,'resource_probe':probe,
+            'sample_attempts_upper':17000,
             'host_transient_bytes':{kind:64*MIB for kind in runner.HOST_STAGES | set(qualification.STAGES) | accounting.KINDS |
                 {'before_framework','before_model','ingestion_sources','ingestion_tokenizer','ingestion_boundary','ingestion_qualification_rows',
                  'qualification_artifact','qualification_parent_release','qualification_state_fingerprint',
