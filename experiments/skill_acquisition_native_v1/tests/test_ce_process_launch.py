@@ -262,5 +262,21 @@ class ProcessLaunchTests(unittest.TestCase):
         self.assertIs(caught.exception,error);self.assertTrue(current.closed)
         self.assertEqual(events,['stdout','stderr','monitor',('worker',100),'popen_handle'])
 
+    def test_rpc_eof_preserves_primary_and_attaches_owned_bounded_stderr(self):
+        import queue
+        import threading
+        current=object.__new__(p.OwnedProcess);joins=[]
+        current.spec=spec();current.stdout=queue.Queue();current.stdout.put(None);current.errors=[]
+        current.stderr_data=bytearray(b'Actual worker failure: NVMLUnknownError before model allocation\n')
+        current.stderr_lock=threading.Lock()
+        current.stderr_thread=SimpleNamespace(join=lambda timeout:joins.append(timeout),is_alive=lambda:False)
+        current._remaining=lambda cap:cap
+        current.budget=SimpleNamespace(run=lambda kind,callback,**fields:callback())
+        with self.assertRaisesRegex(p.worker.WorkerEvidenceError,'worker exited without expected bounded RPC message') as caught:
+            current._receive('response',1,5)
+        self.assertIn('NVMLUnknownError',caught.exception.owned_child_stderr)
+        self.assertIn('bounded, untrusted diagnostic','\n'.join(caught.exception.__notes__))
+        self.assertEqual(joins,[5])
+
 
 if __name__ == '__main__': unittest.main()

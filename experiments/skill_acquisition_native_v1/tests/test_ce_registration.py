@@ -88,9 +88,10 @@ class RegistrationTests(unittest.TestCase):
         with self.assertRaises(ValueError): self.documents(output_root=self.root/'unsafe-output')
 
     def test_child_environment_and_launch_templates_are_explicit_without_credentials(self):
-        with patch.dict(r.os.environ,{'API_KEY':'do-not-copy','TOKEN':'do-not-copy'}):
+        with patch.dict(r.os.environ,{'API_KEY':'do-not-copy','TOKEN':'do-not-copy','PROGRAMFILES':r'C:\Program Files'}):
             environment=r.child_environment()
         self.assertNotIn('API_KEY',environment); self.assertNotIn('TOKEN',environment)
+        self.assertEqual(environment['PROGRAMFILES'],r'C:\Program Files')
         doc=self.documents(); scope=doc['SCOPE.json']
         fake_identity={'os_identity':{'pid':1,'creation_filetime_100ns':1,'boot_identity':'pure-fixture'}}
         context={'request_sha256':'a'*64,'scope_sha256':'b'*64,'bindings':{'scope':scope,'source':self.source}}

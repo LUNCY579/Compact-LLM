@@ -367,8 +367,14 @@ class OwnedProcess:
             try: raw = self.stdout.get(timeout=self._remaining(cap))
             except queue.Empty:
                 self._stop_owned('rpc_deadline'); raise worker.WorkerEvidenceError('owned RPC deadline expired')
-            require(not self.errors, 'worker pipe error: ' + str(self.errors[0]) if self.errors else 'worker pipe error')
-            require(raw is not None, 'worker exited without expected bounded RPC message')
+            try:
+                require(not self.errors, 'worker pipe error: ' + str(self.errors[0]) if self.errors else 'worker pipe error')
+                require(raw is not None, 'worker exited without expected bounded RPC message')
+            except BaseException as error:
+                try:self._attach_owned_stderr(error)
+                except BaseException as diagnostic:
+                    error.owned_stderr_failure={'type':type(diagnostic).__name__,'message':str(diagnostic)[:1000]}
+                raise
             self.received += 1; require(self.received <= self.spec['max_messages'], 'RPC message count exceeded')
             def unique(pairs):
                 value = {}
