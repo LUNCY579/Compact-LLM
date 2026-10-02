@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "READER_INITIAL_FREEZE_BYTE_RECOVERY",
+  "initial_review": "audits/READER_SCIENTIFIC_REVIEW_1.md",
+  "status": "ALL_FIVE_ORIGINAL_HASHES_VERIFIED",
+  "files": {
+    "reader.py": "804110837c260d7dcb67860ca0bdf2a49fd01b1afb7428d2d0e46331335017fd",
+    "reader_execution.py": "e83984c8ce3d25d44558643b9e3d3440b8706c94f331c6457275aebb18bbd193",
+    "test_reader.py": "480aa79762bdad1a1a9c936b2c693866be53ee989846bba998a76a71dd9cd85a",
+    "READER_QUALIFICATION_V1.json": "f53a116d171730bf5ecc5cb6d23dfd6ec38fa879c8b5b1d01785d2b0124998b6",
+    "READER_PROTOCOL_V1.md": "3ab918ebbef216f933aeb41a22221820b47a2a37eab72578ae3c85cb0e3ff52e"
+  },
+  "recovery_source": "Recorded original builder tool calls in rollout-2026-10-01T22-51-26-01a0fabd-03ae-7e83-b88a-cebea4a12aad.jsonl",
+  "method": "Create-only recovery from original recorded patch and append sequences plus original contract generation; every file must match independently recorded initial frozen SHA256. Unmatched drafts retained only in ignored outputs.",
+  "limitation": "The builder failed to snapshot the initial untracked files before repair; this recovery was performed afterwards. Exact hash equality establishes recovered bytes, not an original timely archive.",
+  "model_loads": 0,
+  "framework_imports": 0,
+  "native_launches": 0
+}

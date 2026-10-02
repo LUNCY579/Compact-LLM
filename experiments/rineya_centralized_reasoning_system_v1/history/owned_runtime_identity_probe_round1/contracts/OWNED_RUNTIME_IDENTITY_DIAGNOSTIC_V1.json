@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "contract_id": "CRS-OWNED-RUNTIME-IDENTITY-DIAGNOSTIC-001",
+  "client_date": "2026-10-02",
+  "status": "IMPLEMENTED_LIGHTWEIGHT_TESTED_PENDING_FROZEN_SOURCE_REVIEW",
+  "scientific_reviewer": "/root/scientific_audit",
+  "requested_by": "/root",
+  "design_predecessor_sha256": "dbe826be7ee8f2e1b54c93d6f8923b7422bf60005aa1d9f5cb96f9b49063b33a",
+  "predecessor_preserved_unchanged": true,
+  "design_change": "Add bounded pinned framework import observation after stdlib/source-check baseline; the earlier no-framework draft was the reviewer's narrower proposal, not an owner prohibition on imports",
+  "purpose": "Measure exact owned-Job process identities and strict refusal during registered source checks and CPU-only import statements; no assumed culprit, model execution or native qualification",
+  "scientific_rationale": "Attempt004 recorded framework_import_attempt but no subsequent model operation. Pure source checks cannot exclude a distinct transient framework-import child. A sequential before/after import observation is a bounded resolving experiment, not another native source repair round.",
+  "native_whole_path_qualification": "QUARANTINED_AT_THREE_REVIEW_REPAIR_ROUNDS",
+  "native_launch_authorized": false,
+  "probe_execution_authorized_by_this_file": false,
+  "models_authorized": false,
+  "source_commit": null,
+  "implementation_sha256": "ebee87e14e10b602bdd56e9ff3a920a107b361def71baa1c0043f1953c83fb35",
+  "requires_before_probe": [
+    "Root freezes one separate implementation and its source commit, this contract, exact registry and all receipt identities",
+    "Independent operations review of frozen source, no-model/no-CUDA boundary, exact Job observations/notifications, telemetry and cleanup",
+    "Scientific source review verifies this fixed two-phase scope and correct incomplete-evidence behavior",
+    "Fresh unchanged host admission, one canonical host-wide worker lease and a60-second reservation charged to current epoch/rolling limits",
+    "No automatic rerun, active native job, native source edit, executable-registry broadening or qualification promotion"
+  ],
+  "preserved_native": {
+    "reviewed_source_commit": "1fd862b863f30ac772f54b19e7ab337d68a4215b",
+    "native_source_sha256": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+    "native_contract_sha256": "d79f3b6a51e939d78a99c5c287ef6f33ef5979cfa50e76ba3d930ed3724f826a",
+    "source_mutation_allowed": false,
+    "runtime_registry_expansion_allowed": false,
+    "historical_bulk_status": "FAILED_UNRESOLVED",
+    "historical_tolerances": {
+      "max_abs": 0.03125,
+      "mean_abs": 0.01
+    },
+    "model_math_execution": false
+  },
+  "runtime": {
+    "executable": "C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe",
+    "python": "3.11.15",
+    "packages": {
+      "torch": "2.10.0+cu126",
+      "transformers": "4.57.1",
+      "safetensors": "0.7.0",
+      "tokenizers": "0.22.2",
+      "psutil": "7.2.2"
+    },
+    "identity_limit": "Selected source files, executable hashes and versions bind this import experiment; this is not a claim that every compiled DLL or transitive dependency has been independently audited"
+  },
+  "expected_executable_registry": {
+    "C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe": "de13d8017f63cb63b0b5bfd2f25e69245c9196433a224856ca1abde1e24d0cb7",
+    "C:/Users/clclc/AppData/Roaming/uv/python/cpython-3.11.15-windows-x86_64-none/python.exe": "28d2965d061656abbe3a46100bd3342d1152185289445d489782a21a8cfe9b57",
+    "C:/Program Files/Git/cmd/git.exe": "054dfe58df35f7fcfbae184ff9d6a7c0da1e3743bf0401d951e012e290217c73",
+    "C:/Program Files/Git/mingw64/bin/git.exe": "c56b3cd094880da8693bee16072607422d9c85d0375c07e348104280920c619d"
+  },
+  "registry_association": "Exactly the preserved native contract's .exe entries under its existing slash/case normalization; no added executable is permitted. Freeze canonical normalized map hash before implementation review.",
+  "runtime_file_sha256": {
+    "C:/Users/clclc/BusinessProject/.venv-mq001/Lib/site-packages/torch/__init__.py": "51f02753e29e0fcedd4250bc54c66435a7f9903b0603778b585d4b2ffa79f6be",
+    "C:/Users/clclc/BusinessProject/.venv-mq001/Lib/site-packages/torch/_utils_internal.py": "34470295432e9186b1578ffad6ad4f6cbd64718a18d8a0730c39297c3dd3d98d",
+    "C:/Users/clclc/BusinessProject/.venv-mq001/Lib/site-packages/torch/cuda/__init__.py": "674c693e77b8355458200b6851d5778427e68ee061da0a916c582933173979e9",
+    "C:/Users/clclc/BusinessProject/.venv-mq001/Lib/site-packages/transformers/__init__.py": "4ef5187b5f66c564aa575ddab9ce94342630d40fe874d0464d790c6f6b748647",
+    "C:/Users/clclc/BusinessProject/.venv-mq001/Lib/site-packages/transformers/utils/__init__.py": "46e7a2353a583661a492dfe940d119de003526799e56851d8beb4537a1e65263",
+    "C:/Users/clclc/BusinessProject/.venv-mq001/Lib/site-packages/transformers/utils/import_utils.py": "66b2ac40be2c538dbd9409370c1f6bf769934b8b232edac365e16299c5ec1108",
+    "C:/Users/clclc/BusinessProject/.venv-mq001/Lib/site-packages/transformers/dependency_versions_check.py": "e876e0b53d96a7e41918e01dc943a4947bcd038ace5484c61eb5f7e1db4c3aa8",
+    "C:/Users/clclc/BusinessProject/.venv-mq001/Lib/site-packages/transformers/models/qwen3/__init__.py": "e4953cb8ef71d00989f988d8dfa331b5b30a4ff077f1d2c992b9c0c0bca37136",
+    "C:/Users/clclc/BusinessProject/.venv-mq001/Lib/site-packages/transformers/models/qwen3/modeling_qwen3.py": "4b95c371fd26d40c69083dab36ac1eafd8cf82b415a0bb827275097c5ad2305b",
+    "C:/Users/clclc/BusinessProject/.venv-mq001/Lib/site-packages/transformers/models/qwen3/configuration_qwen3.py": "27863e9718fdbc899f2d0e567621e4d3d36d8dc500c1d54b49dba4242d08d2bd",
+    "C:/Users/clclc/BusinessProject/.venv-mq001/Lib/site-packages/transformers/modeling_utils.py": "bf1c6b2a43cf7c36fb79f37c981424dd6ae78eb863fcaa5d2a37e76c9828611d",
+    "C:/Users/clclc/BusinessProject/.venv-mq001/Lib/site-packages/transformers/masking_utils.py": "7a963feed8173b8265298dd24350c166222ce6b4719442fce48ab414d0478a6a"
+  },
+  "source_binding": "Also retain all preserved native source/runtime pins. Check source-only files and registered executables without reading or hashing any model asset. Bind new harness/observer/contract code before launch; record actual transitive module identities and import milestones without opening model assets.",
+  "environment": {
+    "same_visibility_and_math_environment_as_native": true,
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "do_not_hide_GPU_to_force_a_pass": true,
+    "selected_identity_variables": [
+      "CUDA_VISIBLE_DEVICES",
+      "TORCH_CUDA_SANITIZER",
+      "CUBLAS_WORKSPACE_CONFIG"
+    ],
+    "recording_limit": "Record only declared noncredential settings; do not dump unrelated environment or tokens",
+    "network_or_downloads": false
+  },
+  "phases": [
+    {
+      "id": "registered_stdlib_source_baseline",
+      "idle_seconds": 2,
+      "committed_snapshot_calls": 10,
+      "verify_sources_calls": 2,
+      "runtime_metadata_calls": 2,
+      "snapshot_schedule": "Bootstrap1, repeated8 separated by at least0.05seconds, final1; fixed schedule with phase begin/end receipts",
+      "framework_imports": 0
+    },
+    {
+      "id": "pinned_CPU_import_inventory",
+      "exact_import_steps": [
+        "import torch",
+        "import transformers",
+        "from transformers import Qwen3Config, Qwen3ForCausalLM"
+      ],
+      "step_attempts": 1,
+      "fidelity": "Actual native worker imports torch then resolves these two Transformers symbols. Plain transformers import is lazy and alone is not equivalent. Extra package-only milestone permits phase localization; no instances are constructed.",
+      "symbols_only": true,
+      "model_construction": 0,
+      "tensors_requested_by_experiment": 0,
+      "CUDA_API_calls_requested_by_experiment": 0,
+      "post_import_observation_seconds": 2,
+      "transitive_imports": "Record imported modules including incidental tokenizers/safetensors modules; importing definitions is distinct from tokenizer, safetensors file, model or tensor execution. No such API may be invoked by the experiment."
+    }
+  ],
+  "boundary": {
+    "no_model_assets": true,
+    "no_model_tokenizer_or_config_instances": true,
+    "no_tensor_creation_or_compute_requested": true,
+    "no_CUDA_availability_initialization_or_device_query_calls": true,
+    "no_training_generation_forward_backward_or_optimizer": true,
+    "no_math_or_precision_flag_changes": true,
+    "no_framework_monkeypatch_to_hide_or_bypass_a_side_effect": true,
+    "CUDA_state_observation": "After torch import, read torch.cuda module dictionary's existing _initialized flag without calling a CUDA API; fail CPU scope if initialized. Record available/unavailable state per import milestone, not a forecast.",
+    "GPU_side_effect_observation": "External reviewed nvidia-smi/NVML telemetry is observational; owned worker GPU participation is a CPU-scope violation, not allowed compute. Retain before/after and sampled observations; absence of a sampled entry alone is not proof of zero transient CUDA activity.",
+    "strict_API_boundary": "Implementation/operations review must establish how forbidden CUDA availability/init and model/tensor operations are rejected or observed before execution without changing pinned library code. An import that requires forbidden operations must stop or remain unexecuted; do not silently suppress the operation and call it an unmodified replay. Python/internal C-side-effect coverage limitations must be explicit."
+  },
+  "existing_helpers_invoked_unchanged": [
+    "native.job_process_ids, job_member_witness, owned_job_rss_snapshot",
+    "native.current_windows_job_witness and query-only noninheritable transfer, close before phases",
+    "native.committed_snapshot, verify_sources, runtime_metadata only; no native.preflight/verify_assets/worker/supervise",
+    "native.drain_owned_job and strict last-handle/empty-tree exit proof"
+  ],
+  "observations": {
+    "raw_observer_poll_seconds": 0.02,
+    "unchanged_strict_guard_poll_seconds": 0.1,
+    "notifications": "Independent operations reviewer must validate exact owned Job process-creation/exit notifications, installed before resume; notifications and polling do not alter native membership policy",
+    "capture_before_guard": "Durably record all exact Job PIDs and every resolvable raw identity before each unchanged strict member/RSS guard, including unregistered/mismatched/vanished members, with no filtering",
+    "fields": [
+      "wall/monotonic timestamps, phase/import step and complete exact Job PID list",
+      "PID and creation time or explicit unavailable reason",
+      "executable path, normalized registry key, actual SHA256 or explicit hashing failure",
+      "expected path/hash, path-known and hash-matches separately",
+      "explicit exact-Job membership and notification IDs",
+      "identity at guard begin and guard result/exception, with linked raw observation IDs",
+      "import attempt/completion/error, source/runtime identities and actually imported module manifest",
+      "CPU/CUDA boundary observations and any incomplete side-effect coverage",
+      "RSS/log/source-check costs and cleanup/complete-owned-tree exit"
+    ],
+    "binary_hash_bound": "Hash only observed executable identities, individually at most64MiB and at most256MiB distinct executable bytes in the probe; exceeding the bound yields explicit unavailable coverage and strict refusal, never whitelist bypass",
+    "coverage": "Short-lived/unresolvable notification members remain explicit gaps. Instrumentation and hashing can change timing; no exhaustive-inventory or original-cause claim from sampling alone. No culprit inferred from merely coincident import timing."
+  },
+  "limits": {
+    "runs": 1,
+    "wall_seconds": 60,
+    "live_owned_processes": 8,
+    "log_bytes": 16777216,
+    "worker_tree_rss_gib": 2.0,
+    "host_reserve_gib": 1.25,
+    "preworker_host_gib": 3.3125,
+    "disk_free_gib": 4.0,
+    "gpu_preworker_free_gib": 4.0,
+    "gpu_runtime_free_gib": 0.5,
+    "epoch_seconds": 7200,
+    "rolling24h_seconds": 14400,
+    "one_host_wide_worker": true,
+    "stop_on_first_identity_refusal_or_boundary_violation": true,
+    "automatic_retry": false,
+    "cost": "Conservatively charge all contained worker/observer elapsed time against current epoch and rolling reservation; retain failures and review cost, no budget reset",
+    "uncertain_outcome": "OUTCOME_UNKNOWN with full reservation held until independent reconciliation; no duplicate launch",
+    "cleanup": "Only exact probe-owned Job/tree may be drained or closed; unrelated processes untouched"
+  },
+  "outcomes": [
+    "OBSERVED_IDENTITY_REFUSAL: exact retained identity/path/hash mismatch and guard/phase association; authorizes no executable and establishes no original-run cause by itself",
+    "COMPLETED_FIXED_CPU_IMPORT_PHASES: only specified import/source-check paths completed under bounded observed identities and boundary controls; no native qualification",
+    "BOUNDARY_VIOLATION_OR_INCOMPLETE_COVERAGE: preserve partial evidence, failure and cost; no cause or zero-CUDA claim",
+    "REFUSAL_NOT_REPRODUCED: original cause remains unresolved; no repeat or native retry"
+  ],
+  "claim_limits": {
+    "native_whole_path_qualified": false,
+    "reader_qualified": false,
+    "capture_qualified": false,
+    "training_qualified": false,
+    "numerical_causality_or_neural_mechanism": false,
+    "learning_or_efficiency_measurement": false,
+    "promotion_or_whitelist_permission": false,
+    "cause_without_observed_identity_and_provenance": false
+  },
+  "restart_condition": "Quarantine persists after this resolving experiment. Any proposed operational change must be explicitly registered as a new bounded milestone with fresh source/evidence review, preserve old native code/failures, and meet unchanged numerical/resource gates. This is not a fourth repair of the old candidate.",
+  "scope": "NO_MODEL_FRAMEWORK_IMPORT_IDENTITY_OBSERVATION",
+  "scientific_design_sha256": "74c873a48bcea4cf927ab4501e32475342c8abcb9f398e9d6217f7213f0292f1",
+  "source_sha256": {
+    "experiments/rineya_centralized_reasoning_system_v1/owned_runtime_identity_probe.py": "ebee87e14e10b602bdd56e9ff3a920a107b361def71baa1c0043f1953c83fb35",
+    "experiments/rineya_centralized_reasoning_system_v1/operations.py": "ba27ec8a31437459b956a5642e6ece4838f0584602db2c93ff7bc61437806e30",
+    "experiments/rineya_centralized_reasoning_system_v1/native.py": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+    "experiments/rineya_centralized_reasoning_system_v1/tests/test_owned_runtime_identity_probe.py": "2dff8979d6881c0d1829581e6ee2adf09ac140d691fbc757e5fc01d028a481e7"
+  },
+  "registry_sha256": "15158c7e894334c1434be492d8a9dc3e22dd620b112b078516b6adc00b190969",
+  "cpu_validation": {
+    "tests": 7,
+    "passed": 7,
+    "seconds": 0.063,
+    "framework_imports": 0,
+    "model_calls": 0,
+    "host_database_access": false,
+    "executables_launched": 0
+  },
+  "api_boundary_implementation": {
+    "method": "sys.setprofile plus threading.setprofile installed before imports; preregistered Python wrappers and C-call functions abort before detected body execution",
+    "observes": [
+      "CUDA availability/init/device Python wrappers",
+      "CUDA-named Torch C calls",
+      "listed tensor factories and checkpoint load/save",
+      "Python nn.Module/Qwen/config/tokenizer constructors",
+      "listed safetensors I/O"
+    ],
+    "new_python_threads": true,
+    "internal_C_calls_observable": false,
+    "native_threads_observable": false,
+    "generic_C_type_constructor_coverage": false,
+    "claim": "Experiment requests no model/weight/tokenizer/tensor/CUDA actions; profile and sampled GPU checks do not prove zero hidden import-side effects. Missing coverage remains explicit."
+  },
+  "notification_sources": [
+    "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_associate_completion_port",
+    "https://learn.microsoft.com/en-us/windows/win32/api/ioapiset/nf-ioapiset-getqueuedcompletionstatus",
+    "https://learn.microsoft.com/en-us/windows/win32/api/ioapiset/nf-ioapiset-createiocompletionport"
+  ],
+  "notifications_delivery_guaranteed": false
+}

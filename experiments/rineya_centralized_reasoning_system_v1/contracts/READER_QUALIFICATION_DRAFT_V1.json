@@ -1,0 +1,30 @@
+{
+  "contract_id": "CRS-READER-QUALIFICATION-001-DRAFT",
+  "status": "DRAFT_SCIENTIFIC_REVIEW_BEFORE_IMPLEMENTATION_AND_LAUNCH",
+  "authority": "AUTHORIZATION_2026-10-01.md",
+  "checkpoint": "Titan original BF16 537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+  "path": "stock eager Qwen3, one resident checkpoint, unpadded sequential full-prefix forwards, no cache, no adapters",
+  "planned_serving_envelope": {"input_tokens_max": 512, "generated_tokens_max": 64, "maximum_qualified_forward_shape": 576, "batch": 1},
+  "qualification_only": true,
+  "mechanical_inputs_only": true,
+  "existing_central_CHECK_FINAL": "CLOSED",
+  "historical_bulk_capture": {"status": "FAILED_UNRESOLVED", "max_abs_tolerance": 0.03125, "mean_abs_tolerance": 0.01, "claim_of_resolution_allowed": false},
+  "questions_to_freeze": [
+    "Reference forward and tokenizer behavior for exact assets, prompt template and runtime",
+    "Manual greedy versus independent stock generate with identical no-cache inputs/settings",
+    "Replay each scored token at its exact realized prefix geometry; do not label bulk probability as equivalent",
+    "Measure bulk/prefix discrepancies separately under unchanged historical bounds and retain all failures",
+    "Maximum576 forward plus512 input/64-step sustained mechanical generation even if natural EOS occurs",
+    "Finite tensor/logit checks, frozen base before/after and no-op wrapper parity",
+    "Contained whole-worker exit, complete call/token and process-tree/GPU accounting",
+    "No qualification inherited from four131-token diagnostic or CPU fixtures"
+  ],
+  "scientific_decision_required": "Whether an explicitly registered exact-prefix serving path can qualify the intended deterministic reader without licensing failed bulk-likelihood uses; any unsupported equivalence claim stays closed",
+  "resource_limits_to_keep_or_stricter": {"worker_rss_gib": 2, "host_reserve_gib": 1.25, "gpu_preload_free_gib": 4, "gpu_runtime_free_gib": 0.5, "disk_free_gib": 4, "one_model_worker": true},
+  "budgets": {"per_job_ceiling_proposed_seconds": 600, "epoch_native_seconds": 7200, "rolling24h_native_seconds": 14400, "actual_calls_tokens_and_shapes_to_freeze_before_launch": true},
+  "reader_diagnostic_after_qualification": {"cases": 16, "split": "DEV", "source": "data.reader_cases", "purpose": "source interpretation and structured extraction; not broad reasoning efficacy or native attention extension"},
+  "unsupported_requests": "record unavailable; no silent truncation",
+  "calibration": "UNMEASURED_UNTIL_EXPLICIT_INSTRUMENT",
+  "training_and_export_resume": "SEPARATE_CLOSED_GATES",
+  "native_launch_authorized_by_this_file": false
+}
