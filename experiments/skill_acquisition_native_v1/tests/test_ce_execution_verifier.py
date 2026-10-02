@@ -13,6 +13,7 @@ from .test_ce_qualification_accounting import fixture
 from . import test_ce_checkpoint_reduction as branches
 from . import test_ce_resource_qualification as resources
 from . import test_ce_delta_artifacts as deltas
+from . import test_ce_delta_rebuild as rebuilds
 
 
 class ReplayControls(unittest.TestCase):
@@ -159,30 +160,121 @@ class ReplayControls(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'operation order/history'):
             v._adam_readback(self.context, self.ledger, wrong, binding)
 
-    def test_saved_delta_report_is_bound_to_actual_finite_payload_hashes_and_norm(self):
-        helper = deltas.Tests(); helper.setUp(); self.addCleanup(helper.doCleanups)
-        reference, _ = helper.save()
+    def delta_fixture(self):
+        helper = rebuilds.Tests(); helper.setUp(); self.addCleanup(helper.doCleanups)
+        contract, differences = helper.fixture()
+        refs = contract['refs']; output = helper.root / 'output'; output.mkdir()
+        for role, ref in refs.items():
+            directory = helper.root / (role + '_external') if role in ('base', 'warm') else output
+            directory.mkdir(exist_ok=True)
+            target = directory / ('model.safetensors' if role == 'base' else role + '.safetensors')
+            Path(ref['path']).rename(target); ref['path'] = str(target)
+        reference = dict(refs['delta'], role='qualification_delta', binding_sha256=raw.digest(helper.binding))
         context = copy.deepcopy(self.context)
-        context['bindings']['scope']['native_backend']['parameter_inventory'] = helper.inventory
-        reader = raw.RawEvidenceReader(lambda *args, **fields: None, {key: 10 ** 10 for key in raw.BUDGET_FIELDS}, helper.root)
-        saved = deltas.d.read_delta(reader, reference, helper.binding, helper.inventory)
+        inventory = contract['selected_inventory']; backend = context['bindings']['scope']['native_backend']
+        backend.update(parameter_inventory=inventory, output_directory=str(output), model_dir=str(Path(refs['base']['path']).parent),
+            warm_delta_ref=dict(refs['warm'], data_sha256=contract['warm_data_sha256'], state_sha256=contract['warm_state_sha256']))
+        context['bindings']['anchors'].update(common_anchor_sha256=contract['common_anchor_sha256'],
+            own_start_sha256=contract['common_anchor_sha256'], base_weights_sha256=refs['base']['sha256'])
+        bounds = {key: 10 ** 12 for key in raw.BUDGET_FIELDS}
+        context['bindings']['scope']['qualifier_execution']['delta_rebuild_reader_bounds'] = {
+            role: dict(bounds) for role in ('base', 'warm', 'output')}
+        context['bindings']['scope']['publication'] = {'delta_rebuild_wall_seconds_upper': 3600,
+            'bounds': {'wall_seconds_upper': 19200}}
+        reader = raw.RawEvidenceReader(lambda *args, **fields: self.operations.append((args, fields)), bounds, output)
+        saved = deltas.d.read_delta(reader, reference, helper.binding, inventory)
         donor = {'schema': 'SKILL-ACQUISITION-DONOR-DELTA-1', **{key: reference[key] for key in ('path', 'bytes')},
             'file_sha256': reference['sha256'], 'common_anchor_sha256': context['bindings']['anchors']['common_anchor_sha256'],
             'own_start_sha256': context['bindings']['anchors']['own_start_sha256'], 'reference': 'EXACT_REBUILT_COMMON_WARM_ANCHOR',
             **{key: saved[key] for key in ('data_section_sha256', 'state_sha256', 'numel', 'tensors', 'delta_norm')},
-            'trainable_names_sha256': raw.digest(sorted(entry['name'] for entry in helper.inventory)),
-            'final_master_sha256': '1' * 64, 'deployed_arm_sha256': '2' * 64}
+            'trainable_names_sha256': raw.digest(sorted(entry['name'] for entry in inventory)),
+            'final_master_sha256': contract['final_master_sha256'], 'deployed_arm_sha256': contract['deployed_arm_sha256'],
+            'roundtrip': {'residual_nonzero_elements': sum(value != 0 for value in differences), 'residual_nonzero_tensors': 1}}
         observed = {'own_start_sha256': donor['own_start_sha256'], 'common_reference_sha256': donor['common_anchor_sha256'],
             'delta_dtype': 'float32', 'delta_rebuilt_verified': True, 'delta_file_sha256': reference['sha256'],
             'delta_data_sha256': saved['data_section_sha256'], 'final_master_sha256': donor['final_master_sha256'],
-            'rebuilt_endpoint_sha256': donor['deployed_arm_sha256'], 'rounding_residual_max_abs': 0., 'rounding_residual_l2': 0.}
-        payload = {'donor': donor, 'observations': observed}
-        result = v._delta_readback(context, payload, reference, helper.binding, reader)
-        self.assertEqual(result['saved_delta']['delta_norm'], 5)
-        self.assertFalse(result['roundtrip_independently_rebuilt']); self.assertFalse(result['execution_verified'])
+            'rebuilt_endpoint_sha256': donor['deployed_arm_sha256'], 'rounding_residual_max_abs': max(abs(value) for value in differences),
+            'rounding_residual_l2': sum(value * value for value in differences) ** .5}
+        cp_binding = dict(helper.binding, stage='checkpoint_resume', attempt_id='checkpoint')
+        manifest = {'schema': 'SKILL-ACQUISITION-NATIVE-CHECKPOINT-1',
+            'bindings': {'qualification_evidence_binding': cp_binding, 'inventory': inventory}, 'progress': {'C': 2, 'U': 2},
+            'payload': {'path': refs['checkpoint']['path'], 'file_sha256': refs['checkpoint']['sha256'], 'bytes': refs['checkpoint']['bytes']},
+            'frozen_state_sha256': contract['checkpoint_frozen_state_sha256']}
+        manifest['manifest_sha256'] = raw.digest(manifest)
+        manifest_path = output / 'parent.json'; manifest_path.write_bytes(raw.canonical(manifest) + b'\n')
+        frozen_runtime, _ = helper.digest({'frozen': [.5], 'rope': [1., .125]})
+        source = {'schema': rebuilds.d.SCHEMA, 'selected_inventory': inventory, 'full_state_inventory': contract['full_state_inventory'],
+            'nonbase_ref': refs['buffers'], 'checkpoint_binding': cp_binding, 'parent_manifest_ref': self.ref(manifest_path),
+            'parent_restore_record': {'manifest_sha256': manifest['manifest_sha256']}, 'base_ref': refs['base'], 'warm_ref': refs['warm'],
+            'warm_data_sha256': contract['warm_data_sha256'], 'warm_state_sha256': contract['warm_state_sha256'],
+            'common_anchor_sha256': contract['common_anchor_sha256'], 'frozen_runtime_sha256': frozen_runtime}
+        source_path = output / 'source.json'
+        source_path.write_bytes(raw.canonical(dict(helper.binding, schema=raw.SCHEMA, evidence_kind='delta_full_state', payload=source)) + b'\n')
+        source_ref = dict(self.ref(source_path), role='delta_full_state', binding_sha256=raw.digest(helper.binding))
+        buffers_ref = dict(refs['buffers'], role='delta_buffers', binding_sha256=raw.digest(helper.binding))
+        self.operations.clear()
+        return context, {'donor': donor, 'observations': observed, 'full_state_source_ref': source_ref}, reference, helper.binding, reader, source_ref, buffers_ref
+
+    def delta_readback(self, values, *, preflight=None):
+        context, payload, reference, binding, reader, source_ref, buffers_ref = values
+        return v._delta_readback(context, payload, reference, binding, reader,
+            outer_preflight=preflight or (lambda kind, fields: self.preflights.append((kind, fields))),
+            source_ref=source_ref, buffers_ref=buffers_ref)
+
+    def test_saved_delta_readback_rebuilds_external_anchor_and_parent_master_bytes(self):
+        values = self.delta_fixture(); result = self.delta_readback(values)
+        self.assertTrue(result['roundtrip_independently_rebuilt']); self.assertFalse(result['execution_verified'])
+        self.assertFalse(result['native_qualified']); self.assertEqual(result['byte_derived_rebuild']['residual_nonzero_elements'], 1)
+        self.assertEqual(self.preflights[0][0], 'saved_delta_source_rebuild')
+        self.assertEqual(self.preflights[0][1]['wall_seconds_upper'], 3600)
+        paths = {fields.get('path') for args, fields in self.operations if fields.get('path')}
+        self.assertIn(str(Path(values[0]['bindings']['scope']['native_backend']['model_dir']) / 'model.safetensors'), paths)
+        self.assertIn(values[0]['bindings']['scope']['native_backend']['warm_delta_ref']['path'], paths)
+        context, payload, reference, binding, reader, source_ref, buffers_ref = values
         changed = copy.deepcopy(payload); changed['donor']['delta_norm'] = 4
         with self.assertRaisesRegex(ValueError, 'independent stream'):
-            v._delta_readback(context, changed, reference, helper.binding, reader)
+            self.delta_readback((context, changed, reference, binding, reader, source_ref, buffers_ref))
+        changed = copy.deepcopy(payload); changed['observations']['rounding_residual_l2'] = 0.
+        with self.assertRaisesRegex(ValueError, 'independent saved-byte rebuild'):
+            self.delta_readback((context, changed, reference, binding, reader, source_ref, buffers_ref))
+
+    def test_delta_role_linkage_and_source_budget_refuse_before_external_reads(self):
+        values = self.delta_fixture()
+        def deny(*args): raise RuntimeError('delta scope denied')
+        with self.assertRaisesRegex(RuntimeError, 'scope denied'): self.delta_readback(values, preflight=deny)
+        self.assertEqual(self.operations, [])
+        context, payload, reference, binding, reader, source_ref, buffers_ref = values
+        context['bindings']['scope']['publication']['delta_rebuild_wall_seconds_upper'] = 20000
+        with self.assertRaisesRegex(ValueError, 'prepaid delta rebuild wall ceiling'): self.delta_readback(values)
+        self.assertEqual(self.operations, [])
+        context['bindings']['scope']['publication']['delta_rebuild_wall_seconds_upper'] = 3600
+        changed = copy.deepcopy(payload); changed['full_state_source_ref']['sha256'] = 'f' * 64
+        with self.assertRaisesRegex(ValueError, 'stage-retained full-state'): self.delta_readback((context, changed, reference, binding, reader, source_ref, buffers_ref))
+        self.assertFalse(any(fields.get('path') for args, fields in self.operations))
+        context['bindings']['scope']['qualifier_execution']['delta_rebuild_reader_bounds']['base']['io_read_bytes_upper'] = 0
+        with self.assertRaisesRegex(ValueError, 'read/hash budget exhausted'): self.delta_readback(values)
+        self.assertFalse(any(fields.get('path', '').endswith('model.safetensors') for args, fields in self.operations))
+
+    def test_delta_external_path_is_pinned_and_buffers_must_be_retained_by_stage(self):
+        values = self.delta_fixture()
+        context, payload, reference, binding, reader, source_ref, buffers_ref = values
+        with self.assertRaisesRegex(ValueError, 'non-base state artifact linkage'):
+            self.delta_readback((context, payload, reference, binding, reader, source_ref, None))
+        context['bindings']['scope']['native_backend']['model_dir'] = str(self.root / 'unrelated-model')
+        with self.assertRaisesRegex(ValueError, 'pinned external base/warm/common'):
+            self.delta_readback(values)
+
+    def test_rehashed_delta_source_cannot_name_a_foreign_checkpoint_worker(self):
+        values = self.delta_fixture()
+        context, payload, reference, binding, reader, source_ref, buffers_ref = values
+        path = Path(source_ref['path']); envelope = raw._json(path.read_bytes())
+        envelope['payload']['checkpoint_binding']['worker_identity_sha256'] = 'f' * 64
+        path.write_bytes(raw.canonical(envelope) + b'\n')
+        changed_ref = dict(self.ref(path), role=source_ref['role'], binding_sha256=source_ref['binding_sha256'])
+        payload['full_state_source_ref'] = changed_ref
+        with self.assertRaisesRegex(ValueError, 'same admitted parent worker/source'):
+            self.delta_readback((context, payload, reference, binding, reader, changed_ref, buffers_ref))
+        self.assertFalse(any(fields.get('path', '').endswith('model.safetensors') for args, fields in self.operations))
 
     def test_runtime_readback_requires_actual_loader_identity_and_original_operation_rows(self):
         context = self.context; anchors = context['bindings']['anchors']

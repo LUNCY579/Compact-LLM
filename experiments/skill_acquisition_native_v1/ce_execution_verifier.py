@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import copy
 from pathlib import Path
+import time
 
 from . import ce_qualification_artifacts as raw, ce_qualification as q
 from . import ce_qualification_accounting as accounting
@@ -206,8 +207,71 @@ def _runtime_readback(context, state, payload, binding):
             'execution_verified': False, 'native_qualified': False}
 
 
-def _delta_readback(context, payload, reference, binding, reader):
-    from . import ce_delta_artifacts as delta
+def _delta_readers(context, reader, outer_preflight):
+    """Exact source roots and separately frozen local ceilings, one outer owner.
+
+    ``qualifier_execution.delta_rebuild_reader_bounds`` contains exactly base,
+    warm and output five-counter RawEvidenceReader ceilings. All readers use
+    the original observer, whose durable aggregate admission is still required
+    on every operation. The maps are analytical upper allowances, not prices.
+    """
+    require(type(reader) is raw.RawEvidenceReader and callable(outer_preflight),
+            'independently priced saved-delta source readback')
+    scope = context['bindings']['scope']; backend = scope['native_backend']
+    bounds = scope['qualifier_execution'].get('delta_rebuild_reader_bounds')
+    require(type(bounds) is dict and set(bounds) == {'base', 'warm', 'output'}
+            and all(type(value) is dict and set(value) == set(raw.BUDGET_FIELDS)
+                    and all(raw._int(count) for count in value.values()) for value in bounds.values()),
+            'explicit per-role saved-delta reader/hash/arithmetic ceilings')
+    roots = {'base': backend['model_dir'], 'warm': str(Path(backend['warm_delta_ref']['path']).parent),
+             'output': backend['output_directory']}
+    require(all(type(value) is str and Path(value).is_absolute() for value in roots.values()),
+            'exact admitted base/warm/output source roots')
+    publication = scope.get('publication', {})
+    wall = publication.get('delta_rebuild_wall_seconds_upper')
+    require(raw._finite(wall) and wall > 0 and raw._finite(publication.get('bounds', {}).get('wall_seconds_upper'))
+            and wall <= publication['bounds']['wall_seconds_upper'],
+            'finite independently prepaid delta rebuild wall ceiling')
+    outer_preflight('saved_delta_source_rebuild', {'roots': dict(roots), 'reader_bounds': copy.deepcopy(bounds),
+        'wall_seconds_upper': wall,
+        'required_coverage': ['IO', 'file and arithmetic hashes', 'JSON/reducer work', 'metadata', 'elapsed and tick wall'],
+        'arithmetic_upper_rule': '64*sum(source file bytes) work; 16*sum(source file bytes)+8MiB hash; 16+8*full-state-count hashes',
+        'aggregate_owner': 'original reader.operation; local ceilings do not add authority or refund costs'})
+    owners = {role: raw.RawEvidenceReader(reader.operation, value, roots[role], chunk_bytes=reader.chunk_bytes)
+              for role, value in bounds.items()}
+    return {'base': owners['base'], 'warm': owners['warm'], 'delta': owners['output'],
+            'checkpoint': owners['output'], 'buffers': owners['output']}
+
+
+def _delta_readback(context, payload, reference, binding, reader, *, outer_preflight,
+                    source_ref, buffers_ref=None):
+    readers = _delta_readers(context, reader, outer_preflight)
+    start = time.monotonic()
+    with readers['delta']._overhead('delta_readback_source_report_linkage', work_bytes=64 * raw.MAX_JSON,
+                                   hash_attempts=8, hash_bytes=64 * raw.MAX_JSON):
+        result = _delta_bound_readback(context, payload, reference, binding, readers, source_ref, buffers_ref)
+        require(time.monotonic() - start <= context['bindings']['scope']['publication']['delta_rebuild_wall_seconds_upper'],
+                'independently prepaid delta rebuild wall ceiling exceeded')
+        return result
+
+
+def _delta_bound_readback(context, payload, reference, binding, readers, source_ref, buffers_ref):
+    from . import ce_delta_artifacts as delta, ce_delta_rebuild as rebuild
+    require(type(payload) is dict and payload.get('full_state_source_ref') == source_ref
+            and type(source_ref) is dict and source_ref.get('role') == 'delta_full_state'
+            and source_ref.get('binding_sha256') == digest(binding),
+            'exact stage-retained full-state source artifact required')
+    output = readers['delta']
+    source = output._envelope(source_ref, binding, 'delta_full_state', 'delta_full_state')
+    parent_binding = source.get('checkpoint_binding')
+    require(type(parent_binding) is dict and parent_binding.get('stage') == 'checkpoint_resume'
+            and all(parent_binding.get(key) == binding[key] for key in raw.BINDING_FIELDS
+                    if key not in ('stage', 'attempt_id')), 'delta master source must be the same admitted parent worker/source')
+    nonbase = source.get('nonbase_ref')
+    require((nonbase is None and buffers_ref is None) or (type(nonbase) is dict and type(buffers_ref) is dict
+            and buffers_ref.get('role') == 'delta_buffers' and buffers_ref.get('binding_sha256') == digest(binding)
+            and nonbase == {key: buffers_ref[key] for key in ('path', 'sha256', 'bytes')}),
+            'exact stage-retained non-base state artifact linkage')
     donor = payload.get('donor'); anchors = context['bindings']['anchors']
     inventory = context['bindings']['scope']['native_backend']['parameter_inventory']
     require(type(donor) is dict and donor.get('schema') == 'SKILL-ACQUISITION-DONOR-DELTA-1'
@@ -217,7 +281,7 @@ def _delta_readback(context, payload, reference, binding, reader):
             and donor.get('own_start_sha256') == anchors['own_start_sha256']
             and donor.get('reference') == 'EXACT_REBUILT_COMMON_WARM_ANCHOR',
             'raw saved donor file/reference/common-anchor provenance')
-    saved = delta.read_delta(reader, reference, binding, inventory)
+    saved = delta.read_delta(output, reference, binding, inventory)
     require(all(donor.get(key) == saved[key] for key in ('data_section_sha256', 'state_sha256', 'numel', 'tensors'))
             and donor.get('trainable_names_sha256') == digest(sorted(entry['name'] for entry in inventory))
             and q.finite(donor.get('delta_norm')) and abs(donor['delta_norm'] - saved['delta_norm']) <= 1e-12 + 1e-10 * saved['delta_norm'],
@@ -229,8 +293,12 @@ def _delta_readback(context, payload, reference, binding, reader):
             and payload['observations']['final_master_sha256'] == donor['final_master_sha256']
             and payload['observations']['rebuilt_endpoint_sha256'] == donor['deployed_arm_sha256'],
             'reported roundtrip file/endpoint identities differ from retained donor')
+    rebuilt = rebuild.verify_stage_sources(context, payload, reference, binding, readers=readers)
     return {'saved_delta': saved, 'recorded_roundtrip_observations': payload['observations'],
-            'roundtrip_independently_rebuilt': False, 'execution_verified': False, 'native_qualified': False}
+            'byte_derived_rebuild': rebuilt, 'roundtrip_independently_rebuilt': True,
+            'parent_master_source': {key: copy.deepcopy(source[key]) for key in
+                ('parent_manifest_ref', 'parent_restore_record', 'checkpoint_binding')},
+            'execution_verified': False, 'native_qualified': False}
 
 
 def _retained_prefix(context, original, snapshot):
@@ -371,6 +439,8 @@ def _checkpoint_readback(context, state, payload, binding, *, reader, outer_pref
         'failed_unknown_costs_retained': True}
     return {'observations': observed, 'raw_branches': reduced, 'parent_state_comparison': parent_comparison,
             'parent_derived_reservations': post.cumulative,
+            'parent_master_source': {'parent_manifest_ref': copy.deepcopy(payload['parent_manifest_ref']),
+                'parent_restore_record': copy.deepcopy(record), 'checkpoint_binding': copy.deepcopy(binding)},
             'child_terminal_metadata_consistent': True, 'execution_verified': False, 'native_qualified': False}
 
 
@@ -422,12 +492,17 @@ def _reductions(context, state, attempt_workers, reader, child_bindings, child_l
             with reader._overhead('adam_original_operation_readback', work_bytes=32 * by_role['adam_clipping']['bytes']):
                 reductions[stage] = _adam_readback(context, state, payload, expected)
         elif stage == 'delta_roundtrip':
-            require('delta_roundtrip' in by_role and 'qualification_delta' in by_role, 'raw report and saved delta both required')
+            require({'delta_roundtrip', 'qualification_delta', 'delta_full_state'} <= set(by_role),
+                    'raw report, full-state source and saved delta required')
             payload = reader._envelope(by_role['delta_roundtrip'], expected, 'delta_roundtrip', 'delta_roundtrip')
             with reader._overhead('delta_report_linkage', work_bytes=32 * by_role['delta_roundtrip']['bytes'],
                                   hash_attempts=8, hash_bytes=32 * by_role['delta_roundtrip']['bytes']):
-                reductions[stage] = _delta_readback(context, payload, by_role['qualification_delta'], expected, reader)
-            gaps.append('saved delta bytes/digests/norm are checked; full common-anchor rebuild/master residual and native execution still require verification')
+                reductions[stage] = _delta_readback(context, payload, by_role['qualification_delta'], expected, reader,
+                    outer_preflight=outer_preflight, source_ref=by_role['delta_full_state'], buffers_ref=by_role.get('delta_buffers'))
+                require('checkpoint_resume' in reductions and reductions[stage]['parent_master_source']
+                        == reductions['checkpoint_resume']['parent_master_source'],
+                        'delta master checkpoint differs from independently replayed parent save/restore')
+            gaps.append('full saved-byte common-anchor/master/deployed rebuild and residuals require actual source execution provenance')
         elif stage == 'resource_io_measurement':
             require('resource_io' in by_role, 'raw barrier/operation resource artifact required')
             payload = reader._envelope(by_role['resource_io'], expected, 'resource_io', 'resource_io')

@@ -398,7 +398,12 @@ def main(argv=None):
     # This denial precedes argument parsing, request paths, RPC/environment
     # inspection, source hashing, worker observation and framework imports.
     if not _REGISTERED_LOCAL_ISSUERS:
-        raise MissingCheckpointWorkerService('source-owned checkpoint worker scope/bootstrap/permit issuer is not registered')
+        from . import ce_checkpoint_configuration
+        try: ce_checkpoint_configuration.install_child_configuration()
+        except authority.NativeAdmissionError as error:
+            if ce_checkpoint_configuration._SOURCE_ADOPTION is None:
+                raise MissingCheckpointWorkerService('source-owned checkpoint worker scope/bootstrap/permit issuer is not registered') from error
+            raise
     require(len(_REGISTERED_LOCAL_ISSUERS) == 1, 'one reviewed source-owned child issuer required')
     parser = argparse.ArgumentParser(); parser.add_argument('--request', required=True)
     args = parser.parse_args(argv)
@@ -408,4 +413,7 @@ def main(argv=None):
     return issuer.run_frozen_request(args.request, CheckpointChildHandler, validate_command)
 
 
-if __name__ == '__main__': raise SystemExit(main())
+if __name__ == '__main__':
+    from .ce_qualification_adoption import adopt_source_paths
+    adopt_source_paths()
+    raise SystemExit(main())

@@ -11,6 +11,7 @@ import copy
 import hashlib
 import os
 from pathlib import Path
+import time
 import uuid
 
 from . import ce_native_authority as authority, ce_parent_qualification as parent
@@ -18,6 +19,8 @@ from . import ce_qualification_accounting as accounting, ce_qualification as qua
 from . import ce_bootstrap_accounting as boot, ce_publication as publication
 from . import ce_qualification_artifacts as raw, ce_execution_verifier as execution
 from . import ce_native_backend as backend, ce_native_services as services
+from . import ce_checkpoint_processes as processes, ce_checkpoint_reduction as checkpoint_reduction
+from . import ce_checkpoint_local_issuer as child_issuer, ce_worker_evidence as worker
 
 SCHEMA='CE8-PARENT-QUALIFICATION-BODY-1'
 _PUBLICATION_ISSUER=None
@@ -34,6 +37,25 @@ def _released(service):
 
 class ParentBodyPublisher(publication.CompletionPublisher):
     """Reuse priced helpers; deliberately never calls live-worker publish()."""
+    def tick(self):
+        start=getattr(self,'_delta_rebuild_started',None)
+        if start is not None:
+            require(0<=time.monotonic()-start<=self.spec['delta_rebuild_wall_seconds_upper'],
+                    'independently prepaid parent delta rebuild wall ceiling exceeded')
+        return super().tick()
+
+    def operation(self,kind,phase,operation_id,**fields):
+        delta_scope=(kind=='qualification_reducer_overhead'
+                     and fields.get('reason')=='delta_readback_source_report_linkage')
+        if delta_scope and phase=='started':
+            require(getattr(self,'_delta_rebuild_started',None) is not None
+                    and getattr(self,'_delta_rebuild_operation',None) is None,'source-prepaid delta rebuild scope before its actual reader')
+            self._delta_rebuild_operation=operation_id
+        closing=delta_scope and phase in ('returned','failed')
+        if closing:require(getattr(self,'_delta_rebuild_operation',None)==operation_id,'same source delta reader operation closes its wall window')
+        try:return super().operation(kind,phase,operation_id,**fields)
+        finally:
+            if closing:self._delta_rebuild_started=self._delta_rebuild_operation=None
     def _reference(self,path,role,maximum):
         oid=uuid.uuid4().hex
         self.operation('parent_reference','started',oid,read_bytes_upper=maximum+1,
@@ -105,6 +127,10 @@ class ParentBodyPublisher(publication.CompletionPublisher):
                 'ledger_refs':{'header':header,'journal':journal,'seal':seal},
                 'source_service_bootstrap_snapshot':service_snapshot,'publication_prepayment':self.handle.evidence,
                 'claim':'retained ended body evidence; supervisor must separately prove actual OS exit and run raw/source/cost verification'}
+            terminal_owner=_terminal_owner(context,ledger)
+            if terminal_owner is not None:
+                payload['checkpoint_terminal_evidence_refs']={branch:copy.deepcopy(record['raw_ref'])
+                    for branch,record in terminal_owner.terminal_handle_records.items()}
             result=self._write('PARENT_BODY_COMPLETE.json',payload,'parent_body_complete')
             self.tick();self.handle.complete();self.finished=True
             return {'schema':SCHEMA,'status':'UNQUALIFIED_BODY_COMPLETE','body_completed':True,'os_terminal_verified':False,
@@ -122,6 +148,122 @@ def _owner(context,operation):
     service=parent._service_owner(context)
     require(operation is service.operation, 'parent body callback identity differs from frozen source service')
     return service
+
+
+def _terminal_owner(context,ledger):
+    owner=context['native_services'].get('checkpoint_terminal_owner')
+    if owner is None and context.get('mode')=='synthetic_fixture':return None
+    require(type(owner) is processes.CheckpointProcesses and owner.context is context and owner.accounting is ledger
+            and not owner.final_handle_lifetime_closed and set(owner.terminal_handle_records)==set(checkpoint_reduction.BRANCHES),
+            'actual all-three checkpoint terminal owner required before final publication')
+    return owner
+
+
+def _close_terminals_on_failure(owner,primary):
+    if owner is not None and not owner.final_handle_lifetime_closed:
+        try:owner.close_terminal_handles(primary=primary)
+        except BaseException as failure:
+            if failure is not primary:raw._accounting(primary,failure)
+
+
+def _replay_retained_checkpoint_children(publisher,context,ledger,result,owner):
+    """Independent paid raw/state replay while original child OS clones are live."""
+    require(type(owner) is processes.CheckpointProcesses and owner.context is context and owner.accounting is ledger,
+            'same original checkpoint process owner before terminal replay')
+    handles=owner.retained_terminal_handles()
+    records=owner.terminal_handle_records
+    require(set(records)==set(checkpoint_reduction.BRANCHES)
+            and set(handles)=={record['binding']['worker_identity_sha256'] for record in records.values()}
+            and all(type(handle) is worker.WinWorkerHandle for handle in handles.values()),
+            'all three distinct actual retained terminal handles, never dictionaries')
+    with publisher.reader._overhead('parent_child_replay_setup',work_bytes=128*execution.MAX_HEADER,
+                                   hash_attempts=128,hash_bytes=128*execution.MAX_HEADER):
+        replay_context=dict(context,prepared_receipt=publisher.prepared)
+        verification_binding=publisher._binding();refs=result['ledger_refs']
+        header=execution._header(replay_context,execution._read_json(publisher.reader,refs['header'],verification_binding,'qualification_header'))
+    state,_,attempt_workers=execution._replay(publisher.reader,refs['journal'],verification_binding,replay_context,header,
+                              {publisher.proof['worker_identity_sha256']})
+    observed_seal=execution._read_json(publisher.reader,refs['seal'],verification_binding,'qualification_seal')
+    with publisher.reader._overhead('parent_checkpoint_seal_and_linkage',
+            work_bytes=32*refs['seal']['bytes']+32*refs['journal']['bytes'],
+            hash_attempts=execution.MAX_EVENTS,hash_bytes=8*refs['journal']['bytes']):
+        complete,pending=execution._seal(observed_seal,state)
+    require(complete and not pending,'original ended parent checkpoint replay before releasing child OS handles')
+    attempts=[attempt for attempt in state.attempts if attempt['stage']=='checkpoint_resume' and attempt['status']=='RETURNED']
+    require(len(attempts)==1 and len(attempts[0]['evidence']['raw_refs'])==1,'one exact parent checkpoint bundle')
+    attempt=attempts[0];binding=execution._binding_for(replay_context,attempt,publisher.proof['worker_identity_sha256'])
+    require(result['stage_artifacts']['checkpoint_resume']==attempt['evidence']['raw_refs'],'published checkpoint refs differ from original parent ledger')
+    envelope=execution._read_json(publisher.reader,attempt['evidence']['raw_refs'][0],binding,'checkpoint_branches')
+    require(envelope.get('schema')==raw.SCHEMA and envelope.get('evidence_kind')=='checkpoint_branches'
+            and all(envelope.get(key)==value for key,value in binding.items()),'original checkpoint bundle source/attempt/worker binding')
+    def preflight(name,contract):
+        if name=='checkpoint_branch_reduction':
+            require(contract['reader_bounds']==publisher.reader.remaining
+                    and contract['references']==list(payload['branch_refs'].values()),
+                    'exact already-prepaid final child reducer allowance')
+        elif name=='saved_delta_source_rebuild':
+            scope=replay_context['bindings']['scope'];native=scope['native_backend']
+            expected_roots={'base':native['model_dir'],'warm':str(Path(native['warm_delta_ref']['path']).parent),
+                            'output':native['output_directory']}
+            wall=publisher.spec.get('delta_rebuild_wall_seconds_upper')
+            require(raw._finite(wall) and 0<wall<=publisher.spec['bounds']['wall_seconds_upper']
+                    and contract['wall_seconds_upper']==wall
+                    and contract['roots']==expected_roots
+                    and contract['reader_bounds']==scope['qualifier_execution']['delta_rebuild_reader_bounds']
+                    and getattr(publisher,'_delta_rebuild_started',None) is None,
+                    'exact separately prepaid saved-delta source roots/readers/wall ceiling')
+            publisher._delta_rebuild_started=time.monotonic();publisher._delta_rebuild_operation=None
+        else:require(False,'unexpected final raw reducer preflight')
+        publisher.tick()
+    payload=envelope['payload']
+    require(set(payload.get('branch_refs',{}))==set(checkpoint_reduction.BRANCHES)
+            and set(payload.get('branch_bindings',{}))==set(checkpoint_reduction.BRANCHES),
+            'all raw branch references/bindings before complete stage replay')
+    child_bindings,child_lineages={},{}
+    for branch in checkpoint_reduction.BRANCHES:
+        reference=payload['branch_refs'][branch];child_binding=payload['branch_bindings'][branch]
+        require(child_binding==records[branch]['binding'],'raw branch binding differs from actual retained child owner')
+        child_payload=checkpoint_reduction._envelope(publisher.reader,reference,child_binding)
+        require(child_payload['branch']==branch and type(child_payload.get('observed_lineage')) is dict,
+                'exact raw child lineage before complete stage reductions')
+        child_bindings[reference['path']]=copy.deepcopy(child_binding)
+        child_lineages[child_binding['worker_identity_sha256']]=copy.deepcopy(child_payload['observed_lineage'])
+    with publisher.reader._overhead('parent_checkpoint_raw_and_terminal_linkage',work_bytes=128*raw.MAX_JSON,
+                                   hash_attempts=128,hash_bytes=128*raw.MAX_JSON):
+        try:
+            numeric_reductions,activation_gaps=execution._reductions(replay_context,state,attempt_workers,publisher.reader,
+                child_bindings,child_lineages,outer_preflight=preflight)
+            publisher.tick()
+            require(set(numeric_reductions)==set(qualification.STAGES[1:]),'all original seven numeric stage reductions required before child closure')
+            reduced=numeric_reductions['checkpoint_resume']
+        finally:publisher._delta_rebuild_started=publisher._delta_rebuild_operation=None
+    require(set(payload.get('child_terminal_refs',{}))==set(checkpoint_reduction.BRANCHES),'all three original raw terminal refs')
+    terminal_results={}
+    for branch in checkpoint_reduction.BRANCHES:
+        record=records[branch];child=reduced['raw_branches']['branches'][branch]
+        require(record['binding']==child['binding'] and payload['child_terminal_refs'][branch]==record['raw_ref'],
+                'retained OS owner differs from independently replayed child branch')
+        with publisher.reader._overhead('checkpoint_terminal_source_view',work_bytes=32*raw.MAX_JSON,
+                                       hash_attempts=16,hash_bytes=32*raw.MAX_JSON):
+            child_issuer.validate_parent_view(child['lineage']['child_proof'],record['proof'])
+        observed=execution._read_json(publisher.reader,record['raw_ref'],binding,'checkpoint_retained_terminal')
+        expected={'schema':'CE8-CHECKPOINT-RETAINED-TERMINAL-1','branch':branch,'binding':record['binding'],
+            'worker_proof':record['proof'],'terminal_proof':record['terminal'],'native_qualified':False,'execution_verified':False}
+        require(observed==expected and payload['child_terminal_proofs'][branch]==record['terminal'],
+                'raw retained child terminal proof differs from exact original owner/bundle')
+        handle=handles[record['binding']['worker_identity_sha256']]
+        actual=worker.verify_worker_handle(handle,{key:record['terminal'][key] for key in
+            ('worker_identity_sha256','request_sha256','scope_sha256')},require_native=True,terminal=True)
+        require(actual==record['terminal'] and type(actual.get('exit_code')) is int and actual['exit_code']==0
+                and actual.get('status_file_used') is False,'actual successful same-handle child terminal/source binding')
+        terminal_results[branch]={'binding':copy.deepcopy(record['binding']),'terminal_ref':copy.deepcopy(record['raw_ref']),
+            'terminal_proof':copy.deepcopy(actual),'child_derived_reservations':copy.deepcopy(child['derived_costs'])}
+    return {'schema':'CE8-PARENT-CHILD-TERMINAL-REPLAY-1','status':'UNQUALIFIED_CHILD_EVIDENCE_REPLAY',
+        'parent_ledger_refs':copy.deepcopy(refs),'checkpoint_bundle_ref':copy.deepcopy(attempt['evidence']['raw_refs'][0]),
+        'child_terminal_results':terminal_results,'child_os_terminal_verified':True,'parent_os_terminal_verified':False,
+        'checkpoint_raw_reduction':reduced,'raw_numeric_reductions':numeric_reductions,'activation_gaps':activation_gaps,
+        'native_qualified':False,'execution_verified':False,
+        'claim':'same-handle child OS terminal and raw checkpoint evidence; live parent terminal and complete native qualification remain separate'}
 
 
 def _publisher(context,service,ledger):
@@ -147,11 +289,16 @@ def publication_role(context,artifacts,ledger,service_snapshot,operation):
     service=_owner(context,operation);_released(service)
     require(type(ledger) is accounting.QualificationAccounting and ledger.context is context,
             'actual parent Q before closing the original worker clock')
-    if ledger.worker_open:ledger.end()
-    publisher=_publisher(context,service,ledger)
-    result=publisher.retain(context,artifacts,ledger,service_snapshot)
-    context['native_services']['parent_body_publication']=result
-    return result
+    terminal_owner=_terminal_owner(context,ledger)
+    try:
+        if ledger.worker_open:ledger.end()
+        publisher=_publisher(context,service,ledger)
+        result=publisher.retain(context,artifacts,ledger,service_snapshot)
+        context['native_services']['parent_body_publication']=result
+        return result
+    except BaseException as primary:
+        _close_terminals_on_failure(terminal_owner,primary)
+        raise
 
 
 def interruption_role(context,error,ledger,service_snapshot,operation):
@@ -162,8 +309,20 @@ def interruption_role(context,error,ledger,service_snapshot,operation):
     require(type(service) is services.NativeControllerServices and service.context is context
             and service.operation is operation, 'actual source metadata service owner before interruption IO')
     service._admit()
+    terminal_owner=context['native_services'].get('checkpoint_terminal_owner')
+    if terminal_owner is not None:
+        require(type(terminal_owner) is processes.CheckpointProcesses and terminal_owner.context is context,
+                'only original owned checkpoint terminal clones may close during interruption')
+        interruption=RuntimeError('parent qualification interrupted')
+        interruption.original_interruption=copy.deepcopy(error)
+        _close_terminals_on_failure(terminal_owner,interruption)
+        cleanup={key:copy.deepcopy(getattr(interruption,key)) for key in
+            ('checkpoint_terminal_handle_cleanup','accounting_failure') if hasattr(interruption,key)}
+        if cleanup:
+            error=copy.deepcopy(error)
+            error['checkpoint_terminal_cleanup']=cleanup
     outer=context['native_services'].get('qualification_bootstrap')
-    if outer is None or ledger is None or getattr(outer,'fatal',False) or getattr(outer,'unknown_wall',False):
+    if outer is None or ledger is None or getattr(outer,'closed',False) or getattr(outer,'fatal',False) or getattr(outer,'unknown_wall',False):
         return _early_interruption(service,context,error,ledger,service_snapshot)
     require(type(outer) is boot.BootstrapAccounting,'actual parent failure bootstrap required')
     # Existing explicit interruption records retain pending tickets and their
@@ -257,13 +416,25 @@ def completion_seal_role(context,result,ledger,service_bootstrap,operation):
             and result.get('status')=='UNQUALIFIED_BODY_COMPLETE' and result.get('os_terminal_verified') is False,
             'exact retained parent body result; no fabricated terminal claim')
     snapshot=ledger.snapshot(); require(not snapshot['worker_open'] and not snapshot['pending_operations'], 'parent body Q cannot change after publication')
-    publisher=_publisher(context,service,ledger)
+    terminal_owner=_terminal_owner(context,ledger)
+    publisher=None
+    child_replay_ref=None
     try:
+        publisher=_publisher(context,service,ledger)
         reference=result['body_ref']
         actual=publisher._reference(reference['path'],'parent_body_complete',publisher.spec['max_receipt_bytes'])
         require(all(actual[key]==reference[key] for key in ('path','sha256','bytes')), 'parent body changed before unqualified seal')
+        if terminal_owner is not None:
+            replay=_replay_retained_checkpoint_children(publisher,context,ledger,result,terminal_owner)
+            child_replay_ref=publisher._write('PARENT_CHILD_TERMINAL_REPLAY.json',replay,'checkpoint_terminal_replay')
+            terminal_owner.close_terminal_handles()
+            require(terminal_owner.final_handle_lifetime_closed and not terminal_owner.terminal_handle_records
+                    and terminal_owner.handle.evidence['status']=='RETURNED',
+                    'actual last child clone closure and process ticket completion before scope end')
         publisher.tick();publisher.handle.complete();publisher.finished=True
     except BaseException as primary:
+        _close_terminals_on_failure(terminal_owner,primary)
+        if publisher is None:raise
         publisher.finished=True
         try:publisher.handle.fail(primary)
         except BaseException as failure:raw._accounting(primary,failure);raise primary from failure
@@ -280,4 +451,5 @@ def completion_seal_role(context,result,ledger,service_bootstrap,operation):
         'native_qualified':False,'execution_verified':False,'os_terminal_verified':False,
         'supervisor_terminal_verification_required':True,'publication_prepayment':result['publication_prepayment'],
         'seal_readback_prepayment':publisher.handle.evidence,'scope_bootstrap_evidence_ref':bootstrap_ref,
+        'checkpoint_child_terminal_replay_ref':child_replay_ref,
         'service_bootstrap_clock_scope':'original metadata service whole-clock provenance still requires supervisor verification'}

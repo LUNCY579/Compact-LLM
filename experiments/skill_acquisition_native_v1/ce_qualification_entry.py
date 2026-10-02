@@ -23,6 +23,7 @@ SCHEMA = 'CE8-QUALIFICATION-SOURCE-CONFIGURATION-1'
 ENTRY_MODULE = __package__ + '.ce_qualification_entry'
 _SOURCE_CONFIGURATION = None
 _INSTALLED_SHA256 = None
+_INTAKE_EVIDENCE = None
 require, digest = authority.require, authority.digest
 
 
@@ -54,6 +55,13 @@ def validate_configuration(configuration):
 
 
 def _configuration():
+    global _SOURCE_CONFIGURATION, _INTAKE_EVIDENCE
+    if _SOURCE_CONFIGURATION is None:
+        from . import ce_qualification_configuration as intake
+        require(type(intake._SOURCE_ADOPTION) is MappingProxyType,
+                'reviewed immutable qualification source configuration remains closed')
+        configured, evidence = intake.load_source_configuration()
+        _SOURCE_CONFIGURATION, _INTAKE_EVIDENCE = MappingProxyType(configured), evidence
     require(type(_SOURCE_CONFIGURATION) is MappingProxyType,
             'reviewed immutable qualification source configuration remains closed')
     return validate_configuration(copy.deepcopy(dict(_SOURCE_CONFIGURATION)))
@@ -106,6 +114,12 @@ def install_source_registries():
     configuration = _configuration()  # before import/object/registry traversal
     require(_INSTALLED_SHA256 in (None, configuration['configuration_sha256']), 'source installation cannot switch packet')
     if _INSTALLED_SHA256 is not None: return configuration
+    _install_registry_map(configuration)
+    _INSTALLED_SHA256 = configuration['configuration_sha256']
+    return configuration
+
+
+def _install_registry_map(configuration):
     modules = _modules()
     scope, parent, publisher, child_scope = (modules[name] for name in
         ('ce_scope_adapters', 'ce_parent_qualification', 'ce_parent_publication', 'ce_child_scope_adapters'))
@@ -164,8 +178,19 @@ def install_source_registries():
     local._BOOTSTRAP_ISSUER, local._BOOTSTRAP_VERIFIER = child_scope.child_bootstrap_native_issuer, child_scope.child_bootstrap_prepayment_verifier
     local._PREDECESSOR_VERIFIER, local._PUBLICATION_ISSUER = child_scope.child_predecessor_verifier, issuer
     provider._SERVICE_ISSUER, provider._SERVICE_VERIFIER, provider._METADATA_VERIFIER = entry_provider, child_scope.child_provider_service_verifier, child_scope.child_worker_metadata_verifier
-    _INSTALLED_SHA256 = configuration['configuration_sha256']
     return configuration
+
+
+def install_child_source_registries(configuration):
+    """Source intake identity is required; arbitrary JSON cannot call this ABI."""
+    from . import ce_checkpoint_configuration as transport
+    require(type(transport._SOURCE_ADOPTION) is MappingProxyType and configuration is transport._LOADED
+            and type(transport._EVIDENCE) is dict and transport._EVIDENCE.get('source_files_verified') is True,
+            'exact source-adopted paid child configuration required before registry installation')
+    from . import ce_checkpoint_entry_provider as provider
+    provider.validate_configuration(configuration)
+    _install_registry_map({'service_spec': configuration['service_spec'],
+        'configuration_sha256': transport._EVIDENCE['configuration_sha256']})
 
 
 def serve_parent(pipe, proof, qualify):
@@ -181,11 +206,45 @@ def serve_parent(pipe, proof, qualify):
             and Path(reference['path']).is_absolute() and authority._hex(reference['sha256'])
             and type(reference['bytes']) is int and 0 < reference['bytes'] <= raw.MAX_JSON,
             'bounded actual parent body artifact reference')
-    pipe.emit('response', 1, {'raw_artifact': {key: reference[key] for key in ('path', 'sha256', 'bytes')}, 'body_completed': True,
-        'os_terminal_verified': False, 'native_qualified': False})
+    response = {'raw_artifact': {key: reference[key] for key in ('path', 'sha256', 'bytes')}, 'body_completed': True,
+        'os_terminal_verified': False, 'native_qualified': False}
+    if result.get('final_seal_ref') is not None:
+        response['final_seal_ref'] = {key: result['final_seal_ref'][key] for key in ('path', 'sha256', 'bytes')}
+    pipe.emit('response', 1, response)
     require(pipe.receive(2) == {'command': 'finish', 'data': {}}, 'finish only after parent body completion')
     pipe.emit('response', 2, {'finished': True, 'native_qualified': False})
     return 0
+
+
+def retain_final_body_seal(runtime, context, result):
+    """Carry exact late scope/child refs across exit in one paid raw artifact."""
+    runtime._admit()
+    require(type(runtime) is services.NativeControllerServices and runtime.context is context
+            and type(result) is dict and result.get('native_qualified') is False
+            and result.get('seal', {}).get('status') == 'UNQUALIFIED_BODY_SEAL', 'actual unqualified parent body result')
+    from . import update, ce_publication
+    profile = services._profile(runtime.spec['bootstrap']['operation_profiles']['publication'])
+    with update._span(runtime.operation, 'publication', dict(profile)) as returned:
+        value = {'schema': 'CE8-PARENT-BODY-SEAL-1', 'request_sha256': context['request_sha256'],
+            'scope_sha256': context['scope_sha256'], 'body_seal': result['seal'],
+            'parent_service_specification': runtime.spec['bootstrap'],
+            'metadata_intake_evidence': runtime.metadata_intake_evidence,
+            'native_qualified': False, 'execution_verified': False, 'os_terminal_verified': False}
+        blob = raw.canonical(value) + b'\n'; require(len(blob) <= raw.MAX_JSON, 'final parent seal metadata ceiling')
+        directory = runtime.bootstrap.directory; final = directory / 'PARENT_BODY_SEAL.json'
+        require(not os.path.lexists(final), 'create-only final parent seal')
+        temporary = directory / ('PARENT_BODY_SEAL.' + __import__('uuid').uuid4().hex + '.partial')
+        with temporary.open('xb') as stream:
+            require(stream.write(blob) == len(blob), 'short final parent seal'); stream.flush(); os.fsync(stream.fileno())
+        with temporary.open('rb') as stream: observed = stream.read(len(blob) + 1)
+        require(observed == blob, 'final parent seal temporary readback')
+        ce_publication._atomic_no_replace(temporary, final, directory)
+        with final.open('r+b') as stream: os.fsync(stream.fileno()); observed = stream.read(len(blob) + 1)
+        require(observed == blob, 'final parent seal readback')
+        returned.update(bytes_read=2 * len(blob), bytes_written=len(blob), identity_hash_attempts_actual=1,
+                        identity_hash_bytes_actual=len(blob))
+        result['final_seal_ref'] = {'path': str(final), 'sha256': __import__('hashlib').sha256(blob).hexdigest(), 'bytes': len(blob)}
+    return result
 
 
 def main(argv=None):
@@ -196,6 +255,7 @@ def main(argv=None):
     request, spec = configuration['request'], configuration['service_spec']
     permit = services.ControllerServicePermit(request, spec, source_issuer_identity(), service_metadata_verifier)
     runtime = services.NativeControllerServices(request, permit, spec)
+    runtime.metadata_intake_evidence = copy.deepcopy(_INTAKE_EVIDENCE)
     primary = None
     try:
         profile = services._profile(spec['bootstrap']['operation_profiles']['scope_metadata'])
@@ -212,7 +272,10 @@ def main(argv=None):
         pipe = local.BoundedRPC(configuration['rpc_spec'], binding, os.getpid(), sys.stdin.buffer,
             sys.stdout.buffer, runtime.bootstrap.operation)
         parent = importlib.import_module(__package__ + '.ce_parent_qualification')
-        return serve_parent(pipe, proof, lambda: controller.run_controller(request, runtime, parent.create_parent_qualification))
+        def qualify():
+            return retain_final_body_seal(runtime, context,
+                controller.run_controller(request, runtime, parent.create_parent_qualification))
+        return serve_parent(pipe, proof, qualify)
     except BaseException as error: primary = error; raise
     finally:
         if runtime.worker_handle is not None:
@@ -222,6 +285,12 @@ def main(argv=None):
                     primary.parent_entry_close_failure = {'type': type(cleanup).__name__, 'message': str(cleanup)[:1000]}
                     raise primary from cleanup
                 raise
+        if primary is None:
+            runtime.bootstrap.end()
+            runtime.bootstrap.inspect_evidence()
 
 
-if __name__ == '__main__': raise SystemExit(main())
+if __name__ == '__main__':
+    from .ce_qualification_adoption import adopt_source_paths
+    adopt_source_paths()
+    raise SystemExit(main())

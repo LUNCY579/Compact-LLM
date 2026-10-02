@@ -206,8 +206,9 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
     gradient=proposal['qualification']['witnesses']['arms']['canonical']['gradient_reference_boundary_row_ids']
     batches=[gradient,[rid for rid in witness if rid not in gradient][:8]]
     require(len(witness)==90 and all(len(batch)==8 for batch in batches), 'exact witness and two independent qualification batches')
-    reader={'operation_attempts_upper':20000,'io_read_bytes_upper':128*GIB,'identity_hash_attempts_upper':200000,
+    reader={'operation_attempts_upper':20000,'io_read_bytes_upper':128*GIB,'identity_hash_attempts_upper':10000000,
             'identity_hash_bytes_upper':512*GIB,'reducer_work_bytes_upper':1024*GIB}
+    delta_readers={role:dict(reader) for role in ('base','warm','output')}
     envelope=copy.deepcopy(proposal['qualification']['global_caps'])
     stage_caps=copy.deepcopy(proposal['qualification']['stage_caps'])
     # Native model/CP reservations are the unchanged proposal hard caps. Outer
@@ -220,7 +221,8 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
         'native_backend':model,'qualifier_resources':probe,
         'qualifier_execution':{'schema':executor.SCHEMA,'all_witness_ids':witness,'gradient_batch_ids':gradient,'adam_batches':batches,
             'owned_artifact_directory':str(output_root/'raw'),'json_artifact_bytes_upper':4*MIB,
-            'tensor_artifact_bytes_upper':selected,'artifact_chunk_bytes':MIB,'reader_bounds':reader},
+            'tensor_artifact_bytes_upper':selected,'nonbase_state_bytes_upper':16*MIB,
+            'delta_rebuild_reader_bounds':delta_readers,'artifact_chunk_bytes':MIB,'reader_bounds':reader},
         'qualifier_accounting':{'schema':accounting.SPEC,'owned_directory':str(output_root/'ledger'),
             'ingestion_receipt_sha256':receipt['receipt_sha256'],'operation_profiles':profiles,
             'setup_bounds':profile(64*MIB,64*MIB,16,64*MIB,30),'stage_caps':stage_caps,'global_caps':envelope,
@@ -245,14 +247,20 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
         'operation_bounds':{'acquire':profile(metadata,4096,64,metadata,180),'transfer':lease_profile,
                             'release':profile(4*4097,4096,4,4*4096,19200)}}
     lease.validate_spec(scope['checkpoint_lease'])
-    outer_bounds=costs(256*GIB,64*GIB,200000,1024*GIB,2*GIB,50000,76800)
+    outer_bounds=costs(256*GIB,64*GIB,10000000,1024*GIB,2*GIB,50000,76800)
     scope['qualifier_bootstrap']={'schema':bootstrap.SPEC,'owned_directory':str(output_root/'bootstrap'),
         'caps':outer_bounds,'self_bounds':costs(metadata,metadata,10000,metadata,metadata,10000,60),
         'physical_wall_seconds_upper':19200}
-    pub_bounds=costs(256*GIB,64*MIB,200000,1024*GIB,64*MIB,20000,19200)
+    pub_bounds=costs(256*GIB,64*MIB,10000000,1024*GIB,64*MIB,20000,19200)
+    # Aggregate scope owner pays one process ticket and two complete parent
+    # publication/readback tickets, plus self/Q setup and journal overhead.
+    # A dependent ticket's full ceiling is never reused as its owner's cap.
+    scope_boot_caps=costs(1024*GIB,96*GIB,40000000,4096*GIB,4*GIB,150000,160000)
+    scope['qualifier_bootstrap']['caps']=scope_boot_caps
     pub={'schema':branch_publication.SPEC,'max_receipt_bytes':4*MIB,'bounds':pub_bounds,'reader_bounds':reader}
     scope['checkpoint_branch_publication']=pub
-    scope['publication']={**pub,'schema':publication.SPEC,'owned_directory':str(output_root/'publication')}
+    scope['publication']={**pub,'schema':publication.SPEC,'owned_directory':str(output_root/'publication'),
+        'delta_rebuild_wall_seconds_upper':3600}
     scope['publication_owner']={'accounting_spec_sha256':digest(scope['publication']),
                                 'prepared_receipt_sha256':receipt['receipt_sha256']}
     templates={}
@@ -280,7 +288,9 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
         ('controller_stage','source_verification','scope_admission','framework_preparation','publication','interruption',
          'input_io','tokenizer_load','tokenizer_render','entry_preparation','entry_worker_binding','worker_runtime_binding',
          'worker_source_verification','worker_os_binding','worker_handle_close','worker_handle_duplicate',
-         'scope_capsule','scope_metadata','outer_reservation','terminal_publication')}
+         'scope_capsule','scope_metadata','outer_reservation','terminal_publication','qualification_metadata',
+         'process_launch_preflight','process_launch_parent','process_launch','process_launch_child',
+         'process_launch_child_census','process_owned_stop','process_rpc_receive','process_rpc_send','process_terminal')}
     service_profiles['supervisor_lease']=scope['checkpoint_lease']['operation_bounds']['transfer']
     service_profiles['supervisor_lease_acquire']=scope['checkpoint_lease']['operation_bounds']['acquire']
     service_profiles['supervisor_lease_release']=scope['checkpoint_lease']['operation_bounds']['release']
@@ -288,6 +298,14 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
     service_profiles['resource_probe']=profiles['resource_probe']; service_profiles['resource_cuda_probe']=profile(wall=1)
     service_profiles['entry_lifetime']=profile(4*GIB,metadata,10000,4*GIB,3600)
     service_profiles['entry_preparation']=profile(2*GIB,metadata,100000,4*GIB,1800)
+    service_profiles['controller_stage']['wall_s_upper']=19200
+    service_profiles['tokenizer_render']=profile(0,0,32,4*analytical['max_prepared_hash_bytes'],5)
+    for kind in ('worker_os_binding','worker_runtime_binding','worker_handle_close','worker_handle_duplicate',
+                 'process_launch_parent','process_launch','process_launch_child','process_launch_child_census'):
+        service_profiles[kind]=profile(wall=60)
+    service_profiles['input_io']=profile(128*MIB,64*MIB,20000,256*MIB,60)
+    for kind in ('process_owned_stop','process_rpc_receive','process_rpc_send','process_terminal'):
+        service_profiles[kind]['wall_s_upper']=19200
     service={'schema':'CE8-NATIVE-CONTROLLER-SERVICES-1','approved_code_sha256':source['code_sha256'],
         'role_descriptors':{},'physical_deadline_seconds':19200,
         'supervision':{'schema':'CE8-QUALIFICATION-SUPERVISION-SPEC-1',
@@ -299,8 +317,12 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
                 'hash_bytes':4*metadata,'metadata_bytes':2*metadata,'operation_attempts':4,'wall_seconds':120}},
         'bootstrap':{'owned_directory':str(output_root/'service-bootstrap'),
             'setup_bounds':profile(metadata,metadata,10000,metadata,60),
+            'operation_profile_rule':'CE8-INPUT-IO-EXPLICIT-RESERVATIONS-1',
+            'input_io_row_wall_s_upper':5,
+            'physical_wall_seconds_upper':19200,
+            'finalization_bounds':profile(128*MIB,4*MIB,32,256*MIB,120),
             'operation_profiles':service_profiles,'caps':{'read_bytes':64*GIB,'write_bytes':4*GIB,'hash_attempts':2000000,
-                'hash_bytes':256*GIB,'metadata_bytes':4*GIB,'operation_attempts':100000,'wall_seconds':256000}},
+                'hash_bytes':256*GIB,'metadata_bytes':4*GIB,'operation_attempts':100000,'wall_seconds':512000}},
         'resource':{'limits':limits,'resource_probe':probe,
             'host_transient_bytes':{kind:64*MIB for kind in runner.HOST_STAGES | set(qualification.STAGES) | accounting.KINDS |
                 {'before_framework','before_model','ingestion_sources','ingestion_tokenizer','ingestion_qualification_rows',
@@ -329,7 +351,8 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
         'qualification_weights':'discarded; never production donor or reset anchor','analytical_work':analytical,
         'profile_status':'UNMEASURED_FINITE_UPPER_RESERVATIONS_FOR_DISCARDED_QUALIFICATION_ONLY',
         'root_physical_deadline_seconds':19200,'per_worker_leaf_caps':envelope,
-        'additional_outer_reservations':{'scope_bootstrap':outer_bounds,'service_bootstrap':service['bootstrap']['caps'],
+        'additional_outer_reservations':{'scope_bootstrap':scope_boot_caps,'scope_process_ticket':outer_bounds,
+            'scope_parent_publication_tickets':2,'service_bootstrap':service['bootstrap']['caps'],
             'checkpoint_processes':outer_bounds,'branch_publication_each':pub_bounds,
             'rule':'Separate retained owners; these additional ceilings require explicit review and are not part of the old57600 leaf-wall allowance.'},
         'required_source_interfaces':required_interfaces(),

@@ -11,6 +11,7 @@ import hashlib
 import os
 from pathlib import Path
 import uuid
+import sys
 
 from . import ce_native_services as services, ce_process_launch as launch
 from . import ce_worker_evidence as worker, ce_checkpoint_local_issuer as local
@@ -20,6 +21,139 @@ SPEC = 'CE8-QUALIFICATION-SUPERVISION-SPEC-1'
 SCHEMA = 'CE8-QUALIFICATION-SUPERVISION-1'
 ENTRY_MODULE = 'experiments.skill_acquisition_native_v1.ce_qualification_entry'
 require = worker.require
+
+
+def supervisor_specification(configuration):
+    """Derive a separate metadata owner; the supervised worker owns models."""
+    from . import ce_qualification_entry as entry
+    entry.validate_configuration(configuration)
+    spec = copy.deepcopy(configuration['service_spec'])
+    root = Path(spec['resource']['resource_probe']['output_root'])
+    owner = str(root / 'supervisor-service-bootstrap')
+    spec['bootstrap']['owned_directory'] = owner
+    spec['constructor_prepayment']['owned_directory'] = owner
+    spec['scope_adapters']['owned_directory'] = str(Path(owner) / 'capsules')
+    return spec
+
+
+def supervisor_service_verifier(issuer, request_sha256, spec_sha256):
+    require(issuer is sys.modules[__name__], 'fixed source supervisor metadata issuer')
+    from . import ce_qualification_entry as entry
+    config = entry._configuration()
+    require(request_sha256 == worker.digest(services.controller.request_preimage(config['request']))
+            and spec_sha256 == worker.digest(supervisor_specification(config)), 'source-adopted supervisor request/spec binding')
+    return True
+
+
+def supervisor_launch_verifier(issuer, spec_sha256, request_sha256, scope_sha256):
+    require(type(issuer) is services.NativeControllerServices and issuer.context is None,
+            'actual metadata-only supervisor service issuer')
+    issuer._admit(); spec = getattr(issuer, '_qualification_launch_spec', None)
+    require(type(spec) is dict and spec['worker_module'] == ENTRY_MODULE
+            and worker.digest(spec) == spec_sha256 and spec['request_sha256'] == request_sha256
+            and request_sha256 == worker.digest(services.controller.request_preimage(issuer.request))
+            and spec['scope_sha256'] == scope_sha256 == issuer.request['scope_ref']['sha256']
+            and spec['approved_code_sha256'] == issuer.spec['approved_code_sha256'],
+            'fixed actual source-owned supervisor launch binding')
+    return True
+
+
+def supervisor_worker_verifier(issuer, spec_sha256, request_sha256, scope_sha256):
+    require(type(issuer) is services.NativeControllerServices and issuer.context is None,
+            'existing metadata supervisor observation owner')
+    issuer._admit(); spec = getattr(issuer, '_qualification_observation_spec', None)
+    require(type(spec) is dict and worker.digest(spec) == spec_sha256
+            and spec['request_sha256'] == request_sha256 and spec['scope_sha256'] == scope_sha256,
+            'actual launch-observed exact qualification worker metadata scope')
+    return True
+
+
+def supervisor_launch_observation(spec, permit, identity, parent_identity, observer):
+    require(type(permit) is launch.NativeLaunchPermit, 'source launch permit before worker observation')
+    permit.require(spec, observer); service = permit._issuer
+    require(type(service) is services.NativeControllerServices and observer is service.operation,
+            'same original source supervisor dispatcher')
+    from .ce_child_scope_adapters import observed_child_spec
+    budget = worker._Budget({'bounds': spec['observation_bounds']}, observer)
+    bound = budget.run('worker_source_verification', lambda: observed_child_spec(spec, identity, parent_identity))
+    service._qualification_observation_spec = copy.deepcopy(bound)
+    return bound, worker.WorkerObservationPermit(bound, service, supervisor_worker_verifier, observer)
+
+
+def build_supervisor_launch_spec(configuration, parent_identity):
+    from . import ce_qualification_entry as entry
+    entry.validate_configuration(configuration)
+    policy = configuration['service_spec']['scope_adapters']['worker']
+    module = __package__ + '.ce_qualification_supervisor'
+    code = configuration['service_spec']['approved_code_sha256']
+    spec = {'schema': launch.SPEC, 'mode': 'registered_native_worker',
+        'request_sha256': worker.digest(services.controller.request_preimage(configuration['request'])),
+        'scope_sha256': configuration['request']['scope_ref']['sha256'], 'cwd': policy['source_checkout'],
+        'source_checkout': policy['source_checkout'], 'worker_module': ENTRY_MODULE,
+        'argv': [policy['python_ref']['path'], '-m', ENTRY_MODULE, '--request', configuration['request_ref']['path']],
+        'python_ref': policy['python_ref'], 'process_image_ref': policy['process_image_ref'],
+        'request_ref': configuration['request_ref'], 'source_files': policy['source_files'], 'approved_code_sha256': code,
+        'worker_topology': 'venv_redirector', 'parent_identity': copy.deepcopy(parent_identity),
+        'environment': __import__(__package__ + '.ce_registration', fromlist=['child_environment']).child_environment(),
+        'deadline_seconds': 19200, 'handshake_seconds': 180, 'rpc_seconds': 19200, 'terminate_grace_seconds': 30,
+        'max_message_bytes': 1024 ** 2, 'max_messages': 8, 'max_stderr_bytes': 1024 ** 2,
+        'bounds': {'operation_attempts_upper': 100000, 'io_read_bytes_upper': 4 * 1024 ** 3,
+            'identity_hash_attempts_upper': 100000, 'identity_hash_bytes_upper': 4 * 1024 ** 3, 'wall_seconds_upper': 19200},
+        'observation_bounds': copy.deepcopy(policy['bounds']),
+        'observation_factory_descriptor': {'module': module, 'symbol': 'supervisor_launch_observation',
+            'source_sha256': code[module.replace('.', '/') + '.py']}}
+    launch.validate_spec(spec); return spec
+
+
+def main():
+    """Fixed source-adopted supervisor entry; no argv/env selects a scope."""
+    from .ce_qualification_adoption import adopt_source_paths
+    adopt_source_paths()
+    from . import ce_qualification_entry as entry
+    configuration = entry.install_source_registries()
+    spec = supervisor_specification(configuration)
+    # Register exact source bodies only after the same immutable adoption and
+    # the concrete parent/child installer dependencies have been checked.
+    services._REGISTERED_SERVICE_VERIFIERS |= frozenset((supervisor_service_verifier,))
+    launch._REGISTERED_LAUNCH_VERIFIERS |= frozenset((supervisor_launch_verifier,))
+    launch._REGISTERED_OBSERVATION_FACTORIES |= frozenset((supervisor_launch_observation,))
+    worker._REGISTERED_METADATA_VERIFIERS |= frozenset((supervisor_worker_verifier,))
+    service_permit = services.ControllerServicePermit(configuration['request'], spec, sys.modules[__name__], supervisor_service_verifier)
+    service = services.NativeControllerServices(configuration['request'], service_permit, spec)
+    budget = worker._Budget({'bounds': spec['scope_adapters']['worker']['bounds']}, service.operation)
+    api = budget.run('worker_os_binding', worker._WindowsOS); current = None; result = None; primary = None
+    try:
+        def open_current():
+            nonlocal current
+            current = api.open(os.getpid()); return current
+        budget.run('worker_os_binding', open_current)
+        facts = budget.run('worker_os_binding', lambda: api.snapshot(current))
+        boot = budget.run('worker_os_binding', api.boot)
+        parent = {'pid': facts['pid'], 'creation_filetime_100ns': facts['creation_filetime_100ns'], 'boot_identity': boot}
+        budget.run('worker_handle_close', lambda: api.close(current)); current = None
+        prepared = build_supervisor_launch_spec(configuration, parent)
+        service._qualification_launch_spec = copy.deepcopy(prepared)
+        permit = launch.NativeLaunchPermit(prepared, service, supervisor_launch_verifier, service.operation)
+        result = supervise_qualification(service, prepared, permit)
+        # The current helper retains a real terminal clone for independent
+        # consumers. Close it before finalizing its original metadata owner.
+        result['terminal_handle'].close(); result['terminal_handle'] = None
+        service.bootstrap.end(); final = service.bootstrap.inspect_evidence()
+        result['supervisor_final_evidence'] = final
+        print(worker.canonical({k: v for k, v in result.items() if k != 'terminal_handle'}).decode('ascii'))
+        return 0
+    except BaseException as error: primary = error; raise
+    finally:
+        if current is not None:
+            try: api.close(current)
+            except BaseException as failure:
+                if primary is not None: local.raw._accounting(primary, failure); raise primary from failure
+                raise
+        if result is not None and result.get('terminal_handle') is not None:
+            try: result['terminal_handle'].close()
+            except BaseException as failure:
+                if primary is not None: local.raw._accounting(primary, failure); raise primary from failure
+                raise
 
 
 def _reference(value):
@@ -73,6 +207,55 @@ def _compare_ready(service, actual_live, ready_proof):
         require(size <= 4 * 1024 ** 2, 'ready source/worker identity comparison ceiling')
         returned.update(bytes_read=0, bytes_written=0, identity_hash_attempts_actual=1,
                         identity_hash_bytes_actual=size)
+
+
+def _read_final_seal(service, reference, body_reference, actual_live):
+    profile = services._profile(service.spec['bootstrap']['operation_profiles']['input_io'])
+    with update._span(service.operation, 'input_io', dict(profile)) as returned:
+        root = Path(service.spec['resource']['resource_probe']['output_root']).resolve(); path = Path(reference['path'])
+        require(path.resolve().is_relative_to(root) and path.is_file() and not path.is_symlink()
+                and path.stat().st_size == reference['bytes'], 'exact owned final body seal')
+        with path.open('rb') as stream: blob = stream.read(reference['bytes'] + 1)
+        require(len(blob) == reference['bytes'] and hashlib.sha256(blob).hexdigest() == reference['sha256'], 'final body seal bytes/hash drift')
+        seal = local.raw._json(blob)
+        require(seal.get('schema') == 'CE8-PARENT-BODY-SEAL-1' and seal.get('request_sha256') == actual_live['request_sha256']
+                and seal.get('scope_sha256') == actual_live['scope_sha256'] and seal.get('native_qualified') is False
+                and seal.get('os_terminal_verified') is False, 'same actual worker final body seal')
+        body = seal['body_seal']; require(body['status'] == 'UNQUALIFIED_BODY_SEAL'
+            and all(body['body_ref'][key] == body_reference[key] for key in ('path', 'sha256', 'bytes'))
+            and type(body.get('scope_bootstrap_evidence_ref')) is dict
+            and type(body.get('checkpoint_child_terminal_replay_ref')) is dict, 'exact final scope and child replay refs retained')
+        returned.update(bytes_read=len(blob), identity_hash_attempts_actual=1, identity_hash_bytes_actual=len(blob))
+        return seal
+
+
+def _retain_parent_service_refs(service, final_seal):
+    """After actual exit, pin the configured worker's three ended ledger files."""
+    from . import ce_qualification_entry as entry
+    require(final_seal['parent_service_specification'] == entry._configuration()['service_spec']['bootstrap'],
+            'final worker service ledger must equal the exact adopted parent specification')
+    profile = services._profile(service.spec['bootstrap']['operation_profiles']['input_io'])
+    with update._span(service.operation, 'input_io', dict(profile)) as returned:
+        root = Path(service.spec['resource']['resource_probe']['output_root']).resolve()
+        owner = Path(final_seal['parent_service_specification']['owned_directory'])
+        require(owner.resolve().is_relative_to(root) and not owner.is_symlink(), 'actual configured parent service evidence owner')
+        names = {'header_ref': 'SERVICE_BOOTSTRAP_HEADER.json', 'journal_ref': 'SERVICE_BOOTSTRAP.jsonl',
+                 'seal_ref': 'SERVICE_BOOTSTRAP_SEAL.json'}
+        references = {}; count = 0
+        for key, name in names.items():
+            path = owner / name
+            require(path.is_file() and not path.is_symlink(), 'parent service did not end before actual successful exit')
+            size = path.stat().st_size
+            require(0 < size and count + size <= profile['read_bytes_upper'], 'final parent service read ceiling before open')
+            hashed = hashlib.sha256(); actual = 0
+            with path.open('rb') as stream:
+                while block := stream.read(min(1024 ** 2, size + 1 - actual)):
+                    actual += len(block); require(actual <= size, 'ended parent evidence grew'); hashed.update(block)
+            require(actual == size, 'ended parent service evidence truncated')
+            count += actual; references[key] = {'path': str(path), 'bytes': actual, 'sha256': hashed.hexdigest()}
+        returned.update(bytes_read=count, identity_hash_attempts_actual=3, identity_hash_bytes_actual=count)
+        return {'specification': final_seal['parent_service_specification'], **references,
+                'native_qualified': False, 'execution_verified': False}
 
 
 def _retain(service, policy, envelope):
@@ -129,10 +312,11 @@ def supervise_qualification(service, launch_spec, launch_permit):
         actual_live = owned.monitor.proof()
         _compare_ready(service, actual_live, ready['worker_proof'])
         response = owned.request('qualify', {})
-        require(type(response) is dict and set(response) == {'body_completed', 'os_terminal_verified', 'native_qualified', 'raw_artifact'}
+        require(type(response) is dict and set(response) == {'body_completed', 'os_terminal_verified', 'native_qualified', 'raw_artifact', 'final_seal_ref'}
                 and response['body_completed'] is True and response['os_terminal_verified'] is False
                 and response['native_qualified'] is False, 'unqualified body response protocol')
         body_reference = _reference(response['raw_artifact'])
+        seal_reference = _reference(response['final_seal_ref'])
         require(owned.request('finish', {}) == {'finished': True, 'native_qualified': False}, 'explicit qualification finish handshake')
         process_terminal = owned.terminal(launch_spec['deadline_seconds'])
         require(type(process_terminal['exit_code']) is int and process_terminal['exit_code'] == 0,
@@ -146,10 +330,16 @@ def supervise_qualification(service, launch_spec, launch_permit):
                 and terminal['exit_filetime_100ns'] == process_terminal['exit_filetime_100ns'],
                 'owned terminal and independently retained native handle describe the same exit')
         _read_body(service, body_reference, actual_live)
+        final_seal = _read_final_seal(service, seal_reference, body_reference, actual_live)
+        parent_service_evidence = _retain_parent_service_refs(service, final_seal)
         retained = owned.monitor.retain_terminal()
         envelope = {'schema': SCHEMA, 'status': 'UNQUALIFIED_NATIVE_BODY_EXITED',
             'request_sha256': launch_spec['request_sha256'], 'scope_sha256': launch_spec['scope_sha256'],
             'code_sha256': copy.deepcopy(launch_spec['approved_code_sha256']), 'body_ref': copy.deepcopy(body_reference),
+            'final_body_seal_ref': copy.deepcopy(seal_reference),
+            'final_scope_bootstrap_evidence_ref': final_seal['body_seal']['scope_bootstrap_evidence_ref'],
+            'checkpoint_child_terminal_replay_ref': final_seal['body_seal']['checkpoint_child_terminal_replay_ref'],
+            'parent_service_evidence': parent_service_evidence,
             'live_worker_proof': actual_live, 'terminal_worker_proof': terminal, 'owned_process_terminal': process_terminal,
             'supervisor_bootstrap_prefix': service.bootstrap.snapshot(),
             'supervisor_constructor_reservation_ref': copy.deepcopy(service.constructor_prepayment.reference),
@@ -183,3 +373,11 @@ def supervise_qualification(service, launch_spec, launch_permit):
         if failure is not None:
             if primary is not None: local.raw._accounting(primary, failure); raise primary from failure
             raise failure
+
+
+if __name__ == '__main__':
+    # Registry descriptors use canonical source names, including a real -m
+    # invocation. Execute the one canonical module body rather than register
+    # __main__ callbacks under descriptors for another module name.
+    import importlib
+    raise SystemExit(importlib.import_module(__package__ + '.ce_qualification_supervisor').main())

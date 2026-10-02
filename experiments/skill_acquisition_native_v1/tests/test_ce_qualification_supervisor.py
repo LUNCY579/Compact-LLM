@@ -60,7 +60,8 @@ class SupervisionTests(unittest.TestCase):
                 events.append(command)
                 if command == 'finish': return {'finished': True, 'native_qualified': False}
                 return {'body_completed': True, 'os_terminal_verified': False, 'native_qualified': False,
-                        'raw_artifact': {'path': str(Path(tempfile.gettempdir()) / 'fixture.json'), 'sha256': 'd' * 64, 'bytes': 10}}
+                        'raw_artifact': {'path': str(Path(tempfile.gettempdir()) / 'fixture.json'), 'sha256': 'd' * 64, 'bytes': 10},
+                        'final_seal_ref': {'path': str(Path(tempfile.gettempdir()) / 'seal.json'), 'sha256': 'e' * 64, 'bytes': 10}}
             def terminal(self, seconds): events.append('actual_terminal'); return terminal
             def _stop_owned(self, reason, primary): events.append('prepaid_stop')
             def close(self): events.append('owned_closed'); raise RuntimeError('secondary close receipt')
@@ -82,6 +83,9 @@ class SupervisionTests(unittest.TestCase):
              patch.object(supervisor.local, 'validate_parent_view', return_value=None), \
              patch.object(supervisor, '_compare_ready', return_value=None), \
              patch.object(supervisor, '_read_body', return_value={}), \
+             patch.object(supervisor, '_read_final_seal', return_value={'body_seal': {
+                'scope_bootstrap_evidence_ref': {}, 'checkpoint_child_terminal_replay_ref': {}}}), \
+             patch.object(supervisor, '_retain_parent_service_refs', return_value={}), \
              patch.object(supervisor, '_retain', side_effect=primary):
             with self.assertRaisesRegex(RuntimeError, 'primary publication') as caught:
                 supervisor.supervise_qualification(service, spec, object())

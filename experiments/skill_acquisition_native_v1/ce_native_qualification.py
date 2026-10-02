@@ -402,6 +402,8 @@ class NativeQualificationExecutor:
         return observed, [reference]
 
     def _delta(self):
+        from .ce_delta_state_writer import retain_full_state
+        full_state, full_state_ref, nonbase_refs = retain_full_state(self)
         donor = self.backend.qualification_delta(self.context, self.accounting)
         self.gate('after_delta')
         roundtrip = donor['roundtrip']
@@ -411,8 +413,9 @@ class NativeQualificationExecutor:
             'delta_file_sha256': donor['file_sha256'], 'delta_data_sha256': donor['data_section_sha256'],
             'final_master_sha256': donor['final_master_sha256'], 'rebuilt_endpoint_sha256': donor['deployed_arm_sha256'],
             'rounding_residual_max_abs': roundtrip['residual_max_abs'], 'rounding_residual_l2': roundtrip['residual_norm']}
-        reference = self._write_json('delta_roundtrip', {'donor': donor, 'observations': observed}, 'delta_roundtrip')
-        return observed, [reference, {'path': donor['path'], 'sha256': donor['file_sha256'], 'bytes': donor['bytes'],
+        reference = self._write_json('delta_roundtrip', {'donor': donor, 'observations': observed,
+            'full_state_source_ref': full_state_ref}, 'delta_roundtrip')
+        return observed, [reference, full_state_ref, *nonbase_refs, {'path': donor['path'], 'sha256': donor['file_sha256'], 'bytes': donor['bytes'],
             'role': 'qualification_delta', 'binding_sha256': reference['binding_sha256']}]
 
     def _external(self, stage):

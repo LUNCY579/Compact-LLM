@@ -26,6 +26,8 @@ SCHEMA = 'CE8-NATIVE-CONTROLLER-SERVICES-1'
 BOOTSTRAP = 'CE8-SERVICES-BOOTSTRAP-1'
 PROFILE = ('read_bytes_upper', 'write_bytes_upper', 'identity_hash_attempts_upper', 'identity_hash_bytes_upper', 'wall_s_upper')
 COUNTERS = ('read_bytes', 'write_bytes', 'hash_attempts', 'hash_bytes', 'metadata_bytes', 'operation_attempts', 'wall_seconds')
+INPUT_RESERVATION_RULE = 'CE8-INPUT-IO-EXPLICIT-RESERVATIONS-1'
+INPUT_ROW_BYTES = 64 * 1024
 _REGISTERED_SERVICE_VERIFIERS = frozenset()
 _REGISTERED_ROLE_FACTORIES = frozenset()
 _REGISTERED_BOOTSTRAP_PREPAYMENT_TYPES = frozenset()
@@ -66,6 +68,60 @@ def _profile(value):
     return value
 
 
+def reservation_profile(spec,kind,fields):
+    """Permanent declared input reservation, bounded by frozen maxima.
+
+    Opaque verification keeps its complete hash ceiling. This never consumes
+    returned measurements, discounts completed work or changes other kinds.
+    """
+    maximum=_profile(spec['operation_profiles'][kind]);reserved=copy.deepcopy(maximum)
+    rule=spec.get('operation_profile_rule')
+    require(rule in (None,INPUT_RESERVATION_RULE),'unknown source service reservation rule')
+    row_wall=spec.get('input_io_row_wall_s_upper')
+    if row_wall is not None:
+        require(rule==INPUT_RESERVATION_RULE and type(row_wall) in (int,float) and row_wall==5
+                and spec['operation_profiles']['input_io']['wall_s_upper']>=row_wall,
+                'explicit source fixed five-second small-row input ceiling')
+    if 'wall_s_upper' in fields:
+        wall=fields['wall_s_upper']
+        require(type(wall) in (int,float) and 0<wall<=maximum['wall_s_upper'],'bootstrap profile below declared wall work')
+    aliases={'read_bytes_upper':'io_read_bytes_upper','write_bytes_upper':'io_write_bytes_upper'}
+    declared={}
+    for field in PROFILE[:-1]:
+        alias=aliases.get(field)
+        for present in (field,alias):
+            if present in fields:
+                require(type(fields[present]) is int and 0<=fields[present]<=maximum[field],
+                        'bootstrap profile below declared work')
+        if alias in fields:
+            require(field not in fields or fields[field]==fields[alias],'conflicting bootstrap IO aliases')
+        if field in fields or alias in fields:
+            value=fields[alias] if alias in fields else fields[field]
+            require(type(value) is int and 0<=value<=maximum[field],'bootstrap profile below declared work')
+            declared[field]=value
+    for field in ('identity_hash_attempts_lower','identity_hash_bytes_lower'):
+        if field in fields:
+            require(type(fields[field]) is int and 0<=fields[field]<=maximum[field.replace('_lower','_upper')],
+                    'bootstrap profile below declared opaque lower work')
+    if kind=='input_io' and rule==INPUT_RESERVATION_RULE:
+        for field in aliases:
+            if field in declared:reserved[field]=declared[field]
+        hash_fields=('identity_hash_attempts_upper','identity_hash_bytes_upper')
+        opaque=any(key.endswith('_lower') and key.startswith('identity_hash_') or key.startswith('opaque_') for key in fields)
+        if not opaque and all(field in declared for field in hash_fields):
+            require((declared[hash_fields[0]]==0)==(declared[hash_fields[1]]==0),'coherent explicit input hash reservation')
+            for field in hash_fields:reserved[field]=declared[field]
+        small_row=(row_wall is not None and type(fields.get('row_id')) is str and fields['row_id']
+            and not opaque and all(field in declared for field in PROFILE[:-1])
+            and declared['write_bytes_upper']==0 and declared['read_bytes_upper']<=INPUT_ROW_BYTES
+            and declared['identity_hash_attempts_upper']<=4 and declared['identity_hash_bytes_upper']<=INPUT_ROW_BYTES
+            and (declared['identity_hash_attempts_upper']==0)==(declared['identity_hash_bytes_upper']==0))
+        if small_row:
+            require('wall_s_upper' not in fields or fields['wall_s_upper']<=row_wall,'declared row work exceeds source fixed row wall ceiling')
+            reserved['wall_s_upper']=row_wall
+    return reserved
+
+
 def resolve_role(descriptor, code):
     require(type(descriptor) is dict and set(descriptor) == {'module', 'symbol', 'source_sha256'}
             and type(descriptor['module']) is str and type(descriptor['symbol']) is str
@@ -80,14 +136,22 @@ def resolve_role(descriptor, code):
 
 class BootstrapLedger:
     """Create-only fsynced hash chain; failed/pending reservations never refund."""
-    def __init__(self, spec, request_sha256, *, synthetic_fixture=False, prepayment=None):
+    def __init__(self, spec, request_sha256, *, synthetic_fixture=False, prepayment=None, clock=None):
         require(synthetic_fixture is True or any(type(prepayment) is item for item in _REGISTERED_BOOTSTRAP_PREPAYMENT_TYPES)
                 and callable(getattr(prepayment, 'require_constructor', None)), 'native bootstrap requires source-owned permanent outer constructor prepayment')
         if not synthetic_fixture: prepayment.require_constructor(digest(spec), request_sha256)
         self.spec, self.request_sha256 = copy.deepcopy(spec), request_sha256
+        self._native = synthetic_fixture is not True
         self.directory = Path(spec['owned_directory']); self.path = self.directory / 'SERVICE_BOOTSTRAP.jsonl'
         self.counters = dict.fromkeys(COUNTERS, 0); self.operations, self.events = {}, []
-        self.started = time.perf_counter(); self.sealed = self.fatal = False
+        require(synthetic_fixture is True or clock is None, 'native service clock cannot be injected')
+        self.clock=time.perf_counter if clock is None else clock
+        self.started=self.last_clock=self.clock(); self.actual_wall_seconds=0.0
+        require(type(self.started) in (int,float) and 0<=self.started<float('inf'), 'finite service clock origin')
+        self.sealed = self.fatal = False
+        self._known_size=0;self._end_reserved=None;self._inspection_used=False
+        self.header_path=self.directory/'SERVICE_BOOTSTRAP_HEADER.json'
+        self.seal_path=self.directory/'SERVICE_BOOTSTRAP_SEAL.json'
         require(self.directory.is_absolute() and not self.directory.is_symlink(), 'absolute owned bootstrap directory')
         require(type(spec.get('caps')) is dict and set(spec['caps']) == set(COUNTERS)
                 and all(type(spec['caps'][key]) is int and spec['caps'][key] > 0 for key in COUNTERS if key != 'wall_seconds')
@@ -97,9 +161,29 @@ class BootstrapLedger:
         # Actual outer accounting permanently pre-reserves this constructor;
         # the service permit alone is not prepayment.
         _profile(spec.get('setup_bounds'))
+        require(spec.get('operation_profile_rule') in (None,INPUT_RESERVATION_RULE),'unknown source service reservation rule')
+        if spec.get('input_io_row_wall_s_upper') is not None:
+            reservation_profile(spec,'input_io',{})
+        if not synthetic_fixture:
+            require(spec.get('operation_profile_rule')==INPUT_RESERVATION_RULE,'explicit native service input reservation rule required')
+            _profile(spec.get('finalization_bounds'))
+            require(type(spec.get('physical_wall_seconds_upper')) in (int,float)
+                    and 0<spec['physical_wall_seconds_upper']<float('inf'), 'native service physical deadline required')
         self.directory.mkdir(parents=True, exist_ok=True)
-        require(not os.path.lexists(self.path), 'create-only service bootstrap ledger')
+        require(not any(os.path.lexists(path) for path in (self.path,self.header_path,self.seal_path)), 'create-only service bootstrap ledger/header/seal')
+        self.header={'schema':BOOTSTRAP,'request_sha256':request_sha256,'specification':copy.deepcopy(spec),
+                     'native':not synthetic_fixture,'original_origin':self.started}
+        self._specification_bytes=canonical(spec)
+        raw_header=canonical(self.header)+b'\n'
+        require(len(raw_header)<=1024**2, 'bounded service bootstrap header')
+        for key,value in (('write_bytes',len(raw_header)),('metadata_bytes',len(raw_header)),('hash_attempts',1),('hash_bytes',len(raw_header))):
+            require(self.counters[key]+value<=spec['caps'][key], 'service header exceeds prepaid cap');self.counters[key]+=value
+        try:
+            with self.header_path.open('xb') as stream:
+                require(stream.write(raw_header)==len(raw_header),'short service bootstrap header');stream.flush();os.fsync(stream.fileno())
+        except BaseException:self.fatal=True;raise
         self._event('setup', {'setup_bounds': spec['setup_bounds']}, self._price(spec['setup_bounds']))
+        self._event('origin',{'monotonic':self.started,'original_origin':self.started},{})
     def _price(self, profile):
         return {'read_bytes': profile['read_bytes_upper'], 'write_bytes': profile['write_bytes_upper'],
             'hash_attempts': profile['identity_hash_attempts_upper'], 'hash_bytes': profile['identity_hash_bytes_upper'],
@@ -119,31 +203,26 @@ class BootstrapLedger:
         require(all(next_counters[key] <= self.spec['caps'][key] for key in COUNTERS), 'service reservation cap exhausted before append')
         self.counters = next_counters  # remain charged if the fsynced append fails
         try:
+            require(not self.path.exists() and self._known_size==0 or self.path.stat().st_size==self._known_size,
+                    'single-writer service bootstrap history changed')
             with self.path.open('ab') as stream:
                 require(stream.write(raw) == len(raw), 'short service bootstrap append')
                 stream.flush(); os.fsync(stream.fileno())
         except BaseException:
             self.fatal = True; raise
-        row = dict(body, sha256=hashed); self.events.append(row)
+        row = dict(body, sha256=hashed); self.events.append(row);self._known_size+=len(raw)
         return row
     def operation(self, kind, phase, operation_id, **fields):
+        self._require_specification()
+        require(self._end_reserved is None, 'no service work after final reservation')
+        require(not self.sealed and not self.fatal, 'service bootstrap terminal/fatal; no further claims')
         require(kind in self.spec['operation_profiles'] and phase in ('started', 'returned', 'failed'), 'priced service kind/phase required')
         if phase == 'started':
-            require(operation_id not in self.operations, 'unique bootstrap physical attempt')
-            profile = self.spec['operation_profiles'][kind]
-            if 'wall_s_upper' in fields:
-                declared_wall = fields['wall_s_upper']
-                require(type(declared_wall) in (int, float) and 0 < declared_wall <= profile['wall_s_upper'],
-                        'bootstrap profile below declared wall work')
-            aliases = {'io_read_bytes_upper': 'read_bytes_upper', 'io_write_bytes_upper': 'write_bytes_upper'}
-            for field in PROFILE[:-1]:
-                value = fields.get(field, 0)
-                for alias, target in aliases.items():
-                    if target == field and alias in fields:
-                        require(field not in fields or fields[field] == fields[alias], 'conflicting bootstrap IO aliases')
-                        value = fields[alias]
-                require(type(value) is int and value >= 0 and value <= profile[field], 'bootstrap profile below declared work')
-            row = self._event('operation', {'operation': kind, 'phase': phase, 'operation_id': operation_id, 'fields': fields},
+            require(type(operation_id) is str and operation_id and operation_id not in self.operations, 'unique bootstrap physical attempt')
+            profile = reservation_profile(self.spec,kind,fields)
+            self.tick_wall()
+            row = self._event('operation', {'operation': kind, 'phase': phase, 'operation_id': operation_id, 'fields': fields,
+                              'reservation_profile':profile},
                               dict(self._price(profile), operation_attempts=1))
             self.operations[operation_id] = {'kind': kind, 'phase': phase, 'profile': profile, 'started_seq': row['seq']}
         else:
@@ -159,14 +238,88 @@ class BootstrapLedger:
                 if not valid or value > previous['profile'][upper]:
                     self.fatal = True
                     raise worker.WorkerEvidenceError('bootstrap actual work exceeds reserved profile: ' + field)
+            self.tick_wall()
             row = self._event('operation', {'operation': kind, 'phase': phase, 'operation_id': operation_id, 'fields': fields}, {})
             previous.update(phase=phase, returned_seq=row['seq'])
         return row
     __call__ = operation
+    def _require_specification(self):
+        require(not self._native or canonical(self.spec) == self._specification_bytes,
+                'native service specification changed after constructor prepayment')
+    def tick_wall(self):
+        self._require_specification()
+        require(not self.sealed and not self.fatal, 'ended/fatal service clock cannot restart')
+        try:
+            now=self.clock();require(type(now) in (int,float) and self.last_clock<=now<float('inf'), 'monotonic service clock regressed')
+            deadline=self.spec.get('physical_wall_seconds_upper',self.spec['caps']['wall_seconds'])
+            require(now-self.started<=deadline,'service physical deadline exceeded')
+        except BaseException:self.fatal=True;raise
+        if now>self.last_clock:
+            self._event('wall',{'original_origin':self.started,'monotonic':now,'elapsed_delta':now-self.last_clock},
+                        {'wall_seconds':now-self.last_clock})
+            self.actual_wall_seconds+=now-self.last_clock;self.last_clock=now
+
+    def end(self):
+        require(not self.sealed and not self.fatal and self._end_reserved is None
+                and not any(value['phase']=='started' for value in self.operations.values()),
+                'service end requires all owned operations/process cleanup terminal')
+        self.tick_wall()
+        profile=self.spec.get('finalization_bounds',self.spec['setup_bounds'])
+        _profile(profile);read=self._known_size+len(canonical(self.header))+1+3*1024**2
+        require(profile['read_bytes_upper']>=read and profile['write_bytes_upper']>=1024**2
+                and profile['identity_hash_attempts_upper']>=4 and profile['identity_hash_bytes_upper']>=read+2*1024**2,
+                'permanent final service write/hash/readback lower bounds')
+        payload={'original_origin':self.started,'monotonic':self.last_clock,'prefix_bytes':self._known_size,
+                 'bounds':copy.deepcopy(profile)}
+        self._event('end_reservation',payload,dict(self._price(profile),operation_attempts=2,metadata_bytes=1024**2))
+        self._end_reserved=copy.deepcopy(payload)
+        self.tick_wall()
+        self._event('end',{'original_origin':self.started,'monotonic':self.last_clock,
+                          'reservation_sha256':digest(self._end_reserved)}, {})
+        self.sealed=True;self._check_suffix()
+        raw_seal=canonical(self.snapshot())+b'\n'
+        require(len(raw_seal)<=1024**2,'bounded prepaid service seal')
+        try:
+            with self.seal_path.open('xb') as stream:
+                require(stream.write(raw_seal)==len(raw_seal),'short final service seal');stream.flush();os.fsync(stream.fileno())
+            self._check_suffix()
+        except BaseException:self.fatal=True;raise
+        return self.snapshot()
+
+    def _check_suffix(self):
+        self._require_specification()
+        now=self.clock()
+        try:
+            require(self._end_reserved is not None and type(now) in (int,float) and self.last_clock<=now<float('inf')
+                    and now-self.last_clock<=self._end_reserved['bounds']['wall_s_upper']
+                    and now-self.started<=self.spec.get('physical_wall_seconds_upper',self.spec['caps']['wall_seconds']),
+                    'final service suffix exceeds permanent wall/deadline')
+        except BaseException:self.fatal=True;raise
+
+    def inspect_evidence(self):
+        require(self.sealed and not self.fatal and not self._inspection_used and self._end_reserved is not None,
+                'one permanently prepaid ended service inspection')
+        self._check_suffix();self._inspection_used=True
+        upper=self._end_reserved['bounds']['read_bytes_upper'];refs=[];total=0
+        try:
+            for path in (self.header_path,self.path,self.seal_path):
+                hashed=hashlib.sha256();count=0
+                with path.open('rb') as stream:
+                    while block:=stream.read(min(1024**2,upper+1-total)):
+                        count+=len(block);total+=len(block);require(total<=upper,'service final inspection grew');hashed.update(block)
+                refs.append({'path':str(path),'sha256':hashed.hexdigest(),'bytes':count})
+            self._check_suffix()
+        except BaseException:self.fatal=True;raise
+        return {'schema':BOOTSTRAP,'header_ref':refs[0],'journal_ref':refs[1],'seal_ref':refs[2],'snapshot':self.snapshot(),
+                'native_qualified':False,'execution_verified':False}
     def snapshot(self):
         return {'schema': BOOTSTRAP, 'request_sha256': self.request_sha256, 'head': self.events[-1]['sha256'],
             'cumulative': dict(self.counters), 'pending': [key for key, value in self.operations.items() if value['phase'] == 'started'],
-            'path': str(self.path), 'fatal': self.fatal, 'native_qualified': False}
+            'path': str(self.path), 'fatal': self.fatal, 'native_qualified': False,
+            'original_origin':self.started,'last_monotonic':self.last_clock,'actual_wall_seconds':self.actual_wall_seconds,
+            'clock_ended':self.sealed,'end_reservation':copy.deepcopy(self._end_reserved),
+            'failed_operations':[key for key,value in self.operations.items() if value['phase']=='failed'],
+            'claim':'retained service cost/clock evidence; independent raw replay and OS execution verification required'}
 
 
 class StableDispatcher:

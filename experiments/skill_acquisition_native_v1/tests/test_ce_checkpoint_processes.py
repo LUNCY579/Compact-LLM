@@ -197,5 +197,49 @@ class Tests(unittest.TestCase):
             data, proofs, fence = copy.deepcopy(reduced), copy.deepcopy(terminals), copy.deepcopy(restored); change(data, proofs, fence)
             with self.assertRaises(ValueError): p.checkpoint_observations(self.owner, before, data, proofs, fence, self.binding)
 
+    def test_three_owned_terminal_clones_survive_original_close_and_release_only_after_final_replay(self):
+        from . import test_ce_worker_evidence as handles
+        terminal = handles.WorkerContractTests()
+        records, closed = {}, []
+        for branch in p.cp.BRANCHES:
+            original, releases = terminal.terminal_fixture()
+            clone = original.retain_terminal(); proof = clone.terminal_evidence(); original.close()
+            self.assertEqual(releases, [111]); self.assertEqual(clone.terminal_evidence(), proof)
+            records[branch] = {'handle': clone, 'binding': self.binding, 'terminal': proof}
+            closed.append(releases)
+        self.processes.terminal_handle_records = records
+        self.assertEqual(self.processes.handle.evidence['status'], 'STARTED')
+        self.processes.close_terminal_handles()
+        self.assertEqual(self.processes.terminal_handle_records, {})
+        self.assertTrue(self.processes.final_handle_lifetime_closed)
+        self.assertTrue(all(values == [111, 222] for values in closed))
+        self.assertEqual(self.processes.handle.evidence['status'], 'RETURNED')
+        self.processes.close_terminal_handles()  # owned cleanup is idempotent
+
+    def test_terminal_handle_cleanup_preserves_primary_and_closes_other_owned_handles(self):
+        from . import test_ce_worker_evidence as handles
+        terminal = handles.WorkerContractTests()
+        first, closed_first = terminal.terminal_fixture(); second, closed_second = terminal.terminal_fixture()
+        self.processes.terminal_handle_records = {'uninterrupted': {'handle': first}, 'prefix': {'handle': second}}
+        original = ValueError('raw final evidence failed')
+        from experiments.skill_acquisition_native_v1 import ce_worker_evidence as evidence
+        implementation = evidence.WinWorkerHandle.close
+        def failing_close(current):
+            implementation(current)
+            if current is first: raise RuntimeError('cleanup receipt failed')
+        with patch.object(evidence.WinWorkerHandle, 'close', failing_close):
+            with self.assertRaises(ValueError) as caught: self.processes.close_terminal_handles(original)
+        self.assertIs(caught.exception, original)
+        self.assertEqual(closed_first, [111]); self.assertEqual(closed_second, [111])
+        self.assertEqual(self.processes.terminal_handle_records, {})
+        self.assertEqual(self.processes.handle.evidence['status'], 'FAILED')
+        self.assertEqual(original.checkpoint_terminal_handle_cleanup[0]['message'], 'cleanup receipt failed')
+
+    def test_raw_terminal_dict_cannot_replace_a_retained_handle_for_cleanup_or_replay(self):
+        self.processes.terminal_handle_records = {'prefix': {'handle': {'terminal': True}}}
+        with self.assertRaisesRegex(ValueError, 'actual retained terminal'): self.processes.close_terminal_handles()
+        self.assertEqual(set(self.processes.terminal_handle_records), {'prefix'})
+        with self.assertRaisesRegex(ValueError, 'cannot execute'): self.processes.retained_terminal_handles()
+
 
 if __name__ == '__main__': unittest.main()

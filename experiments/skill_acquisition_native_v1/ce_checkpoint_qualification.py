@@ -438,6 +438,13 @@ def checkpoint_adapter(context, permit, prepared, backend, accounting, proof, bi
         main_error = error
         raise
     finally:
+        terminal_cleanup_error = None
+        if main_error is not None:
+            try: processes.close_terminal_handles(main_error)
+            except BaseException as error:
+                terminal_cleanup_error = error
+                if error is not main_error:
+                    main_error.checkpoint_final_handle_cleanup_failure = {'type': type(error).__name__, 'message': str(error)[:1000]}
         prefix_error = None
         if child_quiescent:
             try: processes.close_prefix_transfer()
@@ -458,3 +465,5 @@ def checkpoint_adapter(context, permit, prepared, backend, accounting, proof, bi
         if prefix_error is not None:
             if main_error is prefix_error: raise main_error
             raise main_error from prefix_error
+        if terminal_cleanup_error is not None and terminal_cleanup_error is not main_error:
+            raise main_error from terminal_cleanup_error

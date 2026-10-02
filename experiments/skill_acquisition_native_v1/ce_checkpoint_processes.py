@@ -186,6 +186,7 @@ class CheckpointProcesses:
         self.operation = self.operation
         self.started = self.last_clock = time.monotonic(); self.parent = self.restore_record = None
         self.units, self.results = {}, []
+        self.terminal_handle_records, self.final_handle_lifetime_closed = {}, False
         self.prefix_terminal_handle = None
         try:
             self.operation('checkpoint_process_setup', 'started', 'setup', metadata_bytes_upper=0,
@@ -398,6 +399,8 @@ class CheckpointProcesses:
         with self.reader._overhead('checkpoint_launch_scope_derivation', work_bytes=32 * raw.MAX_JSON,
                 hash_attempts=8, hash_bytes=32 * raw.MAX_JSON):
             spec = child_launch_spec(context, branch, reference, self.proof)
+            from .ce_checkpoint_configuration import prepare_child_configuration
+            spec, configuration_ref = prepare_child_configuration(self, request, reference, spec, parent)
             require(self.launch_issuer is CheckpointProcesses, 'fixed source checkpoint launch issuer class marker')
             self._active_launch_spec = copy.deepcopy(spec)
             launch_permit = launcher.NativeLaunchPermit(spec, self, self.launch_verifier, self.operation)
@@ -405,7 +408,8 @@ class CheckpointProcesses:
         # before any Popen call; neither raw JSON nor this class enables them.
         owned = launcher.launch_native(spec, launch_permit, self.operation)
         require(type(owned) is launcher.OwnedProcess, 'exact owned native checkpoint process')
-        self.units[branch] = {'owned': owned, 'request': request, 'request_ref': reference, 'spec': spec}
+        self.units[branch] = {'owned': owned, 'request': request, 'request_ref': reference, 'spec': spec,
+            'configuration_ref': configuration_ref}
         return owned
 
     def bound_request(self, plan, parent, results):
@@ -471,6 +475,22 @@ class CheckpointProcesses:
             result = {'branch': plan['branch'], 'binding': binding, 'raw_ref': response['raw_artifact'],
                 'manifest': manifest, 'manifest_ref': payload['final_manifest_ref'], 'store_refs': refs,
                 'terminal_proof': terminal_proof, 'reduction': reduced, 'native_qualified': False}
+            require(plan['branch'] not in self.terminal_handle_records, 'retain each actual terminal branch monitor once')
+            final_clone = owned.monitor.retain_terminal()
+            try:
+                retained_terminal = evidence.verify_worker_handle(final_clone, {key: terminal_proof[key] for key in
+                    ('worker_identity_sha256', 'request_sha256', 'scope_sha256')}, require_native=True, terminal=True)
+                require(retained_terminal == terminal_proof, 'retained original terminal clone changed child OS/source identity')
+                terminal_ref = self.write_json(initializer.child_directory(self.context, plan['branch']) / 'RETAINED_TERMINAL.json',
+                    {'schema': 'CE8-CHECKPOINT-RETAINED-TERMINAL-1', 'branch': plan['branch'], 'binding': binding,
+                        'worker_proof': unit['live_proof'], 'terminal_proof': retained_terminal,
+                        'native_qualified': False, 'execution_verified': False})
+                self.terminal_handle_records[plan['branch']] = {'handle': final_clone, 'binding': copy.deepcopy(binding),
+                    'proof': copy.deepcopy(unit['live_proof']), 'terminal': copy.deepcopy(retained_terminal), 'raw_ref': terminal_ref}
+            except BaseException as error:
+                try: final_clone.close()
+                except BaseException as closing: raw._accounting(error, closing); raise error from closing
+                raise
             if plan['branch'] == 'prefix':
                 require(self.prefix_terminal_handle is None, 'retain original prefix terminal handle once')
                 self.prefix_terminal_handle = owned.monitor.retain_terminal()
@@ -488,6 +508,47 @@ class CheckpointProcesses:
         if primary is not None: raise primary
         if plan['branch'] == 'resumed': self.close_prefix_transfer()
         self.results.append(result); return copy.deepcopy(result)
+
+    def retained_terminal_handles(self):
+        """Return actual opaque objects to the source final verifier, never JSON."""
+        self._admit(self.context, self.permit, native=True)
+        from . import ce_worker_evidence as evidence
+        require(not self.final_handle_lifetime_closed and set(self.terminal_handle_records) == set(cp.BRANCHES),
+                'all three original child terminal handles retained through final replay')
+        output = {}
+        for record in self.terminal_handle_records.values():
+            current = record['handle']
+            require(type(current) is evidence.WinWorkerHandle and not current.closed, 'actual retained original terminal OS handle')
+            actual = evidence.verify_worker_handle(current, {key: record['terminal'][key] for key in
+                ('worker_identity_sha256', 'request_sha256', 'scope_sha256')}, require_native=True, terminal=True)
+            require(actual == record['terminal'], 'final replay same-handle terminal/source proof changed')
+            output[record['binding']['worker_identity_sha256']] = current
+        return output
+
+    def close_terminal_handles(self, primary=None):
+        """Release only these owned clones; final source verifier calls this last."""
+        from . import ce_worker_evidence as evidence
+        failures = []
+        for branch, record in list(self.terminal_handle_records.items()):
+            current = record['handle']
+            try:
+                require(type(current) is evidence.WinWorkerHandle, 'only actual retained terminal monitor may close')
+                current.close()
+            except BaseException as error: failures.append(error)
+            finally:
+                if type(current) is evidence.WinWorkerHandle and current.closed: self.terminal_handle_records.pop(branch, None)
+        if not self.terminal_handle_records:
+            self.final_handle_lifetime_closed = True
+            if self.handle.evidence['status'] == 'STARTED':
+                try:
+                    if primary is None and not failures: self.handle.complete()
+                    else: self.handle.fail(primary if primary is not None else failures[0])
+                except BaseException as error: failures.append(error)
+        if failures:
+            target = primary if primary is not None else failures[0]
+            target.checkpoint_terminal_handle_cleanup = [{'type': type(error).__name__, 'message': str(error)[:1000]} for error in failures]
+            if primary is not None: raise primary from failures[0]
+            raise target
 
     def close_prefix_transfer(self):
         """Read-only original clone; call only after resumed child quiescence."""
@@ -528,13 +589,17 @@ class CheckpointProcesses:
         payload = {'schema': BUNDLE, 'branch_refs': branch_refs, 'branch_bindings': branch_bindings,
             'parent_binding': binding, 'parent_ledger_refs': parent['ledger_refs'], 'parent_manifest_ref': parent['manifest_ref'],
             'parent_restore_record': self.restore_record, 'child_terminal_proofs': terminal_proofs,
+            'child_terminal_refs': {key: value['raw_ref'] for key, value in self.terminal_handle_records.items()},
             'parent_post_restore_snapshot_ref': post_refs['seal'], 'parent_post_restore_ledger_refs': post_refs,
             'outer_prepayment': self.handle.evidence,
             'native_qualified': False, 'execution_verified': False, 'classification': 'actual retained branch/replay/byte proofs; native qualification registry remains closed'}
         reference = self.write_json(self.directory / 'CHECKPOINT_BRANCHES.json', {'schema': raw.SCHEMA, **binding,
             'evidence_kind': 'checkpoint_branches', 'payload': payload}, role='checkpoint_branches', binding=binding)
         require(not any(op['phase'] == 'started' for op in self.operations.values()), 'all owned process/publication operations return before outer end')
-        self.tick(); self.handle.complete()
+        self.tick()
+        # The outer ticket remains started until source final replay releases
+        # all owned OS clones; later OS verification is still prepaid here.
+        self.context['native_services']['checkpoint_terminal_owner'] = self
         return external_result(reference, observed, reduced, self.counts)
 
     def _reduction_preflight(self, name, contract):
