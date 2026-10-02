@@ -168,3 +168,15 @@ paired with inputs. Keep all32 cases visible, with no truncation, replacement dr
 or interpretation of model-max-length metadata as native qualification. Actual
 measurements require a frozen instrument, fresh scientific/operations review and
 reliable bounded CPU telemetry. Native training/serving gates remain closed.
+
+The first token instrument freeze2d7ad4a0/bdb9ad30/d17a60a7 is retained in
+history/learning_tokenization_round1. All21 synthetic tests passed, while first
+SCI/OPS reviews reproduced seven consequential receipt, resource, admission,
+activation and finalization defects. Follow LEARNING_TOKENIZATION_ROUND1_ADJUDICATION
+and the full reports for the coherent second candidate. Its builder owns only
+learning_tokenization.py, tests/test_learning_tokenization.py and
+contracts/LEARNING_TOKENIZATION_V1.json. Do not run or open its actual entry until
+fresh frozen source and immutable activation reviews pass; source tests are
+synthetic and the current actual-registration flag remains closed. No source
+review or new output path permits duplicating an unknown launch. Preserve the
+three-round limit, existing candidate quarantines and original native budget.

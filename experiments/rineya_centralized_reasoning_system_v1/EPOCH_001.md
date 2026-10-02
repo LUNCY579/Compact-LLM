@@ -265,3 +265,30 @@ prompt/response EOS ownership and causal shift before instrument review. The
 six-position synthetic sequence supervises tokens3/4/5 through logits2/3/4;
 all four negative vectors are mathematically consistent. This reference is not
 an actual text encoding, implementation acceptance or numerical forward result.
+
+## Token instrument first freeze and adversarial findings
+
+Source2d7ad4a0, testsbdb9ad30 and closed contractd17a60a7 implement the prospective
+CPU tokenizer/renderer, fixed32-pair accounting, masks and disposable supervisor.
+Root independently passed21 synthetic tests (durable subprocess wall0.700s),
+replayed the positional reference and four rejected vectors, and additionally
+confirmed that a fully coherent post-EOS newline record fails the EOS rule.
+Evidence91fd70f7/815afa04 is source-fixture evidence, with no actual tokenizer load.
+
+Scientific review548e56da nevertheless reproduced corrupted full-render counts/
+hashes accepted by receipt validation. Operations reviewcea99868 reproduced stale
+final peak authorization, unresolved descendants reported known-ended, a second
+launch after unknown response, absent immutable activation transition and an
+unbound child/exit marker. Root additionally reproduced a normal permitted-exit
+race misreported FAILED despite known exit0 and a complete worker reference
+(406263ab; the initial harness setup error is disclosed). Passing tests do not
+resolve these demonstrated counterexamples.
+
+Source acceptance is withheld. The exact three files are copied byte-for-byte
+in history/learning_tokenization_round1, preservation5e75ae9c, and the coherent
+next repair is scoped in audits/LEARNING_TOKENIZATION_ROUND1_ADJUDICATION.md.
+This is the first source review; the second candidate needs fresh SCI/OPS review
+within the same three-round limit. Actual token/Jinja/observer/process measurements
+remain closed; all additional experiments in these controls use synthetic adapters.
+Native consumption remains47.421s and optimizer updates remain0. The owner
+exception for the previously quarantined reader/probe remains unanswered.

@@ -1,0 +1,54 @@
+{
+  "accepted_positional_reference_matches_production_helpers": true,
+  "actual_encodes": 0,
+  "actual_token_measurement_subprocesses": 0,
+  "actual_tokenizer_loads": 0,
+  "canonical_host_DB_access": false,
+  "command": [
+    "C:\\Users\\clclc\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-m",
+    "unittest",
+    "experiments.rineya_centralized_reasoning_system_v1.tests.test_learning_tokenization",
+    "-v"
+  ],
+  "exit_code": 0,
+  "independent_negative_rejections": [
+    {
+      "name": "user_EOS_leaks_into_loss",
+      "reason": "causal ownership/labels/counts/types differ",
+      "rejected": true
+    },
+    {
+      "name": "assistant_EOS_not_supervised",
+      "reason": "causal ownership/labels/counts/types differ",
+      "rejected": true
+    },
+    {
+      "name": "unshifted_ownership_used_for_logits",
+      "reason": "causal ownership/labels/counts/types differ",
+      "rejected": true
+    },
+    {
+      "name": "post_EOS_newline_supervised",
+      "reason": "causal ownership/labels/counts/types differ",
+      "rejected": true
+    }
+  ],
+  "model_forwards": 0,
+  "model_loads": 0,
+  "native_training_eligible": false,
+  "observer": "/root",
+  "optimizer_updates": 0,
+  "receipt_id": "CRS-LEARNING-TOKENIZATION-ROUND1-ROOT-CPU-001",
+  "reference_sha256": "11a1afdae2f5b431352fbe1926ba07efdd7742eb479f7b71561a6831e4485970",
+  "scope": "SOURCE_SYNTHETIC_FIXTURES_AND_POSITIONAL_REFERENCE_REPLAY_ONLY",
+  "source_review_acceptance_pending": true,
+  "source_sha256": {
+    "contracts/LEARNING_TOKENIZATION_V1.json": "d17a60a72d00ff4f58e47d418b3a1fed85be10ce8cdd3dd4c93f793b9a688abb",
+    "learning_tokenization.py": "2d7ad4a0d752b7ca205530a8672986b3cc3c3152857e0f54715ad3d17c11b3b0",
+    "tests/test_learning_tokenization.py": "bdb9ad308d5447f44a8a8bd7b44d95f5f634c7d2d9cf3d93c90cb9dbacbb37ae"
+  },
+  "subprocess_wall_seconds": 0.6996078999945894,
+  "test_output_sha256": "96e3043826918892d15c4c82f29d54b17782a13bd9f2af2e0c511cf6e881e5a0",
+  "tests_passed": 21
+}

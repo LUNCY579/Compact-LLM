@@ -1,0 +1,76 @@
+{
+  "actual_tokenizer_calls": 0,
+  "coherent_alternate_record": {
+    "attention_mask": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "final_EOS_prediction_prefix_positions": 6,
+    "full_logit_ownership_mask": [
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      0
+    ],
+    "full_teacher_forward_positions": 7,
+    "input_ids": [
+      151644,
+      42,
+      151645,
+      123,
+      456,
+      151645,
+      198
+    ],
+    "labels": [
+      -100,
+      -100,
+      -100,
+      123,
+      456,
+      151645,
+      198
+    ],
+    "post_EOS_newline_supervised": false,
+    "prediction_logit_positions": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "prompt_tokens": 3,
+    "response_plus_EOS_tokens": 4,
+    "shifted_loss_mask": [
+      0,
+      0,
+      1,
+      1,
+      1,
+      1
+    ],
+    "supervised_tokens": 4,
+    "target_token_positions": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "terminal_EOS_position": 6
+  },
+  "malformed_array_shapes_or_counts_used": false,
+  "model_calls": 0,
+  "observer": "/root",
+  "production_validator_rejected": true,
+  "rejection_reason": "invalid EOS/fit in ownership record",
+  "scope": "COHERENT_SYNTHETIC_POST_EOS_POSITIONAL_CONTROL_ONLY",
+  "source_sha256": "2d7ad4a0d752b7ca205530a8672986b3cc3c3152857e0f54715ad3d17c11b3b0",
+  "training_eligible": false
+}
