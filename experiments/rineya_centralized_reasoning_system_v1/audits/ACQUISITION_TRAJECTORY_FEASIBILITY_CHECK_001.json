@@ -1,0 +1,526 @@
+{
+  "CPU_control_wall_seconds": 0.0,
+  "CPU_time_observation_limit": "The monotonic interval read 0.0 at clock resolution; four controls executed and retained nonzero primitive/byte accounting. This is not a zero CPU-work or complete subprocess-cost claim.",
+  "actual_tokenizer_model_framework_calls": 0,
+  "canonical_or_ancestry_disjointness_established": false,
+  "central_or_confirmation_bank_access": false,
+  "control_count": 4,
+  "controls": [
+    {
+      "core_cost": {
+        "extracted_events": 11,
+        "input_tokens": null,
+        "model_calls": 0,
+        "operations": 6,
+        "output_tokens": null,
+        "peak_serialized_state_bytes": 2627,
+        "source_bytes_scanned": 289,
+        "source_bytes_verification_scanned": 578,
+        "token_accounting": "not_applicable_no_tokenizer_or_model_in_CPU_fixture",
+        "wall_seconds": 0.0
+      },
+      "core_error": null,
+      "core_evidence_class": "CPU_ENGINEERING_FIXTURE",
+      "expected_hand_answer": {
+        "status": "SUPPORTED",
+        "value": "OwnerA"
+      },
+      "latent_oracle_answer": {
+        "status": "SUPPORTED",
+        "value": "OwnerA"
+      },
+      "latent_world": {
+        "aliases": [],
+        "bindings": [
+          {
+            "entity": "Parcel",
+            "id": "Empty",
+            "mode": null,
+            "owner": null,
+            "time": 0
+          },
+          {
+            "entity": "Parcel",
+            "id": "A",
+            "mode": "CONFIRMED",
+            "owner": "OwnerA",
+            "time": 3
+          },
+          {
+            "entity": "Parcel",
+            "id": "B",
+            "mode": "CONFIRMED",
+            "owner": "OwnerB",
+            "time": 5
+          }
+        ],
+        "cancellations": [],
+        "complete": true,
+        "conditions": [
+          {
+            "id": "RA",
+            "predicate": "PermitA",
+            "relation": "REQUIRE",
+            "target": "A",
+            "time": 0
+          },
+          {
+            "id": "EA",
+            "predicate": "BanA",
+            "relation": "EXCEPT",
+            "target": "A",
+            "time": 0
+          },
+          {
+            "id": "RB",
+            "predicate": "PermitB",
+            "relation": "REQUIRE",
+            "target": "B",
+            "time": 0
+          },
+          {
+            "id": "EB",
+            "predicate": "BanB",
+            "relation": "EXCEPT",
+            "target": "B",
+            "time": 0
+          }
+        ],
+        "facts": [
+          {
+            "id": "PA",
+            "predicate": "PermitA",
+            "status": "SUPPORTED",
+            "time": 2
+          },
+          {
+            "id": "XA",
+            "predicate": "BanA",
+            "status": "REFUTED",
+            "time": 2
+          },
+          {
+            "id": "PB",
+            "predicate": "PermitB",
+            "status": "REFUTED",
+            "time": 4
+          },
+          {
+            "id": "XB",
+            "predicate": "BanB",
+            "status": "REFUTED",
+            "time": 4
+          }
+        ],
+        "query": {
+          "entity": "Parcel",
+          "time": 6
+        }
+      },
+      "name": "later_B_excluded_select_A",
+      "public_core_answer": {
+        "evidence_ids": [
+          "A",
+          "Empty"
+        ],
+        "status": "SUPPORTED",
+        "value": "OwnerA"
+      },
+      "rendered_source": "Empty @0 EMPTY Parcel\nA @3 TRANSFER Parcel OwnerA CONFIRMED\nB @5 TRANSFER Parcel OwnerB CONFIRMED\nPA @2 FACT PermitA SUPPORTED\nXA @2 FACT BanA REFUTED\nPB @4 FACT PermitB REFUTED\nXB @4 FACT BanB REFUTED\nRA @0 REQUIRE A PermitA\nEA @0 EXCEPT A BanA\nRB @0 REQUIRE B PermitB\nEB @0 EXCEPT B BanB",
+      "source_sha256": "441984b48cdadd76a35d5b49127902cb6c4ace5feb4bd07236e62ea74feac254"
+    },
+    {
+      "core_cost": {
+        "extracted_events": 11,
+        "input_tokens": null,
+        "model_calls": 0,
+        "operations": 6,
+        "output_tokens": null,
+        "peak_serialized_state_bytes": 2637,
+        "source_bytes_scanned": 291,
+        "source_bytes_verification_scanned": 582,
+        "token_accounting": "not_applicable_no_tokenizer_or_model_in_CPU_fixture",
+        "wall_seconds": 0.0
+      },
+      "core_error": null,
+      "core_evidence_class": "CPU_ENGINEERING_FIXTURE",
+      "expected_hand_answer": {
+        "status": "SUPPORTED",
+        "value": "OwnerB"
+      },
+      "latent_oracle_answer": {
+        "status": "SUPPORTED",
+        "value": "OwnerB"
+      },
+      "latent_world": {
+        "aliases": [],
+        "bindings": [
+          {
+            "entity": "Parcel",
+            "id": "Empty",
+            "mode": null,
+            "owner": null,
+            "time": 0
+          },
+          {
+            "entity": "Parcel",
+            "id": "A",
+            "mode": "CONFIRMED",
+            "owner": "OwnerA",
+            "time": 3
+          },
+          {
+            "entity": "Parcel",
+            "id": "B",
+            "mode": "CONFIRMED",
+            "owner": "OwnerB",
+            "time": 5
+          }
+        ],
+        "cancellations": [],
+        "complete": true,
+        "conditions": [
+          {
+            "id": "RA",
+            "predicate": "PermitA",
+            "relation": "REQUIRE",
+            "target": "A",
+            "time": 0
+          },
+          {
+            "id": "EA",
+            "predicate": "BanA",
+            "relation": "EXCEPT",
+            "target": "A",
+            "time": 0
+          },
+          {
+            "id": "RB",
+            "predicate": "PermitB",
+            "relation": "REQUIRE",
+            "target": "B",
+            "time": 0
+          },
+          {
+            "id": "EB",
+            "predicate": "BanB",
+            "relation": "EXCEPT",
+            "target": "B",
+            "time": 0
+          }
+        ],
+        "facts": [
+          {
+            "id": "PA",
+            "predicate": "PermitA",
+            "status": "SUPPORTED",
+            "time": 2
+          },
+          {
+            "id": "XA",
+            "predicate": "BanA",
+            "status": "REFUTED",
+            "time": 2
+          },
+          {
+            "id": "PB",
+            "predicate": "PermitB",
+            "status": "SUPPORTED",
+            "time": 4
+          },
+          {
+            "id": "XB",
+            "predicate": "BanB",
+            "status": "REFUTED",
+            "time": 4
+          }
+        ],
+        "query": {
+          "entity": "Parcel",
+          "time": 6
+        }
+      },
+      "name": "flip_only_B_REQUIRE_select_B",
+      "public_core_answer": {
+        "evidence_ids": [
+          "A",
+          "B",
+          "Empty"
+        ],
+        "status": "SUPPORTED",
+        "value": "OwnerB"
+      },
+      "rendered_source": "Empty @0 EMPTY Parcel\nA @3 TRANSFER Parcel OwnerA CONFIRMED\nB @5 TRANSFER Parcel OwnerB CONFIRMED\nPA @2 FACT PermitA SUPPORTED\nXA @2 FACT BanA REFUTED\nPB @4 FACT PermitB SUPPORTED\nXB @4 FACT BanB REFUTED\nRA @0 REQUIRE A PermitA\nEA @0 EXCEPT A BanA\nRB @0 REQUIRE B PermitB\nEB @0 EXCEPT B BanB",
+      "source_sha256": "7150f1a51aab664f86e24a4bb2c7f81979254b3961b37a0419e755d41e552d1a"
+    },
+    {
+      "core_cost": {
+        "extracted_events": 10,
+        "input_tokens": null,
+        "model_calls": 0,
+        "operations": 6,
+        "output_tokens": null,
+        "peak_serialized_state_bytes": 2414,
+        "source_bytes_scanned": 262,
+        "source_bytes_verification_scanned": 524,
+        "token_accounting": "not_applicable_no_tokenizer_or_model_in_CPU_fixture",
+        "wall_seconds": 0.0
+      },
+      "core_error": null,
+      "core_evidence_class": "CPU_ENGINEERING_FIXTURE",
+      "expected_hand_answer": {
+        "status": "UNKNOWN",
+        "value": null
+      },
+      "latent_oracle_answer": {
+        "status": "UNKNOWN",
+        "value": null
+      },
+      "latent_world": {
+        "aliases": [],
+        "bindings": [
+          {
+            "entity": "Parcel",
+            "id": "Empty",
+            "mode": null,
+            "owner": null,
+            "time": 0
+          },
+          {
+            "entity": "Parcel",
+            "id": "A",
+            "mode": "CONFIRMED",
+            "owner": "OwnerA",
+            "time": 3
+          },
+          {
+            "entity": "Parcel",
+            "id": "B",
+            "mode": "CONFIRMED",
+            "owner": "OwnerB",
+            "time": 5
+          }
+        ],
+        "cancellations": [],
+        "complete": true,
+        "conditions": [
+          {
+            "id": "RA",
+            "predicate": "PermitA",
+            "relation": "REQUIRE",
+            "target": "A",
+            "time": 0
+          },
+          {
+            "id": "EA",
+            "predicate": "BanA",
+            "relation": "EXCEPT",
+            "target": "A",
+            "time": 0
+          },
+          {
+            "id": "RB",
+            "predicate": "PermitB",
+            "relation": "REQUIRE",
+            "target": "B",
+            "time": 0
+          },
+          {
+            "id": "EB",
+            "predicate": "BanB",
+            "relation": "EXCEPT",
+            "target": "B",
+            "time": 0
+          }
+        ],
+        "facts": [
+          {
+            "id": "PA",
+            "predicate": "PermitA",
+            "status": "SUPPORTED",
+            "time": 2
+          },
+          {
+            "id": "XA",
+            "predicate": "BanA",
+            "status": "REFUTED",
+            "time": 2
+          },
+          {
+            "id": "XB",
+            "predicate": "BanB",
+            "status": "REFUTED",
+            "time": 4
+          }
+        ],
+        "query": {
+          "entity": "Parcel",
+          "time": 6
+        }
+      },
+      "name": "missing_B_REQUIRE_unknown",
+      "public_core_answer": {
+        "evidence_ids": [
+          "A",
+          "B",
+          "Empty"
+        ],
+        "status": "UNKNOWN",
+        "value": null
+      },
+      "rendered_source": "Empty @0 EMPTY Parcel\nA @3 TRANSFER Parcel OwnerA CONFIRMED\nB @5 TRANSFER Parcel OwnerB CONFIRMED\nPA @2 FACT PermitA SUPPORTED\nXA @2 FACT BanA REFUTED\nXB @4 FACT BanB REFUTED\nRA @0 REQUIRE A PermitA\nEA @0 EXCEPT A BanA\nRB @0 REQUIRE B PermitB\nEB @0 EXCEPT B BanB",
+      "source_sha256": "d6af2813cfd6c4f80877e1ec36e27d173cd493507fb9d6ee7eb10d8d2103c69d"
+    },
+    {
+      "core_cost": {
+        "extracted_events": 12,
+        "input_tokens": null,
+        "model_calls": 0,
+        "operations": 6,
+        "output_tokens": null,
+        "peak_serialized_state_bytes": 2847,
+        "source_bytes_scanned": 319,
+        "source_bytes_verification_scanned": 638,
+        "token_accounting": "not_applicable_no_tokenizer_or_model_in_CPU_fixture",
+        "wall_seconds": 0.0
+      },
+      "core_error": null,
+      "core_evidence_class": "CPU_ENGINEERING_FIXTURE",
+      "expected_hand_answer": {
+        "status": "CONTRADICTORY",
+        "value": null
+      },
+      "latent_oracle_answer": {
+        "status": "CONTRADICTORY",
+        "value": null
+      },
+      "latent_world": {
+        "aliases": [],
+        "bindings": [
+          {
+            "entity": "Parcel",
+            "id": "Empty",
+            "mode": null,
+            "owner": null,
+            "time": 0
+          },
+          {
+            "entity": "Parcel",
+            "id": "A",
+            "mode": "CONFIRMED",
+            "owner": "OwnerA",
+            "time": 3
+          },
+          {
+            "entity": "Parcel",
+            "id": "B",
+            "mode": "CONFIRMED",
+            "owner": "OwnerB",
+            "time": 5
+          }
+        ],
+        "cancellations": [],
+        "complete": true,
+        "conditions": [
+          {
+            "id": "RA",
+            "predicate": "PermitA",
+            "relation": "REQUIRE",
+            "target": "A",
+            "time": 0
+          },
+          {
+            "id": "EA",
+            "predicate": "BanA",
+            "relation": "EXCEPT",
+            "target": "A",
+            "time": 0
+          },
+          {
+            "id": "RB",
+            "predicate": "PermitB",
+            "relation": "REQUIRE",
+            "target": "B",
+            "time": 0
+          },
+          {
+            "id": "EB",
+            "predicate": "BanB",
+            "relation": "EXCEPT",
+            "target": "B",
+            "time": 0
+          }
+        ],
+        "facts": [
+          {
+            "id": "PA",
+            "predicate": "PermitA",
+            "status": "SUPPORTED",
+            "time": 2
+          },
+          {
+            "id": "XA",
+            "predicate": "BanA",
+            "status": "REFUTED",
+            "time": 2
+          },
+          {
+            "id": "PB",
+            "predicate": "PermitB",
+            "status": "REFUTED",
+            "time": 4
+          },
+          {
+            "id": "XB",
+            "predicate": "BanB",
+            "status": "REFUTED",
+            "time": 4
+          },
+          {
+            "id": "PB2",
+            "predicate": "PermitB",
+            "status": "SUPPORTED",
+            "time": 4
+          }
+        ],
+        "query": {
+          "entity": "Parcel",
+          "time": 6
+        }
+      },
+      "name": "same_time_conflicting_B_REQUIRE_contradictory",
+      "public_core_answer": {
+        "evidence_ids": [
+          "A",
+          "B",
+          "Empty"
+        ],
+        "status": "CONTRADICTORY",
+        "value": null
+      },
+      "rendered_source": "Empty @0 EMPTY Parcel\nA @3 TRANSFER Parcel OwnerA CONFIRMED\nB @5 TRANSFER Parcel OwnerB CONFIRMED\nPA @2 FACT PermitA SUPPORTED\nXA @2 FACT BanA REFUTED\nPB @4 FACT PermitB REFUTED\nXB @4 FACT BanB REFUTED\nPB2 @4 FACT PermitB SUPPORTED\nRA @0 REQUIRE A PermitA\nEA @0 EXCEPT A BanA\nRB @0 REQUIRE B PermitB\nEB @0 EXCEPT B BanB",
+      "source_sha256": "6b9dbe919543eed318e282e8b34d7c44b6eff5ec160cd480b99d177ea85805df"
+    }
+  ],
+  "core_sha256": "18d3d7de48a52e341f2e43dd12ddebcae771d48d02eb4af527929caa5d935016",
+  "host_database_access": false,
+  "independent_ground_truth_claim": false,
+  "instruction_origin": "Root explicitly specified two guarded transitions and expected A/B outcomes; optional missing/conflict negatives",
+  "interpretation": "B is excluded in base but becomes selected after changing only its requirement state. Both transitions are query-relevant under allowed premise interventions; the base later transition is not mere irrelevant filler. Missing or same-time conflicting latest B requirement produces UNKNOWN or CONTRADICTORY.",
+  "latent_oracle_renderer_sha256": "837bd152ba5aa9d1fc44a5991909cf4475394eaa42af739cca63ac3422ed3795",
+  "limits": [
+    "All four controls are related variants of one hand root, not four independent parents or a bank.",
+    "Two guarded transitions expand the optimizer single-primary-gated template/depth and require actual family/population/difficulty review before acquisition-panel registration.",
+    "Shared supplied grammar/semantics/oracle/renderer/core and reviewer model/workspace limit independence.",
+    "No canonical duplicate/ancestor proof, tokenizer fit, native path, learning, retention, hypothesis confirmation or authority follows."
+  ],
+  "newIDs_or_seeds_establish_novelty": false,
+  "optimizer_data_changed": false,
+  "original_CRS_LA_H01_gap_closed": false,
+  "receipt_id": "CRS-ACQUISITION-TRAJECTORY-FEASIBILITY-HAND-001",
+  "registered_panel_constructed": false,
+  "registered_parent_count": 0,
+  "reviewer": "/root/scientific_audit",
+  "schema_version": 1,
+  "status": "FOUR_HAND_CPU_CONTROLS_AGREE_DECISION_RELEVANCE_ONLY"
+}

@@ -372,3 +372,21 @@ positions. No optimizer step, neural loss/gradient, acquisition, retention,
 calibration, transfer, native numerical/serving or model qualification occurred.
 Native budget47.421s is unchanged. The quarantined reader/probe exception still
 awaits the owner's explicit answer; source/CPU success grants no fourth repair.
+
+## Acquisition trajectory feasibility control
+
+Four hand controls of one related latent root were executed by an independent
+scientific reviewer against the supplied latent oracle and public CPU core.
+An earlier assignmentA is selected when later assignmentB has a refuted gate;
+flipping only that premise selectsB. Missing and tied conflicting latest premises
+produceUNKNOWN andCONTRADICTORY. Both implementations agree, with24 primitive
+operations and1161 source bytes scanned (2322 verification bytes) retained in
+audits/ACQUISITION_TRAJECTORY_FEASIBILITY_CHECK_001.json, SHA48d6353a. Clock readings
+quantized elapsed time to0.0; that is not a claim of zero work or total cost.
+
+This supports decision relevance of a guarded-selection trajectory axis only.
+These are related variants of one hand example, not four new independent parents
+or an acquisition bank. Two transitions expand the original fixed template/depth;
+canonical disjointness, ancestry, population validity and original H01 remain
+unproven. The bounded construction candidate still needs frozen source and fresh
+review. No optimizer data, model, tokenizer, holdout or native gate changed.
