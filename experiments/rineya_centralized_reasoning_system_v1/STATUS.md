@@ -8,11 +8,12 @@ The new owner request is retained byte-for-byte with a hash in
 section below, charter and manifest are preserved. All central CHECK/FINAL remain closed.
 
 Current milestone, 2026-10-02: **CPU_QUALIFIED for the supplied reference pipeline;
-native operational revision 2 is undergoing separate review.**
+native operational revision 3 is undergoing final targeted review.**
 The complete supplied AI-Newton paper, supplement and figures were inspected;
 18 pinned primary implementation files were source-verified. Exact external
 Titan/Sparse/Transition/Supa assets are inventoried read-only. Opallo binaries
-are missing at both named roots. No model has yet loaded or forwarded in CRS-001.
+are missing at both named roots. Exact Titan has now loaded once and completed
+four diagnostic forwards; broader qualification remains closed.
 
 Implemented: source-addressed evidence, four status states, stale dependency
 invalidation, restricted typed graphs, immutable procedure snapshots, public JSON
@@ -54,6 +55,17 @@ It queries the exact owned Job and closes query handles before framework import.
 No resource/numerical gate is relaxed. Do not rerun the known failing primary
 native v1 worker; use the separately frozen successor after review.
 
+Revision2 at worktree commit `17c01965` returned all four 131-token forwards
+(524 positions). Six protected hidden/logit comparisons had identical raw bytes
+and zero numeric differences; base tensors remained unchanged. The worker
+completed in31.718s, peak Torch GPU allocated/reserved1.400038/1.429688 GiB.
+The supervisor reported FAILED after worker exit0 on a process-exit race despite
+verified empty-tree termination. Both outcomes are retained under
+`evidence/native_d2_attempt_002/`. This is trace-local numerical evidence,
+not whole-path/capture/reader576/training qualification. The final operational
+repair uses exact owned-Job monitoring and verified completion; live errors,
+telemetry and resource gates remain enforced.
+
 Remaining gates: native numerical/capture and maximum576 reader qualification,
 16-case native diagnostic, actual B/C native experiment with meaningful irrelevant
 D content/token costs, separately qualified sustained training/resume/export,
@@ -64,9 +76,10 @@ likelihood failure is preserved. No final bank has been generated or opened.
 Restart commands and conditions: [CONTINUATION.md](CONTINUATION.md). Source changes
 create new registrations; completed or failed observations retain their identities.
 Unknown launch outcomes must be reconciled before another worker. Native
-qualification-worker consumption is 1.1090000000003783 seconds, including the
-failed startup (epoch cap 7200s; rolling 24-hour cap 14400s). No active model
-worker; model loads, forwards and training updates remain zero.
+qualification-worker consumption is35.67099999999846s including both failed
+execution paths (epoch cap7200s, rolling24h cap14400s). No active model worker.
+Model loads1, forwards4, training/optimizer updates0. Efficacy and learning/
+retention remain unmeasured; no candidate model or canonical promotion.
 
 ## Historical founding state (preserved)
 

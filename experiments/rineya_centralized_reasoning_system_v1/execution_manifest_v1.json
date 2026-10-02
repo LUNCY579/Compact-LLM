@@ -4,11 +4,11 @@
   "founding_manifest": "manifest.json",
   "founding_status_preserved": "DESIGN_RECORDED_EXECUTION_NOT_AUTHORIZED",
   "authority": "AUTHORIZATION_2026-10-01.md",
-  "status": "CPU_QUALIFIED_LIFECYCLE_AND_INSTRUMENTS_NATIVE_OPERATIONAL_REV2_PENDING",
+  "status": "CPU_QUALIFIED_TRACE_LOCAL_NATIVE_NUMERICS_PASS_SUPERVISOR_REV3_PENDING",
   "dag": [
     {"id": "source_audit", "state": "COMPLETED_SOURCE_BOUND", "receipt": "audits/source_receipt.json"},
     {"id": "cpu_pipeline", "state": "CPU_QUALIFIED_AND_EXECUTED_208_FIXTURE_CASES", "receipt": "evidence/CPU_EPOCH_001_RESULT.json", "dependencies": ["source_audit"]},
-    {"id": "native_D2", "state": "FIRST_WORKER_FAILED_BEFORE_FRAMEWORK_OWNED_JOB_QUERY_REV2_REVIEW", "receipt": "evidence/native_d2_attempt_001/SUMMARY.json", "dependencies": ["cpu_pipeline", "native_independent_review", "host_admission"]},
+    {"id": "native_D2", "state": "NATIVE_TRACE_LOCAL_NUMERICS_PASS_SUPERVISOR_EXIT_RACE_REV3_REVIEW", "receipt": "evidence/native_d2_attempt_002/SUMMARY.json", "dependencies": ["cpu_pipeline", "native_independent_review", "host_admission"]},
     {"id": "native_reader_576", "state": "BLOCKED_EXACT_QUALIFICATION", "dependencies": ["native_D2"]},
     {"id": "reader_dev16", "state": "DATA_BUILT_NATIVE_NOT_RUN", "dependencies": ["native_reader_576"]},
     {"id": "procedure_dev64", "state": "CPU_FIXTURE_ONLY_NATIVE_NOT_RUN", "dependencies": ["reader_dev16"]},

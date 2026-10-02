@@ -1,0 +1,73 @@
+{
+  "source_commit": "17c01965b048a130f82095e2177d626449d0de4a",
+  "contract_sha256": "291b7803e745ade2ccfcc5a6e9a8eafc31a9c174541ccd5436f730bde57a8707",
+  "job_key": "CRS-D2-002-17c01965-291b7803",
+  "worker_status": "COMPLETE_FIXED_SHAPE_DIAGNOSTIC_ONLY",
+  "supervisor_status": "FAILED",
+  "supervisor_reason": "NoSuchProcess: process PID not found (pid=626604)",
+  "model_loads": 1,
+  "forward_calls": 4,
+  "input_positions": 524,
+  "comparisons_passed": 6,
+  "comparisons_total": 6,
+  "optimizer_updates": 0,
+  "native_worker_seconds_charged": 34.56199999999808,
+  "peak_process_tree_rss_bytes": 1462730752,
+  "peak_torch_allocated_gib": 1.400038242340088,
+  "peak_torch_reserved_gib": 1.4296875,
+  "raw": {
+    "CONTAINMENT_RECEIPT.json": {
+      "sha256": "4b79f4599dfec9bd7a9e862d68a2fb541a06940f16d2ed4bd0728fa0fdf993fd",
+      "bytes": 582
+    },
+    "DIAGNOSTIC_RESULT.json": {
+      "sha256": "b9a09927bf34e1cd2bcea0dacb9444b5e0508a4477b75ff15ae408469f1c3337",
+      "bytes": 13496
+    },
+    "EVENTS.jsonl": {
+      "sha256": "3c7db7b53ca71b7105516a13c49dbded708a5896c9ae30fb35abf46c74cc5a4b",
+      "bytes": 146439
+    },
+    "GO.json": {
+      "sha256": "31ce1fb93567643fa53330ddc249abcc3afd0e6b753dcea262a3caf035d7b6eb",
+      "bytes": 365
+    },
+    "LAUNCH_ATTEMPT.json": {
+      "sha256": "8437eb8b93fc3ae30d14ff8ebf91c480807ab9fe26b2df6ab3ef5c38cecdce20",
+      "bytes": 261
+    },
+    "LAUNCH_INTENT.json": {
+      "sha256": "723000389227f09090e50cdfbbb9b55aad946e5d664e883ecfa2df3c8a52cf79",
+      "bytes": 11425
+    },
+    "MODEL_RECEIPT.json": {
+      "sha256": "a3407d1534b8b2d2ddb1c3e888d2ce9498655307d807c7d1b051afc6fa0ca8d0",
+      "bytes": 34522
+    },
+    "RUNTIME_RECEIPT.json": {
+      "sha256": "a5cf29a521f9374356a383b8b9a8807ee7e027f9fd71f86780b3b97608f934ba",
+      "bytes": 737
+    },
+    "stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "SUPERVISOR_RESULT.json": {
+      "sha256": "c2f90ce741a6dbc9f32dc27837a6b3f5242daf7645f9f8b2d2a1b181fff5bffc",
+      "bytes": 446
+    },
+    "TREE_CONTAINMENT.json": {
+      "sha256": "3e4ad160abb32c631cbb57ac11cd8d2c1ec45066e92340e5ab72777064b02435",
+      "bytes": 1119
+    },
+    "WATCHDOG.jsonl": {
+      "sha256": "e95bc8b505c8374c93c8a7650248e133fa0064e16c5a9535882daa2e55d3aefd",
+      "bytes": 933633
+    }
+  },
+  "scope": "four trace-local fixedshape causality controls, not reader/capture/training qualification; whole supervision remains FAILED pending exit-race repair"
+}

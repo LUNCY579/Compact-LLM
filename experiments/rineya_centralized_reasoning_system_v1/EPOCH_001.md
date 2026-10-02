@@ -118,3 +118,19 @@ Current native adversarial findings are preserved in the separate native
 reports. Repaired CPU process fixtures do not substitute for actual model
 qualification. If admission or numerical checks fail, preserve the attempt,
 charge its cost and continue the next meaningful eligible work.
+
+## Actual native trace, 2026-10-02
+
+Independently reviewed worktree revision2 (`17c01965`) loaded exact Titan and
+returned four fixed131-token forwards,524 positions. All six protected hidden/
+logit raw-byte comparisons passed with max/mean differences0. Reference baseline,
+mask/position witnesses, precision flags, complete316-call accounting and unchanged
+base tensors are retained in `evidence/native_d2_attempt_002/`. Worker31.718s;
+peak Torch allocated/reserved GPU1.400038/1.429688 GiB.
+
+The supervisor reported FAILED on a process-disappearance race at normal exit,
+although worker exit0 and owned-tree empty were verified. Preserve the failed
+whole path and positive trace-local evidence separately. The final operational
+repair/review addresses verified exit monitoring. Total charged native work is
+35.67099999999846s including both failures; capture, reader576, training, model
+quality, acquisition/retention and promotion remain closed or unmeasured.
