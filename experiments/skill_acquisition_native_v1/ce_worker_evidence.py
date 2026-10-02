@@ -251,9 +251,13 @@ class WinWorkerHandle:
         self.spec, self.observer, self.native = copy.deepcopy(spec), observer, native
         self.budget = _Budget(spec, observer)
         self.os = self.budget.run('worker_os_binding', _WindowsOS)
-        self.handle = self.budget.run('worker_os_binding', lambda: self.os.open(spec['expected_pid']))
-        self._seal, self.closed = _HANDLE_SEAL, False
+        self._seal, self.closed, self.handle = _HANDLE_SEAL, False, None
         try:
+            def open_owned():
+                # Retain ownership before post-work accounting can reject.
+                self.handle = self.os.open(spec['expected_pid'])
+                return self.handle
+            self.budget.run('worker_os_binding', open_owned)
             boot = self.budget.run('worker_os_binding', self.os.boot)
             facts = self.budget.run('worker_os_binding', lambda: self.os.snapshot(self.handle))
             self.identity = compare_identity(spec, facts, boot)
@@ -338,6 +342,8 @@ class WinWorkerHandle:
             'status_file_used': False, 'native_qualified': False}
     def close(self):
         if not getattr(self, 'closed', True):
+            if self.handle is None:
+                self.closed = True; return
             entered = False
             def release():
                 nonlocal entered

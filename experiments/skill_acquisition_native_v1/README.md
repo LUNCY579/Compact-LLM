@@ -535,6 +535,44 @@ remain required. No native work has run after the warm stop. The pending new
 experiment choice and frozen scope govern execution; the broader acquisition,
 retention, composition and method-combination objective remains incomplete.
 
+## Selected canonical study and entry verification
+
+`../skill_acquisition_method_lab_v1/evidence/SELECTED_R_ORACLE_SFT_20261002.json`
+records an assistant selection of canonical-only R oracle supervision under the
+original user's explicit permission to add experiments. It records no human
+answer to the optional choice question. The original warm study remains stopped.
+This selection grants no qualification, training, evaluation or dispatch scope;
+those still require exact registration and verification.
+
+`ce_checkpoint_entry_provider.py` supplies the pre-model source/OS metadata
+pipeline. A fixed metadata payment uses the existing durable service bootstrap
+before file or process observation, without requiring an early model execution
+permit. Native model payments remain after observed delegation/context freeze.
+Handle ownership survives post-open accounting failures; redirector and entry
+cleanup preserve primary errors. Real prepared-row and retained terminal-prefix
+factories, source configuration and actual issuer registrations remain missing.
+
+`ce_bootstrap_verifier.py` independently replays original raw header/journal/
+seal, prepayment owners, full failed/pending reservations, transition history,
+offsets and recorded monotonic intervals. A historical STARTED artifact ticket
+can be linked to its later RETURNED raw transition. This is not body execution
+proof. Missing terminal/end coverage and constructor clock gaps stay explicit.
+
+`ce_delta_artifacts.py` streams the exact saved FP32 inventory, checks finite
+values, file/data/state digests and norm with bounded memory. Final readback
+links runtime loader identities and operation rows, and saved donor reports to
+those bytes. Independent full common-anchor/master rebuild and native execution
+remain unverified; reported roundtrip booleans cannot certify that missing work.
+
+The V2 combined source suite passed **327/327 controls**, with unchanged source,
+zero skips/errors and no framework imports, model loads or optimizer execution.
+See `evidence/CE8_ENTRY_BOOTSTRAP_SOURCE_CHECKS_V2_20261002.json`. The earlier
+322-check receipt is retained for its earlier exact source revision.
+
+The canonical experiment is selected, while source freeze, registered scopes,
+remaining concrete factories and actual native qualification precede dispatch.
+Acquisition, retention and independent composition remain unmeasured.
+
 ## Production interface
 
 ```powershell

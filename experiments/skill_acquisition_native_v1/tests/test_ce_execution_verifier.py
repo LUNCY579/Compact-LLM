@@ -12,6 +12,7 @@ from experiments.skill_acquisition_native_v1 import ce_qualification_artifacts a
 from .test_ce_qualification_accounting import fixture
 from . import test_ce_checkpoint_reduction as branches
 from . import test_ce_resource_qualification as resources
+from . import test_ce_delta_artifacts as deltas
 
 
 class ReplayControls(unittest.TestCase):
@@ -157,6 +158,56 @@ class ReplayControls(unittest.TestCase):
         wrong = copy.deepcopy(payload); wrong['operation_order'][0]['clipping']['returned_seq'] = 0
         with self.assertRaisesRegex(ValueError, 'operation order/history'):
             v._adam_readback(self.context, self.ledger, wrong, binding)
+
+    def test_saved_delta_report_is_bound_to_actual_finite_payload_hashes_and_norm(self):
+        helper = deltas.Tests(); helper.setUp(); self.addCleanup(helper.doCleanups)
+        reference, _ = helper.save()
+        context = copy.deepcopy(self.context)
+        context['bindings']['scope']['native_backend']['parameter_inventory'] = helper.inventory
+        reader = raw.RawEvidenceReader(lambda *args, **fields: None, {key: 10 ** 10 for key in raw.BUDGET_FIELDS}, helper.root)
+        saved = deltas.d.read_delta(reader, reference, helper.binding, helper.inventory)
+        donor = {'schema': 'SKILL-ACQUISITION-DONOR-DELTA-1', **{key: reference[key] for key in ('path', 'bytes')},
+            'file_sha256': reference['sha256'], 'common_anchor_sha256': context['bindings']['anchors']['common_anchor_sha256'],
+            'own_start_sha256': context['bindings']['anchors']['own_start_sha256'], 'reference': 'EXACT_REBUILT_COMMON_WARM_ANCHOR',
+            **{key: saved[key] for key in ('data_section_sha256', 'state_sha256', 'numel', 'tensors', 'delta_norm')},
+            'trainable_names_sha256': raw.digest(sorted(entry['name'] for entry in helper.inventory)),
+            'final_master_sha256': '1' * 64, 'deployed_arm_sha256': '2' * 64}
+        observed = {'own_start_sha256': donor['own_start_sha256'], 'common_reference_sha256': donor['common_anchor_sha256'],
+            'delta_dtype': 'float32', 'delta_rebuilt_verified': True, 'delta_file_sha256': reference['sha256'],
+            'delta_data_sha256': saved['data_section_sha256'], 'final_master_sha256': donor['final_master_sha256'],
+            'rebuilt_endpoint_sha256': donor['deployed_arm_sha256'], 'rounding_residual_max_abs': 0., 'rounding_residual_l2': 0.}
+        payload = {'donor': donor, 'observations': observed}
+        result = v._delta_readback(context, payload, reference, helper.binding, reader)
+        self.assertEqual(result['saved_delta']['delta_norm'], 5)
+        self.assertFalse(result['roundtrip_independently_rebuilt']); self.assertFalse(result['execution_verified'])
+        changed = copy.deepcopy(payload); changed['donor']['delta_norm'] = 4
+        with self.assertRaisesRegex(ValueError, 'independent stream'):
+            v._delta_readback(context, changed, reference, helper.binding, reader)
+
+    def test_runtime_readback_requires_actual_loader_identity_and_original_operation_rows(self):
+        context = self.context; anchors = context['bindings']['anchors']
+        context['bindings']['runtime']['decoding_preimage'] = {'device': 'cpu', 'dtype': 'float32', 'fixture': True}
+        anchors.update(base_weights_sha256='1' * 64, tokenizer_receipt_sha256='2' * 64)
+        backend = context['bindings']['scope']['native_backend']
+        backend.update(parameter_inventory=[{'name': 'w', 'shape': [2], 'dtype': 'F32'}],
+            warm_delta_ref={'data_sha256': '3' * 64})
+        self.ledger.begin_stage('runtime_anchor', 'runtime')
+        for kind in ('configured_runtime', 'process_rng_seed', 'model_load', 'inventory_configuration', 'fingerprint'):
+            self.ledger.operation(kind, 'started', kind)
+            self.ledger.operation(kind, 'returned', kind)
+        binding = v._binding_for(context, {'stage': 'runtime_anchor', 'attempt_id': 'runtime'}, self.proof['worker_identity_sha256'])
+        observed = {'actual_anchor_sha256': anchors['own_start_sha256'], 'tokenizer_receipt_sha256': anchors['tokenizer_receipt_sha256'],
+            'actual_runtime_preimage': context['bindings']['runtime']['decoding_preimage'],
+            'decoder_checkpointing': {'use_reentrant': False}, 'head_checkpointing': True}
+        payload = {'observations': observed, 'inventory': backend['parameter_inventory'], 'worker_proof': self.proof,
+            'identity': {'state_fingerprint': anchors['own_start_sha256'], 'weights_sha256': anchors['base_weights_sha256'],
+                'anchor': {'base_weights_sha256': anchors['base_weights_sha256'], 'delta_sha256': backend['warm_delta_ref']['data_sha256'],
+                    'arm_sha256': anchors['common_anchor_sha256']}}}
+        result = v._runtime_readback(context, self.ledger, payload, binding)
+        self.assertTrue(result['loader_identity_and_operation_linkage_consistent']); self.assertFalse(result['execution_verified'])
+        wrong = copy.deepcopy(payload); wrong['identity']['anchor']['delta_sha256'] = '0' * 64
+        with self.assertRaisesRegex(ValueError, 'loader/anchor identity'):
+            v._runtime_readback(context, self.ledger, wrong, binding)
 
     def test_resource_readback_requires_original_probe_rows_and_unmodified_prefix_costs(self):
         context, proof, receipt = fixture(self.root / 'resources')

@@ -70,9 +70,10 @@ def _paid(operation, bounds, kind, work):
 
 def entry_lifetime(payment, body, cleanup=None):
     """Retain every entry failure, including reads before ready and finish IO."""
-    payment.begin()
     try:
-        try: result = body()
+        try:
+            payment.begin()
+            result = body()
         except BaseException as error:
             if cleanup is not None:
                 try: cleanup()
@@ -301,31 +302,45 @@ class LocalCheckpointIssuer:
                 and bool(worker._REGISTERED_METADATA_VERIFIERS),
                 'complete exact child source constructors/OS observation must qualify before entry IO')
         entry = _SOURCE_ENTRY_PROVIDER.open_prepaid_entry(request_path)
-        require(type(entry) is dict and type(entry.get('worker_handle')) is worker.WinWorkerHandle
-                and type(entry.get('observation_permit')) is worker.WorkerObservationPermit,
-                'actual source-owned current OS observation entry')
-        operation, gate, handle = entry['operation'], entry['gate'], entry['worker_handle']
-        entry['observation_permit'].require(handle.spec, operation)
-        proof = worker.verify_worker_handle(handle, entry['expected_worker'], require_native=True)
-        require(proof['os_identity']['pid'] == os.getpid() and entry['request_ref'] == proof['sources']['request_ref']
-                and Path(request_path) == Path(entry['request_ref']['path']), 'entry is exact current raw child request')
-        spec = validate_spec(entry['context']['bindings']['scope']['checkpoint_qualification']['local_issuer'])
-        boot.verify_prepayment(entry['entry_prepayment'], entry['context'], proof,
-            {'accounting_spec_sha256': digest(spec), 'prepared_receipt_sha256':
-             entry['context']['bindings']['scope']['qualifier_accounting']['ingestion_receipt_sha256']},
-            verifier=_BOOTSTRAP_VERIFIER)
+        return self._consume_entry(entry, request_path, handler_type, command_validator)
+
+    def _consume_entry(self, entry, request_path, handler_type, command_validator):
+        require(type(entry) is dict, 'actual source-owned current OS observation entry')
+        from .ce_checkpoint_entry_provider import MetadataEntryPayment
         def close_entry():
             failure = None
-            for current in (entry.get('prefix_handle'), entry.get('parent_handle'), handle):
+            for current in (entry.get('prefix_handle'), entry.get('parent_handle'), entry.get('worker_handle')):
                 if current is not None:
-                    require(type(current) is worker.WinWorkerHandle, 'only retained entry OS handles may close')
-                    try: current.close()
+                    try:
+                        require(type(current) is worker.WinWorkerHandle, 'only retained entry OS handles may close')
+                        current.close()
                     except BaseException as error:
                         if failure is None: failure = error
                         else: raw._accounting(failure, error)
             if failure is not None: raise failure
-        return entry_lifetime(entry['entry_prepayment'],
-            lambda: self._run_entry(entry, spec, proof, handler_type, command_validator), close_entry)
+        payment = entry.get('entry_prepayment')
+        if type(payment) is not MetadataEntryPayment:
+            error = child.MissingCheckpointWorkerService('exact source-owned metadata entry payment required')
+            try: close_entry()
+            except BaseException as failure:
+                error.entry_cleanup_failure = {'type': type(failure).__name__, 'message': str(failure)[:1000]}
+                raise error from failure
+            raise error
+        def validate_and_run():
+            require(type(entry.get('worker_handle')) is worker.WinWorkerHandle
+                    and type(entry.get('observation_permit')) is worker.WorkerObservationPermit,
+                    'actual source-owned current OS observation entry')
+            operation, handle = entry['operation'], entry['worker_handle']
+            entry['observation_permit'].require(handle.spec, operation)
+            proof = worker.verify_worker_handle(handle, entry['expected_worker'], require_native=True)
+            require(proof['os_identity']['pid'] == os.getpid() and entry['request_ref'] == proof['sources']['request_ref']
+                    and Path(request_path) == Path(entry['request_ref']['path']), 'entry is exact current raw child request')
+            spec = validate_spec(entry['context']['bindings']['scope']['checkpoint_qualification']['local_issuer'])
+            payment.verify(entry['context'], proof,
+                {'accounting_spec_sha256': digest(spec), 'prepared_receipt_sha256':
+                 entry['context']['bindings']['scope']['qualifier_accounting']['ingestion_receipt_sha256']})
+            return self._run_entry(entry, spec, proof, handler_type, command_validator)
+        return entry_lifetime(payment, validate_and_run, close_entry)
 
     def _run_entry(self, entry, spec, proof, handler_type, command_validator):
         operation, gate, handle = entry['operation'], entry['gate'], entry['worker_handle']

@@ -181,6 +181,58 @@ def _binding_for(context, attempt, worker):
         'worker_identity_sha256': worker, 'attempt_id': attempt['attempt_id']}
 
 
+def _runtime_readback(context, state, payload, binding):
+    scope, anchors = context['bindings']['scope'], context['bindings']['anchors']
+    observed, identity = payload.get('observations'), payload.get('identity')
+    require(type(observed) is dict and type(identity) is dict
+            and identity.get('state_fingerprint') == anchors['own_start_sha256']
+            and identity.get('weights_sha256') == anchors['base_weights_sha256']
+            and type(identity.get('anchor')) is dict
+            and identity['anchor'].get('base_weights_sha256') == anchors['base_weights_sha256']
+            and identity['anchor'].get('delta_sha256') == scope['native_backend']['warm_delta_ref']['data_sha256']
+            and identity['anchor'].get('arm_sha256') == anchors['common_anchor_sha256'],
+            'raw runtime loader/anchor identity differs from admitted common warm bytes')
+    require(payload.get('inventory') == scope['native_backend']['parameter_inventory']
+            and type(payload.get('worker_proof')) is dict
+            and payload['worker_proof'].get('worker_identity_sha256') == binding['worker_identity_sha256'],
+            'raw runtime exact selected inventory/current worker')
+    configurations = [operation for operation in state.operations.values() if operation['stage'] == binding['stage']
+        and operation['attempt_id'] == binding['attempt_id'] and operation['phase'] == 'returned']
+    require(all(any(operation['kind'] == kind for operation in configurations)
+                for kind in ('configured_runtime', 'process_rng_seed', 'model_load', 'inventory_configuration', 'fingerprint')),
+            'raw runtime observations lack original returned initialization/load operations')
+    q.validate_stage_observations(context, 'runtime_anchor', observed, context['prepared_receipt'])
+    return {'recorded_observations': observed, 'loader_identity_and_operation_linkage_consistent': True,
+            'execution_verified': False, 'native_qualified': False}
+
+
+def _delta_readback(context, payload, reference, binding, reader):
+    from . import ce_delta_artifacts as delta
+    donor = payload.get('donor'); anchors = context['bindings']['anchors']
+    inventory = context['bindings']['scope']['native_backend']['parameter_inventory']
+    require(type(donor) is dict and donor.get('schema') == 'SKILL-ACQUISITION-DONOR-DELTA-1'
+            and donor.get('path') == reference['path'] and donor.get('file_sha256') == reference['sha256']
+            and donor.get('bytes') == reference['bytes']
+            and donor.get('common_anchor_sha256') == anchors['common_anchor_sha256']
+            and donor.get('own_start_sha256') == anchors['own_start_sha256']
+            and donor.get('reference') == 'EXACT_REBUILT_COMMON_WARM_ANCHOR',
+            'raw saved donor file/reference/common-anchor provenance')
+    saved = delta.read_delta(reader, reference, binding, inventory)
+    require(all(donor.get(key) == saved[key] for key in ('data_section_sha256', 'state_sha256', 'numel', 'tensors'))
+            and donor.get('trainable_names_sha256') == digest(sorted(entry['name'] for entry in inventory))
+            and q.finite(donor.get('delta_norm')) and abs(donor['delta_norm'] - saved['delta_norm']) <= 1e-12 + 1e-10 * saved['delta_norm'],
+            'raw saved FP32 delta digest/inventory/norm differs from independent stream')
+    require(type(payload.get('observations')) is dict, 'retained roundtrip report required')
+    q.validate_stage_observations(context, 'delta_roundtrip', payload['observations'], context['prepared_receipt'])
+    require(payload['observations']['delta_file_sha256'] == reference['sha256']
+            and payload['observations']['delta_data_sha256'] == saved['data_section_sha256']
+            and payload['observations']['final_master_sha256'] == donor['final_master_sha256']
+            and payload['observations']['rebuilt_endpoint_sha256'] == donor['deployed_arm_sha256'],
+            'reported roundtrip file/endpoint identities differ from retained donor')
+    return {'saved_delta': saved, 'recorded_roundtrip_observations': payload['observations'],
+            'roundtrip_independently_rebuilt': False, 'execution_verified': False, 'native_qualified': False}
+
+
 def _retained_prefix(context, original, snapshot):
     """Replay a retained head of the already verified main journal."""
     require(type(snapshot) is dict and raw._hex(snapshot.get('ledger_head'))
@@ -347,7 +399,14 @@ def _reductions(context, state, attempt_workers, reader, child_bindings, child_l
                 require(ref.get('binding_sha256') == digest(expected), 'unrelated artifact stage/source/worker/attempt binding')
             by_role[ref['role']] = ref
         stage = attempt['stage']
-        if stage == 'longest_masks':
+        if stage == 'runtime_anchor':
+            require('runtime_anchor' in by_role, 'raw runtime/anchor artifact required')
+            payload = reader._envelope(by_role['runtime_anchor'], expected, 'runtime_anchor', 'runtime_anchor')
+            with reader._overhead('runtime_identity_and_operation_readback', work_bytes=32 * by_role['runtime_anchor']['bytes'],
+                                  hash_attempts=16, hash_bytes=32 * by_role['runtime_anchor']['bytes']):
+                reductions[stage] = _runtime_readback(context, state, payload, expected)
+            gaps.append('runtime loader identity and returned operations require actual source-issued model execution provenance')
+        elif stage == 'longest_masks':
             require('masks' in by_role, 'raw masks artifact required')
             reductions[stage] = reader.read_masks(by_role['masks'], expected, witnesses)['observations']
         elif stage == 'likelihood_gradient_parity':
@@ -362,6 +421,13 @@ def _reductions(context, state, attempt_workers, reader, child_bindings, child_l
             payload = reader._envelope(by_role['adam_clipping'], expected, 'adam_clipping', 'adam_clipping')
             with reader._overhead('adam_original_operation_readback', work_bytes=32 * by_role['adam_clipping']['bytes']):
                 reductions[stage] = _adam_readback(context, state, payload, expected)
+        elif stage == 'delta_roundtrip':
+            require('delta_roundtrip' in by_role and 'qualification_delta' in by_role, 'raw report and saved delta both required')
+            payload = reader._envelope(by_role['delta_roundtrip'], expected, 'delta_roundtrip', 'delta_roundtrip')
+            with reader._overhead('delta_report_linkage', work_bytes=32 * by_role['delta_roundtrip']['bytes'],
+                                  hash_attempts=8, hash_bytes=32 * by_role['delta_roundtrip']['bytes']):
+                reductions[stage] = _delta_readback(context, payload, by_role['qualification_delta'], expected, reader)
+            gaps.append('saved delta bytes/digests/norm are checked; full common-anchor rebuild/master residual and native execution still require verification')
         elif stage == 'resource_io_measurement':
             require('resource_io' in by_role, 'raw barrier/operation resource artifact required')
             payload = reader._envelope(by_role['resource_io'], expected, 'resource_io', 'resource_io')
@@ -398,7 +464,7 @@ def _workers(handles, workers, context):
 
 
 def verify_qualification(context, header_ref, journal_ref, seal_ref, *, reader, outer_preflight,
-                         worker_handles=None, child_bindings=None, child_lineages=None):
+                         worker_handles=None, child_bindings=None, child_lineages=None, bootstrap_evidence=None):
     """Replay retained evidence beneath an explicit independently priced outer scope.
 
     The preflight callback reserves verifier IO/hash/reducer/metadata/time before
@@ -431,6 +497,25 @@ def verify_qualification(context, header_ref, journal_ref, seal_ref, *, reader, 
         complete, pending = _seal(seal, state)
         reductions, gaps = _reductions(context, state, attempt_workers, reader, child_bindings, child_lineages, outer_preflight)
     gaps += _workers(worker_handles, workers, context)
+    bootstrap_reductions = []
+    if bootstrap_evidence is not None:
+        from . import ce_bootstrap_verifier as bootstrap
+        require(type(bootstrap_evidence) is list and len(bootstrap_evidence) <= 16,
+                'bounded exact bootstrap evidence scopes')
+        for evidence in bootstrap_evidence:
+            require(type(evidence) is dict and set(evidence) == {'context', 'refs', 'expected_workers', 'expected_owners', 'outer_evidence'},
+                    'explicit original bootstrap context/ref/contract evidence')
+            original = evidence['context']
+            require(type(original) is dict and all(original.get(key) == context.get(key)
+                        for key in ('request_sha256', 'scope_sha256', 'static_recipe_sha256', 'arm'))
+                    and original['bindings']['source'] == context['bindings']['source'],
+                    'bootstrap scope/source differs from qualification study')
+            refs = evidence['refs']
+            require(type(refs) is dict and set(refs) == {'header', 'journal', 'seal'}, 'complete original bootstrap references')
+            result = bootstrap.verify_bootstrap(original, refs['header'], refs['journal'], refs['seal'],
+                reader=reader, outer_preflight=outer_preflight, expected_workers=evidence['expected_workers'],
+                expected_owners=evidence['expected_owners'], outer_evidence=evidence['outer_evidence'])
+            bootstrap_reductions.append(result); gaps += result['activation_gaps']
     gaps += ['outer bootstrap/verification prepayment and full clock chain require independent registered-service verification',
              'this source does not activate a native execution/qualification verifier registry']
     return {'schema': SCHEMA, 'status': 'UNQUALIFIED', 'native_qualified': False, 'execution_verified': False,
@@ -438,5 +523,5 @@ def verify_qualification(context, header_ref, journal_ref, seal_ref, *, reader, 
         'ledger_head': state._head(), 'events': len(state.events), 'derived_totals': state.cumulative,
         'derived_by_stage': state.by_stage, 'derived_attempts': state.attempts, 'pending_operations': pending,
         'metadata_cost_seal_consistent': True, 'all_stages_complete_by_replay': complete,
-        'raw_numeric_reductions': reductions, 'activation_gaps': gaps,
+        'raw_numeric_reductions': reductions, 'bootstrap_raw_reductions': bootstrap_reductions, 'activation_gaps': gaps,
         'classification': 'bounded retained arithmetic and linkage replay; no native PASS or learning claim'}

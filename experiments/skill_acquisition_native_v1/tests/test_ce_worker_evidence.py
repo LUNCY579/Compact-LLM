@@ -204,5 +204,20 @@ class WorkerContractTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'close preflight refused'): w.build_current_probe_spec(value, observe)
         self.assertEqual(events, ['opened', 'closed'])
 
+    def test_open_handle_is_owned_before_returned_observer_can_fail(self):
+        value = spec(); handle, closed, just_opened = object(), [], []
+        original = RuntimeError('open returned observer failed')
+        class OS:
+            def open(self, pid): just_opened.append(True); return handle
+            def close(self, current): closed.append(current)
+        def observe(kind, phase, **fields):
+            if phase == 'returned' and just_opened:
+                just_opened.clear(); raise original
+        current = object.__new__(w.WinWorkerHandle)
+        with patch.object(w, '_WindowsOS', return_value=OS()):
+            with self.assertRaises(RuntimeError) as caught: current._open(value, observe, native=False)
+        self.assertIs(caught.exception, original)
+        self.assertEqual(closed, [handle]); self.assertTrue(current.closed)
+
 
 if __name__ == '__main__': unittest.main()
