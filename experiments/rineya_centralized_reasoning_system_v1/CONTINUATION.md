@@ -180,3 +180,20 @@ fresh frozen source and immutable activation reviews pass; source tests are
 synthetic and the current actual-registration flag remains closed. No source
 review or new output path permits duplicating an unknown launch. Preserve the
 three-round limit, existing candidate quarantines and original native budget.
+
+Candidate2,40b3a9a6/99566718/7478376b, is now preserved in
+history/learning_tokenization_round2. Its31 synthetic tests and independent
+receipt-vector corruptions pass/reject appropriately; SCI2 conditionally accepts
+the CPU source scope. OPS2 finds one remaining integration conflict: worker
+admission starts Git descendants while rejecting every descendant. Follow
+LEARNING_TOKENIZATION_ROUND2_ADJUDICATION for the final third repair. Keep parent
+Git source observation, but child verification must use immutable file/admission
+proof without subprocesses. Obtain final frozen SCI/OPS review before creating
+any actual activation or CPU measurement; no fourth repair is inferred.
+
+Retention precision is still unregistered. The independent scope report and
+evidence/RETENTION_PRECISION_ARITHMETIC_001.json give illustrative exact zero-damage
+binary-parent feasibility floors149/59 for2%/5% at one fixed95% look. These are
+not power targets, the paired accuracy-difference endpoint or observed retention.
+No panel was generated or opened, no multiplicity policy adopted, and no margin
+changed.32 optimizer parents remain TRAIN exposure, not retention enrollment.

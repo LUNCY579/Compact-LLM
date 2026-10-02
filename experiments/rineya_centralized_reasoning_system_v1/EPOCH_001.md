@@ -292,3 +292,29 @@ within the same three-round limit. Actual token/Jinja/observer/process measureme
 remain closed; all additional experiments in these controls use synthetic adapters.
 Native consumption remains47.421s and optimizer updates remain0. The owner
 exception for the previously quarantined reader/probe remains unanswered.
+
+## Token instrument second review and retention feasibility
+
+Candidate2 source40b3a9a6/tests99566718/closed contract7478376b passed31 synthetic
+tests; Root's durable run took3.705s including startup (receipt4647a528). Five
+independent original/additional full-vector corruptions reject. SCI2 report34d5819c
+closes its earlier vector association finding. OPS2 report26228f22 substantially
+closes the first seven criteria but demonstrates child-side Git subprocess calls,
+incompatible with the strict no-descendant policy. All checks used synthetic
+adapters; no actual tokenizer/process measurement was run.
+
+Exact candidate2 bytes are retained in history/learning_tokenization_round2,
+preservation4a640c53. The final third repair removes only that child-side source
+check conflict while retaining parent clean-commit observation and immutable
+child source/admission proofs. Fresh final SCI/OPS review is required; further
+material disagreement triggers quarantine rather than an implicit fourth repair.
+
+Independent retention design arithmetic (reporta8a07424, Root receipt86f166df)
+shows that with zero damages and independently sampled eligible binary parent
+units, one-sided95% upper bounds for n8/16/32/64 are31.2344/17.0750/8.93682/4.57297%.
+Best-case zero-damage feasibility requires149 parents for2% and59 for5% at one
+fixed look. These are not full power, actual source-correct enrollment or the
+registered paired accuracy-difference endpoint. Variants do not add independent
+parents; source/incumbent evidence is unavailable. No new panel, policy, margin,
+promotion or preservation claim was introduced. Native cost47.421s and training
+updates0 remain unchanged; all actual model and tokenization results are pending.

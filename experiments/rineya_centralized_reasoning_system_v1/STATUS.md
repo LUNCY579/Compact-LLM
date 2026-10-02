@@ -57,8 +57,10 @@ model adaptation and retention remain unmeasured. The separate CPU tokenizer/mas
 architecture passed scope review. Its first frozen implementation passed21
 synthetic tests, but fresh SCI/OPS reviews found receipt-vector association,
 resource, admission, activation and recovery defects. The exact first freeze and
-counterexamples are retained; one coherent second-candidate repair is underway
-(`audits/LEARNING_TOKENIZATION_ROUND1_ADJUDICATION.md`). Actual token measurement
+counterexamples are retained. Candidate2 passed31 synthetic tests and repaired
+those findings, but operations review reproduced worker-side Git subprocesses
+that violate its no-descendant policy. The final third source repair is underway
+(`audits/LEARNING_TOKENIZATION_ROUND2_ADJUDICATION.md`); actual token measurement
 remains closed. This work cannot reopen the quarantined runtime paths.
 The guard and exact-prefix reader qualifier passed24 lightweight tests. Reader
 review reproduced a completion-proof gap,
