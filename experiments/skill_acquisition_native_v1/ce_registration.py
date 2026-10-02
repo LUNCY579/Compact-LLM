@@ -169,7 +169,7 @@ def required_interfaces():
 def child_environment():
     """Explicit minimal future child environment; no credential variables copied."""
     allowed=('SYSTEMROOT','WINDIR','COMSPEC','TEMP','TMP','PATH','USERPROFILE','LOCALAPPDATA','APPDATA',
-             'PROGRAMFILES','PROGRAMW6432')
+             'PROGRAMFILES','PROGRAMW6432','USERNAME')
     result={key:value for key in allowed if (value:=os.environ.get(key)) is not None}
     require(all(result.get(key) for key in ('SYSTEMROOT','TEMP','PATH')), 'explicit Windows child environment metadata missing')
     result.update(PYTHONHASHSEED='20261001',CUBLAS_WORKSPACE_CONFIG=':4096:8')
