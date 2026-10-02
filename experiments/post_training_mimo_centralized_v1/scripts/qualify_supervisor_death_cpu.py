@@ -103,9 +103,9 @@ def refuse_consumed():
 
 
 class DeadlineSafety:
-    """Independent deadline thread holds only the observer's outer safety Job."""
+    """Deadline action uses the owned outer Job or original suspended startup root."""
     def __init__(self, deadline):
-        self.deadline, self.job = deadline, None
+        self.deadline, self.job, self.pending_root = deadline, None, None
         self.intervened, self.errors, self.stopped = False, [], False
         self.lock, self.cancelled = threading.RLock(), threading.Event()
         self.thread = threading.Thread(target=self._watch, daemon=True, name='CPU-outer-deadline')
@@ -113,11 +113,22 @@ class DeadlineSafety:
     def start(self):
         self.thread.start()
 
+    def track_root(self, process, kernel):
+        """Own only the original new Popen handle, before identity/Job logging."""
+        with self.lock:
+            require(self.job is None and self.pending_root is None,
+                    'outer startup root ownership overlap')
+            self.pending_root = (process, kernel)
+            if self.intervened or time.monotonic() >= self.deadline:
+                self.fire()  # A late Popen return still receives owned safety cleanup.
+                raise RuntimeError('outer startup root returned after deadline/intervention')
+
     def install(self, job):
         with self.lock:
             require(self.job is None and not self.intervened and time.monotonic() < self.deadline,
                     'outer safety Job installation after deadline/intervention')
             self.job = job
+            self.pending_root = None
 
     def detach(self, job):
         with self.lock:
@@ -129,8 +140,17 @@ class DeadlineSafety:
             self.intervened = True
             if self.job is not None:
                 try:
-                    self.job.kernel.record({'event': 'uncredited_outer_deadline_safety_termination'})
                     self.job.terminate()
+                    self.job.kernel.record({'event': 'uncredited_outer_deadline_safety_termination'})
+                except BaseException as error:
+                    self.errors.append(type(error).__name__ + ': ' + str(error))
+            elif self.pending_root is not None:
+                process, kernel = self.pending_root
+                try:
+                    result, error = kernel.call('TerminateProcess', int(process._handle), 2,
+                        context={'uncredited_suspended_startup_root': process.pid,
+                                 'original_popen_handle': True})
+                    require(result, f'owned suspended startup safety termination failed: {error}')
                 except BaseException as error:
                     self.errors.append(type(error).__name__ + ': ' + str(error))
 
@@ -144,6 +164,25 @@ class DeadlineSafety:
         self.stopped = not self.thread.is_alive()
         if not self.stopped:
             self.errors.append('outer safety thread did not stop within bounded join')
+
+
+class WatchedOuterJob(TracedJob):
+    """Keep deadline ownership until the actual outer Job close succeeds."""
+    def __init__(self, kernel, process):
+        self.watchdog = None
+        super().__init__(kernel, process)
+
+    def attach(self, watchdog):
+        watchdog.install(self)
+        self.watchdog = watchdog
+
+    def close(self):
+        # No watchdog lock spans native accounting, logging or process waits.
+        # A failed close retains the installed safety action.
+        super().close()
+        if self.watchdog is not None:
+            self.watchdog.detach(self)
+            self.watchdog = None
 
 
 class SafetyTree(prior.Tree):
@@ -214,11 +253,12 @@ class SafetyTree(prior.Tree):
     def launch(self, command, stdout, stderr):
         def popen(*args, **kwargs):
             self.process = subprocess.Popen(*args, **kwargs)
+            self.watchdog.track_root(self.process, self.kernel)
             self.kernel.record({'event': 'owned_supervisor_root_created', 'pid': self.process.pid})
             return self.process
         def outer_job(kernel, process):
-            self.job = TracedJob(kernel, process)
-            self.watchdog.install(self.job)
+            self.job = WatchedOuterJob(kernel, process)
+            self.job.attach(self.watchdog)
             return self.job
         self.process, self.job, proof = launch_suspended(
             self.kernel, command, ROOT, stdout, stderr, min(self.deadline, time.monotonic() + 5),
@@ -234,10 +274,6 @@ class SafetyTree(prior.Tree):
             # This snapshot classifies later outer close as safety, never as proof.
             self.safety_cleanup_used = any(self.kernel.call('WaitForSingleObject', handle, 0)[0] != 0
                                            for handle in owned)
-        except BaseException:
-            self.safety_cleanup_used = True
-        try:
-            self.watchdog.detach(self.job)
         except BaseException:
             self.safety_cleanup_used = True
         result = super().cleanup(manual_fallback=True)
@@ -549,6 +585,11 @@ def observed_log_lower_bound(directory):
                 if event.get('event') == 'owned_supervisor_root_created':
                     require(type(event.get('pid')) is int and event['pid'] > 0, 'invalid root PID')
                     identities.add(event['pid'])
+                elif event.get('event') == 'windows_api' and event.get('api') == 'TerminateProcess':
+                    context = event.get('context') or {}
+                    pid = context.get('uncredited_suspended_startup_root')
+                    if context.get('original_popen_handle') is True and type(pid) is int and pid > 0:
+                        identities.add(pid)
                 elif event.get('event') == 'owned_retainer_process_held':
                     identities.add(event['identity']['pid'])
                 elif event.get('event') == 'owned_job_lifetime_accounting':

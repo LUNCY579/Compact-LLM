@@ -389,5 +389,127 @@ class ResourceAndSafetyFixtures(unittest.TestCase):
             watchdog.install(job)
 
 
+class CleanupWatchdogFixtures(unittest.TestCase):
+    def selected_job(self):
+        watchdog = qual.DeadlineSafety(100)
+        job = qual.WatchedOuterJob.__new__(qual.WatchedOuterJob)
+        job.watchdog, job.handle = None, 800
+        job.kernel = SimpleNamespace(record=Mock())
+        job.terminate = Mock()
+        with patch.object(qual.time, 'monotonic', return_value=0):
+            job.attach(watchdog)
+        return job, watchdog
+
+    def test_outer_watchdog_remains_installed_until_successful_close(self):
+        job, watchdog = self.selected_job()
+        def close(actual):
+            self.assertIs(watchdog.job, actual)
+            self.assertIs(actual.watchdog, watchdog)
+            actual.handle = None
+        with patch.object(qual.TracedJob, 'close', autospec=True, side_effect=close):
+            job.close()
+        self.assertIsNone(watchdog.job)
+        self.assertIsNone(job.watchdog)
+        self.assertFalse(watchdog.intervened)
+
+    def test_failed_outer_close_keeps_deadline_termination_available(self):
+        job, watchdog = self.selected_job()
+        with patch.object(qual.TracedJob, 'close', side_effect=RuntimeError('close denied')):
+            with self.assertRaisesRegex(RuntimeError, 'close denied'):
+                job.close()
+        self.assertIs(watchdog.job, job)
+        watchdog.fire()
+        job.terminate.assert_called_once_with()
+        self.assertTrue(watchdog.intervened)
+
+    def test_cleanup_accounting_boundary_cannot_detach_before_actual_close(self):
+        job, watchdog = self.selected_job()
+        with tempfile.TemporaryDirectory() as temporary:
+            kernel = SimpleNamespace(logging_errors=[], call=lambda *args, **kwargs: (0, 0))
+            tree = qual.SafetyTree(kernel, Path(temporary), 30, qual.config(), watchdog)
+            tree.job = job
+            cleanup = {'status': 'OWNED_CPU_PROCESSES_EXITED', 'owned_process_fallback_pids': [],
+                       'logging_errors': [], 'final_job_accounting_before_close': {'active_processes': 0}}
+            def inherited_cleanup(*args, **kwargs):
+                self.assertIs(watchdog.job, job)  # Final accounting/logging has not closed it.
+                watchdog.fire()
+                job.terminate.assert_called_once_with()
+                return cleanup
+            with patch.object(qual.prior.Tree, 'cleanup', side_effect=inherited_cleanup):
+                tree.cleanup()
+            with patch.object(qual.time, 'monotonic', return_value=0):
+                self.assertFalse(qual.case_passed(None, tree, dict(cleanup,
+                    uncredited_outer_safety_cleanup_used=False), {'supervisor_exit': {}, 'retainer_exit': {}}))
+
+    def test_deadline_safety_terminates_before_diagnostic_logging_failure(self):
+        job, watchdog = self.selected_job()
+        def record(event):
+            job.terminate.assert_called_once_with()
+            raise OSError('diagnostic unavailable')
+        job.kernel.record = record
+        watchdog.fire()
+        job.terminate.assert_called_once_with()
+        self.assertTrue(watchdog.intervened)
+        self.assertTrue(any('diagnostic unavailable' in error for error in watchdog.errors))
+
+    def test_pre_enrollment_deadline_uses_original_root_handle_only(self):
+        watchdog = qual.DeadlineSafety(100)
+        root = SimpleNamespace(pid=100, _handle=101)
+        kernel = SimpleNamespace(call=Mock(return_value=(1, 0)))
+        with patch.object(qual.time, 'monotonic', return_value=0):
+            watchdog.track_root(root, kernel)
+        watchdog.fire()
+        self.assertTrue(watchdog.intervened)
+        self.assertEqual(kernel.call.call_count, 1)
+        call = kernel.call.call_args
+        self.assertEqual(call.args, ('TerminateProcess', 101, 2))
+        self.assertTrue(call.kwargs['context']['original_popen_handle'])
+
+    def test_late_root_return_is_cleaned_and_cannot_enroll_or_resume(self):
+        watchdog = qual.DeadlineSafety(100)
+        kernel = SimpleNamespace(call=Mock(return_value=(1, 0)))
+        with patch.object(qual.time, 'monotonic', return_value=101):
+            with self.assertRaisesRegex(RuntimeError, 'deadline/intervention'):
+                watchdog.track_root(SimpleNamespace(pid=100, _handle=101), kernel)
+        self.assertTrue(watchdog.intervened)
+        kernel.call.assert_called_once()
+        with self.assertRaisesRegex(RuntimeError, 'intervention'):
+            watchdog.install(SimpleNamespace())
+
+    def test_created_root_is_tracked_before_any_diagnostic_record(self):
+        watchdog = qual.DeadlineSafety(100)
+        root = SimpleNamespace(pid=100, _handle=101)
+        kernel = SimpleNamespace(logging_errors=[], call=Mock(return_value=(1, 0)))
+        def record(event):
+            self.assertIs(watchdog.pending_root[0], root)
+            watchdog.fire()
+            kernel.call.assert_called_once()
+        kernel.record = record
+        def launch(kernel, command, cwd, stdout, stderr, deadline, guard, popen, job):
+            popen(command)
+            raise RuntimeError('fixture stopped after creation record')
+        with tempfile.TemporaryDirectory() as temporary:
+            tree = qual.SafetyTree(kernel, Path(temporary), 30, qual.config(), watchdog)
+            with patch.object(qual.subprocess, 'Popen', return_value=root), \
+                 patch.object(qual, 'launch_suspended', side_effect=launch), \
+                 patch.object(qual.time, 'monotonic', return_value=0):
+                with self.assertRaisesRegex(RuntimeError, 'creation record'):
+                    tree.launch(['fixture-python'], None, None)
+        self.assertTrue(watchdog.intervened)
+
+    def test_missing_creation_receipt_keeps_owned_startup_api_lower_bound(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            case = directory / 'A'
+            case.mkdir()
+            (case / 'OBSERVER_API.jsonl').write_text(json.dumps({
+                'event': 'windows_api', 'api': 'TerminateProcess', 'return': 1, 'last_error': 0,
+                'context': {'uncredited_suspended_startup_root': 100, 'original_popen_handle': True}}))
+            with patch.object(qual, 'OUTPUT', directory):
+                result = qual.case_accounting(['A'], FROZEN, SOURCE)
+            self.assertIsNone(result['experimental_os_processes_created'])
+            self.assertEqual(result['confirmed_observed_process_lower_bound'], 1)
+
+
 if __name__ == '__main__':
     unittest.main()
