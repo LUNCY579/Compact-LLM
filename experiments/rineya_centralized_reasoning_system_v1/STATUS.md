@@ -82,9 +82,22 @@ gap remain open until then. First freeze1d20d33c/f7188468/d80358f3 passed15 test
 and a new raw-retained32-core/32-rename validation, but scientific review rejects
 the population: a terminal-only solver gets32/32, earlier owners selected0 times.
 OPS also reproduces unbounded rules/parameter serialization before shape checks.
-The exact freeze and cumulative failed/repeated work are retained. One bounded
-second-candidate recipe/input-validation repair is underway; no panel or native
-operation is qualified by these fixture passes.
+The exact freeze and cumulative failed/repeated work are retained. Candidate2
+source90f0cf99/tests1329e3ae/contract7fd4246c is frozen. Seven targeted boundary/
+constructor checks passed without a full bank or oracle/core call. Root's single
+retained validationc99ad46b then passed15 tests,32 main and32 rename checks in
+3.586479s; raw predictions and costs remain in ignored output. Eight earlier
+owners were selected, two per family. Individual terminal/first/penultimate/fixed1
+controls score24/13/12/11 out of32. SCI2's combined terminal+first+penultimate
+control scores32/32 while skipping84 guard evaluations; population acceptance
+remains withheld. OPS2 closes the bounded-input finding for these exact bytes
+after68 targeted rejection checks. Versioned ancestry links to rejected v1 roots;
+this is a related revised panel, not fresh confirmation. Cumulative known work
+is161 core calls and160 rename controls,321 combined. Earlier builder raw rows
+and costs remain unavailable. No panel/native qualification or H01 closure
+follows from fixture passes. Round2 is archived byte for byte. The last permitted
+repair is scoped in ACQUISITION_PANEL_ROUND2_ADJUDICATION: preserve v2 labels,
+declare interior winners in every family and preserve the v1/v2/v3 relationship.
 The guard and exact-prefix reader qualifier passed24 lightweight tests. Reader
 review reproduced a completion-proof gap,
 so its native launch remains closed pending repair. The previous complete primary

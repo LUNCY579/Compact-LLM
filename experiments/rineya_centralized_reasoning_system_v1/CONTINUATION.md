@@ -284,3 +284,45 @@ pre-encoding checks, prospectively fixed earlier-selection/opposing-terminal
 coverage, raw retained validation and no replacement/resampling. Preserve the
 negative shortcut, changed-recipe relationships and original H01/LA-I1-002 open
 status; no terminal-status substitute endpoint or native scope change.
+
+Candidate2 freeze90f0cf99/1329e3ae/7fd4246c is immutable pending SCI2/OPS2.
+The builder's seven targeted tests passed0.041s with whole-bank/oracle APIs fatal.
+Root did not repeat that class. The separately planned guarded15-test validation
+CRS-ACQUISITION-FREEZE2-ROOT-001 executed exactly one32-core+32-rename batch;
+all passed. REPORTc99ad46b, PLAN849dbe4c and raw bundle/core/receipt references
+are in outputs/acquisition_second_freeze_root_validation_001. Public metadata
+and the exact wrapper are retained in evidence/acquisition_panel_round2_cpu_001;
+private predictions/labels remain ignored. Do not rerun the terminal wrapper/key.
+Validation wall3.586479s and nested core.047s are subsets of observed command
+wall4.15628s; do not add nested times. Core costs192 operations,56153 scanned
+source bytes and110354 verification bytes. Cumulative core161/rename160/combined
+321 includes old failed/repeated work; unavailable historical raw costs stay
+unavailable. No budget reset or native work occurred.
+
+Raw results show eight earlier selections, two per family. Individual terminal,
+first, penultimate and fixed-position1 controls score24/13/12/11 out of32.
+SCI must scrutinize the prospectively recorded combined three-position control,
+actual terminal evidence equivalence, v1-v2 label/ancestry relationship and the
+broader population; OPS must verify the bounded input paths and exact raw/scorer
+associations. No source/data acceptance, H01 amendment or LA-I1-002 closure is
+recorded yet. Preserve all three files before any further repair; max three
+milestone rounds remains in force. Owner exception, native/reader/probe
+quarantines and protected banks remain unchanged.
+
+Final SCI2 review45f02a5d rejects the second population: the complete combined
+three-position rule is32/32 and omits84 candidate guard evaluations. This is
+not source/token/runtime savings. OPS2 review2c705c65 closes the input-boundary
+finding with68 targeted rejections and no added batch. SCI2 verifies28/32 v1-v2
+status changes and all32 related kinship/ancestor links. Root adopts those
+checks; it did not independently repeat them. Exact round2 source/test/contract
+are in history/acquisition_panel_round2, preservation62628e20.
+
+Follow ACQUISITION_PANEL_ROUND2_ADJUDICATION for the final eligible candidate3.
+New builder acq_builder3 owns the same three files after explicit handoff;
+preserve v2 status assignment, all32 slots and full ancestry, prospectively add
+at least one interior supported winner per family and retain the combined
+control. One targeted class only for builder, then stop at exact freeze. Root
+separately plans one guarded raw-retained32+32 observation. Final SCI/OPS reviews
+must inspect it. If a material finding remains after round3, quarantine this
+candidate/population; no fourth same-milestone loop. No model/owner authority,
+native qualification, original H01 amendment or LA-I1-002 closure follows.
