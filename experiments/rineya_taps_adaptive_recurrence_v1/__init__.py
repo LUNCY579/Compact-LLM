@@ -1,1 +1,1 @@
-"""TAPS-RINEYA-001: frozen, diagnostic-first adaptive recurrent update scale."""
+"""TAPS-RINEYA-001. Frozen inference apparatus; no native efficacy claim."""
