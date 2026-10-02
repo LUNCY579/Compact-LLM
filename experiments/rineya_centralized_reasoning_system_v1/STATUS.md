@@ -7,8 +7,8 @@ The new owner request is retained byte-for-byte with a hash in
 [AUTHORIZATION_2026-10-01.md](AUTHORIZATION_2026-10-01.md). The historical founding
 section below, charter and manifest are preserved. All central CHECK/FINAL remain closed.
 
-Current milestone: **IMPLEMENTED; independent CPU and operations review closure
-in progress; native launch awaits clean committed source and exact review.**
+Current milestone: **CPU_QUALIFIED for the supplied reference pipeline;
+native launch awaits its separate clean source and exact review.**
 The complete supplied AI-Newton paper, supplement and figures were inspected;
 18 pinned primary implementation files were source-verified. Exact external
 Titan/Sparse/Transition/Supa assets are inventoried read-only. Opallo binaries
@@ -26,8 +26,11 @@ are labeled; no Rineya discovery or acquisition/retention gain is claimed.
 Reviewers reproduced and repaired consequential source-validation, unknown-state,
 aggregate-scoring, recovery/fencing and incomplete-provenance problems. Original
 findings remain in `audits/`; no vote or administrative signature establishes truth.
-Before dispatch, bind final source/test/review hashes and run the registered CPU
-epoch, then the native preflight. Hourly heartbeat
+The registered CPU epoch executed208 cases with zero missing/errors; supplied
+reader16/16 and B/C/D each64/64 establish fixture correctness/parity only.
+The complete evidence, interpretation and costs are in [EPOCH_001.md](EPOCH_001.md).
+Before native dispatch, bind its final source/test/review hashes and refresh
+actual host admission. Hourly heartbeat
 `crs-001-hourly-research-supervisor` is active with quiet-on-unchanged behavior.
 
 Remaining gates: native numerical/capture and maximum576 reader qualification,
