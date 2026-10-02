@@ -8,8 +8,8 @@ The new owner request is retained byte-for-byte with a hash in
 section below, charter and manifest are preserved. All central CHECK/FINAL remain closed.
 
 Current milestone, 2026-10-02: **CPU_QUALIFIED for the supplied reference pipeline;
-native operational revision 3 source reviewed; whole-path qualification remains
-closed after a live GPU-process conflict. New reader qualification is under review.**
+native operational revision 3 whole-path claim quarantined at its review limit.
+New reader qualification is under review and inherits the closed runtime gate.**
 The complete supplied AI-Newton paper, supplement and figures were inspected;
 18 pinned primary implementation files were source-verified. Exact external
 Titan/Sparse/Transition/Supa assets are inventoried read-only. Opallo binaries
@@ -41,9 +41,10 @@ froze an immutable snapshot. Recovery was repaired and independently reviewed.
 Version 2 equals B's strong supplied graph; no autonomous discovery or B/C efficacy
 is inferred. Separate scorer/atlas v2 instruments fix format/semantics, duplicated
 observations, dose and unavailable-incumbent defects. Native efficiency remains
-quarantined until same-panel baseline/gain binding. A new receipt-bound learning
-delta guard and exact-prefix reader qualifier passed 24 lightweight tests; fresh
-independent review is required. Reader review reproduced a completion-proof gap,
+unmeasured. Independent review accepted the new receipt-bound learning delta
+guard for same-panel arithmetic only; it attests no native execution or learning.
+The guard and exact-prefix reader qualifier passed24 lightweight tests. Reader
+review reproduced a completion-proof gap,
 so its native launch remains closed pending repair. The previous complete primary
 CPU suite passed 117 tests in 17.149 seconds before these additions.
 
@@ -75,7 +76,8 @@ Final revision 3 native SHA `84531289`, contract `d79f3b6a`, passed independent
 operations/scientific source reviews. Its first admission refused RAM0.715 GiB
 and unregistered Photos/Unity GPU identities before dispatch; four cases remained
 unattempted (`evidence/native_d2_rev3_admission_refusal_001/`). After a genuine
-host change, fresh RAM6.289 GiB/GPU6.958 GiB and process checks admitted job
+host change, a root refresh observed RAM6.289 GiB/GPU6.958 GiB; the supervisor
+then performed its own complete admission checks for job
 `CRS-D2-003-1fd862b8-d79f3b6a`. An unregistered Unity process appeared during
 framework import. The watchdog stopped only the owned worker tree, verified
 empty-tree exit and charged7.469s. No diagnostic result or completed model/forward
@@ -83,6 +85,17 @@ event was produced; all four forwards remained unattempted. Raw evidence is in
 `evidence/native_d2_attempt_003/`. The original positive numerical trace and failed
 supervisor observations retain their separate statuses. Resume requires a fresh
 host change and a new job identity; never reuse the terminal failed job/output.
+
+After Unity PID683892 exited, another fresh complete admission dispatched job
+`CRS-D2-004-1fd862b8-d79f3b6a`. It failed on an unregistered executable inside
+the exact owned Job during framework import, with no model measurements. The
+failing executable identity was not captured; its cause remains unresolved.
+The watchdog verified empty-tree exit and charged4.219s. All four forwards remain
+unattempted (`evidence/native_d2_attempt_004/`). The final three-round native
+milestone now quarantines its whole-path claim and further model dispatch;
+preserve the valid revision2 trace and all failures. A separately reviewed,
+bounded no-model executable-inventory experiment is the resolving next step.
+This parking condition retains CRS-001 and its questions; it does not retire it.
 
 Remaining gates: native numerical/capture and maximum576 reader qualification,
 16-case native diagnostic, actual B/C native experiment with meaningful irrelevant
@@ -94,7 +107,7 @@ likelihood failure is preserved. No final bank has been generated or opened.
 Restart commands and conditions: [CONTINUATION.md](CONTINUATION.md). Source changes
 create new registrations; completed or failed observations retain their identities.
 Unknown launch outcomes must be reconciled before another worker. Native
-qualification-worker consumption is43.140000000003056s including three failed
+qualification-worker consumption is47.359000000007654s including four failed
 execution paths (epoch cap7200s, rolling24h cap14400s). No active model worker.
 Model loads1, forwards4, training/optimizer updates0. Efficacy and learning/
 retention remain unmeasured; no candidate model or canonical promotion.

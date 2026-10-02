@@ -43,11 +43,16 @@ From the clean attached worktree, use the exact revision 3 preflight:
 & 'C:\Users\clclc\BusinessProject\.venv-mq001\Scripts\python.exe' -B -m experiments.rineya_centralized_reasoning_system_v1.native --preflight --contract-sha256 d79f3b6a51e939d78a99c5c287ef6f33ef5979cfa50e76ba3d930ed3724f826a --review 'experiments/rineya_centralized_reasoning_system_v1/outputs/NATIVE_OPS_APPROVAL_1fd862b8.json'
 ```
 
-Only after a genuine host change, complete admission and durable reconciliation
-may a new bounded attempt be registered with a new key and output directory.
-Do not reuse `CRS-D2-003-1fd862b8-d79f3b6a` or its output. Current charged native
-time is43.140000000003056s; no active worker remains. Preserve prior failures.
-New reader code is under independent review and is not eligible to launch.
+The later `CRS-D2-004-1fd862b8-d79f3b6a` dispatch failed on an unregistered
+executable inside the owned Job. Its exact identity is unresolved. At the native
+milestone's three-round repair limit, quarantine whole-path qualification and
+further model launches. A fresh host change alone no longer opens this gate.
+Do not reuse terminal003/004 jobs or outputs. Current charged native time is
+47.359000000007654s; no active worker remains. Preserve all failures and positive
+revision2 trace facts. New reader code is under independent review and inherits
+this closed runtime gate. The next eligible runtime action is a separately
+reviewed bounded no-model inventory of exact Job executable identities and
+source-check/telemetry paths, without modifying native3 or broadening its registry.
 
 Actual diagnostic dispatch requires the exact committed contract digest and a
 fresh independent review receipt binding that commit/code/contract, current

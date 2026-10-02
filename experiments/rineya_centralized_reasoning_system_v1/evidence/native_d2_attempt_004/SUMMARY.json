@@ -1,0 +1,56 @@
+{
+  "active_native_jobs": [],
+  "budget": {
+    "epoch": "CRS-EPOCH-001",
+    "epoch_charged_seconds": 47.359000000007654,
+    "epoch_limit_seconds": 7200,
+    "rolling_charged_seconds": 47.359000000007654,
+    "rolling_limit_seconds": 14400,
+    "unknown_reservations_charged_in_full": true
+  },
+  "contract_sha256": "d79f3b6a51e939d78a99c5c287ef6f33ef5979cfa50e76ba3d930ed3724f826a",
+  "diagnostic_result_absent": true,
+  "files": {
+    "CONTAINMENT_RECEIPT.json": "84dfaa45c81359f1351447fc8c860bc275f40c58e54b0ee0e946c5b52b33877a",
+    "EVENTS.jsonl": "65482fb6aabb17398ba27965b34e86f63cca00af2ebfc1580afcad62731e7876",
+    "GO.json": "b46ac0626a75ca35842379eb8d2d9813c2ba4740c338f9448517fa030ef4617e",
+    "LAUNCH_ATTEMPT.json": "91d805d96bea2c671d371688bac29a0a69d10ce40ae5122aef1dea52da383302",
+    "LAUNCH_INTENT.json": "a229086b7d1b1e4d9e3d240ca128bb13bde8de7a946abb4d11a54f47f7878d2b",
+    "SUPERVISOR_RESULT.json": "469b8ba8d075e6b7d0de113bd29198233aa0969223bc3c7f55dfc4f68e931230",
+    "TREE_CONTAINMENT.json": "a5c0ca7bbd32fe8bc135b3e54ef3e8de49a62f1f0b64117d361d8985f9f4ebab",
+    "WATCHDOG.jsonl": "021fda0be2a43de51ebdf5d832a9d1ba8408aed7c0a8c4c650b69a8822f1a399",
+    "receipts/native_outcome_observation-7440858fd330808291c6eebb874a948141ea642eb6471361a53db35a42a06a5c.json": "c4a3d59d3341390e7d806b3ccb4cc78cab9d8f678c38dc04521c5ccee722d527",
+    "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "interpretation": "Owned runtime executable identity refusal before model measurements. Exact failing executable identity not captured by error; do not infer it. Owned-tree exit verified and failed worker cost retained. Whole-path qualification claim quarantined at final review-repair round3; no further model launch or gate broadening until a resolving no-model diagnostic is reviewed.",
+  "job_key": "CRS-D2-004-1fd862b8-d79f3b6a",
+  "journal_event_kinds": [
+    "framework_import_attempt"
+  ],
+  "kind": "FAILED_CONTAINED_NATIVE_ATTEMPT_WITH_RAW_EVIDENCE",
+  "native_sha256": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+  "planned_forward_cases": 4,
+  "recorded_forward_attempts": 0,
+  "recorded_model_load_attempts": 0,
+  "source_commit": "1fd862b863f30ac772f54b19e7ab337d68a4215b",
+  "supervisor": {
+    "exit_code": 2,
+    "launch_attempted": true,
+    "owned_tree_exit": {
+      "observed_at": 1790923020.7004237,
+      "owned_tree_exited": true,
+      "remaining_owned_pids": []
+    },
+    "peak_process_tree_rss_bytes": 35131392,
+    "reader_qualified": false,
+    "reason": "NativeBlocked: unregistered owned runtime executable",
+    "status": "FAILED",
+    "subprocess_creation_outcome_unknown": false,
+    "training_qualified": false,
+    "wall_seconds": 4.219000000004598,
+    "watchdog_poll_seconds": 0.1,
+    "worker_dispatched": true
+  },
+  "unattempted_forward_cases": 4
+}

@@ -166,3 +166,28 @@ review reproduced a completion validator that accepted incomplete synthetic
 proofs; native reader launch remains closed pending consequential repairs and
 fresh review. These tests loaded no framework, tokenizer or model. No acquisition,
 retention, procedure-memory effect or native learning-efficiency claim follows.
+
+## Owned runtime refusal and bounded resolution
+
+After the conflicting Unity process exited, fresh complete admission dispatched
+`CRS-D2-004-1fd862b8-d79f3b6a` under the same final reviewed source/contract.
+The supervisor refused an unregistered executable inside the exact owned Job
+during framework import. The error does not identify that executable, so no
+particular cause is inferred. No diagnostic result or model measurements were
+produced; four planned forwards remain unattempted. Exact owned-tree exit was
+verified and4.219000000004598 worker-seconds charged. Eleven raw files plus the
+summary are preserved in `evidence/native_d2_attempt_004/`.
+
+Total charged native work is47.359000000007654s; no active or unknown worker
+remains. At the native milestone's final third review-repair round, its whole-path
+claim and model dispatch are quarantined pending a separately reviewed bounded
+no-model inventory experiment. Native3 source and its strict executable/resource
+registry stay fixed. Existing trace-local numerical findings and all failure
+receipts remain valid within their original scopes. Reader code inherits this
+gate; moving it to a new namespace cannot open it.
+
+Independent review accepted the receipt-bound learning delta API for matched
+endpoint arithmetic only (`evidence/LEARNING_DELTA_ACCEPTANCE_001.json`). Twelve
+CPU tests and independent negative/inconsistent-gain controls passed. Actual
+native panel provenance, qualification, causal dose comparisons, uncertainty and
+learning remain separate unmet requirements.
