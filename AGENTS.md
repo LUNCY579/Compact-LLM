@@ -43,3 +43,15 @@ Distinguish supplied code from discovered procedures, CPU fixtures from native
 model results, and system-level gains from model-only or distilled gains.
 Refresh current source and host evidence before any future launch; the founding
 snapshot is not live qualification.
+
+## Complementary SYNTH-CRS-001 track (2026-10-02)
+
+For SYNTH-inspired centralized verified supervision and later student distillation,
+read [its preservation charter](RINEYA_SYNTH_CENTRALIZED_REASONING.md) and
+[package](experiments/rineya_synth_centralized_reasoning_v1/README.md).
+This is a separate experiment based on CRS-001, not a rename or replacement.
+Preserve the original CRS-001 question and the central training program's gates.
+The owner-directed non-discard policy also applies to SYNTH-CRS-001, including
+explicit approval for retirement, archival, replacement, deletion, or obsolescence.
+Its founding CPU tests validate design metadata only, not native model readiness.
+Keep implementation within its package; do not modify unrelated projects.

@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "experiment_id": "SYNTH-CRS-001",
+  "state": "DESIGN_REGISTERED_NATIVE_UNQUALIFIED",
+  "repository": "LUNCY579/ChatBubble",
+  "branch": "research/rineya-synth-centralized-reasoning-v1",
+  "parent": {
+    "branch": "research/rineya-centralized-reasoning-system-v1",
+    "commit": "7459b614bcb017ae4f0160b15e0ccd53473bb990",
+    "tree": "9223d7b22e4bbbab867107a241c67ea7410a0ede"
+  },
+  "preservation": {
+    "complementary": true,
+    "automatic_sunset": false,
+    "explicit_owner_approval_for_retirement": true,
+    "preserve_negative_results": true,
+    "github_branch_protection_configured": false
+  },
+  "student": {
+    "parameter_class": "0.6B",
+    "checkpoint_sha256": null,
+    "tokenizer_sha256": null
+  },
+  "permissions": {
+    "native_inference": false,
+    "training": false,
+    "paid_teacher_calls": false,
+    "dataset_download": false,
+    "protected_bank_access": false,
+    "merge": false,
+    "model_upload": false
+  },
+  "claims": {
+    "runtime_implemented": false,
+    "corpus_generated": false,
+    "native_model_run": false,
+    "quality_improvement_established": false,
+    "retention_established": false,
+    "composition_established": false,
+    "release_permitted": false
+  },
+  "scoreboards": [
+    "model_only",
+    "tool_assisted_system",
+    "distilled_model"
+  ],
+  "data_design": {
+    "train_signatures": [
+      "R",
+      "S"
+    ],
+    "held_out_signatures": [
+      "RS"
+    ],
+    "split_unit": "dependency_connected_parent_family",
+    "target_format": "final_answer_only",
+    "verifier": "independent_of_candidate_generator",
+    "protected_banks": "closed"
+  },
+  "arms": [
+    {
+      "id": "M0",
+      "trained": false,
+      "data": "none",
+      "target_format": null
+    },
+    {
+      "id": "M1",
+      "trained": true,
+      "data": "surface_varied_verified_atomic",
+      "target_format": "final_answer_only"
+    },
+    {
+      "id": "M2",
+      "trained": true,
+      "data": "condition_diverse_verified_atomic",
+      "target_format": "final_answer_only"
+    }
+  ],
+  "primary_contrast": [
+    "M2",
+    "M1"
+  ],
+  "primary_budget": "nonpadding_student_training_tokens",
+  "open_run_bindings": [
+    "data_hashes",
+    "native_qualification",
+    "resource_caps",
+    "retention_guard_enrollment",
+    "statistical_method_and_power",
+    "effect_and_retention_margins",
+    "launch_approval"
+  ],
+  "source": {
+    "paper": "https://arxiv.org/abs/2609.37891v1",
+    "dataset_card": "https://huggingface.co/datasets/PleIAs/SYNTH",
+    "checked_on": "2026-10-02"
+  },
+  "validation_scope": "founding_registration_metadata_only"
+}

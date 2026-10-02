@@ -1,0 +1,46 @@
+{
+  "experiment_id": "SYNTH-CRS-001",
+  "checked_on": "2026-10-02",
+  "evidence_class": "LOCAL_CPU_REGISTRATION_METADATA_ONLY",
+  "python": "3.13.5",
+  "tests_passed": 23,
+  "commands": [
+    {
+      "command": "python experiments/rineya_synth_centralized_reasoning_v1/validate_manifest.py",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"VALID_DESIGN_REGISTRATION\",\n  \"native_execution_authorized\": false,\n  \"model_quality_evidence\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python -m unittest discover -s experiments/rineya_synth_centralized_reasoning_v1/tests -v",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_arm_boolean_is_not_integer (test_registration.RegistrationTests.test_arm_boolean_is_not_integer) ... ok\ntest_cli_bad_json_and_duplicate_keys (test_registration.RegistrationTests.test_cli_bad_json_and_duplicate_keys) ... ok\ntest_cli_missing_file (test_registration.RegistrationTests.test_cli_missing_file) ... ok\ntest_cli_valid_does_not_authorize_execution (test_registration.RegistrationTests.test_cli_valid_does_not_authorize_execution) ... ok\ntest_every_execution_permission_stays_closed (test_registration.RegistrationTests.test_every_execution_permission_stays_closed) ... ok\ntest_heldout_composition_not_in_training (test_registration.RegistrationTests.test_heldout_composition_not_in_training) ... ok\ntest_identity_must_not_be_boolean_version (test_registration.RegistrationTests.test_identity_must_not_be_boolean_version) ... ok\ntest_independent_verification_and_closed_banks (test_registration.RegistrationTests.test_independent_verification_and_closed_banks) ... ok\ntest_missing_or_unknown_fields (test_registration.RegistrationTests.test_missing_or_unknown_fields) ... ok\ntest_no_fabricated_capability_claim (test_registration.RegistrationTests.test_no_fabricated_capability_claim) ... ok\ntest_non_discard_rules_are_required (test_registration.RegistrationTests.test_non_discard_rules_are_required) ... ok\ntest_not_an_object (test_registration.RegistrationTests.test_not_an_object) ... ok\ntest_parent_is_exact (test_registration.RegistrationTests.test_parent_is_exact) ... ok\ntest_row_splits_cannot_replace_parent_families (test_registration.RegistrationTests.test_row_splits_cannot_replace_parent_families) ... ok\ntest_separate_scoreboards (test_registration.RegistrationTests.test_separate_scoreboards) ... ok\ntest_source_version_pinned (test_registration.RegistrationTests.test_source_version_pinned) ... ok\ntest_strong_primary_control (test_registration.RegistrationTests.test_strong_primary_control) ... ok\ntest_student_binding_does_not_imply_qualification (test_registration.RegistrationTests.test_student_binding_does_not_imply_qualification) ... ok\ntest_target_format_not_confounded (test_registration.RegistrationTests.test_target_format_not_confounded) ... ok\ntest_truthy_integers_are_not_policy_booleans (test_registration.RegistrationTests.test_truthy_integers_are_not_policy_booleans) ... ok\ntest_unknown_permission_rejected (test_registration.RegistrationTests.test_unknown_permission_rejected) ... ok\ntest_unresolved_launch_requirements_remain_visible (test_registration.RegistrationTests.test_unresolved_launch_requirements_remain_visible) ... ok\ntest_valid_founding_registration (test_registration.RegistrationTests.test_valid_founding_registration) ... ok\n\n----------------------------------------------------------------------\nRan 23 tests in 0.008s\n\nOK\n"
+    }
+  ],
+  "markdown_relative_links_checked": 21,
+  "link_check_scope": "new files locally; inherited targets referenced by inspected parent guidance; no external HTTP link checker",
+  "parent_agents_blob_sha1_verified": "8bc9a32b289f7975ce0da3939825eb9f28944047",
+  "inherited_agents_prefix_preserved_byte_for_byte": true,
+  "modified_existing_paths": [
+    "AGENTS.md"
+  ],
+  "native_execution_performed": false,
+  "training_performed": false,
+  "remote_ci_executed": false,
+  "model_quality_evidence": false,
+  "file_sha256_excluding_this_receipt": {
+    "AGENTS.md": "18ad3e200a859d3722919c68b95b83df057be85581b2b867a8aae099f79fb7e5",
+    "RINEYA_SYNTH_CENTRALIZED_REASONING.md": "271cce0fadefe3eecface205f282ba19b0be45d9c7491d11cb6b0a5374e886df",
+    "experiments/rineya_synth_centralized_reasoning_v1/AGENTS.md": "21f7ecdc22043494662c594cbde91e2bc337feb2d2e61ea6daa42d7ac3a48412",
+    "experiments/rineya_synth_centralized_reasoning_v1/ARCHITECTURE.md": "11692b7d135ce5a78b7782a9aa142fd197d14f9ca039e7583760682e7c9dcf46",
+    "experiments/rineya_synth_centralized_reasoning_v1/DATA_CONTRACT.md": "36a954ffbf093153a7eb08faa0ea70979549a51f4f29b02d2f3c96c07d3f281a",
+    "experiments/rineya_synth_centralized_reasoning_v1/EXPERIMENT_PLAN.md": "bc90aaf5c19b8b87d8f61b2c0e39eeaeeef88e08568991656089aaa2a9e237e6",
+    "experiments/rineya_synth_centralized_reasoning_v1/README.md": "bb9cc63a8e645f3d0bc103174aff5caf4ad7c80287fe51959ca73fe4d1024313",
+    "experiments/rineya_synth_centralized_reasoning_v1/SOURCES.md": "0d8a7dac594c95981c1587fd978d46d910003ce3f614cb689b77610f3a90f004",
+    "experiments/rineya_synth_centralized_reasoning_v1/STATUS.md": "a57fc84056efacfa83a8486a091e6bb13da4bbb7fc6fb915fa81803440825cc8",
+    "experiments/rineya_synth_centralized_reasoning_v1/manifest.json": "20deaa43907eac087bcb14495554b50e15fdb77d095aa1e6d33af5a47f85ec56",
+    "experiments/rineya_synth_centralized_reasoning_v1/tests/test_registration.py": "b2f4c4c0178cd247c8f48f19de0cf44484ec8c76675ad2eaed3518f1d61605bf",
+    "experiments/rineya_synth_centralized_reasoning_v1/validate_manifest.py": "1f8d37ed2570c6b6dfa800af6209edd85b933f2d35bde297d8228c5a37f8175d"
+  }
+}
