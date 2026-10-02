@@ -202,8 +202,8 @@ class BindingTests(unittest.TestCase):
         loader = types.SimpleNamespace(validate_dependencies=lambda manifest: self._validate(manifest))
         with self._cached("worker", fake):
             with mock.patch.object(worker, "_load_binding", return_value=loader):
-                result = worker.run_screen(self.repo/"out.json", self.repo/"unused-handoff.json", "0"*64,
-                                           freeze, hashlib.sha256(freeze.read_bytes()).hexdigest())
+                result = worker.run_screen(self.repo/"out.json", freeze,
+                                           hashlib.sha256(freeze.read_bytes()).hexdigest(), "lease-token")
         self.assertTrue(result["fresh_verified_source"])
         self.assertEqual(result["marker"], (str(self.paths["worker"]), self.manifest["roles"]["worker"]["sha256"]))
         fake._run_bound_screen.assert_not_called()
@@ -211,8 +211,7 @@ class BindingTests(unittest.TestCase):
     def test_unmarked_native_implementation_cannot_be_called_directly(self):
         import worker
         with self.assertRaisesRegex(RuntimeError, "STOP_UNBOUND_NATIVE_WORKER"):
-            worker._run_bound_screen(self.repo/"out.json", self.repo/"handoff.json", "0"*64,
-                                     self.repo/"freeze.json", "0"*64)
+            worker._run_bound_screen(self.repo/"out.json", self.repo/"freeze.json", "0"*64, "lease-token")
 
     def test_renderer_fixture_constant_override_is_rejected_even_when_repinned(self):
         original = self.paths["renderer_fixture"].as_posix()

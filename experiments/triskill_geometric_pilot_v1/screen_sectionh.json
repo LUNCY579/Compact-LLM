@@ -1,0 +1,634 @@
+[
+  {
+    "row_id": "h-screen-T1-ledger_replay",
+    "split": "screen",
+    "family": "state_tracking",
+    "task_kind": "transition_parent",
+    "system": "Apply one event to the supplied account balances. If status is not posted, leave all balances unchanged. add: add amount to account. scale: multiply account by amount. transfer: subtract amount from account and add it to other, simultaneously. Return only the complete resulting balances as a JSON object.",
+    "user": "{\"before\":{\"A\":23,\"B\":-14,\"C\":37,\"D\":5},\"event\":{\"account\":\"C\",\"amount\":8,\"kind\":\"transfer\",\"other\":\"A\",\"status\":\"posted\",\"tick\":58}}",
+    "expected": "{\"A\":31,\"B\":-14,\"C\":29,\"D\":5}",
+    "output_kind": "json_object",
+    "world_signature": "ec319c907f0a688614056e400396cf03e1380d2d063e89eed1102430398f88ea",
+    "state_signature": "1356ea7b5dfcb7ab9083dedfb83ea73eaf73bd47e05de10e93dbb43d38f05af3",
+    "rule_signature": "70917dd3a0f89c637623864ab1a3ab01def661f3f521ef7309b8f7fe336c0d7c",
+    "metadata": {
+      "parent": "T",
+      "native_contract": true,
+      "transition_family": "ledger_replay",
+      "event_kind": "transfer",
+      "in_trained_support": true,
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-T2-ledger_replay",
+    "split": "screen",
+    "family": "state_tracking",
+    "task_kind": "transition_parent",
+    "system": "Apply one event to the supplied account balances. If status is not posted, leave all balances unchanged. add: add amount to account. scale: multiply account by amount. transfer: subtract amount from account and add it to other, simultaneously. Return only the complete resulting balances as a JSON object.",
+    "user": "{\"before\":{\"A\":-6,\"B\":19,\"C\":11,\"D\":-27},\"event\":{\"account\":\"B\",\"amount\":3,\"kind\":\"scale\",\"other\":\"D\",\"status\":\"posted\",\"tick\":17}}",
+    "expected": "{\"A\":-6,\"B\":57,\"C\":11,\"D\":-27}",
+    "output_kind": "json_object",
+    "world_signature": "073baf037877117d507d0e89876e496b8a4ce521d366533ebefedb295e3e6f01",
+    "state_signature": "bb8275b70d7fe64dc1f3f6e13180890154a5cecf8157adc3d8a7168b4052e5b6",
+    "rule_signature": "dc968f3b6df62ecefcab094211b50b6a360d99a2397084a6d4d7f9905475f4e3",
+    "metadata": {
+      "parent": "T",
+      "native_contract": true,
+      "transition_family": "ledger_replay",
+      "event_kind": "scale",
+      "in_trained_support": true,
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-T3-register_machine",
+    "split": "screen",
+    "family": "state_tracking",
+    "task_kind": "transition_parent",
+    "system": "Apply one instruction to the supplied registers. Registers are integers modulo 97. swap exchanges register and other simultaneously. add adds value to register. mix adds (2 times other plus value) to register. conditional adds value if other is greater than threshold, otherwise subtracts value. Reduce updated numeric registers modulo 97; preserve other registers. Return only the complete resulting registers as a JSON object.",
+    "user": "{\"before\":{\"X\":40,\"Y\":88,\"Z\":13},\"event\":{\"kind\":\"add\",\"other\":\"Z\",\"register\":\"Y\",\"threshold\":61,\"tick\":34,\"value\":11}}",
+    "expected": "{\"X\":40,\"Y\":2,\"Z\":13}",
+    "output_kind": "json_object",
+    "world_signature": "e097893bc1558ea96908262d00a8a952d5a2ef72d10c6db8124af5e8f20fc610",
+    "state_signature": "9c3b6fee56fc1b7b56dbec7a6dd453a09d2f99c212d789568a912ba6fcbbb1bf",
+    "rule_signature": "55744a703919dd6524b411fa2b93f956e76a223cc47dea6d5d4cad6eefa3b6c5",
+    "metadata": {
+      "parent": "T",
+      "native_contract": true,
+      "transition_family": "register_machine",
+      "event_kind": "add",
+      "in_trained_support": true,
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-T4-register_machine",
+    "split": "screen",
+    "family": "state_tracking",
+    "task_kind": "transition_parent",
+    "system": "Apply one instruction to the supplied registers. Registers are integers modulo 97. swap exchanges register and other simultaneously. add adds value to register. mix adds (2 times other plus value) to register. conditional adds value if other is greater than threshold, otherwise subtracts value. Reduce updated numeric registers modulo 97; preserve other registers. Return only the complete resulting registers as a JSON object.",
+    "user": "{\"before\":{\"X\":52,\"Y\":7,\"Z\":70},\"event\":{\"kind\":\"conditional\",\"other\":\"Z\",\"register\":\"X\",\"threshold\":45,\"tick\":82,\"value\":-6}}",
+    "expected": "{\"X\":46,\"Y\":7,\"Z\":70}",
+    "output_kind": "json_object",
+    "world_signature": "e394251a1c20fe98bf988d3ba0658a8ef4312f88bd09a276080c750227e6dcb6",
+    "state_signature": "b0fe7724112f8462bd0455dfa0095b95514aa07976d67c61de59b4da0170666d",
+    "rule_signature": "948ce2213334cdec662eb7ab9e01d7f34df2e654c80be8ea29580f4c89f8a400",
+    "metadata": {
+      "parent": "T",
+      "native_contract": true,
+      "transition_family": "register_machine",
+      "event_kind": "conditional",
+      "in_trained_support": true,
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-H-larch",
+    "split": "screen",
+    "family": "answerability_abstention",
+    "task_kind": "answerability_parent",
+    "system": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+    "user": "Complete notes for Larch: The Larch seal has code 14. The seal is stored beside the crate. What is the Larch seal's code?",
+    "expected": "14",
+    "output_kind": "answer_or_abstain",
+    "world_signature": "ae821969031fd2a76b0739bc9c78238bcc0773ed97451b3538b100b8a684d382",
+    "state_signature": "d9058c4458d19c5aa9f16f9975f6f25c92e3a8ec8f9208875a7d1414f788afbb",
+    "rule_signature": "0a0a0eb53b15070a15e5ad2f8ce13d01fd24287127a2bc1ab74316e7f48fc905",
+    "metadata": {
+      "parent": "H",
+      "native_contract": true,
+      "contract": "hskill_answerable_v2",
+      "answerable": true,
+      "strict_reply": "14",
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-H-myrtle",
+    "split": "screen",
+    "family": "answerability_abstention",
+    "task_kind": "answerability_parent",
+    "system": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+    "user": "Complete notes for Myrtle: The Myrtle seal has code 63. The seal is stored beside the crate. What is the Myrtle seal's code?",
+    "expected": "63",
+    "output_kind": "answer_or_abstain",
+    "world_signature": "4636043e28d88efce11486a4c67f431b8020e9fb03e51063982c2e5e688e656b",
+    "state_signature": "8d957d917e7ed2c106f2b0d0c3c38e5dfabaf263792dbc71ae5ab11c6ad5889b",
+    "rule_signature": "d46448c9f76edb21c37d87633383cad501bdf19f35ff356b723373adccc582fd",
+    "metadata": {
+      "parent": "H",
+      "native_contract": true,
+      "contract": "hskill_answerable_v2",
+      "answerable": true,
+      "strict_reply": "63",
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-H-nutmeg",
+    "split": "screen",
+    "family": "answerability_abstention",
+    "task_kind": "answerability_parent",
+    "system": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+    "user": "Complete notes for Nutmeg: The Nutmeg crate has code 27. The seal is stored beside the crate. What is the Nutmeg seal's code?",
+    "expected": "UNKNOWN",
+    "output_kind": "answer_or_abstain",
+    "world_signature": "4ee8477ba4a4adc1e73b6392792fd2a69299ce92ddf2ca6fe44fcb2dcd712b8b",
+    "state_signature": "8fc6cb0d3db2ec0096e9a2f2be0d06e173b2384d431c7d415cc095fc71221bf1",
+    "rule_signature": "10eeebd839c36cadaad873045e71c8702ddb6f71d4411e73eef65a559a1072f5",
+    "metadata": {
+      "parent": "H",
+      "native_contract": true,
+      "contract": "hskill_answerable_v2",
+      "answerable": false,
+      "strict_reply": "I don't know based on the available information.",
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-H-osier",
+    "split": "screen",
+    "family": "answerability_abstention",
+    "task_kind": "answerability_parent",
+    "system": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+    "user": "Complete notes for Osier: The Osier crate has code 50. The seal is stored beside the crate. What is the Osier seal's code?",
+    "expected": "UNKNOWN",
+    "output_kind": "answer_or_abstain",
+    "world_signature": "27aedb33feb46aae05e9be828157d6cfb2dac66a9534eefcee1614b774112be3",
+    "state_signature": "1d0dd2403958b2eaf1ce78e18d07c0a0c7edc6f827928fcfdbd7ec1ccc347a0a",
+    "rule_signature": "0f4a2fa993d7fc4f179ccaaabd089d2a5b1f80e8569ae2946ffd8744316b27e1",
+    "metadata": {
+      "parent": "H",
+      "native_contract": true,
+      "contract": "hskill_answerable_v2",
+      "answerable": false,
+      "strict_reply": "I don't know based on the available information.",
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-C-onyx",
+    "split": "screen",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Reason internally and return only the common final integer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+    "user": "Complete records for onyx:\nRecord A: the initial onyx register value is not recorded.\nRule definitions:\nONYX_1(x) = (3 * x + (5)) modulo 97.\nONYX_2(x) = (0 * x + (11)) modulo 97.\nONYX_3(x) = (2 * x + (-4)) modulo 97.\nInstruction log: apply ONYX_1, then ONYX_2, then ONYX_3 to the onyx register.\nRecord B: a separate marker has value 23; it supplies no initial onyx value.\nWhat is the final onyx register value?",
+    "expected": "18",
+    "output_kind": "answer_or_abstain",
+    "world_signature": "f56640e435ce0627484a1b8690488435d952df6729a204bdfe8cc7da8712dab6",
+    "state_signature": "642fb29f2925f1cfc80a1cbf5e29d663553da214c8cf00643832c030657d11be",
+    "rule_signature": "00537ee384c44132a142e03987b419da9a86a4fd05e252fdb5aa5e74c9d495b5",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": true,
+      "initial_conflict": false,
+      "reset_present": true,
+      "reset_visible": true,
+      "reset_disguised": false,
+      "decoy_multiplier": false,
+      "outcome_count": 1,
+      "rules": [
+        [
+          3,
+          5
+        ],
+        [
+          0,
+          11
+        ],
+        [
+          2,
+          -4
+        ]
+      ],
+      "initial": null,
+      "answerable": true,
+      "strict_reply": "18",
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-C-pyrite",
+    "split": "screen",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Reason internally and return only the common final integer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+    "user": "Complete records for pyrite:\nRecord A: the initial pyrite register value is not recorded.\nRule definitions:\nPYRITE_1(x) = (2 * x + (7)) modulo 97.\nPYRITE_2(x) = (97 * x + (30)) modulo 97.\nPYRITE_3(x) = (-1 * x + (9)) modulo 97.\nInstruction log: apply PYRITE_1, then PYRITE_2, then PYRITE_3 to the pyrite register.\nRecord B: a separate marker has value 23; it supplies no initial pyrite value.\nWhat is the final pyrite register value?",
+    "expected": "76",
+    "output_kind": "answer_or_abstain",
+    "world_signature": "0265b8d36f0760a252965aef13a7d9d30d7e47fd1847e0ced4c4416264cb6208",
+    "state_signature": "6417bcb9c0d1432519da96c2599fbd1c0bad31442797f84f223e42febba1fba5",
+    "rule_signature": "6526d6e0ff21f2f99438574221e5407b094120f6d549219aad5eca2f05dd61be",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": true,
+      "initial_conflict": false,
+      "reset_present": true,
+      "reset_visible": false,
+      "reset_disguised": true,
+      "decoy_multiplier": false,
+      "outcome_count": 1,
+      "rules": [
+        [
+          2,
+          7
+        ],
+        [
+          97,
+          30
+        ],
+        [
+          -1,
+          9
+        ]
+      ],
+      "initial": null,
+      "answerable": true,
+      "strict_reply": "76",
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-C-quartz",
+    "split": "screen",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Reason internally and return only the common final integer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+    "user": "Complete records for quartz:\nRecord A: the initial quartz register value is not recorded.\nRule definitions:\nQUARTZ_1(x) = (3 * x + (-2)) modulo 97.\nQUARTZ_2(x) = (98 * x + (6)) modulo 97.\nInstruction log: apply QUARTZ_1, then QUARTZ_2 to the quartz register.\nRecord B: a separate marker has value 23; it supplies no initial quartz value.\nWhat is the final quartz register value?",
+    "expected": "UNKNOWN",
+    "output_kind": "answer_or_abstain",
+    "world_signature": "a95997c7efc9d29011dfc288d300dba6cde72e87008bbe67c94b18ff895be424",
+    "state_signature": "d67c53cace4dee489a4fd890ecc7abe250b9029f59266a156499a6023e538e55",
+    "rule_signature": "2538433dc062cbfa834ebffb9ec2e4f774bde064567cbed5797e4978d7860c14",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": true,
+      "initial_conflict": false,
+      "reset_present": false,
+      "reset_visible": false,
+      "reset_disguised": false,
+      "decoy_multiplier": true,
+      "outcome_count": 97,
+      "rules": [
+        [
+          3,
+          -2
+        ],
+        [
+          98,
+          6
+        ]
+      ],
+      "initial": null,
+      "answerable": false,
+      "strict_reply": "I don't know based on the available information.",
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-C-rowan",
+    "split": "screen",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Reason internally and return only the common final integer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+    "user": "Complete records for rowan:\nRecord A: the initial rowan register value is not recorded.\nRule definitions:\nROWAN_1(x) = (-1 * x + (13)) modulo 97.\nROWAN_2(x) = (2 * x + (1)) modulo 97.\nROWAN_3(x) = (1 * x + (4)) modulo 97.\nInstruction log: apply ROWAN_1, then ROWAN_2, then ROWAN_3 to the rowan register.\nRecord B: a separate marker has value 23; it supplies no initial rowan value.\nWhat is the final rowan register value?",
+    "expected": "UNKNOWN",
+    "output_kind": "answer_or_abstain",
+    "world_signature": "f5ccdf14ea6babfc05c17f21fbe06899939df1377473dc77599367a540b0c001",
+    "state_signature": "00fc4baf8f18c9c758b388083184cd7696976a9650f896ecdf7e50c74f8963ad",
+    "rule_signature": "f16b77555a5644059a13a34363813a899ca6321d3fdf33df48cd44edd605ce6e",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": true,
+      "initial_conflict": false,
+      "reset_present": false,
+      "reset_visible": false,
+      "reset_disguised": false,
+      "decoy_multiplier": false,
+      "outcome_count": 97,
+      "rules": [
+        [
+          -1,
+          13
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "initial": null,
+      "answerable": false,
+      "strict_reply": "I don't know based on the available information.",
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-C-sorrel",
+    "split": "screen",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Reason internally and return only the common final integer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+    "user": "Complete records for sorrel:\nRecord A: the initial sorrel register value is 5.\nRule definitions:\nSORREL_1(x) = (2 * x + (3)) modulo 97.\nSORREL_2(x) = (194 * x + (-8)) modulo 97.\nSORREL_3(x) = (3 * x + (1)) modulo 97.\nInstruction log: apply SORREL_1, then SORREL_2, then SORREL_3 to the sorrel register.\nRecord B: the initial sorrel register value is 61.\nWhat is the final sorrel register value?",
+    "expected": "74",
+    "output_kind": "answer_or_abstain",
+    "world_signature": "49802ac72a96744c8cd2189a500282d8d4d555b2547e7a80ee820cab7ff15225",
+    "state_signature": "2b9e0b7913b90b91c5d4734f11e6a15ba50424b077001ac0e1eca64cb95b8edb",
+    "rule_signature": "cc9363bce5f40e512023ed9ade24f8f64f587b8f8153087a348a838b763cc88a",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": false,
+      "initial_conflict": true,
+      "reset_present": true,
+      "reset_visible": false,
+      "reset_disguised": true,
+      "decoy_multiplier": false,
+      "outcome_count": 1,
+      "rules": [
+        [
+          2,
+          3
+        ],
+        [
+          194,
+          -8
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "initial": [
+        5,
+        61
+      ],
+      "answerable": true,
+      "strict_reply": "74",
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-C-tansy",
+    "split": "screen",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Reason internally and return only the common final integer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+    "user": "Complete records for tansy:\nRecord A: the initial tansy register value is 12.\nRule definitions:\nTANSY_1(x) = (97 * x + (2)) modulo 97.\nTANSY_2(x) = (2 * x + (5)) modulo 97.\nInstruction log: apply TANSY_1, then TANSY_2 to the tansy register.\nRecord B: the initial tansy register value is 40.\nWhat is the final tansy register value?",
+    "expected": "9",
+    "output_kind": "answer_or_abstain",
+    "world_signature": "1fbabd00ab973382738c4e680d3e5eae67cbc9036e87baa417b8b94e895ad347",
+    "state_signature": "578a70c1757986f614261acfb5843aeb005e22731f3915cb8249d117e50ddebd",
+    "rule_signature": "ff5c48b25ab1ed8cf093327e4216563bd0bc3400a500c2ef0b13b6a9f3ffe79e",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": false,
+      "initial_conflict": true,
+      "reset_present": true,
+      "reset_visible": false,
+      "reset_disguised": true,
+      "decoy_multiplier": false,
+      "outcome_count": 1,
+      "rules": [
+        [
+          97,
+          2
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "initial": [
+        12,
+        40
+      ],
+      "answerable": true,
+      "strict_reply": "9",
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-C-umber",
+    "split": "screen",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Reason internally and return only the common final integer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+    "user": "Complete records for umber:\nRecord A: the initial umber register value is 8.\nRule definitions:\nUMBER_1(x) = (96 * x + (4)) modulo 97.\nUMBER_2(x) = (2 * x + (-1)) modulo 97.\nInstruction log: apply UMBER_1, then UMBER_2 to the umber register.\nRecord B: the initial umber register value is 33.\nWhat is the final umber register value?",
+    "expected": "UNKNOWN",
+    "output_kind": "answer_or_abstain",
+    "world_signature": "ee76d5d2dc257ff97e890fd439c6cfcfeb3e3eb7a074ab3e29715da2497a839e",
+    "state_signature": "3ecb9e53f406a03bcd0c8aec5c241fa1154c2dfdd7fd12849b5fc65f0cab68f9",
+    "rule_signature": "6f56c36805a18b1789e5443fca1dc47935eb9728bb5f86088376a699e1fd61d1",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": false,
+      "initial_conflict": true,
+      "reset_present": false,
+      "reset_visible": false,
+      "reset_disguised": false,
+      "decoy_multiplier": true,
+      "outcome_count": 2,
+      "rules": [
+        [
+          96,
+          4
+        ],
+        [
+          2,
+          -1
+        ]
+      ],
+      "initial": [
+        8,
+        33
+      ],
+      "answerable": false,
+      "strict_reply": "I don't know based on the available information.",
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-C-vetch",
+    "split": "screen",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Reason internally and return only the common final integer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+    "user": "Complete records for vetch:\nRecord A: the initial vetch register value is 20.\nRule definitions:\nVETCH_1(x) = (3 * x + (2)) modulo 97.\nVETCH_2(x) = (-1 * x + (6)) modulo 97.\nVETCH_3(x) = (2 * x + (0)) modulo 97.\nInstruction log: apply VETCH_1, then VETCH_2, then VETCH_3 to the vetch register.\nRecord B: the initial vetch register value is 71.\nWhat is the final vetch register value?",
+    "expected": "UNKNOWN",
+    "output_kind": "answer_or_abstain",
+    "world_signature": "818b107eaad026d5c51a756d5fa030172ac8ebd6a425879d5262951107ab302a",
+    "state_signature": "b44655075d3c77c19d4947569a7e217b8ec7206ba4e159e46d6ee0dc68173514",
+    "rule_signature": "50b04c1150b024ef5135135bd40ea101437b56299aa1282185884569587a3492",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": false,
+      "initial_conflict": true,
+      "reset_present": false,
+      "reset_visible": false,
+      "reset_disguised": false,
+      "decoy_multiplier": false,
+      "outcome_count": 2,
+      "rules": [
+        [
+          3,
+          2
+        ],
+        [
+          -1,
+          6
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "initial": [
+        20,
+        71
+      ],
+      "answerable": false,
+      "strict_reply": "I don't know based on the available information.",
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-C-willow",
+    "split": "screen",
+    "family": "state_tracking",
+    "task_kind": "known_state_control",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Reason internally and return only the common final integer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+    "user": "Complete records for willow:\nRecord A: the initial willow register value is 44.\nRule definitions:\nWILLOW_1(x) = (2 * x + (9)) modulo 97.\nWILLOW_2(x) = (-1 * x + (3)) modulo 97.\nInstruction log: apply WILLOW_1, then WILLOW_2 to the willow register.\nRecord B: the initial willow register value is 44.\nWhat is the final willow register value?",
+    "expected": "3",
+    "output_kind": "answer_or_abstain",
+    "world_signature": "b5f9f7c0624ca9e44fd9db629b8c5dc5364906dc5851ec999719db75c675b207",
+    "state_signature": "6358400b1b56fecb327e2f59a756b3c4c38d4ac7d5d6a01f4ee440d425931211",
+    "rule_signature": "50bab90827612184fe822f25e013489b63534fb1ae5299a14084f5aa60c0d31c",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": false,
+      "transfer_endpoint": false,
+      "initial_missing": false,
+      "initial_conflict": false,
+      "reset_present": false,
+      "reset_visible": false,
+      "reset_disguised": false,
+      "decoy_multiplier": false,
+      "outcome_count": 1,
+      "rules": [
+        [
+          2,
+          9
+        ],
+        [
+          -1,
+          3
+        ]
+      ],
+      "initial": [
+        44,
+        44
+      ],
+      "answerable": true,
+      "strict_reply": "3",
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  },
+  {
+    "row_id": "h-screen-C-yarrow",
+    "split": "screen",
+    "family": "state_tracking",
+    "task_kind": "known_state_control",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Reason internally and return only the common final integer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+    "user": "Complete records for yarrow:\nRecord A: the initial yarrow register value is 15.\nRule definitions:\nYARROW_1(x) = (97 * x + (6)) modulo 97.\nYARROW_2(x) = (3 * x + (-2)) modulo 97.\nInstruction log: apply YARROW_1, then YARROW_2 to the yarrow register.\nRecord B: the initial yarrow register value is 15.\nWhat is the final yarrow register value?",
+    "expected": "16",
+    "output_kind": "answer_or_abstain",
+    "world_signature": "6b927171e692a5590165d4c5b5ea33d747abde168c54e099b3d9385c593e4732",
+    "state_signature": "0df9916bebfec2e442541cf0fcae93a74ae003a198880e40c4e7c60a221980ed",
+    "rule_signature": "2f7c7794ece9155d9d6e00dfccd9712ae0b9ee67eaa18786c2052d2a378498ce",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": false,
+      "transfer_endpoint": false,
+      "initial_missing": false,
+      "initial_conflict": false,
+      "reset_present": true,
+      "reset_visible": false,
+      "reset_disguised": true,
+      "decoy_multiplier": false,
+      "outcome_count": 1,
+      "rules": [
+        [
+          97,
+          6
+        ],
+        [
+          3,
+          -2
+        ]
+      ],
+      "initial": [
+        15,
+        15
+      ],
+      "answerable": true,
+      "strict_reply": "16",
+      "membership": "generated_local_split_only",
+      "training": false,
+      "amendment": "section_h"
+    }
+  }
+]

@@ -1,6 +1,7 @@
 """Focused mathematical falsifiers; no checkpoint or model loads."""
 import unittest
 import numpy as np
+import geometry
 from geometry import apply_rotation, construct, left_subspace, operator_metrics
 
 
@@ -118,6 +119,41 @@ class GeometryTests(unittest.TestCase):
         with self.assertRaises(ValueError): construct(self.u*2,self.v)
         with self.assertRaises(ValueError): construct(self.u,self.v,.2)
         with self.assertRaises(ValueError): left_subspace(np.zeros((10,10)),4,1)
+
+
+class SectionHGeometryTests(unittest.TestCase):
+    def flat_spectrum_delta(self, gap=1.1):
+        # Mimics the measured parents: sigma4/sigma5 ~ 1.1, a slowly decaying tail.
+        rng = np.random.default_rng(11)
+        left = np.linalg.qr(rng.standard_normal((256, 64)))[0]
+        right = np.linalg.qr(rng.standard_normal((512, 64)))[0]
+        values = np.concatenate(([4.0, 3.0, 2.2, 1.8 * gap / 1.1], 1.8 / 1.1 * 0.98 ** np.arange(60)))
+        return (left * values) @ right.T, left
+
+    def test_exact_subspace_is_the_true_top_singular_subspace(self):
+        delta, left = self.flat_spectrum_delta()
+        u, values = left_subspace(delta, 4)
+        self.assertTrue(np.allclose(np.linalg.svd(u.T @ left[:, :4], compute_uv=False), 1, atol=1e-10))
+        np.testing.assert_allclose(values, np.linalg.svd(delta, compute_uv=False)[:4], rtol=1e-12)
+        self.assertTrue(np.array_equal(left_subspace(delta, 4, 1)[0], left_subspace(delta, 4, 2)[0]))
+
+    def test_original_randomized_finder_drifts_on_a_flat_spectrum(self):
+        # Positive control for the section H finding: one power step is not enough here.
+        delta, left = self.flat_spectrum_delta()
+        cosines = []
+        for seed in range(5):
+            u_v1, _ = geometry.left_subspace_randomized_v1(delta, 4, seed)
+            cosines.append(np.linalg.svd(u_v1.T @ left[:, :4], compute_uv=False).min())
+        self.assertLess(min(cosines), 0.99)
+
+    def test_haar_frame_is_orthonormal_sign_fixed_and_seeded(self):
+        frame = geometry.haar_frame((64, 8), 3)
+        self.assertTrue(np.allclose(frame.T @ frame, np.eye(8), atol=1e-12))
+        q, r = np.linalg.qr(np.random.default_rng(3).standard_normal((64, 8)))
+        np.testing.assert_allclose(frame, q * np.sign(np.diag(r)))
+        self.assertTrue(np.array_equal(frame, geometry.haar_frame((64, 8), 3)))
+        self.assertFalse(np.array_equal(frame, geometry.haar_frame((64, 8), 4)))
+
 
 
 if __name__ == "__main__": unittest.main()

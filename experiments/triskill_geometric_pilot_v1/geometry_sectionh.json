@@ -1,0 +1,164 @@
+{
+  "experiment": "TRISKILL-GEO-001-SECTIONH",
+  "source_commit": "01f47694988a85bdedab7831d1652f0b9bf07e9f",
+  "source_weights": {
+    "BASE": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-1.7.0-devfreeze\\model.safetensors",
+      "sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b"
+    },
+    "T": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze\\model.safetensors",
+      "sha256": "a28629c9d3454fbf2e884fd7ca442c1b406e7caf4b36d34b2c0614d0add31284"
+    },
+    "TH": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\model.safetensors",
+      "sha256": "a4d73353db9a91cbba7b4cd7c8fe4fe6822670d10fe523b26a6d651bb9509567"
+    }
+  },
+  "key": "model.layers.14.self_attn.o_proj.weight",
+  "hook": "block14 output residual, all token positions; downstream weights fixed",
+  "subspace_method": "exact float64 SVD (np.linalg.svd), left singular vectors",
+  "rank_per_parent": 4,
+  "rank_choice": "original prospective choice; not selected from the spectrum",
+  "eta": 0.1,
+  "cayley_coefficient": 0.05,
+  "random_basis": {
+    "method": "Haar frame, QR with sign(diag(R)) correction",
+    "seed": 20261003
+  },
+  "metrics": {
+    "union_rank": 8,
+    "intervention_rank": 8,
+    "basis_orthogonality_error": 2.8816515785519522e-15,
+    "rotation_orthogonality_error": 2.937679878587767e-16,
+    "commutator_spectral_norm": 0.11693110981845817,
+    "operator_change_frobenius": 0.023629689422344363,
+    "operator_change_spectral": 0.011692911138775065,
+    "noncommuting": true
+  },
+  "parent_write_norms": {
+    "T": 0.05429271387040945,
+    "H_effective": 0.015465974615158648
+  },
+  "singular_values_top8": {
+    "T": [
+      0.022754928852569134,
+      0.015746676098691383,
+      0.010758152559770527,
+      0.009591778230086397,
+      0.008646240633726092,
+      0.008192313033070145,
+      0.008055775339147602,
+      0.007660721018138968
+    ],
+    "H_effective": [
+      0.008965235552807973,
+      0.0050769537802877315,
+      0.004402036708737776,
+      0.004097309278845068,
+      0.003731738041618702,
+      0.003498500167806472,
+      0.0032704134018935152,
+      0.003018260497012748
+    ]
+  },
+  "spectral_gap_at_rank": {
+    "T": 1.1093582328338258,
+    "H_effective": 1.0979627275948323
+  },
+  "top_singular_values": {
+    "T": [
+      0.02275492885256913,
+      0.015746676098691365,
+      0.010758152559770548,
+      0.0095917782300864
+    ],
+    "H_effective": [
+      0.008965235552807978,
+      0.005076953780287733,
+      0.004402036708737779,
+      0.00409730927884507
+    ]
+  },
+  "principal_cosines": [
+    0.11775027034789834,
+    0.08466905361147134,
+    0.08123639948784264,
+    0.02393741549849667
+  ],
+  "haar_commutator_null": {
+    "draws": 2000,
+    "seed": 7,
+    "quantiles_5_50_95": [
+      0.06843635741220477,
+      0.0958707311555825,
+      0.13081200147290753
+    ],
+    "fraction_at_or_above_observed": 0.1555
+  },
+  "rank_sensitivity": {
+    "1": {
+      "commutator_spectral_norm": 0.07848137048336493,
+      "operator_change_spectral": 0.007848076624995922
+    },
+    "2": {
+      "commutator_spectral_norm": 0.08270487943377812,
+      "operator_change_spectral": 0.008270417230609152
+    },
+    "3": {
+      "commutator_spectral_norm": 0.09174896190260029,
+      "operator_change_spectral": 0.009174799650406469
+    },
+    "4": {
+      "commutator_spectral_norm": 0.11693110981845817,
+      "operator_change_spectral": 0.011692911138775065
+    },
+    "5": {
+      "commutator_spectral_norm": 0.12008191694639714,
+      "operator_change_spectral": 0.012007975257837923
+    },
+    "6": {
+      "commutator_spectral_norm": 0.14597946436677572,
+      "operator_change_spectral": 0.014597557599342488
+    },
+    "7": {
+      "commutator_spectral_norm": 0.1586141636901049,
+      "operator_change_spectral": 0.01586091758166795
+    },
+    "8": {
+      "commutator_spectral_norm": 0.22153936884368136,
+      "operator_change_spectral": 0.02215257787393187
+    }
+  },
+  "legacy_randomized_geometry": {
+    "path": "geometry.npz",
+    "sha256": "52563d5ba4b230f01053cef0c2330645861e20de6ce66be71336ced235c78f7c",
+    "T_randomized_vs_exact_cosines": [
+      0.9999692720927671,
+      0.9979769760735728,
+      0.98802289562609,
+      0.921140875121207
+    ],
+    "H_randomized_vs_exact_cosines": [
+      0.9999381470729304,
+      0.9996824603391714,
+      0.9913130725344178,
+      0.923247931382989
+    ],
+    "relative_operator_difference": 0.3933947541704837
+  },
+  "resource_snapshot": {
+    "ram_free_gib": 5.30255126953125,
+    "disk_free_gib": 70.14620208740234
+  },
+  "geometry_sha256": "b1f2234bac5cef4a94f482b31294959befef1f6c239586621a1bfd0c6a2f9380",
+  "code_sha256": "2ebe76b717d8da21b2c50cecb371ad263ddea1d11951ac6df6c25a30b9cc3902",
+  "model_forwards": 0,
+  "training_examples": 0,
+  "delta_C_used": false,
+  "random_match": "same compact R, operator spectrum/norm/rank/compute; displacement can differ",
+  "status": "PREPARED",
+  "quality_claim": false,
+  "confirmation": false,
+  "limitation": "No objective identifies this rotation with a third skill. Geometry is not functional independence."
+}
