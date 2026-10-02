@@ -18,12 +18,28 @@ import re
 
 from . import learning_data as optimizer
 
-PREVIOUS_VERSION = "CRS-ACQUISITION-FEASIBILITY-v1"
-VERSION = "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair"
+ORIGINAL_VERSION = "CRS-ACQUISITION-FEASIBILITY-v1"
+PREVIOUS_VERSION = "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair"
+VERSION = "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair"
 CANON_VERSION = "TYPED-DIRECTED-RELATIONAL-IR-v1"
 DRAW, ORDER, COUNT = 307, 401, 32
 MAX_STATES, MAX_RECORDS, MAX_SOURCE, MAX_RECEIPT = 4096, 256, 8192, 8 * 1024 * 1024
 FAMILIES, STATUSES = optimizer.FAMILIES, optimizer.STATUSES
+# Exact exposed v2 assignments, frozen independently of subsequent recipe names.
+ASSIGNMENT_VERSION = PREVIOUS_VERSION
+FROZEN_V2_EVIDENCE = {
+    "empty_joint_gates": ("SUPPORTED", "UNKNOWN", "UNKNOWN", "SUPPORTED", "CONTRADICTORY", "REFUTED", "CONTRADICTORY", "REFUTED"),
+    "canceled_prefix_joint_gates": ("REFUTED", "CONTRADICTORY", "CONTRADICTORY", "REFUTED", "SUPPORTED", "UNKNOWN", "SUPPORTED", "UNKNOWN"),
+    "alias_selector_joint_gates": ("UNKNOWN", "SUPPORTED", "SUPPORTED", "UNKNOWN", "REFUTED", "CONTRADICTORY", "REFUTED", "CONTRADICTORY"),
+    "conjunctive_joint_gates": ("CONTRADICTORY", "REFUTED", "REFUTED", "CONTRADICTORY", "UNKNOWN", "SUPPORTED", "UNKNOWN", "SUPPORTED"),
+}
+# Prospectively declared zero-based winners; no outcome search or resampling.
+SUPPORTED_POSITIONS = {
+    "empty_joint_gates": {0: 0, 3: 1},
+    "canceled_prefix_joint_gates": {4: 2, 6: 4},
+    "alias_selector_joint_gates": {1: 1, 2: 1},
+    "conjunctive_joint_gates": {5: 3, 7: 5},
+}
 PACKAGE = Path(__file__).resolve().parent
 OPTIMIZER_SOURCE_SHA = "837bd152ba5aa9d1fc44a5991909cf4475394eaa42af739cca63ac3422ed3795"
 OPTIMIZER_CONTRACT_SHA = "37f316972afc6b1a43f9a1ef8f797b0452fb0de5706724c0fd49f8bf0470015a"
@@ -304,19 +320,20 @@ def previous_root_identity(params):
     return "ap-root-" + digest(previous)
 
 
+def original_root_identity(params):
+    validate_parameters(params)
+    return "ap-root-" + digest(dict(params, recipe_version=ORIGINAL_VERSION))
+
+
 def ancestry_record(params):
-    validate_parameters(params); root = root_identity(params); previous = previous_root_identity(params)
-    return {"root_id": root, "ancestor_roots": [previous, root], "prior_panel_root": previous,
+    validate_parameters(params); root = root_identity(params); previous = previous_root_identity(params); original = original_root_identity(params)
+    return {"root_id": root, "ancestor_roots": [original, previous, root], "prior_panel_root": previous, "original_panel_root": original,
             "parameters": copy.deepcopy(params), "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL", "variant": 0}
 
 
 def assigned_evidence(family, slot):
-    require(family in FAMILIES and type(slot) is int and 0 <= slot < 8, "fixed family/slot")
-    labels = list(STATUSES) * 2
-    random.Random(int(digest([VERSION, DRAW, "counterbalanced_structural_assignment"]), 16)).shuffle(labels)
-    # Each family has two of every state; every candidate-count slot has one of
-    # every state across families. Structural size cannot be a perfect label key.
-    return STATUSES[(STATUSES.index(labels[slot]) + FAMILIES.index(family)) % 4]
+    require(type(family) is str and family in FAMILIES and type(slot) is int and 0 <= slot < 8, "fixed family/slot")
+    return FROZEN_V2_EVIDENCE[family][slot]
 
 
 def selection_recipe(params, evidence):
@@ -324,9 +341,7 @@ def selection_recipe(params, evidence):
     require(type(evidence) is str and evidence in STATUSES, "typed prospective evidence recipe")
     if evidence != "SUPPORTED": return {"intended_status": evidence, "earlier_supported_position": None,
                                          "terminal_disposition": "EXCLUDED" if evidence == "REFUTED" else evidence}
-    positive = [slot for slot in range(8) if assigned_evidence(params["family"], slot) == "SUPPORTED"]
-    rank = positive.index(params["slot"]) if params["slot"] in positive else 0
-    position = params["guarded_candidates"] - 2 if rank == 0 else 0
+    position = SUPPORTED_POSITIONS[params["family"]].get(params["slot"], 0)
     return {"intended_status": evidence, "earlier_supported_position": position, "terminal_disposition": "EXCLUDED"}
 
 
@@ -440,13 +455,14 @@ def assess(world, ancestry, seen=()):
         require(type(entry) in {list, tuple} and len(entry) == 2 and type(entry[0]) is str and 0 < len(entry[0]) <= 128,
                 "bounded seen root/signature pair")
         validate_signature(entry[1])
-    fields = {"root_id", "ancestor_roots", "prior_panel_root", "parameters", "operation", "variant"}
-    require(type(ancestry) is dict and len(ancestry) == 6 and all(type(key) is str for key in ancestry) and set(ancestry) == fields,
+    fields = {"root_id", "ancestor_roots", "prior_panel_root", "original_panel_root", "parameters", "operation", "variant"}
+    require(type(ancestry) is dict and len(ancestry) == 7 and all(type(key) is str for key in ancestry) and set(ancestry) == fields,
             "exact declared ancestry fields")
     validate_parameters(ancestry["parameters"])
     require(type(ancestry["root_id"]) is str and len(ancestry["root_id"]) <= 128
             and type(ancestry["prior_panel_root"]) is str and len(ancestry["prior_panel_root"]) <= 128
-            and type(ancestry["ancestor_roots"]) is list and len(ancestry["ancestor_roots"]) == 2
+            and type(ancestry["original_panel_root"]) is str and len(ancestry["original_panel_root"]) <= 128
+            and type(ancestry["ancestor_roots"]) is list and len(ancestry["ancestor_roots"]) == 3
             and all(type(root) is str and len(root) <= 128 for root in ancestry["ancestor_roots"])
             and type(ancestry["operation"]) is str and type(ancestry["variant"]) is int,
             "bounded scalar ancestry before JSON")
@@ -469,7 +485,8 @@ def assess(world, ancestry, seen=()):
 def registration():
     return {"version": VERSION, "role": "TRAIN", "intent": "ACQUISITION_PROBE", "draw_seed": DRAW, "order_seed": ORDER,
             "planned_roots": COUNT, "variants_per_root": 1, "canonicalization_version": CANON_VERSION,
-            "population": "related v2 selection repair of rejected v1 panel; four broad families,2..9 candidates, earlier winners at predeclared first/penultimate positions; NOT depth=N or optimizer's exact template/difficulty",
+            "population": "related v3 interior-selection repair of rejected v1/v2 panels; exact v2 statuses, four broad families,2..9 candidates, varied predeclared nonterminal winners including interiors; NOT depth=N or optimizer's exact template/difficulty",
+            "assignment_version": ASSIGNMENT_VERSION, "combined_three_position_max_exact": 28,
             "canonical_states_per_world": MAX_STATES, "latent_records": MAX_RECORDS, "source_bytes": MAX_SOURCE, "receipt_bytes": MAX_RECEIPT}
 
 
@@ -585,8 +602,9 @@ def shortcut_scores(bundle):
 def public_position_controls(case):
     """Supplied chronology-aware controls; source only, no gold/oracle/core.
 
-    Each predicts from one chosen candidate and assumes EMPTY if excluded.
-    These are deliberately incomplete controls, not another serving runtime.
+    Individual controls inspect one position; the combined rule inspects the
+    unique terminal/penultimate/first positions in descending chronology.
+    Skipped guard evaluations do not measure unread bytes, tokens or savings.
     """
     validate_public(case); records = []
     pattern = re.compile(r"^([A-Za-z][A-Za-z0-9_]*) @(\d+) (EMPTY|INIT|TRANSFER|FACT|REQUIRE|EXCEPT|ALIAS|CANCEL) (.+)$")
@@ -631,8 +649,24 @@ def public_position_controls(case):
         elif any(state == "UNKNOWN" for _, state in states): disposition, answer = "UNKNOWN", {"status": "UNKNOWN", "value": None}
         else: disposition, answer = "SUPPORTED", {"status": "SUPPORTED", "value": resolve(candidate["args"][1])}
         return {"state": disposition, "prediction": answer, "position": position, "event_id": candidate["id"]}
-    controls = {name: evaluate(position) for name, position in (("terminal_only", len(candidates) - 1), ("first_only", 0),
-                                                               ("penultimate_only", len(candidates) - 2), ("fixed_position_1", 1))}
+    evaluated = {}
+    def cached(position):
+        if position not in evaluated: evaluated[position] = evaluate(position)
+        return evaluated[position]
+    controls = {name: cached(position) for name, position in (("terminal_only", len(candidates) - 1), ("first_only", 0),
+                                                             ("penultimate_only", len(candidates) - 2), ("fixed_position_1", 1))}
+    positions = sorted({0, len(candidates) - 2, len(candidates) - 1}, reverse=True)
+    inspected = [cached(position) for position in positions]
+    terminal = inspected[0]
+    if terminal["state"] in {"UNKNOWN", "CONTRADICTORY"}: chosen = terminal
+    else: chosen = next((row for row in inspected if row["state"] == "SUPPORTED"), None)
+    controls["combined_three_position"] = {
+        "state": chosen["state"] if chosen is not None else "EXCLUDED",
+        "prediction": chosen["prediction"] if chosen is not None else {"status": "REFUTED", "value": None},
+        "position": chosen["position"] if chosen is not None else None,
+        "inspected_positions": positions, "candidate_guard_evaluations": len(positions),
+        "skipped_candidate_guard_evaluations": len(candidates) - len(positions),
+    }
     return {"controls": controls, "candidate_count": len(candidates),
             "positions": [{"position": position, "event_id": row["id"], "resolved_owner": resolve(row["args"][1])} for position, row in enumerate(candidates)],
             "origin": "CODEX_SUPPLIED_PUBLIC_SOURCE_POSITION_CONTROLS"}
@@ -644,7 +678,7 @@ def cpu_receipt(bundle):
     from .core import run_case
     from .scoring_v2 import score_one
     rows, renamed, selected_cells, opposed = [], [], Counter(), {}
-    control_exact = Counter({name: 0 for name in ("terminal_only", "first_only", "penultimate_only", "fixed_position_1")})
+    control_exact = Counter({name: 0 for name in ("terminal_only", "first_only", "penultimate_only", "fixed_position_1", "combined_three_position")})
     for case in bundle["cases"]:
         world, expected = bundle["private"]["latent"][case["id"]], bundle["private"]["gold"][case["id"]]
         # Existing CPU runtime requires its seven-field coordinator Case envelope.
@@ -681,6 +715,9 @@ def cpu_receipt(bundle):
                "earlier_owner_by_family": {family: sum(row["selected_earlier_owner"] for row in rows if row["family"] == family) for family in FAMILIES},
                "selected_position_cells": [{"family": family, "candidate_count": count, "position": position, "rows": value} for (family, count, position), value in sorted(selected_cells.items())],
                "position_control_semantic_exact": dict(control_exact), "position_controls_use_gold_or_core": False,
+               "combined_three_position_criterion_max_exact": 28,
+               "combined_three_position_criterion_passed": control_exact["combined_three_position"] <= 28,
+               "general_shortcut_absence_claim": False,
                "opposing_same_terminal_disposition_by_family": {family: any({"SUPPORTED", "REFUTED"} <= statuses for (name, _), statuses in opposed.items() if name == family) for family in FAMILIES},
                "native_or_training_eligible": False, "actual_tokenizer_model_calls": 0}
     require(len(canonical(receipt).encode()) <= MAX_RECEIPT, "complete CPU receipt ceiling")

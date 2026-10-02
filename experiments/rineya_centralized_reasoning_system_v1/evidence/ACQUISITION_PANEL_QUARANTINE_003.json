@@ -1,0 +1,60 @@
+{
+  "receipt_id": "CRS-ACQUISITION-QUARANTINE-003",
+  "status": "QUARANTINED_AT_FINAL_THREE_ROUND_LIMIT",
+  "track": "CRS-001",
+  "affected_claim": "acquisition evaluation population candidate3",
+  "track_retired_archived_or_replaced": false,
+  "source_sha256": {
+    "acquisition_data.py": "7742ae86bf5b4b2831ae4851ddbadd2356fd7e58dbbd6a5e75eb4ccf4da3e054",
+    "tests/test_acquisition_data.py": "7da7a53eb68b11e36c679250778ee991aab126922c51f491cce47216d537d2df",
+    "contracts/ACQUISITION_PANEL_V1.json": "78f9066b92692eda1c6ea2b7d772c3446c541712b2d01fcf86a97e791299c988"
+  },
+  "review_sha256": {
+    "scientific": "5e9399b327a1d8e2c05a080a0fe2d9c88d8a8fa205ba8a8d6fff2c28a4408262",
+    "operations": "115ea5e909beb0de693c3be583f16067188bbe21b0f7fc221d4e4f2881e3518a",
+    "continuation_assessment": "3d19d79281959054241f7190dc13884f407dac1fc796ed0916cb55243e2266f1"
+  },
+  "raw_validation_report_sha256": "43b5d7675dec09f26d04f1848eb14acc2905705cfa0f64470b57389aeef9b41b",
+  "history_preservation_sha256": "7729e46e51db233d357933aa1f666ed861a2e27e42ae3cd0908b376efb0154bd",
+  "source_consistency_supported_only": true,
+  "population_qualified": false,
+  "source_data_qualified": false,
+  "native_training_or_efficacy_use_eligible": false,
+  "specific_old_control": {
+    "correct": 26,
+    "denominator": 32,
+    "criterion_max_correct": 28,
+    "criterion_met": true
+  },
+  "material_finding": "AP-SCI-3-001",
+  "prospective_coordinator_rule": "k=min(N-2,max(1,N-4)); terminal unknown/contradictory else inspect k; supported owner elseREFUTED",
+  "independently_checked_rule": {
+    "correct": 32,
+    "denominator": 32,
+    "candidate_guard_evaluations": 48,
+    "omitted_candidate_guard_evaluations": 128,
+    "total_candidate_guards": 176,
+    "unread_source_or_token_runtime_saving_claim": false
+  },
+  "LA_I1_002_closed": false,
+  "H01_tested_or_amended": false,
+  "actual_training_updates": 0,
+  "model_or_retention_gain_claim": false,
+  "known_cumulative_invocations": {
+    "main": 192,
+    "core_including_diagnostic": 193,
+    "rename": 192,
+    "combined": 385,
+    "reviewer_shortcut_predictions_separate": true,
+    "historical_unavailable_raw_costs_not_reconstructed": true
+  },
+  "review_limit": 3,
+  "further_same_milestone_repairs_or_relabeling_eligible": false,
+  "resolving_experiment": "Requires explicit owner-approved bounded continuation beyond this cap, or a genuinely different independently reviewed data question/population/contrast. Counterbalance selected applicability independently of public candidate count and test complete fixed/count-relative subset controls prospectively. This record proposes no launch, replacements or new bank.",
+  "pending_owner_exception_sha256": "b619a11eec2cc43eefde2857430d9d17be5bfc3e5d77282b88971f4df091974f",
+  "pending_exception_authorization_received": false,
+  "pending_exception_includes_acquisition_repair": false,
+  "native_charge_seconds": 47.42100000000573,
+  "existing_central_CHECK_FINAL": "CLOSED",
+  "all_prior_quarantines_preserved": true
+}

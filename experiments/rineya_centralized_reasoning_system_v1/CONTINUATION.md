@@ -326,3 +326,43 @@ separately plans one guarded raw-retained32+32 observation. Final SCI/OPS review
 must inspect it. If a material finding remains after round3, quarantine this
 candidate/population; no fourth same-milestone loop. No model/owner authority,
 native qualification, original H01 amendment or LA-I1-002 closure follows.
+
+## Final acquisition quarantine and blocked handoff
+
+Final source7742ae86/tests7da7a53e/contract78f9066b and ignored raw observation
+CRS-ACQUISITION-FREEZE3-ROOT-001 are terminal. Do not rerun its wrapper/key or
+perform a fourth source repair. REPORT43b5d767 records15 class tests,32 main and
+32 rename passes; prior9 targeted tests were not repeated. Exact metadata and
+wrapper are in evidence/acquisition_panel_round3_cpu_001; physical source history
+is in history/acquisition_panel_round3, preservation7729e46e. Cumulative data
+core193/rename192/combined385 includes earlier failures/repeats; missing old raw
+costs are not reconstructed. Command3.5774671s contains validation3.1577804s and
+core.031s; don't add them. No native/model/tokenizer/framework work occurred.
+
+SCI3 review5e9399b3 independently verifies the old control26/32 and new public
+count-relative rule32/32,48 guard evaluations/128 omitted. This is not source
+or token/runtime savings. OPS3 review115ea5e9 supports exact bounds/status/lineage/
+raw/scorer association only. ACQUISITION_PANEL_FINAL_ADJUDICATION and
+evidence/ACQUISITION_PANEL_QUARANTINE_003.json preserve the final negative and
+prohibit population efficacy/training/confirmation use. H01/LA-I1-002 stay open;
+neither new IDs nor a replacement position table can evade this milestone's cap.
+
+Read POST_ACQUISITION_CONTINUATION_ASSESSMENT_001 before more helpers. Generic
+synthetic enrollment is deferred; actual accepted acquisition/legacy panels and
+qualified update0 execution are required to make that transition concrete.
+GOAL_BLOCKED_AUDIT_001.json records the unchanged owner blocker across three
+observed turns and exhausted independent lane. The full mission remains incomplete.
+Native ledger charge47.421s is preserved with no unfinished jobs; central banks
+remain closed. The existing hourly supervisor is updated to quiet read-only
+reconciliation until an actionable authorized change, without resetting caps,
+repairing quarantined source or creating duplicate campaigns.
+
+Restart depends on the human decision for the already concrete and reviewed
+resolution_proposals/author_exception_001/PROPOSAL.json. Its exact scope is one
+extra targeted review/repair for reader/probe and at most one newly keyed60s
+identity observation002 after unchanged bindings/resource/lease/budget gates.
+Record the actual human response; a file flag, heartbeat or peer signature grants
+no authority. That proposal includes no extra native/training/acquisition repair.
+Do all approved integration and fresh review before any prospective probe; actual
+results require separate disposition. Preserve this track, its questions, all
+source/model histories and the original central program objective while blocked.

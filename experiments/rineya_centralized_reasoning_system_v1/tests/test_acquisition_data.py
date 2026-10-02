@@ -248,7 +248,7 @@ class AcquisitionRepairTargetedTests(unittest.TestCase):
     def test_prospective_cells_balanced_and_positions_predeclared_not_depth(self):
         cells=Counter();positions=set()
         for family in panel.FAMILIES:
-            recipes=[]
+            recipes=[];interiors=[]
             for slot in range(8):
                 params=panel.parameters(family,slot);evidence=panel.assigned_evidence(family,slot);recipe=panel.selection_recipe(params,evidence)
                 cells[family,evidence]+=1;recipes.append(recipe)
@@ -256,8 +256,10 @@ class AcquisitionRepairTargetedTests(unittest.TestCase):
                     position=recipe['earlier_supported_position'];positions.add(position)
                     self.assertLess(position,params['guarded_candidates']-1)
                     self.assertEqual(recipe['terminal_disposition'],'EXCLUDED')
+                    if position not in {0,params['guarded_candidates']-2,params['guarded_candidates']-1}:interiors.append(position)
             self.assertEqual(sum(row['earlier_supported_position'] is not None for row in recipes),2)
             self.assertEqual(sum(row['terminal_disposition']=='EXCLUDED' for row in recipes),4)
+            self.assertGreaterEqual(len(interiors),1)
         self.assertTrue(all(cells[family,status]==2 for family in panel.FAMILIES for status in panel.STATUSES))
         self.assertGreater(len(positions),1)
 
@@ -277,7 +279,7 @@ class AcquisitionRepairTargetedTests(unittest.TestCase):
                 self.assertEqual(public['controls']['terminal_only']['state'],'EXCLUDED')
             self.assertEqual(len(positive['facts']),len(negative['facts']))
 
-    def test_canonical_relatedness_and_versioned_v1_ancestry_retained(self):
+    def test_canonical_relatedness_and_versioned_v1_v2_v3_ancestry_retained(self):
         params=panel.parameters(panel.FAMILIES[0],1)
         positive=panel.construct(params,'SUPPORTED');negative=panel.construct(params,'REFUTED')
         first,second=panel.fingerprints(positive),panel.fingerprints(negative)
@@ -288,6 +290,50 @@ class AcquisitionRepairTargetedTests(unittest.TestCase):
         self.assertEqual(ancestry['operation'],'RECIPE_REVISION_OF_UNQUALIFIED_PANEL')
         previous=copy.deepcopy(params);previous['recipe_version']=panel.PREVIOUS_VERSION
         self.assertEqual(ancestry['prior_panel_root'],'ap-root-'+panel.digest(previous))
+        original=copy.deepcopy(params);original['recipe_version']=panel.ORIGINAL_VERSION
+        self.assertEqual(ancestry['original_panel_root'],'ap-root-'+panel.digest(original))
+        self.assertEqual(ancestry['ancestor_roots'],[ancestry['original_panel_root'],ancestry['prior_panel_root'],ancestry['root_id']])
+
+
+class AcquisitionFinalRepairTargetedTests(AcquisitionRepairTargetedTests):
+    """The sole candidate3 class; all whole-bank/oracle/core/scorer work fatal."""
+    def setUp(self):
+        super().setUp()
+        import builtins
+        original_import=builtins.__import__
+        def bounded_import(name,*args,**kwargs):
+            if name.rsplit('.',1)[-1] in {'core','scoring','scoring_v2'}:
+                raise AssertionError('core/scorer imports forbidden in final targeted checks')
+            return original_import(name,*args,**kwargs)
+        target=patch.object(builtins,'__import__',side_effect=bounded_import)
+        target.start();self.addCleanup(target.stop)
+
+    def test_exact_v2_assignments_independent_of_future_recipe_version(self):
+        expected={
+            panel.FAMILIES[0]:('SUPPORTED','UNKNOWN','UNKNOWN','SUPPORTED','CONTRADICTORY','REFUTED','CONTRADICTORY','REFUTED'),
+            panel.FAMILIES[1]:('REFUTED','CONTRADICTORY','CONTRADICTORY','REFUTED','SUPPORTED','UNKNOWN','SUPPORTED','UNKNOWN'),
+            panel.FAMILIES[2]:('UNKNOWN','SUPPORTED','SUPPORTED','UNKNOWN','REFUTED','CONTRADICTORY','REFUTED','CONTRADICTORY'),
+            panel.FAMILIES[3]:('CONTRADICTORY','REFUTED','REFUTED','CONTRADICTORY','UNKNOWN','SUPPORTED','UNKNOWN','SUPPORTED'),
+        }
+        self.assertEqual(panel.FROZEN_V2_EVIDENCE,expected)
+        with patch.object(panel,'VERSION','UNOBSERVED_FUTURE_RECIPE_NAME'):
+            self.assertEqual({family:tuple(panel.assigned_evidence(family,slot) for slot in range(8)) for family in panel.FAMILIES},expected)
+        self.assertEqual(panel.ASSIGNMENT_VERSION,panel.PREVIOUS_VERSION)
+
+    def test_four_predeclared_interior_worlds_defeat_complete_three_position_rule(self):
+        planned=((panel.FAMILIES[0],3,1),(panel.FAMILIES[1],4,2),(panel.FAMILIES[2],2,1),(panel.FAMILIES[3],5,3))
+        for family,slot,position in planned:
+            params=panel.parameters(family,slot);self.assertEqual(panel.assigned_evidence(family,slot),'SUPPORTED')
+            self.assertEqual(panel.selection_recipe(params,'SUPPORTED')['earlier_supported_position'],position)
+            world=panel.construct(params,'SUPPORTED');controls=panel.public_position_controls(self.case(world,params))
+            count=controls['candidate_count'];self.assertTrue(1<=position<=count-3)
+            combined=controls['controls']['combined_three_position']
+            self.assertEqual(combined['inspected_positions'],sorted({0,count-2,count-1},reverse=True))
+            self.assertNotIn(position,combined['inspected_positions'])
+            self.assertEqual(combined['prediction'],{'status':'REFUTED','value':None})
+            self.assertEqual(combined['candidate_guard_evaluations']+combined['skipped_candidate_guard_evaluations'],count)
+            self.assertEqual(controls['controls']['terminal_only']['state'],'EXCLUDED')
+        self.assertEqual(panel.registration()['combined_three_position_max_exact'],28)
 
 
 if __name__=='__main__':unittest.main()

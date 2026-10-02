@@ -425,3 +425,53 @@ evidence/acquisition_panel_round1_cpu_001. One coherent candidate2 is scoped in
 ACQUISITION_PANEL_ROUND1_ADJUDICATION: pre-encoding bounds and prospectively frozen
 real earlier-selection/opposing-terminal coverage, with no pruned/resampled cases.
 No model, tokenizer, protected bank, training, optimizer bytes or native gate changed.
+
+## Final acquisition observations and blocked handoff, 2026-10-02
+
+Candidate2 preserved and committed atad22a638: seven targeted checks, one Root
+15-test/32-main/32-rename observation, all passing. OPS2 closes pre-JSON input
+bounds; SCI2 rejects the population because terminal/first/penultimate predicts
+32/32 while skipping84 guard evaluations. Actual earlier owners8,two per family;
+28/32 statuses changed from v1 to v2. Evidence/history/reviews remain under their
+original source identities. No model result follows.
+
+Final candidate3 freezes v2 statuses and full v1/v2/v3 ancestry, with six interior
+winners. Builder's sole9-test targeted class passes0.019740s (command0.3962432s),
+25 constructor attempts,2 fingerprints,12 public controls and0 forbidden APIs.
+Root's one guarded15-test observation43b5d767 passes32 main/32 rename controls,
+retaining raw inputs,predictions,costs and hashes. Command3.5774671s contains
+validation3.1577804s and core.031s; core192 operations,1060 events,56153 source
+bytes and110354 verification bytes,peak serialized state13805. Nested intervals
+are not additive. No tokenizer/model/framework/native call or update occurred.
+
+The old three-position control26/32 meets its specific<=28 repair criterion.
+Root prospectively forecast a different count-relative rule32/32; fresh SCI3
+independently implements/checks it against all32 retained public cases. It is
+32/32 with48 guard evaluations and128 omitted of176, while still parsing source.
+No token/reading/runtime saving or model-learning effect is measured. SCI3's
+64 control predictions and metadata checks take0.032981s within0.2997964s command;
+OPS3's14 changed-entry rejects take0.0010894s and raw association0.0270097s with0
+extra comparison batch. Shared model/workspace/semantics limitations remain.
+
+Known cumulative data invocations are192 main+192 rename+1 diagnostic:
+193 core and385 combined. Earlier failed/repeated raw rows and complete auxiliary
+costs remain unavailable,not reconstructed. Review-control and coordination costs
+are separately scoped; the recorded goal meter is not Rineya token dose or native
+compute and lacks complete billing/per-agent coverage.
+
+Final source7742ae86/test7da7a53e/contract78f9066b, history7729e46e, SCI5e9399b3
+and OPS115ea5e9 support source consistency but reject population use. The separate
+ACQUISITION_PANEL_QUARANTINE_003 transition preserves this negative at the3-round
+limit; no fourth repair, replacement draw or relabeling. H01/LA-I1-002 remain open.
+Post-acquisition assessment3d19d792 defers generic synthetic enrollment until
+accepted panels and qualified source baseline make the transition concrete.
+
+All native/model/system/distilled acquisition, retention, calibration, transfer,
+prediction/replication and confirmation results remain unmeasured. Native/probe
+charge47.421s is unchanged; host ledger has0 unfinished jobs and central banks
+closed. The full objective is incomplete. The same concrete owner exception is
+unanswered across three observed goal turns; after this durable handoff the goal
+is blocked. Its exact human-approved scope, new version/review bindings and fresh
+admission are required before the prospective identity002 observation. The pending
+proposal includes no extra native/training/acquisition repair. The existing hourly
+supervisor is updated to quiet reconciliation, preserving caps and histories.

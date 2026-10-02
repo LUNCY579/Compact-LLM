@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "contract_id": "CRS-ACQUISITION-PANEL-FEASIBILITY-001",
-  "status": "CANDIDATE_2_FROZEN_BOUNDED_SELECTION_AND_SERIALIZATION_REPAIR_PENDING_SINGLE_RETAINED_ROOT_VALIDATION_AND_FRESH_REVIEW",
-  "builder": "/root/data_audit",
-  "version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+  "status": "CANDIDATE_3_FROZEN_TARGETED_PASS_PENDING_SINGLE_RETAINED_ROOT_VALIDATION_AND_FINAL_SCI_OPS_REVIEW",
+  "builder": "/root/acq_builder3",
+  "version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
   "canonicalization_version": "TYPED-DIRECTED-RELATIONAL-IR-v1",
   "source_sha256": {
-    "acquisition_data.py": "90f0cf990e736f4d455ceba07b93ed06957ef68759b3b0e46fe0fef4af6b4943",
-    "tests/test_acquisition_data.py": "1329e3ae43e76d6062ab124a1005778aeb4556a08d2d437977db286ca7ac32b0",
+    "acquisition_data.py": "7742ae86bf5b4b2831ae4851ddbadd2356fd7e58dbbd6a5e75eb4ccf4da3e054",
+    "tests/test_acquisition_data.py": "7da7a53eb68b11e36c679250778ee991aab126922c51f491cce47216d537d2df",
     "learning_data.py": "837bd152ba5aa9d1fc44a5991909cf4475394eaa42af739cca63ac3422ed3795",
     "contracts/LEARNING_DATA_V1.json": "37f316972afc6b1a43f9a1ef8f797b0452fb0de5706724c0fd49f8bf0470015a",
     "evidence/LEARNING_DATA_ACCEPTANCE_001.json": "ceece000901c57917b2a7ad2eab87365e542f4a5c28e6e5c5b8b4155f6874c62",
@@ -20,7 +20,7 @@
     "ACQUISITION_PANEL_COORDINATOR_SCOPE_1.md": "41750f211690185c3004b05cde4a874df976076f90d45d36d482f77074946356"
   },
   "registration": {
-    "version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+    "version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
     "role": "TRAIN",
     "intent": "ACQUISITION_PROBE",
     "draw_seed": 307,
@@ -28,21 +28,23 @@
     "planned_roots": 32,
     "variants_per_root": 1,
     "canonicalization_version": "TYPED-DIRECTED-RELATIONAL-IR-v1",
-    "population": "related v2 selection repair of rejected v1 panel; four broad families,2..9 candidates, earlier winners at predeclared first/penultimate positions; NOT depth=N or optimizer's exact template/difficulty",
+    "population": "related v3 interior-selection repair of rejected v1/v2 panels; exact v2 statuses, four broad families,2..9 candidates, varied predeclared nonterminal winners including interiors; NOT depth=N or optimizer's exact template/difficulty",
     "canonical_states_per_world": 4096,
     "latent_records": 256,
     "source_bytes": 8192,
-    "receipt_bytes": 8388608
+    "receipt_bytes": 8388608,
+    "assignment_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+    "combined_three_position_max_exact": 28
   },
   "scheduled_membership": [
     {
-      "case_id": "ap-case-83327144d1f4d0d5d374800c19ff271ba9b662ae0df9f31bfa6e0db40125b557",
-      "root_id": "ap-root-9e298aa712692174a4ec23b67e20ea42f845dce32d214f3170eedc97564b2bee",
-      "prior_panel_root": "ap-root-757cd54776692ba6131afb0f844c5b52e98ba0164017d36ae6255eac8fe73a37",
+      "case_id": "ap-case-8f05624781182f7688b26961985f3481ac47ec46f41d3f7bafbb9b5d9e63b24b",
+      "root_id": "ap-root-6d58273d868f08a3f5793045cc708c7ef649c6c7aecf53a429981f8b86b62b3a",
+      "prior_panel_root": "ap-root-9e298aa712692174a4ec23b67e20ea42f845dce32d214f3170eedc97564b2bee",
       "family": "empty_joint_gates",
       "slot": 0,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "empty_joint_gates",
         "slot": 0,
         "guarded_candidates": 2,
@@ -51,14 +53,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-9e298aa712692174a4ec23b67e20ea42f845dce32d214f3170eedc97564b2bee",
+        "root_id": "ap-root-6d58273d868f08a3f5793045cc708c7ef649c6c7aecf53a429981f8b86b62b3a",
         "ancestor_roots": [
           "ap-root-757cd54776692ba6131afb0f844c5b52e98ba0164017d36ae6255eac8fe73a37",
-          "ap-root-9e298aa712692174a4ec23b67e20ea42f845dce32d214f3170eedc97564b2bee"
+          "ap-root-9e298aa712692174a4ec23b67e20ea42f845dce32d214f3170eedc97564b2bee",
+          "ap-root-6d58273d868f08a3f5793045cc708c7ef649c6c7aecf53a429981f8b86b62b3a"
         ],
-        "prior_panel_root": "ap-root-757cd54776692ba6131afb0f844c5b52e98ba0164017d36ae6255eac8fe73a37",
+        "prior_panel_root": "ap-root-9e298aa712692174a4ec23b67e20ea42f845dce32d214f3170eedc97564b2bee",
+        "original_panel_root": "ap-root-757cd54776692ba6131afb0f844c5b52e98ba0164017d36ae6255eac8fe73a37",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "empty_joint_gates",
           "slot": 0,
           "guarded_candidates": 2,
@@ -67,16 +71,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-757cd54776692ba6131afb0f844c5b52e98ba0164017d36ae6255eac8fe73a37"
     },
     {
-      "case_id": "ap-case-a7fc705d6d7cc8048070aa0d7a59d60f758ac311cb15d41e87d79df03e2505f6",
-      "root_id": "ap-root-cc72ac9e6b88c3c86c1fe74daa503b5976289adaeee274ecbe755634ad111fa1",
-      "prior_panel_root": "ap-root-dea5c6b0e604657ae76efd6dd5b8fc232a63c01ea97f67c14b7b091e69d64f5a",
+      "case_id": "ap-case-8d17fb199f322d8776e624f88422564e69203530dbcfe4692d6d9b4650235ce0",
+      "root_id": "ap-root-21370d2ebb6f3894dbeba4d9746c08c68872b6424d3f20bebe23557c89a93786",
+      "prior_panel_root": "ap-root-cc72ac9e6b88c3c86c1fe74daa503b5976289adaeee274ecbe755634ad111fa1",
       "family": "empty_joint_gates",
       "slot": 1,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "empty_joint_gates",
         "slot": 1,
         "guarded_candidates": 3,
@@ -85,14 +90,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-cc72ac9e6b88c3c86c1fe74daa503b5976289adaeee274ecbe755634ad111fa1",
+        "root_id": "ap-root-21370d2ebb6f3894dbeba4d9746c08c68872b6424d3f20bebe23557c89a93786",
         "ancestor_roots": [
           "ap-root-dea5c6b0e604657ae76efd6dd5b8fc232a63c01ea97f67c14b7b091e69d64f5a",
-          "ap-root-cc72ac9e6b88c3c86c1fe74daa503b5976289adaeee274ecbe755634ad111fa1"
+          "ap-root-cc72ac9e6b88c3c86c1fe74daa503b5976289adaeee274ecbe755634ad111fa1",
+          "ap-root-21370d2ebb6f3894dbeba4d9746c08c68872b6424d3f20bebe23557c89a93786"
         ],
-        "prior_panel_root": "ap-root-dea5c6b0e604657ae76efd6dd5b8fc232a63c01ea97f67c14b7b091e69d64f5a",
+        "prior_panel_root": "ap-root-cc72ac9e6b88c3c86c1fe74daa503b5976289adaeee274ecbe755634ad111fa1",
+        "original_panel_root": "ap-root-dea5c6b0e604657ae76efd6dd5b8fc232a63c01ea97f67c14b7b091e69d64f5a",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "empty_joint_gates",
           "slot": 1,
           "guarded_candidates": 3,
@@ -101,16 +108,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-dea5c6b0e604657ae76efd6dd5b8fc232a63c01ea97f67c14b7b091e69d64f5a"
     },
     {
-      "case_id": "ap-case-ec26b379f3a58e3a5acea04f9761db373092431b8f79f9de7a595d0fe4fcdf20",
-      "root_id": "ap-root-441003513f1c4d3fc70f53584bac5662e71a7e6682d81bdaa3999f4b2c3fa442",
-      "prior_panel_root": "ap-root-1c89bd28076e8453b04570ea6884e81dba536f21587a0848fdc66f2a707bee07",
+      "case_id": "ap-case-f0c84f8af3049c39acea59d0df752051638b97b0e725fbead17e900f506a4be8",
+      "root_id": "ap-root-4210bd0db263458c88fa5439a4e5c5586eb2484c9b2693e58c216cf417ae4401",
+      "prior_panel_root": "ap-root-441003513f1c4d3fc70f53584bac5662e71a7e6682d81bdaa3999f4b2c3fa442",
       "family": "empty_joint_gates",
       "slot": 2,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "empty_joint_gates",
         "slot": 2,
         "guarded_candidates": 4,
@@ -119,14 +127,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-441003513f1c4d3fc70f53584bac5662e71a7e6682d81bdaa3999f4b2c3fa442",
+        "root_id": "ap-root-4210bd0db263458c88fa5439a4e5c5586eb2484c9b2693e58c216cf417ae4401",
         "ancestor_roots": [
           "ap-root-1c89bd28076e8453b04570ea6884e81dba536f21587a0848fdc66f2a707bee07",
-          "ap-root-441003513f1c4d3fc70f53584bac5662e71a7e6682d81bdaa3999f4b2c3fa442"
+          "ap-root-441003513f1c4d3fc70f53584bac5662e71a7e6682d81bdaa3999f4b2c3fa442",
+          "ap-root-4210bd0db263458c88fa5439a4e5c5586eb2484c9b2693e58c216cf417ae4401"
         ],
-        "prior_panel_root": "ap-root-1c89bd28076e8453b04570ea6884e81dba536f21587a0848fdc66f2a707bee07",
+        "prior_panel_root": "ap-root-441003513f1c4d3fc70f53584bac5662e71a7e6682d81bdaa3999f4b2c3fa442",
+        "original_panel_root": "ap-root-1c89bd28076e8453b04570ea6884e81dba536f21587a0848fdc66f2a707bee07",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "empty_joint_gates",
           "slot": 2,
           "guarded_candidates": 4,
@@ -135,16 +145,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-1c89bd28076e8453b04570ea6884e81dba536f21587a0848fdc66f2a707bee07"
     },
     {
-      "case_id": "ap-case-3d409ae16b6400f2c89119fa6418d8feafc49eba13cdaffe412f258cf85a5395",
-      "root_id": "ap-root-a7af9305cfdcd2fb8298c600286c26ac50f3c2f9108afbce24b18c4dedf86487",
-      "prior_panel_root": "ap-root-5da1702f17d135e807d6fda8dfcc0caca6fb36f7bc36bb5a5d3cee443808ef00",
+      "case_id": "ap-case-13c2c7de547882723ab4b2a7c8e091714b77c029df08e264ddbbfa5a52653b72",
+      "root_id": "ap-root-5925eab62ca7fe1b67b486d1e8b1875e0707f25ae8907c0a89cd9fede170b3f2",
+      "prior_panel_root": "ap-root-a7af9305cfdcd2fb8298c600286c26ac50f3c2f9108afbce24b18c4dedf86487",
       "family": "empty_joint_gates",
       "slot": 3,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "empty_joint_gates",
         "slot": 3,
         "guarded_candidates": 5,
@@ -153,14 +164,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-a7af9305cfdcd2fb8298c600286c26ac50f3c2f9108afbce24b18c4dedf86487",
+        "root_id": "ap-root-5925eab62ca7fe1b67b486d1e8b1875e0707f25ae8907c0a89cd9fede170b3f2",
         "ancestor_roots": [
           "ap-root-5da1702f17d135e807d6fda8dfcc0caca6fb36f7bc36bb5a5d3cee443808ef00",
-          "ap-root-a7af9305cfdcd2fb8298c600286c26ac50f3c2f9108afbce24b18c4dedf86487"
+          "ap-root-a7af9305cfdcd2fb8298c600286c26ac50f3c2f9108afbce24b18c4dedf86487",
+          "ap-root-5925eab62ca7fe1b67b486d1e8b1875e0707f25ae8907c0a89cd9fede170b3f2"
         ],
-        "prior_panel_root": "ap-root-5da1702f17d135e807d6fda8dfcc0caca6fb36f7bc36bb5a5d3cee443808ef00",
+        "prior_panel_root": "ap-root-a7af9305cfdcd2fb8298c600286c26ac50f3c2f9108afbce24b18c4dedf86487",
+        "original_panel_root": "ap-root-5da1702f17d135e807d6fda8dfcc0caca6fb36f7bc36bb5a5d3cee443808ef00",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "empty_joint_gates",
           "slot": 3,
           "guarded_candidates": 5,
@@ -169,16 +182,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-5da1702f17d135e807d6fda8dfcc0caca6fb36f7bc36bb5a5d3cee443808ef00"
     },
     {
-      "case_id": "ap-case-f2d2f4a9590f90409443c2d7908b120c057596295facf984f2d15fde0677fe47",
-      "root_id": "ap-root-ab2a9a01b77cb6c634efbc869f977489f5e53f321921215f4ca0b2a7850cd0d7",
-      "prior_panel_root": "ap-root-87ac3c9ce28b85d9a20ff9c80f67039a988546c5bc089735047f1a999b04d8c5",
+      "case_id": "ap-case-f2a982ce004e6e3cb8b251fe2ed941ff84f43d674fb9091be87945e7aea40e5e",
+      "root_id": "ap-root-c7529460007784d4841dcee4e1ef80c1450c3d57870d7306b601ba32c1a5c183",
+      "prior_panel_root": "ap-root-ab2a9a01b77cb6c634efbc869f977489f5e53f321921215f4ca0b2a7850cd0d7",
       "family": "empty_joint_gates",
       "slot": 4,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "empty_joint_gates",
         "slot": 4,
         "guarded_candidates": 6,
@@ -187,14 +201,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-ab2a9a01b77cb6c634efbc869f977489f5e53f321921215f4ca0b2a7850cd0d7",
+        "root_id": "ap-root-c7529460007784d4841dcee4e1ef80c1450c3d57870d7306b601ba32c1a5c183",
         "ancestor_roots": [
           "ap-root-87ac3c9ce28b85d9a20ff9c80f67039a988546c5bc089735047f1a999b04d8c5",
-          "ap-root-ab2a9a01b77cb6c634efbc869f977489f5e53f321921215f4ca0b2a7850cd0d7"
+          "ap-root-ab2a9a01b77cb6c634efbc869f977489f5e53f321921215f4ca0b2a7850cd0d7",
+          "ap-root-c7529460007784d4841dcee4e1ef80c1450c3d57870d7306b601ba32c1a5c183"
         ],
-        "prior_panel_root": "ap-root-87ac3c9ce28b85d9a20ff9c80f67039a988546c5bc089735047f1a999b04d8c5",
+        "prior_panel_root": "ap-root-ab2a9a01b77cb6c634efbc869f977489f5e53f321921215f4ca0b2a7850cd0d7",
+        "original_panel_root": "ap-root-87ac3c9ce28b85d9a20ff9c80f67039a988546c5bc089735047f1a999b04d8c5",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "empty_joint_gates",
           "slot": 4,
           "guarded_candidates": 6,
@@ -203,16 +219,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-87ac3c9ce28b85d9a20ff9c80f67039a988546c5bc089735047f1a999b04d8c5"
     },
     {
-      "case_id": "ap-case-6c59e129df88bc7bfad3d865b914f4afb3b8f9da7f873f1f5f13f6cdf5260d5f",
-      "root_id": "ap-root-1e70af5166587319bed810cbb42ba6a443b82d98817c82a9848b59d88485ecc4",
-      "prior_panel_root": "ap-root-02158b5b70695f1a90436a9660d51912d95c593b897ea0fc21b5528d55b92cfe",
+      "case_id": "ap-case-f946685fa35bcfaf502862d8c9670d97ca75b58eb3a5d02365fc90598e816a2b",
+      "root_id": "ap-root-b884d019efb961c110d03fb329705a948c1b72c54964c2114c31fe61676389af",
+      "prior_panel_root": "ap-root-1e70af5166587319bed810cbb42ba6a443b82d98817c82a9848b59d88485ecc4",
       "family": "empty_joint_gates",
       "slot": 5,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "empty_joint_gates",
         "slot": 5,
         "guarded_candidates": 7,
@@ -221,14 +238,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-1e70af5166587319bed810cbb42ba6a443b82d98817c82a9848b59d88485ecc4",
+        "root_id": "ap-root-b884d019efb961c110d03fb329705a948c1b72c54964c2114c31fe61676389af",
         "ancestor_roots": [
           "ap-root-02158b5b70695f1a90436a9660d51912d95c593b897ea0fc21b5528d55b92cfe",
-          "ap-root-1e70af5166587319bed810cbb42ba6a443b82d98817c82a9848b59d88485ecc4"
+          "ap-root-1e70af5166587319bed810cbb42ba6a443b82d98817c82a9848b59d88485ecc4",
+          "ap-root-b884d019efb961c110d03fb329705a948c1b72c54964c2114c31fe61676389af"
         ],
-        "prior_panel_root": "ap-root-02158b5b70695f1a90436a9660d51912d95c593b897ea0fc21b5528d55b92cfe",
+        "prior_panel_root": "ap-root-1e70af5166587319bed810cbb42ba6a443b82d98817c82a9848b59d88485ecc4",
+        "original_panel_root": "ap-root-02158b5b70695f1a90436a9660d51912d95c593b897ea0fc21b5528d55b92cfe",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "empty_joint_gates",
           "slot": 5,
           "guarded_candidates": 7,
@@ -237,16 +256,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-02158b5b70695f1a90436a9660d51912d95c593b897ea0fc21b5528d55b92cfe"
     },
     {
-      "case_id": "ap-case-84b5b9882b5cf9b9bd6190d81b666f843b88ace359c3605d291196190458644a",
-      "root_id": "ap-root-2a9794873fe4fd0002b52997f307c6622a443753c1a88868faa56978075a78c4",
-      "prior_panel_root": "ap-root-10660e0c28a7b436a6abf6f63a786aa8ba82ffbfe714ecb396e4260ac492222e",
+      "case_id": "ap-case-409fc3f9b3dffd599a2518e4c6cf18154c52f6384d0374878652bea486388749",
+      "root_id": "ap-root-8174ac6b3c41f5a34969e16eb2884e30014f11a039725ef9aabdd192a1254bfb",
+      "prior_panel_root": "ap-root-2a9794873fe4fd0002b52997f307c6622a443753c1a88868faa56978075a78c4",
       "family": "empty_joint_gates",
       "slot": 6,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "empty_joint_gates",
         "slot": 6,
         "guarded_candidates": 8,
@@ -255,14 +275,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-2a9794873fe4fd0002b52997f307c6622a443753c1a88868faa56978075a78c4",
+        "root_id": "ap-root-8174ac6b3c41f5a34969e16eb2884e30014f11a039725ef9aabdd192a1254bfb",
         "ancestor_roots": [
           "ap-root-10660e0c28a7b436a6abf6f63a786aa8ba82ffbfe714ecb396e4260ac492222e",
-          "ap-root-2a9794873fe4fd0002b52997f307c6622a443753c1a88868faa56978075a78c4"
+          "ap-root-2a9794873fe4fd0002b52997f307c6622a443753c1a88868faa56978075a78c4",
+          "ap-root-8174ac6b3c41f5a34969e16eb2884e30014f11a039725ef9aabdd192a1254bfb"
         ],
-        "prior_panel_root": "ap-root-10660e0c28a7b436a6abf6f63a786aa8ba82ffbfe714ecb396e4260ac492222e",
+        "prior_panel_root": "ap-root-2a9794873fe4fd0002b52997f307c6622a443753c1a88868faa56978075a78c4",
+        "original_panel_root": "ap-root-10660e0c28a7b436a6abf6f63a786aa8ba82ffbfe714ecb396e4260ac492222e",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "empty_joint_gates",
           "slot": 6,
           "guarded_candidates": 8,
@@ -271,16 +293,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-10660e0c28a7b436a6abf6f63a786aa8ba82ffbfe714ecb396e4260ac492222e"
     },
     {
-      "case_id": "ap-case-1f74e12be5ecfaf78e1e30d6898f1df8000da9c7dc29126075816fb775662865",
-      "root_id": "ap-root-e74e0ede58a62e6865dc26e1ed8ac626b29c8eb095c177210932afe9cbd6eb6a",
-      "prior_panel_root": "ap-root-88fc2ccf44ae935785c8f8f4db3d53100685741ca486705068c30a8746253d73",
+      "case_id": "ap-case-d1fd24d4943ae1fbec7773afa820a039fc60d946c57d70e825b6623dda0c2636",
+      "root_id": "ap-root-0801060d590c28c5e984559b6956ed2c58eb8fb9269a0227c1375dbc5dc07cc1",
+      "prior_panel_root": "ap-root-e74e0ede58a62e6865dc26e1ed8ac626b29c8eb095c177210932afe9cbd6eb6a",
       "family": "empty_joint_gates",
       "slot": 7,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "empty_joint_gates",
         "slot": 7,
         "guarded_candidates": 9,
@@ -289,14 +312,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-e74e0ede58a62e6865dc26e1ed8ac626b29c8eb095c177210932afe9cbd6eb6a",
+        "root_id": "ap-root-0801060d590c28c5e984559b6956ed2c58eb8fb9269a0227c1375dbc5dc07cc1",
         "ancestor_roots": [
           "ap-root-88fc2ccf44ae935785c8f8f4db3d53100685741ca486705068c30a8746253d73",
-          "ap-root-e74e0ede58a62e6865dc26e1ed8ac626b29c8eb095c177210932afe9cbd6eb6a"
+          "ap-root-e74e0ede58a62e6865dc26e1ed8ac626b29c8eb095c177210932afe9cbd6eb6a",
+          "ap-root-0801060d590c28c5e984559b6956ed2c58eb8fb9269a0227c1375dbc5dc07cc1"
         ],
-        "prior_panel_root": "ap-root-88fc2ccf44ae935785c8f8f4db3d53100685741ca486705068c30a8746253d73",
+        "prior_panel_root": "ap-root-e74e0ede58a62e6865dc26e1ed8ac626b29c8eb095c177210932afe9cbd6eb6a",
+        "original_panel_root": "ap-root-88fc2ccf44ae935785c8f8f4db3d53100685741ca486705068c30a8746253d73",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "empty_joint_gates",
           "slot": 7,
           "guarded_candidates": 9,
@@ -305,16 +330,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-88fc2ccf44ae935785c8f8f4db3d53100685741ca486705068c30a8746253d73"
     },
     {
-      "case_id": "ap-case-a9c2368e1501113ef6a1a941d5d7c61a200daf039fae12939a8151dc2abaf092",
-      "root_id": "ap-root-9a5ea74dd269744f4eb18e51e57c02e71777452177a4d65e91a0bac09177ab31",
-      "prior_panel_root": "ap-root-0379dae7693cb4db521af50c9ad5372bd01d4ecd4ba79344a481f612bb0ce488",
+      "case_id": "ap-case-92061bee4ea3e83d5a81a5915ef34edaeabe2f3f0590b32bf27b16fad3fcc9b0",
+      "root_id": "ap-root-85287a5842d550f19cc5be1f98109cc59f1250fdec8d8707c02d6fdbbd23b2f9",
+      "prior_panel_root": "ap-root-9a5ea74dd269744f4eb18e51e57c02e71777452177a4d65e91a0bac09177ab31",
       "family": "canceled_prefix_joint_gates",
       "slot": 0,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "canceled_prefix_joint_gates",
         "slot": 0,
         "guarded_candidates": 2,
@@ -323,14 +349,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-9a5ea74dd269744f4eb18e51e57c02e71777452177a4d65e91a0bac09177ab31",
+        "root_id": "ap-root-85287a5842d550f19cc5be1f98109cc59f1250fdec8d8707c02d6fdbbd23b2f9",
         "ancestor_roots": [
           "ap-root-0379dae7693cb4db521af50c9ad5372bd01d4ecd4ba79344a481f612bb0ce488",
-          "ap-root-9a5ea74dd269744f4eb18e51e57c02e71777452177a4d65e91a0bac09177ab31"
+          "ap-root-9a5ea74dd269744f4eb18e51e57c02e71777452177a4d65e91a0bac09177ab31",
+          "ap-root-85287a5842d550f19cc5be1f98109cc59f1250fdec8d8707c02d6fdbbd23b2f9"
         ],
-        "prior_panel_root": "ap-root-0379dae7693cb4db521af50c9ad5372bd01d4ecd4ba79344a481f612bb0ce488",
+        "prior_panel_root": "ap-root-9a5ea74dd269744f4eb18e51e57c02e71777452177a4d65e91a0bac09177ab31",
+        "original_panel_root": "ap-root-0379dae7693cb4db521af50c9ad5372bd01d4ecd4ba79344a481f612bb0ce488",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "canceled_prefix_joint_gates",
           "slot": 0,
           "guarded_candidates": 2,
@@ -339,16 +367,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-0379dae7693cb4db521af50c9ad5372bd01d4ecd4ba79344a481f612bb0ce488"
     },
     {
-      "case_id": "ap-case-8a02c391a1ea326761780663c85d11c12cbfb42d9a924d5219f591cfba8bbaa2",
-      "root_id": "ap-root-6ecf97b2f4985f60da3f675978004ae0a7a1c1bc828542b63174cc78f6b1178e",
-      "prior_panel_root": "ap-root-6b0080340f621bb1ab5b2c6f5372844cc05a04aa1b4220361e18b2a7d4179a0a",
+      "case_id": "ap-case-3c1816367b586043db00c78dd4977965dfb5107dbdf202555a8e7a67be1ef0d1",
+      "root_id": "ap-root-bb647b3691aa9ce3da419b50418a60cc8b6a31cda9f687a4278c7eae0421e304",
+      "prior_panel_root": "ap-root-6ecf97b2f4985f60da3f675978004ae0a7a1c1bc828542b63174cc78f6b1178e",
       "family": "canceled_prefix_joint_gates",
       "slot": 1,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "canceled_prefix_joint_gates",
         "slot": 1,
         "guarded_candidates": 3,
@@ -357,14 +386,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-6ecf97b2f4985f60da3f675978004ae0a7a1c1bc828542b63174cc78f6b1178e",
+        "root_id": "ap-root-bb647b3691aa9ce3da419b50418a60cc8b6a31cda9f687a4278c7eae0421e304",
         "ancestor_roots": [
           "ap-root-6b0080340f621bb1ab5b2c6f5372844cc05a04aa1b4220361e18b2a7d4179a0a",
-          "ap-root-6ecf97b2f4985f60da3f675978004ae0a7a1c1bc828542b63174cc78f6b1178e"
+          "ap-root-6ecf97b2f4985f60da3f675978004ae0a7a1c1bc828542b63174cc78f6b1178e",
+          "ap-root-bb647b3691aa9ce3da419b50418a60cc8b6a31cda9f687a4278c7eae0421e304"
         ],
-        "prior_panel_root": "ap-root-6b0080340f621bb1ab5b2c6f5372844cc05a04aa1b4220361e18b2a7d4179a0a",
+        "prior_panel_root": "ap-root-6ecf97b2f4985f60da3f675978004ae0a7a1c1bc828542b63174cc78f6b1178e",
+        "original_panel_root": "ap-root-6b0080340f621bb1ab5b2c6f5372844cc05a04aa1b4220361e18b2a7d4179a0a",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "canceled_prefix_joint_gates",
           "slot": 1,
           "guarded_candidates": 3,
@@ -373,16 +404,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-6b0080340f621bb1ab5b2c6f5372844cc05a04aa1b4220361e18b2a7d4179a0a"
     },
     {
-      "case_id": "ap-case-5b316f32782a1812e218c78d8dc147c3c75ce6c4e8bfc27de65a7772a187f618",
-      "root_id": "ap-root-ed0b3b2b701db979f7a6688589b10f4824045fda4a20e5e82699792a0354f17f",
-      "prior_panel_root": "ap-root-6b9b2d0166106ebb86e992d4d4af653cde3d8fec305cea14bc66b73e630c5352",
+      "case_id": "ap-case-2d8c2ab28b53bd69048e4f6111c837c1bf19a2f4d8b3b219eb7aac32becc9a54",
+      "root_id": "ap-root-b6fea26faf257d8e9fe5bd8730eb4696a36f177a5176fe1b6fa2ca785bd78df0",
+      "prior_panel_root": "ap-root-ed0b3b2b701db979f7a6688589b10f4824045fda4a20e5e82699792a0354f17f",
       "family": "canceled_prefix_joint_gates",
       "slot": 2,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "canceled_prefix_joint_gates",
         "slot": 2,
         "guarded_candidates": 4,
@@ -391,14 +423,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-ed0b3b2b701db979f7a6688589b10f4824045fda4a20e5e82699792a0354f17f",
+        "root_id": "ap-root-b6fea26faf257d8e9fe5bd8730eb4696a36f177a5176fe1b6fa2ca785bd78df0",
         "ancestor_roots": [
           "ap-root-6b9b2d0166106ebb86e992d4d4af653cde3d8fec305cea14bc66b73e630c5352",
-          "ap-root-ed0b3b2b701db979f7a6688589b10f4824045fda4a20e5e82699792a0354f17f"
+          "ap-root-ed0b3b2b701db979f7a6688589b10f4824045fda4a20e5e82699792a0354f17f",
+          "ap-root-b6fea26faf257d8e9fe5bd8730eb4696a36f177a5176fe1b6fa2ca785bd78df0"
         ],
-        "prior_panel_root": "ap-root-6b9b2d0166106ebb86e992d4d4af653cde3d8fec305cea14bc66b73e630c5352",
+        "prior_panel_root": "ap-root-ed0b3b2b701db979f7a6688589b10f4824045fda4a20e5e82699792a0354f17f",
+        "original_panel_root": "ap-root-6b9b2d0166106ebb86e992d4d4af653cde3d8fec305cea14bc66b73e630c5352",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "canceled_prefix_joint_gates",
           "slot": 2,
           "guarded_candidates": 4,
@@ -407,16 +441,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-6b9b2d0166106ebb86e992d4d4af653cde3d8fec305cea14bc66b73e630c5352"
     },
     {
-      "case_id": "ap-case-151d86b1ee8b90f6b8fbcd2be5f6cec46e74385dea7e772935f1d08e5d449103",
-      "root_id": "ap-root-6397f038617350cd6fd41dba2f0a6403476cdff39ebab6b682a728ca7ef2cac7",
-      "prior_panel_root": "ap-root-cd42223fd6c98d4315c3df0635e3b1b178c0011a063f926ce199ae3f514408d2",
+      "case_id": "ap-case-1ea566882dd7418453cdf5b8698c76c248fabfc9e6833d0eb633338e20ec0699",
+      "root_id": "ap-root-fe29acaed731baf0174a2c4da01d637189da3ce815e165c153b159c469645e41",
+      "prior_panel_root": "ap-root-6397f038617350cd6fd41dba2f0a6403476cdff39ebab6b682a728ca7ef2cac7",
       "family": "canceled_prefix_joint_gates",
       "slot": 3,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "canceled_prefix_joint_gates",
         "slot": 3,
         "guarded_candidates": 5,
@@ -425,14 +460,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-6397f038617350cd6fd41dba2f0a6403476cdff39ebab6b682a728ca7ef2cac7",
+        "root_id": "ap-root-fe29acaed731baf0174a2c4da01d637189da3ce815e165c153b159c469645e41",
         "ancestor_roots": [
           "ap-root-cd42223fd6c98d4315c3df0635e3b1b178c0011a063f926ce199ae3f514408d2",
-          "ap-root-6397f038617350cd6fd41dba2f0a6403476cdff39ebab6b682a728ca7ef2cac7"
+          "ap-root-6397f038617350cd6fd41dba2f0a6403476cdff39ebab6b682a728ca7ef2cac7",
+          "ap-root-fe29acaed731baf0174a2c4da01d637189da3ce815e165c153b159c469645e41"
         ],
-        "prior_panel_root": "ap-root-cd42223fd6c98d4315c3df0635e3b1b178c0011a063f926ce199ae3f514408d2",
+        "prior_panel_root": "ap-root-6397f038617350cd6fd41dba2f0a6403476cdff39ebab6b682a728ca7ef2cac7",
+        "original_panel_root": "ap-root-cd42223fd6c98d4315c3df0635e3b1b178c0011a063f926ce199ae3f514408d2",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "canceled_prefix_joint_gates",
           "slot": 3,
           "guarded_candidates": 5,
@@ -441,16 +478,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-cd42223fd6c98d4315c3df0635e3b1b178c0011a063f926ce199ae3f514408d2"
     },
     {
-      "case_id": "ap-case-66033851a80cfa1460a6dcbe94e5ab22419c5e35a7960beecbe78de3d734b32a",
-      "root_id": "ap-root-f8261313aa9e6ba1acd71de8341995d5638ea7e29c0e513b914b44d7d053daf0",
-      "prior_panel_root": "ap-root-0de441dd0f030e37fcd47bda1951629817db66849dde1de13131d08fe10af9ac",
+      "case_id": "ap-case-20dbb0ecd3c27b91683f0e7aef0ff28e8d5cffe2578102e3bafea93039be1be2",
+      "root_id": "ap-root-cb1fa847faa721cb8bc16d0cfbf9f63b9a4691369988e977bd7eb0b5e2e2e1bf",
+      "prior_panel_root": "ap-root-f8261313aa9e6ba1acd71de8341995d5638ea7e29c0e513b914b44d7d053daf0",
       "family": "canceled_prefix_joint_gates",
       "slot": 4,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "canceled_prefix_joint_gates",
         "slot": 4,
         "guarded_candidates": 6,
@@ -459,14 +497,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-f8261313aa9e6ba1acd71de8341995d5638ea7e29c0e513b914b44d7d053daf0",
+        "root_id": "ap-root-cb1fa847faa721cb8bc16d0cfbf9f63b9a4691369988e977bd7eb0b5e2e2e1bf",
         "ancestor_roots": [
           "ap-root-0de441dd0f030e37fcd47bda1951629817db66849dde1de13131d08fe10af9ac",
-          "ap-root-f8261313aa9e6ba1acd71de8341995d5638ea7e29c0e513b914b44d7d053daf0"
+          "ap-root-f8261313aa9e6ba1acd71de8341995d5638ea7e29c0e513b914b44d7d053daf0",
+          "ap-root-cb1fa847faa721cb8bc16d0cfbf9f63b9a4691369988e977bd7eb0b5e2e2e1bf"
         ],
-        "prior_panel_root": "ap-root-0de441dd0f030e37fcd47bda1951629817db66849dde1de13131d08fe10af9ac",
+        "prior_panel_root": "ap-root-f8261313aa9e6ba1acd71de8341995d5638ea7e29c0e513b914b44d7d053daf0",
+        "original_panel_root": "ap-root-0de441dd0f030e37fcd47bda1951629817db66849dde1de13131d08fe10af9ac",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "canceled_prefix_joint_gates",
           "slot": 4,
           "guarded_candidates": 6,
@@ -475,16 +515,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-0de441dd0f030e37fcd47bda1951629817db66849dde1de13131d08fe10af9ac"
     },
     {
-      "case_id": "ap-case-26f2a81597e70f6b7d954e0972d343e5bf15cf8d9b723ad0cb9cafc187e95c9e",
-      "root_id": "ap-root-468f9f81d0e4ff1408bc79af4f5f0912738b8720dcca6450582e20a128870598",
-      "prior_panel_root": "ap-root-680a6bb663b042f27f9b25d4fd826b3f357c922b22f81a90cc96ec58ded286cd",
+      "case_id": "ap-case-10f18941603d6d8ce32c5407052fde63761235b268fc0611da4bb66b1f6f60b8",
+      "root_id": "ap-root-9e331a39fb4bf86a9408eff691cdfcad6ce7d29acf9756e6e2354215b9c5e5f3",
+      "prior_panel_root": "ap-root-468f9f81d0e4ff1408bc79af4f5f0912738b8720dcca6450582e20a128870598",
       "family": "canceled_prefix_joint_gates",
       "slot": 5,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "canceled_prefix_joint_gates",
         "slot": 5,
         "guarded_candidates": 7,
@@ -493,14 +534,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-468f9f81d0e4ff1408bc79af4f5f0912738b8720dcca6450582e20a128870598",
+        "root_id": "ap-root-9e331a39fb4bf86a9408eff691cdfcad6ce7d29acf9756e6e2354215b9c5e5f3",
         "ancestor_roots": [
           "ap-root-680a6bb663b042f27f9b25d4fd826b3f357c922b22f81a90cc96ec58ded286cd",
-          "ap-root-468f9f81d0e4ff1408bc79af4f5f0912738b8720dcca6450582e20a128870598"
+          "ap-root-468f9f81d0e4ff1408bc79af4f5f0912738b8720dcca6450582e20a128870598",
+          "ap-root-9e331a39fb4bf86a9408eff691cdfcad6ce7d29acf9756e6e2354215b9c5e5f3"
         ],
-        "prior_panel_root": "ap-root-680a6bb663b042f27f9b25d4fd826b3f357c922b22f81a90cc96ec58ded286cd",
+        "prior_panel_root": "ap-root-468f9f81d0e4ff1408bc79af4f5f0912738b8720dcca6450582e20a128870598",
+        "original_panel_root": "ap-root-680a6bb663b042f27f9b25d4fd826b3f357c922b22f81a90cc96ec58ded286cd",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "canceled_prefix_joint_gates",
           "slot": 5,
           "guarded_candidates": 7,
@@ -509,16 +552,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-680a6bb663b042f27f9b25d4fd826b3f357c922b22f81a90cc96ec58ded286cd"
     },
     {
-      "case_id": "ap-case-e586625ef491db61de899cf8a89d1b152ec450adf0f8fcb5b3a0e909c543c163",
-      "root_id": "ap-root-dbb665b1803c5e038ad6a13b11742e4dba914f0e1f900e2274ec7f7a7e5e32d3",
-      "prior_panel_root": "ap-root-ac8fd6f54708a2fe3acfbce7b8ab67cb74793493e71f95efd44b57820035beb1",
+      "case_id": "ap-case-f8e6a973ca84f2b713c795eabe66c9d7b6261de90f700f5db86297399b18ac2e",
+      "root_id": "ap-root-434c0a9daf69eb5d61559a12ad51638c4123d9c5d06196fca10889fde3ed8380",
+      "prior_panel_root": "ap-root-dbb665b1803c5e038ad6a13b11742e4dba914f0e1f900e2274ec7f7a7e5e32d3",
       "family": "canceled_prefix_joint_gates",
       "slot": 6,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "canceled_prefix_joint_gates",
         "slot": 6,
         "guarded_candidates": 8,
@@ -527,14 +571,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-dbb665b1803c5e038ad6a13b11742e4dba914f0e1f900e2274ec7f7a7e5e32d3",
+        "root_id": "ap-root-434c0a9daf69eb5d61559a12ad51638c4123d9c5d06196fca10889fde3ed8380",
         "ancestor_roots": [
           "ap-root-ac8fd6f54708a2fe3acfbce7b8ab67cb74793493e71f95efd44b57820035beb1",
-          "ap-root-dbb665b1803c5e038ad6a13b11742e4dba914f0e1f900e2274ec7f7a7e5e32d3"
+          "ap-root-dbb665b1803c5e038ad6a13b11742e4dba914f0e1f900e2274ec7f7a7e5e32d3",
+          "ap-root-434c0a9daf69eb5d61559a12ad51638c4123d9c5d06196fca10889fde3ed8380"
         ],
-        "prior_panel_root": "ap-root-ac8fd6f54708a2fe3acfbce7b8ab67cb74793493e71f95efd44b57820035beb1",
+        "prior_panel_root": "ap-root-dbb665b1803c5e038ad6a13b11742e4dba914f0e1f900e2274ec7f7a7e5e32d3",
+        "original_panel_root": "ap-root-ac8fd6f54708a2fe3acfbce7b8ab67cb74793493e71f95efd44b57820035beb1",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "canceled_prefix_joint_gates",
           "slot": 6,
           "guarded_candidates": 8,
@@ -543,16 +589,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-ac8fd6f54708a2fe3acfbce7b8ab67cb74793493e71f95efd44b57820035beb1"
     },
     {
-      "case_id": "ap-case-041f8103b27426b17fa3edebb6c096c9e17992435c144a9180ba9938169f89ef",
-      "root_id": "ap-root-856dd22cdab368ce0b12f85d038d683d7a2781ddd7a8feca29b8b66363edbcad",
-      "prior_panel_root": "ap-root-f6cfc67cfe38a56c8dfef10707d819f65e2f64b00bc5f88897480bb968660d56",
+      "case_id": "ap-case-f367cf68583147f092122009a2607478bda480aeca7aaa8eacad9223922bff3b",
+      "root_id": "ap-root-e7d01da100a7e823a8a6d3536c4f4e6dbed7b9f97b5c84c95e18399c8e2719b1",
+      "prior_panel_root": "ap-root-856dd22cdab368ce0b12f85d038d683d7a2781ddd7a8feca29b8b66363edbcad",
       "family": "canceled_prefix_joint_gates",
       "slot": 7,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "canceled_prefix_joint_gates",
         "slot": 7,
         "guarded_candidates": 9,
@@ -561,14 +608,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-856dd22cdab368ce0b12f85d038d683d7a2781ddd7a8feca29b8b66363edbcad",
+        "root_id": "ap-root-e7d01da100a7e823a8a6d3536c4f4e6dbed7b9f97b5c84c95e18399c8e2719b1",
         "ancestor_roots": [
           "ap-root-f6cfc67cfe38a56c8dfef10707d819f65e2f64b00bc5f88897480bb968660d56",
-          "ap-root-856dd22cdab368ce0b12f85d038d683d7a2781ddd7a8feca29b8b66363edbcad"
+          "ap-root-856dd22cdab368ce0b12f85d038d683d7a2781ddd7a8feca29b8b66363edbcad",
+          "ap-root-e7d01da100a7e823a8a6d3536c4f4e6dbed7b9f97b5c84c95e18399c8e2719b1"
         ],
-        "prior_panel_root": "ap-root-f6cfc67cfe38a56c8dfef10707d819f65e2f64b00bc5f88897480bb968660d56",
+        "prior_panel_root": "ap-root-856dd22cdab368ce0b12f85d038d683d7a2781ddd7a8feca29b8b66363edbcad",
+        "original_panel_root": "ap-root-f6cfc67cfe38a56c8dfef10707d819f65e2f64b00bc5f88897480bb968660d56",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "canceled_prefix_joint_gates",
           "slot": 7,
           "guarded_candidates": 9,
@@ -577,16 +626,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-f6cfc67cfe38a56c8dfef10707d819f65e2f64b00bc5f88897480bb968660d56"
     },
     {
-      "case_id": "ap-case-13cee931af56a0984fb6afaadaf528d42bbb45d00fe8f5335155a8ba30d7ce5a",
-      "root_id": "ap-root-c9c06fbf4ccc44898d266e264f17f456fb5f3e6527f03b386a72298310f9bcb0",
-      "prior_panel_root": "ap-root-28850355573d4a060c4d2e4c9435dd2886786ed43c7623e95df401e6413e12bf",
+      "case_id": "ap-case-86de802b5347eb3ec70ebf252d1985929360faa637450cc33030cc8f15eedaf1",
+      "root_id": "ap-root-8828099214bfb504b74b611503f9fa2cdddf642c4939473abe847369f36d5880",
+      "prior_panel_root": "ap-root-c9c06fbf4ccc44898d266e264f17f456fb5f3e6527f03b386a72298310f9bcb0",
       "family": "alias_selector_joint_gates",
       "slot": 0,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "alias_selector_joint_gates",
         "slot": 0,
         "guarded_candidates": 2,
@@ -595,14 +645,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-c9c06fbf4ccc44898d266e264f17f456fb5f3e6527f03b386a72298310f9bcb0",
+        "root_id": "ap-root-8828099214bfb504b74b611503f9fa2cdddf642c4939473abe847369f36d5880",
         "ancestor_roots": [
           "ap-root-28850355573d4a060c4d2e4c9435dd2886786ed43c7623e95df401e6413e12bf",
-          "ap-root-c9c06fbf4ccc44898d266e264f17f456fb5f3e6527f03b386a72298310f9bcb0"
+          "ap-root-c9c06fbf4ccc44898d266e264f17f456fb5f3e6527f03b386a72298310f9bcb0",
+          "ap-root-8828099214bfb504b74b611503f9fa2cdddf642c4939473abe847369f36d5880"
         ],
-        "prior_panel_root": "ap-root-28850355573d4a060c4d2e4c9435dd2886786ed43c7623e95df401e6413e12bf",
+        "prior_panel_root": "ap-root-c9c06fbf4ccc44898d266e264f17f456fb5f3e6527f03b386a72298310f9bcb0",
+        "original_panel_root": "ap-root-28850355573d4a060c4d2e4c9435dd2886786ed43c7623e95df401e6413e12bf",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "alias_selector_joint_gates",
           "slot": 0,
           "guarded_candidates": 2,
@@ -611,16 +663,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-28850355573d4a060c4d2e4c9435dd2886786ed43c7623e95df401e6413e12bf"
     },
     {
-      "case_id": "ap-case-9bf2bca67670c1a444e4136ac18a76e22bd168ee355c62ab8393aa5ea14debb8",
-      "root_id": "ap-root-15bed65d3d7fc11cfd64e32754741a844339c6966844a26de1bc46614cfedc12",
-      "prior_panel_root": "ap-root-0861fb94ef4eb06915ff934ed1cd27a83c21d18be74731c69bd4e818db85eb7a",
+      "case_id": "ap-case-c22fd9a1e939983f0cbf42e84d611d83e1558bbc48c29dc541ab210421764567",
+      "root_id": "ap-root-63f04626ff7517ef7d0041b0b89a70af9f90629c81150f268a0137d0f483ff01",
+      "prior_panel_root": "ap-root-15bed65d3d7fc11cfd64e32754741a844339c6966844a26de1bc46614cfedc12",
       "family": "alias_selector_joint_gates",
       "slot": 1,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "alias_selector_joint_gates",
         "slot": 1,
         "guarded_candidates": 3,
@@ -629,14 +682,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-15bed65d3d7fc11cfd64e32754741a844339c6966844a26de1bc46614cfedc12",
+        "root_id": "ap-root-63f04626ff7517ef7d0041b0b89a70af9f90629c81150f268a0137d0f483ff01",
         "ancestor_roots": [
           "ap-root-0861fb94ef4eb06915ff934ed1cd27a83c21d18be74731c69bd4e818db85eb7a",
-          "ap-root-15bed65d3d7fc11cfd64e32754741a844339c6966844a26de1bc46614cfedc12"
+          "ap-root-15bed65d3d7fc11cfd64e32754741a844339c6966844a26de1bc46614cfedc12",
+          "ap-root-63f04626ff7517ef7d0041b0b89a70af9f90629c81150f268a0137d0f483ff01"
         ],
-        "prior_panel_root": "ap-root-0861fb94ef4eb06915ff934ed1cd27a83c21d18be74731c69bd4e818db85eb7a",
+        "prior_panel_root": "ap-root-15bed65d3d7fc11cfd64e32754741a844339c6966844a26de1bc46614cfedc12",
+        "original_panel_root": "ap-root-0861fb94ef4eb06915ff934ed1cd27a83c21d18be74731c69bd4e818db85eb7a",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "alias_selector_joint_gates",
           "slot": 1,
           "guarded_candidates": 3,
@@ -645,16 +700,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-0861fb94ef4eb06915ff934ed1cd27a83c21d18be74731c69bd4e818db85eb7a"
     },
     {
-      "case_id": "ap-case-26766f326e18257a3c4192196da817f3dd003a7710ebaf5a9ed37c36a9a25819",
-      "root_id": "ap-root-60a9670ea2df9f9569dd630a48b1d9fe6aba6ce78460f7af61a8054a9f673b60",
-      "prior_panel_root": "ap-root-edfd73bbf9c57343b8619957397feb2b6a8df6a5c2183b47ed32e1fa33095c99",
+      "case_id": "ap-case-10388d1eb04154a38a6588b79e751291415bfe11e204be0b0e7414ad022ecec7",
+      "root_id": "ap-root-d2dcf36d8e8d39f1e16c11fec1bff89390384e5b0251946226448958d88c1f0b",
+      "prior_panel_root": "ap-root-60a9670ea2df9f9569dd630a48b1d9fe6aba6ce78460f7af61a8054a9f673b60",
       "family": "alias_selector_joint_gates",
       "slot": 2,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "alias_selector_joint_gates",
         "slot": 2,
         "guarded_candidates": 4,
@@ -663,14 +719,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-60a9670ea2df9f9569dd630a48b1d9fe6aba6ce78460f7af61a8054a9f673b60",
+        "root_id": "ap-root-d2dcf36d8e8d39f1e16c11fec1bff89390384e5b0251946226448958d88c1f0b",
         "ancestor_roots": [
           "ap-root-edfd73bbf9c57343b8619957397feb2b6a8df6a5c2183b47ed32e1fa33095c99",
-          "ap-root-60a9670ea2df9f9569dd630a48b1d9fe6aba6ce78460f7af61a8054a9f673b60"
+          "ap-root-60a9670ea2df9f9569dd630a48b1d9fe6aba6ce78460f7af61a8054a9f673b60",
+          "ap-root-d2dcf36d8e8d39f1e16c11fec1bff89390384e5b0251946226448958d88c1f0b"
         ],
-        "prior_panel_root": "ap-root-edfd73bbf9c57343b8619957397feb2b6a8df6a5c2183b47ed32e1fa33095c99",
+        "prior_panel_root": "ap-root-60a9670ea2df9f9569dd630a48b1d9fe6aba6ce78460f7af61a8054a9f673b60",
+        "original_panel_root": "ap-root-edfd73bbf9c57343b8619957397feb2b6a8df6a5c2183b47ed32e1fa33095c99",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "alias_selector_joint_gates",
           "slot": 2,
           "guarded_candidates": 4,
@@ -679,16 +737,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-edfd73bbf9c57343b8619957397feb2b6a8df6a5c2183b47ed32e1fa33095c99"
     },
     {
-      "case_id": "ap-case-0f8a37ca08acecce26c36ad5966ebca4daa667f5363e30af17f2962ccb8463bd",
-      "root_id": "ap-root-7459074fd3ce8a41e7b5a56f54885f8ed3cf133797f59146ce155860ae9093db",
-      "prior_panel_root": "ap-root-f7d43d500f5d43316abd10bfcaf3b024700078dbdcb34be4df86142221379bba",
+      "case_id": "ap-case-874329c878aee7cc0271510050c4eeaeaeaa2977ff8cc5b4cfdeea205a9c2523",
+      "root_id": "ap-root-a4f3b45b0fc27d1c71554808d0a7121c92eaa4a527f9d828a5f58fe6848435c9",
+      "prior_panel_root": "ap-root-7459074fd3ce8a41e7b5a56f54885f8ed3cf133797f59146ce155860ae9093db",
       "family": "alias_selector_joint_gates",
       "slot": 3,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "alias_selector_joint_gates",
         "slot": 3,
         "guarded_candidates": 5,
@@ -697,14 +756,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-7459074fd3ce8a41e7b5a56f54885f8ed3cf133797f59146ce155860ae9093db",
+        "root_id": "ap-root-a4f3b45b0fc27d1c71554808d0a7121c92eaa4a527f9d828a5f58fe6848435c9",
         "ancestor_roots": [
           "ap-root-f7d43d500f5d43316abd10bfcaf3b024700078dbdcb34be4df86142221379bba",
-          "ap-root-7459074fd3ce8a41e7b5a56f54885f8ed3cf133797f59146ce155860ae9093db"
+          "ap-root-7459074fd3ce8a41e7b5a56f54885f8ed3cf133797f59146ce155860ae9093db",
+          "ap-root-a4f3b45b0fc27d1c71554808d0a7121c92eaa4a527f9d828a5f58fe6848435c9"
         ],
-        "prior_panel_root": "ap-root-f7d43d500f5d43316abd10bfcaf3b024700078dbdcb34be4df86142221379bba",
+        "prior_panel_root": "ap-root-7459074fd3ce8a41e7b5a56f54885f8ed3cf133797f59146ce155860ae9093db",
+        "original_panel_root": "ap-root-f7d43d500f5d43316abd10bfcaf3b024700078dbdcb34be4df86142221379bba",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "alias_selector_joint_gates",
           "slot": 3,
           "guarded_candidates": 5,
@@ -713,16 +774,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-f7d43d500f5d43316abd10bfcaf3b024700078dbdcb34be4df86142221379bba"
     },
     {
-      "case_id": "ap-case-0150bbbe3e86271147ee3a3175f95a93f0d05af4f3a30cde6791c00d37a3d125",
-      "root_id": "ap-root-2b54aeab1cc2e77c783497def9ed20a72f8fedf30eb0d233fac8dff5828587c0",
-      "prior_panel_root": "ap-root-77f05e8d9f4caa3b56527acb06514ec97a83ab6d13d67ed77c390a968044cedc",
+      "case_id": "ap-case-acfd0c9a8e0ba042563c933d143cfceaafd418edd9ba46cf26893ae7d81d39dc",
+      "root_id": "ap-root-566be4e491592c4e849657a3c9fab0b82ab842e294862e76c1b9bfb8cdec1e2b",
+      "prior_panel_root": "ap-root-2b54aeab1cc2e77c783497def9ed20a72f8fedf30eb0d233fac8dff5828587c0",
       "family": "alias_selector_joint_gates",
       "slot": 4,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "alias_selector_joint_gates",
         "slot": 4,
         "guarded_candidates": 6,
@@ -731,14 +793,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-2b54aeab1cc2e77c783497def9ed20a72f8fedf30eb0d233fac8dff5828587c0",
+        "root_id": "ap-root-566be4e491592c4e849657a3c9fab0b82ab842e294862e76c1b9bfb8cdec1e2b",
         "ancestor_roots": [
           "ap-root-77f05e8d9f4caa3b56527acb06514ec97a83ab6d13d67ed77c390a968044cedc",
-          "ap-root-2b54aeab1cc2e77c783497def9ed20a72f8fedf30eb0d233fac8dff5828587c0"
+          "ap-root-2b54aeab1cc2e77c783497def9ed20a72f8fedf30eb0d233fac8dff5828587c0",
+          "ap-root-566be4e491592c4e849657a3c9fab0b82ab842e294862e76c1b9bfb8cdec1e2b"
         ],
-        "prior_panel_root": "ap-root-77f05e8d9f4caa3b56527acb06514ec97a83ab6d13d67ed77c390a968044cedc",
+        "prior_panel_root": "ap-root-2b54aeab1cc2e77c783497def9ed20a72f8fedf30eb0d233fac8dff5828587c0",
+        "original_panel_root": "ap-root-77f05e8d9f4caa3b56527acb06514ec97a83ab6d13d67ed77c390a968044cedc",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "alias_selector_joint_gates",
           "slot": 4,
           "guarded_candidates": 6,
@@ -747,16 +811,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-77f05e8d9f4caa3b56527acb06514ec97a83ab6d13d67ed77c390a968044cedc"
     },
     {
-      "case_id": "ap-case-25408f3a3e9a6d47e889067c60f9ac7f2a5538bbc37a1f6991ab69790ffab190",
-      "root_id": "ap-root-6c4f6e6b745fcc232e020cc5f5e97bdd4f1a0c67fe943b163c49eba531fd4b8c",
-      "prior_panel_root": "ap-root-38d65b9239cea9fd0375705d3eb4e3cfabae891b8475b2deda28ca9d2312228d",
+      "case_id": "ap-case-202d74a54a090ad04af1c73612033fe072c0354f55f65315e53998bb1bdffd0c",
+      "root_id": "ap-root-4e1cba715f617db40d9f8442b4758a5a23c73440e06005b1e8f5bb94edafc527",
+      "prior_panel_root": "ap-root-6c4f6e6b745fcc232e020cc5f5e97bdd4f1a0c67fe943b163c49eba531fd4b8c",
       "family": "alias_selector_joint_gates",
       "slot": 5,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "alias_selector_joint_gates",
         "slot": 5,
         "guarded_candidates": 7,
@@ -765,14 +830,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-6c4f6e6b745fcc232e020cc5f5e97bdd4f1a0c67fe943b163c49eba531fd4b8c",
+        "root_id": "ap-root-4e1cba715f617db40d9f8442b4758a5a23c73440e06005b1e8f5bb94edafc527",
         "ancestor_roots": [
           "ap-root-38d65b9239cea9fd0375705d3eb4e3cfabae891b8475b2deda28ca9d2312228d",
-          "ap-root-6c4f6e6b745fcc232e020cc5f5e97bdd4f1a0c67fe943b163c49eba531fd4b8c"
+          "ap-root-6c4f6e6b745fcc232e020cc5f5e97bdd4f1a0c67fe943b163c49eba531fd4b8c",
+          "ap-root-4e1cba715f617db40d9f8442b4758a5a23c73440e06005b1e8f5bb94edafc527"
         ],
-        "prior_panel_root": "ap-root-38d65b9239cea9fd0375705d3eb4e3cfabae891b8475b2deda28ca9d2312228d",
+        "prior_panel_root": "ap-root-6c4f6e6b745fcc232e020cc5f5e97bdd4f1a0c67fe943b163c49eba531fd4b8c",
+        "original_panel_root": "ap-root-38d65b9239cea9fd0375705d3eb4e3cfabae891b8475b2deda28ca9d2312228d",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "alias_selector_joint_gates",
           "slot": 5,
           "guarded_candidates": 7,
@@ -781,16 +848,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-38d65b9239cea9fd0375705d3eb4e3cfabae891b8475b2deda28ca9d2312228d"
     },
     {
-      "case_id": "ap-case-e951010f39d96f1e2c9dc0429f255ba82b88c453028b115cd85e9b713e6fc158",
-      "root_id": "ap-root-1d99c508c7bdc8c31c403310ab3c6bc59b7ffbea5cf6ce2b4007e0fe38e44b6c",
-      "prior_panel_root": "ap-root-ea101aebfd1f7427100bde801d1ae4f48da36a6e8ad7422df214eefb48fdf5eb",
+      "case_id": "ap-case-566f15d3b382f49641fd17c5a7b5ef56d3d04a558c53453cc7a0acbab1e4adf0",
+      "root_id": "ap-root-ad8b74b61518bcd1666915d65a5d63c06dd2cf5d668effd4c888e49a7af96c4f",
+      "prior_panel_root": "ap-root-1d99c508c7bdc8c31c403310ab3c6bc59b7ffbea5cf6ce2b4007e0fe38e44b6c",
       "family": "alias_selector_joint_gates",
       "slot": 6,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "alias_selector_joint_gates",
         "slot": 6,
         "guarded_candidates": 8,
@@ -799,14 +867,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-1d99c508c7bdc8c31c403310ab3c6bc59b7ffbea5cf6ce2b4007e0fe38e44b6c",
+        "root_id": "ap-root-ad8b74b61518bcd1666915d65a5d63c06dd2cf5d668effd4c888e49a7af96c4f",
         "ancestor_roots": [
           "ap-root-ea101aebfd1f7427100bde801d1ae4f48da36a6e8ad7422df214eefb48fdf5eb",
-          "ap-root-1d99c508c7bdc8c31c403310ab3c6bc59b7ffbea5cf6ce2b4007e0fe38e44b6c"
+          "ap-root-1d99c508c7bdc8c31c403310ab3c6bc59b7ffbea5cf6ce2b4007e0fe38e44b6c",
+          "ap-root-ad8b74b61518bcd1666915d65a5d63c06dd2cf5d668effd4c888e49a7af96c4f"
         ],
-        "prior_panel_root": "ap-root-ea101aebfd1f7427100bde801d1ae4f48da36a6e8ad7422df214eefb48fdf5eb",
+        "prior_panel_root": "ap-root-1d99c508c7bdc8c31c403310ab3c6bc59b7ffbea5cf6ce2b4007e0fe38e44b6c",
+        "original_panel_root": "ap-root-ea101aebfd1f7427100bde801d1ae4f48da36a6e8ad7422df214eefb48fdf5eb",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "alias_selector_joint_gates",
           "slot": 6,
           "guarded_candidates": 8,
@@ -815,16 +885,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-ea101aebfd1f7427100bde801d1ae4f48da36a6e8ad7422df214eefb48fdf5eb"
     },
     {
-      "case_id": "ap-case-3feefc75ed9c7a62de43f6984f6dfd4c37258cd598ec11829d188f60769fd083",
-      "root_id": "ap-root-6e2acc38a970b6971768293b3dab7e6eef8aa8dcfd2e71239ef7511ba245b835",
-      "prior_panel_root": "ap-root-3b3905b6e357a7826c81ab5f48ad5480afa4237c17f23b1a47225fb7131ac798",
+      "case_id": "ap-case-4b5ef0a51bca42f8817eb164e022ea2e4b6285ee8ff461de2f2ead866ec7d37e",
+      "root_id": "ap-root-cace39bb7502abe5285389062c4a7073857751e47145248fba6cd2a2eee0b2ff",
+      "prior_panel_root": "ap-root-6e2acc38a970b6971768293b3dab7e6eef8aa8dcfd2e71239ef7511ba245b835",
       "family": "alias_selector_joint_gates",
       "slot": 7,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "alias_selector_joint_gates",
         "slot": 7,
         "guarded_candidates": 9,
@@ -833,14 +904,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-6e2acc38a970b6971768293b3dab7e6eef8aa8dcfd2e71239ef7511ba245b835",
+        "root_id": "ap-root-cace39bb7502abe5285389062c4a7073857751e47145248fba6cd2a2eee0b2ff",
         "ancestor_roots": [
           "ap-root-3b3905b6e357a7826c81ab5f48ad5480afa4237c17f23b1a47225fb7131ac798",
-          "ap-root-6e2acc38a970b6971768293b3dab7e6eef8aa8dcfd2e71239ef7511ba245b835"
+          "ap-root-6e2acc38a970b6971768293b3dab7e6eef8aa8dcfd2e71239ef7511ba245b835",
+          "ap-root-cace39bb7502abe5285389062c4a7073857751e47145248fba6cd2a2eee0b2ff"
         ],
-        "prior_panel_root": "ap-root-3b3905b6e357a7826c81ab5f48ad5480afa4237c17f23b1a47225fb7131ac798",
+        "prior_panel_root": "ap-root-6e2acc38a970b6971768293b3dab7e6eef8aa8dcfd2e71239ef7511ba245b835",
+        "original_panel_root": "ap-root-3b3905b6e357a7826c81ab5f48ad5480afa4237c17f23b1a47225fb7131ac798",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "alias_selector_joint_gates",
           "slot": 7,
           "guarded_candidates": 9,
@@ -849,16 +922,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-3b3905b6e357a7826c81ab5f48ad5480afa4237c17f23b1a47225fb7131ac798"
     },
     {
-      "case_id": "ap-case-742ed39f9291a6fe1a36c66cdb4959b6bb1c6c4f4db1a736c893978a9ca45fe7",
-      "root_id": "ap-root-85f47b48a3fbbe41d2255713a597d8a07490b6e685ab3b824528f19a019cfa29",
-      "prior_panel_root": "ap-root-1f329d58f3a2836aa2cd73042543f2816f19ad2268f6f83b1d90306fdd405819",
+      "case_id": "ap-case-9e6dea7384115ceeb622b401d83a97b316c7a1bdfdd8dda12fe39b89896b0ead",
+      "root_id": "ap-root-db1296fe9899f99a2e5c68d7d4dda33aa962d39aa9759d8e330edb6906d22597",
+      "prior_panel_root": "ap-root-85f47b48a3fbbe41d2255713a597d8a07490b6e685ab3b824528f19a019cfa29",
       "family": "conjunctive_joint_gates",
       "slot": 0,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "conjunctive_joint_gates",
         "slot": 0,
         "guarded_candidates": 2,
@@ -867,14 +941,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-85f47b48a3fbbe41d2255713a597d8a07490b6e685ab3b824528f19a019cfa29",
+        "root_id": "ap-root-db1296fe9899f99a2e5c68d7d4dda33aa962d39aa9759d8e330edb6906d22597",
         "ancestor_roots": [
           "ap-root-1f329d58f3a2836aa2cd73042543f2816f19ad2268f6f83b1d90306fdd405819",
-          "ap-root-85f47b48a3fbbe41d2255713a597d8a07490b6e685ab3b824528f19a019cfa29"
+          "ap-root-85f47b48a3fbbe41d2255713a597d8a07490b6e685ab3b824528f19a019cfa29",
+          "ap-root-db1296fe9899f99a2e5c68d7d4dda33aa962d39aa9759d8e330edb6906d22597"
         ],
-        "prior_panel_root": "ap-root-1f329d58f3a2836aa2cd73042543f2816f19ad2268f6f83b1d90306fdd405819",
+        "prior_panel_root": "ap-root-85f47b48a3fbbe41d2255713a597d8a07490b6e685ab3b824528f19a019cfa29",
+        "original_panel_root": "ap-root-1f329d58f3a2836aa2cd73042543f2816f19ad2268f6f83b1d90306fdd405819",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "conjunctive_joint_gates",
           "slot": 0,
           "guarded_candidates": 2,
@@ -883,16 +959,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-1f329d58f3a2836aa2cd73042543f2816f19ad2268f6f83b1d90306fdd405819"
     },
     {
-      "case_id": "ap-case-0194a58463b53aa9224230c302988d0a752219005fc88ebc2396f4549abd162b",
-      "root_id": "ap-root-32dc2900e76079de7c6ff3d3f4981f67aba8ab70c5a04a0059dce1227a1b5f09",
-      "prior_panel_root": "ap-root-827e058e930c1fb1c6d12694972b2429157b31f1a9522dd11b2ff811f3aa064c",
+      "case_id": "ap-case-b04f52a4b8cc22174b3bee7dcac90cb43ef1458fc8925b4fcb7c8f0b0f98c680",
+      "root_id": "ap-root-42ec71b6b614d648b5e08d0e6ab91e9aebd09f2b4a1a95be0c567d5ef7d4ac50",
+      "prior_panel_root": "ap-root-32dc2900e76079de7c6ff3d3f4981f67aba8ab70c5a04a0059dce1227a1b5f09",
       "family": "conjunctive_joint_gates",
       "slot": 1,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "conjunctive_joint_gates",
         "slot": 1,
         "guarded_candidates": 3,
@@ -901,14 +978,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-32dc2900e76079de7c6ff3d3f4981f67aba8ab70c5a04a0059dce1227a1b5f09",
+        "root_id": "ap-root-42ec71b6b614d648b5e08d0e6ab91e9aebd09f2b4a1a95be0c567d5ef7d4ac50",
         "ancestor_roots": [
           "ap-root-827e058e930c1fb1c6d12694972b2429157b31f1a9522dd11b2ff811f3aa064c",
-          "ap-root-32dc2900e76079de7c6ff3d3f4981f67aba8ab70c5a04a0059dce1227a1b5f09"
+          "ap-root-32dc2900e76079de7c6ff3d3f4981f67aba8ab70c5a04a0059dce1227a1b5f09",
+          "ap-root-42ec71b6b614d648b5e08d0e6ab91e9aebd09f2b4a1a95be0c567d5ef7d4ac50"
         ],
-        "prior_panel_root": "ap-root-827e058e930c1fb1c6d12694972b2429157b31f1a9522dd11b2ff811f3aa064c",
+        "prior_panel_root": "ap-root-32dc2900e76079de7c6ff3d3f4981f67aba8ab70c5a04a0059dce1227a1b5f09",
+        "original_panel_root": "ap-root-827e058e930c1fb1c6d12694972b2429157b31f1a9522dd11b2ff811f3aa064c",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "conjunctive_joint_gates",
           "slot": 1,
           "guarded_candidates": 3,
@@ -917,16 +996,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-827e058e930c1fb1c6d12694972b2429157b31f1a9522dd11b2ff811f3aa064c"
     },
     {
-      "case_id": "ap-case-028e5c69bdaacd37b0fcbd32cc75454227a2efb72ebb6d3bb5a243c4b04ed20f",
-      "root_id": "ap-root-70c0708d3c74dc959c48f73f9fa59db33a36049f131dae1004bf12aadae2ae18",
-      "prior_panel_root": "ap-root-e984d5910ec34f1baf26abda67c8d928d02f2beac20f3d2f937a4288f696f491",
+      "case_id": "ap-case-d6d0ba9a795939f1b39a8ebfc415ba35f15b4fb59c34bec3719730be95a0c730",
+      "root_id": "ap-root-0e0558d0465a51bcd780e5a49940bd045ce29a81487c44a92c1e8d1a1a54b608",
+      "prior_panel_root": "ap-root-70c0708d3c74dc959c48f73f9fa59db33a36049f131dae1004bf12aadae2ae18",
       "family": "conjunctive_joint_gates",
       "slot": 2,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "conjunctive_joint_gates",
         "slot": 2,
         "guarded_candidates": 4,
@@ -935,14 +1015,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-70c0708d3c74dc959c48f73f9fa59db33a36049f131dae1004bf12aadae2ae18",
+        "root_id": "ap-root-0e0558d0465a51bcd780e5a49940bd045ce29a81487c44a92c1e8d1a1a54b608",
         "ancestor_roots": [
           "ap-root-e984d5910ec34f1baf26abda67c8d928d02f2beac20f3d2f937a4288f696f491",
-          "ap-root-70c0708d3c74dc959c48f73f9fa59db33a36049f131dae1004bf12aadae2ae18"
+          "ap-root-70c0708d3c74dc959c48f73f9fa59db33a36049f131dae1004bf12aadae2ae18",
+          "ap-root-0e0558d0465a51bcd780e5a49940bd045ce29a81487c44a92c1e8d1a1a54b608"
         ],
-        "prior_panel_root": "ap-root-e984d5910ec34f1baf26abda67c8d928d02f2beac20f3d2f937a4288f696f491",
+        "prior_panel_root": "ap-root-70c0708d3c74dc959c48f73f9fa59db33a36049f131dae1004bf12aadae2ae18",
+        "original_panel_root": "ap-root-e984d5910ec34f1baf26abda67c8d928d02f2beac20f3d2f937a4288f696f491",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "conjunctive_joint_gates",
           "slot": 2,
           "guarded_candidates": 4,
@@ -951,16 +1033,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-e984d5910ec34f1baf26abda67c8d928d02f2beac20f3d2f937a4288f696f491"
     },
     {
-      "case_id": "ap-case-7a5e3e40b3d1088d5ce5f002958c289c52697071efea596bbe04619c658b3aff",
-      "root_id": "ap-root-683603be076b1c85196bafa278e9b19c5369c526d347232617c71450b3a03c83",
-      "prior_panel_root": "ap-root-f25b71aa11338e6f737c1efe7f5877c19853dcdaf071ca048f85064870bf042f",
+      "case_id": "ap-case-00dd605e97d556f04664f96374599b103ef079a6f662a3fd34ca939d525a6f7b",
+      "root_id": "ap-root-5d57e9433d8d00f401b7fb8e797a8bb2a5a5620992635eba1931970c9ffc6e3d",
+      "prior_panel_root": "ap-root-683603be076b1c85196bafa278e9b19c5369c526d347232617c71450b3a03c83",
       "family": "conjunctive_joint_gates",
       "slot": 3,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "conjunctive_joint_gates",
         "slot": 3,
         "guarded_candidates": 5,
@@ -969,14 +1052,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-683603be076b1c85196bafa278e9b19c5369c526d347232617c71450b3a03c83",
+        "root_id": "ap-root-5d57e9433d8d00f401b7fb8e797a8bb2a5a5620992635eba1931970c9ffc6e3d",
         "ancestor_roots": [
           "ap-root-f25b71aa11338e6f737c1efe7f5877c19853dcdaf071ca048f85064870bf042f",
-          "ap-root-683603be076b1c85196bafa278e9b19c5369c526d347232617c71450b3a03c83"
+          "ap-root-683603be076b1c85196bafa278e9b19c5369c526d347232617c71450b3a03c83",
+          "ap-root-5d57e9433d8d00f401b7fb8e797a8bb2a5a5620992635eba1931970c9ffc6e3d"
         ],
-        "prior_panel_root": "ap-root-f25b71aa11338e6f737c1efe7f5877c19853dcdaf071ca048f85064870bf042f",
+        "prior_panel_root": "ap-root-683603be076b1c85196bafa278e9b19c5369c526d347232617c71450b3a03c83",
+        "original_panel_root": "ap-root-f25b71aa11338e6f737c1efe7f5877c19853dcdaf071ca048f85064870bf042f",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "conjunctive_joint_gates",
           "slot": 3,
           "guarded_candidates": 5,
@@ -985,16 +1070,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-f25b71aa11338e6f737c1efe7f5877c19853dcdaf071ca048f85064870bf042f"
     },
     {
-      "case_id": "ap-case-5ebb80d40870e1be22023c839a532451685815f8977be4d86c92136a8664882c",
-      "root_id": "ap-root-5fcdd08edee73cedc203909255eeafa3176e9449012999abcc11cd9bdc83e0a3",
-      "prior_panel_root": "ap-root-1e234163d69e52fc733d2454ddfdbb2c9ccb20280da88975cbadc80e916ee4f7",
+      "case_id": "ap-case-d1bb9421f1aa6a58c4b87a285ae8a7fdc92c8035af5e5be7a81c9e35465db297",
+      "root_id": "ap-root-9bb1ad2cbce05703c9ecba0c4531e0e026e902228636290f3bd7150529ded3b6",
+      "prior_panel_root": "ap-root-5fcdd08edee73cedc203909255eeafa3176e9449012999abcc11cd9bdc83e0a3",
       "family": "conjunctive_joint_gates",
       "slot": 4,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "conjunctive_joint_gates",
         "slot": 4,
         "guarded_candidates": 6,
@@ -1003,14 +1089,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-5fcdd08edee73cedc203909255eeafa3176e9449012999abcc11cd9bdc83e0a3",
+        "root_id": "ap-root-9bb1ad2cbce05703c9ecba0c4531e0e026e902228636290f3bd7150529ded3b6",
         "ancestor_roots": [
           "ap-root-1e234163d69e52fc733d2454ddfdbb2c9ccb20280da88975cbadc80e916ee4f7",
-          "ap-root-5fcdd08edee73cedc203909255eeafa3176e9449012999abcc11cd9bdc83e0a3"
+          "ap-root-5fcdd08edee73cedc203909255eeafa3176e9449012999abcc11cd9bdc83e0a3",
+          "ap-root-9bb1ad2cbce05703c9ecba0c4531e0e026e902228636290f3bd7150529ded3b6"
         ],
-        "prior_panel_root": "ap-root-1e234163d69e52fc733d2454ddfdbb2c9ccb20280da88975cbadc80e916ee4f7",
+        "prior_panel_root": "ap-root-5fcdd08edee73cedc203909255eeafa3176e9449012999abcc11cd9bdc83e0a3",
+        "original_panel_root": "ap-root-1e234163d69e52fc733d2454ddfdbb2c9ccb20280da88975cbadc80e916ee4f7",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "conjunctive_joint_gates",
           "slot": 4,
           "guarded_candidates": 6,
@@ -1019,16 +1107,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-1e234163d69e52fc733d2454ddfdbb2c9ccb20280da88975cbadc80e916ee4f7"
     },
     {
-      "case_id": "ap-case-60a09d2e05a6ece5681ec19ff6ff60afa2b38352b3995969e175286a3e236b93",
-      "root_id": "ap-root-7eb9b21cb9f03f0b8d1e4da232963a0473463b07f6a4375c50e06d63487afec6",
-      "prior_panel_root": "ap-root-f336b132bb8fa289c8650dd08f276c616ad635378a41ee0d0f1baf7b2822b0e4",
+      "case_id": "ap-case-df3fee6ac061b516be8e9495e395ba805eaf906b81d771a526983acfeb3fc9e8",
+      "root_id": "ap-root-943646572d91e440a281359ad5fb32b541aacc46539021f7c85fa9042e52f8ac",
+      "prior_panel_root": "ap-root-7eb9b21cb9f03f0b8d1e4da232963a0473463b07f6a4375c50e06d63487afec6",
       "family": "conjunctive_joint_gates",
       "slot": 5,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "conjunctive_joint_gates",
         "slot": 5,
         "guarded_candidates": 7,
@@ -1037,14 +1126,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-7eb9b21cb9f03f0b8d1e4da232963a0473463b07f6a4375c50e06d63487afec6",
+        "root_id": "ap-root-943646572d91e440a281359ad5fb32b541aacc46539021f7c85fa9042e52f8ac",
         "ancestor_roots": [
           "ap-root-f336b132bb8fa289c8650dd08f276c616ad635378a41ee0d0f1baf7b2822b0e4",
-          "ap-root-7eb9b21cb9f03f0b8d1e4da232963a0473463b07f6a4375c50e06d63487afec6"
+          "ap-root-7eb9b21cb9f03f0b8d1e4da232963a0473463b07f6a4375c50e06d63487afec6",
+          "ap-root-943646572d91e440a281359ad5fb32b541aacc46539021f7c85fa9042e52f8ac"
         ],
-        "prior_panel_root": "ap-root-f336b132bb8fa289c8650dd08f276c616ad635378a41ee0d0f1baf7b2822b0e4",
+        "prior_panel_root": "ap-root-7eb9b21cb9f03f0b8d1e4da232963a0473463b07f6a4375c50e06d63487afec6",
+        "original_panel_root": "ap-root-f336b132bb8fa289c8650dd08f276c616ad635378a41ee0d0f1baf7b2822b0e4",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "conjunctive_joint_gates",
           "slot": 5,
           "guarded_candidates": 7,
@@ -1053,16 +1144,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-f336b132bb8fa289c8650dd08f276c616ad635378a41ee0d0f1baf7b2822b0e4"
     },
     {
-      "case_id": "ap-case-ff53b381a9fa118c7f13fe3f46c214b2c7ac1173fbcb755b50da47457413795a",
-      "root_id": "ap-root-b87e33232279eac53b8fb77fa0b2188fda522e468cb237853b4c29d9c360c56e",
-      "prior_panel_root": "ap-root-0af41a9397a722e0456fe7643cebc7fe93c09f30ed7b70c44388ea1a88eb7be2",
+      "case_id": "ap-case-b3adab762a4c23c346c3f18d90a5e468046bc6175c0cc554071bd1bfa7481295",
+      "root_id": "ap-root-23deb1ce8f3235953c759eefe080196ec1c565f1549bc8243c3a1d91ce23afe0",
+      "prior_panel_root": "ap-root-b87e33232279eac53b8fb77fa0b2188fda522e468cb237853b4c29d9c360c56e",
       "family": "conjunctive_joint_gates",
       "slot": 6,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "conjunctive_joint_gates",
         "slot": 6,
         "guarded_candidates": 8,
@@ -1071,14 +1163,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-b87e33232279eac53b8fb77fa0b2188fda522e468cb237853b4c29d9c360c56e",
+        "root_id": "ap-root-23deb1ce8f3235953c759eefe080196ec1c565f1549bc8243c3a1d91ce23afe0",
         "ancestor_roots": [
           "ap-root-0af41a9397a722e0456fe7643cebc7fe93c09f30ed7b70c44388ea1a88eb7be2",
-          "ap-root-b87e33232279eac53b8fb77fa0b2188fda522e468cb237853b4c29d9c360c56e"
+          "ap-root-b87e33232279eac53b8fb77fa0b2188fda522e468cb237853b4c29d9c360c56e",
+          "ap-root-23deb1ce8f3235953c759eefe080196ec1c565f1549bc8243c3a1d91ce23afe0"
         ],
-        "prior_panel_root": "ap-root-0af41a9397a722e0456fe7643cebc7fe93c09f30ed7b70c44388ea1a88eb7be2",
+        "prior_panel_root": "ap-root-b87e33232279eac53b8fb77fa0b2188fda522e468cb237853b4c29d9c360c56e",
+        "original_panel_root": "ap-root-0af41a9397a722e0456fe7643cebc7fe93c09f30ed7b70c44388ea1a88eb7be2",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "conjunctive_joint_gates",
           "slot": 6,
           "guarded_candidates": 8,
@@ -1087,16 +1181,17 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-0af41a9397a722e0456fe7643cebc7fe93c09f30ed7b70c44388ea1a88eb7be2"
     },
     {
-      "case_id": "ap-case-28d71193eac42b815bbc3ce5d9c3cdb4b9a68e10761061f0203533821a05d7cb",
-      "root_id": "ap-root-07c4f7a73ed57f995a18b07caf5cf683b4c714d83e12d94cfd39bde1ea853933",
-      "prior_panel_root": "ap-root-64e6b0733a07ce757618acca27d2b76d84026a49ff237948957c32e80f07ef75",
+      "case_id": "ap-case-f1ee717bb3a8cab2b65e2e4b78918a1655af548f3d4e7344dddfb6029c2ebf6d",
+      "root_id": "ap-root-14fda1f09b400efabb043deca483766973681035bee2afd6f723c6f0fb3529ae",
+      "prior_panel_root": "ap-root-07c4f7a73ed57f995a18b07caf5cf683b4c714d83e12d94cfd39bde1ea853933",
       "family": "conjunctive_joint_gates",
       "slot": 7,
       "parameters": {
-        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+        "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
         "family": "conjunctive_joint_gates",
         "slot": 7,
         "guarded_candidates": 9,
@@ -1105,14 +1200,16 @@
       },
       "variant": 0,
       "ancestry": {
-        "root_id": "ap-root-07c4f7a73ed57f995a18b07caf5cf683b4c714d83e12d94cfd39bde1ea853933",
+        "root_id": "ap-root-14fda1f09b400efabb043deca483766973681035bee2afd6f723c6f0fb3529ae",
         "ancestor_roots": [
           "ap-root-64e6b0733a07ce757618acca27d2b76d84026a49ff237948957c32e80f07ef75",
-          "ap-root-07c4f7a73ed57f995a18b07caf5cf683b4c714d83e12d94cfd39bde1ea853933"
+          "ap-root-07c4f7a73ed57f995a18b07caf5cf683b4c714d83e12d94cfd39bde1ea853933",
+          "ap-root-14fda1f09b400efabb043deca483766973681035bee2afd6f723c6f0fb3529ae"
         ],
-        "prior_panel_root": "ap-root-64e6b0733a07ce757618acca27d2b76d84026a49ff237948957c32e80f07ef75",
+        "prior_panel_root": "ap-root-07c4f7a73ed57f995a18b07caf5cf683b4c714d83e12d94cfd39bde1ea853933",
+        "original_panel_root": "ap-root-64e6b0733a07ce757618acca27d2b76d84026a49ff237948957c32e80f07ef75",
         "parameters": {
-          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+          "recipe_version": "CRS-ACQUISITION-FEASIBILITY-v3-interior-selection-repair",
           "family": "conjunctive_joint_gates",
           "slot": 7,
           "guarded_candidates": 9,
@@ -1121,50 +1218,51 @@
         },
         "operation": "RECIPE_REVISION_OF_UNQUALIFIED_PANEL",
         "variant": 0
-      }
+      },
+      "original_panel_root": "ap-root-64e6b0733a07ce757618acca27d2b76d84026a49ff237948957c32e80f07ef75"
     }
   ],
   "ordered_case_ids": [
-    "ap-case-84b5b9882b5cf9b9bd6190d81b666f843b88ace359c3605d291196190458644a",
-    "ap-case-60a09d2e05a6ece5681ec19ff6ff60afa2b38352b3995969e175286a3e236b93",
-    "ap-case-13cee931af56a0984fb6afaadaf528d42bbb45d00fe8f5335155a8ba30d7ce5a",
-    "ap-case-742ed39f9291a6fe1a36c66cdb4959b6bb1c6c4f4db1a736c893978a9ca45fe7",
-    "ap-case-9bf2bca67670c1a444e4136ac18a76e22bd168ee355c62ab8393aa5ea14debb8",
-    "ap-case-0f8a37ca08acecce26c36ad5966ebca4daa667f5363e30af17f2962ccb8463bd",
-    "ap-case-e951010f39d96f1e2c9dc0429f255ba82b88c453028b115cd85e9b713e6fc158",
-    "ap-case-151d86b1ee8b90f6b8fbcd2be5f6cec46e74385dea7e772935f1d08e5d449103",
-    "ap-case-1f74e12be5ecfaf78e1e30d6898f1df8000da9c7dc29126075816fb775662865",
-    "ap-case-83327144d1f4d0d5d374800c19ff271ba9b662ae0df9f31bfa6e0db40125b557",
-    "ap-case-7a5e3e40b3d1088d5ce5f002958c289c52697071efea596bbe04619c658b3aff",
-    "ap-case-a7fc705d6d7cc8048070aa0d7a59d60f758ac311cb15d41e87d79df03e2505f6",
-    "ap-case-25408f3a3e9a6d47e889067c60f9ac7f2a5538bbc37a1f6991ab69790ffab190",
-    "ap-case-f2d2f4a9590f90409443c2d7908b120c057596295facf984f2d15fde0677fe47",
-    "ap-case-3feefc75ed9c7a62de43f6984f6dfd4c37258cd598ec11829d188f60769fd083",
-    "ap-case-ec26b379f3a58e3a5acea04f9761db373092431b8f79f9de7a595d0fe4fcdf20",
-    "ap-case-ff53b381a9fa118c7f13fe3f46c214b2c7ac1173fbcb755b50da47457413795a",
-    "ap-case-0150bbbe3e86271147ee3a3175f95a93f0d05af4f3a30cde6791c00d37a3d125",
-    "ap-case-e586625ef491db61de899cf8a89d1b152ec450adf0f8fcb5b3a0e909c543c163",
-    "ap-case-8a02c391a1ea326761780663c85d11c12cbfb42d9a924d5219f591cfba8bbaa2",
-    "ap-case-6c59e129df88bc7bfad3d865b914f4afb3b8f9da7f873f1f5f13f6cdf5260d5f",
-    "ap-case-5b316f32782a1812e218c78d8dc147c3c75ce6c4e8bfc27de65a7772a187f618",
-    "ap-case-041f8103b27426b17fa3edebb6c096c9e17992435c144a9180ba9938169f89ef",
-    "ap-case-66033851a80cfa1460a6dcbe94e5ab22419c5e35a7960beecbe78de3d734b32a",
-    "ap-case-26766f326e18257a3c4192196da817f3dd003a7710ebaf5a9ed37c36a9a25819",
-    "ap-case-0194a58463b53aa9224230c302988d0a752219005fc88ebc2396f4549abd162b",
-    "ap-case-a9c2368e1501113ef6a1a941d5d7c61a200daf039fae12939a8151dc2abaf092",
-    "ap-case-5ebb80d40870e1be22023c839a532451685815f8977be4d86c92136a8664882c",
-    "ap-case-028e5c69bdaacd37b0fcbd32cc75454227a2efb72ebb6d3bb5a243c4b04ed20f",
-    "ap-case-26f2a81597e70f6b7d954e0972d343e5bf15cf8d9b723ad0cb9cafc187e95c9e",
-    "ap-case-3d409ae16b6400f2c89119fa6418d8feafc49eba13cdaffe412f258cf85a5395",
-    "ap-case-28d71193eac42b815bbc3ce5d9c3cdb4b9a68e10761061f0203533821a05d7cb"
+    "ap-case-409fc3f9b3dffd599a2518e4c6cf18154c52f6384d0374878652bea486388749",
+    "ap-case-df3fee6ac061b516be8e9495e395ba805eaf906b81d771a526983acfeb3fc9e8",
+    "ap-case-86de802b5347eb3ec70ebf252d1985929360faa637450cc33030cc8f15eedaf1",
+    "ap-case-9e6dea7384115ceeb622b401d83a97b316c7a1bdfdd8dda12fe39b89896b0ead",
+    "ap-case-c22fd9a1e939983f0cbf42e84d611d83e1558bbc48c29dc541ab210421764567",
+    "ap-case-874329c878aee7cc0271510050c4eeaeaeaa2977ff8cc5b4cfdeea205a9c2523",
+    "ap-case-566f15d3b382f49641fd17c5a7b5ef56d3d04a558c53453cc7a0acbab1e4adf0",
+    "ap-case-1ea566882dd7418453cdf5b8698c76c248fabfc9e6833d0eb633338e20ec0699",
+    "ap-case-d1fd24d4943ae1fbec7773afa820a039fc60d946c57d70e825b6623dda0c2636",
+    "ap-case-8f05624781182f7688b26961985f3481ac47ec46f41d3f7bafbb9b5d9e63b24b",
+    "ap-case-00dd605e97d556f04664f96374599b103ef079a6f662a3fd34ca939d525a6f7b",
+    "ap-case-8d17fb199f322d8776e624f88422564e69203530dbcfe4692d6d9b4650235ce0",
+    "ap-case-202d74a54a090ad04af1c73612033fe072c0354f55f65315e53998bb1bdffd0c",
+    "ap-case-f2a982ce004e6e3cb8b251fe2ed941ff84f43d674fb9091be87945e7aea40e5e",
+    "ap-case-4b5ef0a51bca42f8817eb164e022ea2e4b6285ee8ff461de2f2ead866ec7d37e",
+    "ap-case-f0c84f8af3049c39acea59d0df752051638b97b0e725fbead17e900f506a4be8",
+    "ap-case-b3adab762a4c23c346c3f18d90a5e468046bc6175c0cc554071bd1bfa7481295",
+    "ap-case-acfd0c9a8e0ba042563c933d143cfceaafd418edd9ba46cf26893ae7d81d39dc",
+    "ap-case-f8e6a973ca84f2b713c795eabe66c9d7b6261de90f700f5db86297399b18ac2e",
+    "ap-case-3c1816367b586043db00c78dd4977965dfb5107dbdf202555a8e7a67be1ef0d1",
+    "ap-case-f946685fa35bcfaf502862d8c9670d97ca75b58eb3a5d02365fc90598e816a2b",
+    "ap-case-2d8c2ab28b53bd69048e4f6111c837c1bf19a2f4d8b3b219eb7aac32becc9a54",
+    "ap-case-f367cf68583147f092122009a2607478bda480aeca7aaa8eacad9223922bff3b",
+    "ap-case-20dbb0ecd3c27b91683f0e7aef0ff28e8d5cffe2578102e3bafea93039be1be2",
+    "ap-case-10388d1eb04154a38a6588b79e751291415bfe11e204be0b0e7414ad022ecec7",
+    "ap-case-b04f52a4b8cc22174b3bee7dcac90cb43ef1458fc8925b4fcb7c8f0b0f98c680",
+    "ap-case-92061bee4ea3e83d5a81a5915ef34edaeabe2f3f0590b32bf27b16fad3fcc9b0",
+    "ap-case-d1bb9421f1aa6a58c4b87a285ae8a7fdc92c8035af5e5be7a81c9e35465db297",
+    "ap-case-d6d0ba9a795939f1b39a8ebfc415ba35f15b4fb59c34bec3719730be95a0c730",
+    "ap-case-10f18941603d6d8ce32c5407052fde63761235b268fc0611da4bb66b1f6f60b8",
+    "ap-case-13c2c7de547882723ab4b2a7c8e091714b77c029df08e264ddbbfa5a52653b72",
+    "ap-case-f1ee717bb3a8cab2b65e2e4b78918a1655af548f3d4e7344dddfb6029c2ebf6d"
   ],
-  "scheduled_metadata_sha256": "ac91e9f177a2c6d57d5ba735d287c9fb8b8d22d30ab71e2c30182e50e2b4134a",
-  "fixed_anchor": "Exact frozen v2 versioned repair of v1 unqualified32 family/slot roots; no independent-experiment claim, one variant per revised root and unchanged draw307/order401; caller-resealed alternate bank still rejected",
-  "root_identity": "Revised recipe/version root identity assigned before constructor/render; ancestry retains both rejected-v1 root and revised-v2 root",
+  "scheduled_metadata_sha256": "a848176bf3e6aac6e7c8be173e4830c86d333404873be399641faf3accc236a4",
+  "fixed_anchor": "Exact related v3 revision of rejected v1/v2 family/slot roots; same32 slots/draw307/order401, exact frozen v2 statuses; no new independent parents or resampling; caller-resealed alternate bank rejected",
+  "root_identity": "v3 identity before construction/render; explicit ordered v1/v2/v3 ancestor chain; immediate prior root is v2, original root is v1",
   "construction": {
-    "source_origin": "Fresh typed construction for an explicitly related revision of rejected-v1 data; not an optimizer-world edit/reseed; revision relationship is retained",
+    "source_origin": "Direct typed construction for a related v3 revision of rejected v1/v2 data; not an optimizer-world edit/reseed; both ancestry links retained",
     "old_template": "one primary guarded confirmed transfer plus family decorations",
-    "candidate_population": "Related v2 repair:2..9 potential candidates; SUPPORTED recipe now makes a predeclared earlier candidate applicable while terminal is excluded; REFUTED shares excluded terminal but no earlier candidate applies; UNKNOWN/CONTRADICTORY retain terminal uncertainty",
+    "candidate_population": "Related v3 repair with fixed v2 statuses:2..9 candidates and varied declared earlier winners including interiors in every family; REFUTED shares excluded terminal but no earlier candidate applies; UNKNOWN/CONTRADICTORY retain terminal uncertainty",
     "population_or_difficulty_unchanged": false,
     "exact_old_template_acquisition_claim": false,
     "family_primitives": {
@@ -1173,9 +1271,9 @@
       "alias_selector_joint_gates": "two-hop query aliases and terminal owner alias with2..9 gated candidates",
       "conjunctive_joint_gates": "two requirements per candidate plus shared exception"
     },
-    "depth_and_length_expansion": "Expanded2..9 potential-candidate template retained. Two SUPPORTED recipes per family plan earlier selections; this is neither depth=N proof nor original single-primary template equivalence.",
-    "query_relevance": "Prospectively require actual earlier-owner selection in every family; planned positions are first or penultimate, not measured depth=N. Root will validate positions and opposing same-terminal-disposition cases once after freeze.",
-    "evidence_assignment": "Seeded common2-per-state shuffle, cyclic family rotation; every candidate-count slot has one of every status across families; every family has two of every status",
+    "depth_and_length_expansion": "Expanded2..9 template remains; predeclared positions defeat only complete3-position control, not depth=N or general shortcut absence or original template equivalence",
+    "query_relevance": "At least one declared interior winner per family outside{0,N-2,N-1}; positions fixed before observation. Runtime selection/source agreement remain unobserved for v3.",
+    "evidence_assignment": "Exact literal v2 family/slot assignment, independent of VERSION; v1-to-v2 changed28/32 labels retained; v2-to-v3 planned status changes0/32",
     "premise_word_count": "One SUPPORTED and one REFUTED fact per candidate history; family/filler facts matched; no UNKNOWN/CONTRADICTORY target words copied as premise labels",
     "filler_is_causal_or_novelty": false,
     "all_provided_by_Codex": true
@@ -1380,7 +1478,16 @@
       "combined_invocations": 257,
       "historical_builder_rows_costs_unavailable": true
     },
-    "candidate2_targeted_work": "No core/oracle/full-bank/receipt batch. Seven targeted serializer/constructor/canonical tests; ancillary constructors/public-position control checks are separate from endpoint counts."
+    "candidate2_targeted_work": "No core/oracle/full-bank/receipt batch. Seven targeted serializer/constructor/canonical tests; ancillary constructors/public-position control checks are separate from endpoint counts.",
+    "known_through_root_v2_validation": {
+      "main_comparison_invocations": 160,
+      "core_calls_including_diagnostic": 161,
+      "rename_control_invocations": 160,
+      "combined_invocations": 321,
+      "historical_builder_rows_costs_unavailable": true,
+      "prior_overrun_not_erased": true
+    },
+    "candidate3_targeted_work": "One9-test named scalar/constructor/canonical class; exact stdout/wall/auxiliary counts retained. Zero oracle/core/scorer/full-bank/receipt calls; no comparison batch."
   },
   "observed_shortcuts_from_final_stdout": {
     "denominator_all_planned": 32,
@@ -1424,333 +1531,334 @@
     "The reused latent oracle and core/scorer share declared semantic assumptions; agreement is not independent world truth",
     "Actual token fit cannot reuse the accepted optimizer token study; no tokenizer measured this panel",
     "Unavailable row artifacts/bank hashes and cumulative193 comparison/control invocations require independent review/adjudication; printed summaries are not raw replayable receipts",
-    "v2 is a related repair of exposed/rejectedv1 open-TRAIN parents; earlier position coverage and shortcut controls are prospective until the one named retained observation"
+    "v2 is a related repair of exposed/rejectedv1 open-TRAIN parents; earlier position coverage and shortcut controls are prospective until the one named retained observation",
+    "v3 is a final related development repair of rejected v1/v2; fixed v2 statuses and interiors close at most the finite3-position shortcut; broader population/contrast still unqualified"
   ],
-  "revision": 2,
+  "revision": 3,
   "selection_recipe_frozen_before_observation": {
     "private_coordinator_plan": [
       {
-        "case_id": "ap-case-83327144d1f4d0d5d374800c19ff271ba9b662ae0df9f31bfa6e0db40125b557",
+        "case_id": "ap-case-8f05624781182f7688b26961985f3481ac47ec46f41d3f7bafbb9b5d9e63b24b",
         "family": "empty_joint_gates",
         "slot": 0,
         "candidate_count": 2,
         "planned_evidence_recipe": "SUPPORTED",
         "prospective_selected_position": 0,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-a7fc705d6d7cc8048070aa0d7a59d60f758ac311cb15d41e87d79df03e2505f6",
+        "case_id": "ap-case-8d17fb199f322d8776e624f88422564e69203530dbcfe4692d6d9b4650235ce0",
         "family": "empty_joint_gates",
         "slot": 1,
         "candidate_count": 3,
         "planned_evidence_recipe": "UNKNOWN",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "UNKNOWN",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-ec26b379f3a58e3a5acea04f9761db373092431b8f79f9de7a595d0fe4fcdf20",
+        "case_id": "ap-case-f0c84f8af3049c39acea59d0df752051638b97b0e725fbead17e900f506a4be8",
         "family": "empty_joint_gates",
         "slot": 2,
         "candidate_count": 4,
         "planned_evidence_recipe": "UNKNOWN",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "UNKNOWN",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-3d409ae16b6400f2c89119fa6418d8feafc49eba13cdaffe412f258cf85a5395",
+        "case_id": "ap-case-13c2c7de547882723ab4b2a7c8e091714b77c029df08e264ddbbfa5a52653b72",
         "family": "empty_joint_gates",
         "slot": 3,
         "candidate_count": 5,
         "planned_evidence_recipe": "SUPPORTED",
-        "prospective_selected_position": 0,
+        "prospective_selected_position": 1,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-f2d2f4a9590f90409443c2d7908b120c057596295facf984f2d15fde0677fe47",
+        "case_id": "ap-case-f2a982ce004e6e3cb8b251fe2ed941ff84f43d674fb9091be87945e7aea40e5e",
         "family": "empty_joint_gates",
         "slot": 4,
         "candidate_count": 6,
         "planned_evidence_recipe": "CONTRADICTORY",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "CONTRADICTORY",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-6c59e129df88bc7bfad3d865b914f4afb3b8f9da7f873f1f5f13f6cdf5260d5f",
+        "case_id": "ap-case-f946685fa35bcfaf502862d8c9670d97ca75b58eb3a5d02365fc90598e816a2b",
         "family": "empty_joint_gates",
         "slot": 5,
         "candidate_count": 7,
         "planned_evidence_recipe": "REFUTED",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-84b5b9882b5cf9b9bd6190d81b666f843b88ace359c3605d291196190458644a",
+        "case_id": "ap-case-409fc3f9b3dffd599a2518e4c6cf18154c52f6384d0374878652bea486388749",
         "family": "empty_joint_gates",
         "slot": 6,
         "candidate_count": 8,
         "planned_evidence_recipe": "CONTRADICTORY",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "CONTRADICTORY",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-1f74e12be5ecfaf78e1e30d6898f1df8000da9c7dc29126075816fb775662865",
+        "case_id": "ap-case-d1fd24d4943ae1fbec7773afa820a039fc60d946c57d70e825b6623dda0c2636",
         "family": "empty_joint_gates",
         "slot": 7,
         "candidate_count": 9,
         "planned_evidence_recipe": "REFUTED",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-a9c2368e1501113ef6a1a941d5d7c61a200daf039fae12939a8151dc2abaf092",
+        "case_id": "ap-case-92061bee4ea3e83d5a81a5915ef34edaeabe2f3f0590b32bf27b16fad3fcc9b0",
         "family": "canceled_prefix_joint_gates",
         "slot": 0,
         "candidate_count": 2,
         "planned_evidence_recipe": "REFUTED",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-8a02c391a1ea326761780663c85d11c12cbfb42d9a924d5219f591cfba8bbaa2",
+        "case_id": "ap-case-3c1816367b586043db00c78dd4977965dfb5107dbdf202555a8e7a67be1ef0d1",
         "family": "canceled_prefix_joint_gates",
         "slot": 1,
         "candidate_count": 3,
         "planned_evidence_recipe": "CONTRADICTORY",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "CONTRADICTORY",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-5b316f32782a1812e218c78d8dc147c3c75ce6c4e8bfc27de65a7772a187f618",
+        "case_id": "ap-case-2d8c2ab28b53bd69048e4f6111c837c1bf19a2f4d8b3b219eb7aac32becc9a54",
         "family": "canceled_prefix_joint_gates",
         "slot": 2,
         "candidate_count": 4,
         "planned_evidence_recipe": "CONTRADICTORY",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "CONTRADICTORY",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-151d86b1ee8b90f6b8fbcd2be5f6cec46e74385dea7e772935f1d08e5d449103",
+        "case_id": "ap-case-1ea566882dd7418453cdf5b8698c76c248fabfc9e6833d0eb633338e20ec0699",
         "family": "canceled_prefix_joint_gates",
         "slot": 3,
         "candidate_count": 5,
         "planned_evidence_recipe": "REFUTED",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-66033851a80cfa1460a6dcbe94e5ab22419c5e35a7960beecbe78de3d734b32a",
+        "case_id": "ap-case-20dbb0ecd3c27b91683f0e7aef0ff28e8d5cffe2578102e3bafea93039be1be2",
         "family": "canceled_prefix_joint_gates",
         "slot": 4,
         "candidate_count": 6,
+        "planned_evidence_recipe": "SUPPORTED",
+        "prospective_selected_position": 2,
+        "prospective_terminal_disposition": "EXCLUDED",
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
+      },
+      {
+        "case_id": "ap-case-10f18941603d6d8ce32c5407052fde63761235b268fc0611da4bb66b1f6f60b8",
+        "family": "canceled_prefix_joint_gates",
+        "slot": 5,
+        "candidate_count": 7,
+        "planned_evidence_recipe": "UNKNOWN",
+        "prospective_selected_position": null,
+        "prospective_terminal_disposition": "UNKNOWN",
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
+      },
+      {
+        "case_id": "ap-case-f8e6a973ca84f2b713c795eabe66c9d7b6261de90f700f5db86297399b18ac2e",
+        "family": "canceled_prefix_joint_gates",
+        "slot": 6,
+        "candidate_count": 8,
         "planned_evidence_recipe": "SUPPORTED",
         "prospective_selected_position": 4,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-26f2a81597e70f6b7d954e0972d343e5bf15cf8d9b723ad0cb9cafc187e95c9e",
-        "family": "canceled_prefix_joint_gates",
-        "slot": 5,
-        "candidate_count": 7,
-        "planned_evidence_recipe": "UNKNOWN",
-        "prospective_selected_position": null,
-        "prospective_terminal_disposition": "UNKNOWN",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
-      },
-      {
-        "case_id": "ap-case-e586625ef491db61de899cf8a89d1b152ec450adf0f8fcb5b3a0e909c543c163",
-        "family": "canceled_prefix_joint_gates",
-        "slot": 6,
-        "candidate_count": 8,
-        "planned_evidence_recipe": "SUPPORTED",
-        "prospective_selected_position": 0,
-        "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
-      },
-      {
-        "case_id": "ap-case-041f8103b27426b17fa3edebb6c096c9e17992435c144a9180ba9938169f89ef",
+        "case_id": "ap-case-f367cf68583147f092122009a2607478bda480aeca7aaa8eacad9223922bff3b",
         "family": "canceled_prefix_joint_gates",
         "slot": 7,
         "candidate_count": 9,
         "planned_evidence_recipe": "UNKNOWN",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "UNKNOWN",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-13cee931af56a0984fb6afaadaf528d42bbb45d00fe8f5335155a8ba30d7ce5a",
+        "case_id": "ap-case-86de802b5347eb3ec70ebf252d1985929360faa637450cc33030cc8f15eedaf1",
         "family": "alias_selector_joint_gates",
         "slot": 0,
         "candidate_count": 2,
         "planned_evidence_recipe": "UNKNOWN",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "UNKNOWN",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-9bf2bca67670c1a444e4136ac18a76e22bd168ee355c62ab8393aa5ea14debb8",
+        "case_id": "ap-case-c22fd9a1e939983f0cbf42e84d611d83e1558bbc48c29dc541ab210421764567",
         "family": "alias_selector_joint_gates",
         "slot": 1,
         "candidate_count": 3,
         "planned_evidence_recipe": "SUPPORTED",
         "prospective_selected_position": 1,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-26766f326e18257a3c4192196da817f3dd003a7710ebaf5a9ed37c36a9a25819",
+        "case_id": "ap-case-10388d1eb04154a38a6588b79e751291415bfe11e204be0b0e7414ad022ecec7",
         "family": "alias_selector_joint_gates",
         "slot": 2,
         "candidate_count": 4,
         "planned_evidence_recipe": "SUPPORTED",
-        "prospective_selected_position": 0,
+        "prospective_selected_position": 1,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-0f8a37ca08acecce26c36ad5966ebca4daa667f5363e30af17f2962ccb8463bd",
+        "case_id": "ap-case-874329c878aee7cc0271510050c4eeaeaeaa2977ff8cc5b4cfdeea205a9c2523",
         "family": "alias_selector_joint_gates",
         "slot": 3,
         "candidate_count": 5,
         "planned_evidence_recipe": "UNKNOWN",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "UNKNOWN",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-0150bbbe3e86271147ee3a3175f95a93f0d05af4f3a30cde6791c00d37a3d125",
+        "case_id": "ap-case-acfd0c9a8e0ba042563c933d143cfceaafd418edd9ba46cf26893ae7d81d39dc",
         "family": "alias_selector_joint_gates",
         "slot": 4,
         "candidate_count": 6,
         "planned_evidence_recipe": "REFUTED",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-25408f3a3e9a6d47e889067c60f9ac7f2a5538bbc37a1f6991ab69790ffab190",
+        "case_id": "ap-case-202d74a54a090ad04af1c73612033fe072c0354f55f65315e53998bb1bdffd0c",
         "family": "alias_selector_joint_gates",
         "slot": 5,
         "candidate_count": 7,
         "planned_evidence_recipe": "CONTRADICTORY",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "CONTRADICTORY",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-e951010f39d96f1e2c9dc0429f255ba82b88c453028b115cd85e9b713e6fc158",
+        "case_id": "ap-case-566f15d3b382f49641fd17c5a7b5ef56d3d04a558c53453cc7a0acbab1e4adf0",
         "family": "alias_selector_joint_gates",
         "slot": 6,
         "candidate_count": 8,
         "planned_evidence_recipe": "REFUTED",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-3feefc75ed9c7a62de43f6984f6dfd4c37258cd598ec11829d188f60769fd083",
+        "case_id": "ap-case-4b5ef0a51bca42f8817eb164e022ea2e4b6285ee8ff461de2f2ead866ec7d37e",
         "family": "alias_selector_joint_gates",
         "slot": 7,
         "candidate_count": 9,
         "planned_evidence_recipe": "CONTRADICTORY",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "CONTRADICTORY",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-742ed39f9291a6fe1a36c66cdb4959b6bb1c6c4f4db1a736c893978a9ca45fe7",
+        "case_id": "ap-case-9e6dea7384115ceeb622b401d83a97b316c7a1bdfdd8dda12fe39b89896b0ead",
         "family": "conjunctive_joint_gates",
         "slot": 0,
         "candidate_count": 2,
         "planned_evidence_recipe": "CONTRADICTORY",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "CONTRADICTORY",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-0194a58463b53aa9224230c302988d0a752219005fc88ebc2396f4549abd162b",
+        "case_id": "ap-case-b04f52a4b8cc22174b3bee7dcac90cb43ef1458fc8925b4fcb7c8f0b0f98c680",
         "family": "conjunctive_joint_gates",
         "slot": 1,
         "candidate_count": 3,
         "planned_evidence_recipe": "REFUTED",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-028e5c69bdaacd37b0fcbd32cc75454227a2efb72ebb6d3bb5a243c4b04ed20f",
+        "case_id": "ap-case-d6d0ba9a795939f1b39a8ebfc415ba35f15b4fb59c34bec3719730be95a0c730",
         "family": "conjunctive_joint_gates",
         "slot": 2,
         "candidate_count": 4,
         "planned_evidence_recipe": "REFUTED",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-7a5e3e40b3d1088d5ce5f002958c289c52697071efea596bbe04619c658b3aff",
+        "case_id": "ap-case-00dd605e97d556f04664f96374599b103ef079a6f662a3fd34ca939d525a6f7b",
         "family": "conjunctive_joint_gates",
         "slot": 3,
         "candidate_count": 5,
         "planned_evidence_recipe": "CONTRADICTORY",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "CONTRADICTORY",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-5ebb80d40870e1be22023c839a532451685815f8977be4d86c92136a8664882c",
+        "case_id": "ap-case-d1bb9421f1aa6a58c4b87a285ae8a7fdc92c8035af5e5be7a81c9e35465db297",
         "family": "conjunctive_joint_gates",
         "slot": 4,
         "candidate_count": 6,
         "planned_evidence_recipe": "UNKNOWN",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "UNKNOWN",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-60a09d2e05a6ece5681ec19ff6ff60afa2b38352b3995969e175286a3e236b93",
+        "case_id": "ap-case-df3fee6ac061b516be8e9495e395ba805eaf906b81d771a526983acfeb3fc9e8",
         "family": "conjunctive_joint_gates",
         "slot": 5,
         "candidate_count": 7,
         "planned_evidence_recipe": "SUPPORTED",
-        "prospective_selected_position": 5,
+        "prospective_selected_position": 3,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-ff53b381a9fa118c7f13fe3f46c214b2c7ac1173fbcb755b50da47457413795a",
+        "case_id": "ap-case-b3adab762a4c23c346c3f18d90a5e468046bc6175c0cc554071bd1bfa7481295",
         "family": "conjunctive_joint_gates",
         "slot": 6,
         "candidate_count": 8,
         "planned_evidence_recipe": "UNKNOWN",
         "prospective_selected_position": null,
         "prospective_terminal_disposition": "UNKNOWN",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       },
       {
-        "case_id": "ap-case-28d71193eac42b815bbc3ce5d9c3cdb4b9a68e10761061f0203533821a05d7cb",
+        "case_id": "ap-case-f1ee717bb3a8cab2b65e2e4b78918a1655af548f3d4e7344dddfb6029c2ebf6d",
         "family": "conjunctive_joint_gates",
         "slot": 7,
         "candidate_count": 9,
         "planned_evidence_recipe": "SUPPORTED",
-        "prospective_selected_position": 0,
+        "prospective_selected_position": 5,
         "prospective_terminal_disposition": "EXCLUDED",
-        "measurement_status": "NOT_OBSERVED_REPAIRED_CORE"
+        "measurement_status": "NOT_OBSERVED_CANDIDATE3_CORE"
       }
     ],
-    "plan_sha256": "0d223e5be05c032618a0c85208117187be64a7a4e47a475169b8ae027ab6c38d",
+    "plan_sha256": "02b4bee903d44fb68eda45e6c312388203b6c92314059820fe1c6f9b57a6115b",
     "actual_coverage": null,
     "prospective_earlier_selections": 8,
     "prospective_per_family": {
@@ -1769,11 +1877,62 @@
       "terminal_only",
       "first_only",
       "penultimate_only",
-      "fixed_position_1"
+      "fixed_position_1",
+      "combined_three_position"
     ],
     "control_inputs": "exact public source/query/rules only, no private labels/oracle/core; gold used only later to score controls",
     "actual_core_selection_position": "future cpu_receipt matches actual supported answer to unique resolved public candidate owner; costs/errors/positions retained per row",
-    "same_terminal_disposition": "SUPPORTED and REFUTED planned cases have excluded terminal; only earlier applicability differs; actual opposing coverage is not yet claimed"
+    "same_terminal_disposition": "SUPPORTED and REFUTED planned cases have excluded terminal; only earlier applicability differs; actual opposing coverage is not yet claimed",
+    "predeclared_interior_winners": [
+      {
+        "case_id": "ap-case-13c2c7de547882723ab4b2a7c8e091714b77c029df08e264ddbbfa5a52653b72",
+        "family": "empty_joint_gates",
+        "slot": 3,
+        "candidate_count": 5,
+        "position": 1
+      },
+      {
+        "case_id": "ap-case-20dbb0ecd3c27b91683f0e7aef0ff28e8d5cffe2578102e3bafea93039be1be2",
+        "family": "canceled_prefix_joint_gates",
+        "slot": 4,
+        "candidate_count": 6,
+        "position": 2
+      },
+      {
+        "case_id": "ap-case-f8e6a973ca84f2b713c795eabe66c9d7b6261de90f700f5db86297399b18ac2e",
+        "family": "canceled_prefix_joint_gates",
+        "slot": 6,
+        "candidate_count": 8,
+        "position": 4
+      },
+      {
+        "case_id": "ap-case-10388d1eb04154a38a6588b79e751291415bfe11e204be0b0e7414ad022ecec7",
+        "family": "alias_selector_joint_gates",
+        "slot": 2,
+        "candidate_count": 4,
+        "position": 1
+      },
+      {
+        "case_id": "ap-case-df3fee6ac061b516be8e9495e395ba805eaf906b81d771a526983acfeb3fc9e8",
+        "family": "conjunctive_joint_gates",
+        "slot": 5,
+        "candidate_count": 7,
+        "position": 3
+      },
+      {
+        "case_id": "ap-case-f1ee717bb3a8cab2b65e2e4b78918a1655af548f3d4e7344dddfb6029c2ebf6d",
+        "family": "conjunctive_joint_gates",
+        "slot": 7,
+        "candidate_count": 9,
+        "position": 5
+      }
+    ],
+    "combined_rule": "Unique positions{0,N-2,N-1} descending: terminal UNKNOWN/CONTRADICTORY returns its state; otherwise latest inspected SUPPORTED returns resolved owner; otherwise complete EMPTY fallback REFUTED. Source/query/rules only; gold scored later.",
+    "combined_three_position_prospective_max_exact": 28,
+    "combined_three_position_prospective_min_misses": 4,
+    "general_shortcut_absence_claim": false,
+    "actual_combined_control_accuracy": null,
+    "skipped_guard_evaluations_interpretation": "Distinct candidate guards omitted by this control only; no unread source bytes, token saving or runtime saving claim"
   },
   "boundary_repair": {
     "rules_parameters": "exact small key sets and finite scalar types before canonical encoding at every entry",
@@ -1853,5 +2012,162 @@
     "log_status": "Exact returned tool stdout copied from observation7f1681; no endpoint/cost/raw-bank receipt asserted",
     "stdout_UTF8_sha256": "3b468781e5739dc2e3630047f468db1e7549d38bf3147f2e9528ff750071b528"
   },
-  "future_validation_gate": "Coordinator scopes ONE new raw-retained32-core+32-rename batch after this freeze; builder did not execute prepared wrapper; reviewers consume retained raw results without duplicate batch"
+  "future_validation_gate": "Coordinator separately pre-saves ONE create-once guarded raw32-core+32-rename validation after this freeze, then fresh finalSCI/OPS review; no fourth repair/relabeling loop",
+  "assignment_freeze": {
+    "assignment_version": "CRS-ACQUISITION-FEASIBILITY-v2-selection-repair",
+    "fixed_family_slot_labels": {
+      "empty_joint_gates": [
+        "SUPPORTED",
+        "UNKNOWN",
+        "UNKNOWN",
+        "SUPPORTED",
+        "CONTRADICTORY",
+        "REFUTED",
+        "CONTRADICTORY",
+        "REFUTED"
+      ],
+      "canceled_prefix_joint_gates": [
+        "REFUTED",
+        "CONTRADICTORY",
+        "CONTRADICTORY",
+        "REFUTED",
+        "SUPPORTED",
+        "UNKNOWN",
+        "SUPPORTED",
+        "UNKNOWN"
+      ],
+      "alias_selector_joint_gates": [
+        "UNKNOWN",
+        "SUPPORTED",
+        "SUPPORTED",
+        "UNKNOWN",
+        "REFUTED",
+        "CONTRADICTORY",
+        "REFUTED",
+        "CONTRADICTORY"
+      ],
+      "conjunctive_joint_gates": [
+        "CONTRADICTORY",
+        "REFUTED",
+        "REFUTED",
+        "CONTRADICTORY",
+        "UNKNOWN",
+        "SUPPORTED",
+        "UNKNOWN",
+        "SUPPORTED"
+      ]
+    },
+    "v2_to_v3_planned_label_changes": 0,
+    "v1_to_v2_actual_label_changes": 28,
+    "labels_independent_of_current_VERSION": true,
+    "selection_positions": {
+      "empty_joint_gates": {
+        "0": 0,
+        "3": 1
+      },
+      "canceled_prefix_joint_gates": {
+        "4": 2,
+        "6": 4
+      },
+      "alias_selector_joint_gates": {
+        "1": 1,
+        "2": 1
+      },
+      "conjunctive_joint_gates": {
+        "5": 3,
+        "7": 5
+      }
+    },
+    "no_replacement_pruning_or_resampling": true
+  },
+  "round2_preservation": {
+    "path": "history/acquisition_panel_round2/PRESERVATION.json",
+    "sha256": "62628e20f0a74c770dd67c71562f4f442f733071299ec6c8832aeb562a7c65ec",
+    "source_sha256": "90f0cf990e736f4d455ceba07b93ed06957ef68759b3b0e46fe0fef4af6b4943",
+    "tests_sha256": "1329e3ae43e76d6062ab124a1005778aeb4556a08d2d437977db286ca7ac32b0",
+    "contract_sha256": "7fd4246c00583dd4e8363022ff04002768d5779af27fe72bf2689693e17c5968"
+  },
+  "round2_reviews": {
+    "ACQUISITION_PANEL_SCIENTIFIC_REVIEW_2.md": "45f02a5d030582fdc244ce3570e6135d00aec05dc4c064e86d3208f734553e74",
+    "ACQUISITION_PANEL_OPERATIONAL_REVIEW_2.md": "2c705c653f22bb4137569245107031af9c757460094a9880dd6b045449205b88",
+    "ACQUISITION_PANEL_ROUND2_ADJUDICATION.md": "5837f26ce5e05e7e7855a0e0329eba92236664925b72d40674c0b167d5a8cc08"
+  },
+  "round2_population_negative": {
+    "combined_three_position_exact": 32,
+    "denominator": 32,
+    "skipped_candidate_guard_evaluations": 84,
+    "earlier_owner_selections": 8,
+    "status_reassignments_v1_to_v2": 28,
+    "all32_v1_v2_ancestry_kinship_links_checked": true,
+    "population_rejected": true,
+    "individual_exact": {
+      "terminal_only": 24,
+      "first_only": 13,
+      "penultimate_only": 12,
+      "fixed_position_1": 11
+    },
+    "belongs_to": "retained v2 only; no v3 observation"
+  },
+  "fresh_retained_v2_root_evidence": {
+    "report_path": "outputs/acquisition_second_freeze_root_validation_001/REPORT.json",
+    "report_sha256": "c99ad46b2a01f9625246d7fa3c2d045b03db3fbc40a4094e2cdb2cf3f32a90f6",
+    "private_bundle_sha256": "c9acf12fb4d9d1ac7d1f6bb2e7f4c1b07a00da9f41ee248188a9e4bae75e52e3",
+    "cpu_receipt_sha256": "eaada430d9888ad760e22baefe9ce240da83a257e7bf3f6617cb6f71b45f8331",
+    "new_main": 32,
+    "new_rename": 32,
+    "all_passed": true,
+    "recorded_wall_seconds": 3.5864787999998953,
+    "belongs_to": "v2 freeze only; not candidate3 observation"
+  },
+  "targeted_candidate3_receipt": {
+    "observation_id": "ACQUISITION_CANDIDATE3_TARGETED_FINAL_001",
+    "status": "PASS",
+    "tests": 9,
+    "passed": 9,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "wall_seconds": 0.019739800000024843,
+    "wall_scope": "named class interval, excludes Python startup/source imports/receipt write; no full-bank or comparison time",
+    "only_test_class": "experiments.rineya_centralized_reasoning_system_v1.tests.test_acquisition_data.AcquisitionFinalRepairTargetedTests",
+    "interpreter": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+    "flags": [
+      "-I",
+      "-S",
+      "-B",
+      "-X",
+      "utf8"
+    ],
+    "full_bank_oracle_core_scorer_fatal": true,
+    "forbidden_api_calls": {},
+    "forbidden_imports": [],
+    "allowed_auxiliary_call_attempts": {
+      "construct": 25,
+      "fingerprints": 2,
+      "public_position_controls": 12
+    },
+    "core_calls": 0,
+    "oracle_calls": 0,
+    "scorer_calls": 0,
+    "full_bank_constructions": 0,
+    "full_cpu_receipt_calls": 0,
+    "stdout": "test_canonical_relatedness_and_versioned_v1_v2_v3_ancestry_retained (experiments.rineya_centralized_reasoning_system_v1.tests.test_acquisition_data.AcquisitionFinalRepairTargetedTests.test_canonical_relatedness_and_versioned_v1_v2_v3_ancestry_retained) ... ok\ntest_constructor_realizes_prior_gate_applicability_opposed_to_terminal (experiments.rineya_centralized_reasoning_system_v1.tests.test_acquisition_data.AcquisitionFinalRepairTargetedTests.test_constructor_realizes_prior_gate_applicability_opposed_to_terminal) ... ok\ntest_exact_v2_assignments_independent_of_future_recipe_version (experiments.rineya_centralized_reasoning_system_v1.tests.test_acquisition_data.AcquisitionFinalRepairTargetedTests.test_exact_v2_assignments_independent_of_future_recipe_version) ... ok\ntest_four_predeclared_interior_worlds_defeat_complete_three_position_rule (experiments.rineya_centralized_reasoning_system_v1.tests.test_acquisition_data.AcquisitionFinalRepairTargetedTests.test_four_predeclared_interior_worlds_defeat_complete_three_position_rule) ... ok\ntest_generic_JSON_and_bundle_bound_traversal_precede_consumers (experiments.rineya_centralized_reasoning_system_v1.tests.test_acquisition_data.AcquisitionFinalRepairTargetedTests.test_generic_JSON_and_bundle_bound_traversal_precede_consumers) ... ok\ntest_parameters_all_entrypaths_nested_cyclic_extra_and_bool_reject (experiments.rineya_centralized_reasoning_system_v1.tests.test_acquisition_data.AcquisitionFinalRepairTargetedTests.test_parameters_all_entrypaths_nested_cyclic_extra_and_bool_reject) ... ok\ntest_prospective_cells_balanced_and_positions_predeclared_not_depth (experiments.rineya_centralized_reasoning_system_v1.tests.test_acquisition_data.AcquisitionFinalRepairTargetedTests.test_prospective_cells_balanced_and_positions_predeclared_not_depth) ... ok\ntest_rules_nested_cyclic_huge_and_non_scalar_reject_before_JSON (experiments.rineya_centralized_reasoning_system_v1.tests.test_acquisition_data.AcquisitionFinalRepairTargetedTests.test_rules_nested_cyclic_huge_and_non_scalar_reject_before_JSON) ... ok\ntest_seen_signature_and_ancestry_shapes_reject_before_census_or_JSON (experiments.rineya_centralized_reasoning_system_v1.tests.test_acquisition_data.AcquisitionFinalRepairTargetedTests.test_seen_signature_and_ancestry_shapes_reject_before_census_or_JSON) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.020s\n\nOK\n",
+    "stdout_UTF8_sha256": "62d7137897343949553e6312cee575e51b1df2c76b9de6ff6e22391a8e72bfb3",
+    "failures": [],
+    "error_details": [],
+    "source_or_test_retry_after_failure_allowed": false,
+    "whole_shell_command_wall_seconds": 0.3962432,
+    "whole_shell_command_wall_scope": "Tool-reported command wall including PowerShell/Python startup, imports, named class and receipt write; named class0.0197398s is nested, not additive"
+  },
+  "candidate3_freeze": {
+    "builder": "/root/acq_builder3",
+    "round": 3,
+    "max_rounds": 3,
+    "source_sha256": "7742ae86bf5b4b2831ae4851ddbadd2356fd7e58dbbd6a5e75eb4ccf4da3e054",
+    "tests_sha256": "7da7a53eb68b11e36c679250778ee991aab126922c51f491cce47216d537d2df",
+    "source_test_edits_stopped_after_one_named_targeted_pass": true,
+    "builder_full_bank_or_comparison_work": 0,
+    "contract_hash": "physical SHA returned separately after this final metadata write; no self-hash claim",
+    "next_gate": "Root separately pre-saves one guarded retained32+32 observation, then finalSCI/OPS review; no fourth repair"
+  }
 }

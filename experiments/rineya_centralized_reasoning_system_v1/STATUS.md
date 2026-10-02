@@ -10,7 +10,10 @@ section below, charter and manifest are preserved. All central CHECK/FINAL remai
 Current milestone, 2026-10-02: **CPU_QUALIFIED for the supplied reference pipeline;
 native operational revision 3 whole-path claim quarantined at its review limit.
 The final reader and no-model identity probe are also quarantined at their
-three-round limits; proposed corrections remain outside frozen source.**
+three-round limits; proposed corrections remain outside frozen source.
+The acquisition population is quarantined after final review3. Continued
+execution is blocked pending the concrete owner exception decision; the full
+research objective is incomplete.**
 The complete supplied AI-Newton paper, supplement and figures were inspected;
 18 pinned primary implementation files were source-verified. Exact external
 Titan/Sparse/Transition/Supa assets are inventoried read-only. Opallo binaries
@@ -95,9 +98,22 @@ after68 targeted rejection checks. Versioned ancestry links to rejected v1 roots
 this is a related revised panel, not fresh confirmation. Cumulative known work
 is161 core calls and160 rename controls,321 combined. Earlier builder raw rows
 and costs remain unavailable. No panel/native qualification or H01 closure
-follows from fixture passes. Round2 is archived byte for byte. The last permitted
-repair is scoped in ACQUISITION_PANEL_ROUND2_ADJUDICATION: preserve v2 labels,
-declare interior winners in every family and preserve the v1/v2/v3 relationship.
+follows from fixture passes. Round2 is archived byte for byte. Final candidate3
+source7742ae86/tests7da7a53e/contract78f9066b preserves v2 labels, six interior
+winners and full v1/v2/v3 ancestry. Nine targeted checks and Root's one retained
+15-test/32-main/32-rename observation pass. The old combined control scores26/32,
+but SCI3 independently verifies a prospectively proposed count-relative control
+at32/32, omitting128 guard evaluations. No source/token/runtime saving is inferred.
+OPS3 supports source/evidence association only. The final population is quarantined
+in evidence/ACQUISITION_PANEL_QUARANTINE_003.json; no fourth repair or relabeling.
+Known cumulative data work is193 core/192 rename/385 combined invocations;
+earlier raw-cost gaps remain explicit. History and ignored raw predictions remain.
+POST_ACQUISITION_CONTINUATION_ASSESSMENT_001 defers generic synthetic enrollment
+because accepted panels and a qualified source baseline are absent. The next
+dependent action requires the already pending owner exception, exact approved
+scope, fresh independent review and admission. No further currently necessary
+independent CPU helper was identified. All native and learning outcomes stay
+unmeasured; CRS-001 and its open questions are preserved.
 The guard and exact-prefix reader qualifier passed24 lightweight tests. Reader
 review reproduced a completion-proof gap,
 so its native launch remains closed pending repair. The previous complete primary
