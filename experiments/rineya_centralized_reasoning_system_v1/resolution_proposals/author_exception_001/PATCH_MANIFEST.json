@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "status": "PROPOSAL_ONLY_NOT_APPLIED_OWNER_EXCEPTION_REQUIRED",
+  "frozen_sources": {
+    "owned_runtime_identity_probe.py": "431f9789635f6e99d9fcfd29f58c9dc1e8433e2ef52ee56b07f48a4d2a6f0e4b",
+    "reader.py": "b420e07583bb81ad3ebe7222fdaa254810881f1013a9a336527d9481f9af7a40",
+    "reader_execution.py": "0dcd7dc639f3d8b816288b1417750772b6e704261af47d4dc7eba298383f5e9e"
+  },
+  "proposed_source_sha256": {
+    "owned_runtime_identity_probe.py": "0e85d5cfe818bf706410b78e12b0129ceeb4a95b4eb720d7d733bcef0832157e",
+    "reader.py": "9a6d2806c218f597a500c7a5dd17acee37bd8edd24fbddd3aa357d5704d85ed3",
+    "reader_execution.py": "c66a1b6453f1bad19e0f51eb7d2cf2b763eb0e6e7a09e124eebcb613ef53f9d3"
+  },
+  "patch_sha256": {
+    "probe_disk_usage.patch": "73caca4835843b0bee2412fca40a3a62f8f9b675fbe93aa23e3f94aabd1dc48e",
+    "reader_supervisor_bytes.patch": "6f815fa33fd9717358aa3b20d4f2a94bcab947739bba546e9bbc4e2a814513e2"
+  },
+  "models_loaded": 0,
+  "source_candidates_mutated": false,
+  "extra_round_authorized": false,
+  "new_probe_registration": {
+    "job_key": "CRS-OWNED-IDENTITY-002",
+    "prior_job_key": "CRS-OWNED-IDENTITY-001",
+    "prior_state": "FAILED_TERMINAL_PRESERVED",
+    "requires_explicit_owner_exception_and_new_profile_reviews": true,
+    "maximum_new_runs": 1,
+    "automatic_retry": false
+  }
+}

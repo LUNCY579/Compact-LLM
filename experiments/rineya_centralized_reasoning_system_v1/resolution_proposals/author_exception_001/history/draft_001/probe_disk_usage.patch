@@ -1,0 +1,20 @@
+--- a/experiments/rineya_centralized_reasoning_system_v1/owned_runtime_identity_probe.py
++++ b/experiments/rineya_centralized_reasoning_system_v1/owned_runtime_identity_probe.py
+@@ -523,7 +523,7 @@
+             except psutil.NoSuchProcess:
+                 native.confirm_owned_process_exit(self.job, pid)
+         return {"rss_bytes": rss, "pid_count": len(ids), "host_available_gib": psutil.virtual_memory().available / native.GIB,
+-                "disk_free_gib": psutil.disk_usage(self.output).free / native.GIB,
++                "disk_free_gib": psutil.disk_usage(str(self.output)).free / native.GIB,
+                 "log_bytes": sum(f.stat().st_size for f in self.output.iterdir()
+                                  if f.is_file() and f.suffix in {".jsonl", ".log"})}
+ 
+@@ -805,7 +805,7 @@
+             native.require(len(current["job_pid_list"]) <= 8 and current["observed_rss_bytes"] <= 2 * native.GIB,
+                            "probe process/RSS ceiling")
+             native.require(psutil.virtual_memory().available / native.GIB >= 1.25
+-                           and psutil.disk_usage(output).free / native.GIB >= 4, "probe RAM/disk floor")
++                           and psutil.disk_usage(str(output)).free / native.GIB >= 4, "probe RAM/disk floor")
+             peak_rss = max(peak_rss, current["observed_rss_bytes"])
+             if now >= next_guard:
+                 try:
