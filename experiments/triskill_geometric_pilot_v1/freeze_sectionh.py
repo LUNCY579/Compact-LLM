@@ -2,7 +2,8 @@
 
     python freeze_sectionh.py membership   # screen_sectionh.json, development_sectionh.json
     python freeze_sectionh.py validate     # CPU_VALIDATION_SECTIONH.json (reads exposed banks only)
-    python freeze_sectionh.py freeze       # FREEZE_SECTIONH.json
+    python freeze_sectionh.py freeze       # refuses on uncommitted code; runs validate, then
+                                           # FREEZE_SECTIONH.json pinning the validation receipt
 
 Every output is create-only. No model is loaded and no protected bank is opened: the
 collision checks read T_BANK_V3X, T_BANK_V4, delta_T's training rows and the exposed
@@ -33,6 +34,7 @@ DELTA_T_TRAINING = (RECORDS / "rrp015-20260917/control-prepared/microfit-train.j
                     "0881c027d166f7cdd0286518aff20e5966f92120f4f3877cbca6855fbee2d9e1")
 BOUNDARY_RULE = RECORDS / "hskill-views-002/boundary_rule.py"
 HSKILL_VIEWS = RECORDS / "hskill-views-002/HSKILL_VIEWS_V2.jsonl"   # exposed selection bank
+VALIDATION_NAME = "CPU_VALIDATION_SECTIONH.json"
 SIDECARS = ("config.json", "generation_config.json", "tokenizer.json", "tokenizer_config.json",
             "vocab.json", "merges.txt")
 PACKAGES = ("numpy", "tokenizers", "psutil", "torch", "transformers", "safetensors")
@@ -43,7 +45,7 @@ FROZEN_LOCAL = (
     "SOURCES_VERIFIED.md", "geometry.npz", "geometry.json", "screen.json", "development.json",
     "format_development.json", "conjunction_development.json", "test_benchmark.py", "test_worker.py",
     "test_geometry.py", "test_dependency_binding.py", "test_future_power.py", "test_native_tiny.py",
-    "test_supervise.py", "future_power.py",
+    "test_supervise.py", "test_native_e2e.py", "future_power.py",
 )
 
 
@@ -151,17 +153,32 @@ def validate() -> None:
         and receipt["max_input_tokens"] <= worker.INPUT_SLOTS and receipt["max_reply_tokens"] <= worker.OUTPUT_SLOTS
         and receipt["allocation"]["fits"] and receipt["boundary_rule"]["sha256"] == benchmark.BOUNDARY_RULE_SHA256
         and receipt["boundary_rule"]["patterns_equal"] and receipt["answerability_contract_verbatim_in_views_v2"])
-    write_json(HERE / "CPU_VALIDATION_SECTIONH.json", receipt)
+    write_json(HERE / VALIDATION_NAME, receipt)
     print(json.dumps({"passed": receipt["passed"], "max_input_tokens": receipt["max_input_tokens"],
                       "max_reply_tokens": receipt["max_reply_tokens"], "allocation": receipt["allocation"],
                       "t_collisions": receipt["t_collisions"]["collision_free"], "floors": receipt["floors"]}, indent=2))
 
 
+def _git(*args) -> str:
+    import subprocess
+    return subprocess.run(["git", "-C", str(REPO), *args], check=True, capture_output=True, text=True).stdout.strip()
+
+
 def freeze(implementation_parent: str) -> None:
+    """Build gate: committed code, then a fresh passing CPU validation, then the freeze."""
+    dirty = [line for line in _git("status", "--porcelain", "--", str(HERE)).splitlines() if not line.startswith("??")]
+    if dirty:
+        raise SystemExit(f"tracked pilot files have uncommitted changes: {dirty}")
+    validate()
+    receipt = json.loads((HERE / VALIDATION_NAME).read_text(encoding="utf-8"))
+    if receipt.get("passed") is not True:
+        raise SystemExit("CPU validation did not pass; refusing to freeze")
     gpu_lease = REPO / "experiments/fresh_dual_skill_instrument_v1/gpu_lease.py"
     base_dir = geometry.SOURCES["BASE"][0].parent
     payload = {
         "experiment": "TRISKILL-GEO-001-SECTIONH", "parent_commit": implementation_parent,
+        "implementation_commit": _git("rev-parse", "HEAD"),
+        "cpu_validation": {"file": VALIDATION_NAME, "sha256": sha256(HERE / VALIDATION_NAME), "passed": True},
         "source_commit": "01f47694988a85bdedab7831d1652f0b9bf07e9f",
         "files": {name: sha256(HERE / name) for name in FROZEN_LOCAL},
         "dependency_binding": dependency_binding.build_dependency_manifest(),
@@ -181,8 +198,7 @@ def freeze(implementation_parent: str) -> None:
         "native_execution_status": "REQUIRES_EXPLICIT_OPERATOR_GRANT",
         "native_execution_authorized": False, "confirmation": False, "quality_claim": False,
         "construction_C_training_examples": 0, "model_loads": 0, "model_forwards": 0,
-        "evidence_not_self_pinned": ["FREEZE_SECTIONH.json", "CPU_VALIDATION_SECTIONH.json",
-                                     "CPU_TESTS_SECTIONH.log", "REPORT_SECTIONH.md"],
+        "evidence_not_self_pinned": ["FREEZE_SECTIONH.json", "CPU_TESTS_SECTIONH.log", "REPORT_SECTIONH.md"],
     }
     write_json(HERE / worker.FREEZE_NAME, payload)
     print(sha256(HERE / worker.FREEZE_NAME))

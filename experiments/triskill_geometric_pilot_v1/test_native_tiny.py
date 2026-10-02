@@ -150,6 +150,31 @@ class NativeTinyTests(unittest.TestCase):
         scaled = self._liveness_with_bug(lambda basis, change: (basis, 1.01 * change))
         self.assertFalse(scaled["ok"])
 
+    def test_liveness_checks_the_screen_arm_construction(self):
+        rb = torch.as_tensor(self.random_basis, dtype=torch.float32)
+        eye = np.eye(len(self.rotation))
+        tensor = lambda array: torch.as_tensor(array, dtype=torch.float32)
+        def correct(arm):
+            if arm == "ROTATION":
+                return self.b, tensor(self.rotation - eye)
+            if arm == "REVERSE":
+                return self.b, tensor(self.rotation.T - eye)
+            if arm == "RANDOM":
+                return rb, tensor(self.rotation - eye)
+            return self.b, tensor(0 * eye)
+        run = lambda arm_state: worker.hook_liveness(
+            self.model, torch, "cpu", [self.ids], pad_id=PAD, state=self.state, budget=self.budget,
+            basis=self.basis, random_basis=self.random_basis, rotation=self.rotation, arm_state=arm_state)
+        self.assertTrue(run(correct)["ok"])
+        bugs = {
+            "REVERSE not transposed": lambda arm: (self.b, tensor(self.rotation - eye)) if arm == "REVERSE" else correct(arm),
+            "RANDOM on the learned basis": lambda arm: (self.b, tensor(self.rotation - eye)) if arm == "RANDOM" else correct(arm),
+            "IDENTITY not zero": lambda arm: (self.b, tensor(self.rotation - eye)) if arm == "IDENTITY" else correct(arm),
+            "ROTATION inert": lambda arm: (self.b, tensor(0 * eye)) if arm == "ROTATION" else correct(arm),
+        }
+        for name, arm_state in bugs.items():
+            self.assertFalse(run(arm_state)["ok"], name)
+
     def test_teacher_forced_readout_reproduces_greedy_path(self):
         self.set_change()
         decoded = self.decode()

@@ -51,16 +51,17 @@
     "family": "answerability_abstention",
     "task_kind": "answerability_parent",
     "system": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
-    "user": "Complete notes for Alder: The Alder seal has code 31. The seal is stored beside the crate. What is the Alder seal's code?",
+    "user": "Notes for Alder: The Alder seal has code 31. The seal is stored beside the crate. What is the Alder seal's code?",
     "expected": "31",
     "output_kind": "answer_or_abstain",
     "world_signature": "13576511855daf249875f1f56acb060c1ca27ec27d9b7148a5f100cb91b528f2",
     "state_signature": "43dc4e60955c084aef965e9dfce63c768e7479b956bb5f7c6faf3a9b1dbdcc42",
-    "rule_signature": "cae67f33689798169cb22479fb9ede24d4dbd3d581cd7136c68876302c573c75",
+    "rule_signature": "1f28cd419f244613395bb138d98fce9da4abe244ef38349ae3f400d23e271bb5",
     "metadata": {
       "parent": "H",
       "native_contract": true,
       "contract": "hskill_answerable_v2",
+      "h_row_kind": "answerable",
       "answerable": true,
       "strict_reply": "31",
       "membership": "generated_local_split_only",
@@ -74,16 +75,17 @@
     "family": "answerability_abstention",
     "task_kind": "answerability_parent",
     "system": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
-    "user": "Complete notes for Bramble: The Bramble crate has code 8. The seal is stored beside the crate. What is the Bramble seal's code?",
+    "user": "Notes for Bramble: The Bramble crate has code 8. The seal's code was not recorded. The seal is stored beside the crate. What is the Bramble seal's code?",
     "expected": "UNKNOWN",
     "output_kind": "answer_or_abstain",
     "world_signature": "540f28d1d17d41951dd72de895c857c29c851269ad9197adf5d8de30050ff422",
-    "state_signature": "d59cfe7996af28e286097623b80fe83f2f9e364fd262744d6935d81a200b985c",
-    "rule_signature": "916175c64fe00d54cca88f12556250795bae17a8a1d0ae479f9c949774f980b5",
+    "state_signature": "213e243330f1c0706e917af14778d4e0ce7f267cb56707ac0690e2a7fa638768",
+    "rule_signature": "07fc0cd28c0e170a3b71099398b09654402f467d62b3384d2669dc0df3c123ad",
     "metadata": {
       "parent": "H",
       "native_contract": true,
       "contract": "hskill_answerable_v2",
+      "h_row_kind": "cue",
       "answerable": false,
       "strict_reply": "I don't know based on the available information.",
       "membership": "generated_local_split_only",
@@ -97,7 +99,7 @@
     "family": "skill_composition",
     "task_kind": "third_skill_transfer",
     "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Reason internally and return only the common final integer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
-    "user": "Complete records for acorn:\nRecord A: the initial acorn register value is not recorded.\nRule definitions:\nACORN_1(x) = (2 * x + (3)) modulo 97.\nACORN_2(x) = (0 * x + (15)) modulo 97.\nACORN_3(x) = (3 * x + (-1)) modulo 97.\nInstruction log: apply ACORN_1, then ACORN_2, then ACORN_3 to the acorn register.\nRecord B: a separate marker has value 23; it supplies no initial acorn value.\nWhat is the final acorn register value?",
+    "user": "Records for acorn:\nRecord A: the initial acorn register value is not recorded.\nRule definitions:\nACORN_1(x) = (2 * x + (3)) modulo 97.\nACORN_2(x) = (0 * x + (15)) modulo 97.\nACORN_3(x) = (3 * x + (-1)) modulo 97.\nInstruction log: apply ACORN_1, then ACORN_2, then ACORN_3 to the acorn register.\nRecord B: a separate marker has value 23; it supplies no initial acorn value.\nWhat is the final acorn register value?",
     "expected": "44",
     "output_kind": "answer_or_abstain",
     "world_signature": "cb1c8fdf55987a16e744b98503b581792ac3502817c1c0a401a1bad26a174421",
@@ -113,6 +115,8 @@
       "reset_visible": true,
       "reset_disguised": false,
       "decoy_multiplier": false,
+      "conditional_present": false,
+      "collision_answerable": false,
       "outcome_count": 1,
       "rules": [
         [
@@ -142,43 +146,42 @@
     "family": "skill_composition",
     "task_kind": "third_skill_transfer",
     "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Reason internally and return only the common final integer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
-    "user": "Complete records for bloom:\nRecord A: the initial bloom register value is 6.\nRule definitions:\nBLOOM_1(x) = (3 * x + (4)) modulo 97.\nBLOOM_2(x) = (97 * x + (21)) modulo 97.\nBLOOM_3(x) = (-1 * x + (2)) modulo 97.\nInstruction log: apply BLOOM_1, then BLOOM_2, then BLOOM_3 to the bloom register.\nRecord B: the initial bloom register value is 58.\nWhat is the final bloom register value?",
-    "expected": "78",
+    "user": "Records for bloom:\nRecord A: the initial bloom register value is 81.\nRule definitions:\nBLOOM_1(x) = (x + (-28)) modulo 97 if x is greater than 60; otherwise (x - (-28)) modulo 97.\nBLOOM_2(x) = (2 * x + (1)) modulo 97.\nInstruction log: apply BLOOM_1, then BLOOM_2 to the bloom register.\nRecord B: the initial bloom register value is 25.\nWhat is the final bloom register value?",
+    "expected": "10",
     "output_kind": "answer_or_abstain",
     "world_signature": "b4abbf1120f2a306974aaa845c6b43883c14752d8e6da2a7327e30428fa694c3",
-    "state_signature": "551807cb714c8f6b28dc402beee5ec1c1605d40e89a3868a61aa7b52be8056f4",
-    "rule_signature": "8d83feec2cbf32c01343cbc1bc5af17175b087a271670dfe2e6abe19bac514a6",
+    "state_signature": "e4da269e20156fa4759fd51aa0b4b517bfa351780c4a70b3005100e60f1fd4ac",
+    "rule_signature": "a2e16c5f1d8cbb8bb05116836ac0b27dbfc05b9f324c4f78d7a3ba457820aba7",
     "metadata": {
       "parent": null,
       "new_task_structure": true,
       "transfer_endpoint": true,
       "initial_missing": false,
       "initial_conflict": true,
-      "reset_present": true,
+      "reset_present": false,
       "reset_visible": false,
-      "reset_disguised": true,
+      "reset_disguised": false,
       "decoy_multiplier": false,
+      "conditional_present": true,
+      "collision_answerable": true,
       "outcome_count": 1,
       "rules": [
         [
-          3,
-          4
+          "if_above",
+          60,
+          -28
         ],
         [
-          97,
-          21
-        ],
-        [
-          -1,
-          2
+          2,
+          1
         ]
       ],
       "initial": [
-        6,
-        58
+        81,
+        25
       ],
       "answerable": true,
-      "strict_reply": "78",
+      "strict_reply": "10",
       "membership": "generated_local_split_only",
       "training": false,
       "amendment": "section_h"
@@ -190,12 +193,12 @@
     "family": "skill_composition",
     "task_kind": "third_skill_transfer",
     "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Reason internally and return only the common final integer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
-    "user": "Complete records for cinder:\nRecord A: the initial cinder register value is not recorded.\nRule definitions:\nCINDER_1(x) = (-1 * x + (7)) modulo 97.\nCINDER_2(x) = (2 * x + (9)) modulo 97.\nInstruction log: apply CINDER_1, then CINDER_2 to the cinder register.\nRecord B: a separate marker has value 23; it supplies no initial cinder value.\nWhat is the final cinder register value?",
+    "user": "Records for cinder:\nRecord A: the initial cinder register value is not recorded.\nRule definitions:\nCINDER_1(x) = (-1 * x + (7)) modulo 97.\nCINDER_2(x) = (x + (5)) modulo 97 if x is greater than 30; otherwise (x - (5)) modulo 97.\nInstruction log: apply CINDER_1, then CINDER_2 to the cinder register.\nRecord B: a separate marker has value 23; it supplies no initial cinder value.\nWhat is the final cinder register value?",
     "expected": "UNKNOWN",
     "output_kind": "answer_or_abstain",
     "world_signature": "aa0dc722a6da1519efc65f043a60682428b30945c942f772362a1c3f1305ad9a",
     "state_signature": "06a121f115b425900e462f4ab4c829f70fcba6a12870f6842110effa02fd13d1",
-    "rule_signature": "c0c72b3dadb61d51bbb720421166b257f0d03d9f2b03cfd09d693969ec3dc8fa",
+    "rule_signature": "581219cc016f01260ee77a3e1023cf7319c69bfb0e35bdffc8eb412696dbda48",
     "metadata": {
       "parent": null,
       "new_task_structure": true,
@@ -206,15 +209,18 @@
       "reset_visible": false,
       "reset_disguised": false,
       "decoy_multiplier": false,
-      "outcome_count": 97,
+      "conditional_present": true,
+      "collision_answerable": false,
+      "outcome_count": 87,
       "rules": [
         [
           -1,
           7
         ],
         [
-          2,
-          9
+          "if_above",
+          30,
+          5
         ]
       ],
       "initial": null,
@@ -231,12 +237,12 @@
     "family": "skill_composition",
     "task_kind": "third_skill_transfer",
     "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Reason internally and return only the common final integer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
-    "user": "Complete records for dune:\nRecord A: the initial dune register value is 14.\nRule definitions:\nDUNE_1(x) = (2 * x + (-3)) modulo 97.\nDUNE_2(x) = (98 * x + (5)) modulo 97.\nInstruction log: apply DUNE_1, then DUNE_2 to the dune register.\nRecord B: the initial dune register value is 45.\nWhat is the final dune register value?",
+    "user": "Records for dune:\nRecord A: the initial dune register value is 14.\nRule definitions:\nDUNE_1(x) = (x + (6)) modulo 97 if x is greater than 20; otherwise (x - (6)) modulo 97.\nDUNE_2(x) = (98 * x + (5)) modulo 97.\nInstruction log: apply DUNE_1, then DUNE_2 to the dune register.\nRecord B: the initial dune register value is 45.\nWhat is the final dune register value?",
     "expected": "UNKNOWN",
     "output_kind": "answer_or_abstain",
     "world_signature": "adb3809cbbb7733502a9865cbfa645c9575e04053111732bf4494755f64cfe22",
     "state_signature": "0086df931de5b436b0ec1ac2e99a394ae99a4b2ec8f44655f1aa8a99f6c8e638",
-    "rule_signature": "2f4403b1510fcf9d06177ae645728cbe87cbbb5344554fc44799371857d307c0",
+    "rule_signature": "6ed47cb1b55f97da40f7fed92959fdc01a2911b89aebb1efbc1b22eb404d7448",
     "metadata": {
       "parent": null,
       "new_task_structure": true,
@@ -247,11 +253,14 @@
       "reset_visible": false,
       "reset_disguised": false,
       "decoy_multiplier": true,
+      "conditional_present": true,
+      "collision_answerable": false,
       "outcome_count": 2,
       "rules": [
         [
-          2,
-          -3
+          "if_above",
+          20,
+          6
         ],
         [
           98,

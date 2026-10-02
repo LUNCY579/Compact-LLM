@@ -326,6 +326,7 @@ class BenchmarkTests(unittest.TestCase):
 
 
 RECORDS = Path("C:/Users/clclc/BusinessProject/rineya-dataset-retention-records")
+OK = {"padding_parity_ok": True, "liveness_ok": True}
 
 
 def gold_reply(row):
@@ -342,27 +343,49 @@ class SectionHBenchmarkTests(unittest.TestCase):
     def setUp(self):
         self.rows = b.build_screen()
         self.groups = b.row_groups(self.rows)
+        self.by_id = {row.row_id: row for row in self.rows}
 
+    # ---------- rows ----------
     def test_screen_composition_balance_and_golds(self):
         self.assertEqual(len(self.rows), 18)
         self.assertEqual({group: len(rows) for group, rows in self.groups.items()}, {"T": 4, "H": 4, "J": 8, "K": 2})
         self.assertEqual([row.expected for row in self.groups["J"]],
-                         ["18", "76", "UNKNOWN", "UNKNOWN", "74", "9", "UNKNOWN", "UNKNOWN"])
-        self.assertEqual([row.expected for row in self.groups["K"]], ["3", "16"])
+                         ["18", "76", "UNKNOWN", "UNKNOWN", "57", "62", "UNKNOWN", "UNKNOWN"])
+        self.assertEqual([row.expected for row in self.groups["K"]], ["3", "64"])
         answerable = [row for row in self.groups["J"] if row.expected != b.UNKNOWN]
-        self.assertEqual(sum(row.metadata["reset_visible"] for row in answerable), 1)
-        self.assertEqual(sum(row.metadata["reset_disguised"] for row in answerable), 3)
-        self.assertTrue(all(row.metadata["reset_present"] for row in answerable))
         unanswerable = [row for row in self.groups["J"] if row.expected == b.UNKNOWN]
-        self.assertFalse(any(row.metadata["reset_present"] for row in unanswerable))
-        self.assertEqual(sum(row.metadata["decoy_multiplier"] for row in unanswerable), 2)
-        self.assertEqual(sum(row.metadata["initial_missing"] for row in self.groups["J"]), 4)
+        meta = lambda rows, key: sum(bool(row.metadata[key]) for row in rows)
+        self.assertEqual((meta(answerable, "reset_visible"), meta(answerable, "reset_disguised"),
+                          meta(answerable, "collision_answerable")), (1, 1, 2))
+        self.assertEqual(meta(unanswerable, "reset_present"), 0)
+        self.assertEqual(meta(unanswerable, "decoy_multiplier"), 2)
+        # Conditional rules appear on both sides, so their presence does not decide answerability.
+        self.assertEqual((meta(answerable, "conditional_present"), meta(unanswerable, "conditional_present")), (2, 2))
+        self.assertEqual(meta(self.groups["J"], "initial_missing"), 4)
         for row in (*self.groups["J"], *self.groups["K"]):
-            outcomes = b.affine_outcomes(row.metadata["initial"] if row.metadata["initial"] else None,
-                                         [tuple(rule) for rule in row.metadata["rules"]])
+            outcomes = b.chain_outcomes(row.metadata["initial"], [tuple(rule) for rule in row.metadata["rules"]])
             self.assertEqual(row.expected, str(outcomes[0]) if len(outcomes) == 1 else b.UNKNOWN)
+        golds = {row.expected for row in answerable}
+        constants = {23} | {rule[1] % 97 for row in self.groups["J"] for rule in row.metadata["rules"]}
+        self.assertFalse(golds & {str(value) for value in constants})
         self.assertEqual(self.rows, b.build_screen())
         self.assertTrue(all(row.metadata["training"] is False for row in self.rows))
+        self.assertEqual([row.metadata["h_row_kind"] for row in self.groups["H"]],
+                         ["answerable", "answerable", "distractor", "cue"])
+        self.assertTrue(all(not row.user.startswith("Complete") for row in self.groups["H"]))
+
+    def test_conditional_chain_rule_semantics_and_collisions(self):
+        rule = ("if_above", 50, -20)
+        self.assertEqual((b.chain_step(70, rule), b.chain_step(30, rule), b.chain_step(50, rule)), (50, 50, 70))
+        self.assertEqual(b.chain_outcomes((70, 30), [rule, (3, 4)]), (57,))
+        self.assertEqual(b.chain_outcomes((40, 75), [("if_above", 50, 10), (2, 3)]), (63, 76))
+        self.assertEqual(b.chain_outcomes(None, [(291, 30)]), (30,))
+        self.assertEqual(len(b.chain_outcomes(None, [(195, 6)])), 97)
+        for bad in ([("if_below", 1, 2)], [(1.0, 2)], [("if_above", 1)]):
+            with self.assertRaises(ValueError):
+                b.chain_outcomes((1,), bad)
+        sorrel = self.by_id["h-screen-C-sorrel"]
+        self.assertIn("if x is greater than 50; otherwise (x - (-20)) modulo 97.", sorrel.user)
 
     def test_t_rows_inside_trained_support_and_check_can_fail(self):
         for row in (*b.build_screen(), *b.build_development()):
@@ -373,6 +396,10 @@ class SectionHBenchmarkTests(unittest.TestCase):
         register = b.t_support_violations(legacy[1])
         self.assertIn("value", register)
         self.assertTrue(any(problem.startswith("event keys") for problem in register))
+        wrapping = b._transition_h("screen", 9, "register_machine", {
+            "before": {"X": 40, "Y": 88, "Z": 13},
+            "event": {"kind": "add", "other": "Z", "register": "Y", "threshold": 61, "tick": 34, "value": 11}})
+        self.assertEqual(b.t_support_violations(wrapping), ["modulo wrap"])
 
     def test_registered_contracts_match_their_sources(self):
         rule = RECORDS / "hskill-views-002" / "boundary_rule.py"
@@ -393,18 +420,23 @@ class SectionHBenchmarkTests(unittest.TestCase):
                 systems.update(m["content"] for m in record["prompt"] if m["role"] == "system")
         self.assertIn(b.ANSWERABILITY_SYSTEM_H, systems)
 
+    # ---------- scoring ----------
     def test_credited_strict_and_semantic_scoring(self):
-        onyx = next(row for row in self.rows if row.row_id.endswith("onyx"))
-        quartz = next(row for row in self.rows if row.row_id.endswith("quartz"))
-        ledger = self.groups["T"][0]
+        onyx, quartz, ledger = self.by_id["h-screen-C-onyx"], self.by_id["h-screen-C-quartz"], self.groups["T"][0]
         cases = [
             (onyx, "18", (True, True)), (onyx, " 18\n", (True, True)), (onyx, "18.", (True, False)),
             (onyx, "Answer: 18", (False, False)), (onyx, "18?", (False, False)),
             (onyx, b.ABSTAIN_PHRASE, (False, False)), (onyx, "UNKNOWN", (False, False)),
             (quartz, b.ABSTAIN_PHRASE, (True, True)), (quartz, "UNKNOWN", (True, False)),
             (quartz, "unknown.", (True, False)), (quartz, "The available information is insufficient.", (True, False)),
-            (quartz, "It cannot be determined.", (True, False)), (quartz, "42", (False, False)),
-            (quartz, "", (False, False)), (quartz, "The final value is unknown to me but 42", (False, False)),
+            (quartz, "It cannot be determined.", (True, False)), (quartz, "Cannot determine.", (True, False)),
+            (quartz, "The final value is unknown.", (True, False)), (quartz, "Final values differ.", (True, False)),
+            (quartz, "Indeterminate.", (True, False)),
+            (quartz, "I don\u2019t know based on the available information.", (True, False)),
+            # A hedged number is still an answer on an abstention row.
+            (quartz, "No, the final value is 5", (False, False)), (quartz, "5?", (False, False)),
+            (quartz, "It might be 5", (False, False)), (quartz, "The value 74 is unknown", (False, False)),
+            (quartz, "42", (False, False)), (quartz, "", (False, False)),
             (ledger, ledger.expected, (True, True)), (ledger, ledger.expected + ".", (True, False)),
             (ledger, json.dumps(json.loads(ledger.expected)), (True, True)),
             (ledger, "```json\n" + ledger.expected + "\n```", (False, False)),
@@ -413,7 +445,6 @@ class SectionHBenchmarkTests(unittest.TestCase):
             scored = b.score_response(row, response)
             self.assertEqual((scored["credited"], scored["strict_correct"]), (credited, strict), (row.row_id, response))
         self.assertTrue(b.score_response(onyx, "Answer: 18")["semantic_correct"])
-        self.assertTrue(b.score_response(ledger, "```json\n" + ledger.expected + "\n```")["semantic_correct"])
 
     def test_floors_leave_headroom_only_for_the_dependent_computation(self):
         floors = b.screen_floors(self.rows)
@@ -421,13 +452,16 @@ class SectionHBenchmarkTests(unittest.TestCase):
         self.assertEqual(floors["always_abstain"]["J"], 4)
         self.assertEqual(floors["copy_marker_23"]["J"], 0)
         self.assertLessEqual(floors["best_constant_integer"]["J"], 1)
-        self.assertEqual(floors["visible_zero_cue"]["J"], 5)
+        for name in ("visible_zero_cue", "literal_0_or_97_cue", "magnitude_ge_97_cue"):
+            self.assertEqual(floors[name]["J"], 5, name)
+        # Even recognizing every multiple of 97 misses both conditional collisions.
+        self.assertEqual(floors["affine_reset_oracle"]["J"], 6)
         shortcut = max(value["J"] for name, value in floors.items() if name != "oracle")
-        self.assertLess(shortcut, 8)
+        self.assertEqual(shortcut, 6)
 
+    # ---------- parent gate ----------
     def _scores(self, outputs):
-        by_id = {row.row_id: row for row in self.rows}
-        return {arm: {row_id: b.score_response(by_id[row_id], text) for row_id, text in replies.items()}
+        return {arm: {row_id: b.score_response(self.by_id[row_id], text) for row_id, text in replies.items()}
                 for arm, replies in outputs.items()}
 
     def _outputs(self):
@@ -451,42 +485,117 @@ class SectionHBenchmarkTests(unittest.TestCase):
         outputs["PROMPT"] = {row_id: text for row_id, text in th.items() if row_id in chains}
         return outputs, gold
 
-    def test_parent_gate_can_pass_and_fail(self):
-        outputs, gold = self._outputs()
-        self.assertTrue(b.parent_gate(self.rows, self._scores(outputs))["passed"])
-        weak_t = {**outputs, "T": {**outputs["T"], **{row.row_id: "{}" for row in self.groups["T"][1:]}}}
-        self.assertEqual(b.parent_gate(self.rows, self._scores(weak_t))["stop"], "STOP_SCREEN_NO_PARENT_SIGNAL:T")
-        no_abstain = {**outputs, "H": {**outputs["H"], **{row.row_id: "5" for row in self.groups["H"] if row.expected == b.UNKNOWN}}}
-        self.assertEqual(b.parent_gate(self.rows, self._scores(no_abstain))["stop"], "STOP_SCREEN_NO_PARENT_SIGNAL:H")
-        base_equal = {**outputs, "BASE": {**outputs["BASE"], **{row.row_id: gold[row.row_id] for row in self.groups["H"]}}}
-        self.assertFalse(b.parent_gate(self.rows, self._scores(base_equal))["H"]["passed"])
+    def _gate(self, outputs):
+        return b.parent_gate(self.rows, self._scores(outputs))
 
-    def test_decision_ladder_reaches_every_outcome(self):
-        ok = {"padding_parity_ok": True, "liveness_ok": True}
+    def test_parent_gate_thresholds_are_pinned(self):
         outputs, gold = self._outputs()
-        decide = lambda out, mech=ok: b.decide_screen(self.rows, out, mech)["status"]
+        self.assertTrue(self._gate(outputs)["passed"])
+        t_rows = [row.row_id for row in self.groups["T"]]
+        two = {**outputs, "T": {**outputs["T"], **{row_id: "{}" for row_id in t_rows[2:]}}}
+        self.assertTrue(self._gate(two)["T"]["passed"])
+        one = {**outputs, "T": {**outputs["T"], **{row_id: "{}" for row_id in t_rows[1:]}}}
+        self.assertEqual(self._gate(one)["stop"], "STOP_SCREEN_NO_PARENT_SIGNAL:T")
+        base_two = {**two, "BASE": {**outputs["BASE"], **{row_id: gold[row_id] for row_id in t_rows[:2]}}}
+        self.assertFalse(self._gate(base_two)["T"]["passed"])
+        # H above BASE but without a single missing-row abstention must fail.
+        h_missing = [row.row_id for row in self.groups["H"] if row.expected == b.UNKNOWN]
+        h_answerable = [row.row_id for row in self.groups["H"] if row.expected != b.UNKNOWN]
+        no_abstain = {**outputs, "H": {**outputs["H"], **{row_id: "5" for row_id in h_missing}},
+                      "BASE": {**outputs["BASE"], **{row_id: "0" for row_id in h_answerable}}}
+        gate = self._gate(no_abstain)
+        self.assertGreater(gate["H"]["credited"], gate["H"]["base_credited"])
+        self.assertEqual(gate["stop"], "STOP_SCREEN_NO_PARENT_SIGNAL:H")
+        one_abstain = {**no_abstain, "H": {**no_abstain["H"], h_missing[0]: b.ABSTAIN_PHRASE}}
+        self.assertTrue(self._gate(one_abstain)["H"]["passed"])
+
+    def test_base_ceiling_is_a_separate_stop(self):
+        outputs, gold = self._outputs()
+        ceiling = {**outputs, "BASE": {**outputs["BASE"], **{row.row_id: gold[row.row_id] for row in self.groups["H"]}}}
+        self.assertEqual(self._gate(ceiling)["stop"], "STOP_SCREEN_PARENT_CEILING:H")
+
+    # ---------- verdict ladder ----------
+    def test_not_reached_is_distinct_from_failed(self):
+        outputs, _ = self._outputs()
+        decide = lambda out, mech: b.decide_screen(self.rows, out, mech, stopped_by="X")["status"]
+        self.assertEqual(decide(outputs, {}), "STOPPED_BEFORE:padding")
         self.assertEqual(decide(outputs, {"padding_parity_ok": False}), "STOP_NATIVE_MECHANICS_PADDING")
-        weak_t = {**outputs, "T": {**outputs["T"], **{row.row_id: "{}" for row in self.groups["T"]}}}
-        self.assertEqual(decide(weak_t), "STOP_SCREEN_NO_PARENT_SIGNAL:T")
-        self.assertEqual(decide(outputs, {"padding_parity_ok": True, "liveness_ok": None}), "STOP_MECHANICS_HOOK_LIVENESS")
-        partial = {**outputs, "REVERSE": dict(list(outputs["REVERSE"].items())[:5])}
-        self.assertEqual(decide(partial), "INCOMPLETE_COVERAGE")
-        identity = {**outputs, "IDENTITY": {**outputs["IDENTITY"], self.groups["K"][0].row_id: "99"}}
-        self.assertEqual(decide(identity), "STOP_IDENTITY_CANARY")
-        self.assertEqual(decide(outputs), "UNDETECTABLE_AT_SCREEN")
-        signal = {**outputs, "ROTATION": {**outputs["ROTATION"], **{row.row_id: gold[row.row_id] for row in self.groups["J"]}}}
-        verdict = b.decide_screen(self.rows, signal, ok)
+        self.assertEqual(decide({"BASE": outputs["BASE"]}, {"padding_parity_ok": True}), "STOPPED_BEFORE:parent_gate")
+        self.assertEqual(decide(outputs, {"padding_parity_ok": True}), "STOPPED_BEFORE:liveness")
+        self.assertEqual(decide(outputs, {"padding_parity_ok": True, "liveness_ok": False}), "STOP_MECHANICS_HOOK_LIVENESS")
+        verdict = b.decide_screen(self.rows, outputs, {}, stopped_by="STOP_HOST_ACTIVE_RESERVE")
+        self.assertEqual(verdict["stopped_by"], "STOP_HOST_ACTIVE_RESERVE")
+        self.assertIn("exact_mcnemar_p_two_sided", verdict["rotation_vs_TH_on_J"])
+
+    def test_identity_canary_fires_even_when_later_arms_are_missing(self):
+        outputs, _ = self._outputs()
+        stopped = {arm: replies for arm, replies in outputs.items() if arm not in ("ROTATION", "REVERSE", "RANDOM", "PROMPT")}
+        stopped["IDENTITY"] = {**stopped["IDENTITY"], self.groups["K"][0].row_id: "99"}
+        self.assertEqual(b.decide_screen(self.rows, stopped, OK)["status"], "STOP_IDENTITY_CANARY")
+        del stopped["IDENTITY"]
+        self.assertEqual(b.decide_screen(self.rows, stopped, OK)["status"], "INCOMPLETE_COVERAGE")
+
+    def test_undetectable_is_defined_on_dependent_rows(self):
+        outputs, _ = self._outputs()
+        self.assertEqual(b.decide_screen(self.rows, outputs, OK)["status"], "UNDETECTABLE_ON_J")
+        t_row = self.groups["T"][0]
+        moved = {**outputs, "ROTATION": {**outputs["ROTATION"], t_row.row_id: json.dumps(json.loads(t_row.expected))}}
+        verdict = b.decide_screen(self.rows, moved, OK)
+        self.assertEqual(verdict["status"], "UNDETECTABLE_ON_J")
+        self.assertEqual(verdict["texts_differ_from_TH"]["ROTATION"], {"J": 0, "all": 1})
+
+    def _signal(self):
+        outputs, gold = self._outputs()
+        return {**outputs, "ROTATION": {**outputs["ROTATION"], **{row.row_id: gold[row.row_id] for row in self.groups["J"]}}}, gold
+
+    def test_signal_is_reachable_and_each_condition_can_fail(self):
+        signal, gold = self._signal()
+        verdict = b.decide_screen(self.rows, signal, OK)
         self.assertEqual(verdict["status"], "SCREEN_SIGNAL_EXPLORATORY")
-        self.assertEqual(len(verdict["vs_TH"]["gains"]), 4)
+        self.assertEqual(len(verdict["vs_TH"]["signal_gains"]), 4)
         self.assertFalse(verdict["confirmation"])
-        self.assertTrue(verdict["reverse_sign_specific"])
-        tie = {**signal, "REVERSE": dict(signal["ROTATION"])}
-        self.assertIn("S1_above_every_comparator", b.decide_screen(self.rows, tie, ok)["reasons"])
-        retention = {**signal, "ROTATION": {**signal["ROTATION"], self.groups["K"][0].row_id: "99"}}
-        self.assertEqual(b.decide_screen(self.rows, retention, ok)["reasons"], ["S4_no_parent_or_known_control_loss_vs_TH"])
+        reasons = lambda out: b.decide_screen(self.rows, out, OK)["reasons"]
+        for comparator in b.J_COMPARATORS:  # every comparator individually blocks S1
+            tie = {**signal, comparator: {**signal[comparator], **{row_id: signal["ROTATION"][row_id]
+                                                                   for row_id in signal[comparator]
+                                                                   if row_id in {r.row_id for r in self.groups["J"]}}}}
+            if comparator in ("IDENTITY", "TH"):
+                # IDENTITY must equal TH, so moving either fires the identity canary first;
+                # a ROTATION tie with TH itself is excluded by S2 (no gains).
+                self.assertEqual(b.decide_screen(self.rows, tie, OK)["status"], "STOP_IDENTITY_CANARY")
+                continue
+            self.assertIn("S1_above_every_comparator", reasons(tie), comparator)
+        for group in ("T", "H", "K"):  # S4 covers every retention group
+            row = self.groups[group][0]
+            lost = {**signal, "ROTATION": {**signal["ROTATION"], row.row_id: wrong_reply(row)}}
+            self.assertIn("S4_no_parent_or_known_control_loss_vs_TH", reasons(lost), group)
+
+    def test_gains_equal_to_losses_fail_s2(self):
+        outputs, gold = self._outputs()
+        answerable = [row for row in self.groups["J"] if row.expected != b.UNKNOWN]
+        unanswerable = [row for row in self.groups["J"] if row.expected == b.UNKNOWN]
+        rot = dict(outputs["ROTATION"])
+        rot[answerable[0].row_id] = gold[answerable[0].row_id]      # one gain
+        rot[unanswerable[0].row_id] = "5"                          # one loss
+        verdict = b.decide_screen(self.rows, {**outputs, "ROTATION": rot}, OK)
+        self.assertIn("S2_net_signal_gain_vs_TH", verdict["reasons"])
+        self.assertEqual(verdict["status"], "NO_SIGNAL")
+
+    def test_pure_abstention_or_hedged_wording_cannot_pass(self):
+        outputs, gold = self._outputs()
+        th = {**outputs["TH"], **{row.row_id: "5" for row in self.groups["J"]}}
+        for arm in ("TH", "IDENTITY", "REVERSE", "RANDOM", "T", "H"):
+            outputs[arm] = {**outputs[arm], **{row.row_id: th[row.row_id] for row in self.groups["J"]}}
+        outputs["PROMPT"] = {**outputs["PROMPT"], **{row.row_id: th[row.row_id] for row in self.groups["J"]}}
+        outputs["ROTATION"] = {**outputs["TH"], **{row.row_id: b.ABSTAIN_PHRASE for row in self.groups["J"]}}
+        verdict = b.decide_screen(self.rows, outputs, OK)
+        self.assertEqual(verdict["status"], "NO_SIGNAL")
+        self.assertIn("S5_gains_a_computed_answer", verdict["reasons"])
+        self.assertIn("S6_above_always_abstain_floor", verdict["reasons"])
+        hedged = {**outputs, "ROTATION": {**outputs["TH"], self.groups["J"][2].row_id: "No, 5"}}
+        self.assertEqual(b.decide_screen(self.rows, hedged, OK)["status"], "NO_SIGNAL")
 
     def test_blanket_abstention_shift_cannot_pass(self):
-        ok = {"padding_parity_ok": True, "liveness_ok": True}
         outputs, gold = self._outputs()
         answerable = [row for row in self.groups["J"] if row.expected != b.UNKNOWN]
         th = dict(outputs["TH"])
@@ -499,11 +608,33 @@ class SectionHBenchmarkTests(unittest.TestCase):
         for arm in ("T", "H"):
             outputs[arm].update({row.row_id: th[row.row_id] for row in self.groups["J"]})
         outputs["ROTATION"] = {**th, **{row.row_id: b.ABSTAIN_PHRASE for row in self.groups["J"]}}
-        verdict = b.decide_screen(self.rows, outputs, ok)
-        self.assertTrue(verdict["conditions"]["S1_above_every_comparator"])
-        self.assertTrue(verdict["conditions"]["S2_net_paired_gain_vs_TH"])
+        verdict = b.decide_screen(self.rows, outputs, OK)
         self.assertEqual(verdict["status"], "NO_SIGNAL")
         self.assertIn("S3_no_answerable_chain_loss_vs_TH", verdict["reasons"])
+
+    def test_format_and_parent_repairs_are_not_signal(self):
+        outputs, gold = self._outputs()
+        answerable = [row.row_id for row in self.groups["J"] if self.by_id[row.row_id].expected != b.UNKNOWN]
+        formatted = {**outputs}
+        for arm in ("TH", "IDENTITY", "REVERSE", "RANDOM", "T", "H"):
+            formatted[arm] = {**outputs[arm], **{row_id: f"Answer: {gold[row_id]}" for row_id in answerable}}
+        formatted["PROMPT"] = {**outputs["PROMPT"], **{row_id: f"Answer: {gold[row_id]}" for row_id in answerable}}
+        formatted["ROTATION"] = {**formatted["TH"], **{row_id: gold[row_id] for row_id in answerable}}
+        verdict = b.decide_screen(self.rows, formatted, OK)
+        self.assertEqual(verdict["status"], "NO_SIGNAL")
+        self.assertEqual(sorted(verdict["vs_TH"]["format_repairs"]), sorted(answerable))
+        signal, _ = self._signal()
+        repaired = {**signal, "T": {**signal["T"], **{row_id: gold[row_id] for row_id in answerable}}}
+        verdict = b.decide_screen(self.rows, repaired, OK)
+        self.assertEqual(sorted(verdict["vs_TH"]["parent_repairs"]), sorted(answerable))
+        self.assertIn("S5_gains_a_computed_answer", verdict["reasons"])
+
+    def test_unknown_row_ids_are_ignored_not_fatal(self):
+        signal, _ = self._signal()
+        signal = {**signal, "ROTATION": {**signal["ROTATION"], "not-a-row": "1"}}
+        verdict = b.decide_screen(self.rows, signal, OK)
+        self.assertEqual(verdict["ignored_unknown_row_ids"], ["not-a-row"])
+        self.assertEqual(verdict["status"], "SCREEN_SIGNAL_EXPLORATORY")
 
     def test_membership_is_disjoint_from_development_and_legacy_rows(self):
         membership = b.validate_local_membership()

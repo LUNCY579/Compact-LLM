@@ -103,6 +103,12 @@ ACTIVE_RAM_GIB, ACTIVE_GPU_GIB = 1.5, 0.5
 FOREIGN_RSS_BYTES = 512 * 1024 ** 2
 RESEARCH_PROCESS_WORDS = ("python", "ollama", "llama", "vmmem")
 LIVENESS_RTOL = 1e-3
+H_BYTES_PER_ELEMENT, SINGLE_BYTES_PER_ELEMENT = 20, 12
+START_NAME = "SUPERVISOR_START_SECTIONH.json"
+WORKER_PID_NAME = "WORKER_PID_SECTIONH.json"
+PROGRESS_NAME = "native_progress_sectionh.jsonl"
+BLOCKED_NAME = "blocked_result_sectionh.json"
+MIN_GRANT_CHARS = 12
 GEOMETRY_NPZ, GEOMETRY_JSON = "geometry_sectionh.npz", "geometry_sectionh.json"
 SCREEN_JSON, DEVELOPMENT_JSON = "screen_sectionh.json", "development_sectionh.json"
 FREEZE_NAME = "FREEZE_SECTIONH.json"
@@ -377,7 +383,8 @@ def prefill_logits(model, torch, device, ids, *, pad_id, state, budget):
     return output.logits[0], mask
 
 
-def hook_liveness(model, torch, device, rows_ids, *, pad_id, state, budget, basis, random_basis, rotation):
+def hook_liveness(model, torch, device, rows_ids, *, pad_id, state, budget, basis, random_basis, rotation,
+                  arm_state=None):
     """Registered mechanics canary on DEVELOPMENT prompts, before any construction read.
 
     IDENTITY must displace exactly nothing. For ROTATION/REVERSE/RANDOM the displaced
@@ -385,13 +392,22 @@ def hook_liveness(model, torch, device, rows_ids, *, pad_id, state, budget, basi
     arrays (not from hook state), element-wise; an energy-only check cannot see direction
     errors (R and R^T, or a column-reversed union basis, displace equal energy). Their
     energy must be positive, and ROTATION must change the logits. A hook that never fires
-    fails the check rather than raising.
+    fails the check rather than raising. `arm_state(arm) -> (basis, change)` is the
+    construction the screen itself uses (the worker passes its set_arm path), so a wiring
+    regression there is caught here; the analytic side never uses it.
     """
     import numpy as np
     b64, rb64, r64 = (np.asarray(array, dtype=np.float64) for array in (basis, random_basis, rotation))
     torch_basis = torch.as_tensor(b64, dtype=torch.float32, device=device)
     torch_random = torch.as_tensor(rb64, dtype=torch.float32, device=device)
     eye = np.eye(len(r64))
+    if arm_state is None:
+        def arm_state(arm):
+            if arm in ("ROTATION", "REVERSE", "RANDOM"):
+                chosen = r64.T if arm == "REVERSE" else r64
+                return (torch_random if arm == "RANDOM" else torch_basis,
+                        torch.as_tensor(chosen - eye, dtype=torch.float32, device=device))
+            return torch_basis, torch.zeros((len(r64), len(r64)), dtype=torch.float32, device=device)
 
     def captured(arm_state_basis, change):
         state.set(arm_state_basis, change)
@@ -403,7 +419,7 @@ def hook_liveness(model, torch, device, rows_ids, *, pad_id, state, budget, basi
     records, ok = [], True
     try:
         for ids in rows_ids:
-            base_logits, mask, record0 = captured(torch_basis, torch.zeros((len(r64), len(r64)), dtype=torch.float32, device=device))
+            base_logits, mask, record0 = captured(*arm_state("IDENTITY"))
             if record0 is None:
                 records.append({"hook_fired": False})
                 ok = False
@@ -415,8 +431,7 @@ def hook_liveness(model, torch, device, rows_ids, *, pad_id, state, budget, basi
             for arm in LIVENESS_ARMS:
                 arm_basis = rb64 if arm == "RANDOM" else b64
                 arm_rotation = r64.T if arm == "REVERSE" else r64
-                logits, _, record = captured(torch_random if arm == "RANDOM" else torch_basis,
-                                             torch.as_tensor(arm_rotation - eye, dtype=torch.float32, device=device))
+                logits, _, record = captured(*arm_state(arm))
                 if record is None:
                     row["arms"][arm] = {"hook_fired": False, "ok": False}
                     ok = False
@@ -480,7 +495,11 @@ def load_arm_weights(model, arm, torch, geometry, budget=None, reserve_bytes=Non
     """Replace only in-memory parameters; H uses the realized compressed update.
 
     Before each tensor the wall budget is checked and, when reserve_bytes is given,
-    host RAM must cover this tensor's float64 working set plus the active reserve.
+    host RAM must cover this tensor's working set plus the active reserve: H accumulates in
+    place (one float64 total plus one incoming float32 read and its float64 copy, 20 B per
+    element); single-source arms need the raw read plus one float64 copy (12 B per element).
+    For the tied 151,936 x 1,024 embedding that is 2.9 GiB (H), inside the 5 GiB preload gate
+    with the 1.5 GiB active reserve.
     """
     target = weights_target(arm)
     files = {name: geometry.TensorFile(path) for name, (path, _) in geometry.SOURCES.items()}
@@ -490,9 +509,11 @@ def load_arm_weights(model, arm, torch, geometry, budget=None, reserve_bytes=Non
                 if budget is not None:
                     budget.check()
                 if reserve_bytes is not None:
-                    reserve_bytes(param.numel() * 8 * (5 if target == "H" else 2))
+                    reserve_bytes(param.numel() * (H_BYTES_PER_ELEMENT if target == "H" else SINGLE_BYTES_PER_ELEMENT))
                 if target == "H":
-                    value = files["BASE"].tensor(name) + files["TH"].tensor(name) - files["T"].tensor(name)
+                    value = files["BASE"].tensor(name)
+                    value += files["TH"].tensor(name)
+                    value -= files["T"].tensor(name)
                 else:
                     value = files[target].tensor(name)
                 if tuple(value.shape) != tuple(param.shape):
@@ -523,6 +544,10 @@ def _validate_freeze(path: Path, expected_sha: str):
         _reject_bootstrap_path_substitution(target)
         if sha256(target) != expected:
             raise ValueError(f"prospective freeze mismatch: {relative}")
+    validation=freeze.get("cpu_validation",{})
+    receipt=HERE/str(validation.get("file",""))
+    if validation.get("passed") is not True or receipt.parent != HERE or not receipt.is_file() or sha256(receipt) != validation.get("sha256"):
+        raise ValueError("prospective freeze lacks a passing pinned CPU validation receipt")
     binding=_load_binding(freeze)
     bound=binding.validate_dependencies(freeze.get("dependency_binding"))
     geometry=bound.load_local("geometry")
@@ -550,7 +575,7 @@ def validate_freeze(path: Path, expected_sha: str):
     return _validate_freeze(path,expected_sha)[0]
 
 
-def run_screen(out: Path, freeze_path: Path, freeze_sha: str, lease_token: str):
+def run_screen(out: Path, freeze_path: Path, freeze_sha: str, lease_token: str, attempt_dir: Path | None = None):
     """Narrow bootstrap: native functions come only from pinned source bytes.
 
     supervise.py pins this bootstrap's bytes (via the freeze) before executing it.
@@ -566,24 +591,54 @@ def run_screen(out: Path, freeze_path: Path, freeze_sha: str, lease_token: str):
     bound=binding.validate_dependencies(freeze.get("dependency_binding"))
     worker=bound.load_worker()
     bound.verify_worker_execution(worker)
-    return worker._run_bound_screen(out,freeze_path,freeze_sha,lease_token,_started=started)
+    return worker._run_bound_screen(out,freeze_path,freeze_sha,lease_token,attempt_dir=attempt_dir,_started=started)
 
 
-def _run_bound_screen(out: Path, freeze_path: Path, freeze_sha: str, lease_token: str, _started=None):
-    """Single model load; all arms share padded greedy fixed-slot inference."""
+def verify_supervisor_start(attempt_dir: Path, lease_token: str) -> dict:
+    """The supervisor records the operator grant and our token before launching us."""
+    start_path = Path(attempt_dir) / START_NAME
+    if not start_path.exists():
+        raise RuntimeError("STOP_NO_SUPERVISOR_START_RECEIPT")
+    start = json.loads(start_path.read_text(encoding="utf-8"))
+    grant = start.get("operator_grant")
+    if start.get("lease_token") != lease_token or not isinstance(grant, str) or len(grant.strip()) < MIN_GRANT_CHARS:
+        raise RuntimeError("STOP_NO_SUPERVISOR_GRANT")
+    return start
+
+
+def _write_json(path: Path, payload) -> None:
+    with path.open("x", encoding="utf-8", newline="\n") as stream:
+        json.dump(payload, stream, indent=2)
+        stream.write("\n")
+
+
+def _run_bound_screen(out: Path, freeze_path: Path, freeze_sha: str, lease_token: str, attempt_dir: Path | None = None,
+                      _started=None):
+    """Single model load; all arms share padded greedy fixed-slot inference.
+
+    Output policy (registered retry rule): the create-only screen output is written only
+    once the model has been loaded; an attempt that stops before that writes its record in
+    its own attempt directory and does not spend the screen.
+    """
     module=sys.modules.get(__name__)
     if module is None or getattr(module,"_triskill_source_binding",None) != (str(HERE/"worker.py"),sha256(HERE/"worker.py")):
         raise RuntimeError("STOP_UNBOUND_NATIVE_WORKER")
+    if attempt_dir is None:
+        raise RuntimeError("STOP_NO_ATTEMPT_DIRECTORY")
+    attempt_dir = Path(attempt_dir)
     budget = Budget()
     if _started is not None: budget.started=_started
     budget.check()
     freeze,bound,geometry = _validate_freeze(freeze_path,freeze_sha)
     bound.verify_worker_execution(module)
     benchmark=bound.load_local("benchmark")
+    start_receipt = verify_supervisor_start(attempt_dir, lease_token)
     import numpy as np
     import psutil
+    _write_json(attempt_dir / WORKER_PID_NAME, {"pid": os.getpid(), "ancestors": sorted(ancestor_pids())})
     snapshot = preflight(lease_token)
     if snapshot["blockers"]: raise RuntimeError(json.dumps(snapshot))
+    supervisor_pid = snapshot["lease"]["pid"]
     if out.exists(): raise FileExistsError("create-only screen output exists")
     geo_receipt = json.loads((HERE / GEOMETRY_JSON).read_text(encoding="utf-8"))
     if geo_receipt["status"] != "PREPARED" or sha256(HERE / GEOMETRY_NPZ) != geo_receipt["geometry_sha256"]:
@@ -591,7 +646,8 @@ def _run_bound_screen(out: Path, freeze_path: Path, freeze_sha: str, lease_token
     for path, expected in geometry.SOURCES.values():
         budget.check()
         if sha256(path) != expected: raise ValueError("source weight digest changed")
-    data = np.load(HERE / GEOMETRY_NPZ, allow_pickle=False)
+    with np.load(HERE / GEOMETRY_NPZ, allow_pickle=False) as archive:
+        data = {key: archive[key] for key in ("basis", "rotation", "random_basis")}
     renderer=bound.load_renderer()
     renderer.template_selftest()  # Pinned original DEV bytes; no protected bank.
     render=renderer.render
@@ -604,7 +660,12 @@ def _run_bound_screen(out: Path, freeze_path: Path, freeze_sha: str, lease_token
     if not allocation["fits"]: raise ValueError("registered allocation exceeds the budget")
     by_id = {row.row_id: row for row in rows}
 
+    def supervisor_alive():
+        if not psutil.pid_exists(supervisor_pid):
+            raise RuntimeError("STOP_SUPERVISOR_LOST")
+
     def host_reserve(extra_bytes=0):
+        supervisor_alive()
         if (psutil.virtual_memory().available - extra_bytes) / 2**30 < ACTIVE_RAM_GIB:
             raise RuntimeError("STOP_HOST_ACTIVE_RESERVE")
 
@@ -619,6 +680,8 @@ def _run_bound_screen(out: Path, freeze_path: Path, freeze_sha: str, lease_token
               "study_mode": "mechanical_exploratory", "natural_causal_mechanism_claim": False,
               "construction_uses_C_labels": False, "direction_selection_adapted_from_C": False,
               "quality_claim": False, "training_examples": 0, "model_loads": 0, "weight_loads": 0,
+              "attempt_dir": str(attempt_dir), "operator_grant": start_receipt["operator_grant"],
+              "worker_pid": os.getpid(), "supervisor_pid": supervisor_pid,
               "resources_before": snapshot, "arms": {}, "allocation": allocation,
               "freeze_sha256": sha256(freeze_path), "geometry_sha256": geo_receipt["geometry_sha256"],
               "dependency_binding": bound.receipt(),
@@ -627,6 +690,12 @@ def _run_bound_screen(out: Path, freeze_path: Path, freeze_sha: str, lease_token
                           "fixed_output_slots": OUTPUT_SLOTS, "eos_token_ids": list(EOS_TOKEN_IDS),
                           "greedy": True, "tf32": False, "gpu_memory_fraction": GPU_MEMORY_FRACTION}}
     outputs, mechanics = {}, {}
+    progress = (attempt_dir / PROGRESS_NAME).open("x", encoding="utf-8", newline="\n")
+
+    def record_progress(entry):
+        progress.write(json.dumps(entry) + "\n")
+        progress.flush()
+
     try:
         budget.check()
         resources = preflight(lease_token)
@@ -646,6 +715,7 @@ def _run_bound_screen(out: Path, freeze_path: Path, freeze_sha: str, lease_token
                     torch_dtype=torch.float32, attn_implementation="eager", local_files_only=True,
                     low_cpu_mem_usage=True, device_map={"": "cuda"}).eval()
         result["model_loads"] = 1
+        record_progress({"event": "model_loaded"})
         budget.check()
         tok = AutoTokenizer.from_pretrained(str(geometry.SOURCES["BASE"][0].parent), local_files_only=True)
         configured = model.generation_config.eos_token_id
@@ -664,10 +734,13 @@ def _run_bound_screen(out: Path, freeze_path: Path, freeze_sha: str, lease_token
         def ids_for(system, user):
             return tok(render(system, user), add_special_tokens=False)["input_ids"]
 
-        def set_arm(arm):
+        def arm_state(arm):
             selected = directional_rotation(r, arm)
-            state.set(random_b if arm == "RANDOM" else b,
-                      selected - eye if selected is not None else torch.zeros_like(r))
+            return (random_b if arm == "RANDOM" else b,
+                    selected - eye if selected is not None else torch.zeros_like(r))
+
+        def set_arm(arm):
+            state.set(*arm_state(arm))
 
         loaded = {"target": "BASE"}
 
@@ -689,46 +762,53 @@ def _run_bound_screen(out: Path, freeze_path: Path, freeze_sha: str, lease_token
                 parity.append(unpadded == padded)
             result["development_padding_parity"] = parity
             mechanics["padding_parity_ok"] = all(parity)
+            record_progress({"event": "padding_parity", "ok": all(parity)})
             if not all(parity): raise RuntimeError("STOP_NATIVE_MECHANICS_PADDING")
             schedule = screen_schedule(rows)
             result["screen_allocation"] = [{"arm": arm, "row_ids": [row.row_id for row in unit_rows]}
                                            for arm, unit_rows in schedule]
             for unit_index, (arm, unit_rows) in enumerate(schedule):
                 budget.check()
+                supervisor_alive()
                 ensure_weights(arm)
                 if arm == "TH" and "liveness_ok" not in mechanics:
                     liveness = hook_liveness(model, torch, device, mechanics_ids, pad_id=pad_id, state=state,
                                              budget=budget, basis=data["basis"], random_basis=data["random_basis"],
-                                             rotation=data["rotation"])
+                                             rotation=data["rotation"], arm_state=arm_state)
                     result["hook_liveness"] = liveness
                     mechanics["liveness_ok"] = liveness["ok"]
+                    record_progress({"event": "hook_liveness", "ok": liveness["ok"]})
                     if not liveness["ok"]: raise RuntimeError("STOP_MECHANICS_HOOK_LIVENESS")
                 set_arm(arm)
-                prior = result["arms"].get(arm, {})
-                arm_outputs = dict(prior.get("outputs", {}))
-                tokens, margins = dict(prior.get("scored_tokens", {})), dict(prior.get("margins", {}))
+                arm_record = result["arms"].setdefault(arm, {"outputs": {}, "scores": {}, "scored_tokens": {},
+                                                             "margins": {}, "activation_energy": 0.,
+                                                             "activation_displacement_energy": 0.})
+                outputs[arm] = arm_record["outputs"]
                 for row in unit_rows:
                     budget.generation()
+                    energy, displacement = state.energy, state.displacement
                     decoded = decode(model, torch, device, ids_for(prompt_system(row, arm), row.user), pad_id=pad_id,
                                      eos_ids=EOS_TOKEN_IDS, state=state, budget=budget, reserve=reserve)
-                    arm_outputs[row.row_id] = tok.decode(decoded["tokens"], skip_special_tokens=True)
-                    tokens[row.row_id], margins[row.row_id] = decoded["scored_tokens"], decoded["margins"]
+                    text_out = tok.decode(decoded["tokens"], skip_special_tokens=True)
+                    # Each completed generation is recorded immediately, so a later stop keeps it.
+                    arm_record["outputs"][row.row_id] = text_out
+                    arm_record["scores"][row.row_id] = benchmark.score_response(by_id[row.row_id], text_out)
+                    arm_record["scored_tokens"][row.row_id] = decoded["scored_tokens"]
+                    arm_record["margins"][row.row_id] = decoded["margins"]
+                    arm_record["activation_energy"] += state.energy - energy
+                    arm_record["activation_displacement_energy"] += state.displacement - displacement
                     budget.completed_generations += 1
-                result["arms"][arm] = {
-                    "outputs": arm_outputs,
-                    "scores": {row_id: benchmark.score_response(by_id[row_id], text) for row_id, text in arm_outputs.items()},
-                    "scored_tokens": tokens, "margins": margins,
-                    "activation_energy": state.energy + prior.get("activation_energy", 0.),
-                    "activation_displacement_energy": state.displacement + prior.get("activation_displacement_energy", 0.)}
-                result["arms"][arm]["relative_activation_displacement"] = (
-                    result["arms"][arm]["activation_displacement_energy"] / max(result["arms"][arm]["activation_energy"], 1e-30)) ** .5
-                outputs[arm] = arm_outputs
+                    record_progress({"event": "generation", "arm": arm, "row_id": row.row_id, "text": text_out,
+                                     "scored_tokens": decoded["scored_tokens"], "margins": decoded["margins"]})
+                arm_record["relative_activation_displacement"] = (
+                    arm_record["activation_displacement_energy"] / max(arm_record["activation_energy"], 1e-30)) ** .5
                 if unit_index == 2:
                     # Do not attempt construction if its source manifestations do not transport.
                     gate = benchmark.parent_gate(rows, {name: result["arms"][name]["scores"] for name in ("BASE", "T", "H")})
                     result["parent_gate"] = gate
+                    record_progress({"event": "parent_gate", "passed": gate["passed"], "stop": gate["stop"]})
                     if not gate["passed"]: raise RuntimeError(gate["stop"])
-                if arm == "IDENTITY" and any(text != outputs["TH"].get(row_id) for row_id, text in arm_outputs.items()):
+                if arm == "IDENTITY" and any(text != outputs["TH"].get(row_id) for row_id, text in arm_record["outputs"].items()):
                     raise RuntimeError("STOP_IDENTITY_CANARY")
             # Continuous sensitivity along TH's own greedy tokens (TH weights still loaded).
             readout = {}
@@ -762,16 +842,15 @@ def _run_bound_screen(out: Path, freeze_path: Path, freeze_sha: str, lease_token
                 torch.cuda.empty_cache()
         except Exception as cleanup_error:
             result["cleanup_error"] = str(cleanup_error)
-        mechanics.setdefault("padding_parity_ok", None)
-        mechanics.setdefault("liveness_ok", None)
-        verdict = benchmark.decide_screen(rows, outputs, mechanics)
+        completed = bool(result.get("completed_schedule"))
+        verdict = benchmark.decide_screen(rows, outputs, mechanics, stopped_by=None if completed else result["status"])
         result["verdict"] = verdict
-        if result.get("completed_schedule"):
+        if completed:
             result["status"] = verdict["status"]
         result["budget"] = budget.receipt()
-        with out.open("x", encoding="utf-8", newline="\n") as stream:
-            json.dump(result, stream, indent=2)
-            stream.write("\n")
+        progress.close()
+        # Registered retry rule: an attempt that never loaded the model does not spend the screen.
+        _write_json(out if result["model_loads"] >= 1 else attempt_dir / BLOCKED_NAME, result)
     return result
 
 
@@ -782,10 +861,11 @@ if __name__ == "__main__":
     parser.add_argument("--freeze",type=Path,default=HERE/FREEZE_NAME)
     parser.add_argument("--freeze-sha256")
     parser.add_argument("--lease-token")
+    parser.add_argument("--attempt-dir",type=Path)
     args=parser.parse_args()
     if args.command == "preflight":
         print(json.dumps(preflight(),indent=2))
-    elif not args.lease_token or not args.freeze_sha256:
-        parser.error("run requires --freeze-sha256 and the supervisor's --lease-token; launch via supervise.py")
+    elif not args.lease_token or not args.freeze_sha256 or not args.attempt_dir:
+        parser.error("run requires --freeze-sha256, --attempt-dir and the supervisor's --lease-token; launch via supervise.py")
     else:
-        print(json.dumps(run_screen(args.out,args.freeze,args.freeze_sha256,args.lease_token),indent=2))
+        print(json.dumps(run_screen(args.out,args.freeze,args.freeze_sha256,args.lease_token,args.attempt_dir),indent=2))

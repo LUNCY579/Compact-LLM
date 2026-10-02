@@ -113,16 +113,20 @@ ABSTAIN_PATTERNS = (
 )
 _ABSTAIN = tuple(re.compile(pattern) for pattern in ABSTAIN_PATTERNS)
 # Registered extensions (section H): non-determination wordings H's own training prompts
-# request ("say that the available information is insufficient") and the base model's
-# literal UNKNOWN. Applied to the same normalized first line as the published patterns.
+# request ("say that the available information is insufficient"), the base model's literal
+# UNKNOWN and common phrasings of "the final values differ". Applied to the same normalized
+# first line as the published patterns. On abstention-gold rows a first line that also
+# contains an integer is never credited (a hedged number is still an answer).
 EXTRA_ABSTAIN_PATTERNS = (
     r"\binsufficient\b",
-    r"\b(?:cannot|can ?not|can't) be determined\b",
-    r"\b(?:not determined|undetermined|underdetermined)\b",
-    r"^unknown[.!]?$",
+    r"\b(?:cannot|can ?not|can't) (?:be )?determined?\b",
+    r"\b(?:not determined|undetermined|underdetermined|indeterminate)\b",
+    r"\bunknown\b",
+    r"\bvalues? (?:differ|disagree)\b",
+    r"\bmultiple (?:final |possible )?values\b",
 )
 _EXTRA_ABSTAIN = tuple(re.compile(pattern) for pattern in EXTRA_ABSTAIN_PATTERNS)
-
+_INTEGER = re.compile(r"[0-9]")
 
 def canonical(value: Any) -> str:
     return json.dumps(value, sort_keys=True, separators=(",", ":"))
@@ -316,7 +320,11 @@ def build_legacy_screen() -> tuple[BenchmarkRow, ...]:
 
 
 def t_support_violations(row: BenchmarkRow) -> list[str]:
-    """Where a T row leaves T's trained/measured operand support (empty = inside)."""
+    """Where a T row leaves T's trained/measured operand support (empty = inside).
+
+    Register rows must also not need a modulo-97 wrap: T_BANK_V3X has no wrapping add row
+    and TT scores 0/3 on wrapping conditionals (0/5 for every arm on V4 wrapping adds).
+    """
     family = row.metadata["transition_family"]
     support, payload = T_SUPPORT[family], json.loads(row.user)
     event, before = payload["event"], payload["before"]
@@ -339,6 +347,16 @@ def t_support_violations(row: BenchmarkRow) -> list[str]:
             problems.append("state")
         if not support["threshold"][0] <= event["threshold"] <= support["threshold"][1]:
             problems.append("threshold")
+        if event["kind"] in ("add", "conditional", "mix"):
+            register, value = before[event["register"]], event["value"]
+            if event["kind"] == "add":
+                raw = register + value
+            elif event["kind"] == "mix":
+                raw = register + 2 * before[event["other"]] + value
+            else:
+                raw = register + (value if before[event["other"]] > event["threshold"] else -value)
+            if not 0 <= raw < MOD:
+                problems.append("modulo wrap")
     return problems
 
 
@@ -357,25 +375,63 @@ def _transition_h(split: str, index: int, family: str, payload: dict[str, Any]) 
     )
 
 
-def _answerability_h(split: str, world: str, known: bool, number: int) -> BenchmarkRow:
-    value_note = f"The {world} seal has code {number}." if known else f"The {world} crate has code {number}."
-    user = (
-        f"Complete notes for {world}: {value_note} The seal is stored beside the crate. "
-        f"What is the {world} seal's code?"
-    )
+def _answerability_h(split: str, world: str, kind: str, number: int) -> BenchmarkRow:
+    """kind: 'answerable', 'distractor' (only the crate's code is given) or 'cue'
+    (the notes state the seal's code was not recorded, the cue H was trained on)."""
+    if kind == "answerable":
+        value_note = f"The {world} seal has code {number}."
+    elif kind == "distractor":
+        value_note = f"The {world} crate has code {number}."
+    elif kind == "cue":
+        value_note = f"The {world} crate has code {number}. The seal's code was not recorded."
+    else:
+        raise ValueError("unknown answerability row kind")
+    user = f"Notes for {world}: {value_note} The seal is stored beside the crate. What is the {world} seal's code?"
+    known = kind == "answerable"
     return BenchmarkRow(
         f"h-{split}-H-{world.lower()}", split, "answerability_abstention", "answerability_parent",
         ANSWERABILITY_SYSTEM_H, user, str(number) if known else UNKNOWN, ANSWER_OR_ABSTAIN,
         signature(world), signature({"world": world, "notes": value_note}),
-        signature({"world": world, "query": "seal_code", "complete_notes": True}),
-        {"parent": "H", "native_contract": True, "contract": "hskill_answerable_v2",
+        signature({"world": world, "query": "seal_code"}),
+        {"parent": "H", "native_contract": True, "contract": "hskill_answerable_v2", "h_row_kind": kind,
          "answerable": known, "strict_reply": str(number) if known else ABSTAIN_PHRASE,
          "membership": "generated_local_split_only", "training": False, "amendment": "section_h"},
     )
 
 
+def chain_step(value: int, rule: Sequence[Any]) -> int:
+    """One chain rule: affine (a, b) -> a*x + b, or ("if_above", t, v): T's conditional
+    update applied to the chain register itself: x + v if x > t, otherwise x - v."""
+    if len(rule) == 3 and rule[0] == "if_above":
+        _, threshold, delta = rule
+        return (value + delta) % MOD if value > threshold else (value - delta) % MOD
+    scale, offset = rule
+    return (scale * value + offset) % MOD
+
+
+def chain_outcomes(initial: Sequence[int] | None, rules: Sequence[Sequence[Any]]) -> tuple[int, ...]:
+    """Enumerate every admissible start through the chain (finite domain, no assumptions)."""
+    states = set(range(MOD)) if initial is None else set(initial)
+    if not states or any(type(value) is not int or not 0 <= value < MOD for value in states):
+        raise ValueError("initial states must be a nonempty subset of 0..96")
+    for rule in rules:
+        if not (len(rule) == 2 and all(type(item) is int for item in rule)) and not (
+                len(rule) == 3 and rule[0] == "if_above" and all(type(item) is int for item in rule[1:])):
+            raise ValueError(f"unsupported chain rule {rule!r}")
+        states = {chain_step(value, rule) for value in states}
+    return tuple(sorted(states))
+
+
+def _rule_text(name: str, rule: Sequence[Any]) -> str:
+    if len(rule) == 3:
+        _, threshold, delta = rule
+        return (f"{name}(x) = (x + ({delta})) modulo 97 if x is greater than {threshold}; "
+                f"otherwise (x - ({delta})) modulo 97.")
+    return f"{name}(x) = ({rule[0]} * x + ({rule[1]})) modulo 97."
+
+
 def _transfer_h(split: str, world: str, initial: Sequence[int] | None,
-                rules: Sequence[tuple[int, int]], known_control: bool = False) -> BenchmarkRow:
+                rules: Sequence[Sequence[Any]], known_control: bool = False) -> BenchmarkRow:
     names = [f"{world.upper()}_{index + 1}" for index in range(len(rules))]
     if initial is None:
         first_note = f"Record A: the initial {world} register value is not recorded."
@@ -383,32 +439,33 @@ def _transfer_h(split: str, world: str, initial: Sequence[int] | None,
     else:
         first_note = f"Record A: the initial {world} register value is {initial[0]}."
         last_note = f"Record B: the initial {world} register value is {initial[-1]}."
-    definitions = "\n".join(
-        f"{name}(x) = ({scale} * x + ({offset})) modulo 97."
-        for name, (scale, offset) in zip(names, rules)
-    )
+    definitions = "\n".join(_rule_text(name, rule) for name, rule in zip(names, rules))
     user = (
-        f"Complete records for {world}:\n{first_note}\nRule definitions:\n{definitions}\n"
+        f"Records for {world}:\n{first_note}\nRule definitions:\n{definitions}\n"
         f"Instruction log: apply {', then '.join(names)} to the {world} register.\n{last_note}\n"
         f"What is the final {world} register value?"
     )
-    outcomes = affine_outcomes(initial, rules)
+    outcomes = chain_outcomes(initial, rules)
     answerable = len(outcomes) == 1
     expected = str(outcomes[0]) if answerable else UNKNOWN
     if known_control and (initial is None or len(set(initial)) != 1):
         raise ValueError("known-state controls need one recorded initial value")
+    affine = [rule for rule in rules if len(rule) == 2]
+    reset = any(scale % MOD == 0 for scale, _ in affine)
     return BenchmarkRow(
         f"h-{split}-C-{world}", split, "state_tracking" if known_control else "skill_composition",
         "known_state_control" if known_control else "third_skill_transfer", TRANSFER_SYSTEM_H,
         user, expected, ANSWER_OR_ABSTAIN, signature(world),
-        signature({"register": world, "initial": initial}), signature(list(rules)),
+        signature({"register": world, "initial": initial}), signature([list(rule) for rule in rules]),
         {"parent": None, "new_task_structure": not known_control,
          "transfer_endpoint": not known_control, "initial_missing": initial is None,
          "initial_conflict": initial is not None and len(set(initial)) > 1,
-         "reset_present": any(scale % MOD == 0 for scale, _ in rules),
-         "reset_visible": any(scale == 0 for scale, _ in rules),
-         "reset_disguised": any(scale != 0 and scale % MOD == 0 for scale, _ in rules),
-         "decoy_multiplier": any(scale not in (1, -1) and scale % MOD in (1, MOD - 1) for scale, _ in rules),
+         "reset_present": reset,
+         "reset_visible": any(scale == 0 for scale, _ in affine),
+         "reset_disguised": any(scale != 0 and scale % MOD == 0 for scale, _ in affine),
+         "decoy_multiplier": any(scale not in (1, -1) and scale % MOD in (1, MOD - 1) for scale, _ in affine),
+         "conditional_present": any(len(rule) == 3 for rule in rules),
+         "collision_answerable": answerable and not reset and not known_control,
          "outcome_count": len(outcomes), "rules": [list(rule) for rule in rules],
          "initial": None if initial is None else list(initial), "answerable": answerable,
          "strict_reply": expected if answerable else ABSTAIN_PHRASE,
@@ -416,8 +473,10 @@ def _transfer_h(split: str, world: str, initial: Sequence[int] | None,
     )
 
 
-# Hand-chosen literals; no RNG. Chain rows: 4 answerable (1 visible, 3 disguised resets)
-# and 4 abstention rows (2 with decoy multipliers 98 = 1, 96 = -1 mod 97), plus 2 known controls.
+# Hand-chosen literals; no RNG. Chain rows: 4 answerable (a visible 0*x reset, a disguised
+# 291*x reset, and two conflicts merged by T-style conditional collisions) and 4 abstention
+# rows (decoys 195 = 1 and 96 = -1 mod 97, and two non-colliding conditionals), balanced
+# missing/conflicting starts, plus 2 known-state controls (one through a conditional).
 _SECTION_H = {
     "development": {
         "t": (("ledger_replay", {"before": {"A": 12, "B": 30, "C": -8, "D": 17},
@@ -426,11 +485,11 @@ _SECTION_H = {
               ("register_machine", {"before": {"X": 9, "Y": 64, "Z": 31},
                                     "event": {"kind": "swap", "other": "Z", "register": "X",
                                               "threshold": 20, "tick": 71, "value": 4}})),
-        "h": (("Alder", True, 31), ("Bramble", False, 8)),
+        "h": (("Alder", "answerable", 31), ("Bramble", "cue", 8)),
         "chains": (("acorn", None, ((2, 3), (0, 15), (3, -1)), False),
-                   ("bloom", (6, 58), ((3, 4), (97, 21), (-1, 2)), False),
-                   ("cinder", None, ((-1, 7), (2, 9)), False),
-                   ("dune", (14, 45), ((2, -3), (98, 5)), False)),
+                   ("bloom", (81, 25), (("if_above", 60, -28), (2, 1)), False),
+                   ("cinder", None, ((-1, 7), ("if_above", 30, 5)), False),
+                   ("dune", (14, 45), (("if_above", 20, 6), (98, 5)), False)),
     },
     "screen": {
         "t": (("ledger_replay", {"before": {"A": 23, "B": -14, "C": 37, "D": 5},
@@ -439,23 +498,24 @@ _SECTION_H = {
               ("ledger_replay", {"before": {"A": -6, "B": 19, "C": 11, "D": -27},
                                  "event": {"account": "B", "amount": 3, "kind": "scale", "other": "D",
                                            "status": "posted", "tick": 17}}),
-              ("register_machine", {"before": {"X": 40, "Y": 88, "Z": 13},
+              ("register_machine", {"before": {"X": 40, "Y": 61, "Z": 13},
                                     "event": {"kind": "add", "other": "Z", "register": "Y",
                                               "threshold": 61, "tick": 34, "value": 11}}),
               ("register_machine", {"before": {"X": 52, "Y": 7, "Z": 70},
                                     "event": {"kind": "conditional", "other": "Z", "register": "X",
                                               "threshold": 45, "tick": 82, "value": -6}})),
-        "h": (("Larch", True, 14), ("Myrtle", True, 63), ("Nutmeg", False, 27), ("Osier", False, 50)),
+        "h": (("Larch", "answerable", 14), ("Myrtle", "answerable", 63),
+              ("Nutmeg", "distractor", 27), ("Osier", "cue", 50)),
         "chains": (("onyx", None, ((3, 5), (0, 11), (2, -4)), False),
-                   ("pyrite", None, ((2, 7), (97, 30), (-1, 9)), False),
-                   ("quartz", None, ((3, -2), (98, 6)), False),
-                   ("rowan", None, ((-1, 13), (2, 1), (1, 4)), False),
-                   ("sorrel", (5, 61), ((2, 3), (194, -8), (3, 1)), False),
-                   ("tansy", (12, 40), ((97, 2), (2, 5)), False),
+                   ("pyrite", None, ((2, 7), (291, 30), (-1, 9)), False),
+                   ("quartz", None, ((3, -2), (195, 6)), False),
+                   ("rowan", None, (("if_above", 40, 9), (2, 1)), False),
+                   ("sorrel", (70, 30), (("if_above", 50, -20), (3, 4)), False),
+                   ("tansy", (40, 16), ((2, 1), ("if_above", 60, -24), (1, 5)), False),
                    ("umber", (8, 33), ((96, 4), (2, -1)), False),
-                   ("vetch", (20, 71), ((3, 2), (-1, 6), (2, 0)), False),
+                   ("vetch", (40, 75), (("if_above", 50, 10), (2, 3)), False),
                    ("willow", (44, 44), ((2, 9), (-1, 3)), True),
-                   ("yarrow", (15, 15), ((97, 6), (3, -2)), True)),
+                   ("yarrow", (15, 15), (("if_above", 10, 7), (3, -2)), True)),
     },
 }
 
@@ -464,7 +524,7 @@ def _build_section_h(split: str) -> tuple[BenchmarkRow, ...]:
     spec = _SECTION_H[split]
     return (
         *(_transition_h(split, index + 1, family, payload) for index, (family, payload) in enumerate(spec["t"])),
-        *(_answerability_h(split, world, known, number) for world, known, number in spec["h"]),
+        *(_answerability_h(split, world, kind, number) for world, kind, number in spec["h"]),
         *(_transfer_h(split, world, initial, rules, known) for world, initial, rules, known in spec["chains"]),
     )
 
@@ -688,13 +748,17 @@ def first_line(text: str) -> str:
     return stripped.splitlines()[0] if stripped else ""
 
 
+def _normalize_apostrophes(text: str) -> str:
+    return str(text).replace("\u2019", "'").replace("\u2018", "'")
+
+
 def credited_abstention(line: str) -> bool:
     """boundary_rule.abstains on the first line, plus the registered extensions.
 
-    The constant-abstainer floor (screen_floors) is scored by this same predicate, so
-    predicate breadth cannot manufacture an advantage over that floor.
+    Typographic apostrophes are normalized first (an extension; boundary_rule does not).
+    The constant-abstainer floor (screen_floors) is scored by this same predicate.
     """
-    normalized = re.sub(r"\s+", " ", str(line).strip().lower())
+    normalized = re.sub(r"\s+", " ", _normalize_apostrophes(line).strip().lower())
     if not normalized:
         return False
     return any(pattern.search(normalized) for pattern in (*_ABSTAIN, *_EXTRA_ABSTAIN))
@@ -704,7 +768,7 @@ def _credited_answer_or_abstain(row: BenchmarkRow, text: str) -> tuple[bool, boo
     line = first_line(text)
     abstained = credited_abstention(line)
     if row.expected == UNKNOWN:
-        return abstained, abstained
+        return abstained and not _INTEGER.search(line), abstained
     return (not abstained) and boundary_canonical(line) == row.expected, abstained
 
 
@@ -1036,9 +1100,11 @@ def required_coverage(rows: Sequence[BenchmarkRow]) -> dict[str, list[str]]:
 def parent_gate(rows: Sequence[BenchmarkRow], scores: Mapping[str, Mapping[str, Mapping[str, Any]]]) -> dict[str, Any]:
     """Registered parent transport gate on the 4 T and 4 H rows (credited endpoint).
 
-    T passes with >=2 of 4 credited and more than BASE. H passes with more credited H
-    rows than BASE and >=1 credited abstention on a missing-value row. Parent damage on
-    BASE-credited rows is reported, not gating.
+    T passes with >=2 of 4 credited and more than BASE. H passes with more credited H rows
+    than BASE and >=1 credited abstention on a missing-value row. When BASE already scores
+    every row of a parent's group the parent cannot be shown to transport on this screen;
+    that is a separate stop (`STOP_SCREEN_PARENT_CEILING`), not evidence of a missing parent.
+    Parent damage on BASE-credited rows is reported, not gating.
     """
     groups = row_groups(rows)
     def credited(arm: str, group: str) -> int:
@@ -1050,7 +1116,11 @@ def parent_gate(rows: Sequence[BenchmarkRow], scores: Mapping[str, Mapping[str, 
     h_n, h_base = credited("H", "H"), credited("BASE", "H")
     h_abstain = sum(bool(scores["H"][row.row_id]["credited"]) for row in groups["H"] if row.expected == UNKNOWN)
     t_pass, h_pass = t_n >= 2 and t_n > t_base, h_n > h_base and h_abstain >= 1
-    stop = None if t_pass and h_pass else f"STOP_SCREEN_NO_PARENT_SIGNAL:{'T' if not t_pass else 'H'}"
+    stop = None
+    for parent, passed, base_n, group in (("T", t_pass, t_base, "T"), ("H", h_pass, h_base, "H")):
+        if not passed and stop is None:
+            ceiling = base_n == len(groups[group])
+            stop = f"STOP_SCREEN_PARENT_CEILING:{parent}" if ceiling else f"STOP_SCREEN_NO_PARENT_SIGNAL:{parent}"
     return {"T": {"credited": t_n, "base_credited": t_base, "n": len(groups["T"]), "passed": t_pass,
                   "base_correct_lost": lost("T", "T")},
             "H": {"credited": h_n, "base_credited": h_base, "n": len(groups["H"]), "passed": h_pass,
@@ -1058,24 +1128,45 @@ def parent_gate(rows: Sequence[BenchmarkRow], scores: Mapping[str, Mapping[str, 
             "passed": t_pass and h_pass, "stop": stop}
 
 
+def _reset_scan_value(row: BenchmarkRow, recognize) -> str:
+    """Answer as if every affine rule whose scale `recognize` accepts were a reset (and
+    conditionals were ignored for answerability); abstain when no such rule exists."""
+    rules = row.metadata["rules"]
+    last = max((index for index, rule in enumerate(rules) if len(rule) == 2 and recognize(rule[0])), default=None)
+    if last is None:
+        return ABSTAIN_PHRASE
+    value = rules[last][1] % MOD
+    for rule in rules[last + 1:]:
+        value = chain_step(value, rule)
+    return str(value)
+
+
 def screen_floors(rows: Sequence[BenchmarkRow]) -> dict[str, dict[str, int]]:
-    """Credited scores of shortcut and constant policies on dependent (J) and control (K) rows."""
+    """Credited scores of shortcut and constant policies on dependent (J) and control (K) rows.
+
+    Reset scans read answerability off the multipliers alone and push the believed reset
+    constant through the remaining rules with correct arithmetic, so they are upper bounds
+    for readers that recognize those surface forms. `affine_reset_oracle` recognizes every
+    multiple of 97 correctly but ignores conditional collisions.
+    """
     groups = row_groups(rows)
-    def value_from(initial: Sequence[int] | None, rules: Sequence[Sequence[int]]) -> str:
-        outcomes = affine_outcomes(initial, [tuple(rule) for rule in rules])
+    def value_from(initial: Sequence[int] | None, rules: Sequence[Sequence[Any]]) -> str:
+        outcomes = chain_outcomes(initial, rules)
         return str(outcomes[0]) if len(outcomes) == 1 else ABSTAIN_PHRASE
     def oracle(row: BenchmarkRow) -> str:
         return row.metadata["strict_reply"]
     policies = {
         "always_abstain": lambda row: ABSTAIN_PHRASE,
         "copy_marker_23": lambda row: "23",
-        # Uses the true value where a literal 0 reset is visible: an upper bound for a
-        # reader who only recognizes visible resets.
-        "visible_zero_cue": lambda row: oracle(row) if row.metadata["reset_visible"] else ABSTAIN_PHRASE,
+        "visible_zero_cue": lambda row: _reset_scan_value(row, lambda scale: scale == 0),
+        "literal_0_or_97_cue": lambda row: _reset_scan_value(row, lambda scale: scale in (0, 97)),
+        "magnitude_ge_97_cue": lambda row: _reset_scan_value(row, lambda scale: scale == 0 or abs(scale) >= 97),
+        "affine_reset_oracle": lambda row: _reset_scan_value(row, lambda scale: scale % MOD == 0),
         "first_record_only": lambda row: (ABSTAIN_PHRASE if row.metadata["initial_missing"]
                                           else value_from(row.metadata["initial"][:1], row.metadata["rules"])),
+        "abstain_missing_solve_conflict": lambda row: ABSTAIN_PHRASE if row.metadata["initial_missing"] else oracle(row),
         "copy_last_reset_offset": lambda row: next(
-            (str(offset % MOD) for scale, offset in reversed(row.metadata["rules"]) if scale % MOD == 0),
+            (str(rule[1] % MOD) for rule in reversed(row.metadata["rules"]) if len(rule) == 2 and rule[0] % MOD == 0),
             ABSTAIN_PHRASE),
         "oracle": oracle,
     }
@@ -1093,68 +1184,103 @@ def screen_floors(rows: Sequence[BenchmarkRow]) -> dict[str, dict[str, int]]:
 
 
 def decide_screen(rows: Sequence[BenchmarkRow], outputs: Mapping[str, Mapping[str, str]],
-                  mechanics: Mapping[str, Any]) -> dict[str, Any]:
+                  mechanics: Mapping[str, Any], stopped_by: str | None = None) -> dict[str, Any]:
     """The single registered screening verdict (AMENDMENT_SECTIONH.md section 6).
 
-    Ladder in execution order, first match wins: padding mechanics, the parent gate, hook
-    liveness (run just before the first TH-hosted unit), missing coverage, the identity
-    canary, UNDETECTABLE_AT_SCREEN (ROTATION text equals TH on every row, which is not a
-    rejection), then SCREEN_SIGNAL_EXPLORATORY if all four signal conditions hold,
-    otherwise NO_SIGNAL. No verdict here is confirmation.
+    Ladder in execution order, first match wins. A mechanics value of None means the
+    stage was never reached (`STOPPED_BEFORE:<stage>`, with `stopped_by`), never a failure.
+      1. padding: False -> STOP_NATIVE_MECHANICS_PADDING; None -> STOPPED_BEFORE:padding
+      2. the parent gate (needs BASE/T/H parent rows; else STOPPED_BEFORE:parent_gate)
+      3. liveness: False -> STOP_MECHANICS_HOOK_LIVENESS; None -> STOPPED_BEFORE:liveness
+      4. the identity canary as soon as TH and IDENTITY share rows
+      5. missing coverage -> INCOMPLETE_COVERAGE
+      6. UNDETECTABLE_ON_J: ROTATION text equals TH on every dependent (J) row
+      7. SCREEN_SIGNAL_EXPLORATORY if S1-S6 all hold, otherwise NO_SIGNAL.
+    No verdict is confirmation, and NO_SIGNAL is not evidence of absence (low power).
     """
     by_id = {row.row_id: row for row in rows}
+    clean = {arm: {row_id: text for row_id, text in arm_outputs.items() if row_id in by_id}
+             for arm, arm_outputs in outputs.items()}
+    unknown = sorted({row_id for arm_outputs in outputs.values() for row_id in arm_outputs if row_id not in by_id})
     scores = {arm: {row_id: score_response(by_id[row_id], text) for row_id, text in arm_outputs.items()}
-              for arm, arm_outputs in outputs.items()}
-    verdict: dict[str, Any] = {"confirmation": False, "floors": screen_floors(rows), "reasons": []}
+              for arm, arm_outputs in clean.items()}
+    groups = row_groups(rows)
+    j_ids = [row.row_id for row in groups["J"]]
+    verdict: dict[str, Any] = {"confirmation": False, "floors": screen_floors(rows), "reasons": [],
+                               "stopped_by": stopped_by, "ignored_unknown_row_ids": unknown}
+    def j_pairs():
+        rot, th = scores.get(CANDIDATE_ARM, {}), scores.get("TH", {})
+        paired = [row_id for row_id in j_ids if row_id in rot and row_id in th]
+        gains = [row_id for row_id in paired if rot[row_id]["credited"] and not th[row_id]["credited"]]
+        losses = [row_id for row_id in paired if th[row_id]["credited"] and not rot[row_id]["credited"]]
+        return paired, gains, losses
     def finish(status: str) -> dict[str, Any]:
+        paired, gains, losses = j_pairs()
         verdict["status"] = status
+        verdict["rotation_vs_TH_on_J"] = {"paired": len(paired), "gains": len(gains), "losses": len(losses),
+                                          "exact_mcnemar_p_two_sided": exact_paired_mcnemar(len(gains), len(losses))
+                                          if paired else None}
         return verdict
-    if mechanics.get("padding_parity_ok") is not True:
-        return finish("STOP_NATIVE_MECHANICS_PADDING")
-    parents = {row.row_id for group in ("T", "H") for row in row_groups(rows)[group]}
+    for stage, key, failure in (("padding", "padding_parity_ok", "STOP_NATIVE_MECHANICS_PADDING"),):
+        if mechanics.get(key) is False:
+            return finish(failure)
+        if mechanics.get(key) is not True:
+            return finish(f"STOPPED_BEFORE:{stage}")
+    parents = {row.row_id for group in ("T", "H") for row in groups[group]}
     if any(not parents <= set(scores.get(arm, {})) for arm in ("BASE", "T", "H")):
-        return finish("INCOMPLETE_COVERAGE")
+        return finish("STOPPED_BEFORE:parent_gate")
     gate = parent_gate(rows, scores)
     verdict["parent_gate"] = gate
     if not gate["passed"]:
         return finish(gate["stop"])
-    if mechanics.get("liveness_ok") is not True:
+    if mechanics.get("liveness_ok") is False:
         return finish("STOP_MECHANICS_HOOK_LIVENESS")
-    missing = {arm: sorted(set(ids) - set(outputs.get(arm, {})))
+    if mechanics.get("liveness_ok") is not True:
+        return finish("STOPPED_BEFORE:liveness")
+    shared = set(clean.get("TH", {})) & set(clean.get("IDENTITY", {}))
+    if any(clean["IDENTITY"][row_id] != clean["TH"][row_id] for row_id in shared):
+        return finish("STOP_IDENTITY_CANARY")
+    missing = {arm: sorted(set(ids) - set(clean.get(arm, {})))
                for arm, ids in required_coverage(rows).items()}
     missing = {arm: ids for arm, ids in missing.items() if ids}
     if missing:
         verdict["missing_coverage"] = missing
         return finish("INCOMPLETE_COVERAGE")
-    every = [row.row_id for row in rows]
-    if any(outputs["IDENTITY"][row_id] != outputs["TH"][row_id] for row_id in every):
-        return finish("STOP_IDENTITY_CANARY")
-    groups = row_groups(rows)
-    j_ids = [row.row_id for row in groups["J"]]
     verdict["j_credited"] = {arm: sum(bool(scores[arm][row_id]["credited"]) for row_id in j_ids)
                              for arm in SCREEN_ARMS}
-    verdict["texts_differ_from_TH"] = {arm: sum(outputs[arm][row_id] != outputs["TH"][row_id]
-                                               for row_id in outputs[arm]) for arm in SCREEN_ARMS}
-    if verdict["texts_differ_from_TH"][CANDIDATE_ARM] == 0:
-        verdict["reasons"].append("ROTATION changed no greedy token on any screen row")
-        return finish("UNDETECTABLE_AT_SCREEN")
+    verdict["texts_differ_from_TH"] = {
+        arm: {"J": sum(clean[arm][row_id] != clean["TH"][row_id] for row_id in j_ids),
+              "all": sum(clean[arm][row_id] != clean["TH"][row_id] for row_id in clean[arm])}
+        for arm in SCREEN_ARMS}
+    if verdict["texts_differ_from_TH"][CANDIDATE_ARM]["J"] == 0:
+        verdict["reasons"].append("ROTATION changed no greedy token on any dependent row")
+        return finish("UNDETECTABLE_ON_J")
     rot, th = scores[CANDIDATE_ARM], scores["TH"]
-    gains = [row_id for row_id in j_ids if rot[row_id]["credited"] and not th[row_id]["credited"]]
-    losses = [row_id for row_id in j_ids if th[row_id]["credited"] and not rot[row_id]["credited"]]
+    _, gains, losses = j_pairs()
+    # A counted gain must change the decision or value, not the format (TH semantically
+    # wrong too), and must not merely restore a parent's own ability (T or H credited).
+    format_repairs = [row_id for row_id in gains if th[row_id]["semantic_correct"]]
+    parent_repairs = [row_id for row_id in gains if row_id not in format_repairs
+                      and (scores["T"][row_id]["credited"] or scores["H"][row_id]["credited"])]
+    signal_gains = [row_id for row_id in gains if row_id not in format_repairs and row_id not in parent_repairs]
+    answerable_signal_gains = [row_id for row_id in signal_gains if by_id[row_id].expected != UNKNOWN]
     answerable_losses = [row_id for row_id in losses if by_id[row_id].expected != UNKNOWN]
     retention_ids = [row.row_id for group in ("T", "H", "K") for row in groups[group]]
     retention_losses = [row_id for row_id in retention_ids if th[row_id]["credited"] and not rot[row_id]["credited"]]
     best_comparator = max(verdict["j_credited"][arm] for arm in J_COMPARATORS)
+    abstain_floor = verdict["floors"]["always_abstain"]["J"]
     conditions = {
         "S1_above_every_comparator": verdict["j_credited"][CANDIDATE_ARM] > best_comparator,
-        "S2_net_paired_gain_vs_TH": len(gains) >= 1 and len(gains) > len(losses),
+        "S2_net_signal_gain_vs_TH": len(signal_gains) >= 1 and len(signal_gains) > len(losses),
         "S3_no_answerable_chain_loss_vs_TH": not answerable_losses,
         "S4_no_parent_or_known_control_loss_vs_TH": not retention_losses,
+        "S5_gains_a_computed_answer": len(answerable_signal_gains) >= 1,
+        "S6_above_always_abstain_floor": verdict["j_credited"][CANDIDATE_ARM] > abstain_floor,
     }
     verdict.update({"conditions": conditions, "vs_TH": {
-        "gains": gains, "losses": losses, "answerable_losses": answerable_losses,
-        "retention_losses": retention_losses,
-        "exact_mcnemar_p_two_sided": exact_paired_mcnemar(len(gains), len(losses))},
+        "gains": gains, "signal_gains": signal_gains, "format_repairs": format_repairs,
+        "parent_repairs": parent_repairs, "answerable_signal_gains": answerable_signal_gains,
+        "losses": losses, "answerable_losses": answerable_losses, "retention_losses": retention_losses},
         "best_comparator_j_credited": best_comparator,
         "reverse_sign_specific": verdict["j_credited"][CANDIDATE_ARM] > verdict["j_credited"]["REVERSE"]})
     verdict["reasons"] = [name for name, held in conditions.items() if not held]
