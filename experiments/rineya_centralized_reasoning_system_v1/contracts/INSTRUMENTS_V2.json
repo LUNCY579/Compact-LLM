@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "contract_id": "CRS-INSTRUMENTS-002",
+  "client_date": "2026-10-01",
+  "status": "CPU_VERIFIED_AWAITING_INDEPENDENT_REVIEW",
+  "source_sha256": {
+    "scoring_v2.py": "4233a0841824191955c523a2d09d0bdb1fa9d2fc5b4ab430af39594fbf9c2f54",
+    "atlas_v2.py": "403cec6b49c37b9b623ccf03c39d19c695cbe288ce50f9062e6e62644f078a57",
+    "tests/test_instruments_v2.py": "227627953e77cb571174067d357dcd4c641ab7c08ed036243536c22a0f9b3105"
+  },
+  "cpu_validation": {
+    "command": "python -B -m unittest experiments.rineya_centralized_reasoning_system_v1.tests.test_instruments_v2 -v",
+    "tests": 20,
+    "passed": 20,
+    "failures": 0,
+    "errors": 0,
+    "new_tasks_generated": 0,
+    "model_calls": 0
+  },
+  "preserves": ["scoring.py", "atlas.py", "epoch001 scores and receipts"],
+  "scorer_version": "CRS-SEMANTIC-STATUS-SCORER-v2",
+  "atlas_version": "CRS-LEARNING-INSTRUMENTS-v2",
+  "semantic_projection": "Read only explicit unique typed status/value JSON fields; additional fields may make strict format false while semantic fields remain correct. No prose or gold-assisted repair.",
+  "strict_format": "Exactly status,value plus optional unique string-list evidence_ids; finite bounded JSON,duplicate keys rejected; integer answers exclude booleans and floats.",
+  "maximum_response_bytes": 4096,
+  "maximum_integer_magnitude": 1000000,
+  "operational_error": "Any non-null explicit error field denotes a failed operational observation; it is never semantic success or abstention. Missing and failed cases remain scheduled denominators.",
+  "metrics": {
+    "semantic_accuracy": "explicit status/value correctness independent of extra-field formatting",
+    "strict_accuracy": "semantic correctness AND strict output format",
+    "answerable_accuracy": "SUPPORTED positive-value tasks only, same named scope as original scorer",
+    "determinate_accuracy": "SUPPORTED and explicit REFUTED tasks",
+    "calibration": "UNMEASURED without a separate qualified probability instrument",
+    "evidence_reference_truth": "UNMEASURED by this scorer; external provenance verification required"
+  },
+  "atlas_rows": {
+    "version": 2,
+    "native_metadata": "Explicit study,recipe,family,positive integer depth,train_draw/order/eval_family/initialization seeds,code commit and checkpoint/data/scorer/qualification/measurement receipt hashes",
+    "dose": "unique_parents<=presentations;updates<=presentations;supervised<=processed;positive presentations need parent/input exposure;supervised adaptation updates need target exposure",
+    "metric_unit": "Core metric estimates and interval95 endpoints are proportions in[0,1],with interval containing estimate; efficiency gain is a proportion difference in[-1,1]",
+    "unmeasured": "Metrics remain null; unmeasured rows cannot establish numeric efficiency",
+    "measurement_association": "Native numeric efficiency requires actual receipt bytes matching measurement_receipt_sha256 and all declared row/dose/gain fields; byte association is NOT proof of execution or qualification",
+    "measurement_envelope": "schema_version2,kind CRS_LA_MEASUREMENT,payload with row excluding measurement_receipt_sha256 and explicit gain"
+  },
+  "paired_intervals": {
+    "required_record_fields": ["case_id", "variant_id", "parent_id", "family", "B", "C"],
+    "identity": "Unique case_id globally and variant_id within parent; reject duplicates and family drift",
+    "membership": "expected_cases mapping must match every scheduled case and parent/variant/family identity for future native integration; absent binding is openly descriptive only",
+    "sampling": "Whole parent mean vectors within family strata; repeated variants are not independent samples",
+    "uncertainty_scope": "Conditional on supplied families/draws; few clusters warning; no untouched confirmation,noninferiority or promotion certificate"
+  },
+  "retention": {
+    "membership": "Fixed per-skill item IDs and strict semantic success booleans",
+    "missing_incumbent": "UNAVAILABLE; loss/denominator/retention fields stay null,never silently replaced with source",
+    "zero_source_correct_denominator": "Undefined retention,null",
+    "identity_attestation": "Actual source/incumbent/checkpoint identities belong to external immutable run receipts",
+    "noninferiority_established": false
+  },
+  "new_data_generated": false,
+  "central_check_open": false,
+  "central_final_open": false,
+  "confirmation_generated": false,
+  "native_model_calls": 0,
+  "native_training_qualified": false,
+  "future_runner_integration": "Separate reviewed successor; original runner/scorers/results untouched",
+  "missing_learning_instruments": ["frozen optimizer/probe/legacy bank IDs", "exact512+64 prompt/target token streams and masks", "actual source-correct enrollment", "qualified native gradients/export/resume/sustained fit"],
+  "approval": "Versioned CPU instrument only; no fabricated gain,retention,calibration,frontier or mechanism"
+}

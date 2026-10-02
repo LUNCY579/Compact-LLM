@@ -7,12 +7,12 @@ The new owner request is retained byte-for-byte with a hash in
 [AUTHORIZATION_2026-10-01.md](AUTHORIZATION_2026-10-01.md). The historical founding
 section below, charter and manifest are preserved. All central CHECK/FINAL remain closed.
 
-Current milestone: **CPU_QUALIFIED for the supplied reference pipeline;
-native launch awaits its separate clean source and exact review.**
+Current milestone, 2026-10-02: **CPU_QUALIFIED for the supplied reference pipeline;
+native operational revision 2 is undergoing separate review.**
 The complete supplied AI-Newton paper, supplement and figures were inspected;
 18 pinned primary implementation files were source-verified. Exact external
 Titan/Sparse/Transition/Supa assets are inventoried read-only. Opallo binaries
-are missing at both named roots. No model has yet executed in CRS-001.
+are missing at both named roots. No model has yet loaded or forwarded in CRS-001.
 
 Implemented: source-addressed evidence, four status states, stale dependency
 invalidation, restricted typed graphs, immutable procedure snapshots, public JSON
@@ -33,6 +33,27 @@ Before native dispatch, bind its final source/test/review hashes and refresh
 actual host admission. Hourly heartbeat
 `crs-001-hourly-research-supervisor` is active with quiet-on-unchanged behavior.
 
+The supplied-procedure lifecycle executed 64 DEV cases: version 1 scored 18/32
+and retained 14 semantic counterexamples; supplied version 2 scored 32/32 and
+froze an immutable snapshot. Recovery was repaired and independently reviewed.
+Version 2 equals B's strong supplied graph; no autonomous discovery or B/C efficacy
+is inferred. Separate scorer/atlas v2 instruments fix format/semantics, duplicated
+observations, dose and unavailable-incumbent defects. Native efficiency remains
+quarantined until same-panel baseline/gain binding. The latest complete primary
+CPU suite passed 117 tests in 17.149 seconds.
+
+Native admission first refused an unregistered game package before dispatch.
+After that process exited, clean reviewed source `9fd345d9` dispatched a contained
+qualification worker in the attached managed worktree. It exited before framework
+import: the implicit Job query returned flags `0x3000`, while the explicit owned
+Job returned `0x2000`. Exact membership and empty-tree exit were verified; all
+four forwards remain unattempted. Evidence: `evidence/native_d2_attempt_001/`.
+The resolving successor is built/reviewed in the attached worktree
+`C:/Users/clclc/.codex/worktrees/crs-native-desktop-v2/ChatBubble-rineya-centralized-reasoning-system-v1`.
+It queries the exact owned Job and closes query handles before framework import.
+No resource/numerical gate is relaxed. Do not rerun the known failing primary
+native v1 worker; use the separately frozen successor after review.
+
 Remaining gates: native numerical/capture and maximum576 reader qualification,
 16-case native diagnostic, actual B/C native experiment with meaningful irrelevant
 D content/token costs, separately qualified sustained training/resume/export,
@@ -42,8 +63,10 @@ likelihood failure is preserved. No final bank has been generated or opened.
 
 Restart commands and conditions: [CONTINUATION.md](CONTINUATION.md). Source changes
 create new registrations; completed or failed observations retain their identities.
-Unknown launch outcomes must be reconciled before another worker. Native budget
-consumption in this track is currently zero; no active model worker.
+Unknown launch outcomes must be reconciled before another worker. Native
+qualification-worker consumption is 1.1090000000003783 seconds, including the
+failed startup (epoch cap 7200s; rolling 24-hour cap 14400s). No active model
+worker; model loads, forwards and training updates remain zero.
 
 ## Historical founding state (preserved)
 

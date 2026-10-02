@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "contract_id": "CRS-SUPPLIED-PROCEDURE-DEVELOPMENT-001",
+  "status": "CPU_TESTED_AWAITING_INDEPENDENT_LIFECYCLE_REVIEW",
+  "candidate_origin": "CODEX_SUPPLIED",
+  "candidate_count": 2,
+  "initial_candidate": "LOOKUP then FILTER(until0,ALL) then TRACE_STATE then CHECK",
+  "revision": "Remove premature time0 restriction and reconnect TRACE_STATE directly to LOOKUP; revision supplied by Codex before outcomes.",
+  "limits": {
+    "maximum_dev_cases": 32,
+    "allowed_pair_complete_counts": [
+      16,
+      32
+    ],
+    "maximum_supplied_candidates": 2,
+    "maximum_public_worker_attempts": 64,
+    "per_worker_seconds": 15,
+    "coordinator_wall_seconds": 990,
+    "native_model_calls": 0,
+    "training_updates": 0
+  },
+  "data": {
+    "roles": [
+      "TRAIN",
+      "DEV"
+    ],
+    "fresh_confirmation": false,
+    "central_CHECK_FINAL_access": false,
+    "exposure": "Already open/consumed development data; counterexamples and aggregate feedback remain development evidence.",
+    "independent_truth": "Latent data.oracle outside deployed runtime, then scoring.score outside runtime; shared generator grammar/semantics remain common-mode limitations."
+  },
+  "acceptance": "All fixed DEV cases semantic exact and no operational failure; initial flawed candidate needs at least one valid semantic counterexample and supplied revision must pass before freezing demonstration snapshot. Operational failures alone cannot falsify a graph.",
+  "runtime_boundary": "runner.execute_case/worker_request sends only public case and immutable typed graph snapshot through runtime_worker. Gold, scorer outputs and revision history remain coordinator side.",
+  "history": "Create-only hash-linked proposal/revision/trial/counterexample/freeze receipts identify proposer, reviser, deterministic selector and latent-oracle/scorer verifier. Every scheduled case remains in denominators.",
+  "recovery": "Immutable OperationsStore job/request keys and per-case receipts prevent repeated execution; terminal result reloads verified bytes. Unacknowledged prior CPU attempts remain failed/unknown-cost observations rather than being silently rerun.",
+  "model_origin_rule": "Reject MODEL_PROPOSED/MODEL_REVISED without identified actual native proposal and qualification evidence; even hashed status records cannot enable an unregistered native-proposal adapter in this supplied CPU milestone.",
+  "claims": {
+    "autonomous_Rineya_discovery": false,
+    "native_model_quality": false,
+    "procedure_memory_efficacy": false,
+    "weight_learning": false,
+    "transfer_or_retention_confirmation": false
+  },
+  "command": "python -B -m experiments.rineya_centralized_reasoning_system_v1.procedure_development accept --cases 32 --output experiments/rineya_centralized_reasoning_system_v1/outputs/procedure_development_v1",
+  "validation": {
+    "tests": 6,
+    "passed": 6,
+    "seconds": 18.46,
+    "evidence_scope": "Temporary CPU public-worker lifecycle, corruption/restart/idempotency/proposal-origin controls; no native model execution"
+  },
+  "code_sha256": "5991ebe5e35ad39eb3c01792842e803b59bf0758d57de54254684bb8d1335e0d",
+  "tests_sha256": "74dbe95c32600e38db1b2bb06ffda96ac62db1ac26d6b3f7a2d0859862c16c73"
+}

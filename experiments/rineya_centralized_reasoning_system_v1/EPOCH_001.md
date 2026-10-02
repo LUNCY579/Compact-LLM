@@ -65,6 +65,41 @@ jobs, leases and budgets across worktrees. Its native epoch/rolling charges are
 currently zero. No active model worker exists. The hourly chat heartbeat is
 active and quiet on unchanged/non-actionable state.
 
+## 2026-10-02 continuation and retained failures
+
+The subsequent supplied-procedure lifecycle executed 64 cases: the deliberately
+premature version scored 18/32, with 14 semantic counterexamples retained; the
+pre-supplied revised graph scored 32/32 and was frozen. Its 78 immutable receipts
+are preserved in `evidence/procedure_lifecycle_001/`. Known CPU worker time was
+10.371 seconds, 448 primitive operations, no model or training calls. The graphs
+and revision were supplied before outcomes; this is controlled scaffold correction,
+not autonomous discovery or a new B/C advantage. Repeated coordinator interruptions
+now preserve separate failure receipts and the original exceptions.
+
+Scorer/atlas v2 fixes separate format from semantic outcomes, reject duplicated
+case/variant observations and inconsistent dose metadata, and retain unavailable
+incumbents. Original v1 results are unchanged. Scientific review accepts those
+CPU interfaces; native gain/efficiency remains quarantined until same-panel
+baseline/candidate endpoint binding, real execution and qualification exist.
+The complete primary suite passed 117 tests in 17.149 seconds.
+
+The first live native admission refused an unregistered game package before
+dispatch. After its observed exit, a clean `9fd345d9` worktree dispatched one
+contained qualification worker. It failed its implicit Windows Job-limit check
+before framework import. The supervisor independently verified exact owned-Job
+membership and empty-tree termination. All four planned forwards were unattempted,
+zero models loaded, and 1.1090000000003783 qualification worker-seconds were charged
+to both epoch and rolling budgets. Raw evidence is under
+`evidence/native_d2_attempt_001/`; the earlier admission refusal is separately kept.
+
+A bounded no-model probe distinguishes the implicit Job flags `0x3000` from the
+explicit supervisor-owned Job flags `0x2000`. Operational revision 2 queries the
+exact owned Job with a temporary query-only handle, closes it before framework
+import, and retains all resource/numerical limits. Fresh targeted review and
+commit binding precede another launch. The attached worktree and executable next
+action are recorded in STATUS/CONTINUATION. Native acquisition, retention,
+procedure-memory efficacy and training remain unmeasured; no active model worker.
+
 ## Next action and predictions
 
 Freeze the repaired native diagnostic, obtain independent operations/scientific

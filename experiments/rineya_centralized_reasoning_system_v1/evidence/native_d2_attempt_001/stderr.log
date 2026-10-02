@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\clclc\.codex\worktrees\crs-native-desktop-v2\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\native.py", line 938, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\Users\clclc\.codex\worktrees\crs-native-desktop-v2\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\native.py", line 932, in main
+    return worker(args, cfg)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\.codex\worktrees\crs-native-desktop-v2\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\native.py", line 535, in worker
+    containment = current_windows_job_witness()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\.codex\worktrees\crs-native-desktop-v2\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\native.py", line 365, in current_windows_job_witness
+    require(flags & 0x2000 and not flags & (0x800 | 0x1000), "current worker Job lacks strict kill-on-close/no-breakaway")
+  File "C:\Users\clclc\.codex\worktrees\crs-native-desktop-v2\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\native.py", line 39, in require
+    raise NativeBlocked(message)
+NativeBlocked: current worker Job lacks strict kill-on-close/no-breakaway

@@ -27,6 +27,11 @@ this is not an OS-isolated security boundary.
 For current native preflight use the pinned model environment, without loading
 a model:
 
+The primary native v1 worker has a recorded implicit Job-query startup failure.
+Its admission preflight alone cannot resolve that failure. Operational revision 2
+is built in the attached clean worktree listed in STATUS; use its exact reviewed
+commit/contract/approval instead of re-running the known failing v1 command.
+
 ```powershell
 & 'C:\Users\clclc\BusinessProject\.venv-mq001\Scripts\python.exe' -m experiments.rineya_centralized_reasoning_system_v1.runner preflight
 ```
