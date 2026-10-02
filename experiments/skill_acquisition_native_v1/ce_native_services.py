@@ -130,6 +130,10 @@ class BootstrapLedger:
         if phase == 'started':
             require(operation_id not in self.operations, 'unique bootstrap physical attempt')
             profile = self.spec['operation_profiles'][kind]
+            if 'wall_s_upper' in fields:
+                declared_wall = fields['wall_s_upper']
+                require(type(declared_wall) in (int, float) and 0 < declared_wall <= profile['wall_s_upper'],
+                        'bootstrap profile below declared wall work')
             aliases = {'io_read_bytes_upper': 'read_bytes_upper', 'io_write_bytes_upper': 'write_bytes_upper'}
             for field in PROFILE[:-1]:
                 value = fields.get(field, 0)
@@ -144,6 +148,16 @@ class BootstrapLedger:
         else:
             previous = self.operations.get(operation_id)
             require(previous and previous['kind'] == kind and previous['phase'] == 'started', 'bootstrap matching return required')
+            actuals = {'bytes_read': 'read_bytes_upper', 'bytes_written': 'write_bytes_upper',
+                'identity_hash_attempts_actual': 'identity_hash_attempts_upper',
+                'identity_hash_bytes_actual': 'identity_hash_bytes_upper', 'wall_s': 'wall_s_upper'}
+            for field, upper in actuals.items():
+                if field not in fields: continue
+                value = fields[field]
+                valid = (type(value) in (int, float) and 0 <= value < float('inf')) if field == 'wall_s' else (type(value) is int and value >= 0)
+                if not valid or value > previous['profile'][upper]:
+                    self.fatal = True
+                    raise worker.WorkerEvidenceError('bootstrap actual work exceeds reserved profile: ' + field)
             row = self._event('operation', {'operation': kind, 'phase': phase, 'operation_id': operation_id, 'fields': fields}, {})
             previous.update(phase=phase, returned_seq=row['seq'])
         return row
@@ -156,7 +170,8 @@ class BootstrapLedger:
 
 class StableDispatcher:
     """One callback identity across bootstrap and separately admitted ledgers."""
-    def __init__(self, bootstrap): self.bootstrap, self.ledger = bootstrap, None
+    def __init__(self, bootstrap):
+        self.bootstrap, self.ledger, self.owners = bootstrap, None, {}
     def attach_qualification_accounting(self, ledger):
         require(self.ledger is None and getattr(ledger, 'scope_role', None) == 'qualification_only', 'one separate qualification accounting owner required')
         self.ledger = ledger
@@ -164,7 +179,16 @@ class StableDispatcher:
         require(self.ledger is None and getattr(ledger, 'synthetic_cpu', True) is False, 'one separately admitted native CE ledger owner required')
         self.ledger = ledger
     def __call__(self, kind, phase, operation_id, **fields):
-        target = self.ledger if self.ledger is not None else self.bootstrap
+        require(type(operation_id) is str and operation_id and phase in ('started', 'returned', 'failed'),
+                'explicit dispatch operation identity/phase')
+        if phase == 'started':
+            require(operation_id not in self.owners, 'dispatch operation identity reused')
+            target = self.ledger if self.ledger is not None else self.bootstrap
+            self.owners[operation_id] = (kind, target)
+        else:
+            require(operation_id in self.owners and self.owners[operation_id][0] == kind,
+                    'dispatch matching original operation owner required')
+            target = self.owners[operation_id][1]
         return target.operation(kind, phase, operation_id=operation_id, **fields)
     operation = __call__
     def snapshot(self): return (self.ledger if self.ledger is not None else self.bootstrap).snapshot()
@@ -279,9 +303,16 @@ class NativeControllerServices:
         require('native_execution_permit' not in context.get('native_services', {}), 'worker JSON context must be complete before native permit issuance')
         spec, permit = self._role('worker_observation', context)(context, self.operation)
         handle = worker.open_worker(spec, permit, self.operation)
-        proof = handle.proof()
-        require(proof['fresh_process'] is True and proof['source_verified'] is True, 'registered actual worker provenance prerequisite')
-        completed = dict(context, worker_proof_sha256=digest(proof))
+        try:
+            proof = handle.proof()
+            require(proof['fresh_process'] is True and proof['source_verified'] is True, 'registered actual worker provenance prerequisite')
+            completed = dict(context, worker_proof_sha256=digest(proof))
+        except BaseException as primary:
+            try: handle.close()
+            except BaseException as cleanup:
+                primary.worker_close_failure = {'type': type(cleanup).__name__, 'message': str(cleanup)[:1000]}
+                raise primary from cleanup
+            raise
         self.worker_handle, self.worker_proof = handle, proof
         return completed
     def observer(self, context):

@@ -181,7 +181,7 @@ def _binding_for(context, attempt, worker):
         'worker_identity_sha256': worker, 'attempt_id': attempt['attempt_id']}
 
 
-def _reductions(context, state, attempt_workers, reader, child_bindings):
+def _reductions(context, state, attempt_workers, reader, child_bindings, child_lineages):
     reductions, gaps = {}, []
     receipt = context['prepared_receipt']; rows = {row['id']: row for row in receipt['prepared_row_bindings']}
     execution = context['bindings']['scope']['qualifier_execution']
@@ -198,9 +198,9 @@ def _reductions(context, state, attempt_workers, reader, child_bindings):
             if ref['path'] in child_bindings:
                 child = child_bindings[ref['path']]; raw.binding(child)
                 require(child['stage'] == 'checkpoint_resume' and attempt['stage'] == 'checkpoint_resume'
-                        and child['worker_identity_sha256'] != expected['worker_identity_sha256']
-                        and all(child[key] == expected[key] for key in ('request_sha256', 'scope_sha256', 'static_recipe_sha256', 'code_sha256'))
                         and ref.get('binding_sha256') == digest(child), 'exact separate checkpoint child evidence binding')
+                from .ce_checkpoint_qualification import validate_checkpoint_relationship
+                validate_checkpoint_relationship(expected, child, parent_binding=expected, child_lineages=child_lineages)
                 gaps.append('checkpoint child requires its own registered OS handle and verified parent relationship')
             else:
                 require(ref.get('binding_sha256') == digest(expected), 'unrelated artifact stage/source/worker/attempt binding')
@@ -241,7 +241,7 @@ def _workers(handles, workers, context):
 
 
 def verify_qualification(context, header_ref, journal_ref, seal_ref, *, reader, outer_preflight,
-                         worker_handles=None, child_bindings=None):
+                         worker_handles=None, child_bindings=None, child_lineages=None):
     """Replay retained evidence beneath an explicit independently priced outer scope.
 
     The preflight callback reserves verifier IO/hash/reducer/metadata/time before
@@ -258,7 +258,8 @@ def verify_qualification(context, header_ref, journal_ref, seal_ref, *, reader, 
         'max_events': MAX_EVENTS, 'max_line_bytes': MAX_LINE,
         'required_coverage': ['IO', 'file and arithmetic hashes', 'JSON/reducer work', 'metadata', 'elapsed and tick wall']})
     verifier = context['verification_binding']; child_bindings = {} if child_bindings is None else child_bindings
-    require(type(child_bindings) is dict, 'explicit child artifact binding map')
+    child_lineages = {} if child_lineages is None else child_lineages
+    require(type(child_bindings) is dict and type(child_lineages) is dict, 'explicit child artifact binding/observed lineage maps')
     # Upper setup covers header equality/digests and shadow initialization; it
     # does not impersonate an operation-price measurement or admission service.
     with reader._overhead('verifier_header_scope_setup', work_bytes=32 * MAX_HEADER,
@@ -271,7 +272,7 @@ def verify_qualification(context, header_ref, journal_ref, seal_ref, *, reader, 
     with reader._overhead('seal_and_stage_artifact_linkage', work_bytes=32 * seal_ref['bytes'] + 32 * journal_ref['bytes'],
                           hash_attempts=MAX_EVENTS, hash_bytes=8 * journal_ref['bytes']):
         complete, pending = _seal(seal, state)
-        reductions, gaps = _reductions(context, state, attempt_workers, reader, child_bindings)
+        reductions, gaps = _reductions(context, state, attempt_workers, reader, child_bindings, child_lineages)
     gaps += _workers(worker_handles, workers, context)
     gaps += ['outer bootstrap/verification prepayment and full clock chain require independent registered-service verification',
              'this source does not activate a native execution/qualification verifier registry']

@@ -421,6 +421,40 @@ Native registries remain empty and the producer remains **DRAFT_UNQUALIFIED**.
 The warm stop, pending experiment choice and frozen scope govern native work.
 Acquisition, retention and independent composition remain unproved.
 
+## Further review and raw state reduction
+
+Further review separated immutable child request bytes from observed worker
+identity and moved branch declarations into the complete derived execution
+context. The shared frozen scope is preserved. Worker identity now hashes the
+same OS and raw source facts in supervisor and child views; descriptive launcher
+provenance remains evidence without changing that identity.
+
+Bootstrap helpers enforce declared and reported work bounds. The stable
+dispatcher retains each operation's original cost owner, and failed worker
+admission closes its local handle. Child lease contexts cannot suppress a
+failed branch. Corruption and stale controls require specific validation
+causes and retained operations; infrastructure failures propagate.
+
+`ce_checkpoint_reduction.py` replays separate child ledgers, derives physical
+updates separately from inherited logical progress, recomputes returned state
+descriptors and compares saved parameter/Adam/RNG bytes. Its complete three
+branch envelope-to-ledger-to-endpoint path has **not been exercised end to end**.
+Focused small-file and metadata controls do not establish native execution.
+
+`ce_resource_qualification.py` derives resources from retained barrier samples
+and selected returned operation counters. Exact CUDA totals govern allocator
+fractions; CLI totals remain separate observations. IO observation scope is
+retained, including unmeasured external utility OS IO. Reservation ceilings
+cannot substitute for actual counters or complete-unit native prices.
+
+The expanded source suite passed **226/226 controls**, with unchanged source,
+zero skips/errors and no ML framework imports, models or optimizer steps. See
+`evidence/CE8_INTEGRATION_SOURCE_CHECKS_20261001.json`. Native initializer,
+process/lease/publication wiring, child
+accounting derivation, full pricing and final execution verification remain
+required. Registries stay closed, qualification stays **UNQUALIFIED**, and the
+broader study remains active with no new native treatment after the warm stop.
+
 ## Production interface
 
 ```powershell

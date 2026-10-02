@@ -71,13 +71,14 @@ class Tests(unittest.TestCase):
         original = {'recipe': bindings['recipe']['recipe'], 'code': bindings['source']['code_sha256'],
             'own_start_sha256': bindings['anchors']['own_start_sha256'],
             'common_anchor_sha256': bindings['anchors']['common_anchor_sha256'],
-            'ordered_plan': [{'boundary': i, 'logical_exposure': 0, 'row_ids': batch} for i, batch in enumerate(batches)]}
+            'qualification_batches': batches}
         manifest = {'schema': 'SKILL-ACQUISITION-NATIVE-CHECKPOINT-1', 'bindings': original,
             'bindings_sha256': a.digest(original),
             'progress': {'C': 1, 'U': 1, 'history': history, 'generation': 0, 'snapshot': '9' * 64}}
         manifest['manifest_sha256'] = a.digest(manifest)
-        return {'schema': a.CHILD_PREFIX, 'branch': branch, 'parent_request_sha256': '1' * 64,
+        payload = {'schema': a.CHILD_PREFIX, 'branch': branch, 'parent_request_sha256': '1' * 64,
             'child_request_sha256': self.context['request_sha256'], 'scope_sha256': self.context['scope_sha256'],
+            'study_request_sha256': self.context['request_sha256'],
             'static_recipe_sha256': self.context['static_recipe_sha256'], 'code_sha256': bindings['source']['code_sha256'],
             'common_anchor_sha256': bindings['anchors']['common_anchor_sha256'],
             'own_start_sha256': bindings['anchors']['own_start_sha256'], 'qualification_batches': batches,
@@ -91,6 +92,12 @@ class Tests(unittest.TestCase):
             'inherited_history': history if branch == 'resumed' else [], 'prefix_manifest_ref': dict(rawref),
             'prefix_checkpoint_bindings_sha256': manifest['bindings_sha256'], 'prefix_manifest': manifest,
             'endpoint_raw_refs': {key: dict(rawref) for key in ('parameters', 'adam', 'rng')}}
+        child_ref = dict(rawref, path=str(self.root / 'immutable-child-request.json'), sha256='7' * 64)
+        payload['child_request_ref'], payload['child_request_sha256'] = child_ref, child_ref['sha256']
+        payload['child_proof'] = dict(self.proof, request_sha256=self.context['request_sha256'],
+            scope_sha256=self.context['scope_sha256'], sources={'request_ref': child_ref})
+        payload['declaration_sha256'] = a.digest(a.checkpoint_child_declaration(payload))
+        return payload
     def child_admission(self, payload):
         return a.CheckpointChildAdmission(self.context, None, self.proof, payload)
     def finish_prior(self, ledger, target):
@@ -156,8 +163,33 @@ class Tests(unittest.TestCase):
         parent['os_identity'] = {key: parent.pop(key) for key in ('pid', 'creation_filetime_100ns')}
         code = parent.pop('code_sha256')
         parent['sources'] = {'source_files': {key: {'sha256': value} for key, value in code.items()}}
+        payload['declaration_sha256'] = a.digest(a.checkpoint_child_declaration(payload))
         cap = self.child_admission(payload)
         self.assertFalse(cap._native)
+
+    def test_static_declaration_excludes_future_worker_and_self_request_hash(self):
+        payload = self.child_payload()
+        declaration = a.checkpoint_child_declaration(payload)
+        for key in ('worker_identity_sha256', 'child_request_sha256', 'child_request_ref', 'child_proof', 'declaration_sha256'):
+            self.assertNotIn(key, declaration)
+        self.assertEqual(declaration['study_request_sha256'], self.context['request_sha256'])
+        self.assertNotEqual(payload['child_request_sha256'], payload['study_request_sha256'])
+        cap = self.child_admission(payload)
+        self.assertFalse(cap._native)
+        changed = copy.deepcopy(payload); changed['child_proof']['sources']['request_ref']['sha256'] = '0' * 64
+        with self.assertRaisesRegex(ValueError, 'derived actual child'):
+            self.child_admission(changed)
+
+    def test_actual_state_fingerprint_kind_is_priced_and_unknown_kinds_remain_denied(self):
+        ledger = self.make(); payload = self.child_payload('prefix')
+        ledger.admit_checkpoint_child_prefix(payload, admission_handle=self.child_admission(payload))
+        ledger.begin_stage('checkpoint_resume', 'fixture/controls')
+        ledger.operation('qualification_state_fingerprint', 'started', 'fingerprint',
+                         identity_hash_attempts_upper=2, identity_hash_bytes_upper=100)
+        ledger.operation('qualification_state_fingerprint', 'returned', 'fingerprint', wall_s=0)
+        self.assertEqual(ledger.operation_evidence('fingerprint')['kind'], 'qualification_state_fingerprint')
+        with self.assertRaisesRegex(ValueError, 'declared qualification operation'):
+            ledger.operation('unregistered_fingerprint', 'started', 'unknown')
 
     def test_prefix_single_use_U0_branch_and_stale_restore_are_explicit(self):
         ledger = self.make(); payload = self.child_payload('prefix'); cap = self.child_admission(payload)

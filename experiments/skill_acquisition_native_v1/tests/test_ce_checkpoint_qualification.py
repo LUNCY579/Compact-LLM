@@ -26,7 +26,7 @@ class Contracts(unittest.TestCase):
         return r.RawEvidenceReader(lambda *args, **kwargs: None,
             {'operation_attempts_upper': 1000, 'io_read_bytes_upper': 10 ** 7,
              'identity_hash_attempts_upper': 1000, 'identity_hash_bytes_upper': 10 ** 8,
-             'reducer_work_bytes_upper': 10 ** 8}, self.root, chunk_bytes=64)
+             'reducer_work_bytes_upper': 5 * 10 ** 8}, self.root, chunk_bytes=64)
 
     def state(self, binding, change=None):
         self.serial += 1; stem = self.root / ('branch-%d' % self.serial)
@@ -90,6 +90,30 @@ class Contracts(unittest.TestCase):
         self.assertTrue(all(result[k] for k in ('parameters_bitwise', 'adam_bitwise', 'module_modes_bitwise',
             'python_rng_bitwise', 'numpy_rng_bitwise', 'torch_cpu_rng_bitwise', 'torch_cuda_rng_bitwise')))
         self.assertFalse(result['execution_verified']); self.assertFalse(result['native_qualified'])
+
+    def test_distinct_raw_child_request_compares_under_exact_study_lineage(self):
+        child = dict(self.right)
+        request_ref = {'path': str(self.root / 'raw-child-request.json'), 'sha256': '7' * 64, 'bytes': 100}
+        lineage = {'schema': 'CE8-CHECKPOINT-CHILD-PREDECESSOR-1',
+            'worker_identity_sha256': child['worker_identity_sha256'], 'study_request_sha256': child['request_sha256'],
+            'child_request_sha256': request_ref['sha256'], 'child_request_ref': request_ref,
+            'child_proof': {**{key: child[key] for key in ('worker_identity_sha256', 'request_sha256', 'scope_sha256')},
+                'sources': {'request_ref': request_ref}},
+            'parent_request_sha256': self.left['request_sha256'], 'parent_worker_identity_sha256': self.left['worker_identity_sha256'],
+            **{key: self.left[key] for key in ('scope_sha256', 'static_recipe_sha256', 'code_sha256')},
+            'parent_proof': {key: self.left[key] for key in ('worker_identity_sha256', 'request_sha256', 'scope_sha256')}}
+        left, right = self.state(self.left), self.state(child)
+        result = c.compare_checkpoint_states(self.reader(), left, self.left, right, child, parameter_inventory=self.inventory,
+            parent_binding=self.left, child_lineages={child['worker_identity_sha256']: lineage})
+        self.assertTrue(result['parameters_bitwise']); self.assertFalse(result['execution_verified'])
+        changed = copy.deepcopy(lineage); changed['parent_request_sha256'] = '8' * 64
+        with self.assertRaisesRegex(ValueError, 'exact observed child'):
+            c.compare_checkpoint_states(self.reader(), left, self.left, right, child, parameter_inventory=self.inventory,
+                parent_binding=self.left, child_lineages={child['worker_identity_sha256']: changed})
+        changed = copy.deepcopy(lineage); changed['child_request_sha256'] = child['request_sha256']
+        with self.assertRaisesRegex(ValueError, 'raw child request hash'):
+            c.compare_checkpoint_states(self.reader(), left, self.left, right, child, parameter_inventory=self.inventory,
+                parent_binding=self.left, child_lineages={child['worker_identity_sha256']: changed})
 
     def test_changed_parameter_or_cuda_rng_bytes_fail_despite_valid_hashes(self):
         for name in ('param::w', 'rng::cuda::0'):

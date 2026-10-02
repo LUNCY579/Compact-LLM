@@ -3,6 +3,7 @@ import copy
 import hashlib
 from pathlib import Path
 import tempfile
+from types import SimpleNamespace
 import unittest
 
 from experiments.skill_acquisition_native_v1 import ce_execution_verifier as v
@@ -136,6 +137,32 @@ class ReplayControls(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'scope denied'):
             self.verify(preflight=deny)
         self.assertEqual(self.operations, [])
+
+    def test_checkpoint_child_artifact_binds_separate_raw_request_to_same_study(self):
+        attempt = {'stage': 'checkpoint_resume', 'attempt_id': 'parent-cp', 'status': 'RETURNED'}
+        parent = v._binding_for(self.context, attempt, self.proof['worker_identity_sha256'])
+        child = dict(parent, worker_identity_sha256='6' * 64, attempt_id='child-cp')
+        request_path = self.root / 'child-request.json'; request_path.write_bytes(b'{"branch":"uninterrupted"}\n')
+        request_ref = self.ref(request_path)
+        lineage = {'schema': a.CHILD_PREFIX, 'worker_identity_sha256': child['worker_identity_sha256'],
+            'study_request_sha256': child['request_sha256'], 'child_request_sha256': request_ref['sha256'],
+            'child_request_ref': request_ref, 'parent_request_sha256': parent['request_sha256'],
+            'parent_worker_identity_sha256': parent['worker_identity_sha256'],
+            **{key: parent[key] for key in ('scope_sha256', 'static_recipe_sha256', 'code_sha256')},
+            'parent_proof': {key: parent[key] for key in ('request_sha256', 'scope_sha256', 'worker_identity_sha256')},
+            'child_proof': {**{key: child[key] for key in ('request_sha256', 'scope_sha256', 'worker_identity_sha256')},
+                'sources': {'request_ref': request_ref}}}
+        artifact = dict(request_ref, role='checkpoint_branch', binding_sha256=raw.digest(child))
+        attempt['evidence'] = {'raw_refs': [artifact]}
+        state = SimpleNamespace(attempts=[attempt])
+        reductions, gaps = v._reductions(self.context, state, {'parent-cp': parent['worker_identity_sha256']},
+            None, {artifact['path']: child}, {child['worker_identity_sha256']: lineage})
+        self.assertEqual(reductions, {})
+        self.assertTrue(any('OS handle' in gap for gap in gaps))
+        wrong = copy.deepcopy(lineage); wrong['child_request_sha256'] = child['request_sha256']
+        with self.assertRaisesRegex(ValueError, 'raw child request hash'):
+            v._reductions(self.context, state, {'parent-cp': parent['worker_identity_sha256']}, None,
+                {artifact['path']: child}, {child['worker_identity_sha256']: wrong})
 
     def test_supplied_worker_flags_cannot_replace_actual_execution_handles(self):
         with self.assertRaisesRegex(raw.EvidenceRejected, 'source-issued handles'):

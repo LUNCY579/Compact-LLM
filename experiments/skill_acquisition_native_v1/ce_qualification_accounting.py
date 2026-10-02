@@ -29,12 +29,21 @@ KINDS = ce.NATIVE_KINDS | frozenset(('journal_construct', 'qualification_mask',
     'qualification_reference_forward', 'qualification_candidate_forward',
     'qualification_backward', 'qualification_gradient_validation', 'qualification_rng',
     'qualification_tensor_write', 'qualification_artifact', 'qualification_checkpoint_configuration',
-    'qualification_artifact_readback', 'qualification_reducer_overhead', 'resource_probe', 'resource_cuda_probe'))
+    'qualification_artifact_readback', 'qualification_reducer_overhead', 'resource_probe', 'resource_cuda_probe',
+    'qualification_state_fingerprint'))
 COST_FIELDS = q.COST_FIELDS
 canonical, digest, require = q.canonical, q.digest, q.require
 CHILD_PREFIX = 'CE8-CHECKPOINT-CHILD-PREDECESSOR-1'
 _REGISTERED_CHILD_PREFIX_VERIFIERS = frozenset()
 _CHILD_PREFIX_SEAL = object()
+
+
+def checkpoint_child_declaration(payload):
+    """Static launch declaration excludes facts that exist only after launch."""
+    dynamic = {'schema', 'worker_identity_sha256', 'child_request_sha256',
+               'child_request_ref', 'child_proof', 'declaration_sha256'}
+    return dict({key: _clone(value) for key, value in payload.items() if key not in dynamic},
+                schema='CE8-CHECKPOINT-CHILD-LINEAGE-DECLARATION-1')
 
 
 class CheckpointChildAdmission:
@@ -62,7 +71,7 @@ def _validate_child_prefix(context, proof, payload):
     require(type(payload) is dict and payload.get('schema') == CHILD_PREFIX
             and payload.get('branch') in ('uninterrupted', 'prefix', 'resumed'), 'declared qualification CP child branch')
     bindings = context['bindings']; batches = bindings['scope']['qualifier_execution']['adam_batches']
-    require(payload.get('child_request_sha256') == context['request_sha256']
+    require(payload.get('study_request_sha256') == context['request_sha256']
             and payload.get('scope_sha256') == context['scope_sha256']
             and payload.get('static_recipe_sha256') == context['static_recipe_sha256']
             and payload.get('code_sha256') == bindings['source']['code_sha256']
@@ -97,6 +106,16 @@ def _validate_child_prefix(context, proof, payload):
         return (type(value) is dict and type(value.get('path')) is str and Path(value['path']).is_absolute()
                 and q.hex64(value.get('sha256')) and q.integer(value.get('bytes'), 1))
     require(all(ref(value) for value in refs.values()), 'exact parent raw ledger proof refs')
+    child_ref, child_proof = payload.get('child_request_ref'), payload.get('child_proof')
+    require(ref(child_ref) and child_ref['sha256'] == payload.get('child_request_sha256')
+            and type(child_proof) is dict and child_proof.get('worker_identity_sha256') == proof['worker_identity_sha256']
+            and child_proof.get('request_sha256') == context['request_sha256']
+            and child_proof.get('scope_sha256') == context['scope_sha256']
+            and child_proof.get('boot_identity_sha256') == proof['boot_identity_sha256']
+            and child_proof.get('sources', {}).get('request_ref') == child_ref,
+            'derived actual child raw request/worker/logical study proof required')
+    declaration = checkpoint_child_declaration(payload)
+    require(payload.get('declaration_sha256') == digest(declaration), 'static child declaration digest drift')
     stage_seal = payload.get('parent_stage_seal')
     require(type(stage_seal) is dict and stage_seal.get('schema') == 'CE8-CHECKPOINT-PARENT-STAGE-SEAL-1'
             and stage_seal.get('stage') == 'checkpoint_resume' and stage_seal.get('completed') is False
@@ -130,7 +149,7 @@ def _validate_child_prefix(context, proof, payload):
                 'exact original prefix manifest/bindings body digests required')
         original = manifest['bindings']
         require(original.get('recipe') == bindings['recipe']['recipe']
-                and original.get('ordered_plan') == [{'boundary': i, 'logical_exposure': 0, 'row_ids': batch} for i, batch in enumerate(batches)]
+                and original.get('qualification_batches') == batches
                 and original.get('own_start_sha256') == payload['own_start_sha256']
                 and original.get('common_anchor_sha256') == payload['common_anchor_sha256']
                 and original.get('code') == payload['code_sha256'], 'prefix original recipe/source/anchor/plan drift')
@@ -139,9 +158,11 @@ def _validate_child_prefix(context, proof, payload):
         validate_progress(progress, batches)
         require(progress['C'] == progress['U'] == 1 and progress['history'] == history,
                 'prefix manifest exact observed U1/history required')
-    declared = bindings['scope'].get('checkpoint_child_lineage')
+    declared = context.get('checkpoint_child_declaration')
     if context.get('schema') != FIXTURE:
-        require(declared == payload, 'child lineage differs from source-bound frozen request')
+        require(declared == declaration
+                and context.get('checkpoint_child_observed_lineage') == payload,
+                'prelaunch declaration/observed child lineage differs from full source-bound execution context')
     return payload
 
 

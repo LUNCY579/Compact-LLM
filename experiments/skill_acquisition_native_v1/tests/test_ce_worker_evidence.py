@@ -85,6 +85,41 @@ class WorkerContractTests(unittest.TestCase):
         value = spec(); value.pop('process_image_ref')
         with self.assertRaises(w.WorkerEvidenceError): w.validate_spec(value)
 
+    def test_same_worker_identity_does_not_depend_on_current_or_supervisor_view(self):
+        value=spec(); identity=w.compare_identity(value,facts(value),value['expected_boot_identity'])
+        core={key:copy.deepcopy(value[key]) for key in ('python_ref','process_image_ref','request_ref','source_files')}
+        core.update(entry='worker.py',entry_script_ref=None)
+        parent=dict(core,runtime_launcher=None,launcher_provenance='supervisor launch record required',
+                    source_observation='initial parent observation')
+        child=dict(core,runtime_launcher={'path':value['python_ref']['path'],'source':'current worker sys.executable'},
+                   launcher_provenance='current-runtime path plus raw hash',source_observation='initial child observation')
+        args=(value['request_sha256'],value['scope_sha256'])
+        parent_preimage=w.worker_identity_preimage(identity,parent,*args)
+        child_preimage=w.worker_identity_preimage(identity,child,*args)
+        self.assertEqual(w.digest(parent_preimage),w.digest(child_preimage))
+        self.assertNotEqual(parent,child)  # descriptive evidence remains in each proof
+        for key in ('runtime_launcher','launcher_provenance','source_observation'):
+            self.assertNotIn(key,parent_preimage['source'])
+        child_preimage['source']['python_ref']['path']='mutated returned preimage'
+        self.assertEqual(child['python_ref']['path'],value['python_ref']['path'])
+
+    def test_worker_identity_changes_with_os_request_scope_or_any_bound_source(self):
+        value=spec(); identity=w.compare_identity(value,facts(value),value['expected_boot_identity'])
+        sources={key:copy.deepcopy(value[key]) for key in ('python_ref','process_image_ref','request_ref','source_files')}
+        sources.update(entry='worker.py',entry_script_ref=None)
+        baseline=w.digest(w.worker_identity_preimage(identity,sources,value['request_sha256'],value['scope_sha256']))
+        for key in ('pid','creation_filetime_100ns','boot_identity','image_path','argv'):
+            changed=copy.deepcopy(identity)
+            changed[key]=changed[key]+1 if type(changed[key]) is int else str(changed[key])+'changed'
+            self.assertNotEqual(w.digest(w.worker_identity_preimage(changed,sources,value['request_sha256'],value['scope_sha256'])),baseline)
+        for key in ('python_ref','process_image_ref','request_ref'):
+            changed=copy.deepcopy(sources); changed[key]['sha256']='f'*64
+            self.assertNotEqual(w.digest(w.worker_identity_preimage(identity,changed,value['request_sha256'],value['scope_sha256'])),baseline)
+        changed=copy.deepcopy(sources); changed['source_files']['worker.py']['sha256']='f'*64
+        self.assertNotEqual(w.digest(w.worker_identity_preimage(identity,changed,value['request_sha256'],value['scope_sha256'])),baseline)
+        for args in (('f'*64,value['scope_sha256']),(value['request_sha256'],'f'*64)):
+            self.assertNotEqual(w.digest(w.worker_identity_preimage(identity,sources,*args)),baseline)
+
     def test_status_file_or_probe_flags_cannot_establish_native_process_handle(self):
         for worker in ({'terminal': True, 'exit_code': 0}, True, object(), object.__new__(w.WinWorkerHandle)):
             with self.assertRaises(w.WorkerEvidenceError): w.verify_worker_handle(worker, {'worker_identity_sha256': 'c' * 64})

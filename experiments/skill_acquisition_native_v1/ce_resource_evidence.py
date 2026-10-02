@@ -158,7 +158,8 @@ def readonly_sample(spec, operation):
     except BaseException as error:
         _failed(operation, identifier, start, error); raise
     operation('resource_probe', 'returned', operation_id=identifier, wall_s=elapsed,
-              bytes_read=read, identity_hash_attempts_actual=1, identity_hash_bytes_actual=read,
+              bytes_read=read, bytes_written=0, identity_hash_attempts_actual=1, identity_hash_bytes_actual=read,
+              io_observation_scope='explicit Python file IO; external query utility OS IO is unmeasured',
               resource_observation=sample)
     return sample
 
@@ -243,6 +244,8 @@ class NativeResourceRecorder:
                     raise error from accounting
                 raise
             self.operation('resource_cuda_probe', 'returned', operation_id=identifier, wall_s=elapsed,
+                           bytes_read=0, bytes_written=0, identity_hash_attempts_actual=0,
+                           identity_hash_bytes_actual=0, io_observation_scope='explicit Python file IO and hashes only',
                            resource_observation=sample)
         self.samples.append(sample)
         return copy.deepcopy(sample)

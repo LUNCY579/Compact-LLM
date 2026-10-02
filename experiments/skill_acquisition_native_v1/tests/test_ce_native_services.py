@@ -63,7 +63,42 @@ class NativeServicesTests(unittest.TestCase):
         self.assertIs(dispatcher, original); self.assertIs(dispatcher.bootstrap, bootstrap)
         self.assertEqual([name for name, _ in events], ['bootstrap', 'qualification'])
         self.assertEqual(bootstrap.snapshot(), {'costs': 3})
+        dispatcher('fixture', 'returned', operation_id='before')
+        dispatcher('loss_forward', 'returned', operation_id='after')
+        self.assertEqual([name for name, _ in events], ['bootstrap', 'qualification', 'bootstrap', 'qualification'])
+        with self.assertRaisesRegex(s.worker.WorkerEvidenceError, 'identity reused'):
+            dispatcher('fixture', 'started', operation_id='before')
         with self.assertRaises(s.worker.WorkerEvidenceError): dispatcher.attach_qualification_accounting(ledger)
+
+    def test_actual_work_overrun_is_fatal_keeps_pending_reservation(self):
+        for field, value in (('wall_s', 2), ('bytes_read', 1001), ('bytes_written', 1001),
+                ('identity_hash_attempts_actual', 11), ('identity_hash_bytes_actual', 1001), ('wall_s', True)):
+            with self.subTest(field=field, value=value), tempfile.TemporaryDirectory() as directory:
+                ledger = s.BootstrapLedger(bootstrap_spec(Path(directory)), 'a' * 64, synthetic_fixture=True)
+                ledger.operation('fixture', 'started', operation_id='overrun')
+                charged = dict(ledger.counters)
+                with self.assertRaisesRegex(s.worker.WorkerEvidenceError, 'actual work exceeds'):
+                    ledger.operation('fixture', 'returned', operation_id='overrun', **{field: value})
+                self.assertTrue(ledger.fatal)
+                self.assertEqual(ledger.operations['overrun']['phase'], 'started')
+                self.assertEqual(ledger.counters, charged)
+                self.assertEqual(ledger.snapshot()['pending'], ['overrun'])
+
+    def test_finalize_worker_failure_closes_local_handle_preserves_primary(self):
+        services = object.__new__(s.NativeControllerServices)
+        services._admit = lambda: None
+        services.operation = lambda *args, **kwargs: None
+        services._role = lambda *args: (lambda *args: ({}, object()))
+        calls = []; primary = RuntimeError('OS proof failed')
+        def fail(): raise primary
+        def close(): calls.append('close'); raise RuntimeError('close failed')
+        handle = SimpleNamespace(proof=fail, close=close)
+        with patch.object(s.worker, 'open_worker', return_value=handle):
+            with self.assertRaisesRegex(RuntimeError, 'OS proof failed') as caught:
+                services.finalize_worker_context({'fixture': True})
+        self.assertIs(caught.exception, primary)
+        self.assertEqual(calls, ['close'])
+        self.assertEqual(primary.worker_close_failure['message'], 'close failed')
 
     def test_bootstrap_failed_attempt_remains_charged_and_hash_chain_is_durable(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -90,6 +125,10 @@ class NativeServicesTests(unittest.TestCase):
             with self.assertRaisesRegex(s.worker.WorkerEvidenceError, 'aliases'):
                 ledger.operation('fixture', 'started', operation_id='one', read_bytes_upper=10, io_read_bytes_upper=11)
             self.assertNotIn('one', ledger.operations)
+            before = dict(ledger.counters)
+            with self.assertRaisesRegex(s.worker.WorkerEvidenceError, 'declared wall work'):
+                ledger.operation('fixture', 'started', operation_id='wall', wall_s_upper=2)
+            self.assertEqual(ledger.counters, before); self.assertNotIn('wall', ledger.operations)
 
     def test_short_bootstrap_append_is_fatal_and_keeps_prepaid_charges(self):
         with tempfile.TemporaryDirectory() as directory:

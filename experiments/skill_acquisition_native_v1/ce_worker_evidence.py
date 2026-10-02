@@ -224,6 +224,22 @@ def compare_identity(spec, facts, boot):
         'boot_identity': boot, 'image_path': facts['image_path'], 'argv': list(spec['argv'])}
 
 
+def worker_identity_preimage(identity, sources, request_sha256, scope_sha256):
+    """Stable observed process/source identity, independent of observer view.
+
+    Current-worker sys.executable evidence and supervisor provenance wording are
+    retained in proofs. They describe how a view observed the same worker and
+    must not make that worker's OS/source identity depend on the observing PID.
+    """
+    fields = ('python_ref', 'process_image_ref', 'request_ref', 'source_files', 'entry', 'entry_script_ref')
+    require(type(identity) is dict and identity.get('schema') == IDENTITY
+            and type(sources) is dict and all(key in sources for key in fields)
+            and _hex(request_sha256) and _hex(scope_sha256), 'stable worker identity bindings required')
+    return {'os': copy.deepcopy(identity),
+        'source': {key: copy.deepcopy(sources[key]) for key in fields},
+        'request_sha256': request_sha256, 'scope_sha256': scope_sha256}
+
+
 class WinWorkerHandle:
     """One retained actual process handle, avoiding reopening a recycled PID."""
     def __init__(self, spec, permit, observer):
@@ -246,8 +262,8 @@ class WinWorkerHandle:
             again = self.budget.run('worker_os_binding', lambda: self.os.snapshot(self.handle))
             require(compare_identity(spec, again, self.budget.run('worker_os_binding', self.os.boot)) == self.identity
                     and again['signaled'] is False, 'worker identity changed during source verification')
-            self.identity_sha256 = digest({'os': self.identity, 'source': self.sources,
-                'request_sha256': spec['request_sha256'], 'scope_sha256': spec['scope_sha256']})
+            self.identity_sha256 = digest(worker_identity_preimage(self.identity, self.sources,
+                spec['request_sha256'], spec['scope_sha256']))
         except BaseException as error:
             try: self.close()
             except BaseException as close_error:

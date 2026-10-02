@@ -215,11 +215,57 @@ def _payload_blocks(reader, reference, expected, specifications):
             raise
 
 
-def compare_checkpoint_states(reader, left_manifest_ref, left_binding, right_manifest_ref, right_binding, *, parameter_inventory):
-    """Actual byte comparison, with independent worker provenance left intact."""
+def validate_checkpoint_relationship(left_binding, right_binding, *, parent_binding=None, child_lineages=None):
+    """Exact declared study ancestry; this arithmetic check is not OS proof."""
+    raw.binding(left_binding); raw.binding(right_binding)
+    require(left_binding['stage'] == right_binding['stage'] == 'checkpoint_resume', 'checkpoint branch stage')
     require(left_binding['worker_identity_sha256'] != right_binding['worker_identity_sha256'], 'independent fresh checkpoint workers required')
-    require(all(left_binding[key] == right_binding[key] for key in ('request_sha256', 'scope_sha256', 'static_recipe_sha256', 'code_sha256')),
+    require(all(left_binding[key] == right_binding[key] for key in ('scope_sha256', 'static_recipe_sha256', 'code_sha256')),
             'same checkpoint study/source/recipe for separate workers')
+    if parent_binding is None and child_lineages is None:
+        require(left_binding['request_sha256'] == right_binding['request_sha256'],
+                'different checkpoint requests require exact parent/child lineage')
+        return
+    raw.binding(parent_binding)
+    require(parent_binding['stage'] == 'checkpoint_resume' and type(child_lineages) is dict,
+            'explicit checkpoint parent binding and observed child lineage map')
+    for value in (left_binding, right_binding):
+        require(all(value[key] == parent_binding[key] for key in ('scope_sha256', 'static_recipe_sha256', 'code_sha256')),
+                'checkpoint lineage parent study/source/recipe drift')
+        identity = value['worker_identity_sha256']
+        if identity == parent_binding['worker_identity_sha256']:
+            require(value == parent_binding, 'exact parent attempt binding required')
+            continue
+        lineage = child_lineages.get(identity)
+        require(type(lineage) is dict and lineage.get('schema') == 'CE8-CHECKPOINT-CHILD-PREDECESSOR-1'
+                and lineage.get('worker_identity_sha256') == identity
+                and lineage.get('study_request_sha256') == value['request_sha256'] == parent_binding['request_sha256']
+                and lineage.get('parent_request_sha256') == parent_binding['request_sha256']
+                and lineage.get('parent_worker_identity_sha256') == parent_binding['worker_identity_sha256']
+                and all(lineage.get(key) == parent_binding[key] for key in ('scope_sha256', 'static_recipe_sha256', 'code_sha256')),
+                'exact observed child request/worker/parent lineage required')
+        proof = lineage.get('parent_proof')
+        require(type(proof) is dict and proof.get('worker_identity_sha256') == parent_binding['worker_identity_sha256']
+                and proof.get('request_sha256') == parent_binding['request_sha256']
+                and proof.get('scope_sha256') == parent_binding['scope_sha256'],
+                'retained exact parent worker proof required')
+        child_proof, request_ref = lineage.get('child_proof'), lineage.get('child_request_ref')
+        require(type(request_ref) is dict and type(request_ref.get('path')) is str and Path(request_ref['path']).is_absolute()
+                and raw._hex(request_ref.get('sha256')) and raw._int(request_ref.get('bytes'), 1)
+                and lineage.get('child_request_sha256') == request_ref['sha256']
+                and type(child_proof) is dict and child_proof.get('worker_identity_sha256') == identity
+                and child_proof.get('request_sha256') == value['request_sha256']
+                and child_proof.get('scope_sha256') == value['scope_sha256']
+                and child_proof.get('sources', {}).get('request_ref') == request_ref,
+                'raw child request hash and observed child proof are separate from study identity')
+
+
+def compare_checkpoint_states(reader, left_manifest_ref, left_binding, right_manifest_ref, right_binding, *, parameter_inventory,
+                              parent_binding=None, child_lineages=None):
+    """Actual byte comparison, with independent worker provenance left intact."""
+    require(type(reader) is raw.RawEvidenceReader, 'actual bounded paid checkpoint reader required')
+    with reader._overhead('checkpoint_study_ancestry', work_bytes=8 * raw.MAX_BINDING_BYTES):
+        validate_checkpoint_relationship(left_binding, right_binding, parent_binding=parent_binding, child_lineages=child_lineages)
     left = _read_manifest(reader, left_manifest_ref, left_binding)
     right = _read_manifest(reader, right_manifest_ref, right_binding)
     require(left['specifications'] == right['specifications'], 'bitwise state requires exact parameter/Adam/RNG tensor keys/shapes')

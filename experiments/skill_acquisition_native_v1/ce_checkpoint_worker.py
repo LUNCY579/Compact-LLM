@@ -21,6 +21,7 @@ from . import ce_qualification_artifacts as raw
 REQUEST = 'CE8-CHECKPOINT-WORKER-REQUEST-1'
 COMMAND = 'CE8-CHECKPOINT-WORKER-COMMAND-1'
 RESULT = 'CE8-CHECKPOINT-WORKER-RESULT-1'
+DECLARATION = 'CE8-CHECKPOINT-CHILD-LINEAGE-DECLARATION-1'
 _REGISTERED_LOCAL_ISSUERS = frozenset()
 _REGISTERED_CHILD_INITIALIZERS = frozenset()
 _REGISTERED_CHILD_LEASE_SERVICES = frozenset()
@@ -41,25 +42,27 @@ def validate_command(command, request):
 def validate_request(request, context):
     require(type(request) is dict and request.get('schema') == REQUEST and request.get('branch') in cp.BRANCHES,
             'explicit checkpoint child request/branch')
-    require(not {'approved', 'native_permit', 'observation_permit', 'training_authorized', 'qualification_authorized'} & set(request),
+    require(not {'approved', 'native_permit', 'observation_permit', 'training_authorized', 'qualification_authorized',
+                 'request_sha256', 'worker_identity_sha256', 'child_request_sha256', 'child_request_ref', 'child_proof'} & set(request),
             'JSON request cannot supply execution capabilities')
     batches = cp.qualification_batches(context)
     plan = {'qualification_batches': batches, 'branch': request['branch']}
     require(request.get('plan_sha256') == raw.digest(plan)
-            and request.get('request_sha256') == context['request_sha256']
+            and request.get('study_request_sha256') == context['request_sha256']
             and request.get('scope_sha256') == context['scope_sha256']
             and request.get('static_recipe_sha256') == context['static_recipe_sha256']
             and request.get('code_sha256') == context['bindings']['source']['code_sha256']
             and request.get('common_anchor_sha256') == context['bindings']['anchors']['common_anchor_sha256']
             and request.get('ingestion_receipt_sha256') == context['bindings']['scope']['qualifier_accounting']['ingestion_receipt_sha256'],
             'checkpoint child plan/source/recipe/anchor/census binding')
-    lineage = request.get('predecessor')
-    require(type(lineage) is dict and lineage.get('schema') == 'CE8-CHECKPOINT-CHILD-PREDECESSOR-1'
+    lineage = request.get('lineage_declaration')
+    require(type(lineage) is dict and lineage.get('schema') == DECLARATION
             and lineage.get('branch') == request['branch'] and lineage.get('qualification_batches') == batches
             and lineage.get('inherited_U') == (1 if request['branch'] == 'resumed' else 0)
             and type(lineage['inherited_U']) is int, 'explicit independently verified child predecessor/prefix contract')
-    require(request.get('worker_identity_sha256') == lineage.get('worker_identity_sha256')
-            and raw._hex(request.get('worker_identity_sha256')), 'actual child worker identity bound to lineage')
+    require(not {'worker_identity_sha256', 'child_request_sha256', 'child_request_ref', 'child_proof', 'declaration_sha256'} & set(lineage)
+            and lineage == context.get('checkpoint_child_declaration'),
+            'immutable lineage declaration excludes future OS identity/raw-file hashes')
     if request['branch'] == 'resumed':
         require(type(lineage.get('prefix_manifest_ref')) is dict
                 and raw._hex(lineage.get('prefix_checkpoint_bindings_sha256'))
@@ -68,10 +71,76 @@ def validate_request(request, context):
     return copy.deepcopy(request)
 
 
+def validate_observed_lineage(request, context, actual_proof):
+    """Check the post-observation envelope; this function issues no capability.
+
+    The native handler passes its refreshed actual WinWorkerHandle proof. The
+    local issuer derives this envelope after bounded raw-file/OS observation and
+    includes it in the execution permit preimage, never in the launch request.
+    """
+    from .ce_qualification_accounting import checkpoint_child_declaration
+    observed = context.get('checkpoint_child_observed_lineage')
+    require(type(observed) is dict and observed.get('schema') == 'CE8-CHECKPOINT-CHILD-PREDECESSOR-1'
+            and checkpoint_child_declaration(observed) == request['lineage_declaration']
+            and observed.get('declaration_sha256') == raw.digest(request['lineage_declaration']),
+            'observed child envelope matches static frozen declaration')
+    require(type(actual_proof) is dict and observed.get('child_proof') == actual_proof
+            and observed.get('worker_identity_sha256') == actual_proof.get('worker_identity_sha256')
+            and raw._hex(observed.get('worker_identity_sha256')), 'actual observed child proof/identity envelope')
+    reference = observed.get('child_request_ref')
+    require(type(reference) is dict and set(reference) == {'path', 'sha256', 'bytes'}
+            and type(reference['path']) is str and raw._hex(reference['sha256']) and type(reference['bytes']) is int
+            and reference['bytes'] > 0 and observed.get('child_request_sha256') == reference['sha256']
+            and actual_proof.get('sources', {}).get('request_ref') == reference,
+            'actual raw request reference binds OS-observed source without self-reference')
+    require(observed.get('study_request_sha256') == context['request_sha256'],
+            'stable logical study identity remains distinct from raw child file hash')
+    return copy.deepcopy(observed)
+
+
 def _service(value, registry, name):
     if not any(value is item for item in registry):
         raise MissingCheckpointWorkerService('source-registered checkpoint child ' + name + ' is missing before kernel')
     return value
+
+
+def expected_negative_error(error, message):
+    """Accept a specific plain validation rejection, never infrastructure failure."""
+    if type(error) is not ValueError or str(error) != message or vars(error) or error.__cause__ is not None:
+        raise error
+    return {'type': 'ValueError', 'message': message}
+
+
+def validate_stale_attempt(record, current):
+    require(type(record) is dict and record.get('schema') == cp.RESTORE_SCHEMA
+            and type(record.get('progress')) is dict
+            and type(current) is dict and all(type(current.get(key)) is int for key in ('C', 'U', 'generation'))
+            and 0 <= current['C'] == current['U'] <= 2 and current['generation'] >= 0,
+            'complete retained stale attempt')
+    progress = record['progress']
+    require(all(type(progress.get(key)) is int for key in ('C', 'U', 'generation'))
+            and progress['C'] == progress['U'] == current['C'] == current['U']
+            and progress.get('history') == current['history'] and 0 <= progress['generation'] <= current['generation']
+            and all(type(record.get(key)) is int and record[key] == progress[key] for key in ('C', 'U', 'generation'))
+            and record.get('history') == progress['history'] and record.get('install_fence_required') is True
+            and raw._hex(record.get('manifest_sha256'))
+            and raw._hex(progress.get('snapshot'))
+            and progress['snapshot'] == progress.get('symbolic_snapshot') == record.get('snapshot') == record.get('symbolic_snapshot'),
+            'exact stale endpoint/nested fields with nonfuture generation')
+    return copy.deepcopy(record)
+
+
+def failed_corruption_operation(operations, before_ids, binding):
+    matches = [(identifier, op) for identifier, op in operations.items() if identifier not in before_ids and type(op) is dict
+        and op.get('kind') == 'checkpoint_restore' and op.get('phase') == 'failed'
+        and op.get('worker_id') == binding['worker_identity_sha256']
+        and op.get('attempt_id') == binding['attempt_id'] and op.get('stage') == binding['stage']
+        and type(op.get('result')) is dict and op['result'].get('error_type') == 'ValueError'
+        and op['result'].get('error') == 'latest checkpoint payload bytes corrupt'
+        and type(op.get('started_seq')) is int and type(op.get('returned_seq')) is int
+        and 0 <= op['started_seq'] < op['returned_seq']]
+    require(len(matches) == 1, 'one newly retained current-worker corrupt checkpoint restore rejection')
+    return {'operation_id': matches[0][0], 'operation': copy.deepcopy(matches[0][1])}
 
 
 class CheckpointChildHandler:
@@ -134,7 +203,7 @@ class CheckpointChildHandler:
                 and all(type(value) is int and value >= 0 for value in bounds.values()),
                 'explicit prepriced complete state fingerprint bounds')
         from . import update
-        with update._span(self.operation, 'qualification_state_fingerprint', dict(bounds, reason='negative_control_live_state')):
+        with update._span(self.operation, 'qualification_state_fingerprint', dict(bounds, reason='negative_control_live_state')) as record:
             self.gate('qualification_state_fingerprint')
             parameters, _, groups, _ = checkpoints.storage._scope(backend.model, backend.optimizer)
             tensors, initialized, rng, specifications = checkpoints.storage._capture(parameters, backend.optimizer, progress)
@@ -142,30 +211,39 @@ class CheckpointChildHandler:
             require(bounds['identity_hash_attempts_upper'] >= len(tensors) + 1
                     and bounds['identity_hash_bytes_upper'] >= expected_bytes + raw.MAX_JSON,
                     'complete parameter/Adam/RNG hash work lower bound before hashing')
-            hashes = {}
+            hashes, hashed_bytes = {}, 0
             for name, tensor in tensors.items():
                 hashed = hashlib.sha256()
-                for chunk in streams.tensor_chunks(tensor): hashed.update(chunk)
+                for chunk in streams.tensor_chunks(tensor): hashed.update(chunk); hashed_bytes += len(chunk)
                 hashes[name] = hashed.hexdigest()
             metadata = {'tensor_hashes': hashes, 'specifications': specifications, 'Adam_initialized': initialized,
                 'rng': rng, 'optimizer_groups': groups,
                 'module_training': {name: module.training for name, module in backend.model.named_modules()}}
-            return raw.digest(metadata)
+            encoded = raw.canonical(metadata)
+            require(len(encoded) <= raw.MAX_JSON and hashed_bytes == expected_bytes,
+                    'bounded complete streamed state descriptor/hash byte count')
+            state_hash = hashlib.sha256(encoded).hexdigest()
+            record.update(state_sha256=state_hash, state_descriptor=metadata,
+                identity_hash_attempts_actual=len(tensors) + 1,
+                identity_hash_bytes_actual=hashed_bytes + len(encoded))
+            return state_hash
 
     def _negative_controls(self, checkpoints, request, binding):
         before = self._state_digest(checkpoints)
         corrupt = self.initializer.open_owned_corruption_store(self.context, self.permit, self.accounting, request, binding)
         require(type(corrupt) is cp.QualificationCheckpoints, 'actual isolated corrupt checkpoint storage required')
-        rejected = None
+        rejected = None; before_operations = set(self.accounting.operations)
         try: corrupt.restore(self.backend.model, self.backend.optimizer)
-        except Exception as error: rejected = {'type': type(error).__name__, 'message': str(error)[:1000]}
+        except Exception as error: rejected = expected_negative_error(error, 'latest checkpoint payload bytes corrupt')
         require(rejected is not None, 'corrupted latest checkpoint must reject, never fallback')
+        corruption_operation = failed_corruption_operation(self.accounting.operations, before_operations, binding)
         after_corruption = self._state_digest(checkpoints)
         require(before == after_corruption, 'corruption rejection changed live parameter/Adam/module/RNG state')
         stale = self.initializer.stale_fence_record(self.context, self.accounting, request, binding)
+        stale = validate_stale_attempt(stale, self.accounting.progress_record())
         stale_error = None
         try: self.accounting.install_restore(stale)
-        except Exception as error: stale_error = {'type': type(error).__name__, 'message': str(error)[:1000]}
+        except Exception as error: stale_error = expected_negative_error(error, 'exact ancestor nested restore fence')
         require(stale_error is not None, 'stale generation/fence must reject')
         after_stale = self._state_digest(checkpoints)
         require(before == after_stale, 'stale fence rejection changed complete live state')
@@ -185,13 +263,14 @@ class CheckpointChildHandler:
                 'verified good ancestor restores exact endpoint/RNG/modes and clears fresh-fence obligation')
         return {'before_state_sha256': before, 'after_corruption_state_sha256': after_corruption,
             'after_stale_state_sha256': after_stale, 'corruption_error': rejected, 'stale_fence_error': stale_error,
+            'corruption_restore_operation': corruption_operation, 'stale_attempt_record': stale,
             'recovered_state_sha256': recovered, 'recovery_restore_record': record,
             'classification': 'actual negative-control operations; failed reservations retained, not native PASS'}
 
     def run(self, request, command):
         self._admit()
         request = validate_request(request, self.context); validate_command(command, request)
-        require(request['worker_identity_sha256'] == self.proof['worker_identity_sha256'], 'request actual child identity mismatch')
+        predecessor = validate_observed_lineage(request, self.context, self.proof)
         require(self.backend is None, 'checkpoint child branch runs once')
         from .ce_qualification_accounting import QualificationAccounting, CheckpointChildAdmission
         from .ce_native_backend import NativeCEBackend
@@ -204,9 +283,9 @@ class CheckpointChildHandler:
         self.accounting = accounting
         require(callable(getattr(self.operation, 'attach_qualification_accounting', None)), 'stable child accounting dispatcher')
         self.operation.attach_qualification_accounting(accounting)
-        admission = self.initializer.predecessor_capability(self.context, self.permit, self.proof, request['predecessor'])
+        admission = self.initializer.predecessor_capability(self.context, self.permit, self.proof, predecessor)
         require(type(admission) is CheckpointChildAdmission, 'source-issued exact checkpoint child predecessor capability')
-        accounting.admit_checkpoint_child_prefix(request['predecessor'], admission_handle=admission,
+        accounting.admit_checkpoint_child_prefix(predecessor, admission_handle=admission,
             verifier=self.initializer.predecessor_verifier)
         initial_U = 1 if request['branch'] == 'resumed' else 0
         require(accounting.progress_record()['C'] == accounting.progress_record()['U'] == initial_U,
@@ -220,7 +299,8 @@ class CheckpointChildHandler:
         primary, checkpoint, branch_result = None, None, None
         # The source-owned supervisor transfer does not compete for a second
         # lease while the parent holds it. Its registry is currently empty.
-        with self.lease.enter_child(self.context, self.permit, self.proof, request):
+        from .ce_controller import _OwnedContext
+        with _OwnedContext(self.lease.enter_child(self.context, self.permit, self.proof, request)):
             try:
                 # Local bootstrap must leave CUDA uninitialized. This is the
                 # one and only configure/load owner in this fresh OS process.
@@ -237,7 +317,7 @@ class CheckpointChildHandler:
                     # with this child's own source/evidence binding.
                     imported = self.initializer.admit_prefix_storage(self.context, self.permit, request, bindings)
                     require(type(imported) is dict and set(imported) == {'directory', 'bindings'}
-                            and raw.digest(imported['bindings']) == request['predecessor']['prefix_checkpoint_bindings_sha256'],
+                            and raw.digest(imported['bindings']) == predecessor['prefix_checkpoint_bindings_sha256'],
                             'actual original imported prefix checkpoint binding')
                     prefix = cp.QualificationCheckpoints(self.context, self.permit, imported['directory'], imported['bindings'],
                         sum(math.prod(entry['shape']) for entry in bindings['inventory']),
@@ -277,6 +357,7 @@ class CheckpointChildHandler:
                     raise
         # Terminal raw publication is deliberately after model cleanup and
         # supervisor lease return. The OS supervisor separately proves exit.
+        require(primary is None and branch_result is not None, 'failed/incomplete child work cannot publish terminal success')
         return self.publisher.publish_after_release(self.context, self.permit, request, binding, branch_result, accounting,
             result_schema=RESULT, native_qualified=False)
 
