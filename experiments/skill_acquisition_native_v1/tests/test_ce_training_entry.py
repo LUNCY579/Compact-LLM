@@ -2,13 +2,15 @@
 import copy
 from pathlib import Path
 import sys
+import io
 import tempfile
-from types import MappingProxyType
+from types import MappingProxyType,SimpleNamespace
 import unittest
 from unittest.mock import patch
 
 from experiments.skill_acquisition_native_v1 import ce_training_entry as e,ce_training_configuration as c
 from .test_ce_qualified_receipt import Tests as PairFixture
+from .test_ce_finalizer_accounting import spec as finalizer_spec
 
 
 def configuration(root,selection):
@@ -22,6 +24,8 @@ def configuration(root,selection):
         'resource':{'resource_probe':{'output_root':str(root/'output')}},'bootstrap':{'owned_directory':str(root/'output'/'services')},
         'constructor_prepayment':{'owned_directory':str(root/'output'/'services')},'role_descriptors':{
             name:{'module':fn.__module__,'symbol':fn.__name__,'source_sha256':'a'*64} for name,fn in e.role_functions().items()}}
+    spec['supervision']={'schema':'CE8-TRAINING-SUPERVISION-SPEC-1','owned_directory':str(root/'output'/'supervision'),
+        'max_json_bytes':e.raw.MAX_JSON,'finalizer':finalizer_spec(root/'output')}
     rpc={'schema':e.rpc.SPEC,'deadline_seconds':60,'rpc_seconds':5,'max_message_bytes':4096,'max_messages':8,
         'max_request_bytes':e.raw.MAX_JSON,'operation_bounds':dict(read_bytes_upper=e.raw.MAX_JSON+1,write_bytes_upper=4096,
             identity_hash_attempts_upper=64,identity_hash_bytes_upper=64*e.raw.MAX_JSON,wall_s_upper=5)}
@@ -61,10 +65,11 @@ class Tests(unittest.TestCase):
         original=Path.open;starts=[]
         def opened(path,mode='r',*args,**kwargs):
             if str(path)==policy['configuration_path'] and mode=='rb':
-                first=e.raw._json((Path(policy['owned_directory'])/'parent.jsonl').read_bytes().splitlines()[0]);starts.append(first['kind'])
+                first=e.raw._json((Path(policy['owned_directory'])/'child-0.jsonl').read_bytes().splitlines()[0]);starts.append(first['kind'])
             return original(path,mode,*args,**kwargs)
         with (patch.object(c,'_SOURCE_DECLARATION',MappingProxyType(policy)),patch.object(c,'_SOURCE_DECLARATION_SHA256',e.digest(policy)),
-              patch.object(c,'_LOADED',None),patch.object(c,'_EVIDENCE',None),patch.object(Path,'open',opened)):
+              patch.object(c,'_LOADED',None),patch.object(c,'_EVIDENCE',None),patch.object(Path,'open',opened),
+              patch.dict(c.sys.modules,{'__main__':SimpleNamespace(__spec__=SimpleNamespace(name=e.ENTRY_MODULE))})):
             configured,evidence=c.load_source_configuration()
             self.assertEqual(configured,self.config);self.assertTrue(evidence['metadata_only']);self.assertFalse(evidence['native_qualified'])
             self.assertEqual(starts,['PERMANENT_RESERVATION'])
@@ -82,6 +87,46 @@ class Tests(unittest.TestCase):
         self.assertFalse(events[2][2]['os_terminal_verified']);self.assertFalse(events[2][2]['native_qualified'])
         commands=iter(({'command':'finish','data':{}},))
         with self.assertRaisesRegex(ValueError,'fixed train command'):e.serve_training(Pipe(),{},lambda:(_ for _ in ()).throw(AssertionError('early body')))
+
+    def test_helper_stdout_goes_to_stderr_while_captured_rpc_pipe_keeps_json(self):
+        rpc_output,diagnostics=io.StringIO(),io.StringIO()
+        commands=iter(({'command':'train','data':{}},{'command':'finish','data':{}}))
+        class Pipe:
+            def emit(self,*args):rpc_output.write(e.canonical({'kind':args[0],'sequence':args[1],'payload':args[2]}).decode('ascii')+'\n')
+            def receive(self,sequence):return next(commands)
+        def train():
+            print('[LEASE] owned GPU helper diagnostic')
+            return {'seal':{'status':'UNQUALIFIED_TRAINING_BODY_SEAL','body_ref':{
+                'path':str(self.root/'body.json'),'sha256':'a'*64,'bytes':10}}}
+        with patch.object(e.sys,'stdout',rpc_output),patch.object(e.sys,'stderr',diagnostics):
+            self.assertEqual(e.serve_training(Pipe(),{'proof':'fixture'},train),0)
+        lines=[e.raw._json(line) for line in rpc_output.getvalue().splitlines()]
+        self.assertEqual([line['kind'] for line in lines],['ready','response','response'])
+        self.assertNotIn('[LEASE]',rpc_output.getvalue());self.assertIn('[LEASE]',diagnostics.getvalue())
+
+    def test_two_fixed_executable_intake_slots_do_not_collide_and_unknown_role_refuses(self):
+        policy={'schema':c.DECLARATION,'configuration_path':str(self.root/'two-role-config.json'),
+            'owned_directory':str(self.root/'output'/'two-role-intake'),'source_checkout':str(self.root/'source'),
+            'output_root':str(self.root/'output'),'choice_sha256':self.config['request']['selectedoperatorchoice_ref']['sha256'],
+            'static_recipe_sha256':self.config['service_spec']['scope_adapters']['static_recipe_sha256'],
+            'qualification_selection_sha256':self.config['qualification_selection_sha256'],
+            'bounds':{'read_bytes':64*1024**2,'write_bytes':1024**2,'hash_attempts':10000,'hash_bytes':256*1024**2,
+                'metadata_bytes':1024**2,'operation_attempts':10000,'wall_seconds':120}}
+        Path(policy['configuration_path']).write_bytes(e.canonical(self.config)+b'\n')
+        for name,slot in ((e.__package__+'.ce_training_supervisor','parent'),(e.ENTRY_MODULE,'child-0')):
+            with (patch.object(c,'_SOURCE_DECLARATION',MappingProxyType(policy)),patch.object(c,'_SOURCE_DECLARATION_SHA256',e.digest(policy)),
+                  patch.object(c,'_LOADED',None),patch.object(c,'_EVIDENCE',None),
+                  patch.dict(c.sys.modules,{'__main__':SimpleNamespace(__spec__=SimpleNamespace(name=name))})):
+                config,evidence=c.load_source_configuration()
+                self.assertEqual(config,self.config);self.assertEqual(evidence['source_intake_slot'],slot)
+        self.assertEqual(sorted(path.name for path in Path(policy['owned_directory']).glob('*.jsonl')),['child-0.jsonl','parent.jsonl'])
+        with patch.dict(c.sys.modules,{'__main__':SimpleNamespace(__spec__=SimpleNamespace(name='caller.module'))}):
+            with self.assertRaisesRegex(ValueError,'fixed production executable'):c._source_intake_slot()
+
+    def test_supervision_and_finalizer_policy_fail_before_source_installation(self):
+        changed=copy.deepcopy(self.config);changed['service_spec']['supervision'].pop('finalizer')
+        changed['configuration_sha256']=e.digest({key:value for key,value in changed.items() if key!='configuration_sha256'})
+        with self.assertRaisesRegex(ValueError,'supervisor policy'):e.validate_configuration(changed)
 
 
 if __name__=='__main__':unittest.main()

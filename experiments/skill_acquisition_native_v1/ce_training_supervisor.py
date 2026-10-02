@@ -7,6 +7,7 @@ module makes no skill acquisition, retention or measured-price claim.
 from __future__ import annotations
 
 import copy
+from contextlib import redirect_stdout
 import importlib
 import os
 from pathlib import Path
@@ -195,6 +196,23 @@ def _read_worker_service(owner, configuration, binding):
     return refs, replay
 
 
+def validate_checkpoint_schedule(state, execution):
+    """Derive saves from original returned operations, never body flags."""
+    scheduled = services.controller.checkpoint_boundaries(execution)
+    saves = []
+    for identifier, operation in state.operations.items():
+        if operation['kind'] != 'checkpoint_save' or operation['phase'] != 'returned':
+            continue
+        fields, result = operation['fields'], operation['result']
+        require(type(fields.get('C')) is type(fields.get('U')) is int and fields['C'] == fields['U']
+                and type(result.get('C')) is type(result.get('U')) is int and result['C'] == fields['C']
+                and result['U'] == fields['U'] and raw._hex(result.get('manifest_sha256')),
+                'actual returned checkpoint progress/manifest evidence')
+        saves.append({'operation_id': identifier, 'C': result['C'], 'manifest_sha256': result['manifest_sha256']})
+    require(set(scheduled) <= {value['C'] for value in saves}, 'missing scheduled production checkpoint save')
+    return saves
+
+
 def verify_body(owner, body_ref, terminal_observation, configuration):
     proof = terminal_observation.proof
     binding = {'stage': 'training_supervisor', 'request_sha256': proof['request_sha256'], 'scope_sha256': proof['scope_sha256'],
@@ -219,6 +237,7 @@ def verify_body(owner, body_ref, terminal_observation, configuration):
     require(state.current_invocation is None and body['invocation_id'] in state.invocations
             and state.invocations[body['invocation_id']]['outcome'] == 'COMPLETE', 'actual completed production invocation required')
     runtime.validate_completion(state.snapshot(), body['donor'], {'bindings': {'anchors': anchors}})
+    checkpoints = validate_checkpoint_schedule(state, scope_doc['execution'])
     require(body['donor']['final_master_sha256'] == state.progress['history'][-1]['final_policy_id'], 'donor is not the actually committed final master')
     ref = body['raw_refs']['donor']; require(ref['sha256'] == body['donor']['file_sha256'] and ref['path'] == body['donor']['path'], 'same exact source donor bytes')
     wrapped = files._decorated(owner.reader, ref, binding, 'qualification_delta')
@@ -233,7 +252,7 @@ def verify_body(owner, body_ref, terminal_observation, configuration):
     require(terminal_observation.monotonic - snapshot['original_origin'] <= configuration['service_spec']['bootstrap']['physical_wall_seconds_upper'],
             'worker physical deadline includes actual terminal suffix')
     return {'binding': binding, 'body_ref': body_ref, 'original_journal_refs': body['raw_refs'], 'derived_journal': state.snapshot(),
-        'saved_donor': saved, 'worker_service_refs': refs, 'worker_service_replay': service, 'worker_terminal_suffix': suffix,
+        'saved_donor': saved, 'checkpoint_saves': checkpoints, 'worker_service_refs': refs, 'worker_service_replay': service, 'worker_terminal_suffix': suffix,
         'actual_worker_terminal': proof, 'learning_claim': False, 'native_qualified': False}
 
 
@@ -325,7 +344,8 @@ def main():
     service._training_launch_spec = spec
     service._qualification_launch_spec = spec  # original finalizer's generic metadata-owner binding, no Q dispatch
     permit = launch.NativeLaunchPermit(spec, service, launch_verifier, service.operation)
-    result = supervise_training(service, spec, permit)
+    with redirect_stdout(sys.stderr):
+        result = supervise_training(service, spec, permit)
     print(canonical(result).decode('ascii'))
     return 0
 

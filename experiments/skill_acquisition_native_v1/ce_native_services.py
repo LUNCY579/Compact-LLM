@@ -383,6 +383,10 @@ class NativeResourceGate:
         self.spec, self.bootstrap, self.framework = copy.deepcopy(spec), bootstrap, None
         self.supervisor = None
         self.samples, self.recorder = [], None
+        self.sample_attempts = 0
+        self.sample_attempts_upper = spec.get('sample_attempts_upper')
+        require(self.sample_attempts_upper is None or type(self.sample_attempts_upper) is int
+                and 0 < self.sample_attempts_upper <= 100000, 'finite source resource sample attempt ceiling')
         require(type(spec.get('limits')) is dict and type(spec.get('resource_probe')) is dict
                 and type(spec.get('host_transient_bytes')) is dict
                 and all(type(value) is int and value >= 0 for value in spec['host_transient_bytes'].values()), 'explicit resource limits/probe/transients')
@@ -401,6 +405,9 @@ class NativeResourceGate:
         from .ce_resource_evidence import validate_spec
         validate_spec(spec['resource_probe'])
     def _sample(self, *, launch=False, stage=None):
+        require(self.sample_attempts_upper is None or self.sample_attempts < self.sample_attempts_upper,
+                'resource sample attempt ceiling exhausted before observation')
+        self.sample_attempts += 1
         if self.supervisor is not None: self.supervisor.assert_parent_use()
         from .ce_resource_evidence import readonly_sample, enforce
         label = 'launch' if launch else stage

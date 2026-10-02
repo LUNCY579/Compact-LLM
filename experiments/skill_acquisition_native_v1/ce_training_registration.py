@@ -20,10 +20,12 @@ from . import ce_qualified_receipt as completed, ce_qualification as qualificati
 from . import ce_qualification_artifacts as raw, ce_native_services as services
 from . import ce_native_authority as authority
 from . import ce_scope_adapters as scope_adapters, ce_service_prepayment as prepayment
+from . import ce_finalizer_accounting as finalizer_costs
 
 SCHEMA = 'CE8-CANONICAL-PRODUCTION-DRAFT-1'
 BUDGET = 'CE8-PRODUCTION-BUDGET-PROPOSAL-1'
 STATUS = 'DRAFT_UNAPPROVED_PRODUCTION'
+SUPERVISION = 'CE8-TRAINING-SUPERVISION-SPEC-1'
 MAX_FILE = 8 * raw.CHUNK
 require, canonical, digest = raw.require, raw.canonical, raw.digest
 
@@ -47,6 +49,7 @@ def _budget(value, receipt):
     required = {'schema', 'approved', 'production_training_authorized', 'measured_prices', 'reservation_basis',
         'physical_deadline_seconds', 'journal_operation_bounds', 'backend_operation_bounds', 'journal_setup_bounds',
         'native_caps', 'bootstrap_bounds', 'service_bootstrap', 'training_reader_bounds', 'resource', 'publication'}
+    required |= {'supervision', 'operation_census'}
     require(type(value) is dict and set(value) == required and value['schema'] == BUDGET
             and value['approved'] is False and value['production_training_authorized'] is False
             and value['measured_prices'] is False and type(value['reservation_basis']) is str and value['reservation_basis'],
@@ -68,7 +71,7 @@ def _budget(value, receipt):
             and type(caps['wall_seconds']) in (int, float) and 0 < caps['wall_seconds'] < float('inf')
             and caps['metadata_reserved_bytes'] >= 64 * raw.CHUNK and caps['invocations'] >= caps['resumes'] + 1,
             'finite cumulative starts/invocations/resumes/token/IO/hash/metadata/wall caps')
-    minimum = {'loss_forward': 3000, 'backward': 3000, 'tokenizer_render': 3000, 'fingerprint': 753,
+    minimum = {'loss_forward': 3000, 'backward': 3000, 'tokenizer_render': 3000, 'input_io': 3007, 'fingerprint': 812,
         'checkpoint_configuration': 375, 'gradient_reset': 375, 'gradient_validation': 375,
         'gradient_clipping': 375, 'optimizer': 375, 'gradient_cleanup': 375,
         'checkpoint_save': 7, 'checkpoint_adapter_io': 7}
@@ -131,15 +134,158 @@ def _budget(value, receipt):
             and profile['identity_hash_bytes_upper'] >= publication['artifact_read_bytes_upper'] + 4 * publication['max_json_bytes']
             and profile['identity_hash_attempts_upper'] >= 8 and profile['write_bytes_upper'] >= publication['max_json_bytes'],
             'whole donor/journal/publication envelope before375 updates')
-    require(type(value['resource']) is dict and set(value['resource']) == {'limits', 'resource_probe', 'host_transient_bytes'},
+    require(type(value['resource']) is dict and set(value['resource']) == {'limits', 'resource_probe', 'host_transient_bytes', 'sample_attempts_upper'},
             'explicit full production resource guard policy')
+    require(type(value['resource']['sample_attempts_upper']) is int and 0 < value['resource']['sample_attempts_upper'] <= 100000,
+            'finite production resource sample attempt ceiling')
     stages = set(journal.NATIVE_KINDS) | backend.OPERATION_KINDS | {'ce_boundary', 'runtime_anchor', 'backend_construct',
         'controller_cleanup', 'donor_publish_verify', 'checkpoint_resume'}
     transients = value['resource']['host_transient_bytes']
     require(type(transients) is dict and stages <= set(transients)
             and all(type(number) is int and number >= 0 for number in transients.values()),
             'all actual production resource barrier transients explicitly declared')
+    policy = value['supervision']
+    require(type(policy) is dict and set(policy) == {'schema', 'owned_directory', 'max_json_bytes', 'finalizer'}
+            and policy['schema'] == SUPERVISION and type(policy['max_json_bytes']) is int
+            and 0 < policy['max_json_bytes'] <= raw.MAX_JSON, 'exact four-field training supervision policy')
+    finalizer_costs.validate_specification(policy['finalizer'], Path(policy['owned_directory']).parent)
+    require('qualification_finalizer_constructor' in service['operation_profiles'], 'original paid finalizer constructor profile')
+    ctor = service['operation_profiles']['qualification_finalizer_constructor']
+    require(ctor['write_bytes_upper'] >= finalizer_costs.MAX_JSON and ctor['identity_hash_attempts_upper'] >= 8
+            and ctor['identity_hash_bytes_upper'] >= 8 * finalizer_costs.MAX_JSON, 'full finalizer constructor self-write/hash bounds')
+    census = value['operation_census']
+    require(type(census) is dict and census.get('schema') == 'CE8-PRODUCTION-OPERATION-CENSUS-1'
+            and census.get('unit_prices_measured') is False and census.get('fresh_minimum_starts') == minimum
+            and census.get('resource_sample_attempts_upper') == value['resource']['sample_attempts_upper'],
+            'explicit source-census/finite spare resource arithmetic')
     return copy.deepcopy(value)
+
+
+def operation_census(plan, receipt, native_spec):
+    """Source-derived counts and conservative chunk/guard bounds, not timing."""
+    require(len(ce_plan.validate_plan(plan)) == 375 and receipt['census']['rows'] == 3000, 'complete production census inputs')
+    asset = raw._json(native_spec['asset_receipt_utf8']); header = asset['model_header']
+    require(header['dtypes'] == ['BF16'] and type(header['data_bytes']) is int and header['data_bytes'] > 0,
+            'pinned full-model BF16 byte metadata for FP32 donor chunk bound')
+    full_chunks = (2 * header['data_bytes'] + raw.CHUNK - 1) // raw.CHUNK + header['tensors']
+    selected_chunks = (4 * native_spec['inventory']['numel'] + raw.CHUNK - 1) // raw.CHUNK + len(native_spec['parameter_inventory'])
+    guards = {'fresh_tokenizer_census': 6000, 'training_tokenizer_rerender': 6000, 'ce_boundaries': 375,
+        'donor_full_reference_chunks_upper': full_chunks, 'donor_selected_write_and_readback_chunks_upper': 2 * selected_chunks,
+        'checkpoint_constructor_storage_and_metadata_upper': 512, 'source_loader_lifecycle_and_other_barriers_upper': 256}
+    guard_floor = sum(guards.values()); sample_cap = 1 << (guard_floor - 1).bit_length()
+    require(sample_cap <= 100000, 'calculated production resource sample ceiling exceeds implemented guard contract')
+    minimum = {'loss_forward': 3000, 'backward': 3000, 'tokenizer_render': 3000, 'input_io': 3007, 'fingerprint': 812,
+        'checkpoint_configuration': 375, 'gradient_reset': 375, 'gradient_validation': 375,
+        'gradient_clipping': 375, 'optimizer': 375, 'gradient_cleanup': 375, 'checkpoint_save': 7, 'checkpoint_adapter_io': 7}
+    return {'schema': 'CE8-PRODUCTION-OPERATION-CENSUS-1', 'rows': 3000, 'updates': 375, 'checkpoint_boundaries': copy.deepcopy(admission.SCHEDULE),
+        'fresh_minimum_starts': minimum, 'fingerprint_arithmetic': {'ce_pre_post': 750, 'initial_and_donor_identities': 5,
+            'seven_save_current_hashes': 42, 'five_rolling_previous_verifications': 15, 'total': 812},
+        'resource_guard_upper_components': guards, 'resource_guard_source_upper': guard_floor,
+        'resource_sample_attempts_upper': sample_cap, 'resource_spare_attempts': sample_cap - guard_floor,
+        'full_fp32_tensor_chunks_upper': full_chunks, 'selected_fp32_tensor_chunks_upper': selected_chunks,
+        'native_input_io_arithmetic': {'training_teacher_row_reads': 3000, 'backend_path_proof': 1,
+            'backend_asset_tokenizer_warm_outer_and_inner_reads': 6, 'total': 3007},
+        'unit_prices_measured': False, 'model_or_os_execution': False}
+
+
+def propose_budget(qualification_documents, plan, *, output_root):
+    """Build a concrete unapproved ceiling proposal from the current Q packet."""
+    docs = copy.deepcopy(qualification_documents); scope = docs['SCOPE.json']; root = Path(output_root)
+    receipt = docs['EXPECTED_PREPARED_RECEIPT.json']['expected_receipt']; native = scope['native_backend']
+    census = operation_census(plan, receipt, native)
+    source_profiles = scope['qualifier_accounting']['operation_profiles']
+    profiles = {kind: {key: source_profiles[kind][key] for key in journal.PROFILE} for kind in journal.NATIVE_KINDS}
+    checkpoint_payload_upper = 12 * native['inventory']['numel'] + 64 * raw.CHUNK
+    fingerprint_bytes = max(profiles['fingerprint']['identity_hash_bytes_upper'], 3 * checkpoint_payload_upper)
+    profiles['fingerprint']['identity_hash_bytes_upper'] = 1 << (fingerprint_bytes - 1).bit_length()
+    census['checkpoint_payload_bytes_upper'] = checkpoint_payload_upper
+    census['checkpoint_streamed_hash_bytes_upper'] = 3 * checkpoint_payload_upper
+    starts = dict.fromkeys(journal.NATIVE_KINDS, 1); starts.update(census['fresh_minimum_starts'])
+    starts.update(fingerprint=1024, input_io=3039, module_import=4, checkpoint_adapter_io=16)
+    spare = {kind: count - census['fresh_minimum_starts'].get(kind, 0) for kind, count in starts.items()}
+    census['finite_start_spares'] = spare
+    deadline = 19200; profiles['cleanup']['wall_s_upper'] = deadline
+    setup = qualification_draft.profile(256 * raw.CHUNK, 64 * raw.CHUNK, 1000000, 512 * raw.CHUNK, 120)
+    caps = {'schema': journal.NATIVE_CAP_SCHEMA, 'synthetic_cpu': False, 'operation_starts': starts,
+        'invocations': 1, 'resumes': 0, 'metadata_reserved_bytes': 1024 * raw.CHUNK}
+    for direction, kind in (('forward', 'loss_forward'), ('backward', 'backward')):
+        caps[direction + '_selected_tokens'] = starts[kind] * receipt['census']['max_labeled_tokens']
+        caps[direction + '_sequence_tokens'] = starts[kind] * receipt['census']['max_sequence_positions']
+    for counter, field in {'io_read_bytes': 'read_bytes_upper', 'io_write_bytes': 'write_bytes_upper',
+            'identity_hash_attempts': 'identity_hash_attempts_upper', 'identity_hash_bytes': 'identity_hash_bytes_upper'}.items():
+        margin = 1000000 if counter == 'identity_hash_attempts' else 4 * 1024 ** 3
+        caps[counter] = setup[field] + sum(starts[kind] * profiles[kind][field] for kind in profiles) + margin
+    caps['wall_seconds'] = deadline + setup['wall_s_upper'] + sum(starts[kind] * profiles[kind]['wall_s_upper'] for kind in profiles)
+    backend_profiles = {kind: {key: (profiles[kind] if kind in profiles else native['operation_bounds'][kind])[key]
+                              for key in backend.PROFILE_FIELDS} for kind in backend.OPERATION_KINDS}
+    service = copy.deepcopy(docs['SERVICE_SPEC.json']['bootstrap'])
+    service['operation_profiles']['qualification_reducer_overhead'] = qualification_draft.profile(0, 0, 400000, 4 * 1024 ** 3, 120)
+    service['operation_profiles']['qualification_artifact_readback'] = qualification_draft.profile(256 * raw.CHUNK + 1, 0, 4, 256 * raw.CHUNK + 1, 120)
+    service['operation_profiles']['publication'] = qualification_draft.profile(8 * 1024 ** 3 + 2 * raw.MAX_JSON + 2,
+        raw.MAX_JSON, 8, 8 * 1024 ** 3 + 4 * raw.MAX_JSON, 120)
+    sample_cap = census['resource_sample_attempts_upper']; service['caps']['operation_attempts'] = 262144
+    service['caps']['hash_attempts'] = 33554432; service['caps']['hash_bytes'] = 1024 * 1024 ** 3
+    service['caps']['read_bytes'] = 128 * 1024 ** 3
+    resource = copy.deepcopy(docs['SERVICE_SPEC.json']['resource']); resource['sample_attempts_upper'] = sample_cap
+    stages = set(journal.NATIVE_KINDS) | backend.OPERATION_KINDS | {'ce_boundary', 'runtime_anchor', 'backend_construct',
+        'controller_cleanup', 'donor_publish_verify', 'checkpoint_resume'}
+    for stage in stages: resource['host_transient_bytes'].setdefault(stage, 64 * raw.CHUNK)
+    supervision = copy.deepcopy(docs['SERVICE_SPEC.json']['supervision'])
+    supervision.update(schema=SUPERVISION, owned_directory=str(root / 'supervision'))
+    supervision['finalizer']['owned_directory'] = str(root / 'supervision' / 'finalization')
+    budget = {'schema': BUDGET, 'approved': False, 'production_training_authorized': False, 'measured_prices': False,
+        'reservation_basis': 'Source-derived full375 counts with explicitly retained finite spare starts; Q upper profiles are unmeasured abort ceilings, not production timings or fit proof.',
+        'physical_deadline_seconds': deadline, 'journal_operation_bounds': profiles, 'backend_operation_bounds': backend_profiles,
+        'journal_setup_bounds': setup, 'native_caps': caps, 'bootstrap_bounds': copy.deepcopy(scope['qualifier_bootstrap']['self_bounds']),
+        'service_bootstrap': service, 'training_reader_bounds': {'operation_attempts_upper': 2000, 'io_read_bytes_upper': 512 * raw.CHUNK,
+            'identity_hash_attempts_upper': 1000000, 'identity_hash_bytes_upper': 8 * 1024 ** 3, 'reducer_work_bytes_upper': 16 * 1024 ** 3},
+        'resource': resource, 'publication': {'max_json_bytes': raw.MAX_JSON, 'artifact_read_bytes_upper': 8 * 1024 ** 3},
+        'supervision': supervision, 'operation_census': census}
+    # Resource probes stay in the service owner throughout the CE journal.
+    service['operation_profiles']['resource_cuda_probe']['wall_s_upper'] = max(5, service['operation_profiles']['resource_cuda_probe']['wall_s_upper'])
+    guard_calls = {'resource_probe': sample_cap, 'resource_cuda_probe': sample_cap,
+                   'worker_os_binding': 2 * sample_cap, 'supervisor_lease': sample_cap}
+    other_calls = {'controller_stage': 16, 'qualification_reducer_overhead': 31, 'qualification_artifact_readback': 9,
+        'worker_source_verification': 512, 'scope_admission': 32, 'scope_metadata': 32, 'outer_reservation': 1024,
+        'entry_preparation': 1, 'entry_worker_binding': 16, 'tokenizer_load': 2, 'tokenizer_render': 3000,
+        'input_io': 128, 'publication': 1, 'interruption': 1, 'supervisor_lease_acquire': 1, 'supervisor_lease_release': 1,
+        'worker_handle_close': 16, 'worker_handle_duplicate': 8, 'process_launch_preflight': 8,
+        'process_launch_parent': 16, 'process_launch': 1, 'process_launch_child': 64,
+        'process_launch_child_census': 512, 'process_owned_stop': 1, 'process_rpc_receive': 8,
+        'process_rpc_send': 8, 'process_terminal': 16, 'qualification_finalizer_constructor': 1}
+    calls = dict(guard_calls)
+    for kind, count in other_calls.items(): calls[kind] = calls.get(kind, 0) + count
+    totals = {key: 0 for key in ('read_bytes', 'write_bytes', 'hash_attempts', 'hash_bytes', 'wall_seconds')}
+    price_keys = dict(read_bytes='read_bytes_upper', write_bytes='write_bytes_upper',
+                      hash_attempts='identity_hash_attempts_upper', hash_bytes='identity_hash_bytes_upper', wall_seconds='wall_s_upper')
+    for kind, count in calls.items():
+        profile = service['operation_profiles'][kind]
+        for key, field in price_keys.items(): totals[key] += count * profile[field]
+    require(service.get('operation_profile_rule') == services.INPUT_RESERVATION_RULE
+            and service.get('input_io_row_wall_s_upper') == 5, 'source explicit small-row input rule required for freshcensus pricing')
+    row_profile = services.reservation_profile(service, 'input_io', {'row_id': 'source-bounded-teacher-row',
+        'read_bytes_upper': ce_plan.MAX_LINE, 'write_bytes_upper': 0,
+        'identity_hash_attempts_upper': 1, 'identity_hash_bytes_upper': ce_plan.MAX_LINE})
+    for key, field in price_keys.items(): totals[key] += 3000 * row_profile[field]
+    for profile in (service['setup_bounds'], service['finalization_bounds']):
+        for key, field in price_keys.items(): totals[key] += profile[field]
+    totals['wall_seconds'] += deadline
+    # Additional4GiB covers bounded retained headers/events and their digests;
+    # it is a proposed hard byte ceiling, never an OS IO measurement.
+    margins = dict(read_bytes=4 * 1024 ** 3, write_bytes=4 * 1024 ** 3, hash_attempts=1000000,
+                   hash_bytes=4 * 1024 ** 3, wall_seconds=0)
+    for key in totals:
+        floor = totals[key] + margins[key]
+        service['caps'][key] = max(service['caps'][key], 1 << max(0, int(floor - 1).bit_length()))
+    service['caps']['operation_attempts'] = max(service['caps']['operation_attempts'], sum(calls.values()) + 4096)
+    service['caps']['operation_attempts'] = max(service['caps']['operation_attempts'], sum(calls.values()) + 3000 + 4096)
+    census['service_composition'] = {'guard_operation_calls': guard_calls, 'source_lifecycle_consumer_and_controller_calls': other_calls,
+        'profile_totals_plus_setup_suffix_and_actual_wall': totals, 'self_journal_margins': margins,
+        'caps': copy.deepcopy(service['caps']), 'separate_same_caps_per_worker_and_supervisor': True,
+        'fresh_teacher_row_input_io': {'starts': 3000, 'source_line_bytes_upper': ce_plan.MAX_LINE,
+                                      'permanent_reserved_profile': row_profile},
+        'per_guard_wall_s_upper': sum(service['operation_profiles'][kind]['wall_s_upper'] * count / sample_cap for kind, count in guard_calls.items())}
+    return _budget(budget, receipt)
 
 
 def build_documents(qualification_documents, plan, preparation, current_source, budget, *, output_root,
@@ -210,9 +356,10 @@ def build_documents(qualification_documents, plan, preparation, current_source, 
         'reservation_basis': bound['reservation_basis'], 'static_recipe_sha256': recipe_sha,
         'source_code_sha256': copy.deepcopy(code), 'operation_bounds_sha256': price['operation_bounds_sha256'],
         'qualified_receipt_sha256': None, 'production_budget': None, 'budget_proposal': bound}
-    service = copy.deepcopy(original['SERVICE_SPEC.json']); service.pop('supervision', None); service.pop('scope_adapters', None)
+    service = copy.deepcopy(original['SERVICE_SPEC.json']); service.pop('scope_adapters', None)
     service.update(approved_code_sha256=copy.deepcopy(code), role_descriptors=_roles(code), physical_deadline_seconds=bound['physical_deadline_seconds'],
                    bootstrap=copy.deepcopy(bound['service_bootstrap']), resource=copy.deepcopy(bound['resource']))
+    service['supervision'] = copy.deepcopy(bound['supervision'])
     service['bootstrap']['owned_directory'] = str(root / 'service-bootstrap')
     service['bootstrap']['physical_wall_seconds_upper'] = bound['physical_deadline_seconds']
     service['resource']['resource_probe']['output_root'] = str(root)

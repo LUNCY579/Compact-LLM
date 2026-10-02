@@ -5,6 +5,7 @@ import copy
 import hashlib
 from pathlib import Path
 import time
+import sys
 from types import MappingProxyType
 
 from . import ce_qualification_configuration as intake, ce_qualification_artifacts as raw
@@ -23,16 +24,25 @@ def validate_declaration(value):
     return copy.deepcopy(value)
 
 
+def _source_intake_slot():
+    name=getattr(getattr(sys.modules.get('__main__'),'__spec__',None),'name',None)
+    require(name in (__package__+'.ce_training_supervisor',__package__+'.ce_training_entry'),
+            'fixed production executable source role required before intake')
+    return 'parent' if name==__package__+'.ce_training_supervisor' else 'child-0'
+
+
 def load_source_configuration():
     global _LOADED,_EVIDENCE
     require(type(_SOURCE_DECLARATION) is MappingProxyType and raw._hex(_SOURCE_DECLARATION_SHA256),
             'fixed production source declaration remains closed')
     declaration=validate_declaration(copy.deepcopy(dict(_SOURCE_DECLARATION)))
     require(digest(declaration)==_SOURCE_DECLARATION_SHA256,'literal source declaration pin drift')
+    slot=_source_intake_slot()
     if _LOADED is not None:
-        require(_EVIDENCE['declaration_sha256']==_SOURCE_DECLARATION_SHA256,'production source intake cannot switch')
+        require(_EVIDENCE['declaration_sha256']==_SOURCE_DECLARATION_SHA256 and _EVIDENCE['source_intake_slot']==slot,
+                'production source intake cannot switch declaration or executable role')
         return copy.deepcopy(_LOADED),copy.deepcopy(_EVIDENCE)
-    payment=intake.reserve_metadata_intake(declaration,'parent')
+    payment=intake.reserve_metadata_intake(declaration,slot)
     counts,bounds=payment['counts'],payment['bounds'];head=payment['head']
     try:
         path=Path(declaration['configuration_path'])
@@ -61,6 +71,7 @@ def load_source_configuration():
              'qualification_selection_sha256':value['qualification_selection_sha256'],'metadata_only':True,
              'native_qualified':False},bounds,counts,payment['origin'])
         evidence={'schema':intake.RECORD,'declaration_sha256':payment['declaration_sha256'],
+            'source_intake_slot':slot,
             'journal_path':str(payment['journal']),'ledger_head':head,'configuration_ref':reference,
             'permanent_bounds':copy.deepcopy(bounds),'actual_tracked_counts':counts,'metadata_only':True,
             'native_qualified':False,'execution_verified':False}

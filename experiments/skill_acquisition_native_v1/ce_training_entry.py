@@ -12,6 +12,7 @@ import importlib
 import os
 from pathlib import Path
 import sys
+from contextlib import redirect_stdout
 from types import MappingProxyType
 
 from . import ce_native_services as services, ce_controller as controller, ce_native_authority as authority
@@ -54,6 +55,15 @@ def validate_configuration(value):
     policy=spec['scope_adapters']['worker']
     require(policy['entry_module']==ENTRY_MODULE and policy['request_ref']==value['request_ref']
             and policy['approved_code_sha256']==spec['approved_code_sha256'],'fixed production entry/raw request/full source')
+    supervision=spec.get('supervision')
+    require(type(supervision) is dict and set(supervision)=={'schema','owned_directory','max_json_bytes','finalizer'}
+            and supervision['schema']=='CE8-TRAINING-SUPERVISION-SPEC-1'
+            and type(supervision['owned_directory']) is str and Path(supervision['owned_directory']).is_absolute()
+            and Path(supervision['owned_directory']).is_relative_to(Path(spec['resource']['resource_probe']['output_root']))
+            and raw._int(supervision['max_json_bytes'],1) and supervision['max_json_bytes']<=raw.MAX_JSON,
+            'exact bounded production supervisor policy')
+    from .ce_finalizer_accounting import validate_specification
+    validate_specification(supervision['finalizer'],spec['resource']['resource_probe']['output_root'])
     rpc.validate_spec(value['rpc_spec'])
     canonical(value)
     return value
@@ -108,7 +118,8 @@ def install_source_registries():
 def serve_training(pipe,proof,train):
     pipe.emit('ready',0,{'worker_proof':proof})
     require(pipe.receive(1)=={'command':'train','data':{}},'one fixed train command, no scope/authority payload')
-    result=train();seal=result.get('seal') if type(result) is dict else None
+    with redirect_stdout(sys.stderr):result=train()
+    seal=result.get('seal') if type(result) is dict else None
     require(type(seal) is dict and seal.get('status')=='UNQUALIFIED_TRAINING_BODY_SEAL'
             and type(seal.get('body_ref')) is dict,'actual retained production body before RPC response')
     ref=seal['body_ref']
