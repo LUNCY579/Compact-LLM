@@ -14,6 +14,7 @@ import math
 import os
 from pathlib import Path
 import random
+import re
 import struct
 import subprocess
 import sys
@@ -470,12 +471,13 @@ def job_member_witness(job, cfg):
             executable = process.exe()
             creation_time = process.create_time()
         except psutil.NoSuchProcess:
-            require(pid not in job_process_ids(job), "vanished runtime still listed in owned Job")
+            confirm_owned_process_exit(job, pid)
             continue
         expected = permitted.get(executable.replace("\\", "/").casefold())
         require(expected and sha(executable) == expected, "unregistered owned runtime executable")
         handle = kernel.OpenProcess(0x1000, False, pid)
         if not handle and pid not in job_process_ids(job):
+            confirm_owned_process_exit(job, pid, creation_time)
             continue
         require(handle, "owned live process membership handle unavailable")
         try:
@@ -488,6 +490,179 @@ def job_member_witness(job, cfg):
                           "executable": executable, "executable_sha256": expected,
                           "exact_owned_job_member": True})
     return witnesses
+
+
+def confirm_owned_process_exit(job, pid, creation_time=None):
+    """A missing process sample requires refreshed exact Job and exit evidence."""
+    import psutil
+    require(pid not in job_process_ids(job), "vanished runtime still listed in exact owned Job")
+    try:
+        current = psutil.Process(pid)
+        now_creation = current.create_time()
+        require(creation_time is not None and now_creation != creation_time,
+                "missing owned sample still names a live process; exit not proven")
+        reused = True
+    except psutil.NoSuchProcess:
+        reused = False
+    return {"pid": pid, "recorded_creation_time": creation_time,
+            "refreshed_exact_job_absent": True, "original_process_exited": True,
+            "pid_reused": reused, "observed_at": time.time()}
+
+
+def owned_job_rss_snapshot(job, cfg):
+    """RSS for exact verified members; no parent.children traversal race."""
+    import psutil
+    members = job_member_witness(job, cfg)
+    rss, exits = 0, []
+    for witness in members:
+        try:
+            process = psutil.Process(witness["pid"])
+            require(process.create_time() == witness["creation_time"], "owned RSS process identity drift")
+            rss += process.memory_info().rss
+        except psutil.NoSuchProcess:
+            exits.append(confirm_owned_process_exit(job, witness["pid"], witness["creation_time"]))
+    return {"members": members, "rss_bytes": rss, "confirmed_exit_races": exits}
+
+
+def read_event_journal(path):
+    path = Path(path)
+    require(path.stat().st_size <= 16 * 1024 ** 2, "bounded event journal exceeded")
+    raw = path.read_bytes()
+    require(raw.endswith(b"\n"), "partial final journal record")
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            require(key not in result, "duplicate journal field")
+            result[key] = value
+        return result
+    records = [json.loads(line, object_pairs_hook=unique) for line in raw.splitlines()]
+    canonical(records)
+    return records
+
+
+def validate_diagnostic_completion(result, cfg, source_commit, events=None):
+    """Externally verify complete evidence; disappearance alone is never success."""
+    require(type(result) is dict and result.get("status") == "COMPLETE_FIXED_SHAPE_DIAGNOSTIC_ONLY"
+            and result.get("source_commit") == source_commit and not result.get("error"),
+            "complete current-source worker result required")
+    require(result.get("model_loads") == 1 and result.get("optimizer_steps") == result.get("generation_tokens") == 0
+            and all(type(result.get(k)) is int for k in ("model_loads", "optimizer_steps", "generation_tokens"))
+            and all(result.get(k) is False for k in ("native_qualified", "capture_qualified", "reader_qualified", "training_qualified")),
+            "diagnostic dose or qualification claim mismatch")
+    ledger = result.get("call_accounting", {})
+    require(type(events) is list and events, "durable operation journal required for completion")
+    adapted = []
+    previous_time = None
+    for record in events:
+        require(type(record) is dict and type(record.get("kind")) is str
+                and type(record.get("time")) in (int, float) and math.isfinite(record["time"]),
+                "invalid durable journal record/time")
+        require(previous_time is None or record["time"] >= previous_time, "journal wall time moved backward")
+        previous_time = record["time"]
+        adapted.append({"event": record["kind"], **{k: v for k, v in record.items() if k not in {"kind", "time"}}})
+    from experiments.post_training_mimo_centralized_v1.scripts.qualify_native import verify_call_journal
+    try:
+        verify_call_journal(adapted, snapshot=ledger, maximum_optimizer_calls=0)
+    except (RuntimeError, ValueError, TypeError, KeyError) as error:
+        raise NativeBlocked("durable operation journal/result mismatch: " + str(error)) from error
+    resources = [{k: v for k, v in event.items() if k not in {"kind", "time"}}
+                 for event in events if event["kind"] == "resource"]
+    require(resources == result.get("resources") and resources and resources[-1].get("stage") == "complete",
+            "complete durable resource evidence/result mismatch")
+    require(ledger.get("last_call_id") == 316 and ledger.get("forward_input_positions_attempted") == 524
+            and ledger.get("forward_input_positions_returned") == 524 and ledger.get("pending_calls") == [],
+            "diagnostic accounting incomplete/pending")
+    require(all(type(ledger.get(k)) is int for k in ("last_call_id", "forward_input_positions_attempted", "forward_input_positions_returned")),
+            "accounting counters must be integers, not booleans")
+    require(all(type(ledger.get(k)) is int and ledger[k] == 0 for k in
+                ("max_optimizer_calls", "training_forward_input_positions_attempted", "training_forward_input_positions_returned")),
+            "unexpected training/optimizer accounting")
+    expected = {"model_construct": 1, "checkpoint_load": 1, "tensor_copy": 310, "forward": 4,
+                "backward": 0, "optimizer_step": 0, "checkpoint_save": 0, "checkpoint_reload": 0}
+    operations = ledger.get("operations", {})
+    require(set(operations) == set(expected), "diagnostic operation schema mismatch")
+    for operation, count in expected.items():
+        require(type(operations[operation]) is dict and all(type(v) is int for v in operations[operation].values())
+                and operations[operation] == {"attempted": count, "returned": count, "failed": 0, "pending": 0},
+                "failed/pending or incomplete diagnostic operation: " + operation)
+    comparisons = result.get("comparisons", [])
+    require(type(comparisons) is list and len(comparisons) == 6, "all six comparisons required")
+    expected_comparisons = {(start, kind) for start in (128, 129, 130) for kind in ("logits", "hidden")}
+    observed = set()
+    for row in comparisons:
+        identity = (row.get("mutation_start"), row.get("kind"))
+        require(identity in expected_comparisons and identity not in observed, "comparison coverage mismatch")
+        observed.add(identity)
+        require(row.get("protected_positions") == list(range(127, identity[0]))
+                and row.get("passed") is True and row.get("raw_byte_identity") is True
+                and type(row.get("left_raw_sha256")) is str and re.fullmatch(r"[0-9a-f]{64}", row["left_raw_sha256"])
+                and row["left_raw_sha256"] == row.get("right_raw_sha256")
+                and all(type(row.get(k)) in (int, float) and math.isfinite(row[k]) and row[k] == 0
+                        for k in ("max_abs", "mean_abs")), "failed/nonfinite raw numerical comparison")
+    trials = result.get("trials", [])
+    require(type(trials) is list and len(trials) == 4 and trials[0].get("stage") == "baseline", "four raw trial witnesses required")
+    measurement_events = [event for event in events if event["kind"] == "measurement"]
+    try:
+        durable_measurements_match = (canonical([event.get("measurement") for event in measurement_events]) == canonical(trials))
+    except (ValueError, TypeError) as error:
+        raise NativeBlocked("nonfinite/noncanonical raw measurement payload") from error
+    require(len(measurement_events) == 4
+            and all(set(event) == {"kind", "time", "measurement"} for event in measurement_events)
+            and durable_measurements_match,
+            "four durable measurements must exactly bind saved trial payloads")
+    require(trials[0].get("logits_sha256") == cfg["reference_bulk_logits_sha256"]
+            and trials[0].get("hidden_sha256") == cfg["reference_bulk_hidden_sha256"]
+            and trials[0].get("model_logprobs") == cfg["reference_bulk_model_logprobs"], "historical bulk baseline drift")
+    mask_sha = hashlib.sha256(causal_mask_reference_bytes()).hexdigest()
+    position_sha = hashlib.sha256(struct.pack("<131q", *range(131))).hexdigest()
+    expected_representation = {"rows": 131, "columns": 131, "allowed_condition": "column <= row",
+          "allowed_uint16": 0, "forbidden_uint16": 65407, "allowed_value": 0.0,
+          "forbidden_value": -(2 - 2 ** -7) * 2 ** 127}
+    plan = causal_plan(cfg["prompt_ids"], cfg["generated_ids"])
+    for index, trial in enumerate(trials):
+        registered = plan[index]
+        require(type(trial) is dict and set(trial) == {"stage", "logits_sha256", "hidden_sha256", "model_logprobs",
+                                                      "mutation_start", "protected_positions", "witnesses"},
+                "raw trial schema mismatch")
+        require(trial["stage"] == registered["stage"]
+                and canonical(trial["mutation_start"]) == canonical(registered["mutation_start"])
+                and type(trial["protected_positions"]) is list
+                and all(type(v) is int for v in trial["protected_positions"])
+                and trial["protected_positions"] == list(range(127, 127 + registered["protected_count"])),
+                "trial identity/mutation/protected positions differ from registered plan")
+        require(all(type(trial[k]) is str and re.fullmatch(r"[0-9a-f]{64}", trial[k])
+                    for k in ("logits_sha256", "hidden_sha256")), "raw full trial SHA256 invalid")
+        require(type(trial["model_logprobs"]) is list and len(trial["model_logprobs"]) == 3
+                and all(type(v) in (int, float) and math.isfinite(v) and v <= 0 for v in trial["model_logprobs"]),
+                "three finite raw model log-probabilities required")
+        witnesses = trial.get("witnesses", {})
+        counts = witnesses.get("counts", {})
+        mask, positions = witnesses.get("mask", {}), witnesses.get("positions", {})
+        shape = mask.get("shape", [])
+        representation = mask.get("complete_representation", {})
+        require(type(counts) is dict and all(type(v) is int for v in counts.values())
+                and counts == {"mask": 1, "rotary": 1, "norm": 1}
+                and type(shape) is list and all(type(v) is int for v in shape) and shape == [1, 1, 131, 131]
+                and mask.get("dtype") == "bfloat16" and mask.get("byte_order") == "little_endian"
+                and mask.get("raw_sha256") == mask_sha and mask.get("reference_raw_sha256") == mask_sha
+                and mask.get("actual_values_match_representation") is True
+                and representation == expected_representation
+                and all(type(representation.get(k)) is int for k in ("rows", "columns", "allowed_uint16", "forbidden_uint16"))
+                and all(type(representation.get(k)) is float for k in ("allowed_value", "forbidden_value")),
+                "complete actual causal-mask witness mismatch")
+        pos_ids, pos_shape = positions.get("position_ids"), positions.get("shape", [])
+        require(type(pos_ids) is list and len(pos_ids) == 1 and type(pos_ids[0]) is list
+                and all(type(v) is int for v in pos_ids[0]) and pos_ids == [list(range(131))]
+                and type(pos_shape) is list and all(type(v) is int for v in pos_shape) and pos_shape == [1, 131]
+                and positions.get("dtype") == "int64" and positions.get("byte_order") == "little_endian"
+                and positions.get("raw_sha256") == position_sha, "complete actual rotary-position witness mismatch")
+    for name in ("peak_gpu_allocated_gib", "peak_gpu_reserved_gib", "sampled_min_gpu_free_gib"):
+        value = result.get(name)
+        require(type(value) in (int, float) and math.isfinite(value) and value >= 0, "allocator/GPU telemetry incomplete")
+    require(result["sampled_min_gpu_free_gib"] >= .5, "GPU runtime floor violated")
+    return {"complete_worker_accounting_verified": True, "raw_comparisons_verified": 6,
+            "trial_witnesses_verified": 4, "durable_journal_verified": True,
+            "durable_journal_records": len(events), "capture_qualified": False, "reader_qualified": False}
 
 
 def resume_suspended_primary_thread(process):
@@ -984,10 +1159,20 @@ def supervise(args, cfg):
                        "supervisor_pid": os.getpid(), "worker_tree_pid": process.pid, **query_transfer})
             def gpu_watch():
                 while not stopped.is_set():
+                    querying_live = False
                     try:
-                        allowed = [process.pid] + [p.pid for p in observed.children(recursive=True)]
+                        allowed = job_process_ids(job)
+                        if not allowed:
+                            if process.poll() is not None:
+                                telemetry_state["owned_exit_observed"] = True
+                                return
+                            stopped.wait(.02)
+                            continue
+                        querying_live = True
                         telemetry_state["snapshot"] = collect_telemetry(output, allowed, cfg["gpu_process_registry"])
                     except BaseException as exc:
+                        if stopped.is_set() and not querying_live:
+                            return
                         telemetry_state["error"] = str(exc)
                         break
                     stopped.wait(.5)
@@ -996,15 +1181,10 @@ def supervise(args, cfg):
             with (output / "WATCHDOG.jsonl").open("xb") as audit:
                 while process.poll() is None:
                     store._require_lease(owner, lease["fence"])
-                    members = job_member_witness(job, cfg)
+                    owned = owned_job_rss_snapshot(job, cfg)
+                    members = owned["members"]
                     elapsed = time.monotonic() - started
-                    tree = [observed] + observed.children(recursive=True)
-                    rss = 0
-                    for member in tree:
-                        try:
-                            rss += member.memory_info().rss
-                        except psutil.NoSuchProcess:
-                            pass
+                    rss = owned["rss_bytes"]
                     peak_rss = max(peak_rss, rss)
                     host_free = psutil.virtual_memory().available / GIB
                     sample = telemetry_state["snapshot"]
@@ -1015,7 +1195,8 @@ def supervise(args, cfg):
                     elif sample["unresolved_gpu_pids"] or sample["competing_gpu_pids"] or sample["unclassified_gpu_pids"]: reason = "GPU_PROCESS_CONFLICT"
                     elif stdout.tell() + stderr.tell() > 16 * 1024 ** 2: reason = "LOG_LIMIT"
                     audit.write(canonical({"elapsed": elapsed, "rss": rss, "host_free_gib": host_free,
-                                "gpu_snapshot": sample, "owned_job_members": members, "reason": reason}) + b"\n")
+                                "gpu_snapshot": sample, "owned_job_members": members,
+                                "confirmed_owned_exit_races": owned["confirmed_exit_races"], "reason": reason}) + b"\n")
                     audit.flush(); os.fsync(audit.fileno())
                     if reason:
                         job.kill(); break
@@ -1025,8 +1206,16 @@ def supervise(args, cfg):
                     stopped.wait(.1)
             code = process.wait(timeout=10)
             require(code == 0 and reason is None, "contained worker failed: " + str(reason or code))
+            stopped.set()
+            watcher.join(timeout=5)
+            require(not watcher.is_alive(), "GPU telemetry worker did not stop")
+            require(telemetry_state["error"] is None, "live GPU telemetry failure retained")
+            require(job_process_ids(job) == [], "launcher exit left an owned descendant active")
             result = read_json(output / "DIAGNOSTIC_RESULT.json")
-            require(result["status"] == "COMPLETE_FIXED_SHAPE_DIAGNOSTIC_ONLY", "worker result absent/failed")
+            events = read_event_journal(output / "EVENTS.jsonl")
+            completion = validate_diagnostic_completion(result, cfg, report["observations"]["source"]["commit"], events)
+            completion["events_sha256"] = sha(output / "EVENTS.jsonl")
+            write_new(output / "COMPLETION_VERIFICATION.json", completion)
             verify_sources(cfg); verify_assets(cfg)
             require(not committed_snapshot()["dirty"], "source dirty after worker")
             outcome = "SUCCEEDED"
