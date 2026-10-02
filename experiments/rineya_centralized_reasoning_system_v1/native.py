@@ -14,6 +14,7 @@ import math
 import os
 from pathlib import Path
 import random
+import re
 import struct
 import subprocess
 import sys
@@ -332,9 +333,21 @@ def training_eligibility(*_args, **_kwargs):
     return {"eligible": False, "reason": "native training, update scope, export and complete cross-process resume unqualified"}
 
 
-def current_windows_job_witness():
-    """Read current worker Job membership/limits before importing a framework."""
+def validate_owned_job_flags(flags, member):
+    require(type(flags) is int and member is True and flags & 0x2000 and not flags & (0x800 | 0x1000),
+            "exact owned worker Job lacks strict kill-on-close/no-breakaway")
+
+
+def current_windows_job_witness(query_handle, target_pid, target_creation_time):
+    """Verify exact supervisor Job, then close its temporary child query handle.
+
+    NULL resolves the process's immediate nested Job, which may be another Job.
+    Its flags are retained as observations and never substitute for own identity.
+    """
     require(os.name == "nt", "Windows Job containment required")
+    require(type(query_handle) is int and 0 < query_handle < 2 ** 64,
+            "valid duplicated Job query handle required")
+    import psutil
     import ctypes as c
     from ctypes import wintypes as w
     class Basic(c.Structure):
@@ -355,16 +368,74 @@ def current_windows_job_witness():
     kernel.IsProcessInJob.restype = w.BOOL
     kernel.QueryInformationJobObject.argtypes = [w.HANDLE, c.c_int, c.c_void_p, w.DWORD, c.c_void_p]
     kernel.QueryInformationJobObject.restype = w.BOOL
-    member = w.BOOL()
-    require(kernel.IsProcessInJob(kernel.GetCurrentProcess(), None, c.byref(member)) and member.value,
-            "worker not contained in Windows Job")
-    limits = Extended()
-    require(kernel.QueryInformationJobObject(None, 9, c.byref(limits), c.sizeof(limits), None),
-            "current Job limits unavailable")
-    flags = int(limits.BasicLimitInformation.LimitFlags)
-    require(flags & 0x2000 and not flags & (0x800 | 0x1000), "current worker Job lacks strict kill-on-close/no-breakaway")
-    return {"pid": os.getpid(), "in_current_job": True, "limit_flags": flags,
-            "kill_on_close": True, "observation_api": "IsProcessInJob/QueryInformationJobObject"}
+    kernel.GetHandleInformation.argtypes = [w.HANDLE, c.POINTER(w.DWORD)]
+    kernel.GetHandleInformation.restype = w.BOOL
+    kernel.CloseHandle.argtypes = [w.HANDLE]; kernel.CloseHandle.restype = w.BOOL
+    result = None
+    try:
+        require(type(target_pid) is int and target_pid == os.getpid(),
+                "query handle must belong to exact observed worker PID")
+        require(psutil.Process().create_time() == target_creation_time, "query handle target creation identity drift")
+        handle_flags = w.DWORD()
+        require(kernel.GetHandleInformation(query_handle, c.byref(handle_flags))
+                and not handle_flags.value & 1, "owned query handle must be noninheritable")
+        member = w.BOOL()
+        require(kernel.IsProcessInJob(kernel.GetCurrentProcess(), query_handle, c.byref(member)) and member.value,
+                "worker not contained in exact supervisor-owned Job")
+        limits = Extended()
+        require(kernel.QueryInformationJobObject(query_handle, 9, c.byref(limits), c.sizeof(limits), None),
+                "exact owned Job limits unavailable")
+        flags = int(limits.BasicLimitInformation.LimitFlags)
+        validate_owned_job_flags(flags, bool(member.value))
+        immediate = Extended()
+        immediate_ok = bool(kernel.QueryInformationJobObject(None, 9, c.byref(immediate), c.sizeof(immediate), None))
+        result = {"pid": os.getpid(), "creation_time": target_creation_time,
+                  "in_exact_supervisor_job": True, "exact_owned_limit_flags": flags,
+                  "kill_on_close": True, "breakaway_allowed": False, "query_handle_inheritable": False,
+                  "query_handle_access": "JOB_OBJECT_QUERY_ONLY",
+                  "immediate_null_query_ok": immediate_ok,
+                  "immediate_null_limit_flags": int(immediate.BasicLimitInformation.LimitFlags) if immediate_ok else None,
+                  "observation_api": "IsProcessInJob(explicit duplicate)/QueryInformationJobObject(explicit duplicate)"}
+    finally:
+        require(kernel.CloseHandle(query_handle), "owned query handle failed to close before framework")
+    result["query_handle_closed_before_framework"] = True
+    return result
+
+
+def close_unconsumed_query_handle(handle):
+    import ctypes as c
+    from ctypes import wintypes as w
+    require(type(handle) is int and 0 < handle < 2 ** 64, "invalid unconsumed query handle")
+    kernel = c.WinDLL("kernel32", use_last_error=True)
+    kernel.CloseHandle.argtypes = [w.HANDLE]; kernel.CloseHandle.restype = w.BOOL
+    require(kernel.CloseHandle(handle), "unconsumed owned query handle failed to close")
+
+
+def duplicate_owned_job_query_handle(job, target):
+    """Copy QUERY-only, noninheritable access into an identified own runtime."""
+    import ctypes as c
+    from ctypes import wintypes as w
+    import psutil
+    process = psutil.Process(target["pid"])
+    require(process.create_time() == target["creation_time"] and process.exe() == target["executable"],
+            "query-handle target process identity drift")
+    require(target["pid"] in job_process_ids(job), "query-handle target not in exact owned Job")
+    kernel = job.kernel
+    kernel.GetCurrentProcess.restype = w.HANDLE
+    kernel.OpenProcess.argtypes = [w.DWORD, w.BOOL, w.DWORD]; kernel.OpenProcess.restype = w.HANDLE
+    kernel.DuplicateHandle.argtypes = [w.HANDLE, w.HANDLE, w.HANDLE, c.POINTER(w.HANDLE), w.DWORD, w.BOOL, w.DWORD]
+    kernel.DuplicateHandle.restype = w.BOOL
+    receiver = kernel.OpenProcess(0x40, False, target["pid"])
+    require(receiver, "owned query-handle target OpenProcess failed")
+    duplicate = w.HANDLE()
+    try:
+        require(kernel.DuplicateHandle(kernel.GetCurrentProcess(), job.handle, receiver,
+                    c.byref(duplicate), 4, False, 0), "query-only Job handle duplication failed")
+    finally:
+        kernel.CloseHandle(receiver)
+    return {"own_job_query_handle": int(duplicate.value), "query_handle_target_pid": target["pid"],
+            "query_handle_target_creation_time": target["creation_time"],
+            "duplicate_access_mask": 4, "duplicate_inheritable": False}
 
 
 def job_process_ids(job):
@@ -400,12 +471,13 @@ def job_member_witness(job, cfg):
             executable = process.exe()
             creation_time = process.create_time()
         except psutil.NoSuchProcess:
-            require(pid not in job_process_ids(job), "vanished runtime still listed in owned Job")
+            confirm_owned_process_exit(job, pid)
             continue
         expected = permitted.get(executable.replace("\\", "/").casefold())
         require(expected and sha(executable) == expected, "unregistered owned runtime executable")
         handle = kernel.OpenProcess(0x1000, False, pid)
         if not handle and pid not in job_process_ids(job):
+            confirm_owned_process_exit(job, pid, creation_time)
             continue
         require(handle, "owned live process membership handle unavailable")
         try:
@@ -418,6 +490,179 @@ def job_member_witness(job, cfg):
                           "executable": executable, "executable_sha256": expected,
                           "exact_owned_job_member": True})
     return witnesses
+
+
+def confirm_owned_process_exit(job, pid, creation_time=None):
+    """A missing process sample requires refreshed exact Job and exit evidence."""
+    import psutil
+    require(pid not in job_process_ids(job), "vanished runtime still listed in exact owned Job")
+    try:
+        current = psutil.Process(pid)
+        now_creation = current.create_time()
+        require(creation_time is not None and now_creation != creation_time,
+                "missing owned sample still names a live process; exit not proven")
+        reused = True
+    except psutil.NoSuchProcess:
+        reused = False
+    return {"pid": pid, "recorded_creation_time": creation_time,
+            "refreshed_exact_job_absent": True, "original_process_exited": True,
+            "pid_reused": reused, "observed_at": time.time()}
+
+
+def owned_job_rss_snapshot(job, cfg):
+    """RSS for exact verified members; no parent.children traversal race."""
+    import psutil
+    members = job_member_witness(job, cfg)
+    rss, exits = 0, []
+    for witness in members:
+        try:
+            process = psutil.Process(witness["pid"])
+            require(process.create_time() == witness["creation_time"], "owned RSS process identity drift")
+            rss += process.memory_info().rss
+        except psutil.NoSuchProcess:
+            exits.append(confirm_owned_process_exit(job, witness["pid"], witness["creation_time"]))
+    return {"members": members, "rss_bytes": rss, "confirmed_exit_races": exits}
+
+
+def read_event_journal(path):
+    path = Path(path)
+    require(path.stat().st_size <= 16 * 1024 ** 2, "bounded event journal exceeded")
+    raw = path.read_bytes()
+    require(raw.endswith(b"\n"), "partial final journal record")
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            require(key not in result, "duplicate journal field")
+            result[key] = value
+        return result
+    records = [json.loads(line, object_pairs_hook=unique) for line in raw.splitlines()]
+    canonical(records)
+    return records
+
+
+def validate_diagnostic_completion(result, cfg, source_commit, events=None):
+    """Externally verify complete evidence; disappearance alone is never success."""
+    require(type(result) is dict and result.get("status") == "COMPLETE_FIXED_SHAPE_DIAGNOSTIC_ONLY"
+            and result.get("source_commit") == source_commit and not result.get("error"),
+            "complete current-source worker result required")
+    require(result.get("model_loads") == 1 and result.get("optimizer_steps") == result.get("generation_tokens") == 0
+            and all(type(result.get(k)) is int for k in ("model_loads", "optimizer_steps", "generation_tokens"))
+            and all(result.get(k) is False for k in ("native_qualified", "capture_qualified", "reader_qualified", "training_qualified")),
+            "diagnostic dose or qualification claim mismatch")
+    ledger = result.get("call_accounting", {})
+    require(type(events) is list and events, "durable operation journal required for completion")
+    adapted = []
+    previous_time = None
+    for record in events:
+        require(type(record) is dict and type(record.get("kind")) is str
+                and type(record.get("time")) in (int, float) and math.isfinite(record["time"]),
+                "invalid durable journal record/time")
+        require(previous_time is None or record["time"] >= previous_time, "journal wall time moved backward")
+        previous_time = record["time"]
+        adapted.append({"event": record["kind"], **{k: v for k, v in record.items() if k not in {"kind", "time"}}})
+    from experiments.post_training_mimo_centralized_v1.scripts.qualify_native import verify_call_journal
+    try:
+        verify_call_journal(adapted, snapshot=ledger, maximum_optimizer_calls=0)
+    except (RuntimeError, ValueError, TypeError, KeyError) as error:
+        raise NativeBlocked("durable operation journal/result mismatch: " + str(error)) from error
+    resources = [{k: v for k, v in event.items() if k not in {"kind", "time"}}
+                 for event in events if event["kind"] == "resource"]
+    require(resources == result.get("resources") and resources and resources[-1].get("stage") == "complete",
+            "complete durable resource evidence/result mismatch")
+    require(ledger.get("last_call_id") == 316 and ledger.get("forward_input_positions_attempted") == 524
+            and ledger.get("forward_input_positions_returned") == 524 and ledger.get("pending_calls") == [],
+            "diagnostic accounting incomplete/pending")
+    require(all(type(ledger.get(k)) is int for k in ("last_call_id", "forward_input_positions_attempted", "forward_input_positions_returned")),
+            "accounting counters must be integers, not booleans")
+    require(all(type(ledger.get(k)) is int and ledger[k] == 0 for k in
+                ("max_optimizer_calls", "training_forward_input_positions_attempted", "training_forward_input_positions_returned")),
+            "unexpected training/optimizer accounting")
+    expected = {"model_construct": 1, "checkpoint_load": 1, "tensor_copy": 310, "forward": 4,
+                "backward": 0, "optimizer_step": 0, "checkpoint_save": 0, "checkpoint_reload": 0}
+    operations = ledger.get("operations", {})
+    require(set(operations) == set(expected), "diagnostic operation schema mismatch")
+    for operation, count in expected.items():
+        require(type(operations[operation]) is dict and all(type(v) is int for v in operations[operation].values())
+                and operations[operation] == {"attempted": count, "returned": count, "failed": 0, "pending": 0},
+                "failed/pending or incomplete diagnostic operation: " + operation)
+    comparisons = result.get("comparisons", [])
+    require(type(comparisons) is list and len(comparisons) == 6, "all six comparisons required")
+    expected_comparisons = {(start, kind) for start in (128, 129, 130) for kind in ("logits", "hidden")}
+    observed = set()
+    for row in comparisons:
+        identity = (row.get("mutation_start"), row.get("kind"))
+        require(identity in expected_comparisons and identity not in observed, "comparison coverage mismatch")
+        observed.add(identity)
+        require(row.get("protected_positions") == list(range(127, identity[0]))
+                and row.get("passed") is True and row.get("raw_byte_identity") is True
+                and type(row.get("left_raw_sha256")) is str and re.fullmatch(r"[0-9a-f]{64}", row["left_raw_sha256"])
+                and row["left_raw_sha256"] == row.get("right_raw_sha256")
+                and all(type(row.get(k)) in (int, float) and math.isfinite(row[k]) and row[k] == 0
+                        for k in ("max_abs", "mean_abs")), "failed/nonfinite raw numerical comparison")
+    trials = result.get("trials", [])
+    require(type(trials) is list and len(trials) == 4 and trials[0].get("stage") == "baseline", "four raw trial witnesses required")
+    measurement_events = [event for event in events if event["kind"] == "measurement"]
+    try:
+        durable_measurements_match = (canonical([event.get("measurement") for event in measurement_events]) == canonical(trials))
+    except (ValueError, TypeError) as error:
+        raise NativeBlocked("nonfinite/noncanonical raw measurement payload") from error
+    require(len(measurement_events) == 4
+            and all(set(event) == {"kind", "time", "measurement"} for event in measurement_events)
+            and durable_measurements_match,
+            "four durable measurements must exactly bind saved trial payloads")
+    require(trials[0].get("logits_sha256") == cfg["reference_bulk_logits_sha256"]
+            and trials[0].get("hidden_sha256") == cfg["reference_bulk_hidden_sha256"]
+            and trials[0].get("model_logprobs") == cfg["reference_bulk_model_logprobs"], "historical bulk baseline drift")
+    mask_sha = hashlib.sha256(causal_mask_reference_bytes()).hexdigest()
+    position_sha = hashlib.sha256(struct.pack("<131q", *range(131))).hexdigest()
+    expected_representation = {"rows": 131, "columns": 131, "allowed_condition": "column <= row",
+          "allowed_uint16": 0, "forbidden_uint16": 65407, "allowed_value": 0.0,
+          "forbidden_value": -(2 - 2 ** -7) * 2 ** 127}
+    plan = causal_plan(cfg["prompt_ids"], cfg["generated_ids"])
+    for index, trial in enumerate(trials):
+        registered = plan[index]
+        require(type(trial) is dict and set(trial) == {"stage", "logits_sha256", "hidden_sha256", "model_logprobs",
+                                                      "mutation_start", "protected_positions", "witnesses"},
+                "raw trial schema mismatch")
+        require(trial["stage"] == registered["stage"]
+                and canonical(trial["mutation_start"]) == canonical(registered["mutation_start"])
+                and type(trial["protected_positions"]) is list
+                and all(type(v) is int for v in trial["protected_positions"])
+                and trial["protected_positions"] == list(range(127, 127 + registered["protected_count"])),
+                "trial identity/mutation/protected positions differ from registered plan")
+        require(all(type(trial[k]) is str and re.fullmatch(r"[0-9a-f]{64}", trial[k])
+                    for k in ("logits_sha256", "hidden_sha256")), "raw full trial SHA256 invalid")
+        require(type(trial["model_logprobs"]) is list and len(trial["model_logprobs"]) == 3
+                and all(type(v) in (int, float) and math.isfinite(v) and v <= 0 for v in trial["model_logprobs"]),
+                "three finite raw model log-probabilities required")
+        witnesses = trial.get("witnesses", {})
+        counts = witnesses.get("counts", {})
+        mask, positions = witnesses.get("mask", {}), witnesses.get("positions", {})
+        shape = mask.get("shape", [])
+        representation = mask.get("complete_representation", {})
+        require(type(counts) is dict and all(type(v) is int for v in counts.values())
+                and counts == {"mask": 1, "rotary": 1, "norm": 1}
+                and type(shape) is list and all(type(v) is int for v in shape) and shape == [1, 1, 131, 131]
+                and mask.get("dtype") == "bfloat16" and mask.get("byte_order") == "little_endian"
+                and mask.get("raw_sha256") == mask_sha and mask.get("reference_raw_sha256") == mask_sha
+                and mask.get("actual_values_match_representation") is True
+                and representation == expected_representation
+                and all(type(representation.get(k)) is int for k in ("rows", "columns", "allowed_uint16", "forbidden_uint16"))
+                and all(type(representation.get(k)) is float for k in ("allowed_value", "forbidden_value")),
+                "complete actual causal-mask witness mismatch")
+        pos_ids, pos_shape = positions.get("position_ids"), positions.get("shape", [])
+        require(type(pos_ids) is list and len(pos_ids) == 1 and type(pos_ids[0]) is list
+                and all(type(v) is int for v in pos_ids[0]) and pos_ids == [list(range(131))]
+                and type(pos_shape) is list and all(type(v) is int for v in pos_shape) and pos_shape == [1, 131]
+                and positions.get("dtype") == "int64" and positions.get("byte_order") == "little_endian"
+                and positions.get("raw_sha256") == position_sha, "complete actual rotary-position witness mismatch")
+    for name in ("peak_gpu_allocated_gib", "peak_gpu_reserved_gib", "sampled_min_gpu_free_gib"):
+        value = result.get(name)
+        require(type(value) in (int, float) and math.isfinite(value) and value >= 0, "allocator/GPU telemetry incomplete")
+    require(result["sampled_min_gpu_free_gib"] >= .5, "GPU runtime floor violated")
+    return {"complete_worker_accounting_verified": True, "raw_comparisons_verified": 6,
+            "trial_witnesses_verified": 4, "durable_journal_verified": True,
+            "durable_journal_records": len(events), "capture_qualified": False, "reader_qualified": False}
 
 
 def resume_suspended_primary_thread(process):
@@ -508,6 +753,111 @@ def containment_cpu_smoke(cfg):
             process.kill(); process.wait(timeout=5)
 
 
+def exact_job_query_cpu_probe(cfg, output, *, rejection=None):
+    """Bounded real child query/close/parent-death control; no framework/model.
+
+    The child emits its receipt before sleeping. Parent closes its last owned Job
+    handle and observes every previously verified member exiting automatically.
+    """
+    require(os.name == "nt" and rejection in {None, "target_pid", "target_creation"}, "registered CPU probe mode")
+    import psutil
+    from experiments.opallo_native_collector_v1.supervisor import WindowsJob
+    output = Path(output).resolve(); output.mkdir(parents=True, exist_ok=False)
+    child_receipt = output / "CHILD_QUERY_RECEIPT.json"
+    child_code = r'''
+import ctypes as c,json,os,subprocess,sys,time
+from ctypes import wintypes as w
+from experiments.rineya_centralized_reasoning_system_v1.native import current_windows_job_witness,write_new
+info=json.loads(sys.stdin.readline());handle=info['own_job_query_handle']
+result={'pid':os.getpid(),'framework_imported':'torch' in sys.modules,'model_loads':0,'gpu_calls':0}
+try:
+ result['witness']=current_windows_job_witness(handle,info['query_handle_target_pid'],info['query_handle_target_creation_time'])
+ result['status']='EXACT_OWN_JOB_VERIFIED'
+except BaseException as error:
+ result['status']='REJECTED_BEFORE_FRAMEWORK';result['error']=type(error).__name__+': '+str(error)
+kernel=c.WinDLL('kernel32',use_last_error=True);kernel.GetHandleInformation.argtypes=[w.HANDLE,c.POINTER(w.DWORD)];kernel.GetHandleInformation.restype=w.BOOL
+flags=w.DWORD();result['handle_usable_after_witness']=bool(kernel.GetHandleInformation(handle,c.byref(flags)))
+result['handle_error_after_witness']=c.get_last_error()
+if result['status']=='EXACT_OWN_JOB_VERIFIED':
+ subprocess.Popen([sys.executable,'-B','-c','import time; time.sleep(30)'])
+write_new(info['child_receipt'],result)
+time.sleep(30)
+'''
+    process = job = None
+    evidence = {"scope": "ACTUAL_EXACT_JOB_QUERY_CPU_ONLY", "rejection_control": rejection,
+                "model_loads": 0, "framework_imports": 0, "gpu_calls": 0}
+    try:
+        process = subprocess.Popen([sys.executable, "-B", "-c", child_code], cwd=ROOT,
+                    stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
+                    creationflags=subprocess.CREATE_NEW_PROCESS_GROUP | 4)
+        job = WindowsJob(process)
+        evidence["before_resume"] = job_member_witness(job, cfg)
+        evidence["resume"] = resume_suspended_primary_thread(process)
+        deadline = time.monotonic() + 3
+        target = []
+        while time.monotonic() < deadline:
+            members = job_member_witness(job, cfg)
+            target = [m for m in members if Path(m["executable"]).resolve() == Path(sys._base_executable).resolve()]
+            if len(target) == 1:
+                break
+            time.sleep(.02)
+        require(len(target) == 1, "CPU query probe runtime target unavailable")
+        transfer = duplicate_owned_job_query_handle(job, target[0])
+        evidence["query_handle_transfer"] = transfer
+        sent = {**transfer, "child_receipt": str(child_receipt)}
+        if rejection == "target_pid": sent["query_handle_target_pid"] += 1
+        if rejection == "target_creation": sent["query_handle_target_creation_time"] -= 1
+        process.stdin.write(canonical(sent) + b"\n"); process.stdin.flush()
+        deadline = time.monotonic() + 5
+        while not child_receipt.exists() and time.monotonic() < deadline and process.poll() is None:
+            time.sleep(.02)
+        require(child_receipt.exists(), "CPU child query probe did not return bounded receipt")
+        observed = read_json(child_receipt)
+        evidence["child"] = observed
+        require(observed["handle_usable_after_witness"] is False and observed["handle_error_after_witness"] == 6,
+                "child query handle remained open before framework boundary")
+        expected = "EXACT_OWN_JOB_VERIFIED" if rejection is None else "REJECTED_BEFORE_FRAMEWORK"
+        require(observed["status"] == expected and not observed["framework_imported"], "CPU query probe unexpected outcome")
+        deadline = time.monotonic() + 3
+        while time.monotonic() < deadline:
+            verified_members = job_member_witness(job, cfg)
+            if rejection is not None or len(verified_members) >= 4:
+                break
+            time.sleep(.02)
+        require(rejection is not None or len(verified_members) >= 4, "post-query grandchild inheritance not observed")
+        evidence["members_before_parent_handle_close"] = verified_members
+        job.close()  # Last owned Job handle; must kill all members without explicit kill.
+        deadline = time.monotonic() + 5
+        remaining = []
+        while time.monotonic() < deadline:
+            remaining = []
+            for witness in verified_members:
+                try:
+                    member = psutil.Process(witness["pid"])
+                    if member.create_time() == witness["creation_time"] and member.is_running():
+                        remaining.append(member.pid)
+                except psutil.NoSuchProcess:
+                    pass
+            if not remaining:
+                break
+            time.sleep(.02)
+        require(not remaining, "last-handle close did not terminate complete owned tree")
+        process.wait(timeout=5)
+        evidence.update(status="PASS_EXACT_JOB_QUERY_CPU_ONLY", remaining_owned_pids=[],
+                        parent_last_handle_close_terminated_tree=True, child_receipt_sha256=sha(child_receipt))
+        write_new(output / "PROBE_RECEIPT.json", evidence)
+        return evidence
+    finally:
+        if job:
+            job.close()
+        if process is not None and process.poll() is None:
+            process.kill(); process.wait(timeout=5)
+        if process is not None:
+            for pipe in (process.stdin, process.stdout, process.stderr):
+                if pipe is not None:
+                    pipe.close()
+
+
 def worker(args, cfg):
     """Contained worker. Requires parent GO, committed review and fenced lease."""
     require(os.name == "nt", "Windows-only worker")
@@ -520,19 +870,27 @@ def worker(args, cfg):
         time.sleep(.02)
     require(args.go_path.exists(), "contained GO not received; no framework imported")
     go = read_json(args.go_path)
-    require(all(go.get(k) == v for k, v in {"contract_sha256": args.contract_sha256,
-                                          "owner": args.owner, "fence": args.fence}.items()),
-            "owned contained GO mismatch")
-    import psutil
-    ancestors = psutil.Process().parents()
-    require(go.get("supervisor_pid") in [p.pid for p in ancestors]
-            and go.get("worker_tree_pid") in [os.getpid()] + [p.pid for p in ancestors],
-            "worker ancestry differs from recorded supervisor/tree")
-    supervisor_command = psutil.Process(go["supervisor_pid"]).cmdline()
-    require("--supervise" in supervisor_command
-            and "experiments.rineya_centralized_reasoning_system_v1.native" in supervisor_command,
-            "direct worker invocation unsupported; registered supervisor command required")
-    containment = current_windows_job_witness()
+    query_handle = go.get("own_job_query_handle")
+    query_consumed = False
+    try:
+        require(all(go.get(k) == v for k, v in {"contract_sha256": args.contract_sha256,
+                                              "owner": args.owner, "fence": args.fence}.items()),
+                "owned contained GO mismatch")
+        import psutil
+        ancestors = psutil.Process().parents()
+        require(go.get("supervisor_pid") in [p.pid for p in ancestors]
+                and go.get("worker_tree_pid") in [os.getpid()] + [p.pid for p in ancestors],
+                "worker ancestry differs from recorded supervisor/tree")
+        supervisor_command = psutil.Process(go["supervisor_pid"]).cmdline()
+        require("--supervise" in supervisor_command
+                and "experiments.rineya_centralized_reasoning_system_v1.native" in supervisor_command,
+                "direct worker invocation unsupported; registered supervisor command required")
+        query_consumed = type(query_handle) is int and 0 < query_handle < 2 ** 64
+        containment = current_windows_job_witness(query_handle,
+                      go.get("query_handle_target_pid"), go.get("query_handle_target_creation_time"))
+    finally:
+        if not query_consumed and type(query_handle) is int and 0 < query_handle < 2 ** 64:
+            close_unconsumed_query_handle(query_handle)
     write_new(output / "CONTAINMENT_RECEIPT.json", {**containment, "supervisor_pid": go["supervisor_pid"],
                "worker_tree_pid": go["worker_tree_pid"], "contract_sha256": args.contract_sha256})
     snapshot = committed_snapshot()
@@ -791,16 +1149,30 @@ def supervise(args, cfg):
                     break
                 time.sleep(.02)
             require(len(members) >= 2, "venv runtime child membership not observed before GO")
+            runtime_targets = [m for m in members if Path(m["executable"]).resolve() == Path(sys._base_executable).resolve()]
+            require(len(runtime_targets) == 1, "one exact CPython worker target required for Job query handle")
+            query_transfer = duplicate_owned_job_query_handle(job, runtime_targets[0])
             write_new(output / "TREE_CONTAINMENT.json", {"before_resume": before_resume,
-                       "resume": resumed, "before_go_members": members, "all_members_in_exact_owned_job": True})
+                       "resume": resumed, "before_go_members": members, "all_members_in_exact_owned_job": True,
+                       "query_handle_transfer": query_transfer})
             write_new(output / "GO.json", {"contract_sha256": args.contract_sha256, "owner": owner, "fence": lease["fence"],
-                       "supervisor_pid": os.getpid(), "worker_tree_pid": process.pid})
+                       "supervisor_pid": os.getpid(), "worker_tree_pid": process.pid, **query_transfer})
             def gpu_watch():
                 while not stopped.is_set():
+                    querying_live = False
                     try:
-                        allowed = [process.pid] + [p.pid for p in observed.children(recursive=True)]
+                        allowed = job_process_ids(job)
+                        if not allowed:
+                            if process.poll() is not None:
+                                telemetry_state["owned_exit_observed"] = True
+                                return
+                            stopped.wait(.02)
+                            continue
+                        querying_live = True
                         telemetry_state["snapshot"] = collect_telemetry(output, allowed, cfg["gpu_process_registry"])
                     except BaseException as exc:
+                        if stopped.is_set() and not querying_live:
+                            return
                         telemetry_state["error"] = str(exc)
                         break
                     stopped.wait(.5)
@@ -809,15 +1181,10 @@ def supervise(args, cfg):
             with (output / "WATCHDOG.jsonl").open("xb") as audit:
                 while process.poll() is None:
                     store._require_lease(owner, lease["fence"])
-                    members = job_member_witness(job, cfg)
+                    owned = owned_job_rss_snapshot(job, cfg)
+                    members = owned["members"]
                     elapsed = time.monotonic() - started
-                    tree = [observed] + observed.children(recursive=True)
-                    rss = 0
-                    for member in tree:
-                        try:
-                            rss += member.memory_info().rss
-                        except psutil.NoSuchProcess:
-                            pass
+                    rss = owned["rss_bytes"]
                     peak_rss = max(peak_rss, rss)
                     host_free = psutil.virtual_memory().available / GIB
                     sample = telemetry_state["snapshot"]
@@ -828,7 +1195,8 @@ def supervise(args, cfg):
                     elif sample["unresolved_gpu_pids"] or sample["competing_gpu_pids"] or sample["unclassified_gpu_pids"]: reason = "GPU_PROCESS_CONFLICT"
                     elif stdout.tell() + stderr.tell() > 16 * 1024 ** 2: reason = "LOG_LIMIT"
                     audit.write(canonical({"elapsed": elapsed, "rss": rss, "host_free_gib": host_free,
-                                "gpu_snapshot": sample, "owned_job_members": members, "reason": reason}) + b"\n")
+                                "gpu_snapshot": sample, "owned_job_members": members,
+                                "confirmed_owned_exit_races": owned["confirmed_exit_races"], "reason": reason}) + b"\n")
                     audit.flush(); os.fsync(audit.fileno())
                     if reason:
                         job.kill(); break
@@ -838,8 +1206,16 @@ def supervise(args, cfg):
                     stopped.wait(.1)
             code = process.wait(timeout=10)
             require(code == 0 and reason is None, "contained worker failed: " + str(reason or code))
+            stopped.set()
+            watcher.join(timeout=5)
+            require(not watcher.is_alive(), "GPU telemetry worker did not stop")
+            require(telemetry_state["error"] is None, "live GPU telemetry failure retained")
+            require(job_process_ids(job) == [], "launcher exit left an owned descendant active")
             result = read_json(output / "DIAGNOSTIC_RESULT.json")
-            require(result["status"] == "COMPLETE_FIXED_SHAPE_DIAGNOSTIC_ONLY", "worker result absent/failed")
+            events = read_event_journal(output / "EVENTS.jsonl")
+            completion = validate_diagnostic_completion(result, cfg, report["observations"]["source"]["commit"], events)
+            completion["events_sha256"] = sha(output / "EVENTS.jsonl")
+            write_new(output / "COMPLETION_VERIFICATION.json", completion)
             verify_sources(cfg); verify_assets(cfg)
             require(not committed_snapshot()["dirty"], "source dirty after worker")
             outcome = "SUCCEEDED"

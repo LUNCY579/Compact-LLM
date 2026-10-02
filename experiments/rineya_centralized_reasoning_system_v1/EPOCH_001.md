@@ -134,3 +134,35 @@ whole path and positive trace-local evidence separately. The final operational
 repair/review addresses verified exit monitoring. Total charged native work is
 35.67099999999846s including both failures; capture, reader576, training, model
 quality, acquisition/retention and promotion remain closed or unmeasured.
+
+## Final supervisor source and live conflict, 2026-10-02
+
+Final operational revision 3 at clean worktree `1fd862b8` was independently
+reviewed with native SHA `84531289` and contract `d79f3b6a`. Exact files and prior
+contracts are preserved in `evidence/NATIVE_REV3_INTEGRATION_RECEIPT.json`.
+The first admission refused RAM0.715431 GiB and unregistered Photos/Unity GPU
+identities before dispatch; its snapshot and approvals are retained in
+`evidence/native_d2_rev3_admission_refusal_001/`. No worker cost accrued.
+
+A later genuine host change produced RAM6.289272 GiB, GPU free6.958008 GiB and
+no blocking GPU identities. The reviewed supervisor then admitted job
+`CRS-D2-003-1fd862b8-d79f3b6a`. During framework import, Unity PID683892 appeared
+on the GPU outside the frozen exact-identity registry. The watchdog reported
+`GPU_PROCESS_CONFLICT`, stopped only the owned worker tree and verified its
+empty-tree exit. This attempt cost7.469000000004598 worker-seconds; it produced
+one framework-import-attempt event and no diagnostic result or completed model/
+forward events. All four planned forward cases remained unattempted. Eleven raw
+files plus a source-bound summary are retained in `evidence/native_d2_attempt_003/`.
+
+Total charged native work is43.140000000003056s against7200s/epoch and14400s/
+rolling24h. The host-wide database has no active or unknown native jobs. No
+resource threshold or GPU identity exception was changed, and unrelated apps
+were not terminated. Another attempt requires a fresh host change and a new
+registered identity; the failed job and evidence remain terminal.
+
+A separate exact-prefix reader qualifier and receipt-bound same-panel learning
+delta guard passed24 lightweight CPU tests in0.019s. The independent reader
+review reproduced a completion validator that accepted incomplete synthetic
+proofs; native reader launch remains closed pending consequential repairs and
+fresh review. These tests loaded no framework, tokenizer or model. No acquisition,
+retention, procedure-memory effect or native learning-efficiency claim follows.

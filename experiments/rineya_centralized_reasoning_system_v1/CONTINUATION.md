@@ -27,14 +27,27 @@ this is not an OS-isolated security boundary.
 For current native preflight use the pinned model environment, without loading
 a model:
 
-The primary native v1 worker has a recorded implicit Job-query startup failure.
-Its admission preflight alone cannot resolve that failure. Operational revision 2
-is built in the attached clean worktree listed in STATUS; use its exact reviewed
-commit/contract/approval instead of re-running the known failing v1 command.
+Final native revision 3 is integrated in the primary checkout; the attached clean
+worktree listed in STATUS retains committed source `1fd862b8`, contract `d79f3b6a`
+and its exact review receipts. Revision 3's first dispatch failed on a new Unity
+GPU process during framework import. The failed job/output are terminal evidence,
+not retry targets. No whole-path native qualification has passed.
 
 ```powershell
 & 'C:\Users\clclc\BusinessProject\.venv-mq001\Scripts\python.exe' -m experiments.rineya_centralized_reasoning_system_v1.runner preflight
 ```
+
+From the clean attached worktree, use the exact revision 3 preflight:
+
+```powershell
+& 'C:\Users\clclc\BusinessProject\.venv-mq001\Scripts\python.exe' -B -m experiments.rineya_centralized_reasoning_system_v1.native --preflight --contract-sha256 d79f3b6a51e939d78a99c5c287ef6f33ef5979cfa50e76ba3d930ed3724f826a --review 'experiments/rineya_centralized_reasoning_system_v1/outputs/NATIVE_OPS_APPROVAL_1fd862b8.json'
+```
+
+Only after a genuine host change, complete admission and durable reconciliation
+may a new bounded attempt be registered with a new key and output directory.
+Do not reuse `CRS-D2-003-1fd862b8-d79f3b6a` or its output. Current charged native
+time is43.140000000003056s; no active worker remains. Preserve prior failures.
+New reader code is under independent review and is not eligible to launch.
 
 Actual diagnostic dispatch requires the exact committed contract digest and a
 fresh independent review receipt binding that commit/code/contract, current

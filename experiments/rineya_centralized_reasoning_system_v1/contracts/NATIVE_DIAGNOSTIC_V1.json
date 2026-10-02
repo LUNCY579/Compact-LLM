@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "contract_id": "CRS-NATIVE-D2-V1",
-  "status": "CPU_TESTED_REPAIR_ROUND_1_READY_FOR_INDEPENDENT_NATIVE_REVIEW",
+  "status": "CPU_TESTED_FINAL_OPERATIONAL_REPAIR_ROUND_3_REVIEW_PENDING",
   "diagnostic_scope": "Four non-evaluation fixed-shape131-token forwards of historical failed trace; no generation/training",
   "builder": "runtime_audit",
   "independent_review_required": true,
@@ -31,7 +31,7 @@
     }
   },
   "source_sha256": {
-    "experiments/rineya_centralized_reasoning_system_v1/native.py": "183a177417b81ea938e2476bb49e8e739dd0316e42479bd11f6b5818e5061782",
+    "experiments/rineya_centralized_reasoning_system_v1/native.py": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
     "experiments/rineya_centralized_reasoning_system_v1/operations.py": "ba27ec8a31437459b956a5642e6ece4838f0584602db2c93ff7bc61437806e30",
     "experiments/post_training_mimo_centralized_v1/scripts/stream_checkpoint.py": "434c62698c2e397048db0d88a7959e34d5b8afb93f90cdf86f2aba852922c67f",
     "experiments/post_training_mimo_centralized_v1/scripts/qualify_native.py": "a0fbbbb67dcb7136270dd01efed16cccffc62b09342863f05d03d845805bf941",
@@ -244,11 +244,50 @@
   "interpretation_limit": "Only trace-local equal-shape causality; successful D2 is not capture, reader, training, acquisition or retention qualification. Next exact-prefix scoring successor must retain original bulk failure.",
   "containment": "CREATE_SUSPENDED before venv launcher can spawn; assign exact pinned WindowsJob, verify no children/root exactJobmembership, resume one suspended primary thread. Verify pinned complete Job PID list beforeGO and duringwatchdog. Before exit proof terminate only ownedJob and verify PID list empty. Internal worker validates supervised ancestry/currentJob kill-on-close with no breakaway before framework imports.",
   "cpu_tests": {
-    "tests": 23,
-    "passed": 23,
-    "native_calls": 0,
-    "seconds": 1.147,
-    "claim_scope": "CPU rejection/accounting interfaces and actual stdlib-only Windows containment; no model/framework/CUDA execution"
+    "tests": 31,
+    "passed": 31,
+    "seconds": 6.198,
+    "model_calls_this_validation": 0,
+    "scope": "Exact Job exit-race and live-telemetry failure controls; actual no-model naturally exiting subprocess supervision; retained real native receipt validated read-only and corrupt copies rejected.",
+    "durable_journal_reconstruction": "Pinned central verify_call_journal reconstructs every local kind/time event through explicit kind\u2192event adapter; raw wall times remain unmodified evidence. Complete resource records bind to result including finalcomplete stage. Missingreturn/pending/snapshot differences reject.",
+    "repair_validation_history": [
+      {
+        "tests": 31,
+        "outcome": "FAILED",
+        "failures": 1,
+        "reason": "Trailing durable resourcecomplete record removal was not rejected; added complete resource-journal/result binding."
+      },
+      {
+        "tests": 31,
+        "outcome": "PASSED",
+        "seconds": 5.656
+      },
+      {
+        "tests": 31,
+        "outcome": "FAILED",
+        "errors": 1,
+        "reason": "Nonbaseline NaN rejected as canonicalJSON ValueError; normalize to explicit NativeBlocked."
+      },
+      {
+        "tests": 31,
+        "outcome": "FAILED",
+        "errors": 1,
+        "seconds": 20.701,
+        "reason": "Existing bounded CPU query probe timed out under host contention and temporary partial-file cleanup failed; no model work. Probe limits and source unchanged."
+      },
+      {
+        "tests": 1,
+        "outcome": "PASSED",
+        "seconds": 0.067,
+        "scope": "Targeted complete actual-evidence corruption test."
+      },
+      {
+        "tests": 31,
+        "outcome": "PASSED",
+        "seconds": 6.198
+      }
+    ],
+    "final_measurement_binding": "Exactly4 durable measurement events canonically equal savedtrials; everytrial must follow registered mutation/protected positions, valid full logits/hidden SHA256 and finite3logprobs. Missing/duplicate/mismatched measurements and coherent invalid result+event edits reject."
   },
   "process_attribution": "nvidia-smi process name, psutil executable path, then read-only CIM Name/ExecutablePath fallback without escalation; unknown identity blocks. Windows WDDM per-process GPU memory remains unavailable; GPU-wide free memory is measured.",
   "reader_interface": "validate_token_fields is syntax validation only; validate_reader_request always denies until an exact immutable independently reviewed576-token evidence bundle and reader executor exist. Caller status dictionaries cannot grant qualification.",
@@ -491,8 +530,68 @@
     "https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-queryinformationjobobject",
     "https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/ns-tlhelp32-threadentry32"
   ],
-  "tests_sha256": "9a5ae99fd421906eeff4fe4fe316eca6d1433e1fcd13768545cc83a0f6e264f2",
+  "tests_sha256": "bf0bd76f1d93281dd2a4cbf4581bc30a481e4ae9c4e5d822f3f7e58dbf223067",
   "telemetry_freshness": "GPU and compute-process query timestamps precede identity hashing/CIM; sampled_at remains oldest component time. collect_telemetry does not overwrite GPU/process age. Slow identity checks exceeding5seconds deny; no hash cache silently refreshes timestamps.",
   "raw_numerical_evidence": "Protected left/right raw tensorSHA required equal plus numeric max/mean0; torch.equal remains separate diagnostic. Full replayable causal BF16 mask words/hash and rotary int64 IDs/hash perforward; readonly reduction/splitK flags and Torch allocator peaks recorded.",
-  "launch_response_uncertainty": "LAUNCH_ATTEMPT persisted before Popen invocation. Missing creation response or missing owned-tree exit witness remains OUTCOME_UNKNOWN with full600-second reservation and no fabricated exit/no-dispatch proof; no automatic retry."
+  "launch_response_uncertainty": "LAUNCH_ATTEMPT persisted before Popen invocation. Missing creation response or missing owned-tree exit witness remains OUTCOME_UNKNOWN with full600-second reservation and no fabricated exit/no-dispatch proof; no automatic retry.",
+  "operational_revision": 3,
+  "parent_contract_sha256": "291b7803e745ade2ccfcc5a6e9a8eafc31a9c174541ccd5436f730bde57a8707",
+  "operational_amendment_id": "CRS-NATIVE-OPERATIONAL-AMENDMENT-003",
+  "operational_revision_evidence": {
+    "raw_identity_probe": {
+      "path": "outputs/job_identity_probe_v1/NULL_VS_EXACT_OWN_JOB.json",
+      "sha256": "a2627233b14144547954f818d08aa50f7a2fd58b05eee5da9d08847599af9cb7",
+      "measured_null_flags": 12288,
+      "measured_exact_owned_flags": 8192,
+      "interpretation": "Different observed Job identities/limits; no assertion that NULL denotes an outer rather than an immediate nested Job."
+    },
+    "prior_failure": {
+      "source_commit": "9fd345d9bbcd0cdc6b300dcb07f6b68dbe8914ec",
+      "native_qualification_worker_seconds": 1.1090000000003783,
+      "model_loads": 0,
+      "model_forwards": 0,
+      "source_receipts": {
+        "results/d2_9fd345d9_epoch001_statechange2/stderr.log": "ff3f7abf0b7d8076343ed19b553f300546484f19d2059c0d6a34f7dd5dae7bb5",
+        "results/d2_9fd345d9_epoch001_statechange2/TREE_CONTAINMENT.json": "c97459083e511f77c6618dd5d352965f75090eb64d7d97d934fd6cd494728ae9",
+        "results/d2_9fd345d9_epoch001_statechange2/SUPERVISOR_RESULT.json": "cd5d726e26771f152602377ddf135128a6e143efcfc48d9e9dcae2db10c3da3b"
+      }
+    },
+    "repair_probes": {
+      "outputs/job_identity_probe_v2/target_creation/PROBE_RECEIPT.json": "f1b66d5c19f494807d5a880c7956f2819e6fa8b7bb967ab39cc19c927cdfd016",
+      "outputs/job_identity_probe_v2/target_pid/PROBE_RECEIPT.json": "32b5364cc6a76325b1a83309276507daf49b713cb4f0e7ef047e4a3451091bf6",
+      "outputs/job_identity_probe_v2/valid/PROBE_RECEIPT.json": "e19f52c58911cf902b157d58a30c66b5c58e91b8abdf85854949a4423844686a"
+    }
+  },
+  "exact_own_job_identity_contract": {
+    "duplicate_access_mask": 4,
+    "duplicate_access": "JOB_OBJECT_QUERY_ONLY",
+    "duplicate_inheritable": false,
+    "target_binding": "Exact observed pinned CPython PID+creationtime in owned Job; GO also retains owner/fence/supervisor ancestry binding.",
+    "required_owned_flags": "KILL_ON_JOB_CLOSE set; BREAKAWAY_OK and SILENT_BREAKAWAY_OK absent. Same rule applied to explicit own Job, never relaxed on NULL or parent Job.",
+    "lifetime": "Worker closes temporary query handle on success and every rejection before any framework import; no inherited child query handle.",
+    "parent_death": "Actual CPU controls show parent last-owned-handle close terminates all verified descendants after child query handle closes.",
+    "null_query": "Retain NULL/immediate nested Job flags as read-only diagnostic observation, not authorization or containment identity."
+  },
+  "operational_revision_3_evidence": {
+    "retained_model_run": {
+      "source_commit": "17c01965b048a130f82095e2177d626449d0de4a",
+      "worker_status": "COMPLETE_FIXED_SHAPE_DIAGNOSTIC_ONLY",
+      "supervisor_status": "FAILED",
+      "supervisor_reason": "NoSuchProcess: process PID not found (pid=626604)",
+      "model_loads": 1,
+      "forward_calls": 4,
+      "native_worker_seconds": 34.56199999999808,
+      "source_receipts": {
+        "results/d2_17c01965_epoch001_rev2/SUPERVISOR_RESULT.json": "c2f90ce741a6dbc9f32dc27837a6b3f5242daf7645f9f8b2d2a1b181fff5bffc",
+        "results/d2_17c01965_epoch001_rev2/DIAGNOSTIC_RESULT.json": "b9a09927bf34e1cd2bcea0dacb9444b5e0508a4477b75ff15ae408469f1c3337",
+        "results/d2_17c01965_epoch001_rev2/TREE_CONTAINMENT.json": "3e4ad160abb32c631cbb57ac11cd8d2c1ec45066e92340e5ab72777064b02435",
+        "results/d2_17c01965_epoch001_rev2/EVENTS.jsonl": "3c7db7b53ca71b7105516a13c49dbded708a5896c9ae30fb35abf46c74cc5a4b",
+        "results/d2_17c01965_epoch001_rev2/WATCHDOG.jsonl": "e95bc8b505c8374c93c8a7650248e133fa0064e16c5a9535882daa2e55d3aefd"
+      }
+    },
+    "prior_qualification_cost_seconds": 35.67099999999846,
+    "exit_rule": "Exact owned Job PID/member witnesses replace parent.children() in RAM and GPU telemetry. Missing member samples require refreshed Job absence and original-process exit/reuse proof; absence alone never grants success.",
+    "completion_rule": "Require exit0, stopped/joined telemetry thread without live telemetry error, empty exact owned Job, complete current-source worker result, exact integer accounting with no pending/failed calls, all6raw numerical comparisons and all4complete mask/position witnesses, then unchanged assets/source and clean commit.",
+    "final_round_policy": "Third/final repair round for this milestone; material unresolved issues quarantine supervision claim. No unchanged automatic model retry."
+  }
 }

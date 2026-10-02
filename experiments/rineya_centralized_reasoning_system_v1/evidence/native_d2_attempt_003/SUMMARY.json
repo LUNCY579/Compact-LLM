@@ -1,0 +1,65 @@
+{
+  "active_native_jobs": [],
+  "budget": {
+    "epoch": "CRS-EPOCH-001",
+    "epoch_charged_seconds": 43.140000000003056,
+    "epoch_limit_seconds": 7200,
+    "rolling_charged_seconds": 43.140000000003056,
+    "rolling_limit_seconds": 14400,
+    "unknown_reservations_charged_in_full": true
+  },
+  "completed_forward_events_observed": 0,
+  "completed_model_load_events_observed": 0,
+  "conflicting_processes": [
+    {
+      "name": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.2f1\\Editor\\Unity.exe",
+      "pid": 683892
+    }
+  ],
+  "contract_sha256": "d79f3b6a51e939d78a99c5c287ef6f33ef5979cfa50e76ba3d930ed3724f826a",
+  "diagnostic_result_absent": true,
+  "failed_threshold": "GPU_PROCESS_CONFLICT",
+  "files": {
+    "CONTAINMENT_RECEIPT.json": "9fbda1aeacb4e70d96a8a42e16024cb6d4c30ee9689e9740d691657128bde3c9",
+    "EVENTS.jsonl": "b809f7693b149e3607267143b361a805af9d3fa44a74297a396a1d0a541c74bd",
+    "GO.json": "ce0bd93f3cfc5d0992b57397633ec8eeb0d52c95e547d4531ab918a73e3424dd",
+    "LAUNCH_ATTEMPT.json": "160be7792399e9404440b4e1af42a35260aee11e8292b75022e623da4fd760d6",
+    "LAUNCH_INTENT.json": "5e0c83c086923e57e9dc51a084cd96c19c56dcf347d0cb3c7c0e1e5c13e215b5",
+    "SUPERVISOR_RESULT.json": "f63f39e06f3a3941de2a7f919cfff0b073cecf3ee0831fef10918f57054e2667",
+    "TREE_CONTAINMENT.json": "e50ae7a8f324e06c85488834fcee3b514440f2c1b6349d5450fd3b135f80d96d",
+    "WATCHDOG.jsonl": "c8fc179a3099191a3e439e2a08ef7434f8b2ae901f37e0178919a11dc5cba41d",
+    "receipts/native_outcome_observation-f3d8f6fd0af2bee2c0a3eea030c8c2749935dbf135decc5442110757439313fa.json": "129e0a4a43246fe1d087ca24bb3f360d7a82f29113c2608986dc4044ae162ffc",
+    "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "framework_import_attempts_observed": 1,
+  "interpretation": "Unregistered Unity GPU process appeared during framework import. Watchdog abort preserved; no native numerical measurements. Independent verified owned-tree exit and charged failed worker time. No unrelated process was terminated and no guard changed.",
+  "job_key": "CRS-D2-003-1fd862b8-d79f3b6a",
+  "journal_event_kinds": [
+    "framework_import_attempt"
+  ],
+  "kind": "FAILED_CONTAINED_NATIVE_ATTEMPT_WITH_RAW_EVIDENCE",
+  "last_gpu_observed_at": 1790922727.3219452,
+  "native_sha256": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+  "planned_forward_cases": 4,
+  "source_commit": "1fd862b863f30ac772f54b19e7ab337d68a4215b",
+  "supervisor": {
+    "exit_code": 2,
+    "launch_attempted": true,
+    "owned_tree_exit": {
+      "observed_at": 1790922727.5713382,
+      "owned_tree_exited": true,
+      "remaining_owned_pids": []
+    },
+    "peak_process_tree_rss_bytes": 618078208,
+    "reader_qualified": false,
+    "reason": "GPU_PROCESS_CONFLICT",
+    "status": "FAILED",
+    "subprocess_creation_outcome_unknown": false,
+    "training_qualified": false,
+    "wall_seconds": 7.469000000004598,
+    "watchdog_poll_seconds": 0.1,
+    "worker_dispatched": true
+  },
+  "unattempted_forward_cases": 4
+}

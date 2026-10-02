@@ -180,6 +180,166 @@ class NativeTests(unittest.TestCase):
             sample.update(host_available_gib=4, disk_free_gib=10, process_inventory_available=True)
             self.assertIn("telemetry stale or future-dated", native.admission_reasons(self.cfg, sample, current_time=1007))
 
+    def test_only_exact_owned_job_flags_license_worker_containment(self):
+        native.validate_owned_job_flags(0x2000, True)
+        for flags, member in ((0x3000, True), (0x2800, True), (0, True), (0x2000, False)):
+            with self.assertRaises(native.NativeBlocked):
+                native.validate_owned_job_flags(flags, member)
+
+    @unittest.skipUnless(os.name == "nt", "actual duplicated Windows Job query control")
+    def test_exact_query_handle_closes_before_framework_and_parent_close_kills_tree(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = native.exact_job_query_cpu_probe(self.cfg, Path(tmp) / "valid")
+            witness = result["child"]["witness"]
+            self.assertEqual(witness["exact_owned_limit_flags"], 0x2000)
+            self.assertTrue(witness["in_exact_supervisor_job"])
+            self.assertFalse(witness["query_handle_inheritable"])
+            self.assertTrue(witness["query_handle_closed_before_framework"])
+            self.assertFalse(result["child"]["handle_usable_after_witness"])
+            self.assertTrue(result["parent_last_handle_close_terminated_tree"])
+            self.assertGreaterEqual(len(result["members_before_parent_handle_close"]), 4)
+            self.assertEqual(result["model_loads"], result["gpu_calls"])
+
+    @unittest.skipUnless(os.name == "nt", "actual rejected Windows Job query control")
+    def test_query_handle_closes_on_target_pid_or_creation_rejection(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            for rejection in ("target_pid", "target_creation"):
+                result = native.exact_job_query_cpu_probe(self.cfg, Path(tmp) / rejection, rejection=rejection)
+                self.assertEqual(result["child"]["status"], "REJECTED_BEFORE_FRAMEWORK")
+                self.assertFalse(result["child"]["handle_usable_after_witness"])
+                self.assertFalse(result["child"]["framework_imported"])
+                self.assertTrue(result["parent_last_handle_close_terminated_tree"])
+
+    @unittest.skipUnless(os.name == "nt", "Windows GO rejection boundary")
+    def test_go_fence_rejection_closes_unconsumed_query_transfer(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); output = root / "results" / "invalid-go"
+            output.mkdir(parents=True)
+            go = output / "GO.json"
+            go.write_text(json.dumps({"contract_sha256": "a" * 64, "owner": "wrong-owner", "fence": 1,
+                                      "own_job_query_handle": 1234}))
+            args = SimpleNamespace(output=output, go_path=go, host_db=root / "state.sqlite3",
+                                   contract_sha256="a" * 64, owner="expected-owner", fence=1)
+            with patch.object(native, "PACKAGE", root), patch.object(native, "host_state_path", return_value=args.host_db), \
+                 patch.object(native, "close_unconsumed_query_handle") as close_transfer:
+                with self.assertRaisesRegex(native.NativeBlocked, "GO mismatch"):
+                    native.worker(args, self.cfg)
+                close_transfer.assert_called_once_with(1234)
+            self.assertFalse(args.host_db.exists())
+
+    def test_rss_exit_race_requires_refreshed_job_absence_and_process_exit(self):
+        import psutil
+        witness = {"pid": 12345, "creation_time": 5.0}
+        process = SimpleNamespace(create_time=lambda: 5.0,
+                    memory_info=lambda: (_ for _ in ()).throw(psutil.NoSuchProcess(12345)))
+        with patch.object(native, "job_member_witness", return_value=[witness]), \
+             patch.object(native, "job_process_ids", return_value=[]), \
+             patch("psutil.Process", side_effect=[process, psutil.NoSuchProcess(12345)]):
+            sample = native.owned_job_rss_snapshot(object(), self.cfg)
+        self.assertEqual(sample["rss_bytes"], 0)
+        self.assertTrue(sample["confirmed_exit_races"][0]["original_process_exited"])
+        with patch.object(native, "job_member_witness", return_value=[witness]), \
+             patch.object(native, "job_process_ids", return_value=[12345]), \
+             patch("psutil.Process", return_value=process):
+            with self.assertRaises(native.NativeBlocked):
+                native.owned_job_rss_snapshot(object(), self.cfg)
+
+    def test_live_process_telemetry_unavailability_is_not_an_exit(self):
+        import psutil
+        witness = {"pid": 12345, "creation_time": 5.0}
+        process = SimpleNamespace(create_time=lambda: 5.0,
+                    memory_info=lambda: (_ for _ in ()).throw(psutil.AccessDenied(12345)))
+        with patch.object(native, "job_member_witness", return_value=[witness]), \
+             patch("psutil.Process", return_value=process):
+            with self.assertRaises(psutil.AccessDenied):
+                native.owned_job_rss_snapshot(object(), self.cfg)
+
+    def test_completion_uses_real_retained_evidence_and_rejects_corruption(self):
+        # Reuse an actual prior model receipt read-only; this test loads no model.
+        path = native.PACKAGE / "results/d2_17c01965_epoch001_rev2/DIAGNOSTIC_RESULT.json"
+        if not path.exists():
+            self.skipTest("retained exact native evidence unavailable in this checkout")
+        observed = native.read_json(path)
+        commit = "17c01965b048a130f82095e2177d626449d0de4a"
+        events = native.read_event_journal(path.with_name("EVENTS.jsonl"))
+        native.validate_diagnostic_completion(observed, self.cfg, commit, events)
+        changes = [lambda x: x["call_accounting"]["pending_calls"].append({"call_id": 317}),
+                   lambda x: x["call_accounting"]["operations"]["model_construct"].update(attempted=True, returned=True),
+                   lambda x: x["comparisons"][0].update(left_raw_sha256="X" * 64, right_raw_sha256="X" * 64),
+                   lambda x: x["comparisons"][0].update(max_abs=float("nan")),
+                   lambda x: x["trials"][0]["witnesses"]["mask"].update(shape=[1, 1, 1, 1]),
+                   lambda x: x["trials"][0]["witnesses"]["positions"].update(position_ids=[[False] + list(range(1, 131))]),
+                   lambda x: x.update(status="FAILED_DIAGNOSTIC", error="CUDA OOM")]
+        for mutate in changes:
+            candidate = copy.deepcopy(observed); mutate(candidate)
+            with self.assertRaises(native.NativeBlocked):
+                native.validate_diagnostic_completion(candidate, self.cfg, commit, events)
+        with self.assertRaises(native.NativeBlocked):
+            native.validate_diagnostic_completion(observed, self.cfg, commit, events[:-1])
+        missing_return = [e for e in events if not (e["kind"] == "operation_returned" and e.get("call_id") == 316)]
+        with self.assertRaises(native.NativeBlocked):
+            native.validate_diagnostic_completion(observed, self.cfg, commit, missing_return)
+        no_measurements = [e for e in events if e["kind"] != "measurement"]
+        with self.assertRaises(native.NativeBlocked):
+            native.validate_diagnostic_completion(observed, self.cfg, commit, no_measurements)
+        duplicated = copy.deepcopy(events)
+        measurement_index = next(i for i, e in enumerate(duplicated) if e["kind"] == "measurement")
+        duplicated.insert(measurement_index, copy.deepcopy(duplicated[measurement_index]))
+        with self.assertRaises(native.NativeBlocked):
+            native.validate_diagnostic_completion(observed, self.cfg, commit, duplicated)
+        trial_mutations = [lambda x: x["trials"][1].update(mutation_start=999),
+                           lambda x: x["trials"][1].update(protected_positions=[999]),
+                           lambda x: x["trials"][1].update(logits_sha256="not-a-hash"),
+                           lambda x: x["trials"][2].update(hidden_sha256="X" * 64),
+                           lambda x: x["trials"][3].update(model_logprobs=[0, float("nan"), 0])]
+        for mutate in trial_mutations:
+            candidate = copy.deepcopy(observed); mutate(candidate)
+            with self.assertRaises(native.NativeBlocked):
+                native.validate_diagnostic_completion(candidate, self.cfg, commit, events)
+            # Even coherently editing result+durable payload cannot change the
+            # registered mutation/position/typed-hash/probability contract.
+            matching = copy.deepcopy(events)
+            for event, trial in zip((e for e in matching if e["kind"] == "measurement"), candidate["trials"]):
+                event["measurement"] = copy.deepcopy(trial)
+            with self.assertRaises((native.NativeBlocked, ValueError)):
+                native.validate_diagnostic_completion(candidate, self.cfg, commit, matching)
+
+    @unittest.skipUnless(os.name == "nt", "actual no-model supervision exit race")
+    def test_natural_worker_exit_race_is_preserved_but_missing_result_cannot_succeed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); output = root / "results" / "exit-race"; db = root / "state.sqlite3"
+            args = SimpleNamespace(host_db=db, contract_sha256="f" * 64,
+                      review=root / "review-fixture.json", output=output,
+                      job_key="cpu-exit-race-only", epoch="cpu-fixture")
+            report = {"status": "READY_DIAGNOSTIC_ONLY", "reasons": [],
+                      "observations": {"source": {"commit": "a" * 40}}}
+            original_spawn = native.subprocess.Popen
+            original_rss = native.owned_job_rss_snapshot
+            paused = False
+            def spawn_cpu_only(_command, **kwargs):
+                return original_spawn([native.sys.executable, "-B", "-c", "import time; time.sleep(.8)"], **kwargs)
+            def race_after_loop_test(job, cfg):
+                nonlocal paused
+                if not paused:
+                    paused = True
+                    native.time.sleep(1)
+                return original_rss(job, cfg)
+            def cpu_telemetry(*_args, **_kwargs):
+                return {**self.sample, "sampled_at": native.time.time()}
+            with patch.object(native, "PACKAGE", root), patch.object(native, "host_state_path", return_value=db), \
+                 patch.object(native, "preflight", return_value=report), \
+                 patch.object(native, "collect_telemetry", side_effect=cpu_telemetry), \
+                 patch.object(native.subprocess, "Popen", side_effect=spawn_cpu_only), \
+                 patch.object(native, "owned_job_rss_snapshot", side_effect=race_after_loop_test):
+                self.assertEqual(native.supervise(args, self.cfg), 2)
+            result = native.read_json(output / "SUPERVISOR_RESULT.json")
+            self.assertEqual(result["exit_code"], 0)
+            self.assertTrue(result["owned_tree_exit"]["owned_tree_exited"])
+            self.assertEqual(result["status"], "FAILED")
+            self.assertNotIn("NoSuchProcess", result["reason"])
+            self.assertIn("DIAGNOSTIC_RESULT", result["reason"])
+            self.assertFalse((output / "COMPLETION_VERIFICATION.json").exists())
+
     def test_oom_attempt_is_accounted_and_failed_not_zero_work(self):
         events = []
         accounting = CallAccounting(lambda kind, **detail: events.append({"kind": kind, **detail}),

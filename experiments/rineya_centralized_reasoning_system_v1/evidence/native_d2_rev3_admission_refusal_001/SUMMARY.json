@@ -1,0 +1,48 @@
+{
+  "active_native_jobs_at_reconciliation": [],
+  "additional_worker_seconds": 0,
+  "attempted_forward_cases": 0,
+  "budget_at_reconciliation": {
+    "epoch": "CRS-EPOCH-001",
+    "epoch_charged_seconds": 35.67099999999846,
+    "epoch_limit_seconds": 7200,
+    "rolling_charged_seconds": 35.67099999999846,
+    "rolling_limit_seconds": 14400,
+    "unknown_reservations_charged_in_full": true
+  },
+  "contract_sha256": "d79f3b6a51e939d78a99c5c287ef6f33ef5979cfa50e76ba3d930ed3724f826a",
+  "files": {
+    "D2_REV3_ADMISSION_REFUSAL_REFRESH.json": "f4fae661977ed591e1ff168a7dc8455d38550c370800bbfe9cbc6ec767f5812a",
+    "NATIVE_OPS_APPROVAL_1fd862b8.json": "21d9ae43170abcd511d1b66748da06b31c43423b594ecb951ead10fa778218d2",
+    "NATIVE_SCIENCE_APPROVAL_1fd862b8.json": "57b90a90a698c69514b71ed363eb469111a56a094fa064c6cd21dc60382dc41f"
+  },
+  "gold_or_confirmation_access": false,
+  "interpretation": "Final reviewed native source accepted for bounded diagnostic only; actual launch refused for RAM and unregistered GPU executable identities. No numerical or resource gate changed. Prior worker numerical evidence and supervisor failures retain original status.",
+  "kind": "NATIVE_ADMISSION_REFUSAL_BEFORE_DISPATCH",
+  "leases_at_reconciliation": [
+    {
+      "expires": 1790915664.1621284,
+      "fence": 1,
+      "kind": "coordinator",
+      "owner": "CPU-9f885c20-b7c7-463e-9857-a619f881dbd3",
+      "status": "RECONCILED"
+    },
+    {
+      "expires": 1790918196.586447,
+      "fence": 2,
+      "kind": "model",
+      "owner": "CRS-D2-3c3cea3d009c482dbe8a18e64b7acd09",
+      "status": "RECONCILED"
+    }
+  ],
+  "native_sha256": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+  "native_worker_dispatches": 0,
+  "observed_refusal_snapshot_sha256": "f4fae661977ed591e1ff168a7dc8455d38550c370800bbfe9cbc6ec767f5812a",
+  "output_directory_absent": true,
+  "planned_forward_cases": 4,
+  "planned_job_key": "CRS-D2-003-1fd862b8-d79f3b6a",
+  "planned_job_registration_absent": true,
+  "source_commit": "1fd862b863f30ac772f54b19e7ab337d68a4215b",
+  "track": "CRS-001",
+  "unattempted_forward_cases": 4
+}

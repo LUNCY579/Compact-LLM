@@ -1,0 +1,536 @@
+{
+  "schema_version": 1,
+  "contract_id": "CRS-NATIVE-D2-V1",
+  "status": "CPU_TESTED_OPERATIONAL_REVISION_2_REVIEW_PENDING",
+  "diagnostic_scope": "Four non-evaluation fixed-shape131-token forwards of historical failed trace; no generation/training",
+  "builder": "runtime_audit",
+  "independent_review_required": true,
+  "native_qualified": false,
+  "reader_qualified": false,
+  "training_qualified": false,
+  "model_dir": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze",
+  "asset_sha256": {
+    "model.safetensors": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+    "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+  "runtime": {
+    "executable": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "python": "3.11.15",
+    "packages": {
+      "torch": "2.10.0+cu126",
+      "transformers": "4.57.1",
+      "safetensors": "0.7.0",
+      "tokenizers": "0.22.2",
+      "psutil": "7.2.2"
+    }
+  },
+  "source_sha256": {
+    "experiments/rineya_centralized_reasoning_system_v1/native.py": "b94b4dc2ce9e6c041efecaff84a885e6b4fa6e6986d85832d6aa019128d7a852",
+    "experiments/rineya_centralized_reasoning_system_v1/operations.py": "ba27ec8a31437459b956a5642e6ece4838f0584602db2c93ff7bc61437806e30",
+    "experiments/post_training_mimo_centralized_v1/scripts/stream_checkpoint.py": "434c62698c2e397048db0d88a7959e34d5b8afb93f90cdf86f2aba852922c67f",
+    "experiments/post_training_mimo_centralized_v1/scripts/qualify_native.py": "a0fbbbb67dcb7136270dd01efed16cccffc62b09342863f05d03d845805bf941",
+    "experiments/post_training_mimo_centralized_v1/scripts/laptop_profile.py": "2e8c9236aba1d48e222373c7484c353eec717ae176ce9bc108968b74d1b7e196",
+    "experiments/opallo_native_collector_v1/supervisor.py": "d31370de4f6b09052fac2f3505fc38a40041e76bd2137435a1f3678f4346a54d",
+    "experiments/opallo_native_collector_v1/contract.py": "bec805005c3732ce6b1fa86ff71c6c5d551dfbadf64db4c54a8d9900cab930fb",
+    "experiments/post_training_mimo_centralized_v1/results/headless_capture_qual_v1_20260930_1140/CAPTURE_RESULT.json": "e669a6945520b7c91bb5d00382ceab2ac4ab5cdc8f09d9273ebd4915ae8017a2",
+    "experiments/post_training_mimo_centralized_v1/results/capture_geometry_d1_20260930/DIAGNOSTIC_RESULT.json": "b827f11c29e9a568f4baa37f618b05b9ee96956bd8a9b2cc87b6468634ee0808",
+    "experiments/post_training_mimo_centralized_v1/configs/CAPTURE_CAUSAL_DIAGNOSTIC_WAIT_V2.json": "b254ec5b880e9911d4ca8ba7edc27665c63ca09cbfe66ffafde76cf025fb4c65",
+    "experiments/post_training_mimo_centralized_v1/AMENDMENT_016.md": "73708dc892af904ab0f26761a8c535ca2989c43921ccfc53d223a6692676ce3f"
+  },
+  "runtime_file_sha256": {
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe": "de13d8017f63cb63b0b5bfd2f25e69245c9196433a224856ca1abde1e24d0cb7",
+    "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe": "28d2965d061656abbe3a46100bd3342d1152185289445d489782a21a8cfe9b57",
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Lib\\site-packages\\transformers\\models\\qwen3\\modeling_qwen3.py": "4b95c371fd26d40c69083dab36ac1eafd8cf82b415a0bb827275097c5ad2305b",
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Lib\\site-packages\\transformers\\models\\qwen3\\configuration_qwen3.py": "27863e9718fdbc899f2d0e567621e4d3d36d8dc500c1d54b49dba4242d08d2bd",
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Lib\\site-packages\\transformers\\masking_utils.py": "7a963feed8173b8265298dd24350c166222ce6b4719442fce48ab414d0478a6a",
+    "C:\\Program Files\\Git\\cmd\\git.exe": "054dfe58df35f7fcfbae184ff9d6a7c0da1e3743bf0401d951e012e290217c73",
+    "C:\\Program Files\\Git\\mingw64\\bin\\git.exe": "c56b3cd094880da8693bee16072607422d9c85d0375c07e348104280920c619d"
+  },
+  "limits": {
+    "worker_rss_gib": 2.0,
+    "host_reserve_gib": 1.25,
+    "preworker_host_gib": 3.3125,
+    "gpu_preload_free_gib": 4.0,
+    "gpu_runtime_free_gib": 0.5,
+    "disk_free_gib": 4.0,
+    "wall_seconds": 600,
+    "watchdog_poll_seconds": 0.1
+  },
+  "seed": 20260928,
+  "maximum_forward_calls": 4,
+  "maximum_input_positions": 524,
+  "generation_tokens": 0,
+  "optimizer_steps": 0,
+  "teacher_calls": 0,
+  "maximum_logical_model_calls": 316,
+  "prompt_ids": [
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    2266,
+    20628,
+    151644,
+    872,
+    198,
+    57067,
+    44883,
+    12322,
+    12507,
+    25,
+    470,
+    1172,
+    279,
+    7546,
+    220,
+    16,
+    17,
+    369,
+    220,
+    22,
+    488,
+    220,
+    20,
+    13,
+    151645,
+    198,
+    151644,
+    77091,
+    198,
+    151667,
+    271,
+    151668,
+    271
+  ],
+  "generated_ids": [
+    16,
+    22,
+    151645
+  ],
+  "reference_bulk_logits_sha256": "88cc954c4360789ab7847248e1d454401a5cb4023f3b2e8df6bb6b3dd05c7891",
+  "reference_bulk_hidden_sha256": "4e3b28f16426ea847f95bc40ba5b862470b09784f621fd86ae93766c38f9c278",
+  "reference_bulk_model_logprobs": [
+    -0.46126696467399597,
+    -0.3731182813644409,
+    -0.0006275591440498829
+  ],
+  "historical_capture_tolerances": {
+    "max_abs": 0.03125,
+    "mean_abs": 0.01
+  },
+  "fixed_shape_rule": "Bitwise protected hidden and logits equality, all six comparisons",
+  "historical_bulk_capture_status": "FAILED_AND_RETAINED",
+  "historical_likelihood_error": {
+    "max_abs": 0.04143241047859192,
+    "mean_abs": 0.02629935139945398
+  },
+  "future_reader_envelope": {
+    "max_input_tokens": 512,
+    "max_generated_tokens": 64,
+    "max_total_tokens": 576,
+    "separate_native_qualification_required": true
+  },
+  "training_gate": "CLOSED: physical update scope, maximum shape, export, sustained fit and complete cross-process model/optimizer/scheduler/scaler/RNG/data-cursor resume not qualified",
+  "host_wide_db": "%LOCALAPPDATA%/Rineya/CRS-001/host_state.sqlite3",
+  "outside_state_creation_this_delivery": false,
+  "command_spec": {
+    "preflight": "python -B -m experiments.rineya_centralized_reasoning_system_v1.native --preflight --contract-sha256 SHA --review REVIEW_JSON",
+    "diagnostic": "python -B -m experiments.rineya_centralized_reasoning_system_v1.native --supervise --contract-sha256 SHA --review REVIEW_JSON --output CRS/results/NEW_CHILD --epoch EPOCH --job-key UNIQUE_FROZEN_KEY"
+  },
+  "review_schema": {
+    "status": "APPROVED_FOR_BOUNDED_DIAGNOSTIC",
+    "source_commit": "frozen clean HEAD",
+    "contract_sha256": "frozen contract SHA256",
+    "native_source_sha256": "frozen native.py SHA256",
+    "reviewer": "independent identified reviewer, different from builder"
+  },
+  "interpretation_limit": "Only trace-local equal-shape causality; successful D2 is not capture, reader, training, acquisition or retention qualification. Next exact-prefix scoring successor must retain original bulk failure.",
+  "containment": "CREATE_SUSPENDED before venv launcher can spawn; assign exact pinned WindowsJob, verify no children/root exactJobmembership, resume one suspended primary thread. Verify pinned complete Job PID list beforeGO and duringwatchdog. Before exit proof terminate only ownedJob and verify PID list empty. Internal worker validates supervised ancestry/currentJob kill-on-close with no breakaway before framework imports.",
+  "cpu_tests": {
+    "tests": 27,
+    "passed": 27,
+    "seconds": 2.962,
+    "native_model_calls": 0,
+    "scope": "No-model exact Windows Job query transfer/closure and inherited-tree/parent-last-handle closure; existing CPU rejection tests retained."
+  },
+  "process_attribution": "nvidia-smi process name, psutil executable path, then read-only CIM Name/ExecutablePath fallback without escalation; unknown identity blocks. Windows WDDM per-process GPU memory remains unavailable; GPU-wide free memory is measured.",
+  "reader_interface": "validate_token_fields is syntax validation only; validate_reader_request always denies until an exact immutable independently reviewed576-token evidence bundle and reader executor exist. Caller status dictionaries cannot grant qualification.",
+  "gpu_process_registry": [
+    {
+      "path": "C:\\Windows\\System32\\dwm.exe",
+      "sha256": "00eb3d5e6092e1246bd0956ff0a341c2afa6f96bb805b93d36a7192a9c29e475",
+      "role": "Windows desktop compositor",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\explorer.exe",
+      "sha256": "87811a107eed62900b230c49a252170d6a7307e94a08307ce972f9b9b8155d54",
+      "role": "Windows desktop shell",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+      "sha256": "b15e9da33402779e60c43a358c6aae5aa071a8c7723f200cda50e87ba650ff8a",
+      "role": "Windows graphical resume service",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+      "sha256": "b012b84674ae63052c368227ce41be39e5586d759b5eff8e3fbf01f53bfd00f1",
+      "role": "Windows Start menu UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+      "sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+      "role": "Windows search UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.48\\msedgewebview2.exe",
+      "sha256": "8454a3b710d8a8a7002af5f16349fe6214df14cec90a2008e4790bf5728c4a3b",
+      "role": "Microsoft embedded WebView rendering",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Program Files\\WindowsApps\\Microsoft.YourPhone_1.26072.257.0_x64__8wekyb3d8bbwe\\PhoneExperienceHost.exe",
+      "sha256": "ae33df1ab74d1a0b52df84bbf9832d0501cef6a74fdb36d2c14dc0e5bea83abe",
+      "role": "Windows Phone Link UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+      "sha256": "d0e70f62928d634e3866a2599fa21ae42d7f1c5b053ee4c8c6fdcac7ae9e1385",
+      "role": "Windows text input UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+      "sha256": "9d6d7b37ba8f6db67c3c33111ab32842abb5b4a940ff61c106899b4be5ecfc00",
+      "role": "Windows shell UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe",
+      "sha256": "53d3e7a527b7bc6ef1d0a6f9336b288cbb31b2805c8c6905ee2375061464716e",
+      "role": "Windows Widgets UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\SystemApps\\Microsoft.LockApp_cw5n1h2txyewy\\LockApp.exe",
+      "sha256": "76643b5929faebb04e67e1f5421363f3ec327fe555c596245abba4586d5cf322",
+      "role": "Windows lock screen UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.928.3736.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "sha256": "8fb63474e98f6651105fd78c575be5ebae67fb869849b16e7a940f2da54c28ab",
+      "role": "Codex desktop graphical application",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Program Files\\miHoYo Launcher\\1.18.0.380\\HYPHelper.exe",
+      "sha256": "870501007ce67af0931ab576c9b06335cdc6126a5f898dadbb3fda816113989d",
+      "role": "Installed miHoYo graphical launcher helper",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\154806497bb51bae\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+      "sha256": "76439e11d1ba548251ca0224158002bd8747a2baac4d20363cc7910f26523b8e",
+      "role": "Codex computer-use graphical runtime",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+      "sha256": "cb5b327020f3da829489bf6ba7749c12d7730267d607678c3dcd4917168016fe",
+      "role": "Windows graphical app frame host",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+      "sha256": "11382f7efac4978063f568f06fe90af38f136fbe975cce39d13667bd288b71c9",
+      "role": "Windows settings UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Program Files\\WindowsApps\\Microsoft.Edge.GameAssist_1.0.4019.0_x64__8wekyb3d8bbwe\\EdgeGameAssist.exe",
+      "sha256": "4dea94593a713f760ee417fac2af6d373e1741c3149af79ee31680cc225af9c7",
+      "role": "Microsoft graphical game overlay",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\154806497bb51bae\\bin\\node_modules\\@oai\\sky\\bin\\windows\\codex-computer-use.exe",
+      "sha256": "0d00dfdaee0c1f04d16095228e07ffd091ac1a95edc6f6ca4b4a316b39b6441a",
+      "role": "Codex computer-use graphical runtime",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\System32\\Taskmgr.exe",
+      "sha256": "580dda0bb155f7faf5e9f11e5bf5b4fdc677cdb2adb4dbf48708121ce3965cbd",
+      "role": "Windows Task Manager UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\System32\\ShellHost.exe",
+      "sha256": "75268bc04679fdddbea23e72274351641e44bd7019d8c625d61fbdc574ec0353",
+      "role": "Windows shell UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Flip Hero\\Builds\\MvpSteam\\FlipHero.exe",
+      "sha256": "0d3e08bb0b1f4950dbfdfc7185c887ac3b252e657dcb22cf6e280379c54ca231",
+      "role": "Observed local Unity graphical game, narrow resource policy exception",
+      "dependency_sha256": {
+        "C:\\Users\\clclc\\BusinessProject\\Flip Hero\\Builds\\MvpSteam\\UnityPlayer.dll": "4f8eb2a1431ff69de5aa8ea2c595ceb5d84d9f6ef8141646301f259fd86b9cac"
+      },
+      "justification": "Actual WDDM GPU process type C+G; exe version6000.6.2f1 and matching UnityPlayer.dll Unity playback engine/UnityTechnologies/version6000.6.2f1. Exact executable plus engine DLL pins; metadata unsigned with blank product/company/description fields. Cooperative classification, not proof of absence of all inference or permission to terminate/control app.",
+      "evidence": {
+        "observed_gpu_type": "C+G",
+        "executable_product_version": "6000.6.2f1 (770e33f6875c)",
+        "executable_file_version": "6000.6.2.7802419",
+        "product_name": "",
+        "company_name": "",
+        "file_description": "",
+        "signature_status": "NotSigned",
+        "unity_player_product_name": "Unity",
+        "unity_player_company": "Unity Technologies",
+        "unity_player_description": "Unity playback engine",
+        "unity_player_version": "6000.6.2f1 (770e33f6875c)",
+        "build_receipt_sha256": "f3751c9bb86fc5949558f52928eaa079062e70d22152a118d1e6855f456f4784",
+        "build_receipt": {
+          "schemaVersion": 1,
+          "productName": "Flip Hero",
+          "companyName": "Nookumi",
+          "version": "0.1.0",
+          "unityVersion": "6000.6.2f1",
+          "target": "StandaloneWindows64",
+          "executable": "FlipHero.exe",
+          "builtUtc": "2026-10-02T04:16:46.7877453Z",
+          "buildOptions": "None",
+          "development": false,
+          "totalBytes": 1176184993,
+          "errors": 0,
+          "warnings": 12
+        },
+        "independent_policy_reviewer": "/root/data_audit"
+      }
+    }
+  ],
+  "original_evidence_provenance_sha256": {
+    "experiments/post_training_mimo_centralized_v1/results/headless_capture_qual_v1_20260930_1140/CAPTURE_RESULT.json": "e669a6945520b7c91bb5d00382ceab2ac4ab5cdc8f09d9273ebd4915ae8017a2",
+    "experiments/post_training_mimo_centralized_v1/results/capture_geometry_d1_20260930/DIAGNOSTIC_RESULT.json": "b827f11c29e9a568f4baa37f618b05b9ee96956bd8a9b2cc87b6468634ee0808",
+    "experiments/post_training_mimo_centralized_v1/configs/CAPTURE_CAUSAL_DIAGNOSTIC_WAIT_V2.json": "b254ec5b880e9911d4ca8ba7edc27665c63ca09cbfe66ffafde76cf025fb4c65",
+    "experiments/post_training_mimo_centralized_v1/AMENDMENT_016.md": "73708dc892af904ab0f26761a8c535ca2989c43921ccfc53d223a6692676ce3f"
+  },
+  "native_repairs": [
+    "Popen intent precedes invocation; missing creation response remains OUTCOME_UNKNOWN/full600-second reservation and no fabricated exit or no-dispatch proof.",
+    "Canonical builder identity cannot approve its own contract.",
+    "Only positive exact executable-path/SHA256 graphical/system GPU identities or owned worker tree are admitted; unknown GPU executables block.",
+    "Raw tensor bytes/hash equality required for protected logits and hidden including signed zero; numeric equality remains separate.",
+    "Every forward publishes complete replayable causal-mask BF16 representation/hash and full rotary positions/hash, absolute protected positions and mutation start.",
+    "Runtime records read-only BF16/FP16 reduction/split-K flags and actual Torch allocator peaks; original bulk capture failure retained.",
+    "Internal worker requires recorded supervised ancestry and actual current Windows Job membership/kill-on-close before framework import."
+  ],
+  "actual_windows_containment_cpu_smoke": {
+    "scope": "ACTUAL_WINDOWS_STDLIB_CONTAINMENT_ONLY",
+    "model_loads": 0,
+    "framework_imports": 0,
+    "gpu_calls": 0,
+    "worker_executable": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "before_resume": [
+      {
+        "pid": 584804,
+        "creation_time": 1790915030.2938683,
+        "executable": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+        "executable_sha256": "de13d8017f63cb63b0b5bfd2f25e69245c9196433a224856ca1abde1e24d0cb7",
+        "exact_owned_job_member": true
+      }
+    ],
+    "resume": {
+      "pid": 584804,
+      "thread_id": 587496,
+      "prior_suspend_count": 1
+    },
+    "runtime_tree": [
+      {
+        "pid": 584804,
+        "creation_time": 1790915030.2938683,
+        "executable": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+        "executable_sha256": "de13d8017f63cb63b0b5bfd2f25e69245c9196433a224856ca1abde1e24d0cb7",
+        "exact_owned_job_member": true
+      },
+      {
+        "pid": 579872,
+        "creation_time": 1790915030.5947096,
+        "executable": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+        "executable_sha256": "de13d8017f63cb63b0b5bfd2f25e69245c9196433a224856ca1abde1e24d0cb7",
+        "exact_owned_job_member": true
+      },
+      {
+        "pid": 587960,
+        "creation_time": 1790915030.63411,
+        "executable": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+        "executable_sha256": "28d2965d061656abbe3a46100bd3342d1152185289445d489782a21a8cfe9b57",
+        "exact_owned_job_member": true
+      },
+      {
+        "pid": 587428,
+        "creation_time": 1790915030.5032868,
+        "executable": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+        "executable_sha256": "28d2965d061656abbe3a46100bd3342d1152185289445d489782a21a8cfe9b57",
+        "exact_owned_job_member": true
+      }
+    ],
+    "exit": {
+      "owned_tree_exited": true,
+      "remaining_owned_pids": [],
+      "observed_at": 1790915030.640477
+    },
+    "status": "PASS_CONTAINMENT_ONLY"
+  },
+  "owned_runtime_executables": "Exact pinned venv/CPython and Git executables only. Git is required by committed source guards; vanished PIDs must be absent from a refreshed exact Job list, never accepted as unclassified live members.",
+  "containment_primary_sources": [
+    "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_process_id_list",
+    "https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-queryinformationjobobject",
+    "https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/ns-tlhelp32-threadentry32"
+  ],
+  "tests_sha256": "800eb02ffa7ea4889496ef9d478199ab205fe08f9709d6e84ec8caba33087d5b",
+  "telemetry_freshness": "GPU and compute-process query timestamps precede identity hashing/CIM; sampled_at remains oldest component time. collect_telemetry does not overwrite GPU/process age. Slow identity checks exceeding5seconds deny; no hash cache silently refreshes timestamps.",
+  "raw_numerical_evidence": "Protected left/right raw tensorSHA required equal plus numeric max/mean0; torch.equal remains separate diagnostic. Full replayable causal BF16 mask words/hash and rotary int64 IDs/hash perforward; readonly reduction/splitK flags and Torch allocator peaks recorded.",
+  "launch_response_uncertainty": "LAUNCH_ATTEMPT persisted before Popen invocation. Missing creation response or missing owned-tree exit witness remains OUTCOME_UNKNOWN with full600-second reservation and no fabricated exit/no-dispatch proof; no automatic retry.",
+  "operational_revision": 2,
+  "parent_contract_sha256": "a57a7fa091aeda2a63e8b1452fdeed53474f627246a3f4429b62af924a45babe",
+  "operational_amendment_id": "CRS-NATIVE-OPERATIONAL-AMENDMENT-002",
+  "operational_revision_evidence": {
+    "raw_identity_probe": {
+      "path": "outputs/job_identity_probe_v1/NULL_VS_EXACT_OWN_JOB.json",
+      "sha256": "a2627233b14144547954f818d08aa50f7a2fd58b05eee5da9d08847599af9cb7",
+      "measured_null_flags": 12288,
+      "measured_exact_owned_flags": 8192,
+      "interpretation": "Different observed Job identities/limits; no assertion that NULL denotes an outer rather than an immediate nested Job."
+    },
+    "prior_failure": {
+      "source_commit": "9fd345d9bbcd0cdc6b300dcb07f6b68dbe8914ec",
+      "native_qualification_worker_seconds": 1.1090000000003783,
+      "model_loads": 0,
+      "model_forwards": 0,
+      "source_receipts": {
+        "results/d2_9fd345d9_epoch001_statechange2/stderr.log": "ff3f7abf0b7d8076343ed19b553f300546484f19d2059c0d6a34f7dd5dae7bb5",
+        "results/d2_9fd345d9_epoch001_statechange2/TREE_CONTAINMENT.json": "c97459083e511f77c6618dd5d352965f75090eb64d7d97d934fd6cd494728ae9",
+        "results/d2_9fd345d9_epoch001_statechange2/SUPERVISOR_RESULT.json": "cd5d726e26771f152602377ddf135128a6e143efcfc48d9e9dcae2db10c3da3b"
+      }
+    },
+    "repair_probes": {
+      "outputs/job_identity_probe_v2/target_creation/PROBE_RECEIPT.json": "f1b66d5c19f494807d5a880c7956f2819e6fa8b7bb967ab39cc19c927cdfd016",
+      "outputs/job_identity_probe_v2/target_pid/PROBE_RECEIPT.json": "32b5364cc6a76325b1a83309276507daf49b713cb4f0e7ef047e4a3451091bf6",
+      "outputs/job_identity_probe_v2/valid/PROBE_RECEIPT.json": "e19f52c58911cf902b157d58a30c66b5c58e91b8abdf85854949a4423844686a"
+    }
+  },
+  "exact_own_job_identity_contract": {
+    "duplicate_access_mask": 4,
+    "duplicate_access": "JOB_OBJECT_QUERY_ONLY",
+    "duplicate_inheritable": false,
+    "target_binding": "Exact observed pinned CPython PID+creationtime in owned Job; GO also retains owner/fence/supervisor ancestry binding.",
+    "required_owned_flags": "KILL_ON_JOB_CLOSE set; BREAKAWAY_OK and SILENT_BREAKAWAY_OK absent. Same rule applied to explicit own Job, never relaxed on NULL or parent Job.",
+    "lifetime": "Worker closes temporary query handle on success and every rejection before any framework import; no inherited child query handle.",
+    "parent_death": "Actual CPU controls show parent last-owned-handle close terminates all verified descendants after child query handle closes.",
+    "null_query": "Retain NULL/immediate nested Job flags as read-only diagnostic observation, not authorization or containment identity."
+  }
+}
