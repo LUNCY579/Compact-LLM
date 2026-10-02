@@ -7,6 +7,8 @@ immutable request. JSON contains evidence only, never permits or callables.
 """
 from __future__ import annotations
 
+from contextlib import redirect_stdout
+
 import copy
 import hashlib
 import os
@@ -258,7 +260,8 @@ class BoundedRPC:
         require(set(payload) == {'command', 'data'} and payload['command'] == 'checkpoint_qualification',
                 'branch must complete before finish; exact checkpoint control required')
         command = child.validate_command(payload['data'], request)
-        result = body(command)
+        with redirect_stdout(sys.stderr):
+            result = body(command)
         require(type(result) is dict and type(result.get('raw_artifact')) is dict
                 and result.get('body_completed') is True and result.get('native_qualified') is False,
                 'only completed retained branch artifact can be returned')

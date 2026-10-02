@@ -100,7 +100,13 @@ class Tests(unittest.TestCase):
         self.assertEqual(before, set(sys.modules) & {'torch', 'numpy', 'transformers', 'safetensors'})
 
     def test_actual_stream_protocol_returns_only_ref_then_awaits_explicit_finish(self):
-        result, output = self.serve(self.stream())
+        def logged_body(command):
+            print('[lease] child runtime', flush=True)
+            return self.body(command)
+        diagnostic = io.StringIO()
+        with patch.object(local.sys, 'stderr', diagnostic):
+            result, output = self.serve(self.stream(), body=logged_body)
+        self.assertEqual(diagnostic.getvalue(), '[lease] child runtime\n')
         self.assertEqual(result, 0)
         rows = [local.raw._json(line) for line in output.getvalue().splitlines()]
         self.assertEqual([(row['kind'], row['sequence']) for row in rows], [('ready', 0), ('response', 1), ('response', 2)])

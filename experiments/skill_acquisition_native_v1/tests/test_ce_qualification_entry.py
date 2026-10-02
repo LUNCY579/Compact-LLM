@@ -49,8 +49,13 @@ class Tests(unittest.TestCase):
 
     def test_parent_rpc_retains_body_ref_waits_finish_and_never_claims_terminal_or_native(self):
         pipe, output = self.pipe(); called = []
-        def qualify(): called.append('qualify'); return self.result()
-        self.assertEqual(entry.serve_parent(pipe, self.proof, qualify), 0)
+        def qualify():
+            print('[lease] acquired', flush=True)
+            called.append('qualify'); return self.result()
+        diagnostic = io.StringIO()
+        with patch.object(entry.sys, 'stderr', diagnostic):
+            self.assertEqual(entry.serve_parent(pipe, self.proof, qualify), 0)
+        self.assertEqual(diagnostic.getvalue(), '[lease] acquired\n')
         rows = [entry.raw._json(row) for row in output.getvalue().splitlines()]
         self.assertEqual([(row['kind'], row['sequence']) for row in rows], [('ready', 0), ('response', 1), ('response', 2)])
         self.assertEqual(rows[0]['payload']['worker_proof'], self.proof)

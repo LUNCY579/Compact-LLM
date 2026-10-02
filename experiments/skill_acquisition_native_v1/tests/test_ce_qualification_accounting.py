@@ -286,15 +286,24 @@ class Tests(unittest.TestCase):
         self.assertFalse(reopened.snapshot()['native_qualified'])
 
     def test_raw_alias_conflict_and_caps_deny_before_callback_body(self):
-        ledger = self.make(); ledger.begin_stage('runtime_anchor', 'fixture/anchor')
+        # A denied operation still records elapsed wall time before validation.
+        # Hold this explicit fixture clock fixed so the byte assertion isolates
+        # admission and cannot race a legitimate monotonic wall event.
+        ledger = a.QualificationAccounting(self.context, None, self.proof, self.receipt, clock=lambda: 100.0)
+        ledger.begin_stage('runtime_anchor', 'fixture/anchor')
         size = ledger.path.stat().st_size
+        reserved = dict(ledger.cumulative)
         with self.assertRaisesRegex(ValueError, 'conflicting'):
             ledger.operation('qualification_artifact_readback', 'started', 'conflict', io_read_bytes_upper=2, read_bytes_upper=3)
         self.assertEqual(ledger.path.stat().st_size, size)
+        self.assertNotIn('conflict', ledger.operations)
+        self.assertEqual(ledger.cumulative, reserved)
         ledger.profiles['input_io']['read_bytes_upper'] = 1
         with self.assertRaisesRegex(ValueError, 'profile below'):
             ledger.operation('input_io', 'started', 'too-much', read_bytes_upper=2)
         self.assertNotIn('too-much', ledger.operations)
+        self.assertEqual(ledger.path.stat().st_size, size)
+        self.assertEqual(ledger.cumulative, reserved)
 
     def test_reducer_and_io_alias_reservations_are_permanent_and_stage_bound(self):
         ledger = self.make(); ledger.begin_stage('runtime_anchor', 'fixture/anchor')

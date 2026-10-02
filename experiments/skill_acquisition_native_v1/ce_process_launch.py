@@ -272,6 +272,11 @@ class OwnedProcess:
                         and proof['os_identity']['creation_filetime_100ns'] == self.identity['creation_filetime_100ns'],
                         'post-launch child observation changed owned process identity')
                 self.worker_identity_sha256 = proof['worker_identity_sha256']
+            retained = {'observed_worker_identity': self.identity, 'observed_launcher_identity': self.launcher_identity}
+            if self.native:retained['observed_worker_proof'] = proof
+            # The original paid launch owner retains these real observations
+            # before any ready/control bytes are accepted from the child.
+            self.budget.run('process_launch_child', lambda: None, retained_result_fields=retained)
         except BaseException as error:
             # Only this successfully-created owned child is eligible for stop.
             if self.process is not None:
@@ -310,6 +315,17 @@ class OwnedProcess:
             error.owned_child_stderr=diagnostic
             error.add_note('Owned child stderr (bounded, untrusted diagnostic):\n'+diagnostic)
         if thread is not None and thread.is_alive():error.add_note('Owned child stderr reader did not finish within the bounded cleanup join.')
+
+    def _attach_rpc_diagnostics(self,error,raw):
+        if type(raw) is bytes:
+            retained=raw[:min(self.spec['max_message_bytes'],65536)]
+            error.owned_child_rpc_line=retained.decode('utf8',errors='replace')
+            error.owned_child_rpc_line_bytes=len(retained)
+            error.owned_child_rpc_line_total_bytes=len(raw)
+            error.add_note('Owned child RPC line (bounded, untrusted diagnostic):\n'+error.owned_child_rpc_line)
+        try:self._attach_owned_stderr(error)
+        except BaseException as diagnostic:
+            error.owned_stderr_failure={'type':type(diagnostic).__name__,'message':str(diagnostic)[:1000]}
 
     def _find_worker(self, launcher):
         finish = time.perf_counter() + self._remaining(self.spec['handshake_seconds'])
@@ -370,20 +386,18 @@ class OwnedProcess:
             try:
                 require(not self.errors, 'worker pipe error: ' + str(self.errors[0]) if self.errors else 'worker pipe error')
                 require(raw is not None, 'worker exited without expected bounded RPC message')
+                self.received += 1; require(self.received <= self.spec['max_messages'], 'RPC message count exceeded')
+                def unique(pairs):
+                    value = {}
+                    for key, item in pairs:
+                        require(key not in value, 'duplicate RPC JSON key'); value[key] = item
+                    return value
+                message = json.loads(raw, object_pairs_hook=unique,
+                    parse_constant=lambda _: (_ for _ in ()).throw(worker.WorkerEvidenceError('nonfinite RPC JSON')))
+                return validate_message(message, self.binding, expected_kind=kind, expected_sequence=sequence, expected_pid=self.worker_pid)
             except BaseException as error:
-                try:self._attach_owned_stderr(error)
-                except BaseException as diagnostic:
-                    error.owned_stderr_failure={'type':type(diagnostic).__name__,'message':str(diagnostic)[:1000]}
+                self._attach_rpc_diagnostics(error,raw)
                 raise
-            self.received += 1; require(self.received <= self.spec['max_messages'], 'RPC message count exceeded')
-            def unique(pairs):
-                value = {}
-                for key, item in pairs:
-                    require(key not in value, 'duplicate RPC JSON key'); value[key] = item
-                return value
-            message = json.loads(raw, object_pairs_hook=unique,
-                parse_constant=lambda _: (_ for _ in ()).throw(worker.WorkerEvidenceError('nonfinite RPC JSON')))
-            return validate_message(message, self.binding, expected_kind=kind, expected_sequence=sequence, expected_pid=self.worker_pid)
         return self.budget.run('process_rpc_receive', read, read=self.spec['max_message_bytes'])
     def handshake(self): return self._receive('ready', 0, self.spec['handshake_seconds'])
     def request(self, command, payload):

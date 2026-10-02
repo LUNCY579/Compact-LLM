@@ -36,6 +36,25 @@ def facts(value):
 
 
 class WorkerContractTests(unittest.TestCase):
+    def test_budget_retains_only_fixed_owned_observation_fields_without_cost_override(self):
+        fields={'observed_worker_identity':{'pid':1234,'creation_filetime_100ns':100},
+                'observed_launcher_identity':{'pid':1233},
+                'observed_worker_proof':{'sources':{'request_ref':{'sha256':'a'*64}}}}
+        events=[];budget=w._Budget(spec(),lambda kind,phase,**data:events.append((phase,data)))
+        before=budget.remaining['operation_attempts_upper']
+        def observed():
+            fields['observed_worker_identity']['creation_filetime_100ns']=101
+            return 'completed'
+        self.assertEqual(budget.run('process_launch_child',observed,retained_result_fields=fields),'completed')
+        fields['observed_worker_proof']['sources']['request_ref']['sha256']='foreign'
+        self.assertEqual(events[-1][1]['observed_worker_identity']['creation_filetime_100ns'],101)
+        self.assertEqual(events[-1][1]['observed_worker_proof']['sources']['request_ref']['sha256'],'a'*64)
+        self.assertEqual(budget.remaining['operation_attempts_upper'],before-1)
+        for rejected in ({'wall_s':0},{'io_read_bytes_upper':0},{'approved':True},lambda:fields):
+            with self.assertRaisesRegex(w.WorkerEvidenceError,'no cost override'):
+                budget.run('process_launch_child',Trap(),retained_result_fields=rejected)
+        self.assertEqual(budget.remaining['operation_attempts_upper'],before-1)
+
     def terminal_fixture(self, fail_duplicate_return=False):
         value = spec(); actual = facts(value)
         actual.update(signaled=True, exit_code=0, exit_filetime_100ns=actual['creation_filetime_100ns'] + 100)

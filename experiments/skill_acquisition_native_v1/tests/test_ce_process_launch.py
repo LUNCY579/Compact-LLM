@@ -3,6 +3,7 @@ import ast
 import copy
 import inspect
 import io
+import json
 from pathlib import Path
 import sys
 import tempfile
@@ -277,6 +278,63 @@ class ProcessLaunchTests(unittest.TestCase):
         self.assertIn('NVMLUnknownError',caught.exception.owned_child_stderr)
         self.assertIn('bounded, untrusted diagnostic','\n'.join(caught.exception.__notes__))
         self.assertEqual(joins,[5])
+
+    def test_launch_retains_real_observed_identity_before_ready_bytes(self):
+        import subprocess
+        value=spec();value['worker_topology']='direct';events=[]
+        process=SimpleNamespace(pid=43,_handle=99,returncode=0,stdin=io.BytesIO(),
+                                stdout=io.BytesIO(b''),stderr=io.BytesIO(b''),poll=lambda:0)
+        child={'pid':43,'creation_filetime_100ns':101,'image_path':value['process_image_ref']['path'],
+               'argv':[value['process_image_ref']['path'],*value['argv'][1:]],'signaled':False}
+        api=SimpleNamespace(open=lambda pid:501,close=lambda handle:None,
+            boot=lambda:value['parent_identity']['boot_identity'],
+            snapshot=lambda handle,**kwargs:copy.deepcopy(child) if handle==99 else {'pid':42,'creation_filetime_100ns':100})
+        def observer(kind,phase,**fields):events.append((kind,phase,fields))
+        with (patch.object(p.worker,'_file',return_value=None),patch.object(p.worker,'_WindowsOS',return_value=api),
+              patch.object(p.os,'getpid',return_value=42),patch.object(subprocess,'Popen',return_value=process)):
+            owned=p.OwnedProcess(value,observer,native=False,_fixture_seal=p._FIXTURE_CLEARANCE_SEAL)
+        record=[fields for kind,phase,fields in events if kind=='process_launch_child' and phase=='returned'
+                and 'observed_worker_identity' in fields]
+        self.assertEqual(len(record),1)
+        self.assertEqual(record[0]['observed_worker_identity'],owned.identity)
+        self.assertEqual(record[0]['observed_launcher_identity'],owned.launcher_identity)
+        self.assertEqual(record[0]['observed_worker_identity']['pid'],43)
+        self.assertEqual(owned.received,0)
+        with self.assertRaisesRegex(p.worker.WorkerEvidenceError,'worker exited without expected'):
+            owned.handshake()
+        owned.stdout_thread.join(1);owned.stderr_thread.join(1)
+        for stream in (process.stdin,process.stdout,process.stderr):stream.close()
+
+    def test_invalid_rpc_retains_raw_line_stderr_and_original_exception(self):
+        import queue
+        import threading
+        binding={'session_id':'s','request_sha256':'a'*64,'scope_sha256':'b'*64}
+        invalid={'schema':p.RPC,**binding,'kind':'ready','sequence':0,'worker_pid':43,
+                 'payload':{},'session_id':'foreign'}
+        for raw,expected in ((b'[lease] acquired owned lease\n',json.JSONDecodeError),
+                             (p.canonical(invalid)+b'\n',p.worker.WorkerEvidenceError),
+                             (b'x'*70000+b'\n',json.JSONDecodeError)):
+            with self.subTest(raw_bytes=len(raw)):
+                current=object.__new__(p.OwnedProcess)
+                current.spec=spec();current.stdout=queue.Queue();current.stdout.put(raw);current.errors=[]
+                current.spec['max_message_bytes']=max(current.spec['max_message_bytes'],len(raw))
+                current.spec['bounds']['io_read_bytes_upper']=max(current.spec['bounds']['io_read_bytes_upper'],len(raw))
+                current.received=0;current.binding=binding;current.worker_pid=43
+                current.stderr_data=bytearray(b'Worker diagnostic retained before invalid RPC\n')
+                current.stderr_lock=threading.Lock();current.stderr_thread=None
+                current._remaining=lambda cap:cap
+                events=[]
+                def observer(kind,phase,**fields):
+                    events.append((kind,phase,fields))
+                    if phase=='failed':raise RuntimeError('failed receipt refused')
+                current.budget=p.worker._Budget(current.spec,observer)
+                with self.assertRaises(expected) as caught:current._receive('ready',0,5)
+                self.assertEqual(caught.exception.owned_child_rpc_line,raw[:65536].decode())
+                self.assertEqual(caught.exception.owned_child_rpc_line_bytes,min(len(raw),65536))
+                self.assertEqual(caught.exception.owned_child_rpc_line_total_bytes,len(raw))
+                self.assertIn('Worker diagnostic',caught.exception.owned_child_stderr)
+                self.assertEqual(caught.exception.worker_accounting_failure,'failed receipt refused')
+                self.assertEqual([event[1] for event in events],['started','failed'])
 
 
 if __name__ == '__main__': unittest.main()

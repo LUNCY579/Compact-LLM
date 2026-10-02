@@ -8,6 +8,7 @@ must prove real OS termination and independently replay raw evidence/costs.
 from __future__ import annotations
 
 import argparse
+from contextlib import redirect_stdout
 import copy
 import importlib
 import os
@@ -197,7 +198,8 @@ def serve_parent(pipe, proof, qualify):
     """Bounded actual RPC body; pure streams can test ordering without children."""
     pipe.emit('ready', 0, {'worker_proof': proof})
     require(pipe.receive(1) == {'command': 'qualify', 'data': {}}, 'exact qualify command only; early finish denied')
-    result = qualify()
+    with redirect_stdout(sys.stderr):
+        result = qualify()
     seal = result.get('seal') if type(result) is dict else None
     require(type(seal) is dict and seal.get('status') == 'UNQUALIFIED_BODY_SEAL' and type(seal.get('body_ref')) is dict,
             'only actual retained parent body seal can respond')

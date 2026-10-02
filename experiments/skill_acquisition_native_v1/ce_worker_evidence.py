@@ -109,7 +109,11 @@ def _admit(spec, permit, observer):
 
 class _Budget:
     def __init__(self, spec, observer): self.remaining, self.observer, self.start = dict(spec['bounds']), observer, time.perf_counter()
-    def run(self, kind, work, *, read=0, hashes=0, hashed=0):
+    def run(self, kind, work, *, read=0, hashes=0, hashed=0, retained_result_fields=None):
+        require(retained_result_fields is None or kind == 'process_launch_child' and type(retained_result_fields) is dict
+                and set(retained_result_fields) <= {'observed_worker_identity', 'observed_launcher_identity', 'observed_worker_proof'}
+                and all(type(value) is dict for value in retained_result_fields.values()),
+                'exact owned worker observation result fields; no cost override')
         wanted = {'operation_attempts_upper': 1, 'io_read_bytes_upper': read,
                   'identity_hash_attempts_upper': hashes, 'identity_hash_bytes_upper': hashed}
         require(time.perf_counter() - self.start <= self.remaining['wall_seconds_upper'], 'worker observation wall limit')
@@ -119,13 +123,17 @@ class _Budget:
         self.observer(kind, 'started', operation_id=identifier, **wanted)
         try:
             result = work()
+            retained = {} if retained_result_fields is None else copy.deepcopy(retained_result_fields)
+            require(set(retained) <= {'observed_worker_identity', 'observed_launcher_identity', 'observed_worker_proof'}
+                    and all(type(value) is dict for value in retained.values()),
+                    'owned worker observation result fields changed during work; no cost override')
             require(time.perf_counter() - self.start <= self.remaining['wall_seconds_upper'], 'worker observation wall limit exceeded after work')
         except BaseException as error:
             try: self.observer(kind, 'failed', operation_id=identifier, wall_s=time.perf_counter() - started,
                                error_type=type(error).__name__, error=str(error)[:1000])
             except BaseException as record_error: error.worker_accounting_failure = str(record_error)[:1000]
             raise
-        self.observer(kind, 'returned', operation_id=identifier, wall_s=time.perf_counter() - started)
+        self.observer(kind, 'returned', operation_id=identifier, wall_s=time.perf_counter() - started, **retained)
         return result
 
 
