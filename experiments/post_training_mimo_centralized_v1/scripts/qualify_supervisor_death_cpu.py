@@ -159,6 +159,11 @@ class DeadlineSafety:
             self.fire()
 
     def stop(self):
+        # Never cancel a still-owned deadline action after failed cleanup.
+        # Successful actual close has detached it; no action occurs on that path.
+        with self.lock:
+            if self.job is not None or self.pending_root is not None:
+                self.fire()
         self.cancelled.set()
         self.thread.join(timeout=.2)
         self.stopped = not self.thread.is_alive()

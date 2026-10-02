@@ -510,6 +510,63 @@ class CleanupWatchdogFixtures(unittest.TestCase):
             self.assertIsNone(result['experimental_os_processes_created'])
             self.assertEqual(result['confirmed_observed_process_lower_bound'], 1)
 
+    def stopped_thread(self, watchdog):
+        watchdog.thread = SimpleNamespace(join=Mock(), is_alive=lambda: False)
+
+    def test_failed_close_cleanup_cannot_cancel_installed_safety_action(self):
+        job, watchdog = self.selected_job()
+        self.stopped_thread(watchdog)
+        job.terminate.side_effect = lambda: self.assertFalse(watchdog.cancelled.is_set())
+        with tempfile.TemporaryDirectory() as temporary:
+            kernel = SimpleNamespace(logging_errors=[], call=lambda *args, **kwargs: (0, 0))
+            tree = qual.SafetyTree(kernel, Path(temporary), 30, qual.config(), watchdog)
+            tree.job = job
+            def inherited_cleanup(*args, **kwargs):
+                try:
+                    job.close()
+                except RuntimeError:
+                    return {'status': 'BLOCKED_OWNED_CLEANUP', 'errors': ['outer close denied'],
+                            'owned_process_fallback_pids': [], 'logging_errors': [],
+                            'final_job_accounting_before_close': {'active_processes': 1}}
+                self.fail('fixture close should fail')
+            with patch.object(qual.TracedJob, 'close', side_effect=RuntimeError('close denied')), \
+                 patch.object(qual.prior.Tree, 'cleanup', side_effect=inherited_cleanup):
+                cleanup = tree.cleanup()
+            self.assertEqual(cleanup['status'], 'BLOCKED_OWNED_CLEANUP')
+            self.assertTrue(cleanup['uncredited_outer_safety_cleanup_used'])
+            self.assertIs(watchdog.job, job)
+            watchdog.stop()
+        job.terminate.assert_called_once_with()
+        self.assertTrue(watchdog.intervened)
+        self.assertTrue(watchdog.cancelled.is_set())
+        self.assertTrue(watchdog.stopped)
+
+    def test_finalization_acts_on_pending_original_root_before_cancellation(self):
+        watchdog = qual.DeadlineSafety(100)
+        self.stopped_thread(watchdog)
+        def terminate(*args, **kwargs):
+            self.assertFalse(watchdog.cancelled.is_set())
+            return 1, 0
+        kernel = SimpleNamespace(call=Mock(side_effect=terminate))
+        with patch.object(qual.time, 'monotonic', return_value=0):
+            watchdog.track_root(SimpleNamespace(pid=100, _handle=101), kernel)
+        watchdog.stop()
+        self.assertEqual(kernel.call.call_args.args, ('TerminateProcess', 101, 2))
+        self.assertTrue(watchdog.intervened)
+        self.assertTrue(watchdog.cancelled.is_set())
+
+    def test_successful_close_finalization_does_not_invoke_safety(self):
+        job, watchdog = self.selected_job()
+        self.stopped_thread(watchdog)
+        def close(actual):
+            actual.handle = None
+        with patch.object(qual.TracedJob, 'close', autospec=True, side_effect=close):
+            job.close()
+        watchdog.stop()
+        job.terminate.assert_not_called()
+        self.assertFalse(watchdog.intervened)
+        self.assertTrue(watchdog.stopped)
+
 
 if __name__ == '__main__':
     unittest.main()

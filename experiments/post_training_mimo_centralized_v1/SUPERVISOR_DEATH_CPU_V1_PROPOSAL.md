@@ -61,6 +61,10 @@ detaches the watchdog; accounting/logging before that close cannot detach it.
 Termination precedes the separate diagnostic record. These changes address the
 three P1 findings from independent review of implementation `bfd0e137` without
 adding experimental cases, processes or budgets. Any
+still-owned Job or original startup root receives an uncredited safety termination
+before finalization can cancel the watchdog; a failed-close cleanup result cannot
+silently remove that action. This also blocks qualification and preserves errors.
+Any
 watchdog action, outer close while a process remains active, manual fallback,
 logging/API failure, incomplete accounting or missing outcome makes qualification
 fail. Valid logged creation/native-accounting observations remain lower bounds
