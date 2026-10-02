@@ -175,11 +175,11 @@ class SupervisorGpuLease:
     def acquire(self):
         self._admit(); require(self.state=='NEW', 'supervisor must not wait on its already-held lease')
         self.release_id,self.release_started=uuid.uuid4().hex,time.perf_counter()
-        self.operation('supervisor_lease','started',operation_id=self.release_id,deferred_owned_lease_release=True,
+        self.operation('supervisor_lease_release','started',operation_id=self.release_id,deferred_owned_lease_release=True,
                        **self.spec['operation_bounds']['release'])
         self.release_seal=_RELEASE_SEAL
         try:
-            with update._span(self.operation,'supervisor_lease',dict(self.spec['operation_bounds']['acquire'],lease_action='acquire')):
+            with update._span(self.operation,'supervisor_lease_acquire',dict(self.spec['operation_bounds']['acquire'],lease_action='acquire')):
                 parent=self._parent()
                 from experiments.maxrl_comp002_pretraining_v1 import s0_runtime as runtime
                 if self.native:
@@ -356,7 +356,7 @@ class SupervisorGpuLease:
             else: primary.lease_physical_release_failure=str(error)[:1000]
         self.closed=True; self.state='CLOSED'
         try:
-            self.operation('supervisor_lease','failed' if primary else 'returned',operation_id=self.release_id,
+            self.operation('supervisor_lease_release','failed' if primary else 'returned',operation_id=self.release_id,
                 wall_s=time.perf_counter()-self.release_started,lease_action='release_original_supervisor',
                 error_type=type(primary).__name__ if primary else None,unknown_external_helper_IO=True)
         except BaseException as error:

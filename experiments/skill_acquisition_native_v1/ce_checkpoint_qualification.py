@@ -438,6 +438,14 @@ def checkpoint_adapter(context, permit, prepared, backend, accounting, proof, bi
         main_error = error
         raise
     finally:
+        prefix_error = None
+        if child_quiescent:
+            try: processes.close_prefix_transfer()
+            except BaseException as error:
+                prefix_error = error
+                if main_error is not None:
+                    main_error.checkpoint_prefix_cleanup_failure = {'type': type(error).__name__, 'message': str(error)[:1000]}
+                else: main_error = error
         if lease is not None and child_quiescent:
             # Only the source owner can reacquire its own lease. Failure remains
             # charged and terminal handling may need to discard the parent.
@@ -447,3 +455,6 @@ def checkpoint_adapter(context, permit, prepared, backend, accounting, proof, bi
                     main_error.checkpoint_lease_cleanup_failure = {'type': type(error).__name__, 'message': str(error)[:1000]}
                     raise main_error from error
                 raise
+        if prefix_error is not None:
+            if main_error is prefix_error: raise main_error
+            raise main_error from prefix_error

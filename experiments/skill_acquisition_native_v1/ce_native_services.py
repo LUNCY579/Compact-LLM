@@ -186,7 +186,7 @@ class StableDispatcher:
             require(operation_id not in self.owners, 'dispatch operation identity reused')
             # Finite supervisor metadata kinds keep their original outer owner
             # between and after Q stages; no caller-selected owner flags.
-            target = self.bootstrap if kind in ('supervisor_lease','worker_os_binding') else (
+            target = self.bootstrap if kind in ('supervisor_lease','supervisor_lease_acquire','supervisor_lease_release','worker_os_binding','worker_handle_close','worker_handle_duplicate') else (
                 self.ledger if self.ledger is not None else self.bootstrap)
             self.owners[operation_id] = (kind, target)
         else:

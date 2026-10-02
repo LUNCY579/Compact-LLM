@@ -119,5 +119,72 @@ class Tests(unittest.TestCase):
         with self.assertRaises(ValueError): self.make()
         self.assertEqual(reopened.path.read_bytes(), original)
 
+    def test_normal_end_prepays_final_record_and_allows_only_one_bounded_readback(self):
+        ledger = self.make(); handle = ledger.reserve_setup(self.owner, self.bounds); handle.begin(); self.clock.advance(2); handle.complete()
+        ended = ledger.end(); self.assertTrue(ended['clock_recorded_end']); self.assertTrue(ended['body_completed'])
+        self.assertEqual(ended['original_origin'], 100); self.assertEqual(ended['last_monotonic'], 102)
+        rows = [json.loads(line) for line in ledger.path.read_bytes().splitlines()]
+        self.assertEqual(rows[-2]['kind'], 'end_reservation'); self.assertEqual(rows[-1]['kind'], 'end')
+        self.assertGreaterEqual(ended['cumulative']['io_write_bytes_upper'], rows[-2]['payload']['bounds']['io_write_bytes_upper'])
+        evidence = ledger.inspect_evidence(); self.assertEqual(evidence['journal_ref']['bytes'], ledger.path.stat().st_size)
+        for work in (ledger.end, ledger.tick_wall, lambda: ledger.reserve_setup(self.owner, self.bounds), ledger.inspect_evidence):
+            with self.assertRaises(ValueError): work()
+        before = ledger.path.read_bytes(); reopened = self.make()
+        self.assertTrue(reopened.closed); self.assertEqual(reopened.started_clock, 100); self.assertEqual(reopened.path.read_bytes(), before)
+
+    def test_same_worker_reopen_bridges_every_second_and_preserves_original_origin(self):
+        ledger = self.make(); self.clock.advance(2); ledger.tick_wall(); self.clock.advance(3)
+        reopened = self.make(); self.assertEqual(reopened.started_clock, 100)
+        self.assertEqual(reopened.actual_wall_seconds, 5); self.assertEqual(reopened.last_clock, 105)
+        self.assertEqual(reopened.events[-1]['kind'], 'resume')
+        self.clock.advance(10000)
+        with self.assertRaisesRegex(ValueError, 'physical deadline'): reopened.reserve_setup(self.owner, self.bounds)
+
+    def test_failed_ticket_can_close_clock_but_cannot_be_promoted_to_body_success(self):
+        ledger = self.make(); handle = ledger.reserve_setup(self.owner, self.bounds); handle.begin(); handle.fail(OSError('retained failure'))
+        costs = copy.deepcopy(ledger.cumulative); ended = ledger.end()
+        self.assertEqual(ended['failed_ticket_ids'], [handle.evidence['ticket_id']]); self.assertEqual(ended['outcome'], 'FAILED')
+        self.assertTrue(ended['clock_recorded_end']); self.assertFalse(ended['body_completed']); self.assertFalse(ended['native_qualified'])
+        self.assertTrue(all(ended['cumulative'][key] >= costs[key] for key in b.COST_FIELDS))
+        with self.assertRaises(ValueError): handle.complete()
+
+    def test_pending_reopen_records_unknown_once_and_reopening_cannot_reset_it(self):
+        ledger = self.make(); handle = ledger.reserve_setup(self.owner, self.bounds); handle.begin(); self.clock.advance(3)
+        with self.assertRaisesRegex(ValueError, 'terminal'): ledger.end()
+        reopened = self.make(); self.assertTrue(reopened.unknown_wall); self.assertEqual(reopened.events[-1]['kind'], 'interrupted')
+        original = reopened.path.read_bytes(); again = self.make()
+        self.assertTrue(again.unknown_wall); self.assertEqual(again.path.read_bytes(), original)
+        self.assertEqual(again.tickets[handle.evidence['ticket_id']]['status'], 'STARTED')
+        with self.assertRaises(ValueError): again.end()
+
+    def test_final_write_suffix_is_prepaid_and_late_durability_is_not_clock_success(self):
+        ledger = self.make(); original_sync = b.os.fsync; calls = []
+        def delayed_sync(descriptor):
+            calls.append(descriptor)
+            if len(calls) == 2:
+                self.assertIsNotNone(ledger._end_reserved)
+                self.assertGreaterEqual(ledger.cumulative['wall_seconds_upper'], ledger._end_reserved['bounds']['wall_seconds_upper'])
+                self.clock.advance(ledger._end_reserved['bounds']['wall_seconds_upper'] + 1)
+            return original_sync(descriptor)
+        with patch.object(b.os, 'fsync', side_effect=delayed_sync):
+            with self.assertRaisesRegex(ValueError, 'suffix exceeds prepaid'): ledger.end()
+        self.assertTrue(ledger.unknown_wall); self.assertTrue(ledger.fatal)
+        self.assertFalse(ledger.snapshot()['complete_recorded_clock']); self.assertFalse(ledger.snapshot()['body_completed'])
+        with self.assertRaises(ValueError): ledger.reserve_setup(self.owner, self.bounds)
+
+    def test_interrupted_final_record_retains_reservation_and_cannot_restart_work(self):
+        ledger = self.make(); original_event = ledger._event
+        def interrupted(kind, payload, **kwargs):
+            if kind == 'end': raise OSError('fixture interruption before final record')
+            return original_event(kind, payload, **kwargs)
+        with patch.object(ledger, '_event', side_effect=interrupted):
+            with self.assertRaisesRegex(OSError, 'before final record'): ledger.end()
+        reserved = copy.deepcopy(ledger._end_reserved)
+        reopened = self.make(); self.assertTrue(reopened.unknown_wall)
+        self.assertEqual(reopened.events[-1]['kind'], 'interrupted')
+        self.assertEqual(reopened._end_reserved, reserved)
+        self.assertEqual(reopened.events[-1]['payload']['pending_end_reservation_sha256'], b.digest(reserved))
+        with self.assertRaises(ValueError): reopened.end()
+
 
 if __name__ == '__main__': unittest.main()

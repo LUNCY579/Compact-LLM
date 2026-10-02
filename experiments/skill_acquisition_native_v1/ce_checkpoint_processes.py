@@ -186,6 +186,7 @@ class CheckpointProcesses:
         self.operation = self.operation
         self.started = self.last_clock = time.monotonic(); self.parent = self.restore_record = None
         self.units, self.results = {}, []
+        self.prefix_terminal_handle = None
         try:
             self.operation('checkpoint_process_setup', 'started', 'setup', metadata_bytes_upper=0,
                 identity_hash_attempts_upper=16, identity_hash_bytes_upper=64 * raw.MAX_JSON)
@@ -410,6 +411,13 @@ class CheckpointProcesses:
         unit = self.units[plan['branch']]
         require(parent == self.parent and results == self.results and 'delegation' not in unit, 'one post-handshake child delegation')
         delegation = self.handoff.bind_child(unit['owned'], plan['branch'], unit['request_ref'])
+        if plan['branch'] == 'resumed':
+            from .ce_prefix_handle_transfer import transfer_prefix
+            require(self.prefix_terminal_handle is not None, 'original terminal prefix handle retained before resumed launch')
+            prefix = self.units['prefix']
+            prefix_result = next(value for value in self.results if value['branch'] == 'prefix')
+            delegation['prefix_handle_transfer'] = transfer_prefix(self.context, self.permit, self.prefix_terminal_handle,
+                prefix['live_proof'], prefix_result['manifest_ref'], unit['owned'], delegation, self.operation, self.backend.gate)
         reference = self.write_json(unit['request']['lease_delegation_path'], delegation)
         unit.update(delegation=delegation, delegation_ref=reference, live_proof=copy.deepcopy(self.handoff.child[1]))
         request = unit['request']
@@ -461,6 +469,9 @@ class CheckpointProcesses:
             result = {'branch': plan['branch'], 'binding': binding, 'raw_ref': response['raw_artifact'],
                 'manifest': manifest, 'manifest_ref': payload['final_manifest_ref'], 'store_refs': refs,
                 'terminal_proof': terminal_proof, 'reduction': reduced, 'native_qualified': False}
+            if plan['branch'] == 'prefix':
+                require(self.prefix_terminal_handle is None, 'retain original prefix terminal handle once')
+                self.prefix_terminal_handle = owned.monitor.retain_terminal()
         except BaseException as error:
             primary = error
             try: self.handoff.mark_child_evidence_failed(owned, error)
@@ -473,7 +484,15 @@ class CheckpointProcesses:
                 raise primary from error
             raise
         if primary is not None: raise primary
+        if plan['branch'] == 'resumed': self.close_prefix_transfer()
         self.results.append(result); return copy.deepcopy(result)
+
+    def close_prefix_transfer(self):
+        """Read-only original clone; call only after resumed child quiescence."""
+        current = self.prefix_terminal_handle
+        if current is not None:
+            try: current.close()
+            finally: self.prefix_terminal_handle = None
 
     def restore_parent(self, context, permit, backend, owner, parent):
         self._admit(context, permit, native=True)

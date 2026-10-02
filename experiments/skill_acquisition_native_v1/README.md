@@ -573,6 +573,53 @@ The canonical experiment is selected, while source freeze, registered scopes,
 remaining concrete factories and actual native qualification precede dispatch.
 Acquisition, retention and independent composition remain unmeasured.
 
+## Canonical qualification packet and remaining factories
+
+`ce_registration.py` emits the concrete canonical qualification draft in
+`../skill_acquisition_method_lab_v1/evidence/CE8_CANONICAL_QUALIFICATION_DRAFT_20261002`.
+Its source snapshot and all references are retained. Finite profiles cover
+actual required API kinds, known asset/parameter work, three branch templates,
+resource floors and witness/gradient/Adam row declarations. They are explicit
+discarded-qualification ceilings, not measured production prices. All dispatch
+grants remain false; missing real runtime bootstrap/OS references are not filled
+with invented hashes.
+
+The prior tokenizer receipt belongs to an earlier recipe/source revision. It
+is preserved as observed evidence. A new expected receipt uses actual full
+3000-row source revalidation and the retained token census, and is explicitly
+NOT_OBSERVED_CURRENT_SCOPE. Fresh preparation must reproduce it before models.
+`ce_entry_factories.py` provides the concrete full source/teacher/tokenizer/
+census preparation chain and exact receipt comparison, with CUDA uninitialized.
+
+`ce_prefix_handle_transfer.py` retains the original prefix observation before
+launcher cleanup and transfers read-only noninheritable observation rights to
+the exact resumed child. Adoption occurs after observed delegation, verifies
+the same terminal OS object, and never reopens a dead PID. Native Windows
+transfer remains unexecuted. Unknown/reused remote numeric handles are not closed.
+Worker close/duplicate costs retain their bootstrap owner after child Q ends.
+
+Bootstrap accounting now retains an immutable original clock/deadline,
+same-worker elapsed bridges and durable unknown interruption state. A prepaid
+final reservation precedes an explicit end record; failed tickets close with
+their failed outcome and unchanged costs. Independent replay proves recorded
+end coverage; actual final physical suffix/terminal evidence remains required.
+
+Supervisor ordinary checks, acquisition and whole-lifetime release now have
+separate finite kind profiles. A short check cannot consume the release's full
+lifetime wall allowance. Parent reload and prefix cleanup still require verified
+child quiescence and preserve primary failures.
+
+The expanded source suite passed **354/354 controls**, with unchanged source,
+zero skips/errors and no framework imports, model loads or optimizer execution.
+See `evidence/CE8_REGISTRATION_SOURCE_CHECKS_20261002.json`.
+
+The draft lists exact remaining source compositions: parent executor and
+accounting/prepayment bridge, service constructor and outer/current-worker
+issuers, shared recorder barriers, registered entry factories and complete
+source/OS/clock/prepayment finalization. A new exact source freeze and reviewed
+qualification scope are required before actual native dispatch. The acquisition,
+retention, composition and method-combination study remains incomplete.
+
 ## Production interface
 
 ```powershell

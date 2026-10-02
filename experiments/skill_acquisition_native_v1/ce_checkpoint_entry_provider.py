@@ -396,7 +396,9 @@ class CheckpointEntryProvider:
             local.validate_parent_view(parent.proof(), request['lineage_declaration']['parent_proof'])
             runtime.context = common
             prepared_factory = services.resolve_role(configuration['entry_factories']['prepared_rows'], configuration['launch_spec']['approved_code_sha256'])
-            prepared = prepared_factory(common, service_permit, runtime.operation, runtime.gate, proof)
+            prepared = prepared_factory(common, service_permit, runtime.operation, runtime.gate, proof,
+                request=configuration['controller_request'], service_spec=configuration['service_spec'],
+                worker_handle=handle, observation_permit=permit)
             from .ce_ingestion import PreparedRows
             require(type(prepared) is PreparedRows and prepared.receipt == common['prepared_receipt'],
                     'reviewed real prepared rows/full census must exactly match retained receipt')
@@ -405,11 +407,11 @@ class CheckpointEntryProvider:
                      'prepared_receipt_sha256': prepared.receipt['receipt_sha256']}
             payment.verify(common, proof, owner)
             prefix = None
+            prefix_factory = None
             if request['branch'] == 'resumed':
-                factory = services.resolve_role(configuration['entry_factories']['prefix_terminal_handle'], configuration['launch_spec']['approved_code_sha256'])
-                prefix = factory(common, request, service_permit, runtime.operation)
-                require(type(prefix) is worker.WinWorkerHandle, 'actual retained terminal prefix OS handle factory is missing')
-                handles.append(prefix)
+                # Actual transfer is published by the supervisor only after
+                # ready. Resolve source identity now; adoption waits for control.
+                prefix_factory = services.resolve_role(configuration['entry_factories']['prefix_terminal_handle'], configuration['launch_spec']['approved_code_sha256'])
             return {'context': common, 'request_ref': configuration['launch_spec']['request_ref'],
                 'common_context_ref': configuration['common_context_ref'],
                 'owned_root': common['bindings']['scope']['native_backend']['output_directory'],
@@ -417,6 +419,8 @@ class CheckpointEntryProvider:
                 'expected_worker': {key: proof[key] for key in ('request_sha256', 'scope_sha256', 'worker_identity_sha256')},
                 'entry_prepayment': payment, 'operation': runtime.operation, 'bootstrap_operation': bootstrap_operation,
                 'gate': runtime.gate, 'observer': runtime.observer(common), 'prepared': prepared,
+                'prefix_factory': prefix_factory, 'metadata_service_permit': service_permit,
+                'controller_request': configuration['controller_request'], 'service_spec': configuration['service_spec'],
                 'source_service_bootstrap': runtime.bootstrap.snapshot()}
         except BaseException as primary:
             for handle in reversed(handles):

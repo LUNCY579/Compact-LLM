@@ -371,6 +371,12 @@ class LocalCheckpointIssuer:
                 bootstrap_operation, spec['operation_bounds'], spec['max_request_bytes'])
             context = _paid(bootstrap_operation, spec['operation_bounds'], 'input_io', lambda:
                 derive_context(common, request, entry['request_ref'], proof, delegation, reference))
+            if request['branch'] == 'resumed':
+                from .ce_prefix_handle_transfer import prefix_terminal_handle
+                require(entry.get('prefix_factory') is prefix_terminal_handle, 'exact reviewed prefix adoption source factory')
+                entry['prefix_handle'] = prefix_terminal_handle(common, request, entry['metadata_service_permit'], operation,
+                    controller_request=entry['controller_request'], service_spec=entry['service_spec'], current_handle=handle,
+                    observation_permit=entry['observation_permit'], delegation=delegation)
             # Current lock bytes are independently checked BEFORE any permit.
             from . import ce_checkpoint_lease as lease
             def check_lock():

@@ -275,9 +275,12 @@ class OwnedProcess:
                 handle = None
                 try:
                     def open_owned():
-                        handle = self.os.kernel.OpenProcess(0x1000 | 0x100000 | 1, False, pid)
+                        nonlocal handle
+                        # Only this actual owned worker receives DUP_HANDLE.
+                        # Ordinary read-only observation handles keep their rights.
+                        handle = self.os.kernel.OpenProcess(0x1000 | 0x100000 | 1 | 0x40, False, pid)
                         require(bool(handle), 'owned worker process unavailable'); return handle
-                    handle = self.budget.run('process_launch_child', open_owned)
+                    self.budget.run('process_launch_child', open_owned)
                     facts = self.budget.run('process_launch_child', lambda: self.os.snapshot(handle))
                     parent = self.budget.run('process_launch_child', lambda: _parent_pid(self.os, handle))
                     boot = self.budget.run('process_launch_child', self.os.boot)

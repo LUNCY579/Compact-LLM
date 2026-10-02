@@ -4,6 +4,7 @@ from pathlib import Path
 import sys
 import tempfile
 from unittest.mock import patch
+from types import SimpleNamespace
 import unittest
 
 from experiments.skill_acquisition_native_v1 import ce_worker_evidence as w
@@ -35,6 +36,40 @@ def facts(value):
 
 
 class WorkerContractTests(unittest.TestCase):
+    def terminal_fixture(self, fail_duplicate_return=False):
+        value = spec(); actual = facts(value)
+        actual.update(signaled=True, exit_code=0, exit_filetime_100ns=actual['creation_filetime_100ns'] + 100)
+        closed = []
+        api = SimpleNamespace(boot=lambda: value['expected_boot_identity'],
+            snapshot=lambda handle, **kwargs: dict(actual), duplicate=lambda handle: 222,
+            close=lambda handle: closed.append(handle))
+        def observed(kind, phase, **fields):
+            if fail_duplicate_return and kind == 'worker_handle_duplicate' and phase == 'returned':
+                raise RuntimeError('duplicate receipt failed')
+        result = object.__new__(w.WinWorkerHandle)
+        result.spec, result.observer, result.native, result._permit = value, observed, False, None
+        result.budget, result.os = w._Budget(value, observed), api
+        result._seal, result.closed, result.handle = w._HANDLE_SEAL, False, 111
+        result.identity = w.compare_identity(value, actual, value['expected_boot_identity'])
+        result.sources, result.identity_sha256 = {'fixture': True}, 'f' * 64
+        return result, closed
+
+    def test_terminal_clone_keeps_original_os_object_after_source_close(self):
+        source, closed = self.terminal_fixture()
+        expected = source.terminal_evidence(); clone = source.retain_terminal()
+        self.assertIs(clone.budget, source.budget)
+        source.close()
+        self.assertEqual(clone.terminal_evidence(), expected)
+        self.assertEqual(closed, [111]); clone.close(); self.assertEqual(closed, [111, 222])
+        with self.assertRaisesRegex(ValueError, 'original retained'):
+            source.retain_terminal()
+
+    def test_post_duplicate_receipt_failure_releases_new_handle(self):
+        source, closed = self.terminal_fixture(fail_duplicate_return=True)
+        with self.assertRaisesRegex(RuntimeError, 'duplicate receipt failed'):
+            source.retain_terminal()
+        self.assertEqual(closed, [222]); self.assertFalse(source.closed)
+
     def test_import_framework_free_and_metadata_authority_closed(self):
         self.assertFalse(w._REGISTERED_METADATA_VERIFIERS)
         self.assertNotIn('torch', sys.modules); self.assertNotIn('transformers', sys.modules)

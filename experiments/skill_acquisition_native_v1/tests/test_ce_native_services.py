@@ -76,7 +76,9 @@ class NativeServicesTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp); bootstrap=s.BootstrapLedger(bootstrap_spec(root/'bootstrap'),'a'*64,synthetic_fixture=True)
             bound=spec(root)
-            bootstrap.spec['operation_profiles']['supervisor_lease']=dict(bound['operation_bounds']['release'])
+            bootstrap.spec['operation_profiles']['supervisor_lease']=dict(bound['operation_bounds']['transfer'])
+            bootstrap.spec['operation_profiles']['supervisor_lease_acquire']=dict(bound['operation_bounds']['acquire'])
+            bootstrap.spec['operation_profiles']['supervisor_lease_release']=dict(bound['operation_bounds']['release'])
             # Explicit generous fixture budgets, never native measured prices.
             bootstrap.spec['caps'].update(read_bytes=10**8,write_bytes=10**8,hash_bytes=10**8,metadata_bytes=10**8,hash_attempts=10000,wall_seconds=10000)
             dispatch=s.StableDispatcher(bootstrap)
@@ -137,6 +139,11 @@ class NativeServicesTests(unittest.TestCase):
         dispatch('worker_os_binding','returned',operation_id='refresh')
         self.assertEqual([owner for owner,_ in events],['bootstrap','bootstrap'])
         self.assertIs(dispatch.owners['refresh'][1],bootstrap)
+        for kind in ('worker_handle_close','worker_handle_duplicate'):
+            dispatch(kind,'started',operation_id=kind)
+            dispatch(kind,'returned',operation_id=kind)
+            self.assertIs(dispatch.owners[kind][1],bootstrap)
+        self.assertEqual([owner for owner,_ in events],['bootstrap']*6)
 
     def test_resource_gate_checks_suspended_parent_before_resource_io(self):
         from experiments.skill_acquisition_native_v1 import ce_resource_evidence as r

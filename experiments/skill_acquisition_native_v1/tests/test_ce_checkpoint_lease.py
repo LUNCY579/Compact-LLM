@@ -207,7 +207,7 @@ class LeaseControls(unittest.TestCase):
         self.lease.acquire(); self.context['scope_sha256']='f'*64
         with self.assertRaisesRegex(ValueError,'frozen lease'): self.lease.close()
         self.assertEqual(self.module.releases,1); self.assertFalse(self.module.LOCK.exists())
-        self.assertEqual(self.observer.events[-1][:2],('supervisor_lease','failed'))
+        self.assertEqual(self.observer.events[-1][:2],('supervisor_lease_release','failed'))
 
     def test_lazy_backend_is_bound_once_after_lease_and_before_any_model_work(self):
         lease=c.fixture_supervisor(self.context,None,self.parent,self.module,self.observer)

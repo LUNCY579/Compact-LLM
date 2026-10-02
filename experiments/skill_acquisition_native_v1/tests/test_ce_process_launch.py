@@ -18,6 +18,30 @@ class Trap:
     def __call__(self, *args, **kwargs): raise AssertionError('work before launch admission')
 
 
+class OwnedDuplicateRightsTests(unittest.TestCase):
+    def test_owned_redirector_target_retains_open_before_return_receipt_failure(self):
+        import time
+        current = object.__new__(p.OwnedProcess); events = []
+        original = RuntimeError('owned target open receipt failed')
+        class Kernel:
+            def OpenProcess(self, rights, inherit, pid):
+                events.append(('open', rights, inherit, pid)); return 501
+        class OS:
+            kernel = Kernel()
+            def close(self, handle): events.append(('close', handle))
+        class Budget:
+            def run(self, kind, work):
+                result = work()
+                if kind == 'process_launch_child': raise original
+                return result
+        current.os, current.budget, current.spec = OS(), Budget(), {'handshake_seconds': 1}
+        current.deadline = time.perf_counter() + 2
+        with patch.object(p, '_child_pids', return_value=[41]):
+            with self.assertRaises(RuntimeError) as caught: current._find_worker({'pid': 40})
+        self.assertIs(caught.exception, original)
+        self.assertEqual(events, [('open', 0x1000 | 0x100000 | 1 | 0x40, False, 41), ('close', 501)])
+
+
 def spec():
     root = Path(tempfile.gettempdir()).resolve()
     ref = lambda name: {'path': str(root / name), 'sha256': p.digest(name), 'bytes': 10}

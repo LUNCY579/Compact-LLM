@@ -107,12 +107,13 @@ class Tests(unittest.TestCase):
         self.ledger.path.write_bytes(original)
         wrong = self.ref(self.ledger.path); wrong['sha256'] = '0' * 64
         with self.assertRaisesRegex(ValueError, 'bytes/hash mismatch'): self.verify(journal=wrong, seal=False)
-    def test_reopen_clock_gap_is_explicit_and_deadline_cannot_reset(self):
+    def test_reopen_clock_is_bridged_and_original_deadline_cannot_reset(self):
         self.clock.advance(2); self.ledger.tick_wall(); self.clock.advance(3)
         reopened = v.bootstrap.BootstrapAccounting(self.context, None, self.proof, clock=self.clock)
         self.ledger = reopened
         result = self.verify()
-        self.assertEqual(result['worker_origin_gaps'][0]['unrecorded_seconds'], 3)
+        self.assertEqual(result['worker_origin_gaps'], [])
+        self.assertEqual(result['recorded_wall_seconds'], 5)
         self.assertEqual(result['first_monotonic'], 100)
         self.assertFalse(result['clock_coverage_complete'])
         self.rewrite(lambda rows: rows[-1]['payload'].update(monotonic=10101))
@@ -134,6 +135,25 @@ class Tests(unittest.TestCase):
         self.assertFalse(matched['artifact_birth_order_verified']); self.assertFalse(matched['body_operation_actuals_verified'])
         bad = dict(retained_during_write, status='FAILED')
         with self.assertRaisesRegex(ValueError, 'never occurred'): self.verify(evidence=[bad])
+
+    def test_closed_normal_and_failed_body_clocks_replay_without_native_final_claim(self):
+        handle = self.ledger.reserve_setup(self.owner, self.bounds); handle.begin(); self.clock.advance(2); handle.complete()
+        self.ledger.end(); evidence = self.ledger.inspect_evidence()
+        result = self.verify(evidence=[handle.evidence])
+        self.assertTrue(result['clock_coverage_complete']); self.assertFalse(result['physical_final_verified'])
+        self.assertEqual(result['recorded_wall_seconds'], 2)
+        self.assertIsNotNone(result['end_reservation']); self.assertFalse(result['native_qualified'])
+        self.assertEqual(evidence['snapshot']['failed_ticket_ids'], [])
+        self.rewrite(lambda rows: next(row for row in rows if row['kind'] == 'end')['payload'].update(reservation_sha256='f' * 64))
+        with self.assertRaisesRegex(ValueError, 'exact source end'): self.verify(seal=False)
+
+    def test_pending_interruption_is_durable_and_never_becomes_ended_coverage(self):
+        handle = self.ledger.reserve_setup(self.owner, self.bounds); handle.begin(); self.clock.advance(3)
+        self.ledger = v.bootstrap.BootstrapAccounting(self.context, None, self.proof, clock=self.clock)
+        result = self.verify()
+        self.assertFalse(result['clock_coverage_complete']); self.assertEqual(result['ticket_statuses']['STARTED'], [handle.evidence['ticket_id']])
+        self.assertTrue(self.ledger.snapshot()['unknown_wall']); self.assertEqual(self.ledger.events[-1]['kind'], 'interrupted')
+        with self.assertRaises(ValueError): self.ledger.end()
 
 
 if __name__ == '__main__': unittest.main()

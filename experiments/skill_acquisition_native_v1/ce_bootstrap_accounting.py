@@ -86,7 +86,7 @@ def verify_prepayment(handle, context, proof, owner, *, verifier=None):
     require(ledger.request_sha256 == context.get('request_sha256')
             and ledger.scope_sha256 == context.get('scope_sha256') and ledger.arm == context.get('arm')
             and ledger.proof == proof and evidence['owner'] == owner
-            and evidence['status'] == 'RESERVED' and not ledger.fatal and not ledger.unknown_wall,
+            and evidence['status'] == 'RESERVED' and not ledger.fatal and not ledger.unknown_wall and not ledger.closed,
             'prepayment request/scope/arm/worker/owner/status drift')
     if not fixture:
         require(verifier(handle, context, proof, owner) is True, 'registered prepayment evidence verification failed')
@@ -120,6 +120,7 @@ class BootstrapAccounting:
         require(q.hex64(self.request_sha256) and q.hex64(self.scope_sha256) and self.arm in ('canonical', 'permuted'), 'one exact bootstrap identity')
         self.cumulative, self.events, self.tickets = _zero(), [], {}
         self.fatal = self.unknown_wall = False
+        self.closed, self._worker_seen, self._end_reserved, self._end_readback_used = False, False, None, False
         self.actual_wall_seconds, self.last_clock, self.started_clock = 0.0, started, started
         self.directory = Path(spec['owned_directory']).resolve()
         require(not Path(spec['owned_directory']).is_symlink(), 'regular bootstrap directory')
@@ -152,7 +153,14 @@ class BootstrapAccounting:
                     self._charge(overhead)
                     self._apply(body['kind'], body['payload']); self.events.append(entry); self._known_size += len(raw)
             require(count == size, 'bootstrap replay byte drift')
-            if any(ticket['status'] in ('STARTED', 'RESERVED') for ticket in self.tickets.values()): self.unknown_wall = True
+            if not self.closed and not self.unknown_wall and (self._end_reserved is not None or any(ticket['status'] in ('STARTED', 'RESERVED') for ticket in self.tickets.values())):
+                self.unknown_wall = True
+                self._event('interrupted', {'worker_identity_sha256': self.proof['worker_identity_sha256'],
+                    'boot_identity_sha256': self.proof['boot_identity_sha256'], 'last_recorded_monotonic': self.last_clock,
+                    'observed_monotonic': started, 'pending_ticket_ids': sorted(key for key, ticket in self.tickets.items()
+                        if ticket['status'] in ('STARTED', 'RESERVED')),
+                    'pending_end_reservation_sha256': digest(self._end_reserved) if self._end_reserved is not None else None}, recovery=True)
+            if self.closed: self._end_readback_used = True
         else:
             # Self-construction is admitted from the separately source-bound
             # outer specification, before its owned files can exist.
@@ -163,36 +171,67 @@ class BootstrapAccounting:
             with self.header_path.open('xb') as stream:
                 require(stream.write(raw_header) == len(raw_header), 'short bootstrap header'); stream.flush(); os.fsync(stream.fileno())
             with self.path.open('xb') as stream: stream.flush(); os.fsync(stream.fileno())
-        if not self.unknown_wall:
+        if not self.unknown_wall and not self.closed:
             self._event('self_reservation', {'bounds': spec['self_bounds']})
-            self._event('worker', {'proof': self.proof, 'monotonic': started})
-            self.tick_wall()
+            if not self._worker_seen:
+                self._event('worker', {'proof': self.proof, 'monotonic': started})
+                self.tick_wall()
+            else:
+                # Replay never changes the original origin. Bridge ALL elapsed
+                # same-worker time, including constructor/replay work.
+                self.tick_wall()
+                self._event('resume', {'worker_identity_sha256': self.proof['worker_identity_sha256'],
+                    'boot_identity_sha256': self.proof['boot_identity_sha256'], 'monotonic': self.last_clock,
+                    'original_origin': self.started_clock})
 
     def _head(self): return self.events[-1]['sha256'] if self.events else None
-    def _check(self, amount):
-        require(not self.fatal and not self.unknown_wall, 'bootstrap fatal or interrupted unknown wall')
+    def _check(self, amount, *, recovery=False):
+        require(not self.fatal and not self.closed and (not self.unknown_wall or recovery), 'bootstrap ended, fatal or interrupted unknown wall')
         for key, value in amount.items():
             require(key in COST_FIELDS and q.finite(value) and (key == 'wall_seconds_upper' or type(value) is int), 'finite bootstrap reservation')
             require(self.cumulative[key] + value <= self.spec['caps'][key], 'bootstrap cumulative ceiling: ' + key)
-    def _charge(self, amount): self._check(amount); self.cumulative = _add(self.cumulative, amount)
+    def _charge(self, amount, *, recovery=False): self._check(amount, recovery=recovery); self.cumulative = _add(self.cumulative, amount)
+    def _end_bounds(self, prefix_bytes):
+        # Permanent suffix wall upper and one readback are declared before the
+        # final row. Its actual physical duration needs external source/OS proof.
+        read = len(canonical(self.header)) + 1 + prefix_bytes + 2 * MAX_LINE
+        return dict(_zero(), wall_seconds_upper=self.spec['self_bounds']['wall_seconds_upper'],
+            operation_attempts_upper=2, io_read_bytes_upper=read, io_write_bytes_upper=MAX_LINE,
+            identity_hash_attempts_upper=4, identity_hash_bytes_upper=read + 2 * MAX_LINE,
+            metadata_bytes_upper=MAX_LINE)
     def _apply(self, kind, payload):
         if kind == 'self_reservation':
+            require(self._end_reserved is None and payload['bounds'] == self.spec['self_bounds'], 'immutable setup before final reservation')
             if not self._self_prepaid: self._charge(payload['bounds'])
             self._self_prepaid = False
-        elif kind == 'inspection': self._charge(payload['bounds'])
+        elif kind == 'inspection':
+            require(self._end_reserved is None, 'inspection must precede final reservation')
+            self._charge(payload['bounds'])
         elif kind == 'worker':
+            require(not self._worker_seen and payload['proof'] == self.proof and q.finite(payload['monotonic']),
+                    'one exact original bootstrap worker/origin')
             self.last_clock = payload['monotonic']; self.started_clock = payload['monotonic']
+            self._worker_seen = True
+        elif kind == 'resume':
+            require(self._worker_seen and self._end_reserved is None and payload['original_origin'] == self.started_clock
+                    and payload['worker_identity_sha256'] == self.proof['worker_identity_sha256']
+                    and payload['boot_identity_sha256'] == self.proof['boot_identity_sha256']
+                    and payload['monotonic'] == self.last_clock, 'same-worker resume preserves original clock/deadline')
         elif kind == 'wall':
-            require(payload['boot_identity_sha256'] == self.proof['boot_identity_sha256']
+            require(self._worker_seen and payload['boot_identity_sha256'] == self.proof['boot_identity_sha256']
+                    and payload['worker_identity_sha256'] == self.proof['worker_identity_sha256']
                     and q.finite(payload['monotonic']) and payload['monotonic'] >= self.last_clock
-                    and payload['elapsed_delta'] == payload['monotonic'] - self.last_clock, 'same-boot monotonic wall evidence')
+                    and payload['elapsed_delta'] == payload['monotonic'] - self.last_clock
+                    and payload['monotonic'] - self.started_clock <= self.spec['physical_wall_seconds_upper'], 'same-boot monotonic wall evidence')
             self._charge({'wall_seconds_upper': payload['elapsed_delta']})
             self.last_clock = payload['monotonic']; self.actual_wall_seconds += payload['elapsed_delta']
         elif kind == 'reserve':
+            require(self._worker_seen and self._end_reserved is None, 'reserve only inside open worker lifecycle')
             self._charge(payload['bounds'])
             require(payload['ticket_id'] not in self.tickets, 'unique bootstrap ticket')
             self.tickets[payload['ticket_id']] = dict(payload, status='RESERVED', reservation_sha256=digest(payload))
         elif kind in ('setup_started', 'setup_returned', 'setup_failed'):
+            require(self._end_reserved is None, 'dependent work cannot run after final reservation')
             ticket = self.tickets[payload['ticket_id']]
             require(payload.get('worker_identity_sha256') == self.proof['worker_identity_sha256']
                     and q.finite(payload.get('monotonic')) and payload['monotonic'] == self.last_clock,
@@ -200,24 +239,53 @@ class BootstrapAccounting:
             require(ticket['status'] == ('RESERVED' if kind == 'setup_started' else 'STARTED'), 'one dependent setup lifecycle')
             ticket['status'] = {'setup_started': 'STARTED', 'setup_returned': 'RETURNED', 'setup_failed': 'FAILED'}[kind]
             ticket['result'] = payload
+        elif kind == 'interrupted':
+            require(self._worker_seen and payload['worker_identity_sha256'] == self.proof['worker_identity_sha256']
+                    and payload['boot_identity_sha256'] == self.proof['boot_identity_sha256']
+                    and payload['last_recorded_monotonic'] == self.last_clock
+                    and q.finite(payload['observed_monotonic']) and payload['observed_monotonic'] >= self.last_clock
+                    and payload['pending_ticket_ids'] == sorted(key for key, ticket in self.tickets.items()
+                        if ticket['status'] in ('RESERVED', 'STARTED'))
+                    and payload['pending_end_reservation_sha256'] == (digest(self._end_reserved) if self._end_reserved is not None else None)
+                    and (payload['pending_ticket_ids'] or self._end_reserved is not None),
+                    'retained explicit interruption with unchanged pending reservations')
+            self.unknown_wall = True
+        elif kind == 'end_reservation':
+            require(self._worker_seen and self._end_reserved is None and not any(ticket['status'] in ('RESERVED', 'STARTED') for ticket in self.tickets.values())
+                    and payload['worker_identity_sha256'] == self.proof['worker_identity_sha256']
+                    and payload['boot_identity_sha256'] == self.proof['boot_identity_sha256']
+                    and payload['original_origin'] == self.started_clock and payload['monotonic'] == self.last_clock
+                    and payload['bounds'] == self._end_bounds(payload['prefix_bytes']), 'prepaid exact final clock record reservation')
+            self._charge(payload['bounds']); self._end_reserved = _clone(payload)
+        elif kind == 'end':
+            require(self._end_reserved is not None and self._worker_seen
+                    and payload['worker_identity_sha256'] == self.proof['worker_identity_sha256']
+                    and payload['boot_identity_sha256'] == self.proof['boot_identity_sha256']
+                    and payload['original_origin'] == self.started_clock and payload['monotonic'] == self.last_clock
+                    and payload['reservation_sha256'] == digest(self._end_reserved)
+                    and not any(ticket['status'] in ('RESERVED', 'STARTED') for ticket in self.tickets.values()),
+                    'exact source end after all terminal dependent tickets')
+            self.closed = True
         else: raise ValueError('unknown bootstrap event')
-    def _event(self, kind, payload):
+    def _event(self, kind, payload, *, recovery=False):
         body = {'seq': len(self.events), 'previous': self._head(), 'binding_sha256': self.binding_sha256,
                 'kind': kind, 'payload': _clone(payload)}
         raw = canonical(dict(body, sha256=digest(body))) + b'\n'; require(len(raw) <= MAX_LINE, 'bootstrap event ceiling')
         overhead = {'io_write_bytes_upper': len(raw), 'metadata_bytes_upper': len(raw),
                     'identity_hash_attempts_upper': 1, 'identity_hash_bytes_upper': len(canonical(body))}
-        amount = payload['bounds'] if kind in ('inspection', 'reserve') or kind == 'self_reservation' and not self._self_prepaid else {'wall_seconds_upper': payload['elapsed_delta']} if kind == 'wall' else {}
-        self._check(_add(overhead, amount))
+        amount = payload['bounds'] if kind in ('inspection', 'reserve', 'end_reservation') or kind == 'self_reservation' and not self._self_prepaid else {'wall_seconds_upper': payload['elapsed_delta']} if kind == 'wall' else {}
+        self._check(_add(overhead, amount), recovery=recovery)
         # Validate the complete transition on a pure independent state before
         # persisting anything. Invalid lifecycle rows must never poison replay.
         shadow = object.__new__(BootstrapAccounting)
         for key in ('cumulative', 'spec', 'proof', 'tickets'):
             setattr(shadow, key, _clone(getattr(self, key)))
-        for key in ('fatal', 'unknown_wall', 'last_clock', 'started_clock', 'actual_wall_seconds', '_self_prepaid'):
+        shadow.header = _clone(self.header)
+        shadow._end_reserved = _clone(self._end_reserved)
+        for key in ('fatal', 'unknown_wall', 'closed', '_worker_seen', 'last_clock', 'started_clock', 'actual_wall_seconds', '_self_prepaid'):
             setattr(shadow, key, getattr(self, key))
-        shadow._charge(overhead); shadow._apply(kind, payload)
-        self._charge(overhead)
+        shadow._charge(overhead, recovery=recovery); shadow._apply(kind, payload)
+        self._charge(overhead, recovery=recovery)
         try:
             require(self.path.stat().st_size == self._known_size, 'bootstrap single writer history')
             with self.path.open('ab') as stream:
@@ -226,6 +294,7 @@ class BootstrapAccounting:
             self.fatal = True; raise
         self._apply(kind, payload); self.events.append(json.loads(raw)); self._known_size += len(raw)
     def tick_wall(self):
+        require(self._worker_seen and not self.closed and not self.unknown_wall, 'open bootstrap worker clock required; ended or unknown wall cannot reset')
         now = self.clock()
         require(q.finite(now) and now >= self.last_clock, 'monotonic bootstrap clock')
         require(now - self.started_clock <= self.spec['physical_wall_seconds_upper'], 'bootstrap physical deadline')
@@ -249,19 +318,58 @@ class BootstrapAccounting:
         if error is not None: payload['error'] = {'type': type(error).__name__, 'message': str(error)[:1000]}
         self._event(kind, payload)
     def snapshot(self):
+        failed = sorted(key for key, ticket in self.tickets.items() if ticket['status'] == 'FAILED')
         return {'schema': SCHEMA, 'native_qualified': False, 'binding_sha256': self.binding_sha256,
             'ledger_head': self._head(), 'cumulative': _clone(self.cumulative), 'actual_wall_seconds': self.actual_wall_seconds,
-            'proof': _clone(self.proof), 'tickets': _clone(self.tickets), 'fatal': self.fatal, 'unknown_wall': self.unknown_wall}
+            'proof': _clone(self.proof), 'tickets': _clone(self.tickets), 'fatal': self.fatal, 'unknown_wall': self.unknown_wall,
+            'original_origin': self.started_clock, 'last_monotonic': self.last_clock, 'clock_ended': self.closed,
+            'clock_recorded_end': self.closed, 'failed_ticket_ids': failed,
+            'body_completed': self.closed and not self.fatal and not self.unknown_wall and bool(self.tickets) and not failed,
+            'outcome': 'FAILED' if failed else 'RECORDED_END' if self.closed else 'INCOMPLETE',
+            'end_reservation': _clone(self._end_reserved), 'complete_recorded_clock': self.closed and not self.fatal and not self.unknown_wall}
+    def end(self):
+        require(not self.closed and not self.unknown_wall and not self.fatal
+                and not any(ticket['status'] in ('RESERVED', 'STARTED') for ticket in self.tickets.values()),
+                'end requires every dependent ticket terminal and known source clock')
+        self.tick_wall()
+        bounds = self._end_bounds(self._known_size)
+        self._event('end_reservation', {'bounds': bounds, 'prefix_bytes': self._known_size,
+            'worker_identity_sha256': self.proof['worker_identity_sha256'], 'boot_identity_sha256': self.proof['boot_identity_sha256'],
+            'original_origin': self.started_clock, 'monotonic': self.last_clock})
+        self.tick_wall()
+        self._event('end', {'worker_identity_sha256': self.proof['worker_identity_sha256'],
+            'boot_identity_sha256': self.proof['boot_identity_sha256'], 'original_origin': self.started_clock,
+            'monotonic': self.last_clock, 'reservation_sha256': digest(self._end_reserved)})
+        self._check_final_suffix()
+        return self.snapshot()
+    def _check_final_suffix(self):
+        now = self.clock()
+        try:
+            require(q.finite(now) and now >= self.last_clock
+                    and now - self.last_clock <= self._end_reserved['bounds']['wall_seconds_upper']
+                    and now - self.started_clock <= self.spec['physical_wall_seconds_upper'],
+                    'final bootstrap write/readback suffix exceeds prepaid wall/deadline')
+        except BaseException:
+            self.fatal = self.unknown_wall = True; raise
     def inspect_evidence(self):
         # Inspection itself remains permanently priced; it grants no permission.
-        size = self.path.stat().st_size + self.header_path.stat().st_size + MAX_LINE
-        self._event('inspection', {'bounds': dict(_zero(), operation_attempts_upper=1,
-            io_read_bytes_upper=size, identity_hash_attempts_upper=2, identity_hash_bytes_upper=size)})
+        if self.closed:
+            require(self._end_reserved is not None and not self._end_readback_used and not self.fatal and not self.unknown_wall,
+                    'one prepaid final bootstrap readback only')
+            self._check_final_suffix(); self._end_readback_used = True
+            size = self._end_reserved['bounds']['io_read_bytes_upper']
+        else:
+            size = self.path.stat().st_size + self.header_path.stat().st_size + MAX_LINE
+            self._event('inspection', {'bounds': dict(_zero(), operation_attempts_upper=1,
+                io_read_bytes_upper=size, identity_hash_attempts_upper=2, identity_hash_bytes_upper=size)})
         refs = []
+        total = 0
         for path in (self.header_path, self.path):
             observed, count = hashlib.sha256(), 0
             with path.open('rb') as stream:
-                while block := stream.read(CHUNK): count += len(block); observed.update(block)
+                while block := stream.read(min(CHUNK, size + 1 - total)):
+                    count += len(block); total += len(block); require(total <= size, 'bootstrap inspection grew beyond reservation'); observed.update(block)
             refs.append({'path': str(path), 'bytes': count, 'sha256': observed.hexdigest()})
+        if self.closed: self._check_final_suffix()
         return {'schema': SCHEMA, 'header_ref': refs[0], 'journal_ref': refs[1], 'snapshot': self.snapshot(),
                 'native_qualified': False, 'classification': 'retained prepayment evidence only; no native execution proof'}

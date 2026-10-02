@@ -169,6 +169,18 @@ class _WindowsOS:
         require(bool(handle), 'worker process unavailable; identity cannot be observed')
         return handle
     def close(self, handle): require(bool(self.kernel.CloseHandle(handle)), 'worker handle close failed')
+    def duplicate(self, handle):
+        """Same-process duplicate of this retained read-only observation handle."""
+        c = self.ctypes
+        get_current = self.kernel.GetCurrentProcess
+        get_current.argtypes, get_current.restype = [], c.c_void_p
+        duplicate = self.kernel.DuplicateHandle
+        duplicate.argtypes = [c.c_void_p, c.c_void_p, c.c_void_p, c.POINTER(c.c_void_p), c.c_uint32, c.c_int, c.c_uint32]
+        duplicate.restype = c.c_int
+        result = c.c_void_p(); current = get_current()
+        require(bool(duplicate(current, handle, current, c.byref(result), 0, False, 2)) and result.value,
+                'retained worker handle duplication failed')
+        return result.value
     def boot(self):
         from .runner import windows_boot_identity
         return windows_boot_identity()
@@ -340,6 +352,37 @@ class WinWorkerHandle:
             'exit_code': facts['exit_code'], 'exit_filetime_100ns': facts['exit_filetime_100ns'],
             'request_sha256': self.spec['request_sha256'], 'scope_sha256': self.spec['scope_sha256'],
             'status_file_used': False, 'native_qualified': False}
+    def retain_terminal(self):
+        """Keep the same verified OS object after its launcher owner closes.
+
+        The clone shares the original prepaid observation budget. No dead PID
+        is reopened, no fields from a status file establish terminal identity.
+        """
+        require(self._seal is _HANDLE_SEAL and not self.closed, 'original retained worker observation required')
+        if self.native: _admit(self.spec, self._permit, self.observer)
+        terminal = self.terminal_evidence()
+        require(terminal['exit_code'] == 0, 'only successful terminal prefix may be retained')
+        owned = None
+        def duplicate_owned():
+            nonlocal owned
+            owned = self.os.duplicate(self.handle)
+            return owned
+        try:
+            self.budget.run('worker_handle_duplicate', duplicate_owned)
+            clone = object.__new__(WinWorkerHandle)
+            clone.spec, clone.observer, clone.native = copy.deepcopy(self.spec), self.observer, self.native
+            clone._permit, clone.budget, clone.os = self._permit, self.budget, self.os
+            clone._seal, clone.closed, clone.handle = _HANDLE_SEAL, False, owned
+            clone.identity, clone.sources = copy.deepcopy(self.identity), copy.deepcopy(self.sources)
+            clone.identity_sha256 = self.identity_sha256
+            require(clone.terminal_evidence() == terminal, 'duplicated handle changed exact terminal worker evidence')
+            return clone
+        except BaseException as primary:
+            if owned is not None:
+                try: self.os.close(owned)
+                except BaseException as close_error:
+                    primary.worker_duplicate_close_failure = {'type': type(close_error).__name__, 'message': str(close_error)[:1000]}
+            raise
     def close(self):
         if not getattr(self, 'closed', True):
             if self.handle is None:

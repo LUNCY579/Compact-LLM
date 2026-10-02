@@ -53,6 +53,8 @@ def _shadow(header):
     state.proof, state.last_clock, state.started_clock = None, None, None
     state.actual_wall_seconds, state._self_prepaid = 0.0, False
     state.binding_sha256 = digest(header)
+    state.header = copy.deepcopy(header)
+    state.closed, state._worker_seen, state._end_reserved, state._end_readback_used = False, False, None, False
     # Original first self_reservation charges the one full self bound. Header
     # bytes are included there; replay adds original serialized row overheads.
     return state
@@ -67,7 +69,7 @@ def _transition(state, kind, payload, context, expected_workers, owner_contracts
             require(payload['bounds'] == state.spec['self_bounds'], 'immutable original self bounds; no repricing')
             require(not clocks['expect_worker'] and not any(ticket['status'] in ('RESERVED', 'STARTED') for ticket in state.tickets.values()),
                     'new original setup cannot conceal pending ticket work')
-            clocks['expect_worker'] = True
+            clocks['expect_worker'] = 'resume' if state._worker_seen else 'worker'
         else:
             require(state.proof is not None, 'worker evidence precedes inspection')
             require(type(payload['bounds']) is dict and set(payload['bounds']) == set(bootstrap.COST_FIELDS)
@@ -79,20 +81,16 @@ def _transition(state, kind, payload, context, expected_workers, owner_contracts
             require(payload['bounds'] == expected, 'original source inspection reservation formula')
     elif kind == 'worker':
         require(set(payload) == {'proof', 'monotonic'} and q.finite(payload['monotonic']), 'exact bootstrap worker clock schema')
-        require(clocks['expect_worker'], 'worker starts only after its original setup reservation')
+        require(clocks['expect_worker'] == 'worker' and not state._worker_seen,
+                'one original worker starts after its setup reservation')
         clocks['expect_worker'] = False
         proof = _worker(payload['proof'], context, expected_workers)
-        if state.proof is not None:
-            require(proof['worker_identity_sha256'] == state.proof['worker_identity_sha256']
-                    and proof['boot_identity_sha256'] == state.proof['boot_identity_sha256'],
-                    'unsupported bootstrap worker/boot substitution in one original ledger')
-            require(payload['monotonic'] >= state.last_clock, 'bootstrap worker clock regressed')
-            require(not any(ticket['status'] in ('RESERVED', 'STARTED') for ticket in state.tickets.values()),
-                    'worker restart cannot conceal pending bootstrap tickets')
-            gap = payload['monotonic'] - state.last_clock
-            if gap: clocks['gaps'].append({'after_monotonic': state.last_clock, 'before_monotonic': payload['monotonic'], 'unrecorded_seconds': gap})
-        else: clocks['first_origin'] = payload['monotonic']
+        clocks['first_origin'] = payload['monotonic']
         state.proof = copy.deepcopy(proof)
+    elif kind == 'resume':
+        require(set(payload) == {'worker_identity_sha256', 'boot_identity_sha256', 'monotonic', 'original_origin'}
+                and clocks['expect_worker'] == 'resume', 'exact source resume after immutable setup bounds')
+        clocks['expect_worker'] = False
     elif kind == 'wall':
         require(set(payload) == {'boot_identity_sha256', 'worker_identity_sha256', 'monotonic', 'elapsed_delta'}
                 and state.proof is not None and payload['worker_identity_sha256'] == state.proof['worker_identity_sha256']
@@ -119,6 +117,17 @@ def _transition(state, kind, payload, context, expected_workers, owner_contracts
                     and type(error['type']) is str and 0 < len(error['type']) <= 128
                     and type(error['message']) is str and len(error['message']) <= 1000,
                     'failed dependent body retains its specific error')
+    elif kind == 'interrupted':
+        require(set(payload) == {'worker_identity_sha256', 'boot_identity_sha256', 'last_recorded_monotonic',
+            'observed_monotonic', 'pending_ticket_ids', 'pending_end_reservation_sha256'}, 'exact retained source interruption schema')
+    elif kind == 'end_reservation':
+        require(set(payload) == {'bounds', 'prefix_bytes', 'worker_identity_sha256', 'boot_identity_sha256', 'original_origin', 'monotonic'}
+                and type(payload['prefix_bytes']) is int and payload['prefix_bytes'] == clocks['journal_offset'],
+                'exact prepaid final record/source prefix reservation')
+        q._costs(payload['bounds'])
+    elif kind == 'end':
+        require(set(payload) == {'worker_identity_sha256', 'boot_identity_sha256', 'original_origin', 'monotonic', 'reservation_sha256'},
+                'exact final source clock end schema')
     else: raise raw.EvidenceRejected('unsupported bootstrap event kind/schema')
     if 'monotonic' in payload:
         require(payload['monotonic'] - clocks['first_origin'] <= state.spec['physical_wall_seconds_upper'],
@@ -206,7 +215,9 @@ def verify_bootstrap(context, header_ref, journal_ref, seal_ref=None, *, reader,
                     overhead = {'io_write_bytes_upper': len(line), 'metadata_bytes_upper': len(line),
                         'identity_hash_attempts_upper': 1, 'identity_hash_bytes_upper': len(canonical(body))}
                     state._charge(overhead)
-                    require(not clocks['expect_worker'] or row['kind'] == 'worker', 'setup reservation must be followed by its worker record')
+                    require(not clocks['expect_worker'] or row['kind'] == clocks['expect_worker']
+                            or clocks['expect_worker'] == 'resume' and row['kind'] == 'wall',
+                            'setup reservation must be followed by its original worker or bridged resume')
                     _transition(state, row['kind'], row['payload'], context, expected_workers, expected_owners, clocks)
                     state.events.append(row)
                     offsets.append({'seq': row['seq'], 'offset': offset, 'bytes': len(line), 'sha256': row['sha256']})
@@ -230,9 +241,10 @@ def verify_bootstrap(context, header_ref, journal_ref, seal_ref=None, *, reader,
     statuses = {name: [key for key, ticket in state.tickets.items() if ticket['status'] == name]
                 for name in ('RESERVED', 'STARTED', 'RETURNED', 'FAILED')}
     gaps = ['actual source-owned OS/entry provenance has not been verified',
-        'BootstrapAccounting has no terminal/end event; only recorded prefix clock intervals are proved',
+        'source/OS terminal evidence must verify actual final record/readback suffix within prepaid wall/deadline',
         'publisher/process inner operation actuals are not BootstrapAccounting events; only their matching full ticket reservations are retained']
-    if clocks['gaps']: gaps.append('constructor worker-origin resets left explicit unrecorded monotonic intervals')
+    if not state.closed: gaps.append('source clock end has not been retained')
+    if state.unknown_wall: gaps.append('explicit source interruption leaves unknown clock/completion; retained reservations cannot be reset')
     if statuses['RESERVED'] or statuses['STARTED']: gaps.append('unfinished dependent work retains full prepaid upper costs; completion remains unknown')
     return {'schema': SCHEMA, 'status': 'UNQUALIFIED', 'native_qualified': False, 'execution_verified': False,
         'binding_sha256': header_sha, 'ledger_head': state._head(), 'events': len(state.events),
@@ -240,5 +252,6 @@ def verify_bootstrap(context, header_ref, journal_ref, seal_ref=None, *, reader,
         'derived_tickets': copy.deepcopy(state.tickets), 'ticket_statuses': statuses,
         'recorded_wall_seconds': state.actual_wall_seconds, 'first_monotonic': clocks['first_origin'],
         'last_monotonic': state.last_clock, 'worker_origin_gaps': clocks['gaps'],
-        'clock_coverage_complete': False, 'seal_consistent': seal_ref is not None,
+        'clock_coverage_complete': state.closed and not state.unknown_wall and not state.fatal,
+        'physical_final_verified': False, 'end_reservation': copy.deepcopy(state._end_reserved), 'seal_consistent': seal_ref is not None,
         'matched_outer_evidence': matched, 'activation_gaps': gaps}
