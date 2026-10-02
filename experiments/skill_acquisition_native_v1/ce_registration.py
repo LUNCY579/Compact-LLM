@@ -346,7 +346,7 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
                 'hash_bytes':256*GIB,'metadata_bytes':4*GIB,'operation_attempts':100000,'wall_seconds':512000}},
         'resource':{'limits':limits,'resource_probe':probe,
             'host_transient_bytes':{kind:64*MIB for kind in runner.HOST_STAGES | set(qualification.STAGES) | accounting.KINDS |
-                {'before_framework','before_model','ingestion_sources','ingestion_tokenizer','ingestion_qualification_rows',
+                {'before_framework','before_model','ingestion_sources','ingestion_tokenizer','ingestion_boundary','ingestion_qualification_rows',
                  'qualification_artifact','qualification_parent_release','qualification_state_fingerprint',
                  'after_runtime','after_update','after_checkpoint','after_delta','final'}}}}
     expectation={'schema':'CE8-PREPARED-RECEIPT-EXPECTATION-1','observed_current_scope':False,

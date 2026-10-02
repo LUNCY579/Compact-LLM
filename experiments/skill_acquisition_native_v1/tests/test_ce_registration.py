@@ -55,6 +55,7 @@ class RegistrationTests(unittest.TestCase):
 
     def test_every_profile_has_known_loader_and_tensor_writer_lower_work(self):
         doc=self.documents(); scope=doc['SCOPE.json']; profiles=scope['qualifier_accounting']['operation_profiles']
+        self.assertEqual(doc['SERVICE_SPEC.json']['resource']['host_transient_bytes']['ingestion_boundary'],64*r.MIB)
         self.assertEqual(set(profiles),r.accounting.KINDS)
         context={'bindings':{'scope':scope,'anchors':self.proposal['anchors']}}
         for kind,lower in b.loader_work_lower_bounds(context).items():
