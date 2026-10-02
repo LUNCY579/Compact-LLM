@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "experiment_id": "PPT-001",
+  "created_date": "2026-10-02",
+  "repository": "LUNCY579/ChatBubble",
+  "branch": "research/rineya-ppt-centralized-reasoning-v1",
+  "package_path": "experiments/rineya_ppt_centralized_reasoning_v1",
+  "record_kind": "historical_design_not_launch_config",
+  "status": "DESIGN_RECORDED_NATIVE_NOT_IMPLEMENTED",
+  "base": {
+    "branch": "research/rineya-centralized-reasoning-system-v1",
+    "commit": "7459b614bcb017ae4f0160b15e0ccd53473bb990",
+    "tree": "9223d7b22e4bbbab867107a241c67ea7410a0ede"
+  },
+  "paper": {
+    "arxiv_id": "2609.38104",
+    "version": "v1",
+    "abstract_url": "https://arxiv.org/abs/2609.38104v1",
+    "html_url": "https://arxiv.org/html/2609.38104v1"
+  },
+  "scope": {
+    "research_track": "centralized_system_design_and_reasoning",
+    "intervention": "frozen_model_interacting_sequence_search",
+    "target_parameter_scale": "0.6B",
+    "native_sampler_implemented": false,
+    "native_runtime_implemented": false,
+    "new_model_results": false
+  },
+  "preservation": {
+    "complementary": true,
+    "automatic_sunset": false,
+    "expiry_date": null,
+    "owner_approval_required_for": [
+      "retirement",
+      "archival",
+      "branch_deletion",
+      "replacement",
+      "obsolescence_label"
+    ],
+    "parking_requires": [
+      "reason",
+      "exact_source_tip",
+      "open_questions",
+      "dependencies",
+      "restart_condition"
+    ],
+    "preserve_negative_results": true,
+    "github_branch_protection_configured": false
+  },
+  "permissions_granted_by_this_record": {
+    "native_inference": false,
+    "training": false,
+    "dataset_generation": false,
+    "protected_bank_access": false,
+    "paid_compute": false,
+    "model_upload": false,
+    "merge": false,
+    "branch_deletion": false,
+    "force_push": false
+  },
+  "related_snapshots": [
+    {
+      "id": "R2",
+      "branch": "research/rineya-verified-resampling-v1",
+      "commit": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "relationship": "baseline_reference_not_merged"
+    },
+    {
+      "id": "R3",
+      "branch": "research/rineya-synth-centralized-reasoning-v1",
+      "commit": "23cebe93a8684302eda3a114337482b1c95a26ba",
+      "relationship": "sibling_reference_not_merged"
+    },
+    {
+      "id": "R4",
+      "branch": "research/post-training-mimo-centralized-v1",
+      "commit": "19551ddebc87c93161c303865ce6d0f130de0093",
+      "relationship": "ancestor_no_permission_transfer"
+    }
+  ],
+  "arms": [
+    {
+      "id": "A0",
+      "method": "ordinary_decoding"
+    },
+    {
+      "id": "A1",
+      "method": "dev_tuned_low_temperature"
+    },
+    {
+      "id": "A2",
+      "method": "independent_sampling_label_blind_readout"
+    },
+    {
+      "id": "A3",
+      "method": "single_chain_fixed_horizon_refinement"
+    },
+    {
+      "id": "A4",
+      "method": "uncoupled_fixed_horizon_replicas",
+      "exchange_enabled": false,
+      "readout": "terminal_highest_power_replica"
+    },
+    {
+      "id": "A5",
+      "method": "ppt_fixed_horizon_replicas",
+      "exchange_enabled": true,
+      "readout": "terminal_highest_power_replica"
+    }
+  ],
+  "primary_control": [
+    "A4",
+    "A5"
+  ],
+  "practical_baseline": "A2",
+  "evidence": {
+    "cpu_registration_checks_only": true,
+    "cpu_sampler_qualified": false,
+    "native_scoring_qualified": false,
+    "model_runs": 0,
+    "training_runs": 0,
+    "protected_banks_opened": false,
+    "external_results_are_rineya_results": false
+  },
+  "unresolved_before_native": {
+    "checkpoint_sha256": null,
+    "tokenizer_sha256": null,
+    "prompt_template_sha256": null,
+    "public_split_sha256": null,
+    "native_adapter_revision": null,
+    "dtype": null,
+    "numerical_tolerances": null,
+    "power_ladder": null,
+    "refinement_rounds": null,
+    "seed_count": null,
+    "resource_limits": null,
+    "minimum_worthwhile_improvement": null,
+    "retention_noninferiority_margin": null,
+    "statistical_procedure": null,
+    "launch_authorization": null
+  }
+}
