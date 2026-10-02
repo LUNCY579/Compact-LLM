@@ -53,8 +53,10 @@ registration forgeries remain in history. Acceptance is a separate transition
 receipt, `evidence/LEARNING_DATA_ACCEPTANCE_001.json`, preserving the reviewed
 contract bytes. Shared grammar/semantics, possible remaining shortcuts and the
 small fixed draw limit interpretation. Actual token/template fit, loss masks,
-model adaptation and retention remain unmeasured. A separate CPU tokenizer/mask
-prerequisite is being scoped; it cannot reopen the quarantined runtime paths.
+model adaptation and retention remain unmeasured. The separate CPU tokenizer/mask
+architecture passed scope review. Source/fixture implementation is next; actual
+measurement awaits a frozen instrument and fresh non-builder reviews. It cannot
+reopen the quarantined runtime paths.
 The guard and exact-prefix reader qualifier passed24 lightweight tests. Reader
 review reproduced a completion-proof gap,
 so its native launch remains closed pending repair. The previous complete primary
