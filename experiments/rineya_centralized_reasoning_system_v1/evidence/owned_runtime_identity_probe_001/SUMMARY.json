@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "kind": "FAILED_SINGLE_REVIEWED_NO_MODEL_IDENTITY_PROBE",
+  "source_commit": "f9e5e11997bc7e23bdb0378574fe447dc3c3ee8b",
+  "executor": "/root/scientific_audit",
+  "executor_is_not_independent_reviewer": true,
+  "actual_attempts": 1,
+  "status": "FAILED",
+  "reason": "NativeBlocked: RESOURCE_WATCH: TypeError: argument 1 must be str, not WindowsPath",
+  "candidate_disposition": "QUARANTINED_AT_THIRD_FINAL_REVIEW_REPAIR_LIMIT_NO_RETRY",
+  "fixed_key": "CRS-OWNED-IDENTITY-001",
+  "registered_scope": "NO_MODEL_FRAMEWORK_IMPORT_IDENTITY_OBSERVATION",
+  "binding": {
+    "contract_sha256": "a6bcdfdffead4ee6ce08cc2f80628379678c3afcfb99923d702fd6234f8001ed",
+    "native_sha256": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+    "probe_sha256": "431f9789635f6e99d9fcfd29f58c9dc1e8433e2ef52ee56b07f48a4d2a6f0e4b",
+    "scope": "NO_MODEL_FRAMEWORK_IMPORT_IDENTITY_OBSERVATION",
+    "source_commit": "f9e5e11997bc7e23bdb0378574fe447dc3c3ee8b"
+  },
+  "original_run_directory": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\results\\owned_runtime_identity_probe_f9e5e119_001",
+  "canonical_job_after_run": {
+    "key": "CRS-OWNED-IDENTITY-001",
+    "epoch": "CRS-EPOCH-001",
+    "state": "FAILED",
+    "reserved_seconds": 60.0,
+    "actual_seconds": 0.06199999999807915,
+    "owner": "CRS-IDENTITY-6e03e922ea444a57a6782e0a6e0d840b",
+    "fence": 5,
+    "finished": 1790928665.1412346
+  },
+  "active_or_unknown_after_run": [],
+  "leases_after_run": [
+    {
+      "kind": "coordinator",
+      "owner": "CPU-9f885c20-b7c7-463e-9857-a619f881dbd3",
+      "fence": 1,
+      "status": "RECONCILED"
+    },
+    {
+      "kind": "model",
+      "owner": "CRS-IDENTITY-6e03e922ea444a57a6782e0a6e0d840b",
+      "fence": 5,
+      "status": "RECONCILED"
+    }
+  ],
+  "epoch_charged_seconds": 47.42100000000573,
+  "rolling_charged_seconds": 47.42100000000573,
+  "owned_tree_exit": {
+    "observed_at": 1790928665.1298785,
+    "owned_tree_exited": true,
+    "remaining_owned_pids": []
+  },
+  "known_failed_cost_seconds": 0.06199999999807915,
+  "finalization_status": "FAILED",
+  "before_resume_observation_only": true,
+  "GO_absent": true,
+  "CHILD_EVENTS_absent": true,
+  "framework_import_events_recorded": 0,
+  "model_operations_recorded": 0,
+  "identity_failure_original_cause_established": false,
+  "native_qualified": false,
+  "reader_qualified": false,
+  "training_qualified": false,
+  "native_quarantine_reopened": false,
+  "no_whitelist_expansion": true,
+  "no_budget_reset": true,
+  "files": {
+    "raw/FINALIZATION_RECEIPT.json": {
+      "sha256": "c9c69f709868307460811d845aee8b7e3d3c2a496ac4c9495e6dd9fe5d3be27e",
+      "bytes": 1375,
+      "kind": "actual_probe_raw",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\results\\owned_runtime_identity_probe_f9e5e119_001\\FINALIZATION_RECEIPT.json"
+    },
+    "raw/LAUNCH_ATTEMPT.json": {
+      "sha256": "c93d5a4fd57b5098e0e81b9e7a4a53917a8b48a78130ba0fceec17fb51ce79d2",
+      "bytes": 259,
+      "kind": "actual_probe_raw",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\results\\owned_runtime_identity_probe_f9e5e119_001\\LAUNCH_ATTEMPT.json"
+    },
+    "raw/LAUNCH_INTENT.json": {
+      "sha256": "e903c712906c8217e0ba892291aeda46230115794d9f3857d3c21891d767fac0",
+      "bytes": 12105,
+      "kind": "actual_probe_raw",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\results\\owned_runtime_identity_probe_f9e5e119_001\\LAUNCH_INTENT.json"
+    },
+    "raw/OBSERVATIONS.jsonl": {
+      "sha256": "9fcf9b36b04c1acec8189ed6631169404dc65b39c76f2f821522b2fcdfba0823",
+      "bytes": 619,
+      "kind": "actual_probe_raw",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\results\\owned_runtime_identity_probe_f9e5e119_001\\OBSERVATIONS.jsonl"
+    },
+    "raw/PROBE_RESULT.json": {
+      "sha256": "fa39203e27806b67d330f007628ee833c9625f9a5c967e8a70edb1c4c93c8bf8",
+      "bytes": 1391,
+      "kind": "actual_probe_raw",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\results\\owned_runtime_identity_probe_f9e5e119_001\\PROBE_RESULT.json"
+    },
+    "raw/receipts/native_outcome_observation-df7511d76666a46bc4835f960dc2059bfa487c0d14102ab6dce67a44b1a50e82.json": {
+      "sha256": "e6f8a55d2cca3c5bfaee9b9f642305e1baf8617ea3042aebdcb39a16421f37ac",
+      "bytes": 670,
+      "kind": "actual_probe_raw",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\results\\owned_runtime_identity_probe_f9e5e119_001\\receipts\\native_outcome_observation-df7511d76666a46bc4835f960dc2059bfa487c0d14102ab6dce67a44b1a50e82.json"
+    },
+    "raw/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "kind": "actual_probe_raw",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\results\\owned_runtime_identity_probe_f9e5e119_001\\stderr.log"
+    },
+    "raw/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "kind": "actual_probe_raw",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\results\\owned_runtime_identity_probe_f9e5e119_001\\stdout.log"
+    },
+    "source/owned_runtime_identity_probe.py": {
+      "sha256": "431f9789635f6e99d9fcfd29f58c9dc1e8433e2ef52ee56b07f48a4d2a6f0e4b",
+      "bytes": 56134,
+      "kind": "frozen_reviewed_source_or_report",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\owned_runtime_identity_probe.py"
+    },
+    "source/tests/test_owned_runtime_identity_probe.py": {
+      "sha256": "4436282de22b71d3bc4d00787980e500ede7c48c8a51d705daafd4f99643e784",
+      "bytes": 31196,
+      "kind": "frozen_reviewed_source_or_report",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\tests\\test_owned_runtime_identity_probe.py"
+    },
+    "source/contracts/OWNED_RUNTIME_IDENTITY_DIAGNOSTIC_V1.json": {
+      "sha256": "a6bcdfdffead4ee6ce08cc2f80628379678c3afcfb99923d702fd6234f8001ed",
+      "bytes": 20842,
+      "kind": "frozen_reviewed_source_or_report",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\contracts\\OWNED_RUNTIME_IDENTITY_DIAGNOSTIC_V1.json"
+    },
+    "source/audits/OWNED_RUNTIME_IDENTITY_SCIENTIFIC_REVIEW_3.md": {
+      "sha256": "9a0e879a571b7d97656a7c081362dca7c0246106c7085b6c68ecea9d08651464",
+      "bytes": 6961,
+      "kind": "frozen_reviewed_source_or_report",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\audits\\OWNED_RUNTIME_IDENTITY_SCIENTIFIC_REVIEW_3.md"
+    },
+    "source/audits/OWNED_RUNTIME_IDENTITY_OPERATIONAL_REVIEW_3.md": {
+      "sha256": "83c07b2b4257f31be032e7c0c82b0a989e1a89659d386b3a74d0735494daad44",
+      "bytes": 7557,
+      "kind": "frozen_reviewed_source_or_report",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\audits\\OWNED_RUNTIME_IDENTITY_OPERATIONAL_REVIEW_3.md"
+    },
+    "approvals/OWNED_IDENTITY_SCIENCE_APPROVAL_f9e5e119.json": {
+      "sha256": "1d48f6d05fca47ca048c249326e94e12c98cb24e273184e546b8a33261f6fcaf",
+      "bytes": 1782,
+      "kind": "reviewer_authored_exact_commit_approval",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\outputs\\OWNED_IDENTITY_SCIENCE_APPROVAL_f9e5e119.json"
+    },
+    "approvals/OWNED_IDENTITY_OPS_APPROVAL_f9e5e119.json": {
+      "sha256": "668a95e5bf8e3f9a8a057f87de8ff41d097a913bb0736f1638584a1dfdfe37d9",
+      "bytes": 1083,
+      "kind": "reviewer_authored_exact_commit_approval",
+      "original": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\outputs\\OWNED_IDENTITY_OPS_APPROVAL_f9e5e119.json"
+    }
+  },
+  "claim_limit": "Resource watcher aborted before resume/GO/import phases; no original unexpected-executable identity or framework/model/numerical measurement. Zero sampled RSS is unavailable coverage, not zero memory use. Frozen source remains preserved; no repair/retry beyond cap."
+}

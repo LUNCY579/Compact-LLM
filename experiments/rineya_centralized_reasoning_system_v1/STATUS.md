@@ -9,7 +9,8 @@ section below, charter and manifest are preserved. All central CHECK/FINAL remai
 
 Current milestone, 2026-10-02: **CPU_QUALIFIED for the supplied reference pipeline;
 native operational revision 3 whole-path claim quarantined at its review limit.
-New reader qualification is under review and inherits the closed runtime gate.**
+The final reader and no-model identity probe are also quarantined at their
+three-round limits; proposed corrections remain outside frozen source.**
 The complete supplied AI-Newton paper, supplement and figures were inspected;
 18 pinned primary implementation files were source-verified. Exact external
 Titan/Sparse/Transition/Supa assets are inventoried read-only. Opallo binaries
@@ -58,13 +59,27 @@ the late recovery and rejected source bytes are preserved, not labeled a timely
 original archive. Reader round2 still requires its final third repair for
 nonvacuous causal controls, job ownership and publication recovery.
 
-The no-model executable-inventory probe is implemented but has not run. Its
+The no-model executable-inventory probe was implemented and reviewed. Its
 second frozen revision passed17 CPU tests, including six actual contained
 no-framework subprocess controls. Fresh review requires final corrections for
 reviewer aliases and late-finalization accounting. Round2 is archived in
 `history/owned_runtime_identity_probe_round2/`. The final third repair/review must
 finish before any one-attempt60s import observation; no fourth repair loop is
 authorized under that milestone. It grants no native/reader/training qualification.
+Final source commit `f9e5e119` ran once after exact peer attestations and fresh
+admission. Its watcher failed on a Windows psutil Path/string argument before
+resume/GO/framework phases. The owned tree exited and0.062s was charged
+(`evidence/owned_runtime_identity_probe_001/`); the earlier unexpected executable
+remains unidentified. The frozen candidate is quarantined.
+
+The final reader passed27 CPU tests but final operations review reproduced a
+byte-hash mismatch: its writer appends a newline and its validator hashes the
+parsed canonical object. Actual writer outputs therefore reject. The reader is
+quarantined; no serving or native DEV collection occurred. Counterexample bytes
+and adjudication are retained in `evidence/reader_final3_writer_binding_cpu_v1/`
+and `audits/FINAL_REVIEW_LIMIT_ADJUDICATION_001.md`. A concrete two-fix proposal
+and real-interface regressions are being prepared separately; no fourth repair,
+inference retry or gate broadening has been performed.
 
 Native admission first refused an unregistered game package before dispatch.
 After that process exited, clean reviewed source `9fd345d9` dispatched a contained
@@ -125,7 +140,7 @@ likelihood failure is preserved. No final bank has been generated or opened.
 Restart commands and conditions: [CONTINUATION.md](CONTINUATION.md). Source changes
 create new registrations; completed or failed observations retain their identities.
 Unknown launch outcomes must be reconciled before another worker. Native
-qualification-worker consumption is47.359000000007654s including four failed
+qualification-worker consumption is47.42100000000573s including five failed
 execution paths (epoch cap7200s, rolling24h cap14400s). No active model worker.
 Model loads1, forwards4, training/optimizer updates0. Efficacy and learning/
 retention remain unmeasured; no candidate model or canonical promotion.

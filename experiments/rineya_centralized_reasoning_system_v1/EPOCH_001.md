@@ -191,3 +191,32 @@ endpoint arithmetic only (`evidence/LEARNING_DELTA_ACCEPTANCE_001.json`). Twelve
 CPU tests and independent negative/inconsistent-gain controls passed. Actual
 native panel provenance, qualification, causal dose comparisons, uncertainty and
 learning remain separate unmet requirements.
+
+## Single identity-probe attempt and final reader quarantine
+
+The one reviewed identity probe at clean worktree commit `f9e5e119` received
+independent commit-bound science/operations attestations and fresh admission
+(RAM6.775 GiB, GPU6.986 GiB, no blocking GPU identities). It failed before
+resume/GO/import on the pinned Windows psutil Path/string API mismatch. Exact
+owned-tree exit and terminal cost0.06199999999807915s were verified; all15 copied
+raw/source/approval files match their hashes. Evidence is in
+`evidence/owned_runtime_identity_probe_001/`. The probe provided no original
+unexpected-executable identity or model/numerical result.
+
+Total charge is47.42100000000573s; no active/unknown job remains, and model lease
+fence5 is reconciled. Qualification and training remain closed. The probe candidate
+is quarantined at its third review-repair round, with no automatic retry.
+
+Final reader source passed27 CPU tests and its repaired scientific controls were
+conditionally accepted. Final operations review exercised the actual writer and
+found a deterministic byte-binding mismatch: a newline-bearing file hash differs
+from the canonical parsed-object hash expected by the validator. The reader
+candidate is quarantined at its final third round. Exact synthetic counterexample
+representations are in `evidence/reader_final3_writer_binding_cpu_v1/`; no native
+reader or DEV collection ran. This is an instrument failure, not a model result.
+
+Separate concrete proposed corrections and real-interface CPU checks are being
+prepared for an explicit owner exception to the review limit. No source is repaired
+in place or existing evidence relabeled. Acquisition, retention, efficacy and
+learning efficiency remain unmeasured; prior trace-local numerical facts and the
+CRS track's restart questions are preserved.

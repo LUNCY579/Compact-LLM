@@ -59,8 +59,8 @@ Current CPU continuation: finish final probe review3 against
 `contracts/OWNED_RUNTIME_IDENTITY_DIAGNOSTIC_V1.json`. Round2 source SHA946b4fbc,
 contract651cdc69 and all rejected bytes remain in history. Fresh review found
 builder-name aliases and a late publication error that disagreed with finalized
-SQLite state. Both must close before exact source approvals. No actual import
-probe has executed. The one fixed job key is `CRS-OWNED-IDENTITY-001`; its60s
+SQLite state. Both closed before exact source approvals. No import phase has
+completed. The one fixed job key is `CRS-OWNED-IDENTITY-001`; its60s
 reservation is charged conservatively to the same epoch/rolling budgets.
 
 The attached native worktree currently contains three uncommitted byte-exact
@@ -115,3 +115,24 @@ reconciled host processes, complete required telemetry, adequate resources,
 passed numerical contract and exact shape/sustained qualification. Resource
 blockage preserves CRS and permits independent CPU/data/review work. No agents
 are claimed to remain active between sessions.
+
+## Superseding execution gate, 2026-10-02
+
+The final reviewed probe at clean commit `f9e5e119` executed once and is now
+terminal FAILED. Its watcher passed a Path to Windows psutil's string API and
+stopped the owned tree before resume/GO/import, costing0.062s. The fixed key
+must never be retried. Total charge is47.42100000000573s; no active or unknown
+worker remains. Raw evidence is in `evidence/owned_runtime_identity_probe_001/`.
+Earlier restart placeholders do not authorize another attempt.
+
+Final reader operations review found a real writer/validator byte-hash mismatch
+and quarantined the candidate at its third round. No repair or collection is
+eligible under that exhausted milestone. Preserve all source, approval, failure
+and prior trace-local numerical evidence.
+
+The next dependent action is independent review of concrete proposed corrections
+under `resolution_proposals/author_exception_001/`, followed by an explicit owner
+exception for one additional bounded repair/review round and one newly registered
+60s no-model observation if its gates pass. Proposed patches or reviewer signatures
+grant no authority. Frozen files, numerical/resource limits, weights and protected
+banks remain unchanged. Independent TRAIN-data/atlas CPU work may continue.
