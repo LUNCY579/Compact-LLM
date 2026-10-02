@@ -1,0 +1,23 @@
+{
+  "status": "BLOCKED_PHYSICAL_PROPOSAL",
+  "reviewed_source_sha": "bfd0e13723bcd63ab151fc96fe9dd797b1aff057",
+  "reviewer": "/root/exact_prefix_review",
+  "record_type": "transcription_of_independent_read_only_review",
+  "findings": [
+    "P1: cleanup detaches the watchdog before final outer Job accounting and actual close; retain deadline ownership until close succeeds.",
+    "P1: fire records before termination; terminate before separate diagnostic recording can stall.",
+    "P1: the created suspended root precedes watchdog Job installation; track its original Popen handle immediately until outer enrollment."
+  ],
+  "verified": [
+    "Receipt002 source hashes match committed bfd0e137; its logs report132 tests,OK.",
+    "All48 original,tracked and committed evidence bytes and hashes match.",
+    "Remote closure usesNULL target/output,records its attempt before theAPI and refuses retry.",
+    "Failed or missing aggregate case accounting remainsnull with confirmed lower bounds.",
+    "Physical output,authorization and consumed-outcome namespaces absent."
+  ],
+  "reviewer_probes": 0,
+  "reviewer_edits": 0,
+  "physical_authority": false,
+  "native_authority": false,
+  "service_tier_verified": false
+}
