@@ -12,6 +12,7 @@ import contextlib
 import gc
 import hashlib
 import importlib
+from importlib.machinery import NamespaceLoader
 import json
 import math
 import os
@@ -511,7 +512,21 @@ def verify_module_origins(sources):
     for name,module in list(sys.modules.items()):
         if not any(name=="experiments."+p or name.startswith("experiments."+p+".") for p in SOURCE_PACKAGES):continue
         path=getattr(module,"__file__",None)
-        require(path is not None,"unbound runtime namespace module: "+name)
+        if path is None:
+            spec=getattr(module,"__spec__",None)
+            package=name.removeprefix("experiments.")
+            expected=ROOT/"experiments"/package
+            paths=list(getattr(module,"__path__",()))
+            locations=list(getattr(spec,"submodule_search_locations",()) or ())
+            require(package in SOURCE_PACKAGES and getattr(module,"__name__",None)==name
+                    and getattr(spec,"name",None)==name and getattr(spec,"origin",None) is None
+                    and type(getattr(spec,"loader",None)) is NamespaceLoader
+                    and getattr(module,"__loader__",None) is spec.loader
+                    and len(paths)==len(locations)==1
+                    and Path(paths[0]).resolve()==expected and Path(locations[0]).resolve()==expected
+                    and any(key.startswith("experiments/"+package+"/") and key.endswith(".py") for key in sources),
+                    "unbound runtime namespace module: "+name)
+            continue
         location=Path(path).resolve()
         require(location.is_relative_to(ROOT) and location.relative_to(ROOT).as_posix() in sources,
                 "module loaded outside hashed source bundle: "+name)

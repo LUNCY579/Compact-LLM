@@ -2,6 +2,7 @@
 import ast
 import copy
 import inspect
+import io
 from pathlib import Path
 import sys
 import tempfile
@@ -189,6 +190,77 @@ class ProcessLaunchTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'primary OS query failure'): process.close()
         self.assertTrue(process.closed)
         self.assertEqual(events, ['stdin', 'stdout', 'stderr', 'worker_handle'])
+
+    def startup_failure(self,returned_observer=False):
+        import subprocess
+        value=spec();value['worker_topology']='direct'
+        events=[];original=RuntimeError('launch returned observer refused') if returned_observer else OSError('QueryFullProcessImageNameW child unavailable')
+        class Handle(int):
+            def Close(self):events.append('popen_handle_closed')
+        class Stream(io.BytesIO):
+            def __init__(self,label,blob=b''):super().__init__(blob);self.label=label
+            def close(self):events.append(self.label+'_closed');super().close()
+        class Process:
+            def __init__(self):
+                self.pid=43;self._handle=Handle(99);self.returncode=None
+                self.stdin=Stream('stdin');self.stdout=Stream('stdout')
+                self.stderr=Stream('stderr',b'Worker primary: namespace package origin unavailable: experiments.example\n')
+            def poll(self):return self.returncode
+            def terminate(self):events.append('owned_terminated');self.returncode=1
+            def wait(self,**kwargs):events.append('owned_waited');return self.returncode
+        process=Process()
+        class OS:
+            def open(self,pid):events.append(('parent_open',pid));return 501
+            def close(self,handle):events.append(('os_closed',handle))
+            def boot(self):return value['parent_identity']['boot_identity']
+            def snapshot(self,handle,**kwargs):
+                if handle==99:
+                    self_ref=current[0]
+                    self.assert_readers_started(self_ref)
+                    raise original
+                return {'pid':42,'creation_filetime_100ns':100}
+            def assert_readers_started(self,current):
+                assert current.stderr_thread is not None and current.stdout_thread is not None
+                events.append('readers_started_before_identity')
+        def observer(kind,phase,**fields):
+            events.append((kind,phase))
+            if returned_observer and kind=='process_launch' and phase=='returned':raise original
+        current=[None];owned=object.__new__(p.OwnedProcess);current[0]=owned
+        with (patch.object(p.worker,'_file',return_value=None),patch.object(p.worker,'_WindowsOS',return_value=OS()),
+              patch.object(p.os,'getpid',return_value=42),patch.object(subprocess,'Popen',return_value=process)):
+            with self.assertRaises(type(original)) as caught:
+                p.OwnedProcess.__init__(owned,value,observer,native=False,_fixture_seal=p._FIXTURE_CLEARANCE_SEAL)
+        self.assertIs(caught.exception,original)
+        self.assertIn('namespace package origin unavailable',original.owned_child_stderr)
+        self.assertIn('bounded, untrusted diagnostic','\n'.join(original.__notes__))
+        self.assertTrue(owned.closed);self.assertFalse(owned.stderr_thread.is_alive());self.assertFalse(owned.stdout_thread.is_alive())
+        self.assertIn(('os_closed',501),events)
+        for closed in ('stdin_closed','stdout_closed','stderr_closed','popen_handle_closed'):self.assertIn(closed,events)
+        self.assertEqual(events.count('owned_terminated'),1)
+        self.assertTrue(owned.stop_finished)
+        return events
+
+    def test_startup_identity_failure_keeps_bounded_child_stderr_and_closes_owned_partial_resources(self):
+        events=self.startup_failure()
+        self.assertIn('readers_started_before_identity',events)
+
+    def test_postspawn_return_observer_failure_still_captures_stderr_and_closes_owned_process(self):
+        events=self.startup_failure(returned_observer=True)
+        self.assertNotIn('readers_started_before_identity',events)
+
+    def test_partial_monitor_worker_handle_and_pipes_close_even_if_monitor_close_fails(self):
+        current=object.__new__(p.OwnedProcess);events=[];error=RuntimeError('monitor close receipt failed')
+        current._seal,current.closed,current.stop_finished=p._OWNED_SEAL,False,True
+        current.handle,current.worker_handle=99,100
+        class Handle:
+            def Close(self):events.append('popen_handle')
+        current.process=SimpleNamespace(poll=lambda:1,_handle=Handle(),stdin=None,
+            stdout=SimpleNamespace(close=lambda:events.append('stdout')),stderr=SimpleNamespace(close=lambda:events.append('stderr')))
+        def close_monitor():events.append('monitor');raise error
+        current.monitor=SimpleNamespace(close=close_monitor);current.os=SimpleNamespace(close=lambda handle:events.append(('worker',handle)))
+        with self.assertRaises(RuntimeError) as caught:current.close()
+        self.assertIs(caught.exception,error);self.assertTrue(current.closed)
+        self.assertEqual(events,['stdout','stderr','monitor',('worker',100),'popen_handle'])
 
 
 if __name__ == '__main__': unittest.main()

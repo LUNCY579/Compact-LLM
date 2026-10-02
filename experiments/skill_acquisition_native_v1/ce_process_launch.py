@@ -185,10 +185,12 @@ class OwnedProcess:
         self.binding = {'session_id': uuid.uuid4().hex, 'request_sha256': spec['request_sha256'], 'scope_sha256': spec['scope_sha256']}
         self.sequence = self.sent = self.received = self.stderr_bytes = 0
         self.stdout, self.errors = queue.Queue(maxsize=spec['max_messages']), []
+        self.stdout_thread=self.stderr_thread=None
+        self.stderr_data=bytearray();self.stderr_lock=threading.Lock()
         self.started = time.perf_counter(); self.deadline = self.started + spec['deadline_seconds']
         self._seal, self.closed = _OWNED_SEAL, False
         self.process = self.os = self.monitor = None
-        self.worker_handle = None
+        self.handle=self.worker_handle = None
         self.stop_reservation_id = None
         self.stop_finished = False
         self._launch()
@@ -203,14 +205,26 @@ class OwnedProcess:
         for ref in (self.spec['python_ref'], self.spec['process_image_ref'], self.spec['request_ref'], *self.spec['source_files'].values()):
             worker._file(ref, self.budget)
         self.os = self.budget.run('process_launch_preflight', worker._WindowsOS)
-        parent = self.budget.run('process_launch_parent', lambda: self.os.open(os.getpid()))
+        parent=None;parent_error=None
         try:
+            def open_parent():
+                nonlocal parent
+                parent=self.os.open(os.getpid());return parent
+            self.budget.run('process_launch_parent',open_parent)
             facts = self.budget.run('process_launch_parent', lambda: self.os.snapshot(parent, command=False))
             boot = self.budget.run('process_launch_parent', self.os.boot)
             require({key: facts[key] for key in ('pid', 'creation_filetime_100ns')} == {
                     key: self.spec['parent_identity'][key] for key in ('pid', 'creation_filetime_100ns')}
                     and boot == self.spec['parent_identity']['boot_identity'], 'launch parent OS identity changed')
-        finally: self.os.close(parent)
+        except BaseException as error:parent_error=error;raise
+        finally:
+            if parent is not None:
+                try:self.os.close(parent)
+                except BaseException as closing:
+                    if parent_error is not None:
+                        parent_error.owned_parent_close_failure={'type':type(closing).__name__,'message':str(closing)[:1000]}
+                        raise parent_error from closing
+                    raise
         def spawn():
             require(os.name == 'nt', 'hidden Windows worker launch only')
             import subprocess
@@ -218,6 +232,9 @@ class OwnedProcess:
             self.process = subprocess.Popen(self.spec['argv'], shell=False, cwd=self.spec['cwd'], env=env,
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=0,
                 creationflags=subprocess.CREATE_NO_WINDOW)
+            # Capture bounded diagnostics before any identity query or returned
+            # launch observer can reject an already-created owned process.
+            self._start_pipe_readers()
             return self.process
         # Permanent cleanup prepayment precedes process creation. It remains
         # valid for only the Popen returned below if later observers refuse.
@@ -255,16 +272,44 @@ class OwnedProcess:
                         and proof['os_identity']['creation_filetime_100ns'] == self.identity['creation_filetime_100ns'],
                         'post-launch child observation changed owned process identity')
                 self.worker_identity_sha256 = proof['worker_identity_sha256']
-            threading.Thread(target=self._read_stdout, daemon=True).start()
-            threading.Thread(target=self._read_stderr, daemon=True).start()
         except BaseException as error:
             # Only this successfully-created owned child is eligible for stop.
             if self.process is not None:
                 try: self._stop_owned('launch_identity_or_adapter_failure', error)
                 except BaseException as stop_error:
                     error.owned_stop_failure = {'type': type(stop_error).__name__, 'message': str(stop_error)[:1000]}
-                    raise error from stop_error
+                if self.process.poll() is not None:
+                    try:
+                        self._attach_owned_stderr(error)
+                    except BaseException as diagnostic:
+                        error.owned_stderr_failure={'type':type(diagnostic).__name__,'message':str(diagnostic)[:1000]}
+                    try:
+                        self.close()
+                    except BaseException as closing:
+                        error.owned_launch_cleanup_failure={'type':type(closing).__name__,'message':str(closing)[:1000]}
+                        error.add_note('Owned startup cleanup failure: '+type(closing).__name__+': '+str(closing)[:1000])
+                else:error.add_note('Owned startup cleanup could not establish launcher quiescence; resources remain owned.')
             raise
+
+    def _start_pipe_readers(self):
+        self.stderr_thread=threading.Thread(target=self._read_stderr,daemon=True)
+        self.stderr_thread.start()
+        self.stdout_thread=threading.Thread(target=self._read_stdout,daemon=True)
+        self.stdout_thread.start()
+
+    def _attach_owned_stderr(self,error):
+        thread=getattr(self,'stderr_thread',None)
+        if thread is not None:
+            thread.join(timeout=min(5,self.spec['terminate_grace_seconds']))
+        lock=getattr(self,'stderr_lock',None)
+        if lock is not None:
+            with lock:blob=bytes(self.stderr_data[-min(self.spec['max_stderr_bytes'],65536):])
+        else:blob=b''
+        if blob:
+            diagnostic=blob.decode('utf8',errors='replace')
+            error.owned_child_stderr=diagnostic
+            error.add_note('Owned child stderr (bounded, untrusted diagnostic):\n'+diagnostic)
+        if thread is not None and thread.is_alive():error.add_note('Owned child stderr reader did not finish within the bounded cleanup join.')
 
     def _find_worker(self, launcher):
         finish = time.perf_counter() + self._remaining(self.spec['handshake_seconds'])
@@ -308,6 +353,8 @@ class OwnedProcess:
         try:
             while block := self.process.stderr.read(min(4096, self.spec['max_stderr_bytes'] + 1 - self.stderr_bytes)):
                 self.stderr_bytes += len(block)
+                with self.stderr_lock:
+                    self.stderr_data.extend(block[:max(0,self.spec['max_stderr_bytes']-len(self.stderr_data))])
                 require(self.stderr_bytes <= self.spec['max_stderr_bytes'], 'worker stderr cap exceeded')
         except BaseException as error: self.errors.append(error)
 
@@ -419,9 +466,10 @@ class OwnedProcess:
             if not self.stop_finished: self._stop_owned('normal_terminal_cleanup')
         except BaseException as error: primary = error
         finally:
-            releases = [stream.close for stream in (self.process.stdin, self.process.stdout, self.process.stderr)]
+            releases = [stream.close for stream in (getattr(self.process,'stdin',None),getattr(self.process,'stdout',None),
+                getattr(self.process,'stderr',None)) if stream is not None]
             if self.monitor is not None: releases.append(self.monitor.close)
-            if self.worker_handle is not None and self.worker_handle != self.handle:
+            if self.worker_handle is not None and self.worker_handle != getattr(self,'handle',None):
                 releases.append(lambda: self.os.close(self.worker_handle))
             close_popen = getattr(getattr(self.process, '_handle', None), 'Close', None)
             if callable(close_popen): releases.append(close_popen)

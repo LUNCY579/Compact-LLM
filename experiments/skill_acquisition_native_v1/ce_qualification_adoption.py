@@ -11,7 +11,7 @@ from types import MappingProxyType
 
 from . import ce_native_authority as authority
 
-OUTPUT = r'C:\Users\clclc\BusinessProject\comp-rs-001-records\s0\r-oracle-sft-qualification-20261002\canonical-attempt2'
+OUTPUT = r'C:\Users\clclc\BusinessProject\comp-rs-001-records\s0\r-oracle-sft-qualification-20261002\canonical-attempt3'
 CHECKOUT = r'C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-s1-dev-20260930'
 CHOICE = '9e39a9d443f4f4343bb6ad6c21192b97e1a7964d6195dd360ac0a3b5e5377fe5'
 RECIPE = '32c9a1e326a6ac58d3ac320fd85a215ffc4b94476b3f23bcc8288f0c32940f40'

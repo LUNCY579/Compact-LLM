@@ -2,11 +2,13 @@
 import ast
 import copy
 import importlib
+from importlib.machinery import ModuleSpec, NamespaceLoader
 import json
 from pathlib import Path
 import sys
 import struct
 import tempfile
+from types import ModuleType
 import unittest
 from unittest.mock import patch
 
@@ -96,6 +98,48 @@ class RunnerPureTests(unittest.TestCase):
         root=ast.parse(source)
         imports=[name.name for node in root.body if isinstance(node,ast.Import) for name in node.names]
         self.assertFalse(set(imports)&{"torch","numpy","transformers","safetensors"})
+
+    def test_fixed_entry_imports_accept_exact_hashed_source_namespaces(self):
+        from experiments.skill_acquisition_native_v1 import ce_qualification_entry as entry
+        entry._modules()
+        sources=runner.code_bundle(lambda *args,**kwargs:None)
+        runner.verify_module_origins(sources)
+        self.assertNotIn("torch",sys.modules)
+        self.assertNotIn("transformers",sys.modules)
+        self.assertNotIn("numpy",sys.modules)
+        namespace=importlib.import_module("experiments.maxrl_comp002_pretraining_v1")
+        self.assertIs(type(namespace.__loader__),NamespaceLoader)
+        self.assertIsNone(namespace.__spec__.origin)
+
+    def test_namespace_origin_refuses_foreign_invalid_and_unhashed_roots(self):
+        name="experiments.maxrl_comp002_pretraining_v1"
+        directory=runner.ROOT/"experiments"/"maxrl_comp002_pretraining_v1"
+        sources=runner.code_bundle(lambda *args,**kwargs:None)
+        def namespace(paths,loader=True):
+            module=ModuleType(name)
+            module.__path__=paths
+            module.__loader__=NamespaceLoader(name,paths,None) if loader else object()
+            module.__spec__=ModuleSpec(name,module.__loader__,origin=None,is_package=True)
+            module.__spec__.submodule_search_locations=paths
+            return module
+        cases=(namespace([str(self.root)]),namespace([str(directory),str(self.root)]),
+               namespace([str(directory)],False))
+        for module in cases:
+            with self.subTest(module=module),patch.dict(sys.modules,{name:module}):
+                with self.assertRaisesRegex(ValueError,"unbound runtime namespace"):
+                    runner.verify_module_origins(sources)
+        with patch.dict(sys.modules,{name:namespace([str(directory)])}):
+            with self.assertRaisesRegex(ValueError,"unbound runtime namespace"):
+                runner.verify_module_origins({key:value for key,value in sources.items()
+                    if not key.startswith("experiments/maxrl_comp002_pretraining_v1/")})
+
+    def test_regular_module_origin_still_requires_actual_bundle_membership(self):
+        name="experiments.skill_acquisition_native_v1.injected_origin"
+        module=ModuleType(name)
+        module.__file__=str(self.root/"foreign.py")
+        with patch.dict(sys.modules,{name:module}):
+            with self.assertRaisesRegex(ValueError,"outside hashed source bundle"):
+                runner.verify_module_origins(runner.code_bundle(lambda *args,**kwargs:None))
 
     def test_complete_collected_G16_before_update_C_U_separate(self):
         spy=SpyBackend(self.ledger)
