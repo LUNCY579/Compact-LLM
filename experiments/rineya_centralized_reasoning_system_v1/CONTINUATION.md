@@ -267,3 +267,20 @@ Undersupply/ambiguous/rejected roots remain visible; do not relax proof or enlar
 the population for a pass. Preserve original optimizer/data/token receipts and
 all native gates. No actual token/model/retention/confirmation operation is in
 this CPU lane, and any source candidate has the same maximum three repair rounds.
+
+The first acquisition freeze1d20d33c/f7188468/d80358f3 is preserved in
+history/acquisition_panel_round1 (2cd3d8ba). Root's separately planned new raw run
+e0df2615 passed15 tests and32 main/32 rename checks; private bundle remains in
+ignored output and selected non-gold records are in evidence/acquisition_panel_round1_cpu_001.
+Prior builder rows/hashes/costs were unavailable, not reconstructed. Known/reported
+cumulative work is129 core calls and128 rename controls,257 combined; this is not
+only64 work or cumulative observance of the original single-batch plan.
+
+SCI1 rejects acquisition-population acceptance because terminal-only32/32 and
+zero earlier selections show no realized multistage selection burden. OPS1 rejects
+source acceptance on nested-rule/parameter JSON serialization before finite shape
+bounds. Follow ACQUISITION_PANEL_ROUND1_ADJUDICATION for candidate2: bounded
+pre-encoding checks, prospectively fixed earlier-selection/opposing-terminal
+coverage, raw retained validation and no replacement/resampling. Preserve the
+negative shortcut, changed-recipe relationships and original H01/LA-I1-002 open
+status; no terminal-status substitute endpoint or native scope change.

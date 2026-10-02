@@ -390,3 +390,38 @@ or an acquisition bank. Two transitions expand the original fixed template/depth
 canonical disjointness, ancestry, population validity and original H01 remain
 unproven. The bounded construction candidate still needs frozen source and fresh
 review. No optimizer data, model, tokenizer, holdout or native gate changed.
+
+## Acquisition first freeze: consistency passed, population rejected
+
+First acquisition source1d20d33c/tests f7188468/contractd80358f3 constructed32
+provisional typed roots with2..9 guarded candidates. Builder summaries retain an
+initial0/32 main envelope failure plus32 rename controls(2.167s), corrected32+32
+(2.015s), and final32+32(2.079s), plus one failed core diagnostic. Row-level
+builder receipts/bank hashes/aggregate primitive costs were not saved and remain
+unavailable. They are summaries, not independently replayable complete evidence.
+
+Root scoped one new bounded15-test validation before execution, saved its private
+raw bundle/receipt and public hashes, and observed32/32 main plus32/32 rename
+success in2.450574s. This new e0df2615 evidence is not reconstruction of prior
+rows. Cumulative known/reported work is128 main/scorer comparisons,128 canonical/
+oracle rename controls and1 diagnostic:129 core calls,257 combined invocations.
+Builder suite walls6.261s plus this new run2.451s exclude other unmeasured census/
+review work. Initial one-batch scope was not cumulatively observed; retain that
+limitation rather than reset counts. Future validations are individually named
+and bounded, and no owner/native/resource limit is changed.
+
+Fresh SCI reportda36d14a rejects the acquisition population: a public terminal-only
+solver gets32/32 exact answers, all144 uncanceled preterminal candidates are
+excluded and no scheduled case selects an earlier owner. Graph/source consistency
+and potential counterfactual relevance do not establish realized selection depth.
+OPS reportb03ae0ce reproduces nested caller rules/parameters reaching JSON recursion
+before finite shape/depth checks. Source/data acceptance is withheld despite test
+passes. Original H01/LA-I1-002 remain open; no narrower terminal-status task is
+accepted as an acquisition endpoint.
+
+Exact3-file freeze is retained in history/acquisition_panel_round1, preservation
+2cd3d8ba; selected Root records/integration35154be4 are in
+evidence/acquisition_panel_round1_cpu_001. One coherent candidate2 is scoped in
+ACQUISITION_PANEL_ROUND1_ADJUDICATION: pre-encoding bounds and prospectively frozen
+real earlier-selection/opposing-terminal coverage, with no pruned/resampled cases.
+No model, tokenizer, protected bank, training, optimizer bytes or native gate changed.

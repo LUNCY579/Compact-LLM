@@ -78,7 +78,13 @@ transfer cannot substitute for it. A bounded acquisition-panel feasibility
 candidate is being built under the three scope assessments. New IDs/seeds alone
 do not establish unused roots. Any substantive trajectory/population extension
 must be explicit and independently reviewed; original CRS-LA-H01 and the data
-gap remain open until then. No new panel is qualified or model operation opened.
+gap remain open until then. First freeze1d20d33c/f7188468/d80358f3 passed15 tests
+and a new raw-retained32-core/32-rename validation, but scientific review rejects
+the population: a terminal-only solver gets32/32, earlier owners selected0 times.
+OPS also reproduces unbounded rules/parameter serialization before shape checks.
+The exact freeze and cumulative failed/repeated work are retained. One bounded
+second-candidate recipe/input-validation repair is underway; no panel or native
+operation is qualified by these fixture passes.
 The guard and exact-prefix reader qualifier passed24 lightweight tests. Reader
 review reproduced a completion-proof gap,
 so its native launch remains closed pending repair. The previous complete primary
