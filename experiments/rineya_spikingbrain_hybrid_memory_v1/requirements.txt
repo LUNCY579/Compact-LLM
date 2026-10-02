@@ -1,0 +1,8 @@
+# Install in a dedicated environment; do not rewrite the repository environment.
+# CPU mechanics tested with torch 2.10.0+cpu. Native CUDA stack is unqualified.
+torch>=2.5,<2.11
+transformers==4.51.3
+safetensors>=0.5,<0.8
+psutil>=5.9,<8
+pytest>=8,<9
+accelerate>=1.0,<2
