@@ -48,7 +48,7 @@ def _read_json(reader, reference, verifier_binding, role):
 
 
 def _header(context, observed):
-    bindings = context['bindings']; scope = bindings['scope']; spec = scope['qualifier_accounting']
+    bindings = context['bindings']; scope = bindings['scope']; spec = accounting.accounting_specification(context)
     expected = {'schema': accounting.SCHEMA, 'fixture': context.get('mode') == 'synthetic_fixture',
         'native_qualified': False, 'request_sha256': context['request_sha256'], 'scope_sha256': context['scope_sha256'],
         'arm': context['arm'], 'static_recipe_sha256': context['static_recipe_sha256'], 'specification': spec,

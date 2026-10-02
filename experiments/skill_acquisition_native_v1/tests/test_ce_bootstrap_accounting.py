@@ -36,6 +36,26 @@ class Tests(unittest.TestCase):
                 b.verify_prepayment(Trap(), Trap(), Trap(), Trap(), verifier=lambda *args: True)
         self.assertFalse(b._REGISTERED_NATIVE_ISSUERS); self.assertFalse(b._REGISTERED_PREPAYMENT_VERIFIERS)
 
+    def test_child_bootstrap_has_independent_directory_and_cannot_reprice_common_scope(self):
+        scope = self.context['bindings']['scope']
+        scope['checkpoint_qualification'] = {'owned_directory': str(self.root / 'checkpoints')}
+        self.context['checkpoint_child_declaration'] = {'branch': 'prefix'}
+        before = copy.deepcopy(scope)
+        common = scope['qualifier_bootstrap']
+        directory = self.root / 'checkpoints' / 'children' / 'prefix' / 'bootstrap'
+        self.context['checkpoint_child_bootstrap'] = dict(copy.deepcopy(common), owned_directory=str(directory))
+        child = self.make()
+        self.assertEqual(child.directory, directory)
+        self.assertEqual(scope, before)
+        handle = child.reserve_setup(self.owner, self.bounds); handle.begin(); handle.fail(ValueError('fixture'))
+        self.assertEqual(handle.evidence['status'], 'FAILED')
+        self.assertFalse((self.root / 'bootstrap' / b.JOURNAL).exists())
+        self.context['checkpoint_child_bootstrap']['self_bounds']['io_read_bytes_upper'] += 1
+        with patch.object(Path, 'open', side_effect=AssertionError('IO before exact child derivation')):
+            with self.assertRaisesRegex(ValueError, 'only exact directory'):
+                self.make()
+        self.assertEqual(scope, before)
+
     def test_reservation_is_durable_before_dependent_body_and_failed_work_keeps_charge(self):
         ledger = self.make(); handle = ledger.reserve_setup(self.owner, self.bounds)
         last = json.loads(ledger.path.read_bytes().splitlines()[-1])

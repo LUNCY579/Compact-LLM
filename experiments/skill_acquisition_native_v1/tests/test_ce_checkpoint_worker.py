@@ -1,7 +1,9 @@
 """Closed child CLI and pure frozen branch contracts; no kernel/process/ML."""
 import copy
+import hashlib
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -142,13 +144,15 @@ class ChildContracts(unittest.TestCase):
         binding = {'worker_identity_sha256': '7' * 64, 'attempt_id': 'attempt-1', 'stage': 'checkpoint_resume'}
         operation = {'kind': 'checkpoint_restore', 'phase': 'failed', 'worker_id': '7' * 64,
             'attempt_id': 'attempt-1', 'stage': 'checkpoint_resume', 'started_seq': 4, 'returned_seq': 5,
-            'result': {'error_type': 'ValueError', 'error': 'latest checkpoint payload bytes corrupt'}}
+            'result': {'error': {'type': 'ValueError', 'message': 'latest checkpoint payload bytes corrupt'}}}
         self.assertEqual(w.failed_corruption_operation({'old': operation, 'new': operation}, {'old'}, binding),
                          {'operation_id': 'new', 'operation': operation})
         changes = [lambda op: op.update(phase='started'), lambda op: op.update(worker_id='a' * 64),
             lambda op: op.update(attempt_id='foreign'), lambda op: op.update(stage='delta_roundtrip'),
-            lambda op: op['result'].update(error_type='RuntimeError'),
-            lambda op: op['result'].update(error='resource floor'), lambda op: op.update(returned_seq=4)]
+            lambda op: op['result']['error'].update(type='RuntimeError'),
+            lambda op: op['result']['error'].update(message='resource floor'),
+            lambda op: op.update(result={'error_type': 'ValueError', 'error': 'latest checkpoint payload bytes corrupt'}),
+            lambda op: op.update(returned_seq=4)]
         for change in changes:
             op = copy.deepcopy(operation); change(op)
             with self.assertRaisesRegex(ValueError, 'newly retained'):
@@ -171,6 +175,63 @@ class ChildContracts(unittest.TestCase):
         for change in changes:
             attempted = copy.deepcopy(record); change(attempted)
             with self.assertRaises(ValueError): w.validate_stale_attempt(attempted, current)
+
+    def lifetime_fixture(self, root, mode, order):
+        from . import test_ce_qualification_accounting as qa
+        context, proof, receipt = qa.fixture(root)
+        owner = qa.a.QualificationAccounting(context, None, proof, receipt)
+        path = root / 'retained.json'; blob = b'{"fixture":true}\n'; path.write_bytes(blob)
+        ref = {'path': str(path), 'sha256': hashlib.sha256(blob).hexdigest(), 'bytes': len(blob)}
+        for stage in qa.a.q.STAGES[1:qa.a.q.STAGES.index('checkpoint_resume')]:
+            owner.begin_stage(stage, stage); owner.finish_stage([ref])
+        owner.begin_stage('checkpoint_resume', 'lifetime')
+        class Lease:
+            def __enter__(self):
+                order.append('enter'); owner.operation('qualification_lease', 'started', 'enter')
+                if mode == 'enter':
+                    owner.operation('qualification_lease', 'failed', 'enter'); raise ValueError('enter failed')
+                owner.operation('qualification_lease', 'returned', 'enter'); return self
+            def __exit__(self, typ, error, tb):
+                order.append('exit')
+                # Actual Q semantic guard requires open worker AND active stage.
+                owner.operation('qualification_lease', 'started', 'exit')
+                if mode == 'exit':
+                    owner.operation('qualification_lease', 'failed', 'exit'); raise RuntimeError('exit failed')
+                owner.operation('qualification_lease', 'returned', 'exit'); return mode == 'suppress'
+        def cleanup(): order.append('cleanup')
+        def finish(primary, result):
+            order.append('finish')
+            self.assertTrue(owner.worker_open); self.assertIsNotNone(owner.active)
+            if primary is not None: owner.fail_stage(primary)
+            else: owner.finish_stage([ref])
+        return owner, Lease, cleanup, finish
+
+    def test_actual_q_lease_exit_is_priced_before_stage_finish_and_worker_end(self):
+        with tempfile.TemporaryDirectory(prefix='checkpoint-lifetime-pure-') as directory:
+            order = []; owner, lease, cleanup, finish = self.lifetime_fixture(Path(directory), 'success', order)
+            def body(): order.append('body'); return {'fixture': True}
+            self.assertEqual(w.run_child_lifetime(owner, lease, body, cleanup, finish), {'fixture': True})
+            self.assertEqual(order, ['enter', 'body', 'cleanup', 'exit', 'finish'])
+            self.assertFalse(owner.worker_open); self.assertIsNone(owner.active)
+            self.assertEqual(owner.operations['exit']['phase'], 'returned')
+            exit_seq = owner.operations['exit']['returned_seq']
+            self.assertLess(exit_seq, next(row['seq'] for row in owner.events if row['kind'] == 'finish' and row['payload']['stage'] == 'checkpoint_resume'))
+            self.assertEqual(owner.events[-1]['kind'], 'end')
+
+    def test_enter_exit_or_suppressed_body_failure_retains_original_and_closes_q_clock(self):
+        for mode in ('enter', 'exit', 'suppress'):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory(prefix='checkpoint-lifetime-failure-pure-') as directory:
+                order = []; owner, lease, cleanup, finish = self.lifetime_fixture(Path(directory), mode, order)
+                original = ValueError('body failed')
+                def body(): order.append('body'); raise original
+                with self.assertRaises(ValueError) as caught:
+                    w.run_child_lifetime(owner, lease, body, cleanup, finish)
+                if mode == 'enter': self.assertEqual(str(caught.exception), 'enter failed'); self.assertNotIn('cleanup', order)
+                else: self.assertIs(caught.exception, original)
+                self.assertFalse(owner.worker_open); self.assertIsNone(owner.active)
+                self.assertEqual(owner.attempts[-1]['status'], 'FAILED')
+                self.assertEqual(owner.events[-1]['kind'], 'end')
+                if mode == 'exit': self.assertEqual(original.context_exit_failure['message'], 'exit failed')
 
 
 if __name__ == '__main__': unittest.main()

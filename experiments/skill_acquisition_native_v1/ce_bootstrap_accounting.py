@@ -32,6 +32,22 @@ def _add(a, b): return {key: a.get(key, 0) + b.get(key, 0) for key in COST_FIELD
 def _zero(): return dict.fromkeys(COST_FIELDS, 0)
 
 
+def bootstrap_specification(context):
+    """Derive an independent child directory under unchanged common prices."""
+    scope = context['bindings']['scope']; common = scope['qualifier_bootstrap']
+    child = context.get('checkpoint_child_bootstrap')
+    if child is None: return _clone(common)
+    declaration = context.get('checkpoint_child_declaration')
+    require(type(declaration) is dict and declaration.get('branch') in ('uninterrupted', 'prefix', 'resumed'),
+            'child bootstrap needs its source-bound branch declaration')
+    root = Path(scope['checkpoint_qualification']['owned_directory'])
+    require(root.is_absolute(), 'absolute common checkpoint bootstrap owner')
+    expected = dict(common, owned_directory=str(root / 'children' / declaration['branch'] / 'bootstrap'))
+    require(type(child) is dict and child == expected,
+            'child bootstrap may change only exact directory, never common caps/prices/deadline')
+    return _clone(expected)
+
+
 class PrepaymentHandle:
     __slots__ = ('_seal', '_ledger', '_ticket', '_native')
     def __init__(self, ledger, ticket, *, seal):
@@ -94,7 +110,7 @@ class BootstrapAccounting:
         require(type(proof) is dict and proof.get('fresh_process') is True and proof.get('boot_verified') is True
                 and q.hex64(proof.get('boot_identity_sha256')) and q.hex64(proof.get('worker_identity_sha256')), 'source-bound worker/boot proof required')
         if not self.fixture: require(context.get('worker_proof_sha256') == digest(proof), 'bootstrap worker evidence drift')
-        spec = context.get('bindings', {}).get('scope', {}).get('qualifier_bootstrap')
+        spec = bootstrap_specification(context)
         require(type(spec) is dict and spec.get('schema') == SPEC, 'explicit bootstrap specification required')
         q._costs(spec.get('caps')); q._costs(spec.get('self_bounds'))
         require(type(spec.get('owned_directory')) is str and Path(spec['owned_directory']).is_absolute(), 'absolute bootstrap owner')

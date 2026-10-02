@@ -135,12 +135,60 @@ def failed_corruption_operation(operations, before_ids, binding):
         and op.get('kind') == 'checkpoint_restore' and op.get('phase') == 'failed'
         and op.get('worker_id') == binding['worker_identity_sha256']
         and op.get('attempt_id') == binding['attempt_id'] and op.get('stage') == binding['stage']
-        and type(op.get('result')) is dict and op['result'].get('error_type') == 'ValueError'
-        and op['result'].get('error') == 'latest checkpoint payload bytes corrupt'
+        and type(op.get('result')) is dict
+        and op['result'].get('error') == {'type': 'ValueError', 'message': 'latest checkpoint payload bytes corrupt'}
         and type(op.get('started_seq')) is int and type(op.get('returned_seq')) is int
         and 0 <= op['started_seq'] < op['returned_seq']]
     require(len(matches) == 1, 'one newly retained current-worker corrupt checkpoint restore rejection')
     return {'operation_id': matches[0][0], 'operation': copy.deepcopy(matches[0][1])}
+
+
+def run_child_lifetime(owner, enter, body, cleanup, finish):
+    """Cleanup inside delegation; finish/end after its priced exit, also on failure.
+
+    This ordering primitive supplies no execution authority. The native handler
+    supplies its already admitted source-owned methods; pure fixtures can test
+    the actual durable accounting guard without models or child processes.
+    """
+    from .ce_controller import _OwnedContext
+    primary, result, last_failure = None, None, None
+    try:
+        with _OwnedContext(enter()):
+            work_error = None
+            try: result = body()
+            except BaseException as error: work_error = error; raise
+            finally:
+                try: cleanup()
+                except BaseException as error:
+                    if work_error is not None:
+                        work_error.checkpoint_worker_cleanup_failure = {'type': type(error).__name__, 'message': str(error)[:1000]}
+                        raise work_error from error
+                    raise
+    except BaseException as error: primary = error
+    try: finish(primary, result)
+    except BaseException as error:
+        if primary is None: primary = error
+        else:
+            primary.checkpoint_worker_finish_failure = {'type': type(error).__name__, 'message': str(error)[:1000]}
+            last_failure = error
+        # Retain a failed stage if readback/finish itself rejected before its
+        # terminal row; never publish a completed stage or refund reservations.
+        try:
+            if owner.active is not None: owner.fail_stage(primary)
+        except BaseException as record_error:
+            primary.checkpoint_worker_failure_recording = {'type': type(record_error).__name__, 'message': str(record_error)[:1000]}
+            last_failure = record_error
+    try: owner.end()
+    except BaseException as error:
+        if primary is None: primary = error
+        else:
+            primary.checkpoint_worker_end_failure = {'type': type(error).__name__, 'message': str(error)[:1000]}
+            last_failure = error
+    if primary is not None:
+        if last_failure is not None: raise primary from last_failure
+        raise primary
+    require(result is not None, 'failed/incomplete child lifetime cannot publish terminal success')
+    return result
 
 
 class CheckpointChildHandler:
@@ -295,69 +343,50 @@ class CheckpointChildHandler:
             'scope_sha256': self.context['scope_sha256'], 'static_recipe_sha256': self.context['static_recipe_sha256'],
             'code_sha256': self.context['bindings']['source']['code_sha256'],
             'worker_identity_sha256': self.proof['worker_identity_sha256'], 'attempt_id': attempt_id}
-        backend = NativeCEBackend(self.context, self.permit); self.backend = backend
-        primary, checkpoint, branch_result = None, None, None
-        # The source-owned supervisor transfer does not compete for a second
-        # lease while the parent holds it. Its registry is currently empty.
-        from .ce_controller import _OwnedContext
-        with _OwnedContext(self.lease.enter_child(self.context, self.permit, self.proof, request)):
-            try:
-                # Local bootstrap must leave CUDA uninitialized. This is the
-                # one and only configure/load owner in this fresh OS process.
-                backend.load(self.context, self.prepared, self.services['observer'])
-                directory = self.initializer.checkpoint_directory(self.context, request)
-                bindings = self._bindings(binding)
-                checkpoints = cp.QualificationCheckpoints(self.context, self.permit, directory, bindings,
+        def body():
+            backend = NativeCEBackend(self.context, self.permit); self.backend = backend
+            # Local bootstrap leaves CUDA uninitialized. This fresh process
+            # owns its one configure/load while the supervised lease is held.
+            backend.load(self.context, self.prepared, self.services['observer'])
+            directory = self.initializer.checkpoint_directory(self.context, request)
+            bindings = self._bindings(binding)
+            checkpoints = cp.QualificationCheckpoints(self.context, self.permit, directory, bindings,
+                sum(math.prod(entry['shape']) for entry in bindings['inventory']),
+                operation=self.operation, gate=self.gate, metadata_reserve=accounting.reserve_metadata)
+            checkpoints.attach_ledger(self.operation); self.checkpoints = checkpoints
+            if request['branch'] == 'resumed':
+                imported = self.initializer.admit_prefix_storage(self.context, self.permit, request, bindings)
+                require(type(imported) is dict and set(imported) == {'directory', 'bindings'}
+                        and raw.digest(imported['bindings']) == predecessor['prefix_checkpoint_bindings_sha256'],
+                        'actual original imported prefix checkpoint binding')
+                prefix = cp.QualificationCheckpoints(self.context, self.permit, imported['directory'], imported['bindings'],
                     sum(math.prod(entry['shape']) for entry in bindings['inventory']),
                     operation=self.operation, gate=self.gate, metadata_reserve=accounting.reserve_metadata)
-                checkpoints.attach_ledger(self.operation); self.checkpoints = checkpoints
-                if request['branch'] == 'resumed':
-                    # The original prefix binding/worker remains in an exact
-                    # verified imported store. Resumed U2 is saved separately
-                    # with this child's own source/evidence binding.
-                    imported = self.initializer.admit_prefix_storage(self.context, self.permit, request, bindings)
-                    require(type(imported) is dict and set(imported) == {'directory', 'bindings'}
-                            and raw.digest(imported['bindings']) == predecessor['prefix_checkpoint_bindings_sha256'],
-                            'actual original imported prefix checkpoint binding')
-                    prefix = cp.QualificationCheckpoints(self.context, self.permit, imported['directory'], imported['bindings'],
-                        sum(math.prod(entry['shape']) for entry in bindings['inventory']),
-                        operation=self.operation, gate=self.gate, metadata_reserve=accounting.reserve_metadata)
-                    prefix.attach_ledger(self.operation)
-                    restored = prefix.restore(backend.model, backend.optimizer)
-                    record, operation = self.initializer.bound_restore_result(accounting, restored, binding)
-                    cp.validate_restore_fence(record, accounting.progress_record(), operation, current_binding=binding)
-                    accounting.install_restore(record); backend.refresh_policy(accounting)
-                require(backend.U == initial_U, 'actual child Adam U equals retained prefix start')
-                batches = cp.qualification_batches(self.context)
-                stop_U = 1 if request['branch'] == 'prefix' else 2
-                while accounting.progress_record()['U'] < stop_U:
-                    U = accounting.progress_record()['U']
-                    rows = list(self.prepared.iter_ids(batches[U]))
-                    result = backend.update(rows, accounting); accounting.commit_boundary(result)
-                    require(accounting.progress_record()['C'] == accounting.progress_record()['U'] == U + 1,
-                            'one actual committed child CE update')
-                checkpoint = checkpoints.save(backend.model, backend.optimizer, accounting.progress_record(), self.operation)
-                controls = self._negative_controls(checkpoints, request, binding)
-                # Raw state proof uses actual checkpoint payload/metadata. Its
-                # source-owned publication service retains exact OS lineage.
-                branch_result = self.publisher.retain_branch(self.context, self.permit, request, binding, checkpoint,
-                    accounting, backend, negative_control_evidence=controls)
-            except BaseException as error:
-                primary = error
-                raise
-            finally:
-                try:
-                    if backend.model is not None or backend.optimizer is not None: backend.cleanup()
-                    self.initializer.finish_child_accounting(accounting, request, primary)
-                    accounting.end()
-                except BaseException as cleanup:
-                    if primary is not None:
-                        primary.checkpoint_worker_cleanup_failure = {'type': type(cleanup).__name__, 'message': str(cleanup)[:1000]}
-                        raise primary from cleanup
-                    raise
+                prefix.attach_ledger(self.operation)
+                restored = prefix.restore(backend.model, backend.optimizer)
+                record, operation = self.initializer.bound_restore_result(accounting, restored, binding)
+                cp.validate_restore_fence(record, accounting.progress_record(), operation, current_binding=binding)
+                accounting.install_restore(record); backend.refresh_policy(accounting)
+            require(backend.U == initial_U, 'actual child Adam U equals retained prefix start')
+            batches = cp.qualification_batches(self.context); stop_U = 1 if request['branch'] == 'prefix' else 2
+            while accounting.progress_record()['U'] < stop_U:
+                U = accounting.progress_record()['U']; rows = list(self.prepared.iter_ids(batches[U]))
+                result = backend.update(rows, accounting); accounting.commit_boundary(result)
+                require(accounting.progress_record()['C'] == accounting.progress_record()['U'] == U + 1,
+                        'one actual committed child CE update')
+            checkpoint = checkpoints.save(backend.model, backend.optimizer, accounting.progress_record(), self.operation)
+            controls = self._negative_controls(checkpoints, request, binding)
+            return self.publisher.retain_branch(self.context, self.permit, request, binding, checkpoint,
+                accounting, backend, negative_control_evidence=controls)
+        def cleanup():
+            backend = self.backend
+            if backend is not None and (backend.model is not None or backend.optimizer is not None): backend.cleanup()
+        branch_result = run_child_lifetime(accounting,
+            lambda: self.lease.enter_child(self.context, self.permit, self.proof, request), body, cleanup,
+            lambda primary, retained: self.initializer.finish_child_accounting(accounting, request, primary, retained=retained))
         # Terminal raw publication is deliberately after model cleanup and
         # supervisor lease return. The OS supervisor separately proves exit.
-        require(primary is None and branch_result is not None, 'failed/incomplete child work cannot publish terminal success')
+        require(branch_result is not None, 'failed/incomplete child work cannot publish terminal success')
         return self.publisher.publish_after_release(self.context, self.permit, request, binding, branch_result, accounting,
             result_schema=RESULT, native_qualified=False)
 

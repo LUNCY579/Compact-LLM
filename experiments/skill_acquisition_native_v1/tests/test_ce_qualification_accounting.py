@@ -56,6 +56,32 @@ class Tests(unittest.TestCase):
         self.addCleanup(temporary.cleanup); self.root = Path(temporary.name)
         self.context, self.proof, self.receipt = fixture(self.root)
     def make(self): return a.QualificationAccounting(self.context, None, self.proof, self.receipt)
+    def test_child_accounting_derives_only_exact_branch_directory(self):
+        context = copy.deepcopy(self.context)
+        context['bindings']['scope']['checkpoint_qualification'] = {'owned_directory': str(self.root / 'checkpoint')}
+        context['checkpoint_child_declaration'] = {'branch': 'resumed'}
+        common = context['bindings']['scope']['qualifier_accounting']
+        frozen = copy.deepcopy(common)
+        spec = dict(common, owned_directory=str(self.root / 'checkpoint' / 'children' / 'resumed' / 'ledger'))
+        context['checkpoint_child_accounting'] = {'specification': spec, 'owner': {
+            'accounting_spec_sha256': a.digest(spec), 'prepared_receipt_sha256': self.receipt['receipt_sha256']}}
+        derived = a.accounting_specification(context)
+        self.assertEqual(derived, spec)
+        derived['global_caps']['io_read_bytes_upper'] = 0
+        self.assertEqual(common, frozen)
+        for change in ('path', 'caps', 'profile', 'census', 'deadline', 'owner', 'branch'):
+            altered = copy.deepcopy(context)
+            child = altered['checkpoint_child_accounting']
+            if change == 'path': child['specification']['owned_directory'] = str(self.root / 'foreign')
+            elif change == 'caps': child['specification']['global_caps']['io_read_bytes_upper'] = 0
+            elif change == 'profile': child['specification']['operation_profiles']['qualification_lease']['wall_s_upper'] = 0
+            elif change == 'census': child['specification']['ingestion_receipt_sha256'] = '0' * 64
+            elif change == 'deadline': child['specification']['physical_wall_seconds_upper'] = 1
+            elif change == 'owner': child['owner']['prepared_receipt_sha256'] = '0' * 64
+            else: altered['checkpoint_child_declaration']['branch'] = 'foreign'
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                a.accounting_specification(altered)
+        self.assertIn('qualification_lease', a.KINDS)
     def raw(self, name='raw'):
         path = self.root / (name + '.json'); raw = b'{"fixture":true}\n'; path.write_bytes(raw)
         return {'path': str(path), 'sha256': hashlib.sha256(raw).hexdigest(), 'bytes': len(raw)}

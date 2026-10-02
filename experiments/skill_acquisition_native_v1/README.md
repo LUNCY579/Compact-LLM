@@ -437,9 +437,9 @@ causes and retained operations; infrastructure failures propagate.
 
 `ce_checkpoint_reduction.py` replays separate child ledgers, derives physical
 updates separately from inherited logical progress, recomputes returned state
-descriptors and compares saved parameter/Adam/RNG bytes. Its complete three
-branch envelope-to-ledger-to-endpoint path has **not been exercised end to end**.
-Focused small-file and metadata controls do not establish native execution.
+descriptors and compares saved parameter/Adam/RNG bytes. At that source revision,
+the complete three-branch envelope-to-ledger-to-endpoint path had not been
+exercised end to end. Focused controls did not establish native execution.
 
 `ce_resource_qualification.py` derives resources from retained barrier samples
 and selected returned operation counters. Exact CUDA totals govern allocator
@@ -454,6 +454,47 @@ process/lease/publication wiring, child
 accounting derivation, full pricing and final execution verification remain
 required. Registries stay closed, qualification stays **UNQUALIFIED**, and the
 broader study remains active with no new native treatment after the warm stop.
+
+## Child initialization, delegation and publication
+
+The complete three-branch raw reduction now has a genuine end-to-end fixture:
+independent durable ledgers, inherited U1 plus a returned restore/fresh fence,
+four state descriptors and actual small parameter/Adam/RNG files. Rehashed
+wrong history, refunded costs, foreign parent and changed endpoint controls
+fail. Test coverage is retained as evidence rather than an output authority flag.
+
+`ce_checkpoint_initializer.py` replays original parent header/journal/full
+partial snapshot evidence and verifies the original four-file prefix store.
+It streams create-only imports and isolated corruption copies, binds actual
+returned restores, and finishes the child stage with retained artifacts.
+Child qualification and bootstrap directories derive from the common frozen
+owner policy; their caps, prices, census and deadlines remain exact.
+
+`ce_checkpoint_lease.py` retains one supervisor lock across serial branches.
+Parent GPU use is suspended during delegation. Original current owner markers,
+actual retained worker handles and terminal evidence gate transfers; unknown
+owners cannot be removed. Source service integration and the lease helper's
+complete external IO prices remain unmeasured.
+
+`ce_checkpoint_publication.py` retains saved manifests and control evidence,
+then publishes the ended child ledger and branch envelope under independent
+outer prepayment after model/lease cleanup. Saved progress is an ancestor of
+the installed recovery fence. The exact original accounting owner is pinned.
+Publication explicitly leaves OS termination verification to the supervisor.
+The child lifecycle now exits delegation while its accounting stage is still
+open, then finishes the stage and ends accounting.
+
+The expanded suite passed **263/263 controls** with unchanged source, no skips
+or errors, and no ML framework imports, model loads or optimizer execution.
+See `evidence/CE8_CHILD_LIFECYCLE_SOURCE_CHECKS_20261002.json`. This is pure
+metadata/small-file evidence, not a native CUDA checkpoint qualification.
+
+Native local issuance, process orchestration, full source/worker/bootstrap/clock
+verification and complete native unit prices still require integration.
+Registry activation and actual discarded native qualification require the
+pending selected experiment and frozen authorized scope. Acquisition, functional
+retention and independent skill composition remain unproved; the broader goal
+is active and incomplete.
 
 ## Production interface
 

@@ -30,7 +30,7 @@ KINDS = ce.NATIVE_KINDS | frozenset(('journal_construct', 'qualification_mask',
     'qualification_backward', 'qualification_gradient_validation', 'qualification_rng',
     'qualification_tensor_write', 'qualification_artifact', 'qualification_checkpoint_configuration',
     'qualification_artifact_readback', 'qualification_reducer_overhead', 'resource_probe', 'resource_cuda_probe',
-    'qualification_state_fingerprint'))
+    'qualification_state_fingerprint', 'qualification_lease'))
 COST_FIELDS = q.COST_FIELDS
 canonical, digest, require = q.canonical, q.digest, q.require
 CHILD_PREFIX = 'CE8-CHECKPOINT-CHILD-PREDECESSOR-1'
@@ -44,6 +44,24 @@ def checkpoint_child_declaration(payload):
                'child_request_ref', 'child_proof', 'declaration_sha256'}
     return dict({key: _clone(value) for key, value in payload.items() if key not in dynamic},
                 schema='CE8-CHECKPOINT-CHILD-LINEAGE-DECLARATION-1')
+
+
+def accounting_specification(context):
+    """Pure exact child-owner derivation; never changes a frozen common scope."""
+    scope = context['bindings']['scope']; common = scope['qualifier_accounting']
+    child = context.get('checkpoint_child_accounting')
+    if child is None: return _clone(common)
+    require(type(child) is dict and set(child) == {'specification', 'owner'}, 'exact child accounting derivation')
+    declaration = context.get('checkpoint_child_declaration')
+    require(type(declaration) is dict and declaration.get('branch') in ('uninterrupted', 'prefix', 'resumed'),
+            'child accounting owner needs its immutable branch declaration')
+    root = Path(scope['checkpoint_qualification']['owned_directory'])
+    require(root.is_absolute(), 'absolute common checkpoint child owner')
+    expected = dict(common, owned_directory=str(root / 'children' / declaration['branch'] / 'ledger'))
+    owner = {'accounting_spec_sha256': digest(expected), 'prepared_receipt_sha256': common['ingestion_receipt_sha256']}
+    require(child['specification'] == expected and child['owner'] == owner,
+            'child accounting may change only exact branch directory, never caps/prices/census/deadline')
+    return _clone(expected)
 
 
 class CheckpointChildAdmission:
@@ -201,7 +219,8 @@ class QualificationAccounting:
             if bootstrap_handle is None: bootstrap_handle = services.get('bootstrap_handle')
             if bootstrap_verifier is None: bootstrap_verifier = services.get('bootstrap_verifier')
             boot.require_registered_verifier(bootstrap_verifier)
-            owner = context.get('bindings', {}).get('scope', {}).get('qualifier_accounting_owner') if type(context) is dict else None
+            derived = context.get('checkpoint_child_accounting') if type(context) is dict else None
+            owner = derived.get('owner') if type(derived) is dict else context.get('bindings', {}).get('scope', {}).get('qualifier_accounting_owner')
             boot.verify_prepayment(bootstrap_handle, context, proof, owner, verifier=bootstrap_verifier)
             require(clock is None, 'native qualification monotonic clock cannot be injected')
         self.clock = time.monotonic if clock is None else clock
@@ -212,7 +231,7 @@ class QualificationAccounting:
         self.actual_wall_seconds, self.last_clock, self.worker_open = 0.0, self._wall_origin, False
         if fixture and bootstrap_handle is None:
             outer = boot.BootstrapAccounting(context, None, proof, clock=self.clock)
-            spec = context['bindings']['scope']['qualifier_accounting']
+            spec = accounting_specification(context)
             bounds = _price(spec['setup_bounds'])
             bounds['metadata_bytes_upper'] = MAX_LINE * 2
             owner = {'accounting_spec_sha256': digest(spec), 'prepared_receipt_sha256': prepared_receipt['receipt_sha256']}
@@ -254,7 +273,7 @@ class QualificationAccounting:
         require(context.get('arm') in ('canonical', 'permuted') and q.hex64(context.get('request_sha256'))
                 and q.hex64(context.get('scope_sha256')), 'one qualification request/scope/arm required')
         scope = context.get('bindings', {}).get('scope', {})
-        spec = scope.get('qualifier_accounting')
+        spec = accounting_specification(context)
         require(type(spec) is dict and spec.get('schema') == SPEC, 'explicit qualification accounting specification required')
         require(type(spec.get('owned_directory')) is str and Path(spec['owned_directory']).is_absolute(), 'absolute accounting owner required')
         require(type(prepared_receipt) is dict and prepared_receipt.get('receipt_sha256') == spec.get('ingestion_receipt_sha256')

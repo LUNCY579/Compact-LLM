@@ -15,7 +15,6 @@ from . import ce_checkpoint_worker as worker
 SCHEMA = 'CE8-CHECKPOINT-BRANCH-REDUCTION-1'
 RESULT = 'CE8-CHECKPOINT-WORKER-RESULT-1'
 BRANCHES = ('uninterrupted', 'prefix', 'resumed')
-FULL_BRANCH_PATH_EXERCISED = False
 require, digest = raw.require, raw.digest
 
 
@@ -56,8 +55,8 @@ def reduce_negative_controls(state, controls, parameter_inventory=None, binding=
             'exact retained corruption restore operation required')
     rejected = selected['operation']
     require(rejected['kind'] == 'checkpoint_restore' and rejected['phase'] == 'failed'
-            and rejected.get('result', {}).get('error_type') == 'ValueError'
-            and rejected['result'].get('error') == 'latest checkpoint payload bytes corrupt',
+            and rejected.get('result', {}).get('error') ==
+                {'type': 'ValueError', 'message': 'latest checkpoint payload bytes corrupt'},
             'corruption must be actual payload rejection, not unrelated error')
     require(type(rejected.get('started_seq')) is type(rejected.get('returned_seq')) is int
             and 0 <= rejected['started_seq'] < rejected['returned_seq'], 'strict failed restore operation order')
@@ -203,7 +202,6 @@ def reduce_checkpoint_branches(context, branch_refs, branch_bindings, parent_bin
     totals = {key: sum(value['derived_costs'][key] for value in branches.values()) for key in accounting.COST_FIELDS}
     return {'schema': SCHEMA, 'status': 'UNQUALIFIED', 'native_qualified': False, 'execution_verified': False,
         'branches': branches, 'child_derived_reservations': totals, 'U2_state_comparison': comparison,
-        'full_branch_path_exercised_end_to_end': FULL_BRANCH_PATH_EXERCISED,
         'parent_costs_imported': False, 'parent_external_ledger_refs': branches['prefix']['lineage']['parent_ledger_refs'],
         'activation_gaps': ['source-owned OS terminal handles and exact launch/parent provenance must be verified',
             'bootstrap child prepayment chains and parent external costs need independent raw replay',
