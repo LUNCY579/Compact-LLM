@@ -1,0 +1,55 @@
+{
+  "reference_id": "CRS-LEARNING-TOKENIZATION-CAUSAL-REFERENCE-001",
+  "author": "/root",
+  "scope": "SYNTHETIC_POSITIONAL_REFERENCE_NOT_TOKENIZER_OR_MODEL_EVIDENCE",
+  "status": "DEFINED_BEFORE_FROZEN_INSTRUMENT_REVIEW_NOT_YET_REPLAYED",
+  "source": "Declared causal labels: token j is predicted by logit j-1; prompt labels ignored; response and final assistant EOS supervised",
+  "registered_TRAIN_cases_or_dose": false,
+  "tokenizer_loaded": false,
+  "model_or_training_eligibility": false,
+  "synthetic_sequence": {
+    "prompt_ids": [151644, 42, 151645],
+    "response_content_ids": [123, 456],
+    "assistant_EOS_id": 151645,
+    "joined_training_ids": [151644, 42, 151645, 123, 456, 151645],
+    "IDs_are_actual_encoding_of_text": false,
+    "prompt_count": 3,
+    "response_plus_EOS_count": 3,
+    "full_teacher_forward_positions": 6,
+    "prefix_positions_needed_to_predict_final_EOS": 5
+  },
+  "accepted": {
+    "unshifted_labels": [-100, -100, -100, 123, 456, 151645],
+    "unshifted_target_mask": [0, 0, 0, 1, 1, 1],
+    "shifted_prediction_mask": [0, 0, 1, 1, 1],
+    "supervised_token_positions": [3, 4, 5],
+    "supervised_logit_positions": [2, 3, 4],
+    "supervised_tokens": 3,
+    "EOS_tokens_in_whole_sequence": 2,
+    "EOS_tokens_in_supervised_response": 1
+  },
+  "rejected": [
+    {
+      "name": "user_EOS_leaks_into_loss",
+      "unshifted_labels": [-100, -100, 151645, 123, 456, 151645],
+      "reason": "Prompt position2 must be ignored even though its ID equals assistant EOS"
+    },
+    {
+      "name": "assistant_EOS_not_supervised",
+      "unshifted_labels": [-100, -100, -100, 123, 456, -100],
+      "reason": "Terminal assistant EOS is part of supervised response"
+    },
+    {
+      "name": "unshifted_ownership_used_for_logits",
+      "shifted_prediction_mask": [0, 0, 0, 1, 1],
+      "reason": "Logit2 predicts first response token3; logit4 predicts terminal EOS5"
+    },
+    {
+      "name": "post_EOS_newline_supervised",
+      "joined_training_ids": [151644, 42, 151645, 123, 456, 151645, 198],
+      "unshifted_labels": [-100, -100, -100, 123, 456, 151645, 198],
+      "reason": "Synthetic post-EOS newline is preserved in full render but excluded from training sequence"
+    }
+  ],
+  "verification_rule": "Replay accepted and mutated values against independently inspected frozen production validation; this reference alone certifies no implementation"
+}

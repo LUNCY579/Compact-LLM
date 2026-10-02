@@ -259,3 +259,9 @@ preserve the limitation that requested sleep intervals are not observed sample
 gaps and sampled RSS is not an absolute peak. The new instrument's source/fixtures
 are being built; no actual token artifact, mask measurement or native launch has
 occurred. These CPU fixture costs do not reset the cumulative native budget.
+
+An independent positional reference and non-author review now freeze the expected
+prompt/response EOS ownership and causal shift before instrument review. The
+six-position synthetic sequence supervises tokens3/4/5 through logits2/3/4;
+all four negative vectors are mathematically consistent. This reference is not
+an actual text encoding, implementation acceptance or numerical forward result.
