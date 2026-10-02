@@ -48,6 +48,24 @@ review reproduced a completion-proof gap,
 so its native launch remains closed pending repair. The previous complete primary
 CPU suite passed 117 tests in 17.149 seconds before these additions.
 
+The bounded reader codec is committed at `8cf1141f`:21 lightweight tests and
+independent oversized-output rejection controls pass. It schedules90 source-span
+calls across the existing16 DEV variants/8 parents. All fields come from supplied
+output; source validation only rejects. Tokenizer/template fit, actual serving,
+collection, aggregate runtime capacity and model quality remain unmeasured.
+The initial reader's five files were recovered against their original hashes;
+the late recovery and rejected source bytes are preserved, not labeled a timely
+original archive. Reader round2 still requires its final third repair for
+nonvacuous causal controls, job ownership and publication recovery.
+
+The no-model executable-inventory probe is implemented but has not run. Its
+second frozen revision passed17 CPU tests, including six actual contained
+no-framework subprocess controls. Fresh review requires final corrections for
+reviewer aliases and late-finalization accounting. Round2 is archived in
+`history/owned_runtime_identity_probe_round2/`. The final third repair/review must
+finish before any one-attempt60s import observation; no fourth repair loop is
+authorized under that milestone. It grants no native/reader/training qualification.
+
 Native admission first refused an unregistered game package before dispatch.
 After that process exited, clean reviewed source `9fd345d9` dispatched a contained
 qualification worker in the attached managed worktree. It exited before framework

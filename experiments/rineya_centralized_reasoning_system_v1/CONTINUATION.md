@@ -54,6 +54,39 @@ this closed runtime gate. The next eligible runtime action is a separately
 reviewed bounded no-model inventory of exact Job executable identities and
 source-check/telemetry paths, without modifying native3 or broadening its registry.
 
+Current CPU continuation: finish final probe review3 against
+`owned_runtime_identity_probe.py`, its tests and
+`contracts/OWNED_RUNTIME_IDENTITY_DIAGNOSTIC_V1.json`. Round2 source SHA946b4fbc,
+contract651cdc69 and all rejected bytes remain in history. Fresh review found
+builder-name aliases and a late publication error that disagreed with finalized
+SQLite state. Both must close before exact source approvals. No actual import
+probe has executed. The one fixed job key is `CRS-OWNED-IDENTITY-001`; its60s
+reservation is charged conservatively to the same epoch/rolling budgets.
+
+The attached native worktree currently contains three uncommitted byte-exact
+probe round2 files copied for isolated execution preparation. Replace them only
+with the independently accepted final freeze, preserve the old bytes, commit
+the explicit probe/contract/test/review files locally, then obtain review
+attestations binding that clean commit. Original native code/contract/operations
+must keep hashes84531289/d79f3b6a/ba27ec8a. Old D2 approvals cannot authorize the
+new commit or reopen quarantine. After fresh complete host admission, the CLI is:
+
+```powershell
+& 'C:\Users\clclc\BusinessProject\.venv-mq001\Scripts\python.exe' -B -m experiments.rineya_centralized_reasoning_system_v1.owned_runtime_identity_probe --supervise --contract-sha256 FINAL_SHA --review OPS_REVIEW --review SCI_REVIEW --output NEW_CRS_RESULTS_DIRECTORY --epoch CRS-EPOCH-001
+```
+
+These placeholders require exact final bindings, not guessed values. Reconcile
+all unknown outcomes before any dispatch. The probe does no model construction,
+weight read, tokenizer instantiation or numerical model work. Import/API and
+sampling/C-side-effect limits remain explicit; even a completed probe does not
+establish the original failing cause without observed evidence.
+
+In parallel, finish the final reader repair from
+`outputs/reader_final_repair_pause_before_probe_review/` and its round2 reports.
+Its inherited runtime gate remains closed. The independently reviewed bounded
+codec is committed, while all90 native DEV span calls and exact tokenizer fit
+remain pending. Do not open or generate confirmation/CHECK/FINAL banks.
+
 Actual diagnostic dispatch requires the exact committed contract digest and a
 fresh independent review receipt binding that commit/code/contract, current
 asset/runtime hashes, unambiguous host process/GPU telemetry, the reviewed
