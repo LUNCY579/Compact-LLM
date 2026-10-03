@@ -1,0 +1,41 @@
+{
+  "utc": "2026-09-02T18:52:12.121023+00:00",
+  "git_commit": "4541d0be8ba62eb8c7b8abf48a6e4c31561f8589",
+  "git_branch": "research/supa-a1.1-fast-weight-attention-v1",
+  "git_dirty": false,
+  "python": "3.11.15",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "hostname": "TheFakeGod",
+  "config": {
+    "seeds": [
+      11,
+      22
+    ],
+    "layer": 14,
+    "rank": 16,
+    "eval_lengths": [
+      1024,
+      2048,
+      4096
+    ],
+    "n_per_cell": 8,
+    "n_decoys": 24,
+    "hops": 2,
+    "interference_length": 2048,
+    "n_per_category": 8,
+    "train_rows": 512,
+    "train_lengths": [
+      1024
+    ],
+    "max_steps": 100,
+    "grad_accum": 4,
+    "lr": 0.001,
+    "init_alpha": 0.05,
+    "grad_checkpointing": false,
+    "out_name": "p2b_longctx",
+    "skip_train": false,
+    "skip_short_ablation": false
+  },
+  "config_sha256": "29210769819d87596ec70165f6397b497d788ab6d17e5424008f02492933a85e",
+  "cuda_visible_devices": null
+}

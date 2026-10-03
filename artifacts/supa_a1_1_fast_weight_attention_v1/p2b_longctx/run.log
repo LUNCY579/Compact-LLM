@@ -1,0 +1,99 @@
+[runner] attempt 1/12: waiting for >= 4200 MiB on 3 consecutive samples (Wed Sep  2 07:12:21 CDT 2026)
+[runner] launching P2b with 7600 MiB free (Wed Sep  2 07:15:22 CDT 2026)
+[data] building long-context TRAIN split (disjoint from eval)
+[data] 512 train rows -> data/longctx/train.jsonl
+[data] building eval suites
+[data] position n=168  interference n=56
+[data] suite fingerprint dcdf2b6f1e7a5d06
+[train] arm_B/seed_11 horizon={'beta_raw_init': -1.1, 'lambda_raw_init': -5.9}
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 3986.15it/s]
+[train] arm_B/seed_11 steps=100 first=0.0029 last=0.0011 alpha=0.09870 gpu_h=0.4845 peak=3.19GiB (1748s)
+[train] arm_C/seed_11 horizon={'beta_raw_init': -1.1, 'lambda_raw_init': -5.9}
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 3379.62it/s]
+[train] arm_C/seed_11 steps=100 first=0.0029 last=0.0002 alpha=0.06960 gpu_h=0.5480 peak=3.18GiB (1976s)
+[train] arm_D/seed_11 horizon={'beta_raw_init': -1.1, 'lambda_raw_init': -5.9}
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 3296.41it/s]
+[train] arm_D/seed_11 steps=100 first=0.0029 last=0.0004 alpha=0.06768 gpu_h=0.5615 peak=3.19GiB (2025s)
+[train] arm_B/seed_22 horizon={'beta_raw_init': -1.1, 'lambda_raw_init': -5.9}
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:  63%|██████▎   | 195/310 [00:00<00:00, 1941.78it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 1976.61it/s]
+[train] arm_B/seed_22 steps=100 first=0.0252 last=0.0031 alpha=0.10145 gpu_h=0.6783 peak=3.19GiB (2447s)
+[train] arm_C/seed_22 horizon={'beta_raw_init': -1.1, 'lambda_raw_init': -5.9}
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:  56%|█████▌    | 173/310 [00:00<00:00, 1713.23it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 1761.77it/s]
+[train] arm_C/seed_22 steps=100 first=0.0252 last=0.0004 alpha=0.07014 gpu_h=0.6498 peak=3.18GiB (2344s)
+[train] arm_D/seed_22 horizon={'beta_raw_init': -1.1, 'lambda_raw_init': -5.9}
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:  61%|██████    | 188/310 [00:00<00:00, 1832.83it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 1958.64it/s]
+[train] arm_D/seed_22 steps=100 first=0.0252 last=0.0002 alpha=0.06997 gpu_h=0.6384 peak=3.19GiB (2303s)
+[train] arm_Cshort/seed_11 horizon={'beta_raw_init': 0.0, 'lambda_raw_init': -2.0}
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:  67%|██████▋   | 208/310 [00:00<00:00, 2046.00it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 2264.14it/s]
+[train] arm_Cshort/seed_11 steps=100 first=0.0029 last=0.0004 alpha=0.07617 gpu_h=0.6397 peak=3.18GiB (2308s)
+[eval] loading model once for all arms
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:  55%|█████▌    | 172/310 [00:00<00:00, 1713.38it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 1740.73it/s]
+[eval] arm_A
+[eval] arm_A position=0.8214 CI(0.757, 0.872) mid-edge=+0.1181 interference=0.9821 (257s)
+[eval] arm_B/seed_11
+[eval] arm_B/seed_11 position=0.9464 CI(0.901, 0.972) mid-edge=+0.0694 interference=0.9821 (1039s)
+[eval] arm_C/seed_11
+[eval] arm_C/seed_11 position=0.9524 CI(0.909, 0.976) mid-edge=+0.0833 interference=0.8929 (1047s)
+[eval] arm_D/seed_11
+[eval] arm_D/seed_11 position=0.9583 CI(0.917, 0.98) mid-edge=+0.0486 interference=0.9821 (990s)
+[eval] arm_B/seed_22
+[eval] arm_B/seed_22 position=0.9464 CI(0.901, 0.972) mid-edge=+0.0938 interference=0.9107 (999s)
+[eval] arm_C/seed_22
+[eval] arm_C/seed_22 position=0.9583 CI(0.917, 0.98) mid-edge=+0.0729 interference=0.8214 (4268s)
+[eval] arm_D/seed_22
+[eval] arm_D/seed_22 position=0.9524 CI(0.909, 0.976) mid-edge=+0.0833 interference=0.9107 (1049s)
+[eval] arm_Cshort/seed_11
+[eval] arm_Cshort/seed_11 position=0.9702 CI(0.932, 0.987) mid-edge=+0.0278 interference=0.9821 (1053s)
+{
+  "C_vs_A_seed11": {
+    "n_paired": 168,
+    "b_better": 25,
+    "a_better": 3,
+    "discordant": 28,
+    "p_two_sided": 2.744048833847046e-05
+  },
+  "C_vs_B_seed11": {
+    "n_paired": 168,
+    "b_better": 2,
+    "a_better": 1,
+    "discordant": 3,
+    "p_two_sided": 1.0
+  },
+  "D_vs_C_seed11": {
+    "n_paired": 168,
+    "b_better": 3,
+    "a_better": 2,
+    "discordant": 5,
+    "p_two_sided": 1.0
+  },
+  "C_vs_A_seed22": {
+    "n_paired": 168,
+    "b_better": 26,
+    "a_better": 3,
+    "discordant": 29,
+    "p_two_sided": 1.5236437320709229e-05
+  },
+  "C_vs_B_seed22": {
+    "n_paired": 168,
+    "b_better": 3,
+    "a_better": 1,
+    "discordant": 4,
+    "p_two_sided": 0.625
+  },
+  "D_vs_C_seed22": {
+    "n_paired": 168,
+    "b_better": 2,
+    "a_better": 3,
+    "discordant": 5,
+    "p_two_sided": 1.0
+  },
+  "Clong_vs_Cshort": {
+    "n_paired": 168,
+    "b_better": 2,
+    "a_better": 5,
+    "discordant": 7,
+    "p_two_sided": 0.453125
+  }
+}
+wrote C:\Users\clclc\BusinessProject\RineyaBeta-supa-fwa-v1\artifacts\supa_a1_1_fast_weight_attention_v1\p2b_longctx\summary.json
+[runner] P2b completed (Wed Sep  2 14:27:34 CDT 2026)

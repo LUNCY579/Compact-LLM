@@ -1,0 +1,100 @@
+{
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+  "total_parameters": 596049920,
+  "layer": 14,
+  "rank": 16,
+  "adapter_seed": 11,
+  "arms": {
+    "A": [
+      {
+        "seq_len": 1024,
+        "forward_seconds": 0.17358170000079554,
+        "prefill_tokens_per_sec": 5899.23937831757,
+        "ttft_seconds": 0.17358170000079554,
+        "peak_vram_bytes": 1413012992,
+        "cpu_rss_bytes": 1707393024,
+        "recurrent_state_bytes": 0,
+        "kv_cache_bytes_if_used": 117440512,
+        "trainable_parameters": 0,
+        "fwa_parameters": 0,
+        "generate_seconds": 0.7521836000014446,
+        "generate_tokens": 4,
+        "decode_seconds_per_token": 0.18804590000036114
+      },
+      {
+        "seq_len": 2048,
+        "forward_seconds": 0.5641304999953718,
+        "prefill_tokens_per_sec": 3630.3656689663158,
+        "ttft_seconds": 0.5641304999953718,
+        "peak_vram_bytes": 1935769088,
+        "cpu_rss_bytes": 1772306432,
+        "recurrent_state_bytes": 0,
+        "kv_cache_bytes_if_used": 234881024,
+        "trainable_parameters": 0,
+        "fwa_parameters": 0,
+        "generate_seconds": null,
+        "generate_note": "skipped above 1024 tokens (no KV cache: cost is O(new_tokens * T))"
+      },
+      {
+        "seq_len": 4096,
+        "forward_seconds": 2.1228747999994084,
+        "prefill_tokens_per_sec": 1929.459052413803,
+        "ttft_seconds": 2.1228747999994084,
+        "peak_vram_bytes": 3912416768,
+        "cpu_rss_bytes": 1774223360,
+        "recurrent_state_bytes": 0,
+        "kv_cache_bytes_if_used": 469762048,
+        "trainable_parameters": 0,
+        "fwa_parameters": 0,
+        "generate_seconds": null,
+        "generate_note": "skipped above 1024 tokens (no KV cache: cost is O(new_tokens * T))"
+      }
+    ],
+    "C": [
+      {
+        "seq_len": 1024,
+        "forward_seconds": 0.7309460999967996,
+        "prefill_tokens_per_sec": 1400.9240900313764,
+        "ttft_seconds": 0.7309460999967996,
+        "peak_vram_bytes": 1415113216,
+        "cpu_rss_bytes": 1815945216,
+        "recurrent_state_bytes": 8192,
+        "kv_cache_bytes_if_used": 117440512,
+        "trainable_parameters": 524593,
+        "fwa_parameters": 524593,
+        "generate_seconds": 2.78069819999655,
+        "generate_tokens": 4,
+        "decode_seconds_per_token": 0.6951745499991375
+      },
+      {
+        "seq_len": 2048,
+        "forward_seconds": 1.6765980999989551,
+        "prefill_tokens_per_sec": 1221.5211266201939,
+        "ttft_seconds": 1.6765980999989551,
+        "peak_vram_bytes": 1937869312,
+        "cpu_rss_bytes": 1818836992,
+        "recurrent_state_bytes": 8192,
+        "kv_cache_bytes_if_used": 234881024,
+        "trainable_parameters": 524593,
+        "fwa_parameters": 524593,
+        "generate_seconds": null,
+        "generate_note": "skipped above 1024 tokens (no KV cache: cost is O(new_tokens * T))"
+      },
+      {
+        "seq_len": 4096,
+        "forward_seconds": 4.42759870000009,
+        "prefill_tokens_per_sec": 925.1064239403443,
+        "ttft_seconds": 4.42759870000009,
+        "peak_vram_bytes": 3914516992,
+        "cpu_rss_bytes": 1820581888,
+        "recurrent_state_bytes": 8192,
+        "kv_cache_bytes_if_used": 469762048,
+        "trainable_parameters": 524593,
+        "fwa_parameters": 524593,
+        "generate_seconds": null,
+        "generate_note": "skipped above 1024 tokens (no KV cache: cost is O(new_tokens * T))"
+      }
+    ]
+  }
+}

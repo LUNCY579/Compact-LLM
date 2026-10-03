@@ -1,0 +1,69 @@
+{
+  "utc": "2026-09-01T22:30:47.751242+00:00",
+  "git_commit": "f0b37a51b7223ff37872c06e625b0c33ef31bf4a",
+  "git_branch": "research/supa-a1.1-fast-weight-attention-v1",
+  "git_dirty": true,
+  "python": "3.11.15",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "hostname": "TheFakeGod",
+  "config": {
+    "schema_version": "1.0",
+    "experiment": {
+      "name": "supa_a1_1_fwa_p1_pilot",
+      "status": "EXPLORATORY_NOT_CONFIRMATORY",
+      "phase": "p1"
+    },
+    "model": {
+      "key": "supa_a11",
+      "path": "Rineya_Published_Cores/Rineya-Supa-A1.1-1.1.0-devfreeze",
+      "dtype": "float16",
+      "trust_remote_code": true,
+      "expected_arch": "Qwen3AbstainForCausalLM",
+      "freeze_backbone": true
+    },
+    "fwa": {
+      "variant": "falcon2_prefix_aligned",
+      "rank": 16,
+      "layers": [
+        14
+      ],
+      "n_kv_heads": 8,
+      "epsilon": 1e-06,
+      "init_alpha": 0.0,
+      "recurrent": true,
+      "significance_gate": false
+    },
+    "training": {
+      "seed": 11,
+      "learning_rate": 0.0001,
+      "epochs": 1.0,
+      "max_steps": 24,
+      "per_device_batch_size": 1,
+      "gradient_accumulation_steps": 8,
+      "max_sequence_length": 512,
+      "warmup_ratio": 0.03,
+      "weight_decay": 0.01,
+      "logging_steps": 1,
+      "nan_abort_factor": 10.0,
+      "gradient_checkpointing": true
+    },
+    "data": {
+      "train_rows": 256,
+      "dev_rows": 32,
+      "strata": [
+        "2k"
+      ],
+      "source": "lab_unsealed_synthetic"
+    },
+    "decode": {
+      "max_new_tokens": 16,
+      "do_sample": false,
+      "normalization": "trim"
+    },
+    "paths": {
+      "output_dir": "artifacts/supa_a1_1_fast_weight_attention_v1/p1_pilot"
+    }
+  },
+  "config_sha256": "4d6ea08bd108b8762554693b2f214cfaedcca6d65aa22187184b5747da6e2a48",
+  "cuda_visible_devices": null
+}

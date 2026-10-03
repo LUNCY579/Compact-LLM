@@ -1,0 +1,50 @@
+{
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+  "total_parameters": 596049920,
+  "layer": 14,
+  "rank": 16,
+  "adapter_seed": 11,
+  "arms": {
+    "A": [
+      {
+        "seq_len": 8192,
+        "forward_seconds": 49.99975589999667,
+        "prefill_tokens_per_sec": 163.84079987079588,
+        "ttft_seconds": 49.99975589999667,
+        "peak_vram_bytes": 11590254080,
+        "cpu_rss_bytes": 22876160,
+        "recurrent_state_bytes": 0,
+        "kv_cache_bytes_if_used": 939524096,
+        "trainable_parameters": 0,
+        "fwa_parameters": 0,
+        "generate_seconds": null,
+        "generate_note": "skipped above 0 tokens (no KV cache: cost is O(new_tokens * T))"
+      },
+      {
+        "seq_len": 16384,
+        "oom": true
+      }
+    ],
+    "C": [
+      {
+        "seq_len": 8192,
+        "forward_seconds": 53.0980705999973,
+        "prefill_tokens_per_sec": 154.28055873654318,
+        "ttft_seconds": 53.0980705999973,
+        "peak_vram_bytes": 11592354304,
+        "cpu_rss_bytes": 30924800,
+        "recurrent_state_bytes": 8192,
+        "kv_cache_bytes_if_used": 939524096,
+        "trainable_parameters": 524593,
+        "fwa_parameters": 524593,
+        "generate_seconds": null,
+        "generate_note": "skipped above 0 tokens (no KV cache: cost is O(new_tokens * T))"
+      },
+      {
+        "seq_len": 16384,
+        "oom": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "utc": "2026-09-02T09:30:17.986184+00:00",
+  "git_commit": "165d653eec841e741b3653cb9c0e06e436aaf5a0",
+  "git_branch": "research/supa-a1.1-fast-weight-attention-v1",
+  "git_dirty": false,
+  "python": "3.11.15",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "hostname": "TheFakeGod",
+  "config": {
+    "arm": "C",
+    "layers": [
+      14
+    ],
+    "rank": 16,
+    "seed": 11,
+    "device": "cuda",
+    "optimizer_steps": 2,
+    "examples_seen": 4,
+    "tokens_seen": 4204,
+    "wall_seconds": 161.49205670000083,
+    "gpu_hours": 0.04485890463888912,
+    "peak_vram_bytes": 3312846848,
+    "trainable_parameters": 524593,
+    "loss_history": [
+      {
+        "step": 1,
+        "loss": 1.8211923837661743
+      },
+      {
+        "step": 2,
+        "loss": 0.0019163592951372266
+      }
+    ],
+    "first_loss": 0.00027569307712838054,
+    "last_loss": 0.0019163592951372266,
+    "aborted": null,
+    "skipped_nonfinite": 0,
+    "adapter_path": "C:\\Users\\clclc\\BusinessProject\\RineyaBeta-supa-fwa-v1\\artifacts\\supa_a1_1_fast_weight_attention_v1\\diagnostics\\memprobe_tailloss\\fwa_adapter.pt",
+    "max_sequence_length": 1152,
+    "checkpoint_bytes": 2102533,
+    "init_alpha": 0.05,
+    "beta_raw_init": -1.1,
+    "lambda_raw_init": -5.9,
+    "learning_rate": 0.001,
+    "grad_accum": 2,
+    "train_rows_source": "in_memory",
+    "n_train_rows": 8,
+    "gradient_checkpointing": false,
+    "supervise_answer_only": true,
+    "warmup_ratio_declared_but_unused": 0.03,
+    "supervised_tokens": 4,
+    "final_alpha": 0.050743136554956436
+  },
+  "config_sha256": "e1175e734b7d21d7813da3a7f3a761f8736555a46d7747e456a2148889f01418",
+  "cuda_visible_devices": null
+}
