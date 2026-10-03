@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "id": "SYNTH-FRESH-DEV-PANEL-002",
+  "population": "EXPOSED_CPU_DEV_ONLY_NOT_CONFIRMATION",
+  "source_pool_seed": 2026100307,
+  "source_candidates_per_skill": 256,
+  "component_quota_per_skill": 32,
+  "skills": [
+    "R",
+    "S",
+    "RS"
+  ],
+  "conditions_per_parent": 2,
+  "renderings_per_condition": [
+    "familiar",
+    "heldout_ledger"
+  ],
+  "item_count_range": [
+    13,
+    15
+  ],
+  "reference_request_counts": [
+    4,
+    5
+  ],
+  "reference_standard_depth_range": [
+    1,
+    5
+  ],
+  "reference_deeper_first_depth_range": [
+    6,
+    8
+  ],
+  "selection_cardinality_range": [
+    1,
+    3
+  ],
+  "stratum_component_quotas": {
+    "R": {
+      "wider_request": 16,
+      "deeper_reference": 8,
+      "solved_to_UNKNOWN": 8
+    },
+    "S": {
+      "valid_target_change": 24,
+      "solved_to_UNKNOWN": 8
+    },
+    "RS": {
+      "valid_target_change": 24,
+      "solved_to_UNKNOWN": 8
+    }
+  },
+  "selection": "Generate entire finite source pool before union-by-family/projection/source footprints; exclude whole joined components; choose first eligible component in fixed skill/stratum/candidate order. No student output, baseline success or answer location participates.",
+  "condition_requirement": "Cell 0 solved. Cell 1 has a disjoint certificate set or UNKNOWN; retained facts are unchanged and only registered relevant fields differ.",
+  "RS_requirement": "Unfiltered S has a valid but R-ineligible certificate in every cell, including the impossible eligible-subset cell. RS is never TRAIN.",
+  "freshness": "Both full-family and atomic-projection footprints must avoid all package/data materializations and the exact source-bound CPU fixture census; source IDs alone are insufficient. Unknown pretraining exposure is not certified.",
+  "OOD_disclosure": "n13-15 exceeds founding source-pool sizes; wider requests and depth6-8 are explicit condition shifts. UNKNOWN transitions are separate strata. This is not a matched-difficulty or broad mechanism-family claim.",
+  "infeasible": "BLOCKED_FRESH_FAMILY_QUOTAS; no resampling, dropping strata, quota reduction or fallback seed",
+  "native_launch_authorized": false,
+  "training_authorized": false,
+  "protected_bank_access": false,
+  "confirmation_eligible": false,
+  "baseline_membership_enrolled": false,
+  "source_policy": 2,
+  "amendment": "UNIFORM_COMPACT_ALIAS_BIJECTION_BEFORE_ANY_STUDENT_DEV_OUTPUTS",
+  "predecessor_policy": "EVALUATION_PANEL_POLICY.json",
+  "predecessor_policy_sha256": "1b30b9041b8f009702dc75f284f8637d3cffef6f445cd8deca632ddee0f7c242",
+  "alias_renaming": "Sort the union of all alias keys, string link targets and requests across both parent cells; map bijectively to a..z,aa..az,ba.. with no RNG draws; apply to every R/RS candidate before footprints and selection.",
+  "source_identity": "Keep pre-lexical source hashes/parent IDs and separately bind compact display cells. Renaming creates no fresh families.",
+  "native_context_cap_tokens": 512,
+  "evaluation_prompt_cap_tokens": 480,
+  "evaluation_generation_reserve_tokens": 32,
+  "training_corpus_modified": false
+}

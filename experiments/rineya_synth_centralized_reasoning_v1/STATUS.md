@@ -23,6 +23,24 @@ exact simultaneous retention bounds and separate repairs. Missing qualified
 guards or precision remains inconclusive; arithmetic is not grader authority.
 The full research goal remains active and unanswered.
 
+## CPU preparation after native qualification
+
+[Compact alias policy 002](EVALUATION_ALIAS_AMENDMENT_002.md) preserves the whole
+fresh-family pool and all task conditions while fitting every one of 384 DEV
+prompts under the unchanged 480+32 envelope (maximum 452 prompt tokens).
+Prompt-only arrays are bound independently of CPU-exposed oracle labels. The
+[47-test input/evaluation/schedule receipt](evidence/compact_schedule_cpu_validation_20261003.json)
+passes without skips or source changes.
+
+[Study schedule](STUDY_DEV_REGISTRATION_DRAFT.json) freezes 27 full updates,
+540 whole sequences per trained arm, identical LR and three nine-update resume
+chunks. It preserves 130,562 versus 130,574 non-padding input tokens and the
+matched parent vector. Qualification STATE1 is never a study warmstart.
+This is a closed registration draft, not training authority. Task-retention
+and long-context CPU guard preparation and the actual training/collector
+implementation remain ongoing; qualified language reference/review authority
+is still missing. No M0/M1/M2 result has been obtained.
+
 ## Latest: worker mechanics verified; full supervision still failed
 
 Attempt 6 returned `PASS_SCOPED_NATIVE_MECHANICS`: 40 native training forwards/

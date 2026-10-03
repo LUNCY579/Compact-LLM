@@ -31,8 +31,9 @@ import rs_verifier as old_verifier
 import balanced_corpus as balanced
 import task_compiler as compiler
 
-VERSION = "synth-fresh-dev-panel-1"
+VERSION = "synth-fresh-dev-panel-2"
 POLICY_PATH = _HERE / "EVALUATION_PANEL_POLICY.json"
+POLICY_002_PATH = _HERE / "EVALUATION_PANEL_POLICY_002.json"
 MAX_FILE_BYTES = 16 * 1024 * 1024
 FIXTURE_MODULES = ("test_balanced_corpus", "test_cpu_tokenizer", "test_matching_schedule",
                    "test_prepare_corpus", "test_registration", "test_rs_semantics",
@@ -63,7 +64,8 @@ def _json(path):
                       parse_constant=contract._bad_constant)
 
 
-def policy():
+def policy(source_policy=2):
+    contract.require(type(source_policy) is int and source_policy in (1, 2), "registered evaluation source policy")
     result = _json(POLICY_PATH)
     contract.require(type(result.get("source_pool_seed")) is int and result["source_pool_seed"] == 2026100307 and
                      type(result.get("source_candidates_per_skill")) is int and result["source_candidates_per_skill"] == 256 and
@@ -82,6 +84,18 @@ def policy():
                     "RS": {"valid_target_change": 24, "solved_to_UNKNOWN": 8}}}
     contract.require(all(contract.canonical(result.get(key)) == contract.canonical(expected)
                          for key, expected in controls.items()), "registered source strata or cell quota drift")
+    if source_policy == 2:
+        amendment = _json(POLICY_002_PATH)
+        expected = {**result, "id": "SYNTH-FRESH-DEV-PANEL-002", "source_policy": 2,
+                    "amendment": "UNIFORM_COMPACT_ALIAS_BIJECTION_BEFORE_ANY_STUDENT_DEV_OUTPUTS",
+                    "predecessor_policy": "EVALUATION_PANEL_POLICY.json",
+                    "predecessor_policy_sha256": _sha(POLICY_PATH),
+                    "alias_renaming": "Sort the union of all alias keys, string link targets and requests across both parent cells; map bijectively to a..z,aa..az,ba.. with no RNG draws; apply to every R/RS candidate before footprints and selection.",
+                    "source_identity": "Keep pre-lexical source hashes/parent IDs and separately bind compact display cells. Renaming creates no fresh families.",
+                    "native_context_cap_tokens": 512, "evaluation_prompt_cap_tokens": 480,
+                    "evaluation_generation_reserve_tokens": 32, "training_corpus_modified": False}
+        contract.require(contract.canonical(amendment) == contract.canonical(expected), "lexical amendment or inherited policy drift")
+        return amendment
     return result
 
 
@@ -401,6 +415,43 @@ def _candidate(rng, skill, index):
     return {"skill": skill, "stratum": stratum, "candidate_index": index, "cells": [spec, altered]}
 
 
+def _compact_alias_name(index):
+    contract.require(type(index) is int and index >= 0, "alias ordinal")
+    letters = []
+    while index >= 0:
+        letters.append(chr(ord("a") + index % 26))
+        index = index // 26 - 1
+    return "".join(reversed(letters))
+
+
+def compact_alias_cells(cells):
+    """One parent-wide bijection includes missing links, requests and cycles.
+
+    Both conditions receive the same names. This pure representation change
+    draws no random numbers and preserves indices, initial values and selection.
+    """
+    contract.require(type(cells) is list and len(cells) == 2, "two parent cells required")
+    aliases = set()
+    for cell in cells:
+        contract.validate_spec(cell)
+        if "lookup" in cell:
+            lookup = cell["lookup"]
+            aliases.update(lookup["links"])
+            aliases.update(target for target in lookup["links"].values() if type(target) is str)
+            aliases.update(lookup["requested"])
+    mapping = {name: _compact_alias_name(index) for index, name in enumerate(sorted(aliases))}
+    contract.require(len(mapping) == len(set(mapping.values())) and all(contract.alias(name) for name in mapping.values()), "compact alias bijection")
+    result = copy.deepcopy(cells)
+    for cell in result:
+        if "lookup" in cell:
+            lookup = cell["lookup"]
+            lookup["links"] = {mapping[name]: mapping[target] if type(target) is str else target
+                               for name, target in lookup["links"].items()}
+            lookup["requested"] = [mapping[name] for name in lookup["requested"]]
+        contract.validate_spec(cell)
+    return result, mapping
+
+
 def _pool(frozen):
     rng = random.Random(frozen["source_pool_seed"])
     candidates, attempts = [], []
@@ -411,7 +462,16 @@ def _pool(frozen):
             except ValueError as error:
                 attempts.append({"skill": skill, "index": index, "accepted": False, "reason": str(error)})
                 continue
-            candidate["source_hash"] = contract.digest(candidate)
+            # The source family was declared by policy001; compact strings are
+            # a view of that same source, with a separate display digest.
+            original_hash = contract.digest(candidate)
+            if frozen.get("source_policy", 1) == 2:
+                original_cells_digest = contract.digest(candidate["cells"])
+                candidate["cells"], mapping = compact_alias_cells(candidate["cells"])
+                candidate["alias_bijection"] = mapping
+                candidate["prelexical_cells_sha256"] = original_cells_digest
+                candidate["display_cells_sha256"] = contract.digest(candidate["cells"])
+            candidate["source_hash"] = original_hash
             candidate["parent_id"] = "dev_" + candidate["source_hash"][:24]
             candidate["footprints"] = sorted(set().union(*(footprints(cell) for cell in candidate["cells"])))
             candidates.append(candidate)
@@ -419,10 +479,10 @@ def _pool(frozen):
     return candidates, attempts
 
 
-def compile_panel(exclusions):
+def compile_panel(exclusions, source_policy=2):
     _no_frameworks()
     _validate_exclusions(exclusions)
-    frozen = policy()
+    frozen = policy(source_policy)
     candidates, attempts = _pool(frozen)
     leaders = {candidate["parent_id"]: candidate["parent_id"] for candidate in candidates}
     owners = {}
@@ -462,8 +522,8 @@ def compile_panel(exclusions):
     panel = {"version": VERSION, "population": frozen["population"], "policy": frozen,
              "policy_sha256": contract.digest(frozen), "exclusions": copy.deepcopy(exclusions),
              "generator_and_solver_source_pins": {str(path.resolve()): _sha(path) for path in
-                 (Path(__file__), POLICY_PATH, Path(contract.__file__), Path(primary.__file__),
-                  Path(old_verifier.__file__), Path(compiler.__file__), Path(balanced.__file__))},
+                 ((Path(__file__), POLICY_PATH) + ((POLICY_002_PATH,) if source_policy == 2 else ()) + (Path(contract.__file__), Path(primary.__file__),
+                  Path(old_verifier.__file__), Path(compiler.__file__), Path(balanced.__file__)))},
              "pool_sha256": contract.digest(candidates), "attempts": attempts, "components": components,
              "selected_parents": selected if not shortages else [], "shortages": shortages,
              "status": "BLOCKED_FRESH_FAMILY_QUOTAS" if shortages else "CPU_DEV_PANEL_COMPILED_NATIVE_UNADMITTED",
@@ -475,9 +535,60 @@ def compile_panel(exclusions):
 
 def validate_panel(panel):
     contract.require(type(panel) is dict and "exclusions" in panel, "panel object")
-    expected = compile_panel(panel["exclusions"])
+    expected = compile_panel(panel["exclusions"], panel.get("policy", {}).get("source_policy", 1))
     contract.require(contract.canonical(panel) == contract.canonical(expected), "panel/selection/source/footprint drift")
     contract.require(panel["status"] == "CPU_DEV_PANEL_COMPILED_NATIVE_UNADMITTED", "fresh-family quotas blocked")
+
+
+def audit_alias_amendment(exclusions):
+    """Check all768 sources, not only the selected96, before CPU token fitting."""
+    original, old_attempts = _pool(policy(1))
+    compact, new_attempts = _pool(policy(2))
+    contract.require(len(original) == len(compact) == 768 and old_attempts == new_attempts,
+                     "lexical amendment changed source-pool attempts or identities")
+    checked_cells = 0
+    for before, after in zip(original, compact):
+        contract.require((before["skill"], before["stratum"], before["candidate_index"], before["source_hash"], before["parent_id"])
+                         == (after["skill"], after["stratum"], after["candidate_index"], after["source_hash"], after["parent_id"]),
+                         "lexical amendment changed candidate identity or stratum")
+        expected, mapping = compact_alias_cells(before["cells"])
+        contract.require(after["cells"] == expected and after["alias_bijection"] == mapping and
+                         before["footprints"] == after["footprints"], "source bijection/family footprint changed")
+        for old_cell, new_cell in zip(before["cells"], after["cells"]):
+            contract.require({key: value for key, value in old_cell.items() if key != "lookup"} ==
+                             {key: value for key, value in new_cell.items() if key != "lookup"},
+                             "lexical amendment changed non-reference task data")
+            if "lookup" in old_cell:
+                inverse = {compact_name: original_name for original_name, compact_name in mapping.items()}
+                restored_lookup = {"links": {inverse[name]: inverse[target] if type(target) is str else target
+                                             for name, target in new_cell["lookup"]["links"].items()},
+                                   "requested": [inverse[name] for name in new_cell["lookup"]["requested"]]}
+                contract.require(restored_lookup == old_cell["lookup"], "compact alias graph is not the original bijective graph")
+            old_solution, new_solution = primary.solve(old_cell), primary.solve(new_cell)
+            contract.require(old_solution == new_solution and footprints(old_cell) == footprints(new_cell),
+                             "lexical amendment changed cell answers or projection family")
+            for renderer in (lambda spec: contract.render(spec, 0), render_ledger):
+                old_visible, new_visible = solve_visible(renderer(old_cell)), solve_visible(renderer(new_cell))
+                contract.require(old_visible == new_visible and new_visible["status"] == new_solution["status"] and
+                                 new_visible["solutions"] == new_solution["solutions"], "independent visible solver changed under renaming")
+            checked_cells += 1
+    old_panel, new_panel = compile_panel(exclusions, 1), compile_panel(exclusions, 2)
+    contract.require(old_panel["components"] == new_panel["components"] and old_panel["shortages"] == new_panel["shortages"],
+                     "lexical amendment changed joined-component membership")
+    old_selection = [(item["skill"], item["stratum"], item["candidate_index"], item["parent_id"], item["component_id"])
+                     for item in old_panel["selected_parents"]]
+    new_selection = [(item["skill"], item["stratum"], item["candidate_index"], item["parent_id"], item["component_id"])
+                     for item in new_panel["selected_parents"]]
+    contract.require(old_selection == new_selection, "lexical amendment changed selection")
+    return {"status": "CPU_LEXICAL_AMENDMENT_INVARIANCE_PASSED_NOT_NATIVE_ADMISSION",
+            "source_candidates": 768, "checked_cells": checked_cells,
+            "independent_visible_comparisons": checked_cells * 2,
+            "solution_sets_and_statuses_unchanged": True, "full_and_atomic_projection_footprints_unchanged": True,
+            "source_hashes_and_parent_ids_unchanged": True, "joined_component_members_unchanged": True,
+            "selected_candidate_indices_and_strata_unchanged": True, "selected_components": len(new_selection),
+            "old_policy_sha256": contract.digest(policy(1)), "new_policy_sha256": contract.digest(policy(2)),
+            "new_panel_sha256": new_panel["sha256"], "native_launch_authorized": False,
+            "student_DEV_outputs_used": False, "training_corpus_modified": False}
 
 
 def export_panel(panel):

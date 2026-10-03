@@ -33,6 +33,30 @@ def r_spec():
 
 
 class RenderingTests(unittest.TestCase):
+    def test_compact_alias_bijection_includes_missing_targets_and_is_shared_across_cells(self):
+        first = r_spec()
+        second = copy.deepcopy(first)
+        second["lookup"]["links"]["b"] = "b"
+        rng = evaluation.random.Random(17)
+        state = rng.getstate()
+        compact, mapping = evaluation.compact_alias_cells([first, second])
+        self.assertEqual(state, rng.getstate())
+        self.assertIn("gone", mapping)
+        self.assertEqual(mapping["b"], compact[1]["lookup"]["links"][mapping["b"]])
+        self.assertEqual(compact[0]["lookup"]["requested"], compact[1]["lookup"]["requested"])
+        self.assertEqual(2, len(set(compact[0]["lookup"]["requested"])))
+        for old, new in zip((first, second), compact):
+            self.assertEqual(old["initial"], new["initial"])
+            self.assertEqual(evaluation.primary.solve(old), evaluation.primary.solve(new))
+            self.assertEqual(evaluation.footprints(old), evaluation.footprints(new))
+
+    def test_compact_alias_ordinals_follow_short_bijective_lowercase_names(self):
+        expected = {0: "a", 25: "z", 26: "aa", 27: "ab", 51: "az", 52: "ba", 80: "cc"}
+        self.assertEqual(expected, {index: evaluation._compact_alias_name(index) for index in expected})
+        self.assertEqual(100, len({evaluation._compact_alias_name(index) for index in range(100)}))
+        for index in (True, -1, 1.5):
+            with self.assertRaises(ValueError): evaluation._compact_alias_name(index)
+
     def test_mutated_renderer_cannot_certify_its_own_wrong_rule_mapping(self):
         original = evaluation.render_ledger
         def wrong(spec):
@@ -131,6 +155,38 @@ class PanelTests(unittest.TestCase):
         self.assertEqual(32, frozen["component_quota_per_skill"])
         for key in ("native_launch_authorized", "training_authorized", "protected_bank_access", "confirmation_eligible"):
             self.assertFalse(frozen[key])
+
+    def test_policy002_preserves_immutable_policy001_and_every_semantic_control(self):
+        original, modern = evaluation.policy(1), evaluation.policy(2)
+        self.assertEqual("SYNTH-FRESH-DEV-PANEL-002", modern["id"])
+        self.assertEqual(evaluation._sha(evaluation.POLICY_PATH), modern["predecessor_policy_sha256"])
+        self.assertEqual("1b30b9041b8f009702dc75f284f8637d3cffef6f445cd8deca632ddee0f7c242", modern["predecessor_policy_sha256"])
+        for key in original:
+            if key != "id": self.assertEqual(original[key], modern[key])
+        self.assertFalse(modern["training_corpus_modified"])
+        self.assertEqual((512, 480, 32), (modern["native_context_cap_tokens"], modern["evaluation_prompt_cap_tokens"], modern["evaluation_generation_reserve_tokens"]))
+
+    def test_all768_sources_preserve1536_cells_solvers_families_components_and_selection(self):
+        result = evaluation.audit_alias_amendment(self.excluded)
+        self.assertEqual(768, result["source_candidates"])
+        self.assertEqual(1536, result["checked_cells"])
+        self.assertEqual(3072, result["independent_visible_comparisons"])
+        self.assertEqual(96, result["selected_components"])
+        for key in ("solution_sets_and_statuses_unchanged", "full_and_atomic_projection_footprints_unchanged",
+                    "source_hashes_and_parent_ids_unchanged", "joined_component_members_unchanged",
+                    "selected_candidate_indices_and_strata_unchanged"):
+            self.assertTrue(result[key])
+        self.assertFalse(result["native_launch_authorized"])
+
+    def test_representation_helper_cannot_change_even_irrelevant_R_numeric_data(self):
+        original = evaluation.compact_alias_cells
+        def corrupt(cells):
+            compact, mapping = original(cells)
+            if "lookup" in compact[0] and "selection" not in compact[0]: compact[0]["initial"][0] -= 1
+            return compact, mapping
+        with patch.object(evaluation, "compact_alias_cells", corrupt):
+            with self.assertRaisesRegex(ValueError, "non-reference task data"):
+                evaluation.audit_alias_amendment(self.excluded)
 
     def test_complete_panel_has96_disjoint_components_and384_crossed_rows(self):
         self.assertEqual(96, len(self.panel["selected_parents"]))
