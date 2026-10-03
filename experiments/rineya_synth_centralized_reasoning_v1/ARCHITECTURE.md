@@ -4,6 +4,11 @@ This is a design, not an implemented runtime. "Centralized" means coordinated
 shared interfaces, evidence, verification, and accounting around compact Rineya
 models; it does not imply a new neural architecture or a deployed service.
 
+**2026-10-03 addition:** the bounded offline CPU compiler/verifier subset is now
+implemented; see [CPU_COMPILER.md](CPU_COMPILER.md). The architecture below remains
+the founding proposal. The online runtime and native/training integration remain
+unimplemented and unqualified.
+
 ## A. Offline learning-data production
 
 1. **Source registry:** immutable, content-hashed source/world versions with

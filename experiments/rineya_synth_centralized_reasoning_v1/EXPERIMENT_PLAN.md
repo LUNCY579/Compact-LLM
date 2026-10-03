@@ -4,6 +4,18 @@
 are pending.** Preserve this proposal; record later amendments and exact run IDs.
 Do not replace CRS-001's procedure-memory study or any central E1 protocol.
 
+**2026-10-03 CPU amendment:** [CPU_COMPILER.md](CPU_COMPILER.md) and
+[STATUS.md](STATUS.md) record implemented G0 mechanics and their bounded audit.
+The original future-stage text below remains historical. No G1 or later stage
+has executed. Before any native run commitment, freeze the exact trainable
+parameter set and tokenizer-measured non-padding training-token budget; neither
+is currently set, so no meaningful training-cost estimate is claimed.
+
+**Later owner-delegated decision:** [PILOT_DECISIONS.md](PILOT_DECISIONS.md) freezes
+unchanged dense Titan, rank-8 q/v LoRA and a 131,072-token ceiling for the first
+small DEV dose. That supersedes the unset scope/budget above; actual matching,
+physical qualification, resource fit and the full run manifest remain open.
+
 ## Primary hypothesis: task-condition diversity
 
 Can independently verified, condition-diverse training examples improve atomic

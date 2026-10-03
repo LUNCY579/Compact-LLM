@@ -1,10 +1,13 @@
 # SYNTH-CRS-001: centralized verified supervision for Rineya
 
 **Branch:** `research/rineya-synth-centralized-reasoning-v1`  
-**Status:** design recorded; native implementation and qualification pending.  
+**Status:** CPU corpus materialized and schedule matched; native qualification pending.
 **Target:** one pinned approximately 0.6B Rineya student, not a new from-scratch model.
 
 ## Read in this order
+
+Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
+[status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
 1. [Owner-directed preservation charter](../../RINEYA_SYNTH_CENTRALIZED_REASONING.md).
 2. [Architecture and boundaries](ARCHITECTURE.md).
@@ -32,11 +35,33 @@ python -m unittest discover -s experiments/rineya_synth_centralized_reasoning_v1
 
 These commands check the founding registration, preservation policy fields,
 closed execution permissions, source bindings, and separation of planned arms.
-They are NOT a dataset audit, runtime integration test, native-model test,
-training job, or benchmark. See [local evidence](evidence/local_validation.json).
+The founding checks are NOT a dataset audit, native-model test,
+training job, or benchmark; later CPU compiler tests are described below. See [local evidence](evidence/local_validation.json).
 There are no automatic network calls, paid services, model downloads, or GPU jobs.
 
-## First implementable question
+## CPU compiler milestone — 2026-10-03
+
+The retained manifest checker still validates founding metadata only. Test
+discovery now includes independent R/S semantics, source/parent isolation,
+condition-dependence, negative controls and strict export boundaries: 67 tests.
+See [CPU_COMPILER.md](CPU_COMPILER.md), [current handoff](STATUS.md), and the
+[CPU audit receipt](evidence/cpu_audit_2026-10-03_final.json).
+
+```bash
+python experiments/rineya_synth_centralized_reasoning_v1/audit_cpu.py
+```
+
+This regenerates 384 bounded CPU fixtures, checks two independent solution
+paths, and rejects deliberately incorrect candidates. Use --output with a new
+package evidence/*.json path to retain another receipt. It writes no training
+corpus and performs no model inference, training, network call or GPU job.
+
+The owner-delegated [pilot decisions](PILOT_DECISIONS.md) freeze dense Titan,
+all-layer rank-8 q/v LoRA and a 131,072-token ceiling per trained arm. Actual
+balanced token schedules and native qualification remain open. The question
+whether condition diversity teaches transferable skills remains unanswered.
+
+## First student-learning question (still unmeasured)
 
 At a fixed student-training budget, compare surface-varied verified atomic tasks
 against condition-diverse verified atomic tasks. Start with reference resolution

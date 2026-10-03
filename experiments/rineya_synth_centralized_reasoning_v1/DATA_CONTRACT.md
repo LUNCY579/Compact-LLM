@@ -3,6 +3,11 @@
 These are requirements for future implementation, not an audited corpus or an
 implemented schema. `validate_manifest.py` checks registration metadata only.
 
+**2026-10-03 addition:** [CPU_COMPILER.md](CPU_COMPILER.md) records the implemented
+bounded R/S schema, source/record/export boundaries, and CPU audits. The broader
+data-production requirements below remain the founding contract. No tokenized
+native training corpus is admitted and no process-supervision verifier exists.
+
 ## Required record separation
 
 | Record | Required contents | Access |

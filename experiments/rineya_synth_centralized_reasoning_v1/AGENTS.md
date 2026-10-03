@@ -15,8 +15,9 @@ The inherited CRS-001 is not renamed to SYNTH-CRS-001. The latter adds verified
 supervision research; it does not amend the former's historical question.
 Keep model-only, tool-assisted, and distilled results separately labeled.
 
-Current code validates design metadata only. Do not describe its tests as runtime
-safety, corpus correctness, native readiness, or a capability improvement.
+The founding validator checks design metadata only. The 2026-10-03 CPU compiler
+addition is described in CPU_COMPILER.md and STATUS.md. Its mechanics tests do
+not establish native readiness, training-corpus admission, or capability gains.
 The founding manifest stays historical. New run proposals need separate manifests
 and explicit permission; do not flip its closed flags to manufacture approval.
 Do not open protected banks, generate paid teacher calls, download large datasets,

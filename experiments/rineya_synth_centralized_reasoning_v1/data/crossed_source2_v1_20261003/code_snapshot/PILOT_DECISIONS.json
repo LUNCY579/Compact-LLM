@@ -1,0 +1,189 @@
+{
+  "adaptation": {
+    "alpha": 16,
+    "base_frozen": true,
+    "common_warmstart": false,
+    "context_cap_tokens": 512,
+    "dropout": 0.0,
+    "gradient_accumulation_sequences": 20,
+    "identical_initialization_by_training_seed": true,
+    "inventory_path": "pilot_trainable_inventory.json",
+    "inventory_sha256": "3bcb2a3d4e9324ab8fe4e6b7fb9f6de0c77c6801c3e0101fa63606ff46b7183d",
+    "layers": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "loss": "completion_plus_EOS_mean_per_sequence_then_mean_over_accumulation",
+    "method": "qv_lora",
+    "microbatch_sequences": 1,
+    "packing": false,
+    "padding": false,
+    "projections": [
+      "q_proj",
+      "v_proj"
+    ],
+    "rank": 8,
+    "replay": "none_in_first_atomic_dose_screen; separate prior-correct guards mandatory",
+    "target_format": "final_answer_only",
+    "trainable_parameters": 1146880,
+    "trainable_tensors": 112
+  },
+  "arms": [
+    {
+      "data": "none",
+      "id": "M0",
+      "updates": 0
+    },
+    {
+      "data": "verified_surface_varied_atomic_R_S",
+      "id": "M1"
+    },
+    {
+      "data": "verified_condition_diverse_atomic_R_S",
+      "id": "M2"
+    }
+  ],
+  "budget": {
+    "R_S_token_allocation_target": [
+      0.5,
+      0.5
+    ],
+    "actual_input_tokens": null,
+    "actual_supervised_tokens": null,
+    "actual_updates": null,
+    "ceiling_per_trained_arm_per_seed": 131072,
+    "dummy_padding_to_match": false,
+    "infeasible_matching_outcome": "BLOCKED_MATCHING",
+    "maximum_between_arm_residual_tokens": 512,
+    "maximum_per_skill_budget_difference_from_half": 512,
+    "minimum_consumed_per_arm_per_seed": 130560,
+    "partial_final_accumulation": false,
+    "same_optimizer_update_count": true,
+    "same_parent_pool_and_per_parent_exposure_counts": true,
+    "truncate_targets_to_match": false,
+    "unit": "tokenizer_measured_nonpadding_student_training_input_positions_including_prompt_target_and_EOS",
+    "wall_time_estimate_requires": "qualified_capture_and_sustained_training_throughput; fixed dose alone is not runtime fit",
+    "wall_time_or_cost_estimate": null
+  },
+  "data_requirements": {
+    "answer_positions_balanced_before_native_use": true,
+    "curriculum_and_token_schedule_frozen_before_training": true,
+    "data_hashes": null,
+    "evaluation_families": "new_unexposed_after_CPU_audit; audit_fixture_labels_not_confirmation",
+    "evaluation_hashes": null,
+    "heldout_transfer_signature": "RS",
+    "source_correct_guard_hashes": null,
+    "source_parents_split_by_dependency_component": true,
+    "surface_and_condition_renderings_crossed_before_native_use": true,
+    "teacher_calls": 0,
+    "tokenized_schedule_hashes": null,
+    "train_signatures": [
+      "R",
+      "S"
+    ]
+  },
+  "decision_authority": "Owner delegated checkpoint, trainable-scope and token-budget selection on 2026-10-03; qualification gates remain binding.",
+  "decision_id": "SYNTH-CRS-PILOT-DECISIONS-20261003",
+  "evidence_pins": {
+    "experiments/post_training_mimo_centralized_v1/AMENDMENT_021.md": "29df6cbcf0b847701b1fd5739ee6acd36193e9527a02244950c1f9aca852e0bc",
+    "experiments/post_training_mimo_centralized_v1/NEXT_EXPERIMENT.md": "1974f1cad52f09e5b05051f359f37b4e49bcee3d2e1ff9b259132d262b2cf976",
+    "experiments/post_training_mimo_centralized_v1/RESEARCH_PROTOCOL.md": "24766497a27462a829df71cd9c9fb0a09d66e2628fcaa6e3f11df4438c8c102b",
+    "experiments/post_training_mimo_centralized_v1/RESOURCE_POLICY.md": "a257b742967213b334bb8c5648a391674c99195d84ffe5aac191e9658dcb1258",
+    "experiments/post_training_mimo_centralized_v1/manifests/E1_CANDIDATE_DOSE.json": "8a200f6338806805e062c4b4a255af9a49c1db591ae6a84041f7dd759314ec7f",
+    "experiments/post_training_mimo_centralized_v1/receipts/CAPTURE_GEOMETRY_D1_NATIVE_RESULT.json": "0f253877e0cc51d47e78741899ee794ce89038e76eccdb21dceb00567a6ad375",
+    "experiments/post_training_mimo_centralized_v1/receipts/CAPTURE_SHORT_V1_NATIVE_FAILURE.json": "38b10ab69c53dd26072fbd54a74f2885c77b88fb7aa8bcde2ff521dbba10140a",
+    "experiments/post_training_mimo_centralized_v1/receipts/LAPTOP_NATIVE_STAGE_005_RESULTS.json": "396da65c8febbb631de16ef5ad5048d68c5a2f11bc7ddf4b3b7e0f964c65d9f9",
+    "experiments/post_training_mimo_centralized_v1/receipts/titan_static_v1/PARAMETER_INVENTORY.json": "8f0e1799cf64ca31afd205e411156b566aa0b14b8a6bfaf9617d617baf5b8124",
+    "experiments/post_training_mimo_centralized_v1/receipts/titan_static_v1/PRIMARY_STUDENT_RECEIPT.json": "b6cac2bc479cce98be73a08c4264bbf44e60ca689e6231e40952d8b9e5bc6ba1"
+  },
+  "experiment_id": "SYNTH-CRS-001",
+  "interpretation": "Small supervised DEVELOPMENT dose screen, not a powered confirmation. Failure or null cannot reject condition diversity generally; preserve dose and uncertainty and preregister any successor before fresh evaluation.",
+  "open_gates": [
+    "native_capture_numerical_failure_unresolved",
+    "current_two_update_backend_physical_gradient_optimizer_restore_qualification",
+    "sustained_training_reader_accumulation_RSS_admission",
+    "512_token_exact_rendering_masks_EOS_and_no_truncation",
+    "balanced_curriculum_parent_exposures_token_matching_and_update_count",
+    "independent_prior_correct_guard_enrollment_language_and_long_context_scope",
+    "fresh_atomic_and_RS_evaluation_freeze",
+    "prospective_effect_and_retention_margins_statistics_power_and_multi_seed_rule",
+    "current_committed_runtime_source_and_host_admission",
+    "complete_run_specific_launch_manifest"
+  ],
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "clip_norm": 1.0,
+    "eps": 1e-08,
+    "name": "AdamW",
+    "optimizer_state_dtype": "float32",
+    "peak_lr": 0.0001,
+    "schedule": "5_percent_warmup_then_linear_decay_indexed_by_frozen_matched_optimizer_updates",
+    "weight_decay": 0.0
+  },
+  "permissions": {
+    "merge": false,
+    "model_upload": false,
+    "native_inference": false,
+    "paid_services": false,
+    "protected_bank_access": false,
+    "training": false
+  },
+  "primary_question": "Does condition diversity beat verified surface variation on fresh families without damaging prior-correct behavior?",
+  "schema_version": 1,
+  "seeds": {
+    "automatic_additional_runs": false,
+    "first_development_seed": 101,
+    "independent_training_seeds_if_preregistered_screen_passes": [
+      211,
+      307
+    ]
+  },
+  "selection": {
+    "checkpoint": "final_only",
+    "post_hoc_dose_expansion": false
+  },
+  "source_head": "23cebe93a8684302eda3a114337482b1c95a26ba",
+  "state": "DECISIONS_FROZEN_RUN_NOT_QUALIFIED",
+  "student": {
+    "base_dtype": "bfloat16",
+    "base_parameters": 596049920,
+    "chat_template_sha256_recorded": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "config_sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "name": "Rineya-Titan-Experimental-1.0.0-devfreeze",
+    "native_load_performed": false,
+    "static_asset_hashes_refreshed": true,
+    "tokenizer_config_sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "trained_adapter_dtype": "float32",
+    "weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7"
+  }
+}

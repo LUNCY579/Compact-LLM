@@ -1,0 +1,2773 @@
+{
+  "allowlist_checks": {
+    "RS_absent_from_adaptation": true,
+    "all_prompt_positions_masked": true,
+    "completion_EOS_supervised": true,
+    "no_padding_truncation_or_post_EOS_template_newline": true,
+    "private_lineage_verifier_and_solution_metadata_not_encoded": true,
+    "saved_completion_tokens_decode_to_only_canonical_final_answer_and_EOS": true,
+    "saved_examples_only_messages_and_target": true,
+    "saved_prompt_tokens_decode_to_exact_public_messages_and_empty_think_generation_prefix": true
+  },
+  "arrays_sha256": "315ebae3d3ae42001508746df93fbfb2a0687deedf4a1f62d0b2d03ef7e79f90",
+  "audit_gpu_calls": 0,
+  "audit_model_calls": 0,
+  "audit_optimizer_calls": 0,
+  "between_arm_maximum_position_difference_fraction": {
+    "R": "11/576",
+    "S": "11/554"
+  },
+  "bundle": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003",
+  "current_source_matches_snapshot": {
+    "CORPUS_AMENDMENT_002.md": true,
+    "MATCHING_POLICY.json": true,
+    "PILOT_DECISIONS.json": true,
+    "SOURCE_POLICY_002.json": true,
+    "audit_cpu.py": true,
+    "balanced_corpus.py": true,
+    "cpu_tokenizer.py": true,
+    "matching_schedule.py": true,
+    "pilot_trainable_inventory.json": true,
+    "prepare_corpus.py": true,
+    "rs_contract.py": true,
+    "rs_solver.py": true,
+    "rs_verifier.py": true,
+    "task_compiler.py": true,
+    "validate_manifest.py": true
+  },
+  "enrollment_sha256": "7e297117d0c2b077737342f9b55b01546e380a3728236f8abd241921a5f86f67",
+  "experiment_id": "SYNTH-CRS-001",
+  "framework_modules_imported": [],
+  "limitations": [
+    "CPU data and schedule mechanics do not establish acquisition, transfer or prior-correct retention.",
+    "Global k/depth margins and shared parent/skill occurrence order do not equalize every update k/depth mixture.",
+    "Joint n/k/solution-multiplicity and n/request-count/max-depth/hop distributions remain curriculum differences, not fully matched task difficulty.",
+    "Supervised token counts are reported; they differ by one position and are not an exact matched-budget endpoint.",
+    "The saved source catalog and CPU audit labels are exposed mechanics fixtures, not sealed independent confirmation.",
+    "No native capture numerics, sustained training resource admission, fresh prior-correct guard enrollment or language/long-context preservation is qualified by this audit."
+  ],
+  "native_launch_authorized": false,
+  "native_qualification": false,
+  "old_atomic_condition_witnesses_checked": {
+    "change": 192,
+    "preserve": 64
+  },
+  "per_update_arm_deltas": [
+    {
+      "M2_minus_M1_supervised_tokens": -2,
+      "M2_minus_M1_tokens": -9,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 1
+    },
+    {
+      "M2_minus_M1_supervised_tokens": -7,
+      "M2_minus_M1_tokens": 1,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 2
+    },
+    {
+      "M2_minus_M1_supervised_tokens": -8,
+      "M2_minus_M1_tokens": -19,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 3
+    },
+    {
+      "M2_minus_M1_supervised_tokens": 0,
+      "M2_minus_M1_tokens": -24,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 4
+    },
+    {
+      "M2_minus_M1_supervised_tokens": 16,
+      "M2_minus_M1_tokens": 0,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 5
+    },
+    {
+      "M2_minus_M1_supervised_tokens": -23,
+      "M2_minus_M1_tokens": 3,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 6
+    },
+    {
+      "M2_minus_M1_supervised_tokens": -13,
+      "M2_minus_M1_tokens": -44,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 7
+    },
+    {
+      "M2_minus_M1_supervised_tokens": 5,
+      "M2_minus_M1_tokens": 17,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 8
+    },
+    {
+      "M2_minus_M1_supervised_tokens": -2,
+      "M2_minus_M1_tokens": -41,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 9
+    },
+    {
+      "M2_minus_M1_supervised_tokens": 2,
+      "M2_minus_M1_tokens": -7,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 10
+    },
+    {
+      "M2_minus_M1_supervised_tokens": 14,
+      "M2_minus_M1_tokens": 26,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 11
+    },
+    {
+      "M2_minus_M1_supervised_tokens": -2,
+      "M2_minus_M1_tokens": -21,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 12
+    },
+    {
+      "M2_minus_M1_supervised_tokens": 4,
+      "M2_minus_M1_tokens": 54,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 13
+    },
+    {
+      "M2_minus_M1_supervised_tokens": 6,
+      "M2_minus_M1_tokens": 57,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 14
+    },
+    {
+      "M2_minus_M1_supervised_tokens": 5,
+      "M2_minus_M1_tokens": -52,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 15
+    },
+    {
+      "M2_minus_M1_supervised_tokens": -3,
+      "M2_minus_M1_tokens": -35,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 16
+    },
+    {
+      "M2_minus_M1_supervised_tokens": 4,
+      "M2_minus_M1_tokens": -36,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 17
+    },
+    {
+      "M2_minus_M1_supervised_tokens": 16,
+      "M2_minus_M1_tokens": 17,
+      "R_first_depth_histograms_differ": false,
+      "S_k_histograms_differ": true,
+      "update": 18
+    },
+    {
+      "M2_minus_M1_supervised_tokens": 11,
+      "M2_minus_M1_tokens": 24,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 19
+    },
+    {
+      "M2_minus_M1_supervised_tokens": -11,
+      "M2_minus_M1_tokens": -1,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 20
+    },
+    {
+      "M2_minus_M1_supervised_tokens": -3,
+      "M2_minus_M1_tokens": 6,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 21
+    },
+    {
+      "M2_minus_M1_supervised_tokens": -4,
+      "M2_minus_M1_tokens": 29,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 22
+    },
+    {
+      "M2_minus_M1_supervised_tokens": -4,
+      "M2_minus_M1_tokens": 7,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 23
+    },
+    {
+      "M2_minus_M1_supervised_tokens": -7,
+      "M2_minus_M1_tokens": 32,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 24
+    },
+    {
+      "M2_minus_M1_supervised_tokens": 5,
+      "M2_minus_M1_tokens": -86,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 25
+    },
+    {
+      "M2_minus_M1_supervised_tokens": 9,
+      "M2_minus_M1_tokens": 63,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 26
+    },
+    {
+      "M2_minus_M1_supervised_tokens": -7,
+      "M2_minus_M1_tokens": 51,
+      "R_first_depth_histograms_differ": true,
+      "S_k_histograms_differ": true,
+      "update": 27
+    }
+  ],
+  "per_update_counts": {
+    "M1": [
+      {
+        "R_first_depth": {
+          "2": 1,
+          "5": 2
+        },
+        "S_k": {
+          "1": 3,
+          "2": 5,
+          "3": 2,
+          "4": 2,
+          "5": 5
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 3,
+          "balanced_parent_007": 2,
+          "balanced_parent_008": 1,
+          "balanced_parent_015": 1,
+          "balanced_parent_019": 3,
+          "balanced_parent_023": 3,
+          "balanced_parent_038": 1,
+          "balanced_parent_042": 1,
+          "balanced_parent_043": 2,
+          "balanced_parent_045": 1,
+          "balanced_parent_049": 2
+        },
+        "skill_rows": {
+          "R": 3,
+          "S": 17
+        },
+        "skill_tokens": {
+          "R": 1019,
+          "S": 3204
+        },
+        "supervised_tokens": 202,
+        "tokens": 4223,
+        "update": 1
+      },
+      {
+        "R_first_depth": {
+          "1": 2,
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 2
+        },
+        "S_k": {
+          "1": 3,
+          "2": 1,
+          "3": 2,
+          "4": 2,
+          "5": 5
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_008": 1,
+          "balanced_parent_014": 1,
+          "balanced_parent_015": 2,
+          "balanced_parent_019": 3,
+          "balanced_parent_023": 1,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 1,
+          "balanced_parent_041": 1,
+          "balanced_parent_042": 1,
+          "balanced_parent_049": 2,
+          "balanced_parent_050": 2,
+          "balanced_parent_057": 2
+        },
+        "skill_rows": {
+          "R": 7,
+          "S": 13
+        },
+        "skill_tokens": {
+          "R": 2276,
+          "S": 2429
+        },
+        "supervised_tokens": 211,
+        "tokens": 4705,
+        "update": 2
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "2": 1,
+          "3": 2,
+          "4": 2,
+          "5": 3
+        },
+        "S_k": {
+          "1": 1,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 4
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_014": 2,
+          "balanced_parent_015": 2,
+          "balanced_parent_016": 2,
+          "balanced_parent_019": 2,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 2,
+          "balanced_parent_038": 3,
+          "balanced_parent_049": 2,
+          "balanced_parent_057": 2,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 9,
+          "S": 11
+        },
+        "skill_tokens": {
+          "R": 3262,
+          "S": 2075
+        },
+        "supervised_tokens": 224,
+        "tokens": 5337,
+        "update": 3
+      },
+      {
+        "R_first_depth": {
+          "1": 2,
+          "2": 2,
+          "3": 1
+        },
+        "S_k": {
+          "2": 4,
+          "3": 3,
+          "4": 3,
+          "5": 5
+        },
+        "parent_exposures": {
+          "balanced_parent_007": 2,
+          "balanced_parent_014": 1,
+          "balanced_parent_015": 2,
+          "balanced_parent_019": 3,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 4,
+          "balanced_parent_042": 1,
+          "balanced_parent_045": 1,
+          "balanced_parent_049": 2,
+          "balanced_parent_050": 2,
+          "balanced_parent_057": 1
+        },
+        "skill_rows": {
+          "R": 5,
+          "S": 15
+        },
+        "skill_tokens": {
+          "R": 1574,
+          "S": 2830
+        },
+        "supervised_tokens": 224,
+        "tokens": 4404,
+        "update": 4
+      },
+      {
+        "R_first_depth": {
+          "2": 2,
+          "3": 1,
+          "5": 2
+        },
+        "S_k": {
+          "1": 6,
+          "2": 1,
+          "3": 4,
+          "4": 2,
+          "5": 2
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 4,
+          "balanced_parent_008": 2,
+          "balanced_parent_014": 1,
+          "balanced_parent_015": 2,
+          "balanced_parent_019": 2,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 1,
+          "balanced_parent_041": 2,
+          "balanced_parent_042": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_057": 2
+        },
+        "skill_rows": {
+          "R": 5,
+          "S": 15
+        },
+        "skill_tokens": {
+          "R": 1563,
+          "S": 2798
+        },
+        "supervised_tokens": 180,
+        "tokens": 4361,
+        "update": 5
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "3": 1,
+          "4": 3
+        },
+        "S_k": {
+          "1": 2,
+          "2": 1,
+          "3": 4,
+          "4": 1,
+          "5": 7
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_015": 1,
+          "balanced_parent_016": 2,
+          "balanced_parent_019": 6,
+          "balanced_parent_023": 1,
+          "balanced_parent_026": 1,
+          "balanced_parent_045": 3,
+          "balanced_parent_049": 1,
+          "balanced_parent_050": 1,
+          "balanced_parent_054": 1,
+          "balanced_parent_057": 1
+        },
+        "skill_rows": {
+          "R": 5,
+          "S": 15
+        },
+        "skill_tokens": {
+          "R": 1710,
+          "S": 2805
+        },
+        "supervised_tokens": 226,
+        "tokens": 4515,
+        "update": 6
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "S_k": {
+          "1": 1,
+          "2": 3,
+          "3": 3,
+          "4": 1,
+          "5": 5
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_008": 1,
+          "balanced_parent_015": 3,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 3,
+          "balanced_parent_023": 2,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 1,
+          "balanced_parent_043": 1,
+          "balanced_parent_049": 2,
+          "balanced_parent_054": 2,
+          "balanced_parent_057": 1,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 7,
+          "S": 13
+        },
+        "skill_tokens": {
+          "R": 2308,
+          "S": 2449
+        },
+        "supervised_tokens": 209,
+        "tokens": 4757,
+        "update": 7
+      },
+      {
+        "R_first_depth": {
+          "2": 1,
+          "3": 1,
+          "4": 2,
+          "5": 4
+        },
+        "S_k": {
+          "1": 3,
+          "3": 2,
+          "4": 1,
+          "5": 6
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_007": 1,
+          "balanced_parent_008": 1,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 2,
+          "balanced_parent_022": 1,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 3,
+          "balanced_parent_041": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_049": 4,
+          "balanced_parent_054": 1
+        },
+        "skill_rows": {
+          "R": 8,
+          "S": 12
+        },
+        "skill_tokens": {
+          "R": 2953,
+          "S": 2259
+        },
+        "supervised_tokens": 222,
+        "tokens": 5212,
+        "update": 8
+      },
+      {
+        "R_first_depth": {
+          "3": 1,
+          "4": 2,
+          "5": 4
+        },
+        "S_k": {
+          "1": 1,
+          "2": 5,
+          "5": 7
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_014": 1,
+          "balanced_parent_019": 4,
+          "balanced_parent_023": 4,
+          "balanced_parent_026": 2,
+          "balanced_parent_038": 4,
+          "balanced_parent_043": 1,
+          "balanced_parent_049": 3
+        },
+        "skill_rows": {
+          "R": 7,
+          "S": 13
+        },
+        "skill_tokens": {
+          "R": 2617,
+          "S": 2461
+        },
+        "supervised_tokens": 218,
+        "tokens": 5078,
+        "update": 9
+      },
+      {
+        "R_first_depth": {
+          "2": 2,
+          "3": 3,
+          "4": 3,
+          "5": 1
+        },
+        "S_k": {
+          "1": 4,
+          "4": 4,
+          "5": 3
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 3,
+          "balanced_parent_014": 1,
+          "balanced_parent_016": 2,
+          "balanced_parent_019": 2,
+          "balanced_parent_022": 1,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 1,
+          "balanced_parent_041": 1,
+          "balanced_parent_042": 1,
+          "balanced_parent_049": 1,
+          "balanced_parent_054": 2,
+          "balanced_parent_057": 4
+        },
+        "skill_rows": {
+          "R": 9,
+          "S": 11
+        },
+        "skill_tokens": {
+          "R": 3048,
+          "S": 2082
+        },
+        "supervised_tokens": 211,
+        "tokens": 5130,
+        "update": 10
+      },
+      {
+        "R_first_depth": {
+          "2": 2,
+          "3": 1,
+          "5": 2
+        },
+        "S_k": {
+          "1": 2,
+          "2": 4,
+          "3": 3,
+          "4": 4,
+          "5": 2
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_007": 1,
+          "balanced_parent_008": 1,
+          "balanced_parent_015": 1,
+          "balanced_parent_023": 3,
+          "balanced_parent_038": 1,
+          "balanced_parent_041": 1,
+          "balanced_parent_042": 2,
+          "balanced_parent_043": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_049": 2,
+          "balanced_parent_054": 1,
+          "balanced_parent_057": 3
+        },
+        "skill_rows": {
+          "R": 5,
+          "S": 15
+        },
+        "skill_tokens": {
+          "R": 1603,
+          "S": 2842
+        },
+        "supervised_tokens": 201,
+        "tokens": 4445,
+        "update": 11
+      },
+      {
+        "R_first_depth": {
+          "1": 3,
+          "2": 3,
+          "5": 1
+        },
+        "S_k": {
+          "1": 3,
+          "2": 4,
+          "3": 3,
+          "5": 3
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_008": 1,
+          "balanced_parent_015": 1,
+          "balanced_parent_019": 1,
+          "balanced_parent_022": 2,
+          "balanced_parent_023": 3,
+          "balanced_parent_041": 1,
+          "balanced_parent_042": 1,
+          "balanced_parent_043": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_049": 2,
+          "balanced_parent_050": 1,
+          "balanced_parent_060": 2
+        },
+        "skill_rows": {
+          "R": 7,
+          "S": 13
+        },
+        "skill_tokens": {
+          "R": 2086,
+          "S": 2429
+        },
+        "supervised_tokens": 195,
+        "tokens": 4515,
+        "update": 12
+      },
+      {
+        "R_first_depth": {
+          "1": 4,
+          "2": 1,
+          "4": 2,
+          "5": 1
+        },
+        "S_k": {
+          "1": 2,
+          "2": 3,
+          "3": 3,
+          "4": 2,
+          "5": 2
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_007": 1,
+          "balanced_parent_015": 1,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 1,
+          "balanced_parent_023": 3,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 1,
+          "balanced_parent_042": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_049": 1,
+          "balanced_parent_050": 2,
+          "balanced_parent_057": 1,
+          "balanced_parent_060": 2
+        },
+        "skill_rows": {
+          "R": 8,
+          "S": 12
+        },
+        "skill_tokens": {
+          "R": 2509,
+          "S": 2253
+        },
+        "supervised_tokens": 201,
+        "tokens": 4762,
+        "update": 13
+      },
+      {
+        "R_first_depth": {
+          "1": 3,
+          "3": 2,
+          "4": 1,
+          "5": 3
+        },
+        "S_k": {
+          "2": 2,
+          "4": 6,
+          "5": 3
+        },
+        "parent_exposures": {
+          "balanced_parent_007": 2,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 2,
+          "balanced_parent_023": 1,
+          "balanced_parent_038": 3,
+          "balanced_parent_043": 1,
+          "balanced_parent_049": 1,
+          "balanced_parent_050": 2,
+          "balanced_parent_054": 2,
+          "balanced_parent_057": 4,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 9,
+          "S": 11
+        },
+        "skill_tokens": {
+          "R": 3189,
+          "S": 2096
+        },
+        "supervised_tokens": 230,
+        "tokens": 5285,
+        "update": 14
+      },
+      {
+        "R_first_depth": {
+          "3": 3,
+          "4": 1,
+          "5": 3
+        },
+        "S_k": {
+          "1": 2,
+          "2": 4,
+          "3": 1,
+          "4": 4,
+          "5": 2
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_007": 2,
+          "balanced_parent_008": 2,
+          "balanced_parent_014": 3,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 2,
+          "balanced_parent_023": 3,
+          "balanced_parent_038": 1,
+          "balanced_parent_041": 1,
+          "balanced_parent_043": 1,
+          "balanced_parent_045": 1,
+          "balanced_parent_057": 2
+        },
+        "skill_rows": {
+          "R": 7,
+          "S": 13
+        },
+        "skill_tokens": {
+          "R": 2396,
+          "S": 2450
+        },
+        "supervised_tokens": 197,
+        "tokens": 4846,
+        "update": 15
+      },
+      {
+        "R_first_depth": {
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 1
+        },
+        "S_k": {
+          "2": 2,
+          "3": 10,
+          "4": 1,
+          "5": 3
+        },
+        "parent_exposures": {
+          "balanced_parent_014": 1,
+          "balanced_parent_015": 6,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 2,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 2,
+          "balanced_parent_038": 1,
+          "balanced_parent_045": 4,
+          "balanced_parent_049": 1,
+          "balanced_parent_057": 1
+        },
+        "skill_rows": {
+          "R": 4,
+          "S": 16
+        },
+        "skill_tokens": {
+          "R": 1466,
+          "S": 2991
+        },
+        "supervised_tokens": 216,
+        "tokens": 4457,
+        "update": 16
+      },
+      {
+        "R_first_depth": {
+          "1": 2,
+          "2": 1,
+          "3": 1,
+          "5": 3
+        },
+        "S_k": {
+          "1": 5,
+          "2": 2,
+          "3": 2,
+          "5": 4
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_008": 2,
+          "balanced_parent_015": 2,
+          "balanced_parent_019": 4,
+          "balanced_parent_023": 2,
+          "balanced_parent_038": 1,
+          "balanced_parent_041": 3,
+          "balanced_parent_042": 1,
+          "balanced_parent_054": 1,
+          "balanced_parent_060": 2
+        },
+        "skill_rows": {
+          "R": 7,
+          "S": 13
+        },
+        "skill_tokens": {
+          "R": 2127,
+          "S": 2417
+        },
+        "supervised_tokens": 183,
+        "tokens": 4544,
+        "update": 17
+      },
+      {
+        "R_first_depth": {
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 3
+        },
+        "S_k": {
+          "1": 4,
+          "2": 2,
+          "3": 4,
+          "4": 2,
+          "5": 2
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_007": 2,
+          "balanced_parent_015": 3,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 1,
+          "balanced_parent_023": 1,
+          "balanced_parent_038": 3,
+          "balanced_parent_041": 2,
+          "balanced_parent_042": 1,
+          "balanced_parent_043": 1,
+          "balanced_parent_045": 1,
+          "balanced_parent_049": 1,
+          "balanced_parent_054": 1
+        },
+        "skill_rows": {
+          "R": 6,
+          "S": 14
+        },
+        "skill_tokens": {
+          "R": 2250,
+          "S": 2596
+        },
+        "supervised_tokens": 197,
+        "tokens": 4846,
+        "update": 18
+      },
+      {
+        "R_first_depth": {
+          "1": 2,
+          "2": 2,
+          "4": 3,
+          "5": 2
+        },
+        "S_k": {
+          "1": 3,
+          "2": 1,
+          "3": 2,
+          "4": 3,
+          "5": 2
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_007": 1,
+          "balanced_parent_016": 2,
+          "balanced_parent_019": 2,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 1,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 2,
+          "balanced_parent_041": 1,
+          "balanced_parent_042": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_050": 1,
+          "balanced_parent_057": 2,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 9,
+          "S": 11
+        },
+        "skill_tokens": {
+          "R": 3100,
+          "S": 2069
+        },
+        "supervised_tokens": 209,
+        "tokens": 5169,
+        "update": 19
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "3": 2,
+          "4": 2,
+          "5": 4
+        },
+        "S_k": {
+          "2": 2,
+          "3": 2,
+          "4": 5,
+          "5": 2
+        },
+        "parent_exposures": {
+          "balanced_parent_007": 4,
+          "balanced_parent_008": 1,
+          "balanced_parent_014": 2,
+          "balanced_parent_015": 1,
+          "balanced_parent_016": 1,
+          "balanced_parent_023": 1,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 3,
+          "balanced_parent_043": 1,
+          "balanced_parent_045": 1,
+          "balanced_parent_049": 2,
+          "balanced_parent_050": 1,
+          "balanced_parent_057": 1
+        },
+        "skill_rows": {
+          "R": 9,
+          "S": 11
+        },
+        "skill_tokens": {
+          "R": 3242,
+          "S": 2092
+        },
+        "supervised_tokens": 219,
+        "tokens": 5334,
+        "update": 20
+      },
+      {
+        "R_first_depth": {
+          "2": 1,
+          "3": 2,
+          "4": 2
+        },
+        "S_k": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 3,
+          "5": 6
+        },
+        "parent_exposures": {
+          "balanced_parent_007": 2,
+          "balanced_parent_014": 1,
+          "balanced_parent_015": 2,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 1,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 2,
+          "balanced_parent_026": 1,
+          "balanced_parent_041": 1,
+          "balanced_parent_045": 1,
+          "balanced_parent_049": 5,
+          "balanced_parent_054": 1,
+          "balanced_parent_057": 1
+        },
+        "skill_rows": {
+          "R": 5,
+          "S": 15
+        },
+        "skill_tokens": {
+          "R": 1651,
+          "S": 2839
+        },
+        "supervised_tokens": 223,
+        "tokens": 4490,
+        "update": 21
+      },
+      {
+        "R_first_depth": {
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 3,
+          "5": 1
+        },
+        "S_k": {
+          "1": 3,
+          "2": 1,
+          "3": 3,
+          "4": 1,
+          "5": 2
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 3,
+          "balanced_parent_007": 1,
+          "balanced_parent_015": 1,
+          "balanced_parent_016": 2,
+          "balanced_parent_019": 2,
+          "balanced_parent_022": 1,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 1,
+          "balanced_parent_042": 1,
+          "balanced_parent_043": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_050": 1,
+          "balanced_parent_054": 2,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 10,
+          "S": 10
+        },
+        "skill_tokens": {
+          "R": 3309,
+          "S": 1865
+        },
+        "supervised_tokens": 198,
+        "tokens": 5174,
+        "update": 22
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "2": 1,
+          "4": 1,
+          "5": 1
+        },
+        "S_k": {
+          "1": 1,
+          "2": 7,
+          "3": 5,
+          "4": 3
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_015": 1,
+          "balanced_parent_016": 1,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 4,
+          "balanced_parent_038": 1,
+          "balanced_parent_043": 3,
+          "balanced_parent_045": 4,
+          "balanced_parent_057": 3,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 4,
+          "S": 16
+        },
+        "skill_tokens": {
+          "R": 1405,
+          "S": 2997
+        },
+        "supervised_tokens": 194,
+        "tokens": 4402,
+        "update": 23
+      },
+      {
+        "R_first_depth": {
+          "1": 3,
+          "2": 2,
+          "3": 1,
+          "4": 2
+        },
+        "S_k": {
+          "1": 1,
+          "2": 3,
+          "3": 2,
+          "4": 3,
+          "5": 3
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_007": 2,
+          "balanced_parent_016": 2,
+          "balanced_parent_019": 3,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 2,
+          "balanced_parent_042": 1,
+          "balanced_parent_043": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_050": 2,
+          "balanced_parent_054": 1,
+          "balanced_parent_057": 1,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 8,
+          "S": 12
+        },
+        "skill_tokens": {
+          "R": 2588,
+          "S": 2247
+        },
+        "supervised_tokens": 213,
+        "tokens": 4835,
+        "update": 24
+      },
+      {
+        "R_first_depth": {
+          "3": 3,
+          "4": 2,
+          "5": 5
+        },
+        "S_k": {
+          "1": 2,
+          "2": 2,
+          "3": 3,
+          "4": 2,
+          "5": 1
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_008": 1,
+          "balanced_parent_014": 2,
+          "balanced_parent_015": 1,
+          "balanced_parent_023": 2,
+          "balanced_parent_026": 2,
+          "balanced_parent_038": 4,
+          "balanced_parent_041": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_049": 1,
+          "balanced_parent_054": 1,
+          "balanced_parent_057": 2
+        },
+        "skill_rows": {
+          "R": 10,
+          "S": 10
+        },
+        "skill_tokens": {
+          "R": 3562,
+          "S": 1883
+        },
+        "supervised_tokens": 196,
+        "tokens": 5445,
+        "update": 25
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "2": 3,
+          "4": 1,
+          "5": 5
+        },
+        "S_k": {
+          "1": 2,
+          "2": 3,
+          "3": 2,
+          "4": 2,
+          "5": 1
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_007": 1,
+          "balanced_parent_008": 1,
+          "balanced_parent_015": 2,
+          "balanced_parent_022": 3,
+          "balanced_parent_023": 2,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 4,
+          "balanced_parent_043": 1,
+          "balanced_parent_049": 1,
+          "balanced_parent_057": 1,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 10,
+          "S": 10
+        },
+        "skill_tokens": {
+          "R": 3598,
+          "S": 1869
+        },
+        "supervised_tokens": 204,
+        "tokens": 5467,
+        "update": 26
+      },
+      {
+        "R_first_depth": {
+          "1": 3,
+          "2": 2,
+          "4": 3,
+          "5": 1
+        },
+        "S_k": {
+          "1": 1,
+          "2": 2,
+          "3": 2,
+          "4": 1,
+          "5": 5
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_008": 1,
+          "balanced_parent_015": 1,
+          "balanced_parent_016": 2,
+          "balanced_parent_019": 1,
+          "balanced_parent_023": 2,
+          "balanced_parent_026": 1,
+          "balanced_parent_042": 2,
+          "balanced_parent_045": 1,
+          "balanced_parent_049": 4,
+          "balanced_parent_050": 1,
+          "balanced_parent_057": 1,
+          "balanced_parent_060": 2
+        },
+        "skill_rows": {
+          "R": 9,
+          "S": 11
+        },
+        "skill_tokens": {
+          "R": 2730,
+          "S": 2094
+        },
+        "supervised_tokens": 211,
+        "tokens": 4824,
+        "update": 27
+      }
+    ],
+    "M2": [
+      {
+        "R_first_depth": {
+          "1": 1,
+          "5": 2
+        },
+        "S_k": {
+          "1": 4,
+          "2": 4,
+          "3": 2,
+          "4": 3,
+          "5": 4
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 3,
+          "balanced_parent_007": 2,
+          "balanced_parent_008": 1,
+          "balanced_parent_015": 1,
+          "balanced_parent_019": 3,
+          "balanced_parent_023": 3,
+          "balanced_parent_038": 1,
+          "balanced_parent_042": 1,
+          "balanced_parent_043": 2,
+          "balanced_parent_045": 1,
+          "balanced_parent_049": 2
+        },
+        "skill_rows": {
+          "R": 3,
+          "S": 17
+        },
+        "skill_tokens": {
+          "R": 1008,
+          "S": 3206
+        },
+        "supervised_tokens": 200,
+        "tokens": 4214,
+        "update": 1
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "2": 2,
+          "3": 1,
+          "4": 1,
+          "5": 2
+        },
+        "S_k": {
+          "1": 3,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 4
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_008": 1,
+          "balanced_parent_014": 1,
+          "balanced_parent_015": 2,
+          "balanced_parent_019": 3,
+          "balanced_parent_023": 1,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 1,
+          "balanced_parent_041": 1,
+          "balanced_parent_042": 1,
+          "balanced_parent_049": 2,
+          "balanced_parent_050": 2,
+          "balanced_parent_057": 2
+        },
+        "skill_rows": {
+          "R": 7,
+          "S": 13
+        },
+        "skill_tokens": {
+          "R": 2286,
+          "S": 2420
+        },
+        "supervised_tokens": 204,
+        "tokens": 4706,
+        "update": 2
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "2": 2,
+          "3": 1,
+          "4": 2,
+          "5": 3
+        },
+        "S_k": {
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 1,
+          "5": 4
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_014": 2,
+          "balanced_parent_015": 2,
+          "balanced_parent_016": 2,
+          "balanced_parent_019": 2,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 2,
+          "balanced_parent_038": 3,
+          "balanced_parent_049": 2,
+          "balanced_parent_057": 2,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 9,
+          "S": 11
+        },
+        "skill_tokens": {
+          "R": 3252,
+          "S": 2066
+        },
+        "supervised_tokens": 216,
+        "tokens": 5318,
+        "update": 3
+      },
+      {
+        "R_first_depth": {
+          "1": 4,
+          "3": 1
+        },
+        "S_k": {
+          "2": 2,
+          "3": 5,
+          "4": 5,
+          "5": 3
+        },
+        "parent_exposures": {
+          "balanced_parent_007": 2,
+          "balanced_parent_014": 1,
+          "balanced_parent_015": 2,
+          "balanced_parent_019": 3,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 4,
+          "balanced_parent_042": 1,
+          "balanced_parent_045": 1,
+          "balanced_parent_049": 2,
+          "balanced_parent_050": 2,
+          "balanced_parent_057": 1
+        },
+        "skill_rows": {
+          "R": 5,
+          "S": 15
+        },
+        "skill_tokens": {
+          "R": 1554,
+          "S": 2826
+        },
+        "supervised_tokens": 224,
+        "tokens": 4380,
+        "update": 4
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "3": 2,
+          "4": 2
+        },
+        "S_k": {
+          "1": 4,
+          "2": 2,
+          "3": 2,
+          "4": 3,
+          "5": 4
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 4,
+          "balanced_parent_008": 2,
+          "balanced_parent_014": 1,
+          "balanced_parent_015": 2,
+          "balanced_parent_019": 2,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 1,
+          "balanced_parent_041": 2,
+          "balanced_parent_042": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_057": 2
+        },
+        "skill_rows": {
+          "R": 5,
+          "S": 15
+        },
+        "skill_tokens": {
+          "R": 1543,
+          "S": 2818
+        },
+        "supervised_tokens": 196,
+        "tokens": 4361,
+        "update": 5
+      },
+      {
+        "R_first_depth": {
+          "2": 1,
+          "4": 3,
+          "5": 1
+        },
+        "S_k": {
+          "1": 3,
+          "2": 3,
+          "3": 3,
+          "4": 4,
+          "5": 2
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_015": 1,
+          "balanced_parent_016": 2,
+          "balanced_parent_019": 6,
+          "balanced_parent_023": 1,
+          "balanced_parent_026": 1,
+          "balanced_parent_045": 3,
+          "balanced_parent_049": 1,
+          "balanced_parent_050": 1,
+          "balanced_parent_054": 1,
+          "balanced_parent_057": 1
+        },
+        "skill_rows": {
+          "R": 5,
+          "S": 15
+        },
+        "skill_tokens": {
+          "R": 1740,
+          "S": 2778
+        },
+        "supervised_tokens": 203,
+        "tokens": 4518,
+        "update": 6
+      },
+      {
+        "R_first_depth": {
+          "2": 2,
+          "3": 3,
+          "4": 1,
+          "5": 1
+        },
+        "S_k": {
+          "1": 2,
+          "2": 4,
+          "3": 2,
+          "4": 2,
+          "5": 3
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_008": 1,
+          "balanced_parent_015": 3,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 3,
+          "balanced_parent_023": 2,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 1,
+          "balanced_parent_043": 1,
+          "balanced_parent_049": 2,
+          "balanced_parent_054": 2,
+          "balanced_parent_057": 1,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 7,
+          "S": 13
+        },
+        "skill_tokens": {
+          "R": 2278,
+          "S": 2435
+        },
+        "supervised_tokens": 196,
+        "tokens": 4713,
+        "update": 7
+      },
+      {
+        "R_first_depth": {
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 5
+        },
+        "S_k": {
+          "1": 2,
+          "3": 2,
+          "4": 2,
+          "5": 6
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_007": 1,
+          "balanced_parent_008": 1,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 2,
+          "balanced_parent_022": 1,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 3,
+          "balanced_parent_041": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_049": 4,
+          "balanced_parent_054": 1
+        },
+        "skill_rows": {
+          "R": 8,
+          "S": 12
+        },
+        "skill_tokens": {
+          "R": 2963,
+          "S": 2266
+        },
+        "supervised_tokens": 227,
+        "tokens": 5229,
+        "update": 8
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "3": 2,
+          "5": 4
+        },
+        "S_k": {
+          "1": 1,
+          "2": 5,
+          "4": 1,
+          "5": 6
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_014": 1,
+          "balanced_parent_019": 4,
+          "balanced_parent_023": 4,
+          "balanced_parent_026": 2,
+          "balanced_parent_038": 4,
+          "balanced_parent_043": 1,
+          "balanced_parent_049": 3
+        },
+        "skill_rows": {
+          "R": 7,
+          "S": 13
+        },
+        "skill_tokens": {
+          "R": 2576,
+          "S": 2461
+        },
+        "supervised_tokens": 216,
+        "tokens": 5037,
+        "update": 9
+      },
+      {
+        "R_first_depth": {
+          "2": 3,
+          "3": 2,
+          "4": 3,
+          "5": 1
+        },
+        "S_k": {
+          "1": 3,
+          "2": 1,
+          "4": 3,
+          "5": 4
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 3,
+          "balanced_parent_014": 1,
+          "balanced_parent_016": 2,
+          "balanced_parent_019": 2,
+          "balanced_parent_022": 1,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 1,
+          "balanced_parent_041": 1,
+          "balanced_parent_042": 1,
+          "balanced_parent_049": 1,
+          "balanced_parent_054": 2,
+          "balanced_parent_057": 4
+        },
+        "skill_rows": {
+          "R": 9,
+          "S": 11
+        },
+        "skill_tokens": {
+          "R": 3038,
+          "S": 2085
+        },
+        "supervised_tokens": 213,
+        "tokens": 5123,
+        "update": 10
+      },
+      {
+        "R_first_depth": {
+          "2": 1,
+          "3": 2,
+          "5": 2
+        },
+        "S_k": {
+          "1": 1,
+          "2": 3,
+          "3": 4,
+          "4": 2,
+          "5": 5
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_007": 1,
+          "balanced_parent_008": 1,
+          "balanced_parent_015": 1,
+          "balanced_parent_023": 3,
+          "balanced_parent_038": 1,
+          "balanced_parent_041": 1,
+          "balanced_parent_042": 2,
+          "balanced_parent_043": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_049": 2,
+          "balanced_parent_054": 1,
+          "balanced_parent_057": 3
+        },
+        "skill_rows": {
+          "R": 5,
+          "S": 15
+        },
+        "skill_tokens": {
+          "R": 1611,
+          "S": 2860
+        },
+        "supervised_tokens": 215,
+        "tokens": 4471,
+        "update": 11
+      },
+      {
+        "R_first_depth": {
+          "1": 4,
+          "2": 2,
+          "4": 1
+        },
+        "S_k": {
+          "1": 4,
+          "2": 3,
+          "3": 3,
+          "4": 1,
+          "5": 2
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_008": 1,
+          "balanced_parent_015": 1,
+          "balanced_parent_019": 1,
+          "balanced_parent_022": 2,
+          "balanced_parent_023": 3,
+          "balanced_parent_041": 1,
+          "balanced_parent_042": 1,
+          "balanced_parent_043": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_049": 2,
+          "balanced_parent_050": 1,
+          "balanced_parent_060": 2
+        },
+        "skill_rows": {
+          "R": 7,
+          "S": 13
+        },
+        "skill_tokens": {
+          "R": 2066,
+          "S": 2428
+        },
+        "supervised_tokens": 193,
+        "tokens": 4494,
+        "update": 12
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "2": 3,
+          "4": 3,
+          "5": 1
+        },
+        "S_k": {
+          "1": 1,
+          "2": 4,
+          "3": 3,
+          "4": 2,
+          "5": 2
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_007": 1,
+          "balanced_parent_015": 1,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 1,
+          "balanced_parent_023": 3,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 1,
+          "balanced_parent_042": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_049": 1,
+          "balanced_parent_050": 2,
+          "balanced_parent_057": 1,
+          "balanced_parent_060": 2
+        },
+        "skill_rows": {
+          "R": 8,
+          "S": 12
+        },
+        "skill_tokens": {
+          "R": 2559,
+          "S": 2257
+        },
+        "supervised_tokens": 205,
+        "tokens": 4816,
+        "update": 13
+      },
+      {
+        "R_first_depth": {
+          "1": 2,
+          "3": 1,
+          "4": 2,
+          "5": 4
+        },
+        "S_k": {
+          "2": 1,
+          "3": 1,
+          "4": 3,
+          "5": 6
+        },
+        "parent_exposures": {
+          "balanced_parent_007": 2,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 2,
+          "balanced_parent_023": 1,
+          "balanced_parent_038": 3,
+          "balanced_parent_043": 1,
+          "balanced_parent_049": 1,
+          "balanced_parent_050": 2,
+          "balanced_parent_054": 2,
+          "balanced_parent_057": 4,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 9,
+          "S": 11
+        },
+        "skill_tokens": {
+          "R": 3240,
+          "S": 2102
+        },
+        "supervised_tokens": 236,
+        "tokens": 5342,
+        "update": 14
+      },
+      {
+        "R_first_depth": {
+          "1": 2,
+          "3": 1,
+          "4": 3,
+          "5": 1
+        },
+        "S_k": {
+          "1": 3,
+          "2": 3,
+          "3": 1,
+          "4": 2,
+          "5": 4
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_007": 2,
+          "balanced_parent_008": 2,
+          "balanced_parent_014": 3,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 2,
+          "balanced_parent_023": 3,
+          "balanced_parent_038": 1,
+          "balanced_parent_041": 1,
+          "balanced_parent_043": 1,
+          "balanced_parent_045": 1,
+          "balanced_parent_057": 2
+        },
+        "skill_rows": {
+          "R": 7,
+          "S": 13
+        },
+        "skill_tokens": {
+          "R": 2336,
+          "S": 2458
+        },
+        "supervised_tokens": 202,
+        "tokens": 4794,
+        "update": 15
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "2": 1,
+          "3": 1,
+          "5": 1
+        },
+        "S_k": {
+          "1": 1,
+          "2": 2,
+          "3": 9,
+          "4": 1,
+          "5": 3
+        },
+        "parent_exposures": {
+          "balanced_parent_014": 1,
+          "balanced_parent_015": 6,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 2,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 2,
+          "balanced_parent_038": 1,
+          "balanced_parent_045": 4,
+          "balanced_parent_049": 1,
+          "balanced_parent_057": 1
+        },
+        "skill_rows": {
+          "R": 4,
+          "S": 16
+        },
+        "skill_tokens": {
+          "R": 1436,
+          "S": 2986
+        },
+        "supervised_tokens": 213,
+        "tokens": 4422,
+        "update": 16
+      },
+      {
+        "R_first_depth": {
+          "1": 3,
+          "2": 1,
+          "4": 2,
+          "5": 1
+        },
+        "S_k": {
+          "1": 5,
+          "3": 3,
+          "4": 2,
+          "5": 3
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_008": 2,
+          "balanced_parent_015": 2,
+          "balanced_parent_019": 4,
+          "balanced_parent_023": 2,
+          "balanced_parent_038": 1,
+          "balanced_parent_041": 3,
+          "balanced_parent_042": 1,
+          "balanced_parent_054": 1,
+          "balanced_parent_060": 2
+        },
+        "skill_rows": {
+          "R": 7,
+          "S": 13
+        },
+        "skill_tokens": {
+          "R": 2087,
+          "S": 2421
+        },
+        "supervised_tokens": 187,
+        "tokens": 4508,
+        "update": 17
+      },
+      {
+        "R_first_depth": {
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 3
+        },
+        "S_k": {
+          "1": 1,
+          "2": 3,
+          "3": 4,
+          "4": 3,
+          "5": 3
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_007": 2,
+          "balanced_parent_015": 3,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 1,
+          "balanced_parent_023": 1,
+          "balanced_parent_038": 3,
+          "balanced_parent_041": 2,
+          "balanced_parent_042": 1,
+          "balanced_parent_043": 1,
+          "balanced_parent_045": 1,
+          "balanced_parent_049": 1,
+          "balanced_parent_054": 1
+        },
+        "skill_rows": {
+          "R": 6,
+          "S": 14
+        },
+        "skill_tokens": {
+          "R": 2250,
+          "S": 2613
+        },
+        "supervised_tokens": 213,
+        "tokens": 4863,
+        "update": 18
+      },
+      {
+        "R_first_depth": {
+          "1": 3,
+          "2": 1,
+          "4": 1,
+          "5": 4
+        },
+        "S_k": {
+          "1": 2,
+          "2": 1,
+          "3": 2,
+          "4": 1,
+          "5": 5
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_007": 1,
+          "balanced_parent_016": 2,
+          "balanced_parent_019": 2,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 1,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 2,
+          "balanced_parent_041": 1,
+          "balanced_parent_042": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_050": 1,
+          "balanced_parent_057": 2,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 9,
+          "S": 11
+        },
+        "skill_tokens": {
+          "R": 3110,
+          "S": 2083
+        },
+        "supervised_tokens": 220,
+        "tokens": 5193,
+        "update": 19
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "3": 1,
+          "4": 3,
+          "5": 4
+        },
+        "S_k": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 4,
+          "5": 1
+        },
+        "parent_exposures": {
+          "balanced_parent_007": 4,
+          "balanced_parent_008": 1,
+          "balanced_parent_014": 2,
+          "balanced_parent_015": 1,
+          "balanced_parent_016": 1,
+          "balanced_parent_023": 1,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 3,
+          "balanced_parent_043": 1,
+          "balanced_parent_045": 1,
+          "balanced_parent_049": 2,
+          "balanced_parent_050": 1,
+          "balanced_parent_057": 1
+        },
+        "skill_rows": {
+          "R": 9,
+          "S": 11
+        },
+        "skill_tokens": {
+          "R": 3252,
+          "S": 2081
+        },
+        "supervised_tokens": 208,
+        "tokens": 5333,
+        "update": 20
+      },
+      {
+        "R_first_depth": {
+          "2": 1,
+          "3": 2,
+          "4": 1,
+          "5": 1
+        },
+        "S_k": {
+          "1": 1,
+          "2": 2,
+          "3": 4,
+          "4": 3,
+          "5": 5
+        },
+        "parent_exposures": {
+          "balanced_parent_007": 2,
+          "balanced_parent_014": 1,
+          "balanced_parent_015": 2,
+          "balanced_parent_016": 1,
+          "balanced_parent_019": 1,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 2,
+          "balanced_parent_026": 1,
+          "balanced_parent_041": 1,
+          "balanced_parent_045": 1,
+          "balanced_parent_049": 5,
+          "balanced_parent_054": 1,
+          "balanced_parent_057": 1
+        },
+        "skill_rows": {
+          "R": 5,
+          "S": 15
+        },
+        "skill_tokens": {
+          "R": 1661,
+          "S": 2835
+        },
+        "supervised_tokens": 220,
+        "tokens": 4496,
+        "update": 21
+      },
+      {
+        "R_first_depth": {
+          "1": 2,
+          "2": 1,
+          "3": 2,
+          "4": 3,
+          "5": 2
+        },
+        "S_k": {
+          "1": 3,
+          "2": 1,
+          "3": 4,
+          "5": 2
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 3,
+          "balanced_parent_007": 1,
+          "balanced_parent_015": 1,
+          "balanced_parent_016": 2,
+          "balanced_parent_019": 2,
+          "balanced_parent_022": 1,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 1,
+          "balanced_parent_042": 1,
+          "balanced_parent_043": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_050": 1,
+          "balanced_parent_054": 2,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 10,
+          "S": 10
+        },
+        "skill_tokens": {
+          "R": 3336,
+          "S": 1867
+        },
+        "supervised_tokens": 194,
+        "tokens": 5203,
+        "update": 22
+      },
+      {
+        "R_first_depth": {
+          "2": 2,
+          "4": 1,
+          "5": 1
+        },
+        "S_k": {
+          "1": 2,
+          "2": 8,
+          "3": 4,
+          "5": 2
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_015": 1,
+          "balanced_parent_016": 1,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 4,
+          "balanced_parent_038": 1,
+          "balanced_parent_043": 3,
+          "balanced_parent_045": 4,
+          "balanced_parent_057": 3,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 4,
+          "S": 16
+        },
+        "skill_tokens": {
+          "R": 1415,
+          "S": 2994
+        },
+        "supervised_tokens": 190,
+        "tokens": 4409,
+        "update": 23
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "2": 3,
+          "3": 2,
+          "4": 1,
+          "5": 1
+        },
+        "S_k": {
+          "1": 2,
+          "2": 3,
+          "3": 2,
+          "4": 3,
+          "5": 2
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_007": 2,
+          "balanced_parent_016": 2,
+          "balanced_parent_019": 3,
+          "balanced_parent_022": 1,
+          "balanced_parent_023": 2,
+          "balanced_parent_042": 1,
+          "balanced_parent_043": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_050": 2,
+          "balanced_parent_054": 1,
+          "balanced_parent_057": 1,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 8,
+          "S": 12
+        },
+        "skill_tokens": {
+          "R": 2629,
+          "S": 2238
+        },
+        "supervised_tokens": 206,
+        "tokens": 4867,
+        "update": 24
+      },
+      {
+        "R_first_depth": {
+          "1": 2,
+          "2": 1,
+          "3": 2,
+          "4": 2,
+          "5": 3
+        },
+        "S_k": {
+          "1": 1,
+          "2": 3,
+          "3": 2,
+          "4": 3,
+          "5": 1
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_008": 1,
+          "balanced_parent_014": 2,
+          "balanced_parent_015": 1,
+          "balanced_parent_023": 2,
+          "balanced_parent_026": 2,
+          "balanced_parent_038": 4,
+          "balanced_parent_041": 1,
+          "balanced_parent_045": 2,
+          "balanced_parent_049": 1,
+          "balanced_parent_054": 1,
+          "balanced_parent_057": 2
+        },
+        "skill_rows": {
+          "R": 10,
+          "S": 10
+        },
+        "skill_tokens": {
+          "R": 3472,
+          "S": 1887
+        },
+        "supervised_tokens": 201,
+        "tokens": 5359,
+        "update": 25
+      },
+      {
+        "R_first_depth": {
+          "2": 1,
+          "3": 3,
+          "5": 6
+        },
+        "S_k": {
+          "1": 3,
+          "2": 1,
+          "3": 2,
+          "4": 1,
+          "5": 3
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 2,
+          "balanced_parent_007": 1,
+          "balanced_parent_008": 1,
+          "balanced_parent_015": 2,
+          "balanced_parent_022": 3,
+          "balanced_parent_023": 2,
+          "balanced_parent_026": 1,
+          "balanced_parent_038": 4,
+          "balanced_parent_043": 1,
+          "balanced_parent_049": 1,
+          "balanced_parent_057": 1,
+          "balanced_parent_060": 1
+        },
+        "skill_rows": {
+          "R": 10,
+          "S": 10
+        },
+        "skill_tokens": {
+          "R": 3652,
+          "S": 1878
+        },
+        "supervised_tokens": 213,
+        "tokens": 5530,
+        "update": 26
+      },
+      {
+        "R_first_depth": {
+          "1": 1,
+          "2": 2,
+          "3": 1,
+          "4": 3,
+          "5": 2
+        },
+        "S_k": {
+          "1": 1,
+          "2": 3,
+          "3": 1,
+          "4": 3,
+          "5": 3
+        },
+        "parent_exposures": {
+          "balanced_parent_001": 1,
+          "balanced_parent_008": 1,
+          "balanced_parent_015": 1,
+          "balanced_parent_016": 2,
+          "balanced_parent_019": 1,
+          "balanced_parent_023": 2,
+          "balanced_parent_026": 1,
+          "balanced_parent_042": 2,
+          "balanced_parent_045": 1,
+          "balanced_parent_049": 4,
+          "balanced_parent_050": 1,
+          "balanced_parent_057": 1,
+          "balanced_parent_060": 2
+        },
+        "skill_rows": {
+          "R": 9,
+          "S": 11
+        },
+        "skill_tokens": {
+          "R": 2788,
+          "S": 2087
+        },
+        "supervised_tokens": 204,
+        "tokens": 4875,
+        "update": 27
+      }
+    ]
+  },
+  "plan_sha256": "7fed3d96a3f35f3564965a263dbdf4ee00633ca0a82f6fdeac28daf5c2568755",
+  "preparation_receipt_file_sha256": "cb0b0ffe331664da1206c36b60a344a92b3f1bf6a0dd29cf1a89a45881cb82eb",
+  "preparation_receipt_semantic_sha256": "ebd37ab3ac2ee2e6ce5872b8592075fc4679d4fe4eef444065893a5e1a6bd272",
+  "protected_bank_access": false,
+  "recorded_at_utc": "2026-10-03T07:17:18.090060+00:00",
+  "registered_pool": {
+    "M1": {
+      "distinct_allowlisted_examples": 284,
+      "registered_rows": 320
+    },
+    "M2": {
+      "distinct_allowlisted_examples": 320,
+      "registered_rows": 320
+    }
+  },
+  "remaining_shape_distributions": {
+    "M1": {
+      "R": {
+        "n_requested_maxdepth": {
+          "(11, 2, 5)": 32,
+          "(11, 4, 4)": 16,
+          "(12, 2, 2)": 16,
+          "(12, 2, 4)": 16,
+          "(12, 4, 4)": 16,
+          "(6, 4, 5)": 24,
+          "(7, 2, 2)": 16,
+          "(9, 2, 4)": 16,
+          "(9, 4, 5)": 40
+        },
+        "total_requested_hops": {
+          "3": 16,
+          "4": 16,
+          "6": 16,
+          "7": 32,
+          "8": 16,
+          "10": 16,
+          "11": 16,
+          "15": 24,
+          "17": 40
+        }
+      },
+      "S": {
+        "n_k_solution_count": {
+          "(11, 1, 1)": 40,
+          "(11, 4, 1)": 36,
+          "(11, 5, 6)": 40,
+          "(12, 2, 1)": 52,
+          "(8, 3, 1)": 36,
+          "(8, 5, 1)": 52,
+          "(9, 1, 1)": 16,
+          "(9, 2, 1)": 16,
+          "(9, 3, 1)": 36,
+          "(9, 4, 1)": 24
+        },
+        "target_sign": {
+          "negative": 204,
+          "positive": 144
+        }
+      }
+    },
+    "M2": {
+      "R": {
+        "n_requested_maxdepth": {
+          "(11, 2, 2)": 4,
+          "(11, 2, 4)": 4,
+          "(11, 2, 5)": 24,
+          "(11, 4, 4)": 16,
+          "(12, 2, 2)": 12,
+          "(12, 2, 3)": 4,
+          "(12, 2, 4)": 16,
+          "(12, 4, 4)": 12,
+          "(12, 4, 5)": 4,
+          "(6, 4, 5)": 24,
+          "(7, 2, 2)": 12,
+          "(7, 2, 5)": 4,
+          "(9, 2, 3)": 4,
+          "(9, 2, 4)": 8,
+          "(9, 2, 5)": 4,
+          "(9, 4, 5)": 40
+        },
+        "total_requested_hops": {
+          "3": 16,
+          "4": 12,
+          "5": 8,
+          "6": 16,
+          "7": 28,
+          "8": 12,
+          "9": 4,
+          "10": 12,
+          "11": 12,
+          "12": 4,
+          "13": 4,
+          "14": 8,
+          "15": 16,
+          "16": 8,
+          "17": 32
+        }
+      },
+      "S": {
+        "n_k_solution_count": {
+          "(11, 1, 1)": 36,
+          "(11, 2, 1)": 4,
+          "(11, 3, 1)": 4,
+          "(11, 4, 1)": 4,
+          "(11, 4, 2)": 12,
+          "(11, 5, 3)": 28,
+          "(11, 5, 6)": 28,
+          "(12, 1, 1)": 4,
+          "(12, 2, 1)": 24,
+          "(12, 2, 2)": 20,
+          "(12, 3, 1)": 4,
+          "(8, 1, 1)": 4,
+          "(8, 2, 2)": 4,
+          "(8, 3, 1)": 16,
+          "(8, 3, 3)": 12,
+          "(8, 4, 2)": 20,
+          "(8, 4, 3)": 4,
+          "(8, 5, 1)": 28,
+          "(9, 1, 1)": 12,
+          "(9, 2, 1)": 12,
+          "(9, 2, 2)": 4,
+          "(9, 3, 1)": 32,
+          "(9, 3, 3)": 4,
+          "(9, 4, 1)": 20,
+          "(9, 5, 1)": 8
+        },
+        "target_sign": {
+          "negative": 200,
+          "positive": 144,
+          "zero": 4
+        }
+      }
+    }
+  },
+  "schedule_sha256": "feb657f8ce49bd08f7f077f854db899bbe5675ff522a295f15f3682031b84c3c",
+  "schema_version": 1,
+  "sha256": "7d34edcbfc5da73e6441c89f63adc370c7dda157f8c116b181fdc8ea5857180c",
+  "source_snapshot_hashes": {
+    "CORPUS_AMENDMENT_002.md": "43d3af7c6626743fe5f62c9c9522528a461c6e8386c63bcc4be2da2c37ae79ea",
+    "MATCHING_POLICY.json": "4d2af8df7832f27adbac37fc28740df60fedb3c2b0f8ae9e69f4743d9baa45e5",
+    "PILOT_DECISIONS.json": "711336dbb5c6c68be8097f29159fcef934253292524bfe20936a1b2f32dc0ddd",
+    "SOURCE_POLICY_002.json": "a72510e2066edfd800e9a8a37babc16763d118b9407a53e0477c30ffe706936d",
+    "audit_cpu.py": "cda2fd84856380ddd231142587b26bbe2016c8c24ce08ecbc4a6ddf7143f2d99",
+    "balanced_corpus.py": "0577bb4a15e08ae38b97289171bcd28cb4dc45544393f9e1f3075fbab270ca34",
+    "cpu_tokenizer.py": "268d47037581e7d022cb4d4d53dd9b7e4454909c74b910572d2ba153e463b70f",
+    "matching_schedule.py": "9661626fd27b372e532f1816783b7410e259f22838578f5a050b3a7059729805",
+    "pilot_trainable_inventory.json": "3bcb2a3d4e9324ab8fe4e6b7fb9f6de0c77c6801c3e0101fa63606ff46b7183d",
+    "prepare_corpus.py": "7a8985da55a627856b66d9b649f8fb5d1053deb65b9f5c8d0f72869ebb086c9d",
+    "rs_contract.py": "cef135a06d4449917798e7e40685ac3589615663bfe47662e0a49207b67ccc6a",
+    "rs_solver.py": "6acf2fa26ef3f5a7b103818f4bb0eef972d5d975e9f3b39614ad6b253131acaf",
+    "rs_verifier.py": "36d2322ac077f4731b621defbc77ae39d1bfde2f1d0bcc15c73082b5f897ec98",
+    "task_compiler.py": "1ae26b485d7a6ee48fe9667df51886c2c64af09d89dd0edcb622794d33642f60",
+    "validate_manifest.py": "1f8d37ed2570c6b6dfa800af6209edd85b933f2d35bde297d8228c5a37f8175d"
+  },
+  "state": "PASS_INDEPENDENT_CPU_BUNDLE_AUDIT_NATIVE_UNQUALIFIED",
+  "teacher_calls_recorded": 0,
+  "tokenizer_assets_rehashed_before_and_after": {
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  "totals": {
+    "M1": {
+      "R_first_depth_histogram": {
+        "1": 32,
+        "2": 32,
+        "3": 32,
+        "4": 40,
+        "5": 56
+      },
+      "S_k_histogram": {
+        "1": 56,
+        "2": 68,
+        "3": 72,
+        "4": 60,
+        "5": 92
+      },
+      "answer_slots": {
+        "R": 576,
+        "S": 1108
+      },
+      "input_tokens": 130562,
+      "maximum_position_residual_fraction": {
+        "R": "239/22176",
+        "S": "415/36564"
+      },
+      "parent_exposures": {
+        "balanced_parent_001": 40,
+        "balanced_parent_007": 24,
+        "balanced_parent_008": 16,
+        "balanced_parent_014": 16,
+        "balanced_parent_015": 36,
+        "balanced_parent_016": 24,
+        "balanced_parent_019": 52,
+        "balanced_parent_022": 16,
+        "balanced_parent_023": 52,
+        "balanced_parent_026": 16,
+        "balanced_parent_038": 40,
+        "balanced_parent_041": 16,
+        "balanced_parent_042": 16,
+        "balanced_parent_043": 16,
+        "balanced_parent_045": 36,
+        "balanced_parent_049": 40,
+        "balanced_parent_050": 16,
+        "balanced_parent_054": 16,
+        "balanced_parent_057": 36,
+        "balanced_parent_060": 16
+      },
+      "rows": 540,
+      "skill_input_tokens": {
+        "R": 65141,
+        "S": 65421
+      },
+      "skill_rows": {
+        "R": 192,
+        "S": 348
+      },
+      "supervised_tokens": 5614,
+      "updates": 27
+    },
+    "M2": {
+      "R_first_depth_histogram": {
+        "1": 32,
+        "2": 32,
+        "3": 32,
+        "4": 40,
+        "5": 56
+      },
+      "S_k_histogram": {
+        "1": 56,
+        "2": 68,
+        "3": 72,
+        "4": 60,
+        "5": 92
+      },
+      "answer_slots": {
+        "R": 576,
+        "S": 1108
+      },
+      "input_tokens": 130574,
+      "maximum_position_residual_fraction": {
+        "R": "23/1584",
+        "S": "4307/219384"
+      },
+      "parent_exposures": {
+        "balanced_parent_001": 40,
+        "balanced_parent_007": 24,
+        "balanced_parent_008": 16,
+        "balanced_parent_014": 16,
+        "balanced_parent_015": 36,
+        "balanced_parent_016": 24,
+        "balanced_parent_019": 52,
+        "balanced_parent_022": 16,
+        "balanced_parent_023": 52,
+        "balanced_parent_026": 16,
+        "balanced_parent_038": 40,
+        "balanced_parent_041": 16,
+        "balanced_parent_042": 16,
+        "balanced_parent_043": 16,
+        "balanced_parent_045": 36,
+        "balanced_parent_049": 40,
+        "balanced_parent_050": 16,
+        "balanced_parent_054": 16,
+        "balanced_parent_057": 36,
+        "balanced_parent_060": 16
+      },
+      "rows": 540,
+      "skill_input_tokens": {
+        "R": 65138,
+        "S": 65436
+      },
+      "skill_rows": {
+        "R": 192,
+        "S": 348
+      },
+      "supervised_tokens": 5615,
+      "updates": 27
+    }
+  },
+  "training_admitted": false,
+  "updates_with_different_R_first_depth_histograms": 26,
+  "updates_with_different_S_k_histograms": 27,
+  "verified_bundle_files": {
+    "candidate_records.jsonl": {
+      "bytes": 1127444,
+      "sha256": "90c151edb668416935608912a0d21c0425dbbd9f37a81a1796d4132dcee9f350"
+    },
+    "code_snapshot/CORPUS_AMENDMENT_002.md": {
+      "bytes": 2613,
+      "sha256": "43d3af7c6626743fe5f62c9c9522528a461c6e8386c63bcc4be2da2c37ae79ea"
+    },
+    "code_snapshot/MATCHING_POLICY.json": {
+      "bytes": 1982,
+      "sha256": "4d2af8df7832f27adbac37fc28740df60fedb3c2b0f8ae9e69f4743d9baa45e5"
+    },
+    "code_snapshot/PILOT_DECISIONS.json": {
+      "bytes": 7681,
+      "sha256": "711336dbb5c6c68be8097f29159fcef934253292524bfe20936a1b2f32dc0ddd"
+    },
+    "code_snapshot/SOURCE_POLICY_002.json": {
+      "bytes": 633,
+      "sha256": "a72510e2066edfd800e9a8a37babc16763d118b9407a53e0477c30ffe706936d"
+    },
+    "code_snapshot/audit_cpu.py": {
+      "bytes": 9900,
+      "sha256": "cda2fd84856380ddd231142587b26bbe2016c8c24ce08ecbc4a6ddf7143f2d99"
+    },
+    "code_snapshot/balanced_corpus.py": {
+      "bytes": 18956,
+      "sha256": "0577bb4a15e08ae38b97289171bcd28cb4dc45544393f9e1f3075fbab270ca34"
+    },
+    "code_snapshot/cpu_tokenizer.py": {
+      "bytes": 13500,
+      "sha256": "268d47037581e7d022cb4d4d53dd9b7e4454909c74b910572d2ba153e463b70f"
+    },
+    "code_snapshot/matching_schedule.py": {
+      "bytes": 19376,
+      "sha256": "9661626fd27b372e532f1816783b7410e259f22838578f5a050b3a7059729805"
+    },
+    "code_snapshot/pilot_trainable_inventory.json": {
+      "bytes": 19370,
+      "sha256": "3bcb2a3d4e9324ab8fe4e6b7fb9f6de0c77c6801c3e0101fa63606ff46b7183d"
+    },
+    "code_snapshot/prepare_corpus.py": {
+      "bytes": 25228,
+      "sha256": "7a8985da55a627856b66d9b649f8fb5d1053deb65b9f5c8d0f72869ebb086c9d"
+    },
+    "code_snapshot/rs_contract.py": {
+      "bytes": 7033,
+      "sha256": "cef135a06d4449917798e7e40685ac3589615663bfe47662e0a49207b67ccc6a"
+    },
+    "code_snapshot/rs_solver.py": {
+      "bytes": 2037,
+      "sha256": "6acf2fa26ef3f5a7b103818f4bb0eef972d5d975e9f3b39614ad6b253131acaf"
+    },
+    "code_snapshot/rs_verifier.py": {
+      "bytes": 3704,
+      "sha256": "36d2322ac077f4731b621defbc77ae39d1bfde2f1d0bcc15c73082b5f897ec98"
+    },
+    "code_snapshot/task_compiler.py": {
+      "bytes": 17220,
+      "sha256": "1ae26b485d7a6ee48fe9667df51886c2c64af09d89dd0edcb622794d33642f60"
+    },
+    "code_snapshot/validate_manifest.py": {
+      "bytes": 7349,
+      "sha256": "1f8d37ed2570c6b6dfa800af6209edd85b933f2d35bde297d8228c5a37f8175d"
+    },
+    "corpus_amendment_002.md": {
+      "bytes": 2613,
+      "sha256": "43d3af7c6626743fe5f62c9c9522528a461c6e8386c63bcc4be2da2c37ae79ea"
+    },
+    "enrollment.json": {
+      "bytes": 49975,
+      "sha256": "2730f96e1e7b9b23bab6f5bfc869400d16fd42eca2071d004c68aacd2bb1defc"
+    },
+    "matching_policy.json": {
+      "bytes": 1982,
+      "sha256": "4d2af8df7832f27adbac37fc28740df60fedb3c2b0f8ae9e69f4743d9baa45e5"
+    },
+    "pilot_decisions.json": {
+      "bytes": 7492,
+      "sha256": "c2c78e3eb1e6f718c1c717a51288f5062b1a0db41da03852b4e1d2323d672598"
+    },
+    "plan.json": {
+      "bytes": 506279,
+      "sha256": "a7de5c99f772ece147b08249c332c8d3448e9747a8c2df64dcd0375ff36534d7"
+    },
+    "schedule_result.json": {
+      "bytes": 90383,
+      "sha256": "2664eabfa4cfb9c4e28742cb58f4c6649b24eb80a16df3d5f2cf1a195a058744"
+    },
+    "source_policy_002.json": {
+      "bytes": 633,
+      "sha256": "a72510e2066edfd800e9a8a37babc16763d118b9407a53e0477c30ffe706936d"
+    },
+    "student_pool_M1.jsonl": {
+      "bytes": 308162,
+      "sha256": "5e3ab59b30ea07ae29b89c712b9eb39de1392cd9cb62c92418858c1aa003e1b9"
+    },
+    "student_pool_M2.jsonl": {
+      "bytes": 308161,
+      "sha256": "8fde7abe77b5479288a913034f110c5197c6a5764281b294aea6576fd7123752"
+    },
+    "token_pool_M1.jsonl": {
+      "bytes": 1399335,
+      "sha256": "69105d1b238b229eee13e04e7b479f1f3e8a191c4cdfb9597294f4fb1538ae95"
+    },
+    "token_pool_M2.jsonl": {
+      "bytes": 1399437,
+      "sha256": "34157fe3f99171e249824c66de484b556b68f65508ab3cc43def9129c9782253"
+    },
+    "training_occurrences.json": {
+      "bytes": 80187,
+      "sha256": "9fb20d227e4b72d30dfe44be47e0764f9939544f7de34992c6ebce7a0b5d39dc"
+    }
+  }
+}

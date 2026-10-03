@@ -1,0 +1,278 @@
+{
+  "attempts_sha256": "0c372319462af428ee6349cf154b5015403153e8ac81e897d2ee1ff7f4ba7cf5",
+  "catalog_sha256": "3721f970cd433c8005616889877b7cf30fcd7e8fd08dc3efc592a54a43e30adb",
+  "checks": {
+    "answer_change_witnesses": 96,
+    "answer_preservation_witnesses": 288,
+    "independent_path_agreements": 384,
+    "rejected_negative_controls": 1536
+  },
+  "condition_preserve_definition": "the original certificate remains valid; additional S solutions may appear",
+  "created_at_utc": "2026-10-03T05:39:47.710216+00:00",
+  "dependency_components": 47,
+  "experiment_id": "SYNTH-CRS-001",
+  "file_sha256": {
+    "AGENTS.md": "3651a04fedc07d529cacc2cf991d630d2fcc9eae6d3ac2f8cbe2449f70b67229",
+    "ARCHITECTURE.md": "3f204a596d0c1e9169870cdb520e9a57926b361a1a471d68448cfe75ab063efa",
+    "CPU_COMPILER.md": "3eefc535792983a11abe0d3fe3860877ae75de176d85b73d9f44411e96f7fd89",
+    "DATA_CONTRACT.md": "cf833bdb08655db471d6c843427853a072be8be015a1c732b9edac44ed7d05d9",
+    "EXPERIMENT_PLAN.md": "7e506b53ff7dd9a723ba147eab650120f124ef4860edc872bd9d1e615d93e883",
+    "PILOT_DECISIONS.json": "711336dbb5c6c68be8097f29159fcef934253292524bfe20936a1b2f32dc0ddd",
+    "PILOT_DECISIONS.md": "2fa8cda470be72e2305a5c2ffa5e824c45dca28edaf011e0794dc19dc0c6aa44",
+    "README.md": "c8d1b809bf919269bfc86c7467eaf574350e8719662e085ffd1f05d30cbed868",
+    "SOURCES.md": "0d8a7dac594c95981c1587fd978d46d910003ce3f614cb689b77610f3a90f004",
+    "STATUS.md": "dd59b318014221b027fa0bf25eb482b95ec862cd70e1ea2a061bacf4102e0617",
+    "audit_cpu.py": "cda2fd84856380ddd231142587b26bbe2016c8c24ce08ecbc4a6ddf7143f2d99",
+    "manifest.json": "20deaa43907eac087bcb14495554b50e15fdb77d095aa1e6d33af5a47f85ec56",
+    "pilot_trainable_inventory.json": "3bcb2a3d4e9324ab8fe4e6b7fb9f6de0c77c6801c3e0101fa63606ff46b7183d",
+    "rs_contract.py": "cef135a06d4449917798e7e40685ac3589615663bfe47662e0a49207b67ccc6a",
+    "rs_solver.py": "6acf2fa26ef3f5a7b103818f4bb0eef972d5d975e9f3b39614ad6b253131acaf",
+    "rs_verifier.py": "36d2322ac077f4731b621defbc77ae39d1bfde2f1d0bcc15c73082b5f897ec98",
+    "task_compiler.py": "1ae26b485d7a6ee48fe9667df51886c2c64af09d89dd0edcb622794d33642f60",
+    "tests/test_registration.py": "b2f4c4c0178cd247c8f48f19de0cf44484ec8c76675ad2eaed3518f1d61605bf",
+    "tests/test_rs_semantics.py": "fa7e6106ff5a4c0222b9be4f1580411e83f2a041370e5ceb5aa09e1b9ce99547",
+    "tests/test_task_compiler.py": "bbf40a7068e6267bf4d604f21ef13a66f93f85313b9a349372cc8e42f7669c7e",
+    "validate_manifest.py": "1f8d37ed2570c6b6dfa800af6209edd85b933f2d35bde297d8228c5a37f8175d"
+  },
+  "founding_manifest_sha256": "20deaa43907eac087bcb14495554b50e15fdb77d095aa1e6d33af5a47f85ec56",
+  "launch_authorized": false,
+  "matching_established": [
+    "source_parents",
+    "per_parent_row_exposures",
+    "skill_allocation",
+    "final_answer_format",
+    "acceptance_policy"
+  ],
+  "matching_not_established": [
+    "nonpadding_training_tokens",
+    "supervised_tokens",
+    "optimizer_steps",
+    "difficulty_distribution"
+  ],
+  "model_quality_evidence": false,
+  "native_inference_performed": false,
+  "negative_control_examples": [
+    {
+      "accepted": false,
+      "candidate": "{\"answer\":[2]}",
+      "kind": "wrong_indices_or_cardinality",
+      "messages": [
+        {
+          "content": "Solve using only the stated data and rules. Return exactly one JSON object with the single key \"answer\": a nonempty list of distinct zero-based item indices satisfying all requirements, or the string \"UNKNOWN\" only when no such list exists. Any valid list is accepted. No explanations or extra keys.",
+          "role": "system"
+        },
+        {
+          "content": "Return a certificate meeting every requirement.\nResolve EVERY requested alias through links until an integer item index is reached. Repeated resolved items count once. A missing link or cycle in any requested chain means no valid answer exists. Other aliases are distractors.\nReturn ALL resolved items, each exactly once.\nOrder does not matter. There are no updates, filtering, or precedence rules.\nSPEC\n{\"initial\":[31,6,-12,19,17,29,18,11,-37],\"lookup\":{\"links\":{\"a0_0\":\"a0_1\",\"a0_1\":\"a0_2\",\"a0_2\":\"a0_3\",\"a0_3\":0,\"a1_0\":\"a1_1\",\"a1_1\":\"a1_2\",\"a1_2\":\"a1_3\",\"a1_3\":1,\"noise\":6},\"requested\":[\"a0_0\",\"a1_0\"]}}\nEND_SPEC",
+          "role": "user"
+        }
+      ],
+      "reason": "incorrect_answer",
+      "row_id": "8891bbf4c8b60b0fd37f34c7a12d588c85b646919e09601fff24611e7bc6db87",
+      "skill": "R"
+    },
+    {
+      "accepted": false,
+      "candidate": "{\"answer\":\"UNKNOWN\"}",
+      "kind": "false_unknown",
+      "messages": [
+        {
+          "content": "Solve using only the stated data and rules. Return exactly one JSON object with the single key \"answer\": a nonempty list of distinct zero-based item indices satisfying all requirements, or the string \"UNKNOWN\" only when no such list exists. Any valid list is accepted. No explanations or extra keys.",
+          "role": "system"
+        },
+        {
+          "content": "Return a certificate meeting every requirement.\nResolve EVERY requested alias through links until an integer item index is reached. Repeated resolved items count once. A missing link or cycle in any requested chain means no valid answer exists. Other aliases are distractors.\nReturn ALL resolved items, each exactly once.\nOrder does not matter. There are no updates, filtering, or precedence rules.\nSPEC\n{\"initial\":[31,6,-12,19,17,29,18,11,-37],\"lookup\":{\"links\":{\"a0_0\":\"a0_1\",\"a0_1\":\"a0_2\",\"a0_2\":\"a0_3\",\"a0_3\":0,\"a1_0\":\"a1_1\",\"a1_1\":\"a1_2\",\"a1_2\":\"a1_3\",\"a1_3\":1,\"noise\":6},\"requested\":[\"a0_0\",\"a1_0\"]}}\nEND_SPEC",
+          "role": "user"
+        }
+      ],
+      "reason": "incorrect_answer",
+      "row_id": "8891bbf4c8b60b0fd37f34c7a12d588c85b646919e09601fff24611e7bc6db87",
+      "skill": "R"
+    },
+    {
+      "accepted": false,
+      "candidate": "{\"answer\":[true]}",
+      "kind": "boolean_index",
+      "messages": [
+        {
+          "content": "Solve using only the stated data and rules. Return exactly one JSON object with the single key \"answer\": a nonempty list of distinct zero-based item indices satisfying all requirements, or the string \"UNKNOWN\" only when no such list exists. Any valid list is accepted. No explanations or extra keys.",
+          "role": "system"
+        },
+        {
+          "content": "Return a certificate meeting every requirement.\nResolve EVERY requested alias through links until an integer item index is reached. Repeated resolved items count once. A missing link or cycle in any requested chain means no valid answer exists. Other aliases are distractors.\nReturn ALL resolved items, each exactly once.\nOrder does not matter. There are no updates, filtering, or precedence rules.\nSPEC\n{\"initial\":[31,6,-12,19,17,29,18,11,-37],\"lookup\":{\"links\":{\"a0_0\":\"a0_1\",\"a0_1\":\"a0_2\",\"a0_2\":\"a0_3\",\"a0_3\":0,\"a1_0\":\"a1_1\",\"a1_1\":\"a1_2\",\"a1_2\":\"a1_3\",\"a1_3\":1,\"noise\":6},\"requested\":[\"a0_0\",\"a1_0\"]}}\nEND_SPEC",
+          "role": "user"
+        }
+      ],
+      "reason": "invalid_answer",
+      "row_id": "8891bbf4c8b60b0fd37f34c7a12d588c85b646919e09601fff24611e7bc6db87",
+      "skill": "R"
+    },
+    {
+      "accepted": false,
+      "candidate": "{\"answer\":[0],\"steps\":[\"incorrect\"]}",
+      "kind": "extra_intermediate_state",
+      "messages": [
+        {
+          "content": "Solve using only the stated data and rules. Return exactly one JSON object with the single key \"answer\": a nonempty list of distinct zero-based item indices satisfying all requirements, or the string \"UNKNOWN\" only when no such list exists. Any valid list is accepted. No explanations or extra keys.",
+          "role": "system"
+        },
+        {
+          "content": "Return a certificate meeting every requirement.\nResolve EVERY requested alias through links until an integer item index is reached. Repeated resolved items count once. A missing link or cycle in any requested chain means no valid answer exists. Other aliases are distractors.\nReturn ALL resolved items, each exactly once.\nOrder does not matter. There are no updates, filtering, or precedence rules.\nSPEC\n{\"initial\":[31,6,-12,19,17,29,18,11,-37],\"lookup\":{\"links\":{\"a0_0\":\"a0_1\",\"a0_1\":\"a0_2\",\"a0_2\":\"a0_3\",\"a0_3\":0,\"a1_0\":\"a1_1\",\"a1_1\":\"a1_2\",\"a1_2\":\"a1_3\",\"a1_3\":1,\"noise\":6},\"requested\":[\"a0_0\",\"a1_0\"]}}\nEND_SPEC",
+          "role": "user"
+        }
+      ],
+      "reason": "invalid_answer",
+      "row_id": "8891bbf4c8b60b0fd37f34c7a12d588c85b646919e09601fff24611e7bc6db87",
+      "skill": "R"
+    },
+    {
+      "accepted": false,
+      "candidate": "{\"answer\":[0,1,2,3]}",
+      "kind": "wrong_indices_or_cardinality",
+      "messages": [
+        {
+          "content": "Solve using only the stated data and rules. Return exactly one JSON object with the single key \"answer\": a nonempty list of distinct zero-based item indices satisfying all requirements, or the string \"UNKNOWN\" only when no such list exists. Any valid list is accepted. No explanations or extra keys.",
+          "role": "system"
+        },
+        {
+          "content": "Find one valid plan for these items.\nAll items are eligible; no reference lookup is needed.\nChoose exactly k distinct eligible item indices whose INITIAL values sum to target. There is no preferred subset.\nOrder does not matter. There are no updates, filtering, or precedence rules.\nDATA_FIELDS\ninitial = [-29,-3,3,34,24,-36,-11,28,29,-33]\nselection = {\"k\":3,\"target\":-29}\nEND_DATA_FIELDS",
+          "role": "user"
+        }
+      ],
+      "reason": "incorrect_answer",
+      "row_id": "ef10755db0f66aacb6b835067dc04c2a991eca4fade4100bdcc93ad4420a98d7",
+      "skill": "S"
+    },
+    {
+      "accepted": false,
+      "candidate": "{\"answer\":\"UNKNOWN\"}",
+      "kind": "false_unknown",
+      "messages": [
+        {
+          "content": "Solve using only the stated data and rules. Return exactly one JSON object with the single key \"answer\": a nonempty list of distinct zero-based item indices satisfying all requirements, or the string \"UNKNOWN\" only when no such list exists. Any valid list is accepted. No explanations or extra keys.",
+          "role": "system"
+        },
+        {
+          "content": "Find one valid plan for these items.\nAll items are eligible; no reference lookup is needed.\nChoose exactly k distinct eligible item indices whose INITIAL values sum to target. There is no preferred subset.\nOrder does not matter. There are no updates, filtering, or precedence rules.\nDATA_FIELDS\ninitial = [-29,-3,3,34,24,-36,-11,28,29,-33]\nselection = {\"k\":3,\"target\":-29}\nEND_DATA_FIELDS",
+          "role": "user"
+        }
+      ],
+      "reason": "incorrect_answer",
+      "row_id": "ef10755db0f66aacb6b835067dc04c2a991eca4fade4100bdcc93ad4420a98d7",
+      "skill": "S"
+    },
+    {
+      "accepted": false,
+      "candidate": "{\"answer\":[true]}",
+      "kind": "boolean_index",
+      "messages": [
+        {
+          "content": "Solve using only the stated data and rules. Return exactly one JSON object with the single key \"answer\": a nonempty list of distinct zero-based item indices satisfying all requirements, or the string \"UNKNOWN\" only when no such list exists. Any valid list is accepted. No explanations or extra keys.",
+          "role": "system"
+        },
+        {
+          "content": "Find one valid plan for these items.\nAll items are eligible; no reference lookup is needed.\nChoose exactly k distinct eligible item indices whose INITIAL values sum to target. There is no preferred subset.\nOrder does not matter. There are no updates, filtering, or precedence rules.\nDATA_FIELDS\ninitial = [-29,-3,3,34,24,-36,-11,28,29,-33]\nselection = {\"k\":3,\"target\":-29}\nEND_DATA_FIELDS",
+          "role": "user"
+        }
+      ],
+      "reason": "invalid_answer",
+      "row_id": "ef10755db0f66aacb6b835067dc04c2a991eca4fade4100bdcc93ad4420a98d7",
+      "skill": "S"
+    },
+    {
+      "accepted": false,
+      "candidate": "{\"answer\":[0],\"steps\":[\"incorrect\"]}",
+      "kind": "extra_intermediate_state",
+      "messages": [
+        {
+          "content": "Solve using only the stated data and rules. Return exactly one JSON object with the single key \"answer\": a nonempty list of distinct zero-based item indices satisfying all requirements, or the string \"UNKNOWN\" only when no such list exists. Any valid list is accepted. No explanations or extra keys.",
+          "role": "system"
+        },
+        {
+          "content": "Find one valid plan for these items.\nAll items are eligible; no reference lookup is needed.\nChoose exactly k distinct eligible item indices whose INITIAL values sum to target. There is no preferred subset.\nOrder does not matter. There are no updates, filtering, or precedence rules.\nDATA_FIELDS\ninitial = [-29,-3,3,34,24,-36,-11,28,29,-33]\nselection = {\"k\":3,\"target\":-29}\nEND_DATA_FIELDS",
+          "role": "user"
+        }
+      ],
+      "reason": "invalid_answer",
+      "row_id": "ef10755db0f66aacb6b835067dc04c2a991eca4fade4100bdcc93ad4420a98d7",
+      "skill": "S"
+    }
+  ],
+  "negative_control_policy": "four predeclared wrong candidates per row; all attempts hashed; no selective replacement",
+  "parent_count": 48,
+  "parents_by_split": {
+    "dev": 14,
+    "eval_fixture": 9,
+    "train": 25
+  },
+  "pilot_decisions": {
+    "decisions_are_native_qualification": false,
+    "nonpadding_tokens_ceiling_per_trained_arm": 131072,
+    "path": "PILOT_DECISIONS.json",
+    "sha256": "711336dbb5c6c68be8097f29159fcef934253292524bfe20936a1b2f32dc0ddd",
+    "state": "DECISIONS_FROZEN_RUN_NOT_QUALIFIED",
+    "trainable_parameters": 1146880
+  },
+  "protected_banks_accessed": false,
+  "python": "3.11.15",
+  "records": 384,
+  "records_by_arm_skill": {
+    "M1:R": 96,
+    "M1:S": 96,
+    "M2:R": 96,
+    "M2:S": 96
+  },
+  "records_by_split": {
+    "dev": 112,
+    "eval_fixture": 72,
+    "train": 200
+  },
+  "records_sha256": "0201291d887802a34eca1ca49448a0ffcc7b995c81252580663bfb628c63d199",
+  "run_requirements_unset": [
+    "current_runtime_native_binding_and_qualification",
+    "actual_token_matching_schedule_and_replacement_policy",
+    "native_qualification",
+    "fresh_confirmation_families_and_RS_transfer_set",
+    "prior_correct_guard_enrollment",
+    "effect_and_retention_margins",
+    "statistics_and_power",
+    "host_resource_caps",
+    "launch_approval"
+  ],
+  "scope": "bounded_cpu_compiler_and_verifier_mechanics_only",
+  "seed": 1003,
+  "source_head": "23cebe93a8684302eda3a114337482b1c95a26ba",
+  "source_identity": "HEAD plus current working-tree file hashes; no commit created by this audit",
+  "status": "CPU_FIXTURE_AUDIT_PASSED",
+  "training_fixture_exports": {
+    "M1": {
+      "materialized_training_corpus": false,
+      "rows": 100,
+      "sha256": "b811dc2dd0447c74b769e5fb9b2b40069eae7d5bccdefe31b6a159869114a8c9",
+      "tokenizer_measured_nonpadding_tokens": null,
+      "utf8_bytes": 92959
+    },
+    "M2": {
+      "materialized_training_corpus": false,
+      "rows": 100,
+      "sha256": "e91bfb972affb4e4fd1a5725973f933c40609b4a9620419a3b631b794dbfa0a8",
+      "tokenizer_measured_nonpadding_tokens": null,
+      "utf8_bytes": 93769
+    }
+  },
+  "training_performed": false,
+  "transfer_or_retention_measured": false,
+  "unittest": {
+    "errors": 0,
+    "failures": 0,
+    "output": "test_arm_boolean_is_not_integer (test_registration.RegistrationTests.test_arm_boolean_is_not_integer) ... ok\ntest_cli_bad_json_and_duplicate_keys (test_registration.RegistrationTests.test_cli_bad_json_and_duplicate_keys) ... ok\ntest_cli_missing_file (test_registration.RegistrationTests.test_cli_missing_file) ... ok\ntest_cli_valid_does_not_authorize_execution (test_registration.RegistrationTests.test_cli_valid_does_not_authorize_execution) ... ok\ntest_every_execution_permission_stays_closed (test_registration.RegistrationTests.test_every_execution_permission_stays_closed) ... ok\ntest_heldout_composition_not_in_training (test_registration.RegistrationTests.test_heldout_composition_not_in_training) ... ok\ntest_identity_must_not_be_boolean_version (test_registration.RegistrationTests.test_identity_must_not_be_boolean_version) ... ok\ntest_independent_verification_and_closed_banks (test_registration.RegistrationTests.test_independent_verification_and_closed_banks) ... ok\ntest_missing_or_unknown_fields (test_registration.RegistrationTests.test_missing_or_unknown_fields) ... ok\ntest_no_fabricated_capability_claim (test_registration.RegistrationTests.test_no_fabricated_capability_claim) ... ok\ntest_non_discard_rules_are_required (test_registration.RegistrationTests.test_non_discard_rules_are_required) ... ok\ntest_not_an_object (test_registration.RegistrationTests.test_not_an_object) ... ok\ntest_parent_is_exact (test_registration.RegistrationTests.test_parent_is_exact) ... ok\ntest_row_splits_cannot_replace_parent_families (test_registration.RegistrationTests.test_row_splits_cannot_replace_parent_families) ... ok\ntest_separate_scoreboards (test_registration.RegistrationTests.test_separate_scoreboards) ... ok\ntest_source_version_pinned (test_registration.RegistrationTests.test_source_version_pinned) ... ok\ntest_strong_primary_control (test_registration.RegistrationTests.test_strong_primary_control) ... ok\ntest_student_binding_does_not_imply_qualification (test_registration.RegistrationTests.test_student_binding_does_not_imply_qualification) ... ok\ntest_target_format_not_confounded (test_registration.RegistrationTests.test_target_format_not_confounded) ... ok\ntest_truthy_integers_are_not_policy_booleans (test_registration.RegistrationTests.test_truthy_integers_are_not_policy_booleans) ... ok\ntest_unknown_permission_rejected (test_registration.RegistrationTests.test_unknown_permission_rejected) ... ok\ntest_unresolved_launch_requirements_remain_visible (test_registration.RegistrationTests.test_unresolved_launch_requirements_remain_visible) ... ok\ntest_valid_founding_registration (test_registration.RegistrationTests.test_valid_founding_registration) ... ok\ntest_bad_json_and_answer_formats_fail_closed (test_rs_semantics.ContractBoundaryTests.test_bad_json_and_answer_formats_fail_closed) ... ok\ntest_duplicate_json_keys_and_duplicate_data_fields_rejected (test_rs_semantics.ContractBoundaryTests.test_duplicate_json_keys_and_duplicate_data_fields_rejected) ... ok\ntest_invalid_renderer_template_is_rejected (test_rs_semantics.ContractBoundaryTests.test_invalid_renderer_template_is_rejected) ... ok\ntest_malformed_schema_and_numeric_bounds (test_rs_semantics.ContractBoundaryTests.test_malformed_schema_and_numeric_bounds) ... ok\ntest_parsed_answer_sorting_is_semantic_and_format_is_canonical (test_rs_semantics.ContractBoundaryTests.test_parsed_answer_sorting_is_semantic_and_format_is_canonical) ... ok\ntest_prompt_rules_roles_extra_data_and_missing_delimiters_rejected (test_rs_semantics.ContractBoundaryTests.test_prompt_rules_roles_extra_data_and_missing_delimiters_rejected) ... ok\ntest_reference_schema_is_single_valued_bounded_and_strict (test_rs_semantics.ContractBoundaryTests.test_reference_schema_is_single_valued_bounded_and_strict) ... ok\ntest_render_roundtrip_all_templates_and_signature_detection (test_rs_semantics.ContractBoundaryTests.test_render_roundtrip_all_templates_and_signature_detection) ... ok\ntest_schema_rejects_unknown_or_composite_operations (test_rs_semantics.ContractBoundaryTests.test_schema_rejects_unknown_or_composite_operations) ... ok\ntest_changed_endpoint_changes_answer_and_depth_preserves_it (test_rs_semantics.ReferenceSemanticsTests.test_changed_endpoint_changes_answer_and_depth_preserves_it) ... ok\ntest_longest_bounded_chain_is_not_truncated (test_rs_semantics.ReferenceSemanticsTests.test_longest_bounded_chain_is_not_truncated) ... ok\ntest_missing_requested_start_and_missing_intermediate_link (test_rs_semantics.ReferenceSemanticsTests.test_missing_requested_start_and_missing_intermediate_link) ... ok\ntest_requested_chains_resolve_and_deduplicate (test_rs_semantics.ReferenceSemanticsTests.test_requested_chains_resolve_and_deduplicate) ... ok\ntest_rs_compatibility_uses_only_resolved_eligible_indices (test_rs_semantics.ReferenceSemanticsTests.test_rs_compatibility_uses_only_resolved_eligible_indices) ... ok\ntest_self_and_multinode_requested_cycles (test_rs_semantics.ReferenceSemanticsTests.test_self_and_multinode_requested_cycles) ... ok\ntest_unrequested_cycles_and_missing_links_are_irrelevant (test_rs_semantics.ReferenceSemanticsTests.test_unrequested_cycles_and_missing_links_are_irrelevant) ... ok\ntest_values_are_irrelevant_and_partial_resolved_set_is_wrong (test_rs_semantics.ReferenceSemanticsTests.test_values_are_irrelevant_and_partial_resolved_set_is_wrong) ... ok\ntest_all_alternatives_and_all_orders_are_accepted (test_rs_semantics.SelectionSemanticsTests.test_all_alternatives_and_all_orders_are_accepted) ... ok\ntest_cardinality_is_exact_and_one_item_cannot_be_reused (test_rs_semantics.SelectionSemanticsTests.test_cardinality_is_exact_and_one_item_cannot_be_reused) ... ok\ntest_exhaustive_six_item_binary_worlds (test_rs_semantics.SelectionSemanticsTests.test_exhaustive_six_item_binary_worlds) ... ok\ntest_exhaustive_ternary_prefix_with_negative_zero_positive_padding (test_rs_semantics.SelectionSemanticsTests.test_exhaustive_ternary_prefix_with_negative_zero_positive_padding) ... ok\ntest_infeasible_target_inside_attainable_min_max (test_rs_semantics.SelectionSemanticsTests.test_infeasible_target_inside_attainable_min_max) ... ok\ntest_negative_zero_and_equal_values_keep_distinct_indices (test_rs_semantics.SelectionSemanticsTests.test_negative_zero_and_equal_values_keep_distinct_indices) ... ok\ntest_single_and_maximum_allowed_cardinality (test_rs_semantics.SelectionSemanticsTests.test_single_and_maximum_allowed_cardinality) ... ok\ntest_target_changes_answer_and_irrelevant_value_preserves_it (test_rs_semantics.SelectionSemanticsTests.test_target_changes_answer_and_irrelevant_value_preserves_it) ... ok\ntest_alias_renaming_repeated_requests_and_distractors_are_not_fresh_worlds (test_task_compiler.CatalogIsolationTests.test_alias_renaming_repeated_requests_and_distractors_are_not_fresh_worlds) ... ok\ntest_condition_world_collisions_are_isolated_before_compilation (test_task_compiler.CatalogIsolationTests.test_condition_world_collisions_are_isolated_before_compilation) ... ok\ntest_duplicate_source_ids_parent_ids_and_missing_dependencies_are_rejected (test_task_compiler.CatalogIsolationTests.test_duplicate_source_ids_parent_ids_and_missing_dependencies_are_rejected) ... ok\ntest_family_and_source_dependencies_are_transitively_connected (test_task_compiler.CatalogIsolationTests.test_family_and_source_dependencies_are_transitively_connected) ... ok\ntest_fixture_arguments_are_bounded_and_boolean_is_not_integer (test_task_compiler.CatalogIsolationTests.test_fixture_arguments_are_bounded_and_boolean_is_not_integer) ... ok\ntest_fixture_catalog_is_reproducible_balanced_and_detached (test_task_compiler.CatalogIsolationTests.test_fixture_catalog_is_reproducible_balanced_and_detached) ... ok\ntest_registered_parent_requires_a_matching_grounded_source_world (test_task_compiler.CatalogIsolationTests.test_registered_parent_requires_a_matching_grounded_source_world) ... ok\ntest_registry_unknown_fields_and_malformed_dependencies_fail_with_value_error (test_task_compiler.CatalogIsolationTests.test_registry_unknown_fields_and_malformed_dependencies_fail_with_value_error) ... ok\ntest_boolean_integer_substitution_cannot_reuse_stale_binding (test_task_compiler.CompilationBoundaryTests.test_boolean_integer_substitution_cannot_reuse_stale_binding) ... ok\ntest_catalog_source_parent_hash_split_and_unknown_metadata_mutations_rejected (test_task_compiler.CompilationBoundaryTests.test_catalog_source_parent_hash_split_and_unknown_metadata_mutations_rejected) ... ok\ntest_compilation_is_reproducible_and_arms_match_parent_and_skill_allocations (test_task_compiler.CompilationBoundaryTests.test_compilation_is_reproducible_and_arms_match_parent_and_skill_allocations) ... ok\ntest_duplicate_records_unknown_fields_and_bad_containers_are_rejected (test_task_compiler.CompilationBoundaryTests.test_duplicate_records_unknown_fields_and_bad_containers_are_rejected) ... ok\ntest_exports_are_atomic_train_only_and_contain_only_visible_messages_and_target (test_task_compiler.CompilationBoundaryTests.test_exports_are_atomic_train_only_and_contain_only_visible_messages_and_target) ... ok\ntest_non_json_record_values_and_invalid_unicode_fail_with_value_error (test_task_compiler.CompilationBoundaryTests.test_non_json_record_values_and_invalid_unicode_fail_with_value_error) ... ok\ntest_record_metadata_world_candidate_and_messages_cannot_be_rebound (test_task_compiler.CompilationBoundaryTests.test_record_metadata_world_candidate_and_messages_cannot_be_rebound) ... ok\ntest_rs_composition_is_held_out_and_export_rejects_forged_atomic_labels (test_task_compiler.CompilationBoundaryTests.test_rs_composition_is_held_out_and_export_rejects_forged_atomic_labels) ... ok\ntest_amplification_requires_atomic_solved_and_supported_interventions (test_task_compiler.ConditionDependenceTests.test_amplification_requires_atomic_solved_and_supported_interventions) ... ok\ntest_atomic_variants_have_real_answer_dependence_and_preserved_witnesses (test_task_compiler.ConditionDependenceTests.test_atomic_variants_have_real_answer_dependence_and_preserved_witnesses) ... ok\ntest_item_added_preserves_witnesses_without_claiming_solution_set_invariance (test_task_compiler.ConditionDependenceTests.test_item_added_preserves_witnesses_without_claiming_solution_set_invariance) ... ok\n\n----------------------------------------------------------------------\nRan 67 tests in 1.634s\n\nOK\n",
+    "run": 67,
+    "skipped": 0
+  },
+  "versions": {
+    "compiler": "synth-rs-compiler-1",
+    "contract": "synth-rs-contract-1",
+    "independent_verifier": "synth-rs-verifier-1",
+    "primary_solver": "synth-rs-walk-dp-1"
+  },
+  "wall_seconds": 0.725175
+}
