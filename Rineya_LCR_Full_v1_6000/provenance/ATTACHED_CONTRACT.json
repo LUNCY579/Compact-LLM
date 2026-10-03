@@ -1,0 +1,79 @@
+{
+  "source": "ATTACHED_SPEC.md",
+  "source_sha256": "041f50d4a35ecf50dc255ade4a725b5f18e23db314dfb0cbf1440c79ceecbf21",
+  "authority": "USER_UPLOADED_V1_BRIEF_ONLY; repository v2 is reported separately, not silently adopted",
+  "total_rows": 6000,
+  "marginals": {
+    "split": {
+      "train": 4800,
+      "dev": 600,
+      "holdout": 600
+    },
+    "length_band": {
+      "short": 2000,
+      "medium": 2000,
+      "long": 2000
+    },
+    "task_type": {
+      "alias_resolution": 1200,
+      "causal_disambiguation": 1000,
+      "rule_exception": 1000,
+      "count_with_exclusion": 800,
+      "temporal_correlation": 700,
+      "object_state_tracking": 500,
+      "latest_verified": 400,
+      "multi_condition": 400
+    },
+    "variant": {
+      "answerable": 2700,
+      "unanswerable": 1800,
+      "counterfactual": 900,
+      "paraphrase": 600
+    },
+    "needle_position": {
+      "early": 2400,
+      "middle": 1200,
+      "late": 1200,
+      "distributed": 1200
+    },
+    "difficulty": {
+      "hard": 3600,
+      "medium": 2400
+    }
+  },
+  "unanswerable_reason_counts": {
+    "entity_absent": 450,
+    "attribute_absent": 450,
+    "retracted_or_superseded": 450,
+    "presupposition_contradicted": 450
+  },
+  "literal_context_token_bands": {
+    "short": [
+      300,
+      600
+    ],
+    "medium": [
+      600,
+      1100
+    ],
+    "long": [
+      1100,
+      1600
+    ]
+  },
+  "band_endpoint_convention": "UNRESOLVED_AT_SHARED_ENDPOINTS; this plan has no measured lengths",
+  "max_rendered_total_tokens": 2048,
+  "minimum_completion_reserve_tokens": 128,
+  "assistant_median_max_words": 8,
+  "required_roles": [
+    "system",
+    "user",
+    "assistant"
+  ],
+  "required_unknown_literal": "UNKNOWN",
+  "hard_min_distractor_entities": 8,
+  "hard_min_near_miss_candidates": 2,
+  "hard_lexical_overlap_requirement": "No lexical overlap between question wording and evidence sentence; not weakened here.",
+  "shortcut_max_answerable_accuracy": 0.25,
+  "balance_tolerance_text": "within +/-3%; sparse conditional relative-count interpretation is not silently assumed feasible"
+}

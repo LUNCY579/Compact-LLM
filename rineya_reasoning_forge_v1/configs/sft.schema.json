@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Rineya Reasoning Forge canonical SFT record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "messages"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "messages": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "prefixItems": [
+        {"$ref": "#/$defs/system"},
+        {"$ref": "#/$defs/user"},
+        {"$ref": "#/$defs/assistant"}
+      ]
+    }
+  },
+  "$defs": {
+    "system": {"type":"object","additionalProperties":false,"required":["role","content"],"properties":{"role":{"const":"system"},"content":{"type":"string","minLength":1}}},
+    "user": {"type":"object","additionalProperties":false,"required":["role","content"],"properties":{"role":{"const":"user"},"content":{"type":"string","minLength":1}}},
+    "assistant": {"type":"object","additionalProperties":false,"required":["role","content"],"properties":{"role":{"const":"assistant"},"content":{"type":"string","minLength":1}}}
+  }
+}

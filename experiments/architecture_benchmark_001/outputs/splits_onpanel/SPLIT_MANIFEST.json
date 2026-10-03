@@ -1,0 +1,54 @@
+{
+  "corpus": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_General_Reasoning_and_Natural_Communication_Corpus_v3.0\\data\\sft\\by_class",
+  "derived_from": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\splits_large",
+  "dev_classes": {
+    "percentage_reasoning": 41,
+    "ratio_proportion": 40,
+    "time_duration": 39
+  },
+  "dev_format": "scorable: messages with the final assistant turn removed, plus that turn as `answer`. Same shape as the 150-row panel, so the same probe and scorer run on it unchanged.",
+  "dev_reference_answer_tokens": 502,
+  "disjointness": {
+    "dev|calibration_pilot": 0,
+    "dev|panel": 0,
+    "id|panel": 0,
+    "train|calibration_pilot": 0,
+    "train|dev": 0,
+    "train|panel": 0,
+    "train|splits_large_dev": 0,
+    "train|splits_large_train": 0
+  },
+  "evidence_kind": "exploratory_open_split_only",
+  "families": {
+    "clean_spare": 965,
+    "corpus_probe_total": 1125,
+    "dev": 120,
+    "panel": 150,
+    "spare": 975,
+    "train": 845
+  },
+  "grouping_key": "metadata.template_family",
+  "licenses_efficacy_claim": false,
+  "licenses_registered_training": false,
+  "note": "IN-DOMAIN split: drawn from the 975 probe-class families the panel did not take. Training on this converts the 150-row panel from a TRANSFER benchmark into an IN-DOMAIN generalization benchmark. Family-disjoint from the panel, from calibration/pilot, and from splits_large. A result measured after training on this must never be quoted as a general capability gain.",
+  "panel_replay_verified": true,
+  "probe_classes": [
+    "percentage_reasoning",
+    "ratio_proportion",
+    "time_duration"
+  ],
+  "rows": {
+    "dev": 120,
+    "train": 845
+  },
+  "schema": 1,
+  "seed": 17,
+  "supervised_target_tokens": {
+    "train": 111795
+  },
+  "train_classes": {
+    "percentage_reasoning": 281,
+    "ratio_proportion": 281,
+    "time_duration": 283
+  }
+}

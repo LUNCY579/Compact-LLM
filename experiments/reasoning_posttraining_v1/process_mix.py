@@ -44,6 +44,7 @@ from .sources import stable_hash
 
 EXPERIMENT = "RRP-009-PROCESS-MIX"
 SALT = "RRP-009-process-mix"
+PANEL_PATH = Path(__file__).resolve().parents[2] / "experiments/architecture_benchmark_001/data/monitor_probe.jsonl"
 
 # The three classes the 150-row arithmetic panel scores. Rehearsal must not contain them.
 PANEL_REPLY_CLASSES = frozenset({"percentage_reasoning", "ratio_proportion", "time_duration"})
@@ -73,7 +74,8 @@ EXCLUDES = process_arm.EXCLUDES
 budget.register(EXPERIMENT, ceiling=LIMITS, phases=("train", "resume"), excludes=EXCLUDES)
 
 
-def rehearsal_pool(path: Path, *, select: str = "all") -> tuple[list[dict], dict]:
+def rehearsal_pool(path: Path, *, select: str = "all",
+                   historical_reproduction: bool = False) -> tuple[list[dict], dict]:
     """Single-turn preservation rows, panel classes removed, then the arm's filter.
 
     The panel exclusion is unconditional and runs FIRST, so no filter can reintroduce a
@@ -106,12 +108,26 @@ def rehearsal_pool(path: Path, *, select: str = "all") -> tuple[list[dict], dict
     if dropped_panel == 0:
         raise ValueError("expected panel reply_classes in the preservation slice; found none, "
                          "so the exclusion is not doing anything and the source is wrong")
+    if historical_reproduction:
+        text_contact = {"status": "SKIPPED_FOR_EXPLICIT_HISTORICAL_REPRODUCTION",
+                        "current_gate_eligible": False}
+    else:
+        from .text_contact import audit_and_filter
+        panel_sha = stable_hash(PANEL_PATH)
+        panel = [json.loads(line) for line in PANEL_PATH.read_text(encoding="utf-8").splitlines()
+                 if line.strip()]
+        kept, text_contact = audit_and_filter(kept, panel)
+        if stable_hash(PANEL_PATH) != panel_sha:
+            raise ValueError("retention panel changed during text-contact exclusion")
+        text_contact = {**text_contact, "panel_path": str(PANEL_PATH), "panel_sha256": panel_sha}
+        classes = collections.Counter((r.get("metadata") or {}).get("reply_class") for r in kept)
     if not kept:
         raise ValueError(f"rehearsal filter {select!r} selected no rows")
     audit = {"kept": len(kept), "dropped_panel_reply_class": dropped_panel,
              "dropped_multi_turn": dropped_multiturn, "dropped_by_filter": dropped_filter,
              "filter": select,
              "panel_reply_classes_excluded": sorted(PANEL_REPLY_CLASSES),
+             "text_contact_audit": text_contact,
              "distinct_classes_kept": len(classes),
              "classes_kept": dict(sorted(classes.items()))}
     return kept, audit
@@ -158,10 +174,13 @@ def interleave(transitions: list[dict], rehearsal: list[dict]) -> list[dict]:
 def build(binding: dict, views: Path, rehearsal_path: Path, tokenizer, *,
           per_family: int, exposures: int = 1,
           selection_seed: int = process_arm.SEED,
-          select: str = "all") -> tuple[list[dict], dict, dict]:
+          select: str = "all", also_exclude_views=(),
+          historical_reproduction: bool = False) -> tuple[list[dict], dict, dict]:
     transitions, _, transition_report = process_arm.build(
         binding, views, tokenizer, per_family=per_family, exposures=exposures,
-        selection_seed=selection_seed, experiment=EXPERIMENT)
+        selection_seed=selection_seed, experiment=EXPERIMENT,
+        also_exclude_views=also_exclude_views,
+        historical_reproduction=historical_reproduction)
     transition_tokens = sum(len(r["ids"]) for r in transitions)
 
     # A "+"-joined selector is an RRP-012 blend: the rehearsal budget is split EVENLY by
@@ -170,7 +189,8 @@ def build(binding: dict, views: Path, rehearsal_path: Path, tokenizer, *,
     # dominate would not test that rule as stated.
     parts = select.split("+")
     if len(parts) == 1:
-        pool, pool_audit = rehearsal_pool(rehearsal_path, select=select)
+        pool, pool_audit = rehearsal_pool(rehearsal_path, select=select,
+                                          historical_reproduction=historical_reproduction)
         rehearsal, rehearsal_audit = compile_rehearsal(pool, tokenizer,
                                                        token_budget=transition_tokens)
     else:
@@ -179,7 +199,8 @@ def build(binding: dict, views: Path, rehearsal_path: Path, tokenizer, *,
         for i, part in enumerate(parts):
             # The last component absorbs the integer-division remainder.
             budget_i = transition_tokens - share * (len(parts) - 1) if i == len(parts) - 1 else share
-            sub_pool, sub_pool_audit = rehearsal_pool(rehearsal_path, select=part)
+            sub_pool, sub_pool_audit = rehearsal_pool(rehearsal_path, select=part,
+                                                      historical_reproduction=historical_reproduction)
             sub, sub_audit = compile_rehearsal(sub_pool, tokenizer, token_budget=budget_i)
             rehearsal.extend(sub)
             pool_audit[part] = sub_pool_audit
@@ -194,6 +215,8 @@ def build(binding: dict, views: Path, rehearsal_path: Path, tokenizer, *,
     # The probe measures the NEW skill, so it is drawn from the transition half only.
     plan = process_arm.build_plan(rows, exposures=exposures, experiment=EXPERIMENT)
     plan["probe_row_ids"] = process_arm.probe_subset(transitions, per_family=8)
+    if "scored_instrument_exclusion_audit" in transition_report:
+        plan["scored_instrument_exclusion_audit"] = transition_report["scored_instrument_exclusion_audit"]
 
     report = {
         "record": "RRP009_PROCESS_MIX_BUILD",
@@ -207,7 +230,8 @@ def build(binding: dict, views: Path, rehearsal_path: Path, tokenizer, *,
         "transition_rows": len(transitions),
         "transition_processed_tokens": transition_tokens,
         "transition_draw": {"per_family": per_family, "selection_seed": selection_seed,
-                            "identical_to": "RRP-008 D2 rung"},
+                            "parent_ids_sha256": digest(sorted(r["parent_id"] for r in transitions)),
+                            "historical_draw_identity": "NOT_CLAIMED; current instrument exclusions change the draw"},
         "rehearsal_source": str(rehearsal_path),
         "rehearsal_source_sha256": stable_hash(rehearsal_path),
         "rehearsal_pool_audit": pool_audit,
@@ -221,6 +245,9 @@ def build(binding: dict, views: Path, rehearsal_path: Path, tokenizer, *,
         "quality_claim": False,
         "confirmation": "NOT_ESTABLISHED",
     }
+    for key in ("scored_instruments_excluded", "scored_instrument_exclusion_audit"):
+        if key in transition_report:
+            report[key] = transition_report[key]
     return rows, plan, report
 
 
@@ -228,6 +255,9 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--binding", type=Path, required=True)
     parser.add_argument("--views", type=Path, required=True)
+    parser.add_argument("--exclude-views", type=Path, action="append", default=[],
+                        help="Additional scored instruments to exclude. Must include the frozen "
+                             "SELECT-VIEWS-001 instrument for current-gate training.")
     parser.add_argument("--rehearsal", type=Path, required=True)
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--out-prepared", type=Path, required=True)
@@ -249,7 +279,8 @@ def main(argv=None):
     rows, plan, report = build(binding, args.views, args.rehearsal, tokenizer,
                                per_family=args.per_family, exposures=args.exposures,
                                selection_seed=args.selection_seed,
-                               select=args.rehearsal_select)
+                               select=args.rehearsal_select,
+                               also_exclude_views=args.exclude_views)
     process_arm.write_prepared(args.out_prepared, rows, report)
     write_new(args.out_plan, plan)
 

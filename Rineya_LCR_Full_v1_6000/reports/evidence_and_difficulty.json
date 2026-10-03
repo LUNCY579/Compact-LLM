@@ -1,0 +1,27 @@
+{
+  "distributed_rows": 840,
+  "distributed_with_at_least_two_necessary_fragments": 840,
+  "hard_distractor_failures": 0,
+  "hard_lexical_failures_answerable": 0,
+  "hard_lexical_inapplicable_unknown": 1080,
+  "hard_near_miss_failures": 0,
+  "hard_rows": 3600,
+  "position_results": {
+    "distributed_applicable": 840,
+    "distributed_pass": 840,
+    "early_applicable": 1680,
+    "early_pass": 1680,
+    "late_applicable": 840,
+    "late_pass": 840,
+    "middle_applicable": 840,
+    "middle_pass": 840
+  },
+  "position_rules": {
+    "distributed": "2-3 separated fragments with deletion audit",
+    "early": "all positive-span ends <= 0.25",
+    "late": "all positive-span starts >= 0.75",
+    "middle": "all positive spans in central half [0.25,0.75]"
+  },
+  "unanswerable_position_quota_scope": "related account or absence neighborhood; never claimed positive evidence",
+  "unanswerable_positive_spans": 0
+}

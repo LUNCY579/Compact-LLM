@@ -1,5 +1,25 @@
 # Model-quality continuation
 
+## 2026-09-17: completed clean pilot and corrected historical interpretation
+
+Read [RESULTS_AND_PROGRESS.md](docs/model-quality/audit-2026-09-17/RESULTS_AND_PROGRESS.md)
+before resuming. Six historical D1 seeds exist; three surviving D1 model exports
+are hash-verified and marked for preservation. New RRP-015 control and rehearsal
+training/evaluation are complete, with full checkpoints retained. On the new
+selection instrument, Supa/Opallo/control/rehearsal score14/8/234/225. Control
+passes experimental Gate v2; rehearsal fails source retention. Neither establishes
+broad preservation or release readiness. Historical and new384-row instruments
+must not be compared as identical rows.
+
+New corrections: M4's13 reported UNKNOWN matches include four `UNKNOWN.` outputs
+(only9 literal); short arithmetic contacts reached old rehearsal training;
+nonzero superiority margins were tested against zero; new training now excludes
+both scored-parent banks and requalifies natively before optimization. Original
+registrations and raw historical scores are preserved rather than overwritten.
+
+The older continuation below is retained for chronology; its universal replay
+claims and current-status statements must be read with the newer audit.
+
 ## Where this stands now (2026-09-16)
 
 A one-step **state-transition** skill was taught to the frozen Supa 1.7 source and

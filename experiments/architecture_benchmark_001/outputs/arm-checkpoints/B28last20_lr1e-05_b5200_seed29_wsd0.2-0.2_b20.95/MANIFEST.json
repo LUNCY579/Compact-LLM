@@ -1,0 +1,914 @@
+{
+  "arm": "B28last20",
+  "beta2": 0.95,
+  "bytes": 1258497624,
+  "canonical_tag": "B28last20_lr1e-05_b5200_seed29_wsd0.2-0.2_b20.95",
+  "checkpoint_serialization_sha256": "e90a974c9f810a3afcf6c148fa301c65b63c097c6a7434c53b2ed140d657fa2f",
+  "complete_model": false,
+  "completed": true,
+  "dtype": "float32",
+  "evidence_kind": "exploratory_trained_weights_only",
+  "gpu_workspace_reserve_gib": 0.6,
+  "headline": {
+    "correct_total": 73,
+    "failed_classes": [
+      "percentage_reasoning",
+      "time_duration"
+    ],
+    "gained_total": 31,
+    "lost_total": 5,
+    "per_class": {
+      "percentage_reasoning": {
+        "arm_correct": 27,
+        "gained": 7,
+        "lost": 1,
+        "lost_ids": [
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270"
+        ],
+        "reference_n": 21,
+        "retained": 20,
+        "rows": 50,
+        "source_correct_terminated": 21,
+        "terminated": 50
+      },
+      "ratio_proportion": {
+        "arm_correct": 24,
+        "gained": 8,
+        "lost": 0,
+        "lost_ids": [],
+        "reference_n": 16,
+        "retained": 16,
+        "rows": 50,
+        "source_correct_terminated": 16,
+        "terminated": 50
+      },
+      "time_duration": {
+        "arm_correct": 22,
+        "gained": 16,
+        "lost": 4,
+        "lost_ids": [
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+        ],
+        "reference_n": 10,
+        "retained": 6,
+        "rows": 50,
+        "source_correct_terminated": 10,
+        "terminated": 50
+      }
+    },
+    "reference_n": 47,
+    "retained_total": 42,
+    "status": "FAIL",
+    "terminated_total": 150
+  },
+  "implementation_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+  "licenses_release": false,
+  "lr": 1e-05,
+  "note": "Trainable tensors only. Exploratory: this is NOT a released model, opens no gate and carries no receipt. Averaging is only defined against another checkpoint with an identical soup_key.",
+  "optimizer_storage_backend": "memmap",
+  "optimizer_storage_harness_sha256": null,
+  "parameters": 314618880,
+  "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\arm-checkpoints\\B28last20_lr1e-05_b5200_seed29_wsd0.2-0.2_b20.95",
+  "reconstruct": {
+    "block_tail": 20,
+    "builder": "run._load(source)",
+    "mode": "B28",
+    "read_tail": null,
+    "source": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\Supa",
+    "then": "load trainable.safetensors and copy_ each tensor by name"
+  },
+  "run_label": null,
+  "save_backend": "bounded_fp32_parameter_chunks_v1",
+  "save_max_chunk_elements": 262144,
+  "saved_after_steps": 39,
+  "saved_after_tokens": 5259,
+  "schedule": "wsd:0.2:0.2",
+  "schema": 1,
+  "seed": 29,
+  "sha256": "085ed7d8ff4e8466f79fb6dc9e6e0cb8cab969c8704ac98962b4280d5f71a216",
+  "soup_key": {
+    "block_tail": 20,
+    "mode": "B28",
+    "read_tail": null,
+    "source_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+    "tensor_names_sha256": "21e620aa813faed45db8c2917a352559109f337d4721fd87e246e08a08a98c6d"
+  },
+  "source_assets_sha256": {
+    "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "model.safetensors": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  "source_weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+  "tag": "B28last20_lr1e-05_b5200_seed29_wsd0.2-0.2_b20.95",
+  "tensor_shapes": {
+    "encoder.10.input_norm.weight": [
+      1024
+    ],
+    "encoder.10.k_norm.weight": [
+      128
+    ],
+    "encoder.10.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.10.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.10.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.10.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.10.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.10.post_norm.weight": [
+      1024
+    ],
+    "encoder.10.q_norm.weight": [
+      128
+    ],
+    "encoder.10.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.10.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.11.input_norm.weight": [
+      1024
+    ],
+    "encoder.11.k_norm.weight": [
+      128
+    ],
+    "encoder.11.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.11.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.11.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.11.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.11.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.11.post_norm.weight": [
+      1024
+    ],
+    "encoder.11.q_norm.weight": [
+      128
+    ],
+    "encoder.11.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.11.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.12.input_norm.weight": [
+      1024
+    ],
+    "encoder.12.k_norm.weight": [
+      128
+    ],
+    "encoder.12.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.12.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.12.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.12.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.12.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.12.post_norm.weight": [
+      1024
+    ],
+    "encoder.12.q_norm.weight": [
+      128
+    ],
+    "encoder.12.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.12.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.13.input_norm.weight": [
+      1024
+    ],
+    "encoder.13.k_norm.weight": [
+      128
+    ],
+    "encoder.13.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.13.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.13.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.13.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.13.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.13.post_norm.weight": [
+      1024
+    ],
+    "encoder.13.q_norm.weight": [
+      128
+    ],
+    "encoder.13.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.13.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.14.input_norm.weight": [
+      1024
+    ],
+    "encoder.14.k_norm.weight": [
+      128
+    ],
+    "encoder.14.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.14.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.14.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.14.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.14.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.14.post_norm.weight": [
+      1024
+    ],
+    "encoder.14.q_norm.weight": [
+      128
+    ],
+    "encoder.14.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.14.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.15.input_norm.weight": [
+      1024
+    ],
+    "encoder.15.k_norm.weight": [
+      128
+    ],
+    "encoder.15.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.15.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.15.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.15.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.15.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.15.post_norm.weight": [
+      1024
+    ],
+    "encoder.15.q_norm.weight": [
+      128
+    ],
+    "encoder.15.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.15.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.16.input_norm.weight": [
+      1024
+    ],
+    "encoder.16.k_norm.weight": [
+      128
+    ],
+    "encoder.16.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.16.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.16.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.16.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.16.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.16.post_norm.weight": [
+      1024
+    ],
+    "encoder.16.q_norm.weight": [
+      128
+    ],
+    "encoder.16.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.16.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.17.input_norm.weight": [
+      1024
+    ],
+    "encoder.17.k_norm.weight": [
+      128
+    ],
+    "encoder.17.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.17.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.17.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.17.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.17.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.17.post_norm.weight": [
+      1024
+    ],
+    "encoder.17.q_norm.weight": [
+      128
+    ],
+    "encoder.17.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.17.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.18.input_norm.weight": [
+      1024
+    ],
+    "encoder.18.k_norm.weight": [
+      128
+    ],
+    "encoder.18.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.18.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.18.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.18.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.18.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.18.post_norm.weight": [
+      1024
+    ],
+    "encoder.18.q_norm.weight": [
+      128
+    ],
+    "encoder.18.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.18.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.19.input_norm.weight": [
+      1024
+    ],
+    "encoder.19.k_norm.weight": [
+      128
+    ],
+    "encoder.19.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.19.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.19.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.19.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.19.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.19.post_norm.weight": [
+      1024
+    ],
+    "encoder.19.q_norm.weight": [
+      128
+    ],
+    "encoder.19.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.19.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.20.input_norm.weight": [
+      1024
+    ],
+    "encoder.20.k_norm.weight": [
+      128
+    ],
+    "encoder.20.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.20.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.20.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.20.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.20.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.20.post_norm.weight": [
+      1024
+    ],
+    "encoder.20.q_norm.weight": [
+      128
+    ],
+    "encoder.20.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.20.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.21.input_norm.weight": [
+      1024
+    ],
+    "encoder.21.k_norm.weight": [
+      128
+    ],
+    "encoder.21.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.21.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.21.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.21.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.21.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.21.post_norm.weight": [
+      1024
+    ],
+    "encoder.21.q_norm.weight": [
+      128
+    ],
+    "encoder.21.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.21.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.22.input_norm.weight": [
+      1024
+    ],
+    "encoder.22.k_norm.weight": [
+      128
+    ],
+    "encoder.22.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.22.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.22.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.22.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.22.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.22.post_norm.weight": [
+      1024
+    ],
+    "encoder.22.q_norm.weight": [
+      128
+    ],
+    "encoder.22.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.22.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.23.input_norm.weight": [
+      1024
+    ],
+    "encoder.23.k_norm.weight": [
+      128
+    ],
+    "encoder.23.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.23.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.23.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.23.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.23.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.23.post_norm.weight": [
+      1024
+    ],
+    "encoder.23.q_norm.weight": [
+      128
+    ],
+    "encoder.23.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.23.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.24.input_norm.weight": [
+      1024
+    ],
+    "encoder.24.k_norm.weight": [
+      128
+    ],
+    "encoder.24.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.24.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.24.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.24.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.24.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.24.post_norm.weight": [
+      1024
+    ],
+    "encoder.24.q_norm.weight": [
+      128
+    ],
+    "encoder.24.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.24.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.25.input_norm.weight": [
+      1024
+    ],
+    "encoder.25.k_norm.weight": [
+      128
+    ],
+    "encoder.25.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.25.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.25.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.25.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.25.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.25.post_norm.weight": [
+      1024
+    ],
+    "encoder.25.q_norm.weight": [
+      128
+    ],
+    "encoder.25.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.25.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.26.input_norm.weight": [
+      1024
+    ],
+    "encoder.26.k_norm.weight": [
+      128
+    ],
+    "encoder.26.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.26.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.26.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.26.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.26.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.26.post_norm.weight": [
+      1024
+    ],
+    "encoder.26.q_norm.weight": [
+      128
+    ],
+    "encoder.26.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.26.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.27.input_norm.weight": [
+      1024
+    ],
+    "encoder.27.k_norm.weight": [
+      128
+    ],
+    "encoder.27.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.27.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.27.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.27.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.27.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.27.post_norm.weight": [
+      1024
+    ],
+    "encoder.27.q_norm.weight": [
+      128
+    ],
+    "encoder.27.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.27.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.8.input_norm.weight": [
+      1024
+    ],
+    "encoder.8.k_norm.weight": [
+      128
+    ],
+    "encoder.8.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.8.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.8.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.8.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.8.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.8.post_norm.weight": [
+      1024
+    ],
+    "encoder.8.q_norm.weight": [
+      128
+    ],
+    "encoder.8.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.8.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.9.input_norm.weight": [
+      1024
+    ],
+    "encoder.9.k_norm.weight": [
+      128
+    ],
+    "encoder.9.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "encoder.9.mlp.down_proj.weight": [
+      1024,
+      3072
+    ],
+    "encoder.9.mlp.gate_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.9.mlp.up_proj.weight": [
+      3072,
+      1024
+    ],
+    "encoder.9.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "encoder.9.post_norm.weight": [
+      1024
+    ],
+    "encoder.9.q_norm.weight": [
+      128
+    ],
+    "encoder.9.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "encoder.9.v_proj.weight": [
+      1024,
+      1024
+    ]
+  },
+  "tensors": 220,
+  "token_budget": 5200
+}

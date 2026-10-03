@@ -1,0 +1,105 @@
+{
+  "answer_overlap_note": "Shared integer answers and UNKNOWN are expected and explicitly counted, not hidden as zero.",
+  "case_layouts": {
+    "scope": "Typed graph census with split-specific operator width/depth. Not a proof of disjoint reduced solution motifs; temporal successor lookup is shared.",
+    "typed_degree_signature_intersections": {
+      "dev__holdout": 0,
+      "train__dev": 0,
+      "train__holdout": 0
+    }
+  },
+  "entities": {
+    "counts": {
+      "dev": 1024,
+      "holdout": 1024,
+      "train": 1024
+    },
+    "intersection": {
+      "dev__holdout": 0,
+      "train__dev": 0,
+      "train__holdout": 0
+    }
+  },
+  "external_evaluation_comparison": {
+    "digit_blinded_overlap": null,
+    "eightgram_overlap": null,
+    "entity_overlap": null,
+    "exact_overlap": null,
+    "graph_overlap": null,
+    "nfkc_overlap": null,
+    "rows_opened": 0,
+    "status": "NOT_RUN_NO_BANK_ACCESS",
+    "template_overlap": null
+  },
+  "shared_exact_context_8grams": {
+    "dev__holdout": 124,
+    "train__dev": 136,
+    "train__holdout": 136
+  },
+  "shared_name_blind_sentence_forms": {
+    "dev__holdout": 467,
+    "train__dev": 392,
+    "train__holdout": 352
+  },
+  "structural_disjointness_status": "NOT_FULLY_ESTABLISHED: operator primitives and local sentence forms are shared, despite disjoint names, IDs and registered case layouts.",
+  "template_ids": {
+    "intersection": {
+      "dev__holdout": 0,
+      "train__dev": 0,
+      "train__holdout": 0
+    }
+  },
+  "text_overlap": {
+    "digit_blinded": {
+      "answer": {
+        "dev__holdout": 2,
+        "train__dev": 2,
+        "train__holdout": 2
+      },
+      "context": {
+        "dev__holdout": 0,
+        "train__dev": 0,
+        "train__holdout": 0
+      },
+      "question": {
+        "dev__holdout": 0,
+        "train__dev": 0,
+        "train__holdout": 0
+      }
+    },
+    "exact": {
+      "answer": {
+        "dev__holdout": 18,
+        "train__dev": 22,
+        "train__holdout": 16
+      },
+      "context": {
+        "dev__holdout": 0,
+        "train__dev": 0,
+        "train__holdout": 0
+      },
+      "question": {
+        "dev__holdout": 0,
+        "train__dev": 0,
+        "train__holdout": 0
+      }
+    },
+    "nfkc_whitespace": {
+      "answer": {
+        "dev__holdout": 18,
+        "train__dev": 22,
+        "train__holdout": 16
+      },
+      "context": {
+        "dev__holdout": 0,
+        "train__dev": 0,
+        "train__holdout": 0
+      },
+      "question": {
+        "dev__holdout": 0,
+        "train__dev": 0,
+        "train__holdout": 0
+      }
+    }
+  }
+}

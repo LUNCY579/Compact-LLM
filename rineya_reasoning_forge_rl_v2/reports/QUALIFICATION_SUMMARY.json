@@ -1,0 +1,70 @@
+{
+  "canonical_worlds": 20000,
+  "causal_teacher_forced_views": 10000,
+  "closed_gates": {
+    "deployment": "NOT_QUALIFIED",
+    "gpu_memory_fit": "NOT_MEASURED",
+    "human_review": "NOT_PERFORMED",
+    "model_quality": "NOT_MEASURED",
+    "native_tokenization": "NOT_RUN",
+    "native_trainer_integration": "NOT_RUN",
+    "optimizer_steps": 0,
+    "pretrained_model_calls": 0
+  },
+  "complete_structured_reference_traces": 20000,
+  "final_packaged_tree_semantic_recheck": "reports/final_semantic_recheck.json",
+  "final_public_reference_max_characters": 80,
+  "gold_reason_mode_selfchecks": 20000,
+  "interpretation": "Software and corpus-construction evidence only. Derivative view counts are not independent task counts; synthetic task traces are not model-private reasoning.",
+  "local_reference_transitions_replayed": 198770,
+  "maximum_reference_reason_response_characters": 79502,
+  "original_v1_normalized_prompt_overlap": {
+    "matching_normalized_prompts": 0,
+    "normalization": "NFKC then collapse whitespace; preserve case",
+    "original_rows": 10000,
+    "original_sha256": "3d490c386bf5d0d832a860403253aeff29266ade84f93c384a0a3645cff0eaac",
+    "performed": true,
+    "semantic_overlap_tested": false
+  },
+  "packaging_fixture": "reports/packaging_selfcheck.json",
+  "paired_heldout_probes": {
+    "all_four_long_layouts_record_multiset_matched": true,
+    "manifest_files_verified": 2,
+    "model_calls": 0,
+    "old_answers_invalidated_by_all_edits": true,
+    "parent_worlds": 64,
+    "status": "PASS",
+    "views_checked": 384
+  },
+  "process_labels": 36752,
+  "public_view_schema_checks": 75200,
+  "release": "Rineya Reasoning Forge RL v2.0.0",
+  "release_date": "2026-09-14",
+  "reproducibility": {
+    "executed": "Two complete same-seed 64-world smoke builds, all generated file bytes equal",
+    "second_full_build": "NOT_EXECUTED"
+  },
+  "runtime": {
+    "core_runtime_dependencies": "Python standard library",
+    "optional_schema_validator": "jsonschema 4.26.0",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5"
+  },
+  "separate_audit_solver_checks": 20000,
+  "split_counts": {
+    "test_iid": 1600,
+    "test_length": 160,
+    "test_transfer": 640,
+    "train": 16000,
+    "validation": 1600
+  },
+  "status": "MACHINE_VALIDATED_CANDIDATE",
+  "synthetic_preference_pairs": 32000,
+  "unit_tests": {
+    "errors": 0,
+    "failures": 0,
+    "passed": 222,
+    "receipt": "reports/unit_tests.txt",
+    "skips": 0
+  }
+}

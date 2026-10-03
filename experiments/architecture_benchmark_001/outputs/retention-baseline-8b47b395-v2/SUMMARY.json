@@ -1,0 +1,30 @@
+{
+  "evidence_kind": "local_baseline_test_execution",
+  "scope": "tiny/random fixtures and native parity; not official-model qualification",
+  "initial_memory": {
+    "available": true,
+    "memory_load_percent": 88,
+    "total_phys_gib": 15.218181610107422,
+    "free_phys_gib": 1.7989921569824219,
+    "commit_limit_gib": 35.77949142456055,
+    "committed_gib": 24.025001525878906,
+    "commit_over_phys_gib": 8.806819915771484
+  },
+  "startup_free_gib": 2.0,
+  "between_test_free_gib": 1.0,
+  "threshold_basis": "Static allocation review: native tests hidden_size24 vocab37; full registered shapes use meta; reserve1GiB between tests. This resource preflight changes no scientific threshold.",
+  "completed": false,
+  "aborted_reason": "REFUSING TO START RAB-001 tiny-fixture baseline suite: needs 2.0 GiB free physical memory, host has 1.80 GiB. free 1.80 / 15.2 GiB | committed 24.0 GiB (over physical by 8.8) | load 88%. Starting anyway would page, and a paging second job is slower than running the two sequentially -- measured 10x on this host. Wait for the other job to finish.",
+  "wall_seconds": 8.090000119409524e-05,
+  "final_memory": {
+    "available": true,
+    "memory_load_percent": 88,
+    "total_phys_gib": 15.218181610107422,
+    "free_phys_gib": 1.7989845275878906,
+    "commit_limit_gib": 35.77949142456055,
+    "committed_gib": 24.025001525878906,
+    "commit_over_phys_gib": 8.806819915771484
+  },
+  "process_peak_working_set_gib": 0.0,
+  "process_peak_pagefile_gib": 0.0
+}

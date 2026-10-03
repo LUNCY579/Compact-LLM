@@ -1,0 +1,264 @@
+{
+  "schema": 2,
+  "stage": "G2_RETENTION_B28",
+  "status": "PASS",
+  "evidence_kind": "official_model_qualification",
+  "context": {
+    "context_schema": 2,
+    "experiment_id": "RAB-001",
+    "implementation_sha256": "7373d09c120b5f8943ae010a839a02dfc2924d4a472e6a8b98f757bac4ffa649",
+    "source_audit_digest": "97cd76af0fb2d6064c5cb954906ac493d21e40429cebe55f0bed0000b23d9ef8",
+    "weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "data_sha256": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266",
+    "runtime": {
+      "python": "3.11.15",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "torch": "2.10.0",
+      "transformers": "4.51.3",
+      "safetensors": "0.7.0",
+      "numpy": "2.3.5",
+      "tokenizers": "0.21.4",
+      "numerics": {
+        "cpu_threads": 16,
+        "interop_threads": 16,
+        "float32_matmul_precision": "highest",
+        "deterministic_algorithms": false,
+        "cuda_build": null,
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": true,
+        "cudnn_deterministic": false,
+        "cudnn_benchmark": false
+      }
+    },
+    "device": "cpu",
+    "device_identity": {
+      "device": "cpu"
+    },
+    "precision": "float32",
+    "backend": "eager"
+  },
+  "checks": {
+    "source_probe_informative": true,
+    "no_reference_capability_lost": true,
+    "generation_terminates_per_class": true,
+    "probe_disjoint_from_training": true,
+    "calibration_overlap_as_declared": true,
+    "typed_scorer_recomputed": true,
+    "source_unchanged": true,
+    "probe_unchanged": true,
+    "calibration_unchanged": true,
+    "pilot_unchanged": true,
+    "source_answers_reproduce_parent": true,
+    "reference_matches_parent": true
+  },
+  "metrics": {
+    "arm": "B28",
+    "stage": "G2_RETENTION",
+    "parent_stage": "G2_CACHED_B28",
+    "checkpoint_state_sha256": "c17910722c9a284397277143a085e3912004a9e049c36687cd69f53894e05356",
+    "monitor": {
+      "status": "PASS",
+      "classes": {
+        "percentage_reasoning": {
+          "rows": 50,
+          "reference_n": 21,
+          "lost": 0,
+          "lost_ids": [],
+          "retained": 21,
+          "gained": 0,
+          "terminated": 49,
+          "source_correct_terminated": 21,
+          "arm_correct": 21,
+          "termination_rate": "49/50",
+          "source_informative": true,
+          "losses_within_limit": true,
+          "terminates": true
+        },
+        "ratio_proportion": {
+          "rows": 50,
+          "reference_n": 16,
+          "lost": 0,
+          "lost_ids": [],
+          "retained": 16,
+          "gained": 0,
+          "terminated": 50,
+          "source_correct_terminated": 16,
+          "arm_correct": 16,
+          "termination_rate": "1",
+          "source_informative": true,
+          "losses_within_limit": true,
+          "terminates": true
+        },
+        "time_duration": {
+          "rows": 50,
+          "reference_n": 10,
+          "lost": 0,
+          "lost_ids": [],
+          "retained": 10,
+          "gained": 0,
+          "terminated": 49,
+          "source_correct_terminated": 10,
+          "arm_correct": 10,
+          "termination_rate": "49/50",
+          "source_informative": true,
+          "losses_within_limit": true,
+          "terminates": true
+        }
+      },
+      "failed_classes": [],
+      "uninformative_classes": [],
+      "permits_next_block": true
+    },
+    "per_class": {
+      "percentage_reasoning": {
+        "rows": 50,
+        "reference_n": 21,
+        "lost": 0,
+        "lost_ids": [],
+        "retained": 21,
+        "gained": 0,
+        "terminated": 49,
+        "source_correct_terminated": 21,
+        "arm_correct": 21
+      },
+      "ratio_proportion": {
+        "rows": 50,
+        "reference_n": 16,
+        "lost": 0,
+        "lost_ids": [],
+        "retained": 16,
+        "gained": 0,
+        "terminated": 50,
+        "source_correct_terminated": 16,
+        "arm_correct": 16
+      },
+      "time_duration": {
+        "rows": 50,
+        "reference_n": 10,
+        "lost": 0,
+        "lost_ids": [],
+        "retained": 10,
+        "gained": 0,
+        "terminated": 49,
+        "source_correct_terminated": 10,
+        "arm_correct": 10
+      }
+    },
+    "reference_size": 47,
+    "source_correct_total": 47,
+    "arm_correct_total": 47,
+    "lost_total": 0,
+    "gained_total": 0,
+    "bare_policy": "permissive",
+    "bare_policy_sensitivity": {
+      "other_policy": "strict",
+      "other_status": "FAIL",
+      "verdicts_agree": false,
+      "other_per_class": {
+        "percentage_reasoning": {
+          "rows": 50,
+          "reference_n": 21,
+          "lost": 0,
+          "lost_ids": [],
+          "retained": 21,
+          "gained": 0,
+          "terminated": 49,
+          "source_correct_terminated": 21,
+          "arm_correct": 21
+        },
+        "ratio_proportion": {
+          "rows": 50,
+          "reference_n": 16,
+          "lost": 6,
+          "lost_ids": [
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970"
+          ],
+          "retained": 10,
+          "gained": 0,
+          "terminated": 50,
+          "source_correct_terminated": 10,
+          "arm_correct": 10
+        },
+        "time_duration": {
+          "rows": 50,
+          "reference_n": 10,
+          "lost": 0,
+          "lost_ids": [],
+          "retained": 10,
+          "gained": 0,
+          "terminated": 49,
+          "source_correct_terminated": 10,
+          "arm_correct": 10
+        }
+      },
+      "other_source_correct_total": 41,
+      "other_arm_correct_total": 41
+    },
+    "calibration_family_overlap": 2,
+    "label_human_review_status": "pending",
+    "policy": {
+      "purpose": "capability_retention_of_a_constructed_or_trained_arm_against_the_frozen_source",
+      "rationale": "G1_QUALITY closed the token-salad hole at initialization, but every check it applies is likelihood- or teacher-agreement-shaped, and those are now measured to decouple from capability. At a token-matched 500,099-target dose a CED arm reached held-out CE 0.4727 against the frozen source's 5.5782 -- 5.1055 nats BETTER than its own teacher -- while answering 2 of 60 held-out questions the source answers 20 of 60, with disjoint 95% intervals. No threshold on a likelihood-shaped quantity separates those two models. This stage scores answers instead.",
+      "threshold_provenance": "Transcribed unchanged from RETENTION_GATE_DESIGN.md, committed at f7bc290 before this code existed and before any arm was scored under the typed grammar. The rules are policy tolerances, not values fitted to an arm. max_correct_to_incorrect_per_class is 0 because a gate that permits any forgetting has to justify the permitted amount, and no measurement here supports a number; min_termination_rate_per_class REUSES the existing G0.min_termination_rate of 0.8 rather than inventing a value; min_source_correct_terminated_per_class is 1, the weakest statement that rules out the arithmetic_chain failure where the teacher scores 0 and the probe measures nothing. Historical arm scores under the LEGACY number-sequence scorer were already known when these rules were written, so applying them to an already-measured arm is retrospective demonstration, never preregistered validation. Source scores under this grammar were not known.",
+      "scored_split": "monitor_probe",
+      "probe_classes": [
+        "percentage_reasoning",
+        "ratio_proportion",
+        "time_duration"
+      ],
+      "excluded_probe_class": "arithmetic_chain",
+      "excluded_probe_class_reason": "the frozen source scores 0/20, so every arm would read 0/N before and after and the probe would measure nothing",
+      "reference_rule": "union_of_frozen_source_correct_and_arm_initialization_correct",
+      "max_correct_to_incorrect_per_class": 0,
+      "min_source_correct_terminated_per_class": 1,
+      "min_termination_rate_per_class": 0.8,
+      "gains_offset_losses": false,
+      "bare_policy": "permissive",
+      "bare_policy_sensitivity_reported": true,
+      "bare_policy_review_status": "pending",
+      "declared_calibration_family_overlap": 2,
+      "declared_calibration_family_overlap_note": "Two of the 150 probe families also appear in the open calibration split, which G1_WIDTH uses for activation statistics. Disclosed rather than gated: the count is a fixed property of committed data, known before any arm was scored, and the receipt fails if the observed overlap stops matching it. The probe is fully family-disjoint and id-disjoint from the training splits, which is the exposure that would matter during training.",
+      "grammar_contract_sha256": "871d3bb860be27ff64bb613cccd51349b080412573c6517a64dee181389cedc5",
+      "label_audit_sha256": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7",
+      "policy_proposal_sha256": "4d6cc21aecec3ce2d9010c7af431dff77b2ea0976fea336d8c5fa2feee58f37a",
+      "label_human_review_status": "pending",
+      "forbidden": [
+        "sealed_test_access",
+        "dev_access",
+        "threshold_tuning_on_student_outcomes",
+        "reference_reset_after_training",
+        "candidate_informed_alias_or_panel_changes"
+      ],
+      "licenses_registered_training": false,
+      "licenses_efficacy_claim": false,
+      "licenses_confirmation_certificate": false
+    },
+    "quality_recovery_demonstrated": false,
+    "finite_panel_not_a_population_claim": true,
+    "resource_scope": "open probe split only; no sealed or DEV access, no efficacy claim"
+  },
+  "artifacts": {
+    "retention.json": "79e92c27b8a9e28f89491b58cfe2f25e8a804005a6b9a6fe4441133d25352d05"
+  },
+  "parent_receipts": [
+    {
+      "stage": "G2_CACHED_B28",
+      "receipt_sha256": "ded0c2ae2951056378536020503d95a4a062c95dc639031d7cf0a23d88c33e63",
+      "path": "../../engineering-7373d09c/b28/G2_CACHED_B28.json"
+    },
+    {
+      "stage": "G1_RETENTION_B28",
+      "receipt_sha256": "e3a44de7aec74da570029e4e6418d122346b61c338be8cae5885f63c4199387c",
+      "path": "../B28/G1_RETENTION_B28.json"
+    }
+  ],
+  "parent_receipt_sha256": "ded0c2ae2951056378536020503d95a4a062c95dc639031d7cf0a23d88c33e63",
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false,
+  "receipt_sha256": "6519614a3176ae90dca1d4f486334a9ec625fb5e2925f10250eb2d1615666f28"
+}

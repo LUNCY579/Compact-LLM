@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_quality_diagnostic_only",
+  "note": "Teacher-forced CE and KL-to-source on the already-open calibration split. Run outside the experiment package; not a receipt and authorizes no stage. Measures initialization deficit before any recovery training.",
+  "implementation_reference": "fc44701e (unmodified; this script lives outside ROOT)",
+  "split": "calibration",
+  "rows_scored": 24,
+  "arms": {
+    "B28_source": {
+      "mean_ce_nats": 5.545765432732727,
+      "perplexity": 256.15057373046875,
+      "mean_kl_to_source_nats": 0.0,
+      "top1_agreement_with_source": 1.0,
+      "scored_tokens": 3271,
+      "wall_seconds": 20.941500000000815
+    },
+    "D40_width": {
+      "mean_ce_nats": 5.359702623134649,
+      "perplexity": 212.66168212890625,
+      "mean_kl_to_source_nats": 1.4677026667605113,
+      "top1_agreement_with_source": 0.5001528584530724,
+      "scored_tokens": 3271,
+      "wall_seconds": 18.73649899999873
+    },
+    "C28_ced": {
+      "mean_ce_nats": 12.58542399113421,
+      "perplexity": 292267.40625,
+      "mean_kl_to_source_nats": 9.15426535913974,
+      "top1_agreement_with_source": 0.014368694588810762,
+      "scored_tokens": 3271,
+      "wall_seconds": 18.058902099997795
+    },
+    "C40_ced": {
+      "mean_ce_nats": 12.959880179274304,
+      "perplexity": 425015.0625,
+      "mean_kl_to_source_nats": 9.8776467351584,
+      "top1_agreement_with_source": 0.0036686028737389176,
+      "scored_tokens": 3271,
+      "wall_seconds": 16.9471840000042
+    }
+  },
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}

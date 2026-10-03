@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "run": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-slft\\research\\composable_skills_v1\\runs\\pilot004",
+  "invariants": {
+    "steps": {
+      "control": 28,
+      "anchor": 28,
+      "matched": true
+    },
+    "processed_tokens": {
+      "control": 54172,
+      "anchor": 54172,
+      "matched": true
+    },
+    "supervised_tokens": {
+      "control": 5254,
+      "anchor": 5254,
+      "matched": true
+    },
+    "old_forward_tokens": {
+      "control": 18873,
+      "anchor": 18873,
+      "matched": true
+    },
+    "trainable_params": {
+      "control": 7208960,
+      "anchor": 7208960,
+      "matched": true
+    },
+    "base_dtype": {
+      "control": "float32",
+      "anchor": "float32",
+      "matched": true
+    },
+    "adapter_dtype": {
+      "control": "float32",
+      "anchor": "float32",
+      "matched": true
+    },
+    "old_family_presentations": {
+      "control": {
+        "binding": 87,
+        "time": 9,
+        "arithmetic": 16
+      },
+      "anchor": {
+        "binding": 87,
+        "time": 9,
+        "arithmetic": 16
+      },
+      "matched": true
+    },
+    "old_family_target_tokens": {
+      "control": {
+        "binding": 210,
+        "time": 54,
+        "arithmetic": 48
+      },
+      "anchor": {
+        "binding": 210,
+        "time": 54,
+        "arithmetic": 48
+      },
+      "matched": true
+    }
+  },
+  "per_step_matched": {
+    "actual_lr": true,
+    "old_ids": true,
+    "processed_tokens": true,
+    "supervised_tokens": true,
+    "old_forward_tokens": true
+  },
+  "first_step": {
+    "control": {
+      "step": 1,
+      "processed_tokens": 1962,
+      "supervised_tokens": 209,
+      "old_forward_tokens": 552,
+      "new_ce": 0.5749348569661379,
+      "old_kl": 0.0,
+      "kl_denominator_prediction_positions": 13,
+      "lambda": 0,
+      "actual_lr": 1.8108986192128774e-05,
+      "grad_norm_before_clip": 4.5062150955200195,
+      "adapter_coordinate_step_l2": 0.03586867141190938,
+      "old_ids": [
+        "CS1-anchor-301-0010-b1-u0",
+        "CS1-anchor-301-0023-b0-u1",
+        "CS1-anchor-301-0007-time",
+        "CS1-anchor-301-0024-b0-u0"
+      ],
+      "wall_seconds": 4.219000000000051
+    },
+    "anchor": {
+      "step": 1,
+      "processed_tokens": 1962,
+      "supervised_tokens": 209,
+      "old_forward_tokens": 552,
+      "new_ce": 0.5749348569661379,
+      "old_kl": 0.0,
+      "kl_denominator_prediction_positions": 13,
+      "lambda": 0.25,
+      "actual_lr": 1.8108986192128774e-05,
+      "grad_norm_before_clip": 4.5062150955200195,
+      "adapter_coordinate_step_l2": 0.03586867140840576,
+      "old_ids": [
+        "CS1-anchor-301-0010-b1-u0",
+        "CS1-anchor-301-0023-b0-u1",
+        "CS1-anchor-301-0007-time",
+        "CS1-anchor-301-0024-b0-u0"
+      ],
+      "wall_seconds": 4.969000000000051
+    }
+  },
+  "training_supervised_wall_seconds": {
+    "control": 116.67200000000003,
+    "anchor": 141.34400000000005
+  },
+  "anchor_over_control_wall_ratio": 1.2114646187602853,
+  "first_increment_vector_identity_established": false,
+  "interpretation": "Matching scalar logs and seeds do not prove tensor identity; no step-one tensor snapshot exists. Final BA geometry is separately measured. Cost ratio is one local pair, not a latency benchmark.",
+  "model_calls": 0,
+  "quality_claim": false,
+  "input_sha256": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-slft\\research\\composable_skills_v1\\runs\\pilot004\\PLAN.json": "d044e060f7f8ae8e68e3cc6f18c715047e156a007df300d3b60a21b4ab1550b7",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-slft\\research\\composable_skills_v1\\runs\\pilot004\\train-control\\TRAIN.json": "94d52538c9982f05eb8f4edd8a1731bc6de51e34cb29f37c2f2e0ba506d38f1e",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-slft\\research\\composable_skills_v1\\runs\\pilot004\\train-control\\steps.jsonl": "101383156e865010a3d3b55adcb6f1b0023493e86820d8334d0cd8b00caf27a3",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-slft\\research\\composable_skills_v1\\runs\\pilot004\\train-control\\COMPLETE.json": "38320dda9811561f60bdbd5010bdcc2c25ab6b0f7626d9f4a0484cc490cca5b6",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-slft\\research\\composable_skills_v1\\runs\\pilot004\\train-control\\supervisor.json": "2cdb40167a80eececadecd33f632ccc25ccc91b45f890f78ccd50ef2473bde37",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-slft\\research\\composable_skills_v1\\runs\\pilot004\\train-anchor\\TRAIN.json": "c186113930291ccf67b04494dc6be562538f8a3441803d1ee4ddde6d9b65a171",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-slft\\research\\composable_skills_v1\\runs\\pilot004\\train-anchor\\steps.jsonl": "ed1b97a43f48134cd2e7c05a763f27c9dbd5ba0bf298b4be2ec3fa7e30e791ba",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-slft\\research\\composable_skills_v1\\runs\\pilot004\\train-anchor\\COMPLETE.json": "cd9241215251676e718d2063a9679181194b35d41a908140d34f8e5796c509b7",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-slft\\research\\composable_skills_v1\\runs\\pilot004\\train-anchor\\supervisor.json": "64f5bd31952640c4aa9a0269ecbaf909e569006cb4791bc83c0374f69588f562"
+  }
+}

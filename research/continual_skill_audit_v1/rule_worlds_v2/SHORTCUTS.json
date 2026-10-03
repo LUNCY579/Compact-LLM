@@ -1,0 +1,187 @@
+{
+  "schema": 1,
+  "features": {
+    "train/ledger_replay": {
+      "first_kind_is_add": {
+        "best_polarity_correct": 16,
+        "n": 32,
+        "best_polarity_rate": 0.5
+      },
+      "events_have_identical_keys": {
+        "best_polarity_correct": 16,
+        "n": 32,
+        "best_polarity_rate": 0.5
+      },
+      "same_amount_parity": {
+        "best_polarity_correct": 16,
+        "n": 32,
+        "best_polarity_rate": 0.5
+      },
+      "scale_amount_gt7": {
+        "best_polarity_correct": 18,
+        "n": 32,
+        "best_polarity_rate": 0.5625
+      },
+      "scale_amount_larger": {
+        "best_polarity_correct": 19,
+        "n": 32,
+        "best_polarity_rate": 0.59375
+      }
+    },
+    "train/prerequisite_plan": {
+      "first_kind_is_add": {
+        "best_polarity_correct": 16,
+        "n": 32,
+        "best_polarity_rate": 0.5
+      },
+      "events_have_identical_keys": {
+        "best_polarity_correct": 16,
+        "n": 32,
+        "best_polarity_rate": 0.5
+      },
+      "add_touches_pre_on": {
+        "best_polarity_correct": 16,
+        "n": 32,
+        "best_polarity_rate": 0.5
+      },
+      "add_touches_pre_off": {
+        "best_polarity_correct": 16,
+        "n": 32,
+        "best_polarity_rate": 0.5
+      },
+      "first_add_has_more_bits": {
+        "best_polarity_correct": 16,
+        "n": 32,
+        "best_polarity_rate": 0.5
+      }
+    },
+    "train/register_machine": {
+      "first_kind_is_add": {
+        "best_polarity_correct": 16,
+        "n": 32,
+        "best_polarity_rate": 0.5
+      },
+      "events_have_identical_keys": {
+        "best_polarity_correct": 16,
+        "n": 32,
+        "best_polarity_rate": 0.5
+      },
+      "same_value_parity": {
+        "best_polarity_correct": 16,
+        "n": 32,
+        "best_polarity_rate": 0.5
+      },
+      "add_value_larger": {
+        "best_polarity_correct": 16,
+        "n": 32,
+        "best_polarity_rate": 0.5
+      },
+      "add_value_negative": {
+        "best_polarity_correct": 16,
+        "n": 32,
+        "best_polarity_rate": 0.5
+      },
+      "add_value_above_modulus": {
+        "best_polarity_correct": 16,
+        "n": 32,
+        "best_polarity_rate": 0.5
+      }
+    },
+    "dev/ledger_replay": {
+      "first_kind_is_add": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      },
+      "events_have_identical_keys": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      },
+      "same_amount_parity": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      },
+      "scale_amount_gt7": {
+        "best_polarity_correct": 10,
+        "n": 16,
+        "best_polarity_rate": 0.625
+      },
+      "scale_amount_larger": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      }
+    },
+    "dev/prerequisite_plan": {
+      "first_kind_is_add": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      },
+      "events_have_identical_keys": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      },
+      "add_touches_pre_on": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      },
+      "add_touches_pre_off": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      },
+      "first_add_has_more_bits": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      }
+    },
+    "dev/register_machine": {
+      "first_kind_is_add": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      },
+      "events_have_identical_keys": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      },
+      "same_value_parity": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      },
+      "add_value_larger": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      },
+      "add_value_negative": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      },
+      "add_value_above_modulus": {
+        "best_polarity_correct": 8,
+        "n": 16,
+        "best_polarity_rate": 0.5
+      }
+    }
+  },
+  "model_calls": 0,
+  "limitations": [
+    "Same-bank optimistic polarity selection.",
+    "Incomplete feature class; no guarantee against other shortcuts.",
+    "Semantic arithmetic and bit operations are legitimate solutions, not automatically shortcut violations."
+  ],
+  "input_sha256": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\research\\continual_skill_audit_v1\\rule_worlds_v2\\train.jsonl": "b3fa976d2a975e06efb1ea5b02f9ef50445fec9120f28a3b25286e61092899ec",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\research\\continual_skill_audit_v1\\rule_worlds_v2\\dev.jsonl": "95a14e85629b3b22a1cdfaca7b684bd033ffe81b6b53a857ce226f635cd6593c"
+  }
+}

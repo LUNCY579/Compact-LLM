@@ -1,0 +1,168 @@
+{
+  "artifact_version": "1.1.0-full-candidate",
+  "basis": "User attached LCR v1 specification; not the repository v2 addendum",
+  "content_complete": true,
+  "corpus_accepted": false,
+  "counts": {
+    "difficulty": {
+      "hard": 3600,
+      "medium": 2400
+    },
+    "length_band": {
+      "long": 2000,
+      "medium": 2000,
+      "short": 2000
+    },
+    "needle_position": {
+      "distributed": 1200,
+      "early": 2400,
+      "late": 1200,
+      "middle": 1200
+    },
+    "split": {
+      "dev": 600,
+      "holdout": 600,
+      "train": 4800
+    },
+    "task_type": {
+      "alias_resolution": 1200,
+      "causal_disambiguation": 1000,
+      "count_with_exclusion": 800,
+      "latest_verified": 400,
+      "multi_condition": 400,
+      "object_state_tracking": 500,
+      "rule_exception": 1000,
+      "temporal_correlation": 700
+    },
+    "variant": {
+      "answerable": 2700,
+      "counterfactual": 900,
+      "paraphrase": 600,
+      "unanswerable": 1800
+    }
+  },
+  "external_evaluation_rows_opened": 0,
+  "gates": {
+    "distributed_deletion_test": {
+      "applicable_rows": 840,
+      "rows_passing": 840,
+      "status": "PASS_FOR_IMPLEMENTED_TEXT_DELETION_AUDIT"
+    },
+    "exact_requested_marginals": {
+      "status": "PASS"
+    },
+    "external_evaluation_nonoverlap": {
+      "overlap": null,
+      "status": "NOT_RUN"
+    },
+    "global_pairwise_three_percent": {
+      "maximum_relative_error": 0.004999999999999929,
+      "status": "PASS"
+    },
+    "hard_row_annotations": {
+      "distractor_count_definition": "Names outside positive evidence spans; UNKNOWN has no positive spans. Separate named background entities also present.",
+      "positive_lexical_test_inapplicable_unknown": 1080,
+      "rows": 3600,
+      "status": "PASS_FOR_IMPLEMENTED_CHECKS_NOT_GENERAL_DIFFICULTY_CERTIFICATION"
+    },
+    "independent_human_review": {
+      "status": "NOT_PERFORMED"
+    },
+    "independent_text_answer_rederivation": {
+      "answer_disagreements": 0,
+      "independence": "Separate algorithmic implementation, shared author and grammar; no independent human review",
+      "parsed_facts": 85141,
+      "reason_disagreements": 0,
+      "rows": 6000,
+      "status": "PASS"
+    },
+    "named_exact_answer_shortcut_baselines": {
+      "max_overall_answerable_accuracy": 0.013333333333333334,
+      "max_per_task_answerable_accuracy": 0.055357142857142855,
+      "scope": "Finite declared baselines only",
+      "status": "PASS_BELOW_25_PERCENT"
+    },
+    "native_token_fit_and_reserve": {
+      "context_band_fit": null,
+      "rows_measured": 0,
+      "rows_prompt_le_1920": null,
+      "rows_total_le_2048": null,
+      "status": "UNVERIFIED_BLOCKED"
+    },
+    "nontrivial_abstention": {
+      "selector_plus_validity_balanced_accuracy": 0.875,
+      "status": "NOT_CERTIFIED_KNOWN_EASY_SEMANTIC_RULE"
+    },
+    "positive_evidence_positions": {
+      "results": {
+        "distributed_applicable": 840,
+        "distributed_pass": 840,
+        "early_applicable": 1680,
+        "early_pass": 1680,
+        "late_applicable": 840,
+        "late_pass": 840,
+        "middle_applicable": 840,
+        "middle_pass": 840
+      },
+      "status": "PASS_ON_4200_APPLICABLE_ANSWERABLE_ROWS",
+      "unknown_scope": "No positive evidence; position tags apply to related or absence neighborhoods only"
+    },
+    "question_only_answerability": {
+      "balanced_accuracy_by_split": {
+        "dev": 0.4726190476190476,
+        "holdout": 0.4841269841269841,
+        "train": 0.506795634920635
+      },
+      "status": "MEASURED"
+    },
+    "required_receipt_files": {
+      "fully_measured_acceptance_receipts": false,
+      "native_counts": "null, not guessed; external overlaps null, not zero",
+      "status": "ALL_FIVE_PRESENT_WITH_HONEST_STATUSES"
+    },
+    "single_turn_and_exact_short_answers": {
+      "answer_words_max": 1,
+      "answer_words_median": 1,
+      "answer_words_min": 1,
+      "role_sequence": [
+        "system",
+        "user",
+        "assistant"
+      ],
+      "status": "PASS"
+    },
+    "strong_structural_disjointness": {
+      "note": "Disjoint entity pools and registered case-layout signatures; shared local forms and solution motifs",
+      "status": "NOT_FULLY_ESTABLISHED"
+    },
+    "whole_context_question_text_disjointness": {
+      "normalizations": [
+        "exact",
+        "NFKC_whitespace",
+        "digit_blinded"
+      ],
+      "status": "PASS_ACROSS_DELIVERED_SPLITS"
+    },
+    "within_band_pairwise_three_percent": {
+      "maximum_relative_error": 0.05263157894736836,
+      "note": "Small integer cells require an explicit reviewed rounding convention; none is silently adopted",
+      "status": "NOT_MET_UNDER_LITERAL_RELATIVE_INTERPRETATION"
+    }
+  },
+  "interpretation": "The entire 6000-row candidate content is delivered. The attached specification's full acceptance condition is not satisfied. No retention, quality, model improvement, production readiness, or training-budget permission is claimed.",
+  "model_inference_calls": 0,
+  "model_training_runs": 0,
+  "native_tokenizer_calls": 0,
+  "rows_total": 6000,
+  "schema": 1,
+  "status": "FULL_CONTENT_GENERATED_NOT_FULLY_ACCEPTED",
+  "training_authorized": false,
+  "training_qualification": "NOT_ESTABLISHED",
+  "unanswerability_mechanism_counts": {
+    "attribute_absent": 450,
+    "entity_absent": 450,
+    "presupposition_contradicted": 450,
+    "retracted_or_superseded": 450
+  },
+  "unique_scenario_groups": 6000
+}

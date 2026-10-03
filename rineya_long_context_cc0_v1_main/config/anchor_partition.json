@@ -1,0 +1,3069 @@
+{
+  "version": "rineya_origin_partition_v1",
+  "created_at": "2026-08-24",
+  "policy": "hash-shuffled origin-group partition before derivative-card or prompt generation",
+  "origin_group_counts_per_domain": {
+    "train": 20,
+    "validation": 4,
+    "test": 4,
+    "sealed": 4
+  },
+  "anchor_card_counts_per_domain": {
+    "train": 40,
+    "validation": 8,
+    "test": 8,
+    "sealed": 8
+  },
+  "domains": {
+    "academic": {
+      "train": {
+        "origin_group_ids": [
+          "academic::origin::27",
+          "academic::origin::08",
+          "academic::origin::20",
+          "academic::origin::29",
+          "academic::origin::30",
+          "academic::origin::14",
+          "academic::origin::19",
+          "academic::origin::04",
+          "academic::origin::11",
+          "academic::origin::31",
+          "academic::origin::09",
+          "academic::origin::24",
+          "academic::origin::02",
+          "academic::origin::21",
+          "academic::origin::01",
+          "academic::origin::16",
+          "academic::origin::22",
+          "academic::origin::28",
+          "academic::origin::13",
+          "academic::origin::26"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ACADEMIC-27-A",
+          "ANCH-ACADEMIC-27-B",
+          "ANCH-ACADEMIC-08-A",
+          "ANCH-ACADEMIC-08-B",
+          "ANCH-ACADEMIC-20-A",
+          "ANCH-ACADEMIC-20-B",
+          "ANCH-ACADEMIC-29-A",
+          "ANCH-ACADEMIC-29-B",
+          "ANCH-ACADEMIC-30-A",
+          "ANCH-ACADEMIC-30-B",
+          "ANCH-ACADEMIC-14-A",
+          "ANCH-ACADEMIC-14-B",
+          "ANCH-ACADEMIC-19-A",
+          "ANCH-ACADEMIC-19-B",
+          "ANCH-ACADEMIC-04-A",
+          "ANCH-ACADEMIC-04-B",
+          "ANCH-ACADEMIC-11-A",
+          "ANCH-ACADEMIC-11-B",
+          "ANCH-ACADEMIC-31-A",
+          "ANCH-ACADEMIC-31-B",
+          "ANCH-ACADEMIC-09-A",
+          "ANCH-ACADEMIC-09-B",
+          "ANCH-ACADEMIC-24-A",
+          "ANCH-ACADEMIC-24-B",
+          "ANCH-ACADEMIC-02-A",
+          "ANCH-ACADEMIC-02-B",
+          "ANCH-ACADEMIC-21-A",
+          "ANCH-ACADEMIC-21-B",
+          "ANCH-ACADEMIC-01-A",
+          "ANCH-ACADEMIC-01-B",
+          "ANCH-ACADEMIC-16-A",
+          "ANCH-ACADEMIC-16-B",
+          "ANCH-ACADEMIC-22-A",
+          "ANCH-ACADEMIC-22-B",
+          "ANCH-ACADEMIC-28-A",
+          "ANCH-ACADEMIC-28-B",
+          "ANCH-ACADEMIC-13-A",
+          "ANCH-ACADEMIC-13-B",
+          "ANCH-ACADEMIC-26-A",
+          "ANCH-ACADEMIC-26-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "academic::origin::07",
+          "academic::origin::05",
+          "academic::origin::12",
+          "academic::origin::18"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ACADEMIC-07-A",
+          "ANCH-ACADEMIC-07-B",
+          "ANCH-ACADEMIC-05-A",
+          "ANCH-ACADEMIC-05-B",
+          "ANCH-ACADEMIC-12-A",
+          "ANCH-ACADEMIC-12-B",
+          "ANCH-ACADEMIC-18-A",
+          "ANCH-ACADEMIC-18-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "academic::origin::25",
+          "academic::origin::06",
+          "academic::origin::10",
+          "academic::origin::23"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ACADEMIC-25-A",
+          "ANCH-ACADEMIC-25-B",
+          "ANCH-ACADEMIC-06-A",
+          "ANCH-ACADEMIC-06-B",
+          "ANCH-ACADEMIC-10-A",
+          "ANCH-ACADEMIC-10-B",
+          "ANCH-ACADEMIC-23-A",
+          "ANCH-ACADEMIC-23-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "academic::origin::17",
+          "academic::origin::32",
+          "academic::origin::15",
+          "academic::origin::03"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ACADEMIC-17-A",
+          "ANCH-ACADEMIC-17-B",
+          "ANCH-ACADEMIC-32-A",
+          "ANCH-ACADEMIC-32-B",
+          "ANCH-ACADEMIC-15-A",
+          "ANCH-ACADEMIC-15-B",
+          "ANCH-ACADEMIC-03-A",
+          "ANCH-ACADEMIC-03-B"
+        ]
+      }
+    },
+    "astronomy": {
+      "train": {
+        "origin_group_ids": [
+          "astronomy::origin::01",
+          "astronomy::origin::06",
+          "astronomy::origin::16",
+          "astronomy::origin::14",
+          "astronomy::origin::03",
+          "astronomy::origin::02",
+          "astronomy::origin::29",
+          "astronomy::origin::31",
+          "astronomy::origin::25",
+          "astronomy::origin::18",
+          "astronomy::origin::21",
+          "astronomy::origin::24",
+          "astronomy::origin::17",
+          "astronomy::origin::30",
+          "astronomy::origin::27",
+          "astronomy::origin::12",
+          "astronomy::origin::13",
+          "astronomy::origin::22",
+          "astronomy::origin::26",
+          "astronomy::origin::10"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ASTRONOMY-01-A",
+          "ANCH-ASTRONOMY-01-B",
+          "ANCH-ASTRONOMY-06-A",
+          "ANCH-ASTRONOMY-06-B",
+          "ANCH-ASTRONOMY-16-A",
+          "ANCH-ASTRONOMY-16-B",
+          "ANCH-ASTRONOMY-14-A",
+          "ANCH-ASTRONOMY-14-B",
+          "ANCH-ASTRONOMY-03-A",
+          "ANCH-ASTRONOMY-03-B",
+          "ANCH-ASTRONOMY-02-A",
+          "ANCH-ASTRONOMY-02-B",
+          "ANCH-ASTRONOMY-29-A",
+          "ANCH-ASTRONOMY-29-B",
+          "ANCH-ASTRONOMY-31-A",
+          "ANCH-ASTRONOMY-31-B",
+          "ANCH-ASTRONOMY-25-A",
+          "ANCH-ASTRONOMY-25-B",
+          "ANCH-ASTRONOMY-18-A",
+          "ANCH-ASTRONOMY-18-B",
+          "ANCH-ASTRONOMY-21-A",
+          "ANCH-ASTRONOMY-21-B",
+          "ANCH-ASTRONOMY-24-A",
+          "ANCH-ASTRONOMY-24-B",
+          "ANCH-ASTRONOMY-17-A",
+          "ANCH-ASTRONOMY-17-B",
+          "ANCH-ASTRONOMY-30-A",
+          "ANCH-ASTRONOMY-30-B",
+          "ANCH-ASTRONOMY-27-A",
+          "ANCH-ASTRONOMY-27-B",
+          "ANCH-ASTRONOMY-12-A",
+          "ANCH-ASTRONOMY-12-B",
+          "ANCH-ASTRONOMY-13-A",
+          "ANCH-ASTRONOMY-13-B",
+          "ANCH-ASTRONOMY-22-A",
+          "ANCH-ASTRONOMY-22-B",
+          "ANCH-ASTRONOMY-26-A",
+          "ANCH-ASTRONOMY-26-B",
+          "ANCH-ASTRONOMY-10-A",
+          "ANCH-ASTRONOMY-10-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "astronomy::origin::05",
+          "astronomy::origin::11",
+          "astronomy::origin::08",
+          "astronomy::origin::23"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ASTRONOMY-05-A",
+          "ANCH-ASTRONOMY-05-B",
+          "ANCH-ASTRONOMY-11-A",
+          "ANCH-ASTRONOMY-11-B",
+          "ANCH-ASTRONOMY-08-A",
+          "ANCH-ASTRONOMY-08-B",
+          "ANCH-ASTRONOMY-23-A",
+          "ANCH-ASTRONOMY-23-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "astronomy::origin::28",
+          "astronomy::origin::09",
+          "astronomy::origin::32",
+          "astronomy::origin::15"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ASTRONOMY-28-A",
+          "ANCH-ASTRONOMY-28-B",
+          "ANCH-ASTRONOMY-09-A",
+          "ANCH-ASTRONOMY-09-B",
+          "ANCH-ASTRONOMY-32-A",
+          "ANCH-ASTRONOMY-32-B",
+          "ANCH-ASTRONOMY-15-A",
+          "ANCH-ASTRONOMY-15-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "astronomy::origin::04",
+          "astronomy::origin::20",
+          "astronomy::origin::07",
+          "astronomy::origin::19"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ASTRONOMY-04-A",
+          "ANCH-ASTRONOMY-04-B",
+          "ANCH-ASTRONOMY-20-A",
+          "ANCH-ASTRONOMY-20-B",
+          "ANCH-ASTRONOMY-07-A",
+          "ANCH-ASTRONOMY-07-B",
+          "ANCH-ASTRONOMY-19-A",
+          "ANCH-ASTRONOMY-19-B"
+        ]
+      }
+    },
+    "business": {
+      "train": {
+        "origin_group_ids": [
+          "business::origin::08",
+          "business::origin::20",
+          "business::origin::11",
+          "business::origin::19",
+          "business::origin::27",
+          "business::origin::31",
+          "business::origin::25",
+          "business::origin::28",
+          "business::origin::22",
+          "business::origin::29",
+          "business::origin::06",
+          "business::origin::16",
+          "business::origin::32",
+          "business::origin::07",
+          "business::origin::14",
+          "business::origin::17",
+          "business::origin::04",
+          "business::origin::05",
+          "business::origin::12",
+          "business::origin::09"
+        ],
+        "anchor_card_ids": [
+          "ANCH-BUSINESS-08-A",
+          "ANCH-BUSINESS-08-B",
+          "ANCH-BUSINESS-20-A",
+          "ANCH-BUSINESS-20-B",
+          "ANCH-BUSINESS-11-A",
+          "ANCH-BUSINESS-11-B",
+          "ANCH-BUSINESS-19-A",
+          "ANCH-BUSINESS-19-B",
+          "ANCH-BUSINESS-27-A",
+          "ANCH-BUSINESS-27-B",
+          "ANCH-BUSINESS-31-A",
+          "ANCH-BUSINESS-31-B",
+          "ANCH-BUSINESS-25-A",
+          "ANCH-BUSINESS-25-B",
+          "ANCH-BUSINESS-28-A",
+          "ANCH-BUSINESS-28-B",
+          "ANCH-BUSINESS-22-A",
+          "ANCH-BUSINESS-22-B",
+          "ANCH-BUSINESS-29-A",
+          "ANCH-BUSINESS-29-B",
+          "ANCH-BUSINESS-06-A",
+          "ANCH-BUSINESS-06-B",
+          "ANCH-BUSINESS-16-A",
+          "ANCH-BUSINESS-16-B",
+          "ANCH-BUSINESS-32-A",
+          "ANCH-BUSINESS-32-B",
+          "ANCH-BUSINESS-07-A",
+          "ANCH-BUSINESS-07-B",
+          "ANCH-BUSINESS-14-A",
+          "ANCH-BUSINESS-14-B",
+          "ANCH-BUSINESS-17-A",
+          "ANCH-BUSINESS-17-B",
+          "ANCH-BUSINESS-04-A",
+          "ANCH-BUSINESS-04-B",
+          "ANCH-BUSINESS-05-A",
+          "ANCH-BUSINESS-05-B",
+          "ANCH-BUSINESS-12-A",
+          "ANCH-BUSINESS-12-B",
+          "ANCH-BUSINESS-09-A",
+          "ANCH-BUSINESS-09-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "business::origin::03",
+          "business::origin::23",
+          "business::origin::01",
+          "business::origin::24"
+        ],
+        "anchor_card_ids": [
+          "ANCH-BUSINESS-03-A",
+          "ANCH-BUSINESS-03-B",
+          "ANCH-BUSINESS-23-A",
+          "ANCH-BUSINESS-23-B",
+          "ANCH-BUSINESS-01-A",
+          "ANCH-BUSINESS-01-B",
+          "ANCH-BUSINESS-24-A",
+          "ANCH-BUSINESS-24-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "business::origin::30",
+          "business::origin::21",
+          "business::origin::26",
+          "business::origin::15"
+        ],
+        "anchor_card_ids": [
+          "ANCH-BUSINESS-30-A",
+          "ANCH-BUSINESS-30-B",
+          "ANCH-BUSINESS-21-A",
+          "ANCH-BUSINESS-21-B",
+          "ANCH-BUSINESS-26-A",
+          "ANCH-BUSINESS-26-B",
+          "ANCH-BUSINESS-15-A",
+          "ANCH-BUSINESS-15-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "business::origin::18",
+          "business::origin::13",
+          "business::origin::10",
+          "business::origin::02"
+        ],
+        "anchor_card_ids": [
+          "ANCH-BUSINESS-18-A",
+          "ANCH-BUSINESS-18-B",
+          "ANCH-BUSINESS-13-A",
+          "ANCH-BUSINESS-13-B",
+          "ANCH-BUSINESS-10-A",
+          "ANCH-BUSINESS-10-B",
+          "ANCH-BUSINESS-02-A",
+          "ANCH-BUSINESS-02-B"
+        ]
+      }
+    },
+    "chemistry": {
+      "train": {
+        "origin_group_ids": [
+          "chemistry::origin::31",
+          "chemistry::origin::23",
+          "chemistry::origin::02",
+          "chemistry::origin::28",
+          "chemistry::origin::32",
+          "chemistry::origin::20",
+          "chemistry::origin::30",
+          "chemistry::origin::14",
+          "chemistry::origin::25",
+          "chemistry::origin::26",
+          "chemistry::origin::07",
+          "chemistry::origin::21",
+          "chemistry::origin::27",
+          "chemistry::origin::16",
+          "chemistry::origin::17",
+          "chemistry::origin::22",
+          "chemistry::origin::18",
+          "chemistry::origin::08",
+          "chemistry::origin::11",
+          "chemistry::origin::12"
+        ],
+        "anchor_card_ids": [
+          "ANCH-CHEMISTRY-31-A",
+          "ANCH-CHEMISTRY-31-B",
+          "ANCH-CHEMISTRY-23-A",
+          "ANCH-CHEMISTRY-23-B",
+          "ANCH-CHEMISTRY-02-A",
+          "ANCH-CHEMISTRY-02-B",
+          "ANCH-CHEMISTRY-28-A",
+          "ANCH-CHEMISTRY-28-B",
+          "ANCH-CHEMISTRY-32-A",
+          "ANCH-CHEMISTRY-32-B",
+          "ANCH-CHEMISTRY-20-A",
+          "ANCH-CHEMISTRY-20-B",
+          "ANCH-CHEMISTRY-30-A",
+          "ANCH-CHEMISTRY-30-B",
+          "ANCH-CHEMISTRY-14-A",
+          "ANCH-CHEMISTRY-14-B",
+          "ANCH-CHEMISTRY-25-A",
+          "ANCH-CHEMISTRY-25-B",
+          "ANCH-CHEMISTRY-26-A",
+          "ANCH-CHEMISTRY-26-B",
+          "ANCH-CHEMISTRY-07-A",
+          "ANCH-CHEMISTRY-07-B",
+          "ANCH-CHEMISTRY-21-A",
+          "ANCH-CHEMISTRY-21-B",
+          "ANCH-CHEMISTRY-27-A",
+          "ANCH-CHEMISTRY-27-B",
+          "ANCH-CHEMISTRY-16-A",
+          "ANCH-CHEMISTRY-16-B",
+          "ANCH-CHEMISTRY-17-A",
+          "ANCH-CHEMISTRY-17-B",
+          "ANCH-CHEMISTRY-22-A",
+          "ANCH-CHEMISTRY-22-B",
+          "ANCH-CHEMISTRY-18-A",
+          "ANCH-CHEMISTRY-18-B",
+          "ANCH-CHEMISTRY-08-A",
+          "ANCH-CHEMISTRY-08-B",
+          "ANCH-CHEMISTRY-11-A",
+          "ANCH-CHEMISTRY-11-B",
+          "ANCH-CHEMISTRY-12-A",
+          "ANCH-CHEMISTRY-12-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "chemistry::origin::09",
+          "chemistry::origin::24",
+          "chemistry::origin::04",
+          "chemistry::origin::29"
+        ],
+        "anchor_card_ids": [
+          "ANCH-CHEMISTRY-09-A",
+          "ANCH-CHEMISTRY-09-B",
+          "ANCH-CHEMISTRY-24-A",
+          "ANCH-CHEMISTRY-24-B",
+          "ANCH-CHEMISTRY-04-A",
+          "ANCH-CHEMISTRY-04-B",
+          "ANCH-CHEMISTRY-29-A",
+          "ANCH-CHEMISTRY-29-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "chemistry::origin::01",
+          "chemistry::origin::03",
+          "chemistry::origin::15",
+          "chemistry::origin::05"
+        ],
+        "anchor_card_ids": [
+          "ANCH-CHEMISTRY-01-A",
+          "ANCH-CHEMISTRY-01-B",
+          "ANCH-CHEMISTRY-03-A",
+          "ANCH-CHEMISTRY-03-B",
+          "ANCH-CHEMISTRY-15-A",
+          "ANCH-CHEMISTRY-15-B",
+          "ANCH-CHEMISTRY-05-A",
+          "ANCH-CHEMISTRY-05-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "chemistry::origin::19",
+          "chemistry::origin::06",
+          "chemistry::origin::10",
+          "chemistry::origin::13"
+        ],
+        "anchor_card_ids": [
+          "ANCH-CHEMISTRY-19-A",
+          "ANCH-CHEMISTRY-19-B",
+          "ANCH-CHEMISTRY-06-A",
+          "ANCH-CHEMISTRY-06-B",
+          "ANCH-CHEMISTRY-10-A",
+          "ANCH-CHEMISTRY-10-B",
+          "ANCH-CHEMISTRY-13-A",
+          "ANCH-CHEMISTRY-13-B"
+        ]
+      }
+    },
+    "common_sense": {
+      "train": {
+        "origin_group_ids": [
+          "common_sense::origin::07",
+          "common_sense::origin::16",
+          "common_sense::origin::09",
+          "common_sense::origin::08",
+          "common_sense::origin::02",
+          "common_sense::origin::04",
+          "common_sense::origin::19",
+          "common_sense::origin::24",
+          "common_sense::origin::31",
+          "common_sense::origin::03",
+          "common_sense::origin::06",
+          "common_sense::origin::32",
+          "common_sense::origin::26",
+          "common_sense::origin::27",
+          "common_sense::origin::05",
+          "common_sense::origin::12",
+          "common_sense::origin::30",
+          "common_sense::origin::29",
+          "common_sense::origin::20",
+          "common_sense::origin::01"
+        ],
+        "anchor_card_ids": [
+          "ANCH-COMMON_SEN-07-A",
+          "ANCH-COMMON_SEN-07-B",
+          "ANCH-COMMON_SEN-16-A",
+          "ANCH-COMMON_SEN-16-B",
+          "ANCH-COMMON_SEN-09-A",
+          "ANCH-COMMON_SEN-09-B",
+          "ANCH-COMMON_SEN-08-A",
+          "ANCH-COMMON_SEN-08-B",
+          "ANCH-COMMON_SEN-02-A",
+          "ANCH-COMMON_SEN-02-B",
+          "ANCH-COMMON_SEN-04-A",
+          "ANCH-COMMON_SEN-04-B",
+          "ANCH-COMMON_SEN-19-A",
+          "ANCH-COMMON_SEN-19-B",
+          "ANCH-COMMON_SEN-24-A",
+          "ANCH-COMMON_SEN-24-B",
+          "ANCH-COMMON_SEN-31-A",
+          "ANCH-COMMON_SEN-31-B",
+          "ANCH-COMMON_SEN-03-A",
+          "ANCH-COMMON_SEN-03-B",
+          "ANCH-COMMON_SEN-06-A",
+          "ANCH-COMMON_SEN-06-B",
+          "ANCH-COMMON_SEN-32-A",
+          "ANCH-COMMON_SEN-32-B",
+          "ANCH-COMMON_SEN-26-A",
+          "ANCH-COMMON_SEN-26-B",
+          "ANCH-COMMON_SEN-27-A",
+          "ANCH-COMMON_SEN-27-B",
+          "ANCH-COMMON_SEN-05-A",
+          "ANCH-COMMON_SEN-05-B",
+          "ANCH-COMMON_SEN-12-A",
+          "ANCH-COMMON_SEN-12-B",
+          "ANCH-COMMON_SEN-30-A",
+          "ANCH-COMMON_SEN-30-B",
+          "ANCH-COMMON_SEN-29-A",
+          "ANCH-COMMON_SEN-29-B",
+          "ANCH-COMMON_SEN-20-A",
+          "ANCH-COMMON_SEN-20-B",
+          "ANCH-COMMON_SEN-01-A",
+          "ANCH-COMMON_SEN-01-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "common_sense::origin::15",
+          "common_sense::origin::21",
+          "common_sense::origin::14",
+          "common_sense::origin::28"
+        ],
+        "anchor_card_ids": [
+          "ANCH-COMMON_SEN-15-A",
+          "ANCH-COMMON_SEN-15-B",
+          "ANCH-COMMON_SEN-21-A",
+          "ANCH-COMMON_SEN-21-B",
+          "ANCH-COMMON_SEN-14-A",
+          "ANCH-COMMON_SEN-14-B",
+          "ANCH-COMMON_SEN-28-A",
+          "ANCH-COMMON_SEN-28-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "common_sense::origin::13",
+          "common_sense::origin::11",
+          "common_sense::origin::18",
+          "common_sense::origin::10"
+        ],
+        "anchor_card_ids": [
+          "ANCH-COMMON_SEN-13-A",
+          "ANCH-COMMON_SEN-13-B",
+          "ANCH-COMMON_SEN-11-A",
+          "ANCH-COMMON_SEN-11-B",
+          "ANCH-COMMON_SEN-18-A",
+          "ANCH-COMMON_SEN-18-B",
+          "ANCH-COMMON_SEN-10-A",
+          "ANCH-COMMON_SEN-10-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "common_sense::origin::23",
+          "common_sense::origin::17",
+          "common_sense::origin::22",
+          "common_sense::origin::25"
+        ],
+        "anchor_card_ids": [
+          "ANCH-COMMON_SEN-23-A",
+          "ANCH-COMMON_SEN-23-B",
+          "ANCH-COMMON_SEN-17-A",
+          "ANCH-COMMON_SEN-17-B",
+          "ANCH-COMMON_SEN-22-A",
+          "ANCH-COMMON_SEN-22-B",
+          "ANCH-COMMON_SEN-25-A",
+          "ANCH-COMMON_SEN-25-B"
+        ]
+      }
+    },
+    "computing_engineering": {
+      "train": {
+        "origin_group_ids": [
+          "computing_engineering::origin::24",
+          "computing_engineering::origin::08",
+          "computing_engineering::origin::06",
+          "computing_engineering::origin::11",
+          "computing_engineering::origin::21",
+          "computing_engineering::origin::03",
+          "computing_engineering::origin::10",
+          "computing_engineering::origin::07",
+          "computing_engineering::origin::15",
+          "computing_engineering::origin::22",
+          "computing_engineering::origin::17",
+          "computing_engineering::origin::27",
+          "computing_engineering::origin::32",
+          "computing_engineering::origin::30",
+          "computing_engineering::origin::31",
+          "computing_engineering::origin::26",
+          "computing_engineering::origin::18",
+          "computing_engineering::origin::29",
+          "computing_engineering::origin::23",
+          "computing_engineering::origin::20"
+        ],
+        "anchor_card_ids": [
+          "ANCH-COMPUTING_-24-A",
+          "ANCH-COMPUTING_-24-B",
+          "ANCH-COMPUTING_-08-A",
+          "ANCH-COMPUTING_-08-B",
+          "ANCH-COMPUTING_-06-A",
+          "ANCH-COMPUTING_-06-B",
+          "ANCH-COMPUTING_-11-A",
+          "ANCH-COMPUTING_-11-B",
+          "ANCH-COMPUTING_-21-A",
+          "ANCH-COMPUTING_-21-B",
+          "ANCH-COMPUTING_-03-A",
+          "ANCH-COMPUTING_-03-B",
+          "ANCH-COMPUTING_-10-A",
+          "ANCH-COMPUTING_-10-B",
+          "ANCH-COMPUTING_-07-A",
+          "ANCH-COMPUTING_-07-B",
+          "ANCH-COMPUTING_-15-A",
+          "ANCH-COMPUTING_-15-B",
+          "ANCH-COMPUTING_-22-A",
+          "ANCH-COMPUTING_-22-B",
+          "ANCH-COMPUTING_-17-A",
+          "ANCH-COMPUTING_-17-B",
+          "ANCH-COMPUTING_-27-A",
+          "ANCH-COMPUTING_-27-B",
+          "ANCH-COMPUTING_-32-A",
+          "ANCH-COMPUTING_-32-B",
+          "ANCH-COMPUTING_-30-A",
+          "ANCH-COMPUTING_-30-B",
+          "ANCH-COMPUTING_-31-A",
+          "ANCH-COMPUTING_-31-B",
+          "ANCH-COMPUTING_-26-A",
+          "ANCH-COMPUTING_-26-B",
+          "ANCH-COMPUTING_-18-A",
+          "ANCH-COMPUTING_-18-B",
+          "ANCH-COMPUTING_-29-A",
+          "ANCH-COMPUTING_-29-B",
+          "ANCH-COMPUTING_-23-A",
+          "ANCH-COMPUTING_-23-B",
+          "ANCH-COMPUTING_-20-A",
+          "ANCH-COMPUTING_-20-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "computing_engineering::origin::28",
+          "computing_engineering::origin::02",
+          "computing_engineering::origin::01",
+          "computing_engineering::origin::25"
+        ],
+        "anchor_card_ids": [
+          "ANCH-COMPUTING_-28-A",
+          "ANCH-COMPUTING_-28-B",
+          "ANCH-COMPUTING_-02-A",
+          "ANCH-COMPUTING_-02-B",
+          "ANCH-COMPUTING_-01-A",
+          "ANCH-COMPUTING_-01-B",
+          "ANCH-COMPUTING_-25-A",
+          "ANCH-COMPUTING_-25-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "computing_engineering::origin::04",
+          "computing_engineering::origin::05",
+          "computing_engineering::origin::09",
+          "computing_engineering::origin::13"
+        ],
+        "anchor_card_ids": [
+          "ANCH-COMPUTING_-04-A",
+          "ANCH-COMPUTING_-04-B",
+          "ANCH-COMPUTING_-05-A",
+          "ANCH-COMPUTING_-05-B",
+          "ANCH-COMPUTING_-09-A",
+          "ANCH-COMPUTING_-09-B",
+          "ANCH-COMPUTING_-13-A",
+          "ANCH-COMPUTING_-13-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "computing_engineering::origin::12",
+          "computing_engineering::origin::19",
+          "computing_engineering::origin::14",
+          "computing_engineering::origin::16"
+        ],
+        "anchor_card_ids": [
+          "ANCH-COMPUTING_-12-A",
+          "ANCH-COMPUTING_-12-B",
+          "ANCH-COMPUTING_-19-A",
+          "ANCH-COMPUTING_-19-B",
+          "ANCH-COMPUTING_-14-A",
+          "ANCH-COMPUTING_-14-B",
+          "ANCH-COMPUTING_-16-A",
+          "ANCH-COMPUTING_-16-B"
+        ]
+      }
+    },
+    "earth_science": {
+      "train": {
+        "origin_group_ids": [
+          "earth_science::origin::14",
+          "earth_science::origin::13",
+          "earth_science::origin::17",
+          "earth_science::origin::03",
+          "earth_science::origin::27",
+          "earth_science::origin::18",
+          "earth_science::origin::22",
+          "earth_science::origin::32",
+          "earth_science::origin::16",
+          "earth_science::origin::12",
+          "earth_science::origin::23",
+          "earth_science::origin::10",
+          "earth_science::origin::29",
+          "earth_science::origin::25",
+          "earth_science::origin::31",
+          "earth_science::origin::11",
+          "earth_science::origin::09",
+          "earth_science::origin::28",
+          "earth_science::origin::20",
+          "earth_science::origin::19"
+        ],
+        "anchor_card_ids": [
+          "ANCH-EARTH_SCIE-14-A",
+          "ANCH-EARTH_SCIE-14-B",
+          "ANCH-EARTH_SCIE-13-A",
+          "ANCH-EARTH_SCIE-13-B",
+          "ANCH-EARTH_SCIE-17-A",
+          "ANCH-EARTH_SCIE-17-B",
+          "ANCH-EARTH_SCIE-03-A",
+          "ANCH-EARTH_SCIE-03-B",
+          "ANCH-EARTH_SCIE-27-A",
+          "ANCH-EARTH_SCIE-27-B",
+          "ANCH-EARTH_SCIE-18-A",
+          "ANCH-EARTH_SCIE-18-B",
+          "ANCH-EARTH_SCIE-22-A",
+          "ANCH-EARTH_SCIE-22-B",
+          "ANCH-EARTH_SCIE-32-A",
+          "ANCH-EARTH_SCIE-32-B",
+          "ANCH-EARTH_SCIE-16-A",
+          "ANCH-EARTH_SCIE-16-B",
+          "ANCH-EARTH_SCIE-12-A",
+          "ANCH-EARTH_SCIE-12-B",
+          "ANCH-EARTH_SCIE-23-A",
+          "ANCH-EARTH_SCIE-23-B",
+          "ANCH-EARTH_SCIE-10-A",
+          "ANCH-EARTH_SCIE-10-B",
+          "ANCH-EARTH_SCIE-29-A",
+          "ANCH-EARTH_SCIE-29-B",
+          "ANCH-EARTH_SCIE-25-A",
+          "ANCH-EARTH_SCIE-25-B",
+          "ANCH-EARTH_SCIE-31-A",
+          "ANCH-EARTH_SCIE-31-B",
+          "ANCH-EARTH_SCIE-11-A",
+          "ANCH-EARTH_SCIE-11-B",
+          "ANCH-EARTH_SCIE-09-A",
+          "ANCH-EARTH_SCIE-09-B",
+          "ANCH-EARTH_SCIE-28-A",
+          "ANCH-EARTH_SCIE-28-B",
+          "ANCH-EARTH_SCIE-20-A",
+          "ANCH-EARTH_SCIE-20-B",
+          "ANCH-EARTH_SCIE-19-A",
+          "ANCH-EARTH_SCIE-19-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "earth_science::origin::07",
+          "earth_science::origin::02",
+          "earth_science::origin::04",
+          "earth_science::origin::08"
+        ],
+        "anchor_card_ids": [
+          "ANCH-EARTH_SCIE-07-A",
+          "ANCH-EARTH_SCIE-07-B",
+          "ANCH-EARTH_SCIE-02-A",
+          "ANCH-EARTH_SCIE-02-B",
+          "ANCH-EARTH_SCIE-04-A",
+          "ANCH-EARTH_SCIE-04-B",
+          "ANCH-EARTH_SCIE-08-A",
+          "ANCH-EARTH_SCIE-08-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "earth_science::origin::21",
+          "earth_science::origin::01",
+          "earth_science::origin::15",
+          "earth_science::origin::05"
+        ],
+        "anchor_card_ids": [
+          "ANCH-EARTH_SCIE-21-A",
+          "ANCH-EARTH_SCIE-21-B",
+          "ANCH-EARTH_SCIE-01-A",
+          "ANCH-EARTH_SCIE-01-B",
+          "ANCH-EARTH_SCIE-15-A",
+          "ANCH-EARTH_SCIE-15-B",
+          "ANCH-EARTH_SCIE-05-A",
+          "ANCH-EARTH_SCIE-05-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "earth_science::origin::26",
+          "earth_science::origin::30",
+          "earth_science::origin::24",
+          "earth_science::origin::06"
+        ],
+        "anchor_card_ids": [
+          "ANCH-EARTH_SCIE-26-A",
+          "ANCH-EARTH_SCIE-26-B",
+          "ANCH-EARTH_SCIE-30-A",
+          "ANCH-EARTH_SCIE-30-B",
+          "ANCH-EARTH_SCIE-24-A",
+          "ANCH-EARTH_SCIE-24-B",
+          "ANCH-EARTH_SCIE-06-A",
+          "ANCH-EARTH_SCIE-06-B"
+        ]
+      }
+    },
+    "economics": {
+      "train": {
+        "origin_group_ids": [
+          "economics::origin::13",
+          "economics::origin::11",
+          "economics::origin::21",
+          "economics::origin::20",
+          "economics::origin::14",
+          "economics::origin::26",
+          "economics::origin::24",
+          "economics::origin::04",
+          "economics::origin::05",
+          "economics::origin::01",
+          "economics::origin::18",
+          "economics::origin::23",
+          "economics::origin::07",
+          "economics::origin::30",
+          "economics::origin::29",
+          "economics::origin::28",
+          "economics::origin::09",
+          "economics::origin::02",
+          "economics::origin::15",
+          "economics::origin::25"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ECONOMICS-13-A",
+          "ANCH-ECONOMICS-13-B",
+          "ANCH-ECONOMICS-11-A",
+          "ANCH-ECONOMICS-11-B",
+          "ANCH-ECONOMICS-21-A",
+          "ANCH-ECONOMICS-21-B",
+          "ANCH-ECONOMICS-20-A",
+          "ANCH-ECONOMICS-20-B",
+          "ANCH-ECONOMICS-14-A",
+          "ANCH-ECONOMICS-14-B",
+          "ANCH-ECONOMICS-26-A",
+          "ANCH-ECONOMICS-26-B",
+          "ANCH-ECONOMICS-24-A",
+          "ANCH-ECONOMICS-24-B",
+          "ANCH-ECONOMICS-04-A",
+          "ANCH-ECONOMICS-04-B",
+          "ANCH-ECONOMICS-05-A",
+          "ANCH-ECONOMICS-05-B",
+          "ANCH-ECONOMICS-01-A",
+          "ANCH-ECONOMICS-01-B",
+          "ANCH-ECONOMICS-18-A",
+          "ANCH-ECONOMICS-18-B",
+          "ANCH-ECONOMICS-23-A",
+          "ANCH-ECONOMICS-23-B",
+          "ANCH-ECONOMICS-07-A",
+          "ANCH-ECONOMICS-07-B",
+          "ANCH-ECONOMICS-30-A",
+          "ANCH-ECONOMICS-30-B",
+          "ANCH-ECONOMICS-29-A",
+          "ANCH-ECONOMICS-29-B",
+          "ANCH-ECONOMICS-28-A",
+          "ANCH-ECONOMICS-28-B",
+          "ANCH-ECONOMICS-09-A",
+          "ANCH-ECONOMICS-09-B",
+          "ANCH-ECONOMICS-02-A",
+          "ANCH-ECONOMICS-02-B",
+          "ANCH-ECONOMICS-15-A",
+          "ANCH-ECONOMICS-15-B",
+          "ANCH-ECONOMICS-25-A",
+          "ANCH-ECONOMICS-25-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "economics::origin::06",
+          "economics::origin::22",
+          "economics::origin::19",
+          "economics::origin::12"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ECONOMICS-06-A",
+          "ANCH-ECONOMICS-06-B",
+          "ANCH-ECONOMICS-22-A",
+          "ANCH-ECONOMICS-22-B",
+          "ANCH-ECONOMICS-19-A",
+          "ANCH-ECONOMICS-19-B",
+          "ANCH-ECONOMICS-12-A",
+          "ANCH-ECONOMICS-12-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "economics::origin::16",
+          "economics::origin::27",
+          "economics::origin::32",
+          "economics::origin::03"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ECONOMICS-16-A",
+          "ANCH-ECONOMICS-16-B",
+          "ANCH-ECONOMICS-27-A",
+          "ANCH-ECONOMICS-27-B",
+          "ANCH-ECONOMICS-32-A",
+          "ANCH-ECONOMICS-32-B",
+          "ANCH-ECONOMICS-03-A",
+          "ANCH-ECONOMICS-03-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "economics::origin::08",
+          "economics::origin::31",
+          "economics::origin::17",
+          "economics::origin::10"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ECONOMICS-08-A",
+          "ANCH-ECONOMICS-08-B",
+          "ANCH-ECONOMICS-31-A",
+          "ANCH-ECONOMICS-31-B",
+          "ANCH-ECONOMICS-17-A",
+          "ANCH-ECONOMICS-17-B",
+          "ANCH-ECONOMICS-10-A",
+          "ANCH-ECONOMICS-10-B"
+        ]
+      }
+    },
+    "english_literature": {
+      "train": {
+        "origin_group_ids": [
+          "english_literature::origin::06",
+          "english_literature::origin::03",
+          "english_literature::origin::10",
+          "english_literature::origin::15",
+          "english_literature::origin::24",
+          "english_literature::origin::14",
+          "english_literature::origin::05",
+          "english_literature::origin::04",
+          "english_literature::origin::01",
+          "english_literature::origin::22",
+          "english_literature::origin::11",
+          "english_literature::origin::19",
+          "english_literature::origin::09",
+          "english_literature::origin::23",
+          "english_literature::origin::27",
+          "english_literature::origin::28",
+          "english_literature::origin::18",
+          "english_literature::origin::02",
+          "english_literature::origin::07",
+          "english_literature::origin::16"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ENGLISH_LI-06-A",
+          "ANCH-ENGLISH_LI-06-B",
+          "ANCH-ENGLISH_LI-03-A",
+          "ANCH-ENGLISH_LI-03-B",
+          "ANCH-ENGLISH_LI-10-A",
+          "ANCH-ENGLISH_LI-10-B",
+          "ANCH-ENGLISH_LI-15-A",
+          "ANCH-ENGLISH_LI-15-B",
+          "ANCH-ENGLISH_LI-24-A",
+          "ANCH-ENGLISH_LI-24-B",
+          "ANCH-ENGLISH_LI-14-A",
+          "ANCH-ENGLISH_LI-14-B",
+          "ANCH-ENGLISH_LI-05-A",
+          "ANCH-ENGLISH_LI-05-B",
+          "ANCH-ENGLISH_LI-04-A",
+          "ANCH-ENGLISH_LI-04-B",
+          "ANCH-ENGLISH_LI-01-A",
+          "ANCH-ENGLISH_LI-01-B",
+          "ANCH-ENGLISH_LI-22-A",
+          "ANCH-ENGLISH_LI-22-B",
+          "ANCH-ENGLISH_LI-11-A",
+          "ANCH-ENGLISH_LI-11-B",
+          "ANCH-ENGLISH_LI-19-A",
+          "ANCH-ENGLISH_LI-19-B",
+          "ANCH-ENGLISH_LI-09-A",
+          "ANCH-ENGLISH_LI-09-B",
+          "ANCH-ENGLISH_LI-23-A",
+          "ANCH-ENGLISH_LI-23-B",
+          "ANCH-ENGLISH_LI-27-A",
+          "ANCH-ENGLISH_LI-27-B",
+          "ANCH-ENGLISH_LI-28-A",
+          "ANCH-ENGLISH_LI-28-B",
+          "ANCH-ENGLISH_LI-18-A",
+          "ANCH-ENGLISH_LI-18-B",
+          "ANCH-ENGLISH_LI-02-A",
+          "ANCH-ENGLISH_LI-02-B",
+          "ANCH-ENGLISH_LI-07-A",
+          "ANCH-ENGLISH_LI-07-B",
+          "ANCH-ENGLISH_LI-16-A",
+          "ANCH-ENGLISH_LI-16-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "english_literature::origin::21",
+          "english_literature::origin::20",
+          "english_literature::origin::30",
+          "english_literature::origin::12"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ENGLISH_LI-21-A",
+          "ANCH-ENGLISH_LI-21-B",
+          "ANCH-ENGLISH_LI-20-A",
+          "ANCH-ENGLISH_LI-20-B",
+          "ANCH-ENGLISH_LI-30-A",
+          "ANCH-ENGLISH_LI-30-B",
+          "ANCH-ENGLISH_LI-12-A",
+          "ANCH-ENGLISH_LI-12-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "english_literature::origin::25",
+          "english_literature::origin::17",
+          "english_literature::origin::29",
+          "english_literature::origin::32"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ENGLISH_LI-25-A",
+          "ANCH-ENGLISH_LI-25-B",
+          "ANCH-ENGLISH_LI-17-A",
+          "ANCH-ENGLISH_LI-17-B",
+          "ANCH-ENGLISH_LI-29-A",
+          "ANCH-ENGLISH_LI-29-B",
+          "ANCH-ENGLISH_LI-32-A",
+          "ANCH-ENGLISH_LI-32-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "english_literature::origin::08",
+          "english_literature::origin::13",
+          "english_literature::origin::26",
+          "english_literature::origin::31"
+        ],
+        "anchor_card_ids": [
+          "ANCH-ENGLISH_LI-08-A",
+          "ANCH-ENGLISH_LI-08-B",
+          "ANCH-ENGLISH_LI-13-A",
+          "ANCH-ENGLISH_LI-13-B",
+          "ANCH-ENGLISH_LI-26-A",
+          "ANCH-ENGLISH_LI-26-B",
+          "ANCH-ENGLISH_LI-31-A",
+          "ANCH-ENGLISH_LI-31-B"
+        ]
+      }
+    },
+    "finance": {
+      "train": {
+        "origin_group_ids": [
+          "finance::origin::22",
+          "finance::origin::23",
+          "finance::origin::26",
+          "finance::origin::27",
+          "finance::origin::14",
+          "finance::origin::25",
+          "finance::origin::24",
+          "finance::origin::31",
+          "finance::origin::10",
+          "finance::origin::08",
+          "finance::origin::20",
+          "finance::origin::13",
+          "finance::origin::04",
+          "finance::origin::21",
+          "finance::origin::16",
+          "finance::origin::07",
+          "finance::origin::03",
+          "finance::origin::18",
+          "finance::origin::29",
+          "finance::origin::19"
+        ],
+        "anchor_card_ids": [
+          "ANCH-FINANCE-22-A",
+          "ANCH-FINANCE-22-B",
+          "ANCH-FINANCE-23-A",
+          "ANCH-FINANCE-23-B",
+          "ANCH-FINANCE-26-A",
+          "ANCH-FINANCE-26-B",
+          "ANCH-FINANCE-27-A",
+          "ANCH-FINANCE-27-B",
+          "ANCH-FINANCE-14-A",
+          "ANCH-FINANCE-14-B",
+          "ANCH-FINANCE-25-A",
+          "ANCH-FINANCE-25-B",
+          "ANCH-FINANCE-24-A",
+          "ANCH-FINANCE-24-B",
+          "ANCH-FINANCE-31-A",
+          "ANCH-FINANCE-31-B",
+          "ANCH-FINANCE-10-A",
+          "ANCH-FINANCE-10-B",
+          "ANCH-FINANCE-08-A",
+          "ANCH-FINANCE-08-B",
+          "ANCH-FINANCE-20-A",
+          "ANCH-FINANCE-20-B",
+          "ANCH-FINANCE-13-A",
+          "ANCH-FINANCE-13-B",
+          "ANCH-FINANCE-04-A",
+          "ANCH-FINANCE-04-B",
+          "ANCH-FINANCE-21-A",
+          "ANCH-FINANCE-21-B",
+          "ANCH-FINANCE-16-A",
+          "ANCH-FINANCE-16-B",
+          "ANCH-FINANCE-07-A",
+          "ANCH-FINANCE-07-B",
+          "ANCH-FINANCE-03-A",
+          "ANCH-FINANCE-03-B",
+          "ANCH-FINANCE-18-A",
+          "ANCH-FINANCE-18-B",
+          "ANCH-FINANCE-29-A",
+          "ANCH-FINANCE-29-B",
+          "ANCH-FINANCE-19-A",
+          "ANCH-FINANCE-19-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "finance::origin::01",
+          "finance::origin::06",
+          "finance::origin::28",
+          "finance::origin::17"
+        ],
+        "anchor_card_ids": [
+          "ANCH-FINANCE-01-A",
+          "ANCH-FINANCE-01-B",
+          "ANCH-FINANCE-06-A",
+          "ANCH-FINANCE-06-B",
+          "ANCH-FINANCE-28-A",
+          "ANCH-FINANCE-28-B",
+          "ANCH-FINANCE-17-A",
+          "ANCH-FINANCE-17-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "finance::origin::05",
+          "finance::origin::32",
+          "finance::origin::12",
+          "finance::origin::30"
+        ],
+        "anchor_card_ids": [
+          "ANCH-FINANCE-05-A",
+          "ANCH-FINANCE-05-B",
+          "ANCH-FINANCE-32-A",
+          "ANCH-FINANCE-32-B",
+          "ANCH-FINANCE-12-A",
+          "ANCH-FINANCE-12-B",
+          "ANCH-FINANCE-30-A",
+          "ANCH-FINANCE-30-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "finance::origin::02",
+          "finance::origin::15",
+          "finance::origin::11",
+          "finance::origin::09"
+        ],
+        "anchor_card_ids": [
+          "ANCH-FINANCE-02-A",
+          "ANCH-FINANCE-02-B",
+          "ANCH-FINANCE-15-A",
+          "ANCH-FINANCE-15-B",
+          "ANCH-FINANCE-11-A",
+          "ANCH-FINANCE-11-B",
+          "ANCH-FINANCE-09-A",
+          "ANCH-FINANCE-09-B"
+        ]
+      }
+    },
+    "food": {
+      "train": {
+        "origin_group_ids": [
+          "food::origin::27",
+          "food::origin::12",
+          "food::origin::06",
+          "food::origin::10",
+          "food::origin::04",
+          "food::origin::30",
+          "food::origin::14",
+          "food::origin::08",
+          "food::origin::24",
+          "food::origin::32",
+          "food::origin::23",
+          "food::origin::15",
+          "food::origin::02",
+          "food::origin::29",
+          "food::origin::19",
+          "food::origin::26",
+          "food::origin::21",
+          "food::origin::09",
+          "food::origin::11",
+          "food::origin::01"
+        ],
+        "anchor_card_ids": [
+          "ANCH-FOOD-27-A",
+          "ANCH-FOOD-27-B",
+          "ANCH-FOOD-12-A",
+          "ANCH-FOOD-12-B",
+          "ANCH-FOOD-06-A",
+          "ANCH-FOOD-06-B",
+          "ANCH-FOOD-10-A",
+          "ANCH-FOOD-10-B",
+          "ANCH-FOOD-04-A",
+          "ANCH-FOOD-04-B",
+          "ANCH-FOOD-30-A",
+          "ANCH-FOOD-30-B",
+          "ANCH-FOOD-14-A",
+          "ANCH-FOOD-14-B",
+          "ANCH-FOOD-08-A",
+          "ANCH-FOOD-08-B",
+          "ANCH-FOOD-24-A",
+          "ANCH-FOOD-24-B",
+          "ANCH-FOOD-32-A",
+          "ANCH-FOOD-32-B",
+          "ANCH-FOOD-23-A",
+          "ANCH-FOOD-23-B",
+          "ANCH-FOOD-15-A",
+          "ANCH-FOOD-15-B",
+          "ANCH-FOOD-02-A",
+          "ANCH-FOOD-02-B",
+          "ANCH-FOOD-29-A",
+          "ANCH-FOOD-29-B",
+          "ANCH-FOOD-19-A",
+          "ANCH-FOOD-19-B",
+          "ANCH-FOOD-26-A",
+          "ANCH-FOOD-26-B",
+          "ANCH-FOOD-21-A",
+          "ANCH-FOOD-21-B",
+          "ANCH-FOOD-09-A",
+          "ANCH-FOOD-09-B",
+          "ANCH-FOOD-11-A",
+          "ANCH-FOOD-11-B",
+          "ANCH-FOOD-01-A",
+          "ANCH-FOOD-01-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "food::origin::17",
+          "food::origin::03",
+          "food::origin::31",
+          "food::origin::20"
+        ],
+        "anchor_card_ids": [
+          "ANCH-FOOD-17-A",
+          "ANCH-FOOD-17-B",
+          "ANCH-FOOD-03-A",
+          "ANCH-FOOD-03-B",
+          "ANCH-FOOD-31-A",
+          "ANCH-FOOD-31-B",
+          "ANCH-FOOD-20-A",
+          "ANCH-FOOD-20-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "food::origin::28",
+          "food::origin::07",
+          "food::origin::18",
+          "food::origin::13"
+        ],
+        "anchor_card_ids": [
+          "ANCH-FOOD-28-A",
+          "ANCH-FOOD-28-B",
+          "ANCH-FOOD-07-A",
+          "ANCH-FOOD-07-B",
+          "ANCH-FOOD-18-A",
+          "ANCH-FOOD-18-B",
+          "ANCH-FOOD-13-A",
+          "ANCH-FOOD-13-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "food::origin::05",
+          "food::origin::22",
+          "food::origin::16",
+          "food::origin::25"
+        ],
+        "anchor_card_ids": [
+          "ANCH-FOOD-05-A",
+          "ANCH-FOOD-05-B",
+          "ANCH-FOOD-22-A",
+          "ANCH-FOOD-22-B",
+          "ANCH-FOOD-16-A",
+          "ANCH-FOOD-16-B",
+          "ANCH-FOOD-25-A",
+          "ANCH-FOOD-25-B"
+        ]
+      }
+    },
+    "games": {
+      "train": {
+        "origin_group_ids": [
+          "games::origin::07",
+          "games::origin::24",
+          "games::origin::25",
+          "games::origin::20",
+          "games::origin::02",
+          "games::origin::12",
+          "games::origin::14",
+          "games::origin::06",
+          "games::origin::15",
+          "games::origin::16",
+          "games::origin::10",
+          "games::origin::05",
+          "games::origin::13",
+          "games::origin::18",
+          "games::origin::22",
+          "games::origin::03",
+          "games::origin::08",
+          "games::origin::19",
+          "games::origin::11",
+          "games::origin::04"
+        ],
+        "anchor_card_ids": [
+          "ANCH-GAMES-07-A",
+          "ANCH-GAMES-07-B",
+          "ANCH-GAMES-24-A",
+          "ANCH-GAMES-24-B",
+          "ANCH-GAMES-25-A",
+          "ANCH-GAMES-25-B",
+          "ANCH-GAMES-20-A",
+          "ANCH-GAMES-20-B",
+          "ANCH-GAMES-02-A",
+          "ANCH-GAMES-02-B",
+          "ANCH-GAMES-12-A",
+          "ANCH-GAMES-12-B",
+          "ANCH-GAMES-14-A",
+          "ANCH-GAMES-14-B",
+          "ANCH-GAMES-06-A",
+          "ANCH-GAMES-06-B",
+          "ANCH-GAMES-15-A",
+          "ANCH-GAMES-15-B",
+          "ANCH-GAMES-16-A",
+          "ANCH-GAMES-16-B",
+          "ANCH-GAMES-10-A",
+          "ANCH-GAMES-10-B",
+          "ANCH-GAMES-05-A",
+          "ANCH-GAMES-05-B",
+          "ANCH-GAMES-13-A",
+          "ANCH-GAMES-13-B",
+          "ANCH-GAMES-18-A",
+          "ANCH-GAMES-18-B",
+          "ANCH-GAMES-22-A",
+          "ANCH-GAMES-22-B",
+          "ANCH-GAMES-03-A",
+          "ANCH-GAMES-03-B",
+          "ANCH-GAMES-08-A",
+          "ANCH-GAMES-08-B",
+          "ANCH-GAMES-19-A",
+          "ANCH-GAMES-19-B",
+          "ANCH-GAMES-11-A",
+          "ANCH-GAMES-11-B",
+          "ANCH-GAMES-04-A",
+          "ANCH-GAMES-04-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "games::origin::21",
+          "games::origin::01",
+          "games::origin::29",
+          "games::origin::23"
+        ],
+        "anchor_card_ids": [
+          "ANCH-GAMES-21-A",
+          "ANCH-GAMES-21-B",
+          "ANCH-GAMES-01-A",
+          "ANCH-GAMES-01-B",
+          "ANCH-GAMES-29-A",
+          "ANCH-GAMES-29-B",
+          "ANCH-GAMES-23-A",
+          "ANCH-GAMES-23-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "games::origin::17",
+          "games::origin::26",
+          "games::origin::31",
+          "games::origin::30"
+        ],
+        "anchor_card_ids": [
+          "ANCH-GAMES-17-A",
+          "ANCH-GAMES-17-B",
+          "ANCH-GAMES-26-A",
+          "ANCH-GAMES-26-B",
+          "ANCH-GAMES-31-A",
+          "ANCH-GAMES-31-B",
+          "ANCH-GAMES-30-A",
+          "ANCH-GAMES-30-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "games::origin::27",
+          "games::origin::32",
+          "games::origin::09",
+          "games::origin::28"
+        ],
+        "anchor_card_ids": [
+          "ANCH-GAMES-27-A",
+          "ANCH-GAMES-27-B",
+          "ANCH-GAMES-32-A",
+          "ANCH-GAMES-32-B",
+          "ANCH-GAMES-09-A",
+          "ANCH-GAMES-09-B",
+          "ANCH-GAMES-28-A",
+          "ANCH-GAMES-28-B"
+        ]
+      }
+    },
+    "geography": {
+      "train": {
+        "origin_group_ids": [
+          "geography::origin::06",
+          "geography::origin::19",
+          "geography::origin::13",
+          "geography::origin::21",
+          "geography::origin::29",
+          "geography::origin::15",
+          "geography::origin::08",
+          "geography::origin::01",
+          "geography::origin::03",
+          "geography::origin::04",
+          "geography::origin::20",
+          "geography::origin::23",
+          "geography::origin::26",
+          "geography::origin::09",
+          "geography::origin::30",
+          "geography::origin::17",
+          "geography::origin::14",
+          "geography::origin::28",
+          "geography::origin::12",
+          "geography::origin::07"
+        ],
+        "anchor_card_ids": [
+          "ANCH-GEOGRAPHY-06-A",
+          "ANCH-GEOGRAPHY-06-B",
+          "ANCH-GEOGRAPHY-19-A",
+          "ANCH-GEOGRAPHY-19-B",
+          "ANCH-GEOGRAPHY-13-A",
+          "ANCH-GEOGRAPHY-13-B",
+          "ANCH-GEOGRAPHY-21-A",
+          "ANCH-GEOGRAPHY-21-B",
+          "ANCH-GEOGRAPHY-29-A",
+          "ANCH-GEOGRAPHY-29-B",
+          "ANCH-GEOGRAPHY-15-A",
+          "ANCH-GEOGRAPHY-15-B",
+          "ANCH-GEOGRAPHY-08-A",
+          "ANCH-GEOGRAPHY-08-B",
+          "ANCH-GEOGRAPHY-01-A",
+          "ANCH-GEOGRAPHY-01-B",
+          "ANCH-GEOGRAPHY-03-A",
+          "ANCH-GEOGRAPHY-03-B",
+          "ANCH-GEOGRAPHY-04-A",
+          "ANCH-GEOGRAPHY-04-B",
+          "ANCH-GEOGRAPHY-20-A",
+          "ANCH-GEOGRAPHY-20-B",
+          "ANCH-GEOGRAPHY-23-A",
+          "ANCH-GEOGRAPHY-23-B",
+          "ANCH-GEOGRAPHY-26-A",
+          "ANCH-GEOGRAPHY-26-B",
+          "ANCH-GEOGRAPHY-09-A",
+          "ANCH-GEOGRAPHY-09-B",
+          "ANCH-GEOGRAPHY-30-A",
+          "ANCH-GEOGRAPHY-30-B",
+          "ANCH-GEOGRAPHY-17-A",
+          "ANCH-GEOGRAPHY-17-B",
+          "ANCH-GEOGRAPHY-14-A",
+          "ANCH-GEOGRAPHY-14-B",
+          "ANCH-GEOGRAPHY-28-A",
+          "ANCH-GEOGRAPHY-28-B",
+          "ANCH-GEOGRAPHY-12-A",
+          "ANCH-GEOGRAPHY-12-B",
+          "ANCH-GEOGRAPHY-07-A",
+          "ANCH-GEOGRAPHY-07-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "geography::origin::27",
+          "geography::origin::22",
+          "geography::origin::25",
+          "geography::origin::24"
+        ],
+        "anchor_card_ids": [
+          "ANCH-GEOGRAPHY-27-A",
+          "ANCH-GEOGRAPHY-27-B",
+          "ANCH-GEOGRAPHY-22-A",
+          "ANCH-GEOGRAPHY-22-B",
+          "ANCH-GEOGRAPHY-25-A",
+          "ANCH-GEOGRAPHY-25-B",
+          "ANCH-GEOGRAPHY-24-A",
+          "ANCH-GEOGRAPHY-24-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "geography::origin::18",
+          "geography::origin::32",
+          "geography::origin::02",
+          "geography::origin::10"
+        ],
+        "anchor_card_ids": [
+          "ANCH-GEOGRAPHY-18-A",
+          "ANCH-GEOGRAPHY-18-B",
+          "ANCH-GEOGRAPHY-32-A",
+          "ANCH-GEOGRAPHY-32-B",
+          "ANCH-GEOGRAPHY-02-A",
+          "ANCH-GEOGRAPHY-02-B",
+          "ANCH-GEOGRAPHY-10-A",
+          "ANCH-GEOGRAPHY-10-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "geography::origin::16",
+          "geography::origin::11",
+          "geography::origin::05",
+          "geography::origin::31"
+        ],
+        "anchor_card_ids": [
+          "ANCH-GEOGRAPHY-16-A",
+          "ANCH-GEOGRAPHY-16-B",
+          "ANCH-GEOGRAPHY-11-A",
+          "ANCH-GEOGRAPHY-11-B",
+          "ANCH-GEOGRAPHY-05-A",
+          "ANCH-GEOGRAPHY-05-B",
+          "ANCH-GEOGRAPHY-31-A",
+          "ANCH-GEOGRAPHY-31-B"
+        ]
+      }
+    },
+    "health": {
+      "train": {
+        "origin_group_ids": [
+          "health::origin::11",
+          "health::origin::12",
+          "health::origin::27",
+          "health::origin::24",
+          "health::origin::19",
+          "health::origin::06",
+          "health::origin::10",
+          "health::origin::13",
+          "health::origin::02",
+          "health::origin::16",
+          "health::origin::26",
+          "health::origin::17",
+          "health::origin::21",
+          "health::origin::22",
+          "health::origin::18",
+          "health::origin::04",
+          "health::origin::20",
+          "health::origin::28",
+          "health::origin::23",
+          "health::origin::15"
+        ],
+        "anchor_card_ids": [
+          "ANCH-HEALTH-11-A",
+          "ANCH-HEALTH-11-B",
+          "ANCH-HEALTH-12-A",
+          "ANCH-HEALTH-12-B",
+          "ANCH-HEALTH-27-A",
+          "ANCH-HEALTH-27-B",
+          "ANCH-HEALTH-24-A",
+          "ANCH-HEALTH-24-B",
+          "ANCH-HEALTH-19-A",
+          "ANCH-HEALTH-19-B",
+          "ANCH-HEALTH-06-A",
+          "ANCH-HEALTH-06-B",
+          "ANCH-HEALTH-10-A",
+          "ANCH-HEALTH-10-B",
+          "ANCH-HEALTH-13-A",
+          "ANCH-HEALTH-13-B",
+          "ANCH-HEALTH-02-A",
+          "ANCH-HEALTH-02-B",
+          "ANCH-HEALTH-16-A",
+          "ANCH-HEALTH-16-B",
+          "ANCH-HEALTH-26-A",
+          "ANCH-HEALTH-26-B",
+          "ANCH-HEALTH-17-A",
+          "ANCH-HEALTH-17-B",
+          "ANCH-HEALTH-21-A",
+          "ANCH-HEALTH-21-B",
+          "ANCH-HEALTH-22-A",
+          "ANCH-HEALTH-22-B",
+          "ANCH-HEALTH-18-A",
+          "ANCH-HEALTH-18-B",
+          "ANCH-HEALTH-04-A",
+          "ANCH-HEALTH-04-B",
+          "ANCH-HEALTH-20-A",
+          "ANCH-HEALTH-20-B",
+          "ANCH-HEALTH-28-A",
+          "ANCH-HEALTH-28-B",
+          "ANCH-HEALTH-23-A",
+          "ANCH-HEALTH-23-B",
+          "ANCH-HEALTH-15-A",
+          "ANCH-HEALTH-15-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "health::origin::29",
+          "health::origin::09",
+          "health::origin::14",
+          "health::origin::32"
+        ],
+        "anchor_card_ids": [
+          "ANCH-HEALTH-29-A",
+          "ANCH-HEALTH-29-B",
+          "ANCH-HEALTH-09-A",
+          "ANCH-HEALTH-09-B",
+          "ANCH-HEALTH-14-A",
+          "ANCH-HEALTH-14-B",
+          "ANCH-HEALTH-32-A",
+          "ANCH-HEALTH-32-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "health::origin::30",
+          "health::origin::03",
+          "health::origin::25",
+          "health::origin::01"
+        ],
+        "anchor_card_ids": [
+          "ANCH-HEALTH-30-A",
+          "ANCH-HEALTH-30-B",
+          "ANCH-HEALTH-03-A",
+          "ANCH-HEALTH-03-B",
+          "ANCH-HEALTH-25-A",
+          "ANCH-HEALTH-25-B",
+          "ANCH-HEALTH-01-A",
+          "ANCH-HEALTH-01-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "health::origin::05",
+          "health::origin::07",
+          "health::origin::31",
+          "health::origin::08"
+        ],
+        "anchor_card_ids": [
+          "ANCH-HEALTH-05-A",
+          "ANCH-HEALTH-05-B",
+          "ANCH-HEALTH-07-A",
+          "ANCH-HEALTH-07-B",
+          "ANCH-HEALTH-31-A",
+          "ANCH-HEALTH-31-B",
+          "ANCH-HEALTH-08-A",
+          "ANCH-HEALTH-08-B"
+        ]
+      }
+    },
+    "history": {
+      "train": {
+        "origin_group_ids": [
+          "history::origin::12",
+          "history::origin::18",
+          "history::origin::32",
+          "history::origin::10",
+          "history::origin::11",
+          "history::origin::27",
+          "history::origin::29",
+          "history::origin::06",
+          "history::origin::28",
+          "history::origin::09",
+          "history::origin::30",
+          "history::origin::15",
+          "history::origin::07",
+          "history::origin::25",
+          "history::origin::22",
+          "history::origin::05",
+          "history::origin::04",
+          "history::origin::19",
+          "history::origin::01",
+          "history::origin::16"
+        ],
+        "anchor_card_ids": [
+          "ANCH-HISTORY-12-A",
+          "ANCH-HISTORY-12-B",
+          "ANCH-HISTORY-18-A",
+          "ANCH-HISTORY-18-B",
+          "ANCH-HISTORY-32-A",
+          "ANCH-HISTORY-32-B",
+          "ANCH-HISTORY-10-A",
+          "ANCH-HISTORY-10-B",
+          "ANCH-HISTORY-11-A",
+          "ANCH-HISTORY-11-B",
+          "ANCH-HISTORY-27-A",
+          "ANCH-HISTORY-27-B",
+          "ANCH-HISTORY-29-A",
+          "ANCH-HISTORY-29-B",
+          "ANCH-HISTORY-06-A",
+          "ANCH-HISTORY-06-B",
+          "ANCH-HISTORY-28-A",
+          "ANCH-HISTORY-28-B",
+          "ANCH-HISTORY-09-A",
+          "ANCH-HISTORY-09-B",
+          "ANCH-HISTORY-30-A",
+          "ANCH-HISTORY-30-B",
+          "ANCH-HISTORY-15-A",
+          "ANCH-HISTORY-15-B",
+          "ANCH-HISTORY-07-A",
+          "ANCH-HISTORY-07-B",
+          "ANCH-HISTORY-25-A",
+          "ANCH-HISTORY-25-B",
+          "ANCH-HISTORY-22-A",
+          "ANCH-HISTORY-22-B",
+          "ANCH-HISTORY-05-A",
+          "ANCH-HISTORY-05-B",
+          "ANCH-HISTORY-04-A",
+          "ANCH-HISTORY-04-B",
+          "ANCH-HISTORY-19-A",
+          "ANCH-HISTORY-19-B",
+          "ANCH-HISTORY-01-A",
+          "ANCH-HISTORY-01-B",
+          "ANCH-HISTORY-16-A",
+          "ANCH-HISTORY-16-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "history::origin::03",
+          "history::origin::17",
+          "history::origin::02",
+          "history::origin::20"
+        ],
+        "anchor_card_ids": [
+          "ANCH-HISTORY-03-A",
+          "ANCH-HISTORY-03-B",
+          "ANCH-HISTORY-17-A",
+          "ANCH-HISTORY-17-B",
+          "ANCH-HISTORY-02-A",
+          "ANCH-HISTORY-02-B",
+          "ANCH-HISTORY-20-A",
+          "ANCH-HISTORY-20-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "history::origin::13",
+          "history::origin::21",
+          "history::origin::23",
+          "history::origin::08"
+        ],
+        "anchor_card_ids": [
+          "ANCH-HISTORY-13-A",
+          "ANCH-HISTORY-13-B",
+          "ANCH-HISTORY-21-A",
+          "ANCH-HISTORY-21-B",
+          "ANCH-HISTORY-23-A",
+          "ANCH-HISTORY-23-B",
+          "ANCH-HISTORY-08-A",
+          "ANCH-HISTORY-08-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "history::origin::14",
+          "history::origin::26",
+          "history::origin::24",
+          "history::origin::31"
+        ],
+        "anchor_card_ids": [
+          "ANCH-HISTORY-14-A",
+          "ANCH-HISTORY-14-B",
+          "ANCH-HISTORY-26-A",
+          "ANCH-HISTORY-26-B",
+          "ANCH-HISTORY-24-A",
+          "ANCH-HISTORY-24-B",
+          "ANCH-HISTORY-31-A",
+          "ANCH-HISTORY-31-B"
+        ]
+      }
+    },
+    "legal": {
+      "train": {
+        "origin_group_ids": [
+          "legal::origin::26",
+          "legal::origin::06",
+          "legal::origin::05",
+          "legal::origin::13",
+          "legal::origin::14",
+          "legal::origin::07",
+          "legal::origin::02",
+          "legal::origin::01",
+          "legal::origin::25",
+          "legal::origin::10",
+          "legal::origin::09",
+          "legal::origin::23",
+          "legal::origin::04",
+          "legal::origin::29",
+          "legal::origin::24",
+          "legal::origin::03",
+          "legal::origin::18",
+          "legal::origin::28",
+          "legal::origin::30",
+          "legal::origin::12"
+        ],
+        "anchor_card_ids": [
+          "ANCH-LEGAL-26-A",
+          "ANCH-LEGAL-26-B",
+          "ANCH-LEGAL-06-A",
+          "ANCH-LEGAL-06-B",
+          "ANCH-LEGAL-05-A",
+          "ANCH-LEGAL-05-B",
+          "ANCH-LEGAL-13-A",
+          "ANCH-LEGAL-13-B",
+          "ANCH-LEGAL-14-A",
+          "ANCH-LEGAL-14-B",
+          "ANCH-LEGAL-07-A",
+          "ANCH-LEGAL-07-B",
+          "ANCH-LEGAL-02-A",
+          "ANCH-LEGAL-02-B",
+          "ANCH-LEGAL-01-A",
+          "ANCH-LEGAL-01-B",
+          "ANCH-LEGAL-25-A",
+          "ANCH-LEGAL-25-B",
+          "ANCH-LEGAL-10-A",
+          "ANCH-LEGAL-10-B",
+          "ANCH-LEGAL-09-A",
+          "ANCH-LEGAL-09-B",
+          "ANCH-LEGAL-23-A",
+          "ANCH-LEGAL-23-B",
+          "ANCH-LEGAL-04-A",
+          "ANCH-LEGAL-04-B",
+          "ANCH-LEGAL-29-A",
+          "ANCH-LEGAL-29-B",
+          "ANCH-LEGAL-24-A",
+          "ANCH-LEGAL-24-B",
+          "ANCH-LEGAL-03-A",
+          "ANCH-LEGAL-03-B",
+          "ANCH-LEGAL-18-A",
+          "ANCH-LEGAL-18-B",
+          "ANCH-LEGAL-28-A",
+          "ANCH-LEGAL-28-B",
+          "ANCH-LEGAL-30-A",
+          "ANCH-LEGAL-30-B",
+          "ANCH-LEGAL-12-A",
+          "ANCH-LEGAL-12-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "legal::origin::16",
+          "legal::origin::22",
+          "legal::origin::19",
+          "legal::origin::20"
+        ],
+        "anchor_card_ids": [
+          "ANCH-LEGAL-16-A",
+          "ANCH-LEGAL-16-B",
+          "ANCH-LEGAL-22-A",
+          "ANCH-LEGAL-22-B",
+          "ANCH-LEGAL-19-A",
+          "ANCH-LEGAL-19-B",
+          "ANCH-LEGAL-20-A",
+          "ANCH-LEGAL-20-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "legal::origin::15",
+          "legal::origin::11",
+          "legal::origin::31",
+          "legal::origin::08"
+        ],
+        "anchor_card_ids": [
+          "ANCH-LEGAL-15-A",
+          "ANCH-LEGAL-15-B",
+          "ANCH-LEGAL-11-A",
+          "ANCH-LEGAL-11-B",
+          "ANCH-LEGAL-31-A",
+          "ANCH-LEGAL-31-B",
+          "ANCH-LEGAL-08-A",
+          "ANCH-LEGAL-08-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "legal::origin::27",
+          "legal::origin::17",
+          "legal::origin::21",
+          "legal::origin::32"
+        ],
+        "anchor_card_ids": [
+          "ANCH-LEGAL-27-A",
+          "ANCH-LEGAL-27-B",
+          "ANCH-LEGAL-17-A",
+          "ANCH-LEGAL-17-B",
+          "ANCH-LEGAL-21-A",
+          "ANCH-LEGAL-21-B",
+          "ANCH-LEGAL-32-A",
+          "ANCH-LEGAL-32-B"
+        ]
+      }
+    },
+    "life_advice": {
+      "train": {
+        "origin_group_ids": [
+          "life_advice::origin::23",
+          "life_advice::origin::18",
+          "life_advice::origin::32",
+          "life_advice::origin::28",
+          "life_advice::origin::26",
+          "life_advice::origin::02",
+          "life_advice::origin::01",
+          "life_advice::origin::07",
+          "life_advice::origin::29",
+          "life_advice::origin::20",
+          "life_advice::origin::24",
+          "life_advice::origin::25",
+          "life_advice::origin::22",
+          "life_advice::origin::15",
+          "life_advice::origin::04",
+          "life_advice::origin::10",
+          "life_advice::origin::16",
+          "life_advice::origin::21",
+          "life_advice::origin::08",
+          "life_advice::origin::03"
+        ],
+        "anchor_card_ids": [
+          "ANCH-LIFE_ADVIC-23-A",
+          "ANCH-LIFE_ADVIC-23-B",
+          "ANCH-LIFE_ADVIC-18-A",
+          "ANCH-LIFE_ADVIC-18-B",
+          "ANCH-LIFE_ADVIC-32-A",
+          "ANCH-LIFE_ADVIC-32-B",
+          "ANCH-LIFE_ADVIC-28-A",
+          "ANCH-LIFE_ADVIC-28-B",
+          "ANCH-LIFE_ADVIC-26-A",
+          "ANCH-LIFE_ADVIC-26-B",
+          "ANCH-LIFE_ADVIC-02-A",
+          "ANCH-LIFE_ADVIC-02-B",
+          "ANCH-LIFE_ADVIC-01-A",
+          "ANCH-LIFE_ADVIC-01-B",
+          "ANCH-LIFE_ADVIC-07-A",
+          "ANCH-LIFE_ADVIC-07-B",
+          "ANCH-LIFE_ADVIC-29-A",
+          "ANCH-LIFE_ADVIC-29-B",
+          "ANCH-LIFE_ADVIC-20-A",
+          "ANCH-LIFE_ADVIC-20-B",
+          "ANCH-LIFE_ADVIC-24-A",
+          "ANCH-LIFE_ADVIC-24-B",
+          "ANCH-LIFE_ADVIC-25-A",
+          "ANCH-LIFE_ADVIC-25-B",
+          "ANCH-LIFE_ADVIC-22-A",
+          "ANCH-LIFE_ADVIC-22-B",
+          "ANCH-LIFE_ADVIC-15-A",
+          "ANCH-LIFE_ADVIC-15-B",
+          "ANCH-LIFE_ADVIC-04-A",
+          "ANCH-LIFE_ADVIC-04-B",
+          "ANCH-LIFE_ADVIC-10-A",
+          "ANCH-LIFE_ADVIC-10-B",
+          "ANCH-LIFE_ADVIC-16-A",
+          "ANCH-LIFE_ADVIC-16-B",
+          "ANCH-LIFE_ADVIC-21-A",
+          "ANCH-LIFE_ADVIC-21-B",
+          "ANCH-LIFE_ADVIC-08-A",
+          "ANCH-LIFE_ADVIC-08-B",
+          "ANCH-LIFE_ADVIC-03-A",
+          "ANCH-LIFE_ADVIC-03-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "life_advice::origin::09",
+          "life_advice::origin::13",
+          "life_advice::origin::31",
+          "life_advice::origin::30"
+        ],
+        "anchor_card_ids": [
+          "ANCH-LIFE_ADVIC-09-A",
+          "ANCH-LIFE_ADVIC-09-B",
+          "ANCH-LIFE_ADVIC-13-A",
+          "ANCH-LIFE_ADVIC-13-B",
+          "ANCH-LIFE_ADVIC-31-A",
+          "ANCH-LIFE_ADVIC-31-B",
+          "ANCH-LIFE_ADVIC-30-A",
+          "ANCH-LIFE_ADVIC-30-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "life_advice::origin::17",
+          "life_advice::origin::12",
+          "life_advice::origin::19",
+          "life_advice::origin::11"
+        ],
+        "anchor_card_ids": [
+          "ANCH-LIFE_ADVIC-17-A",
+          "ANCH-LIFE_ADVIC-17-B",
+          "ANCH-LIFE_ADVIC-12-A",
+          "ANCH-LIFE_ADVIC-12-B",
+          "ANCH-LIFE_ADVIC-19-A",
+          "ANCH-LIFE_ADVIC-19-B",
+          "ANCH-LIFE_ADVIC-11-A",
+          "ANCH-LIFE_ADVIC-11-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "life_advice::origin::27",
+          "life_advice::origin::14",
+          "life_advice::origin::06",
+          "life_advice::origin::05"
+        ],
+        "anchor_card_ids": [
+          "ANCH-LIFE_ADVIC-27-A",
+          "ANCH-LIFE_ADVIC-27-B",
+          "ANCH-LIFE_ADVIC-14-A",
+          "ANCH-LIFE_ADVIC-14-B",
+          "ANCH-LIFE_ADVIC-06-A",
+          "ANCH-LIFE_ADVIC-06-B",
+          "ANCH-LIFE_ADVIC-05-A",
+          "ANCH-LIFE_ADVIC-05-B"
+        ]
+      }
+    },
+    "life_science": {
+      "train": {
+        "origin_group_ids": [
+          "life_science::origin::17",
+          "life_science::origin::29",
+          "life_science::origin::30",
+          "life_science::origin::31",
+          "life_science::origin::28",
+          "life_science::origin::09",
+          "life_science::origin::07",
+          "life_science::origin::10",
+          "life_science::origin::26",
+          "life_science::origin::02",
+          "life_science::origin::19",
+          "life_science::origin::05",
+          "life_science::origin::01",
+          "life_science::origin::04",
+          "life_science::origin::14",
+          "life_science::origin::18",
+          "life_science::origin::25",
+          "life_science::origin::23",
+          "life_science::origin::08",
+          "life_science::origin::20"
+        ],
+        "anchor_card_ids": [
+          "ANCH-LIFE_SCIEN-17-A",
+          "ANCH-LIFE_SCIEN-17-B",
+          "ANCH-LIFE_SCIEN-29-A",
+          "ANCH-LIFE_SCIEN-29-B",
+          "ANCH-LIFE_SCIEN-30-A",
+          "ANCH-LIFE_SCIEN-30-B",
+          "ANCH-LIFE_SCIEN-31-A",
+          "ANCH-LIFE_SCIEN-31-B",
+          "ANCH-LIFE_SCIEN-28-A",
+          "ANCH-LIFE_SCIEN-28-B",
+          "ANCH-LIFE_SCIEN-09-A",
+          "ANCH-LIFE_SCIEN-09-B",
+          "ANCH-LIFE_SCIEN-07-A",
+          "ANCH-LIFE_SCIEN-07-B",
+          "ANCH-LIFE_SCIEN-10-A",
+          "ANCH-LIFE_SCIEN-10-B",
+          "ANCH-LIFE_SCIEN-26-A",
+          "ANCH-LIFE_SCIEN-26-B",
+          "ANCH-LIFE_SCIEN-02-A",
+          "ANCH-LIFE_SCIEN-02-B",
+          "ANCH-LIFE_SCIEN-19-A",
+          "ANCH-LIFE_SCIEN-19-B",
+          "ANCH-LIFE_SCIEN-05-A",
+          "ANCH-LIFE_SCIEN-05-B",
+          "ANCH-LIFE_SCIEN-01-A",
+          "ANCH-LIFE_SCIEN-01-B",
+          "ANCH-LIFE_SCIEN-04-A",
+          "ANCH-LIFE_SCIEN-04-B",
+          "ANCH-LIFE_SCIEN-14-A",
+          "ANCH-LIFE_SCIEN-14-B",
+          "ANCH-LIFE_SCIEN-18-A",
+          "ANCH-LIFE_SCIEN-18-B",
+          "ANCH-LIFE_SCIEN-25-A",
+          "ANCH-LIFE_SCIEN-25-B",
+          "ANCH-LIFE_SCIEN-23-A",
+          "ANCH-LIFE_SCIEN-23-B",
+          "ANCH-LIFE_SCIEN-08-A",
+          "ANCH-LIFE_SCIEN-08-B",
+          "ANCH-LIFE_SCIEN-20-A",
+          "ANCH-LIFE_SCIEN-20-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "life_science::origin::13",
+          "life_science::origin::16",
+          "life_science::origin::24",
+          "life_science::origin::11"
+        ],
+        "anchor_card_ids": [
+          "ANCH-LIFE_SCIEN-13-A",
+          "ANCH-LIFE_SCIEN-13-B",
+          "ANCH-LIFE_SCIEN-16-A",
+          "ANCH-LIFE_SCIEN-16-B",
+          "ANCH-LIFE_SCIEN-24-A",
+          "ANCH-LIFE_SCIEN-24-B",
+          "ANCH-LIFE_SCIEN-11-A",
+          "ANCH-LIFE_SCIEN-11-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "life_science::origin::12",
+          "life_science::origin::27",
+          "life_science::origin::15",
+          "life_science::origin::32"
+        ],
+        "anchor_card_ids": [
+          "ANCH-LIFE_SCIEN-12-A",
+          "ANCH-LIFE_SCIEN-12-B",
+          "ANCH-LIFE_SCIEN-27-A",
+          "ANCH-LIFE_SCIEN-27-B",
+          "ANCH-LIFE_SCIEN-15-A",
+          "ANCH-LIFE_SCIEN-15-B",
+          "ANCH-LIFE_SCIEN-32-A",
+          "ANCH-LIFE_SCIEN-32-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "life_science::origin::03",
+          "life_science::origin::06",
+          "life_science::origin::21",
+          "life_science::origin::22"
+        ],
+        "anchor_card_ids": [
+          "ANCH-LIFE_SCIEN-03-A",
+          "ANCH-LIFE_SCIEN-03-B",
+          "ANCH-LIFE_SCIEN-06-A",
+          "ANCH-LIFE_SCIEN-06-B",
+          "ANCH-LIFE_SCIEN-21-A",
+          "ANCH-LIFE_SCIEN-21-B",
+          "ANCH-LIFE_SCIEN-22-A",
+          "ANCH-LIFE_SCIEN-22-B"
+        ]
+      }
+    },
+    "mathematics": {
+      "train": {
+        "origin_group_ids": [
+          "mathematics::origin::25",
+          "mathematics::origin::22",
+          "mathematics::origin::21",
+          "mathematics::origin::31",
+          "mathematics::origin::28",
+          "mathematics::origin::11",
+          "mathematics::origin::14",
+          "mathematics::origin::24",
+          "mathematics::origin::08",
+          "mathematics::origin::09",
+          "mathematics::origin::03",
+          "mathematics::origin::26",
+          "mathematics::origin::02",
+          "mathematics::origin::27",
+          "mathematics::origin::19",
+          "mathematics::origin::04",
+          "mathematics::origin::20",
+          "mathematics::origin::13",
+          "mathematics::origin::05",
+          "mathematics::origin::12"
+        ],
+        "anchor_card_ids": [
+          "ANCH-MATHEMATIC-25-A",
+          "ANCH-MATHEMATIC-25-B",
+          "ANCH-MATHEMATIC-22-A",
+          "ANCH-MATHEMATIC-22-B",
+          "ANCH-MATHEMATIC-21-A",
+          "ANCH-MATHEMATIC-21-B",
+          "ANCH-MATHEMATIC-31-A",
+          "ANCH-MATHEMATIC-31-B",
+          "ANCH-MATHEMATIC-28-A",
+          "ANCH-MATHEMATIC-28-B",
+          "ANCH-MATHEMATIC-11-A",
+          "ANCH-MATHEMATIC-11-B",
+          "ANCH-MATHEMATIC-14-A",
+          "ANCH-MATHEMATIC-14-B",
+          "ANCH-MATHEMATIC-24-A",
+          "ANCH-MATHEMATIC-24-B",
+          "ANCH-MATHEMATIC-08-A",
+          "ANCH-MATHEMATIC-08-B",
+          "ANCH-MATHEMATIC-09-A",
+          "ANCH-MATHEMATIC-09-B",
+          "ANCH-MATHEMATIC-03-A",
+          "ANCH-MATHEMATIC-03-B",
+          "ANCH-MATHEMATIC-26-A",
+          "ANCH-MATHEMATIC-26-B",
+          "ANCH-MATHEMATIC-02-A",
+          "ANCH-MATHEMATIC-02-B",
+          "ANCH-MATHEMATIC-27-A",
+          "ANCH-MATHEMATIC-27-B",
+          "ANCH-MATHEMATIC-19-A",
+          "ANCH-MATHEMATIC-19-B",
+          "ANCH-MATHEMATIC-04-A",
+          "ANCH-MATHEMATIC-04-B",
+          "ANCH-MATHEMATIC-20-A",
+          "ANCH-MATHEMATIC-20-B",
+          "ANCH-MATHEMATIC-13-A",
+          "ANCH-MATHEMATIC-13-B",
+          "ANCH-MATHEMATIC-05-A",
+          "ANCH-MATHEMATIC-05-B",
+          "ANCH-MATHEMATIC-12-A",
+          "ANCH-MATHEMATIC-12-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "mathematics::origin::18",
+          "mathematics::origin::15",
+          "mathematics::origin::01",
+          "mathematics::origin::07"
+        ],
+        "anchor_card_ids": [
+          "ANCH-MATHEMATIC-18-A",
+          "ANCH-MATHEMATIC-18-B",
+          "ANCH-MATHEMATIC-15-A",
+          "ANCH-MATHEMATIC-15-B",
+          "ANCH-MATHEMATIC-01-A",
+          "ANCH-MATHEMATIC-01-B",
+          "ANCH-MATHEMATIC-07-A",
+          "ANCH-MATHEMATIC-07-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "mathematics::origin::16",
+          "mathematics::origin::06",
+          "mathematics::origin::17",
+          "mathematics::origin::10"
+        ],
+        "anchor_card_ids": [
+          "ANCH-MATHEMATIC-16-A",
+          "ANCH-MATHEMATIC-16-B",
+          "ANCH-MATHEMATIC-06-A",
+          "ANCH-MATHEMATIC-06-B",
+          "ANCH-MATHEMATIC-17-A",
+          "ANCH-MATHEMATIC-17-B",
+          "ANCH-MATHEMATIC-10-A",
+          "ANCH-MATHEMATIC-10-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "mathematics::origin::23",
+          "mathematics::origin::30",
+          "mathematics::origin::29",
+          "mathematics::origin::32"
+        ],
+        "anchor_card_ids": [
+          "ANCH-MATHEMATIC-23-A",
+          "ANCH-MATHEMATIC-23-B",
+          "ANCH-MATHEMATIC-30-A",
+          "ANCH-MATHEMATIC-30-B",
+          "ANCH-MATHEMATIC-29-A",
+          "ANCH-MATHEMATIC-29-B",
+          "ANCH-MATHEMATIC-32-A",
+          "ANCH-MATHEMATIC-32-B"
+        ]
+      }
+    },
+    "operations": {
+      "train": {
+        "origin_group_ids": [
+          "operations::origin::15",
+          "operations::origin::07",
+          "operations::origin::12",
+          "operations::origin::31",
+          "operations::origin::04",
+          "operations::origin::03",
+          "operations::origin::08",
+          "operations::origin::09",
+          "operations::origin::21",
+          "operations::origin::02",
+          "operations::origin::14",
+          "operations::origin::30",
+          "operations::origin::18",
+          "operations::origin::17",
+          "operations::origin::32",
+          "operations::origin::28",
+          "operations::origin::13",
+          "operations::origin::05",
+          "operations::origin::20",
+          "operations::origin::01"
+        ],
+        "anchor_card_ids": [
+          "ANCH-OPERATIONS-15-A",
+          "ANCH-OPERATIONS-15-B",
+          "ANCH-OPERATIONS-07-A",
+          "ANCH-OPERATIONS-07-B",
+          "ANCH-OPERATIONS-12-A",
+          "ANCH-OPERATIONS-12-B",
+          "ANCH-OPERATIONS-31-A",
+          "ANCH-OPERATIONS-31-B",
+          "ANCH-OPERATIONS-04-A",
+          "ANCH-OPERATIONS-04-B",
+          "ANCH-OPERATIONS-03-A",
+          "ANCH-OPERATIONS-03-B",
+          "ANCH-OPERATIONS-08-A",
+          "ANCH-OPERATIONS-08-B",
+          "ANCH-OPERATIONS-09-A",
+          "ANCH-OPERATIONS-09-B",
+          "ANCH-OPERATIONS-21-A",
+          "ANCH-OPERATIONS-21-B",
+          "ANCH-OPERATIONS-02-A",
+          "ANCH-OPERATIONS-02-B",
+          "ANCH-OPERATIONS-14-A",
+          "ANCH-OPERATIONS-14-B",
+          "ANCH-OPERATIONS-30-A",
+          "ANCH-OPERATIONS-30-B",
+          "ANCH-OPERATIONS-18-A",
+          "ANCH-OPERATIONS-18-B",
+          "ANCH-OPERATIONS-17-A",
+          "ANCH-OPERATIONS-17-B",
+          "ANCH-OPERATIONS-32-A",
+          "ANCH-OPERATIONS-32-B",
+          "ANCH-OPERATIONS-28-A",
+          "ANCH-OPERATIONS-28-B",
+          "ANCH-OPERATIONS-13-A",
+          "ANCH-OPERATIONS-13-B",
+          "ANCH-OPERATIONS-05-A",
+          "ANCH-OPERATIONS-05-B",
+          "ANCH-OPERATIONS-20-A",
+          "ANCH-OPERATIONS-20-B",
+          "ANCH-OPERATIONS-01-A",
+          "ANCH-OPERATIONS-01-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "operations::origin::19",
+          "operations::origin::10",
+          "operations::origin::29",
+          "operations::origin::23"
+        ],
+        "anchor_card_ids": [
+          "ANCH-OPERATIONS-19-A",
+          "ANCH-OPERATIONS-19-B",
+          "ANCH-OPERATIONS-10-A",
+          "ANCH-OPERATIONS-10-B",
+          "ANCH-OPERATIONS-29-A",
+          "ANCH-OPERATIONS-29-B",
+          "ANCH-OPERATIONS-23-A",
+          "ANCH-OPERATIONS-23-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "operations::origin::16",
+          "operations::origin::06",
+          "operations::origin::27",
+          "operations::origin::24"
+        ],
+        "anchor_card_ids": [
+          "ANCH-OPERATIONS-16-A",
+          "ANCH-OPERATIONS-16-B",
+          "ANCH-OPERATIONS-06-A",
+          "ANCH-OPERATIONS-06-B",
+          "ANCH-OPERATIONS-27-A",
+          "ANCH-OPERATIONS-27-B",
+          "ANCH-OPERATIONS-24-A",
+          "ANCH-OPERATIONS-24-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "operations::origin::11",
+          "operations::origin::25",
+          "operations::origin::26",
+          "operations::origin::22"
+        ],
+        "anchor_card_ids": [
+          "ANCH-OPERATIONS-11-A",
+          "ANCH-OPERATIONS-11-B",
+          "ANCH-OPERATIONS-25-A",
+          "ANCH-OPERATIONS-25-B",
+          "ANCH-OPERATIONS-26-A",
+          "ANCH-OPERATIONS-26-B",
+          "ANCH-OPERATIONS-22-A",
+          "ANCH-OPERATIONS-22-B"
+        ]
+      }
+    },
+    "physical_science": {
+      "train": {
+        "origin_group_ids": [
+          "physical_science::origin::30",
+          "physical_science::origin::13",
+          "physical_science::origin::05",
+          "physical_science::origin::09",
+          "physical_science::origin::22",
+          "physical_science::origin::24",
+          "physical_science::origin::27",
+          "physical_science::origin::04",
+          "physical_science::origin::10",
+          "physical_science::origin::06",
+          "physical_science::origin::25",
+          "physical_science::origin::15",
+          "physical_science::origin::07",
+          "physical_science::origin::12",
+          "physical_science::origin::31",
+          "physical_science::origin::17",
+          "physical_science::origin::11",
+          "physical_science::origin::18",
+          "physical_science::origin::32",
+          "physical_science::origin::03"
+        ],
+        "anchor_card_ids": [
+          "ANCH-PHYSICAL_S-30-A",
+          "ANCH-PHYSICAL_S-30-B",
+          "ANCH-PHYSICAL_S-13-A",
+          "ANCH-PHYSICAL_S-13-B",
+          "ANCH-PHYSICAL_S-05-A",
+          "ANCH-PHYSICAL_S-05-B",
+          "ANCH-PHYSICAL_S-09-A",
+          "ANCH-PHYSICAL_S-09-B",
+          "ANCH-PHYSICAL_S-22-A",
+          "ANCH-PHYSICAL_S-22-B",
+          "ANCH-PHYSICAL_S-24-A",
+          "ANCH-PHYSICAL_S-24-B",
+          "ANCH-PHYSICAL_S-27-A",
+          "ANCH-PHYSICAL_S-27-B",
+          "ANCH-PHYSICAL_S-04-A",
+          "ANCH-PHYSICAL_S-04-B",
+          "ANCH-PHYSICAL_S-10-A",
+          "ANCH-PHYSICAL_S-10-B",
+          "ANCH-PHYSICAL_S-06-A",
+          "ANCH-PHYSICAL_S-06-B",
+          "ANCH-PHYSICAL_S-25-A",
+          "ANCH-PHYSICAL_S-25-B",
+          "ANCH-PHYSICAL_S-15-A",
+          "ANCH-PHYSICAL_S-15-B",
+          "ANCH-PHYSICAL_S-07-A",
+          "ANCH-PHYSICAL_S-07-B",
+          "ANCH-PHYSICAL_S-12-A",
+          "ANCH-PHYSICAL_S-12-B",
+          "ANCH-PHYSICAL_S-31-A",
+          "ANCH-PHYSICAL_S-31-B",
+          "ANCH-PHYSICAL_S-17-A",
+          "ANCH-PHYSICAL_S-17-B",
+          "ANCH-PHYSICAL_S-11-A",
+          "ANCH-PHYSICAL_S-11-B",
+          "ANCH-PHYSICAL_S-18-A",
+          "ANCH-PHYSICAL_S-18-B",
+          "ANCH-PHYSICAL_S-32-A",
+          "ANCH-PHYSICAL_S-32-B",
+          "ANCH-PHYSICAL_S-03-A",
+          "ANCH-PHYSICAL_S-03-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "physical_science::origin::19",
+          "physical_science::origin::14",
+          "physical_science::origin::08",
+          "physical_science::origin::02"
+        ],
+        "anchor_card_ids": [
+          "ANCH-PHYSICAL_S-19-A",
+          "ANCH-PHYSICAL_S-19-B",
+          "ANCH-PHYSICAL_S-14-A",
+          "ANCH-PHYSICAL_S-14-B",
+          "ANCH-PHYSICAL_S-08-A",
+          "ANCH-PHYSICAL_S-08-B",
+          "ANCH-PHYSICAL_S-02-A",
+          "ANCH-PHYSICAL_S-02-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "physical_science::origin::21",
+          "physical_science::origin::26",
+          "physical_science::origin::16",
+          "physical_science::origin::29"
+        ],
+        "anchor_card_ids": [
+          "ANCH-PHYSICAL_S-21-A",
+          "ANCH-PHYSICAL_S-21-B",
+          "ANCH-PHYSICAL_S-26-A",
+          "ANCH-PHYSICAL_S-26-B",
+          "ANCH-PHYSICAL_S-16-A",
+          "ANCH-PHYSICAL_S-16-B",
+          "ANCH-PHYSICAL_S-29-A",
+          "ANCH-PHYSICAL_S-29-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "physical_science::origin::01",
+          "physical_science::origin::28",
+          "physical_science::origin::20",
+          "physical_science::origin::23"
+        ],
+        "anchor_card_ids": [
+          "ANCH-PHYSICAL_S-01-A",
+          "ANCH-PHYSICAL_S-01-B",
+          "ANCH-PHYSICAL_S-28-A",
+          "ANCH-PHYSICAL_S-28-B",
+          "ANCH-PHYSICAL_S-20-A",
+          "ANCH-PHYSICAL_S-20-B",
+          "ANCH-PHYSICAL_S-23-A",
+          "ANCH-PHYSICAL_S-23-B"
+        ]
+      }
+    },
+    "research_methods": {
+      "train": {
+        "origin_group_ids": [
+          "research_methods::origin::14",
+          "research_methods::origin::10",
+          "research_methods::origin::19",
+          "research_methods::origin::24",
+          "research_methods::origin::18",
+          "research_methods::origin::04",
+          "research_methods::origin::11",
+          "research_methods::origin::20",
+          "research_methods::origin::09",
+          "research_methods::origin::29",
+          "research_methods::origin::26",
+          "research_methods::origin::17",
+          "research_methods::origin::30",
+          "research_methods::origin::02",
+          "research_methods::origin::16",
+          "research_methods::origin::25",
+          "research_methods::origin::15",
+          "research_methods::origin::12",
+          "research_methods::origin::06",
+          "research_methods::origin::07"
+        ],
+        "anchor_card_ids": [
+          "ANCH-RESEARCH_M-14-A",
+          "ANCH-RESEARCH_M-14-B",
+          "ANCH-RESEARCH_M-10-A",
+          "ANCH-RESEARCH_M-10-B",
+          "ANCH-RESEARCH_M-19-A",
+          "ANCH-RESEARCH_M-19-B",
+          "ANCH-RESEARCH_M-24-A",
+          "ANCH-RESEARCH_M-24-B",
+          "ANCH-RESEARCH_M-18-A",
+          "ANCH-RESEARCH_M-18-B",
+          "ANCH-RESEARCH_M-04-A",
+          "ANCH-RESEARCH_M-04-B",
+          "ANCH-RESEARCH_M-11-A",
+          "ANCH-RESEARCH_M-11-B",
+          "ANCH-RESEARCH_M-20-A",
+          "ANCH-RESEARCH_M-20-B",
+          "ANCH-RESEARCH_M-09-A",
+          "ANCH-RESEARCH_M-09-B",
+          "ANCH-RESEARCH_M-29-A",
+          "ANCH-RESEARCH_M-29-B",
+          "ANCH-RESEARCH_M-26-A",
+          "ANCH-RESEARCH_M-26-B",
+          "ANCH-RESEARCH_M-17-A",
+          "ANCH-RESEARCH_M-17-B",
+          "ANCH-RESEARCH_M-30-A",
+          "ANCH-RESEARCH_M-30-B",
+          "ANCH-RESEARCH_M-02-A",
+          "ANCH-RESEARCH_M-02-B",
+          "ANCH-RESEARCH_M-16-A",
+          "ANCH-RESEARCH_M-16-B",
+          "ANCH-RESEARCH_M-25-A",
+          "ANCH-RESEARCH_M-25-B",
+          "ANCH-RESEARCH_M-15-A",
+          "ANCH-RESEARCH_M-15-B",
+          "ANCH-RESEARCH_M-12-A",
+          "ANCH-RESEARCH_M-12-B",
+          "ANCH-RESEARCH_M-06-A",
+          "ANCH-RESEARCH_M-06-B",
+          "ANCH-RESEARCH_M-07-A",
+          "ANCH-RESEARCH_M-07-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "research_methods::origin::01",
+          "research_methods::origin::05",
+          "research_methods::origin::13",
+          "research_methods::origin::08"
+        ],
+        "anchor_card_ids": [
+          "ANCH-RESEARCH_M-01-A",
+          "ANCH-RESEARCH_M-01-B",
+          "ANCH-RESEARCH_M-05-A",
+          "ANCH-RESEARCH_M-05-B",
+          "ANCH-RESEARCH_M-13-A",
+          "ANCH-RESEARCH_M-13-B",
+          "ANCH-RESEARCH_M-08-A",
+          "ANCH-RESEARCH_M-08-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "research_methods::origin::28",
+          "research_methods::origin::21",
+          "research_methods::origin::23",
+          "research_methods::origin::27"
+        ],
+        "anchor_card_ids": [
+          "ANCH-RESEARCH_M-28-A",
+          "ANCH-RESEARCH_M-28-B",
+          "ANCH-RESEARCH_M-21-A",
+          "ANCH-RESEARCH_M-21-B",
+          "ANCH-RESEARCH_M-23-A",
+          "ANCH-RESEARCH_M-23-B",
+          "ANCH-RESEARCH_M-27-A",
+          "ANCH-RESEARCH_M-27-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "research_methods::origin::03",
+          "research_methods::origin::31",
+          "research_methods::origin::32",
+          "research_methods::origin::22"
+        ],
+        "anchor_card_ids": [
+          "ANCH-RESEARCH_M-03-A",
+          "ANCH-RESEARCH_M-03-B",
+          "ANCH-RESEARCH_M-31-A",
+          "ANCH-RESEARCH_M-31-B",
+          "ANCH-RESEARCH_M-32-A",
+          "ANCH-RESEARCH_M-32-B",
+          "ANCH-RESEARCH_M-22-A",
+          "ANCH-RESEARCH_M-22-B"
+        ]
+      }
+    },
+    "social": {
+      "train": {
+        "origin_group_ids": [
+          "social::origin::13",
+          "social::origin::27",
+          "social::origin::32",
+          "social::origin::29",
+          "social::origin::21",
+          "social::origin::12",
+          "social::origin::17",
+          "social::origin::30",
+          "social::origin::03",
+          "social::origin::15",
+          "social::origin::23",
+          "social::origin::04",
+          "social::origin::24",
+          "social::origin::01",
+          "social::origin::25",
+          "social::origin::22",
+          "social::origin::14",
+          "social::origin::11",
+          "social::origin::10",
+          "social::origin::18"
+        ],
+        "anchor_card_ids": [
+          "ANCH-SOCIAL-13-A",
+          "ANCH-SOCIAL-13-B",
+          "ANCH-SOCIAL-27-A",
+          "ANCH-SOCIAL-27-B",
+          "ANCH-SOCIAL-32-A",
+          "ANCH-SOCIAL-32-B",
+          "ANCH-SOCIAL-29-A",
+          "ANCH-SOCIAL-29-B",
+          "ANCH-SOCIAL-21-A",
+          "ANCH-SOCIAL-21-B",
+          "ANCH-SOCIAL-12-A",
+          "ANCH-SOCIAL-12-B",
+          "ANCH-SOCIAL-17-A",
+          "ANCH-SOCIAL-17-B",
+          "ANCH-SOCIAL-30-A",
+          "ANCH-SOCIAL-30-B",
+          "ANCH-SOCIAL-03-A",
+          "ANCH-SOCIAL-03-B",
+          "ANCH-SOCIAL-15-A",
+          "ANCH-SOCIAL-15-B",
+          "ANCH-SOCIAL-23-A",
+          "ANCH-SOCIAL-23-B",
+          "ANCH-SOCIAL-04-A",
+          "ANCH-SOCIAL-04-B",
+          "ANCH-SOCIAL-24-A",
+          "ANCH-SOCIAL-24-B",
+          "ANCH-SOCIAL-01-A",
+          "ANCH-SOCIAL-01-B",
+          "ANCH-SOCIAL-25-A",
+          "ANCH-SOCIAL-25-B",
+          "ANCH-SOCIAL-22-A",
+          "ANCH-SOCIAL-22-B",
+          "ANCH-SOCIAL-14-A",
+          "ANCH-SOCIAL-14-B",
+          "ANCH-SOCIAL-11-A",
+          "ANCH-SOCIAL-11-B",
+          "ANCH-SOCIAL-10-A",
+          "ANCH-SOCIAL-10-B",
+          "ANCH-SOCIAL-18-A",
+          "ANCH-SOCIAL-18-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "social::origin::02",
+          "social::origin::26",
+          "social::origin::19",
+          "social::origin::28"
+        ],
+        "anchor_card_ids": [
+          "ANCH-SOCIAL-02-A",
+          "ANCH-SOCIAL-02-B",
+          "ANCH-SOCIAL-26-A",
+          "ANCH-SOCIAL-26-B",
+          "ANCH-SOCIAL-19-A",
+          "ANCH-SOCIAL-19-B",
+          "ANCH-SOCIAL-28-A",
+          "ANCH-SOCIAL-28-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "social::origin::06",
+          "social::origin::07",
+          "social::origin::09",
+          "social::origin::16"
+        ],
+        "anchor_card_ids": [
+          "ANCH-SOCIAL-06-A",
+          "ANCH-SOCIAL-06-B",
+          "ANCH-SOCIAL-07-A",
+          "ANCH-SOCIAL-07-B",
+          "ANCH-SOCIAL-09-A",
+          "ANCH-SOCIAL-09-B",
+          "ANCH-SOCIAL-16-A",
+          "ANCH-SOCIAL-16-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "social::origin::20",
+          "social::origin::31",
+          "social::origin::05",
+          "social::origin::08"
+        ],
+        "anchor_card_ids": [
+          "ANCH-SOCIAL-20-A",
+          "ANCH-SOCIAL-20-B",
+          "ANCH-SOCIAL-31-A",
+          "ANCH-SOCIAL-31-B",
+          "ANCH-SOCIAL-05-A",
+          "ANCH-SOCIAL-05-B",
+          "ANCH-SOCIAL-08-A",
+          "ANCH-SOCIAL-08-B"
+        ]
+      }
+    },
+    "statistics": {
+      "train": {
+        "origin_group_ids": [
+          "statistics::origin::11",
+          "statistics::origin::30",
+          "statistics::origin::14",
+          "statistics::origin::24",
+          "statistics::origin::01",
+          "statistics::origin::08",
+          "statistics::origin::19",
+          "statistics::origin::15",
+          "statistics::origin::07",
+          "statistics::origin::02",
+          "statistics::origin::12",
+          "statistics::origin::26",
+          "statistics::origin::29",
+          "statistics::origin::06",
+          "statistics::origin::09",
+          "statistics::origin::10",
+          "statistics::origin::21",
+          "statistics::origin::20",
+          "statistics::origin::32",
+          "statistics::origin::28"
+        ],
+        "anchor_card_ids": [
+          "ANCH-STATISTICS-11-A",
+          "ANCH-STATISTICS-11-B",
+          "ANCH-STATISTICS-30-A",
+          "ANCH-STATISTICS-30-B",
+          "ANCH-STATISTICS-14-A",
+          "ANCH-STATISTICS-14-B",
+          "ANCH-STATISTICS-24-A",
+          "ANCH-STATISTICS-24-B",
+          "ANCH-STATISTICS-01-A",
+          "ANCH-STATISTICS-01-B",
+          "ANCH-STATISTICS-08-A",
+          "ANCH-STATISTICS-08-B",
+          "ANCH-STATISTICS-19-A",
+          "ANCH-STATISTICS-19-B",
+          "ANCH-STATISTICS-15-A",
+          "ANCH-STATISTICS-15-B",
+          "ANCH-STATISTICS-07-A",
+          "ANCH-STATISTICS-07-B",
+          "ANCH-STATISTICS-02-A",
+          "ANCH-STATISTICS-02-B",
+          "ANCH-STATISTICS-12-A",
+          "ANCH-STATISTICS-12-B",
+          "ANCH-STATISTICS-26-A",
+          "ANCH-STATISTICS-26-B",
+          "ANCH-STATISTICS-29-A",
+          "ANCH-STATISTICS-29-B",
+          "ANCH-STATISTICS-06-A",
+          "ANCH-STATISTICS-06-B",
+          "ANCH-STATISTICS-09-A",
+          "ANCH-STATISTICS-09-B",
+          "ANCH-STATISTICS-10-A",
+          "ANCH-STATISTICS-10-B",
+          "ANCH-STATISTICS-21-A",
+          "ANCH-STATISTICS-21-B",
+          "ANCH-STATISTICS-20-A",
+          "ANCH-STATISTICS-20-B",
+          "ANCH-STATISTICS-32-A",
+          "ANCH-STATISTICS-32-B",
+          "ANCH-STATISTICS-28-A",
+          "ANCH-STATISTICS-28-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "statistics::origin::17",
+          "statistics::origin::13",
+          "statistics::origin::22",
+          "statistics::origin::31"
+        ],
+        "anchor_card_ids": [
+          "ANCH-STATISTICS-17-A",
+          "ANCH-STATISTICS-17-B",
+          "ANCH-STATISTICS-13-A",
+          "ANCH-STATISTICS-13-B",
+          "ANCH-STATISTICS-22-A",
+          "ANCH-STATISTICS-22-B",
+          "ANCH-STATISTICS-31-A",
+          "ANCH-STATISTICS-31-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "statistics::origin::03",
+          "statistics::origin::18",
+          "statistics::origin::23",
+          "statistics::origin::16"
+        ],
+        "anchor_card_ids": [
+          "ANCH-STATISTICS-03-A",
+          "ANCH-STATISTICS-03-B",
+          "ANCH-STATISTICS-18-A",
+          "ANCH-STATISTICS-18-B",
+          "ANCH-STATISTICS-23-A",
+          "ANCH-STATISTICS-23-B",
+          "ANCH-STATISTICS-16-A",
+          "ANCH-STATISTICS-16-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "statistics::origin::04",
+          "statistics::origin::25",
+          "statistics::origin::27",
+          "statistics::origin::05"
+        ],
+        "anchor_card_ids": [
+          "ANCH-STATISTICS-04-A",
+          "ANCH-STATISTICS-04-B",
+          "ANCH-STATISTICS-25-A",
+          "ANCH-STATISTICS-25-B",
+          "ANCH-STATISTICS-27-A",
+          "ANCH-STATISTICS-27-B",
+          "ANCH-STATISTICS-05-A",
+          "ANCH-STATISTICS-05-B"
+        ]
+      }
+    },
+    "wildlife": {
+      "train": {
+        "origin_group_ids": [
+          "wildlife::origin::04",
+          "wildlife::origin::16",
+          "wildlife::origin::12",
+          "wildlife::origin::17",
+          "wildlife::origin::24",
+          "wildlife::origin::06",
+          "wildlife::origin::09",
+          "wildlife::origin::29",
+          "wildlife::origin::26",
+          "wildlife::origin::14",
+          "wildlife::origin::19",
+          "wildlife::origin::21",
+          "wildlife::origin::18",
+          "wildlife::origin::15",
+          "wildlife::origin::07",
+          "wildlife::origin::30",
+          "wildlife::origin::32",
+          "wildlife::origin::28",
+          "wildlife::origin::05",
+          "wildlife::origin::11"
+        ],
+        "anchor_card_ids": [
+          "ANCH-WILDLIFE-04-A",
+          "ANCH-WILDLIFE-04-B",
+          "ANCH-WILDLIFE-16-A",
+          "ANCH-WILDLIFE-16-B",
+          "ANCH-WILDLIFE-12-A",
+          "ANCH-WILDLIFE-12-B",
+          "ANCH-WILDLIFE-17-A",
+          "ANCH-WILDLIFE-17-B",
+          "ANCH-WILDLIFE-24-A",
+          "ANCH-WILDLIFE-24-B",
+          "ANCH-WILDLIFE-06-A",
+          "ANCH-WILDLIFE-06-B",
+          "ANCH-WILDLIFE-09-A",
+          "ANCH-WILDLIFE-09-B",
+          "ANCH-WILDLIFE-29-A",
+          "ANCH-WILDLIFE-29-B",
+          "ANCH-WILDLIFE-26-A",
+          "ANCH-WILDLIFE-26-B",
+          "ANCH-WILDLIFE-14-A",
+          "ANCH-WILDLIFE-14-B",
+          "ANCH-WILDLIFE-19-A",
+          "ANCH-WILDLIFE-19-B",
+          "ANCH-WILDLIFE-21-A",
+          "ANCH-WILDLIFE-21-B",
+          "ANCH-WILDLIFE-18-A",
+          "ANCH-WILDLIFE-18-B",
+          "ANCH-WILDLIFE-15-A",
+          "ANCH-WILDLIFE-15-B",
+          "ANCH-WILDLIFE-07-A",
+          "ANCH-WILDLIFE-07-B",
+          "ANCH-WILDLIFE-30-A",
+          "ANCH-WILDLIFE-30-B",
+          "ANCH-WILDLIFE-32-A",
+          "ANCH-WILDLIFE-32-B",
+          "ANCH-WILDLIFE-28-A",
+          "ANCH-WILDLIFE-28-B",
+          "ANCH-WILDLIFE-05-A",
+          "ANCH-WILDLIFE-05-B",
+          "ANCH-WILDLIFE-11-A",
+          "ANCH-WILDLIFE-11-B"
+        ]
+      },
+      "validation": {
+        "origin_group_ids": [
+          "wildlife::origin::27",
+          "wildlife::origin::31",
+          "wildlife::origin::03",
+          "wildlife::origin::08"
+        ],
+        "anchor_card_ids": [
+          "ANCH-WILDLIFE-27-A",
+          "ANCH-WILDLIFE-27-B",
+          "ANCH-WILDLIFE-31-A",
+          "ANCH-WILDLIFE-31-B",
+          "ANCH-WILDLIFE-03-A",
+          "ANCH-WILDLIFE-03-B",
+          "ANCH-WILDLIFE-08-A",
+          "ANCH-WILDLIFE-08-B"
+        ]
+      },
+      "test": {
+        "origin_group_ids": [
+          "wildlife::origin::02",
+          "wildlife::origin::01",
+          "wildlife::origin::20",
+          "wildlife::origin::25"
+        ],
+        "anchor_card_ids": [
+          "ANCH-WILDLIFE-02-A",
+          "ANCH-WILDLIFE-02-B",
+          "ANCH-WILDLIFE-01-A",
+          "ANCH-WILDLIFE-01-B",
+          "ANCH-WILDLIFE-20-A",
+          "ANCH-WILDLIFE-20-B",
+          "ANCH-WILDLIFE-25-A",
+          "ANCH-WILDLIFE-25-B"
+        ]
+      },
+      "sealed": {
+        "origin_group_ids": [
+          "wildlife::origin::10",
+          "wildlife::origin::13",
+          "wildlife::origin::23",
+          "wildlife::origin::22"
+        ],
+        "anchor_card_ids": [
+          "ANCH-WILDLIFE-10-A",
+          "ANCH-WILDLIFE-10-B",
+          "ANCH-WILDLIFE-13-A",
+          "ANCH-WILDLIFE-13-B",
+          "ANCH-WILDLIFE-23-A",
+          "ANCH-WILDLIFE-23-B",
+          "ANCH-WILDLIFE-22-A",
+          "ANCH-WILDLIFE-22-B"
+        ]
+      }
+    }
+  }
+}

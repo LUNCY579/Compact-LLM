@@ -1,0 +1,66 @@
+{
+  "budget": {
+    "loss_tokens": null,
+    "max_completion_tokens": null,
+    "max_prompt_tokens": null,
+    "optimizer_steps": null,
+    "reasoning_token_limit": null,
+    "rollout_groups": null,
+    "samples_per_group": null
+  },
+  "candidate_data": [
+    "data/sft_final/train.jsonl.gz",
+    "data/sft_reason/train.jsonl.gz",
+    "data/rl/train.jsonl.gz",
+    "data/rl_reason/train.jsonl.gz"
+  ],
+  "control_arms": [
+    "unchanged_native_checkpoint",
+    "final_only_sft",
+    "reason_then_final_sft"
+  ],
+  "evaluation_only_splits": [
+    "test_iid",
+    "test_transfer",
+    "test_length"
+  ],
+  "match_and_report": [
+    "exact_parent_weights",
+    "tokenizer_and_template",
+    "train_group_ids",
+    "native_loss_mask",
+    "optimizer",
+    "learning_rate_schedule",
+    "initialization_seed",
+    "data_order",
+    "loss_tokens",
+    "processed_tokens",
+    "optimizer_updates",
+    "generation_tokens",
+    "wall_time",
+    "peak_memory"
+  ],
+  "note": "No model, LR, trainer, device, or memory fit is silently assumed. Token matching and update matching can require separate comparisons.",
+  "reward": {
+    "absolute_max_optional_efficiency_weight": 0.05,
+    "arbitrary_generated_trace_truth_reward": false,
+    "baseline": "binary_strict_format_and_verified_optimal_answer",
+    "efficiency_weight": 0.0
+  },
+  "schema_version": "1.0.0",
+  "seed": 20260914,
+  "selection_split": "validation",
+  "status": "PROPOSED_NOT_EXECUTED",
+  "stop_on": [
+    "source_or_tokenizer_hash_mismatch",
+    "gold_leak_to_model_prompt",
+    "heldout_training_rows",
+    "silent_truncation",
+    "nonfinite_loss_or_reward",
+    "resource_limit_exceeded"
+  ],
+  "subsequent_rl_arms": [
+    "selected_sft_with_outcome_only_reward",
+    "same_selected_sft_with_optional_correct_only_efficiency_adjustment"
+  ]
+}

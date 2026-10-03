@@ -85,6 +85,9 @@ INSTRUMENTS = {
         'audit': RECORDS / 'process-transition-probe-001' / 'AUDIT.json',
         'view_role': 'CANDIDATE_NOT_ADMITTED_OR_TRAINED',
         'admits_selection': False,
+        'floors_doc': 'forge-v2-prereg-001/PROCESS_PROBE_FLOORS.md',
+        'limitation_0': ('TRAIN-only derivative views; CANDIDATE_NOT_ADMITTED_OR_TRAINED, '
+                         'never for selection'),
         'floors': {
             'ledger_replay': {'copy_before': 31, 'constant_majority': 1, 'n': 128},
             'register_machine': {'copy_before': 7, 'constant_majority': 1, 'n': 128},
@@ -96,6 +99,9 @@ INSTRUMENTS = {
         'audit': RECORDS / 'select-views-001' / 'FLOORS.json',
         'view_role': 'ADMITTED_FOR_SELECTION',
         'admits_selection': True,
+        'floors_doc': 'select-views-001/FLOORS.json',
+        'limitation_0': ('TRAIN-split derivative views; ADMITTED_FOR_SELECTION, '
+                         'never for confirmation'),
         'floors': {
             'ledger_replay': {'copy_before': 30, 'constant_majority': 1, 'n': 128},
             'register_machine': {'copy_before': 9, 'constant_majority': 1, 'n': 128},
@@ -108,6 +114,52 @@ DEFAULT_INSTRUMENT = 'process-transition-probe-001'
 
 def sha256_file(path: Path) -> str:
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def weight_identity(model_dir: Path) -> dict:
+    """Hash the weights this probe actually loaded.
+
+    The retention probe has always recorded `hf_candidate_identity.weight_sha256`; this probe
+    recorded only `model_dir`. A path is not bytes -- with an arm-directory OVERWRITE trap on
+    record, that asymmetry made every acquisition number identity-UNBOUND, and a bank bridge
+    built from these artifacts could not be receipted (2026-09-20).
+
+    RECORDS, DOES NOT ENFORCE. A missing or mismatched receipt is reported as a field, never
+    raised: this must not add a failure mode to runs that worked before. Scorers apply the gate.
+    """
+    model_dir = Path(model_dir).resolve()
+    shards = sorted(model_dir.glob('model.safetensors')) or sorted(
+        model_dir.glob('model-*-of-*.safetensors'))
+    files = {p.name: sha256_file(p) for p in shards}
+    if not files:
+        # Reclaimed-weights directories are real here: the ladder runner deletes an arm's
+        # safetensors after scoring. Return the SAME keys so callers never branch on shape.
+        return {'weight_sha256': None, 'weight_files': {}, 'sharded': False,
+                'directory': str(model_dir), 'receipt_matches': None,
+                'note': 'no safetensors found in the model directory'}
+    # One shard -> its hash IS the weight identity. Sharded -> hash the ordered shard hashes,
+    # so the value is stable and still a single comparable string.
+    if len(files) == 1:
+        weight_sha = next(iter(files.values()))
+    else:
+        weight_sha = hashlib.sha256(canonical(files).encode('utf-8')).hexdigest()
+    identity = {'weight_sha256': weight_sha, 'weight_files': files,
+                'sharded': len(files) > 1, 'directory': str(model_dir)}
+    receipt_path = model_dir / 'MATERIALIZATION.json'
+    if receipt_path.is_file():
+        try:
+            receipt = json.loads(receipt_path.read_text(encoding='utf-8'))
+        except Exception as exc:                                        # noqa: BLE001
+            identity['receipt'] = 'UNREADABLE: {}'.format(exc)
+            return identity
+        recorded = receipt.get('out_weight_sha256')
+        identity['materialization_sha256'] = sha256_file(receipt_path)
+        identity['receipt_out_weight_sha256'] = recorded
+        identity['receipt_matches'] = (recorded == weight_sha)
+        identity['checkpoint_manifest_sha256'] = receipt.get('checkpoint_manifest_sha256')
+    else:
+        identity['receipt_matches'] = None
+    return identity
 
 
 def canonical(obj) -> str:
@@ -279,8 +331,13 @@ def main(argv=None):
         model, tokenizer, _ = run._load(model_dir, args.device)
         checkpoint_identity = None
     eos = run._eos_ids(model_dir, tokenizer)
+    model_identity = weight_identity(model_dir)
     print('loaded {} on {} | {} views | views sha {}'.format(
         model_dir.name, args.device, len(rows), views_sha[:12]), flush=True)
+    print('weight sha {} | receipt {}'.format(
+        (model_identity['weight_sha256'] or 'NONE')[:12],
+        {True: 'MATCHES', False: 'MISMATCH', None: 'absent'}[model_identity['receipt_matches']]),
+        flush=True)
 
     predictions, started = {}, time.perf_counter()
     with torch.inference_mode():
@@ -374,6 +431,7 @@ def main(argv=None):
                          'release result.'),
         'label': args.label,
         'model_dir': str(model_dir),
+        'hf_candidate_identity': model_identity,
         'checkpoint': checkpoint_identity,
         'device': args.device,
         'views_sha256': views_sha,
@@ -393,19 +451,24 @@ def main(argv=None):
             'binding_floor_count': total_floor,
             'binding_floor_rate': round(total_floor / total_n, 4),
             'presentation_only_gain': total_canon - total_strict,
+            # Generated from the floors in force, not transcribed. A hardcoded triple is how
+            # SELECT-VIEWS-001's first artifact came to quote the OLD instrument's floors.
             'note': ('the aggregate is REPORTED, never the gate: the three families have '
-                     'different binding floors (ledger_replay 0.2422 copy_before, '
-                     'register_machine 0.0547 copy_before, prerequisite_plan 0.0703 '
-                     'constant_majority)'),
+                     'different binding floors ('
+                     + ', '.join('{} {:.4f} {}'.format(f, per_family[f]['binding_floor_rate'],
+                                                       per_family[f]['binding_floor_predictor'])
+                                 for f in sorted(per_family)) + ')'),
         },
         'per_family': per_family,
-        'decision_rule': ('pre-registered in forge-v2-prereg-001/PROCESS_PROBE_FLOORS.md: a core '
+        'decision_rule': ('pre-registered in ' + instrument['floors_doc'] + ': a core '
                           'clears a family only if the two-sided exact binomial 95% lower bound '
                           'on canonical_correct exceeds that family binding floor, where the '
-                          'binding floor is the STRONGER of copy_before and constant_majority'),
+                          'binding floor is the STRONGER of copy_before and constant_majority. '
+                          'The CP lower bound is the rule; no transcribed minimum count (the '
+                          '40/12/15 shorthand in RRP-008/009/013) is binding.'),
         'floors_published_before_any_model_call': floors,
         'limitations': [
-            'TRAIN-only derivative views; CANDIDATE_NOT_ADMITTED_OR_TRAINED, never for selection',
+            instrument['limitation_0'],
             'single-step competence does not establish multi-step search or planning',
             'prerequisite_plan positives cover applicable actions only',
             'exact-match scoring; strict vs canonical separates presentation from arithmetic',

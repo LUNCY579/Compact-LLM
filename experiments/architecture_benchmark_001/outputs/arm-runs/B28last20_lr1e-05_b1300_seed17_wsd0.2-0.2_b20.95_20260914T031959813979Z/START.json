@@ -1,0 +1,49 @@
+{
+  "pid": 85228,
+  "argv": [
+    "experiments/rab001_exploration/arm_dose.py",
+    "B28last20",
+    "1e-5",
+    "1300",
+    "17",
+    "1.0",
+    "wsd:0.2:0.2",
+    "0.95",
+    "final"
+  ],
+  "tag": "B28last20_lr1e-05_b1300_seed17_wsd0.2-0.2_b20.95",
+  "completed": false,
+  "canonical_tag": "B28last20_lr1e-05_b1300_seed17_wsd0.2-0.2_b20.95",
+  "run_label": null,
+  "optimizer_storage_backend": "memmap",
+  "optimizer_storage_harness_sha256": null,
+  "gpu_workspace_reserve_gib": 0.6,
+  "checkpoint_serialization_sha256": "e90a974c9f810a3afcf6c148fa301c65b63c097c6a7434c53b2ed140d657fa2f",
+  "implementation_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+  "exploration_harness_sha256": "49b8ff3abbb6648eb33cb364747d13c65990a13bd684552f484d0e2ed628ce4f",
+  "optimizer_harness_sha256": "1c6c50012e40fec55874b68dc27f5013824588ae5460d8e3929cd0f4b8caa544",
+  "data_sha256": {
+    "train": "cd57e650ee0bedf7c973e2a365a6a387f504094bffc23faa65b3c46ccecad34c",
+    "dev": "14bcd079363990c130063e66660097ab95888e69eeaf3d1ea68af6e18561d3f9",
+    "monitor_probe": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266",
+    "probe_label_audit": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7"
+  },
+  "source_assets_sha256": {
+    "model.safetensors": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  "host_before": {
+    "available": true,
+    "memory_load_percent": 49,
+    "total_phys_gib": 15.218181610107422,
+    "free_phys_gib": 7.611354827880859,
+    "commit_limit_gib": 32.70072937011719,
+    "committed_gib": 15.878379821777344,
+    "commit_over_phys_gib": 0.6601982116699219
+  }
+}

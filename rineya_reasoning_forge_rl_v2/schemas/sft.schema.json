@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "title": "Rineya SFT demonstration row",
+  "required": [
+    "id",
+    "group_id",
+    "family",
+    "split",
+    "messages"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^RRFR2-[0-9a-f]{24}$"
+    },
+    "group_id": {
+      "type": "string",
+      "pattern": "^RRFR2-[0-9a-f]{24}$"
+    },
+    "family": {
+      "enum": [
+        "ledger_replay",
+        "register_machine",
+        "temporal_route",
+        "prerequisite_plan",
+        "deadline_schedule",
+        "budget_selection",
+        "evidence_chain",
+        "continuous_replan"
+      ]
+    },
+    "split": {
+      "enum": [
+        "train",
+        "validation"
+      ]
+    },
+    "messages": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "content"
+          ],
+          "properties": {
+            "role": {
+              "const": "system"
+            },
+            "content": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "content"
+          ],
+          "properties": {
+            "role": {
+              "const": "user"
+            },
+            "content": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "content"
+          ],
+          "properties": {
+            "role": {
+              "const": "assistant"
+            },
+            "content": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "version": 2,
+  "seed": 20260919,
+  "role": "PROSPECTIVE_VISIBLE_DEVELOPMENT",
+  "model_calls": 0,
+  "rows": 696,
+  "worlds": 72,
+  "counts": {
+    "train/ledger_replay/transition": 96,
+    "train/ledger_replay/boundary": 32,
+    "train/ledger_replay/joint": 32,
+    "train/prerequisite_plan/transition": 80,
+    "train/prerequisite_plan/boundary": 32,
+    "train/prerequisite_plan/joint": 32,
+    "train/register_machine/transition": 96,
+    "train/register_machine/boundary": 32,
+    "train/register_machine/joint": 32,
+    "dev/ledger_replay/transition": 48,
+    "dev/ledger_replay/boundary": 16,
+    "dev/ledger_replay/joint": 16,
+    "dev/prerequisite_plan/transition": 40,
+    "dev/prerequisite_plan/boundary": 16,
+    "dev/prerequisite_plan/joint": 16,
+    "dev/register_machine/transition": 48,
+    "dev/register_machine/boundary": 16,
+    "dev/register_machine/joint": 16
+  },
+  "world_and_exact_semantic_overlap": 0,
+  "joint_train_policy": "Only a separately declared joint-supervised positive control may use joint training rows.",
+  "independently_sealed": false,
+  "qualified_by_model": false,
+  "limitations": [
+    "Rules share a generator and narrow synthetic schemas.",
+    "Dev template variation is only a prefix change, not a substantive paraphrase split.",
+    "Equal candidate-state comparison is a deliberately simple boundary component.",
+    "Further shortcut and rendered-prompt review required before model execution.",
+    "No scale, quality, continual-learning or composition success established."
+  ],
+  "builder_sha256": "82dce236a9c2869bcdc89a277b60bfde12cc0283fd2d862e062bdf79a72c8107",
+  "sha256": {
+    "train.jsonl": "b3fa976d2a975e06efb1ea5b02f9ef50445fec9120f28a3b25286e61092899ec",
+    "dev.jsonl": "95a14e85629b3b22a1cdfaca7b684bd033ffe81b6b53a857ce226f635cd6593c"
+  }
+}

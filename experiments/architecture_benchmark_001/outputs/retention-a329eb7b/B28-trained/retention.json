@@ -1,0 +1,5174 @@
+{
+  "schema": 2,
+  "stage": "G2_RETENTION",
+  "arm": "B28",
+  "probe_rows": 150,
+  "bare_policy": "permissive",
+  "reference_ids": [
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970",
+    "rineya_v3_sft__time_duration__reas_time_duration_s00__00242",
+    "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+    "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+    "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+    "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+    "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+    "rineya_v3_sft__time_duration__reas_time_duration_s07__02318",
+    "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+    "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+    "rineya_v3_sft__time_duration__reas_time_duration_s09__02996"
+  ],
+  "reference_ids_by_policy": {
+    "permissive": [
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970",
+      "rineya_v3_sft__time_duration__reas_time_duration_s00__00242",
+      "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+      "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+      "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+      "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+      "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+      "rineya_v3_sft__time_duration__reas_time_duration_s07__02318",
+      "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+      "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+      "rineya_v3_sft__time_duration__reas_time_duration_s09__02996"
+    ],
+    "strict": [
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832",
+      "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+      "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752",
+      "rineya_v3_sft__time_duration__reas_time_duration_s00__00242",
+      "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+      "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+      "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+      "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+      "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+      "rineya_v3_sft__time_duration__reas_time_duration_s07__02318",
+      "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+      "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+      "rineya_v3_sft__time_duration__reas_time_duration_s09__02996"
+    ]
+  },
+  "source_correct_ids": [
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832",
+    "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752",
+    "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970",
+    "rineya_v3_sft__time_duration__reas_time_duration_s00__00242",
+    "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+    "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+    "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+    "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+    "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+    "rineya_v3_sft__time_duration__reas_time_duration_s07__02318",
+    "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+    "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+    "rineya_v3_sft__time_duration__reas_time_duration_s09__02996"
+  ],
+  "arm_matches_source_verbatim": 150,
+  "rows": [
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01577",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0197",
+      "target": {
+        "kind": "quantity",
+        "value": "64",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "60 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "64",
+        "parsed": "60",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "60 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "64",
+        "parsed": "60",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00515",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0064",
+      "target": {
+        "kind": "quantity",
+        "value": "40",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "30 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "40",
+        "parsed": "30",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "30 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "40",
+        "parsed": "30",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02677",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0334",
+      "target": {
+        "kind": "duration",
+        "value": "2700",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "9:15 AM - 8:30 AM = 45 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "2700",
+        "parsed": null,
+        "reason": "duration is not number/unit pairs: '9:15 am - 8:30 am = 45 minutes'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 17
+      },
+      "arm": {
+        "raw": "9:15 AM - 8:30 AM = 45 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "2700",
+        "parsed": null,
+        "reason": "duration is not number/unit pairs: '9:15 am - 8:30 am = 45 minutes'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 17
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0122",
+      "target": {
+        "kind": "duration",
+        "value": "5400",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "2 hours",
+        "terminated": true,
+        "kind": "duration",
+        "target": "5400",
+        "parsed": "7200",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "2 hours",
+        "terminated": true,
+        "kind": "duration",
+        "target": "5400",
+        "parsed": "7200",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s06__01827",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0228",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 625
+      },
+      "source": {
+        "raw": "9:15 AM to 10:85 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "625",
+        "parsed": null,
+        "reason": "not a clock time: '9:15 am to 10:85'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 13
+      },
+      "arm": {
+        "raw": "9:15 AM to 10:85 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "625",
+        "parsed": null,
+        "reason": "not a clock time: '9:15 am to 10:85'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 13
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0207",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 980
+      },
+      "source": {
+        "raw": "4:20 PM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "980",
+        "parsed": "980",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "4:20 PM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "980",
+        "parsed": "980",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0087",
+      "target": {
+        "kind": "count",
+        "value": "54",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "sensor tag",
+          "sensor tags",
+          "tag",
+          "tags"
+        ]
+      },
+      "source": {
+        "raw": "36 sensor tags.",
+        "terminated": true,
+        "kind": "count",
+        "target": "54",
+        "parsed": "36",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "36 sensor tags.",
+        "terminated": true,
+        "kind": "count",
+        "target": "54",
+        "parsed": "36",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s09__02781",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0347",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 1135
+      },
+      "source": {
+        "raw": "It ends at 6:55 PM.",
+        "terminated": true,
+        "kind": "clock",
+        "target": "1135",
+        "parsed": null,
+        "reason": "not a clock time: 'it ends at 6:55'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 10
+      },
+      "arm": {
+        "raw": "It ends at 6:55 PM.",
+        "terminated": true,
+        "kind": "clock",
+        "target": "1135",
+        "parsed": null,
+        "reason": "not a clock time: 'it ends at 6:55'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 10
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0097",
+      "target": {
+        "kind": "quantity",
+        "value": "50",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "50 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "50",
+        "parsed": "50",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "50 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "50",
+        "parsed": "50",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00883",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0110",
+      "target": {
+        "kind": "count",
+        "value": "18",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "15",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "15",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "15",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "15",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02787",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0348",
+      "target": {
+        "kind": "number",
+        "value": "90",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "A quantity of 120 decreases by 25%.",
+        "terminated": true,
+        "kind": "number",
+        "target": "90",
+        "parsed": null,
+        "reason": "no leading number in 'a quantity of 120 decreases by 25%'",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 13
+      },
+      "arm": {
+        "raw": "A quantity of 120 decreases by 25%.",
+        "terminated": true,
+        "kind": "number",
+        "target": "90",
+        "parsed": null,
+        "reason": "no leading number in 'a quantity of 120 decreases by 25%'",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 13
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0344",
+      "target": {
+        "kind": "distance_km",
+        "value": "55",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "55 km",
+        "terminated": true,
+        "kind": "distance_km",
+        "target": "55",
+        "parsed": "55",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "55 km",
+        "terminated": true,
+        "kind": "distance_km",
+        "target": "55",
+        "parsed": "55",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0194",
+      "target": {
+        "kind": "percent",
+        "value": "20",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "200%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "20",
+        "parsed": "200",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "200%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "20",
+        "parsed": "200",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s00__00171",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0021",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 625
+      },
+      "source": {
+        "raw": "9:15 AM + 70 minutes = 10:45 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "625",
+        "parsed": null,
+        "reason": "not a clock time: '9:15 am + 70 minutes = 10:45'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 18
+      },
+      "arm": {
+        "raw": "9:15 AM + 70 minutes = 10:45 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "625",
+        "parsed": null,
+        "reason": "not a clock time: '9:15 am + 70 minutes = 10:45'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 18
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0101",
+      "target": {
+        "kind": "volume_cups",
+        "value": "8",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "16 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "8",
+        "parsed": "16",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "16 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "8",
+        "parsed": "16",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02155",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0269",
+      "target": {
+        "kind": "volume_cups",
+        "value": "5",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "20 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "5",
+        "parsed": "20",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "20 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "5",
+        "parsed": "20",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s00__00027",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0003",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 625
+      },
+      "source": {
+        "raw": "10:45 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "625",
+        "parsed": "645",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      },
+      "arm": {
+        "raw": "10:45 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "625",
+        "parsed": "645",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02213",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0276",
+      "target": {
+        "kind": "duration",
+        "value": "3000",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "It runs from 2:20 PM to 3:10 PM.",
+        "terminated": true,
+        "kind": "duration",
+        "target": "3000",
+        "parsed": null,
+        "reason": "no leading number in 'it runs from 2:20 pm to 3:10 pm'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 17
+      },
+      "arm": {
+        "raw": "It runs from 2:20 PM to 3:10 PM.",
+        "terminated": true,
+        "kind": "duration",
+        "target": "3000",
+        "parsed": null,
+        "reason": "no leading number in 'it runs from 2:20 pm to 3:10 pm'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 17
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02114",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0264",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 970
+      },
+      "source": {
+        "raw": "It ends at 4:10 PM.",
+        "terminated": true,
+        "kind": "clock",
+        "target": "970",
+        "parsed": null,
+        "reason": "not a clock time: 'it ends at 4:10'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 10
+      },
+      "arm": {
+        "raw": "It ends at 4:10 PM.",
+        "terminated": true,
+        "kind": "clock",
+        "target": "970",
+        "parsed": null,
+        "reason": "not a clock time: 'it ends at 4:10'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 10
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s02__00681",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0085",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 595
+      },
+      "source": {
+        "raw": "11:55 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "595",
+        "parsed": "715",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      },
+      "arm": {
+        "raw": "11:55 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "595",
+        "parsed": "715",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01739",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0217",
+      "target": {
+        "kind": "duration",
+        "value": "3000",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "1 hour and 40 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "3000",
+        "parsed": "6000",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 7
+      },
+      "arm": {
+        "raw": "1 hour and 40 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "3000",
+        "parsed": "6000",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 7
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00598",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0074",
+      "target": {
+        "kind": "money",
+        "value": "56",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "$168",
+        "terminated": true,
+        "kind": "money",
+        "target": "56",
+        "parsed": "168",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "$168",
+        "terminated": true,
+        "kind": "money",
+        "target": "56",
+        "parsed": "168",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0319",
+      "target": {
+        "kind": "count",
+        "value": "9",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "9",
+        "terminated": true,
+        "kind": "count",
+        "target": "9",
+        "parsed": "9",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 1
+      },
+      "arm": {
+        "raw": "9",
+        "terminated": true,
+        "kind": "count",
+        "target": "9",
+        "parsed": "9",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 1
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0033",
+      "target": {
+        "kind": "money",
+        "value": "108",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "$108",
+        "terminated": true,
+        "kind": "money",
+        "target": "108",
+        "parsed": "108",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "$108",
+        "terminated": true,
+        "kind": "money",
+        "target": "108",
+        "parsed": "108",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0152",
+      "target": {
+        "kind": "duration",
+        "value": "1500",
+        "bare_allowed": true,
+        "bare_unit": "minute"
+      },
+      "source": {
+        "raw": "25 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "1500",
+        "parsed": "1500",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "25 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "1500",
+        "parsed": "1500",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01600",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0200",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 1145
+      },
+      "source": {
+        "raw": "6:20 PM + 45 minutes = 6:65 PM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "1145",
+        "parsed": null,
+        "reason": "not a clock time: '6:20 pm + 45 minutes = 6:65'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 17
+      },
+      "arm": {
+        "raw": "6:20 PM + 45 minutes = 6:65 PM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "1145",
+        "parsed": null,
+        "reason": "not a clock time: '6:20 pm + 45 minutes = 6:65'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 17
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01281",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0160",
+      "target": {
+        "kind": "duration",
+        "value": "1500",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "1 hour and 25 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "1500",
+        "parsed": "5100",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 7
+      },
+      "arm": {
+        "raw": "1 hour and 25 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "1500",
+        "parsed": "5100",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 7
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0367",
+      "target": {
+        "kind": "percent",
+        "value": "25",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "25%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "25",
+        "parsed": "25",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "25%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "25",
+        "parsed": "25",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00774",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0096",
+      "target": {
+        "kind": "count",
+        "value": "72",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "shipping label",
+          "shipping labels",
+          "label",
+          "labels"
+        ]
+      },
+      "source": {
+        "raw": "162 shipping labels.",
+        "terminated": true,
+        "kind": "count",
+        "target": "72",
+        "parsed": "162",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 6
+      },
+      "arm": {
+        "raw": "162 shipping labels.",
+        "terminated": true,
+        "kind": "count",
+        "target": "72",
+        "parsed": "162",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 6
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02229",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0278",
+      "target": {
+        "kind": "duration",
+        "value": "7200",
+        "bare_allowed": true,
+        "bare_unit": "minute"
+      },
+      "source": {
+        "raw": "2 hours 15 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "7200",
+        "parsed": "8100",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      },
+      "arm": {
+        "raw": "2 hours 15 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "7200",
+        "parsed": "8100",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0071",
+      "target": {
+        "kind": "number",
+        "value": "90",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "90",
+        "terminated": true,
+        "kind": "number",
+        "target": "90",
+        "parsed": "90",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "90",
+        "terminated": true,
+        "kind": "number",
+        "target": "90",
+        "parsed": "90",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02504",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0313",
+      "target": {
+        "kind": "quantity",
+        "value": "72",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "70 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "72",
+        "parsed": "70",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "70 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "72",
+        "parsed": "70",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02944",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0368",
+      "target": {
+        "kind": "number",
+        "value": "55",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "60",
+        "terminated": true,
+        "kind": "number",
+        "target": "55",
+        "parsed": "60",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "60",
+        "terminated": true,
+        "kind": "number",
+        "target": "55",
+        "parsed": "60",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02628",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0328",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 740
+      },
+      "source": {
+        "raw": "11:30 AM + 50 minutes = 12:20 PM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "740",
+        "parsed": null,
+        "reason": "not a clock time: '11:30 am + 50 minutes = 12:20'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 19
+      },
+      "arm": {
+        "raw": "11:30 AM + 50 minutes = 12:20 PM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "740",
+        "parsed": null,
+        "reason": "not a clock time: '11:30 am + 50 minutes = 12:20'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 19
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02931",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0366",
+      "target": {
+        "kind": "count",
+        "value": "18",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02506",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0313",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 610
+      },
+      "source": {
+        "raw": "9:15 AM + 55 minutes = 9:70 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "610",
+        "parsed": null,
+        "reason": "not a clock time: '9:15 am + 55 minutes = 9:70'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 17
+      },
+      "arm": {
+        "raw": "9:15 AM + 55 minutes = 9:70 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "610",
+        "parsed": null,
+        "reason": "not a clock time: '9:15 am + 55 minutes = 9:70'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 17
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01440",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0180",
+      "target": {
+        "kind": "quantity",
+        "value": "108",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "110 units",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "108",
+        "parsed": "110",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "110 units",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "108",
+        "parsed": "110",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01778",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0222",
+      "target": {
+        "kind": "quantity",
+        "value": "45",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "35 units",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "45",
+        "parsed": "35",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "35 units",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "45",
+        "parsed": "35",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0011",
+      "target": {
+        "kind": "distance_km",
+        "value": "60",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "60 km",
+        "terminated": true,
+        "kind": "distance_km",
+        "target": "60",
+        "parsed": "60",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "60 km",
+        "terminated": true,
+        "kind": "distance_km",
+        "target": "60",
+        "parsed": "60",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0077",
+      "target": {
+        "kind": "percent",
+        "value": "60",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "60%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "60",
+        "parsed": "60",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "60%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "60",
+        "parsed": "60",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0127",
+      "target": {
+        "kind": "count",
+        "value": "15",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "folding chair",
+          "folding chairs",
+          "chair",
+          "chairs"
+        ],
+        "qualifier": "blue"
+      },
+      "source": {
+        "raw": "15",
+        "terminated": true,
+        "kind": "count",
+        "target": "15",
+        "parsed": "15",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "15",
+        "terminated": true,
+        "kind": "count",
+        "target": "15",
+        "parsed": "15",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0151",
+      "target": {
+        "kind": "percent",
+        "value": "25",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "12.5%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "25",
+        "parsed": "25/2",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "12.5%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "25",
+        "parsed": "25/2",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0004",
+      "target": {
+        "kind": "distance_km",
+        "value": "44",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "44 km.",
+        "terminated": true,
+        "kind": "distance_km",
+        "target": "44",
+        "parsed": "44",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "44 km.",
+        "terminated": true,
+        "kind": "distance_km",
+        "target": "44",
+        "parsed": "44",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0293",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 460
+      },
+      "source": {
+        "raw": "7:40 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "460",
+        "parsed": "460",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "7:40 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "460",
+        "parsed": "460",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01186",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0148",
+      "target": {
+        "kind": "quantity",
+        "value": "90",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "95 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "90",
+        "parsed": "95",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "95 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "90",
+        "parsed": "95",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0118",
+      "target": {
+        "kind": "money",
+        "value": "90",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "$90",
+        "terminated": true,
+        "kind": "money",
+        "target": "90",
+        "parsed": "90",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "$90",
+        "terminated": true,
+        "kind": "money",
+        "target": "90",
+        "parsed": "90",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0038",
+      "target": {
+        "kind": "number",
+        "value": "10",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "10",
+        "terminated": true,
+        "kind": "number",
+        "target": "10",
+        "parsed": "10",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "10",
+        "terminated": true,
+        "kind": "number",
+        "target": "10",
+        "parsed": "10",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01779",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0222",
+      "target": {
+        "kind": "count",
+        "value": "18",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "15",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "15",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "15",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "15",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00374",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0046",
+      "target": {
+        "kind": "volume_cups",
+        "value": "12",
+        "bare_allowed": true,
+        "qualifier": "water"
+      },
+      "source": {
+        "raw": "9",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "12",
+        "parsed": "9",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 1
+      },
+      "arm": {
+        "raw": "9",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "12",
+        "parsed": "9",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 1
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s09__02996",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0374",
+      "target": {
+        "kind": "duration",
+        "value": "5400",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "1 hour and 30 minutes.",
+        "terminated": true,
+        "kind": "duration",
+        "target": "5400",
+        "parsed": "5400",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 8
+      },
+      "arm": {
+        "raw": "1 hour and 30 minutes.",
+        "terminated": true,
+        "kind": "duration",
+        "target": "5400",
+        "parsed": "5400",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 8
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00350",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0043",
+      "target": {
+        "kind": "volume_cups",
+        "value": "4",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "16 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "4",
+        "parsed": "16",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "16 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "4",
+        "parsed": "16",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0142",
+      "target": {
+        "kind": "percent",
+        "value": "10",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "The percent increase is 10%.",
+        "terminated": true,
+        "kind": "percent",
+        "target": "10",
+        "parsed": null,
+        "reason": "no leading number in 'the percent increase is 10%'",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 8
+      },
+      "arm": {
+        "raw": "The percent increase is 10%.",
+        "terminated": true,
+        "kind": "percent",
+        "target": "10",
+        "parsed": null,
+        "reason": "no leading number in 'the percent increase is 10%'",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 8
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02233",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0279",
+      "target": {
+        "kind": "quantity",
+        "value": "128",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "160 - 20 = 140 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "128",
+        "parsed": null,
+        "reason": "unit '- 20 = 140 units' does not match 'unit'",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 14
+      },
+      "arm": {
+        "raw": "160 - 20 = 140 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "128",
+        "parsed": null,
+        "reason": "unit '- 20 = 140 units' does not match 'unit'",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 14
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0067",
+      "target": {
+        "kind": "count",
+        "value": "15",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "15",
+        "terminated": true,
+        "kind": "count",
+        "target": "15",
+        "parsed": "15",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "15",
+        "terminated": true,
+        "kind": "count",
+        "target": "15",
+        "parsed": "15",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01293",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0161",
+      "target": {
+        "kind": "volume_cups",
+        "value": "16/5",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "16 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "16/5",
+        "parsed": "16",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "16 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "16/5",
+        "parsed": "16",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01592",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0199",
+      "target": {
+        "kind": "money",
+        "value": "36",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "$72",
+        "terminated": true,
+        "kind": "money",
+        "target": "36",
+        "parsed": "72",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "$72",
+        "terminated": true,
+        "kind": "money",
+        "target": "36",
+        "parsed": "72",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__02027",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0253",
+      "target": {
+        "kind": "count",
+        "value": "18",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02401",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0300",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 595
+      },
+      "source": {
+        "raw": "The coding sprint ends at 9:55 AM.",
+        "terminated": true,
+        "kind": "clock",
+        "target": "595",
+        "parsed": null,
+        "reason": "not a clock time: 'the coding sprint ends at 9:55'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 12
+      },
+      "arm": {
+        "raw": "The coding sprint ends at 9:55 AM.",
+        "terminated": true,
+        "kind": "clock",
+        "target": "595",
+        "parsed": null,
+        "reason": "not a clock time: 'the coding sprint ends at 9:55'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 12
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00547",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0068",
+      "target": {
+        "kind": "count",
+        "value": "18",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01155",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0144",
+      "target": {
+        "kind": "number",
+        "value": "96",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "108",
+        "terminated": true,
+        "kind": "number",
+        "target": "96",
+        "parsed": "108",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "108",
+        "terminated": true,
+        "kind": "number",
+        "target": "96",
+        "parsed": "108",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0351",
+      "target": {
+        "kind": "percent",
+        "value": "30",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "30%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "30",
+        "parsed": "30",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "30%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "30",
+        "parsed": "30",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02851",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0356",
+      "target": {
+        "kind": "count",
+        "value": "18",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0251",
+      "target": {
+        "kind": "money",
+        "value": "36",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "$36",
+        "terminated": true,
+        "kind": "money",
+        "target": "36",
+        "parsed": "36",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "$36",
+        "terminated": true,
+        "kind": "money",
+        "target": "36",
+        "parsed": "36",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02753",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0344",
+      "target": {
+        "kind": "quantity",
+        "value": "48",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "40 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "48",
+        "parsed": "40",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "40 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "48",
+        "parsed": "40",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01723",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0215",
+      "target": {
+        "kind": "money",
+        "value": "60",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "$90",
+        "terminated": true,
+        "kind": "money",
+        "target": "60",
+        "parsed": "90",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "$90",
+        "terminated": true,
+        "kind": "money",
+        "target": "60",
+        "parsed": "90",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0353",
+      "target": {
+        "kind": "quantity",
+        "value": "32",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "24 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "32",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "24 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "32",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02307",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0288",
+      "target": {
+        "kind": "count",
+        "value": "18",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s02__00828",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0103",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 860
+      },
+      "source": {
+        "raw": "1:50 PM to 2:20 PM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "860",
+        "parsed": null,
+        "reason": "not a clock time: '1:50 pm to 2:20'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 12
+      },
+      "arm": {
+        "raw": "1:50 PM to 2:20 PM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "860",
+        "parsed": null,
+        "reason": "not a clock time: '1:50 pm to 2:20'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 12
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0129",
+      "target": {
+        "kind": "money",
+        "value": "5",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "$5",
+        "terminated": true,
+        "kind": "money",
+        "target": "5",
+        "parsed": "5",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "$5",
+        "terminated": true,
+        "kind": "money",
+        "target": "5",
+        "parsed": "5",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0035",
+      "target": {
+        "kind": "percent",
+        "value": "25",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "125 - 100 = 25. 25 / 100 = 2",
+        "terminated": false,
+        "kind": "percent",
+        "target": "25",
+        "parsed": null,
+        "reason": "did not terminate",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 24
+      },
+      "arm": {
+        "raw": "125 - 100 = 25. 25 / 100 = 2",
+        "terminated": false,
+        "kind": "percent",
+        "target": "25",
+        "parsed": null,
+        "reason": "did not terminate",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 24
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01863",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0232",
+      "target": {
+        "kind": "count",
+        "value": "32",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "drill bit",
+          "drill bits",
+          "bit",
+          "bits"
+        ]
+      },
+      "source": {
+        "raw": "16 drill bits.",
+        "terminated": true,
+        "kind": "count",
+        "target": "32",
+        "parsed": "16",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "16 drill bits.",
+        "terminated": true,
+        "kind": "count",
+        "target": "32",
+        "parsed": "16",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01086",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0135",
+      "target": {
+        "kind": "money",
+        "value": "20",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "$80",
+        "terminated": true,
+        "kind": "money",
+        "target": "20",
+        "parsed": "80",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "$80",
+        "terminated": true,
+        "kind": "money",
+        "target": "20",
+        "parsed": "80",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01940",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0242",
+      "target": {
+        "kind": "count",
+        "value": "160",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "page",
+          "pages"
+        ]
+      },
+      "source": {
+        "raw": "240 pages.",
+        "terminated": true,
+        "kind": "count",
+        "target": "160",
+        "parsed": "240",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "240 pages.",
+        "terminated": true,
+        "kind": "count",
+        "target": "160",
+        "parsed": "240",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00744",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0093",
+      "target": {
+        "kind": "count",
+        "value": "9",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "6",
+        "terminated": true,
+        "kind": "count",
+        "target": "9",
+        "parsed": "6",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 1
+      },
+      "arm": {
+        "raw": "6",
+        "terminated": true,
+        "kind": "count",
+        "target": "9",
+        "parsed": "6",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 1
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0285",
+      "target": {
+        "kind": "volume_cups",
+        "value": "18",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "18 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "18",
+        "parsed": "18",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "18 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "18",
+        "parsed": "18",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00933",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0116",
+      "target": {
+        "kind": "count",
+        "value": "24",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "access badge",
+          "access badges",
+          "badge",
+          "badges"
+        ]
+      },
+      "source": {
+        "raw": "16 access badges.",
+        "terminated": true,
+        "kind": "count",
+        "target": "24",
+        "parsed": "16",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "16 access badges.",
+        "terminated": true,
+        "kind": "count",
+        "target": "24",
+        "parsed": "16",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0282",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 1110
+      },
+      "source": {
+        "raw": "6:30 PM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "1110",
+        "parsed": "1110",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "6:30 PM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "1110",
+        "parsed": "1110",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0281",
+      "target": {
+        "kind": "volume_cups",
+        "value": "6",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "6 cups.",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "6",
+        "parsed": "6",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "6 cups.",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "6",
+        "parsed": "6",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0314",
+      "target": {
+        "kind": "money",
+        "value": "9",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "A 15% tip on a $60 bill is $9.",
+        "terminated": true,
+        "kind": "money",
+        "target": "9",
+        "parsed": null,
+        "reason": "no leading number in 'a 15% tip on a $60 bill is $9'",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 16
+      },
+      "arm": {
+        "raw": "A 15% tip on a $60 bill is $9.",
+        "terminated": true,
+        "kind": "money",
+        "target": "9",
+        "parsed": null,
+        "reason": "no leading number in 'a 15% tip on a $60 bill is $9'",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 16
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0332",
+      "target": {
+        "kind": "count",
+        "value": "15",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "15",
+        "terminated": true,
+        "kind": "count",
+        "target": "15",
+        "parsed": "15",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "15",
+        "terminated": true,
+        "kind": "count",
+        "target": "15",
+        "parsed": "15",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0191",
+      "target": {
+        "kind": "money",
+        "value": "8",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "$8",
+        "terminated": true,
+        "kind": "money",
+        "target": "8",
+        "parsed": "8",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "$8",
+        "terminated": true,
+        "kind": "money",
+        "target": "8",
+        "parsed": "8",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0354",
+      "target": {
+        "kind": "percent",
+        "value": "60",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "60%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "60",
+        "parsed": "60",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "60%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "60",
+        "parsed": "60",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01952",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0244",
+      "target": {
+        "kind": "volume_cups",
+        "value": "16",
+        "bare_allowed": true,
+        "qualifier": "water"
+      },
+      "source": {
+        "raw": "12 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "16",
+        "parsed": "12",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "12 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "16",
+        "parsed": "12",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02273",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0284",
+      "target": {
+        "kind": "count",
+        "value": "60",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "page",
+          "pages"
+        ]
+      },
+      "source": {
+        "raw": "120 pages.",
+        "terminated": true,
+        "kind": "count",
+        "target": "60",
+        "parsed": "120",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "120 pages.",
+        "terminated": true,
+        "kind": "count",
+        "target": "60",
+        "parsed": "120",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0066",
+      "target": {
+        "kind": "count",
+        "value": "12",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "12",
+        "terminated": true,
+        "kind": "count",
+        "target": "12",
+        "parsed": "12",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "12",
+        "terminated": true,
+        "kind": "count",
+        "target": "12",
+        "parsed": "12",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0147",
+      "target": {
+        "kind": "distance_km",
+        "value": "16",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "16 km",
+        "terminated": true,
+        "kind": "distance_km",
+        "target": "16",
+        "parsed": "16",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "16 km",
+        "terminated": true,
+        "kind": "distance_km",
+        "target": "16",
+        "parsed": "16",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s01__00538",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0067",
+      "target": {
+        "kind": "duration",
+        "value": "3000",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "100 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "3000",
+        "parsed": "6000",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "100 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "3000",
+        "parsed": "6000",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s06__01985",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0248",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 595
+      },
+      "source": {
+        "raw": "11:55 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "595",
+        "parsed": "715",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      },
+      "arm": {
+        "raw": "11:55 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "595",
+        "parsed": "715",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00261",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0032",
+      "target": {
+        "kind": "count",
+        "value": "45",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "page",
+          "pages"
+        ]
+      },
+      "source": {
+        "raw": "30 pages.",
+        "terminated": true,
+        "kind": "count",
+        "target": "45",
+        "parsed": "30",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "30 pages.",
+        "terminated": true,
+        "kind": "count",
+        "target": "45",
+        "parsed": "30",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02675",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0334",
+      "target": {
+        "kind": "count",
+        "value": "18",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0047",
+      "target": {
+        "kind": "percent",
+        "value": "10",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "10%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "10",
+        "parsed": "10",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "10%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "10",
+        "parsed": "10",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s02__00840",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0105",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 580
+      },
+      "source": {
+        "raw": "End time: 9:40 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "580",
+        "parsed": null,
+        "reason": "not a clock time: 'end time: 9:40'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 9
+      },
+      "arm": {
+        "raw": "End time: 9:40 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "580",
+        "parsed": null,
+        "reason": "not a clock time: 'end time: 9:40'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 9
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0212",
+      "target": {
+        "kind": "count",
+        "value": "15",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "15 timing chips",
+        "terminated": true,
+        "kind": "count",
+        "target": "15",
+        "parsed": "15",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "15 timing chips",
+        "terminated": true,
+        "kind": "count",
+        "target": "15",
+        "parsed": "15",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01610",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0201",
+      "target": {
+        "kind": "duration",
+        "value": "2700",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "1 hour and 45 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "2700",
+        "parsed": "6300",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 7
+      },
+      "arm": {
+        "raw": "1 hour and 45 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "2700",
+        "parsed": "6300",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 7
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s02__00849",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0106",
+      "target": {
+        "kind": "duration",
+        "value": "1500",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "1 hour and 25 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "1500",
+        "parsed": "5100",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 7
+      },
+      "arm": {
+        "raw": "1 hour and 25 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "1500",
+        "parsed": "5100",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 7
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0335",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 595
+      },
+      "source": {
+        "raw": "9:55 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "595",
+        "parsed": "595",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "9:55 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "595",
+        "parsed": "595",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0093",
+      "target": {
+        "kind": "number",
+        "value": "4",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "4",
+        "terminated": true,
+        "kind": "number",
+        "target": "4",
+        "parsed": "4",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 1
+      },
+      "arm": {
+        "raw": "4",
+        "terminated": true,
+        "kind": "number",
+        "target": "4",
+        "parsed": "4",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 1
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01339",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0167",
+      "target": {
+        "kind": "duration",
+        "value": "1500",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "8 hours 25 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "1500",
+        "parsed": "30300",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      },
+      "arm": {
+        "raw": "8 hours 25 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "1500",
+        "parsed": "30300",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0129",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 595
+      },
+      "source": {
+        "raw": "9:55 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "595",
+        "parsed": "595",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "9:55 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "595",
+        "parsed": "595",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s09__02961",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0370",
+      "target": {
+        "kind": "duration",
+        "value": "1800",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "1 hour 30 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "1800",
+        "parsed": "5400",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      },
+      "arm": {
+        "raw": "1 hour 30 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "1800",
+        "parsed": "5400",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01696",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0212",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 580
+      },
+      "source": {
+        "raw": "10:30 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "580",
+        "parsed": "630",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      },
+      "arm": {
+        "raw": "10:30 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "580",
+        "parsed": "630",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s02__00626",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0078",
+      "target": {
+        "kind": "duration",
+        "value": "2700",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "55 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "2700",
+        "parsed": "3300",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "55 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "2700",
+        "parsed": "3300",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01594",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0199",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 1055
+      },
+      "source": {
+        "raw": "4:50 PM + 45 minutes = 5:35 PM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "1055",
+        "parsed": null,
+        "reason": "not a clock time: '4:50 pm + 45 minutes = 5:35'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 17
+      },
+      "arm": {
+        "raw": "4:50 PM + 45 minutes = 5:35 PM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "1055",
+        "parsed": null,
+        "reason": "not a clock time: '4:50 pm + 45 minutes = 5:35'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 17
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02638",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0329",
+      "target": {
+        "kind": "count",
+        "value": "55",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "safety helmet",
+          "safety helmets",
+          "helmet",
+          "helmets"
+        ],
+        "qualifier": "blue"
+      },
+      "source": {
+        "raw": "32 helmets.",
+        "terminated": true,
+        "kind": "count",
+        "target": "55",
+        "parsed": "32",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "32 helmets.",
+        "terminated": true,
+        "kind": "count",
+        "target": "55",
+        "parsed": "32",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02729",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0341",
+      "target": {
+        "kind": "number",
+        "value": "150",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "200 decreases by 25% is 150.",
+        "terminated": true,
+        "kind": "number",
+        "target": "150",
+        "parsed": null,
+        "reason": "unconsumed text 'decreases by 25% is 150'",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 15
+      },
+      "arm": {
+        "raw": "200 decreases by 25% is 150.",
+        "terminated": true,
+        "kind": "number",
+        "target": "150",
+        "parsed": null,
+        "reason": "unconsumed text 'decreases by 25% is 150'",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 15
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0321",
+      "target": {
+        "kind": "number",
+        "value": "120",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "120",
+        "terminated": true,
+        "kind": "number",
+        "target": "120",
+        "parsed": "120",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "120",
+        "terminated": true,
+        "kind": "number",
+        "target": "120",
+        "parsed": "120",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s09__02953",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0369",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 595
+      },
+      "source": {
+        "raw": "10:55 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "595",
+        "parsed": "655",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      },
+      "arm": {
+        "raw": "10:55 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "595",
+        "parsed": "655",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02944",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0368",
+      "target": {
+        "kind": "count",
+        "value": "9",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "15",
+        "terminated": true,
+        "kind": "count",
+        "target": "9",
+        "parsed": "15",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "15",
+        "terminated": true,
+        "kind": "count",
+        "target": "9",
+        "parsed": "15",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0065",
+      "target": {
+        "kind": "number",
+        "value": "20",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "30",
+        "terminated": true,
+        "kind": "number",
+        "target": "20",
+        "parsed": "30",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "30",
+        "terminated": true,
+        "kind": "number",
+        "target": "20",
+        "parsed": "30",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0293",
+      "target": {
+        "kind": "number",
+        "value": "25",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "25",
+        "terminated": true,
+        "kind": "number",
+        "target": "25",
+        "parsed": "25",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "25",
+        "terminated": true,
+        "kind": "number",
+        "target": "25",
+        "parsed": "25",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02611",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0326",
+      "target": {
+        "kind": "quantity",
+        "value": "30",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "10 units remaining.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "30",
+        "parsed": null,
+        "reason": "unit 'units remaining' does not match 'unit'",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "10 units remaining.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "30",
+        "parsed": null,
+        "reason": "unit 'units remaining' does not match 'unit'",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0125",
+      "target": {
+        "kind": "money",
+        "value": "30",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "$30",
+        "terminated": true,
+        "kind": "money",
+        "target": "30",
+        "parsed": "30",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "$30",
+        "terminated": true,
+        "kind": "money",
+        "target": "30",
+        "parsed": "30",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02526",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0315",
+      "target": {
+        "kind": "volume_cups",
+        "value": "22",
+        "bare_allowed": true,
+        "qualifier": "water"
+      },
+      "source": {
+        "raw": "16 cups water.",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "22",
+        "parsed": null,
+        "reason": "'cups water' is not a cup unit",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "16 cups water.",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "22",
+        "parsed": null,
+        "reason": "'cups water' is not a cup unit",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0253",
+      "target": {
+        "kind": "quantity",
+        "value": "60",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "50% of 120 units = 60 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "60",
+        "parsed": null,
+        "reason": "unit '% of 120 units = 60 units' does not match 'unit'",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 15
+      },
+      "arm": {
+        "raw": "50% of 120 units = 60 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "60",
+        "parsed": null,
+        "reason": "unit '% of 120 units = 60 units' does not match 'unit'",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 15
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0040",
+      "target": {
+        "kind": "money",
+        "value": "4",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "$4",
+        "terminated": true,
+        "kind": "money",
+        "target": "4",
+        "parsed": "4",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "$4",
+        "terminated": true,
+        "kind": "money",
+        "target": "4",
+        "parsed": "4",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s06__01801",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0225",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 615
+      },
+      "source": {
+        "raw": "It ends at 10:15 AM.",
+        "terminated": true,
+        "kind": "clock",
+        "target": "615",
+        "parsed": null,
+        "reason": "not a clock time: 'it ends at 10:15'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 11
+      },
+      "arm": {
+        "raw": "It ends at 10:15 AM.",
+        "terminated": true,
+        "kind": "clock",
+        "target": "615",
+        "parsed": null,
+        "reason": "not a clock time: 'it ends at 10:15'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 11
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01475",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0184",
+      "target": {
+        "kind": "number",
+        "value": "240",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "220",
+        "terminated": true,
+        "kind": "number",
+        "target": "240",
+        "parsed": "220",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "220",
+        "terminated": true,
+        "kind": "number",
+        "target": "240",
+        "parsed": "220",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02056",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0257",
+      "target": {
+        "kind": "quantity",
+        "value": "36",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "30 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "36",
+        "parsed": "30",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "30 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "36",
+        "parsed": "30",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01566",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0195",
+      "target": {
+        "kind": "duration",
+        "value": "3000",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "10 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "3000",
+        "parsed": "600",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "10 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "3000",
+        "parsed": "600",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0029",
+      "target": {
+        "kind": "count",
+        "value": "12",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "12 chips",
+        "terminated": true,
+        "kind": "count",
+        "target": "12",
+        "parsed": "12",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "12 chips",
+        "terminated": true,
+        "kind": "count",
+        "target": "12",
+        "parsed": "12",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__01029",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0128",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 985
+      },
+      "source": {
+        "raw": "3:10 PM + 75 minutes = 3:10 PM + 75 minutes =",
+        "terminated": false,
+        "kind": "clock",
+        "target": "985",
+        "parsed": null,
+        "reason": "did not terminate",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 24
+      },
+      "arm": {
+        "raw": "3:10 PM + 75 minutes = 3:10 PM + 75 minutes =",
+        "terminated": false,
+        "kind": "clock",
+        "target": "985",
+        "parsed": null,
+        "reason": "did not terminate",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 24
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00223",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0027",
+      "target": {
+        "kind": "number",
+        "value": "64",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "60",
+        "terminated": true,
+        "kind": "number",
+        "target": "64",
+        "parsed": "60",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "60",
+        "terminated": true,
+        "kind": "number",
+        "target": "64",
+        "parsed": "60",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0287",
+      "target": {
+        "kind": "money",
+        "value": "4",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "10% tip on a $40 bill is $4.",
+        "terminated": true,
+        "kind": "money",
+        "target": "4",
+        "parsed": null,
+        "reason": "'% tip on a $40 bill is $4' is not a declared money unit",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 14
+      },
+      "arm": {
+        "raw": "10% tip on a $40 bill is $4.",
+        "terminated": true,
+        "kind": "money",
+        "target": "4",
+        "parsed": null,
+        "reason": "'% tip on a $40 bill is $4' is not a declared money unit",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 14
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0121",
+      "target": {
+        "kind": "money",
+        "value": "4",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "$4.",
+        "terminated": true,
+        "kind": "money",
+        "target": "4",
+        "parsed": "4",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "$4.",
+        "terminated": true,
+        "kind": "money",
+        "target": "4",
+        "parsed": "4",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01120",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0140",
+      "target": {
+        "kind": "count",
+        "value": "9",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "6",
+        "terminated": true,
+        "kind": "count",
+        "target": "9",
+        "parsed": "6",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 1
+      },
+      "arm": {
+        "raw": "6",
+        "terminated": true,
+        "kind": "count",
+        "target": "9",
+        "parsed": "6",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 1
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0327",
+      "target": {
+        "kind": "number",
+        "value": "24",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "number",
+        "target": "24",
+        "parsed": "24",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "number",
+        "target": "24",
+        "parsed": "24",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01368",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0171",
+      "target": {
+        "kind": "count",
+        "value": "80",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "160 timing chips.",
+        "terminated": true,
+        "kind": "count",
+        "target": "80",
+        "parsed": "160",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 6
+      },
+      "arm": {
+        "raw": "160 timing chips.",
+        "terminated": true,
+        "kind": "count",
+        "target": "80",
+        "parsed": "160",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 6
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0335",
+      "target": {
+        "kind": "quantity",
+        "value": "50",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "50 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "50",
+        "parsed": "50",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "50 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "50",
+        "parsed": "50",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02422",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0302",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 630
+      },
+      "source": {
+        "raw": "It ends at 10:30 AM.",
+        "terminated": true,
+        "kind": "clock",
+        "target": "630",
+        "parsed": null,
+        "reason": "not a clock time: 'it ends at 10:30'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 11
+      },
+      "arm": {
+        "raw": "It ends at 10:30 AM.",
+        "terminated": true,
+        "kind": "clock",
+        "target": "630",
+        "parsed": null,
+        "reason": "not a clock time: 'it ends at 10:30'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 11
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0176",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 600
+      },
+      "source": {
+        "raw": "10:00 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "600",
+        "parsed": "600",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      },
+      "arm": {
+        "raw": "10:00 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "600",
+        "parsed": "600",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s09__02720",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0340",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 580
+      },
+      "source": {
+        "raw": "9:15 AM + 25 minutes = 9:40 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "580",
+        "parsed": null,
+        "reason": "not a clock time: '9:15 am + 25 minutes = 9:40'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 17
+      },
+      "arm": {
+        "raw": "9:15 AM + 25 minutes = 9:40 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "580",
+        "parsed": null,
+        "reason": "not a clock time: '9:15 am + 25 minutes = 9:40'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 17
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00487",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0060",
+      "target": {
+        "kind": "percent",
+        "value": "25",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "12.5%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "25",
+        "parsed": "25/2",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "12.5%",
+        "terminated": true,
+        "kind": "percent",
+        "target": "25",
+        "parsed": "25/2",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01539",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0192",
+      "target": {
+        "kind": "duration",
+        "value": "2700",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "1 hour 45 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "2700",
+        "parsed": "6300",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      },
+      "arm": {
+        "raw": "1 hour 45 minutes",
+        "terminated": true,
+        "kind": "duration",
+        "target": "2700",
+        "parsed": "6300",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0090",
+      "target": {
+        "kind": "volume_cups",
+        "value": "4",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "4 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "4",
+        "parsed": "4",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "4 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "4",
+        "parsed": "4",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02247",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0280",
+      "target": {
+        "kind": "count",
+        "value": "48",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "sensor tag",
+          "sensor tags",
+          "tag",
+          "tags"
+        ],
+        "qualifier": "blue"
+      },
+      "source": {
+        "raw": "28",
+        "terminated": true,
+        "kind": "count",
+        "target": "48",
+        "parsed": "28",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "28",
+        "terminated": true,
+        "kind": "count",
+        "target": "48",
+        "parsed": "28",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02115",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0264",
+      "target": {
+        "kind": "count",
+        "value": "18",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "24",
+        "terminated": true,
+        "kind": "count",
+        "target": "18",
+        "parsed": "24",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02562",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0320",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 610
+      },
+      "source": {
+        "raw": "9:15 AM + 55 minutes = 10:10 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "610",
+        "parsed": null,
+        "reason": "not a clock time: '9:15 am + 55 minutes = 10:10'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 18
+      },
+      "arm": {
+        "raw": "9:15 AM + 55 minutes = 10:10 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "610",
+        "parsed": null,
+        "reason": "not a clock time: '9:15 am + 55 minutes = 10:10'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 18
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01931",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0241",
+      "target": {
+        "kind": "volume_cups",
+        "value": "16",
+        "bare_allowed": true,
+        "qualifier": "water"
+      },
+      "source": {
+        "raw": "12 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "16",
+        "parsed": "12",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "12 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "16",
+        "parsed": "12",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0070",
+      "target": {
+        "kind": "quantity",
+        "value": "10",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "10 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "10",
+        "parsed": "10",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "10 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "10",
+        "parsed": "10",
+        "reason": null,
+        "correct": true,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0121",
+      "target": {
+        "kind": "volume_cups",
+        "value": "2",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "16 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "2",
+        "parsed": "16",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      },
+      "arm": {
+        "raw": "16 cups",
+        "terminated": true,
+        "kind": "volume_cups",
+        "target": "2",
+        "parsed": "16",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 3
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s09__02842",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0355",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 610
+      },
+      "source": {
+        "raw": "9:15 AM + 55 minutes = 9:70 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "610",
+        "parsed": null,
+        "reason": "not a clock time: '9:15 am + 55 minutes = 9:70'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 17
+      },
+      "arm": {
+        "raw": "9:15 AM + 55 minutes = 9:70 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "610",
+        "parsed": null,
+        "reason": "not a clock time: '9:15 am + 55 minutes = 9:70'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 17
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01679",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0209",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 1190
+      },
+      "source": {
+        "raw": "1:00 PM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "1190",
+        "parsed": "780",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 5
+      },
+      "arm": {
+        "raw": "1:00 PM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "1190",
+        "parsed": "780",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 5
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02318",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0289",
+      "target": {
+        "kind": "duration",
+        "value": "2400",
+        "bare_allowed": true,
+        "bare_unit": "minute"
+      },
+      "source": {
+        "raw": "40 minutes.",
+        "terminated": true,
+        "kind": "duration",
+        "target": "2400",
+        "parsed": "2400",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "40 minutes.",
+        "terminated": true,
+        "kind": "duration",
+        "target": "2400",
+        "parsed": "2400",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s00__00242",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0030",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 610
+      },
+      "source": {
+        "raw": "10:10 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "610",
+        "parsed": "610",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      },
+      "arm": {
+        "raw": "10:10 AM",
+        "terminated": true,
+        "kind": "clock",
+        "target": "610",
+        "parsed": "610",
+        "reason": null,
+        "correct": true,
+        "reply_class": "time_duration",
+        "new_tokens": 6
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01429",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0178",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 1160
+      },
+      "source": {
+        "raw": "105 minutes = 1 hour 45 minutes.",
+        "terminated": true,
+        "kind": "clock",
+        "target": "1160",
+        "parsed": null,
+        "reason": "not a clock time: '105 minutes = 1 hour 45 minutes'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 13
+      },
+      "arm": {
+        "raw": "105 minutes = 1 hour 45 minutes.",
+        "terminated": true,
+        "kind": "clock",
+        "target": "1160",
+        "parsed": null,
+        "reason": "not a clock time: '105 minutes = 1 hour 45 minutes'",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 13
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00729",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0091",
+      "target": {
+        "kind": "quantity",
+        "value": "32",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": {
+        "raw": "20 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "32",
+        "parsed": "20",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      },
+      "arm": {
+        "raw": "20 units.",
+        "terminated": true,
+        "kind": "quantity",
+        "target": "32",
+        "parsed": "20",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 4
+      }
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970",
+      "reply_class": "ratio_proportion",
+      "group_id": "rineya_v3_family__ratio_proportion__0371",
+      "target": {
+        "kind": "count",
+        "value": "15",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": {
+        "raw": "15",
+        "terminated": true,
+        "kind": "count",
+        "target": "15",
+        "parsed": "15",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "15",
+        "terminated": true,
+        "kind": "count",
+        "target": "15",
+        "parsed": "15",
+        "reason": null,
+        "correct": true,
+        "reply_class": "ratio_proportion",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01749",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0218",
+      "target": {
+        "kind": "duration",
+        "value": "3000",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "It is 10 minutes.",
+        "terminated": true,
+        "kind": "duration",
+        "target": "3000",
+        "parsed": "600",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 7
+      },
+      "arm": {
+        "raw": "It is 10 minutes.",
+        "terminated": true,
+        "kind": "duration",
+        "target": "3000",
+        "parsed": "600",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 7
+      }
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01599",
+      "reply_class": "percentage_reasoning",
+      "group_id": "rineya_v3_family__percentage_reasoning__0199",
+      "target": {
+        "kind": "number",
+        "value": "125/2",
+        "bare_allowed": true
+      },
+      "source": {
+        "raw": "75",
+        "terminated": true,
+        "kind": "number",
+        "target": "125/2",
+        "parsed": "75",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      },
+      "arm": {
+        "raw": "75",
+        "terminated": true,
+        "kind": "number",
+        "target": "125/2",
+        "parsed": "75",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "percentage_reasoning",
+        "new_tokens": 2
+      }
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s02__00597",
+      "reply_class": "time_duration",
+      "group_id": "rineya_v3_family__time_duration__0074",
+      "target": {
+        "kind": "duration",
+        "value": "3000",
+        "bare_allowed": false
+      },
+      "source": {
+        "raw": "It is 2 hours and 40 minutes.",
+        "terminated": true,
+        "kind": "duration",
+        "target": "3000",
+        "parsed": "9600",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 11
+      },
+      "arm": {
+        "raw": "It is 2 hours and 40 minutes.",
+        "terminated": true,
+        "kind": "duration",
+        "target": "3000",
+        "parsed": "9600",
+        "reason": "value mismatch",
+        "correct": false,
+        "reply_class": "time_duration",
+        "new_tokens": 11
+      }
+    }
+  ],
+  "not_sealed_quality_evidence": true,
+  "open_splits_only": true,
+  "receipt_sha256": "54c92851a28fdc735fedaa5ae6182d62bf3cbef38331160b2d1b89293020cdac"
+}

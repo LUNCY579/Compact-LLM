@@ -1,0 +1,164 @@
+train 8000
+validation 800
+test_iid 800
+test_transfer 320
+test_length 80
+{
+  "version": "1.0.0",
+  "seed": 20260911,
+  "total_unique_rows": 10000,
+  "split_counts": {
+    "train": 8000,
+    "validation": 800,
+    "test_iid": 800,
+    "test_transfer": 320,
+    "test_length": 80
+  },
+  "family_counts": {
+    "grounded_summary": 625,
+    "program_trace": 625,
+    "temporal_order": 625,
+    "source_boundaries": 625,
+    "hanoi": 625,
+    "dialogue_memory": 625,
+    "communication": 625,
+    "detective": 625,
+    "counterfactual": 625,
+    "deduction": 625,
+    "truth_tellers": 625,
+    "signed_ledger": 625,
+    "story_state": 625,
+    "document_reconciliation": 625,
+    "weighted_routes": 625,
+    "relational_join": 625
+  },
+  "length_measure": "whitespace-delimited user words, NOT model tokens",
+  "tokenizer_audit": "pending: no tokenizer packages or network access in build environment",
+  "pilot_train_rows": 512,
+  "pilot_validation_rows": 128,
+  "verification": "all references matched independent text-facing checkers during build",
+  "model_training_run": false,
+  "human_review": false,
+  "external_benchmark_decontamination_run": false,
+  "by_split": {
+    "train": {
+      "user_word_min": 246,
+      "user_word_median": 536,
+      "user_word_max": 4130,
+      "total_user_words": 9201970,
+      "answer_word_median": 1,
+      "answer_word_max": 36,
+      "position_modes": {
+        "early": 2000,
+        "middle": 2000,
+        "late": 2000,
+        "distributed": 2000
+      },
+      "requested_word_tiers": {
+        "512": 2400,
+        "1024": 1600,
+        "2048": 1200,
+        "256": 2000,
+        "4096": 800
+      }
+    },
+    "validation": {
+      "user_word_min": 246,
+      "user_word_median": 535,
+      "user_word_max": 4126,
+      "total_user_words": 906055,
+      "answer_word_median": 1,
+      "answer_word_max": 36,
+      "position_modes": {
+        "distributed": 200,
+        "early": 200,
+        "middle": 200,
+        "late": 200
+      },
+      "requested_word_tiers": {
+        "4096": 80,
+        "256": 208,
+        "512": 240,
+        "1024": 160,
+        "2048": 112
+      }
+    },
+    "test_iid": {
+      "user_word_min": 246,
+      "user_word_median": 534,
+      "user_word_max": 4126,
+      "total_user_words": 905612,
+      "answer_word_median": 1,
+      "answer_word_max": 36,
+      "position_modes": {
+        "distributed": 200,
+        "middle": 200,
+        "late": 200,
+        "early": 200
+      },
+      "requested_word_tiers": {
+        "1024": 160,
+        "4096": 80,
+        "256": 208,
+        "512": 240,
+        "2048": 112
+      }
+    },
+    "test_transfer": {
+      "user_word_min": 246,
+      "user_word_median": 534,
+      "user_word_max": 4123,
+      "total_user_words": 373352,
+      "answer_word_median": 1,
+      "answer_word_max": 34,
+      "position_modes": {
+        "middle": 80,
+        "distributed": 80,
+        "early": 80,
+        "late": 80
+      },
+      "requested_word_tiers": {
+        "256": 80,
+        "1024": 64,
+        "2048": 48,
+        "4096": 32,
+        "512": 96
+      }
+    },
+    "test_length": {
+      "user_word_min": 8182,
+      "user_word_median": 8215,
+      "user_word_max": 16414,
+      "total_user_words": 918192,
+      "answer_word_median": 1,
+      "answer_word_max": 34,
+      "position_modes": {
+        "distributed": 20,
+        "middle": 20,
+        "late": 20,
+        "early": 20
+      },
+      "requested_word_tiers": {
+        "16384": 32,
+        "8192": 48
+      }
+    }
+  },
+  "answer_categories": {
+    "reference_with_slots": 1250,
+    "exact": 8750
+  },
+  "answer_labels": {
+    "IMPOSSIBLE": 125,
+    "UNKNOWN": 1020,
+    "OFF": 353,
+    "BOTH": 155,
+    "LIAR": 250,
+    "HONEST": 266,
+    "SUPPORTED": 158,
+    "INCONSISTENT": 55,
+    "REFUTED": 157,
+    "ON": 272,
+    "UNREACHABLE": 125
+  }
+}

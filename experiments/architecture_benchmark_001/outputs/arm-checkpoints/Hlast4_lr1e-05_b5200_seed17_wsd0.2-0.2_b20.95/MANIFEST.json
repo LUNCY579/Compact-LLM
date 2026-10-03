@@ -1,0 +1,153 @@
+{
+  "arm": "Hlast4",
+  "beta2": 0.95,
+  "bytes": 75522368,
+  "complete_model": false,
+  "completed": true,
+  "dtype": "float32",
+  "evidence_kind": "exploratory_trained_weights_only",
+  "headline": {
+    "correct_total": 49,
+    "failed_classes": [],
+    "gained_total": 2,
+    "lost_total": 0,
+    "per_class": {
+      "percentage_reasoning": {
+        "arm_correct": 22,
+        "gained": 1,
+        "lost": 0,
+        "lost_ids": [],
+        "reference_n": 21,
+        "retained": 21,
+        "rows": 50,
+        "source_correct_terminated": 21,
+        "terminated": 50
+      },
+      "ratio_proportion": {
+        "arm_correct": 16,
+        "gained": 0,
+        "lost": 0,
+        "lost_ids": [],
+        "reference_n": 16,
+        "retained": 16,
+        "rows": 50,
+        "source_correct_terminated": 16,
+        "terminated": 50
+      },
+      "time_duration": {
+        "arm_correct": 11,
+        "gained": 1,
+        "lost": 0,
+        "lost_ids": [],
+        "reference_n": 10,
+        "retained": 10,
+        "rows": 50,
+        "source_correct_terminated": 10,
+        "terminated": 49
+      }
+    },
+    "reference_n": 47,
+    "retained_total": 47,
+    "status": "PASS",
+    "terminated_total": 149
+  },
+  "licenses_release": false,
+  "lr": 1e-05,
+  "note": "Trainable tensors only. Exploratory: this is NOT a released model, opens no gate and carries no receipt. Averaging is only defined against another checkpoint with an identical soup_key.",
+  "parameters": 18880128,
+  "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\arm-checkpoints\\Hlast4_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95",
+  "reconstruct": {
+    "builder": "DualStack.from_source(run._load(source)[0], 'H')",
+    "mode": "H",
+    "read_tail": 4,
+    "source": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\Supa",
+    "then": "load trainable.safetensors and copy_ each tensor by name"
+  },
+  "saved_after_steps": 41,
+  "saved_after_tokens": 5233,
+  "schedule": "wsd:0.2:0.2",
+  "schema": 1,
+  "seed": 17,
+  "sha256": "0ef834bde7d770806860ef8b48181edaab51f88714641ab77ac9bd345f73d0c4",
+  "soup_key": {
+    "mode": "H",
+    "read_tail": 4,
+    "source_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+    "tensor_names_sha256": "bbf9d032e835e46258c4558e3cc48980fd2bc6f1f8449ee23543c762549a9ee3"
+  },
+  "tag": "Hlast4_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95",
+  "tensor_shapes": {
+    "memory.k_norm.weight": [
+      128
+    ],
+    "memory.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "memory.norm.weight": [
+      1024
+    ],
+    "memory.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "reads.24.input_norm.weight": [
+      1024
+    ],
+    "reads.24.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.24.q_norm.weight": [
+      128
+    ],
+    "reads.24.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.25.input_norm.weight": [
+      1024
+    ],
+    "reads.25.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.25.q_norm.weight": [
+      128
+    ],
+    "reads.25.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.26.input_norm.weight": [
+      1024
+    ],
+    "reads.26.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.26.q_norm.weight": [
+      128
+    ],
+    "reads.26.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.27.input_norm.weight": [
+      1024
+    ],
+    "reads.27.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.27.q_norm.weight": [
+      128
+    ],
+    "reads.27.q_proj.weight": [
+      2048,
+      1024
+    ]
+  },
+  "tensors": 20,
+  "token_budget": 5200
+}

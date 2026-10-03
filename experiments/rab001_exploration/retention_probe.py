@@ -89,6 +89,54 @@ OUT = ROOT / 'evidence' / 'retention-design-v1'
 NCAL = 256
 
 
+def _lenient_values(text: str) -> set:
+    """Every number and clock time appearing anywhere in `text`.
+
+    PANEL-001. RECORDED, NEVER SCORED. This exists so the panel's headroom can be split after
+    the fact into a FORMAT channel (the arm computed the right value and wrapped it in a form
+    the scorer cannot parse) and a VALUE channel (the arm computed a different number). It
+    feeds one boolean field and touches no verdict, no total and no gate: `correct` is still
+    decided solely by `retention.score_prediction`.
+
+    Deliberately GENEROUS -- it accepts the target value anywhere, including as an intermediate
+    step -- so the format channel it reports is an UPPER bound and the value channel a LOWER
+    bound. Every claim built on it is then conservative in the safe direction.
+    """
+    import re
+    from fractions import Fraction
+    out, low = set(), text.lower()
+    for m in re.finditer(r'(\d{1,2}):(\d{2})\s*(am|pm)?', low):
+        hour, minute, meridiem = int(m.group(1)), int(m.group(2)), m.group(3)
+        if minute > 59:
+            continue
+        for ap in ([meridiem] if meridiem else ['am', 'pm']):
+            out.add(('clock', (hour % 12 + (12 if ap == 'pm' else 0)) * 60 + minute))
+    for m in re.finditer(r'-?\d[\d,]*\.?\d*', low.replace(',', '')):
+        try:
+            out.add(('num', Fraction(m.group(0))))
+        except (ValueError, ZeroDivisionError):
+            pass
+    for m in re.finditer(r'(\d+)\s*hour[s]?(?:\s*(?:and\s*)?(\d+)\s*minute[s]?)?', low):
+        total = int(m.group(1)) * 60 + int(m.group(2) or 0)
+        out.update({('num', Fraction(total * 60)), ('num', Fraction(total))})
+    for m in re.finditer(r'(\d+)\s*minute[s]?', low):
+        minutes = int(m.group(1))
+        out.update({('num', Fraction(minutes * 60)), ('num', Fraction(minutes))})
+    return out
+
+
+def _target_forms(target: dict) -> set:
+    """The accepted numeric forms of one row's answer. Durations are stored in seconds."""
+    from fractions import Fraction
+    if target['kind'] == 'clock':
+        return {('clock', target['minute_of_day'])}
+    value = Fraction(str(target['value']))
+    accepted = {('num', value)}
+    if target['kind'] == 'duration':
+        accepted.add(('num', value / 60))
+    return accepted
+
+
 def main() -> int:
     if len(sys.argv) < 3:
         raise SystemExit(__doc__)
@@ -137,8 +185,13 @@ def main() -> int:
     tokenizer = run._load_tokenizer(SOURCE)
     eos = run._eos_ids(SOURCE, tokenizer)
     built_from = None
+    hf_candidate_identity = None
     latent_info = None
-    if target == 'source':
+    if target.startswith('hf:'):
+        from experiments.rab001_exploration.hf_checkpoint import load_hf_candidate
+        model, hf_candidate_identity = load_hf_candidate(Path(target[3:]), SOURCE, device)
+        built_from = f'verified HF materialization {target[3:]}'
+    elif target == 'source':
         model = run._load(SOURCE, device)[0]
         built_from = 'frozen source (tautological control)'
     elif target.startswith('ced_last'):
@@ -239,6 +292,7 @@ def main() -> int:
     gc.collect()
 
     result = {'schema': 1, 'evidence_kind': 'exploratory_typed_retention_probe_only',
+              'hf_candidate_identity': hf_candidate_identity,
               'note': 'Produced by the package scorer but OUTSIDE the receipt system: no '
                       'receipt, no gate, no stage opened, no efficacy claim. Exists because '
                       'G1_RETENTION refuses an arm whose G1_QUALITY receipt failed, so the '
@@ -278,6 +332,30 @@ def main() -> int:
             'per_class': counts,
             'source_rate_by_class': {
                 cls: f"{c['source_correct_terminated']}/{c['rows']}" for cls, c in counts.items()},
+            # PANEL-001. Every row, not just the source-correct ones. Before this, only
+            # `lost_ids` (a subset of the source's 47) and totals were stored, so the 103 rows
+            # where all the movement lives were discarded -- which is why the D1/D2 contrast
+            # could only be paired over 47 rows, where p <= 0.05 was unattainable in principle.
+            # ADDITIVE RECORDING ONLY: nothing above is computed from anything below.
+            'per_row': {
+                i: {'correct': arm_scored[i]['correct'],
+                    'source_correct': i in source_correct,
+                    'reason': arm_scored[i].get('reason'),
+                    'parsed': arm_scored[i].get('parsed'),
+                    'terminated': arm_scored[i]['terminated'],
+                    'raw': arm_scored[i]['raw'],
+                    'reply_class': arm_scored[i]['reply_class'],
+                    'target_kind': targets[i]['kind'],
+                    'bare_allowed': targets[i].get('bare_allowed'),
+                    # Report-only: is the target value present anywhere in the arm's text?
+                    'lenient_value_present': bool(
+                        _target_forms(targets[i]) & _lenient_values(arm_scored[i]['raw'])),
+                    # The same question asked of the FROZEN SOURCE's text, so each row can be
+                    # placed in the source's format (24) or value (79) channel without a join.
+                    'source_lenient_value_present': bool(
+                        _target_forms(targets[i]) & _lenient_values(source_raw[i]['raw'])),
+                    }
+                for i in sorted(arm_scored)},
         }
 
     registered = result['by_bare_policy'][policy['bare_policy']]

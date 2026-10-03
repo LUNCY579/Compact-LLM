@@ -1,0 +1,831 @@
+{
+  "all_named_answer_baselines_le_25pct": true,
+  "definitions": {
+    "first_candidate": "First capitalized entity name in model-visible record, with the published entity lexicon used only to exclude sentence-leading ordinary words.",
+    "last_candidate": "Last capitalized entity name in model-visible record.",
+    "limitation": "Finite weak baselines. Low exact-answer scores do not certify shortcut-free answerability or broad difficulty.",
+    "most_recent": "Textually most recent, not an oracle chronological winner.",
+    "question_only_context_only": "Unigram TF-IDF nearest neighbor; fivefold OOF TRAIN, TRAIN-fitted DEV and holdout."
+  },
+  "question_only_answerability": {
+    "balanced_accuracy_by_split": {
+      "dev": 0.4785714285714286,
+      "holdout": 0.5194444444444444,
+      "train": 0.5263392857142857
+    },
+    "features": "unigram TF-IDF + question character/word counts",
+    "fit": "TRAIN only"
+  },
+  "results": {
+    "always_unknown": {
+      "answerable_accuracy": 0.0,
+      "answerable_correct": 0,
+      "answerable_total": 4200,
+      "by_task": {
+        "alias_resolution": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 840
+        },
+        "causal_disambiguation": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 700
+        },
+        "count_with_exclusion": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 560
+        },
+        "latest_verified": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 280
+        },
+        "multi_condition": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 280
+        },
+        "object_state_tracking": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 350
+        },
+        "rule_exception": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 700
+        },
+        "temporal_correlation": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 490
+        }
+      },
+      "overall_accuracy": 0.3
+    },
+    "context_only": {
+      "answerable_accuracy": 0.004047619047619047,
+      "answerable_correct": 17,
+      "answerable_total": 4200,
+      "by_task": {
+        "alias_resolution": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 840
+        },
+        "causal_disambiguation": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 700
+        },
+        "count_with_exclusion": {
+          "accuracy": 0.023214285714285715,
+          "correct": 13,
+          "n": 560
+        },
+        "latest_verified": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 280
+        },
+        "multi_condition": {
+          "accuracy": 0.0035714285714285713,
+          "correct": 1,
+          "n": 280
+        },
+        "object_state_tracking": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 350
+        },
+        "rule_exception": {
+          "accuracy": 0.002857142857142857,
+          "correct": 2,
+          "n": 700
+        },
+        "temporal_correlation": {
+          "accuracy": 0.0020408163265306124,
+          "correct": 1,
+          "n": 490
+        }
+      },
+      "overall_accuracy": 0.08966666666666667
+    },
+    "copy_most_recent_entity": {
+      "answerable_accuracy": 0.1030952380952381,
+      "answerable_correct": 433,
+      "answerable_total": 4200,
+      "by_task": {
+        "alias_resolution": {
+          "accuracy": 0.2,
+          "correct": 168,
+          "n": 840
+        },
+        "causal_disambiguation": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 700
+        },
+        "count_with_exclusion": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 560
+        },
+        "latest_verified": {
+          "accuracy": 0.19642857142857142,
+          "correct": 55,
+          "n": 280
+        },
+        "multi_condition": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 280
+        },
+        "object_state_tracking": {
+          "accuracy": 0.2,
+          "correct": 70,
+          "n": 350
+        },
+        "rule_exception": {
+          "accuracy": 0.2,
+          "correct": 140,
+          "n": 700
+        },
+        "temporal_correlation": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 490
+        }
+      },
+      "overall_accuracy": 0.07216666666666667
+    },
+    "first_candidate": {
+      "answerable_accuracy": 0.0,
+      "answerable_correct": 0,
+      "answerable_total": 4200,
+      "by_task": {
+        "alias_resolution": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 840
+        },
+        "causal_disambiguation": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 700
+        },
+        "count_with_exclusion": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 560
+        },
+        "latest_verified": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 280
+        },
+        "multi_condition": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 280
+        },
+        "object_state_tracking": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 350
+        },
+        "rule_exception": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 700
+        },
+        "temporal_correlation": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 490
+        }
+      },
+      "overall_accuracy": 0.0
+    },
+    "last_candidate": {
+      "answerable_accuracy": 0.1030952380952381,
+      "answerable_correct": 433,
+      "answerable_total": 4200,
+      "by_task": {
+        "alias_resolution": {
+          "accuracy": 0.2,
+          "correct": 168,
+          "n": 840
+        },
+        "causal_disambiguation": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 700
+        },
+        "count_with_exclusion": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 560
+        },
+        "latest_verified": {
+          "accuracy": 0.19642857142857142,
+          "correct": 55,
+          "n": 280
+        },
+        "multi_condition": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 280
+        },
+        "object_state_tracking": {
+          "accuracy": 0.2,
+          "correct": 70,
+          "n": 350
+        },
+        "rule_exception": {
+          "accuracy": 0.2,
+          "correct": 140,
+          "n": 700
+        },
+        "temporal_correlation": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 490
+        }
+      },
+      "overall_accuracy": 0.07216666666666667
+    },
+    "majority": {
+      "answerable_accuracy": 0.0,
+      "answerable_correct": 0,
+      "answerable_total": 4200,
+      "by_task": {
+        "alias_resolution": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 840
+        },
+        "causal_disambiguation": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 700
+        },
+        "count_with_exclusion": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 560
+        },
+        "latest_verified": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 280
+        },
+        "multi_condition": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 280
+        },
+        "object_state_tracking": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 350
+        },
+        "rule_exception": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 700
+        },
+        "temporal_correlation": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 490
+        }
+      },
+      "overall_accuracy": 0.3
+    },
+    "majority_answerable_per_task": {
+      "answerable_accuracy": 0.013333333333333334,
+      "answerable_correct": 56,
+      "answerable_total": 4200,
+      "by_task": {
+        "alias_resolution": {
+          "accuracy": 0.004761904761904762,
+          "correct": 4,
+          "n": 840
+        },
+        "causal_disambiguation": {
+          "accuracy": 0.005714285714285714,
+          "correct": 4,
+          "n": 700
+        },
+        "count_with_exclusion": {
+          "accuracy": 0.055357142857142855,
+          "correct": 31,
+          "n": 560
+        },
+        "latest_verified": {
+          "accuracy": 0.010714285714285714,
+          "correct": 3,
+          "n": 280
+        },
+        "multi_condition": {
+          "accuracy": 0.010714285714285714,
+          "correct": 3,
+          "n": 280
+        },
+        "object_state_tracking": {
+          "accuracy": 0.008571428571428572,
+          "correct": 3,
+          "n": 350
+        },
+        "rule_exception": {
+          "accuracy": 0.007142857142857143,
+          "correct": 5,
+          "n": 700
+        },
+        "temporal_correlation": {
+          "accuracy": 0.006122448979591836,
+          "correct": 3,
+          "n": 490
+        }
+      },
+      "overall_accuracy": 0.009333333333333334
+    },
+    "majority_per_task": {
+      "answerable_accuracy": 0.0,
+      "answerable_correct": 0,
+      "answerable_total": 4200,
+      "by_task": {
+        "alias_resolution": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 840
+        },
+        "causal_disambiguation": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 700
+        },
+        "count_with_exclusion": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 560
+        },
+        "latest_verified": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 280
+        },
+        "multi_condition": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 280
+        },
+        "object_state_tracking": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 350
+        },
+        "rule_exception": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 700
+        },
+        "temporal_correlation": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 490
+        }
+      },
+      "overall_accuracy": 0.3
+    },
+    "question_only": {
+      "answerable_accuracy": 0.004047619047619047,
+      "answerable_correct": 17,
+      "answerable_total": 4200,
+      "by_task": {
+        "alias_resolution": {
+          "accuracy": 0.0011904761904761906,
+          "correct": 1,
+          "n": 840
+        },
+        "causal_disambiguation": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 700
+        },
+        "count_with_exclusion": {
+          "accuracy": 0.025,
+          "correct": 14,
+          "n": 560
+        },
+        "latest_verified": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 280
+        },
+        "multi_condition": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 280
+        },
+        "object_state_tracking": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "n": 350
+        },
+        "rule_exception": {
+          "accuracy": 0.0014285714285714286,
+          "correct": 1,
+          "n": 700
+        },
+        "temporal_correlation": {
+          "accuracy": 0.0020408163265306124,
+          "correct": 1,
+          "n": 490
+        }
+      },
+      "overall_accuracy": 0.09633333333333334
+    }
+  },
+  "selector_plus_status_answerability": {
+    "balanced_accuracy": 0.875,
+    "interpretation": "High performance means most UNKNOWN mechanisms are easy once the right case is located, not that every abstention requires deep reasoning.",
+    "scope": "cheap task-aware relational join plus explicit validity notices; stronger than surface features"
+  },
+  "surface_threshold_search": {
+    "all_cohort_optimistic_diagnostic": {
+      "capitalized_name_mentions": {
+        "balanced_accuracy": 0.5129761904761905,
+        "direction": "ge",
+        "threshold": 54.5,
+        "unique_thresholds": 128
+      },
+      "comma_count": {
+        "balanced_accuracy": 0.5088492063492064,
+        "direction": "ge",
+        "threshold": 14.5,
+        "unique_thresholds": 59
+      },
+      "context_characters": {
+        "balanced_accuracy": 0.5155555555555555,
+        "direction": "ge",
+        "threshold": 2259.0,
+        "unique_thresholds": 1983
+      },
+      "context_words": {
+        "balanced_accuracy": 0.5185714285714286,
+        "direction": "ge",
+        "threshold": 307.5,
+        "unique_thresholds": 325
+      },
+      "digit_density": {
+        "balanced_accuracy": 0.5044047619047619,
+        "direction": "lt",
+        "threshold": 0.0009282896763588812,
+        "unique_thresholds": 643
+      },
+      "forecast_word_count": {
+        "balanced_accuracy": 0.5,
+        "direction": "ge",
+        "threshold": 1.0,
+        "unique_thresholds": 2
+      },
+      "line_count": {
+        "balanced_accuracy": 0.518531746031746,
+        "direction": "ge",
+        "threshold": 38.5,
+        "unique_thresholds": 45
+      },
+      "mean_context_word_length": {
+        "balanced_accuracy": 0.5078968253968253,
+        "direction": "lt",
+        "threshold": 6.299651144416487,
+        "unique_thresholds": 5356
+      },
+      "mean_question_word_length": {
+        "balanced_accuracy": 0.5091269841269841,
+        "direction": "ge",
+        "threshold": 5.738636363636363,
+        "unique_thresholds": 51
+      },
+      "negative_issuance_word_count": {
+        "balanced_accuracy": 0.5058333333333334,
+        "direction": "ge",
+        "threshold": 0.5,
+        "unique_thresholds": 3
+      },
+      "punctuation_density": {
+        "balanced_accuracy": 0.5163492063492063,
+        "direction": "lt",
+        "threshold": 0.0004426738361930442,
+        "unique_thresholds": 2680
+      },
+      "query_colour_word_mentions": {
+        "balanced_accuracy": 0.5,
+        "direction": "ge",
+        "threshold": 1.0,
+        "unique_thresholds": 2
+      },
+      "query_direction_word_mentions": {
+        "balanced_accuracy": 0.5127380952380952,
+        "direction": "ge",
+        "threshold": 3.5,
+        "unique_thresholds": 22
+      },
+      "question_characters": {
+        "balanced_accuracy": 0.503968253968254,
+        "direction": "lt",
+        "threshold": 85.5,
+        "unique_thresholds": 27
+      },
+      "question_context_exact_word_overlap": {
+        "balanced_accuracy": 0.5068650793650793,
+        "direction": "lt",
+        "threshold": 3.5,
+        "unique_thresholds": 9
+      },
+      "question_words": {
+        "balanced_accuracy": 0.5056349206349207,
+        "direction": "lt",
+        "threshold": 14.5,
+        "unique_thresholds": 6
+      },
+      "sentence_count": {
+        "balanced_accuracy": 0.518531746031746,
+        "direction": "ge",
+        "threshold": 41.5,
+        "unique_thresholds": 45
+      },
+      "unique_capitalized_names": {
+        "balanced_accuracy": 0.5082936507936507,
+        "direction": "ge",
+        "threshold": 33.5,
+        "unique_thresholds": 22
+      },
+      "unique_lowercase_words": {
+        "balanced_accuracy": 0.5098015873015873,
+        "direction": "ge",
+        "threshold": 146.5,
+        "unique_thresholds": 71
+      },
+      "unrecorded_word_count": {
+        "balanced_accuracy": 0.5008333333333334,
+        "direction": "lt",
+        "threshold": 2.5,
+        "unique_thresholds": 6
+      },
+      "withdrawal_word_count": {
+        "balanced_accuracy": 0.5091666666666667,
+        "direction": "lt",
+        "threshold": 0.5,
+        "unique_thresholds": 3
+      }
+    },
+    "best_all_cohort_balanced_accuracy": 0.5185714285714286,
+    "feature_count": 21,
+    "features": {
+      "capitalized_name_mentions": {
+        "balanced_accuracy": 0.5143849206349207,
+        "direction": "ge",
+        "test_balanced_accuracy": {
+          "dev": 0.5091269841269841,
+          "holdout": 0.4988095238095238,
+          "train": 0.5143849206349207
+        },
+        "threshold": 54.0,
+        "unique_thresholds": 109
+      },
+      "comma_count": {
+        "balanced_accuracy": 0.5111607142857143,
+        "direction": "ge",
+        "test_balanced_accuracy": {
+          "dev": 0.5095238095238095,
+          "holdout": 0.48968253968253966,
+          "train": 0.5111607142857143
+        },
+        "threshold": 14.5,
+        "unique_thresholds": 26
+      },
+      "context_characters": {
+        "balanced_accuracy": 0.5187996031746032,
+        "direction": "ge",
+        "test_balanced_accuracy": {
+          "dev": 0.498015873015873,
+          "holdout": 0.49682539682539684,
+          "train": 0.5187996031746032
+        },
+        "threshold": 2426.0,
+        "unique_thresholds": 1721
+      },
+      "context_words": {
+        "balanced_accuracy": 0.5223214285714286,
+        "direction": "ge",
+        "test_balanced_accuracy": {
+          "dev": 0.5031746031746032,
+          "holdout": 0.5011904761904762,
+          "train": 0.5223214285714286
+        },
+        "threshold": 310.5,
+        "unique_thresholds": 286
+      },
+      "digit_density": {
+        "balanced_accuracy": 0.5051587301587301,
+        "direction": "lt",
+        "test_balanced_accuracy": {
+          "dev": 0.4992063492063492,
+          "holdout": 0.501984126984127,
+          "train": 0.5051587301587301
+        },
+        "threshold": 0.0009238113769184554,
+        "unique_thresholds": 530
+      },
+      "forecast_word_count": {
+        "balanced_accuracy": 0.5,
+        "direction": "ge",
+        "test_balanced_accuracy": {
+          "dev": 0.5,
+          "holdout": 0.5,
+          "train": 0.5
+        },
+        "threshold": 1.0,
+        "unique_thresholds": 2
+      },
+      "line_count": {
+        "balanced_accuracy": 0.5215277777777778,
+        "direction": "ge",
+        "test_balanced_accuracy": {
+          "dev": 0.5087301587301587,
+          "holdout": 0.5043650793650793,
+          "train": 0.5215277777777778
+        },
+        "threshold": 38.5,
+        "unique_thresholds": 37
+      },
+      "mean_context_word_length": {
+        "balanced_accuracy": 0.509375,
+        "direction": "lt",
+        "test_balanced_accuracy": {
+          "dev": 0.4896825396825397,
+          "holdout": 0.5091269841269841,
+          "train": 0.509375
+        },
+        "threshold": 6.4026582408398465,
+        "unique_thresholds": 4275
+      },
+      "mean_question_word_length": {
+        "balanced_accuracy": 0.5061507936507936,
+        "direction": "ge",
+        "test_balanced_accuracy": {
+          "dev": 0.503968253968254,
+          "holdout": 0.5380952380952381,
+          "train": 0.5061507936507936
+        },
+        "threshold": 5.738636363636363,
+        "unique_thresholds": 43
+      },
+      "negative_issuance_word_count": {
+        "balanced_accuracy": 0.5056547619047619,
+        "direction": "ge",
+        "test_balanced_accuracy": {
+          "dev": 0.5142857142857142,
+          "holdout": 0.4988095238095238,
+          "train": 0.5056547619047619
+        },
+        "threshold": 0.5,
+        "unique_thresholds": 3
+      },
+      "punctuation_density": {
+        "balanced_accuracy": 0.5187996031746032,
+        "direction": "lt",
+        "test_balanced_accuracy": {
+          "dev": 0.5027777777777778,
+          "holdout": 0.5051587301587301,
+          "train": 0.5187996031746032
+        },
+        "threshold": 0.00041220122420025575,
+        "unique_thresholds": 1721
+      },
+      "query_colour_word_mentions": {
+        "balanced_accuracy": 0.5,
+        "direction": "ge",
+        "test_balanced_accuracy": {
+          "dev": 0.5,
+          "holdout": 0.5,
+          "train": 0.5
+        },
+        "threshold": 1.0,
+        "unique_thresholds": 2
+      },
+      "query_direction_word_mentions": {
+        "balanced_accuracy": 0.5128968253968254,
+        "direction": "ge",
+        "test_balanced_accuracy": {
+          "dev": 0.5119047619047619,
+          "holdout": 0.5123015873015873,
+          "train": 0.5128968253968254
+        },
+        "threshold": 3.5,
+        "unique_thresholds": 13
+      },
+      "question_characters": {
+        "balanced_accuracy": 0.5055555555555555,
+        "direction": "lt",
+        "test_balanced_accuracy": {
+          "dev": 0.5087301587301587,
+          "holdout": 0.47896825396825393,
+          "train": 0.5055555555555555
+        },
+        "threshold": 84.5,
+        "unique_thresholds": 25
+      },
+      "question_context_exact_word_overlap": {
+        "balanced_accuracy": 0.5053571428571428,
+        "direction": "lt",
+        "test_balanced_accuracy": {
+          "dev": 0.5103174603174603,
+          "holdout": 0.4900793650793651,
+          "train": 0.5053571428571428
+        },
+        "threshold": 2.5,
+        "unique_thresholds": 7
+      },
+      "question_words": {
+        "balanced_accuracy": 0.5041666666666667,
+        "direction": "lt",
+        "test_balanced_accuracy": {
+          "dev": 0.5126984126984127,
+          "holdout": 0.5103174603174603,
+          "train": 0.5041666666666667
+        },
+        "threshold": 14.5,
+        "unique_thresholds": 6
+      },
+      "sentence_count": {
+        "balanced_accuracy": 0.5215277777777778,
+        "direction": "ge",
+        "test_balanced_accuracy": {
+          "dev": 0.5087301587301587,
+          "holdout": 0.5043650793650793,
+          "train": 0.5215277777777778
+        },
+        "threshold": 41.5,
+        "unique_thresholds": 37
+      },
+      "unique_capitalized_names": {
+        "balanced_accuracy": 0.5055555555555555,
+        "direction": "ge",
+        "test_balanced_accuracy": {
+          "dev": 0.5249999999999999,
+          "holdout": 0.5134920634920634,
+          "train": 0.5055555555555555
+        },
+        "threshold": 33.5,
+        "unique_thresholds": 18
+      },
+      "unique_lowercase_words": {
+        "balanced_accuracy": 0.5117063492063492,
+        "direction": "ge",
+        "test_balanced_accuracy": {
+          "dev": 0.5087301587301587,
+          "holdout": 0.49563492063492065,
+          "train": 0.5117063492063492
+        },
+        "threshold": 146.5,
+        "unique_thresholds": 63
+      },
+      "unrecorded_word_count": {
+        "balanced_accuracy": 0.5012896825396825,
+        "direction": "lt",
+        "test_balanced_accuracy": {
+          "dev": 0.4992063492063492,
+          "holdout": 0.49722222222222223,
+          "train": 0.5012896825396825
+        },
+        "threshold": 0.5,
+        "unique_thresholds": 4
+      },
+      "withdrawal_word_count": {
+        "balanced_accuracy": 0.5101190476190476,
+        "direction": "lt",
+        "test_balanced_accuracy": {
+          "dev": 0.5107142857142857,
+          "holdout": 0.5,
+          "train": 0.5101190476190476
+        },
+        "threshold": 0.5,
+        "unique_thresholds": 3
+      }
+    },
+    "scope": "exhaustive unique thresholds in both directions over the listed finite features only",
+    "train_selected_feature": "context_words",
+    "train_selected_test_balanced_accuracy": {
+      "dev": 0.5031746031746032,
+      "holdout": 0.5011904761904762,
+      "train": 0.5223214285714286
+    }
+  },
+  "threshold_answerable": 0.25
+}

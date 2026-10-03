@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "verified_rows": 10000,
+  "split_counts": {
+    "test_iid": 800,
+    "test_length": 80,
+    "test_transfer": 320,
+    "train": 8000,
+    "validation": 800
+  },
+  "checks": [
+    "JSON/schema and roles",
+    "independent text-side answer recomputation",
+    "reference and prompt hashes",
+    "record/group uniqueness",
+    "exact prompt disjointness",
+    "exact canonical case disjointness",
+    "evidence-record presence",
+    "length constraints for generated responses",
+    "no audit fields in training columns"
+  ],
+  "deduction_label_by_position": {
+    "BOTH": {
+      "middle": 38,
+      "early": 38,
+      "late": 41,
+      "distributed": 38
+    },
+    "REFUTED": {
+      "middle": 43,
+      "distributed": 38,
+      "late": 38,
+      "early": 38
+    },
+    "SUPPORTED": {
+      "early": 43,
+      "late": 38,
+      "middle": 39,
+      "distributed": 38
+    },
+    "UNKNOWN": {
+      "middle": 38,
+      "late": 38,
+      "distributed": 41,
+      "early": 38
+    }
+  },
+  "not_checked": [
+    "real model token lengths",
+    "human prose quality",
+    "model efficacy",
+    "external or private benchmark overlap",
+    "near-duplicate semantic templates"
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "composition": {
+    "capability_group": {
+      "reasoning": 39
+    },
+    "difficulty": {
+      "basic": 13,
+      "compositional": 12,
+      "intermediate": 14
+    },
+    "domain": {
+      "arts": 4,
+      "civic_logistics": 2,
+      "coding": 2,
+      "cooking": 3,
+      "electronics": 1,
+      "field_work": 3,
+      "games": 2,
+      "health_safety": 2,
+      "home": 2,
+      "parenting_logistics": 2,
+      "personal_finance": 2,
+      "productivity": 2,
+      "school": 4,
+      "science": 2,
+      "shopping": 1,
+      "sports": 1,
+      "travel": 2,
+      "work": 2
+    },
+    "length_mode": {
+      "SHORT": 6,
+      "TINY": 33
+    },
+    "multi_turn": {
+      "False": 18,
+      "True": 21
+    },
+    "speech_act": {
+      "return_compact_correct_answer": 39
+    }
+  },
+  "contamination_guards": {
+    "duplicate_ids": 0,
+    "panel_class_rows": 0,
+    "panel_stem_blinded": 0,
+    "panel_stem_verbatim": 0,
+    "rows_not_from_pool": 0
+  },
+  "derived_from": "experiments\\architecture_benchmark_001\\outputs\\splits_large",
+  "dev_and_task_probe_copied_from": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\splits_large",
+  "distinct_reply_classes": 15,
+  "distinct_template_families": 39,
+  "evidence_kind": "exploratory_curated_selection_split",
+  "licenses_efficacy_claim": false,
+  "licenses_registered_training": false,
+  "max_usable_budget": 5275,
+  "note": "A SUBSET of splits_large TRAIN chosen by a named rule at a fixed supervised-token budget. Rows are verbatim from the pool, so family/id disjointness against DEV and the task probe is inherited. DEV and task_probe are copied byte-for-byte, so the only difference from the banked runs is which TRAIN rows exist. Sized to the budget so arm_dose consumes ALL of it at every seed -- the seed then changes only the order, which separates selection from the draw.",
+  "raw_tokens": 5314,
+  "reply_classes": {
+    "causal_reasoning": 2,
+    "comparison_ranking": 4,
+    "conditional_rules": 1,
+    "constraint_selection": 2,
+    "contradiction_detection": 5,
+    "counting_sets": 1,
+    "estimation_sanity": 4,
+    "insufficient_information": 2,
+    "logical_implication": 1,
+    "physical_commonsense": 4,
+    "schedule_ordering": 5,
+    "sequence_pattern": 1,
+    "spatial_relations": 4,
+    "troubleshooting_diagnosis": 2,
+    "unit_conversion": 1
+  },
+  "requested_budget": 5233,
+  "rows": 39,
+  "schema": 1,
+  "selection_inputs": "v3.0 curation metadata rejoined via source_row_id; the panel is never consulted",
+  "selection_rule": "reasoning",
+  "selection_seed": 17,
+  "supervised_target_tokens_available": 5275
+}

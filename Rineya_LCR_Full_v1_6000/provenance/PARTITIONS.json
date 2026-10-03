@@ -1,0 +1,99 @@
+{
+  "assigned_before_generation": true,
+  "external_evaluation_nonoverlap": "NOT_ESTABLISHED; no evaluation corpus is opened",
+  "profiles": {
+    "dev": {
+      "depth": 3,
+      "domain": "conservatory dossier",
+      "materials": [
+        "moss",
+        "pollen",
+        "peat",
+        "loam",
+        "pumice",
+        "bark",
+        "reed",
+        "humus"
+      ],
+      "place": "pavilion",
+      "prefix": [
+        "Mer",
+        "Ner",
+        "Pel",
+        "Quel",
+        "Rav",
+        "Sel",
+        "Tor",
+        "Vel"
+      ],
+      "prose_id": "curator_apposition",
+      "question_place": "enclosure",
+      "question_unit": "sample",
+      "unit": "specimen"
+    },
+    "holdout": {
+      "depth": 4,
+      "domain": "theatre chronicle",
+      "materials": [
+        "velvet",
+        "satin",
+        "plaster",
+        "ribbon",
+        "gauze",
+        "tulle",
+        "brocade",
+        "pigment"
+      ],
+      "place": "gallery",
+      "prefix": [
+        "Wen",
+        "Yal",
+        "Zer",
+        "Bri",
+        "Dru",
+        "Gri",
+        "Kro",
+        "Sha"
+      ],
+      "prose_id": "stage_possession",
+      "question_place": "hall",
+      "question_unit": "stagepiece",
+      "unit": "prop"
+    },
+    "train": {
+      "depth": 2,
+      "domain": "courier archive",
+      "materials": [
+        "linen",
+        "cedar",
+        "copper",
+        "canvas",
+        "paper",
+        "wax",
+        "twine",
+        "felt"
+      ],
+      "place": "station",
+      "prefix": [
+        "Bel",
+        "Cor",
+        "Dal",
+        "Fen",
+        "Gal",
+        "Har",
+        "Kel",
+        "Lom"
+      ],
+      "prose_id": "dispatch_active",
+      "question_place": "depot",
+      "question_unit": "consignment",
+      "unit": "parcel"
+    }
+  },
+  "shared": {
+    "language": "English function words and syntax",
+    "semantics": "all eight task families; typed operator primitives shared"
+  },
+  "structural_scope": "different case-layout depth per split, with concrete graphs in worlds; not a claim of new mathematical operators",
+  "version": "1.1.0-full-candidate"
+}

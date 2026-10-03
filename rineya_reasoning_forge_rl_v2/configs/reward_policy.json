@@ -1,0 +1,23 @@
+{
+  "alternative_optimal_witnesses": "accept",
+  "boolean_for_integer": "reject",
+  "correct_reward": 1.0,
+  "default_efficiency_weight": 0.0,
+  "default_mode": "final_only",
+  "duplicate_json_keys": "reject",
+  "explicit_truncation": "incorrect_in_offline_evaluator",
+  "extra_keys": "reject",
+  "format": "one strict JSON object, or an exact think/final envelope in reasoning mode",
+  "free_form_trace_truth": "not_scored",
+  "incorrect_reward": 0.0,
+  "max_efficiency_weight": 0.05,
+  "missing_predictions": "incorrect",
+  "nan_and_infinity": "reject",
+  "schema_version": "1.0.0",
+  "supported_modes": [
+    "final_only",
+    "reason_then_final"
+  ],
+  "training_truncation_boundary": "Native trainer must mask or zero explicitly truncated generations; the text-only callback has no finish reason.",
+  "version": "2.0.0"
+}

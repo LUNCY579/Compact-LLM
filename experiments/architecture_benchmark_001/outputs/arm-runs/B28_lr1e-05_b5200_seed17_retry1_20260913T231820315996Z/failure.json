@@ -1,0 +1,7 @@
+{
+  "completed": false,
+  "type": "SystemExit",
+  "message": "REFUSING TO START arm dose B28_lr1e-05_b5200_seed17_retry1 CPU checkpoint copy: needs 3.4 GiB free physical memory, host has 2.36 GiB. free 2.36 / 15.2 GiB | committed 25.1 GiB (over physical by 9.9) | load 84%. Starting anyway would page, and a paging second job is slower than running the two sequentially -- measured 10x on this host. Wait for the other job to finish.",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\rab001_exploration\\arm_dose.py\", line 681, in <module>\n    status = main()\n             ^^^^^^\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\rab001_exploration\\arm_dose.py\", line 557, in main\n    hostbudget.require(params_bytes / 2**30 + 1.2, f'arm dose {TAG} CPU checkpoint copy')\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\rab001_exploration\\hostbudget.py\", line 84, in require\n    raise SystemExit(\nSystemExit: REFUSING TO START arm dose B28_lr1e-05_b5200_seed17_retry1 CPU checkpoint copy: needs 3.4 GiB free physical memory, host has 2.36 GiB. free 2.36 / 15.2 GiB | committed 25.1 GiB (over physical by 9.9) | load 84%. Starting anyway would page, and a paging second job is slower than running the two sequentially -- measured 10x on this host. Wait for the other job to finish.\n",
+  "tag": "B28_lr1e-05_b5200_seed17_retry1"
+}

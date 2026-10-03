@@ -1,0 +1,520 @@
+{
+  "arm": "H",
+  "beta2": 0.95,
+  "bytes": 478295336,
+  "complete_model": false,
+  "completed": true,
+  "dtype": "float32",
+  "evidence_kind": "exploratory_trained_weights_only",
+  "headline": {
+    "correct_total": 37,
+    "failed_classes": [
+      "percentage_reasoning",
+      "ratio_proportion",
+      "time_duration"
+    ],
+    "gained_total": 14,
+    "lost_total": 24,
+    "per_class": {
+      "percentage_reasoning": {
+        "arm_correct": 19,
+        "gained": 7,
+        "lost": 9,
+        "lost_ids": [
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381",
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564",
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617",
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751",
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035",
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574",
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622",
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683"
+        ],
+        "reference_n": 21,
+        "retained": 12,
+        "rows": 50,
+        "source_correct_terminated": 21,
+        "terminated": 50
+      },
+      "ratio_proportion": {
+        "arm_correct": 14,
+        "gained": 3,
+        "lost": 5,
+        "lost_ids": [
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720",
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752"
+        ],
+        "reference_n": 16,
+        "retained": 11,
+        "rows": 50,
+        "source_correct_terminated": 16,
+        "terminated": 50
+      },
+      "time_duration": {
+        "arm_correct": 4,
+        "gained": 4,
+        "lost": 10,
+        "lost_ids": [
+          "rineya_v3_sft__time_duration__reas_time_duration_s00__00242",
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02318",
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02996"
+        ],
+        "reference_n": 10,
+        "retained": 0,
+        "rows": 50,
+        "source_correct_terminated": 10,
+        "terminated": 48
+      }
+    },
+    "reference_n": 47,
+    "retained_total": 23,
+    "status": "FAIL",
+    "terminated_total": 148
+  },
+  "licenses_release": false,
+  "lr": 1e-05,
+  "note": "Trainable tensors only. Exploratory: this is NOT a released model, opens no gate and carries no receipt. Averaging is only defined against another checkpoint with an identical soup_key.",
+  "parameters": 119571072,
+  "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\arm-checkpoints\\H_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95",
+  "reconstruct": {
+    "builder": "DualStack.from_source(run._load(source)[0], 'H')",
+    "mode": "H",
+    "read_tail": null,
+    "source": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\Supa",
+    "then": "load trainable.safetensors and copy_ each tensor by name"
+  },
+  "saved_after_steps": 41,
+  "saved_after_tokens": 5233,
+  "schedule": "wsd:0.2:0.2",
+  "schema": 1,
+  "seed": 17,
+  "sha256": "068d7bc73097510a2c59d2422e2ab32fd8d071a07915402bc844bbacbb01f4da",
+  "soup_key": {
+    "mode": "H",
+    "read_tail": null,
+    "source_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+    "tensor_names_sha256": "0b91f0faac50e312e7390b97346ac822c27b86e457d2c6c2abbfdcdc38f4e931"
+  },
+  "tag": "H_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95",
+  "tensor_shapes": {
+    "memory.k_norm.weight": [
+      128
+    ],
+    "memory.k_proj.weight": [
+      1024,
+      1024
+    ],
+    "memory.norm.weight": [
+      1024
+    ],
+    "memory.v_proj.weight": [
+      1024,
+      1024
+    ],
+    "reads.0.input_norm.weight": [
+      1024
+    ],
+    "reads.0.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.0.q_norm.weight": [
+      128
+    ],
+    "reads.0.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.1.input_norm.weight": [
+      1024
+    ],
+    "reads.1.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.1.q_norm.weight": [
+      128
+    ],
+    "reads.1.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.10.input_norm.weight": [
+      1024
+    ],
+    "reads.10.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.10.q_norm.weight": [
+      128
+    ],
+    "reads.10.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.11.input_norm.weight": [
+      1024
+    ],
+    "reads.11.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.11.q_norm.weight": [
+      128
+    ],
+    "reads.11.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.12.input_norm.weight": [
+      1024
+    ],
+    "reads.12.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.12.q_norm.weight": [
+      128
+    ],
+    "reads.12.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.13.input_norm.weight": [
+      1024
+    ],
+    "reads.13.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.13.q_norm.weight": [
+      128
+    ],
+    "reads.13.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.14.input_norm.weight": [
+      1024
+    ],
+    "reads.14.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.14.q_norm.weight": [
+      128
+    ],
+    "reads.14.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.15.input_norm.weight": [
+      1024
+    ],
+    "reads.15.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.15.q_norm.weight": [
+      128
+    ],
+    "reads.15.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.16.input_norm.weight": [
+      1024
+    ],
+    "reads.16.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.16.q_norm.weight": [
+      128
+    ],
+    "reads.16.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.17.input_norm.weight": [
+      1024
+    ],
+    "reads.17.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.17.q_norm.weight": [
+      128
+    ],
+    "reads.17.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.18.input_norm.weight": [
+      1024
+    ],
+    "reads.18.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.18.q_norm.weight": [
+      128
+    ],
+    "reads.18.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.19.input_norm.weight": [
+      1024
+    ],
+    "reads.19.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.19.q_norm.weight": [
+      128
+    ],
+    "reads.19.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.2.input_norm.weight": [
+      1024
+    ],
+    "reads.2.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.2.q_norm.weight": [
+      128
+    ],
+    "reads.2.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.20.input_norm.weight": [
+      1024
+    ],
+    "reads.20.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.20.q_norm.weight": [
+      128
+    ],
+    "reads.20.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.21.input_norm.weight": [
+      1024
+    ],
+    "reads.21.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.21.q_norm.weight": [
+      128
+    ],
+    "reads.21.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.22.input_norm.weight": [
+      1024
+    ],
+    "reads.22.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.22.q_norm.weight": [
+      128
+    ],
+    "reads.22.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.23.input_norm.weight": [
+      1024
+    ],
+    "reads.23.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.23.q_norm.weight": [
+      128
+    ],
+    "reads.23.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.24.input_norm.weight": [
+      1024
+    ],
+    "reads.24.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.24.q_norm.weight": [
+      128
+    ],
+    "reads.24.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.25.input_norm.weight": [
+      1024
+    ],
+    "reads.25.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.25.q_norm.weight": [
+      128
+    ],
+    "reads.25.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.26.input_norm.weight": [
+      1024
+    ],
+    "reads.26.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.26.q_norm.weight": [
+      128
+    ],
+    "reads.26.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.27.input_norm.weight": [
+      1024
+    ],
+    "reads.27.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.27.q_norm.weight": [
+      128
+    ],
+    "reads.27.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.3.input_norm.weight": [
+      1024
+    ],
+    "reads.3.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.3.q_norm.weight": [
+      128
+    ],
+    "reads.3.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.4.input_norm.weight": [
+      1024
+    ],
+    "reads.4.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.4.q_norm.weight": [
+      128
+    ],
+    "reads.4.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.5.input_norm.weight": [
+      1024
+    ],
+    "reads.5.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.5.q_norm.weight": [
+      128
+    ],
+    "reads.5.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.6.input_norm.weight": [
+      1024
+    ],
+    "reads.6.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.6.q_norm.weight": [
+      128
+    ],
+    "reads.6.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.7.input_norm.weight": [
+      1024
+    ],
+    "reads.7.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.7.q_norm.weight": [
+      128
+    ],
+    "reads.7.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.8.input_norm.weight": [
+      1024
+    ],
+    "reads.8.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.8.q_norm.weight": [
+      128
+    ],
+    "reads.8.q_proj.weight": [
+      2048,
+      1024
+    ],
+    "reads.9.input_norm.weight": [
+      1024
+    ],
+    "reads.9.o_proj.weight": [
+      1024,
+      2048
+    ],
+    "reads.9.q_norm.weight": [
+      128
+    ],
+    "reads.9.q_proj.weight": [
+      2048,
+      1024
+    ]
+  },
+  "tensors": 116,
+  "token_budget": 5200
+}

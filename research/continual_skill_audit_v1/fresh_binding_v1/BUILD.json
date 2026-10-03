@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "role": "VISIBLE_PROSPECTIVE_DEVELOPMENT",
+  "rows": 576,
+  "worlds": 144,
+  "counts": {
+    "anchor/binding/direct": 96,
+    "anchor/binding/two_hop": 96,
+    "anchor/time/time": 64,
+    "anchor/arithmetic/arithmetic": 32,
+    "dev/binding/direct": 96,
+    "dev/binding/two_hop": 96,
+    "dev/time/time": 64,
+    "dev/arithmetic/arithmetic": 32
+  },
+  "excluded_semantic_keys": 336,
+  "semantic_overlap": 0,
+  "model_calls": 0,
+  "source_qualified": false,
+  "confirmation": false,
+  "builder_sha256": "fb7dd9a58e7a8283261cffe9f8137454a630f404c6dbfbd0c2601da84ce5169c",
+  "input_sha256": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-slft\\research\\composable_skills_v1\\runs\\pilot004\\anchor.json": "0e3de29872588e35a9c9aa0f1485ab6db4b8900ab89f9513aa49467c2a1a5c07",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-slft\\research\\composable_skills_v1\\runs\\pilot004\\dev.json": "b79798bd368f23f24225aca778d4c25aa95e7931097dadd40b73b48b6ee4c85c"
+  },
+  "output_sha256": {
+    "anchor.json": "9f0e040733f8f1e14a0a6920ecf0a32e9bbed2fcf6cb875bb51c54c604da465a",
+    "dev.json": "0cc2187b86b5df2d43443fc42c3d54085457e73750a7d7a686f307dbbd8ebbf0"
+  },
+  "limitations": [
+    "Different templates and entity pools are still one synthetic generator.",
+    "Missing bindings are omissions, not a complete taxonomy of uncertainty.",
+    "Clock wraparound and two-hop distractors need source qualification.",
+    "Disjointness covers declared banks; it is not an exhaustive historical-contamination audit.",
+    "Source-margin selection and token-matched anchor sampling are not yet implemented."
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "release_status": "machine_validated_candidate",
+  "training_authorized_by_this_bundle": false,
+  "model_training_executed": false,
+  "token_lengths_measured_with_real_model_tokenizer": false,
+  "external_private_benchmark_overlap_audited": false,
+  "independent_human_review_completed": false,
+  "train": "training_candidate_after_local_checks",
+  "validation": "development_only",
+  "test_iid": "evaluation_only",
+  "test_transfer": "evaluation_only",
+  "test_length": "evaluation_only_after_context_and_memory_checks",
+  "probes": "evaluation_only_derivatives_of_test_iid",
+  "pilot": "subsets_of_train_and_validation_not_additional_independent_data",
+  "loss_mask": "final_assistant_answer_and_turn_terminator_only",
+  "overlength_policy": "exclude_and_report_never_blindly_truncate",
+  "do_not_train_on": ["metadata", "reports", "PREVIEW.md", "documentation", "test_splits", "probes"]
+}

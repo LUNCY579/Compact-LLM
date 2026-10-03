@@ -1,0 +1,33 @@
+{
+  "budget_tokens": 120000,
+  "contamination_guards": {
+    "forge_eval_id_in_train": 0,
+    "forge_eval_prompt_tail_verbatim": 0,
+    "panel_stem_blinded": 0,
+    "panel_stem_verbatim": 0
+  },
+  "dev_and_task_probe_copied_from": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\splits_large",
+  "evidence_kind": "exploratory_mixed_length_train_split",
+  "forge_rows_skipped_eval_id": 0,
+  "forge_rows_skipped_too_long": 195,
+  "forge_token_share_actual": 0.7515078809690426,
+  "forge_token_share_requested": 0.75,
+  "licenses_efficacy_claim": false,
+  "licenses_registered_training": false,
+  "max_forge_tokens": 1024,
+  "max_usable_budget": 119689,
+  "note": "TRAIN mixes splits_large with forge TRAIN rows to test whether exposure to long sequences preserves off-distribution termination. DEV and task_probe are copied byte-for-byte from splits_large so the only change is TRAIN length composition. Forge rows are labelled reply_class=forge_reasoning and are NOT arithmetic, so the panel remains a transfer benchmark.",
+  "rows": {
+    "forge": 121,
+    "large": 226,
+    "total": 347
+  },
+  "schema": 1,
+  "seed": 17,
+  "supervised_target_tokens_available": 119689,
+  "tokens": {
+    "forge": 90208,
+    "large": 29828,
+    "total": 120036
+  }
+}

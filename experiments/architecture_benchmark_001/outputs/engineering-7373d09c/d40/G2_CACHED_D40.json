@@ -1,0 +1,137 @@
+{
+  "schema": 2,
+  "stage": "G2_CACHED_D40",
+  "status": "PASS",
+  "evidence_kind": "official_model_qualification",
+  "context": {
+    "context_schema": 2,
+    "experiment_id": "RAB-001",
+    "implementation_sha256": "7373d09c120b5f8943ae010a839a02dfc2924d4a472e6a8b98f757bac4ffa649",
+    "source_audit_digest": "97cd76af0fb2d6064c5cb954906ac493d21e40429cebe55f0bed0000b23d9ef8",
+    "weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "data_sha256": "c32868c895d903fb5ac579fb3e7ccb950d369509996534d004af57996551da38",
+    "runtime": {
+      "python": "3.11.15",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "torch": "2.10.0",
+      "transformers": "4.51.3",
+      "safetensors": "0.7.0",
+      "numpy": "2.3.5",
+      "tokenizers": "0.21.4",
+      "numerics": {
+        "cpu_threads": 16,
+        "interop_threads": 16,
+        "float32_matmul_precision": "highest",
+        "deterministic_algorithms": false,
+        "cuda_build": null,
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": true,
+        "cudnn_deterministic": false,
+        "cudnn_benchmark": false
+      }
+    },
+    "device": "cpu",
+    "device_identity": {
+      "device": "cpu"
+    },
+    "precision": "float32",
+    "backend": "eager"
+  },
+  "checks": {
+    "25_steps_completed": true,
+    "all_intended_parameters_reached": true,
+    "teacher_frozen": true,
+    "save_reload_exact": true,
+    "source_unchanged": true,
+    "training_data_unchanged": true,
+    "teacher_cache_unchanged": true,
+    "matched_control_verified": true,
+    "optimizer_steps_changed_state": true
+  },
+  "metrics": {
+    "arm": "D40",
+    "engineering_only": true,
+    "recipe_sha256": "ddd053dee001b181d61cfa9bcd789f960b89e8b5aee6a3113c40c855b91ee7f4",
+    "recipe": {
+      "enabled": true,
+      "arms": [
+        "B28",
+        "D40",
+        "C28",
+        "C40"
+      ],
+      "steps": 25,
+      "learning_rate": 1e-05,
+      "optimizer": "SGD_no_momentum",
+      "alpha": 0.5,
+      "temperature": 1.0,
+      "head_chunk_tokens": 8,
+      "gradient_checkpointing": true,
+      "seed": 17,
+      "requires_strict_current_arm_qualification": true,
+      "C28_requires_matched_B28_engineering_control": true,
+      "C40_requires_matched_D40_engineering_control": true,
+      "licenses_recovery": false
+    },
+    "losses": [
+      3.4595305919647217,
+      3.4254143238067627,
+      4.103493690490723,
+      3.324354887008667,
+      3.3594107627868652,
+      3.9259369373321533,
+      3.1777184009552,
+      3.379945993423462,
+      3.9231338500976562,
+      3.6139988899230957,
+      3.4305198192596436,
+      3.6506829261779785,
+      3.331298828125,
+      3.2063546180725098,
+      3.104013442993164,
+      3.5665197372436523,
+      3.141793727874756,
+      3.6711437702178955,
+      2.89408016204834,
+      3.264439821243286,
+      3.7213757038116455,
+      3.201601266860962,
+      3.846081018447876,
+      3.728647470474243,
+      3.2910728454589844
+    ],
+    "student_training_tokens": 3159,
+    "supervised_shifted_targets": 3134,
+    "teacher_backbone_tokens_in_student_loop": 0,
+    "teacher_preparation_forward_tokens_shared": 3159,
+    "head_projection_work_including_recomputation": {
+      "student_head_positions": 6268,
+      "teacher_head_positions": 6268
+    },
+    "teacher_head_device": "cpu",
+    "teacher_cache_sha256": "416ea7ebaa71c49dbaa7463091eb2df86ad5377c69c8807a9f4160f33ea54a6f",
+    "initial_state_sha256": "f4a9a127513f418cae7ce026a9d3d6f88f2a34af30456ffe592b41893bac18ca",
+    "final_state_sha256": "7c2dfdf268ca4d08eb4461200b0b6828ea99a39119ff043fca577f1b0db732e8",
+    "wall_seconds": 311.22192860000087,
+    "peak_cuda_allocated_bytes": null,
+    "teacher_cache_cost_policy": "Shared preparation recorded once; allocate or amortize it explicitly in later cost comparisons.",
+    "licenses_recovery": false,
+    "not_an_8gb_fit_guarantee": true
+  },
+  "artifacts": {
+    "config.json": "895fff1a2bc09047ad000f3932033bf472d94b7befb8f719acd8167bfa9f40a2",
+    "model.safetensors": "2604541e6963ef3766816f850bb22ab579ae4d579a9485f79a68cc601ff9942d",
+    "teacher_cache_manifest.json": "c92c95dd5c3385c8ff373494d398344d4c5caf6cd71f7d8bc1432ec46780b62b"
+  },
+  "parent_receipts": [
+    {
+      "stage": "G1_WIDTH",
+      "receipt_sha256": "7c42d3db78255bc82603c7c3fa57135a625eb551f0976b4f475fcbe30f136bd3",
+      "path": "../../ladder-7373d09c-v1/G1_WIDTH/attempt-0001/G1_WIDTH.json"
+    }
+  ],
+  "parent_receipt_sha256": "7c42d3db78255bc82603c7c3fa57135a625eb551f0976b4f475fcbe30f136bd3",
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false,
+  "receipt_sha256": "f0b2cc4879f61f63960c63346eac3bf97127074b3f940652d93b861b33446f12"
+}

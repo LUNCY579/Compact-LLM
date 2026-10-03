@@ -440,6 +440,42 @@ def test_every_phase_maps_to_a_measured_resource_profile():
     assert PRELOAD_MINIMA["train"] == (6.0, 6.0)
 
 
+@pytest.mark.parametrize("experiment", controller.PROCESS_PLANS)
+def test_process_training_qualification_failure_prevents_optimizer(tmp_path, monkeypatch, experiment):
+    """A registered process lane cannot reach microfit with an unqualified binding."""
+    from contextlib import nullcontext
+    from types import SimpleNamespace
+    from experiments.reasoning_posttraining_v1 import engine, native_runtime
+    from experiments.model_quality_gpu_v1 import native
+
+    monkeypatch.setattr(controller, "claim_worker", lambda *args: None)
+    monkeypatch.setattr(controller, "lease", lambda *args: nullcontext())
+    monkeypatch.setattr(controller, "inputs", lambda *args, **kwargs:
+                        ({}, {"experiment": experiment}, tmp_path, [], []))
+    monkeypatch.setattr(controller, "design_for", lambda *args: SimpleNamespace(order_seed=17))
+    monkeypatch.setattr(controller, "binding_for", lambda *args: {"experiment": experiment})
+    monkeypatch.setattr(controller, "guard", lambda **kwargs: {})
+    monkeypatch.setattr(controller, "eos_set", lambda *args: [2])
+    monkeypatch.setattr(controller.shutil, "disk_usage", lambda *args: SimpleNamespace(free=2**40))
+    monkeypatch.setattr(controller, "Journal", lambda *args:
+                        SimpleNamespace(breached=False, read=lambda: {}, reserve=lambda *args: None))
+    monkeypatch.setattr(native, "configure_runtime", lambda *args: None)
+    monkeypatch.setattr(native, "load_tokenizer", lambda *args: object())
+    monkeypatch.setattr(native, "load_model", lambda *args: object())
+    reached = []
+    def qualification(*args):
+        reached.append("qualification")
+        raise RuntimeError("fixture native qualification rejected")
+    monkeypatch.setattr(native_runtime, "qualify", qualification)
+    monkeypatch.setattr(engine, "microfit", lambda *args, **kwargs:
+                        pytest.fail("optimizer was reached without native qualification"))
+    args = SimpleNamespace(out=str(tmp_path), resource_lock="fixture.lock", command="train",
+                           journal="fixture.journal", source="fixture.source", experiment=experiment)
+    assert controller.worker(args) == 2
+    assert reached == ["qualification"]
+    assert read_json(tmp_path / "failure.json")["message"] == "fixture native qualification rejected"
+
+
 # ---------------------------------------------------------------- bank kind detection
 
 def test_bank_kind_is_three_way_and_preservation_is_not_mistaken_for_forge_v2():

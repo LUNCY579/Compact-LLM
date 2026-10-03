@@ -1,0 +1,42 @@
+{
+  "dataset_release": "Rineya Reasoning Forge RL v2.0.0",
+  "excluded_rows": [],
+  "gates": {
+    "corpus_machine_validation": true,
+    "human_review": false,
+    "model_quality_claims": false,
+    "native_reset_parity": false,
+    "native_tokenization": false,
+    "resource_fit": false,
+    "training_authorized": false
+  },
+  "native_model": {
+    "assistant_terminator_id": null,
+    "checkpoint_id": null,
+    "context_limit_tokens": null,
+    "loss_mask_receipt": null,
+    "revision": null,
+    "template_sha256": null,
+    "tokenizer_asset_sha256": null,
+    "weight_sha256": null
+  },
+  "note": "Template only. Machine validation is a release claim; every other gate requires an actual separate receipt.",
+  "release_manifest_sha256": null,
+  "review_date": null,
+  "review_row_fields": [
+    "id",
+    "split",
+    "native_token_count",
+    "reference_correct",
+    "rules_clear",
+    "trace_checkpoints_correct",
+    "final_complete",
+    "decision",
+    "notes"
+  ],
+  "reviewed_rows": [],
+  "reviewer": null,
+  "schema_version": "1.0.0",
+  "status": "NOT_REVIEWED",
+  "unresolved_issues": []
+}

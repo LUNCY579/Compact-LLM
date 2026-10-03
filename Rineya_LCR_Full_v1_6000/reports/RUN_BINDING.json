@@ -1,0 +1,133 @@
+{
+  "basis": "Final candidate content after query-balance-v1 whole-corpus regeneration",
+  "code": {
+    "src/audit.py": {
+      "bytes": 26777,
+      "sha256": "c578e3c7ffa23f6c14a8894e215a306cc348fb7bb6db6d8041325af297953efc"
+    },
+    "src/audit_shortcuts.py": {
+      "bytes": 1741,
+      "sha256": "c806b0ca36911ffbf9caa46fbde38368b6a3673eeb03d0a995d011ac7fc3d502"
+    },
+    "src/check.py": {
+      "bytes": 15583,
+      "sha256": "6912fd57bfc06dd13f0d29a6052be578b3988ef391f27918f86d52ba2d9c95e7"
+    },
+    "src/check_allocation.py": {
+      "bytes": 4678,
+      "sha256": "fd7969f9bb8d6a815cc9d0cffd01aaa01cffbad8d31637003b5a34e7be47f2e9"
+    },
+    "src/export.py": {
+      "bytes": 2286,
+      "sha256": "fbe84dcc23b5d2d980ff36c114bb3edcdcdb4ddb745290f16325081006d10396"
+    },
+    "src/generate.py": {
+      "bytes": 33761,
+      "sha256": "bba8e4431a741459ec4ff1036c8e31c1c6af788c54e99edcc928510184a9bc0a"
+    },
+    "src/native_census.py": {
+      "bytes": 5655,
+      "sha256": "0091a350e7fcc653c9fc1938662e0facf982e06b098cd518592ee70815458b35"
+    },
+    "src/tokenizer_preflight.py": {
+      "bytes": 8206,
+      "sha256": "27ab9a50b4ebb5124cff6353d8edac4d1d43405a5204929b240fe9c0d7405299"
+    },
+    "src/verify_package.py": {
+      "bytes": 4075,
+      "sha256": "b7ad5e49c4349c8a2bfbcfd52ab8d8d7dd9a47a0e582eb3432ac8966f8ca532a"
+    }
+  },
+  "corpus_accepted": false,
+  "data": {
+    "data/all.jsonl": {
+      "bytes": 38725445,
+      "sha256": "4e30533c0cb9e695b3ad36530a1552dec76f914ad57e88ff63334755e159b3cf"
+    },
+    "data/dev.jsonl": {
+      "bytes": 3851460,
+      "sha256": "450b736c8d56fb016750ffcb605d9581f5a9fe13064d6b5eb26471fbc1fa0bfa"
+    },
+    "data/holdout.jsonl": {
+      "bytes": 3866623,
+      "sha256": "89cfabe3bf3a1c0f7c83fec5f3d0929ba89b21b423d22d2bd7cd46a4cfd09f8f"
+    },
+    "data/train.jsonl": {
+      "bytes": 31007362,
+      "sha256": "f707f87d88ad879d90fe07e656d4e5cf9bf823b9790aeb6e7a8389ca9cba2844"
+    }
+  },
+  "execution_scope": "Semantic and finite-adversary audits executed as separate stages; shortcut stage reproduced through packaged helper. No native-token success claimed.",
+  "frozen_at_utc": "2026-09-17T03:35:32.307496+00:00",
+  "model_calls": 0,
+  "native_tokenizer_calls": 0,
+  "receipts": {
+    "reports/acceptance.json": {
+      "bytes": 5466,
+      "sha256": "91358488337e9685dc71c6edb4443ba0b0518ceaa48aaffecdd5059107312343"
+    },
+    "reports/balance.json": {
+      "bytes": 169931,
+      "sha256": "09855bedb12ac02d01f22c9b36ae342f47a874e5396bc39f751fb179533efb89"
+    },
+    "reports/delivery_checks.json": {
+      "bytes": 225,
+      "sha256": "80ebd6e45e63e0e1571e22fbaea06d7c35e4c6bfdf50fa7c09b51fd7d0cd2b9a"
+    },
+    "reports/distributed_deletion_audit.json": {
+      "bytes": 151349,
+      "sha256": "65ef6e7c25f40c6a63469528cd087d84595ea1a675ec8e2f5faf429c942e37b3"
+    },
+    "reports/environment.json": {
+      "bytes": 392,
+      "sha256": "a51c9a766cabf8bbcc564b36974202ddae3e97148610cdec1c6bbd75e7c74411"
+    },
+    "reports/evidence_and_difficulty.json": {
+      "bytes": 914,
+      "sha256": "82e67134a852fbf443c3dd5f550fe763825df6f94f3ed23ef629e490bf1702d7"
+    },
+    "reports/generation.json": {
+      "bytes": 316,
+      "sha256": "827f5709aa0d961eb74fdfd821d2f9baf0666b86c7ba81a050a65da81bc7069e"
+    },
+    "reports/leakage.json": {
+      "bytes": 2572,
+      "sha256": "9fca66316493fdc60099a38329c10be064f0f0e8f13723bc64c634e145690476"
+    },
+    "reports/shortcut_floors.json": {
+      "bytes": 25366,
+      "sha256": "a90c8ae597122263cf2e1615e8615edeb6d049be782c13260d4ad35b5cabdec4"
+    },
+    "reports/source_syntax.json": {
+      "bytes": 333,
+      "sha256": "bf61a2d3627272be31ba412756374e653b0706a68df2df96bdbf3320a0097d91"
+    },
+    "reports/token_profile.json": {
+      "bytes": 2211,
+      "sha256": "f682de375f9834304052af741e7c86f18494094c654bb90951f82e404e3af16c"
+    },
+    "reports/verification.json": {
+      "bytes": 460,
+      "sha256": "eea0485c7a494a7ee5b6d8d46c6dfa670a4d87fd45b35c91a4e9a125a8fe65f8"
+    }
+  },
+  "schema": 1,
+  "source_spec": {
+    "bytes": 11688,
+    "sha256": "041f50d4a35ecf50dc255ade4a725b5f18e23db314dfb0cbf1440c79ceecbf21"
+  },
+  "worlds": {
+    "worlds/dev.jsonl": {
+      "bytes": 3725729,
+      "sha256": "d550c174166e40b8eb35c4fcc413f8f7e71d3610d2c5c6049e8141ddfdc45797"
+    },
+    "worlds/holdout.jsonl": {
+      "bytes": 3925482,
+      "sha256": "77ae538795938e73b19a05fb61e5654f88724f7fe2443ec52be3c66684fe36d1"
+    },
+    "worlds/train.jsonl": {
+      "bytes": 29563375,
+      "sha256": "1478be0ffe4628736485aa97122d4b04f0fc17fa48d6e8bd3554f615942cea43"
+    }
+  }
+}

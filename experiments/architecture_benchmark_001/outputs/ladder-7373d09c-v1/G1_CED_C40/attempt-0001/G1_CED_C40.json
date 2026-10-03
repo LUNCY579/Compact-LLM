@@ -1,0 +1,88 @@
+{
+  "schema": 2,
+  "stage": "G1_CED_C40",
+  "status": "FAIL",
+  "evidence_kind": "official_model_qualification",
+  "context": {
+    "context_schema": 2,
+    "experiment_id": "RAB-001",
+    "implementation_sha256": "7373d09c120b5f8943ae010a839a02dfc2924d4a472e6a8b98f757bac4ffa649",
+    "source_audit_digest": "97cd76af0fb2d6064c5cb954906ac493d21e40429cebe55f0bed0000b23d9ef8",
+    "weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "data_sha256": "69bdc5ac3350814ad8592e79001815dde58484f16ff6030519a7d09f57e7da6b",
+    "runtime": {
+      "python": "3.11.15",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "torch": "2.10.0",
+      "transformers": "4.51.3",
+      "safetensors": "0.7.0",
+      "numpy": "2.3.5",
+      "tokenizers": "0.21.4",
+      "numerics": {
+        "cpu_threads": 16,
+        "interop_threads": 16,
+        "float32_matmul_precision": "highest",
+        "deterministic_algorithms": false,
+        "cuda_build": null,
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": true,
+        "cudnn_deterministic": false,
+        "cudnn_benchmark": false
+      }
+    },
+    "device": "cpu",
+    "device_identity": {
+      "device": "cpu"
+    },
+    "precision": "float32",
+    "backend": "eager"
+  },
+  "checks": {
+    "registered_dimensions": true,
+    "exact_parameter_count": true,
+    "registered_donor_layer": true,
+    "shared_encoder_final_memory": true,
+    "decoder_local_attention_absent": true,
+    "finite_converted_logits": true,
+    "save_reload_exact": true,
+    "strict_tail_only_parity": false,
+    "strict_chunked_cache_parity": false,
+    "causal_prefix_parity": false,
+    "decode_choices_exact": true,
+    "donor_state_unmodified": true,
+    "source_unchanged": true,
+    "pilot_unchanged": true,
+    "calibration_unchanged": true
+  },
+  "metrics": {
+    "arm": "C40",
+    "donor_preset": "D40_896_near_baseline_budget",
+    "donor_layer": 20,
+    "tested_rows": 8,
+    "parameters": 594279808,
+    "parameter_ratio_to_B28": 0.9970302621632765,
+    "kv_bytes_per_token_batch1": 75264,
+    "analytic_kv_ratio_to_B28": 0.65625,
+    "function_preserving": false,
+    "quality_recovery_demonstrated": false,
+    "parity_note": "Strict elementwise parity is mandatory. Argmax, TV/KL and global-scale bounds are diagnostics only. The mechanism of any discrepancy is unproven; no claim that rounding explains every difference.",
+    "resource_scope": "analytic KV only; no measured memory/speed claim"
+  },
+  "artifacts": {
+    "lineage.json": "a56fac4cb6515febbf0ce6f3963ff58417ec147cbd2bfe1fa315f2df35638be2",
+    "config.json": "7338e3dbdc11b57973e35760c54696f01220ee689daf230b7fef4b913550f469",
+    "model.safetensors": "f55bf153995d3069cc7be6594e6d14619494a9dc64fcbd820ca531bfae0e9c00",
+    "numerics.json": "92055e9db379ed88004916714d9d3560935c649e93327f93dd9aaab9a045ea6d"
+  },
+  "parent_receipts": [
+    {
+      "stage": "G1_WIDTH",
+      "receipt_sha256": "7c42d3db78255bc82603c7c3fa57135a625eb551f0976b4f475fcbe30f136bd3",
+      "path": "../../G1_WIDTH/attempt-0001/G1_WIDTH.json"
+    }
+  ],
+  "parent_receipt_sha256": "7c42d3db78255bc82603c7c3fa57135a625eb551f0976b4f475fcbe30f136bd3",
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false,
+  "receipt_sha256": "5ac5c3d55f7f4e05564e993236e9d6579288603f4bf71a52dd97e3ed09dc0469"
+}

@@ -1,0 +1,33 @@
+Completed question_only fit=3840 scored=960
+Completed question_only fit=3840 scored=960
+Completed question_only fit=3840 scored=960
+Completed question_only fit=3840 scored=960
+Completed question_only fit=3840 scored=960
+Completed question_only fit=4800 scored=1200
+Completed context_only fit=3840 scored=960
+Completed context_only fit=3840 scored=960
+Completed context_only fit=3840 scored=960
+Completed context_only fit=3840 scored=960
+Completed context_only fit=3840 scored=960
+Completed context_only fit=4800 scored=1200
+Question-only answerability classifier complete.
+Surface feature extraction complete.
+Exhaustive threshold search complete.
+{
+  "rows": 6000,
+  "named_answer_baselines_le_25pct": true,
+  "question_only_answerability": {
+    "fit": "TRAIN only",
+    "features": "unigram TF-IDF + question character/word counts",
+    "balanced_accuracy_by_split": {
+      "train": 0.506795634920635,
+      "dev": 0.4726190476190476,
+      "holdout": 0.4841269841269841
+    }
+  },
+  "selector_plus_status_answerability": {
+    "balanced_accuracy": 0.875,
+    "scope": "cheap task-aware relational join plus explicit validity notices; stronger than surface features",
+    "interpretation": "High performance means most UNKNOWN mechanisms are easy once the right case is located, not that every abstention requires deep reasoning."
+  }
+}

@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rineya-reasoning-forge-rl"
+version = "2.0.0"
+description = "Deterministic synthetic planning tasks, structured traces, and verifiable rewards"
+requires-python = ">=3.10"
+license = {text = "MIT (code); generated data CC0-1.0 intent"}
+dependencies = []
+
+[tool.setuptools.packages.find]
+include = ["forge_rl*"]
+
+[project.scripts]
+forge-rl-build = "forge_rl.build:main"
+forge-rl-validate = "forge_rl.validate:main"
+forge-rl-evaluate = "forge_rl.evaluate:main"

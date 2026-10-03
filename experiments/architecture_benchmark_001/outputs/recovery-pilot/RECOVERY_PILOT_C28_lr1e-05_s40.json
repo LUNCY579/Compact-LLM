@@ -1,0 +1,359 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_bounded_recovery_pilot_only",
+  "note": "HELD-OUT calibration rows never used for a gradient step, plus open pilot generation. Not a sealed or DEV evaluation and not an efficacy claim. Outside the experiment package; no receipt, no gate opened.",
+  "arm": "C28",
+  "steps": 40,
+  "optimizer": "AdamW lr=1e-05 wd=0 clip=1.0",
+  "seed": 17,
+  "train_rows": 25,
+  "heldout_rows": 8,
+  "heldout_target_tokens": 1001,
+  "source_heldout_ce_nats": 5.667859240369006,
+  "trainable_parameters": 596311424,
+  "supervised_target_tokens": 4968,
+  "wall_seconds": 455.21481620000003,
+  "checkpoints": [
+    {
+      "step": 0,
+      "tokens": 0,
+      "heldout_ce_nats": 12.20026726203484,
+      "heldout_kl_to_source_nats": 8.917618270401473,
+      "heldout_top1_agreement": 0.02097902097902098,
+      "exact_hits": 0,
+      "strict_hits": 0,
+      "of": 6,
+      "terminated": 0,
+      "distinct": 6,
+      "scoring": "exact_hits is leading-integer match; strict_hits is full-string equality"
+    },
+    {
+      "step": 20,
+      "tokens": 2585,
+      "heldout_ce_nats": 4.249023864319274,
+      "heldout_kl_to_source_nats": 2.612860848258187,
+      "heldout_top1_agreement": 0.34165834165834164,
+      "exact_hits": 0,
+      "strict_hits": 0,
+      "of": 6,
+      "terminated": 6,
+      "distinct": 2,
+      "scoring": "exact_hits is leading-integer match; strict_hits is full-string equality"
+    },
+    {
+      "step": 40,
+      "tokens": 4968,
+      "heldout_ce_nats": 2.721565894432716,
+      "heldout_kl_to_source_nats": 3.027971357256025,
+      "heldout_top1_agreement": 0.3356643356643357,
+      "exact_hits": 0,
+      "strict_hits": 0,
+      "of": 6,
+      "terminated": 6,
+      "distinct": 3,
+      "scoring": "exact_hits is leading-integer match; strict_hits is full-string equality"
+    }
+  ],
+  "trajectory": [
+    {
+      "step": 1,
+      "train_ce": 11.481517791748047,
+      "grad_norm": 415.97698974609375,
+      "tokens": 88
+    },
+    {
+      "step": 2,
+      "train_ce": 11.246371269226074,
+      "grad_norm": 321.61016845703125,
+      "tokens": 263
+    },
+    {
+      "step": 3,
+      "train_ce": 12.532729148864746,
+      "grad_norm": 1197.3878173828125,
+      "tokens": 354
+    },
+    {
+      "step": 4,
+      "train_ce": 10.123210906982422,
+      "grad_norm": 251.5938720703125,
+      "tokens": 493
+    },
+    {
+      "step": 5,
+      "train_ce": 9.339661598205566,
+      "grad_norm": 256.74530029296875,
+      "tokens": 640
+    },
+    {
+      "step": 6,
+      "train_ce": 8.757122993469238,
+      "grad_norm": 234.91741943359375,
+      "tokens": 730
+    },
+    {
+      "step": 7,
+      "train_ce": 7.278241157531738,
+      "grad_norm": 195.61851501464844,
+      "tokens": 878
+    },
+    {
+      "step": 8,
+      "train_ce": 7.427664279937744,
+      "grad_norm": 294.4200744628906,
+      "tokens": 964
+    },
+    {
+      "step": 9,
+      "train_ce": 7.541831016540527,
+      "grad_norm": 134.11866760253906,
+      "tokens": 1079
+    },
+    {
+      "step": 10,
+      "train_ce": 6.484591960906982,
+      "grad_norm": 99.242431640625,
+      "tokens": 1166
+    },
+    {
+      "step": 11,
+      "train_ce": 6.174954891204834,
+      "grad_norm": 81.44368743896484,
+      "tokens": 1271
+    },
+    {
+      "step": 12,
+      "train_ce": 6.348089694976807,
+      "grad_norm": 98.17566680908203,
+      "tokens": 1385
+    },
+    {
+      "step": 13,
+      "train_ce": 5.881532669067383,
+      "grad_norm": 58.088470458984375,
+      "tokens": 1565
+    },
+    {
+      "step": 14,
+      "train_ce": 5.4325385093688965,
+      "grad_norm": 98.49629974365234,
+      "tokens": 1682
+    },
+    {
+      "step": 15,
+      "train_ce": 5.455195903778076,
+      "grad_norm": 66.1151123046875,
+      "tokens": 1834
+    },
+    {
+      "step": 16,
+      "train_ce": 4.930549144744873,
+      "grad_norm": 61.7334098815918,
+      "tokens": 1952
+    },
+    {
+      "step": 17,
+      "train_ce": 4.670166492462158,
+      "grad_norm": 53.504173278808594,
+      "tokens": 2129
+    },
+    {
+      "step": 18,
+      "train_ce": 4.925086975097656,
+      "grad_norm": 56.3383674621582,
+      "tokens": 2231
+    },
+    {
+      "step": 19,
+      "train_ce": 4.304370880126953,
+      "grad_norm": 43.14576721191406,
+      "tokens": 2448
+    },
+    {
+      "step": 20,
+      "train_ce": 4.7466044425964355,
+      "grad_norm": 41.94887161254883,
+      "tokens": 2585
+    },
+    {
+      "step": 21,
+      "train_ce": 5.150224208831787,
+      "grad_norm": 45.76511001586914,
+      "tokens": 2710
+    },
+    {
+      "step": 22,
+      "train_ce": 4.235769748687744,
+      "grad_norm": 41.709678649902344,
+      "tokens": 2832
+    },
+    {
+      "step": 23,
+      "train_ce": 5.149649620056152,
+      "grad_norm": 47.6815185546875,
+      "tokens": 2940
+    },
+    {
+      "step": 24,
+      "train_ce": 3.9335825443267822,
+      "grad_norm": 39.32358169555664,
+      "tokens": 3030
+    },
+    {
+      "step": 25,
+      "train_ce": 3.3889095783233643,
+      "grad_norm": 40.26223373413086,
+      "tokens": 3134
+    },
+    {
+      "step": 26,
+      "train_ce": 4.305244445800781,
+      "grad_norm": 43.526058197021484,
+      "tokens": 3222
+    },
+    {
+      "step": 27,
+      "train_ce": 3.7717463970184326,
+      "grad_norm": 31.37521743774414,
+      "tokens": 3397
+    },
+    {
+      "step": 28,
+      "train_ce": 4.0590291023254395,
+      "grad_norm": 37.530704498291016,
+      "tokens": 3488
+    },
+    {
+      "step": 29,
+      "train_ce": 3.7495410442352295,
+      "grad_norm": 51.739315032958984,
+      "tokens": 3627
+    },
+    {
+      "step": 30,
+      "train_ce": 3.7559244632720947,
+      "grad_norm": 28.28672218322754,
+      "tokens": 3774
+    },
+    {
+      "step": 31,
+      "train_ce": 3.8319976329803467,
+      "grad_norm": 47.76064682006836,
+      "tokens": 3864
+    },
+    {
+      "step": 32,
+      "train_ce": 3.0047733783721924,
+      "grad_norm": 31.009553909301758,
+      "tokens": 4012
+    },
+    {
+      "step": 33,
+      "train_ce": 2.4892218112945557,
+      "grad_norm": 47.32791519165039,
+      "tokens": 4098
+    },
+    {
+      "step": 34,
+      "train_ce": 3.9354026317596436,
+      "grad_norm": 85.78456115722656,
+      "tokens": 4213
+    },
+    {
+      "step": 35,
+      "train_ce": 2.1356213092803955,
+      "grad_norm": 34.9803581237793,
+      "tokens": 4300
+    },
+    {
+      "step": 36,
+      "train_ce": 2.7130892276763916,
+      "grad_norm": 35.0870361328125,
+      "tokens": 4405
+    },
+    {
+      "step": 37,
+      "train_ce": 2.611862897872925,
+      "grad_norm": 33.376953125,
+      "tokens": 4519
+    },
+    {
+      "step": 38,
+      "train_ce": 2.7162716388702393,
+      "grad_norm": 26.83909797668457,
+      "tokens": 4699
+    },
+    {
+      "step": 39,
+      "train_ce": 2.689500570297241,
+      "grad_norm": 48.04483413696289,
+      "tokens": 4816
+    },
+    {
+      "step": 40,
+      "train_ce": 2.289371967315674,
+      "grad_norm": 31.534412384033203,
+      "tokens": 4968
+    }
+  ],
+  "final_generation": {
+    "exact_hits": 0,
+    "strict_hits": 0,
+    "of": 6,
+    "terminated": 6,
+    "distinct": 3,
+    "scoring": "exact_hits is leading-integer match; strict_hits is full-string equality",
+    "samples": [
+      {
+        "id": "pilot-d1-v0",
+        "expected": "3",
+        "got": "10.",
+        "leading_int": "10",
+        "strict_match": false,
+        "numeric_match": false
+      },
+      {
+        "id": "pilot-d1-v1",
+        "expected": "5",
+        "got": "19.",
+        "leading_int": "19",
+        "strict_match": false,
+        "numeric_match": false
+      },
+      {
+        "id": "pilot-d1-v2",
+        "expected": "7",
+        "got": "10.",
+        "leading_int": "10",
+        "strict_match": false,
+        "numeric_match": false
+      },
+      {
+        "id": "pilot-d1-v3",
+        "expected": "9",
+        "got": "10.",
+        "leading_int": "10",
+        "strict_match": false,
+        "numeric_match": false
+      },
+      {
+        "id": "pilot-d1-v4",
+        "expected": "11",
+        "got": "10.",
+        "leading_int": "10",
+        "strict_match": false,
+        "numeric_match": false
+      },
+      {
+        "id": "pilot-d1-v5",
+        "expected": "8",
+        "got": "The current one.",
+        "leading_int": null,
+        "strict_match": false,
+        "numeric_match": false
+      }
+    ]
+  },
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}

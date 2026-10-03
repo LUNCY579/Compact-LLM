@@ -1,0 +1,18 @@
+{
+  "command": "qualify (in-process, for traceback)",
+  "error": "Cannot copy out of meta tensor; no data!",
+  "error_type": "NotImplementedError",
+  "experiment": "D28-001",
+  "failing_call": "run.qualify -> load_source(include_native=True) -> native(...) native_parity check",
+  "known_fix_in_this_repo": "experiments/architecture_benchmark_001/run.py::_materialize_native_buffers and ::_require_materialized, called at run.py:136-138 after tie_weights(). RAB-001 hit the same bug and already solved it; FWT-001/D28-001 inherit the unfixed loader.",
+  "licenses_engineering_smoke": false,
+  "not_fixed_here": "source.py belongs to full_width_transition_v1. Patching another package from this branch is what the programme agent contract forbids; see MERGED_BRANCH_PORTABILITY.md.",
+  "root_cause": "experiments/full_width_transition_v1/source.py::load_source builds Qwen3ForCausalLM under torch.device('meta') then load_state_dict(assign=True). rotary_emb.inv_freq is a NON-PERSISTENT buffer, absent from the state dict, so assign never replaces it and it stays on meta. Construction succeeds; the first forward dies in Qwen3RotaryEmbedding.forward at modeling_qwen3.py:336 (self.inv_freq[None,:,None].float()).",
+  "runtime": {
+    "platform": "win32",
+    "torch": "2.10.0+cpu",
+    "transformers": "4.51.3"
+  },
+  "source": "Supa (hardlinks to Rineya-Supa-1.7.0-devfreeze; audit_source digest 2a9c9664...)",
+  "status": "BLOCKED_OR_INTERRUPTED"
+}

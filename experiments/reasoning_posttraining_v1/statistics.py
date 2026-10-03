@@ -245,16 +245,37 @@ def point_estimates(clusters) -> dict:
 
 def compare(rows, baseline, arm, *, cluster_key, bank=None, margin: float = 0.0,
             alpha: float = ALPHA, seed: int = 20260915) -> dict:
-    """The primary superiority contrast: is the arm better than the baseline by > margin?"""
+    """Does the gain exceed the declared practical margin at the cluster level?
+
+    Test the boundary at ``margin``, under the sign-flip test's symmetry assumption,
+    and require the observed effect to be above it. Retaining the two-sided test
+    makes this directional decision conservative and preserves the margin=0
+    procedure. Rejecting a zero-effect null while the point estimate barely clears
+    a positive margin does not establish superiority over that margin.
+
+    The shifted null requires independent cluster signs to be exchangeable about
+    a common location/constant shift of ``margin``. This assumption is not proved
+    by the recorded outcomes. Arbitrary heterogeneous, asymmetric cluster effects
+    do not give a distribution-free test of population mean superiority here.
+    """
+    if (isinstance(margin, bool) or not isinstance(margin, (int, float))
+            or not math.isfinite(margin) or not 0 <= margin <= 1):
+        raise ValueError("superiority margin must be a finite accuracy difference in [0, 1]")
     clusters = paired_clusters(rows, baseline, arm, cluster_key=cluster_key)
     est = point_estimates(clusters)
-    test = cluster_permutation_test(clusters, alpha=alpha, seed=seed)
+    test = cluster_permutation_test(clusters, alpha=alpha, seed=seed, shift=margin)
     boot = cluster_bootstrap(clusters, alpha=alpha, seed=seed)
     practical = est["cluster_weighted_difference"] > margin
     return {
         "contrast": "superiority", "bank": bank, "cluster_unit": cluster_key,
         "cluster_unit_rationale": (CLUSTER_UNITS.get(bank) or {}).get("note"),
         "practical_margin": margin,
+        "hypothesis": ("At the null boundary, cluster effects are symmetric about the "
+                       "declared margin. Superiority requires rejecting that boundary "
+                       "with the two-sided sign-flip test and an observed gain above it."),
+        "validity_assumptions": ("Independent cluster sign exchangeability under a symmetric "
+                                 "location/constant-shift null about the margin; not a "
+                                 "distribution-free test of arbitrary population mean superiority."),
         "estimates": est, "permutation": test, "bootstrap": boot,
         "exceeds_practical_margin": practical,
         "claim_supported": bool(practical and test["significant_at_alpha"]),
@@ -262,7 +283,7 @@ def compare(rows, baseline, arm, *, cluster_key, bank=None, margin: float = 0.0,
             "the design cannot reach alpha (see permutation.resolution)"
             if test["significance_refused"] else
             "the estimate does not exceed the pre-declared practical margin" if not practical
-            else "the difference is not distinguishable from zero at the cluster level"),
+            else "the difference is not distinguishable from the declared margin at the cluster level"),
         "clusters": [c.as_dict() for c in clusters][:64],
         "quality_claim": False,
     }
