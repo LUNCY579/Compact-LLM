@@ -120,6 +120,19 @@ def _pid_identity(pid):
 
 def _pid_alive(identity):
     psutil = _psutil()
+    if "creation_filetime_100ns" in identity:
+        import native_process
+        try:
+            return native_process.Sampler().is_alive(identity)
+        except OSError as error:
+            # Historical records can outlive the Windows process object. Only a
+            # fresh authoritative no-such-process observation establishes that;
+            # a live/denied process is never classified dead by float rounding.
+            try:
+                psutil.Process(identity["pid"])
+            except psutil.NoSuchProcess:
+                return False
+            raise error
     try:
         process = psutil.Process(identity["pid"])
         return (process.create_time() == identity["create_time"]
@@ -204,16 +217,26 @@ def _acquire_lease(output, config_sha256):
 
 
 def _cpu_snapshot(output_dir, worker=None):
-    psutil = _psutil()
+    import native_process
     started = time.monotonic()
+    phase = time.perf_counter()
     owned = ({"identities": [], "rss_bytes": 0} if worker is None
              else worker.process_resource_snapshot())
-    available = psutil.virtual_memory().available
+    owned_elapsed = time.perf_counter() - phase
+    phase = time.perf_counter()
+    available = native_process.system_memory_status()["available_bytes"]
+    RAM_elapsed = time.perf_counter() - phase
+    phase = time.perf_counter()
     disk_free = shutil.disk_usage(output_dir).free
+    disk_elapsed = time.perf_counter() - phase
     return {"sample_started_monotonic": started, "sample_completed_monotonic": time.monotonic(),
             "host_available_bytes": available,
             "disk_free_bytes": disk_free,
-            "worker_tree_rss_bytes": owned["rss_bytes"], "owned_process_identities": owned["identities"]}
+            "worker_tree_rss_bytes": owned["rss_bytes"], "owned_process_identities": owned["identities"],
+            "owned_process_samples": owned.get("process_samples", []),
+            "phase_latency_seconds": {"owned_process_total": owned_elapsed,
+                "owned_job_PID_query": owned.get("job_query_seconds", 0.0),
+                "RAM_available": RAM_elapsed, "disk_free": disk_elapsed}}
 
 
 def _gpu_snapshot():
@@ -424,6 +447,9 @@ class _WindowsOwnedWorker:
             self.identity = _pid_identity(self.process.pid)
             self.job.assign(int(self.process._handle))
             assigned = True
+            import native_process
+            self.process_sampler = native_process.Sampler()
+            self.identity["creation_filetime_100ns"] = self.process_sampler.birth_from_handle(int(self.process._handle))
             self.identity.update({"process_handle": int(self.process._handle), "job_handle": int(self.job.handle),
                                   "job_name": self.job.name,
                                   "job_kill_on_close": True, "breakaway_allowed": False,
@@ -489,22 +515,14 @@ class _WindowsOwnedWorker:
         return values
 
     def process_resource_snapshot(self):
-        """One fresh Process object per current Job PID for birth and RSS."""
-        psutil = _psutil()
-        identities = []
-        rss = 0
-        for pid in self.job.pids():
-            try:
-                process = psutil.Process(pid)
-                birth = process.create_time()
-                if pid == self.identity["pid"] and birth != self.identity["create_time"]:
-                    raise RuntimeError("owned root PID birth time changed")
-                resident = process.memory_info().rss
-                identities.append({"pid": pid, "create_time": birth})
-                rss += resident
-            except psutil.NoSuchProcess:
-                continue
-        return {"identities": identities, "rss_bytes": rss}
+        """Fresh retained Win32 handle for each actual Job member's birth/RSS."""
+        import native_process
+        started = time.perf_counter()
+        pids = self.job.pids()
+        elapsed = time.perf_counter() - started
+        result = native_process.owned_snapshot(pids, self.identity, self.job.handle, self.process_sampler)
+        result["job_query_seconds"] = elapsed
+        return result
 
     def terminate(self):
         self.job.terminate()

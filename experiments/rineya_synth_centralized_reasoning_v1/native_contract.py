@@ -100,6 +100,9 @@ def runtime_files() -> dict[str, str]:
     from native_nvml import library_path
     nvml = library_path()
     paths[str(nvml)] = filehash(nvml)
+    from native_process import library_path as process_library_path
+    kernel = process_library_path()
+    paths[str(kernel)] = filehash(kernel)
     return paths
 
 

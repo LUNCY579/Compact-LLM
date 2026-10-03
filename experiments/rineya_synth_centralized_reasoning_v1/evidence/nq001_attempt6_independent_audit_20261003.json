@@ -1,0 +1,431 @@
+{
+  "artifact_directory": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\nq001_attempt6",
+  "attempts": 620,
+  "base": {
+    "activation_sites_observed": 198,
+    "embedding_head_tie_preserved": true,
+    "full_FP32_CPU_model_materialization_performed": false,
+    "loaded_base_frozen_and_BF16": true,
+    "observations_per_site": 75,
+    "postcheck_unchanged_bytes": true,
+    "postcheck_verified_source_tensors": 310,
+    "source_tensor_digest_entries": 310
+  },
+  "containment": {
+    "Job_closed_kill_on_close": true,
+    "NVML_cleanup_verified": true,
+    "owned_worker_terminal": true,
+    "partial_inventory_frozen": true,
+    "sampler_threads_terminal_verified": true
+  },
+  "dose": {
+    "capture_input_positions": 2453,
+    "capture_tokens_per_repeat": 6,
+    "maximum_forward_calls": 200,
+    "maximum_forward_input_positions": 102400,
+    "native_input_positions": 8928,
+    "native_supervised_positions": 413,
+    "parity_input_positions": 390,
+    "reference_input_positions": 4705,
+    "reference_supervised_positions": 211,
+    "total_forward_calls": 75,
+    "total_forward_input_positions": 16476
+  },
+  "failed_API_calls": 0,
+  "frameworks_imported": false,
+  "full_E0_or_central_E1_qualified": false,
+  "full_supervised_native_qualification_established": false,
+  "hash_closure": {
+    "all_eight_mechanics_milestones_present": true,
+    "audit_input_file_hashes": {
+      "RESOURCE_OBSERVATIONS.json": "a208791be9e72275236f9aae6f06ceee272a19a92eb69b735f4f5cb46c965d9a",
+      "STATE1.pt": "f62ae46b79572738b12a921e41fd43cb0bde37495bf9801947c7832d8c74c988",
+      "SUPERVISOR_RECEIPT.json": "3a94712e8dd102139a220e611fb532611b51532d5e9fadb907dcaea320190bb6",
+      "events.jsonl": "3fee8998d01f6bc370b3014d7745fa96d2f92f846e5f5b20780f1fa47da0e5b4",
+      "stage_training_mechanics.json": "c3e1b68d1f98b2cc8969764246f7f0ab8382c7f348f3242e4cc096e226f2a867",
+      "worker_result.json": "e2d724ecff3d45bd17919562eed18da52e6a5c2b0bc7902bb86f9acde6852905"
+    },
+    "config_sha256_verified": "64e53d192c181c267c6e8c314e0dce9080d87719b84e2c1efc37c0522e8fc496",
+    "frozen_pin_rechecks": {
+      "data_pins": {
+        "all_current_bytes_match_frozen_pins": true,
+        "count": 8
+      },
+      "model_pins": {
+        "all_current_bytes_match_frozen_pins": true,
+        "count": 5
+      },
+      "runtime_pins": {
+        "all_current_bytes_match_frozen_pins": true,
+        "count": 63
+      },
+      "source_pins": {
+        "all_current_bytes_match_frozen_pins": true,
+        "count": 23
+      }
+    },
+    "journal_preserved_measurement_hashes_verified": 84,
+    "supervisor_inventory_files_verified": 94
+  },
+  "model_or_GPU_API_calls_during_audit": false,
+  "numerics": {
+    "CE_atol": 2e-06,
+    "CE_max_absolute_error": 4.76837158203125e-07,
+    "CE_rows": 60,
+    "all_gradient_comparisons_passed": true,
+    "capture_prefix_bulk_argmax_equal": true,
+    "capture_repeat_exact": true,
+    "capture_selected_logprob_max_error": 0.0,
+    "capture_selected_logprob_mean_error": 0.0,
+    "changed_adapter_tensors_update1": 56,
+    "changed_adapter_tensors_update2": 112,
+    "not_capability_or_transfer_evidence": true,
+    "reference_gradient_atol": 1e-06,
+    "reference_gradient_max_absolute_error": 0.0,
+    "reference_gradient_rtol": 1e-05,
+    "reference_gradient_tensors": 112,
+    "training_row_loss_means_mechanics_only": [
+      2.430888497829437,
+      1.894806182384491
+    ],
+    "zero_adapter_parity_max_error": 0.0
+  },
+  "operation_counts": {
+    "capture_bulk_forward": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "capture_forward": {
+      "attempted": 12,
+      "failed": 0,
+      "pending": 0,
+      "returned": 12
+    },
+    "checkpoint_load": {
+      "attempted": 2,
+      "failed": 0,
+      "pending": 0,
+      "returned": 2
+    },
+    "checkpoint_restore": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "checkpoint_save": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "cuda_context_init": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "frozen_base_postcheck": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "gradient_compare": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "initial_adapter_snapshot": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "install_activation_hooks": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "install_fp32_compute": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "install_qv_lora": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "model_construct": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "native_backward": {
+      "attempted": 40,
+      "failed": 0,
+      "pending": 0,
+      "returned": 40
+    },
+    "native_completion_loss_check": {
+      "attempted": 40,
+      "failed": 0,
+      "pending": 0,
+      "returned": 40
+    },
+    "native_forward": {
+      "attempted": 40,
+      "failed": 0,
+      "pending": 0,
+      "returned": 40
+    },
+    "native_gradient_clip": {
+      "attempted": 2,
+      "failed": 0,
+      "pending": 0,
+      "returned": 2
+    },
+    "native_gradient_reset": {
+      "attempted": 3,
+      "failed": 0,
+      "pending": 0,
+      "returned": 3
+    },
+    "native_optimizer_construct": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "native_optimizer_step": {
+      "attempted": 2,
+      "failed": 0,
+      "pending": 0,
+      "returned": 2
+    },
+    "native_row_tensor_materialize": {
+      "attempted": 40,
+      "failed": 0,
+      "pending": 0,
+      "returned": 40
+    },
+    "optimizer_continuation_verify": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "reference_autograd_grad": {
+      "attempted": 20,
+      "failed": 0,
+      "pending": 0,
+      "returned": 20
+    },
+    "reference_completion_loss_check": {
+      "attempted": 20,
+      "failed": 0,
+      "pending": 0,
+      "returned": 20
+    },
+    "reference_forward": {
+      "attempted": 20,
+      "failed": 0,
+      "pending": 0,
+      "returned": 20
+    },
+    "reference_gradient_accumulate": {
+      "attempted": 20,
+      "failed": 0,
+      "pending": 0,
+      "returned": 20
+    },
+    "reference_gradient_clip": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "reference_gradient_copy": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "reference_optimizer_construct": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "reference_optimizer_load_state": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "reference_optimizer_step": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "reference_parameter_clone": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "reference_row_tensor_materialize": {
+      "attempted": 20,
+      "failed": 0,
+      "pending": 0,
+      "returned": 20
+    },
+    "reference_state_verify": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "restore_fault_adapter": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "restore_fault_cpu_rng": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "restore_fault_cuda0_rng": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "restore_fault_moment": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "restore_fault_python_rng": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "state1_restore_verify": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "state1_snapshot": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "tensor_copy": {
+      "attempted": 310,
+      "failed": 0,
+      "pending": 0,
+      "returned": 310
+    },
+    "zero_parity_adapter_forward": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    },
+    "zero_parity_base_forward": {
+      "attempted": 1,
+      "failed": 0,
+      "pending": 0,
+      "returned": 1
+    }
+  },
+  "pending_API_calls": 0,
+  "production_training_authorized": false,
+  "protected_bank_access": false,
+  "quality_gain_established": false,
+  "resources": {
+    "CPU_freshness_limit_seconds": 0.2,
+    "CPU_maximum_query_seconds": 0.09399999999732245,
+    "CPU_samples": 3125,
+    "GPU_maximum_query_seconds": 0.031000000002677552,
+    "GPU_samples": 624,
+    "PID_count_histogram": {
+      "1": 4,
+      "2": 1,
+      "3": 3114,
+      "4": 2,
+      "5": 4
+    },
+    "all_measured_floors_held": true,
+    "causal_conclusion": "Receipts establish a 219ms CPU observation-publication interval crossing the fixed 200ms freshness gate. Earlier transient PIDs are consistent with final preflight subprocesses; they are absent from the stale window. No direct causal attribution to Git, heartbeat I/O, or scheduling is established.",
+    "earlier_transient_four_or_five_PID_samples": 6,
+    "last_window_identical_three_owned_PIDs": true,
+    "maximum_owned_tree_RSS_bytes": 1495674880,
+    "minimum_GPU_free_bytes": 841736192,
+    "minimum_host_available_bytes": 2761244672,
+    "only_observed_stale_window": {
+      "next_completed": 58670.625,
+      "next_pids": [
+        779968,
+        774640,
+        782240
+      ],
+      "next_query_duration_seconds": 0.09399999999732245,
+      "next_start": 58670.531,
+      "next_start_interval_seconds": 0.125,
+      "previous_completed": 58670.484,
+      "previous_pids": [
+        779968,
+        774640,
+        782240
+      ],
+      "previous_start": 58670.406,
+      "previous_start_to_next_publish_seconds": 0.21899999999732245
+    }
+  },
+  "schema_version": 1,
+  "scope": "Independent stdlib-only audit of terminal Native6 receipts, hashes and ZIP metadata; no framework/model/GPU API execution",
+  "source_commit": "66ba74cfcf14972eb14254a94d411662f084ee20",
+  "state1": {
+    "all_controlled_fault_components_changed": true,
+    "bytes": 13898350,
+    "bytes_and_hash_match_descriptor": true,
+    "copied_gradient_optimizer_continuation_all_components_bitwise": true,
+    "reference_pass_preserved_state_and_rng": true,
+    "restored_before_group2_against_independent_pre_save_snapshot": true,
+    "sha256": "f62ae46b79572738b12a921e41fd43cb0bde37495bf9801947c7832d8c74c988",
+    "zip_metadata": {
+      "CRC_all_members_passed": true,
+      "maximum_storage_member_bytes": 65536,
+      "members": 454,
+      "storage_members": 450,
+      "tensor_deserialization_performed": false
+    }
+  },
+  "status": "WORKER_MECHANICS_CHECKS_VERIFIED_SUPERVISED_SCOPE_FAILED",
+  "supervisor_elapsed_seconds": 332.65699999999924,
+  "supervisor_failure": "stale_external_CPU_watchdog",
+  "supervisor_returncode": 137,
+  "supervisor_status": "OWNED_WORKER_ABORTED",
+  "uncompleted_scope": "The worker report and all mechanics checks passed, but the supervisor aborted for CPU staleness before clean owned-tree termination. This is not a full supervised qualification pass. Production comparison, transfer and retention remain unmeasured.",
+  "utc": "2026-10-03T11:57:37.296104+00:00",
+  "worker_checks_status": "PASS_SCOPED_NATIVE_MECHANICS",
+  "worker_wall_seconds": 308.5940000000046
+}

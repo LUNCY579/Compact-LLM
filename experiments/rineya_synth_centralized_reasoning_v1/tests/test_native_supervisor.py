@@ -13,6 +13,7 @@ from unittest import mock
 PACKAGE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PACKAGE))
 import native_supervisor as ns
+import native_process as np
 
 
 class Clock:
@@ -553,37 +554,43 @@ class MonitorBoundsTests(unittest.TestCase):
 
 
 class WindowsContainmentTests(unittest.TestCase):
-    def test_resource_snapshot_constructs_one_Process_per_actual_job_PID(self):
+    def setUp(self):
+        sampler = mock.Mock()
+        sampler.birth_from_handle.return_value = np.EPOCH_FILETIME + 10000000
+        sampler.memory_status.return_value = {"available_bytes": 4 * ns.GIB, "total_bytes": 16 * ns.GIB}
+        sampler.process.side_effect = lambda pid, job_handle=None: {
+            "pid": pid, "terminal_confirmed": False, "creation_filetime_100ns": np.EPOCH_FILETIME + 10000000,
+            "create_time": 1.0, "rss_bytes": {43210: 1024, 56789: 2048}.get(pid, 0)}
+        self.sampler_patch = mock.patch.object(np, "Sampler", return_value=sampler)
+        self.sampler_patch.start()
+        self.addCleanup(self.sampler_patch.stop)
+        self.system_sampler_patch = mock.patch.object(np, "_SYSTEM_SAMPLER", None)
+        self.system_sampler_patch.start()
+        self.addCleanup(self.system_sampler_patch.stop)
+
+    def test_resource_snapshot_samples_one_handle_per_actual_job_PID(self):
         worker = object.__new__(ns._WindowsOwnedWorker)
         worker.job = mock.Mock()
         worker.job.pids.return_value = [10, 20]
-        worker.identity = {"pid": 10, "create_time": 1.0}
-        processes = {}
-        for pid, birth, rss in ((10, 1.0, 1024), (20, 2.0, 2048)):
-            process = mock.Mock()
-            process.create_time.return_value = birth
-            process.memory_info.return_value.rss = rss
-            processes[pid] = process
-        psutil = mock.Mock()
-        psutil.Process.side_effect = lambda pid: processes[pid]
-        with mock.patch.object(ns, "_psutil", return_value=psutil):
-            sampled = worker.process_resource_snapshot()
-        self.assertEqual([mock.call(10), mock.call(20)], psutil.Process.call_args_list)
-        self.assertEqual({"identities": [{"pid": 10, "create_time": 1.0}, {"pid": 20, "create_time": 2.0}],
-                          "rss_bytes": 3072}, sampled)
-        for process in processes.values():
-            process.create_time.assert_called_once_with()
-            process.memory_info.assert_called_once_with()
+        worker.job.handle = 456
+        worker.identity = {"pid": 10, "create_time": 1.0, "creation_filetime_100ns": 12345}
+        worker.process_sampler = mock.Mock()
+        worker.process_sampler.process.side_effect = lambda pid, job_handle=None: {
+            "pid": pid, "terminal_confirmed": False, "creation_filetime_100ns": 12345,
+            "create_time": 1.0, "rss_bytes": {10: 1024, 20: 2048}[pid]}
+        sampled = worker.process_resource_snapshot()
+        self.assertEqual([mock.call(10, job_handle=456), mock.call(20, job_handle=456)], worker.process_sampler.process.call_args_list)
+        self.assertEqual(3072, sampled["rss_bytes"])
+        self.assertEqual([10, 20], [v["pid"] for v in sampled["identities"]])
 
     def test_resource_snapshot_rejects_changed_root_birth(self):
         worker = object.__new__(ns._WindowsOwnedWorker)
         worker.job = mock.Mock()
         worker.job.pids.return_value = [10]
-        worker.identity = {"pid": 10, "create_time": 1.0}
-        psutil = mock.Mock()
-        psutil.NoSuchProcess = type("NoSuchProcess", (Exception,), {})
-        psutil.Process.return_value.create_time.return_value = 2.0
-        with mock.patch.object(ns, "_psutil", return_value=psutil), self.assertRaisesRegex(RuntimeError, "birth time changed"):
+        worker.identity = {"pid": 10, "create_time": 1.0, "creation_filetime_100ns": 12345}
+        worker.process_sampler = mock.Mock()
+        worker.process_sampler.process.return_value = {"terminal_confirmed": False, "creation_filetime_100ns": 12346, "rss_bytes": 1}
+        with self.assertRaisesRegex(RuntimeError, "birth FILETIME changed"):
             worker.process_resource_snapshot()
 
     def test_job_limits_kill_on_close_and_no_child_breakaway(self):

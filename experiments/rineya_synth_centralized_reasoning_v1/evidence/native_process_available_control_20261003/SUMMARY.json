@@ -1,0 +1,64 @@
+{
+  "available_API_parity": {
+    "available_exact_either_sequential_bracket": 50,
+    "mean_native_seconds": 1.039300077536609e-05,
+    "mean_psutil_seconds": 0.03546602799993707,
+    "no_tolerance_added": true,
+    "outside_bracket_bytes": 0,
+    "physical_total_exact_all": true,
+    "samples": 50
+  },
+  "complete_CPU_profile": {
+    "coarse_monotonic_zero_duration_is_not_zero_API_latency": true,
+    "mean_direct_RAM_seconds": 1.7629999638302253e-05,
+    "mean_disk_seconds": 3.2925999694271016e-05,
+    "samples": 50
+  },
+  "controls": {
+    "available_API_parity": "global_memory_status_control_6998fa06543c4b8d954c2fc377608939",
+    "complete_direct_CPU": "direct_available_CPU_profile_7d64c4b11087432b80f69726a8b3aa87",
+    "same_handle_idle": "native_process_cpu_control_97beaa81e3ec4f5caf6d28962a8fb601"
+  },
+  "finding": "psutil GetPerformanceInfo physical-availability query dominates old snapshot; direct GlobalMemoryStatusEx returns same available-physical metric while avoiding broad performance retrieval. Single-handle GetProcessTimes/WorkingSetSize also avoids process identity/RSS reopening and fallback.",
+  "kernel32": {
+    "path": "C:\\Windows\\System32\\kernel32.dll",
+    "sha256": "8f8629741558b5df71def4e1dd8ef9645d4f806b949762c47757c50fea1a9e6d"
+  },
+  "limitations": [
+    "Idle controls are not proof under a model workload.",
+    "Psutil fallback activation in native6 is not proven; per-PID and phase latency instrumentation added for attribution.",
+    "Current-code snapshots are labeled current; earlier controls retain their own before/after source hashes."
+  ],
+  "limits_unchanged": {
+    "CPU_freshness_seconds": 0.2,
+    "CPU_poll_seconds": 0.1,
+    "GPU_freshness_seconds": 2,
+    "GPU_poll_seconds": 0.5,
+    "RAM_preworker_GiB": 3.3125,
+    "RAM_reserve_GiB": 1.25,
+    "RSS_GiB": 2,
+    "disk_GiB": 4,
+    "scope_seconds": 600
+  },
+  "model_or_GPU_worker_launched": false,
+  "one_GiB_resident_profile": "NOT_RUN: actual admission readings below unchanged3.3125GiB floor; no admission exception",
+  "primary_sources": [
+    "https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-globalmemorystatusex",
+    "https://learn.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-getprocessmemoryinfo",
+    "https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getprocesstimes",
+    "https://raw.githubusercontent.com/giampaolo/psutil/release-7.2.2/psutil/arch/windows/mem.c"
+  ],
+  "raw_birth_policy": "new roots capture exact FILETIME on owned Popen handle; same-handle sampler compares raw ticks exactly; historical psutil create_time remains unchanged; raw-aware is_alive uses Wait0+raw birth without float tolerance",
+  "rights": {
+    "OpenProcess": 1052672,
+    "meaning": "PROCESS_QUERY_LIMITED_INFORMATION|SYNCHRONIZE; no VM_READ/mutation rights",
+    "terminal_skip": "only same retained handle WaitForSingleObject WAIT_OBJECT_0",
+    "unknown_or_live_denial": "fail closed, no scan or retry in sampling"
+  },
+  "schema_version": 1,
+  "scope": "CPU_ONLY_TELEMETRY_CONTROLS_NOT_MODEL_QUALIFICATION",
+  "tests": {
+    "native_process": 10,
+    "native_supervisor": 46
+  }
+}

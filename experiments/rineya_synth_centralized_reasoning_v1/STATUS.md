@@ -1,5 +1,39 @@
 # Status and next handoff
 
+## Latest: worker mechanics verified; full supervision still failed
+
+Attempt 6 returned `PASS_SCOPED_NATIVE_MECHANICS`: 40 native training forwards/
+backwards, two optimizer updates, 20 independent reference gradients, one
+reference update, exact restoration/continuation, and all 310 frozen-base tensor
+checks. Its [independent audit](evidence/nq001_attempt6_independent_audit_20261003.json)
+verified all 620 API calls, 60 loss checks, 112 gradient comparisons and retained
+artifact hashes. The controller aborted on a 219-ms CPU observation window,
+above the unchanged 200-ms bound. **Full supervised qualification did not pass.**
+All raw measurements, private local STATE1, and source/config snapshots remain in
+[attempt 6 evidence](evidence/nq001_attempt6_20261003). No study-training or
+transfer/retention result is claimed. The next sampler investigation keeps every
+resource, numerical and dose limit fixed and requires CPU controls before launch.
+
+The [direct process/RAM successor](NQ_PROCESS_AMENDMENT_006.md) removes the
+measured 25–35-ms RAM-query bottleneck with exact read-only parity controls.
+[SYNTH_NQ001_PROC7.json](configs/SYNTH_NQ001_PROC7.json) freezes 25 source and
+64 runtime bindings, including System32 kernel32.dll. Its static preflight and
+[288 CPU tests](evidence/process7_final_cpu_validation_20261003.json) passed,
+without skips or source changes. The next actual scope still needs current
+3.3125-GiB RAM admission and full supervised success; no limits were lowered.
+
+The new CPU-only [fresh DEV panel policy](EVALUATION_PANEL_POLICY.json) creates
+32 joined components each for R/S/RS and 384 crossed rows. It declares wider,
+deeper and UNKNOWN strata plus a held-out ledger rendering. Inventory-completeness
+and independent rule-parser fixes now pass negative controls. The
+[rebuilt root-bound bundle](evidence/fresh_dev_root2_20261003) and
+[CPU receipt](evidence/evaluation_panel_root_control_20261003.json) preserve
+all rows and source bindings. Its
+measured prompts span 185–572 tokens; 59 rows exceed the current 480-token prompt
+allowance plus 32 generation tokens. Preserve every row; native evaluation is
+unadmitted until a separate envelope or source amendment is registered. DEV
+labels are CPU-exposed, and prior-correct membership remains unenrolled.
+
 ## Current native qualification handoff — 2026-10-03
 
 Attempt 5 is now terminal and failed before its first optimizer step: a milestone
