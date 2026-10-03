@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import sys
 import tempfile
+import threading
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
@@ -12,7 +13,7 @@ from unittest.mock import patch
 PACKAGE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PACKAGE))
 import native_contract as contract
-from native_worker import Journal, capture, verify_worker_ownership
+from native_worker import Journal, capture, verify_worker_ownership, read_heartbeat
 
 
 class Scalar:
@@ -47,6 +48,40 @@ class FakeTorch:
 
 
 class ContractTests(unittest.TestCase):
+    def test_concurrent_heartbeat_read_and_append(self):
+        import os
+        import time
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "heartbeat.jsonl"
+            path.write_text('{"unix_seconds":0,"supervisor_pid":1}\n')
+            failures = []
+            done = threading.Event()
+            def writer():
+                try:
+                    for number in range(100):
+                        with path.open("a", encoding="utf-8", newline="\n") as stream:
+                            stream.write(json.dumps({"unix_seconds": time.time(), "supervisor_pid": 1}) + "\n")
+                except BaseException as exc:
+                    failures.append(exc)
+                finally:
+                    done.set()
+            thread = threading.Thread(target=writer)
+            thread.start()
+            reads = 0
+            while not done.is_set() or reads < 100:
+                value = read_heartbeat(path)
+                self.assertEqual(1, value["supervisor_pid"])
+                reads += 1
+            thread.join(timeout=2)
+            self.assertFalse(thread.is_alive())
+            self.assertEqual([], failures)
+
+    def test_incomplete_append_never_becomes_a_heartbeat(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "heartbeat.jsonl"
+            path.write_bytes(b'{"unix_seconds":1,"supervisor_pid":2}\n{"unix_seconds":999')
+            self.assertEqual(1, read_heartbeat(path)["unix_seconds"])
+
     def test_contained_child_interpreter_does_not_need_launcher_pid(self):
         owner = {"worker_pid": 111, "supervisor_pid": 222, "supervisor_create_time": 1234.0,
                  "job_name": "Local\\SYNTH_NQ_JOB_" + "a"*32, "config_sha256": "b"*64}

@@ -63,6 +63,24 @@ def verify_worker_ownership(owner, config_path, *, membership=in_owned_job):
             "query_job_handle_closed_before_framework_import": True}
 
 
+def read_heartbeat(path):
+    """Read only the latest complete append-only heartbeat, with bounded IO."""
+    with Path(path).open("rb", buffering=0) as stream:
+        size = os.fstat(stream.fileno()).st_size
+        require(0 < size <= 1024 * 1024, "heartbeat journal size bound")
+        beginning = max(0, size - 4096)
+        stream.seek(beginning)
+        raw = stream.read(size - beginning)
+    if beginning:
+        require(b"\n" in raw, "no complete heartbeat tail")
+        raw = raw.split(b"\n", 1)[1]
+    lines = [line for line in raw.splitlines(keepends=True) if line.endswith(b"\n")]
+    require(bool(lines), "no complete heartbeat record")
+    value = json.loads(lines[-1].decode("utf-8"), object_pairs_hook=contract._pairs,
+                       parse_constant=contract._bad_constant)
+    require(type(value) is dict, "heartbeat object")
+    return value
+
 class Journal:
     def __init__(self, directory: Path):
         self.path = directory / "events.jsonl"
@@ -186,9 +204,11 @@ def run(config_path: Path, output: Path) -> int:
         if torch is not None and torch.cuda.is_initialized():
             free, total = torch.cuda.mem_get_info()
             require(free >= 0.5 * 1024**3, "native GPU free floor")
-        require((output / "supervisor_alive.json").is_file(), "missing supervisor heartbeat")
-        heartbeat = contract.read_json(output / "supervisor_alive.json", 65536)
-        require(time.time() - heartbeat["unix_seconds"] <= 2.0, "supervisor heartbeat stale")
+        require((output / "supervisor_heartbeat.jsonl").is_file(), "missing supervisor heartbeat")
+        heartbeat = read_heartbeat(output / "supervisor_heartbeat.jsonl")
+        age = time.time() - heartbeat["unix_seconds"]
+        require(-0.2 <= age <= 2.0 and heartbeat["supervisor_pid"] == owner["supervisor_pid"],
+                "supervisor heartbeat stale, future or wrong owner")
     journal.guard = guard
     try:
         config = contract.preflight(config_path)

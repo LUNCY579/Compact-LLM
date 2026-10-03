@@ -41,6 +41,7 @@ GPU_FRESHNESS = 2.0
 GPU_TIMEOUT = 2.0
 ADMISSION_INTERVAL = 2.0
 ADMISSION_DEADLINE = 30.0
+HEARTBEAT_MAX_BYTES = 1024 ** 2
 _LOCAL_LEASE_LOCK = threading.Lock()
 
 
@@ -72,13 +73,24 @@ def _read(path):
 
 
 def _heartbeat(output, supervisor_pid):
-    # This explicitly mutable coordination signal is separate from receipts.
-    target = Path(output) / "supervisor_alive.json"
-    temporary = Path(output) / (".supervisor_alive." + uuid.uuid4().hex + ".tmp")
-    with temporary.open("x", encoding="utf-8", newline="\n") as stream:
-        json.dump({"unix_seconds": time.time(), "supervisor_pid": supervisor_pid}, stream, allow_nan=False)
-        stream.write("\n")
-    os.replace(temporary, target)
+    # One writer, before resume and then in the CPU thread only. Appending avoids
+    # replacing a pathname while the Windows worker reader has it open. A reader
+    # may see a trailing partial record and must select the last complete line.
+    target = Path(output) / "supervisor_heartbeat.jsonl"
+    record = (json.dumps({"unix_seconds": time.time(), "supervisor_pid": supervisor_pid},
+                         allow_nan=False) + "\n").encode("utf-8")
+    if not target.exists():
+        stream = target.open("xb")  # first creation is exclusive
+    else:
+        # No O_CREAT: a disappearing ledger is an error rather than a reset.
+        descriptor = os.open(target, os.O_WRONLY | os.O_APPEND | getattr(os, "O_BINARY", 0))
+        stream = os.fdopen(descriptor, "ab")
+    with stream:
+        stream.seek(0, os.SEEK_END)
+        if stream.tell() + len(record) > HEARTBEAT_MAX_BYTES:
+            raise ValueError("heartbeat ledger exceeds prospective 1MiB byte cap")
+        stream.write(record)
+        stream.flush()
 
 
 def _new_output(output_dir):

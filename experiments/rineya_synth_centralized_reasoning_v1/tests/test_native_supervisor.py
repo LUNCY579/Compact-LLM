@@ -546,7 +546,7 @@ class WindowsContainmentTests(unittest.TestCase):
         process.poll.return_value = None
         def resume(pid):
             self.assertTrue((Path(directory) / "supervisor_ownership.json").exists())
-            self.assertTrue((Path(directory) / "supervisor_alive.json").exists())
+            self.assertTrue((Path(directory) / "supervisor_heartbeat.jsonl").exists())
             ownership = json.loads((Path(directory) / "supervisor_ownership.json").read_text(encoding="utf-8"))
             self.assertEqual({"worker_pid": 43210, "root_worker_pid": 43210, "supervisor_pid": ns.os.getpid(),
                               "supervisor_create_time": 1.0, "config_sha256": "f" * 64, "job_name": job.name}, ownership)
@@ -648,6 +648,45 @@ class WindowsContainmentTests(unittest.TestCase):
                     worker.close()
             job.close.assert_called_once_with()
         self.assertNotIn("torch", sys.modules)
+
+
+class HeartbeatLedgerTests(unittest.TestCase):
+    def test_two_heartbeats_append_without_replacement_or_temporary_file(self):
+        with tempfile.TemporaryDirectory() as directory, mock.patch.object(ns.os, "replace") as replace, \
+                mock.patch.object(ns.time, "time", side_effect=[100.0, 100.1]):
+            output = Path(directory)
+            ns._heartbeat(output, 4321)
+            first = (output / "supervisor_heartbeat.jsonl").read_bytes()
+            ns._heartbeat(output, 4321)
+            complete = (output / "supervisor_heartbeat.jsonl").read_bytes()
+            self.assertTrue(complete.startswith(first))
+            self.assertTrue(complete.endswith(b"\n"))
+            records = [json.loads(line) for line in complete.splitlines()]
+            self.assertEqual([100.0, 100.1], [item["unix_seconds"] for item in records])
+            self.assertEqual([4321, 4321], [item["supervisor_pid"] for item in records])
+            replace.assert_not_called()
+            self.assertEqual(["supervisor_heartbeat.jsonl"], [path.name for path in output.iterdir()])
+
+    def test_existing_ledger_cap_rejects_append_without_changing_prior_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            ledger = output / "supervisor_heartbeat.jsonl"
+            ledger.write_bytes(b"x" * ns.HEARTBEAT_MAX_BYTES)
+            with self.assertRaisesRegex(ValueError, "1MiB byte cap"):
+                ns._heartbeat(output, 4321)
+            self.assertEqual(b"x" * ns.HEARTBEAT_MAX_BYTES, ledger.read_bytes())
+
+    def test_real_writer_two_lines_match_worker_latest_complete_reader(self):
+        import native_worker as worker_module
+        with tempfile.TemporaryDirectory() as directory, mock.patch.object(ns.time, "time", side_effect=[100.0, 100.1]):
+            output = Path(directory)
+            ns._heartbeat(output, 4321)
+            ns._heartbeat(output, 4321)
+            ledger = output / "supervisor_heartbeat.jsonl"
+            self.assertEqual({"unix_seconds": 100.1, "supervisor_pid": 4321}, worker_module.read_heartbeat(ledger))
+            with ledger.open("ab") as stream:
+                stream.write(b'{"unix_seconds":100.2')  # interrupted future append has no newline
+            self.assertEqual({"unix_seconds": 100.1, "supervisor_pid": 4321}, worker_module.read_heartbeat(ledger))
 
 
 if __name__ == "__main__":
