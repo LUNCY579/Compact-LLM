@@ -1,0 +1,75 @@
+experiment:
+  name: layer8_qlora_cc0_8k
+  classification: EXPLORATORY_SINGLE_LAYER_ACTIVATION
+  hypothesis: >
+    QLoRA on Supa-A1.1 layer 8 alone, trained only on unused CC0 train-8K,
+    can raise CC0 val/test exact (esp. 8K stratum) and make L8 skip more
+    catastrophic without short-response regression.
+  non_claim: >
+    2K/4K already entered Supa-A1.1 via Halo Stage-A; those strata are excluded.
+    Inference leave-one-out sensitivity is not training importance.
+
+model:
+  path: Rineya_Published_Cores/Rineya-Supa-A1.1-1.1.0-devfreeze
+  dtype: float16
+  trust_remote_code: true
+
+adapter:
+  method: qlora
+  selected_layers: [8]
+  target_module_group: both
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  qlora: true
+
+data:
+  corpus_root: rineya_long_context_cc0_v1_main
+  strata: [8k]
+  exclude_strata: [2k, 4k]
+  max_sequence_length: 2048
+  overflow_policy: left-context
+  # Proxy-8K rows tokenize to ~12k. 8192 OOMs on 8GB; 4096 QLoRA was ~88s/step
+  # (~24h/epoch). 2048 + left-context keeps unused-8K stratum training tractable.
+  never_touch: [test, sealed, dpo]
+  # Val/test views keep ALL strata for thorough transfer reporting.
+  val_include_all_strata: true
+  test_include_all_strata: true
+
+train:
+  learning_rate: 5.0e-5
+  epochs: 1.0
+  max_steps: 200
+  # 200 steps × accum 8 ≈ 1600 of 7923 8K rows (~1/5 epoch). Full epoch is
+  # ~4.4h at 2048 on this 8GB GPU; this cap keeps dual-eval finishable.
+  per_device_batch_size: 1
+  gradient_accumulation_steps: 8
+  warmup_ratio: 0.05
+  seed: 17
+  gradient_checkpointing: true
+  output_dir: artifacts/rineya_single_layer_ft_v1/layer8_qlora_cc0_8k
+
+eval:
+  # Generation uses the same left-context window as training.
+  max_prompt_tokens: 2048
+  # Thorough but finishable: full 8K cells + capped transfer strata.
+  val_per_stratum_cap:
+    "2k": 200
+    "4k": 200
+    "8k": 0   # 0 = all
+    "16k": 80
+    "32k": 40
+  test_per_stratum_cap:
+    "2k": 200
+    "4k": 200
+    "8k": 0
+    "16k": 80
+    "32k": 40
+  max_new_tokens: 64
+  ablation_layer: 8
+  ablation_max_new_tokens: 24
+  smoke_bank: data/supa_layer_ablation_smoke.jsonl
+  puzzle_gold: artifacts/rineya_single_layer_ft_v1/layer8_lora_puzzle_smoke/views/val_easy_gold.jsonl
+  puzzle_baseline_accuracy: 0.24
+  bootstrap_samples: 2000
+  bootstrap_seed: 17

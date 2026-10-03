@@ -1,0 +1,45 @@
+{
+  "schema_version": "layer8_smoke_v1",
+  "experiment": {
+    "name": "layer8_lora_puzzle_smoke",
+    "classification": "EXPLORATORY_SINGLE_LAYER_ACTIVATION",
+    "hypothesis": "LoRA on Supa-A1.1 layer 8 alone (strongest null under identity-skip) can raise puzzle val exact and make L8 skip more catastrophic.\n",
+    "non_claim": "Inference leave-one-out redundancy is not training importance. No efficacy claim until dual metrics move and an all-layer control exists.\n"
+  },
+  "puzzle": {
+    "baseline_accuracy": 0.24,
+    "layer8_lora_accuracy": 0.26,
+    "delta": 0.02,
+    "baseline_correct_total": [
+      48,
+      200
+    ],
+    "layer8_lora_correct_total": [
+      52,
+      200
+    ]
+  },
+  "ablation_layer8_skip": {
+    "baseline": {
+      "catastrophe_score": 0.04417107963508515,
+      "mean_logit_cosine_vs_intact": 0.9779144601824574,
+      "bucket": "null",
+      "critical": false
+    },
+    "layer8_lora": {
+      "catastrophe_score": 0.07046754466920913,
+      "mean_logit_cosine_vs_intact": 0.9647662276653954,
+      "bucket": "null",
+      "critical": false
+    },
+    "cosine_delta": -0.013148,
+    "catastrophe_score_delta": 0.026296
+  },
+  "gates": {
+    "puzzle_no_material_regression": true,
+    "ablation_more_sensitive": false,
+    "activated_claim_eligible": false
+  },
+  "interpretation": "puzzle_ok_ablation_still_null",
+  "caveat": "Inference leave-one-out sensitivity is not training importance. No all-layer matched-budget control in this smoke."
+}

@@ -1,0 +1,17 @@
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<00:42,  7.21it/s]Loading weights:  93%|#########3| 289/310 [00:00<00:00, 1404.02it/s]Loading weights: 100%|##########| 310/310 [00:00<00:00, 1148.51it/s]
+anchor_predictions.jsonl: 28/168 4s
+anchor_predictions.jsonl: 56/168 7s
+anchor_predictions.jsonl: 84/168 10s
+anchor_predictions.jsonl: 112/168 13s
+anchor_predictions.jsonl: 140/168 16s
+anchor_predictions.jsonl: 168/168 20s
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\clclc\BusinessProject\ChatBubble-slft\research\composable_skills_v1\pilot.py", line 553, in <module>
+    main()
+  File "C:\Users\clclc\BusinessProject\ChatBubble-slft\research\composable_skills_v1\pilot.py", line 540, in main
+    baseline(out, plan)
+  File "C:\Users\clclc\BusinessProject\ChatBubble-slft\research\composable_skills_v1\pilot.py", line 320, in baseline
+    raise ValueError(f"teacher head reconstruction mismatch: {error}")
+ValueError: teacher head reconstruction mismatch: 3.9577484130859375e-05

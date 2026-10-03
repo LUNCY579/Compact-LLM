@@ -1,0 +1,3474 @@
+[
+  {
+    "id": "CS1-dev-303-0000-b0-u0",
+    "world_id": "CS1-dev-303-0000",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Nora",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The painter position is held by Nora. The driver position is held by Omar. The singer position is held by Iris. The editor position is held by Theo.\nName the person holding the painter position."
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Omar\"], [\"editor\", \"Theo\"], [\"painter\", \"Nora\"], [\"singer\", \"Iris\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-dev-303-0000-b0-u1",
+    "world_id": "CS1-dev-303-0000",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The courier position is held by Nora. The driver position is held by Omar. The singer position is held by Iris. The editor position is held by Theo.\nName the person holding the painter position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Nora\"], [\"driver\", \"Omar\"], [\"editor\", \"Theo\"], [\"singer\", \"Iris\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-dev-303-0000-b1-u0",
+    "world_id": "CS1-dev-303-0000",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Omar",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The painter position is held by Omar. The driver position is held by Nora. The singer position is held by Iris. The editor position is held by Theo.\nName the person holding the painter position."
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Nora\"], [\"editor\", \"Theo\"], [\"painter\", \"Omar\"], [\"singer\", \"Iris\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-dev-303-0000-b1-u1",
+    "world_id": "CS1-dev-303-0000",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The courier position is held by Omar. The driver position is held by Nora. The singer position is held by Iris. The editor position is held by Theo.\nName the person holding the painter position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Omar\"], [\"driver\", \"Nora\"], [\"editor\", \"Theo\"], [\"singer\", \"Iris\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-dev-303-0000-arithmetic",
+    "world_id": "CS1-dev-303-0000-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "55",
+    "answerable": true,
+    "semantic_key": "arithmetic:64-9",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 64 - 9?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0000-time",
+    "world_id": "CS1-dev-303-0000-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "18:08",
+    "answerable": true,
+    "semantic_key": "time:17:52:16",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 17:52; 16 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0001-b0-u0",
+    "world_id": "CS1-dev-303-0001",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Ada",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The courier position is held by Lena. The baker position is held by Ada. The editor position is held by Iris. The driver position is held by Nora.\nName the person holding the baker position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ada\"], [\"courier\", \"Lena\"], [\"driver\", \"Nora\"], [\"editor\", \"Iris\"]], \"baker\"]"
+  },
+  {
+    "id": "CS1-dev-303-0001-b0-u1",
+    "world_id": "CS1-dev-303-0001",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The courier position is held by Lena. The singer position is held by Ada. The editor position is held by Iris. The driver position is held by Nora.\nName the person holding the baker position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Lena\"], [\"driver\", \"Nora\"], [\"editor\", \"Iris\"], [\"singer\", \"Ada\"]], \"baker\"]"
+  },
+  {
+    "id": "CS1-dev-303-0001-b1-u0",
+    "world_id": "CS1-dev-303-0001",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Iris",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The courier position is held by Lena. The baker position is held by Iris. The editor position is held by Ada. The driver position is held by Nora.\nName the person holding the baker position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Iris\"], [\"courier\", \"Lena\"], [\"driver\", \"Nora\"], [\"editor\", \"Ada\"]], \"baker\"]"
+  },
+  {
+    "id": "CS1-dev-303-0001-b1-u1",
+    "world_id": "CS1-dev-303-0001",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The courier position is held by Lena. The singer position is held by Iris. The editor position is held by Ada. The driver position is held by Nora.\nName the person holding the baker position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Lena\"], [\"driver\", \"Nora\"], [\"editor\", \"Ada\"], [\"singer\", \"Iris\"]], \"baker\"]"
+  },
+  {
+    "id": "CS1-dev-303-0001-arithmetic",
+    "world_id": "CS1-dev-303-0001-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "51",
+    "answerable": true,
+    "semantic_key": "arithmetic:49+2",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 49 + 2?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0001-time",
+    "world_id": "CS1-dev-303-0001-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "18:40",
+    "answerable": true,
+    "semantic_key": "time:17:43:57",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 17:43; 57 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0002-b0-u0",
+    "world_id": "CS1-dev-303-0002",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Omar",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The baker position is held by Lena. The courier position is held by Nora. The singer position is held by Omar. The driver position is held by Noah.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Lena\"], [\"courier\", \"Nora\"], [\"driver\", \"Noah\"], [\"singer\", \"Omar\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0002-b0-u1",
+    "world_id": "CS1-dev-303-0002",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The baker position is held by Lena. The courier position is held by Nora. The clerk position is held by Omar. The driver position is held by Noah.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Lena\"], [\"clerk\", \"Omar\"], [\"courier\", \"Nora\"], [\"driver\", \"Noah\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0002-b1-u0",
+    "world_id": "CS1-dev-303-0002",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Noah",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The baker position is held by Lena. The courier position is held by Nora. The singer position is held by Noah. The driver position is held by Omar.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Lena\"], [\"courier\", \"Nora\"], [\"driver\", \"Omar\"], [\"singer\", \"Noah\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0002-b1-u1",
+    "world_id": "CS1-dev-303-0002",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The baker position is held by Lena. The courier position is held by Nora. The clerk position is held by Noah. The driver position is held by Omar.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Lena\"], [\"clerk\", \"Noah\"], [\"courier\", \"Nora\"], [\"driver\", \"Omar\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0002-arithmetic",
+    "world_id": "CS1-dev-303-0002-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "20",
+    "answerable": true,
+    "semantic_key": "arithmetic:25-5",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 25 - 5?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0002-time",
+    "world_id": "CS1-dev-303-0002-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "17:18",
+    "answerable": true,
+    "semantic_key": "time:16:41:37",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 16:41; 37 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0003-b0-u0",
+    "world_id": "CS1-dev-303-0003",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Lena",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The painter position is held by Ada. The singer position is held by Omar. The baker position is held by Nora. The courier position is held by Lena.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"courier\", \"Lena\"], [\"painter\", \"Ada\"], [\"singer\", \"Omar\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0003-b0-u1",
+    "world_id": "CS1-dev-303-0003",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The painter position is held by Ada. The singer position is held by Omar. The baker position is held by Nora. The clerk position is held by Lena.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"clerk\", \"Lena\"], [\"painter\", \"Ada\"], [\"singer\", \"Omar\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0003-b1-u0",
+    "world_id": "CS1-dev-303-0003",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Ada",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The painter position is held by Lena. The singer position is held by Omar. The baker position is held by Nora. The courier position is held by Ada.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"courier\", \"Ada\"], [\"painter\", \"Lena\"], [\"singer\", \"Omar\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0003-b1-u1",
+    "world_id": "CS1-dev-303-0003",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The painter position is held by Lena. The singer position is held by Omar. The baker position is held by Nora. The clerk position is held by Ada.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"clerk\", \"Ada\"], [\"painter\", \"Lena\"], [\"singer\", \"Omar\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0003-arithmetic",
+    "world_id": "CS1-dev-303-0003-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "30",
+    "answerable": true,
+    "semantic_key": "arithmetic:21+9",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 21 + 9?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0003-time",
+    "world_id": "CS1-dev-303-0003-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "11:32",
+    "answerable": true,
+    "semantic_key": "time:10:17:75",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 10:17; 75 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0004-b0-u0",
+    "world_id": "CS1-dev-303-0004",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Mira",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The driver position is held by Theo. The editor position is held by Leon. The keeper position is held by Hugo. The courier position is held by Mira.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Mira\"], [\"driver\", \"Theo\"], [\"editor\", \"Leon\"], [\"keeper\", \"Hugo\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0004-b0-u1",
+    "world_id": "CS1-dev-303-0004",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The driver position is held by Theo. The editor position is held by Leon. The keeper position is held by Hugo. The clerk position is held by Mira.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Mira\"], [\"driver\", \"Theo\"], [\"editor\", \"Leon\"], [\"keeper\", \"Hugo\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0004-b1-u0",
+    "world_id": "CS1-dev-303-0004",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Theo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The driver position is held by Mira. The editor position is held by Leon. The keeper position is held by Hugo. The courier position is held by Theo.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Theo\"], [\"driver\", \"Mira\"], [\"editor\", \"Leon\"], [\"keeper\", \"Hugo\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0004-b1-u1",
+    "world_id": "CS1-dev-303-0004",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The driver position is held by Mira. The editor position is held by Leon. The keeper position is held by Hugo. The clerk position is held by Theo.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Theo\"], [\"driver\", \"Mira\"], [\"editor\", \"Leon\"], [\"keeper\", \"Hugo\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0004-arithmetic",
+    "world_id": "CS1-dev-303-0004-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "80",
+    "answerable": true,
+    "semantic_key": "arithmetic:85-5",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 85 - 5?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0004-time",
+    "world_id": "CS1-dev-303-0004-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "12:10",
+    "answerable": true,
+    "semantic_key": "time:10:45:85",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 10:45; 85 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0005-b0-u0",
+    "world_id": "CS1-dev-303-0005",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Rosa",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The courier position is held by Rosa. The singer position is held by Nora. The clerk position is held by Leon. The baker position is held by Theo.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"clerk\", \"Leon\"], [\"courier\", \"Rosa\"], [\"singer\", \"Nora\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0005-b0-u1",
+    "world_id": "CS1-dev-303-0005",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The driver position is held by Rosa. The singer position is held by Nora. The clerk position is held by Leon. The baker position is held by Theo.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"clerk\", \"Leon\"], [\"driver\", \"Rosa\"], [\"singer\", \"Nora\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0005-b1-u0",
+    "world_id": "CS1-dev-303-0005",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Nora",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The courier position is held by Nora. The singer position is held by Rosa. The clerk position is held by Leon. The baker position is held by Theo.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"clerk\", \"Leon\"], [\"courier\", \"Nora\"], [\"singer\", \"Rosa\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0005-b1-u1",
+    "world_id": "CS1-dev-303-0005",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The driver position is held by Nora. The singer position is held by Rosa. The clerk position is held by Leon. The baker position is held by Theo.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"clerk\", \"Leon\"], [\"driver\", \"Nora\"], [\"singer\", \"Rosa\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0005-arithmetic",
+    "world_id": "CS1-dev-303-0005-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "17",
+    "answerable": true,
+    "semantic_key": "arithmetic:15+2",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 15 + 2?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0005-time",
+    "world_id": "CS1-dev-303-0005-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "12:42",
+    "answerable": true,
+    "semantic_key": "time:12:34:8",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 12:34; 8 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0006-b0-u0",
+    "world_id": "CS1-dev-303-0006",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Omar",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The baker position is held by Lena. The editor position is held by Omar. The keeper position is held by Ada. The clerk position is held by Theo.\nName the person holding the editor position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Lena\"], [\"clerk\", \"Theo\"], [\"editor\", \"Omar\"], [\"keeper\", \"Ada\"]], \"editor\"]"
+  },
+  {
+    "id": "CS1-dev-303-0006-b0-u1",
+    "world_id": "CS1-dev-303-0006",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The baker position is held by Lena. The singer position is held by Omar. The keeper position is held by Ada. The clerk position is held by Theo.\nName the person holding the editor position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Lena\"], [\"clerk\", \"Theo\"], [\"keeper\", \"Ada\"], [\"singer\", \"Omar\"]], \"editor\"]"
+  },
+  {
+    "id": "CS1-dev-303-0006-b1-u0",
+    "world_id": "CS1-dev-303-0006",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Ada",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The baker position is held by Lena. The editor position is held by Ada. The keeper position is held by Omar. The clerk position is held by Theo.\nName the person holding the editor position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Lena\"], [\"clerk\", \"Theo\"], [\"editor\", \"Ada\"], [\"keeper\", \"Omar\"]], \"editor\"]"
+  },
+  {
+    "id": "CS1-dev-303-0006-b1-u1",
+    "world_id": "CS1-dev-303-0006",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The baker position is held by Lena. The singer position is held by Ada. The keeper position is held by Omar. The clerk position is held by Theo.\nName the person holding the editor position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Lena\"], [\"clerk\", \"Theo\"], [\"keeper\", \"Omar\"], [\"singer\", \"Ada\"]], \"editor\"]"
+  },
+  {
+    "id": "CS1-dev-303-0006-arithmetic",
+    "world_id": "CS1-dev-303-0006-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "72",
+    "answerable": true,
+    "semantic_key": "arithmetic:76-4",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 76 - 4?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0006-time",
+    "world_id": "CS1-dev-303-0006-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "18:39",
+    "answerable": true,
+    "semantic_key": "time:17:11:88",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 17:11; 88 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0007-b0-u0",
+    "world_id": "CS1-dev-303-0007",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Hugo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The courier position is held by Theo. The driver position is held by Iris. The painter position is held by Hugo. The singer position is held by Noah.\nName the person holding the painter position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Theo\"], [\"driver\", \"Iris\"], [\"painter\", \"Hugo\"], [\"singer\", \"Noah\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-dev-303-0007-b0-u1",
+    "world_id": "CS1-dev-303-0007",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The courier position is held by Theo. The driver position is held by Iris. The editor position is held by Hugo. The singer position is held by Noah.\nName the person holding the painter position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Theo\"], [\"driver\", \"Iris\"], [\"editor\", \"Hugo\"], [\"singer\", \"Noah\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-dev-303-0007-b1-u0",
+    "world_id": "CS1-dev-303-0007",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Noah",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The courier position is held by Theo. The driver position is held by Iris. The painter position is held by Noah. The singer position is held by Hugo.\nName the person holding the painter position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Theo\"], [\"driver\", \"Iris\"], [\"painter\", \"Noah\"], [\"singer\", \"Hugo\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-dev-303-0007-b1-u1",
+    "world_id": "CS1-dev-303-0007",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The courier position is held by Theo. The driver position is held by Iris. The editor position is held by Noah. The singer position is held by Hugo.\nName the person holding the painter position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Theo\"], [\"driver\", \"Iris\"], [\"editor\", \"Noah\"], [\"singer\", \"Hugo\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-dev-303-0007-arithmetic",
+    "world_id": "CS1-dev-303-0007-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "64",
+    "answerable": true,
+    "semantic_key": "arithmetic:56+8",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 56 + 8?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0007-time",
+    "world_id": "CS1-dev-303-0007-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "14:08",
+    "answerable": true,
+    "semantic_key": "time:13:2:66",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 13:02; 66 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0008-b0-u0",
+    "world_id": "CS1-dev-303-0008",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Iris",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The singer position is held by Rosa. The keeper position is held by Nora. The painter position is held by Iris. The editor position is held by Hugo.\nName the person holding the painter position."
+      }
+    ],
+    "semantic_key": "[[[\"editor\", \"Hugo\"], [\"keeper\", \"Nora\"], [\"painter\", \"Iris\"], [\"singer\", \"Rosa\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-dev-303-0008-b0-u1",
+    "world_id": "CS1-dev-303-0008",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The singer position is held by Rosa. The keeper position is held by Nora. The courier position is held by Iris. The editor position is held by Hugo.\nName the person holding the painter position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Iris\"], [\"editor\", \"Hugo\"], [\"keeper\", \"Nora\"], [\"singer\", \"Rosa\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-dev-303-0008-b1-u0",
+    "world_id": "CS1-dev-303-0008",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Hugo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The singer position is held by Rosa. The keeper position is held by Nora. The painter position is held by Hugo. The editor position is held by Iris.\nName the person holding the painter position."
+      }
+    ],
+    "semantic_key": "[[[\"editor\", \"Iris\"], [\"keeper\", \"Nora\"], [\"painter\", \"Hugo\"], [\"singer\", \"Rosa\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-dev-303-0008-b1-u1",
+    "world_id": "CS1-dev-303-0008",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The singer position is held by Rosa. The keeper position is held by Nora. The courier position is held by Hugo. The editor position is held by Iris.\nName the person holding the painter position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Hugo\"], [\"editor\", \"Iris\"], [\"keeper\", \"Nora\"], [\"singer\", \"Rosa\"]], \"painter\"]"
+  },
+  {
+    "id": "CS1-dev-303-0008-arithmetic",
+    "world_id": "CS1-dev-303-0008-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "66",
+    "answerable": true,
+    "semantic_key": "arithmetic:70-4",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 70 - 4?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0008-time",
+    "world_id": "CS1-dev-303-0008-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "14:50",
+    "answerable": true,
+    "semantic_key": "time:13:34:76",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 13:34; 76 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0009-b0-u0",
+    "world_id": "CS1-dev-303-0009",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Ada",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The driver position is held by Theo. The baker position is held by Lena. The clerk position is held by Hugo. The courier position is held by Ada.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Lena\"], [\"clerk\", \"Hugo\"], [\"courier\", \"Ada\"], [\"driver\", \"Theo\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0009-b0-u1",
+    "world_id": "CS1-dev-303-0009",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The driver position is held by Theo. The baker position is held by Lena. The clerk position is held by Hugo. The painter position is held by Ada.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Lena\"], [\"clerk\", \"Hugo\"], [\"driver\", \"Theo\"], [\"painter\", \"Ada\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0009-b1-u0",
+    "world_id": "CS1-dev-303-0009",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Theo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The driver position is held by Ada. The baker position is held by Lena. The clerk position is held by Hugo. The courier position is held by Theo.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Lena\"], [\"clerk\", \"Hugo\"], [\"courier\", \"Theo\"], [\"driver\", \"Ada\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0009-b1-u1",
+    "world_id": "CS1-dev-303-0009",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The driver position is held by Ada. The baker position is held by Lena. The clerk position is held by Hugo. The painter position is held by Theo.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Lena\"], [\"clerk\", \"Hugo\"], [\"driver\", \"Ada\"], [\"painter\", \"Theo\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0009-arithmetic",
+    "world_id": "CS1-dev-303-0009-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "49",
+    "answerable": true,
+    "semantic_key": "arithmetic:42+7",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 42 + 7?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0009-time",
+    "world_id": "CS1-dev-303-0009-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "16:30",
+    "answerable": true,
+    "semantic_key": "time:15:51:39",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 15:51; 39 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0010-b0-u0",
+    "world_id": "CS1-dev-303-0010",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Lena",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The clerk position is held by Lena. The painter position is held by Omar. The baker position is held by Nora. The driver position is held by Noah.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"clerk\", \"Lena\"], [\"driver\", \"Noah\"], [\"painter\", \"Omar\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0010-b0-u1",
+    "world_id": "CS1-dev-303-0010",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The courier position is held by Lena. The painter position is held by Omar. The baker position is held by Nora. The driver position is held by Noah.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"courier\", \"Lena\"], [\"driver\", \"Noah\"], [\"painter\", \"Omar\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0010-b1-u0",
+    "world_id": "CS1-dev-303-0010",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Omar",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The clerk position is held by Omar. The painter position is held by Lena. The baker position is held by Nora. The driver position is held by Noah.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"clerk\", \"Omar\"], [\"driver\", \"Noah\"], [\"painter\", \"Lena\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0010-b1-u1",
+    "world_id": "CS1-dev-303-0010",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The courier position is held by Omar. The painter position is held by Lena. The baker position is held by Nora. The driver position is held by Noah.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"courier\", \"Omar\"], [\"driver\", \"Noah\"], [\"painter\", \"Lena\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0010-arithmetic",
+    "world_id": "CS1-dev-303-0010-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "75",
+    "answerable": true,
+    "semantic_key": "arithmetic:82-7",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 82 - 7?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0010-time",
+    "world_id": "CS1-dev-303-0010-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "13:38",
+    "answerable": true,
+    "semantic_key": "time:12:25:73",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 12:25; 73 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0011-b0-u0",
+    "world_id": "CS1-dev-303-0011",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Theo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The clerk position is held by Leon. The driver position is held by Theo. The painter position is held by Nora. The baker position is held by Mira.\nName the person holding the driver position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"clerk\", \"Leon\"], [\"driver\", \"Theo\"], [\"painter\", \"Nora\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-dev-303-0011-b0-u1",
+    "world_id": "CS1-dev-303-0011",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The clerk position is held by Leon. The keeper position is held by Theo. The painter position is held by Nora. The baker position is held by Mira.\nName the person holding the driver position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"clerk\", \"Leon\"], [\"keeper\", \"Theo\"], [\"painter\", \"Nora\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-dev-303-0011-b1-u0",
+    "world_id": "CS1-dev-303-0011",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Nora",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The clerk position is held by Leon. The driver position is held by Nora. The painter position is held by Theo. The baker position is held by Mira.\nName the person holding the driver position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"clerk\", \"Leon\"], [\"driver\", \"Nora\"], [\"painter\", \"Theo\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-dev-303-0011-b1-u1",
+    "world_id": "CS1-dev-303-0011",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The clerk position is held by Leon. The keeper position is held by Nora. The painter position is held by Theo. The baker position is held by Mira.\nName the person holding the driver position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"clerk\", \"Leon\"], [\"keeper\", \"Nora\"], [\"painter\", \"Theo\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-dev-303-0011-arithmetic",
+    "world_id": "CS1-dev-303-0011-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "73",
+    "answerable": true,
+    "semantic_key": "arithmetic:65+8",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 65 + 8?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0011-time",
+    "world_id": "CS1-dev-303-0011-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "12:05",
+    "answerable": true,
+    "semantic_key": "time:11:55:10",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 11:55; 10 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0012-b0-u0",
+    "world_id": "CS1-dev-303-0012",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Lena",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The keeper position is held by Ada. The clerk position is held by Lena. The editor position is held by Mira. The driver position is held by Leon.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Lena\"], [\"driver\", \"Leon\"], [\"editor\", \"Mira\"], [\"keeper\", \"Ada\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0012-b0-u1",
+    "world_id": "CS1-dev-303-0012",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The keeper position is held by Ada. The courier position is held by Lena. The editor position is held by Mira. The driver position is held by Leon.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Lena\"], [\"driver\", \"Leon\"], [\"editor\", \"Mira\"], [\"keeper\", \"Ada\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0012-b1-u0",
+    "world_id": "CS1-dev-303-0012",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Mira",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The keeper position is held by Ada. The clerk position is held by Mira. The editor position is held by Lena. The driver position is held by Leon.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Mira\"], [\"driver\", \"Leon\"], [\"editor\", \"Lena\"], [\"keeper\", \"Ada\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0012-b1-u1",
+    "world_id": "CS1-dev-303-0012",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The keeper position is held by Ada. The courier position is held by Mira. The editor position is held by Lena. The driver position is held by Leon.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Mira\"], [\"driver\", \"Leon\"], [\"editor\", \"Lena\"], [\"keeper\", \"Ada\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0012-arithmetic",
+    "world_id": "CS1-dev-303-0012-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "66",
+    "answerable": true,
+    "semantic_key": "arithmetic:72-6",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 72 - 6?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0012-time",
+    "world_id": "CS1-dev-303-0012-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "16:50",
+    "answerable": true,
+    "semantic_key": "time:16:23:27",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 16:23; 27 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0013-b0-u0",
+    "world_id": "CS1-dev-303-0013",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Rosa",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The editor position is held by Ada. The clerk position is held by Leon. The singer position is held by Rosa. The painter position is held by Ivan.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Leon\"], [\"editor\", \"Ada\"], [\"painter\", \"Ivan\"], [\"singer\", \"Rosa\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0013-b0-u1",
+    "world_id": "CS1-dev-303-0013",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The editor position is held by Ada. The clerk position is held by Leon. The keeper position is held by Rosa. The painter position is held by Ivan.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Leon\"], [\"editor\", \"Ada\"], [\"keeper\", \"Rosa\"], [\"painter\", \"Ivan\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0013-b1-u0",
+    "world_id": "CS1-dev-303-0013",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Ivan",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The editor position is held by Ada. The clerk position is held by Leon. The singer position is held by Ivan. The painter position is held by Rosa.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Leon\"], [\"editor\", \"Ada\"], [\"painter\", \"Rosa\"], [\"singer\", \"Ivan\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0013-b1-u1",
+    "world_id": "CS1-dev-303-0013",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The editor position is held by Ada. The clerk position is held by Leon. The keeper position is held by Ivan. The painter position is held by Rosa.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Leon\"], [\"editor\", \"Ada\"], [\"keeper\", \"Ivan\"], [\"painter\", \"Rosa\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0013-arithmetic",
+    "world_id": "CS1-dev-303-0013-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "16",
+    "answerable": true,
+    "semantic_key": "arithmetic:14+2",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 14 + 2?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0013-time",
+    "world_id": "CS1-dev-303-0013-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "12:18",
+    "answerable": true,
+    "semantic_key": "time:11:31:47",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 11:31; 47 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0014-b0-u0",
+    "world_id": "CS1-dev-303-0014",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Ada",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The singer position is held by Noah. The editor position is held by Leon. The driver position is held by Rosa. The keeper position is held by Ada.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Rosa\"], [\"editor\", \"Leon\"], [\"keeper\", \"Ada\"], [\"singer\", \"Noah\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0014-b0-u1",
+    "world_id": "CS1-dev-303-0014",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The singer position is held by Noah. The editor position is held by Leon. The driver position is held by Rosa. The clerk position is held by Ada.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Ada\"], [\"driver\", \"Rosa\"], [\"editor\", \"Leon\"], [\"singer\", \"Noah\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0014-b1-u0",
+    "world_id": "CS1-dev-303-0014",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Noah",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The singer position is held by Ada. The editor position is held by Leon. The driver position is held by Rosa. The keeper position is held by Noah.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"driver\", \"Rosa\"], [\"editor\", \"Leon\"], [\"keeper\", \"Noah\"], [\"singer\", \"Ada\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0014-b1-u1",
+    "world_id": "CS1-dev-303-0014",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The singer position is held by Ada. The editor position is held by Leon. The driver position is held by Rosa. The clerk position is held by Noah.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Noah\"], [\"driver\", \"Rosa\"], [\"editor\", \"Leon\"], [\"singer\", \"Ada\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0014-arithmetic",
+    "world_id": "CS1-dev-303-0014-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "46",
+    "answerable": true,
+    "semantic_key": "arithmetic:50-4",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 50 - 4?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0014-time",
+    "world_id": "CS1-dev-303-0014-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "15:51",
+    "answerable": true,
+    "semantic_key": "time:14:47:64",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 14:47; 64 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0015-b0-u0",
+    "world_id": "CS1-dev-303-0015",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Noah",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The singer position is held by Noah. The editor position is held by Hugo. The keeper position is held by Ada. The baker position is held by Mira.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"editor\", \"Hugo\"], [\"keeper\", \"Ada\"], [\"singer\", \"Noah\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0015-b0-u1",
+    "world_id": "CS1-dev-303-0015",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The driver position is held by Noah. The editor position is held by Hugo. The keeper position is held by Ada. The baker position is held by Mira.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"driver\", \"Noah\"], [\"editor\", \"Hugo\"], [\"keeper\", \"Ada\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0015-b1-u0",
+    "world_id": "CS1-dev-303-0015",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Hugo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The singer position is held by Hugo. The editor position is held by Noah. The keeper position is held by Ada. The baker position is held by Mira.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"editor\", \"Noah\"], [\"keeper\", \"Ada\"], [\"singer\", \"Hugo\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0015-b1-u1",
+    "world_id": "CS1-dev-303-0015",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The driver position is held by Hugo. The editor position is held by Noah. The keeper position is held by Ada. The baker position is held by Mira.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"driver\", \"Hugo\"], [\"editor\", \"Noah\"], [\"keeper\", \"Ada\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0015-arithmetic",
+    "world_id": "CS1-dev-303-0015-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "37",
+    "answerable": true,
+    "semantic_key": "arithmetic:34+3",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 34 + 3?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0015-time",
+    "world_id": "CS1-dev-303-0015-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "10:21",
+    "answerable": true,
+    "semantic_key": "time:9:29:52",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 09:29; 52 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0016-b0-u0",
+    "world_id": "CS1-dev-303-0016",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Noah",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The keeper position is held by Noah. The driver position is held by Iris. The singer position is held by Rosa. The clerk position is held by Ivan.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Ivan\"], [\"driver\", \"Iris\"], [\"keeper\", \"Noah\"], [\"singer\", \"Rosa\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0016-b0-u1",
+    "world_id": "CS1-dev-303-0016",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The editor position is held by Noah. The driver position is held by Iris. The singer position is held by Rosa. The clerk position is held by Ivan.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Ivan\"], [\"driver\", \"Iris\"], [\"editor\", \"Noah\"], [\"singer\", \"Rosa\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0016-b1-u0",
+    "world_id": "CS1-dev-303-0016",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Iris",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The keeper position is held by Iris. The driver position is held by Noah. The singer position is held by Rosa. The clerk position is held by Ivan.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Ivan\"], [\"driver\", \"Noah\"], [\"keeper\", \"Iris\"], [\"singer\", \"Rosa\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0016-b1-u1",
+    "world_id": "CS1-dev-303-0016",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The editor position is held by Iris. The driver position is held by Noah. The singer position is held by Rosa. The clerk position is held by Ivan.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Ivan\"], [\"driver\", \"Noah\"], [\"editor\", \"Iris\"], [\"singer\", \"Rosa\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0016-arithmetic",
+    "world_id": "CS1-dev-303-0016-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "25",
+    "answerable": true,
+    "semantic_key": "arithmetic:28-3",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 28 - 3?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0016-time",
+    "world_id": "CS1-dev-303-0016-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "15:43",
+    "answerable": true,
+    "semantic_key": "time:14:48:55",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 14:48; 55 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0017-b0-u0",
+    "world_id": "CS1-dev-303-0017",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Ivan",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The painter position is held by Iris. The courier position is held by Ivan. The editor position is held by Nora. The baker position is held by Ada.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ada\"], [\"courier\", \"Ivan\"], [\"editor\", \"Nora\"], [\"painter\", \"Iris\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0017-b0-u1",
+    "world_id": "CS1-dev-303-0017",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The painter position is held by Iris. The clerk position is held by Ivan. The editor position is held by Nora. The baker position is held by Ada.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ada\"], [\"clerk\", \"Ivan\"], [\"editor\", \"Nora\"], [\"painter\", \"Iris\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0017-b1-u0",
+    "world_id": "CS1-dev-303-0017",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Nora",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The painter position is held by Iris. The courier position is held by Nora. The editor position is held by Ivan. The baker position is held by Ada.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ada\"], [\"courier\", \"Nora\"], [\"editor\", \"Ivan\"], [\"painter\", \"Iris\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0017-b1-u1",
+    "world_id": "CS1-dev-303-0017",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The painter position is held by Iris. The clerk position is held by Nora. The editor position is held by Ivan. The baker position is held by Ada.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ada\"], [\"clerk\", \"Nora\"], [\"editor\", \"Ivan\"], [\"painter\", \"Iris\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0017-arithmetic",
+    "world_id": "CS1-dev-303-0017-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "23",
+    "answerable": true,
+    "semantic_key": "arithmetic:21+2",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 21 + 2?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0017-time",
+    "world_id": "CS1-dev-303-0017-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "10:16",
+    "answerable": true,
+    "semantic_key": "time:9:56:20",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 09:56; 20 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0018-b0-u0",
+    "world_id": "CS1-dev-303-0018",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Theo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The editor position is held by Ivan. The courier position is held by Mira. The keeper position is held by Theo. The baker position is held by Iris.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Iris\"], [\"courier\", \"Mira\"], [\"editor\", \"Ivan\"], [\"keeper\", \"Theo\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0018-b0-u1",
+    "world_id": "CS1-dev-303-0018",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The editor position is held by Ivan. The courier position is held by Mira. The clerk position is held by Theo. The baker position is held by Iris.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Iris\"], [\"clerk\", \"Theo\"], [\"courier\", \"Mira\"], [\"editor\", \"Ivan\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0018-b1-u0",
+    "world_id": "CS1-dev-303-0018",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Iris",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The editor position is held by Ivan. The courier position is held by Mira. The keeper position is held by Iris. The baker position is held by Theo.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"courier\", \"Mira\"], [\"editor\", \"Ivan\"], [\"keeper\", \"Iris\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0018-b1-u1",
+    "world_id": "CS1-dev-303-0018",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The editor position is held by Ivan. The courier position is held by Mira. The clerk position is held by Iris. The baker position is held by Theo.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Theo\"], [\"clerk\", \"Iris\"], [\"courier\", \"Mira\"], [\"editor\", \"Ivan\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0018-arithmetic",
+    "world_id": "CS1-dev-303-0018-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "40",
+    "answerable": true,
+    "semantic_key": "arithmetic:46-6",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 46 - 6?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0018-time",
+    "world_id": "CS1-dev-303-0018-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "15:37",
+    "answerable": true,
+    "semantic_key": "time:14:38:59",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 14:38; 59 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0019-b0-u0",
+    "world_id": "CS1-dev-303-0019",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Hugo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The singer position is held by Mira. The driver position is held by Omar. The baker position is held by Ivan. The courier position is held by Hugo.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ivan\"], [\"courier\", \"Hugo\"], [\"driver\", \"Omar\"], [\"singer\", \"Mira\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0019-b0-u1",
+    "world_id": "CS1-dev-303-0019",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The singer position is held by Mira. The driver position is held by Omar. The baker position is held by Ivan. The editor position is held by Hugo.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ivan\"], [\"driver\", \"Omar\"], [\"editor\", \"Hugo\"], [\"singer\", \"Mira\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0019-b1-u0",
+    "world_id": "CS1-dev-303-0019",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Mira",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The singer position is held by Hugo. The driver position is held by Omar. The baker position is held by Ivan. The courier position is held by Mira.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ivan\"], [\"courier\", \"Mira\"], [\"driver\", \"Omar\"], [\"singer\", \"Hugo\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0019-b1-u1",
+    "world_id": "CS1-dev-303-0019",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The singer position is held by Hugo. The driver position is held by Omar. The baker position is held by Ivan. The editor position is held by Mira.\nName the person holding the courier position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ivan\"], [\"driver\", \"Omar\"], [\"editor\", \"Mira\"], [\"singer\", \"Hugo\"]], \"courier\"]"
+  },
+  {
+    "id": "CS1-dev-303-0019-arithmetic",
+    "world_id": "CS1-dev-303-0019-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "70",
+    "answerable": true,
+    "semantic_key": "arithmetic:63+7",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 63 + 7?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0019-time",
+    "world_id": "CS1-dev-303-0019-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "17:51",
+    "answerable": true,
+    "semantic_key": "time:17:22:29",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 17:22; 29 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0020-b0-u0",
+    "world_id": "CS1-dev-303-0020",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Ivan",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The courier position is held by Lena. The painter position is held by Leon. The driver position is held by Hugo. The clerk position is held by Ivan.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Ivan\"], [\"courier\", \"Lena\"], [\"driver\", \"Hugo\"], [\"painter\", \"Leon\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0020-b0-u1",
+    "world_id": "CS1-dev-303-0020",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The courier position is held by Lena. The painter position is held by Leon. The driver position is held by Hugo. The baker position is held by Ivan.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Ivan\"], [\"courier\", \"Lena\"], [\"driver\", \"Hugo\"], [\"painter\", \"Leon\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0020-b1-u0",
+    "world_id": "CS1-dev-303-0020",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Lena",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The courier position is held by Ivan. The painter position is held by Leon. The driver position is held by Hugo. The clerk position is held by Lena.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Lena\"], [\"courier\", \"Ivan\"], [\"driver\", \"Hugo\"], [\"painter\", \"Leon\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0020-b1-u1",
+    "world_id": "CS1-dev-303-0020",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The courier position is held by Ivan. The painter position is held by Leon. The driver position is held by Hugo. The baker position is held by Lena.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Lena\"], [\"courier\", \"Ivan\"], [\"driver\", \"Hugo\"], [\"painter\", \"Leon\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0020-arithmetic",
+    "world_id": "CS1-dev-303-0020-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "54",
+    "answerable": true,
+    "semantic_key": "arithmetic:60-6",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 60 - 6?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0020-time",
+    "world_id": "CS1-dev-303-0020-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "09:01",
+    "answerable": true,
+    "semantic_key": "time:8:22:39",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 08:22; 39 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0021-b0-u0",
+    "world_id": "CS1-dev-303-0021",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Ada",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The keeper position is held by Ada. The editor position is held by Rosa. The courier position is held by Mira. The singer position is held by Noah.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Mira\"], [\"editor\", \"Rosa\"], [\"keeper\", \"Ada\"], [\"singer\", \"Noah\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0021-b0-u1",
+    "world_id": "CS1-dev-303-0021",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The painter position is held by Ada. The editor position is held by Rosa. The courier position is held by Mira. The singer position is held by Noah.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Mira\"], [\"editor\", \"Rosa\"], [\"painter\", \"Ada\"], [\"singer\", \"Noah\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0021-b1-u0",
+    "world_id": "CS1-dev-303-0021",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Rosa",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The keeper position is held by Rosa. The editor position is held by Ada. The courier position is held by Mira. The singer position is held by Noah.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Mira\"], [\"editor\", \"Ada\"], [\"keeper\", \"Rosa\"], [\"singer\", \"Noah\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0021-b1-u1",
+    "world_id": "CS1-dev-303-0021",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The painter position is held by Rosa. The editor position is held by Ada. The courier position is held by Mira. The singer position is held by Noah.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Mira\"], [\"editor\", \"Ada\"], [\"painter\", \"Rosa\"], [\"singer\", \"Noah\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0021-arithmetic",
+    "world_id": "CS1-dev-303-0021-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "23",
+    "answerable": true,
+    "semantic_key": "arithmetic:16+7",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 16 + 7?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0021-time",
+    "world_id": "CS1-dev-303-0021-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "16:08",
+    "answerable": true,
+    "semantic_key": "time:15:50:18",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 15:50; 18 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0022-b0-u0",
+    "world_id": "CS1-dev-303-0022",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Mira",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The baker position is held by Rosa. The keeper position is held by Mira. The driver position is held by Lena. The courier position is held by Leon.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Rosa\"], [\"courier\", \"Leon\"], [\"driver\", \"Lena\"], [\"keeper\", \"Mira\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0022-b0-u1",
+    "world_id": "CS1-dev-303-0022",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The baker position is held by Rosa. The singer position is held by Mira. The driver position is held by Lena. The courier position is held by Leon.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Rosa\"], [\"courier\", \"Leon\"], [\"driver\", \"Lena\"], [\"singer\", \"Mira\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0022-b1-u0",
+    "world_id": "CS1-dev-303-0022",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Lena",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The baker position is held by Rosa. The keeper position is held by Lena. The driver position is held by Mira. The courier position is held by Leon.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Rosa\"], [\"courier\", \"Leon\"], [\"driver\", \"Mira\"], [\"keeper\", \"Lena\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0022-b1-u1",
+    "world_id": "CS1-dev-303-0022",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The baker position is held by Rosa. The singer position is held by Lena. The driver position is held by Mira. The courier position is held by Leon.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Rosa\"], [\"courier\", \"Leon\"], [\"driver\", \"Mira\"], [\"singer\", \"Lena\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0022-arithmetic",
+    "world_id": "CS1-dev-303-0022-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "33",
+    "answerable": true,
+    "semantic_key": "arithmetic:40-7",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 40 - 7?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0022-time",
+    "world_id": "CS1-dev-303-0022-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "12:29",
+    "answerable": true,
+    "semantic_key": "time:11:48:41",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 11:48; 41 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0023-b0-u0",
+    "world_id": "CS1-dev-303-0023",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Hugo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The clerk position is held by Theo. The baker position is held by Mira. The driver position is held by Hugo. The courier position is held by Rosa.\nName the person holding the driver position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"clerk\", \"Theo\"], [\"courier\", \"Rosa\"], [\"driver\", \"Hugo\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-dev-303-0023-b0-u1",
+    "world_id": "CS1-dev-303-0023",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The clerk position is held by Theo. The baker position is held by Mira. The editor position is held by Hugo. The courier position is held by Rosa.\nName the person holding the driver position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"clerk\", \"Theo\"], [\"courier\", \"Rosa\"], [\"editor\", \"Hugo\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-dev-303-0023-b1-u0",
+    "world_id": "CS1-dev-303-0023",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Rosa",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The clerk position is held by Theo. The baker position is held by Mira. The driver position is held by Rosa. The courier position is held by Hugo.\nName the person holding the driver position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"clerk\", \"Theo\"], [\"courier\", \"Hugo\"], [\"driver\", \"Rosa\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-dev-303-0023-b1-u1",
+    "world_id": "CS1-dev-303-0023",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The clerk position is held by Theo. The baker position is held by Mira. The editor position is held by Rosa. The courier position is held by Hugo.\nName the person holding the driver position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"clerk\", \"Theo\"], [\"courier\", \"Hugo\"], [\"editor\", \"Rosa\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-dev-303-0023-arithmetic",
+    "world_id": "CS1-dev-303-0023-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "51",
+    "answerable": true,
+    "semantic_key": "arithmetic:46+5",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 46 + 5?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0023-time",
+    "world_id": "CS1-dev-303-0023-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "09:13",
+    "answerable": true,
+    "semantic_key": "time:8:20:53",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 08:20; 53 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0024-b0-u0",
+    "world_id": "CS1-dev-303-0024",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Nora",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The courier position is held by Lena. The keeper position is held by Noah. The clerk position is held by Nora. The driver position is held by Hugo.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Nora\"], [\"courier\", \"Lena\"], [\"driver\", \"Hugo\"], [\"keeper\", \"Noah\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0024-b0-u1",
+    "world_id": "CS1-dev-303-0024",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The courier position is held by Lena. The keeper position is held by Noah. The painter position is held by Nora. The driver position is held by Hugo.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Lena\"], [\"driver\", \"Hugo\"], [\"keeper\", \"Noah\"], [\"painter\", \"Nora\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0024-b1-u0",
+    "world_id": "CS1-dev-303-0024",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Hugo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The courier position is held by Lena. The keeper position is held by Noah. The clerk position is held by Hugo. The driver position is held by Nora.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"clerk\", \"Hugo\"], [\"courier\", \"Lena\"], [\"driver\", \"Nora\"], [\"keeper\", \"Noah\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0024-b1-u1",
+    "world_id": "CS1-dev-303-0024",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The courier position is held by Lena. The keeper position is held by Noah. The painter position is held by Hugo. The driver position is held by Nora.\nName the person holding the clerk position."
+      }
+    ],
+    "semantic_key": "[[[\"courier\", \"Lena\"], [\"driver\", \"Nora\"], [\"keeper\", \"Noah\"], [\"painter\", \"Hugo\"]], \"clerk\"]"
+  },
+  {
+    "id": "CS1-dev-303-0024-arithmetic",
+    "world_id": "CS1-dev-303-0024-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "69",
+    "answerable": true,
+    "semantic_key": "arithmetic:77-8",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 77 - 8?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0024-time",
+    "world_id": "CS1-dev-303-0024-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "09:19",
+    "answerable": true,
+    "semantic_key": "time:8:21:58",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 08:21; 58 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0025-b0-u0",
+    "world_id": "CS1-dev-303-0025",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Nora",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The baker position is held by Iris. The editor position is held by Theo. The courier position is held by Hugo. The keeper position is held by Nora.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Iris\"], [\"courier\", \"Hugo\"], [\"editor\", \"Theo\"], [\"keeper\", \"Nora\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0025-b0-u1",
+    "world_id": "CS1-dev-303-0025",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The baker position is held by Iris. The editor position is held by Theo. The courier position is held by Hugo. The clerk position is held by Nora.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Iris\"], [\"clerk\", \"Nora\"], [\"courier\", \"Hugo\"], [\"editor\", \"Theo\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0025-b1-u0",
+    "world_id": "CS1-dev-303-0025",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Iris",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The baker position is held by Nora. The editor position is held by Theo. The courier position is held by Hugo. The keeper position is held by Iris.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"courier\", \"Hugo\"], [\"editor\", \"Theo\"], [\"keeper\", \"Iris\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0025-b1-u1",
+    "world_id": "CS1-dev-303-0025",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The baker position is held by Nora. The editor position is held by Theo. The courier position is held by Hugo. The clerk position is held by Iris.\nName the person holding the keeper position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Nora\"], [\"clerk\", \"Iris\"], [\"courier\", \"Hugo\"], [\"editor\", \"Theo\"]], \"keeper\"]"
+  },
+  {
+    "id": "CS1-dev-303-0025-arithmetic",
+    "world_id": "CS1-dev-303-0025-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "48",
+    "answerable": true,
+    "semantic_key": "arithmetic:45+3",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 45 + 3?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0025-time",
+    "world_id": "CS1-dev-303-0025-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "09:32",
+    "answerable": true,
+    "semantic_key": "time:9:1:31",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 09:01; 31 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0026-b0-u0",
+    "world_id": "CS1-dev-303-0026",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Hugo",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The driver position is held by Hugo. The baker position is held by Mira. The singer position is held by Rosa. The painter position is held by Ada.\nName the person holding the driver position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"driver\", \"Hugo\"], [\"painter\", \"Ada\"], [\"singer\", \"Rosa\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-dev-303-0026-b0-u1",
+    "world_id": "CS1-dev-303-0026",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The courier position is held by Hugo. The baker position is held by Mira. The singer position is held by Rosa. The painter position is held by Ada.\nName the person holding the driver position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Mira\"], [\"courier\", \"Hugo\"], [\"painter\", \"Ada\"], [\"singer\", \"Rosa\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-dev-303-0026-b1-u0",
+    "world_id": "CS1-dev-303-0026",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": false,
+    "reference": "Mira",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The driver position is held by Mira. The baker position is held by Hugo. The singer position is held by Rosa. The painter position is held by Ada.\nName the person holding the driver position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Hugo\"], [\"driver\", \"Mira\"], [\"painter\", \"Ada\"], [\"singer\", \"Rosa\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-dev-303-0026-b1-u1",
+    "world_id": "CS1-dev-303-0026",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": false,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The courier position is held by Mira. The baker position is held by Hugo. The singer position is held by Rosa. The painter position is held by Ada.\nName the person holding the driver position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Hugo\"], [\"courier\", \"Mira\"], [\"painter\", \"Ada\"], [\"singer\", \"Rosa\"]], \"driver\"]"
+  },
+  {
+    "id": "CS1-dev-303-0026-arithmetic",
+    "world_id": "CS1-dev-303-0026-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "39",
+    "answerable": true,
+    "semantic_key": "arithmetic:44-5",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 44 - 5?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0026-time",
+    "world_id": "CS1-dev-303-0026-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "14:03",
+    "answerable": true,
+    "semantic_key": "time:13:13:50",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 13:13; 50 minutes pass. Give the end time."
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0027-b0-u0",
+    "world_id": "CS1-dev-303-0027",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Ada",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The clerk position is held by Rosa. The singer position is held by Ada. The editor position is held by Leon. The baker position is held by Noah.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Noah\"], [\"clerk\", \"Rosa\"], [\"editor\", \"Leon\"], [\"singer\", \"Ada\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0027-b0-u1",
+    "world_id": "CS1-dev-303-0027",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The clerk position is held by Rosa. The keeper position is held by Ada. The editor position is held by Leon. The baker position is held by Noah.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Noah\"], [\"clerk\", \"Rosa\"], [\"editor\", \"Leon\"], [\"keeper\", \"Ada\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0027-b1-u0",
+    "world_id": "CS1-dev-303-0027",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": true,
+    "long": true,
+    "reference": "Leon",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The clerk position is held by Rosa. The singer position is held by Leon. The editor position is held by Ada. The baker position is held by Noah.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Noah\"], [\"clerk\", \"Rosa\"], [\"editor\", \"Ada\"], [\"singer\", \"Leon\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0027-b1-u1",
+    "world_id": "CS1-dev-303-0027",
+    "split": "dev",
+    "family": "binding",
+    "template": "position_held",
+    "answerable": false,
+    "long": true,
+    "reference": "UNKNOWN",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Answer using only the roster. Return just the person's name. If the roster does not identify that person, return UNKNOWN and nothing else."
+      },
+      {
+        "role": "user",
+        "content": "The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The building has a blue door. The hall contains a wooden bench. The clerk position is held by Rosa. The keeper position is held by Leon. The editor position is held by Ada. The baker position is held by Noah.\nName the person holding the singer position."
+      }
+    ],
+    "semantic_key": "[[[\"baker\", \"Noah\"], [\"clerk\", \"Rosa\"], [\"editor\", \"Ada\"], [\"keeper\", \"Leon\"]], \"singer\"]"
+  },
+  {
+    "id": "CS1-dev-303-0027-arithmetic",
+    "world_id": "CS1-dev-303-0027-arithmetic",
+    "split": "dev",
+    "family": "arithmetic",
+    "template": "dev_arithmetic",
+    "reference": "71",
+    "answerable": true,
+    "semantic_key": "arithmetic:62+9",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Return only the integer answer."
+      },
+      {
+        "role": "user",
+        "content": "What is the result of 62 + 9?"
+      }
+    ]
+  },
+  {
+    "id": "CS1-dev-303-0027-time",
+    "world_id": "CS1-dev-303-0027-time",
+    "split": "dev",
+    "family": "time",
+    "template": "dev_time",
+    "reference": "10:54",
+    "answerable": true,
+    "semantic_key": "time:10:42:12",
+    "prompt": [
+      {
+        "role": "system",
+        "content": "Use 24-hour HH:MM format only."
+      },
+      {
+        "role": "user",
+        "content": "The start time is 10:42; 12 minutes pass. Give the end time."
+      }
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<02:37,  1.96it/s]Loading weights:  95%|#########5| 295/310 [00:00<00:00, 643.50it/s]Loading weights: 100%|##########| 310/310 [00:00<00:00, 492.63it/s]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\clclc\BusinessProject\ChatBubble-slft\research\composable_skills_v1\pilot.py", line 539, in <module>
+    main()
+  File "C:\Users\clclc\BusinessProject\ChatBubble-slft\research\composable_skills_v1\pilot.py", line 526, in main
+    baseline(out, plan)
+  File "C:\Users\clclc\BusinessProject\ChatBubble-slft\research\composable_skills_v1\pilot.py", line 278, in baseline
+    predictions = generate(model, tokenizer, anchors, plan, dest / "anchor_predictions.jsonl", 12)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-slft\research\composable_skills_v1\pilot.py", line 227, in generate
+    ids = torch.tensor([prompt_ids(tokenizer, row)], device="cuda")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Could not infer dtype of tokenizers.Encoding
