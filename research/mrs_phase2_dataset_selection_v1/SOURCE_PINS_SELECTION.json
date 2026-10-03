@@ -1,0 +1,42 @@
+{
+  "stage": "P0_DATASET_COMPARISON",
+  "created_utc": "2026-09-17T04:09:49.823511+00:00",
+  "repository": "LUNCY579/ChatBubble",
+  "branch": "codex/mrs-phase2-dataset-selection-v1",
+  "parent_sha": "a4a250338e85442b3762e9c5f0a620ee803c9969",
+  "source_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-mrs-phase2-dataset-selection-v1",
+  "source_status": "?? experiments/mrs_phase2_dataset_selection_v1/\n?? research/mrs_phase2_dataset_selection_v1/",
+  "user_authorized_scope": "Compare delivered CC0 and 6000 long-context datasets; proceed only through passing PhaseII gates",
+  "native_training_allowed_by_this_record": false,
+  "no_original_dataset_changes": true,
+  "protected_data_reads": 0,
+  "MRS_reference": {
+    "worktree": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-multi-reasoning-frozen-scout-v1",
+    "branch": "codex/multi-reasoning-frozen-scout-v1-completion",
+    "head": "50cb16f27c0ad5f941d572eca90f11d59f00d040",
+    "source_commit": "a4a250338e85442b3762e9c5f0a620ee803c9969",
+    "freeze_sha256": "278ce0962bd10864fba7d8ce2e7248579f18b22495d176c4f0f40db903a68837",
+    "bank_sha256": "c6b98cb5e8ffd35828fb4634f9f2c69a977a02fe426bce0061b70fe8aab8d156",
+    "evaluation_protocol_changed": false
+  },
+  "candidate_scopes": {
+    "cc0": [
+      "train",
+      "validation"
+    ],
+    "lcr6000": [
+      "train",
+      "dev",
+      "holdout:already-exposed data development"
+    ]
+  },
+  "excluded_paths": [
+    "CC0 main test",
+    "CC0 sealed prompts",
+    "CC0 sealed answer key",
+    "CC0 mixed raw anchors",
+    "all external ANY_READ or protected evaluation payloads"
+  ],
+  "historical_artifacts_preserved": true,
+  "runtime_python": "3.11.15"
+}

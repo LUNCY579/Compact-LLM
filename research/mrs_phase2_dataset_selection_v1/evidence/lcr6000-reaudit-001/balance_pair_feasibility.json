@@ -1,0 +1,3965 @@
+{
+  "scope": "Each global/within-band pair separately, preserving both realized marginals. Exact integer max-flow with +/-3% relative-count cell bounds. Does not prove a single six-way table can realize every pair witness simultaneously.",
+  "global": {
+    "split__length_band": {
+      "feasible": true,
+      "required_residual_flow": 180,
+      "achieved_flow": 180,
+      "witness": [
+        {
+          "left": "dev",
+          "right": "long",
+          "count": 206
+        },
+        {
+          "left": "dev",
+          "right": "medium",
+          "count": 200
+        },
+        {
+          "left": "dev",
+          "right": "short",
+          "count": 194
+        },
+        {
+          "left": "holdout",
+          "right": "long",
+          "count": 206
+        },
+        {
+          "left": "holdout",
+          "right": "medium",
+          "count": 200
+        },
+        {
+          "left": "holdout",
+          "right": "short",
+          "count": 194
+        },
+        {
+          "left": "train",
+          "right": "long",
+          "count": 1588
+        },
+        {
+          "left": "train",
+          "right": "medium",
+          "count": 1600
+        },
+        {
+          "left": "train",
+          "right": "short",
+          "count": 1612
+        }
+      ]
+    },
+    "split__task_type": {
+      "feasible": true,
+      "required_residual_flow": 173,
+      "achieved_flow": 173,
+      "witness": [
+        {
+          "left": "dev",
+          "right": "alias_resolution",
+          "count": 123
+        },
+        {
+          "left": "dev",
+          "right": "causal_disambiguation",
+          "count": 103
+        },
+        {
+          "left": "dev",
+          "right": "count_with_exclusion",
+          "count": 82
+        },
+        {
+          "left": "dev",
+          "right": "latest_verified",
+          "count": 39
+        },
+        {
+          "left": "dev",
+          "right": "multi_condition",
+          "count": 39
+        },
+        {
+          "left": "dev",
+          "right": "object_state_tracking",
+          "count": 49
+        },
+        {
+          "left": "dev",
+          "right": "rule_exception",
+          "count": 97
+        },
+        {
+          "left": "dev",
+          "right": "temporal_correlation",
+          "count": 68
+        },
+        {
+          "left": "holdout",
+          "right": "alias_resolution",
+          "count": 123
+        },
+        {
+          "left": "holdout",
+          "right": "causal_disambiguation",
+          "count": 103
+        },
+        {
+          "left": "holdout",
+          "right": "count_with_exclusion",
+          "count": 82
+        },
+        {
+          "left": "holdout",
+          "right": "latest_verified",
+          "count": 39
+        },
+        {
+          "left": "holdout",
+          "right": "multi_condition",
+          "count": 39
+        },
+        {
+          "left": "holdout",
+          "right": "object_state_tracking",
+          "count": 49
+        },
+        {
+          "left": "holdout",
+          "right": "rule_exception",
+          "count": 97
+        },
+        {
+          "left": "holdout",
+          "right": "temporal_correlation",
+          "count": 68
+        },
+        {
+          "left": "train",
+          "right": "alias_resolution",
+          "count": 954
+        },
+        {
+          "left": "train",
+          "right": "causal_disambiguation",
+          "count": 794
+        },
+        {
+          "left": "train",
+          "right": "count_with_exclusion",
+          "count": 636
+        },
+        {
+          "left": "train",
+          "right": "latest_verified",
+          "count": 322
+        },
+        {
+          "left": "train",
+          "right": "multi_condition",
+          "count": 322
+        },
+        {
+          "left": "train",
+          "right": "object_state_tracking",
+          "count": 402
+        },
+        {
+          "left": "train",
+          "right": "rule_exception",
+          "count": 806
+        },
+        {
+          "left": "train",
+          "right": "temporal_correlation",
+          "count": 564
+        }
+      ]
+    },
+    "split__variant": {
+      "feasible": true,
+      "required_residual_flow": 174,
+      "achieved_flow": 174,
+      "witness": [
+        {
+          "left": "dev",
+          "right": "answerable",
+          "count": 278
+        },
+        {
+          "left": "dev",
+          "right": "counterfactual",
+          "count": 88
+        },
+        {
+          "left": "dev",
+          "right": "paraphrase",
+          "count": 59
+        },
+        {
+          "left": "dev",
+          "right": "unanswerable",
+          "count": 175
+        },
+        {
+          "left": "holdout",
+          "right": "answerable",
+          "count": 278
+        },
+        {
+          "left": "holdout",
+          "right": "counterfactual",
+          "count": 88
+        },
+        {
+          "left": "holdout",
+          "right": "paraphrase",
+          "count": 59
+        },
+        {
+          "left": "holdout",
+          "right": "unanswerable",
+          "count": 175
+        },
+        {
+          "left": "train",
+          "right": "answerable",
+          "count": 2144
+        },
+        {
+          "left": "train",
+          "right": "counterfactual",
+          "count": 724
+        },
+        {
+          "left": "train",
+          "right": "paraphrase",
+          "count": 482
+        },
+        {
+          "left": "train",
+          "right": "unanswerable",
+          "count": 1450
+        }
+      ]
+    },
+    "split__needle_position": {
+      "feasible": true,
+      "required_residual_flow": 173,
+      "achieved_flow": 173,
+      "witness": [
+        {
+          "left": "dev",
+          "right": "distributed",
+          "count": 123
+        },
+        {
+          "left": "dev",
+          "right": "early",
+          "count": 243
+        },
+        {
+          "left": "dev",
+          "right": "late",
+          "count": 117
+        },
+        {
+          "left": "dev",
+          "right": "middle",
+          "count": 117
+        },
+        {
+          "left": "holdout",
+          "right": "distributed",
+          "count": 123
+        },
+        {
+          "left": "holdout",
+          "right": "early",
+          "count": 243
+        },
+        {
+          "left": "holdout",
+          "right": "late",
+          "count": 117
+        },
+        {
+          "left": "holdout",
+          "right": "middle",
+          "count": 117
+        },
+        {
+          "left": "train",
+          "right": "distributed",
+          "count": 954
+        },
+        {
+          "left": "train",
+          "right": "early",
+          "count": 1914
+        },
+        {
+          "left": "train",
+          "right": "late",
+          "count": 966
+        },
+        {
+          "left": "train",
+          "right": "middle",
+          "count": 966
+        }
+      ]
+    },
+    "split__difficulty": {
+      "feasible": true,
+      "required_residual_flow": 177,
+      "achieved_flow": 177,
+      "witness": [
+        {
+          "left": "dev",
+          "right": "hard",
+          "count": 367
+        },
+        {
+          "left": "dev",
+          "right": "medium",
+          "count": 233
+        },
+        {
+          "left": "holdout",
+          "right": "hard",
+          "count": 367
+        },
+        {
+          "left": "holdout",
+          "right": "medium",
+          "count": 233
+        },
+        {
+          "left": "train",
+          "right": "hard",
+          "count": 2866
+        },
+        {
+          "left": "train",
+          "right": "medium",
+          "count": 1934
+        }
+      ]
+    },
+    "length_band__task_type": {
+      "feasible": true,
+      "required_residual_flow": 168,
+      "achieved_flow": 168,
+      "witness": [
+        {
+          "left": "long",
+          "right": "alias_resolution",
+          "count": 399
+        },
+        {
+          "left": "long",
+          "right": "causal_disambiguation",
+          "count": 343
+        },
+        {
+          "left": "long",
+          "right": "count_with_exclusion",
+          "count": 272
+        },
+        {
+          "left": "long",
+          "right": "latest_verified",
+          "count": 130
+        },
+        {
+          "left": "long",
+          "right": "multi_condition",
+          "count": 130
+        },
+        {
+          "left": "long",
+          "right": "object_state_tracking",
+          "count": 162
+        },
+        {
+          "left": "long",
+          "right": "rule_exception",
+          "count": 331
+        },
+        {
+          "left": "long",
+          "right": "temporal_correlation",
+          "count": 233
+        },
+        {
+          "left": "medium",
+          "right": "alias_resolution",
+          "count": 400
+        },
+        {
+          "left": "medium",
+          "right": "causal_disambiguation",
+          "count": 333
+        },
+        {
+          "left": "medium",
+          "right": "count_with_exclusion",
+          "count": 269
+        },
+        {
+          "left": "medium",
+          "right": "latest_verified",
+          "count": 137
+        },
+        {
+          "left": "medium",
+          "right": "multi_condition",
+          "count": 137
+        },
+        {
+          "left": "medium",
+          "right": "object_state_tracking",
+          "count": 171
+        },
+        {
+          "left": "medium",
+          "right": "rule_exception",
+          "count": 326
+        },
+        {
+          "left": "medium",
+          "right": "temporal_correlation",
+          "count": 227
+        },
+        {
+          "left": "short",
+          "right": "alias_resolution",
+          "count": 401
+        },
+        {
+          "left": "short",
+          "right": "causal_disambiguation",
+          "count": 324
+        },
+        {
+          "left": "short",
+          "right": "count_with_exclusion",
+          "count": 259
+        },
+        {
+          "left": "short",
+          "right": "latest_verified",
+          "count": 133
+        },
+        {
+          "left": "short",
+          "right": "multi_condition",
+          "count": 133
+        },
+        {
+          "left": "short",
+          "right": "object_state_tracking",
+          "count": 167
+        },
+        {
+          "left": "short",
+          "right": "rule_exception",
+          "count": 343
+        },
+        {
+          "left": "short",
+          "right": "temporal_correlation",
+          "count": 240
+        }
+      ]
+    },
+    "length_band__variant": {
+      "feasible": true,
+      "required_residual_flow": 180,
+      "achieved_flow": 180,
+      "witness": [
+        {
+          "left": "long",
+          "right": "answerable",
+          "count": 912
+        },
+        {
+          "left": "long",
+          "right": "counterfactual",
+          "count": 297
+        },
+        {
+          "left": "long",
+          "right": "paraphrase",
+          "count": 194
+        },
+        {
+          "left": "long",
+          "right": "unanswerable",
+          "count": 597
+        },
+        {
+          "left": "medium",
+          "right": "answerable",
+          "count": 900
+        },
+        {
+          "left": "medium",
+          "right": "counterfactual",
+          "count": 309
+        },
+        {
+          "left": "medium",
+          "right": "paraphrase",
+          "count": 206
+        },
+        {
+          "left": "medium",
+          "right": "unanswerable",
+          "count": 585
+        },
+        {
+          "left": "short",
+          "right": "answerable",
+          "count": 888
+        },
+        {
+          "left": "short",
+          "right": "counterfactual",
+          "count": 294
+        },
+        {
+          "left": "short",
+          "right": "paraphrase",
+          "count": 200
+        },
+        {
+          "left": "short",
+          "right": "unanswerable",
+          "count": 618
+        }
+      ]
+    },
+    "length_band__needle_position": {
+      "feasible": true,
+      "required_residual_flow": 180,
+      "achieved_flow": 180,
+      "witness": [
+        {
+          "left": "long",
+          "right": "distributed",
+          "count": 400
+        },
+        {
+          "left": "long",
+          "right": "early",
+          "count": 812
+        },
+        {
+          "left": "long",
+          "right": "late",
+          "count": 388
+        },
+        {
+          "left": "long",
+          "right": "middle",
+          "count": 400
+        },
+        {
+          "left": "medium",
+          "right": "distributed",
+          "count": 400
+        },
+        {
+          "left": "medium",
+          "right": "early",
+          "count": 812
+        },
+        {
+          "left": "medium",
+          "right": "late",
+          "count": 400
+        },
+        {
+          "left": "medium",
+          "right": "middle",
+          "count": 388
+        },
+        {
+          "left": "short",
+          "right": "distributed",
+          "count": 400
+        },
+        {
+          "left": "short",
+          "right": "early",
+          "count": 776
+        },
+        {
+          "left": "short",
+          "right": "late",
+          "count": 412
+        },
+        {
+          "left": "short",
+          "right": "middle",
+          "count": 412
+        }
+      ]
+    },
+    "length_band__difficulty": {
+      "feasible": true,
+      "required_residual_flow": 180,
+      "achieved_flow": 180,
+      "witness": [
+        {
+          "left": "long",
+          "right": "hard",
+          "count": 1212
+        },
+        {
+          "left": "long",
+          "right": "medium",
+          "count": 788
+        },
+        {
+          "left": "medium",
+          "right": "hard",
+          "count": 1212
+        },
+        {
+          "left": "medium",
+          "right": "medium",
+          "count": 788
+        },
+        {
+          "left": "short",
+          "right": "hard",
+          "count": 1176
+        },
+        {
+          "left": "short",
+          "right": "medium",
+          "count": 824
+        }
+      ]
+    },
+    "task_type__variant": {
+      "feasible": true,
+      "required_residual_flow": 167,
+      "achieved_flow": 167,
+      "witness": [
+        {
+          "left": "alias_resolution",
+          "right": "answerable",
+          "count": 552
+        },
+        {
+          "left": "alias_resolution",
+          "right": "counterfactual",
+          "count": 177
+        },
+        {
+          "left": "alias_resolution",
+          "right": "paraphrase",
+          "count": 117
+        },
+        {
+          "left": "alias_resolution",
+          "right": "unanswerable",
+          "count": 354
+        },
+        {
+          "left": "causal_disambiguation",
+          "right": "answerable",
+          "count": 463
+        },
+        {
+          "left": "causal_disambiguation",
+          "right": "counterfactual",
+          "count": 149
+        },
+        {
+          "left": "causal_disambiguation",
+          "right": "paraphrase",
+          "count": 97
+        },
+        {
+          "left": "causal_disambiguation",
+          "right": "unanswerable",
+          "count": 291
+        },
+        {
+          "left": "count_with_exclusion",
+          "right": "answerable",
+          "count": 369
+        },
+        {
+          "left": "count_with_exclusion",
+          "right": "counterfactual",
+          "count": 120
+        },
+        {
+          "left": "count_with_exclusion",
+          "right": "paraphrase",
+          "count": 78
+        },
+        {
+          "left": "count_with_exclusion",
+          "right": "unanswerable",
+          "count": 233
+        },
+        {
+          "left": "latest_verified",
+          "right": "answerable",
+          "count": 175
+        },
+        {
+          "left": "latest_verified",
+          "right": "counterfactual",
+          "count": 61
+        },
+        {
+          "left": "latest_verified",
+          "right": "paraphrase",
+          "count": 41
+        },
+        {
+          "left": "latest_verified",
+          "right": "unanswerable",
+          "count": 123
+        },
+        {
+          "left": "multi_condition",
+          "right": "answerable",
+          "count": 175
+        },
+        {
+          "left": "multi_condition",
+          "right": "counterfactual",
+          "count": 61
+        },
+        {
+          "left": "multi_condition",
+          "right": "paraphrase",
+          "count": 41
+        },
+        {
+          "left": "multi_condition",
+          "right": "unanswerable",
+          "count": 123
+        },
+        {
+          "left": "object_state_tracking",
+          "right": "answerable",
+          "count": 219
+        },
+        {
+          "left": "object_state_tracking",
+          "right": "counterfactual",
+          "count": 77
+        },
+        {
+          "left": "object_state_tracking",
+          "right": "paraphrase",
+          "count": 51
+        },
+        {
+          "left": "object_state_tracking",
+          "right": "unanswerable",
+          "count": 153
+        },
+        {
+          "left": "rule_exception",
+          "right": "answerable",
+          "count": 437
+        },
+        {
+          "left": "rule_exception",
+          "right": "counterfactual",
+          "count": 153
+        },
+        {
+          "left": "rule_exception",
+          "right": "paraphrase",
+          "count": 103
+        },
+        {
+          "left": "rule_exception",
+          "right": "unanswerable",
+          "count": 307
+        },
+        {
+          "left": "temporal_correlation",
+          "right": "answerable",
+          "count": 310
+        },
+        {
+          "left": "temporal_correlation",
+          "right": "counterfactual",
+          "count": 102
+        },
+        {
+          "left": "temporal_correlation",
+          "right": "paraphrase",
+          "count": 72
+        },
+        {
+          "left": "temporal_correlation",
+          "right": "unanswerable",
+          "count": 216
+        }
+      ]
+    },
+    "task_type__needle_position": {
+      "feasible": true,
+      "required_residual_flow": 171,
+      "achieved_flow": 171,
+      "witness": [
+        {
+          "left": "alias_resolution",
+          "right": "distributed",
+          "count": 235
+        },
+        {
+          "left": "alias_resolution",
+          "right": "early",
+          "count": 487
+        },
+        {
+          "left": "alias_resolution",
+          "right": "late",
+          "count": 237
+        },
+        {
+          "left": "alias_resolution",
+          "right": "middle",
+          "count": 241
+        },
+        {
+          "left": "causal_disambiguation",
+          "right": "distributed",
+          "count": 206
+        },
+        {
+          "left": "causal_disambiguation",
+          "right": "early",
+          "count": 406
+        },
+        {
+          "left": "causal_disambiguation",
+          "right": "late",
+          "count": 194
+        },
+        {
+          "left": "causal_disambiguation",
+          "right": "middle",
+          "count": 194
+        },
+        {
+          "left": "count_with_exclusion",
+          "right": "distributed",
+          "count": 164
+        },
+        {
+          "left": "count_with_exclusion",
+          "right": "early",
+          "count": 324
+        },
+        {
+          "left": "count_with_exclusion",
+          "right": "late",
+          "count": 156
+        },
+        {
+          "left": "count_with_exclusion",
+          "right": "middle",
+          "count": 156
+        },
+        {
+          "left": "latest_verified",
+          "right": "distributed",
+          "count": 78
+        },
+        {
+          "left": "latest_verified",
+          "right": "early",
+          "count": 164
+        },
+        {
+          "left": "latest_verified",
+          "right": "late",
+          "count": 80
+        },
+        {
+          "left": "latest_verified",
+          "right": "middle",
+          "count": 78
+        },
+        {
+          "left": "multi_condition",
+          "right": "distributed",
+          "count": 78
+        },
+        {
+          "left": "multi_condition",
+          "right": "early",
+          "count": 164
+        },
+        {
+          "left": "multi_condition",
+          "right": "late",
+          "count": 80
+        },
+        {
+          "left": "multi_condition",
+          "right": "middle",
+          "count": 78
+        },
+        {
+          "left": "object_state_tracking",
+          "right": "distributed",
+          "count": 99
+        },
+        {
+          "left": "object_state_tracking",
+          "right": "early",
+          "count": 195
+        },
+        {
+          "left": "object_state_tracking",
+          "right": "late",
+          "count": 103
+        },
+        {
+          "left": "object_state_tracking",
+          "right": "middle",
+          "count": 103
+        },
+        {
+          "left": "rule_exception",
+          "right": "distributed",
+          "count": 200
+        },
+        {
+          "left": "rule_exception",
+          "right": "early",
+          "count": 388
+        },
+        {
+          "left": "rule_exception",
+          "right": "late",
+          "count": 206
+        },
+        {
+          "left": "rule_exception",
+          "right": "middle",
+          "count": 206
+        },
+        {
+          "left": "temporal_correlation",
+          "right": "distributed",
+          "count": 140
+        },
+        {
+          "left": "temporal_correlation",
+          "right": "early",
+          "count": 272
+        },
+        {
+          "left": "temporal_correlation",
+          "right": "late",
+          "count": 144
+        },
+        {
+          "left": "temporal_correlation",
+          "right": "middle",
+          "count": 144
+        }
+      ]
+    },
+    "task_type__difficulty": {
+      "feasible": true,
+      "required_residual_flow": 175,
+      "achieved_flow": 175,
+      "witness": [
+        {
+          "left": "alias_resolution",
+          "right": "hard",
+          "count": 721
+        },
+        {
+          "left": "alias_resolution",
+          "right": "medium",
+          "count": 479
+        },
+        {
+          "left": "causal_disambiguation",
+          "right": "hard",
+          "count": 612
+        },
+        {
+          "left": "causal_disambiguation",
+          "right": "medium",
+          "count": 388
+        },
+        {
+          "left": "count_with_exclusion",
+          "right": "hard",
+          "count": 489
+        },
+        {
+          "left": "count_with_exclusion",
+          "right": "medium",
+          "count": 311
+        },
+        {
+          "left": "latest_verified",
+          "right": "hard",
+          "count": 244
+        },
+        {
+          "left": "latest_verified",
+          "right": "medium",
+          "count": 156
+        },
+        {
+          "left": "multi_condition",
+          "right": "hard",
+          "count": 240
+        },
+        {
+          "left": "multi_condition",
+          "right": "medium",
+          "count": 160
+        },
+        {
+          "left": "object_state_tracking",
+          "right": "hard",
+          "count": 294
+        },
+        {
+          "left": "object_state_tracking",
+          "right": "medium",
+          "count": 206
+        },
+        {
+          "left": "rule_exception",
+          "right": "hard",
+          "count": 588
+        },
+        {
+          "left": "rule_exception",
+          "right": "medium",
+          "count": 412
+        },
+        {
+          "left": "temporal_correlation",
+          "right": "hard",
+          "count": 412
+        },
+        {
+          "left": "temporal_correlation",
+          "right": "medium",
+          "count": 288
+        }
+      ]
+    },
+    "variant__needle_position": {
+      "feasible": true,
+      "required_residual_flow": 172,
+      "achieved_flow": 172,
+      "witness": [
+        {
+          "left": "answerable",
+          "right": "distributed",
+          "count": 543
+        },
+        {
+          "left": "answerable",
+          "right": "early",
+          "count": 1096
+        },
+        {
+          "left": "answerable",
+          "right": "late",
+          "count": 529
+        },
+        {
+          "left": "answerable",
+          "right": "middle",
+          "count": 532
+        },
+        {
+          "left": "counterfactual",
+          "right": "distributed",
+          "count": 177
+        },
+        {
+          "left": "counterfactual",
+          "right": "early",
+          "count": 370
+        },
+        {
+          "left": "counterfactual",
+          "right": "late",
+          "count": 178
+        },
+        {
+          "left": "counterfactual",
+          "right": "middle",
+          "count": 175
+        },
+        {
+          "left": "paraphrase",
+          "right": "distributed",
+          "count": 119
+        },
+        {
+          "left": "paraphrase",
+          "right": "early",
+          "count": 235
+        },
+        {
+          "left": "paraphrase",
+          "right": "late",
+          "count": 123
+        },
+        {
+          "left": "paraphrase",
+          "right": "middle",
+          "count": 123
+        },
+        {
+          "left": "unanswerable",
+          "right": "distributed",
+          "count": 361
+        },
+        {
+          "left": "unanswerable",
+          "right": "early",
+          "count": 699
+        },
+        {
+          "left": "unanswerable",
+          "right": "late",
+          "count": 370
+        },
+        {
+          "left": "unanswerable",
+          "right": "middle",
+          "count": 370
+        }
+      ]
+    },
+    "variant__difficulty": {
+      "feasible": true,
+      "required_residual_flow": 176,
+      "achieved_flow": 176,
+      "witness": [
+        {
+          "left": "answerable",
+          "right": "hard",
+          "count": 1638
+        },
+        {
+          "left": "answerable",
+          "right": "medium",
+          "count": 1062
+        },
+        {
+          "left": "counterfactual",
+          "right": "hard",
+          "count": 550
+        },
+        {
+          "left": "counterfactual",
+          "right": "medium",
+          "count": 350
+        },
+        {
+          "left": "paraphrase",
+          "right": "hard",
+          "count": 353
+        },
+        {
+          "left": "paraphrase",
+          "right": "medium",
+          "count": 247
+        },
+        {
+          "left": "unanswerable",
+          "right": "hard",
+          "count": 1059
+        },
+        {
+          "left": "unanswerable",
+          "right": "medium",
+          "count": 741
+        }
+      ]
+    },
+    "needle_position__difficulty": {
+      "feasible": true,
+      "required_residual_flow": 176,
+      "achieved_flow": 176,
+      "witness": [
+        {
+          "left": "distributed",
+          "right": "hard",
+          "count": 720
+        },
+        {
+          "left": "distributed",
+          "right": "medium",
+          "count": 480
+        },
+        {
+          "left": "early",
+          "right": "hard",
+          "count": 1468
+        },
+        {
+          "left": "early",
+          "right": "medium",
+          "count": 932
+        },
+        {
+          "left": "late",
+          "right": "hard",
+          "count": 706
+        },
+        {
+          "left": "late",
+          "right": "medium",
+          "count": 494
+        },
+        {
+          "left": "middle",
+          "right": "hard",
+          "count": 706
+        },
+        {
+          "left": "middle",
+          "right": "medium",
+          "count": 494
+        }
+      ]
+    }
+  },
+  "within_band": {
+    "short": {
+      "split__task_type": {
+        "feasible": true,
+        "required_residual_flow": 50,
+        "achieved_flow": 50,
+        "witness": [
+          {
+            "left": "dev",
+            "right": "alias_resolution",
+            "count": 41
+          },
+          {
+            "left": "dev",
+            "right": "causal_disambiguation",
+            "count": 34
+          },
+          {
+            "left": "dev",
+            "right": "count_with_exclusion",
+            "count": 26
+          },
+          {
+            "left": "dev",
+            "right": "latest_verified",
+            "count": 13
+          },
+          {
+            "left": "dev",
+            "right": "multi_condition",
+            "count": 13
+          },
+          {
+            "left": "dev",
+            "right": "object_state_tracking",
+            "count": 17
+          },
+          {
+            "left": "dev",
+            "right": "rule_exception",
+            "count": 33
+          },
+          {
+            "left": "dev",
+            "right": "temporal_correlation",
+            "count": 23
+          },
+          {
+            "left": "holdout",
+            "right": "alias_resolution",
+            "count": 41
+          },
+          {
+            "left": "holdout",
+            "right": "causal_disambiguation",
+            "count": 34
+          },
+          {
+            "left": "holdout",
+            "right": "count_with_exclusion",
+            "count": 26
+          },
+          {
+            "left": "holdout",
+            "right": "latest_verified",
+            "count": 13
+          },
+          {
+            "left": "holdout",
+            "right": "multi_condition",
+            "count": 13
+          },
+          {
+            "left": "holdout",
+            "right": "object_state_tracking",
+            "count": 17
+          },
+          {
+            "left": "holdout",
+            "right": "rule_exception",
+            "count": 33
+          },
+          {
+            "left": "holdout",
+            "right": "temporal_correlation",
+            "count": 23
+          },
+          {
+            "left": "train",
+            "right": "alias_resolution",
+            "count": 318
+          },
+          {
+            "left": "train",
+            "right": "causal_disambiguation",
+            "count": 265
+          },
+          {
+            "left": "train",
+            "right": "count_with_exclusion",
+            "count": 215
+          },
+          {
+            "left": "train",
+            "right": "latest_verified",
+            "count": 108
+          },
+          {
+            "left": "train",
+            "right": "multi_condition",
+            "count": 107
+          },
+          {
+            "left": "train",
+            "right": "object_state_tracking",
+            "count": 132
+          },
+          {
+            "left": "train",
+            "right": "rule_exception",
+            "count": 268
+          },
+          {
+            "left": "train",
+            "right": "temporal_correlation",
+            "count": 187
+          }
+        ]
+      },
+      "split__variant": {
+        "feasible": true,
+        "required_residual_flow": 52,
+        "achieved_flow": 52,
+        "witness": [
+          {
+            "left": "dev",
+            "right": "answerable",
+            "count": 91
+          },
+          {
+            "left": "dev",
+            "right": "counterfactual",
+            "count": 30
+          },
+          {
+            "left": "dev",
+            "right": "paraphrase",
+            "count": 20
+          },
+          {
+            "left": "dev",
+            "right": "unanswerable",
+            "count": 59
+          },
+          {
+            "left": "holdout",
+            "right": "answerable",
+            "count": 91
+          },
+          {
+            "left": "holdout",
+            "right": "counterfactual",
+            "count": 30
+          },
+          {
+            "left": "holdout",
+            "right": "paraphrase",
+            "count": 20
+          },
+          {
+            "left": "holdout",
+            "right": "unanswerable",
+            "count": 59
+          },
+          {
+            "left": "train",
+            "right": "answerable",
+            "count": 718
+          },
+          {
+            "left": "train",
+            "right": "counterfactual",
+            "count": 240
+          },
+          {
+            "left": "train",
+            "right": "paraphrase",
+            "count": 160
+          },
+          {
+            "left": "train",
+            "right": "unanswerable",
+            "count": 482
+          }
+        ]
+      },
+      "split__needle_position": {
+        "feasible": true,
+        "required_residual_flow": 56,
+        "achieved_flow": 56,
+        "witness": [
+          {
+            "left": "dev",
+            "right": "distributed",
+            "count": 41
+          },
+          {
+            "left": "dev",
+            "right": "early",
+            "count": 81
+          },
+          {
+            "left": "dev",
+            "right": "late",
+            "count": 39
+          },
+          {
+            "left": "dev",
+            "right": "middle",
+            "count": 39
+          },
+          {
+            "left": "holdout",
+            "right": "distributed",
+            "count": 41
+          },
+          {
+            "left": "holdout",
+            "right": "early",
+            "count": 81
+          },
+          {
+            "left": "holdout",
+            "right": "late",
+            "count": 39
+          },
+          {
+            "left": "holdout",
+            "right": "middle",
+            "count": 39
+          },
+          {
+            "left": "train",
+            "right": "distributed",
+            "count": 318
+          },
+          {
+            "left": "train",
+            "right": "early",
+            "count": 638
+          },
+          {
+            "left": "train",
+            "right": "late",
+            "count": 322
+          },
+          {
+            "left": "train",
+            "right": "middle",
+            "count": 322
+          }
+        ]
+      },
+      "split__difficulty": {
+        "feasible": true,
+        "required_residual_flow": 57,
+        "achieved_flow": 57,
+        "witness": [
+          {
+            "left": "dev",
+            "right": "hard",
+            "count": 122
+          },
+          {
+            "left": "dev",
+            "right": "medium",
+            "count": 78
+          },
+          {
+            "left": "holdout",
+            "right": "hard",
+            "count": 122
+          },
+          {
+            "left": "holdout",
+            "right": "medium",
+            "count": 78
+          },
+          {
+            "left": "train",
+            "right": "hard",
+            "count": 956
+          },
+          {
+            "left": "train",
+            "right": "medium",
+            "count": 644
+          }
+        ]
+      },
+      "task_type__variant": {
+        "feasible": true,
+        "required_residual_flow": 46,
+        "achieved_flow": 46,
+        "witness": [
+          {
+            "left": "alias_resolution",
+            "right": "answerable",
+            "count": 182
+          },
+          {
+            "left": "alias_resolution",
+            "right": "counterfactual",
+            "count": 59
+          },
+          {
+            "left": "alias_resolution",
+            "right": "paraphrase",
+            "count": 41
+          },
+          {
+            "left": "alias_resolution",
+            "right": "unanswerable",
+            "count": 118
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "answerable",
+            "count": 154
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "counterfactual",
+            "count": 49
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "paraphrase",
+            "count": 33
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "unanswerable",
+            "count": 97
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "answerable",
+            "count": 122
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "counterfactual",
+            "count": 41
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "paraphrase",
+            "count": 26
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "unanswerable",
+            "count": 78
+          },
+          {
+            "left": "latest_verified",
+            "right": "answerable",
+            "count": 60
+          },
+          {
+            "left": "latest_verified",
+            "right": "counterfactual",
+            "count": 20
+          },
+          {
+            "left": "latest_verified",
+            "right": "paraphrase",
+            "count": 13
+          },
+          {
+            "left": "latest_verified",
+            "right": "unanswerable",
+            "count": 41
+          },
+          {
+            "left": "multi_condition",
+            "right": "answerable",
+            "count": 59
+          },
+          {
+            "left": "multi_condition",
+            "right": "counterfactual",
+            "count": 20
+          },
+          {
+            "left": "multi_condition",
+            "right": "paraphrase",
+            "count": 13
+          },
+          {
+            "left": "multi_condition",
+            "right": "unanswerable",
+            "count": 41
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "answerable",
+            "count": 73
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "counterfactual",
+            "count": 25
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "paraphrase",
+            "count": 17
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "unanswerable",
+            "count": 51
+          },
+          {
+            "left": "rule_exception",
+            "right": "answerable",
+            "count": 146
+          },
+          {
+            "left": "rule_exception",
+            "right": "counterfactual",
+            "count": 51
+          },
+          {
+            "left": "rule_exception",
+            "right": "paraphrase",
+            "count": 34
+          },
+          {
+            "left": "rule_exception",
+            "right": "unanswerable",
+            "count": 103
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "answerable",
+            "count": 104
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "counterfactual",
+            "count": 35
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "paraphrase",
+            "count": 23
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "unanswerable",
+            "count": 71
+          }
+        ]
+      },
+      "task_type__needle_position": {
+        "feasible": true,
+        "required_residual_flow": 47,
+        "achieved_flow": 47,
+        "witness": [
+          {
+            "left": "alias_resolution",
+            "right": "distributed",
+            "count": 78
+          },
+          {
+            "left": "alias_resolution",
+            "right": "early",
+            "count": 161
+          },
+          {
+            "left": "alias_resolution",
+            "right": "late",
+            "count": 80
+          },
+          {
+            "left": "alias_resolution",
+            "right": "middle",
+            "count": 81
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "distributed",
+            "count": 68
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "early",
+            "count": 135
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "late",
+            "count": 65
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "middle",
+            "count": 65
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "distributed",
+            "count": 54
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "early",
+            "count": 109
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "late",
+            "count": 52
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "middle",
+            "count": 52
+          },
+          {
+            "left": "latest_verified",
+            "right": "distributed",
+            "count": 26
+          },
+          {
+            "left": "latest_verified",
+            "right": "early",
+            "count": 55
+          },
+          {
+            "left": "latest_verified",
+            "right": "late",
+            "count": 27
+          },
+          {
+            "left": "latest_verified",
+            "right": "middle",
+            "count": 26
+          },
+          {
+            "left": "multi_condition",
+            "right": "distributed",
+            "count": 26
+          },
+          {
+            "left": "multi_condition",
+            "right": "early",
+            "count": 53
+          },
+          {
+            "left": "multi_condition",
+            "right": "late",
+            "count": 27
+          },
+          {
+            "left": "multi_condition",
+            "right": "middle",
+            "count": 27
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "distributed",
+            "count": 33
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "early",
+            "count": 65
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "late",
+            "count": 34
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "middle",
+            "count": 34
+          },
+          {
+            "left": "rule_exception",
+            "right": "distributed",
+            "count": 68
+          },
+          {
+            "left": "rule_exception",
+            "right": "early",
+            "count": 130
+          },
+          {
+            "left": "rule_exception",
+            "right": "late",
+            "count": 68
+          },
+          {
+            "left": "rule_exception",
+            "right": "middle",
+            "count": 68
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "distributed",
+            "count": 47
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "early",
+            "count": 92
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "late",
+            "count": 47
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "middle",
+            "count": 47
+          }
+        ]
+      },
+      "task_type__difficulty": {
+        "feasible": true,
+        "required_residual_flow": 53,
+        "achieved_flow": 53,
+        "witness": [
+          {
+            "left": "alias_resolution",
+            "right": "hard",
+            "count": 239
+          },
+          {
+            "left": "alias_resolution",
+            "right": "medium",
+            "count": 161
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "hard",
+            "count": 203
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "medium",
+            "count": 130
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "hard",
+            "count": 163
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "medium",
+            "count": 104
+          },
+          {
+            "left": "latest_verified",
+            "right": "hard",
+            "count": 82
+          },
+          {
+            "left": "latest_verified",
+            "right": "medium",
+            "count": 52
+          },
+          {
+            "left": "multi_condition",
+            "right": "hard",
+            "count": 80
+          },
+          {
+            "left": "multi_condition",
+            "right": "medium",
+            "count": 53
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "hard",
+            "count": 98
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "medium",
+            "count": 68
+          },
+          {
+            "left": "rule_exception",
+            "right": "hard",
+            "count": 197
+          },
+          {
+            "left": "rule_exception",
+            "right": "medium",
+            "count": 137
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "hard",
+            "count": 138
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "medium",
+            "count": 95
+          }
+        ]
+      },
+      "variant__needle_position": {
+        "feasible": true,
+        "required_residual_flow": 52,
+        "achieved_flow": 52,
+        "witness": [
+          {
+            "left": "answerable",
+            "right": "distributed",
+            "count": 181
+          },
+          {
+            "left": "answerable",
+            "right": "early",
+            "count": 365
+          },
+          {
+            "left": "answerable",
+            "right": "late",
+            "count": 177
+          },
+          {
+            "left": "answerable",
+            "right": "middle",
+            "count": 177
+          },
+          {
+            "left": "counterfactual",
+            "right": "distributed",
+            "count": 59
+          },
+          {
+            "left": "counterfactual",
+            "right": "early",
+            "count": 123
+          },
+          {
+            "left": "counterfactual",
+            "right": "late",
+            "count": 59
+          },
+          {
+            "left": "counterfactual",
+            "right": "middle",
+            "count": 59
+          },
+          {
+            "left": "paraphrase",
+            "right": "distributed",
+            "count": 39
+          },
+          {
+            "left": "paraphrase",
+            "right": "early",
+            "count": 79
+          },
+          {
+            "left": "paraphrase",
+            "right": "late",
+            "count": 41
+          },
+          {
+            "left": "paraphrase",
+            "right": "middle",
+            "count": 41
+          },
+          {
+            "left": "unanswerable",
+            "right": "distributed",
+            "count": 121
+          },
+          {
+            "left": "unanswerable",
+            "right": "early",
+            "count": 233
+          },
+          {
+            "left": "unanswerable",
+            "right": "late",
+            "count": 123
+          },
+          {
+            "left": "unanswerable",
+            "right": "middle",
+            "count": 123
+          }
+        ]
+      },
+      "variant__difficulty": {
+        "feasible": true,
+        "required_residual_flow": 56,
+        "achieved_flow": 56,
+        "witness": [
+          {
+            "left": "answerable",
+            "right": "hard",
+            "count": 546
+          },
+          {
+            "left": "answerable",
+            "right": "medium",
+            "count": 354
+          },
+          {
+            "left": "counterfactual",
+            "right": "hard",
+            "count": 183
+          },
+          {
+            "left": "counterfactual",
+            "right": "medium",
+            "count": 117
+          },
+          {
+            "left": "paraphrase",
+            "right": "hard",
+            "count": 118
+          },
+          {
+            "left": "paraphrase",
+            "right": "medium",
+            "count": 82
+          },
+          {
+            "left": "unanswerable",
+            "right": "hard",
+            "count": 353
+          },
+          {
+            "left": "unanswerable",
+            "right": "medium",
+            "count": 247
+          }
+        ]
+      },
+      "needle_position__difficulty": {
+        "feasible": true,
+        "required_residual_flow": 56,
+        "achieved_flow": 56,
+        "witness": [
+          {
+            "left": "distributed",
+            "right": "hard",
+            "count": 239
+          },
+          {
+            "left": "distributed",
+            "right": "medium",
+            "count": 161
+          },
+          {
+            "left": "early",
+            "right": "hard",
+            "count": 489
+          },
+          {
+            "left": "early",
+            "right": "medium",
+            "count": 311
+          },
+          {
+            "left": "late",
+            "right": "hard",
+            "count": 236
+          },
+          {
+            "left": "late",
+            "right": "medium",
+            "count": 164
+          },
+          {
+            "left": "middle",
+            "right": "hard",
+            "count": 236
+          },
+          {
+            "left": "middle",
+            "right": "medium",
+            "count": 164
+          }
+        ]
+      }
+    },
+    "medium": {
+      "split__task_type": {
+        "feasible": true,
+        "required_residual_flow": 50,
+        "achieved_flow": 50,
+        "witness": [
+          {
+            "left": "dev",
+            "right": "alias_resolution",
+            "count": 41
+          },
+          {
+            "left": "dev",
+            "right": "causal_disambiguation",
+            "count": 34
+          },
+          {
+            "left": "dev",
+            "right": "count_with_exclusion",
+            "count": 26
+          },
+          {
+            "left": "dev",
+            "right": "latest_verified",
+            "count": 13
+          },
+          {
+            "left": "dev",
+            "right": "multi_condition",
+            "count": 13
+          },
+          {
+            "left": "dev",
+            "right": "object_state_tracking",
+            "count": 17
+          },
+          {
+            "left": "dev",
+            "right": "rule_exception",
+            "count": 33
+          },
+          {
+            "left": "dev",
+            "right": "temporal_correlation",
+            "count": 23
+          },
+          {
+            "left": "holdout",
+            "right": "alias_resolution",
+            "count": 41
+          },
+          {
+            "left": "holdout",
+            "right": "causal_disambiguation",
+            "count": 34
+          },
+          {
+            "left": "holdout",
+            "right": "count_with_exclusion",
+            "count": 26
+          },
+          {
+            "left": "holdout",
+            "right": "latest_verified",
+            "count": 13
+          },
+          {
+            "left": "holdout",
+            "right": "multi_condition",
+            "count": 13
+          },
+          {
+            "left": "holdout",
+            "right": "object_state_tracking",
+            "count": 17
+          },
+          {
+            "left": "holdout",
+            "right": "rule_exception",
+            "count": 33
+          },
+          {
+            "left": "holdout",
+            "right": "temporal_correlation",
+            "count": 23
+          },
+          {
+            "left": "train",
+            "right": "alias_resolution",
+            "count": 318
+          },
+          {
+            "left": "train",
+            "right": "causal_disambiguation",
+            "count": 265
+          },
+          {
+            "left": "train",
+            "right": "count_with_exclusion",
+            "count": 215
+          },
+          {
+            "left": "train",
+            "right": "latest_verified",
+            "count": 107
+          },
+          {
+            "left": "train",
+            "right": "multi_condition",
+            "count": 108
+          },
+          {
+            "left": "train",
+            "right": "object_state_tracking",
+            "count": 133
+          },
+          {
+            "left": "train",
+            "right": "rule_exception",
+            "count": 267
+          },
+          {
+            "left": "train",
+            "right": "temporal_correlation",
+            "count": 187
+          }
+        ]
+      },
+      "split__variant": {
+        "feasible": true,
+        "required_residual_flow": 52,
+        "achieved_flow": 52,
+        "witness": [
+          {
+            "left": "dev",
+            "right": "answerable",
+            "count": 91
+          },
+          {
+            "left": "dev",
+            "right": "counterfactual",
+            "count": 30
+          },
+          {
+            "left": "dev",
+            "right": "paraphrase",
+            "count": 20
+          },
+          {
+            "left": "dev",
+            "right": "unanswerable",
+            "count": 59
+          },
+          {
+            "left": "holdout",
+            "right": "answerable",
+            "count": 91
+          },
+          {
+            "left": "holdout",
+            "right": "counterfactual",
+            "count": 30
+          },
+          {
+            "left": "holdout",
+            "right": "paraphrase",
+            "count": 20
+          },
+          {
+            "left": "holdout",
+            "right": "unanswerable",
+            "count": 59
+          },
+          {
+            "left": "train",
+            "right": "answerable",
+            "count": 718
+          },
+          {
+            "left": "train",
+            "right": "counterfactual",
+            "count": 240
+          },
+          {
+            "left": "train",
+            "right": "paraphrase",
+            "count": 160
+          },
+          {
+            "left": "train",
+            "right": "unanswerable",
+            "count": 482
+          }
+        ]
+      },
+      "split__needle_position": {
+        "feasible": true,
+        "required_residual_flow": 56,
+        "achieved_flow": 56,
+        "witness": [
+          {
+            "left": "dev",
+            "right": "distributed",
+            "count": 41
+          },
+          {
+            "left": "dev",
+            "right": "early",
+            "count": 81
+          },
+          {
+            "left": "dev",
+            "right": "late",
+            "count": 39
+          },
+          {
+            "left": "dev",
+            "right": "middle",
+            "count": 39
+          },
+          {
+            "left": "holdout",
+            "right": "distributed",
+            "count": 41
+          },
+          {
+            "left": "holdout",
+            "right": "early",
+            "count": 81
+          },
+          {
+            "left": "holdout",
+            "right": "late",
+            "count": 39
+          },
+          {
+            "left": "holdout",
+            "right": "middle",
+            "count": 39
+          },
+          {
+            "left": "train",
+            "right": "distributed",
+            "count": 318
+          },
+          {
+            "left": "train",
+            "right": "early",
+            "count": 638
+          },
+          {
+            "left": "train",
+            "right": "late",
+            "count": 322
+          },
+          {
+            "left": "train",
+            "right": "middle",
+            "count": 322
+          }
+        ]
+      },
+      "split__difficulty": {
+        "feasible": true,
+        "required_residual_flow": 57,
+        "achieved_flow": 57,
+        "witness": [
+          {
+            "left": "dev",
+            "right": "hard",
+            "count": 122
+          },
+          {
+            "left": "dev",
+            "right": "medium",
+            "count": 78
+          },
+          {
+            "left": "holdout",
+            "right": "hard",
+            "count": 122
+          },
+          {
+            "left": "holdout",
+            "right": "medium",
+            "count": 78
+          },
+          {
+            "left": "train",
+            "right": "hard",
+            "count": 956
+          },
+          {
+            "left": "train",
+            "right": "medium",
+            "count": 644
+          }
+        ]
+      },
+      "task_type__variant": {
+        "feasible": true,
+        "required_residual_flow": 47,
+        "achieved_flow": 47,
+        "witness": [
+          {
+            "left": "alias_resolution",
+            "right": "answerable",
+            "count": 181
+          },
+          {
+            "left": "alias_resolution",
+            "right": "counterfactual",
+            "count": 59
+          },
+          {
+            "left": "alias_resolution",
+            "right": "paraphrase",
+            "count": 41
+          },
+          {
+            "left": "alias_resolution",
+            "right": "unanswerable",
+            "count": 119
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "answerable",
+            "count": 154
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "counterfactual",
+            "count": 49
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "paraphrase",
+            "count": 33
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "unanswerable",
+            "count": 97
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "answerable",
+            "count": 122
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "counterfactual",
+            "count": 41
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "paraphrase",
+            "count": 26
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "unanswerable",
+            "count": 78
+          },
+          {
+            "left": "latest_verified",
+            "right": "answerable",
+            "count": 59
+          },
+          {
+            "left": "latest_verified",
+            "right": "counterfactual",
+            "count": 20
+          },
+          {
+            "left": "latest_verified",
+            "right": "paraphrase",
+            "count": 13
+          },
+          {
+            "left": "latest_verified",
+            "right": "unanswerable",
+            "count": 41
+          },
+          {
+            "left": "multi_condition",
+            "right": "answerable",
+            "count": 60
+          },
+          {
+            "left": "multi_condition",
+            "right": "counterfactual",
+            "count": 20
+          },
+          {
+            "left": "multi_condition",
+            "right": "paraphrase",
+            "count": 13
+          },
+          {
+            "left": "multi_condition",
+            "right": "unanswerable",
+            "count": 41
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "answerable",
+            "count": 74
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "counterfactual",
+            "count": 25
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "paraphrase",
+            "count": 17
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "unanswerable",
+            "count": 51
+          },
+          {
+            "left": "rule_exception",
+            "right": "answerable",
+            "count": 146
+          },
+          {
+            "left": "rule_exception",
+            "right": "counterfactual",
+            "count": 51
+          },
+          {
+            "left": "rule_exception",
+            "right": "paraphrase",
+            "count": 34
+          },
+          {
+            "left": "rule_exception",
+            "right": "unanswerable",
+            "count": 102
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "answerable",
+            "count": 104
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "counterfactual",
+            "count": 35
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "paraphrase",
+            "count": 23
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "unanswerable",
+            "count": 71
+          }
+        ]
+      },
+      "task_type__needle_position": {
+        "feasible": true,
+        "required_residual_flow": 47,
+        "achieved_flow": 47,
+        "witness": [
+          {
+            "left": "alias_resolution",
+            "right": "distributed",
+            "count": 78
+          },
+          {
+            "left": "alias_resolution",
+            "right": "early",
+            "count": 161
+          },
+          {
+            "left": "alias_resolution",
+            "right": "late",
+            "count": 80
+          },
+          {
+            "left": "alias_resolution",
+            "right": "middle",
+            "count": 81
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "distributed",
+            "count": 68
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "early",
+            "count": 135
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "late",
+            "count": 65
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "middle",
+            "count": 65
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "distributed",
+            "count": 54
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "early",
+            "count": 109
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "late",
+            "count": 52
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "middle",
+            "count": 52
+          },
+          {
+            "left": "latest_verified",
+            "right": "distributed",
+            "count": 26
+          },
+          {
+            "left": "latest_verified",
+            "right": "early",
+            "count": 54
+          },
+          {
+            "left": "latest_verified",
+            "right": "late",
+            "count": 27
+          },
+          {
+            "left": "latest_verified",
+            "right": "middle",
+            "count": 26
+          },
+          {
+            "left": "multi_condition",
+            "right": "distributed",
+            "count": 26
+          },
+          {
+            "left": "multi_condition",
+            "right": "early",
+            "count": 54
+          },
+          {
+            "left": "multi_condition",
+            "right": "late",
+            "count": 27
+          },
+          {
+            "left": "multi_condition",
+            "right": "middle",
+            "count": 27
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "distributed",
+            "count": 34
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "early",
+            "count": 65
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "late",
+            "count": 34
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "middle",
+            "count": 34
+          },
+          {
+            "left": "rule_exception",
+            "right": "distributed",
+            "count": 67
+          },
+          {
+            "left": "rule_exception",
+            "right": "early",
+            "count": 130
+          },
+          {
+            "left": "rule_exception",
+            "right": "late",
+            "count": 68
+          },
+          {
+            "left": "rule_exception",
+            "right": "middle",
+            "count": 68
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "distributed",
+            "count": 47
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "early",
+            "count": 92
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "late",
+            "count": 47
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "middle",
+            "count": 47
+          }
+        ]
+      },
+      "task_type__difficulty": {
+        "feasible": true,
+        "required_residual_flow": 53,
+        "achieved_flow": 53,
+        "witness": [
+          {
+            "left": "alias_resolution",
+            "right": "hard",
+            "count": 239
+          },
+          {
+            "left": "alias_resolution",
+            "right": "medium",
+            "count": 161
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "hard",
+            "count": 203
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "medium",
+            "count": 130
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "hard",
+            "count": 163
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "medium",
+            "count": 104
+          },
+          {
+            "left": "latest_verified",
+            "right": "hard",
+            "count": 81
+          },
+          {
+            "left": "latest_verified",
+            "right": "medium",
+            "count": 52
+          },
+          {
+            "left": "multi_condition",
+            "right": "hard",
+            "count": 81
+          },
+          {
+            "left": "multi_condition",
+            "right": "medium",
+            "count": 53
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "hard",
+            "count": 99
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "medium",
+            "count": 68
+          },
+          {
+            "left": "rule_exception",
+            "right": "hard",
+            "count": 196
+          },
+          {
+            "left": "rule_exception",
+            "right": "medium",
+            "count": 137
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "hard",
+            "count": 138
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "medium",
+            "count": 95
+          }
+        ]
+      },
+      "variant__needle_position": {
+        "feasible": true,
+        "required_residual_flow": 52,
+        "achieved_flow": 52,
+        "witness": [
+          {
+            "left": "answerable",
+            "right": "distributed",
+            "count": 181
+          },
+          {
+            "left": "answerable",
+            "right": "early",
+            "count": 365
+          },
+          {
+            "left": "answerable",
+            "right": "late",
+            "count": 177
+          },
+          {
+            "left": "answerable",
+            "right": "middle",
+            "count": 177
+          },
+          {
+            "left": "counterfactual",
+            "right": "distributed",
+            "count": 59
+          },
+          {
+            "left": "counterfactual",
+            "right": "early",
+            "count": 123
+          },
+          {
+            "left": "counterfactual",
+            "right": "late",
+            "count": 59
+          },
+          {
+            "left": "counterfactual",
+            "right": "middle",
+            "count": 59
+          },
+          {
+            "left": "paraphrase",
+            "right": "distributed",
+            "count": 39
+          },
+          {
+            "left": "paraphrase",
+            "right": "early",
+            "count": 79
+          },
+          {
+            "left": "paraphrase",
+            "right": "late",
+            "count": 41
+          },
+          {
+            "left": "paraphrase",
+            "right": "middle",
+            "count": 41
+          },
+          {
+            "left": "unanswerable",
+            "right": "distributed",
+            "count": 121
+          },
+          {
+            "left": "unanswerable",
+            "right": "early",
+            "count": 233
+          },
+          {
+            "left": "unanswerable",
+            "right": "late",
+            "count": 123
+          },
+          {
+            "left": "unanswerable",
+            "right": "middle",
+            "count": 123
+          }
+        ]
+      },
+      "variant__difficulty": {
+        "feasible": true,
+        "required_residual_flow": 56,
+        "achieved_flow": 56,
+        "witness": [
+          {
+            "left": "answerable",
+            "right": "hard",
+            "count": 546
+          },
+          {
+            "left": "answerable",
+            "right": "medium",
+            "count": 354
+          },
+          {
+            "left": "counterfactual",
+            "right": "hard",
+            "count": 183
+          },
+          {
+            "left": "counterfactual",
+            "right": "medium",
+            "count": 117
+          },
+          {
+            "left": "paraphrase",
+            "right": "hard",
+            "count": 118
+          },
+          {
+            "left": "paraphrase",
+            "right": "medium",
+            "count": 82
+          },
+          {
+            "left": "unanswerable",
+            "right": "hard",
+            "count": 353
+          },
+          {
+            "left": "unanswerable",
+            "right": "medium",
+            "count": 247
+          }
+        ]
+      },
+      "needle_position__difficulty": {
+        "feasible": true,
+        "required_residual_flow": 56,
+        "achieved_flow": 56,
+        "witness": [
+          {
+            "left": "distributed",
+            "right": "hard",
+            "count": 239
+          },
+          {
+            "left": "distributed",
+            "right": "medium",
+            "count": 161
+          },
+          {
+            "left": "early",
+            "right": "hard",
+            "count": 489
+          },
+          {
+            "left": "early",
+            "right": "medium",
+            "count": 311
+          },
+          {
+            "left": "late",
+            "right": "hard",
+            "count": 236
+          },
+          {
+            "left": "late",
+            "right": "medium",
+            "count": 164
+          },
+          {
+            "left": "middle",
+            "right": "hard",
+            "count": 236
+          },
+          {
+            "left": "middle",
+            "right": "medium",
+            "count": 164
+          }
+        ]
+      }
+    },
+    "long": {
+      "split__task_type": {
+        "feasible": true,
+        "required_residual_flow": 49,
+        "achieved_flow": 49,
+        "witness": [
+          {
+            "left": "dev",
+            "right": "alias_resolution",
+            "count": 41
+          },
+          {
+            "left": "dev",
+            "right": "causal_disambiguation",
+            "count": 34
+          },
+          {
+            "left": "dev",
+            "right": "count_with_exclusion",
+            "count": 26
+          },
+          {
+            "left": "dev",
+            "right": "latest_verified",
+            "count": 13
+          },
+          {
+            "left": "dev",
+            "right": "multi_condition",
+            "count": 13
+          },
+          {
+            "left": "dev",
+            "right": "object_state_tracking",
+            "count": 17
+          },
+          {
+            "left": "dev",
+            "right": "rule_exception",
+            "count": 33
+          },
+          {
+            "left": "dev",
+            "right": "temporal_correlation",
+            "count": 23
+          },
+          {
+            "left": "holdout",
+            "right": "alias_resolution",
+            "count": 41
+          },
+          {
+            "left": "holdout",
+            "right": "causal_disambiguation",
+            "count": 34
+          },
+          {
+            "left": "holdout",
+            "right": "count_with_exclusion",
+            "count": 26
+          },
+          {
+            "left": "holdout",
+            "right": "latest_verified",
+            "count": 13
+          },
+          {
+            "left": "holdout",
+            "right": "multi_condition",
+            "count": 13
+          },
+          {
+            "left": "holdout",
+            "right": "object_state_tracking",
+            "count": 17
+          },
+          {
+            "left": "holdout",
+            "right": "rule_exception",
+            "count": 33
+          },
+          {
+            "left": "holdout",
+            "right": "temporal_correlation",
+            "count": 23
+          },
+          {
+            "left": "train",
+            "right": "alias_resolution",
+            "count": 318
+          },
+          {
+            "left": "train",
+            "right": "causal_disambiguation",
+            "count": 266
+          },
+          {
+            "left": "train",
+            "right": "count_with_exclusion",
+            "count": 214
+          },
+          {
+            "left": "train",
+            "right": "latest_verified",
+            "count": 107
+          },
+          {
+            "left": "train",
+            "right": "multi_condition",
+            "count": 107
+          },
+          {
+            "left": "train",
+            "right": "object_state_tracking",
+            "count": 133
+          },
+          {
+            "left": "train",
+            "right": "rule_exception",
+            "count": 267
+          },
+          {
+            "left": "train",
+            "right": "temporal_correlation",
+            "count": 188
+          }
+        ]
+      },
+      "split__variant": {
+        "feasible": true,
+        "required_residual_flow": 52,
+        "achieved_flow": 52,
+        "witness": [
+          {
+            "left": "dev",
+            "right": "answerable",
+            "count": 91
+          },
+          {
+            "left": "dev",
+            "right": "counterfactual",
+            "count": 30
+          },
+          {
+            "left": "dev",
+            "right": "paraphrase",
+            "count": 20
+          },
+          {
+            "left": "dev",
+            "right": "unanswerable",
+            "count": 59
+          },
+          {
+            "left": "holdout",
+            "right": "answerable",
+            "count": 91
+          },
+          {
+            "left": "holdout",
+            "right": "counterfactual",
+            "count": 30
+          },
+          {
+            "left": "holdout",
+            "right": "paraphrase",
+            "count": 20
+          },
+          {
+            "left": "holdout",
+            "right": "unanswerable",
+            "count": 59
+          },
+          {
+            "left": "train",
+            "right": "answerable",
+            "count": 718
+          },
+          {
+            "left": "train",
+            "right": "counterfactual",
+            "count": 240
+          },
+          {
+            "left": "train",
+            "right": "paraphrase",
+            "count": 160
+          },
+          {
+            "left": "train",
+            "right": "unanswerable",
+            "count": 482
+          }
+        ]
+      },
+      "split__needle_position": {
+        "feasible": true,
+        "required_residual_flow": 56,
+        "achieved_flow": 56,
+        "witness": [
+          {
+            "left": "dev",
+            "right": "distributed",
+            "count": 41
+          },
+          {
+            "left": "dev",
+            "right": "early",
+            "count": 81
+          },
+          {
+            "left": "dev",
+            "right": "late",
+            "count": 39
+          },
+          {
+            "left": "dev",
+            "right": "middle",
+            "count": 39
+          },
+          {
+            "left": "holdout",
+            "right": "distributed",
+            "count": 41
+          },
+          {
+            "left": "holdout",
+            "right": "early",
+            "count": 81
+          },
+          {
+            "left": "holdout",
+            "right": "late",
+            "count": 39
+          },
+          {
+            "left": "holdout",
+            "right": "middle",
+            "count": 39
+          },
+          {
+            "left": "train",
+            "right": "distributed",
+            "count": 318
+          },
+          {
+            "left": "train",
+            "right": "early",
+            "count": 638
+          },
+          {
+            "left": "train",
+            "right": "late",
+            "count": 322
+          },
+          {
+            "left": "train",
+            "right": "middle",
+            "count": 322
+          }
+        ]
+      },
+      "split__difficulty": {
+        "feasible": true,
+        "required_residual_flow": 57,
+        "achieved_flow": 57,
+        "witness": [
+          {
+            "left": "dev",
+            "right": "hard",
+            "count": 122
+          },
+          {
+            "left": "dev",
+            "right": "medium",
+            "count": 78
+          },
+          {
+            "left": "holdout",
+            "right": "hard",
+            "count": 122
+          },
+          {
+            "left": "holdout",
+            "right": "medium",
+            "count": 78
+          },
+          {
+            "left": "train",
+            "right": "hard",
+            "count": 956
+          },
+          {
+            "left": "train",
+            "right": "medium",
+            "count": 644
+          }
+        ]
+      },
+      "task_type__variant": {
+        "feasible": true,
+        "required_residual_flow": 43,
+        "achieved_flow": 43,
+        "witness": [
+          {
+            "left": "alias_resolution",
+            "right": "answerable",
+            "count": 184
+          },
+          {
+            "left": "alias_resolution",
+            "right": "counterfactual",
+            "count": 59
+          },
+          {
+            "left": "alias_resolution",
+            "right": "paraphrase",
+            "count": 40
+          },
+          {
+            "left": "alias_resolution",
+            "right": "unanswerable",
+            "count": 117
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "answerable",
+            "count": 154
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "counterfactual",
+            "count": 49
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "paraphrase",
+            "count": 33
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "unanswerable",
+            "count": 98
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "answerable",
+            "count": 121
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "counterfactual",
+            "count": 41
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "paraphrase",
+            "count": 26
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "unanswerable",
+            "count": 78
+          },
+          {
+            "left": "latest_verified",
+            "right": "answerable",
+            "count": 59
+          },
+          {
+            "left": "latest_verified",
+            "right": "counterfactual",
+            "count": 20
+          },
+          {
+            "left": "latest_verified",
+            "right": "paraphrase",
+            "count": 13
+          },
+          {
+            "left": "latest_verified",
+            "right": "unanswerable",
+            "count": 41
+          },
+          {
+            "left": "multi_condition",
+            "right": "answerable",
+            "count": 59
+          },
+          {
+            "left": "multi_condition",
+            "right": "counterfactual",
+            "count": 20
+          },
+          {
+            "left": "multi_condition",
+            "right": "paraphrase",
+            "count": 13
+          },
+          {
+            "left": "multi_condition",
+            "right": "unanswerable",
+            "count": 41
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "answerable",
+            "count": 74
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "counterfactual",
+            "count": 25
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "paraphrase",
+            "count": 17
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "unanswerable",
+            "count": 51
+          },
+          {
+            "left": "rule_exception",
+            "right": "answerable",
+            "count": 146
+          },
+          {
+            "left": "rule_exception",
+            "right": "counterfactual",
+            "count": 51
+          },
+          {
+            "left": "rule_exception",
+            "right": "paraphrase",
+            "count": 34
+          },
+          {
+            "left": "rule_exception",
+            "right": "unanswerable",
+            "count": 102
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "answerable",
+            "count": 103
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "counterfactual",
+            "count": 35
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "paraphrase",
+            "count": 24
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "unanswerable",
+            "count": 72
+          }
+        ]
+      },
+      "task_type__needle_position": {
+        "feasible": true,
+        "required_residual_flow": 47,
+        "achieved_flow": 47,
+        "witness": [
+          {
+            "left": "alias_resolution",
+            "right": "distributed",
+            "count": 78
+          },
+          {
+            "left": "alias_resolution",
+            "right": "early",
+            "count": 162
+          },
+          {
+            "left": "alias_resolution",
+            "right": "late",
+            "count": 79
+          },
+          {
+            "left": "alias_resolution",
+            "right": "middle",
+            "count": 81
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "distributed",
+            "count": 68
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "early",
+            "count": 136
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "late",
+            "count": 65
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "middle",
+            "count": 65
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "distributed",
+            "count": 54
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "early",
+            "count": 108
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "late",
+            "count": 52
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "middle",
+            "count": 52
+          },
+          {
+            "left": "latest_verified",
+            "right": "distributed",
+            "count": 26
+          },
+          {
+            "left": "latest_verified",
+            "right": "early",
+            "count": 54
+          },
+          {
+            "left": "latest_verified",
+            "right": "late",
+            "count": 27
+          },
+          {
+            "left": "latest_verified",
+            "right": "middle",
+            "count": 26
+          },
+          {
+            "left": "multi_condition",
+            "right": "distributed",
+            "count": 26
+          },
+          {
+            "left": "multi_condition",
+            "right": "early",
+            "count": 54
+          },
+          {
+            "left": "multi_condition",
+            "right": "late",
+            "count": 27
+          },
+          {
+            "left": "multi_condition",
+            "right": "middle",
+            "count": 26
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "distributed",
+            "count": 34
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "early",
+            "count": 65
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "late",
+            "count": 34
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "middle",
+            "count": 34
+          },
+          {
+            "left": "rule_exception",
+            "right": "distributed",
+            "count": 67
+          },
+          {
+            "left": "rule_exception",
+            "right": "early",
+            "count": 130
+          },
+          {
+            "left": "rule_exception",
+            "right": "late",
+            "count": 68
+          },
+          {
+            "left": "rule_exception",
+            "right": "middle",
+            "count": 68
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "distributed",
+            "count": 47
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "early",
+            "count": 91
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "late",
+            "count": 48
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "middle",
+            "count": 48
+          }
+        ]
+      },
+      "task_type__difficulty": {
+        "feasible": true,
+        "required_residual_flow": 52,
+        "achieved_flow": 52,
+        "witness": [
+          {
+            "left": "alias_resolution",
+            "right": "hard",
+            "count": 240
+          },
+          {
+            "left": "alias_resolution",
+            "right": "medium",
+            "count": 160
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "hard",
+            "count": 204
+          },
+          {
+            "left": "causal_disambiguation",
+            "right": "medium",
+            "count": 130
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "hard",
+            "count": 162
+          },
+          {
+            "left": "count_with_exclusion",
+            "right": "medium",
+            "count": 104
+          },
+          {
+            "left": "latest_verified",
+            "right": "hard",
+            "count": 81
+          },
+          {
+            "left": "latest_verified",
+            "right": "medium",
+            "count": 52
+          },
+          {
+            "left": "multi_condition",
+            "right": "hard",
+            "count": 80
+          },
+          {
+            "left": "multi_condition",
+            "right": "medium",
+            "count": 53
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "hard",
+            "count": 99
+          },
+          {
+            "left": "object_state_tracking",
+            "right": "medium",
+            "count": 68
+          },
+          {
+            "left": "rule_exception",
+            "right": "hard",
+            "count": 196
+          },
+          {
+            "left": "rule_exception",
+            "right": "medium",
+            "count": 137
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "hard",
+            "count": 138
+          },
+          {
+            "left": "temporal_correlation",
+            "right": "medium",
+            "count": 96
+          }
+        ]
+      },
+      "variant__needle_position": {
+        "feasible": true,
+        "required_residual_flow": 52,
+        "achieved_flow": 52,
+        "witness": [
+          {
+            "left": "answerable",
+            "right": "distributed",
+            "count": 181
+          },
+          {
+            "left": "answerable",
+            "right": "early",
+            "count": 365
+          },
+          {
+            "left": "answerable",
+            "right": "late",
+            "count": 177
+          },
+          {
+            "left": "answerable",
+            "right": "middle",
+            "count": 177
+          },
+          {
+            "left": "counterfactual",
+            "right": "distributed",
+            "count": 59
+          },
+          {
+            "left": "counterfactual",
+            "right": "early",
+            "count": 123
+          },
+          {
+            "left": "counterfactual",
+            "right": "late",
+            "count": 59
+          },
+          {
+            "left": "counterfactual",
+            "right": "middle",
+            "count": 59
+          },
+          {
+            "left": "paraphrase",
+            "right": "distributed",
+            "count": 39
+          },
+          {
+            "left": "paraphrase",
+            "right": "early",
+            "count": 79
+          },
+          {
+            "left": "paraphrase",
+            "right": "late",
+            "count": 41
+          },
+          {
+            "left": "paraphrase",
+            "right": "middle",
+            "count": 41
+          },
+          {
+            "left": "unanswerable",
+            "right": "distributed",
+            "count": 121
+          },
+          {
+            "left": "unanswerable",
+            "right": "early",
+            "count": 233
+          },
+          {
+            "left": "unanswerable",
+            "right": "late",
+            "count": 123
+          },
+          {
+            "left": "unanswerable",
+            "right": "middle",
+            "count": 123
+          }
+        ]
+      },
+      "variant__difficulty": {
+        "feasible": true,
+        "required_residual_flow": 56,
+        "achieved_flow": 56,
+        "witness": [
+          {
+            "left": "answerable",
+            "right": "hard",
+            "count": 546
+          },
+          {
+            "left": "answerable",
+            "right": "medium",
+            "count": 354
+          },
+          {
+            "left": "counterfactual",
+            "right": "hard",
+            "count": 183
+          },
+          {
+            "left": "counterfactual",
+            "right": "medium",
+            "count": 117
+          },
+          {
+            "left": "paraphrase",
+            "right": "hard",
+            "count": 118
+          },
+          {
+            "left": "paraphrase",
+            "right": "medium",
+            "count": 82
+          },
+          {
+            "left": "unanswerable",
+            "right": "hard",
+            "count": 353
+          },
+          {
+            "left": "unanswerable",
+            "right": "medium",
+            "count": 247
+          }
+        ]
+      },
+      "needle_position__difficulty": {
+        "feasible": true,
+        "required_residual_flow": 56,
+        "achieved_flow": 56,
+        "witness": [
+          {
+            "left": "distributed",
+            "right": "hard",
+            "count": 239
+          },
+          {
+            "left": "distributed",
+            "right": "medium",
+            "count": 161
+          },
+          {
+            "left": "early",
+            "right": "hard",
+            "count": 489
+          },
+          {
+            "left": "early",
+            "right": "medium",
+            "count": 311
+          },
+          {
+            "left": "late",
+            "right": "hard",
+            "count": 236
+          },
+          {
+            "left": "late",
+            "right": "medium",
+            "count": 164
+          },
+          {
+            "left": "middle",
+            "right": "hard",
+            "count": 236
+          },
+          {
+            "left": "middle",
+            "right": "medium",
+            "count": 164
+          }
+        ]
+      }
+    }
+  },
+  "all_pair_tables_individually_feasible": true,
+  "source_sha256": "3c6dd79b2db9b078f301efb97842cc5a0317b0825773f3fd5a4c35e2f2f3f7f9"
+}

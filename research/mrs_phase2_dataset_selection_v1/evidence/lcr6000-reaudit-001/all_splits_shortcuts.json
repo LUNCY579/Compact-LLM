@@ -1,0 +1,326 @@
+{
+  "question_only": {
+    "classifier": "Laplace-smoothed multinomial naive Bayes; unigram question tokens; equal class priors; train fit; dev and open holdout scored without refit",
+    "balanced_accuracy_by_split": {
+      "train": 0.5043650793650793,
+      "dev": 0.47896825396825393,
+      "holdout": 0.48730158730158735
+    }
+  },
+  "semantic_selector_plus_validity": {
+    "train": 0.875,
+    "dev": 0.875,
+    "holdout": 0.875
+  },
+  "surface_thresholds": {
+    "context_characters": {
+      "balanced_accuracy": 0.5233630952380952,
+      "direction": "ge",
+      "threshold": 2629.5,
+      "unique_thresholds": 1833,
+      "balanced_accuracy_by_split": {
+        "train": 0.5233630952380952,
+        "dev": 0.49722222222222223,
+        "holdout": 0.49126984126984125
+      }
+    },
+    "context_words": {
+      "balanced_accuracy": 0.5247519841269841,
+      "direction": "ge",
+      "threshold": 346.5,
+      "unique_thresholds": 311,
+      "balanced_accuracy_by_split": {
+        "train": 0.5247519841269841,
+        "dev": 0.49603174603174605,
+        "holdout": 0.49007936507936506
+      }
+    },
+    "question_characters": {
+      "balanced_accuracy": 0.5076388888888889,
+      "direction": "lt",
+      "threshold": 85.5,
+      "unique_thresholds": 26,
+      "balanced_accuracy_by_split": {
+        "train": 0.5076388888888889,
+        "dev": 0.49682539682539684,
+        "holdout": 0.49563492063492065
+      }
+    },
+    "question_words": {
+      "balanced_accuracy": 0.5009920634920635,
+      "direction": "lt",
+      "threshold": 11.5,
+      "unique_thresholds": 5,
+      "balanced_accuracy_by_split": {
+        "train": 0.5009920634920635,
+        "dev": 0.5,
+        "holdout": 0.49206349206349204
+      }
+    },
+    "sentence_count": {
+      "balanced_accuracy": 0.5219742063492063,
+      "direction": "ge",
+      "threshold": 43.5,
+      "unique_thresholds": 40,
+      "balanced_accuracy_by_split": {
+        "train": 0.5219742063492063,
+        "dev": 0.5095238095238095,
+        "holdout": 0.5067460317460317
+      }
+    },
+    "line_count": {
+      "balanced_accuracy": 0.5219742063492063,
+      "direction": "ge",
+      "threshold": 40.5,
+      "unique_thresholds": 40,
+      "balanced_accuracy_by_split": {
+        "train": 0.5219742063492063,
+        "dev": 0.5095238095238095,
+        "holdout": 0.5067460317460317
+      }
+    },
+    "capitalized_name_mentions": {
+      "balanced_accuracy": 0.5174107142857143,
+      "direction": "ge",
+      "threshold": 57.5,
+      "unique_thresholds": 111,
+      "balanced_accuracy_by_split": {
+        "train": 0.5174107142857143,
+        "dev": 0.4992063492063492,
+        "holdout": 0.5007936507936508
+      }
+    },
+    "unique_capitalized_names": {
+      "balanced_accuracy": 0.50625,
+      "direction": "ge",
+      "threshold": 33.5,
+      "unique_thresholds": 18,
+      "balanced_accuracy_by_split": {
+        "train": 0.50625,
+        "dev": 0.5218253968253969,
+        "holdout": 0.5202380952380952
+      }
+    },
+    "mean_context_word_length": {
+      "balanced_accuracy": 0.5102678571428572,
+      "direction": "lt",
+      "threshold": 6.301657800200232,
+      "unique_thresholds": 4295,
+      "balanced_accuracy_by_split": {
+        "train": 0.5102678571428572,
+        "dev": 0.5051587301587301,
+        "holdout": 0.5043650793650793
+      }
+    },
+    "mean_question_word_length": {
+      "balanced_accuracy": 0.5091765873015873,
+      "direction": "lt",
+      "threshold": 5.5993589743589745,
+      "unique_thresholds": 38,
+      "balanced_accuracy_by_split": {
+        "train": 0.5091765873015873,
+        "dev": 0.48412698412698413,
+        "holdout": 0.5075396825396825
+      }
+    },
+    "punctuation_density": {
+      "balanced_accuracy": 0.5233630952380952,
+      "direction": "lt",
+      "threshold": 0.00037936288909881454,
+      "unique_thresholds": 1833,
+      "balanced_accuracy_by_split": {
+        "train": 0.5233630952380952,
+        "dev": 0.5051587301587301,
+        "holdout": 0.5003968253968254
+      }
+    },
+    "digit_density": {
+      "balanced_accuracy": 0.504811507936508,
+      "direction": "lt",
+      "threshold": 0.0008385750131719566,
+      "unique_thresholds": 529,
+      "balanced_accuracy_by_split": {
+        "train": 0.504811507936508,
+        "dev": 0.4992063492063492,
+        "holdout": 0.5059523809523809
+      }
+    },
+    "comma_count": {
+      "balanced_accuracy": 0.5106150793650794,
+      "direction": "ge",
+      "threshold": 15.5,
+      "unique_thresholds": 26,
+      "balanced_accuracy_by_split": {
+        "train": 0.5106150793650794,
+        "dev": 0.513095238095238,
+        "holdout": 0.4936507936507937
+      }
+    },
+    "question_context_exact_word_overlap": {
+      "balanced_accuracy": 0.5037698412698413,
+      "direction": "ge",
+      "threshold": 4.5,
+      "unique_thresholds": 8,
+      "balanced_accuracy_by_split": {
+        "train": 0.5037698412698413,
+        "dev": 0.4817460317460317,
+        "holdout": 0.498015873015873
+      }
+    },
+    "query_colour_word_mentions": {
+      "balanced_accuracy": 0.5,
+      "direction": "ge",
+      "threshold": 1.0,
+      "unique_thresholds": 2,
+      "balanced_accuracy_by_split": {
+        "train": 0.5,
+        "dev": 0.5,
+        "holdout": 0.5
+      }
+    },
+    "query_direction_word_mentions": {
+      "balanced_accuracy": 0.5110119047619047,
+      "direction": "ge",
+      "threshold": 6.5,
+      "unique_thresholds": 14,
+      "balanced_accuracy_by_split": {
+        "train": 0.5110119047619047,
+        "dev": 0.4988095238095238,
+        "holdout": 0.5146825396825396
+      }
+    },
+    "withdrawal_word_count": {
+      "balanced_accuracy": 0.5101190476190476,
+      "direction": "lt",
+      "threshold": 0.5,
+      "unique_thresholds": 3,
+      "balanced_accuracy_by_split": {
+        "train": 0.5101190476190476,
+        "dev": 0.5107142857142857,
+        "holdout": 0.5
+      }
+    },
+    "negative_issuance_word_count": {
+      "balanced_accuracy": 0.5056547619047619,
+      "direction": "ge",
+      "threshold": 0.5,
+      "unique_thresholds": 3,
+      "balanced_accuracy_by_split": {
+        "train": 0.5056547619047619,
+        "dev": 0.5142857142857142,
+        "holdout": 0.4988095238095238
+      }
+    },
+    "unrecorded_word_count": {
+      "balanced_accuracy": 0.5011904761904762,
+      "direction": "ge",
+      "threshold": 0.5,
+      "unique_thresholds": 4,
+      "balanced_accuracy_by_split": {
+        "train": 0.5011904761904762,
+        "dev": 0.5099206349206349,
+        "holdout": 0.49801587301587297
+      }
+    },
+    "forecast_word_count": {
+      "balanced_accuracy": 0.5,
+      "direction": "ge",
+      "threshold": 1.0,
+      "unique_thresholds": 2,
+      "balanced_accuracy_by_split": {
+        "train": 0.5,
+        "dev": 0.5,
+        "holdout": 0.5
+      }
+    },
+    "unique_lowercase_words": {
+      "balanced_accuracy": 0.5108630952380953,
+      "direction": "ge",
+      "threshold": 147.5,
+      "unique_thresholds": 62,
+      "balanced_accuracy_by_split": {
+        "train": 0.5108630952380953,
+        "dev": 0.5115079365079365,
+        "holdout": 0.49246031746031743
+      }
+    }
+  },
+  "train_selected_feature": "context_words",
+  "train_selected_feature_scores": {
+    "train": 0.5247519841269841,
+    "dev": 0.49603174603174605,
+    "holdout": 0.49007936507936506
+  },
+  "exact_answer_baselines": {
+    "train": {
+      "majority": {
+        "overall_accuracy": 0.3,
+        "answerable_accuracy": 0.0
+      },
+      "always_unknown": {
+        "overall_accuracy": 0.3,
+        "answerable_accuracy": 0.0
+      },
+      "first_entity": {
+        "overall_accuracy": 0.0,
+        "answerable_accuracy": 0.0
+      },
+      "last_entity": {
+        "overall_accuracy": 0.0,
+        "answerable_accuracy": 0.0
+      },
+      "copy_most_recent_entity": {
+        "overall_accuracy": 0.0,
+        "answerable_accuracy": 0.0
+      }
+    },
+    "dev": {
+      "majority": {
+        "overall_accuracy": 0.3,
+        "answerable_accuracy": 0.0
+      },
+      "always_unknown": {
+        "overall_accuracy": 0.3,
+        "answerable_accuracy": 0.0
+      },
+      "first_entity": {
+        "overall_accuracy": 0.0,
+        "answerable_accuracy": 0.0
+      },
+      "last_entity": {
+        "overall_accuracy": 0.0,
+        "answerable_accuracy": 0.0
+      },
+      "copy_most_recent_entity": {
+        "overall_accuracy": 0.0,
+        "answerable_accuracy": 0.0
+      }
+    },
+    "holdout": {
+      "majority": {
+        "overall_accuracy": 0.3,
+        "answerable_accuracy": 0.0
+      },
+      "always_unknown": {
+        "overall_accuracy": 0.3,
+        "answerable_accuracy": 0.0
+      },
+      "first_entity": {
+        "overall_accuracy": 0.0,
+        "answerable_accuracy": 0.0
+      },
+      "last_entity": {
+        "overall_accuracy": 0.0,
+        "answerable_accuracy": 0.0
+      },
+      "copy_most_recent_entity": {
+        "overall_accuracy": 0.0,
+        "answerable_accuracy": 0.0
+      }
+    }
+  },
+  "limitations": [
+    "Finite attacks only. Train scores are in-sample. Producer logistic/nearest-neighbor baselines not reexecuted because sklearn absent.",
+    "Cheap semantic screen solves answerability only, not exact answer strings."
+  ]
+}

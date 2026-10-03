@@ -1,0 +1,44 @@
+{
+  "status": "MEASURED_ALL_6000_OPEN_ROWS",
+  "rows": 6000,
+  "rows_truncated": 0,
+  "rows_filtered": 0,
+  "holdout_rows_read": 600,
+  "band_policy": "Literal inclusive endpoints; shared-endpoint ambiguity separately counted, no new policy adopted.",
+  "prompt_tokens": {
+    "min": 434,
+    "max": 1472,
+    "mean": 895.18,
+    "p50": 839
+  },
+  "total_tokens": {
+    "min": 437,
+    "max": 1478,
+    "mean": 899.4268333333333,
+    "p50": 843
+  },
+  "prompt_over_1920": 0,
+  "total_over_2048": 0,
+  "outside_intended_band": 98,
+  "at_shared_endpoint": 4,
+  "by_split": {
+    "train": {
+      "rows": 4800,
+      "prompt_over_1920": 0,
+      "total_over_2048": 0,
+      "outside_intended_band": 4
+    },
+    "dev": {
+      "rows": 600,
+      "prompt_over_1920": 0,
+      "total_over_2048": 0,
+      "outside_intended_band": 37
+    },
+    "holdout": {
+      "rows": 600,
+      "prompt_over_1920": 0,
+      "total_over_2048": 0,
+      "outside_intended_band": 57
+    }
+  }
+}

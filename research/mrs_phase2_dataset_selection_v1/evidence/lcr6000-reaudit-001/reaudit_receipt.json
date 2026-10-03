@@ -1,0 +1,393 @@
+{
+  "status": "P0_STOP_MEASURED_BAND_FAILURES_AND_UNRESOLVED_EXTERNAL_EXCLUSION",
+  "corpus_accepted": false,
+  "dataset_root": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\Rineya_LCR_Full_v1_6000",
+  "manifest_sha256": "65995575f13187ef78464e4120d1768696dd9114c7dfd8a379ed3ca6e28b266d",
+  "source_audit_sha256": "f95ca103155145054f2f8e9028cf3eeb4292cded9918ce8ead47d2664748d8ab",
+  "source_repository": "LUNCY579/ChatBubble",
+  "source_branch": "codex/mrs-phase2-dataset-selection-v1",
+  "evidence_class": "OPEN_DATA_DEVELOPMENT_REAUDIT",
+  "rows": 6000,
+  "payload_splits_read": [
+    "train",
+    "dev",
+    "holdout"
+  ],
+  "holdout_payload_reads": 600,
+  "all_jsonl_read": false,
+  "access_basis": {
+    "README": "data/dev and data/holdout are for data development; NOT model benchmarks",
+    "QUARANTINE_AND_CLAIMS": {
+      "blind_future_check": "A content-frozen candidate can be checked by an authorized independent exclusion process. Return aggregate counts bound to candidate, bank and code hashes, not bank rows/templates/keys.",
+      "claims_closed": [
+        "native_window_fit",
+        "all_native_length_bands",
+        "full_external_nonoverlap",
+        "strict_structural_disjointness",
+        "shortcut_free_abstention",
+        "retention_benefit",
+        "reasoning_quality_improvement",
+        "independent_human_certification",
+        "training_authorization"
+      ],
+      "data_dev_holdout_are_model_evaluation_sets": false,
+      "dev_holdout_inspected_for_data_design": true,
+      "external_nonoverlap_verified": false,
+      "external_overlap_counts": null,
+      "frozen_banks_copied_or_reseeded": false,
+      "frozen_evaluation_rows_opened": 0,
+      "github_writes": 0,
+      "model_weights_loaded": false,
+      "persistent_library_mutations": 0,
+      "target_model_inference_calls": 0,
+      "target_model_training_runs": 0
+    },
+    "original_v1_spec_sha256": "041f50d4a35ecf50dc255ade4a725b5f18e23db314dfb0cbf1440c79ceecbf21"
+  },
+  "forbidden_evaluation_payload_reads": 0,
+  "model_weights_loaded": 0,
+  "model_calls": 0,
+  "training_runs": 0,
+  "dataset_files_modified": 0,
+  "run_seconds": 35.685240268707275,
+  "runtime": {
+    "transformers": "4.57.1",
+    "tokenizers": "0.22.2",
+    "numpy": "2.4.6"
+  },
+  "explicit_input_inventory": [
+    {
+      "path": "MANIFEST.json",
+      "bytes": 9897,
+      "sha256": "65995575f13187ef78464e4120d1768696dd9114c7dfd8a379ed3ca6e28b266d"
+    },
+    {
+      "path": "provenance/ATTACHED_CONTRACT.json",
+      "bytes": 2091,
+      "sha256": "0dcfccfdc13d77c24d68880284b7c803c2d2e33e0f4000dda67ef7ffe0afbdeb"
+    },
+    {
+      "path": "provenance/TARGET_TOKENIZER_LOCK.json",
+      "bytes": 841,
+      "sha256": "788b8caa51c499738ac1de1570c7028f12b4f66a2452a1f4df17b6f416b4d730"
+    },
+    {
+      "path": "reports/acceptance.json",
+      "bytes": 5466,
+      "sha256": "91358488337e9685dc71c6edb4443ba0b0518ceaa48aaffecdd5059107312343"
+    },
+    {
+      "path": "reports/leakage.json",
+      "bytes": 2572,
+      "sha256": "9fca66316493fdc60099a38329c10be064f0f0e8f13723bc64c634e145690476"
+    },
+    {
+      "path": "reports/token_profile.json",
+      "bytes": 2211,
+      "sha256": "f682de375f9834304052af741e7c86f18494094c654bb90951f82e404e3af16c"
+    },
+    {
+      "path": "reports/RUN_BINDING.json",
+      "bytes": 4620,
+      "sha256": "16c9750fba76f1326a553abb4a5c7e75b18f13613079cb9ad6d3e5e2546d3592"
+    },
+    {
+      "path": "QUARANTINE_AND_CLAIMS.json",
+      "bytes": 956,
+      "sha256": "ebf0b778482a0dcb67a2e8206e10e2eccd69c299ea19729c1afcd54645861f27"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3246,
+      "sha256": "ad552906879bb651c6d3282d1229caa0eefdf737a6dde4b9a0ed9dc3227b7b95"
+    },
+    {
+      "path": "STATUS.json",
+      "bytes": 394,
+      "sha256": "a9b9bb91e59e882dcdcf6f5824c39dd75626148d5f4ff61eacc7b0bec4cfa143"
+    },
+    {
+      "path": "DATA_CARD.md",
+      "bytes": 11239,
+      "sha256": "9e526465aa9afddcd9afce513463b6c078f78e035992cbc3878abd1adf115989"
+    },
+    {
+      "path": "REPRODUCE.md",
+      "bytes": 3890,
+      "sha256": "819eb182210b5299803d0be7bfa8d4d047d0f5d5cc178e135ffe1143e4441579"
+    },
+    {
+      "path": "provenance/ATTACHED_SPEC.md",
+      "bytes": 11688,
+      "sha256": "041f50d4a35ecf50dc255ade4a725b5f18e23db314dfb0cbf1440c79ceecbf21"
+    },
+    {
+      "path": "provenance/PARTITIONS.json",
+      "bytes": 2115,
+      "sha256": "a727e39f4dc15bbcbb607384b3e2651f35a40f021783d8ecc74109e2770f8235"
+    },
+    {
+      "path": "src/check.py",
+      "bytes": 15583,
+      "sha256": "6912fd57bfc06dd13f0d29a6052be578b3988ef391f27918f86d52ba2d9c95e7"
+    },
+    {
+      "path": "src/audit.py",
+      "bytes": 26777,
+      "sha256": "c578e3c7ffa23f6c14a8894e215a306cc348fb7bb6db6d8041325af297953efc"
+    },
+    {
+      "path": "src/tokenizer_preflight.py",
+      "bytes": 8206,
+      "sha256": "27ab9a50b4ebb5124cff6353d8edac4d1d43405a5204929b240fe9c0d7405299"
+    },
+    {
+      "path": "src/native_census.py",
+      "bytes": 5655,
+      "sha256": "0091a350e7fcc653c9fc1938662e0facf982e06b098cd518592ee70815458b35"
+    },
+    {
+      "path": "src/generate.py",
+      "bytes": 33761,
+      "sha256": "bba8e4431a741459ec4ff1036c8e31c1c6af788c54e99edcc928510184a9bc0a"
+    },
+    {
+      "path": "data/train.jsonl",
+      "bytes": 31007362,
+      "sha256": "f707f87d88ad879d90fe07e656d4e5cf9bf823b9790aeb6e7a8389ca9cba2844"
+    },
+    {
+      "path": "data/dev.jsonl",
+      "bytes": 3851460,
+      "sha256": "450b736c8d56fb016750ffcb605d9581f5a9fe13064d6b5eb26471fbc1fa0bfa"
+    },
+    {
+      "path": "data/holdout.jsonl",
+      "bytes": 3866623,
+      "sha256": "89cfabe3bf3a1c0f7c83fec5f3d0929ba89b21b423d22d2bd7cd46a4cfd09f8f"
+    },
+    {
+      "path": "sft/train.jsonl",
+      "bytes": 22030151,
+      "sha256": "373b27e8a6ff0c9b86eb0dbbff9f4aa29d5d26797d98aab88c5d4e39109c6eb4"
+    },
+    {
+      "path": "sft/dev.jsonl",
+      "bytes": 2730514,
+      "sha256": "329b96e87d4c635fa0f48dcdfb9a21dcfdf554fcdbaf349a05feed72e38d9265"
+    },
+    {
+      "path": "sft/holdout.jsonl",
+      "bytes": 2740187,
+      "sha256": "92a40cd81961cd273418e88fb40399d42d365886931dd753827570beb32bd41a"
+    },
+    {
+      "path": "worlds/train.jsonl",
+      "bytes": 29563375,
+      "sha256": "1478be0ffe4628736485aa97122d4b04f0fc17fa48d6e8bd3554f615942cea43"
+    },
+    {
+      "path": "worlds/dev.jsonl",
+      "bytes": 3725729,
+      "sha256": "d550c174166e40b8eb35c4fcc413f8f7e71d3610d2c5c6049e8141ddfdc45797"
+    },
+    {
+      "path": "worlds/holdout.jsonl",
+      "bytes": 3925482,
+      "sha256": "77ae538795938e73b19a05fb61e5654f88724f7fe2443ec52be3c66684fe36d1"
+    },
+    {
+      "path": "MANIFEST.json",
+      "bytes": 9897,
+      "sha256": "65995575f13187ef78464e4120d1768696dd9114c7dfd8a379ed3ca6e28b266d"
+    }
+  ],
+  "native": {
+    "status": "MEASURED_ALL_6000_OPEN_ROWS",
+    "rows": 6000,
+    "rows_truncated": 0,
+    "rows_filtered": 0,
+    "holdout_rows_read": 600,
+    "band_policy": "Literal inclusive endpoints; shared-endpoint ambiguity separately counted, no new policy adopted.",
+    "prompt_tokens": {
+      "min": 434,
+      "max": 1472,
+      "mean": 895.18,
+      "p50": 839
+    },
+    "total_tokens": {
+      "min": 437,
+      "max": 1478,
+      "mean": 899.4268333333333,
+      "p50": 843
+    },
+    "prompt_over_1920": 0,
+    "total_over_2048": 0,
+    "outside_intended_band": 98,
+    "at_shared_endpoint": 4,
+    "by_split": {
+      "train": {
+        "rows": 4800,
+        "prompt_over_1920": 0,
+        "total_over_2048": 0,
+        "outside_intended_band": 4
+      },
+      "dev": {
+        "rows": 600,
+        "prompt_over_1920": 0,
+        "total_over_2048": 0,
+        "outside_intended_band": 37
+      },
+      "holdout": {
+        "rows": 600,
+        "prompt_over_1920": 0,
+        "total_over_2048": 0,
+        "outside_intended_band": 57
+      }
+    }
+  },
+  "semantic_errors": [],
+  "independent_solver_verified_rows": 6000,
+  "parsed_facts": 85141,
+  "question_only_balanced_accuracy": {
+    "train": 0.5043650793650793,
+    "dev": 0.47896825396825393,
+    "holdout": 0.48730158730158735
+  },
+  "surface_train_selected_feature": "context_words",
+  "surface_train_selected_balanced_accuracy": {
+    "train": 0.5247519841269841,
+    "dev": 0.49603174603174605,
+    "holdout": 0.49007936507936506
+  },
+  "semantic_selector_plus_validity": {
+    "balanced_accuracy": {
+      "train": 0.875,
+      "dev": 0.875,
+      "holdout": 0.875
+    },
+    "category": "TASK_AWARE_SEMANTIC_ALGORITHM",
+    "binding_surface_threshold_failure": false,
+    "interpretation": "Requires record facts, a relational color/location join, and explicit withdrawal/nonissuance checks. It does not by itself demonstrate forbidden question/surface leakage or violate a 0.55 question/surface gate. It reveals shallow semantic answerability for three of four absence mechanisms."
+  },
+  "binding_failures_and_interpretation_dependent_failures": [
+    {
+      "requirement": "native intended context bands",
+      "status": "FAIL_MEASURED",
+      "violations": 98,
+      "action": "Issue new immutable dataset version that regenerates offending contexts within actual native bands; no truncation or relabelling after acceptance."
+    },
+    {
+      "requirement": "within-band pairwise balance under literal relative-count +/-3%",
+      "status": "FAIL_UNDER_LITERAL_RELATIVE_INTERPRETATION",
+      "max_relative_error": 0.05263157894736836,
+      "integer_infeasible_cells_fixed_marginals": 0,
+      "action": "Prospectively resolve integer rounding/tolerance semantics or regenerate allocations satisfying a feasible explicit contract; no retroactive acceptance."
+    }
+  ],
+  "structural_reaudit": {
+    "status": "MEASURED_ALL_OPEN_SPLITS",
+    "pairwise": {
+      "train__dev": {
+        "ids": 0,
+        "groups": 0,
+        "templates": 0,
+        "context_exact": 0,
+        "context_nfkc": 0,
+        "context_digit_blinded": 0,
+        "question_exact": 0,
+        "question_nfkc": 0,
+        "question_digit_blinded": 0,
+        "entity_name_intersection": 0,
+        "local_sentence_form_intersection": 392,
+        "registered_typed_graph_invariant_intersection": 0,
+        "whole_actual_symbolic_case_invariant_intersection": 0,
+        "full_symbolic_entity_renamed_hash_intersection": 0,
+        "full_entity_renamed_user_template_intersection": 0
+      },
+      "train__holdout": {
+        "ids": 0,
+        "groups": 0,
+        "templates": 0,
+        "context_exact": 0,
+        "context_nfkc": 0,
+        "context_digit_blinded": 0,
+        "question_exact": 0,
+        "question_nfkc": 0,
+        "question_digit_blinded": 0,
+        "entity_name_intersection": 0,
+        "local_sentence_form_intersection": 352,
+        "registered_typed_graph_invariant_intersection": 0,
+        "whole_actual_symbolic_case_invariant_intersection": 0,
+        "full_symbolic_entity_renamed_hash_intersection": 0,
+        "full_entity_renamed_user_template_intersection": 0
+      },
+      "dev__holdout": {
+        "ids": 0,
+        "groups": 0,
+        "templates": 0,
+        "context_exact": 0,
+        "context_nfkc": 0,
+        "context_digit_blinded": 0,
+        "question_exact": 0,
+        "question_nfkc": 0,
+        "question_digit_blinded": 0,
+        "entity_name_intersection": 0,
+        "local_sentence_form_intersection": 467,
+        "registered_typed_graph_invariant_intersection": 0,
+        "whole_actual_symbolic_case_invariant_intersection": 0,
+        "full_symbolic_entity_renamed_hash_intersection": 0,
+        "full_entity_renamed_user_template_intersection": 0
+      }
+    },
+    "method": "Registered typed graphs: node-kind and typed-edge multiplicities. Full actual case structures: key-labelled object/list/leaf multiplicities excluding IDs, names and depth annotations. Zero intersection of necessary graph invariants proves no isomorphism under the defined typed/key-labelled representation; this does not require a canonical-labelling library.",
+    "template_interpretation": "Split-assigned selectors/domain/filler templates and full entity-renamed user texts are distinct. Shared local task sentences and operator grammar are explicitly allowed by PARTITIONS.shared; 392 train/dev local forms alone are not proof that full scenario templates collide.",
+    "limits": "Shared mathematical operators and reduced solution motifs remain. Full-text template hashes do not prove that every possible semantic abstraction is distinct. No claim of wholly novel operators or external protected-bank exclusion.",
+    "invariant_counts": {
+      "train": {
+        "registered": 7,
+        "whole_symbolic": 16,
+        "entity_renamed_worlds": 4686,
+        "full_user_templates": 4800
+      },
+      "dev": {
+        "registered": 7,
+        "whole_symbolic": 16,
+        "entity_renamed_worlds": 598,
+        "full_user_templates": 600
+      },
+      "holdout": {
+        "registered": 7,
+        "whole_symbolic": 16,
+        "entity_renamed_worlds": 599,
+        "full_user_templates": 600
+      }
+    }
+  },
+  "scout_exclusion": {
+    "status": "PASS_EXACT_IDS_TEXT_AND_FULL_SCHEMA_CANONICAL_COMPARISON_ONLY",
+    "bank_manifest_sha256": "c6b98cb5e8ffd35828fb4634f9f2c69a977a02fe426bce0061b70fe8aab8d156",
+    "public_sha256": "0e899f8c7d59842ab33a0cb82757c21fe9569454e41b2c4ea8e86d4fcfae8f91",
+    "worlds_sha256": "3fa651980d33ec6018c39d3cd182b18e101718054e3b2e7650e5573b28fc5332",
+    "scout_rows": 120,
+    "dataset_rows": 6000,
+    "id_group_overlap": 0,
+    "normalized_context_problem_overlap": 0,
+    "normalized_question_overlap": 0,
+    "full_entity_renamed_world_overlap": 0,
+    "canonicalization": "Complete declared world for scout versus complete query/cases for LCR; remove lexical entity identities and ID/split/depth annotations, preserve semantic fields and list order.",
+    "limits": "Different world schemas mean zero full-canonical collisions is not universal semantic graph-isomorphism proof. Both contain shared generic reasoning primitives. Protected evaluation banks remain unread and unverified."
+  },
+  "external_protected_exclusion": "UNVERIFIED; obtain authorized blind hash-bound inventory/aggregate receipt without reading protected payloads",
+  "remaining_limitations": [
+    "Finite question/surface attacks; producer sklearn exact-answer adversaries not rerun in this script.",
+    "Independent text checker is a separate algorithm sharing author/grammar with generator, not independent human review.",
+    "Whole scenario templates and typed full graphs may be disjoint while local operator primitives and reduced motifs are shared; no stronger semantic novelty claim.",
+    "All open splits are permanently data-design-exposed and cannot serve as model confirmation."
+  ],
+  "earlier_receipt_corrections": [
+    "Earlier holdout-unverified limitation is closed by explicit open-data authorization and all6000 census.",
+    "392 shared generic sentence forms do not alone establish full-scenario template or full typed-graph overlap.",
+    "87.5% semantic checker success is not automatically a forbidden question/surface shortcut threshold failure."
+  ]
+}
