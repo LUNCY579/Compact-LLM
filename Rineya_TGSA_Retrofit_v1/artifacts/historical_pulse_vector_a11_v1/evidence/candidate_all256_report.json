@@ -1,0 +1,217 @@
+{
+  "suite": "Rineya Long-Context Demonstration Suite",
+  "runs": [
+    {
+      "run": "candidate_all256",
+      "key_items": 256,
+      "prediction_rows": 256,
+      "covered_items": 256,
+      "coverage": 1.0,
+      "duplicate_prediction_ids": [],
+      "unexpected_prediction_ids": [],
+      "strict_exact": 0.234375,
+      "first_line_exact": 0.234375,
+      "short_response_rate_le_12_words": 1.0,
+      "mean_response_words": 1.046875,
+      "pack_metrics": {
+        "complete_scenario_packs_in_key": 64,
+        "fully_covered_scenario_packs": 64,
+        "base_paraphrase_prediction_agreement": 0.78125,
+        "base_paraphrase_both_correct": 0.03125,
+        "counterfactual_pair_both_correct_and_changed": 0.0,
+        "unanswerable_accuracy": 0.796875,
+        "all_four_variants_correct": 0.0
+      },
+      "by_variant": {
+        "base": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.046875,
+          "first_line_exact": 0.046875
+        },
+        "counterfactual": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "paraphrase": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.09375,
+          "first_line_exact": 0.09375
+        },
+        "unanswerable": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.796875,
+          "first_line_exact": 0.796875
+        }
+      },
+      "by_domain": {
+        "arcane_academy": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.21875,
+          "first_line_exact": 0.21875
+        },
+        "coastal_council": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.21875,
+          "first_line_exact": 0.21875
+        },
+        "detective_bureau": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.21875,
+          "first_line_exact": 0.21875
+        },
+        "expedition": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.25,
+          "first_line_exact": 0.25
+        },
+        "family_enterprise": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.21875,
+          "first_line_exact": 0.21875
+        },
+        "museum": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.21875,
+          "first_line_exact": 0.21875
+        },
+        "orbital_station": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.25,
+          "first_line_exact": 0.25
+        },
+        "research_institute": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.28125,
+          "first_line_exact": 0.28125
+        }
+      },
+      "by_task_type": {
+        "alias_resolution": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.09375,
+          "first_line_exact": 0.09375
+        },
+        "causal_disambiguation": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.25,
+          "first_line_exact": 0.25
+        },
+        "count_with_exclusions": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.0625,
+          "first_line_exact": 0.0625
+        },
+        "latest_verified_record": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.28125,
+          "first_line_exact": 0.28125
+        },
+        "multi_condition_identity": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.4375,
+          "first_line_exact": 0.4375
+        },
+        "object_state_tracking": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.25,
+          "first_line_exact": 0.25
+        },
+        "rule_exception": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.25,
+          "first_line_exact": 0.25
+        },
+        "temporal_correction": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.25,
+          "first_line_exact": 0.25
+        }
+      },
+      "by_difficulty": {
+        "hard": {
+          "items": 160,
+          "covered": 160,
+          "strict_exact": 0.21875,
+          "first_line_exact": 0.21875
+        },
+        "medium": {
+          "items": 96,
+          "covered": 96,
+          "strict_exact": 0.260417,
+          "first_line_exact": 0.260417
+        }
+      },
+      "by_needle_profile": {
+        "distributed": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.265625,
+          "first_line_exact": 0.265625
+        },
+        "early": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.078125,
+          "first_line_exact": 0.078125
+        },
+        "late": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.34375,
+          "first_line_exact": 0.34375
+        },
+        "middle": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.25,
+          "first_line_exact": 0.25
+        }
+      },
+      "by_length_bucket": {
+        "compact_long": {
+          "items": 88,
+          "covered": 88,
+          "strict_exact": 0.25,
+          "first_line_exact": 0.25
+        },
+        "extended_long": {
+          "items": 84,
+          "covered": 84,
+          "strict_exact": 0.214286,
+          "first_line_exact": 0.214286
+        },
+        "standard_long": {
+          "items": 84,
+          "covered": 84,
+          "strict_exact": 0.238095,
+          "first_line_exact": 0.238095
+        }
+      }
+    }
+  ],
+  "repeated_run_stability": {
+    "number_of_runs": 1,
+    "available": false
+  }
+}

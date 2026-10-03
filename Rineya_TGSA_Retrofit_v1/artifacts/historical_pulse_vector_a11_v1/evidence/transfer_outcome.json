@@ -1,0 +1,206 @@
+{
+  "candidate_generation_health": {
+    "empty_predictions": [],
+    "fourfold_word_repetition": [],
+    "passed": true,
+    "rows": 256,
+    "status_errors": []
+  },
+  "control_fidelity": {
+    "bitwise_mismatches": [],
+    "max_abs_diff": 0.0,
+    "passed": true,
+    "tensor_count": 310
+  },
+  "deltas": {
+    "all256": {
+      "all_four_packs": -20,
+      "base_paraphrase_both_correct_packs": -49,
+      "counterfactual_pair_packs": -34,
+      "strict_exact_hits": -110,
+      "unanswerable_hits": 29
+    },
+    "showcase": {
+      "all_four_packs": -7,
+      "base_paraphrase_both_correct_packs": -13,
+      "counterfactual_pair_packs": -8,
+      "strict_exact_hits": -30,
+      "unanswerable_hits": 6
+    },
+    "stability": {
+      "all_four_packs": -13,
+      "base_paraphrase_both_correct_packs": -36,
+      "counterfactual_pair_packs": -26,
+      "strict_exact_hits": -80,
+      "unanswerable_hits": 23
+    }
+  },
+  "evaluator_sha256": "92c9e17762ff5979ac6c0657be26ee0a99bfce0620453886a2e2bc81632af1b5",
+  "parent_predictions_reused_from": "historical-soup-a11-baya-midpoint-v1",
+  "registration_sha256": "3f7e962fa6af27423afe163641f3abe07c6e7f0c1f34bdc9f76034ecc47bbd1f",
+  "reports": {
+    "candidate": {
+      "all256": {
+        "all_four_packs": 0,
+        "base_paraphrase_both_correct_packs": 2,
+        "counterfactual_pair_packs": 0,
+        "coverage": 1.0,
+        "covered_items": 256,
+        "duplicate_prediction_ids": [],
+        "items": 256,
+        "mean_response_words": 1.046875,
+        "prediction_rows": 256,
+        "report": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-retrofit\\Rineya_TGSA_Retrofit_v1\\artifacts\\historical_pulse_vector_a11_v1\\evidence\\candidate_all256_report.json",
+        "report_sha256": "2485b1030dd0541cc37a8665349732f374c91955be0298b5baae8045453a1006",
+        "short_response_rate_le_12_words": 1.0,
+        "strict_exact": 0.234375,
+        "strict_exact_hits": 60,
+        "unanswerable_hits": 51,
+        "unexpected_prediction_ids": [],
+        "variant_hits": {
+          "base": 3,
+          "counterfactual": 0,
+          "paraphrase": 6,
+          "unanswerable": 51
+        }
+      },
+      "showcase": {
+        "all_four_packs": 0,
+        "base_paraphrase_both_correct_packs": 0,
+        "counterfactual_pair_packs": 0,
+        "coverage": 1.0,
+        "covered_items": 64,
+        "duplicate_prediction_ids": [],
+        "items": 64,
+        "mean_response_words": 1.03125,
+        "prediction_rows": 64,
+        "report": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-retrofit\\Rineya_TGSA_Retrofit_v1\\artifacts\\historical_pulse_vector_a11_v1\\evidence\\candidate_showcase_report.json",
+        "report_sha256": "eaac85a11f1ec2ee945c059c6c2f09c892166a34c66643242b441a73cb7c3cd2",
+        "short_response_rate_le_12_words": 1.0,
+        "strict_exact": 0.234375,
+        "strict_exact_hits": 15,
+        "unanswerable_hits": 13,
+        "unexpected_prediction_ids": [],
+        "variant_hits": {
+          "base": 0,
+          "counterfactual": 0,
+          "paraphrase": 2,
+          "unanswerable": 13
+        }
+      },
+      "stability": {
+        "all_four_packs": 0,
+        "base_paraphrase_both_correct_packs": 2,
+        "counterfactual_pair_packs": 0,
+        "coverage": 1.0,
+        "covered_items": 192,
+        "duplicate_prediction_ids": [],
+        "items": 192,
+        "mean_response_words": 1.052083,
+        "prediction_rows": 192,
+        "report": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-retrofit\\Rineya_TGSA_Retrofit_v1\\artifacts\\historical_pulse_vector_a11_v1\\evidence\\candidate_stability_report.json",
+        "report_sha256": "6f25ba7a83f64c20623c7dd5e642a24e9906bd504432c8e6c074c53cbef8baaf",
+        "short_response_rate_le_12_words": 1.0,
+        "strict_exact": 0.234375,
+        "strict_exact_hits": 45,
+        "unanswerable_hits": 38,
+        "unexpected_prediction_ids": [],
+        "variant_hits": {
+          "base": 3,
+          "counterfactual": 0,
+          "paraphrase": 4,
+          "unanswerable": 38
+        }
+      }
+    },
+    "parent": {
+      "all256": {
+        "all_four_packs": 20,
+        "base_paraphrase_both_correct_packs": 51,
+        "counterfactual_pair_packs": 34,
+        "coverage": 1.0,
+        "covered_items": 256,
+        "duplicate_prediction_ids": [],
+        "items": 256,
+        "mean_response_words": 2.082031,
+        "prediction_rows": 256,
+        "report": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-retrofit\\Rineya_TGSA_Retrofit_v1\\artifacts\\historical_soup_a11_baya_midpoint_v1\\evidence\\parent_all256_report.json",
+        "report_sha256": "8b5ae45d5d64c949812dff3aaf68aeb83aa41747531b2e6cb18bc18dcf1b68dc",
+        "short_response_rate_le_12_words": 1.0,
+        "strict_exact": 0.664062,
+        "strict_exact_hits": 170,
+        "unanswerable_hits": 22,
+        "unexpected_prediction_ids": [],
+        "variant_hits": {
+          "base": 53,
+          "counterfactual": 38,
+          "paraphrase": 57,
+          "unanswerable": 22
+        }
+      },
+      "showcase": {
+        "all_four_packs": 7,
+        "base_paraphrase_both_correct_packs": 13,
+        "counterfactual_pair_packs": 8,
+        "coverage": 1.0,
+        "covered_items": 64,
+        "duplicate_prediction_ids": [],
+        "items": 64,
+        "mean_response_words": 2.109375,
+        "prediction_rows": 64,
+        "report": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-retrofit\\Rineya_TGSA_Retrofit_v1\\artifacts\\historical_soup_a11_baya_midpoint_v1\\evidence\\parent_showcase_report.json",
+        "report_sha256": "e34fb8379978e32276013c841bc77204fe906d9e9366746c4ce96d19a3cadd31",
+        "short_response_rate_le_12_words": 1.0,
+        "strict_exact": 0.703125,
+        "strict_exact_hits": 45,
+        "unanswerable_hits": 7,
+        "unexpected_prediction_ids": [],
+        "variant_hits": {
+          "base": 13,
+          "counterfactual": 10,
+          "paraphrase": 15,
+          "unanswerable": 7
+        }
+      },
+      "stability": {
+        "all_four_packs": 13,
+        "base_paraphrase_both_correct_packs": 38,
+        "counterfactual_pair_packs": 26,
+        "coverage": 1.0,
+        "covered_items": 192,
+        "duplicate_prediction_ids": [],
+        "items": 192,
+        "mean_response_words": 2.072917,
+        "prediction_rows": 192,
+        "report": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-retrofit\\Rineya_TGSA_Retrofit_v1\\artifacts\\historical_soup_a11_baya_midpoint_v1\\evidence\\parent_stability_report.json",
+        "report_sha256": "7bb8b2301e941d0024f80c5d2fa36a51f2847f1f02831f7d1cd3edd4aee8c922",
+        "short_response_rate_le_12_words": 1.0,
+        "strict_exact": 0.651042,
+        "strict_exact_hits": 125,
+        "unanswerable_hits": 15,
+        "unexpected_prediction_ids": [],
+        "variant_hits": {
+          "base": 40,
+          "counterfactual": 28,
+          "paraphrase": 42,
+          "unanswerable": 15
+        }
+      }
+    }
+  },
+  "runner_sha256": "cdf156ef08fe719e3d64dd588c11669563e082e656b8c01e8fd32f5ed6562022",
+  "schema_version": "rineya.historical-dose-transfer-outcome.v1",
+  "transfer_gate": {
+    "all_four_packs_preserved": false,
+    "artifact_provenance_complete": true,
+    "base_paraphrase_packs_preserved": false,
+    "candidate_generation_health": true,
+    "control_reconstruction_bitwise_exact": true,
+    "coverage_and_identity": true,
+    "fresh_process_reload": true,
+    "stability_preserved": false,
+    "strict_all256_gain": false
+  },
+  "transfer_result": "TRANSFER_FAIL",
+  "trial_id": "historical-pulse-vector-a11-v1"
+}

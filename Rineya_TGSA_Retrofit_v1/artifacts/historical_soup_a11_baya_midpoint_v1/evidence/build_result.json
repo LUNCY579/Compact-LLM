@@ -1,0 +1,128 @@
+{
+  "candidate_name": "Rineya-Supa-A1.1-BayaMid-Soup-0.5-transfer-v1",
+  "created_at_utc": "2026-08-31T05:28:29.120444Z",
+  "merge_manifest_sha256": "e2073b114af7bb746739318ab623ded882c8225dd4e5846d25ffced1b99d347f",
+  "output_checkpoint_digest": "73312805252d10b903f6262d1d431fe7b97341dbdbbc183e0f9936ace5415767",
+  "recipe": {
+    "accumulation_dtype": "float32",
+    "candidate_count": 1,
+    "effective_adapter_scale_if_linearity_and_unrounded_sources_hold": 1.03125,
+    "forbidden_adaptation": [
+      "no coefficient refinement",
+      "no layerwise search",
+      "no prompt or threshold changes",
+      "no gate retuning",
+      "no sealed-data access"
+    ],
+    "ingredient_coefficient": 0.5,
+    "kind": "uniform_dense_lerp",
+    "output_dtype": "float16",
+    "parent_coefficient": 0.5
+  },
+  "registration": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-retrofit\\Rineya_TGSA_Retrofit_v1\\configs\\historical_soup_a11_baya_midpoint_trial.json",
+    "registration_base_commit": "3d481b959ff4bb35150a42836ee33f6709f20598",
+    "sha256": "c93d43ec4d4f16f0c4689828f55a9e55e8a1f72ceba70865a851b4f07aa07cc8"
+  },
+  "schema_version": "rineya.historical-soup-artifact.v1",
+  "source_preflight": {
+    "compatibility": {
+      "architecture_fields_identical": true,
+      "effective_rope_theta": 1000000.0,
+      "ingredient_architecture": [
+        "Qwen3ForCausalLM"
+      ],
+      "intentional_runtime_identity": "Qwen3AbstainForCausalLM",
+      "parent_architecture": [
+        "Qwen3AbstainForCausalLM"
+      ],
+      "passed": true,
+      "tensor_count": 310,
+      "tensor_key_sets_identical": true,
+      "tensor_shapes_identical": true,
+      "tokenizer_sha256_identical": true
+    },
+    "ingredient": {
+      "config": {
+        "bytes": 726,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Baya-1.7.0-devfreeze\\config.json",
+        "sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd"
+      },
+      "tokenizer": {
+        "bytes": 11422654,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Baya-1.7.0-devfreeze\\tokenizer.json",
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      "weights": {
+        "bytes": 1192135096,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Baya-1.7.0-devfreeze\\model.safetensors",
+        "sha256": "1737cd1ee2bdde714c259adf2012ae44c89ad82a06797653343bad7e3cf88bba"
+      }
+    },
+    "parent": {
+      "config": {
+        "bytes": 1588,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze\\config.json",
+        "sha256": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705"
+      },
+      "tokenizer": {
+        "bytes": 11422654,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze\\tokenizer.json",
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      "weights": {
+        "bytes": 1192134784,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze\\model.safetensors",
+        "sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026"
+      }
+    },
+    "registration": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-retrofit\\Rineya_TGSA_Retrofit_v1\\configs\\historical_soup_a11_baya_midpoint_trial.json",
+      "registration_base_commit": "3d481b959ff4bb35150a42836ee33f6709f20598",
+      "sha256": "c93d43ec4d4f16f0c4689828f55a9e55e8a1f72ceba70865a851b4f07aa07cc8"
+    },
+    "schema_version": "rineya.historical-soup-preflight.v1",
+    "trial_id": "historical-soup-a11-baya-midpoint-v1",
+    "verified_at_utc": "2026-08-31T05:28:20.477833Z"
+  },
+  "trial_artifact_sha256": "f3701ca1b248584c68587a82643c9bcab1afc0d9083f6db0623d8700302d8bd9",
+  "trial_id": "historical-soup-a11-baya-midpoint-v1",
+  "verification": {
+    "abstain_logit_bias": 5.156249985098839,
+    "abstain_token_id": 51378,
+    "config_sha256": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "forbidden_identity_assets_absent": true,
+    "index_sha256": "a1ad0b9868a804a2625dab13104dc91ca324d24245fdc69474f6a4b12280dc80",
+    "passed": true,
+    "required_class": "Qwen3AbstainForCausalLM",
+    "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "weight_bytes": 1192134496,
+    "weight_files": [
+      {
+        "bytes": 311165064,
+        "name": "model-00001-of-00005.safetensors",
+        "sha256": "55cffb17969c303013594a34c149757b84158b281c6c9500216940439affb4f9"
+      },
+      {
+        "bytes": 264290248,
+        "name": "model-00002-of-00005.safetensors",
+        "sha256": "b6660a249bf77c3a7b4d37c804af969236972b1b12cdb858a83e7946d9a72cf2"
+      },
+      {
+        "bytes": 264291112,
+        "name": "model-00003-of-00005.safetensors",
+        "sha256": "085d0c7791ff699a00dab70811a8ca87d78d6502d206a09ce070a657d355719d"
+      },
+      {
+        "bytes": 264290344,
+        "name": "model-00004-of-00005.safetensors",
+        "sha256": "06003203dd2d2c80d48a8a01b0d43f55f997b43146b957f6c96ee284599000c0"
+      },
+      {
+        "bytes": 88097728,
+        "name": "model-00005-of-00005.safetensors",
+        "sha256": "70f77a9ef82fd646a36879c496a484870330666b22a8cc90e7da8dccf21344a4"
+      }
+    ]
+  }
+}
