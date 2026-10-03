@@ -43,6 +43,9 @@ class Worker:
         self.identity = {"pid": 987654321, "create_time": 1.0, "process_handle": 123, "job_handle": 456,
                          "assigned_before_resume": True, "job_kill_on_close": True, "breakaway_allowed": False}
         self.terminated = self.closed = False
+        self.resumed = False
+        self.on_resume = None
+        self.monitors = []
         self.returncode = 0
         self.poll_count = 0
         self.live_descendants = False
@@ -63,6 +66,13 @@ class Worker:
     def terminate(self):
         self.terminated = True
 
+    def resume(self):
+        if not self.monitors or not self.monitors[-1].started:
+            raise AssertionError("external monitor must start before resume")
+        if self.on_resume:
+            self.on_resume()
+        self.resumed = True
+
     def close(self):
         self.closed = True
 
@@ -72,19 +82,37 @@ class Monitor:
         self.worker = worker
         self.deadline = deadline
         self.reason = None
+        self.admitted = admitted
+        self.started = False
+        self.observations = []
 
     def start(self):
+        self.sample()
+        self.started = True
         return self
 
+    def sample(self):
+        self.cpu = ns._cpu_snapshot(self.worker.output, self.worker)
+        self.observations.append(self.cpu)
+
     def check(self):
-        return self.reason
+        if self.reason:
+            return self.reason
+        if ns.time.monotonic() >= self.deadline:
+            return "whole_scope_deadline"
+        if not ns._fresh_cpu(self.cpu, ns.time.monotonic()):
+            return "stale_external_CPU_watchdog"
+        return None
+
+    def pre_resume_check(self):
+        return self.check() or ns._admission_failure({**self.admitted, **self.cpu}, ns.time.monotonic())
 
     def _abort(self, reason):
         self.reason = reason
         self.worker.terminate()
 
     def close(self):
-        return [{"mock_external_watchdog": True}]
+        return [{"mock_external_watchdog": True}, *self.observations]
 
 
 class SupervisorTests(unittest.TestCase):
@@ -105,6 +133,7 @@ class SupervisorTests(unittest.TestCase):
         self.sample_changes = {}
         self.worker_changes = {}
         self.monitor_reason = None
+        self.construction_delay = 0
         self.stack = ExitStack()
         self.addCleanup(self.stack.close)
         for name, value in (
@@ -129,7 +158,9 @@ class SupervisorTests(unittest.TestCase):
         self.assertEqual(2, len(self.samples), "never launch before both independent admissions")
         self.assertEqual(self.config["config_sha256"], config_sha256)
         self.assertLess(self.clock.now, deadline_monotonic)
+        self.clock.sleep(self.construction_delay)
         worker = Worker(argv, output)
+        worker.monitors = self.monitors
         for key, value in self.worker_changes.items():
             setattr(worker, key, value)
         self.workers.append(worker)
@@ -254,6 +285,7 @@ class SupervisorTests(unittest.TestCase):
         result = self.run_scope()
         self.assertEqual("SUPERVISED_WORKER_EXITED_ZERO", result["status"])
         self.assertTrue(result["worker_launched"])
+        self.assertTrue(result["worker_resumed"])
         self.assertEqual(0, result["returncode"])
         self.assertTrue(result["job_closed_kill_on_close"])
         self.assertTrue(result["owned_handle_alive_verified_after_launch"])
@@ -261,6 +293,39 @@ class SupervisorTests(unittest.TestCase):
         self.assertIn("partial.mock.json", [row["path"] for row in result["partial_outputs"]])
         self.assertFalse(result["mechanical_qualification_established"])
         self.assertTrue((Path(result["lease_path"]) / "worker.json").exists())
+        self.assertTrue((Path(result["lease_path"]) / "resume.json").exists())
+
+    def test_slow_suspended_construction_is_followed_by_genuine_fresh_monitor_before_resume(self):
+        self.construction_delay = 0.35
+        result = self.run_scope()
+        self.assertEqual("SUPERVISED_WORKER_EXITED_ZERO", result["status"])
+        self.assertTrue(self.workers[0].resumed)
+        self.assertTrue(self.monitors[0].started)
+        self.assertGreaterEqual(self.monitors[0].observations[0]["sample_started_monotonic"]
+                                - result["dispatch_observation"]["sample_started_monotonic"], 0.35 - 1e-10)
+        self.assertEqual(700.0, result["deadline_monotonic"])
+        self.assertEqual(0.2, result["cadence"]["CPU_freshness_seconds"])
+
+    def test_blocked_slow_resume_keeps_external_observations_current_without_resetting_deadline(self):
+        def delayed_resume():
+            self.assertTrue(self.monitors[0].started)
+            self.clock.sleep(0.35)
+            self.monitors[0].sample()  # independent external sampler's current observation
+        self.worker_changes = {"on_resume": delayed_resume}
+        result = self.run_scope()
+        self.assertEqual("SUPERVISED_WORKER_EXITED_ZERO", result["status"])
+        self.assertEqual(2, len(self.monitors[0].observations))
+        self.assertEqual(700.0, result["deadline_monotonic"])
+        self.assertEqual(0.1, result["cadence"]["CPU_watchdog_seconds"])
+        self.assertEqual(0.2, result["cadence"]["CPU_freshness_seconds"])
+
+    def test_startup_monitor_failure_never_resumes_suspended_worker(self):
+        self.monitor_reason = "startup_external_CPU_watchdog_not_ready"
+        result = self.run_scope()
+        self.assertEqual("OWNED_WORKER_ABORTED", result["status"])
+        self.assertFalse(result["worker_resumed"])
+        self.assertFalse(self.workers[0].resumed)
+        self.assertTrue(self.workers[0].terminated)
 
     def test_watchdog_failure_terminates_owned_worker_preserves_returncode(self):
         self.monitor_reason = "runtime_system_reserve"
@@ -366,11 +431,14 @@ class MonitorBoundsTests(unittest.TestCase):
         self.assertIn("termination_error", self.mon.observations[0])
 
     def test_cpu_watchdog_memory_failure_uses_no_gpu_query(self):
+        def heartbeat(output, pid):
+            self.assertEqual(1, self.mon.cpu["host_available_bytes"])
+            self.assertTrue(self.mon.ready.is_set(), "publish current CPU before heartbeat IO")
         with mock.patch.object(ns, "_cpu_snapshot", return_value=snapshot(100, host_available_bytes=1)), \
-                mock.patch.object(ns, "_gpu_snapshot") as gpu, mock.patch.object(ns, "_heartbeat") as heartbeat:
+                mock.patch.object(ns, "_gpu_snapshot") as gpu, mock.patch.object(ns, "_heartbeat", side_effect=heartbeat) as heartbeat_mock:
             self.mon._cpu_loop()
         gpu.assert_not_called()
-        heartbeat.assert_called_once_with(self.mon.output, ns.os.getpid())
+        heartbeat_mock.assert_called_once_with(self.mon.output, ns.os.getpid())
         self.worker.terminate.assert_called_once_with()
         self.assertEqual("runtime_system_reserve", self.mon.reason)
 
@@ -383,6 +451,54 @@ class MonitorBoundsTests(unittest.TestCase):
         cpu.assert_not_called()
         self.worker.terminate.assert_called_once_with()
         self.assertIn("GPU_probe_error:TimeoutExpired", self.mon.reason)
+
+    def test_real_monitor_start_replaces_old_cpu_with_current_owned_tree_before_ready(self):
+        self.clock.now += 0.35
+        calls = []
+        monitor = self.mon
+        class MockThread:
+            def __init__(self, *, target, daemon):
+                self.target = target
+            def start(self):
+                calls.append(self.target.__name__)
+                if self.target.__name__ == "_cpu_loop":
+                    monitor.ready.set()  # mocked external sampler readiness
+            def join(self, timeout):
+                pass
+        with mock.patch.object(ns, "_cpu_snapshot", return_value=snapshot(self.clock.now)) as cpu, \
+                mock.patch.object(ns, "_gpu_snapshot") as gpu, mock.patch.object(ns.threading, "Thread", MockThread):
+            self.mon.start()
+        self.assertEqual(["_cpu_loop", "_gpu_loop"], calls)
+        self.assertEqual(100.35, self.mon.cpu["sample_started_monotonic"])
+        cpu.assert_called_once_with(self.mon.output, self.worker)
+        gpu.assert_not_called()
+        self.assertIsNone(self.mon.pre_resume_check())
+        self.assertEqual(700, self.mon.deadline)
+        self.assertEqual("worker_suspended_startup", self.mon.observations[0]["phase"])
+
+    def test_real_monitor_readiness_failure_aborts_still_suspended_worker(self):
+        self.mon.ready = mock.Mock()
+        self.mon.ready.wait.return_value = False
+        with mock.patch.object(ns, "_cpu_snapshot", return_value=snapshot(100)), \
+                mock.patch.object(ns.threading, "Thread"):
+            self.mon.start()
+        self.mon.ready.wait.assert_called_once_with(0.2)
+        self.worker.terminate.assert_called_once_with()
+        self.assertEqual("startup_external_CPU_watchdog_not_ready", self.mon.reason)
+
+    def test_monitor_refreshes_stale_gpu_while_worker_remains_suspended(self):
+        self.clock.now += 2.01
+        self.mon.ready = mock.Mock()
+        self.mon.ready.wait.return_value = True
+        with mock.patch.object(ns, "_gpu_snapshot", return_value=snapshot(self.clock.now)) as gpu, \
+                mock.patch.object(ns, "_cpu_snapshot", return_value=snapshot(self.clock.now)), \
+                mock.patch.object(ns.threading, "Thread"):
+            self.mon.start()
+        gpu.assert_called_once_with()
+        self.assertIsNone(self.mon.pre_resume_check())
+        self.assertEqual(700, self.mon.deadline)
+        self.assertEqual("GPU", self.mon.observations[0]["kind"])
+        self.assertEqual("worker_suspended_startup", self.mon.observations[0]["phase"])
 
 
 class WindowsContainmentTests(unittest.TestCase):
@@ -412,6 +528,7 @@ class WindowsContainmentTests(unittest.TestCase):
         job = mock.Mock(handle=456)
         job.assign.side_effect = lambda handle: events.append("assign")
         process = mock.Mock(pid=43210, _handle=123)
+        process.poll.return_value = None
         def resume(pid):
             self.assertTrue((Path(directory) / "supervisor_ownership.json").exists())
             self.assertTrue((Path(directory) / "supervisor_alive.json").exists())
@@ -424,7 +541,11 @@ class WindowsContainmentTests(unittest.TestCase):
                 mock.patch.object(ns.subprocess, "Popen", return_value=process) as popen:
             worker = ns._WindowsOwnedWorker(["python", "mock_worker"], Path(directory), config_sha256="f" * 64,
                                             deadline_monotonic=ns.time.monotonic() + 600)
-            self.assertEqual(["assign", "resume"], events)
+            self.assertEqual(["assign"], events)
+            self.assertFalse(worker.resumed)
+            events.append("monitor_ready")
+            worker.resume()
+            self.assertEqual(["assign", "monitor_ready", "resume"], events)
             self.assertEqual(0x08000004, popen.call_args.kwargs["creationflags"])
             self.assertFalse(popen.call_args.kwargs["shell"])
             self.assertEqual("1", popen.call_args.kwargs["env"]["HF_HUB_OFFLINE"])

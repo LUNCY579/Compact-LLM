@@ -402,6 +402,8 @@ class _WindowsOwnedWorker:
         self.job = _WindowsJob()
         self.process = None
         self.logs = []
+        self.deadline_monotonic = deadline_monotonic
+        self.resumed = False
         assigned = False
         try:
             for name in ("worker.stdout.log", "worker.stderr.log"):
@@ -422,7 +424,8 @@ class _WindowsOwnedWorker:
             _heartbeat(output, os.getpid())
             if time.monotonic() >= deadline_monotonic:
                 raise RuntimeError("whole scope elapsed before suspended worker resume")
-            _resume_primary_thread(self.process.pid)
+            # Return still suspended. The external monitor must be started and
+            # observe this actual owned tree before resume() can execute code.
         except BaseException as error:
             evidence = {"attempted_worker_argv": argv, "assigned_before_resume": assigned,
                         "resumed_successfully": False, "process_identity": getattr(self, "identity", None),
@@ -447,6 +450,16 @@ class _WindowsOwnedWorker:
             for stream in self.logs:
                 stream.close()
             raise _LaunchFailure(error, evidence) from error
+
+    def resume(self):
+        if self.resumed:
+            raise RuntimeError("owned worker cannot resume twice")
+        if time.monotonic() >= self.deadline_monotonic:
+            raise RuntimeError("whole scope elapsed before suspended worker resume")
+        if self.poll() is not None:
+            raise RuntimeError("owned suspended worker is already terminal")
+        _resume_primary_thread(self.process.pid)
+        self.resumed = True
 
     def poll(self):
         return self.process.poll()  # Windows Popen polls its actual process handle.
@@ -486,6 +499,7 @@ class _Monitor:
         self.reason = None
         self.observations = []
         self.threads = []
+        self.ready = threading.Event()
 
     def _abort(self, reason):
         with self.lock:
@@ -527,10 +541,12 @@ class _Monitor:
         while not self.stop.is_set():
             try:
                 snapshot = _cpu_snapshot(self.output, self.worker)
-                _heartbeat(self.output, os.getpid())
                 with self.lock:
                     self.cpu = snapshot
                     self.observations.append({"kind": "CPU", **snapshot})
+                # Publish a complete current sample before heartbeat file IO.
+                self.ready.set()
+                _heartbeat(self.output, os.getpid())
                 reason = self.check()
                 if reason:
                     self._abort(reason)
@@ -556,11 +572,33 @@ class _Monitor:
 
     def start(self):
         self.gpu_uuid = self.gpu["gpu_uuid"]
+        # Process creation, ownership writes and thread enumeration need not fit
+        # into a 200ms CPU observation window. Keep the process suspended, take
+        # genuine current measurements, and start the monitor before resuming.
+        if not _fresh_gpu(self.gpu, time.monotonic()):
+            self.gpu = _gpu_snapshot()
+            self.observations.append({"kind": "GPU", "phase": "worker_suspended_startup", **self.gpu})
+        self.cpu = _cpu_snapshot(self.output, self.worker)
+        self.observations.append({"kind": "CPU", "phase": "worker_suspended_startup", **self.cpu})
+        reason = self.pre_resume_check()
+        if reason:
+            self._abort(reason)
+            return self
         for function in (self._cpu_loop, self._gpu_loop):
             thread = threading.Thread(target=function, daemon=True)
             thread.start()
             self.threads.append(thread)
+        if not self.ready.wait(CPU_FRESHNESS):
+            self._abort("startup_external_CPU_watchdog_not_ready")
         return self
+
+    def pre_resume_check(self):
+        reason = self.check()
+        if reason:
+            return reason
+        with self.lock:
+            current = {**self.gpu, **self.cpu}
+        return _admission_failure(current, time.monotonic())
 
     def close(self):
         self.stop.set()
@@ -596,6 +634,7 @@ def supervise(config_path, output_dir, *, admission_only=False):
             "--config", str(Path(config_path).absolute()), "--output-dir", str(output)]
     receipt = {"schema_version": 1, "started_utc": _utc(), "output_dir": str(output),
                "attempted_worker_argv": argv, "worker_attempted": False, "worker_launched": False,
+               "worker_resumed": False,
                "admission_only": bool(admission_only), "bounds": dict(BOUNDS),
                "cadence": {"CPU_watchdog_seconds": CPU_INTERVAL, "CPU_freshness_seconds": CPU_FRESHNESS,
                            "GPU_query_interval_seconds": GPU_INTERVAL, "GPU_query_timeout_seconds": GPU_TIMEOUT,
@@ -666,26 +705,39 @@ def supervise(config_path, output_dir, *, admission_only=False):
             receipt["worker_identity"] = dict(worker.identity)
             receipt["owned_handle_alive_verified_after_launch"] = worker.is_alive()
             _json_new(lease / "worker.json", receipt["worker_identity"])
-            monitor = _Monitor(worker, output, receipt["deadline_monotonic"], observation).start()
-            while True:
-                reason = monitor.check()
-                if reason:
-                    monitor._abort(reason)
-                    receipt["status"] = "OWNED_WORKER_ABORTED"
-                    receipt["failure"] = reason
-                    break
-                returncode = worker.poll()
-                if returncode is not None:
-                    receipt["returncode"] = returncode
-                    if worker.process_identities():
-                        monitor._abort("root_exited_with_live_owned_descendants")
+            monitor = _Monitor(worker, output, receipt["deadline_monotonic"], observation)
+            monitor.start()
+            reason = monitor.pre_resume_check()
+            if reason:
+                monitor._abort(reason)
+                receipt["status"] = "OWNED_WORKER_ABORTED"
+                receipt["failure"] = reason
+            else:
+                worker.resume()
+                receipt["worker_resumed"] = True
+                receipt["worker_resume_monotonic"] = time.monotonic()
+                _json_new(lease / "resume.json", {
+                    "worker_identity": receipt["worker_identity"], "resumed_monotonic": receipt["worker_resume_monotonic"],
+                    "external_monitor_ready_before_resume": True, "deadline_monotonic": receipt["deadline_monotonic"]})
+                while True:
+                    reason = monitor.check()
+                    if reason:
+                        monitor._abort(reason)
                         receipt["status"] = "OWNED_WORKER_ABORTED"
-                        receipt["failure"] = "root_exited_with_live_owned_descendants"
-                    else:
-                        receipt["status"] = ("SUPERVISED_WORKER_EXITED_ZERO" if returncode == 0
-                                             else "SUPERVISED_WORKER_FAILED")
-                    break
-                time.sleep(CPU_INTERVAL)
+                        receipt["failure"] = reason
+                        break
+                    returncode = worker.poll()
+                    if returncode is not None:
+                        receipt["returncode"] = returncode
+                        if worker.process_identities():
+                            monitor._abort("root_exited_with_live_owned_descendants")
+                            receipt["status"] = "OWNED_WORKER_ABORTED"
+                            receipt["failure"] = "root_exited_with_live_owned_descendants"
+                        else:
+                            receipt["status"] = ("SUPERVISED_WORKER_EXITED_ZERO" if returncode == 0
+                                                 else "SUPERVISED_WORKER_FAILED")
+                        break
+                    time.sleep(CPU_INTERVAL)
     except BaseException as error:
         receipt["failure"] = type(error).__name__ + ": " + str(error)
         receipt["status"] = "OWNED_WORKER_ABORTED" if worker else "ADMISSION_DENIED"
