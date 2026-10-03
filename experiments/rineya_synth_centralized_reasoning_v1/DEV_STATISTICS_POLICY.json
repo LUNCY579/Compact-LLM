@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "id": "SYNTH-DEV-STATISTICS-001",
+  "population": "EXPOSED_SINGLE_TRAINING_SEED_DEV_ONLY",
+  "training_seed": 101,
+  "comparison": "one M1/M2 pair against unchanged M0; no selection across seeds",
+  "component_counts_per_skill": {"R": 32, "S": 32, "RS": 32},
+  "conditions": [0, 1],
+  "renderings": ["familiar", "heldout_ledger"],
+  "component_row_count": 4,
+  "panel_binding": "freeze exact row/skill/condition/rendering/joined-parent assignments before scores; analysis requires that pre-score metadata SHA256, preventing post-hoc regrouping",
+  "atomic_endpoint": "equal-weight macro-average R/S accuracy, first average four rows within each joined parent component",
+  "RS_endpoint": "separate held-out RS component accuracy; never substitute for the atomic endpoint",
+  "bootstrap": {
+    "method": "paired percentile cluster bootstrap within each skill; same resampled component index for both arms",
+    "seed": 2026100309,
+    "resamples": 10000,
+    "confidence": 0.95,
+    "quantile": "linear interpolation at p*(B-1)"
+  },
+  "advancement": {
+    "atomic_M2_minus_M1_minimum": 0.05,
+    "atomic_lower_CI_strictly_positive": true,
+    "RS_M2_minus_M1_strictly_positive": true,
+    "RS_lower_CI_strictly_positive": true,
+    "all_retention_domains_and_both_candidates_must_pass": true
+  },
+  "retention": {
+    "required_domain_classes": ["task", "language", "long_context"],
+    "enrollment": "caller explicitly freezes complete domain IDs/classes/row IDs/component IDs and all M0 scores before candidate outputs",
+    "enrollment_binding": "analysis requires the enrollment SHA256 fixed in the pre-candidate manifest, including its explicit unchanged baseline ID; a self-consistent later subset cannot replace it",
+    "eligible_unit": "joined parent component with at least one M0-correct row",
+    "failure": "any enrolled prior-correct row lost makes its component a failure",
+    "repairs": "reported separately; never offset a loss or increase the retention denominator",
+    "upper_bound": "exact one-sided Clopper-Pearson binomial CDF inversion; zero-loss bound is 1-alpha^(1/n)",
+    "family_alpha": 0.05,
+    "per_comparison_alpha": "0.05/(2*number_of_explicitly_declared_domains)",
+    "maximum_upper_failure_rate": 0.05,
+    "zero_observed_component_failures_required": true,
+    "missing_zero_eligible_or_insufficient_precision": "INCONCLUSIVE; no advancement",
+    "scorer_metadata": "caller-qualified scorer, label and qualification-receipt SHA256 bindings for each domain; missing/unqualified bindings leave a computational screen only"
+  },
+  "interpretation": "One training seed cannot confirm general condition-diversity transfer, broad retention, or training-seed reliability. Binary inputs do not qualify a grader. No shifted permutation noninferiority procedure is used.",
+  "maximum_total_guard_rows": 100000,
+  "native_launch_authorized": false,
+  "training_authorized": false,
+  "protected_bank_access": false,
+  "confirmation_eligible": false,
+  "broad_retention_certified": false,
+  "transfer_confirmation_established": false
+}

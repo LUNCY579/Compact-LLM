@@ -1,5 +1,28 @@
 # Status and next handoff
 
+## Latest: short supervised native mechanics passed; comparison pending
+
+Attempt 7 passed the complete supervised short scope in 353.437 seconds, with
+normal exit and verified owned-tree/sampler/NVML cleanup. The
+[independent audit](evidence/nq001_attempt7_independent_audit_20261003.json)
+verified 620 returned API calls, 75 forwards / 16,476 positions, two native and
+one reference updates, all 60 CE checks, exact 112 gradient comparisons,
+bitwise restoration/continuation and unchanged 310 base tensors. CPU observation
+windows stayed below 200 ms (maximum 141 ms); all memory and GPU floors held.
+Raw outputs and local private STATE1 are retained in
+[attempt 7 evidence](evidence/nq001_attempt7_20261003).
+
+This qualifies `PASS_SHORT_SCOPED_NATIVE_MECHANICS` only. Full E0/E1, sustained
+27-update fit, M0/M1/M2 study training, fresh transfer and prior-correct retention
+remain unqualified/unmeasured. No protected banks or publication were enabled.
+
+The [DEV statistics policy](DEV_STATISTICS_POLICY.json) and
+[23-test CPU receipt](evidence/dev_statistics_cpu_validation_20261003.json)
+freeze component-level comparisons, pre-candidate enrollment/cohort hashes,
+exact simultaneous retention bounds and separate repairs. Missing qualified
+guards or precision remains inconclusive; arithmetic is not grader authority.
+The full research goal remains active and unanswered.
+
 ## Latest: worker mechanics verified; full supervision still failed
 
 Attempt 6 returned `PASS_SCOPED_NATIVE_MECHANICS`: 40 native training forwards/
