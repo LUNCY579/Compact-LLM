@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import ctypes
 from collections import defaultdict
 from datetime import datetime, timezone
 import importlib.metadata
@@ -9,12 +10,57 @@ import json
 import os
 from pathlib import Path
 import random
+import re
 import sys
 import time
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import native_contract as contract
 from rs_contract import canonical, require
+
+
+def in_owned_job(job_name):
+    """Verify the actual interpreter descendant, then close its query handle."""
+    require(os.name == "nt", "native qualification requires Windows containment")
+    from ctypes import wintypes
+    kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+    kernel.OpenJobObjectW.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.LPCWSTR]
+    kernel.OpenJobObjectW.restype = wintypes.HANDLE
+    kernel.GetCurrentProcess.restype = wintypes.HANDLE
+    kernel.IsProcessInJob.argtypes = [wintypes.HANDLE, wintypes.HANDLE, ctypes.POINTER(wintypes.BOOL)]
+    kernel.IsProcessInJob.restype = wintypes.BOOL
+    kernel.CloseHandle.argtypes = [wintypes.HANDLE]
+    handle = kernel.OpenJobObjectW(4, False, job_name)  # JOB_OBJECT_QUERY
+    if not handle:
+        raise ctypes.WinError(ctypes.get_last_error())
+    try:
+        inside = wintypes.BOOL()
+        if not kernel.IsProcessInJob(kernel.GetCurrentProcess(), handle, ctypes.byref(inside)):
+            raise ctypes.WinError(ctypes.get_last_error())
+        return bool(inside.value)
+    finally:
+        # Retaining this handle would defeat the supervisor's kill-on-close.
+        if not kernel.CloseHandle(handle):
+            raise ctypes.WinError(ctypes.get_last_error())
+
+
+def verify_worker_ownership(owner, config_path, *, membership=in_owned_job):
+    require(type(owner) is dict and type(owner.get("worker_pid")) is int and owner["worker_pid"] > 0
+            and type(owner.get("supervisor_pid")) is int and owner["supervisor_pid"] > 0,
+            "typed ownership PIDs")
+    require(owner.get("config_sha256") == contract.filehash(config_path), "worker config ownership mismatch")
+    name = owner.get("job_name")
+    require(type(name) is str and re.fullmatch(r"Local\\SYNTH_NQ_JOB_[0-9a-f]{32}", name) is not None,
+            "owned Job name")
+    require(membership(name) is True, "interpreter is outside owned Job")
+    import psutil
+    supervisor = psutil.Process(owner["supervisor_pid"])
+    require(supervisor.is_running() and supervisor.create_time() == owner.get("supervisor_create_time"),
+            "supervisor identity is not currently live")
+    return {"actual_worker_pid": os.getpid(), "actual_parent_pid": os.getppid(),
+            "launcher_root_pid": owner["worker_pid"], "supervisor_pid": owner["supervisor_pid"],
+            "job_name": name, "owned_job_membership_verified": True,
+            "query_job_handle_closed_before_framework_import": True}
 
 
 class Journal:
@@ -119,8 +165,10 @@ def run(config_path: Path, output: Path) -> int:
     require(output.resolve().parent == contract.PACKAGE / "artifacts" and output.is_dir(), "owned output directory")
     require((output / "supervisor_ownership.json").is_file(), "supervisor ownership receipt required")
     owner = contract.read_json(output / "supervisor_ownership.json")
-    require(owner.get("worker_pid") == os.getpid() and owner.get("supervisor_pid") == os.getppid()
-            and owner.get("config_sha256") == contract.filehash(config_path), "worker ownership/config mismatch")
+    ownership = verify_worker_ownership(owner, config_path)
+    with (output / "worker_ownership_verified.json").open("x", encoding="utf-8", newline="\n") as stream:
+        json.dump(ownership, stream, indent=2, sort_keys=True)
+        stream.write("\n")
     journal = Journal(output)
     start = time.monotonic()
     torch = model = config = None

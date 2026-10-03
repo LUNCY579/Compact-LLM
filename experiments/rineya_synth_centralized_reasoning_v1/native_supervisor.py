@@ -310,9 +310,15 @@ class _WindowsJob:
         for name, (arguments, result) in signatures.items():
             getattr(self.api, name).argtypes = arguments
             getattr(self.api, name).restype = result
-        self.handle = self.api.CreateJobObjectW(None, None)
+        self.name = "Local\\SYNTH_NQ_JOB_" + uuid.uuid4().hex
+        ctypes.set_last_error(0)
+        self.handle = self.api.CreateJobObjectW(None, self.name)
         if not self.handle:
             raise ctypes.WinError(ctypes.get_last_error())
+        if ctypes.get_last_error() == 183:  # ERROR_ALREADY_EXISTS
+            # A collision must never attach to or reconfigure another Job.
+            self.close()
+            raise RuntimeError("new owned Job name already exists")
         limits = _ExtendedLimits()
         limits.BasicLimitInformation.LimitFlags = 0x2000  # KILL_ON_JOB_CLOSE; no BREAKAWAY flags
         if not self.api.SetInformationJobObject(self.handle, 9, ctypes.byref(limits), ctypes.sizeof(limits)):
@@ -417,10 +423,14 @@ class _WindowsOwnedWorker:
             self.job.assign(int(self.process._handle))
             assigned = True
             self.identity.update({"process_handle": int(self.process._handle), "job_handle": int(self.job.handle),
+                                  "job_name": self.job.name,
                                   "job_kill_on_close": True, "breakaway_allowed": False,
                                   "assigned_before_resume": True})
+            supervisor_identity = _pid_identity(os.getpid())
             _json_new(output / "supervisor_ownership.json", {
-                "worker_pid": self.process.pid, "supervisor_pid": os.getpid(), "config_sha256": config_sha256})
+                "worker_pid": self.process.pid, "root_worker_pid": self.process.pid,
+                "job_name": self.job.name, "supervisor_pid": os.getpid(),
+                "supervisor_create_time": supervisor_identity["create_time"], "config_sha256": config_sha256})
             _heartbeat(output, os.getpid())
             if time.monotonic() >= deadline_monotonic:
                 raise RuntimeError("whole scope elapsed before suspended worker resume")

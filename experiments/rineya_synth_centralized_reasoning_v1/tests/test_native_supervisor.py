@@ -518,14 +518,29 @@ class WindowsContainmentTests(unittest.TestCase):
             job.terminate()
             job.close()
         self.assertEqual([0x2000], flags)
+        self.assertRegex(job.name, r"Local\\SYNTH_NQ_JOB_[0-9a-f]{32}\Z")
+        api.CreateJobObjectW.assert_called_once_with(None, job.name)
         self.assertEqual(0, flags[0] & (0x800 | 0x1000))
         api.AssignProcessToJobObject.assert_called_once_with(456, 123)
         api.TerminateJobObject.assert_called_once_with(456, 137)
         api.CloseHandle.assert_called_once_with(456)
 
+    def test_named_job_collision_does_not_reconfigure_or_terminate_existing_job(self):
+        api = mock.Mock()
+        api.CreateJobObjectW.return_value = 456
+        with mock.patch.object(ns.os, "name", "nt"), mock.patch.object(ns.ctypes, "WinDLL", return_value=api, create=True), \
+                mock.patch.object(ns.ctypes, "get_last_error", return_value=183, create=True):
+            with self.assertRaisesRegex(RuntimeError, "name already exists"):
+                ns._WindowsJob()
+        api.CloseHandle.assert_called_once_with(456)
+        api.SetInformationJobObject.assert_not_called()
+        api.AssignProcessToJobObject.assert_not_called()
+        api.TerminateJobObject.assert_not_called()
+
     def test_popen_suspended_no_window_assign_before_resume(self):
         events = []
         job = mock.Mock(handle=456)
+        job.name = "Local\\SYNTH_NQ_JOB_" + "a" * 32
         job.assign.side_effect = lambda handle: events.append("assign")
         process = mock.Mock(pid=43210, _handle=123)
         process.poll.return_value = None
@@ -533,7 +548,8 @@ class WindowsContainmentTests(unittest.TestCase):
             self.assertTrue((Path(directory) / "supervisor_ownership.json").exists())
             self.assertTrue((Path(directory) / "supervisor_alive.json").exists())
             ownership = json.loads((Path(directory) / "supervisor_ownership.json").read_text(encoding="utf-8"))
-            self.assertEqual({"worker_pid": 43210, "supervisor_pid": ns.os.getpid(), "config_sha256": "f" * 64}, ownership)
+            self.assertEqual({"worker_pid": 43210, "root_worker_pid": 43210, "supervisor_pid": ns.os.getpid(),
+                              "supervisor_create_time": 1.0, "config_sha256": "f" * 64, "job_name": job.name}, ownership)
             events.append("resume")
         with tempfile.TemporaryDirectory() as directory, mock.patch.object(ns, "_WindowsJob", return_value=job), \
                 mock.patch.object(ns, "_pid_identity", return_value={"pid": 43210, "create_time": 1.0}), \
@@ -550,11 +566,13 @@ class WindowsContainmentTests(unittest.TestCase):
             self.assertFalse(popen.call_args.kwargs["shell"])
             self.assertEqual("1", popen.call_args.kwargs["env"]["HF_HUB_OFFLINE"])
             self.assertTrue(worker.identity["assigned_before_resume"])
+            self.assertEqual(job.name, worker.identity["job_name"])
             worker.close()
             job.close.assert_called_once_with()
 
     def test_failed_assignment_never_resumes_and_kills_only_just_created_root(self):
         job = mock.Mock(handle=456)
+        job.name = "Local\\SYNTH_NQ_JOB_" + "a" * 32
         job.assign.side_effect = OSError("mock assignment failure")
         process = mock.Mock(pid=43210, _handle=123)
         with tempfile.TemporaryDirectory() as directory, mock.patch.object(ns, "_WindowsJob", return_value=job), \
@@ -567,6 +585,69 @@ class WindowsContainmentTests(unittest.TestCase):
             resume.assert_not_called()
             process.kill.assert_called_once_with()
             job.close.assert_called_once_with()
+
+    def test_recorded_named_job_allows_actual_child_query_and_preserves_whole_tree_RSS(self):
+        import native_worker as worker_module
+        root_pid, child_pid = 43210, 56789
+        supervisor_pid = ns.os.getpid()
+        job = mock.Mock(handle=456)
+        job.name = "Local\\SYNTH_NQ_JOB_" + "a" * 32
+        job.pids.return_value = [root_pid, child_pid]
+        process = mock.Mock(pid=root_pid, _handle=123)
+        process.poll.return_value = None
+        kernel = mock.Mock()
+        kernel.OpenJobObjectW.return_value = 789
+        kernel.GetCurrentProcess.return_value = 999  # actual child's pseudo-handle
+        def membership(current, handle, pointer):
+            self.assertEqual((999, 789), (current, handle))
+            ns.ctypes.cast(pointer, ns.ctypes.POINTER(ns.wintypes.BOOL)).contents.value = True
+            return True
+        kernel.IsProcessInJob.side_effect = membership
+        fake_psutil = mock.Mock()
+        def inspected(pid):
+            value = mock.Mock()
+            value.create_time.return_value = 1.0
+            value.is_running.return_value = True
+            value.memory_info.return_value.rss = {root_pid: 1024, child_pid: 2048}.get(pid, 0)
+            return value
+        fake_psutil.Process.side_effect = inspected
+        fake_psutil.virtual_memory.return_value.available = 4 * ns.GIB
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            config_path = output / "mock_config.json"
+            config_path.write_text('{"mock":true}', encoding="utf-8")
+            checksum = ns.hashlib.sha256(config_path.read_bytes()).hexdigest()
+            with mock.patch.object(ns, "_WindowsJob", return_value=job), \
+                    mock.patch.object(ns, "_pid_identity", side_effect=lambda pid: {"pid": pid, "create_time": 1.0}), \
+                    mock.patch.object(ns.subprocess, "Popen", return_value=process):
+                worker = ns._WindowsOwnedWorker(["python", "mock_worker"], output, config_sha256=checksum,
+                                                deadline_monotonic=ns.time.monotonic() + 600)
+                try:
+                    owner = json.loads((output / "supervisor_ownership.json").read_text(encoding="utf-8"))
+                    self.assertEqual(root_pid, owner["worker_pid"])
+                    self.assertEqual(supervisor_pid, owner["supervisor_pid"])
+                    with mock.patch.object(ns, "_psutil", return_value=fake_psutil), \
+                            mock.patch.object(ns.shutil, "disk_usage", return_value=mock.Mock(free=8 * ns.GIB)):
+                        sampled = ns._cpu_snapshot(output, worker)
+                    self.assertEqual([root_pid, child_pid], [item["pid"] for item in sampled["owned_process_identities"]])
+                    self.assertEqual(3072, sampled["worker_tree_rss_bytes"])
+                    with mock.patch.object(worker_module.ctypes, "WinDLL", return_value=kernel, create=True), \
+                            mock.patch.object(worker_module.os, "name", "nt"), \
+                            mock.patch.object(worker_module.os, "getpid", return_value=child_pid), \
+                            mock.patch.object(worker_module.os, "getppid", return_value=root_pid), \
+                            mock.patch.dict(sys.modules, {"psutil": fake_psutil}):
+                        verified = worker_module.verify_worker_ownership(owner, config_path, membership=worker_module.in_owned_job)
+                    self.assertEqual(child_pid, verified["actual_worker_pid"])
+                    self.assertNotEqual(owner["worker_pid"], verified["actual_worker_pid"])
+                    self.assertTrue(verified["owned_job_membership_verified"])
+                    kernel.OpenJobObjectW.assert_called_once_with(4, False, job.name)
+                    kernel.CloseHandle.assert_called_once_with(789)
+                    self.assertTrue(verified["query_job_handle_closed_before_framework_import"])
+                    job.close.assert_not_called()  # query close leaves supervisor's own handle retained
+                finally:
+                    worker.close()
+            job.close.assert_called_once_with()
+        self.assertNotIn("torch", sys.modules)
 
 
 if __name__ == "__main__":

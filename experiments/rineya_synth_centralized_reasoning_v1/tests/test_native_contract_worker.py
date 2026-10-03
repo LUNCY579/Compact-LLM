@@ -12,7 +12,7 @@ from unittest.mock import patch
 PACKAGE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PACKAGE))
 import native_contract as contract
-from native_worker import Journal, capture
+from native_worker import Journal, capture, verify_worker_ownership
 
 
 class Scalar:
@@ -47,6 +47,27 @@ class FakeTorch:
 
 
 class ContractTests(unittest.TestCase):
+    def test_contained_child_interpreter_does_not_need_launcher_pid(self):
+        owner = {"worker_pid": 111, "supervisor_pid": 222, "supervisor_create_time": 1234.0,
+                 "job_name": "Local\\SYNTH_NQ_JOB_" + "a"*32, "config_sha256": "b"*64}
+        fake_psutil = SimpleNamespace(Process=lambda pid: SimpleNamespace(is_running=lambda: True, create_time=lambda: 1234.0))
+        with patch.dict(sys.modules, {"psutil": fake_psutil}), patch.object(contract, "filehash", return_value="b"*64), \
+             patch("native_worker.os.getpid", return_value=333), patch("native_worker.os.getppid", return_value=111):
+            result = verify_worker_ownership(owner, Path("config"), membership=lambda name: True)
+        self.assertEqual(333, result["actual_worker_pid"])
+        self.assertEqual(111, result["launcher_root_pid"])
+        self.assertTrue(result["owned_job_membership_verified"])
+
+    def test_reused_supervisor_or_uncontained_child_is_rejected(self):
+        owner = {"worker_pid": 111, "supervisor_pid": 222, "supervisor_create_time": 1234.0,
+                 "job_name": "Local\\SYNTH_NQ_JOB_" + "a"*32, "config_sha256": "b"*64}
+        with patch.object(contract, "filehash", return_value="b"*64):
+            with self.assertRaisesRegex(ValueError, "outside owned Job"):
+                verify_worker_ownership(owner, Path("config"), membership=lambda name: False)
+            fake_psutil = SimpleNamespace(Process=lambda pid: SimpleNamespace(is_running=lambda: True, create_time=lambda: 1235.0))
+            with patch.dict(sys.modules, {"psutil": fake_psutil}), self.assertRaisesRegex(ValueError, "not currently live"):
+                verify_worker_ownership(owner, Path("config"), membership=lambda name: True)
+
     def test_guard_constants_preserve_proposed_thresholds(self):
         proposal = contract.read_json(PACKAGE / "NATIVE_QUALIFICATION_PROPOSAL.json")
         for key in contract.TOLERANCES:

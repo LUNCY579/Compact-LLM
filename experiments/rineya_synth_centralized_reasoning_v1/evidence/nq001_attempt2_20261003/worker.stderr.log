@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\native_worker.py", line 251, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\native_worker.py", line 247, in main
+    return run(args.config, args.output_dir)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\native_worker.py", line 122, in run
+    require(owner.get("worker_pid") == os.getpid() and owner.get("supervisor_pid") == os.getppid()
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\rs_contract.py", line 30, in require
+    raise ValueError(message)
+ValueError: worker ownership/config mismatch
