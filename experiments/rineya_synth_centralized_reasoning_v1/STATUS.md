@@ -2,7 +2,22 @@
 
 ## Current native qualification handoff — 2026-10-03
 
-Four source-bound mechanical qualification attempts are terminal and preserved.
+Attempt 5 is now terminal and failed before its first optimizer step: a milestone
+producer used an uppercase stage name rejected by the writer. Twenty forward/
+loss/backward sequences completed; zero-adapter and capture numeric checks passed.
+The supervisor also recorded CPU observation staleness. Preserve the separate
+worker and controller errors in [attempt 5 evidence](evidence/nq001_attempt5_20261003).
+The [boundary successor](NQ_BOUNDARY_AMENDMENT_005.md) fixes the name contract and
+requires actual worker-journal CPU integration plus sampler timing review before
+another frozen scope. No scoped native qualification or study pass is recorded.
+
+The [sixth scope](configs/SYNTH_NQ001_BOUND6.json) freezes the corrected producer
+and single-query sampler with all earlier dose, resource and numerical limits.
+Its [255-test CPU run](evidence/boundary6_final_cpu_validation_20261003.json)
+passed without skips, with unchanged before/after source hashes and actual
+worker-journal integration. Static preflight passed; native execution is pending.
+
+Earlier attempts 1–4 are terminal and preserved.
 Attempt 4 loaded the pinned base and reached one backward call, but the external
 GPU observation became stale before any optimizer step. No native qualification
 pass or M0/M1/M2 capability result exists. Its raw receipt and source snapshot are
@@ -15,7 +30,8 @@ The [final successor CPU run](evidence/nvml5_final_cpu_validation_20261003.json)
 passed all 252 discovered tests without skips, with test IDs and unchanged
 before/after source hashes. [SYNTH_NQ001_NVML5.json](configs/SYNTH_NQ001_NVML5.json)
 freezes the fifth bounded mechanics scope, including the actual System32 NVML
-DLL hash. Its static preflight passed; a native pass remains pending.
+DLL hash. Its static preflight passed before launch; its native attempt failed
+as recorded above.
 The research goal remains active; fresh transfer and retention remain unmeasured.
 
 ## Later 2026-10-03: CPU_CORPUS_MATERIALIZED_SCHEDULE_MATCHED_NATIVE_UNQUALIFIED

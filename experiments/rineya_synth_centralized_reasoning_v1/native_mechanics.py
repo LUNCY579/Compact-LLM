@@ -14,6 +14,7 @@ import json
 import math
 from pathlib import Path
 import random
+import re
 
 VERSION = "synth-training-mechanics-1"
 MAX_CHECKPOINT_BYTES = 32 * 1024 * 1024
@@ -36,6 +37,8 @@ def _json_number(value):
 
 
 def _preserve_fragment(preserve, name, value):
+    _require(type(name) is str and re.fullmatch(r"[a-z0-9_]+", name) is not None,
+             "milestone evidence name must match the worker lowercase contract")
     if preserve is None:
         return
 
@@ -511,7 +514,7 @@ def qualify_training(torch, model, rows40, output_dir, call, guard, config, *, p
     losses1, _ = accumulate(rows40[:20], "native")
     gradients_valid()
     initial_A_zero = all(bool((p.grad == 0).all()) for name, p in entries if name.endswith(".lora_A"))
-    milestone("initial_A_gradient_check", {"completed_native_updates": 0,
+    milestone("initial_a_gradient_check", {"completed_native_updates": 0,
               "initial_A_gradients_exactly_zero": initial_A_zero})
     _require(initial_A_zero,
              "initial zero B must produce exact zero A gradients")

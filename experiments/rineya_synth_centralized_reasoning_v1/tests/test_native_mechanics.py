@@ -188,9 +188,25 @@ def expect_value_error(function, text=None):
 
 with tempfile.TemporaryDirectory(prefix='synth-mechanics-cpu-') as directory:
     work = Path(directory)
-    if mode in ('normal','durable'):
+    if mode in ('normal','durable','journal_integration'):
         options = {} if mode == 'normal' else {'preserve':preserve}
-        report = mechanics.qualify_training(torch, toy, rows(), work, call, guard, CONFIG, **options)
+        actual_journal = None
+        qualified_call = call
+        if mode == 'journal_integration':
+            # Use the production writer and accounting implementation. Importing
+            # this worker module does not run run(), load a model, or create CUDA.
+            from native_worker import Journal
+            actual_journal = Journal(work)
+            actual_journal.guard = guard
+            options = {'preserve':actual_journal.evidence}
+            def qualified_call(operation,function):
+                operations.append(operation)
+                return actual_journal.call(operation,function)
+        try:
+            report = mechanics.qualify_training(torch, toy, rows(), work, qualified_call, guard, CONFIG, **options)
+        finally:
+            if actual_journal is not None:
+                actual_journal.stream.close()
         assert report['status'] == 'MECHANICAL_CHECKS_PASSED'
         assert report['completed_native_updates'] == 2
         assert report['completed_reference_updates'] == 1
@@ -237,23 +253,41 @@ with tempfile.TemporaryDirectory(prefix='synth-mechanics-cpu-') as directory:
         assert set(payload) == {'schema_version','adapters','optimizer','rng'}
         assert len(payload['adapters']) == 8 and set(payload['rng']) == {'python','cpu'}
         assert all(float(item['step']) == 1 for item in payload['optimizer']['state'].values())
-        assert len(list(work.iterdir())) == (1 if mode == 'normal' else 2)
+        milestone_names = ['mechanics_initial_a_gradient_check', 'mechanics_update1',
+            'mechanics_restore_fault_witnesses', 'mechanics_state1_restoration',
+            'mechanics_reference_state', 'mechanics_reference_gradient_comparison',
+            'mechanics_update2', 'mechanics_optimizer_continuation']
+        if mode == 'journal_integration':
+            stage_paths = list(work.glob('stage_mechanics_*.json'))
+            assert {path.name for path in stage_paths} == {'stage_'+name+'.json' for name in milestone_names}
+            preserved = {name:json.loads((work/('stage_'+name+'.json')).read_text()) for name in milestone_names}
+            assert len(list(work.glob('stage_loss_*.json'))) == 60
+            assert len(list(work.iterdir())) == 70  # 8 milestones, 60 losses, journal and STATE1.
+            accounting = actual_journal.snapshot()['operations']
+            assert set(accounting) == set(expected)
+            assert all(accounting[name] == {'attempted':count,'returned':count,'failed':0,'pending':0}
+                       for name,count in expected.items())
+            events = [json.loads(line) for line in (work/'events.jsonl').read_text().splitlines()]
+            measurements = [event for event in events if event['event'] == 'measurement_preserved']
+            assert len(measurements) == 68
+            assert all(hashlib.sha256((work/event['path']).read_bytes()).hexdigest() == event['sha256']
+                       for event in measurements)
+        else:
+            assert len(list(work.iterdir())) == (1 if mode == 'normal' else 2)
         if mode == 'normal':
             assert not preserved
         else:
-            assert list(preserved) == ['mechanics_initial_A_gradient_check', 'mechanics_update1',
-                'mechanics_restore_fault_witnesses', 'mechanics_state1_restoration',
-                'mechanics_reference_state', 'mechanics_reference_gradient_comparison',
-                'mechanics_update2', 'mechanics_optimizer_continuation']
+            assert list(preserved) == milestone_names
             assert preserved['mechanics_update1']['completed_native_updates'] == 1
             assert preserved['mechanics_update2']['completed_native_updates'] == 2
             assert preserved['mechanics_state1_restoration']['before_group2'] is True
             assert preserved['mechanics_state1_restoration']['restored_bitwise_against_detached_pre_save_snapshot']
             assert preserved['mechanics_reference_gradient_comparison']['passed'] is True
             assert preserved['mechanics_optimizer_continuation']['passed'] is True
-            assert len(list((work/'milestones').iterdir())) == 8
-            assert all(json.loads(path.read_text()) == preserved[path.stem]
-                       for path in (work/'milestones').iterdir())
+            if mode == 'durable':
+                assert len(list((work/'milestones').iterdir())) == 8
+                assert all(json.loads(path.read_text()) == preserved[path.stem]
+                           for path in (work/'milestones').iterdir())
         # Reusing a completed output path is rejected before any new optimizer
         # construction or mutation, rather than failing only after update 1.
         fresh = make_toy()
@@ -288,7 +322,7 @@ with tempfile.TemporaryDirectory(prefix='synth-mechanics-cpu-') as directory:
         if mode == 'guard_failure':
             assert 'native_optimizer_step' not in operations
             assert not (work/'STATE1.pt').exists()
-            assert preserved['mechanics_initial_A_gradient_check']['initial_A_gradients_exactly_zero'] is True
+            assert preserved['mechanics_initial_a_gradient_check']['initial_A_gradients_exactly_zero'] is True
         if mode == 'ce_fault':
             assert operations.count('native_forward') == 1
             assert 'native_backward' not in operations and 'native_optimizer_step' not in operations
@@ -351,6 +385,12 @@ with tempfile.TemporaryDirectory(prefix='synth-mechanics-cpu-') as directory:
         for bad in ({'tensor':torch.ones(1)}, {'tuple':(1,2)}, {'bad':float('nan')},
                     {1:'integer key'}, {'large':'x' * mechanics.MAX_MILESTONE_BYTES}):
             expect_value_error(lambda:mechanics._preserve_fragment(writer,'bad',bad))
+        assert not observed
+        for bad_name in ('mechanics_initial_A_gradient_check', '', '../escape', 'space name', 'dash-name', 42):
+            expect_value_error(lambda:mechanics._preserve_fragment(writer,bad_name,{'passed':False}),
+                               'lowercase contract')
+            expect_value_error(lambda:mechanics._preserve_fragment(None,bad_name,{'passed':False}),
+                               'lowercase contract')
         assert not observed
         source = {'rows':[{'passed':False,'metric':mechanics._json_number(float('inf'))}]}
         mechanics._preserve_fragment(writer,'valid',source)
@@ -453,6 +493,15 @@ class NativeMechanicsTests(unittest.TestCase):
 
     def test_durable_milestones_have_pure_json_and_unchanged_operation_counts(self):
         self.assertEqual("CPU_TOY_TRAINING_MECHANICS_PASSED", self.run_child("durable")["status"])
+
+    def test_actual_worker_journal_accepts_all_milestones_with_fixed_dose(self):
+        report = self.run_child("journal_integration")
+        self.assertEqual("CPU_TOY_TRAINING_MECHANICS_PASSED", report["status"])
+        self.assertEqual(2, report["native_updates"])
+        self.assertEqual(1, report["reference_updates"])
+        self.assertEqual(40, report["native_forwards"])
+        self.assertEqual(20, report["reference_forwards"])
+        self.assertFalse(report["cuda_initialized"])
 
     def test_milestone_writer_failure_stops_before_next_group(self):
         self.assertEqual("EXPECTED_FAILURE_REJECTED", self.run_child("preservation_failure")["status"])

@@ -553,6 +553,39 @@ class MonitorBoundsTests(unittest.TestCase):
 
 
 class WindowsContainmentTests(unittest.TestCase):
+    def test_resource_snapshot_constructs_one_Process_per_actual_job_PID(self):
+        worker = object.__new__(ns._WindowsOwnedWorker)
+        worker.job = mock.Mock()
+        worker.job.pids.return_value = [10, 20]
+        worker.identity = {"pid": 10, "create_time": 1.0}
+        processes = {}
+        for pid, birth, rss in ((10, 1.0, 1024), (20, 2.0, 2048)):
+            process = mock.Mock()
+            process.create_time.return_value = birth
+            process.memory_info.return_value.rss = rss
+            processes[pid] = process
+        psutil = mock.Mock()
+        psutil.Process.side_effect = lambda pid: processes[pid]
+        with mock.patch.object(ns, "_psutil", return_value=psutil):
+            sampled = worker.process_resource_snapshot()
+        self.assertEqual([mock.call(10), mock.call(20)], psutil.Process.call_args_list)
+        self.assertEqual({"identities": [{"pid": 10, "create_time": 1.0}, {"pid": 20, "create_time": 2.0}],
+                          "rss_bytes": 3072}, sampled)
+        for process in processes.values():
+            process.create_time.assert_called_once_with()
+            process.memory_info.assert_called_once_with()
+
+    def test_resource_snapshot_rejects_changed_root_birth(self):
+        worker = object.__new__(ns._WindowsOwnedWorker)
+        worker.job = mock.Mock()
+        worker.job.pids.return_value = [10]
+        worker.identity = {"pid": 10, "create_time": 1.0}
+        psutil = mock.Mock()
+        psutil.NoSuchProcess = type("NoSuchProcess", (Exception,), {})
+        psutil.Process.return_value.create_time.return_value = 2.0
+        with mock.patch.object(ns, "_psutil", return_value=psutil), self.assertRaisesRegex(RuntimeError, "birth time changed"):
+            worker.process_resource_snapshot()
+
     def test_job_limits_kill_on_close_and_no_child_breakaway(self):
         api = mock.Mock()
         api.CreateJobObjectW.return_value = 456

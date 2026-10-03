@@ -206,23 +206,14 @@ def _acquire_lease(output, config_sha256):
 def _cpu_snapshot(output_dir, worker=None):
     psutil = _psutil()
     started = time.monotonic()
-    identities = [] if worker is None else worker.process_identities()
-    rss = 0
-    for identity in identities:
-        try:
-            process = psutil.Process(identity["pid"])
-            if process.create_time() != identity["create_time"]:
-                raise RuntimeError("owned PID birth time changed")
-            rss += process.memory_info().rss
-        except psutil.NoSuchProcess:
-            # A child that has become terminal contributes no live RSS.
-            continue
+    owned = ({"identities": [], "rss_bytes": 0} if worker is None
+             else worker.process_resource_snapshot())
     available = psutil.virtual_memory().available
     disk_free = shutil.disk_usage(output_dir).free
     return {"sample_started_monotonic": started, "sample_completed_monotonic": time.monotonic(),
             "host_available_bytes": available,
             "disk_free_bytes": disk_free,
-            "worker_tree_rss_bytes": rss, "owned_process_identities": identities}
+            "worker_tree_rss_bytes": owned["rss_bytes"], "owned_process_identities": owned["identities"]}
 
 
 def _gpu_snapshot():
@@ -496,6 +487,24 @@ class _WindowsOwnedWorker:
             except _psutil().NoSuchProcess:
                 continue
         return values
+
+    def process_resource_snapshot(self):
+        """One fresh Process object per current Job PID for birth and RSS."""
+        psutil = _psutil()
+        identities = []
+        rss = 0
+        for pid in self.job.pids():
+            try:
+                process = psutil.Process(pid)
+                birth = process.create_time()
+                if pid == self.identity["pid"] and birth != self.identity["create_time"]:
+                    raise RuntimeError("owned root PID birth time changed")
+                resident = process.memory_info().rss
+                identities.append({"pid": pid, "create_time": birth})
+                rss += resident
+            except psutil.NoSuchProcess:
+                continue
+        return {"identities": identities, "rss_bytes": rss}
 
     def terminate(self):
         self.job.terminate()

@@ -1,0 +1,26 @@
+{
+  "GPU_query_or_context_API_called": false,
+  "after_max_ms": 46.999999998661224,
+  "after_mean_ms": 26.899999999732245,
+  "before_max_ms": 31.9999999992433,
+  "before_mean_ms": 25.300000000133878,
+  "interpretation": "One fresh Process per actual Job PID replaces duplicated Process construction. Idle timing control does not demonstrate speedup: mean25.3ms to26.9ms; no timing-gain claim. Both controls stayed within200ms freshness. This does not prove behavior under model load.",
+  "limitations": [
+    "Before-control complete stdout frames were truncated; original artifacts and accurately observed summary retained, no reconstructed raw frames."
+  ],
+  "model_launched": false,
+  "owned_pid_count_each": 3,
+  "policies_unchanged": {
+    "CPU_freshness_seconds": 0.2,
+    "CPU_poll_seconds": 0.1,
+    "RAM_reserve_GiB": 1.25,
+    "disk_query_each_CPU_snapshot": true,
+    "owned_tree_RSS_GiB": 2.0
+  },
+  "samples_each": 50,
+  "schema_version": 1,
+  "scope": "CPU_ONLY_OBSERVER_CONTROL_NOT_MODEL_QUALIFICATION",
+  "source_sha256_after": "feaa03fb1e2d1051230728b51c85179784574b8f1b9d0236b37a381ba24d7b32",
+  "source_sha256_before": "31107e7e7db14a867a9428da299edc889749d041a0ea5a217cf91bbd297422c4",
+  "supervisor_tests_passed": 46
+}
