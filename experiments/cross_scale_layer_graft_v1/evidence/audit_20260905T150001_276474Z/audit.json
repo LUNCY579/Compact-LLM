@@ -1,0 +1,75 @@
+{
+  "status": "PASS",
+  "checks": {
+    "run_complete": true,
+    "config_matches_started_and_finished": true,
+    "unique_arm_case_rows": true,
+    "registered_source_hashes_match": true,
+    "dataset_hashes_match": true,
+    "supa_checkpoint_receipts_match": true,
+    "donor_checkpoint_receipts_match": true,
+    "loaded_states_match": true,
+    "no_backbone_training": true,
+    "peak_process_memory_within_budget": true,
+    "restored_logits": true,
+    "native_supa_capture_exact": true,
+    "identity_control_receipts": true,
+    "primary_gate_recomputed": true,
+    "registered_arm_order": true,
+    "registered_case_order": true,
+    "outputs_equal_raw_receipts": true,
+    "scores_recomputed": true,
+    "format_scores_recomputed": true,
+    "identity_outputs_and_logit_deltas": true,
+    "scenario_disjoint_holdout": true,
+    "calibration_token_accounting": true,
+    "development_prompts_not_calibration_prompts": true,
+    "local_bridge_and_activation_hashes": true,
+    "development_gate_enforced": true,
+    "A0_smoke_historical_identity": true,
+    "A1_smoke_historical_identity": true,
+    "A0_dev_historical_identity": true,
+    "A1_dev_historical_identity": true,
+    "A0_development_recomputed": true,
+    "G_development_recomputed": true,
+    "R_development_recomputed": true,
+    "S_development_recomputed": true,
+    "A1_development_recomputed": true
+  },
+  "case_rows": 144,
+  "arm_counts": {
+    "A0_smoke": 8,
+    "Z_smoke": 8,
+    "I_smoke": 8,
+    "N_smoke": 8,
+    "R_smoke": 8,
+    "S_smoke": 8,
+    "G_smoke": 8,
+    "A1_smoke": 8,
+    "A0_dev": 16,
+    "G_dev": 16,
+    "R_dev": 16,
+    "S_dev": 16,
+    "A1_dev": 16
+  },
+  "data_overlap": {
+    "smoke": {
+      "exact_prompt_overlap_with_calibration": 8,
+      "cases_used_for_bridge_training": 6
+    },
+    "dev": {
+      "exact_prompt_overlap_with_calibration": 0,
+      "cases_used_for_bridge_training": 0
+    }
+  },
+  "historical_output_sha256": {
+    "A0_smoke": "05b8af68f4b726ee10442237862fffcf32ced0fb380e2e17aeee680aeaac936c",
+    "A1_smoke": "ef52c842ac40e3df3bf18447b5738637defd161ee58ea12e8cd3f8e5c897f039",
+    "A0_dev": "2fe08ad24bcdcbb0feaaa106d6fe32f02aee062ca8e1b3695079d7d30740a404",
+    "A1_dev": "e5c5f8d0f0a6d62a93b8f2b163e9730b1913e569e0b82c085779955ab5e49b73"
+  },
+  "source_run": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\cross_scale_layer_graft_v1\\evidence\\20260905T141942_899240Z",
+  "auditor_sha256": "9e95e574697b048938d2fbc890f8e7789c22a97b898e0bc81fd2acfadd85db11",
+  "source_manifest_sha256": "cdad7791094f0b6a1ce5ea09609e2ea9a58cc628e2f408e97e7a992657a72e49",
+  "raw_results_sha256": "92addecf9cabc3353ed07934aab89973f89bb96f0bba8c4bd6d0762ea1857e22"
+}

@@ -1,0 +1,79 @@
+{
+  "status": "DESCRIPTIVE_ONLY",
+  "source_sha256": "c77779b8deb187c717a86531f5c16f59dcde880d917994cf0f99bb5b5c3eb346",
+  "note": "Post-hoc per-token diagnostics. No fitting, selection, or evaluation gate is changed. Global MSE weights high-norm tokens heavily.",
+  "metrics": {
+    "all_heldout_tokens": {
+      "up": {
+        "tokens": 526,
+        "mean_token_cosine": 0.6120398640632629,
+        "median_token_cosine": 0.676298975944519,
+        "mean_token_relative_mse": 6.669308662414551,
+        "median_token_relative_mse": 1.2167993783950806,
+        "global_relative_mse": 0.00239300518296659,
+        "median_target_token_rms": 0.9336521625518799,
+        "max_target_token_rms": 332.4628601074219,
+        "largest_token_fraction_of_total_energy": 0.08330165594816208
+      },
+      "down": {
+        "tokens": 526,
+        "mean_token_cosine": 0.8574190735816956,
+        "median_token_cosine": 0.8703277707099915,
+        "mean_token_relative_mse": 0.2694832682609558,
+        "median_token_relative_mse": 0.26164326071739197,
+        "global_relative_mse": 0.0004689526977017522,
+        "median_target_token_rms": 1.5493237972259521,
+        "max_target_token_rms": 255.7727508544922,
+        "largest_token_fraction_of_total_energy": 0.08319695293903351
+      }
+    },
+    "text_token_ids_below_151643": {
+      "up": {
+        "tokens": 466,
+        "mean_token_cosine": 0.5852259397506714,
+        "median_token_cosine": 0.6429356336593628,
+        "mean_token_relative_mse": 7.415653228759766,
+        "median_token_relative_mse": 1.647950530052185,
+        "global_relative_mse": 6.772644519805908,
+        "median_target_token_rms": 0.9268847107887268,
+        "max_target_token_rms": 2.1960039138793945,
+        "largest_token_fraction_of_total_energy": 0.010488541796803474
+      },
+      "down": {
+        "tokens": 466,
+        "mean_token_cosine": 0.8444348573684692,
+        "median_token_cosine": 0.855930507183075,
+        "mean_token_relative_mse": 0.29135632514953613,
+        "median_token_relative_mse": 0.2799617052078247,
+        "global_relative_mse": 0.3068024218082428,
+        "median_target_token_rms": 1.532967209815979,
+        "max_target_token_rms": 2.2439396381378174,
+        "largest_token_fraction_of_total_energy": 0.004417664837092161
+      }
+    },
+    "last_prompt_token": {
+      "up": {
+        "tokens": 12,
+        "mean_token_cosine": 0.7110711932182312,
+        "median_token_cosine": 0.7212793827056885,
+        "mean_token_relative_mse": 1.8539859056472778,
+        "median_token_relative_mse": 0.8141508102416992,
+        "global_relative_mse": 1.8816713094711304,
+        "median_target_token_rms": 0.7808009386062622,
+        "max_target_token_rms": 0.8110183477401733,
+        "largest_token_fraction_of_total_energy": 0.09102124720811844
+      },
+      "down": {
+        "tokens": 12,
+        "mean_token_cosine": 0.9457777142524719,
+        "median_token_cosine": 0.9503738880157471,
+        "mean_token_relative_mse": 0.11932431906461716,
+        "median_token_relative_mse": 0.10463562607765198,
+        "global_relative_mse": 0.12358477711677551,
+        "median_target_token_rms": 1.3716939687728882,
+        "max_target_token_rms": 1.563500165939331,
+        "largest_token_fraction_of_total_energy": 0.1032572016119957
+      }
+    }
+  }
+}

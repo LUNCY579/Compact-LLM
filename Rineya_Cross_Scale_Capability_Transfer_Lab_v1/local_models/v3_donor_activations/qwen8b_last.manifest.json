@@ -1,0 +1,66 @@
+{
+  "capture_layers": [
+    0,
+    9,
+    18,
+    26,
+    35
+  ],
+  "capture_slots": [
+    "embedding",
+    "layer_0",
+    "layer_9",
+    "layer_18",
+    "layer_26",
+    "layer_35"
+  ],
+  "hidden_size": 4096,
+  "model": "qwen8b",
+  "pooling": "last",
+  "provenance": {
+    "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "shards": [
+      {
+        "name": "model-00001-of-00005.safetensors",
+        "sha256": "31d6a825ae35f11fb85b195b4c42c146c051e446433125a215336abdf95cbf5f"
+      },
+      {
+        "name": "model-00002-of-00005.safetensors",
+        "sha256": "5991236cea6fe21f3d43cab0f0e84448734fbbe0789816202989f2ddc9d18282"
+      },
+      {
+        "name": "model-00003-of-00005.safetensors",
+        "sha256": "c5185c4794be2d8a9784d5753c9922db38df478ce11f9ed0b415b7304d896836"
+      },
+      {
+        "name": "model-00004-of-00005.safetensors",
+        "sha256": "b5ee7de71fbf17db3d5704e0c8f2bc7d005ca9e1d7ca2aeb19827b0cfcaa917a"
+      },
+      {
+        "name": "model-00005-of-00005.safetensors",
+        "sha256": "20c2d6366ab85c90786ccdd829cd2b9e7d30ef3b2ebbb998280e7e4014b542ff"
+      }
+    ],
+    "snapshot": "C:\\Users\\clclc\\.cache\\huggingface\\hub\\models--Qwen--Qwen3-8B\\snapshots\\b968826d9c46dd6066d109eabc6255188de91218"
+  },
+  "relative_depths": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "resources": {
+    "arithmetic_dtype": "float32",
+    "device": "cpu",
+    "method": "streaming layer-by-layer forward over memory-mapped safetensors",
+    "models_resident": 0,
+    "rss_bytes_after": 357027840,
+    "threads": 8,
+    "wall_seconds": 387.3274186999997
+  },
+  "role": "donor",
+  "rows": 59,
+  "total_prompt_tokens": 9013,
+  "vocab_size": 151936
+}
