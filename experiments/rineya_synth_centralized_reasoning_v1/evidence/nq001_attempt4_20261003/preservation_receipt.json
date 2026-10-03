@@ -1,0 +1,88 @@
+{
+  "files": {
+    "RESOURCE_OBSERVATIONS.json": "22c8bdea4ffd0695a52604361f0b76caaa83b54c03f5ae73e37776759bbbeabc",
+    "SUPERVISOR_RECEIPT.json": "070ba7f1b42a8aa2836d854eb400359b09c4073d2034425d66f19d58aff0cfdd",
+    "SYNTH_NQ001_HEART4.json": "950bde2fd28114ea5f5436cf7e31965b9882776a94b5329d887284cddbbe29fe",
+    "code_snapshot/native_contract.py": "da6fb03f9ae4ba0f0d580ef7d6d27822ba8f572e514b823555955c8f24036013",
+    "code_snapshot/native_loader.py": "43229ee3ab59719ddc076ce252fdab029a9b5f43c11c66e9ccc84d092f378174",
+    "code_snapshot/native_mechanics.py": "9500771d24152173cda0459323280268fa3faddb90791f451d7c19e7ac8fe4b4",
+    "code_snapshot/native_precision.py": "05d18fdec95860df8f54ba60a7cee16bc983f783fa51a5f009cf6dc1939736cc",
+    "code_snapshot/native_supervisor.py": "a92179bfc1a795237a548201b2e1411e29012ec705e74138089032250a94dbbc",
+    "code_snapshot/native_worker.py": "c72cca5a5251c1fdbc1e0c14737df7b85d2ecd2c88044dffde4240ae123174e9",
+    "events.jsonl": "735af189a86d9143e3dc7379aeac03d27c32114bccd012c28105bc6abcfdc5f4",
+    "supervisor_heartbeat.jsonl": "acc86bc4f258e9a886238b8ae5ad4cd9e2b4184aa39d7a2d8bec0fbe2f760b51",
+    "supervisor_ownership.json": "b6e826fbd65682946f30acf4db1b521aabeb4183fc464ec2a587a2947176be78",
+    "worker.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "worker.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "worker_ownership_verified.json": "0cebd6862e9397b21a61ec3f6a4bfef37d382253cdca25f10b230a942a9e761f"
+  },
+  "last_events": [
+    {
+      "event": "attempt",
+      "id": 336,
+      "operation": "native_forward",
+      "utc": "2026-10-03T09:34:14.210377+00:00"
+    },
+    {
+      "event": "returned",
+      "id": 336,
+      "operation": "native_forward",
+      "utc": "2026-10-03T09:34:14.329660+00:00"
+    },
+    {
+      "event": "attempt",
+      "id": 337,
+      "operation": "native_completion_loss_check",
+      "utc": "2026-10-03T09:34:14.858829+00:00"
+    },
+    {
+      "event": "returned",
+      "id": 337,
+      "operation": "native_completion_loss_check",
+      "utc": "2026-10-03T09:34:20.523793+00:00"
+    },
+    {
+      "event": "attempt",
+      "id": 338,
+      "operation": "native_backward",
+      "utc": "2026-10-03T09:34:21.103179+00:00"
+    },
+    {
+      "event": "returned",
+      "id": 338,
+      "operation": "native_backward",
+      "utc": "2026-10-03T09:34:27.980721+00:00"
+    },
+    {
+      "event": "attempt",
+      "id": 339,
+      "operation": "native_row_tensor_materialize",
+      "utc": "2026-10-03T09:34:28.728124+00:00"
+    },
+    {
+      "event": "returned",
+      "id": 339,
+      "operation": "native_row_tensor_materialize",
+      "utc": "2026-10-03T09:34:28.728124+00:00"
+    },
+    {
+      "event": "attempt",
+      "id": 340,
+      "operation": "native_forward",
+      "utc": "2026-10-03T09:34:29.902313+00:00"
+    },
+    {
+      "event": "returned",
+      "id": 340,
+      "operation": "native_forward",
+      "utc": "2026-10-03T09:34:30.022302+00:00"
+    }
+  ],
+  "native_qualification": false,
+  "owned_worker_dead": true,
+  "production_training_authorized": false,
+  "source_commit": "6629842c9c58fced880e97826c3ab0192c40f27d",
+  "status": "PRESERVED_TERMINAL_EXTERNAL_GPU_STALENESS_ABORT",
+  "supervisor_status": "OWNED_WORKER_ABORTED",
+  "worker_exit": 137
+}

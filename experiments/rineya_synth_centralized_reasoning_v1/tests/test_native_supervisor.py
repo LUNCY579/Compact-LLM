@@ -134,6 +134,7 @@ class SupervisorTests(unittest.TestCase):
         self.worker_changes = {}
         self.monitor_reason = None
         self.construction_delay = 0
+        self.unjoined_threads = []
         self.stack = ExitStack()
         self.addCleanup(self.stack.close)
         for name, value in (
@@ -141,6 +142,7 @@ class SupervisorTests(unittest.TestCase):
             ("_pid_alive", lambda identity: False), ("_preflight", lambda path: copy.deepcopy(self.config)),
             ("resource_snapshot", self.observe), ("_cpu_snapshot", self.cpu_observe),
             ("_WindowsOwnedWorker", self.launch), ("_Monitor", self.monitor),
+            ("_gpu_pending_threads", lambda: []), ("_shutdown_gpu_probe", lambda: None),
         ):
             self.stack.enter_context(mock.patch.object(ns, name, value))
         self.stack.enter_context(mock.patch.object(ns.time, "monotonic", self.clock.monotonic))
@@ -169,6 +171,7 @@ class SupervisorTests(unittest.TestCase):
     def monitor(self, *args):
         monitor = Monitor(*args)
         monitor.reason = self.monitor_reason
+        monitor.unjoined_threads = self.unjoined_threads
         self.monitors.append(monitor)
         return monitor
 
@@ -327,6 +330,44 @@ class SupervisorTests(unittest.TestCase):
         self.assertFalse(self.workers[0].resumed)
         self.assertTrue(self.workers[0].terminated)
 
+    def test_unjoined_sampler_does_not_claim_terminal_success_or_frozen_inventory(self):
+        self.unjoined_threads = [{"name": "blocked_GPU_probe", "ident": 123}]
+        result = self.run_scope()
+        self.assertEqual("SUPERVISOR_SHUTDOWN_UNVERIFIED", result["status"])
+        self.assertFalse(result["sampler_threads_terminal_verified"])
+        self.assertFalse(result["partial_outputs_frozen"])
+        self.assertTrue(all("sha256" not in row for row in result["partial_outputs"]))
+        self.assertTrue(self.workers[0].closed)
+
+    def test_live_supervisor_with_unverified_samplers_cannot_enroll_another_scope(self):
+        self.unjoined_threads = [{"name": "blocked_GPU_probe", "ident": 123}]
+        self.run_scope("first")
+        self.config["config_sha256"] = "e" * 64
+        with mock.patch.object(ns, "_pid_alive", side_effect=lambda identity: identity["pid"] == ns.os.getpid()):
+            second = self.run_scope("second")
+        self.assertIn("live supervisor has unverified sampler shutdown", second["failure"])
+        self.assertEqual(1, len(self.workers))
+
+    def test_successful_worker_with_shutdown_beyond_original_deadline_is_not_scope_success(self):
+        with mock.patch.object(ns, "_shutdown_gpu_probe", side_effect=lambda: self.clock.sleep(599)):
+            result = self.run_scope()
+        self.assertEqual("WHOLE_SCOPE_DEADLINE_EXCEEDED", result["status"])
+        self.assertEqual("whole_scope_deadline_during_shutdown", result["failure"])
+        self.assertEqual(0, result["returncode"])
+        self.assertEqual(700.0, result["deadline_monotonic"])
+
+    def test_inventory_beyond_deadline_cannot_claim_scope_success(self):
+        inventory = ns._inventory
+        def slow_inventory(path):
+            self.clock.sleep(599)
+            return inventory(path)
+        with mock.patch.object(ns, "_inventory", side_effect=slow_inventory):
+            result = self.run_scope()
+        self.assertEqual("WHOLE_SCOPE_DEADLINE_EXCEEDED", result["status"])
+        self.assertEqual("whole_scope_deadline_during_inventory", result["failure"])
+        self.assertEqual(0, result["returncode"])
+        self.assertGreaterEqual(result["elapsed_seconds"], 600)
+
     def test_watchdog_failure_terminates_owned_worker_preserves_returncode(self):
         self.monitor_reason = "runtime_system_reserve"
         result = self.run_scope()
@@ -445,19 +486,19 @@ class MonitorBoundsTests(unittest.TestCase):
     def test_gpu_timeout_abort_does_not_block_on_cpu_probe(self):
         self.mon.stop = mock.Mock()
         self.mon.stop.wait.return_value = False
-        with mock.patch.object(ns, "_gpu_snapshot", side_effect=ns.subprocess.TimeoutExpired("nvidia-smi", 2)), \
+        with mock.patch.object(ns, "_gpu_snapshot", side_effect=TimeoutError("fixed 2s native-call deadline")), \
                 mock.patch.object(ns, "_cpu_snapshot") as cpu:
             self.mon._gpu_loop()
         cpu.assert_not_called()
         self.worker.terminate.assert_called_once_with()
-        self.assertIn("GPU_probe_error:TimeoutExpired", self.mon.reason)
+        self.assertIn("GPU_probe_error:TimeoutError", self.mon.reason)
 
     def test_real_monitor_start_replaces_old_cpu_with_current_owned_tree_before_ready(self):
         self.clock.now += 0.35
         calls = []
         monitor = self.mon
         class MockThread:
-            def __init__(self, *, target, daemon):
+            def __init__(self, *, target, daemon, name):
                 self.target = target
             def start(self):
                 calls.append(self.target.__name__)
@@ -475,6 +516,16 @@ class MonitorBoundsTests(unittest.TestCase):
         self.assertIsNone(self.mon.pre_resume_check())
         self.assertEqual(700, self.mon.deadline)
         self.assertEqual("worker_suspended_startup", self.mon.observations[0]["phase"])
+
+    def test_close_reports_actual_unjoined_sampler_and_native_backend_thread(self):
+        blocked = mock.Mock(name="blocked")
+        blocked.name, blocked.ident = "SYNTH_GPU_probe", 123
+        blocked.is_alive.return_value = True
+        self.mon.threads = [blocked]
+        with mock.patch.object(ns, "_gpu_pending_threads", return_value=[{"name": "SYNTH_NVML_memory", "ident": 456}]):
+            self.mon.close()
+        blocked.join.assert_called_once_with(timeout=2.1)
+        self.assertEqual([123, 456], [item["ident"] for item in self.mon.unjoined_threads])
 
     def test_real_monitor_readiness_failure_aborts_still_suspended_worker(self):
         self.mon.ready = mock.Mock()

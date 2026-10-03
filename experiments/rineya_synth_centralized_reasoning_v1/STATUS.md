@@ -1,5 +1,23 @@
 # Status and next handoff
 
+## Current native qualification handoff — 2026-10-03
+
+Four source-bound mechanical qualification attempts are terminal and preserved.
+Attempt 4 loaded the pinned base and reached one backward call, but the external
+GPU observation became stale before any optimizer step. No native qualification
+pass or M0/M1/M2 capability result exists. Its raw receipt and source snapshot are
+in [evidence/nq001_attempt4_20261003](evidence/nq001_attempt4_20261003).
+The [telemetry successor](NQ_TELEMETRY_AMENDMENT_004.md) specifies direct pinned
+NVML observations, exact owned-Job worker accounting and durable partial numeric
+measurements. It retains every numerical/resource/dose limit and requires passing
+CPU/read-only controls and a new committed scope before another attempt.
+The [final successor CPU run](evidence/nvml5_final_cpu_validation_20261003.json)
+passed all 252 discovered tests without skips, with test IDs and unchanged
+before/after source hashes. [SYNTH_NQ001_NVML5.json](configs/SYNTH_NQ001_NVML5.json)
+freezes the fifth bounded mechanics scope, including the actual System32 NVML
+DLL hash. Its static preflight passed; a native pass remains pending.
+The research goal remains active; fresh transfer and retention remain unmeasured.
+
 ## Later 2026-10-03: CPU_CORPUS_MATERIALIZED_SCHEDULE_MATCHED_NATIVE_UNQUALIFIED
 
 The [matched corpus milestone](CPU_DATA_MILESTONE.md) now has an immutable source,

@@ -1,0 +1,162 @@
+{
+  "CPU_child_code_sha256": "26192746c1feb7830f09f745684119f1505a7fbf66344129cc173816734754fe",
+  "GPU_queried_or_initialized": false,
+  "actual_control": {
+    "actual_interpreter_pid": 770792,
+    "descendant_pid": 772796,
+    "model_frameworks_imported": false,
+    "samples": [
+      {
+        "elapsed_seconds": 0.002361799997743219,
+        "observed_pids": [
+          772876,
+          769312,
+          772796,
+          767956,
+          770792,
+          772988
+        ],
+        "queried_job_pids": [
+          772876,
+          769312,
+          772796,
+          767956,
+          770792,
+          772988
+        ],
+        "query_handle_closed": true,
+        "scope": "Windows_JobObjectBasicProcessIdList_owned_PIDs_only",
+        "tree_rss_bytes": 67072000,
+        "vanished_pids": []
+      },
+      {
+        "elapsed_seconds": 0.0001664000010350719,
+        "observed_pids": [
+          772876,
+          769312,
+          772796,
+          767956,
+          770792,
+          772988
+        ],
+        "queried_job_pids": [
+          772876,
+          769312,
+          772796,
+          767956,
+          770792,
+          772988
+        ],
+        "query_handle_closed": true,
+        "scope": "Windows_JobObjectBasicProcessIdList_owned_PIDs_only",
+        "tree_rss_bytes": 67076096,
+        "vanished_pids": []
+      },
+      {
+        "elapsed_seconds": 0.00014590000500902534,
+        "observed_pids": [
+          772876,
+          769312,
+          772796,
+          767956,
+          770792,
+          772988
+        ],
+        "queried_job_pids": [
+          772876,
+          769312,
+          772796,
+          767956,
+          770792,
+          772988
+        ],
+        "query_handle_closed": true,
+        "scope": "Windows_JobObjectBasicProcessIdList_owned_PIDs_only",
+        "tree_rss_bytes": 67080192,
+        "vanished_pids": []
+      },
+      {
+        "elapsed_seconds": 0.00013020000187680125,
+        "observed_pids": [
+          772876,
+          769312,
+          772796,
+          767956,
+          770792,
+          772988
+        ],
+        "queried_job_pids": [
+          772876,
+          769312,
+          772796,
+          767956,
+          770792,
+          772988
+        ],
+        "query_handle_closed": true,
+        "scope": "Windows_JobObjectBasicProcessIdList_owned_PIDs_only",
+        "tree_rss_bytes": 67096576,
+        "vanished_pids": []
+      },
+      {
+        "elapsed_seconds": 0.00011929999891435727,
+        "observed_pids": [
+          772876,
+          769312,
+          772796,
+          767956,
+          770792,
+          772988
+        ],
+        "queried_job_pids": [
+          772876,
+          769312,
+          772796,
+          767956,
+          770792,
+          772988
+        ],
+        "query_handle_closed": true,
+        "scope": "Windows_JobObjectBasicProcessIdList_owned_PIDs_only",
+        "tree_rss_bytes": 67096576,
+        "vanished_pids": []
+      }
+    ],
+    "status": "CPU_ONLY_OWNED_JOB_QUERY_PASSED"
+  },
+  "dedicated_test_runtime_seconds": 0.862,
+  "dedicated_tests_passed": 13,
+  "job_name": "Local\\SYNTH_NQ_JOB_bdca550cd2fd498aac64576048765ef0",
+  "launcher_returncode_after_job_close": 0,
+  "launcher_root_pid": 772876,
+  "maximum_queried_pids": 256,
+  "native_qualification_established": false,
+  "production_training_authorized": false,
+  "psutil": "7.2.2",
+  "published_model_assets_loaded": false,
+  "python": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+  "queried_processes_confirmed_dead_after_kill_on_close": {
+    "767956": true,
+    "769312": true,
+    "770792": true,
+    "772796": true,
+    "772876": true,
+    "772988": true
+  },
+  "query_RSS_timing_seconds": {
+    "count": 5,
+    "maximum": 0.002361799997743219,
+    "median": 0.00014590000500902534,
+    "minimum": 0.00011929999891435727,
+    "sum": 0.002923600004578475
+  },
+  "query_access": "JOB_OBJECT_QUERY_ONLY_NONINHERITABLE",
+  "query_handle_closed_after_every_sample": true,
+  "query_information_class": 3,
+  "recorded_at_utc": "2026-10-03T10:49:26.776803+00:00",
+  "schema_version": 1,
+  "scope": "REAL_WINDOWS_JOB_CPU_CONTROL_ONLY_NO_MODEL_OR_GPU",
+  "test_command": "python -B -m unittest discover -s experiments/rineya_synth_centralized_reasoning_v1/tests -p test_native_job_resources.py -v",
+  "test_source_sha256": "2cb1f5cf077a249244591801ab51f0aea9153145fd812e1e788273d92bbec50c",
+  "worker_source_sha256": "907473f524f8f0d3a07e9ba190f6da73d8eac92f56ccf061e23f92099237183a"
+}

@@ -13,7 +13,7 @@ from unittest.mock import patch
 PACKAGE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PACKAGE))
 import native_contract as contract
-from native_worker import Journal, capture, verify_worker_ownership, read_heartbeat
+from native_worker import Journal, capture, verify_worker_ownership, read_heartbeat, preserve_terminal
 
 
 class Scalar:
@@ -134,6 +134,56 @@ class ContractTests(unittest.TestCase):
 
 
 class JournalTests(unittest.TestCase):
+    def test_nonfinite_failed_measurements_are_readable_and_explicit(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            journal = Journal(output)
+            value = {"failed": True, "error": float("nan"), "bounds": [float("inf")]}
+            journal.evidence("failed_numeric", value)
+            preserve_terminal(output, value, journal, None)
+            for path in ("stage_failed_numeric.json", "worker_result.json"):
+                measured = contract.read_json(output / path)
+                self.assertEqual({"invalid_nonfinite_float": "nan"}, measured["error"])
+                self.assertEqual({"invalid_nonfinite_float": "inf"}, measured["bounds"][0])
+                self.assertTrue(measured["failed"])
+
+    def test_short_stage_write_never_emits_preservation_success(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal = Journal(Path(directory))
+            with patch.object(Path, "open") as opened:
+                opened.return_value.__enter__.return_value.write.return_value = 1
+                with self.assertRaisesRegex(ValueError, "short stage"):
+                    journal.evidence("short_write", {"measurement": 2})
+            journal.stream.close()
+            self.assertEqual([], contract.read_jsonl(Path(directory) / "events.jsonl"))
+
+    def test_poisoned_cuda_diagnostic_cannot_erase_terminal_receipt(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            journal = Journal(output)
+            def failure():
+                self.assertTrue((output / "worker_result.json").is_file())
+                self.assertTrue(journal.stream.closed)
+                raise RuntimeError("fixture poisoned CUDA")
+            torch = SimpleNamespace(cuda=SimpleNamespace(is_initialized=lambda: True,
+                max_memory_allocated=lambda: 7, max_memory_reserved=lambda: 9, mem_get_info=failure))
+            preserve_terminal(output, {"status": "NATIVE_QUALIFICATION_FAILED"}, journal, torch)
+            self.assertEqual("NATIVE_QUALIFICATION_FAILED", contract.read_json(output / "worker_result.json")["status"])
+            self.assertEqual("fixture poisoned CUDA", contract.read_json(output / "worker_GPU_final.json")["diagnostic_error"]["message"])
+
+    def test_completed_measurement_is_write_once_and_hashed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal = Journal(Path(directory))
+            journal.evidence("numerics", {"error": 0.0, "qualified": False})
+            path = Path(directory) / "stage_numerics.json"
+            self.assertEqual({"error": 0.0, "qualified": False}, contract.read_json(path))
+            with self.assertRaises(FileExistsError): journal.evidence("numerics", {})
+            with self.assertRaises(ValueError): journal.evidence("../outside", {})
+            journal.stream.close()
+            row = contract.read_jsonl(Path(directory) / "events.jsonl")[0]
+            self.assertEqual(contract.filehash(path), row["sha256"])
+            self.assertIs(False, row["qualification_established"])
+
     def test_returns_and_failures_preserve_attempts_and_pending_counts(self):
         with tempfile.TemporaryDirectory() as directory:
             journal = Journal(Path(directory))
@@ -187,6 +237,16 @@ class CaptureTests(unittest.TestCase):
         self.assertEqual(2, len(evidence["traces"]))
         self.assertAlmostEqual(.1, evidence["selected_logprob_max_error"])
         self.assertGreater(evidence["selected_logprob_mean_error"], .01)
+
+    def test_failed_numerical_gate_preserves_measured_trace(self):
+        model, call, config, _, _ = self.fixture(drift=.1)
+        preserved = []
+        with self.assertRaisesRegex(ValueError, "numerical gate"):
+            capture(FakeTorch, model, [7, 8, 9], call, lambda stage: None, config,
+                    preserve=lambda name, value: preserved.append((name, copy.deepcopy(value))))
+        self.assertEqual(5, len(preserved))
+        self.assertEqual("capture_numerical_measurements", preserved[-1][0])
+        self.assertAlmostEqual(.1, preserved[-1][1]["selected_logprob_max_error"])
 
     def test_whole_window_exhaustion_stops_without_truncating(self):
         model, call, config, operations, _ = self.fixture()

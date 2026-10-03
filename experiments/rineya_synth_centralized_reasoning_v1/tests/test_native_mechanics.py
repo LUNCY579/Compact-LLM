@@ -11,7 +11,7 @@ import unittest
 PACKAGE = Path(__file__).resolve().parents[1]
 
 CHILD = r'''
-import hashlib, io, json, random, sys, tempfile
+import hashlib, io, json, os, random, sys, tempfile
 from pathlib import Path
 from types import SimpleNamespace
 import torch
@@ -120,6 +120,7 @@ if mode == 'ce_fault':
     original_loss = mechanics.completion_loss
     mechanics.completion_loss = lambda *args: original_loss(*args) + .001
 operations, stages = [], []
+preserved = {}
 toy = make_toy()
 base = {name:p for name,p in toy.named_parameters(remove_duplicate=False)
         if not name.endswith(('.lora_A','.lora_B'))}
@@ -156,6 +157,19 @@ def guard(stage):
     if mode == 'guard_failure' and stage == 'native_optimizer_step:before':
         raise ValueError('controlled external guard rejection')
 
+def preserve(name, fragment):
+    assert name not in preserved
+    raw = json.dumps(fragment,allow_nan=False,sort_keys=True,separators=(',',':')).encode('utf-8')
+    assert len(raw) <= mechanics.MAX_MILESTONE_BYTES
+    preserved[name] = json.loads(raw)
+    folder = work / 'milestones'
+    folder.mkdir(exist_ok=True)
+    with (folder / (name + '.json')).open('xb',buffering=0) as stream:
+        stream.write(raw)
+        os.fsync(stream.fileno())
+    if mode == 'preservation_failure' and name == 'mechanics_state1_restoration':
+        raise ValueError('controlled milestone writer interruption')
+
 def check_base():
     current = dict(toy.named_parameters(remove_duplicate=False))
     assert all(current[n] is p and p.data_ptr() == base_pointers[n]
@@ -174,8 +188,9 @@ def expect_value_error(function, text=None):
 
 with tempfile.TemporaryDirectory(prefix='synth-mechanics-cpu-') as directory:
     work = Path(directory)
-    if mode == 'normal':
-        report = mechanics.qualify_training(torch, toy, rows(), work, call, guard, CONFIG)
+    if mode in ('normal','durable'):
+        options = {} if mode == 'normal' else {'preserve':preserve}
+        report = mechanics.qualify_training(torch, toy, rows(), work, call, guard, CONFIG, **options)
         assert report['status'] == 'MECHANICAL_CHECKS_PASSED'
         assert report['completed_native_updates'] == 2
         assert report['completed_reference_updates'] == 1
@@ -222,7 +237,23 @@ with tempfile.TemporaryDirectory(prefix='synth-mechanics-cpu-') as directory:
         assert set(payload) == {'schema_version','adapters','optimizer','rng'}
         assert len(payload['adapters']) == 8 and set(payload['rng']) == {'python','cpu'}
         assert all(float(item['step']) == 1 for item in payload['optimizer']['state'].values())
-        assert len(list(work.iterdir())) == 1
+        assert len(list(work.iterdir())) == (1 if mode == 'normal' else 2)
+        if mode == 'normal':
+            assert not preserved
+        else:
+            assert list(preserved) == ['mechanics_initial_A_gradient_check', 'mechanics_update1',
+                'mechanics_restore_fault_witnesses', 'mechanics_state1_restoration',
+                'mechanics_reference_state', 'mechanics_reference_gradient_comparison',
+                'mechanics_update2', 'mechanics_optimizer_continuation']
+            assert preserved['mechanics_update1']['completed_native_updates'] == 1
+            assert preserved['mechanics_update2']['completed_native_updates'] == 2
+            assert preserved['mechanics_state1_restoration']['before_group2'] is True
+            assert preserved['mechanics_state1_restoration']['restored_bitwise_against_detached_pre_save_snapshot']
+            assert preserved['mechanics_reference_gradient_comparison']['passed'] is True
+            assert preserved['mechanics_optimizer_continuation']['passed'] is True
+            assert len(list((work/'milestones').iterdir())) == 8
+            assert all(json.loads(path.read_text()) == preserved[path.stem]
+                       for path in (work/'milestones').iterdir())
         # Reusing a completed output path is rejected before any new optimizer
         # construction or mutation, rather than failing only after update 1.
         fresh = make_toy()
@@ -237,16 +268,17 @@ with tempfile.TemporaryDirectory(prefix='synth-mechanics-cpu-') as directory:
                           'cuda_initialized':torch.cuda.is_initialized(),
                           'pretrained_weights_loaded':False, 'native_qualification':False}))
     elif mode in ('gradient_fault','rng_fault','tamper_checkpoint','guard_failure',
-                  'ce_fault','restore_snapshot_fault','reference_optimizer_fault'):
+                  'ce_fault','restore_snapshot_fault','reference_optimizer_fault','preservation_failure'):
         expected_error = {'gradient_fault':'independent reference',
                           'rng_fault':'reference pass changed',
                           'tamper_checkpoint':'checkpoint bytes changed',
                           'ce_fault':'independently selected log-softmax',
                           'restore_snapshot_fault':'pre-save witness bitwise',
                           'reference_optimizer_fault':'moments/steps differ bitwise',
+                          'preservation_failure':'controlled milestone writer interruption',
                           'guard_failure':'controlled external guard rejection'}[mode]
         error = expect_value_error(lambda: mechanics.qualify_training(
-            torch, toy, rows(), work, call, guard, CONFIG), expected_error)
+            torch, toy, rows(), work, call, guard, CONFIG, preserve=preserve), expected_error)
         if mode in ('gradient_fault','rng_fault'):
             assert operations.count('native_optimizer_step') == 1
             assert 'reference_optimizer_step' not in operations
@@ -255,16 +287,35 @@ with tempfile.TemporaryDirectory(prefix='synth-mechanics-cpu-') as directory:
             assert 'reference_forward' not in operations
         if mode == 'guard_failure':
             assert 'native_optimizer_step' not in operations
-            assert not list(work.iterdir())
+            assert not (work/'STATE1.pt').exists()
+            assert preserved['mechanics_initial_A_gradient_check']['initial_A_gradients_exactly_zero'] is True
         if mode == 'ce_fault':
             assert operations.count('native_forward') == 1
             assert 'native_backward' not in operations and 'native_optimizer_step' not in operations
+            measurement = preserved['mechanics_native_row_00_ce_failure']
+            assert measurement['passed'] is False and measurement['absolute_error'] > 2e-6
+            assert list(preserved) == ['mechanics_native_row_00_ce_failure']
         if mode == 'restore_snapshot_fault':
             assert operations.count('native_optimizer_step') == 1
             assert 'reference_forward' not in operations
+            assert preserved['mechanics_state1_restoration']['restored_bitwise_against_detached_pre_save_snapshot'] is False
         if mode == 'reference_optimizer_fault':
             assert operations.count('native_optimizer_step') == 2
             assert operations.count('reference_optimizer_step') == 1
+            measurement = preserved['mechanics_optimizer_continuation']
+            assert measurement['passed'] is False and measurement['moments_and_steps_bitwise_equal'] is False
+            assert preserved['mechanics_update2']['completed_native_updates'] == 2
+        if mode == 'gradient_fault':
+            measurement = preserved['mechanics_reference_gradient_comparison']
+            assert measurement['passed'] is False and any(not row['passed'] for row in measurement['comparisons'])
+            assert measurement['atol'] == 1e-6 and measurement['rtol'] == 1e-5
+            assert 'mechanics_update2' not in preserved
+        if mode == 'rng_fault':
+            assert preserved['mechanics_reference_state']['parameters_moments_gradients_rng_preserved'] is False
+        if mode == 'preservation_failure':
+            assert preserved['mechanics_state1_restoration']['restored_bitwise_against_detached_pre_save_snapshot'] is True
+            assert operations.count('native_optimizer_step') == 1
+            assert 'reference_forward' not in operations
         check_base()
         print(json.dumps({'status':'EXPECTED_FAILURE_REJECTED', 'mode':mode, 'error':error,
                           'cuda_initialized':torch.cuda.is_initialized()}))
@@ -290,6 +341,21 @@ with tempfile.TemporaryDirectory(prefix='synth-mechanics-cpu-') as directory:
             expect_value_error(lambda: mechanics.qualify_training(
                 torch,toy,good_rows,work,call,guard,dict(CONFIG,**overrides)))
         assert not operations and not list(work.iterdir())
+        expect_value_error(lambda: mechanics.qualify_training(
+            torch,toy,good_rows,work,call,guard,CONFIG,preserve='not callable'),'preservation callback')
+        assert not operations
+        # Milestone serialization rejects tensors, tuples, nonfinite numbers,
+        # nonstring keys and overlarge data before calling the writer.
+        observed = []
+        writer = lambda name,value:observed.append((name,value))
+        for bad in ({'tensor':torch.ones(1)}, {'tuple':(1,2)}, {'bad':float('nan')},
+                    {1:'integer key'}, {'large':'x' * mechanics.MAX_MILESTONE_BYTES}):
+            expect_value_error(lambda:mechanics._preserve_fragment(writer,'bad',bad))
+        assert not observed
+        source = {'rows':[{'passed':False,'metric':mechanics._json_number(float('inf'))}]}
+        mechanics._preserve_fragment(writer,'valid',source)
+        observed[0][1]['rows'][0]['passed'] = True
+        assert source['rows'][0]['passed'] is False and source['rows'][0]['metric'] == 'Infinity'
         # Mean completion CE includes the final EOS; prompt predictions do not.
         ids = torch.tensor([[0,1,2,9]],dtype=torch.long)
         labels = torch.tensor([[-100,-100,2,9]],dtype=torch.long)
@@ -384,6 +450,12 @@ class NativeMechanicsTests(unittest.TestCase):
         self.assertFalse(report["cuda_initialized"])
         self.assertFalse(report["pretrained_weights_loaded"])
         self.assertFalse(report["native_qualification"])
+
+    def test_durable_milestones_have_pure_json_and_unchanged_operation_counts(self):
+        self.assertEqual("CPU_TOY_TRAINING_MECHANICS_PASSED", self.run_child("durable")["status"])
+
+    def test_milestone_writer_failure_stops_before_next_group(self):
+        self.assertEqual("EXPECTED_FAILURE_REJECTED", self.run_child("preservation_failure")["status"])
 
     def test_independent_gradient_mismatch_stops_before_second_update(self):
         self.assertEqual("EXPECTED_FAILURE_REJECTED", self.run_child("gradient_fault")["status"])

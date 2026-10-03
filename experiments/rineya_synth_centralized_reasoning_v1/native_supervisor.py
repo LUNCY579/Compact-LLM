@@ -182,6 +182,10 @@ def _acquire_lease(output, config_sha256):
                 failure = terminal["launch_failure"]
                 if not failure.get("owned_process_handle_terminal_verified"):
                     raise RuntimeError("prior failed launch process was not verified terminal")
+            if (terminal and (terminal.get("sampler_threads_terminal_verified") is False
+                              or terminal.get("gpu_telemetry_cleanup_verified") is False)
+                    and _pid_alive(reservation["supervisor"])):
+                raise RuntimeError("a currently live supervisor has unverified sampler shutdown")
             if (terminal and terminal.get("worker_attempted")
                     and terminal.get("config_sha256") == config_sha256
                     and terminal.get("status") != "SUPERVISED_WORKER_EXITED_ZERO"):
@@ -222,30 +226,25 @@ def _cpu_snapshot(output_dir, worker=None):
 
 
 def _gpu_snapshot():
-    started = time.monotonic()
-    result = subprocess.run(
-        ["nvidia-smi", "--id=0", "--query-gpu=uuid,memory.total,memory.free",
-         "--format=csv,noheader,nounits"], capture_output=True, text=True,
-        check=True, timeout=GPU_TIMEOUT,
-        creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
-    )
-    lines = result.stdout.strip().splitlines()
-    if len(lines) != 1:
-        raise RuntimeError("GPU0 observation must contain exactly one device")
-    identifier, total, free = [piece.strip() for piece in lines[0].split(",")]
-    total, free = float(total) * 1024 ** 2, float(free) * 1024 ** 2
-    if not identifier or not all(math.isfinite(value) for value in (total, free)) or not 0 <= free <= total:
-        raise RuntimeError("malformed GPU memory observation")
-    return {"GPU_index": 0, "gpu_uuid": identifier, "gpu_total_bytes": int(total),
-            "gpu_free_bytes": int(free), "gpu_sample_started_monotonic": started,
-            "gpu_sample_completed_monotonic": time.monotonic(), "gpu_observation_id": uuid.uuid4().hex}
+    import native_nvml
+    return native_nvml.gpu_snapshot()
+
+
+def _gpu_pending_threads():
+    import native_nvml
+    return native_nvml.pending_query_threads()
+
+
+def _shutdown_gpu_probe():
+    import native_nvml
+    native_nvml.shutdown()
 
 
 def resource_snapshot(output_dir, worker=None):
-    """Fresh CPU/disk and bounded GPU0 CLI observation; no Torch import."""
+    """Fresh CPU/disk and bounded read-only NVML GPU0 observation; no Torch."""
     cpu = _cpu_snapshot(output_dir, worker)
     gpu = _gpu_snapshot()
-    # Refresh RAM after the CLI as well, rather than admitting old RAM evidence.
+    # Refresh RAM after telemetry as well, rather than admitting old RAM evidence.
     refreshed = _cpu_snapshot(output_dir, worker)
     return {**cpu, **refreshed, **gpu}
 
@@ -522,6 +521,7 @@ class _Monitor:
         self.observations = []
         self.threads = []
         self.ready = threading.Event()
+        self.unjoined_threads = []
 
     def _abort(self, reason):
         with self.lock:
@@ -607,7 +607,7 @@ class _Monitor:
             self._abort(reason)
             return self
         for function in (self._cpu_loop, self._gpu_loop):
-            thread = threading.Thread(target=function, daemon=True)
+            thread = threading.Thread(target=function, daemon=True, name="SYNTH_EXTERNAL" + function.__name__)
             thread.start()
             self.threads.append(thread)
         if not self.ready.wait(CPU_FRESHNESS):
@@ -626,7 +626,11 @@ class _Monitor:
         self.stop.set()
         for thread in self.threads:
             thread.join(timeout=GPU_TIMEOUT + CPU_INTERVAL)
-        return list(self.observations)
+        self.unjoined_threads = [{"name": thread.name, "ident": thread.ident, "kind": "external_sampler"}
+                                 for thread in self.threads if thread.is_alive()]
+        self.unjoined_threads.extend({"kind": "NVML_native_call", **item} for item in _gpu_pending_threads())
+        with self.lock:
+            return list(self.observations)
 
 
 def _preflight(config_path):
@@ -663,6 +667,7 @@ def supervise(config_path, output_dir, *, admission_only=False):
                            "GPU_freshness_seconds": GPU_FRESHNESS, "admission_interval_seconds": ADMISSION_INTERVAL,
                            "admission_deadline_seconds": ADMISSION_DEADLINE, "admission_samples": 2},
                "deadline_monotonic": started + 600, "status": "ADMISSION_DENIED", "returncode": None,
+               "gpu_telemetry_backend": "pinned_System32_NVML_read_only",
                "mechanical_qualification_established": False, "production_training_authorized": False,
                "protected_bank_access": False, "admission_observations": []}
     lease = worker = monitor = None
@@ -776,8 +781,15 @@ def supervise(config_path, output_dir, *, admission_only=False):
             except BaseException as containment_error:
                 receipt["termination_error"] = type(containment_error).__name__ + ": " + str(containment_error)
     finally:
+        unjoined = []
         if monitor:
-            _json_new(output / "RESOURCE_OBSERVATIONS.json", monitor.close())
+            try:
+                observations = monitor.close()
+                unjoined.extend(getattr(monitor, "unjoined_threads", []))
+                _json_new(output / "RESOURCE_OBSERVATIONS.json", observations)
+            except BaseException as error:
+                receipt["sampler_shutdown_error"] = type(error).__name__ + ": " + str(error)
+                unjoined.append({"kind": "external_sampler_shutdown_unverified"})
         if worker:
             try:
                 worker.close()
@@ -787,9 +799,42 @@ def supervise(config_path, output_dir, *, admission_only=False):
             except BaseException as error:
                 receipt["containment_failure"] = type(error).__name__ + ": " + str(error)
                 receipt["status"] = "OWNED_WORKER_ABORTED"
+        if not unjoined:
+            try:
+                _shutdown_gpu_probe()
+                receipt["gpu_telemetry_cleanup_verified"] = True
+            except BaseException as error:
+                receipt["gpu_telemetry_cleanup_error"] = type(error).__name__ + ": " + str(error)
+                receipt["gpu_telemetry_cleanup_verified"] = False
+        unjoined.extend({"kind": "NVML_native_call", **item} for item in _gpu_pending_threads())
+        unique = {}
+        for item in unjoined:
+            key = (item.get("kind"), item.get("name"), item.get("ident"), item.get("operation"))
+            unique[key] = item
+        unjoined = list(unique.values())
+        receipt["unjoined_sampler_threads"] = unjoined
+        receipt["sampler_threads_terminal_verified"] = not unjoined
+        if unjoined or receipt.get("gpu_telemetry_cleanup_verified") is False:
+            receipt["status"] = "SUPERVISOR_SHUTDOWN_UNVERIFIED"
         receipt["finished_utc"] = _utc()
         receipt["elapsed_seconds"] = time.monotonic() - started
-        receipt["partial_outputs"] = _inventory(output)
+        if (time.monotonic() >= receipt["deadline_monotonic"]
+                and receipt["status"] == "SUPERVISED_WORKER_EXITED_ZERO"):
+            receipt["status"] = "WHOLE_SCOPE_DEADLINE_EXCEEDED"
+            receipt["failure"] = "whole_scope_deadline_during_shutdown"
+        if unjoined:
+            receipt["partial_outputs_frozen"] = False
+            receipt["partial_outputs"] = [{"path": str(path.relative_to(output)), "frozen": False}
+                                           for path in sorted(output.rglob("*")) if path.is_file() or path.is_symlink()]
+        else:
+            receipt["partial_outputs_frozen"] = True
+            receipt["partial_outputs"] = _inventory(output)
+        receipt["finished_utc"] = _utc()
+        receipt["elapsed_seconds"] = time.monotonic() - started
+        if (time.monotonic() >= receipt["deadline_monotonic"]
+                and receipt["status"] == "SUPERVISED_WORKER_EXITED_ZERO"):
+            receipt["status"] = "WHOLE_SCOPE_DEADLINE_EXCEEDED"
+            receipt["failure"] = "whole_scope_deadline_during_inventory"
         receipt = _json_safe(receipt)
         if lease:
             _json_new(lease / "terminal.json", receipt)

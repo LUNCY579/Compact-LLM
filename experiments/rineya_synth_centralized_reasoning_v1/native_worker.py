@@ -7,6 +7,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 import importlib.metadata
 import json
+import math
 import os
 from pathlib import Path
 import random
@@ -17,6 +18,113 @@ import time
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import native_contract as contract
 from rs_contract import canonical, require
+
+
+MAX_OWNED_JOB_PIDS = 256
+
+
+def diagnostic_json(value):
+    """Keep invalid measured floats explicit in standards-compliant evidence."""
+    if isinstance(value, float) and not math.isfinite(value):
+        return {"invalid_nonfinite_float": repr(value)}
+    if isinstance(value, dict):
+        return {key: diagnostic_json(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [diagnostic_json(item) for item in value]
+    return value
+
+
+def _job_query_api():
+    """Open only query-capable Windows APIs; no handle is retained here."""
+    require(os.name == "nt", "native qualification requires Windows containment")
+    from ctypes import wintypes
+    kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+    signatures = {
+        "OpenJobObjectW": ([wintypes.DWORD, wintypes.BOOL, wintypes.LPCWSTR], wintypes.HANDLE),
+        "QueryInformationJobObject": ([wintypes.HANDLE, ctypes.c_int, ctypes.c_void_p,
+                                        wintypes.DWORD, ctypes.c_void_p], wintypes.BOOL),
+        "CloseHandle": ([wintypes.HANDLE], wintypes.BOOL),
+        "GetLastError": ([], wintypes.DWORD),
+    }
+    for name, (arguments, result) in signatures.items():
+        getattr(kernel, name).argtypes = arguments
+        getattr(kernel, name).restype = result
+    return kernel
+
+
+def _job_query_error(kernel, operation):
+    code = int(kernel.GetLastError())
+    if os.name == "nt":
+        error = ctypes.WinError(code)
+        error.add_note(operation + " failed")
+        return error
+    return OSError(code, operation + " failed")
+
+
+def owned_job_pids(job_name):
+    """Return a complete bounded Job PID snapshot, closing the query handle.
+
+    Checking this assigned Job avoids the global Windows process enumeration
+    performed by psutil.children(). The actual interpreter must be present on
+    every sample. Holding a query handle between samples would defeat the
+    supervisor's kill-on-close containment, so this helper always closes it.
+    """
+    require(type(job_name) is str and re.fullmatch(r"Local\\SYNTH_NQ_JOB_[0-9a-f]{32}", job_name) is not None,
+            "owned Job name")
+    kernel = _job_query_api()
+    handle = kernel.OpenJobObjectW(4, False, job_name)  # JOB_OBJECT_QUERY only, non-inheritable
+    if not handle:
+        raise _job_query_error(kernel, "OpenJobObjectW")
+    try:
+        capacity = 16
+        while capacity <= MAX_OWNED_JOB_PIDS:
+            class PidList(ctypes.Structure):
+                # Windows DWORD is exactly 32 bits, including in CPU fixtures.
+                _fields_ = [("assigned", ctypes.c_uint32), ("count", ctypes.c_uint32),
+                            ("pids", ctypes.c_size_t * capacity)]
+            value = PidList()
+            succeeded = kernel.QueryInformationJobObject(handle, 3, ctypes.byref(value), ctypes.sizeof(value), None)
+            if succeeded:
+                require(0 < value.count == value.assigned <= capacity <= MAX_OWNED_JOB_PIDS,
+                        "owned Job PID list is empty, incomplete or exceeds bound")
+                pids = [int(pid) for pid in value.pids[:value.count]]
+                require(all(0 < pid <= 0xffffffff for pid in pids) and len(pids) == len(set(pids)),
+                        "invalid or duplicate owned Job PID")
+                require(os.getpid() in pids, "actual interpreter is absent from owned Job PID list")
+                return pids
+            if int(kernel.GetLastError()) != 234:  # ERROR_MORE_DATA is the only retryable result.
+                raise _job_query_error(kernel, "QueryInformationJobObject")
+            require(value.assigned <= MAX_OWNED_JOB_PIDS and value.count <= capacity,
+                    "owned Job PID list exceeds containment bound")
+            capacity = max(capacity * 2, int(value.assigned))
+        raise ValueError("owned Job PID list exceeds containment bound")
+    finally:
+        if not kernel.CloseHandle(handle):
+            raise _job_query_error(kernel, "CloseHandle")
+
+
+def owned_job_resources(job_name):
+    """Sum RSS for exactly the queried Job PIDs, ignoring confirmed death only."""
+    import psutil
+    pids = owned_job_pids(job_name)
+    rss, observed, vanished = 0, [], []
+    for pid in pids:
+        try:
+            amount = psutil.Process(pid).memory_info().rss
+        except psutil.NoSuchProcess:
+            # Access denial, a reused live PID, and an unconfirmed identity
+            # failure cannot silently reduce the measured owned-tree RSS.
+            require(pid != os.getpid() and psutil.pid_exists(pid) is False,
+                    "owned Job PID disappearance is not confirmed terminal")
+            vanished.append(pid)
+            continue
+        require(type(amount) is int and amount >= 0, "invalid owned Job process RSS")
+        rss += amount
+        observed.append(pid)
+    require(os.getpid() in observed, "actual interpreter RSS was not measured")
+    return {"tree_rss_bytes": rss, "queried_job_pids": pids, "observed_pids": observed,
+            "vanished_pids": vanished, "query_handle_closed": True,
+            "scope": "Windows_JobObjectBasicProcessIdList_owned_PIDs_only"}
 
 
 def in_owned_job(job_name):
@@ -83,11 +191,24 @@ def read_heartbeat(path):
 
 class Journal:
     def __init__(self, directory: Path):
+        self.directory = directory
         self.path = directory / "events.jsonl"
         self.stream = self.path.open("x", encoding="utf-8", newline="\n")
         self.counts = defaultdict(lambda: dict.fromkeys(("attempted", "returned", "failed", "pending"), 0))
         self.calls = 0
         self.guard = lambda stage: None
+
+    def evidence(self, name, value):
+        """Persist a completed measurement before subsequent native work."""
+        require(type(name) is str and re.fullmatch(r"[a-z0-9_]+", name) is not None, "evidence name")
+        path = self.directory / ("stage_" + name + ".json")
+        raw = (canonical(diagnostic_json(value)) + "\n").encode("utf-8")
+        require(len(raw) <= 1024 * 1024, "stage evidence size bound")
+        with path.open("xb", buffering=0) as stream:
+            require(stream.write(raw) == len(raw), "short stage evidence write")
+            os.fsync(stream.fileno())
+        self.emit({"event": "measurement_preserved", "path": path.name,
+                   "sha256": contract.filehash(path), "qualification_established": False})
 
     def emit(self, value):
         self.stream.write(canonical({"utc": datetime.now(timezone.utc).isoformat(), **value}) + "\n")
@@ -112,6 +233,10 @@ class Journal:
         counts["pending"] -= 1
         counts["returned"] += 1
         self.emit({"event": "returned", "id": identity, "operation": operation})
+        if operation.endswith("_completion_loss_check"):
+            require(type(result) is tuple and len(result) == 2 and type(result[1]) is dict,
+                    "loss measurement boundary")
+            self.evidence("loss_%04d" % identity, result[1])
         self.guard("after_" + operation)
         return result
 
@@ -120,7 +245,7 @@ class Journal:
                 "operations": {k: dict(v) for k, v in self.counts.items()}, "last_call": self.calls}
 
 
-def capture(torch, model, prompt_ids, call, guard, config, evidence=None):
+def capture(torch, model, prompt_ids, call, guard, config, evidence=None, preserve=None):
     """Greedy TRAIN-only capture, two repeats and isolated bulk likelihood."""
     limit = config["dose"]["capture_max_generated_tokens"]
     eos = {151645, 151643}
@@ -144,6 +269,8 @@ def capture(torch, model, prompt_ids, call, guard, config, evidence=None):
                 token = int(row.argmax().item())
                 logprob = float(torch.log_softmax(row, dim=-1)[token].item())
                 trace.append({"token": token, "logprob": logprob, "prefix_length": len(prefix)})
+                if preserve is not None:
+                    preserve("capture_r%d_t%02d" % (repeat, step), trace[-1])
                 prefix.append(token)
                 del output, ids, row
                 if token in eos:
@@ -173,10 +300,34 @@ def capture(torch, model, prompt_ids, call, guard, config, evidence=None):
     evidence.update({"generated_tokens_per_repeat": len(trace), "prefix_bulk_argmax_equal": not argmax_differences,
                      "selected_logprob_max_error": maximum, "selected_logprob_mean_error": mean,
                      "trace": trace})
+    if preserve is not None:
+        preserve("capture_numerical_measurements", evidence)
     require(not argmax_differences, "prefix/bulk argmax differs")
     require(maximum <= config["tolerances"]["selected_logprob_max_error"] and
             mean <= config["tolerances"]["selected_logprob_mean_error"], "prefix/bulk numerical gate failed")
     return evidence
+
+
+def preserve_terminal(output, report, journal, torch):
+    """Write the terminal receipt before any optional CUDA diagnostic."""
+    with (output / "worker_result.json").open("x", encoding="utf-8", newline="\n") as stream:
+        json.dump(diagnostic_json(report), stream, indent=2, sort_keys=True, allow_nan=False)
+        stream.write("\n")
+        stream.flush()
+        os.fsync(stream.fileno())
+    journal.stream.close()
+    if torch is not None:
+        try:
+            diagnostics = {"CUDA_initialized": torch.cuda.is_initialized()}
+            if diagnostics["CUDA_initialized"]:
+                diagnostics.update({"peak_allocated_bytes": torch.cuda.max_memory_allocated(),
+                                    "peak_reserved_bytes": torch.cuda.max_memory_reserved(),
+                                    "free_bytes_final": torch.cuda.mem_get_info()[0]})
+        except BaseException as exc:
+            diagnostics = {"diagnostic_error": {"type": type(exc).__name__, "message": str(exc)}}
+        with (output / "worker_GPU_final.json").open("x", encoding="utf-8", newline="\n") as stream:
+            json.dump(diagnostic_json(diagnostics), stream, indent=2, sort_keys=True, allow_nan=False)
+            stream.write("\n")
 
 
 def run(config_path: Path, output: Path) -> int:
@@ -196,8 +347,7 @@ def run(config_path: Path, output: Path) -> int:
 
     def guard(stage):
         import psutil
-        process = psutil.Process()
-        rss = process.memory_info().rss + sum(p.memory_info().rss for p in process.children(recursive=True) if p.is_running())
+        rss = owned_job_resources(owner["job_name"])["tree_rss_bytes"]
         available = psutil.virtual_memory().available
         require(time.monotonic() - start <= 600, "native worker deadline")
         require(rss <= 2 * 1024**3 and available >= 1.25 * 1024**3, "native worker host resource guard")
@@ -251,6 +401,7 @@ def run(config_path: Path, output: Path) -> int:
         model, load_report, source_hashes = load_titan(torch, Qwen3Config, Qwen3ForCausalLM,
                                                      config["model_dir"], journal.call, guard)
         report["loader"] = load_report
+        journal.evidence("loader", load_report)
         report["compute"] = journal.call("install_fp32_compute", lambda: install_fp32_compute(model, torch))
         model.eval()
         hooks = journal.call("install_activation_hooks", lambda: install_fp32_activation_assertions(model, torch))
@@ -273,13 +424,17 @@ def run(config_path: Path, output: Path) -> int:
             require(report["zero_adapter_output_equal"], "zero LoRA output parity failed")
         del original, adapted, ids
         report["zero_adapter_output_max_error"] = 0.0
+        journal.evidence("zero_adapter_parity", {k: report[k] for k in
+                         ("zero_adapter_output_equal", "zero_adapter_output_max_error")})
         report["capture"] = {}
-        capture(torch, model, rows[0]["prompt_ids"], journal.call, guard, config, report["capture"])
+        capture(torch, model, rows[0]["prompt_ids"], journal.call, guard, config, report["capture"], journal.evidence)
         report["training_mechanics"] = qualify_training(torch, model, rows, output, journal.call, guard,
             {"require_cuda": True, "adapter_tensors": 112, "adapter_parameters": 1146880, "eos_id": 151645,
              "rows_per_update": 20, "CE_absolute_error": 2e-6, "reference_gradient_atol": 1e-6,
-             "reference_gradient_rtol": 1e-5})
-        report["frozen_base_postcheck"] = verify_frozen_base(torch, model, source_hashes, journal.call, guard)
+             "reference_gradient_rtol": 1e-5}, preserve=journal.evidence)
+        journal.evidence("training_mechanics", report["training_mechanics"])
+        report["frozen_base_postcheck"] = journal.call("frozen_base_postcheck", lambda:
+            verify_frozen_base(torch, model, source_hashes, journal.call, guard))
         report["activation_observations"] = dict(hooks["observations"])
         require(all(n > 0 for n in hooks["observations"].values()), "unobserved FP32 activation site")
         for handle in hooks["handles"]:
@@ -296,14 +451,9 @@ def run(config_path: Path, output: Path) -> int:
                        "forward_dose": forward_counts, "operation_accounting": journal.snapshot(),
                        "production_training_authorized": False, "protected_bank_access": False,
                        "quality_gain_established": False, "full_E0_or_central_E1_qualified": False})
-        if torch is not None and torch.cuda.is_initialized():
-            report["GPU"] = {"peak_allocated_bytes": torch.cuda.max_memory_allocated(),
-                             "peak_reserved_bytes": torch.cuda.max_memory_reserved(),
-                             "free_bytes_final": torch.cuda.mem_get_info()[0]}
-        with (output / "worker_result.json").open("x", encoding="utf-8", newline="\n") as stream:
-            json.dump(report, stream, indent=2, sort_keys=True)
-            stream.write("\n")
-        journal.stream.close()
+        # Preserve the terminal mechanics receipt before optional CUDA reporting:
+        # a poisoned/hung context must not erase the authoritative failure.
+        preserve_terminal(output, report, journal, torch)
     return 0 if status == "PASS_SCOPED_NATIVE_MECHANICS" else 2
 
 

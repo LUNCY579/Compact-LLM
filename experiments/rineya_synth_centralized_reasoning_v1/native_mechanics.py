@@ -10,12 +10,14 @@ from __future__ import annotations
 
 import hashlib
 import io
+import json
 import math
 from pathlib import Path
 import random
 
 VERSION = "synth-training-mechanics-1"
 MAX_CHECKPOINT_BYTES = 32 * 1024 * 1024
+MAX_MILESTONE_BYTES = 64 * 1024
 SEQUENCES_PER_UPDATE = 20
 CE_ATOL = 2e-6
 GRAD_ATOL, GRAD_RTOL = 1e-6, 1e-5
@@ -24,6 +26,38 @@ GRAD_ATOL, GRAD_RTOL = 1e-6, 1e-5
 def _require(condition, message):
     if not condition:
         raise ValueError(message)
+
+
+def _json_number(value):
+    """Keep failed nonfinite comparisons representable in strict JSON."""
+    number = float(value)
+    return number if math.isfinite(number) else ("NaN" if math.isnan(number) else
+                                                "Infinity" if number > 0 else "-Infinity")
+
+
+def _preserve_fragment(preserve, name, value):
+    if preserve is None:
+        return
+
+    def validate(part):
+        if type(part) is dict:
+            _require(all(type(key) is str for key in part), "milestone JSON keys must be strings")
+            for item in part.values():
+                validate(item)
+        elif type(part) is list:
+            for item in part:
+                validate(item)
+        else:
+            _require(part is None or type(part) in (str, int, float, bool),
+                     "milestone must contain pure JSON values")
+            _require(type(part) is not float or math.isfinite(part), "nonfinite milestone JSON number")
+    _require(callable(preserve), "milestone preservation callback")
+    validate(value)
+    raw = json.dumps(value, allow_nan=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    _require(len(raw) <= MAX_MILESTONE_BYTES, "mechanics milestone exceeds 64 KiB bound")
+    # Give the writer detached Python data, so it cannot mutate a later gate's
+    # comparison result or retain a Torch tensor through an alias.
+    preserve(name, json.loads(raw))
 
 
 def bitwise_equal_tensor(torch, left, right):
@@ -243,7 +277,7 @@ def completion_loss(torch, logits, input_ids, labels):
     return torch.nn.functional.cross_entropy(logits[0, positions - 1], labels[0, positions], reduction="mean")
 
 
-def _checked_loss(torch, logits, ids, labels):
+def _checked_loss(torch, logits, ids, labels, failed_preserve=None):
     loss = completion_loss(torch, logits, ids, labels)
     positions = (labels[0] != -100).nonzero().flatten().tolist()
     # Select each preceding row independently. Do not derive the reference from
@@ -252,7 +286,12 @@ def _checked_loss(torch, logits, ids, labels):
                                for index in positions]).mean()
     observed, reference = float(loss.detach()), float(independent)
     error = abs(observed - reference)
-    _require(math.isfinite(observed) and math.isfinite(reference) and error <= CE_ATOL,
+    passed = math.isfinite(observed) and math.isfinite(reference) and error <= CE_ATOL
+    if not passed and failed_preserve is not None:
+        failed_preserve({"ce": _json_number(observed), "selected_logsoftmax": _json_number(reference),
+                         "absolute_error": _json_number(error), "atol": CE_ATOL, "passed": False,
+                         "supervised_positions": len(positions)})
+    _require(passed,
              "completion CE differs from independently selected log-softmax")
     return loss, {"ce": observed, "selected_logsoftmax": reference, "absolute_error": error,
                   "supervised_positions": len(positions)}
@@ -338,15 +377,19 @@ def _load_checkpoint(torch, descriptor):
     return torch.load(io.BytesIO(data), map_location="cpu", weights_only=True)
 
 
-def qualify_training(torch, model, rows40, output_dir, call, guard, config):
+def qualify_training(torch, model, rows40, output_dir, call, guard, config, *, preserve=None):
     """Run a fixed two-update mechanics check with one independent continuation.
 
     All model forwards, backwards, optimizer actions, snapshot/copy boundaries,
     checkpoint operations and controlled faults go through ``call(op, fn)``.
     ``guard(stage)`` runs before and after every such operation. Exceptions
     propagate to the owning worker's failure/pending accounting; no retry occurs.
+    Optional ``preserve(name, fragment)`` receives bounded detached strict-JSON
+    milestones before the next phase. Failed comparisons are preserved before
+    rejection, without adding any model or optimizer operations.
     """
     _require(type(config) is dict and callable(call) and callable(guard), "mechanics configuration/callbacks")
+    _require(preserve is None or callable(preserve), "milestone preservation callback")
     require_cuda = config.get("require_cuda", True)
     _require(type(require_cuda) is bool, "require_cuda must be explicit boolean")
     _require(config.get("rows_per_update", SEQUENCES_PER_UPDATE) == SEQUENCES_PER_UPDATE
@@ -380,6 +423,9 @@ def qualify_training(torch, model, rows40, output_dir, call, guard, config):
     destination = Path(output_dir).resolve() / "STATE1.pt"
     _require(not destination.exists(), "write-once state1 checkpoint already exists")
     operation_counts = {}
+
+    def milestone(name, value):
+        _preserve_fragment(preserve, "mechanics_" + name, value)
 
     def invoke(operation, function):
         guard(operation + ":before")
@@ -420,9 +466,12 @@ def qualify_training(torch, model, rows40, output_dir, call, guard, config):
             output = invoke(operation_prefix + "_forward", lambda: model(
                 input_ids=ids, attention_mask=mask, use_cache=False, logits_to_keep=0))
             logits = output if torch.is_tensor(output) else output.logits
+            row_index = offset + (20 if reference or report["completed_native_updates"] else 0)
             loss, check = invoke(operation_prefix + "_completion_loss_check", lambda: _checked_loss(
-                torch, logits, ids, labels))
-            check["row_index"] = offset + (20 if reference or report["completed_native_updates"] else 0)
+                torch, logits, ids, labels, failed_preserve=lambda failed: milestone(
+                    operation_prefix + "_row_%02d_ce_failure" % row_index,
+                    {"row_index": row_index, **failed})))
+            check["row_index"] = row_index
             report[("reference" if reference else "native") + "_row_loss_checks"].append(check)
             losses.append(check["ce"])
             if reference:
@@ -461,11 +510,18 @@ def qualify_training(torch, model, rows40, output_dir, call, guard, config):
     invoke("native_gradient_reset", lambda: optimizer.zero_grad(set_to_none=True))
     losses1, _ = accumulate(rows40[:20], "native")
     gradients_valid()
-    _require(all(bool((p.grad == 0).all()) for name, p in entries if name.endswith(".lora_A")),
+    initial_A_zero = all(bool((p.grad == 0).all()) for name, p in entries if name.endswith(".lora_A"))
+    milestone("initial_A_gradient_check", {"completed_native_updates": 0,
+              "initial_A_gradients_exactly_zero": initial_A_zero})
+    _require(initial_A_zero,
              "initial zero B must produce exact zero A gradients")
     report["initial_A_gradients_exactly_zero"] = True
     report["pre_clip_norm_update1"] = native_update(1)
     changed1 = [name for name, p in entries if not bitwise_equal_tensor(torch, initial[name], p)]
+    milestone("update1", {"completed_native_updates": 1, "sequence_mean_loss": sum(losses1) / 20,
+              "pre_clip_norm": report["pre_clip_norm_update1"], "changed_adapters": changed1,
+              "initial_A_gradients_exactly_zero": True, "any_adapter_changed": bool(changed1),
+              "only_B_changed": all(name.endswith(".lora_B") for name in changed1)})
     _require(bool(changed1), "native update 1 changed no adapter")
     _require(all(name.endswith(".lora_B") for name in changed1), "zero-A-gradient first update changed A")
     report["changed_adapters_update1"] = changed1
@@ -498,20 +554,29 @@ def qualify_training(torch, model, rows40, output_dir, call, guard, config):
     if require_cuda:
         fault_witnesses["cuda0_rng_changed"] = not bitwise_equal_tensor(
             torch, state1["rng"]["cuda0"], torch.cuda.get_rng_state(0))
+    milestone("restore_fault_witnesses", {"checkpoint": checkpoint, "optimizer_boundary": 1,
+              "witnesses": fault_witnesses, "all_components_changed": all(fault_witnesses.values())})
     _require(all(fault_witnesses.values()), "controlled faults did not change every registered component")
     payload = invoke("checkpoint_load", lambda: _load_checkpoint(torch, checkpoint))
     invoke("checkpoint_restore", lambda: restore_training_state(
         torch, model, optimizer, payload, require_cuda=require_cuda))
     del payload
-    _require(invoke("state1_restore_verify", lambda: _state_matches(
-        torch, model, optimizer, state1, require_cuda)), "state1 restoration differs from pre-save witness bitwise")
+    restored = invoke("state1_restore_verify", lambda: _state_matches(
+        torch, model, optimizer, state1, require_cuda))
+    milestone("state1_restoration", {"optimizer_boundary": 1, "before_group2": True,
+              "restored_bitwise_against_detached_pre_save_snapshot": restored,
+              "checkpoint": checkpoint, "restore_fault_witnesses": fault_witnesses})
+    _require(restored, "state1 restoration differs from pre-save witness bitwise")
     report["checkpoint"] = checkpoint
     report["restore_fault_witnesses"] = fault_witnesses
     report["state1_restored_bitwise_before_group2"] = True
 
     losses_reference, reference_gradients = accumulate(rows40[20:], "reference", reference=True)
-    _require(invoke("reference_state_verify", lambda: _state_matches(
-        torch, model, optimizer, state1, require_cuda)), "reference pass changed parameters/moments/gradients/RNG")
+    reference_preserved = invoke("reference_state_verify", lambda: _state_matches(
+        torch, model, optimizer, state1, require_cuda))
+    milestone("reference_state", {"reference_rows": 20, "completed_native_updates": 1,
+              "parameters_moments_gradients_rng_preserved": reference_preserved})
+    _require(reference_preserved, "reference pass changed parameters/moments/gradients/RNG")
     _require(any(bool((g != 0).any()) for g in reference_gradients), "reference gradients identically zero")
     report["reference_preserved_state_and_rng"] = True
     invoke("native_gradient_reset", lambda: optimizer.zero_grad(set_to_none=True))
@@ -522,12 +587,15 @@ def qualify_training(torch, model, rows40, output_dir, call, guard, config):
         comparisons = []
         for (name, parameter), reference in zip(entries, reference_gradients):
             difference = (parameter.grad - reference).abs()
-            comparisons.append({"name": name, "max_abs": float(difference.max()),
-                                "mean_abs": float(difference.mean()),
+            comparisons.append({"name": name, "max_abs": _json_number(difference.max()),
+                                "mean_abs": _json_number(difference.mean()),
                                 "finite": bool(torch.isfinite(difference).all()),
                                 "passed": bool(torch.allclose(parameter.grad, reference,
                                                                atol=GRAD_ATOL, rtol=GRAD_RTOL, equal_nan=False))})
-        _require(all(item["passed"] and item["finite"] for item in comparisons),
+        passed = all(item["passed"] and item["finite"] for item in comparisons)
+        milestone("reference_gradient_comparison", {"comparisons": comparisons, "passed": passed,
+                  "atol": GRAD_ATOL, "rtol": GRAD_RTOL, "sequences_per_update": 20})
+        _require(passed,
                  "20-sequence gradient accumulation differs from independent reference")
         return comparisons
 
@@ -549,21 +617,32 @@ def qualify_training(torch, model, rows40, output_dir, call, guard, config):
     invoke("reference_optimizer_step", ref_optimizer.step)
     report["completed_reference_updates"] = 1
     report["pre_clip_norm_update2"] = native_update(2)
+    changed2 = [name for name, p in entries if not bitwise_equal_tensor(torch, state1["adapters"][name], p)]
+    milestone("update2", {"completed_native_updates": 2, "completed_reference_updates": 1,
+              "sequence_mean_loss": sum(losses2) / 20, "pre_clip_norm": report["pre_clip_norm_update2"],
+              "changed_adapters": changed2, "any_adapter_changed": bool(changed2)})
 
     def verify_continuation():
-        _require(all(bitwise_equal_tensor(torch, left, right)
-                     and bitwise_equal_tensor(torch, left.grad, right.grad)
-                     for left, right in zip(ref_parameters, parameters)),
+        equal_parameters = all(bitwise_equal_tensor(torch, left, right)
+                               for left, right in zip(ref_parameters, parameters))
+        equal_gradients = all(bitwise_equal_tensor(torch, left.grad, right.grad)
+                              for left, right in zip(ref_parameters, parameters))
+        equal_optimizer = equal_tree(torch, ref_optimizer.state_dict(), optimizer.state_dict())
+        equal_rng = equal_tree(torch, state1["rng"], _rng_snapshot(torch, require_cuda))
+        milestone("optimizer_continuation", {"completed_native_updates": 2, "completed_reference_updates": 1,
+                  "parameters_bitwise_equal": equal_parameters, "clipped_gradients_bitwise_equal": equal_gradients,
+                  "moments_and_steps_bitwise_equal": equal_optimizer, "rng_bitwise_equal": equal_rng,
+                  "passed": equal_parameters and equal_gradients and equal_optimizer and equal_rng})
+        _require(equal_parameters and equal_gradients,
                  "copied-gradient clipping/AdamW parameters differ bitwise")
-        _require(equal_tree(torch, ref_optimizer.state_dict(), optimizer.state_dict()),
+        _require(equal_optimizer,
                  "copied-gradient AdamW moments/steps differ bitwise")
-        _require(equal_tree(torch, state1["rng"], _rng_snapshot(torch, require_cuda)),
+        _require(equal_rng,
                  "group 2 or copied-gradient continuation changed RNG")
         return True
 
     report["copied_gradient_optimizer_continuation_bitwise"] = invoke(
         "optimizer_continuation_verify", verify_continuation)
-    changed2 = [name for name, p in entries if not bitwise_equal_tensor(torch, state1["adapters"][name], p)]
     _require(bool(changed2), "native update 2 changed no adapter")
     report["changed_adapters_update2"] = changed2
     report["sequence_mean_losses"] = [sum(losses1) / 20, sum(losses2) / 20]

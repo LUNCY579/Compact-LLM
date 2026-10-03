@@ -97,6 +97,9 @@ def runtime_files() -> dict[str, str]:
             paths[str(path.resolve())] = filehash(path)
     require(sys.version.split()[0] == RUNTIME["python"], "interpreter version differs")
     paths[str(Path(sys.executable).resolve())] = filehash(Path(sys.executable))
+    from native_nvml import library_path
+    nvml = library_path()
+    paths[str(nvml)] = filehash(nvml)
     return paths
 
 
