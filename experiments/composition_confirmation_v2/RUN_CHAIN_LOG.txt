@@ -1,671 +1,0 @@
-[wmi_runner] start 2026-09-25 08:35:28 target=C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\run_chain.py
-=== chain step batteries: C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\run_gpu_batteries.py
-  RAM free 5.04 then 5.06 GiB (floor 3.5); disk free 23.3 GiB
-  [gpu-lease] acquired rineya-gpu-0.lock label=soup:gpu-batteries token=121d17af
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\build_beta_arms.py --control-only
-positive control: max |SPARSE + 0.75*(ADD-100 - SPARSE) - ADD-O75| = 1.192e-07 (tol 1e-06)
-partition check: dOpallo squared norm MLP 1.1188, ATTN_LN 0.7226, OTHER 0 (MLP share of energy 0.608)
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\build_arms.py --control-only
-positive controls (max abs error): {'ADD-100': '0.00e+00', 'SPARSE': '0.00e+00', 'AVG': '2.38e-07'}
-== battery A-convention
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\build_beta_arms.py --arms beta:0.5 --no-controls
-controls skipped (--no-controls): the calling driver ran them in this run
-{"experiment": "CONVENTION-LOC-001 step 1", "arm": "ADD-O50", "spec": "beta:0.5", "construction": "SPARSE + c(tensor)*(ADD-100 - SPARSE), FP32, streaming; c from spec", "weight_sha256": "bc69a4ec403b74fb09de815ec55738a7126da345802a7b45e520f205e3c68051", "quality_claim": false}
-  verify ADD-O50: 0 mismatches on first chunks
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\T_BANK_V2.json --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\arms --arms ADD-O50 --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\scores\ADD-O50.json --no-lease
-startup checks
-  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
-  bank T_BANK_V2.json n=192 sha256=fc094136a5b581cb9cc03393b1e5959ed8f69247638c81e37cf7f68fbf132e01
-  [gpu-lease] --no-lease: caller holds the lease for this window
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<01:26,  3.56it/s]Loading weights:  15%|#5        | 48/310 [00:00<00:01, 158.15it/s]Loading weights:  29%|##9       | 91/310 [00:00<00:00, 244.33it/s]Loading weights:  43%|####2     | 133/310 [00:00<00:00, 296.18it/s]Loading weights:  57%|#####6    | 176/310 [00:00<00:00, 335.92it/s]Loading weights:  70%|#######   | 217/310 [00:00<00:00, 356.45it/s]Loading weights:  83%|########2 | 257/310 [00:00<00:00, 368.66it/s]Loading weights:  96%|#########6| 299/310 [00:00<00:00, 378.50it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 302.76it/s]
-{"arm": "ADD-O50", "correct": 100, "n": 192, "copied_input_verbatim": 3, "by_family": {"ledger_replay": {"correct": 31, "n": 64}, "prerequisite_plan": {"correct": 36, "n": 64}, "register_machine": {"correct": 33, "n": 64}}, "seconds": 102.5}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\scores\ADD-O50.json
-  ADD-O50: scored 192 rows; weights deleted (sha bc69a4ec403b kept); disk free 23.2 GiB
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\build_beta_arms.py --arms beta:0.6 --no-controls
-controls skipped (--no-controls): the calling driver ran them in this run
-{"experiment": "CONVENTION-LOC-001 step 1", "arm": "ADD-O60", "spec": "beta:0.6", "construction": "SPARSE + c(tensor)*(ADD-100 - SPARSE), FP32, streaming; c from spec", "weight_sha256": "0415bb045acbee51d7df655e9f91a70568c6b25b099907d63eadb0835565b87f", "quality_claim": false}
-  verify ADD-O60: 0 mismatches on first chunks
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\T_BANK_V2.json --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\arms --arms ADD-O60 --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\scores\ADD-O60.json --no-lease
-startup checks
-  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
-  bank T_BANK_V2.json n=192 sha256=fc094136a5b581cb9cc03393b1e5959ed8f69247638c81e37cf7f68fbf132e01
-  [gpu-lease] --no-lease: caller holds the lease for this window
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<02:52,  1.79it/s]Loading weights:  13%|#3        | 41/310 [00:00<00:03, 82.27it/s]Loading weights:  28%|##7       | 86/310 [00:00<00:01, 163.54it/s]Loading weights:  42%|####1     | 129/310 [00:00<00:00, 226.94it/s]Loading weights:  55%|#####4    | 170/310 [00:00<00:00, 270.67it/s]Loading weights:  69%|######9   | 214/310 [00:01<00:00, 313.03it/s]Loading weights:  83%|########2 | 257/310 [00:01<00:00, 342.15it/s]Loading weights:  97%|#########6| 300/310 [00:01<00:00, 364.88it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 238.37it/s]
-{"arm": "ADD-O60", "correct": 98, "n": 192, "copied_input_verbatim": 3, "by_family": {"ledger_replay": {"correct": 30, "n": 64}, "prerequisite_plan": {"correct": 34, "n": 64}, "register_machine": {"correct": 34, "n": 64}}, "seconds": 96.7}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\scores\ADD-O60.json
-  ADD-O60: scored 192 rows; weights deleted (sha 0415bb045acb kept); disk free 23.2 GiB
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\build_beta_arms.py --arms beta:0.9 --no-controls
-controls skipped (--no-controls): the calling driver ran them in this run
-{"experiment": "CONVENTION-LOC-001 step 1", "arm": "ADD-O90", "spec": "beta:0.9", "construction": "SPARSE + c(tensor)*(ADD-100 - SPARSE), FP32, streaming; c from spec", "weight_sha256": "dd8dd1038bca9d9efc7ab3009ff55fbfdabb385682b08ef3120cc83d2c010f96", "quality_claim": false}
-  verify ADD-O90: 0 mismatches on first chunks
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\T_BANK_V2.json --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\arms --arms ADD-O90 --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\scores\ADD-O90.json --no-lease
-startup checks
-  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
-  bank T_BANK_V2.json n=192 sha256=fc094136a5b581cb9cc03393b1e5959ed8f69247638c81e37cf7f68fbf132e01
-  [gpu-lease] --no-lease: caller holds the lease for this window
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:19,  1.55it/s]Loading weights:  14%|#4        | 44/310 [00:00<00:03, 78.82it/s]Loading weights:  28%|##7       | 86/310 [00:00<00:01, 148.04it/s]Loading weights:  43%|####2     | 133/310 [00:00<00:00, 215.93it/s]Loading weights:  57%|#####7    | 177/310 [00:01<00:00, 268.38it/s]Loading weights:  70%|#######   | 218/310 [00:01<00:00, 302.46it/s]Loading weights:  83%|########3 | 258/310 [00:01<00:00, 327.20it/s]Loading weights:  97%|#########6| 300/310 [00:01<00:00, 346.28it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 222.83it/s]
-{"arm": "ADD-O90", "correct": 24, "n": 192, "copied_input_verbatim": 4, "by_family": {"ledger_replay": {"correct": 8, "n": 64}, "prerequisite_plan": {"correct": 0, "n": 64}, "register_machine": {"correct": 16, "n": 64}}, "seconds": 98.2}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\scores\ADD-O90.json
-  ADD-O90: scored 192 rows; weights deleted (sha dd8dd1038bca kept); disk free 23.2 GiB
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\build_beta_arms.py --arms H1 --no-controls
-controls skipped (--no-controls): the calling driver ran them in this run
-{"experiment": "CONVENTION-LOC-001 step 1", "arm": "H1", "spec": "H1", "construction": "SPARSE + c(tensor)*(ADD-100 - SPARSE), FP32, streaming; c from spec", "weight_sha256": "3ff2aa596ccdc8234dae053362c1cabc8f5c3e274f3ea78591a9a7b219729fc1", "quality_claim": false}
-  verify H1: 0 mismatches on first chunks
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\T_BANK_V2.json --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\arms --arms H1 --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\scores\H1.json --no-lease
-startup checks
-  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
-  bank T_BANK_V2.json n=192 sha256=fc094136a5b581cb9cc03393b1e5959ed8f69247638c81e37cf7f68fbf132e01
-  [gpu-lease] --no-lease: caller holds the lease for this window
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<01:22,  3.72it/s]Loading weights:  15%|#5        | 48/310 [00:00<00:01, 158.46it/s]Loading weights:  31%|###       | 96/310 [00:00<00:00, 253.82it/s]Loading weights:  44%|####4     | 137/310 [00:00<00:00, 300.99it/s]Loading weights:  58%|#####8    | 180/310 [00:00<00:00, 339.79it/s]Loading weights:  72%|#######1  | 223/310 [00:00<00:00, 365.99it/s]Loading weights:  85%|########5 | 265/310 [00:00<00:00, 380.74it/s]Loading weights: 100%|##########| 310/310 [00:00<00:00, 312.46it/s]
-{"arm": "H1", "correct": 102, "n": 192, "copied_input_verbatim": 3, "by_family": {"ledger_replay": {"correct": 30, "n": 64}, "prerequisite_plan": {"correct": 38, "n": 64}, "register_machine": {"correct": 34, "n": 64}}, "seconds": 96.3}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\scores\H1.json
-  H1: scored 192 rows; weights deleted (sha 3ff2aa596ccd kept); disk free 23.2 GiB
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\build_beta_arms.py --arms H1c --no-controls
-controls skipped (--no-controls): the calling driver ran them in this run
-{"experiment": "CONVENTION-LOC-001 step 1", "arm": "H1c", "spec": "H1c", "construction": "SPARSE + c(tensor)*(ADD-100 - SPARSE), FP32, streaming; c from spec", "weight_sha256": "ea46496c1a713c971589f3575532d0dd7f64e85cf7eaf8dd410c4b206c82043e", "quality_claim": false}
-  verify H1c: 0 mismatches on first chunks
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\T_BANK_V2.json --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\arms --arms H1c --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\scores\H1c.json --no-lease
-startup checks
-  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
-  bank T_BANK_V2.json n=192 sha256=fc094136a5b581cb9cc03393b1e5959ed8f69247638c81e37cf7f68fbf132e01
-  [gpu-lease] --no-lease: caller holds the lease for this window
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<01:19,  3.88it/s]Loading weights:  15%|#4        | 45/310 [00:00<00:01, 153.96it/s]Loading weights:  27%|##7       | 85/310 [00:00<00:00, 234.82it/s]Loading weights:  42%|####1     | 130/310 [00:00<00:00, 297.84it/s]Loading weights:  56%|#####5    | 173/310 [00:00<00:00, 337.81it/s]Loading weights:  69%|######9   | 214/310 [00:00<00:00, 359.28it/s]Loading weights:  83%|########3 | 258/310 [00:00<00:00, 374.60it/s]Loading weights:  97%|#########7| 302/310 [00:00<00:00, 389.66it/s]Loading weights: 100%|##########| 310/310 [00:00<00:00, 311.56it/s]
-{"arm": "H1c", "correct": 99, "n": 192, "copied_input_verbatim": 4, "by_family": {"ledger_replay": {"correct": 31, "n": 64}, "prerequisite_plan": {"correct": 35, "n": 64}, "register_machine": {"correct": 33, "n": 64}}, "seconds": 95.5}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\convention_localization_v1\scores\H1c.json
-  H1c: scored 192 rows; weights deleted (sha ea46496c1a71 kept); disk free 23.2 GiB
-== battery B-interference
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\build_arms.py --arms SPARSE-125 --no-controls
-controls skipped (--no-controls): the calling driver ran them in this run
-{"experiment": "INTERFERENCE-MECH-001 step 1", "arm": "SPARSE-125", "spec": {"a": 1.25, "b": 0.0, "mask": null, "keep": null}, "seed": 20260925, "delta_norm_vs_BASE": 0.8675688589052218, "weight_sha256": "e409592c78c11887e105941b77e23a3bd99e0029e3cf509b66fb8bf9adeaaeac", "quality_claim": false}
-  verify SPARSE-125: 0 mismatches on first chunks
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v1\T_BANK_V3X.json --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\arms --arms SPARSE-125 --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\scores\SPARSE-125.json --no-lease
-startup checks
-  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
-  bank T_BANK_V3X.json n=864 sha256=173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c
-  [gpu-lease] --no-lease: caller holds the lease for this window
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<02:57,  1.74it/s]Loading weights:  15%|#4        | 45/310 [00:00<00:02, 88.74it/s]Loading weights:  28%|##7       | 86/310 [00:00<00:01, 158.47it/s]Loading weights:  43%|####2     | 132/310 [00:00<00:00, 228.96it/s]Loading weights:  57%|#####6    | 176/310 [00:00<00:00, 280.78it/s]Loading weights:  70%|#######   | 217/310 [00:01<00:00, 314.73it/s]Loading weights:  83%|########2 | 257/310 [00:01<00:00, 336.22it/s]Loading weights:  97%|#########7| 301/310 [00:01<00:00, 360.06it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 237.26it/s]
-{"arm": "SPARSE-125", "correct": 448, "n": 864, "copied_input_verbatim": 22, "by_family": {"ledger_replay": {"correct": 142, "n": 288}, "prerequisite_plan": {"correct": 141, "n": 288}, "register_machine": {"correct": 165, "n": 288}}, "seconds": 424.7}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\scores\SPARSE-125.json
-  SPARSE-125: scored 864 rows; weights deleted (sha e409592c78c1 kept); disk free 23.2 GiB
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\build_arms.py --arms ADD-A125 --no-controls
-controls skipped (--no-controls): the calling driver ran them in this run
-{"experiment": "INTERFERENCE-MECH-001 step 1", "arm": "ADD-A125", "spec": {"a": 1.25, "b": 1.0, "mask": null, "keep": null}, "seed": 20260925, "delta_norm_vs_BASE": 1.6124550482285043, "weight_sha256": "ba8903b1c7cd0ee504e3e47bd7f70d70e4f20cfe3899c14e3664ed48f3071cf0", "quality_claim": false}
-  verify ADD-A125: 0 mismatches on first chunks
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v1\T_BANK_V3X.json --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\arms --arms ADD-A125 --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\scores\ADD-A125.json --no-lease
-startup checks
-  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
-  bank T_BANK_V3X.json n=864 sha256=173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c
-  [gpu-lease] --no-lease: caller holds the lease for this window
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<02:49,  1.82it/s]Loading weights:  15%|#5        | 48/310 [00:00<00:02, 98.15it/s]Loading weights:  30%|###       | 93/310 [00:00<00:01, 175.33it/s]Loading weights:  44%|####4     | 137/310 [00:00<00:00, 238.25it/s]Loading weights:  60%|#####9    | 185/310 [00:00<00:00, 298.75it/s]Loading weights:  75%|#######4  | 232/310 [00:01<00:00, 342.06it/s]Loading weights:  89%|########8 | 275/310 [00:01<00:00, 365.12it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 248.68it/s]
-{"arm": "ADD-A125", "correct": 36, "n": 864, "copied_input_verbatim": 4, "by_family": {"ledger_replay": {"correct": 12, "n": 288}, "prerequisite_plan": {"correct": 0, "n": 288}, "register_machine": {"correct": 24, "n": 288}}, "seconds": 437.3}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\scores\ADD-A125.json
-  ADD-A125: scored 864 rows; weights deleted (sha ba8903b1c7cd kept); disk free 23.1 GiB
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\build_arms.py --arms DARE-O50 --no-controls
-controls skipped (--no-controls): the calling driver ran them in this run
-{"experiment": "INTERFERENCE-MECH-001 step 1", "arm": "DARE-O50", "spec": {"a": 1.0, "b": 1.0, "mask": "dO", "keep": 0.5}, "seed": 20260925, "delta_norm_vs_BASE": 2.042010538460313, "weight_sha256": "526ad4b5e1dda04c09169ac193728c5750dec54fde829a29d29f80d378b2ad83", "quality_claim": false}
-  verify DARE-O50: 0 mismatches on first chunks
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v1\T_BANK_V3X.json --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\arms --arms DARE-O50 --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\scores\DARE-O50.json --no-lease
-startup checks
-  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
-  bank T_BANK_V3X.json n=864 sha256=173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c
-  [gpu-lease] --no-lease: caller holds the lease for this window
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:01,  1.70it/s]Loading weights:  15%|#5        | 47/310 [00:00<00:02, 91.30it/s]Loading weights:  29%|##9       | 91/310 [00:00<00:01, 166.09it/s]Loading weights:  43%|####2     | 133/310 [00:00<00:00, 225.77it/s]Loading weights:  58%|#####7    | 179/310 [00:00<00:00, 282.62it/s]Loading weights:  71%|#######1  | 221/310 [00:01<00:00, 318.33it/s]Loading weights:  85%|########4 | 262/310 [00:01<00:00, 336.09it/s]Loading weights:  97%|#########7| 302/310 [00:01<00:00, 349.98it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 234.58it/s]
-{"arm": "DARE-O50", "correct": 10, "n": 864, "copied_input_verbatim": 1, "by_family": {"ledger_replay": {"correct": 4, "n": 288}, "prerequisite_plan": {"correct": 0, "n": 288}, "register_machine": {"correct": 6, "n": 288}}, "seconds": 436.2}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\scores\DARE-O50.json
-  DARE-O50: scored 864 rows; weights deleted (sha 526ad4b5e1dd kept); disk free 23.1 GiB
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\build_arms.py --arms DARE-O10 --no-controls
-controls skipped (--no-controls): the calling driver ran them in this run
-{"experiment": "INTERFERENCE-MECH-001 step 1", "arm": "DARE-O10", "spec": {"a": 1.0, "b": 1.0, "mask": "dO", "keep": 0.1}, "seed": 20260925, "delta_norm_vs_BASE": 4.3466365660842525, "weight_sha256": "81746bbb2c04de41266e4c6211811f683e2753f03b0dd0c4ffb432ad8e6e6e8e", "quality_claim": false}
-  verify DARE-O10: 0 mismatches on first chunks
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v1\T_BANK_V3X.json --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\arms --arms DARE-O10 --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\scores\DARE-O10.json --no-lease
-startup checks
-  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
-  bank T_BANK_V3X.json n=864 sha256=173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c
-  [gpu-lease] --no-lease: caller holds the lease for this window
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<02:48,  1.83it/s]Loading weights:  12%|#1        | 37/310 [00:00<00:03, 76.02it/s]Loading weights:  26%|##6       | 82/310 [00:00<00:01, 159.04it/s]Loading weights:  40%|####      | 124/310 [00:00<00:00, 219.63it/s]Loading weights:  51%|#####1    | 159/310 [00:00<00:00, 248.12it/s]Loading weights:  65%|######4   | 200/310 [00:01<00:00, 289.84it/s]Loading weights:  78%|#######8  | 242/310 [00:01<00:00, 323.19it/s]Loading weights:  91%|#########1| 283/310 [00:01<00:00, 345.84it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 232.41it/s]
-{"arm": "DARE-O10", "correct": 10, "n": 864, "copied_input_verbatim": 2, "by_family": {"ledger_replay": {"correct": 5, "n": 288}, "prerequisite_plan": {"correct": 0, "n": 288}, "register_machine": {"correct": 5, "n": 288}}, "seconds": 436.5}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\scores\DARE-O10.json
-  DARE-O10: scored 864 rows; weights deleted (sha 81746bbb2c04 kept); disk free 23.1 GiB
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\build_arms.py --arms DISJOINT-DARE --no-controls
-controls skipped (--no-controls): the calling driver ran them in this run
-{"experiment": "INTERFERENCE-MECH-001 step 1", "arm": "DISJOINT-DARE", "spec": {"a": 1.0, "b": 1.0, "mask": "disjoint", "keep": 0.5}, "seed": 20260925, "delta_norm_vs_BASE": 2.155403450741117, "weight_sha256": "d867d6944b9bb9e1369650f7a2f41ac796ad0170e362dd2b31b9c0d40294a27a", "quality_claim": false}
-  verify DISJOINT-DARE: 0 mismatches on first chunks
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v1\T_BANK_V3X.json --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\arms --arms DISJOINT-DARE --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\scores\DISJOINT-DARE.json --no-lease
-startup checks
-  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
-  bank T_BANK_V3X.json n=864 sha256=173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c
-  [gpu-lease] --no-lease: caller holds the lease for this window
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:05,  1.67it/s]Loading weights:  15%|#5        | 47/310 [00:00<00:02, 89.30it/s]Loading weights:  29%|##9       | 91/310 [00:00<00:01, 163.37it/s]Loading weights:  44%|####3     | 135/310 [00:00<00:00, 227.91it/s]Loading weights:  58%|#####8    | 181/310 [00:01<00:00, 285.26it/s]Loading weights:  74%|#######3  | 229/310 [00:01<00:00, 332.98it/s]Loading weights:  88%|########7 | 272/310 [00:01<00:00, 359.06it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 238.70it/s]
-{"arm": "DISJOINT-DARE", "correct": 13, "n": 864, "copied_input_verbatim": 1, "by_family": {"ledger_replay": {"correct": 7, "n": 288}, "prerequisite_plan": {"correct": 0, "n": 288}, "register_machine": {"correct": 6, "n": 288}}, "seconds": 433.8}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1\scores\DISJOINT-DARE.json
-  DISJOINT-DARE: scored 864 rows; weights deleted (sha d867d6944b9b kept); disk free 23.1 GiB
-  [gpu-lease] released rineya-gpu-0.lock
-{
- "bank": "T_BANK_V2 (exposed)",
- "n": 192,
- "exploratory": true,
- "periods": {
-  "ADD-100": 178,
-  "ADD-75": 63,
-  "ADD-O50": 0,
-  "ADD-O60": 2,
-  "ADD-O75": 63,
-  "ADD-O90": 148,
-  "ADD-S75": 178,
-  "AVG": 0,
-  "BASE": 0,
-  "CONFLICT-LOCAL": 178,
-  "H1": 0,
-  "H1c": 0,
-  "OPALLO": 79,
-  "SPARSE": 0
- },
- "tolerant": {
-  "ADD-100": 97,
-  "ADD-75": 94,
-  "ADD-O50": 100,
-  "ADD-O60": 100,
-  "ADD-O75": 98,
-  "ADD-O90": 98,
-  "ADD-S75": 89,
-  "AVG": 69,
-  "BASE": 0,
-  "CONFLICT-LOCAL": 97,
-  "H1": 102,
-  "H1c": 99,
-  "OPALLO": 8,
-  "SPARSE": 102
- },
- "strict": {
-  "ADD-100": 6,
-  "ADD-75": 59,
-  "ADD-O50": 100,
-  "ADD-O60": 98,
-  "ADD-O75": 63,
-  "ADD-O90": 24,
-  "ADD-S75": 4,
-  "AVG": 69,
-  "BASE": 0,
-  "CONFLICT-LOCAL": 6,
-  "H1": 102,
-  "H1c": 99,
-  "OPALLO": 1,
-  "SPARSE": 102
- },
- "beta_arms": {
-  "ADD-O50": {
-   "beta": 0.5,
-   "predicted_period_rows": 3,
-   "registered_prediction": 3,
-   "observed_period_rows": 0,
-   "band": [
-    0,
-    8
-   ],
-   "count_in_band": true,
-   "per_row_agreement": 189,
-   "agreement_ok": true,
-   "tolerant": 100,
-   "tolerant_ok": true,
-   "PASS": true
-  },
-  "ADD-O60": {
-   "beta": 0.6,
-   "predicted_period_rows": 12,
-   "registered_prediction": 12,
-   "observed_period_rows": 2,
-   "band": [
-    7,
-    17
-   ],
-   "count_in_band": false,
-   "per_row_agreement": 180,
-   "agreement_ok": true,
-   "tolerant": 100,
-   "tolerant_ok": true,
-   "PASS": false
-  },
-  "ADD-O90": {
-   "beta": 0.9,
-   "predicted_period_rows": 127,
-   "registered_prediction": 127,
-   "observed_period_rows": 148,
-   "band": [
-    95,
-    159
-   ],
-   "count_in_band": true,
-   "per_row_agreement": 169,
-   "agreement_ok": false,
-   "tolerant": 98,
-   "tolerant_ok": true,
-   "PASS": false
-  }
- },
- "H1": {
-  "P1": {
-   "H1_periods": 0,
-   "H1_verdict": "PASS",
-   "H1c_periods": 0,
-   "H1c_verdict": "NOT_SUFFICIENT"
-  },
-  "P2": {
-   "diff_tolerant_H1_minus_SPARSE": 0,
-   "lower95_one_sided": -3.0,
-   "margin": -10.200000000000001,
-   "PASS": true
-  },
-  "P3": {
-   "strict_H1": 102,
-   "strict_ADD-100": 6,
-   "gain": 96,
-   "required": 30.599999999999998,
-   "p": 6.979604631123946e-26,
-   "PASS": true
-  },
-  "additive_prediction": {
-   "H1c_ge_150": false,
-   "sum_periods": 0,
-   "sum_within_178_pm_25": false
-  }
- }
-}
-{
- "bank": "T_BANK_V3X.json",
- "exploratory": true,
- "n": 864,
- "per_arm_primary": {
-  "ADD-100": 413,
-  "ADD-A125": 427,
-  "AVG": 331,
-  "BASE": 4,
-  "DARE-O10": 415,
-  "DARE-O50": 412,
-  "DISJOINT-DARE": 409,
-  "SPARSE": 447,
-  "SPARSE-125": 448
- },
- "P1_DARE-O50_vs_ADD-100": {
-  "x": 413,
-  "y": 412,
-  "diff": -1,
-  "lost": 3,
-  "gained": 2,
-  "p": 1.0,
-  "band": "SAME"
- },
- "P2_DARE-O10_vs_ADD-100": {
-  "x": 413,
-  "y": 415,
-  "diff": 2,
-  "lost": 4,
-  "gained": 6,
-  "p": 0.75390625,
-  "band": "SAME"
- },
- "P3_DISJOINT-DARE_vs_ADD-100": {
-  "x": 413,
-  "y": 409,
-  "diff": -4,
-  "lost": 5,
-  "gained": 1,
-  "p": 0.21875,
-  "band": "SAME"
- },
- "P4_SPARSE-125_vs_SPARSE": {
-  "x": 447,
-  "y": 448,
-  "diff": 1,
-  "lost": 27,
-  "gained": 28,
-  "p": 1.0,
-  "band": "SAME"
- },
- "P5_interference_shrinks_at_alpha_1.25": {
-  "interference_at_1.00": -34,
-  "interference_at_1.25": -21,
-  "I_rows": 13,
-  "ci95": [
-   -4.0,
-   30.0
-  ],
-  "prediction": "I >= +10 with the CI excluding 0",
-  "met": false
- },
- "P6_ADD-A125_vs_SPARSE": {
-  "x": 447,
-  "y": 427,
-  "diff": -20,
-  "lost": 58,
-  "gained": 38,
-  "p": 0.05191052214883845,
-  "band": "INCONCLUSIVE"
- }
-}
-=== chain step batteries exited 0 after 3117s
-=== chain step stage_a: C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\run_stage_a.py
-  RAM 6.76/6.69 GiB, VRAM free 7.53 GiB, disk free 23.1 GiB
-  [gpu-lease] acquired rineya-gpu-0.lock label=confirm002:stage-a token=8145e77a
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v1\T_BANK_V3X.json --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\arms --arms H25 TH25 THFULL --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\STAGE_A_T_V3X.json --no-lease
-startup checks
-  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
-  bank T_BANK_V3X.json n=864 sha256=173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c
-  [gpu-lease] --no-lease: caller holds the lease for this window
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:06,  1.66it/s]Loading weights:   6%|6         | 19/310 [00:00<00:08, 35.41it/s]Loading weights:  11%|#1        | 35/310 [00:00<00:04, 60.66it/s]Loading weights:  17%|#6        | 52/310 [00:00<00:03, 85.49it/s]Loading weights:  22%|##1       | 68/310 [00:01<00:02, 101.65it/s]Loading weights:  27%|##7       | 85/310 [00:01<00:01, 118.62it/s]Loading weights:  33%|###2      | 102/310 [00:01<00:01, 129.86it/s]Loading weights:  38%|###8      | 118/310 [00:01<00:01, 134.69it/s]Loading weights:  43%|####3     | 134/310 [00:01<00:01, 140.03it/s]Loading weights:  48%|####8     | 150/310 [00:01<00:01, 139.11it/s]Loading weights:  54%|#####4    | 168/310 [00:01<00:00, 149.18it/s]Loading weights:  59%|#####9    | 184/310 [00:01<00:00, 149.57it/s]Loading weights:  65%|######5   | 202/310 [00:01<00:00, 152.85it/s]Loading weights:  71%|#######   | 220/310 [00:01<00:00, 157.35it/s]Loading weights:  76%|#######6  | 236/310 [00:02<00:00, 148.55it/s]Loading weights:  82%|########1 | 254/310 [00:02<00:00, 155.65it/s]Loading weights:  87%|########7 | 270/310 [00:02<00:00, 150.78it/s]Loading weights:  92%|#########2| 286/310 [00:02<00:00, 152.63it/s]Loading weights:  97%|#########7| 302/310 [00:02<00:00, 147.78it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 119.93it/s]
-{"arm": "H25", "correct": 4, "n": 864, "copied_input_verbatim": 7, "by_family": {"ledger_replay": {"correct": 4, "n": 288}, "prerequisite_plan": {"correct": 0, "n": 288}, "register_machine": {"correct": 0, "n": 288}}, "seconds": 844.8}
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:43,  1.38it/s]Loading weights:   5%|5         | 16/310 [00:00<00:11, 25.35it/s]Loading weights:  10%|#         | 31/310 [00:00<00:05, 48.63it/s]Loading weights:  15%|#5        | 48/310 [00:01<00:03, 73.12it/s]Loading weights:  22%|##2       | 69/310 [00:01<00:02, 102.28it/s]Loading weights:  28%|##8       | 88/310 [00:01<00:01, 122.49it/s]Loading weights:  34%|###3      | 105/310 [00:01<00:01, 129.26it/s]Loading weights:  39%|###9      | 121/310 [00:01<00:01, 136.30it/s]Loading weights:  44%|####4     | 137/310 [00:01<00:01, 140.72it/s]Loading weights:  51%|#####     | 158/310 [00:01<00:00, 156.65it/s]Loading weights:  57%|#####6    | 176/310 [00:01<00:00, 161.69it/s]Loading weights:  63%|######2   | 195/310 [00:01<00:00, 165.42it/s]Loading weights:  69%|######8   | 213/310 [00:02<00:00, 164.39it/s]Loading weights:  75%|#######4  | 231/310 [00:02<00:00, 168.32it/s]Loading weights:  80%|########  | 249/310 [00:02<00:00, 166.69it/s]Loading weights:  86%|########6 | 267/310 [00:02<00:00, 168.85it/s]Loading weights:  92%|#########2| 286/310 [00:02<00:00, 170.48it/s]Loading weights:  98%|#########8| 304/310 [00:02<00:00, 168.34it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 120.35it/s]
-{"arm": "TH25", "correct": 444, "n": 864, "copied_input_verbatim": 23, "by_family": {"ledger_replay": {"correct": 131, "n": 288}, "prerequisite_plan": {"correct": 150, "n": 288}, "register_machine": {"correct": 163, "n": 288}}, "seconds": 490.9}
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:45,  1.37it/s]Loading weights:   5%|4         | 15/310 [00:00<00:12, 23.76it/s]Loading weights:   9%|8         | 27/310 [00:00<00:06, 41.00it/s]Loading weights:  14%|#4        | 44/310 [00:01<00:04, 66.40it/s]Loading weights:  19%|#9        | 59/310 [00:01<00:02, 83.78it/s]Loading weights:  25%|##4       | 77/310 [00:01<00:02, 106.12it/s]Loading weights:  30%|###       | 93/310 [00:01<00:01, 116.39it/s]Loading weights:  36%|###6      | 113/310 [00:01<00:01, 135.88it/s]Loading weights:  42%|####1     | 130/310 [00:01<00:01, 141.30it/s]Loading weights:  47%|####7     | 146/310 [00:01<00:01, 145.47it/s]Loading weights:  52%|#####2    | 162/310 [00:01<00:00, 148.11it/s]Loading weights:  58%|#####8    | 180/310 [00:01<00:00, 153.34it/s]Loading weights:  63%|######3   | 196/310 [00:02<00:00, 147.18it/s]Loading weights:  68%|######8   | 212/310 [00:02<00:00, 149.60it/s]Loading weights:  74%|#######3  | 228/310 [00:02<00:00, 149.67it/s]Loading weights:  79%|#######9  | 245/310 [00:02<00:00, 149.66it/s]Loading weights:  85%|########4 | 262/310 [00:02<00:00, 149.99it/s]Loading weights:  90%|######### | 279/310 [00:02<00:00, 151.91it/s]Loading weights:  95%|#########5| 295/310 [00:02<00:00, 146.80it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 112.05it/s]
-{"arm": "THFULL", "correct": 269, "n": 864, "copied_input_verbatim": 14, "by_family": {"ledger_replay": {"correct": 105, "n": 288}, "prerequisite_plan": {"correct": 0, "n": 288}, "register_machine": {"correct": 164, "n": 288}}, "seconds": 487.3}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\STAGE_A_T_V3X.json
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\score_boundary.py --bank C:\Users\clclc\BusinessProject\rineya-dataset-retention-records\hskill-views-002\HSKILL_VIEWS_V2.jsonl --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\titan_opallo_skill_vector_v1\arms --arms BASE SPARSE --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\STAGE_A_H_VIEWS_BASE_SPARSE.json --no-lease
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:37,  1.42it/s]Loading weights:   5%|4         | 15/310 [00:00<00:12, 23.90it/s]Loading weights:   9%|8         | 27/310 [00:00<00:06, 41.77it/s]Loading weights:  14%|#4        | 44/310 [00:01<00:03, 67.37it/s]Loading weights:  19%|#8        | 58/310 [00:01<00:03, 81.49it/s]Loading weights:  23%|##2       | 70/310 [00:01<00:02, 90.62it/s]Loading weights:  26%|##6       | 82/310 [00:01<00:02, 94.90it/s]Loading weights:  32%|###1      | 99/310 [00:01<00:01, 113.00it/s]Loading weights:  36%|###6      | 113/310 [00:01<00:01, 117.48it/s]Loading weights:  41%|####      | 126/310 [00:01<00:01, 117.32it/s]Loading weights:  45%|####5     | 140/310 [00:01<00:01, 123.40it/s]Loading weights:  49%|####9     | 153/310 [00:01<00:01, 124.10it/s]Loading weights:  54%|#####4    | 168/310 [00:02<00:01, 127.34it/s]Loading weights:  59%|#####8    | 182/310 [00:02<00:01, 122.19it/s]Loading weights:  64%|######3   | 197/310 [00:02<00:00, 126.86it/s]Loading weights:  69%|######9   | 214/310 [00:02<00:00, 134.46it/s]Loading weights:  75%|#######5  | 234/310 [00:02<00:00, 149.55it/s]Loading weights:  81%|########  | 250/310 [00:02<00:00, 148.52it/s]Loading weights:  86%|########6 | 267/310 [00:02<00:00, 148.35it/s]Loading weights:  91%|######### | 282/310 [00:02<00:00, 145.67it/s]Loading weights:  96%|#########5| 297/310 [00:02<00:00, 144.45it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 104.28it/s]
-{"arm": "BASE", "boundary_abstain": 71, "n_boundary": 112, "answerable_attempt": 111, "answerable_correct": 40, "n_answerable": 112, "seconds": 68.0}
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:34,  1.44it/s]Loading weights:   5%|4         | 15/310 [00:00<00:11, 24.72it/s]Loading weights:  10%|9         | 30/310 [00:00<00:05, 48.55it/s]Loading weights:  15%|#4        | 45/310 [00:01<00:03, 70.36it/s]Loading weights:  19%|#9        | 59/310 [00:01<00:02, 85.85it/s]Loading weights:  24%|##3       | 74/310 [00:01<00:02, 101.77it/s]Loading weights:  29%|##9       | 90/310 [00:01<00:01, 117.03it/s]Loading weights:  34%|###3      | 105/310 [00:01<00:01, 116.07it/s]Loading weights:  39%|###9      | 122/310 [00:01<00:01, 130.27it/s]Loading weights:  44%|####4     | 137/310 [00:01<00:01, 119.38it/s]Loading weights:  50%|####9     | 154/310 [00:01<00:01, 129.34it/s]Loading weights:  54%|#####4    | 168/310 [00:01<00:01, 128.37it/s]Loading weights:  59%|#####8    | 182/310 [00:02<00:00, 129.71it/s]Loading weights:  63%|######3   | 196/310 [00:02<00:00, 126.61it/s]Loading weights:  67%|######7   | 209/310 [00:02<00:00, 126.51it/s]Loading weights:  72%|#######1  | 223/310 [00:02<00:00, 129.98it/s]Loading weights:  76%|#######6  | 237/310 [00:02<00:00, 130.80it/s]Loading weights:  82%|########1 | 253/310 [00:02<00:00, 135.08it/s]Loading weights:  86%|########6 | 267/310 [00:02<00:00, 130.81it/s]Loading weights:  91%|######### | 281/310 [00:02<00:00, 124.03it/s]Loading weights:  95%|#########4| 294/310 [00:02<00:00, 125.08it/s]Loading weights:  99%|#########9| 307/310 [00:03<00:00, 123.90it/s]Loading weights: 100%|##########| 310/310 [00:03<00:00, 102.32it/s]
-{"arm": "SPARSE", "boundary_abstain": 70, "n_boundary": 112, "answerable_attempt": 112, "answerable_correct": 34, "n_answerable": 112, "seconds": 56.0}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\STAGE_A_H_VIEWS_BASE_SPARSE.json
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\score_boundary.py --bank C:\Users\clclc\BusinessProject\rineya-dataset-retention-records\hskill-views-002\HSKILL_VIEWS_V2.jsonl --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\arms --arms H25 TH25 THFULL --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\STAGE_A_H_VIEWS_NEW.json --no-lease
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:14,  1.59it/s]Loading weights:   6%|6         | 19/310 [00:00<00:08, 34.02it/s]Loading weights:  12%|#1        | 36/310 [00:00<00:04, 60.67it/s]Loading weights:  17%|#6        | 52/310 [00:00<00:03, 82.56it/s]Loading weights:  22%|##1       | 68/310 [00:01<00:02, 100.12it/s]Loading weights:  28%|##7       | 86/310 [00:01<00:01, 119.64it/s]Loading weights:  33%|###3      | 103/310 [00:01<00:01, 129.52it/s]Loading weights:  38%|###8      | 119/310 [00:01<00:01, 137.04it/s]Loading weights:  44%|####3     | 135/310 [00:01<00:01, 143.30it/s]Loading weights:  49%|####9     | 152/310 [00:01<00:01, 150.26it/s]Loading weights:  55%|#####4    | 169/310 [00:01<00:00, 155.28it/s]Loading weights:  60%|######    | 187/310 [00:01<00:00, 158.30it/s]Loading weights:  66%|######5   | 204/310 [00:01<00:00, 158.43it/s]Loading weights:  72%|#######1  | 223/310 [00:02<00:00, 162.30it/s]Loading weights:  77%|#######7  | 240/310 [00:02<00:00, 162.62it/s]Loading weights:  83%|########2 | 257/310 [00:02<00:00, 159.20it/s]Loading weights:  89%|########8 | 275/310 [00:02<00:00, 162.77it/s]Loading weights:  94%|#########4| 292/310 [00:02<00:00, 156.57it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 122.26it/s]
-{"arm": "H25", "boundary_abstain": 86, "n_boundary": 112, "answerable_attempt": 112, "answerable_correct": 43, "n_answerable": 112, "seconds": 72.1}
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:21,  1.53it/s]Loading weights:   5%|5         | 17/310 [00:00<00:09, 29.61it/s]Loading weights:  11%|#1        | 35/310 [00:00<00:04, 59.45it/s]Loading weights:  17%|#7        | 53/310 [00:00<00:03, 84.64it/s]Loading weights:  23%|##2       | 70/310 [00:01<00:02, 103.35it/s]Loading weights:  29%|##9       | 91/310 [00:01<00:01, 127.08it/s]Loading weights:  35%|###4      | 108/310 [00:01<00:01, 135.22it/s]Loading weights:  40%|####      | 125/310 [00:01<00:01, 139.73it/s]Loading weights:  45%|####5     | 141/310 [00:01<00:01, 144.01it/s]Loading weights:  51%|#####     | 158/310 [00:01<00:01, 145.08it/s]Loading weights:  58%|#####7    | 179/310 [00:01<00:00, 158.93it/s]Loading weights:  64%|######3   | 198/310 [00:01<00:00, 164.97it/s]Loading weights:  70%|######9   | 216/310 [00:01<00:00, 167.65it/s]Loading weights:  75%|#######5  | 234/310 [00:02<00:00, 168.22it/s]Loading weights:  81%|########1 | 252/310 [00:02<00:00, 169.55it/s]Loading weights:  87%|########7 | 270/310 [00:02<00:00, 164.41it/s]Loading weights:  93%|#########3| 289/310 [00:02<00:00, 166.04it/s]Loading weights:  99%|#########8| 306/310 [00:02<00:00, 164.79it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 123.73it/s]
-{"arm": "TH25", "boundary_abstain": 86, "n_boundary": 112, "answerable_attempt": 112, "answerable_correct": 34, "n_answerable": 112, "seconds": 56.1}
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:19,  1.55it/s]Loading weights:   6%|6         | 19/310 [00:00<00:08, 33.78it/s]Loading weights:  12%|#1        | 36/310 [00:00<00:04, 61.57it/s]Loading weights:  18%|#7        | 55/310 [00:00<00:02, 88.78it/s]Loading weights:  23%|##2       | 71/310 [00:01<00:02, 104.12it/s]Loading weights:  30%|##9       | 92/310 [00:01<00:01, 128.30it/s]Loading weights:  36%|###5      | 111/310 [00:01<00:01, 143.34it/s]Loading weights:  42%|####1     | 130/310 [00:01<00:01, 153.42it/s]Loading weights:  48%|####7     | 148/310 [00:01<00:01, 155.06it/s]Loading weights:  55%|#####4    | 169/310 [00:01<00:00, 166.40it/s]Loading weights:  61%|######    | 188/310 [00:01<00:00, 169.30it/s]Loading weights:  66%|######6   | 206/310 [00:01<00:00, 166.69it/s]Loading weights:  72%|#######2  | 224/310 [00:01<00:00, 164.51it/s]Loading weights:  78%|#######8  | 243/310 [00:02<00:00, 168.81it/s]Loading weights:  84%|########4 | 261/310 [00:02<00:00, 167.39it/s]Loading weights:  90%|########9 | 278/310 [00:02<00:00, 163.26it/s]Loading weights:  95%|#########5| 295/310 [00:02<00:00, 163.58it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 127.18it/s]
-{"arm": "THFULL", "boundary_abstain": 78, "n_boundary": 112, "answerable_attempt": 112, "answerable_correct": 28, "n_answerable": 112, "seconds": 60.9}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\STAGE_A_H_VIEWS_NEW.json
-  [gpu-lease] released rineya-gpu-0.lock
-{
- "canary_PASS": true,
- "canary": {
-  "BASE": {
-   "mine": {
-    "boundary_abstain": 71,
-    "answerable_attempt": 111,
-    "answerable_correct": 40
-   },
-   "recorded": {
-    "boundary_abstain": 71,
-    "answerable_attempt": 111,
-    "answerable_correct": 40
-   },
-   "per_row_credited_agreement": 224,
-   "text_identical": 224,
-   "PASS": true
-  },
-  "SPARSE": {
-   "mine": {
-    "boundary_abstain": 70,
-    "answerable_attempt": 112,
-    "answerable_correct": 34
-   },
-   "recorded": {
-    "boundary_abstain": 70,
-    "answerable_attempt": 112,
-    "answerable_correct": 34
-   },
-   "per_row_credited_agreement": 224,
-   "text_identical": 224,
-   "PASS": true
-  }
- },
- "power": {
-  "C1": 0.996,
-  "C2": 1.0,
-  "C3": 0.82,
-  "C4": 1.0,
-  "ALL4": 0.819,
-  "C5": 0.0,
-  "gates_T": 1.0,
-  "G_H": 1.0
- },
- "rules": {
-  "extend_T": false,
-  "extend_boundary": false,
-  "spend_decision_flag": false
- }
-}
-=== chain step stage_a exited 0 after 2171s
-=== chain step stage_b: C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\run_stage_b.py
-  [gpu-lease] acquired rineya-gpu-0.lock label=confirm002:stage-b token=4d95e45b
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\T_BANK_V4.json --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\titan_opallo_skill_vector_v1\arms --arms BASE SPARSE --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\B_T_GATES.json --no-lease
-startup checks
-  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
-  bank T_BANK_V4.json n=864 sha256=82f0a6423dd6b58b81319708e7fbda7c5880b9734742323ea11574ff354c93c0
-  [gpu-lease] --no-lease: caller holds the lease for this window
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:29,  1.47it/s]Loading weights:   6%|6         | 20/310 [00:00<00:08, 33.73it/s]Loading weights:  12%|#1        | 37/310 [00:00<00:04, 59.42it/s]Loading weights:  17%|#6        | 52/310 [00:01<00:03, 78.42it/s]Loading weights:  22%|##1       | 67/310 [00:01<00:02, 95.19it/s]Loading weights:  26%|##6       | 82/310 [00:01<00:02, 106.63it/s]Loading weights:  32%|###2      | 100/310 [00:01<00:01, 124.74it/s]Loading weights:  37%|###7      | 116/310 [00:01<00:01, 128.45it/s]Loading weights:  44%|####3     | 135/310 [00:01<00:01, 140.94it/s]Loading weights:  49%|####8     | 151/310 [00:01<00:01, 140.50it/s]Loading weights:  54%|#####4    | 168/310 [00:01<00:00, 144.91it/s]Loading weights:  59%|#####9    | 184/310 [00:01<00:00, 147.54it/s]Loading weights:  65%|######4   | 200/310 [00:01<00:00, 146.42it/s]Loading weights:  69%|######9   | 215/310 [00:02<00:00, 133.22it/s]Loading weights:  74%|#######3  | 229/310 [00:02<00:00, 131.07it/s]Loading weights:  79%|#######9  | 245/310 [00:02<00:00, 138.65it/s]Loading weights:  84%|########4 | 261/310 [00:02<00:00, 140.29it/s]Loading weights:  89%|########9 | 276/310 [00:02<00:00, 137.79it/s]Loading weights:  94%|#########3| 290/310 [00:02<00:00, 133.06it/s]Loading weights:  99%|#########8| 306/310 [00:02<00:00, 136.54it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 111.16it/s]
-{"arm": "BASE", "correct": 5, "n": 864, "copied_input_verbatim": 9, "by_family": {"ledger_replay": {"correct": 5, "n": 288}, "prerequisite_plan": {"correct": 0, "n": 288}, "register_machine": {"correct": 0, "n": 288}}, "seconds": 948.3}
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<04:01,  1.28it/s]Loading weights:   5%|4         | 15/310 [00:00<00:13, 22.21it/s]Loading weights:   9%|9         | 28/310 [00:00<00:06, 41.12it/s]Loading weights:  14%|#3        | 42/310 [00:01<00:04, 60.25it/s]Loading weights:  18%|#7        | 55/310 [00:01<00:03, 74.74it/s]Loading weights:  22%|##2       | 69/310 [00:01<00:02, 88.42it/s]Loading weights:  26%|##6       | 82/310 [00:01<00:02, 95.32it/s]Loading weights:  31%|###       | 96/310 [00:01<00:02, 105.21it/s]Loading weights:  36%|###5      | 111/310 [00:01<00:01, 117.04it/s]Loading weights:  40%|####      | 125/310 [00:01<00:01, 119.42it/s]Loading weights:  45%|####4     | 138/310 [00:01<00:01, 121.22it/s]Loading weights:  49%|####8     | 151/310 [00:01<00:01, 123.00it/s]Loading weights:  54%|#####3    | 166/310 [00:02<00:01, 128.68it/s]Loading weights:  58%|#####8    | 180/310 [00:02<00:00, 130.76it/s]Loading weights:  63%|######2   | 194/310 [00:02<00:00, 131.22it/s]Loading weights:  67%|######7   | 209/310 [00:02<00:00, 133.29it/s]Loading weights:  72%|#######1  | 223/310 [00:02<00:00, 129.56it/s]Loading weights:  76%|#######6  | 237/310 [00:02<00:00, 122.21it/s]Loading weights:  81%|########  | 251/310 [00:02<00:00, 126.37it/s]Loading weights:  86%|########6 | 267/310 [00:02<00:00, 130.70it/s]Loading weights:  91%|######### | 281/310 [00:02<00:00, 125.46it/s]Loading weights:  95%|#########5| 296/310 [00:03<00:00, 132.10it/s]Loading weights: 100%|##########| 310/310 [00:03<00:00, 98.02it/s] 
-{"arm": "SPARSE", "correct": 430, "n": 864, "copied_input_verbatim": 32, "by_family": {"ledger_replay": {"correct": 136, "n": 288}, "prerequisite_plan": {"correct": 126, "n": 288}, "register_machine": {"correct": 168, "n": 288}}, "seconds": 485.0}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\B_T_GATES.json
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\score_boundary.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\HSKILL_SOUP_V3.jsonl --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\titan_opallo_skill_vector_v1\arms --arms BASE --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\B_H_GATES_BASE.json --no-lease
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:32,  1.45it/s]Loading weights:   5%|5         | 16/310 [00:00<00:11, 26.71it/s]Loading weights:  11%|#         | 33/310 [00:00<00:05, 54.13it/s]Loading weights:  15%|#4        | 46/310 [00:01<00:03, 69.84it/s]Loading weights:  19%|#9        | 60/310 [00:01<00:02, 84.10it/s]Loading weights:  25%|##5       | 78/310 [00:01<00:02, 106.58it/s]Loading weights:  30%|###       | 93/310 [00:01<00:01, 114.19it/s]Loading weights:  35%|###4      | 108/310 [00:01<00:01, 122.36it/s]Loading weights:  40%|####      | 125/310 [00:01<00:01, 130.82it/s]Loading weights:  45%|####5     | 141/310 [00:01<00:01, 137.70it/s]Loading weights:  51%|#####     | 158/310 [00:01<00:01, 141.10it/s]Loading weights:  57%|#####6    | 176/310 [00:01<00:00, 148.47it/s]Loading weights:  62%|######1   | 192/310 [00:01<00:00, 143.82it/s]Loading weights:  67%|######7   | 209/310 [00:02<00:00, 148.13it/s]Loading weights:  73%|#######2  | 225/310 [00:02<00:00, 137.06it/s]Loading weights:  78%|#######8  | 242/310 [00:02<00:00, 145.31it/s]Loading weights:  83%|########2 | 257/310 [00:02<00:00, 138.74it/s]Loading weights:  88%|########8 | 273/310 [00:02<00:00, 143.16it/s]Loading weights:  94%|#########3| 290/310 [00:02<00:00, 145.72it/s]Loading weights:  99%|#########9| 308/310 [00:02<00:00, 153.98it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 111.20it/s]
-{"arm": "BASE", "boundary_abstain": 185, "n_boundary": 336, "answerable_attempt": 109, "answerable_correct": 41, "n_answerable": 109, "seconds": 127.0}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\B_H_GATES_BASE.json
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\score_boundary.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\HSKILL_SOUP_V3.jsonl --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\arms --arms H25 --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\B_H_GATES_H25.json --no-lease
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:36,  1.43it/s]Loading weights:   5%|5         | 16/310 [00:00<00:11, 25.96it/s]Loading weights:  11%|#         | 33/310 [00:00<00:05, 52.79it/s]Loading weights:  15%|#5        | 48/310 [00:01<00:03, 72.14it/s]Loading weights:  20%|##        | 63/310 [00:01<00:02, 89.59it/s]Loading weights:  26%|##5       | 80/310 [00:01<00:02, 106.99it/s]Loading weights:  31%|###       | 95/310 [00:01<00:01, 117.10it/s]Loading weights:  35%|###5      | 110/310 [00:01<00:01, 123.56it/s]Loading weights:  41%|####      | 126/310 [00:01<00:01, 128.25it/s]Loading weights:  45%|####5     | 141/310 [00:01<00:01, 132.80it/s]Loading weights:  51%|#####     | 158/310 [00:01<00:01, 141.17it/s]Loading weights:  58%|#####7    | 179/310 [00:01<00:00, 156.72it/s]Loading weights:  64%|######3   | 198/310 [00:01<00:00, 163.88it/s]Loading weights:  70%|#######   | 217/310 [00:02<00:00, 170.22it/s]Loading weights:  76%|#######5  | 235/310 [00:02<00:00, 169.05it/s]Loading weights:  82%|########1 | 253/310 [00:02<00:00, 168.44it/s]Loading weights:  87%|########7 | 270/310 [00:02<00:00, 164.63it/s]Loading weights:  94%|#########3| 290/310 [00:02<00:00, 173.56it/s]Loading weights:  99%|#########9| 308/310 [00:02<00:00, 173.93it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 118.10it/s]
-{"arm": "H25", "boundary_abstain": 263, "n_boundary": 336, "answerable_attempt": 109, "answerable_correct": 41, "n_answerable": 109, "seconds": 135.7}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\B_H_GATES_H25.json
-{
-  "instrument": "CONFIRM-002",
-  "t_bank_sha256": "82f0a6423dd6b58b81319708e7fbda7c5880b9734742323ea11574ff354c93c0",
-  "h_bank_sha256": "686df45b94fa000be8df8d15e1f026a7f74e22deadfa4aacda96f5c6244c8ad5",
-  "gates_T": {
-    "G1": true,
-    "G2": true,
-    "G3": true,
-    "thresholds": [
-      172,
-      346,
-      260
-    ],
-    "BASE": 5,
-    "SPARSE": 430,
-    "ALL": true
-  },
-  "gate_H": {
-    "x": 185,
-    "y": 263,
-    "net": 78,
-    "lost": 4,
-    "gained": 82,
-    "p": 5.763476560721547e-20,
-    "required": 17,
-    "PASS": true
-  }
-}
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\T_BANK_V4.json --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\arms --arms TH25 THFULL --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\B_T_COMPOSE.json --no-lease
-startup checks
-  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
-  bank T_BANK_V4.json n=864 sha256=82f0a6423dd6b58b81319708e7fbda7c5880b9734742323ea11574ff354c93c0
-  [gpu-lease] --no-lease: caller holds the lease for this window
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:10,  1.62it/s]Loading weights:   5%|5         | 16/310 [00:00<00:10, 28.85it/s]Loading weights:  12%|#1        | 36/310 [00:00<00:04, 63.74it/s]Loading weights:  16%|#5        | 49/310 [00:00<00:03, 77.61it/s]Loading weights:  22%|##1       | 67/310 [00:01<00:02, 100.78it/s]Loading weights:  26%|##6       | 82/310 [00:01<00:02, 112.92it/s]Loading weights:  33%|###2      | 102/310 [00:01<00:01, 134.30it/s]Loading weights:  38%|###8      | 118/310 [00:01<00:01, 140.22it/s]Loading weights:  44%|####3     | 136/310 [00:01<00:01, 148.03it/s]Loading weights:  50%|#####     | 155/310 [00:01<00:00, 158.17it/s]Loading weights:  56%|#####6    | 174/310 [00:01<00:00, 163.92it/s]Loading weights:  62%|######1   | 192/310 [00:01<00:00, 159.18it/s]Loading weights:  69%|######8   | 213/310 [00:01<00:00, 169.33it/s]Loading weights:  75%|#######4  | 231/310 [00:02<00:00, 165.47it/s]Loading weights:  80%|########  | 248/310 [00:02<00:00, 164.30it/s]Loading weights:  86%|########6 | 268/310 [00:02<00:00, 165.73it/s]Loading weights:  93%|#########2| 287/310 [00:02<00:00, 171.01it/s]Loading weights:  98%|#########8| 305/310 [00:02<00:00, 168.81it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 124.96it/s]
-{"arm": "TH25", "correct": 434, "n": 864, "copied_input_verbatim": 28, "by_family": {"ledger_replay": {"correct": 138, "n": 288}, "prerequisite_plan": {"correct": 126, "n": 288}, "register_machine": {"correct": 170, "n": 288}}, "seconds": 427.7}
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:56,  1.31it/s]Loading weights:   5%|5         | 16/310 [00:00<00:11, 24.55it/s]Loading weights:  11%|#         | 33/310 [00:00<00:05, 51.01it/s]Loading weights:  16%|#5        | 49/310 [00:01<00:03, 72.51it/s]Loading weights:  22%|##1       | 67/310 [00:01<00:02, 95.39it/s]Loading weights:  26%|##6       | 82/310 [00:01<00:02, 108.36it/s]Loading weights:  32%|###2      | 100/310 [00:01<00:01, 124.70it/s]Loading weights:  37%|###7      | 116/310 [00:01<00:01, 133.44it/s]Loading weights:  44%|####3     | 135/310 [00:01<00:01, 143.29it/s]Loading weights:  49%|####9     | 152/310 [00:01<00:01, 147.46it/s]Loading weights:  55%|#####4    | 169/310 [00:01<00:00, 151.93it/s]Loading weights:  60%|######    | 187/310 [00:01<00:00, 159.03it/s]Loading weights:  66%|######5   | 204/310 [00:02<00:00, 157.55it/s]Loading weights:  72%|#######2  | 224/310 [00:02<00:00, 164.97it/s]Loading weights:  78%|#######7  | 241/310 [00:02<00:00, 165.97it/s]Loading weights:  83%|########3 | 258/310 [00:02<00:00, 152.91it/s]Loading weights:  89%|########9 | 276/310 [00:02<00:00, 159.94it/s]Loading weights:  95%|#########4| 293/310 [00:02<00:00, 156.82it/s]Loading weights: 100%|#########9| 309/310 [00:02<00:00, 155.20it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 115.10it/s]
-{"arm": "THFULL", "correct": 260, "n": 864, "copied_input_verbatim": 19, "by_family": {"ledger_replay": {"correct": 94, "n": 288}, "prerequisite_plan": {"correct": 1, "n": 288}, "register_machine": {"correct": 165, "n": 288}}, "seconds": 435.7}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\B_T_COMPOSE.json
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\score_boundary.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\HSKILL_SOUP_V3.jsonl --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\titan_opallo_skill_vector_v1\arms --arms SPARSE --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\B_H_SPARSE.json --no-lease
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:28,  1.48it/s]Loading weights:   5%|5         | 16/310 [00:00<00:10, 27.00it/s]Loading weights:  11%|#         | 34/310 [00:00<00:04, 56.89it/s]Loading weights:  16%|#5        | 49/310 [00:01<00:03, 74.78it/s]Loading weights:  22%|##2       | 69/310 [00:01<00:02, 100.35it/s]Loading weights:  27%|##7       | 85/310 [00:01<00:01, 113.94it/s]Loading weights:  32%|###2      | 100/310 [00:01<00:01, 120.75it/s]Loading weights:  37%|###7      | 115/310 [00:01<00:01, 120.81it/s]Loading weights:  42%|####2     | 131/310 [00:01<00:01, 128.75it/s]Loading weights:  47%|####7     | 147/310 [00:01<00:01, 136.87it/s]Loading weights:  53%|#####3    | 165/310 [00:01<00:00, 145.71it/s]Loading weights:  58%|#####8    | 181/310 [00:01<00:00, 144.00it/s]Loading weights:  65%|######4   | 201/310 [00:01<00:00, 159.35it/s]Loading weights:  70%|#######   | 218/310 [00:02<00:00, 161.46it/s]Loading weights:  76%|#######5  | 235/310 [00:02<00:00, 153.97it/s]Loading weights:  81%|########  | 251/310 [00:02<00:00, 153.96it/s]Loading weights:  86%|########6 | 268/310 [00:02<00:00, 150.98it/s]Loading weights:  92%|#########1| 284/310 [00:02<00:00, 151.84it/s]Loading weights:  97%|#########6| 300/310 [00:02<00:00, 147.59it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 114.41it/s]
-{"arm": "SPARSE", "boundary_abstain": 183, "n_boundary": 336, "answerable_attempt": 109, "answerable_correct": 37, "n_answerable": 109, "seconds": 106.4}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\B_H_SPARSE.json
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\score_boundary.py --bank C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\HSKILL_SOUP_V3.jsonl --arms-root C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\arms --arms TH25 THFULL --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\B_H_COMPOSE.json --no-lease
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:24,  1.51it/s]Loading weights:   5%|4         | 15/310 [00:00<00:11, 26.00it/s]Loading weights:  10%|#         | 31/310 [00:00<00:05, 52.71it/s]Loading weights:  15%|#5        | 47/310 [00:00<00:03, 75.58it/s]Loading weights:  19%|#9        | 60/310 [00:01<00:02, 86.23it/s]Loading weights:  26%|##5       | 80/310 [00:01<00:02, 112.86it/s]Loading weights:  31%|###1      | 97/310 [00:01<00:01, 127.17it/s]Loading weights:  37%|###6      | 114/310 [00:01<00:01, 135.25it/s]Loading weights:  44%|####3     | 135/310 [00:01<00:01, 150.34it/s]Loading weights:  49%|####9     | 152/310 [00:01<00:01, 153.67it/s]Loading weights:  55%|#####4    | 169/310 [00:01<00:00, 157.84it/s]Loading weights:  60%|######    | 187/310 [00:01<00:00, 163.02it/s]Loading weights:  66%|######5   | 204/310 [00:01<00:00, 164.73it/s]Loading weights:  72%|#######1  | 222/310 [00:02<00:00, 166.42it/s]Loading weights:  78%|#######7  | 241/310 [00:02<00:00, 169.56it/s]Loading weights:  84%|########3 | 259/310 [00:02<00:00, 167.56it/s]Loading weights:  90%|########9 | 278/310 [00:02<00:00, 172.86it/s]Loading weights:  95%|#########5| 296/310 [00:02<00:00, 173.98it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 122.38it/s]
-{"arm": "TH25", "boundary_abstain": 250, "n_boundary": 336, "answerable_attempt": 109, "answerable_correct": 35, "n_answerable": 109, "seconds": 117.1}
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:28,  1.48it/s]Loading weights:   6%|6         | 20/310 [00:00<00:08, 34.07it/s]Loading weights:  12%|#2        | 38/310 [00:00<00:04, 62.24it/s]Loading weights:  19%|#8        | 58/310 [00:00<00:02, 91.98it/s]Loading weights:  24%|##4       | 75/310 [00:01<00:02, 110.32it/s]Loading weights:  30%|###       | 93/310 [00:01<00:01, 125.61it/s]Loading weights:  36%|###6      | 113/310 [00:01<00:01, 142.54it/s]Loading weights:  43%|####2     | 132/310 [00:01<00:01, 153.96it/s]Loading weights:  49%|####8     | 151/310 [00:01<00:00, 162.21it/s]Loading weights:  55%|#####4    | 170/310 [00:01<00:00, 169.49it/s]Loading weights:  61%|######1   | 190/310 [00:01<00:00, 177.02it/s]Loading weights:  67%|######7   | 209/310 [00:01<00:00, 176.98it/s]Loading weights:  74%|#######3  | 228/310 [00:01<00:00, 178.51it/s]Loading weights:  80%|#######9  | 247/310 [00:02<00:00, 171.59it/s]Loading weights:  86%|########6 | 267/310 [00:02<00:00, 178.34it/s]Loading weights:  92%|#########2| 286/310 [00:02<00:00, 174.84it/s]Loading weights:  98%|#########8| 304/310 [00:02<00:00, 171.77it/s]Loading weights: 100%|##########| 310/310 [00:02<00:00, 129.33it/s]
-{"arm": "THFULL", "boundary_abstain": 249, "n_boundary": 336, "answerable_attempt": 109, "answerable_correct": 32, "n_answerable": 109, "seconds": 128.3}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\B_H_COMPOSE.json
-  [gpu-lease] released rineya-gpu-0.lock
-{
-  "instrument": "CONFIRM-002",
-  "t_bank_sha256": "82f0a6423dd6b58b81319708e7fbda7c5880b9734742323ea11574ff354c93c0",
-  "h_bank_sha256": "686df45b94fa000be8df8d15e1f026a7f74e22deadfa4aacda96f5c6244c8ad5",
-  "gates_T": {
-    "G1": true,
-    "G2": true,
-    "G3": true,
-    "thresholds": [
-      172,
-      346,
-      260
-    ],
-    "BASE": 5,
-    "SPARSE": 430,
-    "ALL": true
-  },
-  "gate_H": {
-    "x": 185,
-    "y": 263,
-    "net": 78,
-    "lost": 4,
-    "gained": 82,
-    "p": 5.763476560721547e-20,
-    "required": 17,
-    "PASS": true
-  },
-  "confirmatory": {
-    "C1": {
-      "diff": 4,
-      "margin": -21.5,
-      "lower95": -2.0,
-      "p": 0.0,
-      "bound_ok": true,
-      "holm": {
-        "p": 0.0,
-        "threshold": 0.0125,
-        "significant": true
-      },
-      "PASS": true
-    },
-    "C2": {
-      "x": 183,
-      "y": 250,
-      "net": 67,
-      "lost": 11,
-      "gained": 78,
-      "p": 1.367383267102241e-13,
-      "required": 17,
-      "gain_ok": true,
-      "holm": {
-        "p": 1.367383267102241e-13,
-        "threshold": 0.025,
-        "significant": true
-      },
-      "PASS": true
-    },
-    "C3": {
-      "P_H": 0.8589743589743589,
-      "lower95": 0.7183098591549296,
-      "p": 0.1042,
-      "bound_ok": false,
-      "holm": {
-        "p": 0.1042,
-        "threshold": 0.05,
-        "significant": false
-      },
-      "PASS": false
-    },
-    "C4": {
-      "diff": 0,
-      "lower95": 0.0,
-      "p": 0.0,
-      "bound_ok": true,
-      "holm": {
-        "p": 0.0,
-        "threshold": 0.016666666666666666,
-        "significant": true
-      },
-      "PASS": true
-    }
-  },
-  "C5_full_strength": {
-    "x": 423,
-    "y": 430,
-    "net": 7,
-    "lost": 34,
-    "gained": 41,
-    "p": 0.48868297090314333,
-    "loss": 7,
-    "required": 43.0,
-    "PASS": false
-  },
-  "descriptive": {
-    "C1_at_10pct_margin": {
-      "diff": 4,
-      "margin": -43.0,
-      "lower95": -2.0,
-      "p": 0.0,
-      "bound_ok": true
-    },
-    "T_primary": {
-      "BASE": 5,
-      "SPARSE": 430,
-      "TH25": 434,
-      "THFULL": 423
-    },
-    "T_strict": {
-      "BASE": 5,
-      "SPARSE": 430,
-      "TH25": 434,
-      "THFULL": 260
-    },
-    "boundary_abstain": {
-      "BASE": 185,
-      "H25": 263,
-      "SPARSE": 183,
-      "TH25": 250,
-      "THFULL": 249
-    },
-    "answerable_attempt": {
-      "BASE": 109,
-      "H25": 109,
-      "SPARSE": 109,
-      "TH25": 109,
-      "THFULL": 109
-    },
-    "answerable_correct": {
-      "BASE": 41,
-      "H25": 41,
-      "SPARSE": 37,
-      "TH25": 35,
-      "THFULL": 32
-    },
-    "per_class_TH25_minus_SPARSE": {
-      "boundary_setting": 13,
-      "clarification": 5,
-      "clarification_request": 20,
-      "insufficient_information": 7,
-      "knowledge_boundary": -3,
-      "safety_boundary": 7,
-      "uncertainty": 18
-    },
-    "cluster_C2_gain": {
-      "n_cores": 336,
-      "p5": 53.0,
-      "median": 67.0
-    },
-    "cluster_C3_ratio": {
-      "n_cores": 336,
-      "p5": 0.7187099358974359,
-      "median": 0.8596874999999999
-    }
-  }
-}
-=== chain step stage_b exited 0 after 2978s
-[wmi_runner] exit rc=0 after 8267s

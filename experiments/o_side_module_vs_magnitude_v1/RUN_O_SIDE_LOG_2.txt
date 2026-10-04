@@ -1,89 +1,0 @@
-[wmi_runner] start 2026-09-25 19:21:13 target=C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\run_o_side.py
-  [gpu-lease] acquired rineya-gpu-0.lock label=oside-001 token=cbdda825
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u -B C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\score_o_tokens.py --arm BASE --model-dir C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\titan_opallo_skill_vector_v1\arms\BASE --expect-sha 75b0a92cd28eb90d121d72aa7618c497a6ff1b4522b73bdf01cabf515c30ad93 --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\scores\BASE.json
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<01:27,  3.54it/s]Loading weights:  15%|#5        | 47/310 [00:00<00:01, 156.26it/s]Loading weights:  29%|##9       | 91/310 [00:00<00:00, 244.04it/s]Loading weights:  43%|####3     | 134/310 [00:00<00:00, 301.58it/s]Loading weights:  57%|#####6    | 176/310 [00:00<00:00, 335.52it/s]Loading weights:  70%|#######   | 217/310 [00:00<00:00, 357.23it/s]Loading weights:  83%|########3 | 258/310 [00:00<00:00, 367.14it/s]Loading weights:  97%|#########6| 300/310 [00:00<00:00, 381.35it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 303.51it/s]
-{"arm": "BASE", "rows": 1000, "seconds": 56.9}
-{"arm": "BASE", "rows": 2000, "seconds": 113.4}
-{"arm": "BASE", "rows": 3000, "seconds": 165.2}
-{"arm": "BASE", "rows": 4000, "seconds": 223.0}
-{"arm": "BASE", "rows": 5000, "seconds": 279.5}
-{"arm": "BASE", "rows": 6000, "seconds": 344.6}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\scores\BASE.json (6741 rows, 397.4 s)
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u -B C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\score_o_tokens.py --arm OPALLO --model-dir C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\titan_opallo_skill_vector_v1\arms\OPALLO --expect-sha 5ff1c9a5cf3674ace09eaf33bfc21431ea63718cff3cbf5b52701fd3de1416f8 --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\scores\OPALLO.json
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<01:30,  3.40it/s]Loading weights:  12%|#2        | 38/310 [00:00<00:02, 123.32it/s]Loading weights:  26%|##5       | 80/310 [00:00<00:01, 214.17it/s]Loading weights:  37%|###6      | 114/310 [00:00<00:00, 252.36it/s]Loading weights:  48%|####7     | 148/310 [00:00<00:00, 275.80it/s]Loading weights:  59%|#####9    | 184/310 [00:00<00:00, 300.33it/s]Loading weights:  70%|#######   | 218/310 [00:00<00:00, 310.79it/s]Loading weights:  82%|########1 | 253/310 [00:01<00:00, 322.37it/s]Loading weights:  93%|#########3| 289/310 [00:01<00:00, 329.97it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 266.14it/s]
-{"arm": "OPALLO", "rows": 1000, "seconds": 73.3}
-{"arm": "OPALLO", "rows": 2000, "seconds": 135.8}
-{"arm": "OPALLO", "rows": 3000, "seconds": 206.4}
-{"arm": "OPALLO", "rows": 4000, "seconds": 302.9}
-{"arm": "OPALLO", "rows": 5000, "seconds": 362.5}
-{"arm": "OPALLO", "rows": 6000, "seconds": 417.7}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\scores\OPALLO.json (6741 rows, 470.8 s)
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u -B C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\analyse_o_side.py --canary-only BASE OPALLO
-{
-  "provenance": {
-    "arms": {
-      "BASE": {
-        "problems": [],
-        "PASS": true
-      },
-      "OPALLO": {
-        "problems": [],
-        "PASS": true
-      }
-    },
-    "devices": [
-      "NVIDIA GeForce RTX 4070 Laptop GPU"
-    ],
-    "one_device": true,
-    "PASS": true
-  },
-  "tolerance": 1e-05,
-  "arms": {
-    "BASE": {
-      "rows_compared": 6741,
-      "ids_equal": true,
-      "token_count_mismatches": 0,
-      "rows_with_nonfinite_nll": 0,
-      "max_abs_diff_vs_recorded": 0.0,
-      "max_abs_internal_mean_diff": 1.1126200352151727e-06,
-      "PASS": true
-    },
-    "OPALLO": {
-      "rows_compared": 6741,
-      "ids_equal": true,
-      "token_count_mismatches": 0,
-      "rows_with_nonfinite_nll": 0,
-      "max_abs_diff_vs_recorded": 0.0,
-      "max_abs_internal_mean_diff": 7.549921674510074e-07,
-      "PASS": true
-    }
-  },
-  "PASS": true
-}
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u -B C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\score_o_tokens.py --arm OPALLO-BF16 --model-dir C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\titan_opallo_skill_vector_v1\arms\OPALLO --expect-sha 5ff1c9a5cf3674ace09eaf33bfc21431ea63718cff3cbf5b52701fd3de1416f8 --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\scores\OPALLO-BF16.json --cast-bf16
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:48,  1.36it/s]Loading weights:   4%|3         | 12/310 [00:00<00:15, 18.87it/s]Loading weights:   6%|6         | 20/310 [00:00<00:09, 30.04it/s]Loading weights:  11%|#         | 33/310 [00:01<00:05, 50.01it/s]Loading weights:  14%|#4        | 44/310 [00:01<00:04, 62.99it/s]Loading weights:  18%|#7        | 55/310 [00:01<00:03, 72.14it/s]Loading weights:  22%|##1       | 67/310 [00:01<00:02, 82.73it/s]Loading weights:  26%|##5       | 80/310 [00:01<00:02, 92.71it/s]Loading weights:  29%|##9       | 91/310 [00:01<00:02, 95.94it/s]Loading weights:  33%|###3      | 103/310 [00:01<00:02, 98.71it/s]Loading weights:  37%|###6      | 114/310 [00:01<00:01, 101.45it/s]Loading weights:  40%|####      | 125/310 [00:01<00:01, 100.73it/s]Loading weights:  44%|####3     | 136/310 [00:02<00:01, 101.44it/s]Loading weights:  47%|####7     | 147/310 [00:02<00:01, 103.09it/s]Loading weights:  51%|#####1    | 159/310 [00:02<00:01, 102.66it/s]Loading weights:  56%|#####5    | 173/310 [00:02<00:01, 112.73it/s]Loading weights:  60%|#####9    | 185/310 [00:02<00:01, 106.47it/s]Loading weights:  63%|######3   | 196/310 [00:02<00:01, 104.52it/s]Loading weights:  67%|######7   | 209/310 [00:02<00:00, 108.87it/s]Loading weights:  71%|#######   | 220/310 [00:02<00:00, 103.65it/s]Loading weights:  75%|#######4  | 231/310 [00:02<00:00, 103.33it/s]Loading weights:  78%|#######8  | 243/310 [00:03<00:00, 105.87it/s]Loading weights:  82%|########1 | 254/310 [00:03<00:00, 104.43it/s]Loading weights:  85%|########5 | 265/310 [00:03<00:00, 105.40it/s]Loading weights:  89%|########9 | 276/310 [00:03<00:00, 106.17it/s]Loading weights:  93%|#########3| 289/310 [00:03<00:00, 108.12it/s]Loading weights:  97%|#########6| 300/310 [00:03<00:00, 107.87it/s]Loading weights: 100%|##########| 310/310 [00:03<00:00, 84.81it/s] 
-{"arm": "OPALLO-BF16", "rows": 1000, "seconds": 75.0}
-{"arm": "OPALLO-BF16", "rows": 2000, "seconds": 150.6}
-{"arm": "OPALLO-BF16", "rows": 3000, "seconds": 211.5}
-{"arm": "OPALLO-BF16", "rows": 4000, "seconds": 270.7}
-{"arm": "OPALLO-BF16", "rows": 5000, "seconds": 323.7}
-{"arm": "OPALLO-BF16", "rows": 6000, "seconds": 376.2}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\scores\OPALLO-BF16.json (6741 rows, 415.4 s)
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u -B C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\score_o_tokens.py --arm SPARSE --model-dir C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\titan_opallo_skill_vector_v1\arms\SPARSE --expect-sha 6ae85f5bdab9437edc06b20716e6e7008d8aa402ec95a0a65ebc7bf8da1e94ed --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\scores\SPARSE.json
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<01:29,  3.45it/s]Loading weights:  12%|#2        | 38/310 [00:00<00:02, 123.74it/s]Loading weights:  26%|##5       | 80/310 [00:00<00:01, 214.53it/s]Loading weights:  37%|###7      | 116/310 [00:00<00:00, 259.19it/s]Loading weights:  49%|####9     | 152/310 [00:00<00:00, 287.99it/s]Loading weights:  62%|######1   | 191/310 [00:00<00:00, 315.67it/s]Loading weights:  74%|#######3  | 229/310 [00:00<00:00, 334.78it/s]Loading weights:  85%|########5 | 265/310 [00:01<00:00, 342.15it/s]Loading weights:  97%|#########7| 301/310 [00:01<00:00, 277.97it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 257.17it/s]
-{"arm": "SPARSE", "rows": 1000, "seconds": 55.1}
-{"arm": "SPARSE", "rows": 2000, "seconds": 107.1}
-{"arm": "SPARSE", "rows": 3000, "seconds": 158.9}
-{"arm": "SPARSE", "rows": 4000, "seconds": 212.6}
-{"arm": "SPARSE", "rows": 5000, "seconds": 266.4}
-{"arm": "SPARSE", "rows": 6000, "seconds": 318.2}
-wrote C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\scores\SPARSE.json (6741 rows, 357.4 s)
-  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u -B C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\score_o_tokens.py --arm ADD-100 --model-dir C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\titan_opallo_skill_vector_v1\arms\ADD-100 --expect-sha 95a7576725721e8143c1be8b21448326d6d87dc69087da39ea378c47fadf0d5b --output C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\o_side_module_vs_magnitude_v1\scores\ADD-100.json
-[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<01:28,  3.48it/s]Loading weights:  12%|#2        | 38/310 [00:00<00:02, 124.98it/s]Loading weights:  25%|##5       | 78/310 [00:00<00:01, 212.73it/s]Loading weights:  39%|###9      | 122/310 [00:00<00:00, 281.90it/s]Loading weights:  53%|#####2    | 163/310 [00:00<00:00, 320.05it/s]Loading weights:  66%|######6   | 206/310 [00:00<00:00, 353.24it/s]Loading weights:  79%|#######9  | 246/310 [00:00<00:00, 366.98it/s]Loading weights:  92%|#########2| 286/310 [00:01<00:00, 362.12it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 288.84it/s]
-{"arm": "ADD-100", "rows": 1000, "seconds": 54.5}
-{"arm": "ADD-100", "rows": 2000, "seconds": 109.4}

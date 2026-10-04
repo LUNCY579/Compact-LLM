@@ -1,1 +1,0 @@
-"""JLR qualification tests."""
