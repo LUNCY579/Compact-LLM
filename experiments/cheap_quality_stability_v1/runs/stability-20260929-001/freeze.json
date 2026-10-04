@@ -1,0 +1,471 @@
+{
+  "schema": 1,
+  "phase": "before_scoring",
+  "created_utc": "2026-09-29T23:27:18.479874+00:00",
+  "inputs": {
+    "monitor": {
+      "path": "experiments/architecture_benchmark_001/data/monitor_probe.jsonl",
+      "sha256": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266",
+      "bytes": 129415,
+      "expected_sha256": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266"
+    },
+    "audit": {
+      "path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/PROBE_LABEL_AUDIT.json",
+      "sha256": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7",
+      "bytes": 308132,
+      "expected_sha256": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7"
+    },
+    "scorer": {
+      "path": "experiments/architecture_benchmark_001/retention.py",
+      "sha256": "c52b6a48cb811e3c272793a66765e82152fe170e8307eea153c3b1b6c5c58322",
+      "bytes": 33056,
+      "expected_sha256": "c52b6a48cb811e3c272793a66765e82152fe170e8307eea153c3b1b6c5c58322"
+    },
+    "contract": {
+      "path": "experiments/architecture_benchmark_001/TYPED_SCORING_CONTRACT.md",
+      "sha256": "871d3bb860be27ff64bb613cccd51349b080412573c6517a64dee181389cedc5",
+      "bytes": 9615,
+      "expected_sha256": "871d3bb860be27ff64bb613cccd51349b080412573c6517a64dee181389cedc5"
+    },
+    "seed17": {
+      "path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json",
+      "sha256": "65e7977600d3e74526a2514c12b135fb47e8f3e63d086c947dcdc314e1caa619",
+      "bytes": 125627,
+      "expected_sha256": "65e7977600d3e74526a2514c12b135fb47e8f3e63d086c947dcdc314e1caa619"
+    },
+    "seed23": {
+      "path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed23_wsd0.2-0.2_b20.95.json",
+      "sha256": "019e9c7820ec91f266878fcffda1249946dcec5a7c403880e0c7dd0277a0063d",
+      "bytes": 125473,
+      "expected_sha256": "019e9c7820ec91f266878fcffda1249946dcec5a7c403880e0c7dd0277a0063d"
+    },
+    "seed29": {
+      "path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed29_wsd0.2-0.2_b20.95.json",
+      "sha256": "c96aef914eba67e9345f6e732609e3fc2c0359253fde4064d2718c447ba63b1b",
+      "bytes": 123845,
+      "expected_sha256": "c96aef914eba67e9345f6e732609e3fc2c0359253fde4064d2718c447ba63b1b"
+    },
+    "seed41": {
+      "path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed41_wsd0.2-0.2_b20.95.json",
+      "sha256": "2a9e092d83c6535ca68014d887f3fa0ae14c13ef463041ebc5acb038bdcca25d",
+      "bytes": 124399,
+      "expected_sha256": "2a9e092d83c6535ca68014d887f3fa0ae14c13ef463041ebc5acb038bdcca25d"
+    }
+  },
+  "implementation": {
+    "experiments/cheap_quality_stability_v1/.gitignore": "ccf58e28fccde6c0c37d6abe83e98be8db118e70e1d82214ccaceca4bcac7931",
+    "experiments/cheap_quality_stability_v1/analyze.py": "35ebb618d8f4dcfbb7608ad8bc093fb3ff8ced8382ddf198e06c152df21674ee",
+    "experiments/cheap_quality_stability_v1/config.json": "37c99f57150625fcd19dc9fe336139d9908784b224e5a1012d0aadf8f4855aaf",
+    "experiments/cheap_quality_stability_v1/PROTOCOL.md": "ab88c67252166b78235a83e651fd525977e62fec48a5c53bbda3bcfb0d2da915",
+    "experiments/cheap_quality_stability_v1/README.md": "2b3e4e6aad86088981899cde13ffd0e33adc896a563f20e3d780e88ee1ed78ce",
+    "experiments/cheap_quality_stability_v1/tests/test_analysis.py": "422f993d4d5d1473952c494ca9acafd09f2dfb5aae2f33bfb804094bc1528e5c"
+  },
+  "config": {
+    "schema": 1,
+    "experiment": "cheap_quality_stability_v1",
+    "expected_rows": 150,
+    "seeds": [
+      17,
+      23,
+      29,
+      41
+    ],
+    "policies": [
+      "permissive",
+      "strict"
+    ],
+    "resource_budget": {
+      "tree_rss_mib": 512,
+      "wall_seconds": 900,
+      "output_mib": 50,
+      "max_input_mib": 4
+    },
+    "expected_recipe": {
+      "arm": "B28last20",
+      "mode": "B28",
+      "block_tail": 20,
+      "lr": 1e-05,
+      "token_budget": 5200,
+      "beta2": 0.95,
+      "schedule_spec": "wsd:0.2:0.2",
+      "parameters": 596049920,
+      "trainable_parameters": 314618880,
+      "train_device": "cuda",
+      "probe_device": "cpu",
+      "completed": true,
+      "aborted_reason": null,
+      "device_integrity_control_passed": true,
+      "registered_bare_policy": "permissive"
+    },
+    "expected_source_assets": {
+      "model.safetensors": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+      "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+      "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+    },
+    "inputs": {
+      "monitor": {
+        "path": "experiments/architecture_benchmark_001/data/monitor_probe.jsonl",
+        "sha256": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266"
+      },
+      "audit": {
+        "path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/PROBE_LABEL_AUDIT.json",
+        "sha256": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7"
+      },
+      "scorer": {
+        "path": "experiments/architecture_benchmark_001/retention.py",
+        "sha256": "c52b6a48cb811e3c272793a66765e82152fe170e8307eea153c3b1b6c5c58322"
+      },
+      "contract": {
+        "path": "experiments/architecture_benchmark_001/TYPED_SCORING_CONTRACT.md",
+        "sha256": "871d3bb860be27ff64bb613cccd51349b080412573c6517a64dee181389cedc5"
+      },
+      "seed17": {
+        "path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json",
+        "sha256": "65e7977600d3e74526a2514c12b135fb47e8f3e63d086c947dcdc314e1caa619"
+      },
+      "seed23": {
+        "path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed23_wsd0.2-0.2_b20.95.json",
+        "sha256": "019e9c7820ec91f266878fcffda1249946dcec5a7c403880e0c7dd0277a0063d"
+      },
+      "seed29": {
+        "path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed29_wsd0.2-0.2_b20.95.json",
+        "sha256": "c96aef914eba67e9345f6e732609e3fc2c0359253fde4064d2718c447ba63b1b"
+      },
+      "seed41": {
+        "path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed41_wsd0.2-0.2_b20.95.json",
+        "sha256": "2a9e092d83c6535ca68014d887f3fa0ae14c13ef463041ebc5acb038bdcca25d"
+      }
+    }
+  },
+  "runtime": {
+    "executable": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "python": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "stdlib_only": true,
+    "argv": [
+      "experiments/cheap_quality_stability_v1/analyze.py",
+      "--output",
+      "experiments/cheap_quality_stability_v1/runs/stability-20260929-001"
+    ],
+    "working_directory": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-stability\\ChatBubble-rvs001"
+  },
+  "historical_identities": {
+    "17": {
+      "canonical_tag": "B28last20_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95",
+      "source_assets_sha256": {
+        "model.safetensors": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+        "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+        "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+        "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+        "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      },
+      "source_weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "data_sha256": {
+        "train": "cd57e650ee0bedf7c973e2a365a6a387f504094bffc23faa65b3c46ccecad34c",
+        "dev": "14bcd079363990c130063e66660097ab95888e69eeaf3d1ea68af6e18561d3f9",
+        "monitor_probe": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266",
+        "probe_label_audit": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7"
+      },
+      "reference_receipt": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\retention-a329eb7b\\B28\\retention.json",
+      "reference_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+      "exploration_harness_sha256": "1e8119bb9e06a56f0905899f9044b13bf009c5ee8f4de797e42c374d75896948",
+      "optimizer_harness_sha256": "1c6c50012e40fec55874b68dc27f5013824588ae5460d8e3929cd0f4b8caa544",
+      "optimizer_storage_harness_sha256": null,
+      "run_directory": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\arm-runs\\B28last20_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95_20260914T025105210772Z",
+      "checkpoint": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\arm-checkpoints\\B28last20_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95",
+        "tensors": 220,
+        "parameters": 314618880,
+        "bytes": 1258497624,
+        "sha256": "915af77f4ad2a1813df46a5b5a65b9dddd138b820e2e9e53ad8845bdf8d0db0d",
+        "dtype": "float32",
+        "saved_after_steps": 41,
+        "saved_after_tokens": 5233,
+        "complete_model": false,
+        "source_weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+        "source_assets_sha256": {
+          "model.safetensors": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+          "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+          "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+          "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+          "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+          "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        },
+        "implementation_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+        "save_backend": "bounded_fp32_parameter_chunks_v1",
+        "save_max_chunk_elements": 262144,
+        "checkpoint_serialization_sha256": "e90a974c9f810a3afcf6c148fa301c65b63c097c6a7434c53b2ed140d657fa2f",
+        "reconstruct": {
+          "source": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\Supa",
+          "mode": "B28",
+          "read_tail": null,
+          "block_tail": 20,
+          "builder": "run._load(source)",
+          "then": "load trainable.safetensors and copy_ each tensor by name"
+        },
+        "soup_key": {
+          "mode": "B28",
+          "read_tail": null,
+          "block_tail": 20,
+          "source_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+          "tensor_names_sha256": "21e620aa813faed45db8c2917a352559109f337d4721fd87e246e08a08a98c6d"
+        }
+      },
+      "numerics": {
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": false,
+        "float32_matmul_precision": "highest"
+      },
+      "schedule_spec": "wsd:0.2:0.2",
+      "optimizer": "AdamW(offloaded) lr=1e-05 wd=0 clip=1.0 micro_batch=1 betas=(0.9,0.95) eps=1e-8",
+      "train_device": "cuda",
+      "probe_device": "cpu",
+      "supervised_target_tokens": 5233,
+      "optimizer_steps": 41,
+      "train_rows_consumed": 41,
+      "train_row_ids_sha256": "13b008ec63ee36836aa6a521897ac5081b2972efb289ce6439b9b4daef9bc9c6"
+    },
+    "23": {
+      "canonical_tag": "B28last20_lr1e-05_b5200_seed23_wsd0.2-0.2_b20.95",
+      "source_assets_sha256": {
+        "model.safetensors": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+        "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+        "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+        "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+        "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      },
+      "source_weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "data_sha256": {
+        "train": "cd57e650ee0bedf7c973e2a365a6a387f504094bffc23faa65b3c46ccecad34c",
+        "dev": "14bcd079363990c130063e66660097ab95888e69eeaf3d1ea68af6e18561d3f9",
+        "monitor_probe": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266",
+        "probe_label_audit": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7"
+      },
+      "reference_receipt": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\retention-a329eb7b\\B28\\retention.json",
+      "reference_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+      "exploration_harness_sha256": "49b8ff3abbb6648eb33cb364747d13c65990a13bd684552f484d0e2ed628ce4f",
+      "optimizer_harness_sha256": "1c6c50012e40fec55874b68dc27f5013824588ae5460d8e3929cd0f4b8caa544",
+      "optimizer_storage_harness_sha256": null,
+      "run_directory": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\arm-runs\\B28last20_lr1e-05_b5200_seed23_wsd0.2-0.2_b20.95_20260914T060520105641Z",
+      "checkpoint": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\arm-checkpoints\\B28last20_lr1e-05_b5200_seed23_wsd0.2-0.2_b20.95",
+        "tensors": 220,
+        "parameters": 314618880,
+        "bytes": 1258497624,
+        "sha256": "22a69c163ad039720aa8d7ef22f2e23e238d8a9193d4672df75ca9023d091c5e",
+        "dtype": "float32",
+        "saved_after_steps": 40,
+        "saved_after_tokens": 5284,
+        "complete_model": false,
+        "source_weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+        "source_assets_sha256": {
+          "model.safetensors": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+          "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+          "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+          "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+          "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+          "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        },
+        "implementation_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+        "save_backend": "bounded_fp32_parameter_chunks_v1",
+        "save_max_chunk_elements": 262144,
+        "checkpoint_serialization_sha256": "e90a974c9f810a3afcf6c148fa301c65b63c097c6a7434c53b2ed140d657fa2f",
+        "reconstruct": {
+          "source": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\Supa",
+          "mode": "B28",
+          "read_tail": null,
+          "block_tail": 20,
+          "builder": "run._load(source)",
+          "then": "load trainable.safetensors and copy_ each tensor by name"
+        },
+        "soup_key": {
+          "mode": "B28",
+          "read_tail": null,
+          "block_tail": 20,
+          "source_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+          "tensor_names_sha256": "21e620aa813faed45db8c2917a352559109f337d4721fd87e246e08a08a98c6d"
+        }
+      },
+      "numerics": {
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": false,
+        "float32_matmul_precision": "highest"
+      },
+      "schedule_spec": "wsd:0.2:0.2",
+      "optimizer": "AdamW(offloaded) lr=1e-05 wd=0 clip=1.0 micro_batch=1 betas=(0.9,0.95) eps=1e-8",
+      "train_device": "cuda",
+      "probe_device": "cpu",
+      "supervised_target_tokens": 5284,
+      "optimizer_steps": 40,
+      "train_rows_consumed": 40,
+      "train_row_ids_sha256": "1d016ac289ebd741c4ed6ff6fb0d7c6601aaf6afbc9d53d017c03c06ea2bf1e5"
+    },
+    "29": {
+      "canonical_tag": "B28last20_lr1e-05_b5200_seed29_wsd0.2-0.2_b20.95",
+      "source_assets_sha256": {
+        "model.safetensors": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+        "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+        "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+        "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+        "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      },
+      "source_weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "data_sha256": {
+        "train": "cd57e650ee0bedf7c973e2a365a6a387f504094bffc23faa65b3c46ccecad34c",
+        "dev": "14bcd079363990c130063e66660097ab95888e69eeaf3d1ea68af6e18561d3f9",
+        "monitor_probe": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266",
+        "probe_label_audit": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7"
+      },
+      "reference_receipt": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\retention-a329eb7b\\B28\\retention.json",
+      "reference_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+      "exploration_harness_sha256": "49b8ff3abbb6648eb33cb364747d13c65990a13bd684552f484d0e2ed628ce4f",
+      "optimizer_harness_sha256": "1c6c50012e40fec55874b68dc27f5013824588ae5460d8e3929cd0f4b8caa544",
+      "optimizer_storage_harness_sha256": null,
+      "run_directory": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\arm-runs\\B28last20_lr1e-05_b5200_seed29_wsd0.2-0.2_b20.95_20260914T061050444908Z",
+      "checkpoint": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\arm-checkpoints\\B28last20_lr1e-05_b5200_seed29_wsd0.2-0.2_b20.95",
+        "tensors": 220,
+        "parameters": 314618880,
+        "bytes": 1258497624,
+        "sha256": "085ed7d8ff4e8466f79fb6dc9e6e0cb8cab969c8704ac98962b4280d5f71a216",
+        "dtype": "float32",
+        "saved_after_steps": 39,
+        "saved_after_tokens": 5259,
+        "complete_model": false,
+        "source_weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+        "source_assets_sha256": {
+          "model.safetensors": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+          "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+          "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+          "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+          "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+          "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        },
+        "implementation_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+        "save_backend": "bounded_fp32_parameter_chunks_v1",
+        "save_max_chunk_elements": 262144,
+        "checkpoint_serialization_sha256": "e90a974c9f810a3afcf6c148fa301c65b63c097c6a7434c53b2ed140d657fa2f",
+        "reconstruct": {
+          "source": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\Supa",
+          "mode": "B28",
+          "read_tail": null,
+          "block_tail": 20,
+          "builder": "run._load(source)",
+          "then": "load trainable.safetensors and copy_ each tensor by name"
+        },
+        "soup_key": {
+          "mode": "B28",
+          "read_tail": null,
+          "block_tail": 20,
+          "source_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+          "tensor_names_sha256": "21e620aa813faed45db8c2917a352559109f337d4721fd87e246e08a08a98c6d"
+        }
+      },
+      "numerics": {
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": false,
+        "float32_matmul_precision": "highest"
+      },
+      "schedule_spec": "wsd:0.2:0.2",
+      "optimizer": "AdamW(offloaded) lr=1e-05 wd=0 clip=1.0 micro_batch=1 betas=(0.9,0.95) eps=1e-8",
+      "train_device": "cuda",
+      "probe_device": "cpu",
+      "supervised_target_tokens": 5259,
+      "optimizer_steps": 39,
+      "train_rows_consumed": 39,
+      "train_row_ids_sha256": "7f4a88f26e6a01042b3ff461678704afd106000df93b8f4f977612fd834af1bc"
+    },
+    "41": {
+      "canonical_tag": "B28last20_lr1e-05_b5200_seed41_wsd0.2-0.2_b20.95",
+      "source_assets_sha256": {
+        "model.safetensors": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+        "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+        "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+        "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+        "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      },
+      "source_weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "data_sha256": {
+        "train": "cd57e650ee0bedf7c973e2a365a6a387f504094bffc23faa65b3c46ccecad34c",
+        "dev": "14bcd079363990c130063e66660097ab95888e69eeaf3d1ea68af6e18561d3f9",
+        "monitor_probe": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266",
+        "probe_label_audit": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7"
+      },
+      "reference_receipt": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\retention-a329eb7b\\B28\\retention.json",
+      "reference_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+      "exploration_harness_sha256": "49b8ff3abbb6648eb33cb364747d13c65990a13bd684552f484d0e2ed628ce4f",
+      "optimizer_harness_sha256": "1c6c50012e40fec55874b68dc27f5013824588ae5460d8e3929cd0f4b8caa544",
+      "optimizer_storage_harness_sha256": null,
+      "run_directory": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\arm-runs\\B28last20_lr1e-05_b5200_seed41_wsd0.2-0.2_b20.95_20260914T061716466081Z",
+      "checkpoint": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\arm-checkpoints\\B28last20_lr1e-05_b5200_seed41_wsd0.2-0.2_b20.95",
+        "tensors": 220,
+        "parameters": 314618880,
+        "bytes": 1258497624,
+        "sha256": "b9da8dbcbdcc58a1fe99491a9179c28aa7e84650230af29a205258c2ca1e9666",
+        "dtype": "float32",
+        "saved_after_steps": 39,
+        "saved_after_tokens": 5260,
+        "complete_model": false,
+        "source_weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+        "source_assets_sha256": {
+          "model.safetensors": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+          "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+          "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+          "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+          "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+          "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        },
+        "implementation_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+        "save_backend": "bounded_fp32_parameter_chunks_v1",
+        "save_max_chunk_elements": 262144,
+        "checkpoint_serialization_sha256": "e90a974c9f810a3afcf6c148fa301c65b63c097c6a7434c53b2ed140d657fa2f",
+        "reconstruct": {
+          "source": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\Supa",
+          "mode": "B28",
+          "read_tail": null,
+          "block_tail": 20,
+          "builder": "run._load(source)",
+          "then": "load trainable.safetensors and copy_ each tensor by name"
+        },
+        "soup_key": {
+          "mode": "B28",
+          "read_tail": null,
+          "block_tail": 20,
+          "source_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+          "tensor_names_sha256": "21e620aa813faed45db8c2917a352559109f337d4721fd87e246e08a08a98c6d"
+        }
+      },
+      "numerics": {
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": false,
+        "float32_matmul_precision": "highest"
+      },
+      "schedule_spec": "wsd:0.2:0.2",
+      "optimizer": "AdamW(offloaded) lr=1e-05 wd=0 clip=1.0 micro_batch=1 betas=(0.9,0.95) eps=1e-8",
+      "train_device": "cuda",
+      "probe_device": "cpu",
+      "supervised_target_tokens": 5260,
+      "optimizer_steps": 39,
+      "train_rows_consumed": 39,
+      "train_row_ids_sha256": "38e1f1af8863d7b1bbd7a9e772673850ac7d9db79cdcb921daea63af4cf639d8"
+    }
+  },
+  "resource_measurement": "external hardware supervisor required; local guards cover elapsed time and output size"
+}

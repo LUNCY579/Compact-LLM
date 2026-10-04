@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "title": "Bounded Rineya overnight resource and dataset readiness watch",
+  "created_utc": "2026-09-30T05:56:31.000Z",
+  "deadline_utc": "2026-09-30T13:56:31.000Z",
+  "cadence_minutes": 30,
+  "max_wakes": 16,
+  "timezone": "America/Chicago",
+  "latest_observed": {
+    "utc": "2026-09-30T05:30:26.0808512Z",
+    "host_available_bytes": 1096278016,
+    "host_available_gib": 1.021,
+    "gpu_free_mib": 6931
+  },
+  "authority": "User delegated dataset selection, continued hardware monitoring and useful unattended work. Original exact-Titan inference-only pilot authorization remains bounded by its freeze. No training path is currently qualified.",
+  "read_only_vault": "C:/Users/clclc/BusinessProject/Rineya-Dataset",
+  "outputs_root": "C:/Users/clclc/.codex/worktrees/rineya-quality-stability/ChatBubble-rvs001/research/cheap_quality_campaign_20260929/runs/overnight-20260930",
+  "cpu_admission": {
+    "new_worktree_checkout_host_free_gib": 3,
+    "worker_start_host_free_gib": 2,
+    "ongoing_host_free_gib": 1.5,
+    "tree_rss_mib": 512,
+    "wall_seconds": 900,
+    "output_mib": 50,
+    "disk_free_gib": 4,
+    "workers": 1
+  },
+  "dataset_action": {
+    "study": "DATA-ADMISSION-001",
+    "different_experiment_requires_new_worktree": true,
+    "ref": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+    "worktree_name": "rineya-dataset-admission",
+    "branch_prefix": "codex/",
+    "once_only": true,
+    "training_parents_max_per_bundle": 128,
+    "rows_scanned_max_total": 100000,
+    "tokenizer_only_allowed_when_cpu_admitted": true,
+    "priorities": [
+      {
+        "bundle": "instruction_following_v1",
+        "use": "First short SFT eligibility/serializer audit",
+        "declared_train_rows": 18000,
+        "declared_train_empty_targets": 657,
+        "issues": [
+          "exact whitespace",
+          "EOS-only targets",
+          "local licence grant unestablished",
+          "independent ambiguity review and native qualification pending"
+        ]
+      },
+      {
+        "bundle": "grounded_answering_bundle",
+        "use": "First short grounding/RVS adapter eligibility audit",
+        "declared_train_rows": 30000,
+        "issues": [
+          "shared latent-fact oracle",
+          "human_reviewed false",
+          "licence grant unestablished",
+          "custom raw-text scorer needed"
+        ]
+      },
+      {
+        "bundle": "Rineya_SkillFoundry_v1",
+        "use": "Licence-cleared alternative small state pilot after token/recipe review",
+        "declared_pilot_parents": 512,
+        "issues": [
+          "human review PENDING",
+          "native adapter explicitly excludes LoRA/PEFT",
+          "native fit unqualified"
+        ]
+      }
+    ],
+    "boundaries": [
+      "TRAIN only for candidate audit/export; no TEST/CHECK/FINAL/sealed payload",
+      "complete counterfactual parent groups",
+      "no oracle/rule plan/gold/metadata in public prompts",
+      "no silent whitespace stripping, target conversion, empty-target dropping or truncation",
+      "source vault immutable",
+      "report declared vs newly verified",
+      "no claimed trained intelligence or human approval"
+    ]
+  },
+  "native_action": {
+    "original_worktree": "C:/Users/clclc/BusinessProject/ChatBubble-rvs001",
+    "expected_head": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+    "interpreter": "C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe",
+    "model": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Titan-Experimental-1.0.0-devfreeze",
+    "base": "experiments/rineya_verified_resampling_v1/runs/pilot-validation-20260929/titan",
+    "study_id": "0d55427b86492457eb9eea1656daf95b3cd1e9b6ad1de32af725d5a1739c95c6",
+    "purpose": "Measure frozen-model coverage/selection, not train or claim stronger weights",
+    "additional_conservative_preimport_trigger": {
+      "host_free_gib": 8.5,
+      "gpu_free_gib": 4.5
+    },
+    "unchanged_guards": {
+      "postimport_host_free_gib": 7.4,
+      "running_host_free_gib": 6,
+      "gpu_admission_gib": 4,
+      "running_gpu_headroom_gib": 0.5,
+      "disk_free_gib": 4,
+      "tree_rss_gib": 4,
+      "segment_seconds": 1800,
+      "total_collection_seconds": 21600,
+      "generated_token_reservation": 278528
+    },
+    "qualification_launches_max": 1,
+    "require": "PASS_NATIVE_INFERENCE_ONLY",
+    "smoke_attempts": 32,
+    "later_attempts_max_per_wake": 256,
+    "one_shared_lock": true,
+    "collection_policy": "one foreground supervised operation at a time; every ≤128-attempt segment retains 30-minute watchdog; source/runtime/host drift or any nonzero/block stops native work, no automatic retry or interrupted-attempt abandonment",
+    "deadline_policy": "qualification/smoke need≥40minutes remaining;≤256 collection attempt invocation needs≥70minutes remaining; do not exceed frozen six-hour collection ceiling or launch late; retain/evaluate mechanically valid partial banks with isolated oracle, never tune from answers",
+    "no_new_dataset_substitution": true
+  },
+  "future_weight_update_direction": {
+    "method": "GPU-resident small LoRA; frozen BF16 base, GPU optimizer states, no CPU optimizer/parameter offload",
+    "status": "PROPOSED_NOT_QUALIFIED_NOT_LAUNCHED",
+    "reason": "VRAM-only training is impossible; host imports/loading/control still need RAM. Current data/serializer/trainer gates unmet."
+  },
+  "stop_rules": [
+    "deadline reached",
+    "native failure/drift",
+    "valid complete RVS report plus dataset readiness report finished"
+  ],
+  "notification_rule": "quiet for unchanged/nonactionable memory; notify meaningful completion/failure/required action only",
+  "forbidden": [
+    "unrelated process termination",
+    "guard lowering",
+    "environment replacement/package installs",
+    "model downloads",
+    "paid cloud/teacher calls",
+    "training/RSD/EFE/promotion/protected data access",
+    "modifying original checkout/source weights/sibling worktrees/data vault",
+    "silently restarting live or failed work"
+  ]
+}
