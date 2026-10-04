@@ -129,8 +129,8 @@ class DeadlineSafety:
             self.intervened = True
             if self.job is not None:
                 try:
-                    self.job.kernel.record({'event': 'uncredited_outer_deadline_safety_termination'})
                     self.job.terminate()
+                    self.job.kernel.record({'event': 'uncredited_outer_deadline_safety_termination'})
                 except BaseException as error:
                     self.errors.append(type(error).__name__ + ': ' + str(error))
 
