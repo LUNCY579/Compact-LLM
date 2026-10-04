@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\clclc\Documents\Codex\2026-10-01\task\ChatBubble-mimo-suspended-job\experiments\post_training_mimo_centralized_v1\scripts\qualify_suspended_job_cpu.py", line 574, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\Users\clclc\Documents\Codex\2026-10-01\task\ChatBubble-mimo-suspended-job\experiments\post_training_mimo_centralized_v1\scripts\qualify_suspended_job_cpu.py", line 570, in main
+    return controller(args) if args.controller else (worker(args) if args.worker else dummy(args))
+                                                     ^^^^^^^^^^^^
+  File "C:\Users\clclc\Documents\Codex\2026-10-01\task\ChatBubble-mimo-suspended-job\experiments\post_training_mimo_centralized_v1\scripts\qualify_suspended_job_cpu.py", line 294, in worker
+    publish_go(directory, 'DUMMY_GO.json', args.token, ready['identity'], sources(), kernel, job, go['source_sha'])
+  File "C:\Users\clclc\Documents\Codex\2026-10-01\task\ChatBubble-mimo-suspended-job\experiments\post_training_mimo_centralized_v1\scripts\qualify_suspended_job_cpu.py", line 205, in publish_go
+    'job_handle': int(job_handle), 'source_sha': source_sha})
+                  ^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: b'h\x02\x00\x00\x00\x00\x00\x00'
