@@ -1,0 +1,30 @@
+{
+  "change": "Release consumed output/loss locals immediately after successful backward, before next forward/clip/checkpoint; retain checked scalar losses.",
+  "focused_tests": {
+    "count": 14,
+    "errors": 0,
+    "failures": 0,
+    "seconds": 14.116,
+    "skips": 0
+  },
+  "model_framework_GPU_calls": 0,
+  "native_resource_fit_measured": false,
+  "native_resume_qualified": false,
+  "negative_control": {
+    "diagnostic": "consumed forward graph still retained",
+    "expected_failure_detected": true,
+    "remove_cleanup_in_memory_only": true,
+    "source_file_modified": false,
+    "unexpected_errors": 0
+  },
+  "numerical_dose_resource_limits_changed": false,
+  "protected_bank_access": false,
+  "recorded_at_utc": "2026-10-04T23:10:28.001627+00:00",
+  "schema_version": 1,
+  "source_hashes": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_native_chunk.py": "96f361052c34750313731c1fad0fe07d5ed48d376ee59850370cfeae99f59047",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_study_native_chunk.py": "505c42ae619df1c2962d2fc41db6de63f0557afc97ef0ba0bca8dc37676bcba7"
+  },
+  "status": "CPU_CHUNK_TRANSIENT_LIFETIME_CONTROL_PASS_NATIVE_UNQUALIFIED",
+  "study_training_authorized": false
+}

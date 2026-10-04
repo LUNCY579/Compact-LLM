@@ -379,6 +379,9 @@ def run_chunk(registration, arm, chunk, backend, row_get, call, guard, preserve,
                 # CE was scalarized inside the backend's already journaled check.
                 losses.append(finite(backend.last_loss_check["ce"],"checked sequence loss"))
                 ledger.invoke("backward",lambda:backend.backward(loss,scale=.05))
+                # Release full logits and the consumed graph before the next
+                # forward or checkpoint; retain only the checked scalar loss.
+                del output, loss
             norm=finite(ledger.invoke("finite_gradient_clip",lambda:backend.finite_clip_gradients(max_norm=1.0)),"preclip norm")
             ledger.invoke("optimizer_step",lambda:backend.optimizer_step(lr=update["learning_rate"],update_ordinal=ordinal))
             result["completed_updates"]=ordinal

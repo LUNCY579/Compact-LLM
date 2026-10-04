@@ -10,6 +10,7 @@ import sys
 import tempfile
 import time
 import unittest
+import weakref
 from unittest.mock import patch
 
 PACKAGE=Path(__file__).resolve().parents[1]
@@ -150,6 +151,35 @@ class ChunkTests(unittest.TestCase):
         return QuadraticAdam(arm,recipe,self.journal,self.guard,scope=scope),Preserve(directory)
     def execute(self,backend,preserve,arm="M1",ordinal=1,**kwargs):
         return chunk.run_chunk(self.registration,arm,ordinal,backend,self.pools.get(arm,self.pools["M1"]).__getitem__,self.journal,self.guard,preserve,**kwargs)
+    def test_consumed_output_and_loss_released_before_next_forward_and_clip(self):
+        class Output(dict): pass
+        class Loss: pass
+        backend,preserve=self.fixture()
+        old_forward,old_loss,old_backward,old_clip=backend.forward,backend.completion_loss,backend.backward,backend.finite_clip_gradients
+        previous={"output":None,"loss":None}
+        def released():
+            for reference in previous.values():
+                if reference is not None and reference() is not None:
+                    raise RuntimeError("consumed forward graph still retained")
+        def forward(row):
+            released()
+            value=Output(old_forward(row));backend.pending=value
+            previous["output"]=weakref.ref(value)
+            return value
+        def loss(output,row):
+            old_loss(output,row)
+            value=Loss();backend.loss=value
+            previous["loss"]=weakref.ref(value)
+            return value
+        def backward(value,**kwargs):
+            old_backward(value,**kwargs);backend.loss=None
+        def clip(**kwargs):
+            released();return old_clip(**kwargs)
+        backend.forward,backend.completion_loss,backend.backward,backend.finite_clip_gradients=forward,loss,backward,clip
+        result=self.execute(backend,preserve)
+        self.assertEqual("COMPLETE_PROTOCOL_CHUNK_STUDY_UNAUTHORIZED",result["status"],result.get("error"))
+        self.assertEqual(180,result["costs"]["protocol"]["backward"]["returned"])
+        released()
     def test_continuous27_equals_three9_chunks_bitwise_Adam_RNG_order_dose_both_arms(self):
         for arm in ("M1","M2"):
             full,_=self.fixture(arm,arm+"continuous")
