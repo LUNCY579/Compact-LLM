@@ -19,6 +19,9 @@ qualifies only four TRAIN prompts under the existing resource/numerical bounds.
 The [long prompt input receipt](evidence/long_prompt_inputs_root1_cpu_validation_20261004.json)
 retains every guard row as CPU-only prompt arrays; long-context native execution
 and enrollment remain unqualified.
+The [539-test backend CPU receipt](evidence/backend_qualification_root_cpu_validation_002_20261004.json)
+supports the [next sustained/resume qualification](BACKEND_QUALIFICATION_001.md);
+actual native fit and the study comparison remain pending.
 
 1. [Owner-directed preservation charter](../../RINEYA_SYNTH_CENTRALIZED_REASONING.md).
 2. [Architecture and boundaries](ARCHITECTURE.md).

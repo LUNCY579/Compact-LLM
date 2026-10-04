@@ -1,5 +1,22 @@
 # Status and next handoff
 
+## 2026-10-04: sustained/resume qualification implemented; native fit pending
+
+The reviewed [backend qualification](BACKEND_QUALIFICATION_001.md) is integrated.
+Its 45 focused CPU/mock controls pass, including continuous versus fresh-restored
+update ten, exact dose/cost checks, predecessor forgery rejection, physical-method
+restoration structure, isolated startup, supervisor containment and terminal
+cleanup failures. [Staging evidence](evidence/backend_qualification_staging_20261004)
+preserves the initial mock-cleanup failure and passing successor.
+
+The first aggregate [539-test root run](evidence/backend_qualification_root_cpu_validation_20261004.json)
+found one test-isolation failure: semantic solver modules loaded by other tests
+violated a check intended for the prompt adapter's isolated process. The check
+now runs the complete fixture under fresh `-I -B` Python; all 13 focused adapter
+controls pass. The complete [successor CPU run](evidence/backend_qualification_root_cpu_validation_002_20261004.json)
+passes all 539 tests without skips or source changes. No native phase A/B
+worker, study checkpoint or acquisition/transfer/retention score exists yet.
+
 ## 2026-10-04: short raw-collection CPU work bounds prepared
 
 A [six-test CPU batching plan](evidence/short_collection_plan_cpu_20261004/cpu_validation.json)

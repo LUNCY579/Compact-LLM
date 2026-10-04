@@ -3,6 +3,7 @@ from copy import deepcopy
 import json
 from pathlib import Path
 import sys
+import subprocess
 import tempfile
 from types import SimpleNamespace
 import unittest
@@ -198,10 +199,23 @@ class StreamingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "inventory"): self.validate()
 
     def test_import_and_entire_fixture_process_have_no_framework_or_solver(self):
-        for name in ("torch", "transformers", "rs_verifier", "long_context_guards", "long_context_tasks"):
-            self.assertNotIn(name, sys.modules)
-        self.validate()
-        adapter.no_frameworks()
+        # Other tests in the aggregate suite import the semantic solvers.
+        # Verify this adapter's entire fixture boundary in a fresh interpreter.
+        code = """import sys, unittest
+sys.path.insert(0, sys.argv[1])
+from test_long_inference_inputs import StreamingTests
+result = unittest.TestResult()
+StreamingTests('test_exact_envelopes_output_denominator_order_and_no_oracle_fields').run(result)
+assert result.testsRun == 1 and result.wasSuccessful() and not result.skipped
+for name in ('torch', 'transformers', 'rs_verifier', 'rs_solver', 'cpu_tokenizer', 'long_context_guards', 'long_context_tasks'):
+    assert name not in sys.modules, name
+print('ISOLATED_PROMPT_FIXTURE_PROCESS_ONLY')
+"""
+        result = subprocess.run([sys.executable, "-I", "-B", "-c", code,
+                                 str(Path(__file__).resolve().parent)],
+                                capture_output=True, text=True, timeout=30)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual("ISOLATED_PROMPT_FIXTURE_PROCESS_ONLY", result.stdout.strip())
 
 
 if __name__ == "__main__": unittest.main()
