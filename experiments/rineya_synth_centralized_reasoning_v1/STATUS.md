@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-04: short raw-collection CPU work bounds prepared
+
+A [six-test CPU batching plan](evidence/short_collection_plan_cpu_20261004/cpu_validation.json)
+retains all 384 atomic/RS DEV and 768 task-guard prompts in 18 fixed batches of
+64 rows. Whole-row order and prompt-only arrays are bound before any model
+output. Each batch reserves at most 2,050 forwards including two zero-parity
+controls; input-position caps sum every possible generated prefix explicitly.
+These are prospective work bounds, not measured throughput or native authority.
+No baseline response, score or source-correct enrollment was produced. Actual
+short DEV collection needs its own committed collector/source/resource scope;
+language and long-context qualification remain separate.
+
 ## 2026-10-04: long prompt inputs prepared on CPU
 
 The integrated [streaming prompt adapter](long_inference_inputs.py) passed
