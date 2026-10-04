@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "experiment_id": "cheap_quality_retrieval_v1",
+  "status": "PROSPECTIVE_CONSTRUCTION_AND_ALGORITHM_DESIGN_BEFORE_EXECUTION",
+  "source": "Fresh generated openDEV synthetic factual worlds; no inherited dataset or protected/sealed payload is read.",
+  "worlds": {"count": 64, "single_hop": 32, "two_hop": 32, "paired_positions": ["early", "middle", "late"], "case_count": 192, "irrelevant_factual_sentences_per_case": 64},
+  "question_templates": {"single_hop": "Which locker stores parcel Pdddd?", "two_hop": "Which locker stores the parcel carried by courier Cdddd?"},
+  "fact_templates": ["Courier Cdddd carries parcel Pdddd.", "Parcel Pdddd is stored in locker Ldddd."],
+  "entity_construction": "Per-world seeded random distinct four-digit courier/parcel/locker identifiers, all using the same lexical templates. Support identifiers use the same identifier format as irrelevant facts.",
+  "support_placement": "Required support sentence(s) are an adjacent block at start, midpoint of 64 irrelevant facts, or end. All three versions reuse the identical question, factual sentences and support IDs.",
+  "freeze_before_scores": "Serialize all 192 public contexts and evaluator-only support records in separate JSONL files; write FROZEN_INPUTS.json with byte sizes and SHA-256, config/protocol/implementation/native-tokenizer bindings; re-read and verify frozen bytes before any retrieval scores. Freeze is construction, not a measured scientific result.",
+  "retriever_boundary": "Each algorithm receives only question + public sentence_id/text records. No world type, position, gold answer, support IDs, expected evidence or evaluator object is passed. The public-schema guard rejects additional fields.",
+  "methods": {
+    "lead_prefix": "Rank original factual sentences in source order.",
+    "seeded_random": "Seeded random permutation of sentence identities sorted by public sentence_id, seed derived from frozen base seed and canonical question + public sentence inventory sorted by sentence_id. The same world has the same identity ranking across its three placements, preventing position from changing the random draw.",
+    "bm25_one_hop": "Standard nonnegative BM25 IDF log(1+(N-df+0.5)/(df+0.5)), k1=1.2,b=0.75, binary query terms, ASCII alphanumeric casefold terms, no stopword removal; source order breaks ties.",
+    "bm25_two_pass": "Run one-hop BM25, expand the question using the text of its single top public sentence, run BM25 again, and retain that first-pass seed sentence first before expanded-query ranks. No evaluator evidence is used."
+  },
+  "packing": "For every method/budget, take the longest whole-sentence ranking prefix that fits when restored to source order; stop at the first additional sentence that exceeds the budget. Final selected facts are restored to original source order. Lead-prefix therefore remains a contiguous source prefix. Partial sentences are forbidden.",
+  "padding": "After whole-sentence selection, repeatedly test the fixed suffix candidates [newline, space+filler, space+x, space+0, space] in order; append the first that increases raw tokenizer length by exactly one. Fail if none works. This inserts evaluator-independent irrelevant lexical/whitespace filler, never support or answers. Preserve every suffix, final raw text and exact net padding-token count. All methods consume exactly the same 128/256/512 actual context tokens; their sentence/chunk/sample counts may differ.",
+  "native_budget_scope": "128/256/512 refer only to raw selected factual context plus padding under the local Rineya tokenizer with add_special_tokens=False. Query and chat formatting overhead are excluded; this does not establish a native total envelope or usable model context budget.",
+  "metrics": ["full evidence recall: all one/two required support IDs selected", "any evidence recall: at least one required support ID selected", "support precision among selected original factual sentences", "selected sentence count", "consumed context tokens", "selected-context tokens and net padding tokens", "retrieval ranking seconds", "packing seconds"],
+  "timing_scope": "One ranking measurement per case/method is reused for three budgets; packing measured separately per budget. Raw tokenizer time is included in packing, not ranking. Wall/RSS evidence covers all generation, tokenization, freezing, ranking, packing and reporting work.",
+  "aggregation": "Report case means, separate single/two-hop and early/middle/late strata, and each world's mean over its three paired positions. World-cluster descriptive means/min/max expose the reuse of one world across positions; no independence of 192 worlds, confidence intervals, significance, population claims or result-based algorithm tuning.",
+  "interpretation": "Synthetic construction/evidence-retention diagnosis only. No answer correctness, reasoning intelligence improvement, deployed selector, native model usage or Lost in the Middle replication is claimed.",
+  "runtime": "One CPU worker, Python stdlib + tokenizers 0.22.2 raw encode only; TOKENIZERS_PARALLELISM=false within this process. No Transformers, Torch, NumPy, model/weight/adapter loading or GPU computation.",
+  "budgets": {"max_tree_rss_bytes": 536870912, "max_wall_seconds": 900, "max_output_bytes": 52428800},
+  "forbidden": ["protected or sealed dataset reads", "modifying tokenizer/source files", "passing gold support/type/answer into algorithms", "using equal sentence count as evidence of equal token cost", "retuning from resulting recall", "claiming answer accuracy or model gains", "native resource floor changes", "weight/model loading", "parallel experiment workers"],
+  "outputs": ["RUN.json", "SOURCE.json", "public_contexts.jsonl", "evaluator_only.jsonl", "FROZEN_INPUTS.json", "resources.jsonl", "analysis.json", "cases.csv", "world_clusters.csv", "aggregates.csv", "report.html", "COMPLETED.json or FAILED.json"],
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false,
+  "opens_gate": false
+}
