@@ -1,0 +1,41 @@
+test_all_subsets_including_singletons_and_joint_failure (test_analysis.ComplementarityTests.test_all_subsets_including_singletons_and_joint_failure) ... ok
+test_analyze_ignores_supplied_correctness_and_keeps_losses (test_analysis.ComplementarityTests.test_analyze_ignores_supplied_correctness_and_keeps_losses) ... ok
+test_duplicate_json_keys_rejected (test_analysis.ComplementarityTests.test_duplicate_json_keys_rejected) ... ok
+test_format_type_value_and_eos_categories_are_distinct (test_analysis.ComplementarityTests.test_format_type_value_and_eos_categories_are_distinct) ... ERROR
+test_pair_partition_and_oracle_ceiling (test_analysis.ComplementarityTests.test_pair_partition_and_oracle_ceiling) ... ok
+test_reject_missing_extra_ids_and_truthy_termination (test_analysis.ComplementarityTests.test_reject_missing_extra_ids_and_truthy_termination) ... ok
+test_typed_equal_value_does_not_manufacture_sampling_gain (test_analysis.ComplementarityTests.test_typed_equal_value_does_not_manufacture_sampling_gain) ... ERROR
+
+======================================================================
+ERROR: test_format_type_value_and_eos_categories_are_distinct (test_analysis.ComplementarityTests.test_format_type_value_and_eos_categories_are_distinct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\.codex\worktrees\rineya-quality-complementarity\ChatBubble-rvs001\experiments\cheap_quality_complementarity_v1\tests\test_analysis.py", line 56, in test_format_type_value_and_eos_categories_are_distinct
+    self.assertEqual(failure_kind(self.scorer.score_prediction(text, terminated, target)), expected)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\.codex\worktrees\rineya-quality-complementarity\ChatBubble-rvs001\experiments\architecture_benchmark_001\retention.py", line 423, in score_prediction
+    validate_target(target)
+  File "C:\Users\clclc\.codex\worktrees\rineya-quality-complementarity\ChatBubble-rvs001\experiments\architecture_benchmark_001\retention.py", line 220, in validate_target
+    raise TargetError('bare_allowed must be an explicit boolean')
+frozen_retention_parser.TargetError: bare_allowed must be an explicit boolean
+
+======================================================================
+ERROR: test_typed_equal_value_does_not_manufacture_sampling_gain (test_analysis.ComplementarityTests.test_typed_equal_value_does_not_manufacture_sampling_gain)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\.codex\worktrees\rineya-quality-complementarity\ChatBubble-rvs001\experiments\cheap_quality_complementarity_v1\tests\test_analysis.py", line 60, in test_typed_equal_value_does_not_manufacture_sampling_gain
+    kind = comparison_kind({'text': '5.', 'terminated': True},
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\.codex\worktrees\rineya-quality-complementarity\ChatBubble-rvs001\experiments\cheap_quality_complementarity_v1\analyze.py", line 280, in comparison_kind
+    values.append(scorer.parse_prediction(output['text'], target))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\.codex\worktrees\rineya-quality-complementarity\ChatBubble-rvs001\experiments\architecture_benchmark_001\retention.py", line 340, in parse_prediction
+    validate_target(target)
+  File "C:\Users\clclc\.codex\worktrees\rineya-quality-complementarity\ChatBubble-rvs001\experiments\architecture_benchmark_001\retention.py", line 220, in validate_target
+    raise TargetError('bare_allowed must be an explicit boolean')
+frozen_retention_parser.TargetError: bare_allowed must be an explicit boolean
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.023s
+
+FAILED (errors=2)
