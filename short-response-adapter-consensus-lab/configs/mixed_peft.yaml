@@ -1,9 +1,0 @@
-name: mixed_peft_not_yet_trained
-status: preregistered_infrastructure_only
-backbone: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/frozen_anchor
-notes: >-
-  The official repository contains only rank-16 LoRA adapters. DoRA and PiSSA
-  conditions must be trained inside this lab under matched data/steps/parameter
-  budgets before this config can be activated; unsupported methods are not
-  silently substituted.
-
