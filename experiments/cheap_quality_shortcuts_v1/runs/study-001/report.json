@@ -1,0 +1,488 @@
+{
+  "status": "PASS_DATA_VERIFIER_DIAGNOSTIC",
+  "evidence": "CPU_DATA_ONLY_NOT_MODEL_EFFICACY",
+  "population": {
+    "selection": 256,
+    "DEV": 256,
+    "per_family_per_role": 64
+  },
+  "allocation": {
+    "candidate_specifications": 3312,
+    "duplicate_candidates_skipped": 1,
+    "selection_basis": "fixed generator order, role and structure quotas; no solver/model scoring"
+  },
+  "predictors_frozen": [
+    "zero",
+    "one",
+    "minus_one",
+    "empty",
+    "first_number",
+    "last_number",
+    "min_number",
+    "max_number",
+    "initial_state",
+    "first_set",
+    "all_numbers",
+    "selection_mode"
+  ],
+  "calibration_modes": {
+    "integer": 255,
+    "registers": [
+      -1,
+      -6,
+      7
+    ],
+    "sets": [
+      -10,
+      -2,
+      0,
+      7,
+      8
+    ],
+    "text": "fern"
+  },
+  "shortcut_curves": [
+    {
+      "family": "bounded_integer_arithmetic",
+      "predictor": "zero",
+      "parents": 64,
+      "correct": 4,
+      "accuracy": 0.0625
+    },
+    {
+      "family": "bounded_integer_arithmetic",
+      "predictor": "one",
+      "parents": 64,
+      "correct": 1,
+      "accuracy": 0.015625
+    },
+    {
+      "family": "bounded_integer_arithmetic",
+      "predictor": "minus_one",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "bounded_integer_arithmetic",
+      "predictor": "empty",
+      "parents": 64,
+      "correct": 4,
+      "accuracy": 0.0625
+    },
+    {
+      "family": "bounded_integer_arithmetic",
+      "predictor": "first_number",
+      "parents": 64,
+      "correct": 3,
+      "accuracy": 0.046875
+    },
+    {
+      "family": "bounded_integer_arithmetic",
+      "predictor": "last_number",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "bounded_integer_arithmetic",
+      "predictor": "min_number",
+      "parents": 64,
+      "correct": 1,
+      "accuracy": 0.015625
+    },
+    {
+      "family": "bounded_integer_arithmetic",
+      "predictor": "max_number",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "bounded_integer_arithmetic",
+      "predictor": "initial_state",
+      "parents": 64,
+      "correct": 4,
+      "accuracy": 0.0625
+    },
+    {
+      "family": "bounded_integer_arithmetic",
+      "predictor": "first_set",
+      "parents": 64,
+      "correct": 4,
+      "accuracy": 0.0625
+    },
+    {
+      "family": "bounded_integer_arithmetic",
+      "predictor": "all_numbers",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "bounded_integer_arithmetic",
+      "predictor": "selection_mode",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "symbolic_variable_updates",
+      "predictor": "zero",
+      "parents": 64,
+      "correct": 1,
+      "accuracy": 0.015625
+    },
+    {
+      "family": "symbolic_variable_updates",
+      "predictor": "one",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "symbolic_variable_updates",
+      "predictor": "minus_one",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "symbolic_variable_updates",
+      "predictor": "empty",
+      "parents": 64,
+      "correct": 1,
+      "accuracy": 0.015625
+    },
+    {
+      "family": "symbolic_variable_updates",
+      "predictor": "first_number",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "symbolic_variable_updates",
+      "predictor": "last_number",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "symbolic_variable_updates",
+      "predictor": "min_number",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "symbolic_variable_updates",
+      "predictor": "max_number",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "symbolic_variable_updates",
+      "predictor": "initial_state",
+      "parents": 64,
+      "correct": 4,
+      "accuracy": 0.0625
+    },
+    {
+      "family": "symbolic_variable_updates",
+      "predictor": "first_set",
+      "parents": 64,
+      "correct": 1,
+      "accuracy": 0.015625
+    },
+    {
+      "family": "symbolic_variable_updates",
+      "predictor": "all_numbers",
+      "parents": 64,
+      "correct": 4,
+      "accuracy": 0.0625
+    },
+    {
+      "family": "symbolic_variable_updates",
+      "predictor": "selection_mode",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "finite_set_queries",
+      "predictor": "zero",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "finite_set_queries",
+      "predictor": "one",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "finite_set_queries",
+      "predictor": "minus_one",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "finite_set_queries",
+      "predictor": "empty",
+      "parents": 64,
+      "correct": 7,
+      "accuracy": 0.109375
+    },
+    {
+      "family": "finite_set_queries",
+      "predictor": "first_number",
+      "parents": 64,
+      "correct": 1,
+      "accuracy": 0.015625
+    },
+    {
+      "family": "finite_set_queries",
+      "predictor": "last_number",
+      "parents": 64,
+      "correct": 3,
+      "accuracy": 0.046875
+    },
+    {
+      "family": "finite_set_queries",
+      "predictor": "min_number",
+      "parents": 64,
+      "correct": 1,
+      "accuracy": 0.015625
+    },
+    {
+      "family": "finite_set_queries",
+      "predictor": "max_number",
+      "parents": 64,
+      "correct": 3,
+      "accuracy": 0.046875
+    },
+    {
+      "family": "finite_set_queries",
+      "predictor": "initial_state",
+      "parents": 64,
+      "correct": 7,
+      "accuracy": 0.109375
+    },
+    {
+      "family": "finite_set_queries",
+      "predictor": "first_set",
+      "parents": 64,
+      "correct": 11,
+      "accuracy": 0.171875
+    },
+    {
+      "family": "finite_set_queries",
+      "predictor": "all_numbers",
+      "parents": 64,
+      "correct": 21,
+      "accuracy": 0.328125
+    },
+    {
+      "family": "finite_set_queries",
+      "predictor": "selection_mode",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "constrained_text_transformations",
+      "predictor": "zero",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "constrained_text_transformations",
+      "predictor": "one",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "constrained_text_transformations",
+      "predictor": "minus_one",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "constrained_text_transformations",
+      "predictor": "empty",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "constrained_text_transformations",
+      "predictor": "first_number",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "constrained_text_transformations",
+      "predictor": "last_number",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "constrained_text_transformations",
+      "predictor": "min_number",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "constrained_text_transformations",
+      "predictor": "max_number",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "constrained_text_transformations",
+      "predictor": "initial_state",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "constrained_text_transformations",
+      "predictor": "first_set",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "constrained_text_transformations",
+      "predictor": "all_numbers",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "constrained_text_transformations",
+      "predictor": "selection_mode",
+      "parents": 64,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "ALL",
+      "predictor": "zero",
+      "parents": 256,
+      "correct": 5,
+      "accuracy": 0.01953125
+    },
+    {
+      "family": "ALL",
+      "predictor": "one",
+      "parents": 256,
+      "correct": 1,
+      "accuracy": 0.00390625
+    },
+    {
+      "family": "ALL",
+      "predictor": "minus_one",
+      "parents": 256,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    {
+      "family": "ALL",
+      "predictor": "empty",
+      "parents": 256,
+      "correct": 12,
+      "accuracy": 0.046875
+    },
+    {
+      "family": "ALL",
+      "predictor": "first_number",
+      "parents": 256,
+      "correct": 4,
+      "accuracy": 0.015625
+    },
+    {
+      "family": "ALL",
+      "predictor": "last_number",
+      "parents": 256,
+      "correct": 3,
+      "accuracy": 0.01171875
+    },
+    {
+      "family": "ALL",
+      "predictor": "min_number",
+      "parents": 256,
+      "correct": 2,
+      "accuracy": 0.0078125
+    },
+    {
+      "family": "ALL",
+      "predictor": "max_number",
+      "parents": 256,
+      "correct": 3,
+      "accuracy": 0.01171875
+    },
+    {
+      "family": "ALL",
+      "predictor": "initial_state",
+      "parents": 256,
+      "correct": 15,
+      "accuracy": 0.05859375
+    },
+    {
+      "family": "ALL",
+      "predictor": "first_set",
+      "parents": 256,
+      "correct": 16,
+      "accuracy": 0.0625
+    },
+    {
+      "family": "ALL",
+      "predictor": "all_numbers",
+      "parents": 256,
+      "correct": 25,
+      "accuracy": 0.09765625
+    },
+    {
+      "family": "ALL",
+      "predictor": "selection_mode",
+      "parents": 256,
+      "correct": 0,
+      "accuracy": 0.0
+    }
+  ],
+  "controls": {
+    "total": 2560,
+    "positive": 768,
+    "negative": 1792,
+    "false_accepts": 0,
+    "false_rejects": 0,
+    "failures": []
+  },
+  "costs": {
+    "reference_rows": 512,
+    "heuristic_candidates": 3072,
+    "mutation_candidates": 2560,
+    "make_row_reference_verifier_calls": 1024,
+    "additional_verifier_calls": 6144,
+    "elapsed_seconds": 0.4529999999995198,
+    "model_calls": 0,
+    "model_generation_tokens": 0,
+    "optimizer_steps": 0
+  },
+  "interpretation": "Per-family shortcut floors identify answer-prior/task vulnerabilities, not evidence that Rineya exploits them. Gold-derived controls are verifier tests, not deployable predictions.",
+  "CHECK": "CLOSED",
+  "FINAL": "CLOSED"
+}
