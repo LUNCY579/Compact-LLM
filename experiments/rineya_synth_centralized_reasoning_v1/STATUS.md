@@ -1,5 +1,35 @@
 # Status and next handoff
 
+## 2026-10-04: CPU guards and runtime controls prepared
+
+The [full CPU validation](evidence/inference_path_cpu_validation_20261004.json)
+passed all 480 tests without skips, failures or source changes. The independent
+review covered prompt-only inference, isolated worker startup, supervisor
+ownership and cleanup, and chunk publication/resume cost accounting.
+
+The preserved [task guards](evidence/task_guards_root1_20261004) contain 768 rows
+in 192 content components across retrieval, instruction and answerability.
+The [long-context guards](evidence/long_context_guards_root1_20261004) contain
+2,304 rows in 192 worlds, with complete paired variants at 1,024/2,048/4,096
+total-token envelopes. All rows are retained; independent solutions, negative
+controls, source exclusions and exact token fitting pass. These are CPU packets,
+not native preservation results or enrolled M0-correct cohorts.
+
+The new study backend and chunk runner have CPU random-model/toy controls for
+loss, Adam, whole-row dose, RNG, boundary restore and cumulative primitive costs.
+Their native sustained fit and fresh-process continuation remain unqualified.
+The separate inference contract permits only four deterministic TRAIN prompts
+on a fresh unchanged base, repeat/bulk numerical controls and unchanged-base
+checks. It retains the Native7 resource and numerical bounds and grants no
+DEV collection, scoring or study-training authority.
+
+Next: freeze and independently audit that limited supervised inference scope;
+then qualify actual study resume/sustained fit and the separate long-context
+profile. Qualified language reference labels and independent reviewer/adjudication
+evidence are still missing. Training, protected banks and publication remain
+closed. There is no M0/M1/M2 transfer or retention result, and the research
+question remains unanswered.
+
 ## Latest: short supervised native mechanics passed; comparison pending
 
 Attempt 7 passed the complete supervised short scope in 353.437 seconds, with

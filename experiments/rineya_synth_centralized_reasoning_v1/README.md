@@ -1,13 +1,19 @@
 # SYNTH-CRS-001: centralized verified supervision for Rineya
 
 **Branch:** `research/rineya-synth-centralized-reasoning-v1`  
-**Status:** CPU corpus materialized and schedule matched; native qualification pending.
+**Status:** CPU corpus, fresh guards and runtime controls audited; short native mechanics passed; comparison pending.
 **Target:** one pinned approximately 0.6B Rineya student, not a new from-scratch model.
 
 ## Read in this order
 
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
+
+The [480-test CPU receipt](evidence/inference_path_cpu_validation_20261004.json)
+and preserved [task](evidence/task_guards_root1_20261004) and
+[long-context](evidence/long_context_guards_root1_20261004) packets support the
+next bounded qualification work. Actual study training, fresh transfer and
+prior-correct retention are unmeasured; qualified language review is pending.
 
 1. [Owner-directed preservation charter](../../RINEYA_SYNTH_CENTRALIZED_REASONING.md).
 2. [Architecture and boundaries](ARCHITECTURE.md).
