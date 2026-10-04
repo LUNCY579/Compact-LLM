@@ -1,0 +1,27 @@
+[wmi_runner] start 2026-09-26 17:12:08 target=C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\run_stage_a_wait.py
+[stage-a-wait] resuming registered runner from completed units
+[stage-a-wait] RAM 6.86 GiB, disk 21.33 GiB, lease free
+[stage-a-wait] RAM 3.17 GiB, disk 21.33 GiB, lease free
+[stage-a-wait] RAM 6.58 GiB, disk 21.33 GiB, lease free
+[stage-a-wait] RAM 6.58 GiB, disk 21.33 GiB, lease free
+[stage-a-wait] gates met twice; launching registered runner
+  RAM 6.56/6.57 GiB, disk free 21.3 GiB
+  [gpu-lease] acquired rineya-gpu-0.lock label=triskill001:stage-a token=06a36a93
+{"rule": "C100 - BASE on C semantic (192 JSON rows) >= +30, exact McNemar p < 0.01; AND (AMENDMENT_1) exact two-sided world sign test over DEV+CAL worlds p < 0.01", "base_semantic": 33, "c100_semantic": 73, "c100_strict": 73, "gained": 57, "lost": 17, "net": 40, "p_two_sided": 3.3971668169915196e-06, "world_level": {"worlds": 64, "worlds_up": 34, "worlds_down": 9, "worlds_tied": 21, "p": 0.00017015517460094998, "sided": "two"}, "pass": true}
+  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\build_arm.py build --arm TTC50  (try 1/1)
+Traceback (most recent call last):
+  File "C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\build_arm.py", line 236, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\build_arm.py", line 232, in main
+    return build(a.arm, a.beta_star)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\build_arm.py", line 198, in build
+    save_file(out, str(out_dir / "model.safetensors"), metadata={"format": "pt"})
+  File "C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Lib\site-packages\safetensors\torch.py", line 323, in save_file
+    serialize_file(
+safetensors._safetensors_rust.SafetensorError: Error while serializing: I/O error: The process cannot access the file because it is being used by another process. (os error 32)
+  step failed rc=1
+  [gpu-lease] released rineya-gpu-0.lock
+step failed after 1 tries: -u
+[wmi_runner] exit rc=1 after 137s

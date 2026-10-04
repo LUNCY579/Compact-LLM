@@ -1,0 +1,76 @@
+[wmi_runner] start 2026-09-26 18:11:42 target=C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\run_poststop.py
+  RAM 6.43/6.45 GiB, disk 17.51 GiB
+  [gpu-lease] acquired rineya-gpu-0.lock label=triskill-poststop:random-null token=8a60a5ae
+{"arm": "TTR", "beta": 0.25, "update_norm_fro": 0.21437929157715252, "weight_sha256": "f8c8c8e0e9b080b040c7ee3004405baddf9b10a0a843496a2d9526c509140aae"}
+  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\score_c.py --arm-dir C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\poststop_null\arms\TTR --bank dev --no-lease --out C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\poststop_null\c_preds\TTR25__dev.jsonl.attempt1 (try 1/3)
+  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<01:27,  3.53it/s]Loading weights:  12%|#2        | 38/310 [00:00<00:02, 125.14it/s]Loading weights:  25%|##5       | 78/310 [00:00<00:01, 213.42it/s]Loading weights:  37%|###6      | 114/310 [00:00<00:00, 255.86it/s]Loading weights:  49%|####9     | 153/310 [00:00<00:00, 294.01it/s]Loading weights:  62%|######1   | 191/310 [00:00<00:00, 318.96it/s]Loading weights:  75%|#######5  | 234/310 [00:00<00:00, 347.89it/s]Loading weights:  88%|########8 | 274/310 [00:01<00:00, 363.12it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 284.17it/s]
+wrote C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\poststop_null\c_preds\TTR25__dev.jsonl.attempt1 (128 rows)
+  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\score_c.py --arm-dir C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\poststop_null\arms\TTR --bank cal --no-lease --out C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\poststop_null\c_preds\TTR25__cal.jsonl.attempt1 (try 1/3)
+  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<01:34,  3.27it/s]Loading weights:  12%|#1        | 37/310 [00:00<00:02, 113.49it/s]Loading weights:  24%|##3       | 74/310 [00:00<00:01, 191.93it/s]Loading weights:  35%|###4      | 108/310 [00:00<00:00, 234.65it/s]Loading weights:  45%|####4     | 138/310 [00:00<00:00, 254.22it/s]Loading weights:  55%|#####4    | 169/310 [00:00<00:00, 270.95it/s]Loading weights:  65%|######4   | 201/310 [00:00<00:00, 281.12it/s]Loading weights:  76%|#######5  | 235/310 [00:01<00:00, 295.84it/s]Loading weights:  86%|########6 | 268/310 [00:01<00:00, 301.77it/s]Loading weights:  97%|#########7| 301/310 [00:01<00:00, 309.24it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 247.76it/s]
+wrote C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\poststop_null\c_preds\TTR25__cal.jsonl.attempt1 (128 rows)
+  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py --bank C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v1\T_BANK_V3X.json --arms-root C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\poststop_null\arms --arms TTR --no-lease --output C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\poststop_null\t\TTR25.json.attempt1 (try 1/3)
+startup checks
+  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
+  bank T_BANK_V3X.json n=864 sha256=173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c
+  [gpu-lease] --no-lease: caller holds the lease for this window
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<01:35,  3.25it/s]Loading weights:  12%|#2        | 38/310 [00:00<00:02, 119.26it/s]Loading weights:  26%|##6       | 81/310 [00:00<00:01, 215.33it/s]Loading weights:  39%|###9      | 122/310 [00:00<00:00, 274.36it/s]Loading weights:  52%|#####2    | 162/310 [00:00<00:00, 309.69it/s]Loading weights:  65%|######5   | 202/310 [00:00<00:00, 332.86it/s]Loading weights:  79%|#######9  | 245/310 [00:00<00:00, 356.06it/s]Loading weights:  92%|#########1| 284/310 [00:01<00:00, 359.96it/s]Loading weights: 100%|##########| 310/310 [00:01<00:00, 283.05it/s]
+{"arm": "TTR", "correct": 444, "n": 864, "copied_input_verbatim": 23, "by_family": {"ledger_replay": {"correct": 131, "n": 288}, "prerequisite_plan": {"correct": 150, "n": 288}, "register_machine": {"correct": 163, "n": 288}}, "seconds": 532.3}
+wrote C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\poststop_null\t\TTR25.json.attempt1
+  $ C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -u C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v2\score_boundary.py --bank C:\Users\clclc\BusinessProject\rineya-dataset-retention-records\hskill-views-002\HSKILL_VIEWS_V2.jsonl --arms-root C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\poststop_null\arms --arms TTR --no-lease --output C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\poststop_null\h\TTR25.json.attempt1 (try 1/3)
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<03:21,  1.53it/s]Loading weights:   5%|4         | 14/310 [00:00<00:12, 23.96it/s]Loading weights:   8%|8         | 25/310 [00:00<00:06, 41.05it/s]Loading weights:  12%|#1        | 37/310 [00:00<00:04, 58.18it/s]Loading weights:  16%|#5        | 49/310 [00:01<00:03, 71.16it/s]Loading weights:  20%|##        | 63/310 [00:01<00:02, 86.60it/s]Loading weights:  24%|##4       | 75/310 [00:01<00:02, 90.30it/s]Loading weights:  28%|##7       | 86/310 [00:01<00:02, 93.99it/s]Loading weights:  31%|###1      | 97/310 [00:01<00:02, 91.29it/s]Loading weights:  35%|###4      | 108/310 [00:01<00:02, 96.14it/s]Loading weights:  38%|###8      | 119/310 [00:01<00:01, 98.54it/s]Loading weights:  42%|####1     | 130/310 [00:01<00:01, 97.96it/s]Loading weights:  46%|####6     | 143/310 [00:01<00:01, 104.20it/s]Loading weights:  50%|####9     | 154/310 [00:02<00:01, 104.85it/s]Loading weights:  54%|#####4    | 168/310 [00:02<00:01, 108.93it/s]Loading weights:  58%|#####7    | 179/310 [00:02<00:01, 107.00it/s]Loading weights:  61%|######1   | 190/310 [00:02<00:01, 106.86it/s]Loading weights:  65%|######4   | 201/310 [00:02<00:01, 101.89it/s]Loading weights:  69%|######9   | 214/310 [00:02<00:00, 104.95it/s]Loading weights:  74%|#######3  | 228/310 [00:02<00:00, 112.82it/s]Loading weights:  77%|#######7  | 240/310 [00:02<00:00, 111.28it/s]Loading weights:  81%|########1 | 252/310 [00:02<00:00, 111.45it/s]Loading weights:  85%|########5 | 264/310 [00:03<00:00, 106.10it/s]Loading weights:  89%|########8 | 275/310 [00:03<00:00, 107.16it/s]Loading weights:  92%|#########2| 286/310 [00:03<00:00, 107.21it/s]Loading weights:  96%|#########5| 297/310 [00:03<00:00, 106.31it/s]Loading weights:  99%|#########9| 308/310 [00:03<00:00, 98.97it/s] Loading weights: 100%|##########| 310/310 [00:03<00:00, 87.44it/s]
+{"arm": "TTR", "boundary_abstain": 86, "n_boundary": 112, "answerable_attempt": 112, "answerable_correct": 34, "n_answerable": 112, "seconds": 65.8}
+wrote C:\Users\clclc\.codex\worktrees\triskill-stage-a\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\poststop_null\h\TTR25.json.attempt1
+  [gpu-lease] released rineya-gpu-0.lock
+{
+ "scores": {
+  "TT": {
+   "C_semantic": 37,
+   "C_strict": 0,
+   "T_primary": 444,
+   "H_boundary": 86
+  },
+  "TTC25": {
+   "C_semantic": 84,
+   "C_strict": 84,
+   "T_primary": 428,
+   "H_boundary": 84
+  },
+  "TTR25": {
+   "C_semantic": 37,
+   "C_strict": 0,
+   "T_primary": 444,
+   "H_boundary": 86
+  }
+ },
+ "contrasts_vs_TT": {
+  "TTC25": {
+   "C_semantic_gain": 47,
+   "C_gained": 66,
+   "C_lost": 19,
+   "T_loss": 16,
+   "T_gained": 9,
+   "T_lost": 25,
+   "H_loss": 2,
+   "H_gained": 0,
+   "H_lost": 2
+  },
+  "TTR25": {
+   "C_semantic_gain": 0,
+   "C_gained": 0,
+   "C_lost": 0,
+   "T_loss": 0,
+   "T_gained": 0,
+   "T_lost": 0,
+   "H_loss": 0,
+   "H_gained": 0,
+   "H_lost": 0
+  }
+ }
+}
+[wmi_runner] exit rc=0 after 765s
