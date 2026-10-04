@@ -1,5 +1,26 @@
 # Status and next handoff
 
+## 2026-10-04: limited native inference qualification passed
+
+The first four-TRAIN-prompt inference attempt completed in 88.922 seconds with
+normal supervised exit and verified owned-tree, sampler and NVML cleanup. The
+[independent audit](evidence/infq001_attempt1_independent_audit_20261004.json)
+passed 1,270 checks of raw/preserved hashes, source/runtime/model/data bindings,
+403 returned API calls, 84 forwards / 28,627 positions, all four exact repeat
+and prefix/bulk controls, zero-B physical parity and 310 unchanged base tensors.
+Continuous observed CPU freshness stayed below 200 ms (maximum 140 ms); GPU
+freshness stayed below two seconds (maximum 516 ms). Resource floors held.
+[Raw terminal evidence and source snapshots](evidence/infq001_attempt1_20261004)
+and the [frozen scope](configs/SYNTH_INFQ001_TRAIN4.json) are retained.
+
+This is `PASS_SHORT_SCOPED_NATIVE_INFERENCE_MECHANICS` only. No answers were
+graded, optimizer steps/backward calls were zero, and full DEV collection,
+study training, long-context execution and transfer/retention remain closed
+or unqualified. Next work is a separately registered sustained nine-update
+backend and fresh-process continuation qualification, plus the long-context
+prompt input path. Qualified language reference/review authority and enrolled
+guard precision are still requirements. The research question is unanswered.
+
 ## 2026-10-04: CPU guards and runtime controls prepared
 
 The [full CPU validation](evidence/inference_path_cpu_validation_20261004.json)
