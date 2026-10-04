@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-04: long prompt inputs prepared on CPU
+
+The integrated [streaming prompt adapter](long_inference_inputs.py) passed
+[13 focused CPU controls](evidence/long_prompt_inputs_root1_cpu_validation_20261004.json)
+and a complete isolated-Python run. All 2,304 rows / 5,431,296 prompt positions
+are retained at the 992/2,016/4,064 prompt-token envelopes plus 32 generation
+tokens. Prompt-only arrays are identical across the original, buffered and
+integrated preparations. The integrated run took 15.125 seconds and an OS
+lifetime memory peak of 155,480,064 bytes. Source/parser/tokenizer/order/byte
+bindings were checked before publication; no oracle sidecar or framework was
+used. [Complete attempts, code snapshots and CPU evidence](evidence/long_prompt_inputs_root1_20261004)
+are preserved. These inputs grant no native long-context execution, prior-correct
+enrollment, language qualification or preservation result.
+
 ## 2026-10-04: limited native inference qualification passed
 
 The first four-TRAIN-prompt inference attempt completed in 88.922 seconds with

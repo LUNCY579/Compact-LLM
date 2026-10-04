@@ -16,6 +16,9 @@ next bounded qualification work. Actual study training, fresh transfer and
 prior-correct retention are unmeasured; qualified language review is pending.
 The [independent inference audit](evidence/infq001_attempt1_independent_audit_20261004.json)
 qualifies only four TRAIN prompts under the existing resource/numerical bounds.
+The [long prompt input receipt](evidence/long_prompt_inputs_root1_cpu_validation_20261004.json)
+retains every guard row as CPU-only prompt arrays; long-context native execution
+and enrollment remain unqualified.
 
 1. [Owner-directed preservation charter](../../RINEYA_SYNTH_CENTRALIZED_REASONING.md).
 2. [Architecture and boundaries](ARCHITECTURE.md).

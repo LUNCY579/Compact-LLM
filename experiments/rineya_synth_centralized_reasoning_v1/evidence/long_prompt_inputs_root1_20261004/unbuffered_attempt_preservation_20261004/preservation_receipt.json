@@ -1,0 +1,37 @@
+{
+  "exit_code": 0,
+  "files": {
+    "inputs_root1_cpu_20261004/prompt_arrays.jsonl": {
+      "bytes": 39259534,
+      "sha256": "3b2d0a71ddd302e56c50d2252dfb757ad4eb2e8cbe3b116dabe0bdad71e5878c"
+    },
+    "inputs_root1_cpu_20261004/receipt.json": {
+      "bytes": 3416,
+      "sha256": "970bc976cc0ceb0e5f31bea7d955159f4f774517b18e897788b524121419be24"
+    },
+    "streaming_inputs.py": {
+      "bytes": 21300,
+      "sha256": "5c811c2351cad9517660432d8e78ec22a842cf74cc41838836f0193a13204222"
+    },
+    "test_streaming_inputs.py": {
+      "bytes": 11312,
+      "sha256": "478949db367765dbff4f6383d82e77155d09dcfc0e6cf448ec303f5cd78e8279"
+    }
+  },
+  "model_or_GPU_calls": 0,
+  "native_execution_authorized": false,
+  "oracle_inputs_read": false,
+  "owned_attempt": "inputs_root1_cpu_20261004",
+  "partial_or_failed_attempt": false,
+  "process_terminated_by_agent": false,
+  "reason_for_successor": "Use bounded64KiB buffering to avoid tiny Windows FileIO.readline reads.",
+  "status": "COMPLETED_CPU_ATTEMPT_PRESERVED_NATIVE_UNADMITTED",
+  "terminal_stdout": {
+    "CPU_peak_bytes": 155373568,
+    "model_or_GPU_calls": 0,
+    "rows": 2304,
+    "status": "CPU_LONG_PROMPT_ARRAYS_PREPARED_NATIVE_UNADMITTED",
+    "whole_adapter_wall_seconds": 253.35899999999856
+  },
+  "tool_session_id": 84185
+}
