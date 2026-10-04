@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Communicative abstention review</title>
+<style>body{font:16px/1.5 system-ui;max-width:1200px;margin:32px auto;padding:20px}table{border-collapse:collapse}td,th{border:1px solid #bbb;padding:8px}code{overflow-wrap:anywhere}</style>
+<h1>Historical communicative abstention: two blinded reviews</h1>
+<p>Descriptive exploratory annotations. Not human-certified or a qualified semantic grader. No model inference or promotion.</p>
+<p>Literal full-response UNKNOWN, punctuation-normalized diagnostic and communicative ABSTAIN are separate measures. Semantic labels do not change inherited exact correctness.</p>
+<p>Any label disagreement or AMBIGUOUS is unresolved; conservative lower/upper bounds permit any substantive category. No adjudication is performed.</p>
+<table><tr><th>Model</th><th>Exact UNKNOWN</th><th>Punctuation diagnostic</th><th>Communicative abstention bounds</th><th>Assertions / missing evidence</th><th>False abstention / answerables</th><th>Unresolved</th></tr>
+<tr><td>supa</td><td>13</td><td>13</td><td>13–13 / 256</td><td>51–51 / 64</td><td>0–0 / 192</td><td>0</td></tr>
+<tr><td>opallo</td><td>0</td><td>2</td><td>3–4 / 256</td><td>60–61 / 64</td><td>0–0 / 192</td><td>1</td></tr>
+</table>
+<h2>Paired historical exact correctness</h2>
+<p>Supa source correct: 161; Opallo candidate correct: 135. Gains on source-wrong rows: 9; losses on source-correct rows: 35. These are inherited bank flags, not independently qualified semantic grading.</p>
+<p>Intervals resample whole scenario worlds; variants and two model outputs are not independent observations. Intervals are descriptive, unadjusted for multiple comparisons and do not establish causation.</p>
+<h2>Provenance and limits</h2><p>Input hashes were frozen before parsing. Historical banks record runtime/numerics and termination; checkpoint hashes and parameter dtype are absent. No precision or model-source qualification is inferred from these metadata.</p>
+<h2>Costs</h2><pre>{
+  &quot;evaluation&quot;: {
+    &quot;elapsed_seconds_through_receipt&quot;: 2.266000000000531,
+    &quot;peak_observed_self_rss_bytes&quot;: 26812416,
+    &quot;output_bytes_before_cost_receipt&quot;: 1236298,
+    &quot;limits&quot;: {
+      &quot;rss_bytes&quot;: 536870912,
+      &quot;wall_seconds&quot;: 900,
+      &quot;output_bytes&quot;: 52428800,
+      &quot;batch_responses&quot;: 64,
+      &quot;bootstrap_replicates&quot;: 1000
+    },
+    &quot;resource_scope&quot;: &quot;self RSS sampled at boundaries; external process-tree supervisor required&quot;,
+    &quot;model_loads&quot;: 0,
+    &quot;new_inference_tokens&quot;: 0,
+    &quot;training_updates&quot;: 0,
+    &quot;paid_service_calls&quot;: 0,
+    &quot;unmetered&quot;: &quot;review inference costs and operator/tool overhead; report review-supplied costs separately&quot;
+  },
+  &quot;preparation&quot;: {
+    &quot;elapsed_seconds_through_receipt&quot;: 0.6400000000003274,
+    &quot;limits&quot;: {
+      &quot;batch_responses&quot;: 64,
+      &quot;bootstrap_replicates&quot;: 1000,
+      &quot;output_bytes&quot;: 52428800,
+      &quot;rss_bytes&quot;: 536870912,
+      &quot;wall_seconds&quot;: 900
+    },
+    &quot;model_loads&quot;: 0,
+    &quot;new_inference_tokens&quot;: 0,
+    &quot;output_bytes_before_cost_receipt&quot;: 710985,
+    &quot;paid_service_calls&quot;: 0,
+    &quot;peak_observed_self_rss_bytes&quot;: 38977536,
+    &quot;resource_scope&quot;: &quot;self RSS sampled at boundaries; external process-tree supervisor required&quot;,
+    &quot;training_updates&quot;: 0,
+    &quot;unmetered&quot;: &quot;review inference costs and operator/tool overhead; report review-supplied costs separately&quot;
+  },
+  &quot;review_a_reported&quot;: {
+    &quot;wall_seconds&quot;: 177.531,
+    &quot;model_calls&quot;: null,
+    &quot;input_tokens&quot;: null,
+    &quot;output_tokens&quot;: null
+  },
+  &quot;review_b_reported&quot;: {
+    &quot;wall_seconds&quot;: 138,
+    &quot;model_calls&quot;: null,
+    &quot;input_tokens&quot;: null,
+    &quot;output_tokens&quot;: null
+  },
+  &quot;historical_inference&quot;: &quot;see source_metadata; copied past costs, zero new generation&quot;
+}</pre>
+<p>Annotation cost values are reviewer-supplied or unrecorded; historical inference costs are inherited and were not incurred by this CPU analysis.</p>
+<p><a href="report.json">Full JSON</a> · <a href="groups.csv">Model/world/domain CSV</a> · <a href="paired.csv">Paired gains/losses CSV</a> · <a href="rows.private.csv">Private disagreement audit</a> · <a href="LABEL_A_SNAPSHOT.json">Review A</a> · <a href="LABEL_B_SNAPSHOT.json">Review B</a></p>
+<p>Proceed only with descriptive instrument review. Hold any efficacy, semantic-grader qualification, causal attribution or release/preservation claim. Disagreements remain unresolved; new data or grader qualification is separate work.</p></html>
