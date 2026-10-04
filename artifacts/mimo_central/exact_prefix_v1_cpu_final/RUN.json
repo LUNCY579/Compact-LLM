@@ -1,0 +1,39 @@
+{
+  "E1_authorized": false,
+  "at_utc": "2026-10-01T17:01:28.475693+00:00",
+  "command": [
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "experiments.post_training_mimo_centralized_v1.tests.test_exact_prefix_capture",
+    "experiments.post_training_mimo_centralized_v1.tests.test_greedy_capture",
+    "experiments.post_training_mimo_centralized_v1.tests.test_post_import_admission",
+    "-v"
+  ],
+  "exit_code": 0,
+  "model_calls": 0,
+  "native_mechanics_qualified": false,
+  "source_files": {
+    "experiments/post_training_mimo_centralized_v1/configs/CAPTURE_EXACT_PREFIX_FIXED_TRACE_V1.json": {
+      "bytes": 6116,
+      "sha256": "b1b5348680f7c2bf09272ed81e504d95ae60cbbef97a85763f4ac4da9311cb9b"
+    },
+    "experiments/post_training_mimo_centralized_v1/scripts/exact_prefix_capture.py": {
+      "bytes": 13972,
+      "sha256": "85fdd9a50b964ba51b97dce61a36ee7bed1b561b907cc080c9c60d98fb8aa175"
+    },
+    "experiments/post_training_mimo_centralized_v1/scripts/qualify_exact_prefix.py": {
+      "bytes": 29225,
+      "sha256": "8d82d8b105035b9ede96abedde95a1b09b6a5eb6237815ad557c74a14f1b97c8"
+    },
+    "experiments/post_training_mimo_centralized_v1/tests/test_exact_prefix_capture.py": {
+      "bytes": 20280,
+      "sha256": "a83283b90aac0f9db9fbe7af8f81819f33f1c020d6bee7cf860fe57face0423e"
+    }
+  },
+  "status": "PASS_CPU_FIXTURES_ONLY",
+  "stderr_sha256": "99a21a29455e6f2d0d0100eeadf10c4deb32d035029187373b76b36e6907260d",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "wall_seconds": 0.5319999999992433
+}
