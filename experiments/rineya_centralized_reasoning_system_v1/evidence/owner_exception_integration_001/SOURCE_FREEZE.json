@@ -1,0 +1,62 @@
+{
+  "status": "FROZEN_BEFORE_ONE_BOUNDED_CPU_RUN",
+  "preserved_base_commit": "a6d6673c94141486ce4a8124b595b847731f32ed",
+  "builder": "/root/exception_builder",
+  "preserved_pins": {
+    "native.py": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+    "operations.py": "ba27ec8a31437459b956a5642e6ece4838f0584602db2c93ff7bc61437806e30",
+    "contracts/NATIVE_DIAGNOSTIC_V1.json": "d79f3b6a51e939d78a99c5c287ef6f33ef5979cfa50e76ba3d930ed3724f826a",
+    "contracts/OWNED_RUNTIME_IDENTITY_DIAGNOSTIC_V1.json": "a6bcdfdffead4ee6ce08cc2f80628379678c3afcfb99923d702fd6234f8001ed",
+    "contracts/READER_QUALIFICATION_V1.json": "b50d61609f8bb933045abac1b769dc7979c3b8f6f2163eb256c2fe3e77376bb0"
+  },
+  "original_source_pins": {
+    "probe": {
+      "experiments/rineya_centralized_reasoning_system_v1/owned_runtime_identity_probe.py": "431f9789635f6e99d9fcfd29f58c9dc1e8433e2ef52ee56b07f48a4d2a6f0e4b",
+      "experiments/rineya_centralized_reasoning_system_v1/operations.py": "ba27ec8a31437459b956a5642e6ece4838f0584602db2c93ff7bc61437806e30",
+      "experiments/rineya_centralized_reasoning_system_v1/native.py": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+      "experiments/rineya_centralized_reasoning_system_v1/tests/test_owned_runtime_identity_probe.py": "4436282de22b71d3bc4d00787980e500ede7c48c8a51d705daafd4f99643e784"
+    },
+    "reader": {
+      "experiments/rineya_centralized_reasoning_system_v1/native.py": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+      "experiments/rineya_centralized_reasoning_system_v1/operations.py": "ba27ec8a31437459b956a5642e6ece4838f0584602db2c93ff7bc61437806e30",
+      "experiments/post_training_mimo_centralized_v1/scripts/stream_checkpoint.py": "434c62698c2e397048db0d88a7959e34d5b8afb93f90cdf86f2aba852922c67f",
+      "experiments/post_training_mimo_centralized_v1/scripts/qualify_native.py": "a0fbbbb67dcb7136270dd01efed16cccffc62b09342863f05d03d845805bf941",
+      "experiments/post_training_mimo_centralized_v1/scripts/laptop_profile.py": "2e8c9236aba1d48e222373c7484c353eec717ae176ce9bc108968b74d1b7e196",
+      "experiments/opallo_native_collector_v1/supervisor.py": "d31370de4f6b09052fac2f3505fc38a40041e76bd2137435a1f3678f4346a54d",
+      "experiments/opallo_native_collector_v1/contract.py": "bec805005c3732ce6b1fa86ff71c6c5d551dfbadf64db4c54a8d9900cab930fb",
+      "experiments/post_training_mimo_centralized_v1/results/headless_capture_qual_v1_20260930_1140/CAPTURE_RESULT.json": "e669a6945520b7c91bb5d00382ceab2ac4ab5cdc8f09d9273ebd4915ae8017a2",
+      "experiments/post_training_mimo_centralized_v1/results/capture_geometry_d1_20260930/DIAGNOSTIC_RESULT.json": "b827f11c29e9a568f4baa37f618b05b9ee96956bd8a9b2cc87b6468634ee0808",
+      "experiments/post_training_mimo_centralized_v1/configs/CAPTURE_CAUSAL_DIAGNOSTIC_WAIT_V2.json": "b254ec5b880e9911d4ca8ba7edc27665c63ca09cbfe66ffafde76cf025fb4c65",
+      "experiments/post_training_mimo_centralized_v1/AMENDMENT_016.md": "73708dc892af904ab0f26761a8c535ca2989c43921ccfc53d223a6692676ce3f",
+      "experiments/rineya_centralized_reasoning_system_v1/reader.py": "b420e07583bb81ad3ebe7222fdaa254810881f1013a9a336527d9481f9af7a40",
+      "experiments/rineya_centralized_reasoning_system_v1/reader_execution.py": "0dcd7dc639f3d8b816288b1417750772b6e704261af47d4dc7eba298383f5e9e"
+    },
+    "test_reader.py": "06c13d9e59c37806e60bcecc854c46e3b837d8d09035d559f1cf7c3244b4eaba"
+  },
+  "source_sha256": {
+    "reader.py": "0299cb37b417bf142341509efd9d728263ddcbe89f02e6cc8b49b01f4ec851ab",
+    "reader_execution.py": "c66a1b6453f1bad19e0f51eb7d2cf2b763eb0e6e7a09e124eebcb613ef53f9d3",
+    "owned_runtime_identity_probe.py": "52e15881991f617fcb41f89cead7c379cc279a9a4da9c790b25501f03cae0e35",
+    "tests/test_reader.py": "fadf48684d98bc18d59292245fab72a120d9c1ba8f7927db08dea4c7daadf95f",
+    "tests/test_owned_runtime_identity_probe.py": "86d2a08743acff8916d908f758ef404ec4e487d8cb8c9c703995d413d8f50793",
+    "contracts/OWNED_RUNTIME_IDENTITY_DIAGNOSTIC_002_V2.json": "d7b2e5bc7673580c59a07ed5de27e8548bf13c5829fedb6e907dc9c12345a409",
+    "contracts/READER_QUALIFICATION_OWNER_EXCEPTION_001_V2.json": "e0dd0e7a61163ccfa5647041c097d1db49a9a88facfee25499b71cc26e9dd308"
+  },
+  "reviewed_intermediate_patch_result_pins": {
+    "probe": "0e85d5cfe818bf706410b78e12b0129ceeb4a95b4eb720d7d733bcef0832157e",
+    "reader": "9a6d2806c218f597a500c7a5dd17acee37bd8edd24fbddd3aa357d5704d85ed3",
+    "execution": "c66a1b6453f1bad19e0f51eb7d2cf2b763eb0e6e7a09e124eebcb613ef53f9d3"
+  },
+  "prior_registration_metadata_attempt": {
+    "tests_run": 0,
+    "candidate_edits": 0,
+    "result": "STOPPED_BEFORE_CONTRACT_CREATION_ON_MISTYPED_LOCAL_OLD_CONTRACT_HASH_ASSERTION",
+    "tool_seconds": 0.3088343
+  },
+  "source_and_contract_gates_preserved": true,
+  "canonical_host_database_access": false,
+  "framework_imports": 0,
+  "models_loaded": 0,
+  "native_probe_runs": 0,
+  "independent_approval": false
+}

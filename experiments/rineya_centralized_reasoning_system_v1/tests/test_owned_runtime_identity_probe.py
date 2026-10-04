@@ -79,20 +79,42 @@ class IdentityProbeTests(unittest.TestCase):
     def test_final_exact_reviewer_roles_reject_builder_aliases_unknown_and_duplicates(self):
         with tempfile.TemporaryDirectory() as td:
             paths=[Path(td)/"science.json",Path(td)/"operations.json"];binding={"scope":probe.SCOPE}
-            def reviews(science,operations="/root/data_audit",science_role="science"):
+            def reviews(science,operations="/root/exception_ops",science_role="science"):
                 for path,role,name in zip(paths,(science_role,"operations"),(science,operations)):
                     path.write_bytes(probe.canonical({"status":"APPROVED_FOR_OWNED_IDENTITY_PROBE",
                         "binding":binding,"role":role,"reviewer":name}))
-            roles={"science":"/root/runtime_audit","operations":"/root/data_audit"}
+            roles={"science":"/root/exception_science","operations":"/root/exception_ops"}
             for name in ("scientific_audit","\\root\\scientific_audit","/root/scientific_audit/",
-                         " /ROOT/ SCIENTIFIC_AUDIT / ","root","/root/","unknown","/other/runtime_audit","/root/data_audit"):
+                         " /ROOT/ SCIENTIFIC_AUDIT / ","root","/root/","runtime_audit","data_audit","exception_builder",
+                         "/root/exception_builder/","unknown","/other/exception_science","/root/exception_ops"):
                 reviews(name)
                 with self.assertRaises(probe.native.NativeBlocked):probe.checked_reviews(paths,binding,roles)
-            reviews("runtime_audit"," /ROOT\\DATA_AUDIT/ ");probe.checked_reviews(paths,binding,roles)
-            reviews("/root/runtime_audit/","runtime_audit")
+            reviews("exception_science"," /ROOT\\EXCEPTION_OPS/ ");probe.checked_reviews(paths,binding,roles)
+            reviews("/root/exception_science/","exception_science")
             with self.assertRaises(probe.native.NativeBlocked):probe.checked_reviews(paths,binding,roles)
-            reviews("/root/runtime_audit",science_role="operations")
+            reviews("/root/exception_science",science_role="operations")
             with self.assertRaises(probe.native.NativeBlocked):probe.checked_reviews(paths,binding,roles)
+            reviews("/root/exception_science")
+            with self.assertRaises(probe.native.NativeBlocked):probe.checked_reviews(paths,binding,
+                {"science":"/root/exception_ops","operations":"/root/exception_science"})
+            with self.assertRaises(probe.native.NativeBlocked):probe.checked_reviews(paths,binding,
+                {"science":"/root/runtime_audit","operations":"/root/data_audit"})
+
+    def test_actual_pinned_psutil_path_refusal_and_string_success(self):
+        """Actual psutil API only; these disk values are not host admission."""
+        import psutil
+        self.assertEqual(os.name,'nt');self.assertEqual(psutil.__version__,'7.2.2')
+        with tempfile.TemporaryDirectory() as td:
+            path=Path(td)
+            with self.assertRaises(TypeError):psutil.disk_usage(path)
+            actual=psutil.disk_usage(str(path))
+            self.assertGreater(actual.total,0);self.assertTrue(0 <= actual.free <= actual.total)
+        source=Path(probe.__file__).read_text()
+        self.assertIn('psutil.disk_usage(str(self.output))',source)
+        self.assertIn('psutil.disk_usage(str(output))',source)
+        self.assertNotIn('psutil.disk_usage(self.output)',source)
+        self.assertNotIn('psutil.disk_usage(output)',source)
+        self.assertEqual(probe.KEY,'CRS-OWNED-IDENTITY-002')
 
     def test_final_publication_fault_reports_known_state_and_idempotent_no_worker_recovery(self):
         for mode in ("before_release","after_release","lost_write_response"):
@@ -363,7 +385,8 @@ class IdentityProbeTests(unittest.TestCase):
     def test_actual_exact_job_deadline_kills_while_observer_sample_blocks(self):
         from experiments.opallo_native_collector_v1.supervisor import WindowsJob
         with tempfile.TemporaryDirectory() as td:
-            process=subprocess.Popen([sys.executable,"-B","-c","import time;time.sleep(30)"],
+            script="import subprocess,sys,time\nsubprocess.Popen([sys.executable,'-B','-c','import time;time.sleep(30)'])\ntime.sleep(30)"
+            process=subprocess.Popen([sys.executable,"-B","-c",script],
                     stdout=subprocess.PIPE,stderr=subprocess.PIPE,creationflags=subprocess.CREATE_NEW_PROCESS_GROUP|4)
             job=None;watch=None;release=threading.Event()
             try:

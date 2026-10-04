@@ -26,8 +26,8 @@ from .operations import OperationsStore, TERMINAL, canonical, host_state_path
 
 PACKAGE = native.PACKAGE
 ROOT = native.ROOT
-CONTRACT = PACKAGE / "contracts/OWNED_RUNTIME_IDENTITY_DIAGNOSTIC_V1.json"
-KEY = "CRS-OWNED-IDENTITY-001"
+CONTRACT = PACKAGE / "contracts/OWNED_RUNTIME_IDENTITY_DIAGNOSTIC_002_V2.json"
+KEY = "CRS-OWNED-IDENTITY-002"
 SCOPE = "NO_MODEL_FRAMEWORK_IMPORT_IDENTITY_OBSERVATION"
 MAX_LOG = 16 * 1024 * 1024
 HASH_SINGLE = 64 * 1024 * 1024
@@ -277,7 +277,8 @@ def reviewer_identity(value):
     native.require(type(value) is str, "reviewer identity must be text")
     parts = [part.strip().casefold() for part in value.strip().replace("\\", "/").split("/") if part.strip()]
     native.require(len(parts) == 1 or (len(parts) == 2 and parts[0] == "root"), "unknown reviewer namespace")
-    native.require(parts and parts[-1] not in {"root", "scientific_audit"}, "builder cannot approve probe")
+    native.require(parts and parts[-1] in {"exception_science", "exception_ops"},
+                   "owner exception001 requires a registered non-builder reviewer")
     return parts[-1]
 
 
@@ -286,7 +287,8 @@ def checked_reviews(paths, expected, expected_roles=None):
     expected_roles = expected_roles if expected_roles is not None else native.read_json(CONTRACT)["independent_reviewers_required"]
     native.require(set(expected_roles) == {"science", "operations"}, "frozen exact reviewer role map required")
     required = {role: reviewer_identity(name) for role, name in expected_roles.items()}
-    native.require(required == {"science": "runtime_audit", "operations": "data_audit"}, "reviewer policy amendment required")
+    native.require(required == {"science": "exception_science", "operations": "exception_ops"},
+                   "owner exception001 exact reviewer policy required")
     roles, reviewers = set(), set()
     for path in paths:
         review = native.read_json(path)
@@ -523,7 +525,7 @@ class ResourceWatch:
             except psutil.NoSuchProcess:
                 native.confirm_owned_process_exit(self.job, pid)
         return {"rss_bytes": rss, "pid_count": len(ids), "host_available_gib": psutil.virtual_memory().available / native.GIB,
-                "disk_free_gib": psutil.disk_usage(self.output).free / native.GIB,
+                "disk_free_gib": psutil.disk_usage(str(self.output)).free / native.GIB,
                 "log_bytes": sum(f.stat().st_size for f in self.output.iterdir()
                                  if f.is_file() and f.suffix in {".jsonl", ".log"})}
 
@@ -805,7 +807,7 @@ def supervise(args, cfg, native_cfg):
             native.require(len(current["job_pid_list"]) <= 8 and current["observed_rss_bytes"] <= 2 * native.GIB,
                            "probe process/RSS ceiling")
             native.require(psutil.virtual_memory().available / native.GIB >= 1.25
-                           and psutil.disk_usage(output).free / native.GIB >= 4, "probe RAM/disk floor")
+                           and psutil.disk_usage(str(output)).free / native.GIB >= 4, "probe RAM/disk floor")
             peak_rss = max(peak_rss, current["observed_rss_bytes"])
             if now >= next_guard:
                 try:
