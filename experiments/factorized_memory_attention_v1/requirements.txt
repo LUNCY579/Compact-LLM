@@ -1,6 +1,0 @@
-torch>=2.4
-pytest>=8
-# Exact-host native Qwen3 qualification additionally requires the checkpoint-compatible
-# Transformers stack. The registered Supa config records transformers 4.51.0; historical
-# checkpoint evidence records successful loading with 5.14.1. Pin on the exact host and
-# receipt-bind the actual version instead of silently forcing one here.
