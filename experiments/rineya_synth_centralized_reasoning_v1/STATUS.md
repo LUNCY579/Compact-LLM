@@ -20,6 +20,9 @@ or unqualified. Next work is a separately registered sustained nine-update
 backend and fresh-process continuation qualification, plus the long-context
 prompt input path. Qualified language reference/review authority and enrolled
 guard precision are still requirements. The research question is unanswered.
+The [language handoff](LANGUAGE_GATE_HANDOFF.md) records both missing review
+authority and the insufficient zero-loss precision of the central 64-world
+proposal under SYNTH's existing margin; it grants no qualification or launch.
 
 ## 2026-10-04: CPU guards and runtime controls prepared
 
