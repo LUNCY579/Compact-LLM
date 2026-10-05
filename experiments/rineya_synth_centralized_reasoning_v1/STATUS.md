@@ -1,5 +1,21 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: additive offline quality packet owner-reviewed
+
+The [supplemental readiness/measurement package](SUPPLEMENTAL_QUALITY_PACKET_001.md)
+is accepted and preserved only for offline arithmetic/provenance. Root verified
+the15-file manifest and ran70 controls with no failures/errors/skips or forbidden
+imports/actions. Its human-selected3pp/zero-new-loss engineering policy is distinct
+from historical5pp-plus-CI criteria, which remain unchanged. The packet retains
+15 unresolved real gates and allfalse permissions at historicalHEAD48fd.
+
+This supplies no native grading, guard membership, STUDY weights, export parity,
+training or promotion authority. Current owned CUDA diagnostic review remains
+open; its actual source producer/adapted-container fixture has passed with CPU-only
+classification, while full context/filesystem and runtime qualification are still
+pending. M0 remains256/384 audited raw rows, all unscored. The complete three-arm
+research question remains unanswered.
+
 ## 2026-10-05 UTC: owned execution source implemented; review remains open
 
 New staged contract/worker/supervisor/source-loader/native-pipeline/auditor files
