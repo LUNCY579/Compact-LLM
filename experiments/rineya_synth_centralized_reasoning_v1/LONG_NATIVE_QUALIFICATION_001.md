@@ -57,6 +57,12 @@ standard-library runtime closure remains false; final admission rejects a
 missing or false declaration. The16 long controls include resealed incomplete
 registration rejection. No final registration or native manifest was written.
 
+The result also retains a defensive copy of the already checked fresh200ms
+factory-admission proof. The [17-control receipt](evidence/long_native_admission_root_cpu_validation_20261005.json)
+checks preservation and expired-proof rejection before factory invocation. No
+additional native query occurs. Its fake factory cannot issue native success;
+durable source, supervisor, ownership and external review joins remain required.
+
 Remaining work: review and bind the additive standard-library runtime roster,
 implement the independent terminal/cross-process token/LP/
 cost/state/resource/cleanup auditor, then qualify actual owned long scopes with

@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: factory admission observation retained
+
+The long-scope result retains a defensive copy of its already checked fresh200ms
+factory-admission proof, so a later independent audit can inspect the exact
+request and observed expiry. All
+[17 root controls](evidence/long_native_admission_root_cpu_validation_20261005.json)
+and [independent review](evidence/long_native_admission_independent_review_20261005.json)
+pass. Expired admission rejects before factory invocation; a CPU fixture with a
+well-formed proof still cannot produce native success. No new query or model
+work was added. The full native terminal auditor and complete runtime registration
+remain pending; there is no new long native run, study training or transfer result.
+
 ## 2026-10-05 UTC: scoped CPU encoder inventory integrated
 
 The [encoder inventory](ENCODER_INVENTORY_001.md) binds the exact45-file

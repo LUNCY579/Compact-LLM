@@ -4,6 +4,7 @@ import importlib.util
 import hashlib,json,os
 from pathlib import Path
 import sys,tempfile,unittest,subprocess
+import time
 from unittest.mock import patch
 HERE=Path(__file__).resolve().parent
 STAGED=HERE.name=='long_native_qualification_work' and HERE.parent.name=='artifacts'
@@ -174,6 +175,25 @@ assert not any(n in sys.modules for n in ('torch','transformers','tokenizers'))
                 result=subprocess.run([sys.executable,'-I','-B','-c',script,str(stage),str(Path(contract.native.__file__).parent)],capture_output=True,text=True,timeout=30)
                 self.assertEqual(0,result.returncode,result.stderr)
         self.assertFalse(any(name in sys.modules for name in ('torch','transformers','tokenizers')))
+    def test_factory_admission_observation_persists_without_fixture_native_success(self):
+        with tempfile.TemporaryDirectory(dir=HERE) as root:
+            factory=Factory([9,151645]);factory.execution_scope=contract.NATIVE;observed=[]
+            def admission(request):
+                now=time.monotonic();proof={'binding':request,'owned_supervision_verified':True,
+                    'model_load_and_constructor_in_scope':True,'observed_monotonic':now,'expires_monotonic':now+.2}
+                observed.append(proof);return proof
+            result=core.run_scope(self.scope(),factory,lambda n,f:f(),lambda n:None,Sink(root),admission=admission)
+            self.assertEqual('FAILED_NATIVE_LONG_SCOPE',result['status']);self.assertIsNone(result['capsule_chain'])
+            self.assertEqual(observed[0],result['native_admission']);observed[0]['binding']['seed']=999
+            self.assertEqual(101,result['native_admission']['binding']['seed']);self.assertEqual(1,len(factory.sessions))
+            self.assertFalse(result['native_long_context_qualified'])
+        with tempfile.TemporaryDirectory(dir=HERE) as root:
+            factory=Factory();factory.execution_scope=contract.NATIVE
+            def expired(request):
+                now=time.monotonic();return {'binding':request,'owned_supervision_verified':True,
+                    'model_load_and_constructor_in_scope':True,'observed_monotonic':now-1,'expires_monotonic':now-.8}
+            result=core.run_scope(self.scope(),factory,lambda n,f:f(),lambda n:None,Sink(root),admission=expired)
+            self.assertEqual([],factory.sessions);self.assertNotIn('native_admission',result)
     def test_cleanup_failure_and_deadline_prevent_any_success_publication(self):
         with tempfile.TemporaryDirectory(dir=HERE) as root:
             factory=Factory()

@@ -202,6 +202,7 @@ def run_scope(scope,factory,call,guard,preserve,*,admission=None,previous_fixtur
             proof=admission(deepcopy(request));now=time.monotonic()
             require(proof['binding']==request and proof['owned_supervision_verified'] is True and proof['model_load_and_constructor_in_scope'] is True
                 and proof['observed_monotonic']<=now<=proof['expires_monotonic']<=proof['observed_monotonic']+.2,'fresh200ms owned factory admission')
+            result['native_admission']=deepcopy(proof)
         session=factory(scope,call=collector,guard=guard,dose=dose)
         engine=session['component'];require(engine.context_cap==scope['dose']['context_cap'] and engine.generation_cap==32,'exact long component envelope')
         require((mode==contract.NATIVE and engine.scope=='UNQUALIFIED_NATIVE_IMPLEMENTATION' and engine.device=='cuda:0')
