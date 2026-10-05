@@ -1,0 +1,224 @@
+--- root/long_native_contract.py
++++ stage/long_native_contract.py
+@@ -6,7 +6,7 @@
+ import sys
+ 
+ HERE=Path(__file__).resolve().parent
+-STAGED=HERE.name=='long_native_qualification_work' and HERE.parent.name=='artifacts'
++STAGED=HERE.name in ('long_native_qualification_work','encoder_runtime_v2_work') and HERE.parent.name=='artifacts'
+ PACKAGE=HERE.parents[1] if STAGED else HERE
+ sys.path.insert(0,str(PACKAGE));sys.path.insert(0,str(HERE))
+ import native_contract as native
+@@ -15,10 +15,10 @@
+ from native_loader import ASSET_PINS,MODEL_DIR
+ from rs_contract import canonical,digest,require
+ 
+-PURPOSE='TRAIN_long_split_fresh_native_numerical_qualification_only'
+-VERSION='synth-long-native-split-qualification-1'
+-KIND='SYNTH_LONG_NATIVE_QUALIFICATION_CAPSULE_V1'
+-AUDIT_KIND='SYNTH_LONG_NATIVE_SCOPE_INDEPENDENT_AUDIT_V1'
++PURPOSE='TRAIN_long_split_fresh_native_encoder_stdlib_V2_qualification_only'
++VERSION='synth-long-native-split-encoder-stdlib-qualified-scope-2'
++KIND='SYNTH_LONG_NATIVE_QUALIFICATION_CAPSULE_V2'
++AUDIT_KIND='SYNTH_LONG_NATIVE_SCOPE_INDEPENDENT_AUDIT_V2'
+ NATIVE='UNQUALIFIED_NATIVE_LONG_IMPLEMENTATION'
+ FAKE='CPU_FAKE_NATIVE_LONG_PROTOCOL'
+ FILES=('long_native_contract.py','long_native_core.py','long_native_worker.py','long_native_supervisor.py')
+@@ -34,8 +34,8 @@
+ def source_pins():
+     names=('native_contract.py','native_loader.py','native_precision.py','native_mechanics.py','native_process.py','native_nvml.py',
+         'native_supervisor.py','native_worker.py','inference_contract.py','inference_component.py','inference_qual_worker.py','long_inference_inputs.py',
+-        'cpu_tokenizer.py','long_inference_component.py','backend_qual_contract.py','study_schedule.py','rs_contract.py')
+-    paths=[PACKAGE/n for n in names]+[HERE/n for n in FILES]
++        'cpu_tokenizer.py','long_inference_component.py','backend_qual_contract.py','study_schedule.py','encoder_inventory.py','stdlib_inventory.py','rs_contract.py')
++    paths=[PACKAGE/n for n in names]+[HERE/n for n in FILES]+[HERE/'encoder_registration_v2.py',HERE/'admitted_runtime_observer.py']
+     tests=HERE if STAGED else PACKAGE/'tests'
+     paths+=list(tests.glob('test_long_native*.py'))
+     require(all(p.is_file() and not p.is_symlink() for p in paths),'complete reviewed long-native source files')
+@@ -56,8 +56,10 @@
+ 
+ def validate_runtime_pins(value,encoder=None):
+     expected=base_runtime_pins()
+-    if encoder is not None:expected.update(encoder['runtime_pins'])
+-    require(value==expected,'all inherited64 runtime pins plus exact additive AST and encoder closure')
++    if encoder is not None:
++        from encoder_registration_v2 import merge_pins
++        expected=merge_pins(expected,encoder['runtime_pins'])
++    require(value==expected,'all inherited64 runtime pins plus exact additive AST/encoder/finite stdlib maps')
+     return True
+ 
+ 
+@@ -97,16 +99,8 @@
+ 
+ 
+ def encoder_registration(value):
+-    require(type(value) is dict and set(value)=={'path','sha256'},'independently selected encoder runtime registration')
+-    path=Path(value['path']);require(path.is_absolute() and path.is_file() and not path.is_symlink()
+-        and path.resolve().parent==(PACKAGE/'artifacts/long_native_audit_registrations').resolve()
+-        and native.filehash(path)==value['sha256'],'owned frozen encoder registration bytes')
+-    body=native.read_json(path)
+-    require(body['kind']=='SYNTH_LONG_ENCODER_RUNTIME_REGISTRATION_V1' and body['sha256']==digest({k:v for k,v in body.items() if k!='sha256'})
+-        and set(body['runtime_pins'])==set(encoder_runtime_paths()),'exact executing encoder source/binary roster')
+-    require(body.get('complete_runtime_execution_closure_established') is True,
+-        'complete reviewed encoder and stdlib execution closure required; package-only candidate cannot dispatch')
+-    return deepcopy(body)
++    import encoder_registration_v2 as v2
++    return v2.registration(value,base_runtime_pins())
+ 
+ 
+ def build_scope(cap,role,*,references=None,prefix_stress=None,encoder=None,authorize=False):
+@@ -117,11 +111,14 @@
+     prior=native.read_json(PACKAGE/'configs/SYNTH_NQ001_PROC7.json');sources=source_pins()
+     encoding=None if encoder is None else encoder_registration(encoder)
+     runtime=base_runtime_pins()
+-    if encoding is not None:runtime.update(encoding['runtime_pins'])
++    if encoding is not None:
++        from encoder_registration_v2 import merge_pins
++        runtime=merge_pins(runtime,encoding['runtime_pins'])
+     identity={'purpose':PURPOSE,'context_cap':cap,'packet_sha256':PACKET_SHA,'source_pins':sources,'runtime_pins':runtime,
+         'model_pins':dict(ASSET_PINS),'tokenizer_binding':deepcopy(packet['tokenizer_binding']),'seed':101,
+         'precision':deepcopy(prior['precision']),'tolerances':deepcopy(native.TOLERANCES),'prefix_stress_ids':deepcopy(prefix_stress)}
+     identity['qualified_short_helper_prerequisite']=prerequisite.inference_binding()
++    identity['declared_execution_scope_registration_sha256']=None if encoding is None else encoding['sha256']
+     identity['sha256']=digest(identity)
+     return {'schema_version':1,'contract':VERSION,'purpose':PURPOSE,'authorization':deepcopy(AUTHORIZATION),
+         'owned_qualification_authorized':authorize,'staged_native_dispatch_forbidden':STAGED,'recipe':identity,
+
+--- root/long_native_core.py
++++ stage/long_native_core.py
+@@ -3,7 +3,8 @@
+ from pathlib import Path
+ import hashlib,json,math,sys,time
+ HERE=Path(__file__).resolve().parent
+-PACKAGE=HERE.parents[1] if HERE.name=='long_native_qualification_work' and HERE.parent.name=='artifacts' else HERE
++STAGED=HERE.name in ('long_native_qualification_work','encoder_runtime_v2_work') and HERE.parent.name=='artifacts'
++PACKAGE=HERE.parents[1] if STAGED else HERE
+ sys.path.insert(0,str(PACKAGE));sys.path.insert(0,str(HERE))
+ import long_native_contract as contract
+ from rs_contract import canonical,digest,require
+@@ -168,6 +169,7 @@
+     require(scope['dose']==contract.work(scope['row'],scope['role']),'exact immutable role dose')
+     checksum(scope['recipe']);role=scope['role'];mode=getattr(factory,'execution_scope',None)
+     require(mode in (contract.NATIVE,contract.FAKE),'explicit implementation scope')
++    require(mode!=contract.NATIVE or not STAGED,'staged V2 native core forbidden before reference paths/probes')
+     previous=native_references(scope) if mode==contract.NATIVE else deepcopy(previous_fixtures or[])
+     if mode==contract.FAKE:
+         for item in previous:
+
+--- root/long_native_worker.py
++++ stage/long_native_worker.py
+@@ -3,7 +3,8 @@
+ from pathlib import Path
+ import argparse,hashlib,importlib.metadata,os,random,sys,time
+ HERE=Path(__file__).resolve().parent
+-PACKAGE=HERE.parents[1] if HERE.name=='long_native_qualification_work' and HERE.parent.name=='artifacts' else HERE
++STAGED=HERE.name in ('long_native_qualification_work','encoder_runtime_v2_work') and HERE.parent.name=='artifacts'
++PACKAGE=HERE.parents[1] if STAGED else HERE
+ sys.path.insert(0,str(PACKAGE));sys.path.insert(0,str(HERE))
+ import long_native_contract as contract
+ import long_native_core as core
+@@ -14,9 +15,11 @@
+     def decode(self,*args,**kwargs):raise ValueError('long qualification never decodes or grades answers')
+ 
+ 
+-def verified_files(scope,call,guard):
++def verified_files(scope,call,guard,admission,*,phase):
+     """Actual byte verification only after fresh owned admission."""
+-    maps={'source':scope['source_pins'],'runtime':scope['runtime_pins'],'data':scope['data_pins'],'model':scope['model_pins'],
++    from admitted_runtime_observer import observe,validate_admission
++    validate_admission(admission,phase,scope['recipe']['sha256'],scope['role'])
++    maps={'source':scope['source_pins'],'runtime':scope['encoder_runtime_registration']['inherited_runtime_pins'],'data':scope['data_pins'],'model':scope['model_pins'],
+           'encoder_assets':{str(Path(scope['tokenizer_binding']['model_dir'])/name):entry['sha256'] for name,entry in scope['tokenizer_binding']['assets'].items()},
+           'encoder_bindings':scope['tokenizer_binding']['binding_sources']}
+     actual={}
+@@ -33,6 +36,11 @@
+                 return value.hexdigest()
+             value=call('long_%s_file_verify'%section,read_hash);require(value==want,'actual admitted '+section+' byte drift')
+             actual[section][name]=value
++    observation=observe(scope['encoder_runtime_registration'],call,guard,admission,phase=phase,recipe_sha256=scope['recipe']['sha256'],role=scope['role'])
++    from encoder_registration_v2 import merge_pins
++    actual['runtime']=merge_pins(actual['runtime'],observation['actual_additional_runtime_pins'])
++    require(actual['runtime']==scope['runtime_pins'],'all declared inherited/additive actual runtime bytes')
++    actual['runtime_observation']=observation
+     return actual
+ 
+ 
+@@ -58,7 +66,7 @@
+ 
+ class NativeFactory:
+     execution_scope=contract.NATIVE
+-    def __init__(self,owner,journal):self.owner,self.journal=owner,journal;self.torch=None;self.hooks=[];self.call=None;self.cleaned=False
++    def __init__(self,owner,journal):self.owner,self.journal=owner,journal;self.torch=None;self.hooks=[];self.call=None;self.cleaned=False;self.admission_evidence=None
+     def cleanup(self):
+         if self.cleaned:return
+         self.cleaned=True
+@@ -76,7 +84,7 @@
+         self.call=call
+         # Contract sources and static metadata were frozen before dispatch; all
+         # actual byte/encoder work is included inside the admitted factory.
+-        pins_before=verified_files(scope,call,guard)
++        pins_before=verified_files(scope,call,guard,self.admission_evidence,phase="before_import")
+         encoding=verify_encoder(scope,call)
+         for name,value in scope['offline_environment'].items():os.environ[name]=value
+         os.environ['CUDA_VISIBLE_DEVICES']='0'
+@@ -146,7 +154,10 @@
+             base=verify_frozen_base(torch,model,source_hashes,call,guard)
+             require(base['verified_source_tensors']==310 and base['frozen_base_unchanged'] is True,'actual all310 frozen base contents')
+             require(active['observations'] and all(value>0 for value in active['observations'].values()),'every FP32 activation site observed')
+-            actual_after=verified_files(scope,call,guard);require(actual_after==pins_before,'actual source/runtime/model/encoder bytes before/after')
++            actual_after=verified_files(scope,call,guard,self.admission_evidence,phase="after_math")
++            before_compare=deepcopy(pins_before);after_compare=deepcopy(actual_after)
++            before_compare['runtime_observation'].pop('phase');after_compare['runtime_observation'].pop('phase')
++            require(after_compare==before_compare,'actual source/runtime/model/encoder bytes before/after')
+             return {'kind':'NATIVE_OBSERVED_LONG_END','identity_common':common,'RNG_unchanged':True,'RNG_after':after_rng,
+                 'base310_unchanged':True,'base_postcheck':base,'zeroB_unchanged':True,'zeroB_after':z,'adapter_byte_hashes_after':deepcopy(after_adapter),
+                 'activation_observations':deepcopy(active['observations']),'actual_pin_maps_after':actual_after,'native_long_context_qualified':False}
+@@ -154,6 +165,7 @@
+ 
+ 
+ def run(config_path,output):
++    require(not STAGED,'staged V2 worker forbidden before paths/probes')
+     scope=contract.preflight(config_path)  # staging denial precedes all APIs
+     from native_worker import Journal,verify_worker_ownership,preserve_terminal
+     from inference_qual_worker import make_guard
+@@ -172,7 +184,9 @@
+         journal.emit({'event':'long_measurement_preserved','name':event['event'],'publication':value});return value
+     def admission(request):
+         guard('before_long_owned_factory');now=time.monotonic()
+-        return {'binding':request,'owned_supervision_verified':True,'model_load_and_constructor_in_scope':True,'observed_monotonic':now,'expires_monotonic':now+.2}
++        evidence={'binding':request,'owned_supervision_verified':True,'model_load_and_constructor_in_scope':True,'observed_monotonic':now,'expires_monotonic':now+.2}
++        factory.admission_evidence=evidence
++        return evidence
+     result=core.run_scope(scope,factory,journal.call,guard,preserve,admission=admission)
+     result.update({'config_sha256':scope['config_sha256'],'source_commit':scope['source_commit'],'wall_seconds':time.monotonic()-start,
+         'operation_accounting':journal.snapshot(),'requires_independent_supervised_audit':True})
+
+--- root/long_native_supervisor.py
++++ stage/long_native_supervisor.py
+@@ -9,7 +9,8 @@
+ from pathlib import Path as _Path
+ import sys as _sys
+ _HERE=_Path(__file__).resolve().parent
+-_PACKAGE=_HERE.parents[1] if _HERE.name=="long_native_qualification_work" and _HERE.parent.name=="artifacts" else _HERE
++_STAGED=_HERE.name in ("long_native_qualification_work","encoder_runtime_v2_work") and _HERE.parent.name=="artifacts"
++_PACKAGE=_HERE.parents[1] if _STAGED else _HERE
+ _sys.path.insert(0,str(_PACKAGE));_sys.path.insert(0,str(_HERE))
+ 
+ from native_supervisor import (
+@@ -51,6 +52,7 @@
+ 
+ 
+ def supervise_long_native_qualification(config_path, output_dir, *, admission_only=False):
++    if _STAGED: raise ValueError("staged V2 supervisor forbidden before paths/probes")
+     """Return and preserve one terminal receipt, with no launch retry."""
+     import long_native_contract
+     if long_native_contract.STAGED: raise ValueError("staged native-long dispatch forbidden before APIs")
+@@ -76,7 +78,7 @@
+         receipt["preflight"] = config
+         receipt["config_sha256"] = config["config_sha256"]
+         authorization = config.get("authorization", {})
+-        if (authorization.get("scope") != "TRAIN_long_split_fresh_native_numerical_qualification_only"
++        if (authorization.get("scope") != "TRAIN_long_split_fresh_native_encoder_stdlib_V2_qualification_only"
+                 or any(authorization.get(name) is not False for name in
+                        ("production_training", "protected_bank_access", "paid_services"))):
+             raise ValueError("supervisor admits inference qualification only")

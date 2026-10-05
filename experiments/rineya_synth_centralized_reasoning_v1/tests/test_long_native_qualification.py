@@ -7,13 +7,16 @@ import sys,tempfile,unittest,subprocess
 import time
 from unittest.mock import patch
 HERE=Path(__file__).resolve().parent
-STAGED=HERE.name=='long_native_qualification_work' and HERE.parent.name=='artifacts'
+STAGED=HERE.name in ('long_native_qualification_work','encoder_runtime_v2_work') and HERE.parent.name=='artifacts'
 PACKAGE=HERE.parents[1] if STAGED else HERE.parent
 CODE=HERE if STAGED else PACKAGE
 sys.path.insert(0,str(PACKAGE));sys.path.insert(0,str(CODE))
 import long_native_contract as contract
+sys.path.insert(0,str(CODE))
 import long_native_core as core
+sys.path.insert(0,str(CODE))
 import long_native_worker as worker
+sys.path.insert(0,str(CODE))
 import long_native_supervisor as supervisor
 import long_inference_component as component
 spec=importlib.util.spec_from_file_location('long_sparse_fixture',PACKAGE/'tests/test_inference_component.py')
@@ -150,8 +153,12 @@ class Controls(unittest.TestCase):
     def test_native_admission_absent_before_factory_and_stage_entries_deny(self):
         factory=Factory();factory.execution_scope=contract.NATIVE
         with tempfile.TemporaryDirectory(dir=HERE) as root:
-            result=core.run_scope(self.scope(),factory,lambda n,f:f(),lambda n:None,Sink(root))
-            self.assertEqual('FAILED_NATIVE_LONG_SCOPE',result['status']);self.assertEqual([],factory.sessions)
+            if core.STAGED:
+                with self.assertRaisesRegex(ValueError,'staged'):core.run_scope(self.scope(),factory,lambda n,f:f(),lambda n:None,Sink(root))
+            else:
+                result=core.run_scope(self.scope(),factory,lambda n,f:f(),lambda n:None,Sink(root))
+                self.assertEqual('FAILED_NATIVE_LONG_SCOPE',result['status'])
+            self.assertEqual([],factory.sessions)
         if contract.STAGED:
             with self.assertRaisesRegex(ValueError,'staged'):contract.preflight(HERE/'none.json')
             with self.assertRaisesRegex(ValueError,'staged'):contract.write_scope(HERE/'none.json',4096,'trace1')
@@ -180,6 +187,12 @@ assert not any(n in sys.modules for n in ('torch','transformers','tokenizers'))
         result=subprocess.run([sys.executable,'-I','-B','-c',code,str(PACKAGE)],capture_output=True,text=True,timeout=30)
         self.assertEqual(0,result.returncode,result.stderr)
     def test_factory_admission_observation_persists_without_fixture_native_success(self):
+        if core.STAGED:
+            factory=Factory();factory.execution_scope=contract.NATIVE;admissions=[]
+            with tempfile.TemporaryDirectory(dir=HERE) as root,self.assertRaisesRegex(ValueError,'staged'):
+                core.run_scope(self.scope(),factory,lambda n,f:f(),lambda n:None,Sink(root),admission=lambda request:admissions.append(request))
+            self.assertEqual([],admissions);self.assertEqual([],factory.sessions)
+            return
         with tempfile.TemporaryDirectory(dir=HERE) as root:
             factory=Factory([9,151645]);factory.execution_scope=contract.NATIVE;observed=[]
             def admission(request):
@@ -297,15 +310,20 @@ assert imported<=set(c.source_pins()),sorted(imported-set(c.source_pins()))
         ast_key=next(key for key in runtime if Path(key).name=='ast.py');bad=deepcopy(runtime);bad[ast_key]='0'*64
         with self.assertRaisesRegex(ValueError,'additive AST'):contract.validate_runtime_pins(bad)
     def test_package_only_encoder_candidate_cannot_dispatch_when_resealed(self):
-        for flag in (None,False):
+        import encoder_registration_v2 as v2
+        runtime=contract.base_runtime_pins()
+        for flag in (None,False,True):
             with tempfile.TemporaryDirectory(dir=HERE) as root:
                 package=Path(root);directory=package/'artifacts/long_native_audit_registrations';directory.mkdir(parents=True)
                 body={'kind':'SYNTH_LONG_ENCODER_RUNTIME_REGISTRATION_V1','runtime_pins':{}}
                 if flag is not None:body['complete_runtime_execution_closure_established']=flag
                 body=core.seal(body);path=directory/'CPU_FIXTURE_NOT_REGISTRATION.json';path.write_text(core.canonical(body))
                 value={'path':str(path),'sha256':hashlib.sha256(path.read_bytes()).hexdigest()}
-                with patch.object(contract,'PACKAGE',package),patch.object(contract,'encoder_runtime_paths',return_value=[]):
-                    with self.assertRaisesRegex(ValueError,'package-only'):contract.encoder_registration(value)
+                if contract.STAGED:
+                    with self.assertRaisesRegex(ValueError,'staged'):contract.encoder_registration(value)
+                else:
+                    with patch.object(v2,'PACKAGE',package),patch.object(contract,'base_runtime_pins',return_value=runtime):
+                        with self.assertRaisesRegex(ValueError,'V2 schema'):contract.encoder_registration(value)
 
 
 if __name__=='__main__':unittest.main()

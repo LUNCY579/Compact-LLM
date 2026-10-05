@@ -3,7 +3,8 @@ from copy import deepcopy
 from pathlib import Path
 import hashlib,json,math,sys,time
 HERE=Path(__file__).resolve().parent
-PACKAGE=HERE.parents[1] if HERE.name=='long_native_qualification_work' and HERE.parent.name=='artifacts' else HERE
+STAGED=HERE.name in ('long_native_qualification_work','encoder_runtime_v2_work') and HERE.parent.name=='artifacts'
+PACKAGE=HERE.parents[1] if STAGED else HERE
 sys.path.insert(0,str(PACKAGE));sys.path.insert(0,str(HERE))
 import long_native_contract as contract
 from rs_contract import canonical,digest,require
@@ -168,6 +169,7 @@ def run_scope(scope,factory,call,guard,preserve,*,admission=None,previous_fixtur
     require(scope['dose']==contract.work(scope['row'],scope['role']),'exact immutable role dose')
     checksum(scope['recipe']);role=scope['role'];mode=getattr(factory,'execution_scope',None)
     require(mode in (contract.NATIVE,contract.FAKE),'explicit implementation scope')
+    require(mode!=contract.NATIVE or not STAGED,'staged V2 native core forbidden before reference paths/probes')
     previous=native_references(scope) if mode==contract.NATIVE else deepcopy(previous_fixtures or[])
     if mode==contract.FAKE:
         for item in previous:

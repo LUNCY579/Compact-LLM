@@ -3,7 +3,8 @@ from copy import deepcopy
 from pathlib import Path
 import argparse,hashlib,importlib.metadata,os,random,sys,time
 HERE=Path(__file__).resolve().parent
-PACKAGE=HERE.parents[1] if HERE.name=='long_native_qualification_work' and HERE.parent.name=='artifacts' else HERE
+STAGED=HERE.name in ('long_native_qualification_work','encoder_runtime_v2_work') and HERE.parent.name=='artifacts'
+PACKAGE=HERE.parents[1] if STAGED else HERE
 sys.path.insert(0,str(PACKAGE));sys.path.insert(0,str(HERE))
 import long_native_contract as contract
 import long_native_core as core
@@ -14,9 +15,11 @@ class NoDecode:
     def decode(self,*args,**kwargs):raise ValueError('long qualification never decodes or grades answers')
 
 
-def verified_files(scope,call,guard):
+def verified_files(scope,call,guard,admission,*,phase):
     """Actual byte verification only after fresh owned admission."""
-    maps={'source':scope['source_pins'],'runtime':scope['runtime_pins'],'data':scope['data_pins'],'model':scope['model_pins'],
+    from admitted_runtime_observer import observe,validate_admission
+    validate_admission(admission,phase,scope['recipe']['sha256'],scope['role'])
+    maps={'source':scope['source_pins'],'runtime':scope['encoder_runtime_registration']['inherited_runtime_pins'],'data':scope['data_pins'],'model':scope['model_pins'],
           'encoder_assets':{str(Path(scope['tokenizer_binding']['model_dir'])/name):entry['sha256'] for name,entry in scope['tokenizer_binding']['assets'].items()},
           'encoder_bindings':scope['tokenizer_binding']['binding_sources']}
     actual={}
@@ -33,6 +36,11 @@ def verified_files(scope,call,guard):
                 return value.hexdigest()
             value=call('long_%s_file_verify'%section,read_hash);require(value==want,'actual admitted '+section+' byte drift')
             actual[section][name]=value
+    observation=observe(scope['encoder_runtime_registration'],call,guard,admission,phase=phase,recipe_sha256=scope['recipe']['sha256'],role=scope['role'])
+    from encoder_registration_v2 import merge_pins
+    actual['runtime']=merge_pins(actual['runtime'],observation['actual_additional_runtime_pins'])
+    require(actual['runtime']==scope['runtime_pins'],'all declared inherited/additive actual runtime bytes')
+    actual['runtime_observation']=observation
     return actual
 
 
@@ -58,7 +66,7 @@ def verify_encoder(scope,call):
 
 class NativeFactory:
     execution_scope=contract.NATIVE
-    def __init__(self,owner,journal):self.owner,self.journal=owner,journal;self.torch=None;self.hooks=[];self.call=None;self.cleaned=False
+    def __init__(self,owner,journal):self.owner,self.journal=owner,journal;self.torch=None;self.hooks=[];self.call=None;self.cleaned=False;self.admission_evidence=None
     def cleanup(self):
         if self.cleaned:return
         self.cleaned=True
@@ -76,7 +84,7 @@ class NativeFactory:
         self.call=call
         # Contract sources and static metadata were frozen before dispatch; all
         # actual byte/encoder work is included inside the admitted factory.
-        pins_before=verified_files(scope,call,guard)
+        pins_before=verified_files(scope,call,guard,self.admission_evidence,phase="before_import")
         encoding=verify_encoder(scope,call)
         for name,value in scope['offline_environment'].items():os.environ[name]=value
         os.environ['CUDA_VISIBLE_DEVICES']='0'
@@ -146,7 +154,10 @@ class NativeFactory:
             base=verify_frozen_base(torch,model,source_hashes,call,guard)
             require(base['verified_source_tensors']==310 and base['frozen_base_unchanged'] is True,'actual all310 frozen base contents')
             require(active['observations'] and all(value>0 for value in active['observations'].values()),'every FP32 activation site observed')
-            actual_after=verified_files(scope,call,guard);require(actual_after==pins_before,'actual source/runtime/model/encoder bytes before/after')
+            actual_after=verified_files(scope,call,guard,self.admission_evidence,phase="after_math")
+            before_compare=deepcopy(pins_before);after_compare=deepcopy(actual_after)
+            before_compare['runtime_observation'].pop('phase');after_compare['runtime_observation'].pop('phase')
+            require(after_compare==before_compare,'actual source/runtime/model/encoder bytes before/after')
             return {'kind':'NATIVE_OBSERVED_LONG_END','identity_common':common,'RNG_unchanged':True,'RNG_after':after_rng,
                 'base310_unchanged':True,'base_postcheck':base,'zeroB_unchanged':True,'zeroB_after':z,'adapter_byte_hashes_after':deepcopy(after_adapter),
                 'activation_observations':deepcopy(active['observations']),'actual_pin_maps_after':actual_after,'native_long_context_qualified':False}
@@ -154,6 +165,7 @@ class NativeFactory:
 
 
 def run(config_path,output):
+    require(not STAGED,'staged V2 worker forbidden before paths/probes')
     scope=contract.preflight(config_path)  # staging denial precedes all APIs
     from native_worker import Journal,verify_worker_ownership,preserve_terminal
     from inference_qual_worker import make_guard
@@ -172,7 +184,9 @@ def run(config_path,output):
         journal.emit({'event':'long_measurement_preserved','name':event['event'],'publication':value});return value
     def admission(request):
         guard('before_long_owned_factory');now=time.monotonic()
-        return {'binding':request,'owned_supervision_verified':True,'model_load_and_constructor_in_scope':True,'observed_monotonic':now,'expires_monotonic':now+.2}
+        evidence={'binding':request,'owned_supervision_verified':True,'model_load_and_constructor_in_scope':True,'observed_monotonic':now,'expires_monotonic':now+.2}
+        factory.admission_evidence=evidence
+        return evidence
     result=core.run_scope(scope,factory,journal.call,guard,preserve,admission=admission)
     result.update({'config_sha256':scope['config_sha256'],'source_commit':scope['source_commit'],'wall_seconds':time.monotonic()-start,
         'operation_accounting':journal.snapshot(),'requires_independent_supervised_audit':True})

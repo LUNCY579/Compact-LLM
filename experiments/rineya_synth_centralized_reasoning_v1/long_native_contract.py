@@ -6,7 +6,7 @@ import os
 import sys
 
 HERE=Path(__file__).resolve().parent
-STAGED=HERE.name=='long_native_qualification_work' and HERE.parent.name=='artifacts'
+STAGED=HERE.name in ('long_native_qualification_work','encoder_runtime_v2_work') and HERE.parent.name=='artifacts'
 PACKAGE=HERE.parents[1] if STAGED else HERE
 sys.path.insert(0,str(PACKAGE));sys.path.insert(0,str(HERE))
 import native_contract as native
@@ -15,10 +15,10 @@ import backend_qual_contract as prerequisite
 from native_loader import ASSET_PINS,MODEL_DIR
 from rs_contract import canonical,digest,require
 
-PURPOSE='TRAIN_long_split_fresh_native_numerical_qualification_only'
-VERSION='synth-long-native-split-qualification-1'
-KIND='SYNTH_LONG_NATIVE_QUALIFICATION_CAPSULE_V1'
-AUDIT_KIND='SYNTH_LONG_NATIVE_SCOPE_INDEPENDENT_AUDIT_V1'
+PURPOSE='TRAIN_long_split_fresh_native_encoder_stdlib_V2_qualification_only'
+VERSION='synth-long-native-split-encoder-stdlib-qualified-scope-2'
+KIND='SYNTH_LONG_NATIVE_QUALIFICATION_CAPSULE_V2'
+AUDIT_KIND='SYNTH_LONG_NATIVE_SCOPE_INDEPENDENT_AUDIT_V2'
 NATIVE='UNQUALIFIED_NATIVE_LONG_IMPLEMENTATION'
 FAKE='CPU_FAKE_NATIVE_LONG_PROTOCOL'
 FILES=('long_native_contract.py','long_native_core.py','long_native_worker.py','long_native_supervisor.py')
@@ -34,8 +34,8 @@ ROLES=('trace1','trace2','bulk','prefix_stress')
 def source_pins():
     names=('native_contract.py','native_loader.py','native_precision.py','native_mechanics.py','native_process.py','native_nvml.py',
         'native_supervisor.py','native_worker.py','inference_contract.py','inference_component.py','inference_qual_worker.py','long_inference_inputs.py',
-        'cpu_tokenizer.py','long_inference_component.py','backend_qual_contract.py','study_schedule.py','rs_contract.py')
-    paths=[PACKAGE/n for n in names]+[HERE/n for n in FILES]
+        'cpu_tokenizer.py','long_inference_component.py','backend_qual_contract.py','study_schedule.py','encoder_inventory.py','stdlib_inventory.py','rs_contract.py')
+    paths=[PACKAGE/n for n in names]+[HERE/n for n in FILES]+[HERE/'encoder_registration_v2.py',HERE/'admitted_runtime_observer.py']
     tests=HERE if STAGED else PACKAGE/'tests'
     paths+=list(tests.glob('test_long_native*.py'))
     require(all(p.is_file() and not p.is_symlink() for p in paths),'complete reviewed long-native source files')
@@ -56,8 +56,10 @@ def base_runtime_pins():
 
 def validate_runtime_pins(value,encoder=None):
     expected=base_runtime_pins()
-    if encoder is not None:expected.update(encoder['runtime_pins'])
-    require(value==expected,'all inherited64 runtime pins plus exact additive AST and encoder closure')
+    if encoder is not None:
+        from encoder_registration_v2 import merge_pins
+        expected=merge_pins(expected,encoder['runtime_pins'])
+    require(value==expected,'all inherited64 runtime pins plus exact additive AST/encoder/finite stdlib maps')
     return True
 
 
@@ -97,16 +99,8 @@ def encoder_runtime_paths():
 
 
 def encoder_registration(value):
-    require(type(value) is dict and set(value)=={'path','sha256'},'independently selected encoder runtime registration')
-    path=Path(value['path']);require(path.is_absolute() and path.is_file() and not path.is_symlink()
-        and path.resolve().parent==(PACKAGE/'artifacts/long_native_audit_registrations').resolve()
-        and native.filehash(path)==value['sha256'],'owned frozen encoder registration bytes')
-    body=native.read_json(path)
-    require(body['kind']=='SYNTH_LONG_ENCODER_RUNTIME_REGISTRATION_V1' and body['sha256']==digest({k:v for k,v in body.items() if k!='sha256'})
-        and set(body['runtime_pins'])==set(encoder_runtime_paths()),'exact executing encoder source/binary roster')
-    require(body.get('complete_runtime_execution_closure_established') is True,
-        'complete reviewed encoder and stdlib execution closure required; package-only candidate cannot dispatch')
-    return deepcopy(body)
+    import encoder_registration_v2 as v2
+    return v2.registration(value,base_runtime_pins())
 
 
 def build_scope(cap,role,*,references=None,prefix_stress=None,encoder=None,authorize=False):
@@ -117,11 +111,14 @@ def build_scope(cap,role,*,references=None,prefix_stress=None,encoder=None,autho
     prior=native.read_json(PACKAGE/'configs/SYNTH_NQ001_PROC7.json');sources=source_pins()
     encoding=None if encoder is None else encoder_registration(encoder)
     runtime=base_runtime_pins()
-    if encoding is not None:runtime.update(encoding['runtime_pins'])
+    if encoding is not None:
+        from encoder_registration_v2 import merge_pins
+        runtime=merge_pins(runtime,encoding['runtime_pins'])
     identity={'purpose':PURPOSE,'context_cap':cap,'packet_sha256':PACKET_SHA,'source_pins':sources,'runtime_pins':runtime,
         'model_pins':dict(ASSET_PINS),'tokenizer_binding':deepcopy(packet['tokenizer_binding']),'seed':101,
         'precision':deepcopy(prior['precision']),'tolerances':deepcopy(native.TOLERANCES),'prefix_stress_ids':deepcopy(prefix_stress)}
     identity['qualified_short_helper_prerequisite']=prerequisite.inference_binding()
+    identity['declared_execution_scope_registration_sha256']=None if encoding is None else encoding['sha256']
     identity['sha256']=digest(identity)
     return {'schema_version':1,'contract':VERSION,'purpose':PURPOSE,'authorization':deepcopy(AUTHORIZATION),
         'owned_qualification_authorized':authorize,'staged_native_dispatch_forbidden':STAGED,'recipe':identity,

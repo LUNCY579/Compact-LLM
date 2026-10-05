@@ -1,5 +1,24 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: exact V2 runtime consumption integrated
+
+The [V2 runtime contract/observer](ENCODER_RUNTIME_V2_001.md) is integrated from
+reviewed bytes. Exact external candidate/review/source/template/policy joins
+retain65 inherited +45 encoder +779 stdlib entries as887 unique runtime pins.
+Counted guarded before-import/after-math byte observations preserve preparation
+gates and original model/resource/numerical/ownership behavior. Both staging
+names refuse native dispatch independently of cached module aliases.
+
+All [64 targeted root controls](evidence/encoder_runtime_v2_root_cpu_validation_001_20261005.json)
+pass, following independent32+32 staged/fresh-package checks. The
+[reviewed history](evidence/encoder_runtime_v2_reviewed_cpu_20261005) retains36
+staged files and exact V1 root predecessors. No final registration/config or
+native model/encoder/framework/GPU execution occurred. Current package evidence
+must be reconstructed after these root source changes. Independent V2 validator
+and actual terminal I/O/current-identity certification remain pending, so native
+launch stays closed. M0 completion, model fit, language authority and the learning
+comparison remain unfinished. The800-test full run predates this integration.
+
 ## 2026-10-05 UTC: whole terminal-frame CPU composition integrated
 
 The [terminal composition helper](LONG_TERMINAL_COMPOSITION_001.md) is integrated

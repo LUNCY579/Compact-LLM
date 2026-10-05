@@ -9,7 +9,8 @@ qualification; this code alone does not authorize DEV scoring or training.
 from pathlib import Path as _Path
 import sys as _sys
 _HERE=_Path(__file__).resolve().parent
-_PACKAGE=_HERE.parents[1] if _HERE.name=="long_native_qualification_work" and _HERE.parent.name=="artifacts" else _HERE
+_STAGED=_HERE.name in ("long_native_qualification_work","encoder_runtime_v2_work") and _HERE.parent.name=="artifacts"
+_PACKAGE=_HERE.parents[1] if _STAGED else _HERE
 _sys.path.insert(0,str(_PACKAGE));_sys.path.insert(0,str(_HERE))
 
 from native_supervisor import (
@@ -51,6 +52,7 @@ def _preflight(path):
 
 
 def supervise_long_native_qualification(config_path, output_dir, *, admission_only=False):
+    if _STAGED: raise ValueError("staged V2 supervisor forbidden before paths/probes")
     """Return and preserve one terminal receipt, with no launch retry."""
     import long_native_contract
     if long_native_contract.STAGED: raise ValueError("staged native-long dispatch forbidden before APIs")
@@ -76,7 +78,7 @@ def supervise_long_native_qualification(config_path, output_dir, *, admission_on
         receipt["preflight"] = config
         receipt["config_sha256"] = config["config_sha256"]
         authorization = config.get("authorization", {})
-        if (authorization.get("scope") != "TRAIN_long_split_fresh_native_numerical_qualification_only"
+        if (authorization.get("scope") != "TRAIN_long_split_fresh_native_encoder_stdlib_V2_qualification_only"
                 or any(authorization.get(name) is not False for name in
                        ("production_training", "protected_bank_access", "paid_services"))):
             raise ValueError("supervisor admits inference qualification only")
