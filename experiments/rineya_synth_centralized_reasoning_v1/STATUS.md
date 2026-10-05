@@ -1,5 +1,27 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: owned execution source implemented; review remains open
+
+New staged contract/worker/supervisor/source-loader/native-pipeline/auditor files
+are retained in an [open-review snapshot](evidence/prefix_owned_execution_open_review_20261005/ROOT_PRESERVATION.json).
+They are not accepted native infrastructure. Preliminary CPU ownership/replay
+controls and native-schema adapter fixtures do not qualify the full actual
+producer/context/filesystem orchestration. No native or binary execution occurred.
+
+Review found and is correcting concrete schema, ownership, preflight, source
+execution, loader/cache, environment/device-binding and error/cleanup gaps.
+The [anchored review](evidence/prefix_owned_execution_open_review_20261005/owned_execution_initial_source_findings_1791230189386817900.json)
+and Root requirement records preserve those findings. Native-schema fixture
+capability now forces CPU-only classification; it cannot enter the public native
+audit path. Full inert actual-producer/integrated-audit positive proof, remaining
+runtime/bootstrap policy and current qualification remain unresolved. Stage
+native gates stay closed, and old helpers/qualified sources remain unchanged.
+
+M0 remains256/384 audited raw rows, all unscored. No retry, model computation,
+training, scoring, driver/TDR change or transfer result follows this source work.
+Continue the actual owned qualification path rather than treating the fixture
+workflow as a substitute for the original three-arm goal.
+
 ## 2026-10-05 UTC: runtime source candidate and closed contract reviewed
 
 The [source-only runtime milestone](PREFIX_RUNTIME_CANDIDATE_001.md) passes20
