@@ -1,5 +1,33 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: backend phase A failed its GPU floor
+
+The first [phase-A scope](configs/SYNTH_BACKENDQ001_A1.json) exited with worker
+failure after its first training forward returned. The
+[independent audit](evidence/backendq001_A_attempt1_independent_audit_20261005.json)
+verified 353 returned API calls and three physical forwards / 585 positions,
+including successful zero-adapter parity. Zero losses, backwards, optimizer
+steps, C9 checkpoints or W9/W10 witnesses completed. Only three pretraining
+base-byte checks completed; there is no final preservation proof or sustained
+qualification. [All raw evidence and 22 source snapshots](evidence/backendq001_A_attempt1_20261005)
+are retained. Owned processes, samplers, NVML and the lease are terminal.
+
+The direct CUDA diagnostic reported 417,288,192 free bytes, below the unchanged
+536,870,912-byte floor. Sampled NVML observations missed that direct/API-time
+floor violation; they do not override it. A had more free VRAM at admission
+and a lower Torch allocation peak than Native7, while the nonallocator residual
+was higher at failure. This does not prove intrinsic profile infeasibility or
+identify an app's historical allocation. A separate
+[current read-only snapshot](evidence/current_GPU_contention_snapshot_20261005.json)
+shows 2,202 MiB free and StarRail among current GPU processes, below the existing
+4-GiB native admission requirement. No unrelated app was controlled or stopped.
+
+Native admission and unchanged retry remain closed. Continue CPU collector
+integration and a separately evidenced memory/recomputation investigation with
+the same parameters, data, optimizer, numerical tolerances and resource floors.
+Study training, transfer/retention and the qualified language gate remain open
+requirements; the research question is unanswered.
+
 ## 2026-10-04: sustained/resume qualification implemented; native fit pending
 
 The reviewed [backend qualification](BACKEND_QUALIFICATION_001.md) is integrated.

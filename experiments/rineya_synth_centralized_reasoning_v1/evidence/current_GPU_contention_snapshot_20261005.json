@@ -1,0 +1,52 @@
+{
+  "admission_floor_bytes": 4294967296,
+  "compute_process_query_has_per_process_memory_NA": true,
+  "current_sample_below_admission_floor": true,
+  "failed_A_Job_closed": true,
+  "failed_A_owned_pid_alive": false,
+  "failed_A_owned_root_pid": 177408,
+  "limitations": [
+    "Current process presence/creation metadata does not quantify per-process VRAM or prove the owner of the historical nonallocator increase.",
+    "nvidia-smi rounded current memory metrics are separate from actual A direct CUDA guard and sampled NVML records.",
+    "No process command lines, app control, unrelated termination, framework or model call performed."
+  ],
+  "native_retry_authorized": false,
+  "nvidia_smi_query_gpu": {
+    "GPU_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+    "driver_version": "566.07",
+    "free_MiB": 2202,
+    "query_exit_code": 0,
+    "total_MiB": 8188,
+    "used_MiB": 5747
+  },
+  "protected_bank_access": false,
+  "recorded_at_utc": "2026-10-05T00:18:15.253812+00:00",
+  "schema_version": 1,
+  "selected_process_metadata": [
+    {
+      "created_local": "2026-10-04T17:36:37.754562-05:00",
+      "name": "HYPHelper.exe",
+      "parent_pid": 3208,
+      "pid": 148948
+    },
+    {
+      "created_local": "2026-10-04T17:36:38.241876-05:00",
+      "name": "dwm.exe",
+      "parent_pid": 2200,
+      "pid": 28416
+    },
+    {
+      "created_local": "2026-10-04T19:01:39.465166-05:00",
+      "name": "StarRail.exe",
+      "parent_pid": 3208,
+      "pid": 182256
+    },
+    {
+      "created_local": "2026-10-04T19:02:01.715712-05:00",
+      "name": "ZFGameBrowser.exe",
+      "parent_pid": 186176,
+      "pid": 185380
+    }
+  ],
+  "status": "READ_ONLY_CURRENT_GPU_CONTENTION_SNAPSHOT_NOT_HISTORICAL_ATTRIBUTION"
+}

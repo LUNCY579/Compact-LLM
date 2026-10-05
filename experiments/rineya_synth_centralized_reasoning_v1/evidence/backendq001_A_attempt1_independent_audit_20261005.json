@@ -1,0 +1,327 @@
+{
+  "accounting": {
+    "API_attempted": 353,
+    "API_failed": 0,
+    "API_pending": 0,
+    "API_returned": 353,
+    "C9_saved": false,
+    "CE_checks": 0,
+    "backwards": 0,
+    "full_base_content_checks_completed": 3,
+    "full_base_content_checks_planned_A": 16,
+    "last_complete_base_proof_precedes_first_training_forward": true,
+    "last_returned_call": {
+      "event": "returned",
+      "id": 353,
+      "operation": "training_forward",
+      "utc": "2026-10-05T00:02:55.133927+00:00"
+    },
+    "no_actual_return_erased": true,
+    "optimizer_steps": 0,
+    "physical_forwards": 3,
+    "physical_input_positions": 585,
+    "primitive_costs_match_actual_events_and_worker_API_ledger": true,
+    "train_forwards": 1,
+    "train_positions": 195,
+    "wrapper_protocol_counts": {
+      "backward": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "checkpoint_restore": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "checkpoint_save": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "clip": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "forward": {
+        "attempted": 1,
+        "failed": 1,
+        "pending": 0,
+        "returned": 0
+      },
+      "gradient_reset": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "loss": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "reference_control": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "step": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      }
+    },
+    "zero_parity_forwards": 2,
+    "zero_parity_positions": 390
+  },
+  "attempt_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq001_A_attempt1",
+  "checks_passed": 5324,
+  "closure": {
+    "NVML_cleanup_verified": true,
+    "all_supervisor_partial_output_hashes_verified": true,
+    "config_body_sha256": "4345a89e0f083d3ebded203422898e7463c4b1b2e2d9925ebb50d3bf55e89707",
+    "config_file_sha256": "7fb27959ea8c20fa4bf7a67006cfca3c7829d779915b4c2883f5946b2d4d12a7",
+    "current_source_pins_verified": 22,
+    "data_pins_verified": 8,
+    "durable_lease_terminal_verified": true,
+    "job_closed_kill_on_close": true,
+    "model_asset_byte_pins_verified": 7,
+    "owned_worker_identity_currently_alive": false,
+    "raw_before_after_unchanged": true,
+    "raw_files": {
+      "RESOURCE_OBSERVATIONS.json": {
+        "bytes": 2926365,
+        "sha256": "cfa31a0a5441139571d0a91bdd77fd54c7e05058c41c4ade7dad2021b29962b6"
+      },
+      "SUPERVISOR_RECEIPT.json": {
+        "bytes": 3004937,
+        "sha256": "84475ca283358c13055a513cc6e64ba7a3906b167ae71da2b71c446301e14459"
+      },
+      "events.jsonl": {
+        "bytes": 69837,
+        "sha256": "e7c1eb1b31eb3a5b8bcb4ae2399add3b8375125e4d70fa5b135e5f2307a7e592"
+      },
+      "stage_loader.json": {
+        "bytes": 36145,
+        "sha256": "475aaffe87ba2b89aba950438e24cd39e8248d2fd9943253530957cddb7ade36"
+      },
+      "stage_worker_ownership_verified.json": {
+        "bytes": 265,
+        "sha256": "94475b7f7cfe4592de78f7446ea1d17b486e55aff3a08d8bca1288681d881c5b"
+      },
+      "stage_zero_parity.json": {
+        "bytes": 172,
+        "sha256": "b2311c010801718c905e32dc9a39cac667c7e611db5305bfc2a59175fa9e6c3d"
+      },
+      "supervisor_heartbeat.jsonl": {
+        "bytes": 58417,
+        "sha256": "0d346c2d6d3c07939c7f2a50b6263d9ec21634370c1e3f061150c75972ea2d59"
+      },
+      "supervisor_ownership.json": {
+        "bytes": 289,
+        "sha256": "37c97afe71b535480dd026ebcd9febbdee76db257f418cc09b8d1a53171702a1"
+      },
+      "worker.stderr.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "worker.stdout.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "worker_GPU_final.json": {
+        "bytes": 139,
+        "sha256": "0433129b4bec0b41b9256f2bbd253f12ab08185826d4e569234d6218a70dc032"
+      },
+      "worker_result.json": {
+        "bytes": 12778,
+        "sha256": "8e633721782fa3c5644d151444b1ab1d714f99bbbf41626bfb5df466f7c49ef3"
+      }
+    },
+    "recipe_sha256": "7dcb03cb01a20eb050d23b9f3cda3b8af3c40f7c0081f5d0e782602d90b36620",
+    "runtime_pins_verified": 64,
+    "sampler_threads_terminal_verified": true,
+    "source_packet_sha256": "67744aaf1c77816b599496e684ecb85b673ee14e1b8bd44547b14faaef001d04"
+  },
+  "experiment": "SYNTH-CRS-001",
+  "failure": {
+    "direct_and_external_observations_have_different_time_and_API_scope": "The final CUDA diagnostic and sampled NVML record do not provide a same-instant parity measurement. The direct worker guard failed; sampled external telemetry alone does not establish that the instantaneous floor held.",
+    "direct_final_CUDA_free_bytes": 417288192,
+    "direct_final_deficit_bytes": 119582720,
+    "direct_guard_instantaneous_free_bytes_not_durably_recorded": true,
+    "external_NVML_min_free_bytes": 746250240,
+    "external_NVML_samples_crossed_floor": false,
+    "forward_kernel_exception_or_OOM_claimed": false,
+    "loss_or_backward_started": false,
+    "model_forward_API_returned": true,
+    "position": "post-operation resource guard after actual returned training_forward id353",
+    "reported_message": "native GPU free floor",
+    "reported_type": "ValueError",
+    "unchanged_floor_bytes": 536870912
+  },
+  "limited_zero_parity": {
+    "all_B_zero": true,
+    "equal": true,
+    "max_error": 0.0,
+    "native_launch_authorized": false,
+    "prior_forward_attributes_restored": true,
+    "qv_sites": 56,
+    "study_warmstart_authorized": false
+  },
+  "native_execution_during_this_audit": false,
+  "qualification": {
+    "C9_W9_W10_absent": true,
+    "DEV_collection_authorized": false,
+    "automatic_retry_authorized": false,
+    "final_frozen_base_proof_after_failed_forward_established": false,
+    "fresh_process_resume_qualified": false,
+    "full27_qualified": false,
+    "full_resumed9_qualified": false,
+    "production_training_authorized": false,
+    "protected_bank_access": false,
+    "quality_gain_established": false,
+    "study_warmstart_allowed": false,
+    "sustained_nine_update_qualified": false,
+    "zero_parity_is_not_training_qualification": true
+  },
+  "resources": {
+    "CPU_samples": 931,
+    "GPU_final_diagnostic": {
+      "CUDA_initialized": true,
+      "free_bytes_final": 417288192,
+      "peak_allocated_bytes": 4276709888,
+      "peak_reserved_bytes": 4313841664
+    },
+    "GPU_samples": 185,
+    "UTC_to_monotonic_alignment_is_approximate": true,
+    "maximum_CPU_previous_start_to_next_publish_seconds": 0.125,
+    "maximum_CPU_query_seconds": 0.01599999999962165,
+    "maximum_GPU_previous_start_to_next_publish_seconds": 0.5149999999994179,
+    "maximum_GPU_query_seconds": 0.0,
+    "maximum_owned_tree_RSS_bytes": 1228894208,
+    "minimum_host_available_bytes": 10896224256,
+    "near_training_forward_CPU_samples": [
+      {
+        "host_available_bytes": 10965700608,
+        "sample_completed_monotonic": 14611.515,
+        "sample_started_monotonic": 14611.515,
+        "worker_tree_rss_bytes": 1224069120
+      },
+      {
+        "host_available_bytes": 10965635072,
+        "sample_completed_monotonic": 14611.609,
+        "sample_started_monotonic": 14611.609,
+        "worker_tree_rss_bytes": 1224159232
+      },
+      {
+        "host_available_bytes": 10967339008,
+        "sample_completed_monotonic": 14611.718,
+        "sample_started_monotonic": 14611.718,
+        "worker_tree_rss_bytes": 1224159232
+      },
+      {
+        "host_available_bytes": 10990477312,
+        "sample_completed_monotonic": 14611.812,
+        "sample_started_monotonic": 14611.812,
+        "worker_tree_rss_bytes": 1225097216
+      },
+      {
+        "host_available_bytes": 10975543296,
+        "sample_completed_monotonic": 14611.921,
+        "sample_started_monotonic": 14611.921,
+        "worker_tree_rss_bytes": 1228894208
+      },
+      {
+        "host_available_bytes": 10975416320,
+        "sample_completed_monotonic": 14612.015,
+        "sample_started_monotonic": 14612.015,
+        "worker_tree_rss_bytes": 1227915264
+      },
+      {
+        "host_available_bytes": 10978594816,
+        "sample_completed_monotonic": 14612.109,
+        "sample_started_monotonic": 14612.109,
+        "worker_tree_rss_bytes": 1227919360
+      },
+      {
+        "host_available_bytes": 10978570240,
+        "sample_completed_monotonic": 14612.218,
+        "sample_started_monotonic": 14612.218,
+        "worker_tree_rss_bytes": 1227919360
+      },
+      {
+        "host_available_bytes": 10978643968,
+        "sample_completed_monotonic": 14612.312,
+        "sample_started_monotonic": 14612.312,
+        "worker_tree_rss_bytes": 1227923456
+      }
+    ],
+    "near_training_forward_GPU_samples": [
+      {
+        "GPU_index": 0,
+        "gpu_free_bytes": 2903011328,
+        "gpu_observation_id": "a9f9ce0809cd44cca9e2680bd8893290",
+        "gpu_sample_completed_monotonic": 14610.921,
+        "gpu_sample_started_monotonic": 14610.921,
+        "gpu_total_bytes": 8585740288,
+        "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+        "kind": "GPU"
+      },
+      {
+        "GPU_index": 0,
+        "gpu_free_bytes": 2886905856,
+        "gpu_observation_id": "bfcc06e3a0ff41dd82246a115966853b",
+        "gpu_sample_completed_monotonic": 14611.406,
+        "gpu_sample_started_monotonic": 14611.406,
+        "gpu_total_bytes": 8585740288,
+        "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+        "kind": "GPU"
+      },
+      {
+        "GPU_index": 0,
+        "gpu_free_bytes": 1496637440,
+        "gpu_observation_id": "2f9b29aaf73f47afabb4f8ab5fe72558",
+        "gpu_sample_completed_monotonic": 14611.906,
+        "gpu_sample_started_monotonic": 14611.906,
+        "gpu_total_bytes": 8585740288,
+        "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+        "kind": "GPU"
+      },
+      {
+        "GPU_index": 0,
+        "gpu_free_bytes": 746250240,
+        "gpu_observation_id": "b81e384df7b2411da785207380355886",
+        "gpu_sample_completed_monotonic": 14612.406,
+        "gpu_sample_started_monotonic": 14612.406,
+        "gpu_total_bytes": 8585740288,
+        "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+        "kind": "GPU"
+      }
+    ],
+    "sampled_CPU_RAM_RSS_disk_floors_held": true,
+    "sampled_GPU_floor_held": true,
+    "training_forward_attempt_monotonic_inferred_from_supervisor_UTC_origin": 14611.785818,
+    "training_forward_return_monotonic_inferred_from_supervisor_UTC_origin": 14611.905926000001,
+    "worker_GPU_floor_failed": true
+  },
+  "schema_version": 1,
+  "scope": "Independent stdlib JSON/event/source/byte/resource/cleanup audit; no framework/model/GPU API execution or tensor deserialization.",
+  "sha256": "9bb2697636d9b2d77b1aa37b505e554decd5d6ed175faef5e7182d9962607ffb",
+  "source_commit": "ca8aac64106cfbf9deae6da4bbe9b2a73777a933",
+  "status": "VERIFIED_FAILED_BACKEND_A_GPU_FREE_FLOOR_NO_QUALIFICATION",
+  "supervisor_elapsed_seconds": 108.95299999999952,
+  "supervisor_returncode": 2,
+  "supervisor_status": "SUPERVISED_WORKER_FAILED",
+  "tensor_deserialization_performed": false,
+  "utc": "2026-10-05T00:14:23.035258+00:00",
+  "worker_status": "FAILED_SCOPED_BACKEND_QUALIFICATION",
+  "worker_wall_seconds": 84.65600000000086
+}
