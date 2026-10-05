@@ -3,6 +3,7 @@ from copy import deepcopy
 import importlib.util
 import json
 from pathlib import Path
+import subprocess
 import sys
 import unittest
 
@@ -226,7 +227,10 @@ class Controls(unittest.TestCase):
         f=Fixture();f.complete()
         self.assertEqual(f.recipe['prompt_hash_conventions'],{'short':'SHA256_RENDERED_UTF8_CHAT_TEMPLATE','long':'SHA256_CANONICAL_MESSAGES_JSON'})
         self.assertTrue(all(session['component'].tokenizer.calls==[] for session in f.sessions))
-        self.assertFalse(any(n in sys.modules for n in ('torch','transformers','tokenizers')))
+        code="import sys;sys.path.insert(0,sys.argv[1]);import long_split_controller;assert not any(n in sys.modules for n in ('torch','transformers','tokenizers'));print('ISOLATED_CPU_IMPORT')"
+        result=subprocess.run([sys.executable,'-I','-B','-c',code,str(CODE)],capture_output=True,text=True)
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertEqual(result.stdout.strip(),'ISOLATED_CPU_IMPORT')
 
 
 if __name__=='__main__':unittest.main()

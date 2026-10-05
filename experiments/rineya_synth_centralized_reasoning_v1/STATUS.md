@@ -1,5 +1,22 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: complete728-test CPU suite passes
+
+The [full root CPU run](evidence/full_cpu_protocol_integration_validation_002_20261005.json)
+passes all728 tests with zero skips in341.498seconds (342.312seconds command wall),
+using the pinned local tokenizer and CUDA disabled. Every package/test source
+hash is unchanged before/after. This checks the original registration/compiler
+contracts with the integrated controller, backend, qualification and audit code;
+it does not establish native model readiness or acquisition/transfer.
+
+The [first full run](evidence/full_cpu_protocol_integration_validation_001_20261005.json)
+had one test-only failure: a global-import assertion saw `tokenizers` loaded by
+an earlier legitimate CPU tokenizer test. Its
+[failed test and receipt](evidence/full_cpu_protocol_integration_failure001_20261005)
+are preserved. Only that test now checks its imports in an isolated interpreter;
+the no-decoder assertion remains. Its16-case suite and full728-case rerun pass.
+No production code, resource/numerical gate, protected bank or launch flag changed.
+
 ## 2026-10-05 UTC: independent full27 auditor integrated
 
 The [independent chunk auditor](FULL27_INDEPENDENT_AUDIT_001.md) and inert saved-
