@@ -1,5 +1,24 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: CPU long split mechanics integrated
+
+The [long split mechanics](LONG_SPLIT_MECHANICS_001.md) is integrated after
+independent review of fixed budgets, exact physical operation/prefix rosters,
+typed source hashes and fresh-root portability. All
+[44 root controls](evidence/long_split_controller_root_cpu_validation_20261005.json)
+pass (16 controller in6.540seconds;28 component in1.440seconds), with unchanged
+source hashes and the original short helper intact. The
+[reviewed history](evidence/long_split_controller_reviewed_cpu_20261005)
+retains the accepted14-pass bypasses,16-pass repair and path fix. Every parity,
+greedy, bulk and separately declared stress call is counted; EOS coverage is
+never replaced with a fabricated full trace. Extra metered calls cannot commit.
+
+The implementation admits CPU fake scope only. Identity/RNG/zero-B declarations
+and fake parity remain unqualified native provenance. Native worker/registration,
+OS/source/model state, cross-process trace auditing and actual long numerical/
+memory fit remain missing. No model/GPU, decoder, actual grading, guard enrollment
+or native launch occurred. The original research comparison remains unmeasured.
+
 ## 2026-10-05 UTC: current Windows GPU counters recorded separately
 
 A [read-only current counter snapshot](evidence/ram2_windows_gpu_counter_context_20261005)
