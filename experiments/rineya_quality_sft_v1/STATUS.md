@@ -40,3 +40,12 @@ warmup clock and integrated LR all change; lower total exposure is not a clean
 attenuation control. Future opposite-dose tests must hold allworlds/groups/early
 warmup fixed. The first two-arm quality screen remains unchanged. The research
 goal remains active; no reproducible broad-quality gain has been demonstrated.
+
+Next continuation: objective_geometry.py and mechanism_witness.py distinguish
+response/nonresponse gradient direction from scale and validate abstract query
+order sensitivity.127CPU fixtures pass,0failures/skips,1profilerwarning. A toy
+12.69x gradient scale gives~1x idealAdam first-update norm; opposed complementary
+supervision reverses direction. Affine multipliers can commute, and downstream
+operations can erase local order differences. All examples are mathematical
+fixtures; actual Rineya gradients, bank certification and quality gains remain
+unmeasured. Mechanism metadata advice is UNVERIFIED, never an admission.

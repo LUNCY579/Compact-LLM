@@ -112,3 +112,53 @@ long reasoning and benefits from shorter/mixed demonstrations.
 Its long/short teacher conditions also change teacher identity. A Rineya test
 must hold verified solution content/difficulty and source teacher provenance
 fixed before attributing an effect to length. Shorter is a hypothesis, not law.
+
+## Gradient direction and claimed task mechanisms
+
+The next research continuation adds `objective_geometry.py`, a metadata-only
+target partition and detached streaming gradient checker. For each intact group,
+after the ONE causal shift:
+
+`g_whole = (N_response/N_whole)*g_response + (N_complement/N_whole)*g_complement`.
+
+The complement includes previous assistant history, headers/thinking stub and
+post-EOS newline, not just user text. Masking its labels does not remove that
+history from inference or prevent gradients through input representations.
+
+The historical aggregate label ratio12.69 yields response target share.07879;
+it does not measure native gradient direction or update strength. Handwritten
+autograd counterexamples verify that aligned complementary gradients preserve
+the response direction, while opposed gradients can reverse the whole direction
+with identical target counts. Ideal zero-moment/zero-decay step1 Adam with
+global clipping gives nearly the SAME update magnitude after12.69x positive
+gradient scaling. It also gives opposite toy update directions at similar
+magnitude. Actual FP32 parameter rounding, later moments and Rineya outcomes
+are not established by this mathematics.
+
+Any native capture must observe identical theta/group/dropout state, complete
+target subsets, both raw and clipped direction statistics and actual update
+norms. Source314M-tail gradients require1.172GiB each; a separately qualified
+no-update capture can retain two CPU snapshots and stream the third rather
+than retain three banks/moments. The checker itself captures no gradient/model
+and confers no additional runtime budget or native qualification.
+
+`mechanism_witness.py` adds advisory abstract affine witnesses. The owner found
+that summing changes was mislabeled ordered state tracking and marker lookup
+mislabeled entity binding. All sums commute; even two nontrivial affine
+multipliers can commute. For example `(2,1)` and `(3,2)` both fix the same
+point, and swapping them does not change the result. `(2,1)` and `(3,1)` do.
+The checker compares independent iterative/composed solutions, complete query
+endpoints and suffix-erasure algebra under bounded valid swaps.
+
+Finding no changed original-adjacent swap is insufficient to prove invariance:
+an identity between two noncommuting updates hides that assay. All pairwise
+commutators zero provides a separate affine commutativity proof. Changes erased
+by downstream operations cannot license a queried order-dependence claim.
+Renaming alone cannot establish entity binding; relevant reassignment/change
+and irrelevant-change controls need actual owner/public-solver evidence.
+
+These are mechanism checks, not new training examples/admission gates. Missing
+or self-declared mechanism descriptors remain UNVERIFIED pending actual owner
+receipts. Existing quotas/first two SFT arms/quality thresholds remain unchanged.
+The expanded fixture suite passes127tests with no native Rineya calls. Neither
+mechanical algebra nor dataset labels demonstrates the requested quality gains.
