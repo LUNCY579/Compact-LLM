@@ -1,5 +1,33 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: recomputation A aborted its CPU freshness gate
+
+The [amended A scope](configs/SYNTH_BACKENDQ002_RECOMPUTE_A1.json) was contained
+and stopped after 193.046 seconds. The
+[independent audit](evidence/backendq002_recompute_A_attempt1_independent_audit_20261005.json)
+verified 1,745 API attempts / 1,744 returns / one pending outer training forward,
+21 CE/backward rows and one complete optimizer update. Recorded decoder work
+was 56 no-grad / 590 forward / 588 recompute calls. The
+[raw receipts and 24 source snapshots](evidence/backendq002_recompute_A_attempt1_20261005)
+are preserved. No terminal worker/region summary, C9, W9/W10 or final base/restore
+proof exists. This is not sustained, resume or native-fit qualification.
+
+The terminal CPU sample took 328 ms, including 323.1869 ms in the disk-free
+phase, above the unchanged 200-ms freshness bound. The prior start gap was 94 ms;
+the exact abort-check time/thread is unlogged. Wall query time includes possible
+descheduling, so no filesystem/filter/writer/scheduler cause is established.
+Sampled GPU free memory remained above 3,122,126,848 bytes; no direct terminal
+Torch peak/free receipt exists. Owned processes, sampler threads, NVML and lease
+cleanup are terminal and independently verified.
+
+The [bounded disk investigation](evidence/disk_watchdog_cpu_20261005/preservation_receipt.json)
+passed five controls, 96 read-parity brackets and 128 durable writes but did not
+reproduce the stall. A verified volume-root probe can preserve the existing
+total-volume-free counter; prevention under load remains inconclusive. No
+resource/freshness relaxation, stale-value cache, writer durability reduction,
+unrelated app termination or unchanged retry is authorized. The study comparison
+and qualified language-reference/reviewer evidence remain outstanding.
+
 ## 2026-10-05 UTC: amended backend and final-adapter helpers verified on CPU
 
 The [recomputation amendment](BACKEND_RECOMPUTATION_AMENDMENT_002.md) is integrated

@@ -1,0 +1,56 @@
+{
+  "actual_failure_CPU_window_seconds": 0.328,
+  "actual_failure_disk_phase_seconds": 0.32318689999738126,
+  "controls": 5,
+  "current_shutil_free_semantics": "GetDiskFreeSpaceExW third-output total-volume free; caller-quota availability separate",
+  "durable_record_writes": 128,
+  "files": {
+    "cause_and_proposal_20261005.json": {
+      "bytes": 3805,
+      "sha256": "eb9169ae033f6f6273fae6da98414c8c4d468a649789cfba68e31111fafed3d2"
+    },
+    "cpu_probe_attempt1_20261005/cpu_probe_receipt.json": {
+      "bytes": 9601,
+      "sha256": "441bc8993195b712a9618f34e71878d9a106281bd527fe714049e43500090f76"
+    },
+    "cpu_probe_attempt1_20261005/owned_CPU_durable_journal.jsonl": {
+      "bytes": 43538,
+      "sha256": "efbf09fe1df44c0b202e74047df753790c1c2f9bf144bb9202614730b6daa093"
+    },
+    "cpu_probe_attempt1_20261005/probe_observations.json": {
+      "bytes": 292977,
+      "sha256": "10741ec726729474a7c02c8eb28260baf5950f6219afd9c2d448c18e4d2c4dbd"
+    },
+    "isolated_bootstrap_failure_preserved_20261005/failure_receipt.json": {
+      "bytes": 346,
+      "sha256": "88c8ecec38c2b7d6eab7f5f251d112f456e965234f5209301a7dc3f545a9e43c"
+    },
+    "isolated_bootstrap_failure_preserved_20261005/prove_volume_probe_cpu.py": {
+      "bytes": 10634,
+      "sha256": "d67aa8dc1488d73da3fdadd0fbef0eb3ba7c31d1c270ab684e5f2256f2c9e3c6"
+    },
+    "prove_volume_probe_cpu.py": {
+      "bytes": 10690,
+      "sha256": "c1fe1b1f0d3944a4542734c788db44b606455135f3ee0904acb21ced391115bf"
+    },
+    "test_volume_disk_probe.py": {
+      "bytes": 2119,
+      "sha256": "bec046512d55ff2fafe98962b6903cb67831c3dc9f951bc0f7f52bfcf02a9901"
+    },
+    "volume_disk_probe.py": {
+      "bytes": 4481,
+      "sha256": "3634dde97957d35e7336e078f3559df0cb832da1d112472cc031b99422e759ad"
+    }
+  },
+  "fsync_or_writer_cause_proven": false,
+  "loaded_host_stall_prevention_qualified": false,
+  "native_retry_authorized": false,
+  "no_numeric_free_space_cache": true,
+  "protected_bank_access": false,
+  "real_read_parity_brackets": 96,
+  "recorded_at_utc": "2026-10-05T02:30:12.121509+00:00",
+  "resource_floors_freshness_cadence_unchanged": true,
+  "schema_version": 1,
+  "stall_reproduced": false,
+  "status": "BOUNDED_DISK_QUERY_INVESTIGATION_INCONCLUSIVE_FOR_STALL_PREVENTION"
+}

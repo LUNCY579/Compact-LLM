@@ -1,0 +1,165 @@
+{
+  "CPU_controls": {
+    "focused_fake_test_seconds": 0.007,
+    "focused_fake_tests": 5,
+    "idle_samples": 32,
+    "moving_space_brackets": 0,
+    "probe_latencies": {
+      "idle": {
+        "candidate_verified_binding_root_disk_sample": {
+          "count": 32,
+          "max_seconds": 0.002842399997462053,
+          "median_seconds": 0.0021267999982228503,
+          "min_seconds": 0.00188960000014049,
+          "over_200ms": 0,
+          "p95_seconds": 0.0027118999969388824
+        },
+        "qualified_bound_root_CPU_snapshot": {
+          "count": 32,
+          "max_seconds": 0.0002789000027405564,
+          "median_seconds": 5.4700001783203334e-05,
+          "min_seconds": 3.0699997296324e-05,
+          "over_200ms": 0,
+          "p95_seconds": 0.00017320000188192353
+        },
+        "qualified_output_directory_CPU_snapshot": {
+          "count": 32,
+          "max_seconds": 0.0018288000028405804,
+          "median_seconds": 5.77000027988106e-05,
+          "min_seconds": 4.2900002881651744e-05,
+          "over_200ms": 0,
+          "p95_seconds": 0.0002227000004495494
+        }
+      },
+      "owned_CPU_fsync_writer": {
+        "candidate_verified_binding_root_disk_sample": {
+          "count": 64,
+          "max_seconds": 0.0028965000019525178,
+          "median_seconds": 0.002267200001369929,
+          "min_seconds": 0.0019338999991305172,
+          "over_200ms": 0,
+          "p95_seconds": 0.002544099999795435
+        },
+        "qualified_bound_root_CPU_snapshot": {
+          "count": 64,
+          "max_seconds": 0.0002660999998624902,
+          "median_seconds": 8.729999899514951e-05,
+          "min_seconds": 3.0199997127056122e-05,
+          "over_200ms": 0,
+          "p95_seconds": 0.0002099999983329326
+        },
+        "qualified_output_directory_CPU_snapshot": {
+          "count": 64,
+          "max_seconds": 0.0003068000005441718,
+          "median_seconds": 5.520000195247121e-05,
+          "min_seconds": 4.100000296602957e-05,
+          "over_200ms": 0,
+          "p95_seconds": 0.000228899996727705
+        }
+      }
+    },
+    "samples": 96,
+    "stable_exact_triplet_parity_samples": 96,
+    "writer_joined": true,
+    "writer_latency": {
+      "count": 128,
+      "max_seconds": 0.0009677000016381498,
+      "median_seconds": 0.0004650999981095083,
+      "min_seconds": 0.00030130000232020393,
+      "over_200ms": 0,
+      "p95_seconds": 0.0005913999993936159
+    },
+    "writer_phase_samples": 64,
+    "writer_returned_fsync_records": 128,
+    "writer_total_bytes": 43538
+  },
+  "GPU_queried": false,
+  "actual_failure": {
+    "CPU_observations": 1769,
+    "approximate_UTC_window": [
+      "2026-10-05T02:08:29.585675+00:00",
+      "2026-10-05T02:08:29.913675+00:00"
+    ],
+    "cause_limit": "323ms measured inside disk-query phase; API wall latency may include scheduling/filter/IO stalls; journal overlap is temporal evidence, not causal proof",
+    "nearby_durable_event_count": 7,
+    "nearby_event_types": {
+      "attempt": 4,
+      "returned": 3
+    },
+    "previous_start_gap_seconds": 0.09400000000096043,
+    "receipt_status": "OWNED_WORKER_ABORTED",
+    "worst_observation_index": 2121,
+    "worst_phase_latency_seconds": {
+      "RAM_available": 7.599999662488699e-06,
+      "disk_free": 0.32318689999738126,
+      "owned_job_PID_query": 6.420000136131421e-05,
+      "owned_process_total": 0.0001494999996793922
+    },
+    "worst_window_seconds": 0.3280000000013388
+  },
+  "exact_volume": {
+    "bindings_verified_before_after": true,
+    "failed_output": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1",
+    "fixture_output": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\disk_watchdog_work\\cpu_probe_attempt1_20261005",
+    "mount_root": "C:\\",
+    "no_reparse_ancestry": true,
+    "volume_GUID": "\\\\?\\Volume{5f48bbb0-378c-42f9-b535-4c3c9152619f}\\"
+  },
+  "failed_attempt_hashes_after": {
+    "RESOURCE_OBSERVATIONS.json": "d0f96e74a106febb77ca237636d9204cf9d71c9c2ae6841f0be41b4d3347b9c5",
+    "SUPERVISOR_RECEIPT.json": "fc95a029a8ce3caa7d0a5d5861ee74271ddd90376dec7846d111bf35daf12ccb",
+    "events.jsonl": "f7539535ebd2dbbbed4ef274834923325b791cd67d1934ca98325f800d71b45d",
+    "supervisor_heartbeat.jsonl": "03cf975a9b713f166f89a3f23a810bdbb78791addcda0720134fa1fc35cd995b"
+  },
+  "failed_attempt_hashes_before": {
+    "RESOURCE_OBSERVATIONS.json": "d0f96e74a106febb77ca237636d9204cf9d71c9c2ae6841f0be41b4d3347b9c5",
+    "SUPERVISOR_RECEIPT.json": "fc95a029a8ce3caa7d0a5d5861ee74271ddd90376dec7846d111bf35daf12ccb",
+    "events.jsonl": "f7539535ebd2dbbbed4ef274834923325b791cd67d1934ca98325f800d71b45d",
+    "supervisor_heartbeat.jsonl": "03cf975a9b713f166f89a3f23a810bdbb78791addcda0720134fa1fc35cd995b"
+  },
+  "framework_imported": false,
+  "native_launch_authorized": false,
+  "proposal_limits": "staged explicit containing-volume-root probe only; measured CPU timings do not guarantee future loaded-host freshness. No fsync removed/batched, no production/native admission or retry.",
+  "published_weights_opened": false,
+  "raw_observation_file": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\disk_watchdog_work\\cpu_probe_attempt1_20261005\\probe_observations.json",
+    "sha256": "10741ec726729474a7c02c8eb28260baf5950f6219afd9c2d448c18e4d2c4dbd"
+  },
+  "recorded_at_utc": "2026-10-05T02:23:03.327710+00:00",
+  "resource_policy": {
+    "CPU_cadence_seconds": 0.1,
+    "CPU_freshness_seconds": 0.2,
+    "all_sample_binding_latency_inside_window": true,
+    "disk_free_GiB": 4.0,
+    "existing_free_counter": "GetDiskFreeSpaceExW THIRD output total-volume free; shutil.free",
+    "numeric_space_cache": false,
+    "original_resource_checks_unchanged": true,
+    "quota_counter": "FIRST output caller availability captured separately; not substituted into existing floor",
+    "slow_call_still_fails_freshness": true
+  },
+  "root_source_edits": false,
+  "schema_version": 1,
+  "source_after": {
+    "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11-windows-x86_64-none\\Lib\\shutil.py": "aa2c11b95294111edddfeb02f9082ec7c4c21060d87f6857364b5bb95fb94e09",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\disk_watchdog_work\\prove_volume_probe_cpu.py": "c1fe1b1f0d3944a4542734c788db44b606455135f3ee0904acb21ced391115bf",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\disk_watchdog_work\\test_volume_disk_probe.py": "bec046512d55ff2fafe98962b6903cb67831c3dc9f951bc0f7f52bfcf02a9901",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\disk_watchdog_work\\volume_disk_probe.py": "3634dde97957d35e7336e078f3559df0cb832da1d112472cc031b99422e759ad",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_worker.py": "44cf0b9770d976e11767f4558fcf71d9c9c0994b269f2a89192a7c294314bb3b",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691"
+  },
+  "source_before": {
+    "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11-windows-x86_64-none\\Lib\\shutil.py": "aa2c11b95294111edddfeb02f9082ec7c4c21060d87f6857364b5bb95fb94e09",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\disk_watchdog_work\\prove_volume_probe_cpu.py": "c1fe1b1f0d3944a4542734c788db44b606455135f3ee0904acb21ced391115bf",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\disk_watchdog_work\\test_volume_disk_probe.py": "bec046512d55ff2fafe98962b6903cb67831c3dc9f951bc0f7f52bfcf02a9901",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\disk_watchdog_work\\volume_disk_probe.py": "3634dde97957d35e7336e078f3559df0cb832da1d112472cc031b99422e759ad",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_worker.py": "44cf0b9770d976e11767f4558fcf71d9c9c0994b269f2a89192a7c294314bb3b",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691"
+  },
+  "source_primary_references": [
+    "https://github.com/python/cpython/blob/v3.11.15/Modules/posixmodule.c#L10790-L10825",
+    "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getdiskfreespaceexw",
+    "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getvolumepathnamew"
+  ],
+  "status": "PASS_BOUNDED_CPU_SAME_VOLUME_PROBE_CONTROLS_NOT_NATIVE_QUALIFICATION",
+  "study_training_qualified": false
+}

@@ -1,0 +1,60 @@
+{
+  "CPU_proof": {
+    "all_128_fsync_returned": true,
+    "caller_available_counter": "Observed and preserved separately; current live caller/free values matched but no claim quotas disabled. API policy proof uses official CPython3.11.15/Microsoft definitions.",
+    "correction_detail": "Main proof receipt records initial focused run duration .007; final exact source successor fake controls passed5/5 at.010 immediately before actual probe. No source/control outcome discrepancy. Original receipt remains unchanged.",
+    "durable_records": 128,
+    "fake_tests": 5,
+    "fake_tests_seconds_correction": 0.01,
+    "real_samples": 96,
+    "same_GUID": "\\\\?\\Volume{5f48bbb0-378c-42f9-b535-4c3c9152619f}\\",
+    "same_mount_root": "C:\\",
+    "stable_exact_triple_read_parity": 96,
+    "writer_bytes": 43538,
+    "writer_joined": true,
+    "writer_max_seconds": 0.0009677000016381498
+  },
+  "actual_cause": {
+    "causal_attribution": "Only measured phase attribution is established. Seven durable event timestamps overlap approximately; no fsync start/end timings, thread scheduling trace, disk/filter ETW or lock evidence exists to identify underlying blocking.",
+    "disk_query_phase_seconds": 0.32318689999738126,
+    "measured_window_seconds": 0.3280000000013388,
+    "preceding_start_gap_seconds": 0.09400000000096043
+  },
+  "closed_flags": {
+    "GPU_queried": false,
+    "app_processes_killed": false,
+    "framework_imported": false,
+    "native_launch_authorized": false,
+    "paid_services": false,
+    "protected_bank_access": false,
+    "published_weights_opened": false,
+    "root_source_edits": false,
+    "study_training_qualified": false
+  },
+  "proof_receipt": {
+    "path": "experiments/rineya_synth_centralized_reasoning_v1/artifacts/disk_watchdog_work/cpu_probe_attempt1_20261005/cpu_probe_receipt.json",
+    "sha256": "441bc8993195b712a9618f34e71878d9a106281bd527fe714049e43500090f76"
+  },
+  "proposal": {
+    "evidence_strength": "Semantic read parity and bounded CPU controls support a staged source amendment. Performance prevention under the failed loaded scope remains unproven: no unchanged retry is justified.",
+    "implementation": "volume_disk_probe.py VolumeBoundDiskProbe; containing mount point resolved with WinAPI, GUID-bound; every sample rechecks output ancestry/root/GUID then fresh GetDiskFreeSpaceExW(root) THIRD output",
+    "measured_performance": "32idle+64writer samples: original output-path CPU snapshot max1.829ms idle/.307ms writer; root CPU snapshot max.279ms/.266ms. Root medians mixed (writer87.3us vs output55.2us). Candidate including full mapping/path checks max2.843ms/2.897ms, thus slower normal path than either bare query. No323ms stall reproduced.",
+    "source_integration": "Requires root independent review, source integration/pins/config amendment and resource admission before any future native launch; this staging component grants no permission.",
+    "writer_amendment": "None justified by this bounded evidence. All per-record flush/fsync retained; no batching/removal/cache, no lost attempt/return records."
+  },
+  "recorded_at_utc": "2026-10-05T02:24:21.544150+00:00",
+  "schema_version": 1,
+  "source_hashes": {
+    "prove_volume_probe_cpu.py": "c1fe1b1f0d3944a4542734c788db44b606455135f3ee0904acb21ced391115bf",
+    "test_volume_disk_probe.py": "bec046512d55ff2fafe98962b6903cb67831c3dc9f951bc0f7f52bfcf02a9901",
+    "volume_disk_probe.py": "3634dde97957d35e7336e078f3559df0cb832da1d112472cc031b99422e759ad"
+  },
+  "status": "BOUNDED_CAUSE_LOCALIZED_TO_DISK_PHASE_ROOT_PROBE_SEMANTICS_PASS_RELIABILITY_INCONCLUSIVE",
+  "unchanged_limits": {
+    "CPU_cadence_seconds": 0.1,
+    "CPU_freshness_seconds": 0.2,
+    "all_other_resource_checks_unchanged": true,
+    "disk_floor_GiB": 4.0,
+    "slow_sample_still_failed": true
+  }
+}

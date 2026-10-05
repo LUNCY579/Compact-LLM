@@ -1,0 +1,3219 @@
+{
+  "CPU_staleness": {
+    "cause_scope": "Qualified monitor recorded CPU staleness. Terminal sample spent323.187ms wall time inside shutil.disk_usage(output_dir) and328ms start-to-completion; recorded sample-start gaps stayed below200ms.",
+    "disk_free_phase_seconds": 0.32318689999738126,
+    "freshness_limit_seconds": 0.2,
+    "last_heartbeat": {
+      "supervisor_pid": 216684,
+      "unix_seconds": 1791166109.913675
+    },
+    "last_heartbeat_gap_seconds": 0.41506242752075195,
+    "last_sample": {
+      "disk_free_bytes": 111376293888,
+      "host_available_bytes": 13073035264,
+      "kind": "CPU",
+      "owned_process_identities": [
+        {
+          "create_time": 1791165932.8741944,
+          "creation_filetime_100ns": 134356395328741943,
+          "pid": 226308
+        },
+        {
+          "create_time": 1791165932.969325,
+          "creation_filetime_100ns": 134356395329693250,
+          "pid": 210036
+        },
+        {
+          "create_time": 1791165932.992592,
+          "creation_filetime_100ns": 134356395329925922,
+          "pid": 227432
+        }
+      ],
+      "owned_process_samples": [
+        {
+          "api_latency_seconds": {
+            "CloseHandle_seconds": 1.8999999156221747e-06,
+            "GetProcessTimes_seconds": 7.899998308857903e-06,
+            "IsProcessInJob_seconds": 4.400000761961564e-06,
+            "K32GetProcessMemoryInfo_seconds": 6.70000008540228e-06,
+            "OpenProcess_seconds": 1.1100000847363845e-05,
+            "WaitForSingleObject_seconds": 3.4999975468963385e-06
+          },
+          "create_time": 1791165932.8741944,
+          "creation_filetime_100ns": 134356395328741943,
+          "pid": 226308,
+          "rss_bytes": 5234688,
+          "sample_completed_monotonic": 22146.359,
+          "sample_started_monotonic": 22146.359,
+          "terminal_confirmed": false
+        },
+        {
+          "api_latency_seconds": {
+            "CloseHandle_seconds": 1.1000010999850929e-06,
+            "GetProcessTimes_seconds": 2.9000002541579306e-06,
+            "IsProcessInJob_seconds": 1.3999997463542968e-06,
+            "K32GetProcessMemoryInfo_seconds": 5.000001692678779e-06,
+            "OpenProcess_seconds": 4.19999923906289e-06,
+            "WaitForSingleObject_seconds": 1.3999997463542968e-06
+          },
+          "create_time": 1791165932.969325,
+          "creation_filetime_100ns": 134356395329693250,
+          "pid": 210036,
+          "rss_bytes": 7745536,
+          "sample_completed_monotonic": 22146.359,
+          "sample_started_monotonic": 22146.359,
+          "terminal_confirmed": false
+        },
+        {
+          "api_latency_seconds": {
+            "CloseHandle_seconds": 1.1000010999850929e-06,
+            "GetProcessTimes_seconds": 5.199999577598646e-06,
+            "IsProcessInJob_seconds": 1.2000018614344299e-06,
+            "K32GetProcessMemoryInfo_seconds": 4.800000169780105e-06,
+            "OpenProcess_seconds": 3.1000017770566046e-06,
+            "WaitForSingleObject_seconds": 1.1999982234556228e-06
+          },
+          "create_time": 1791165932.992592,
+          "creation_filetime_100ns": 134356395329925922,
+          "pid": 227432,
+          "rss_bytes": 1416507392,
+          "sample_completed_monotonic": 22146.359,
+          "sample_started_monotonic": 22146.359,
+          "terminal_confirmed": false
+        }
+      ],
+      "phase_latency_seconds": {
+        "RAM_available": 7.599999662488699e-06,
+        "disk_free": 0.32318689999738126,
+        "owned_job_PID_query": 6.420000136131421e-05,
+        "owned_process_total": 0.0001494999996793922
+      },
+      "sample_completed_monotonic": 22146.687,
+      "sample_started_monotonic": 22146.359,
+      "worker_tree_rss_bytes": 1429487616
+    },
+    "last_sample_already_stale_at_own_completion_by_seconds": 0.12800000000133877,
+    "last_sample_envelope_seconds": 0.3280000000013388,
+    "last_start_gap_seconds": 0.09400000000096043,
+    "limits": [
+      "Exact abort check time/thread and sample reference are not logged; main monitor may abort using prior completed sample while disk query is outstanding.",
+      "Phase perf_counter duration includes descheduling during the call; evidence does not identify pure disk-API blocking, an application, or an OS scheduling cause.",
+      "CPU freshness200ms and worker heartbeat2s are distinct gates; no bound relaxed."
+    ],
+    "maximum_previous_sample_envelope_seconds": 0.01599999999962165,
+    "maximum_start_gap_seconds": 0.14099999999962165,
+    "nominal_interval_seconds": 0.1,
+    "previous_sample_started_monotonic": 22146.265,
+    "prior_heartbeat": {
+      "supervisor_pid": 216684,
+      "unix_seconds": 1791166109.4986126
+    }
+  },
+  "DEV_collection_authorized": false,
+  "accounting": {
+    "API_attempted": 1745,
+    "API_failed": 0,
+    "API_pending": 1,
+    "API_returned": 1744,
+    "C9_W9_W10_present": false,
+    "CE_fragments": 21,
+    "CE_tolerance": 2e-06,
+    "additional_decoder_region_event_costs": {
+      "forward": {
+        "journal_envelope_seconds": 1.8774779999999989,
+        "per_layer": {
+          "checkpoint_layer00_forward": {
+            "attempted": 22,
+            "failed": 0,
+            "pending": 0,
+            "returned": 22
+          },
+          "checkpoint_layer01_forward": {
+            "attempted": 22,
+            "failed": 0,
+            "pending": 0,
+            "returned": 22
+          },
+          "checkpoint_layer02_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer03_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer04_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer05_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer06_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer07_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer08_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer09_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer10_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer11_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer12_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer13_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer14_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer15_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer16_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer17_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer18_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer19_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer20_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer21_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer22_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer23_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer24_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer25_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer26_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer27_forward": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          }
+        },
+        "total": {
+          "attempted": 590,
+          "failed": 0,
+          "pending": 0,
+          "returned": 590
+        }
+      },
+      "no_grad": {
+        "journal_envelope_seconds": 0.19168500000000002,
+        "per_layer": {
+          "checkpoint_layer00_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer01_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer02_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer03_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer04_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer05_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer06_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer07_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer08_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer09_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer10_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer11_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer12_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer13_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer14_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer15_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer16_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer17_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer18_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer19_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer20_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer21_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer22_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer23_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer24_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer25_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer26_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          },
+          "checkpoint_layer27_no_grad": {
+            "attempted": 2,
+            "failed": 0,
+            "pending": 0,
+            "returned": 2
+          }
+        },
+        "total": {
+          "attempted": 56,
+          "failed": 0,
+          "pending": 0,
+          "returned": 56
+        }
+      },
+      "recompute": {
+        "journal_envelope_seconds": 1.7799839999999978,
+        "per_layer": {
+          "checkpoint_layer00_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer01_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer02_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer03_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer04_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer05_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer06_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer07_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer08_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer09_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer10_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer11_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer12_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer13_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer14_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer15_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer16_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer17_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer18_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer19_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer20_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer21_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer22_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer23_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer24_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer25_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer26_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          },
+          "checkpoint_layer27_recompute": {
+            "attempted": 21,
+            "failed": 0,
+            "pending": 0,
+            "returned": 21
+          }
+        },
+        "total": {
+          "attempted": 588,
+          "failed": 0,
+          "pending": 0,
+          "returned": 588
+        }
+      }
+    },
+    "additional_region_proof_limits": "No decoder_regions JSONL/installer snapshot. Named call events prove partial counts/returns; exact region IDs/pairing and installer durations lack final durable proof. UTC attempt-to-return envelopes include journal work and differ from installer function timers.",
+    "completed_full_base_content_checks": 4,
+    "completed_train_sequences": 21,
+    "completed_updates": 1,
+    "dose_inference_basis": "Frozen row order plus22 train-forward attempts/21 returns/two zero-parity returns and two returned decoder layers in pending root call; terminal dose snapshot absent.",
+    "exact_profile_attribute_restore_proof_present": false,
+    "final_full_base_proof_complete": false,
+    "full_base_content_check_envelopes": [
+      {
+        "id": 321,
+        "journal_envelope_seconds": 10.279526,
+        "returned_utc": "2026-10-05T02:06:51.011286+00:00",
+        "started_utc": "2026-10-05T02:06:40.731760+00:00"
+      },
+      {
+        "id": 332,
+        "journal_envelope_seconds": 10.656635,
+        "returned_utc": "2026-10-05T02:07:02.186321+00:00",
+        "started_utc": "2026-10-05T02:06:51.529686+00:00"
+      },
+      {
+        "id": 406,
+        "journal_envelope_seconds": 10.230227,
+        "returned_utc": "2026-10-05T02:07:16.155764+00:00",
+        "started_utc": "2026-10-05T02:07:05.925537+00:00"
+      },
+      {
+        "id": 1675,
+        "journal_envelope_seconds": 10.704686,
+        "returned_utc": "2026-10-05T02:08:26.250202+00:00",
+        "started_utc": "2026-10-05T02:08:15.545516+00:00"
+      }
+    ],
+    "input_positions_attempted_inferred": 5089,
+    "input_positions_returned_inferred": 4908,
+    "last_returned_call": {
+      "event": "returned",
+      "id": 1745,
+      "operation": "checkpoint_layer01_forward",
+      "utc": "2026-10-05T02:08:29.718917+00:00"
+    },
+    "maximum_recorded_CE_absolute_error": 4.76837158203125e-07,
+    "missing_outputs": [
+      "WORKER_RESULT.json",
+      "worker_result.json",
+      "decoder_regions_00.jsonl",
+      "qualification_C9.pt",
+      "stage_detached_c9_witness.json",
+      "stage_checkpoint_c9_descriptor.json",
+      "stage_detached_witness10.json"
+    ],
+    "next_partial_update": 2,
+    "pending_calls": [
+      {
+        "event": "attempt",
+        "id": 1743,
+        "operation": "training_forward",
+        "utc": "2026-10-05T02:08:29.650218+00:00"
+      }
+    ],
+    "pending_train_sequence_within_update": 2,
+    "physical_root_forward_attempts_inferred": 24,
+    "physical_root_forward_returns": 23,
+    "physical_zeroB_parity": {
+      "all_B_zero": true,
+      "equal": true,
+      "max_error": 0.0,
+      "native_launch_authorized": false,
+      "prior_forward_attributes_restored": true,
+      "qv_sites": 56,
+      "study_warmstart_authorized": false
+    },
+    "planned_A_full_base_content_checks": 16,
+    "primitive_operations_from_durable_events": {
+      "adapter_inventory_validate": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "adapter_metadata_validate": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "base_storage_inventory": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "base_storage_validate": {
+        "attempted": 50,
+        "failed": 0,
+        "pending": 0,
+        "returned": 50
+      },
+      "checkpoint_install_attributes": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "checkpoint_layer00_forward": {
+        "attempted": 22,
+        "failed": 0,
+        "pending": 0,
+        "returned": 22
+      },
+      "checkpoint_layer00_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer00_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer01_forward": {
+        "attempted": 22,
+        "failed": 0,
+        "pending": 0,
+        "returned": 22
+      },
+      "checkpoint_layer01_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer01_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer02_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer02_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer02_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer03_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer03_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer03_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer04_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer04_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer04_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer05_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer05_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer05_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer06_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer06_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer06_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer07_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer07_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer07_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer08_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer08_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer08_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer09_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer09_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer09_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer10_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer10_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer10_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer11_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer11_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer11_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer12_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer12_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer12_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer13_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer13_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer13_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer14_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer14_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer14_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer15_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer15_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer15_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer16_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer16_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer16_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer17_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer17_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer17_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer18_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer18_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer18_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer19_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer19_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer19_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer20_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer20_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer20_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer21_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer21_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer21_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer22_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer22_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer22_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer23_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer23_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer23_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer24_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer24_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer24_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer25_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer25_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer25_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer26_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer26_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer26_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer27_forward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_layer27_no_grad": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "checkpoint_layer27_recompute": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_load": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "completion_CE_selected_NLL_check": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "consumed_gradient_clear": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "cuda_context_init": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "finite_gradient_clip": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "forward_array_integrity_validate": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "fp32_activation_assertions_install": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "fp32_compute_install": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "fresh_start_attestation": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "fresh_training_seed": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "gradient_reset": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "model_construct": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "model_eval_set": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "native_base_content_verify": {
+        "attempted": 4,
+        "failed": 0,
+        "pending": 0,
+        "returned": 4
+      },
+      "native_base_inventory_validate": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "native_config_validate": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "optimizer_boundary_validate": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "optimizer_construct": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "optimizer_step": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_GPU_preload_admission": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_adapter_inventory": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_framework_import": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_full_checkpoint_install": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_parity_adapter_logits_validate": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_parity_base_logits_validate": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_parity_inventory": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_parity_row_materialize": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_parity_state_preserved": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_parity_state_snapshot": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_precision_seed_configure": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_qv_forward_restore": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_qv_physical_bypass": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_zero_B_query": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "qualification_zero_output_compare": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "rank8_qv_adapter_install": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "row_tensor_materialize": {
+        "attempted": 22,
+        "failed": 0,
+        "pending": 0,
+        "returned": 22
+      },
+      "tensor_copy": {
+        "attempted": 310,
+        "failed": 0,
+        "pending": 0,
+        "returned": 310
+      },
+      "training_backward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "training_forward": {
+        "attempted": 22,
+        "failed": 0,
+        "pending": 1,
+        "returned": 21
+      },
+      "zero_B_validate": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "zero_parity_adapter_forward": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "zero_parity_base_forward": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      }
+    },
+    "protocol_ledger_scope": "Reconstructed from frozen core flow and native primitive receipts; no terminal wrapper/dose ledger survived the kill.",
+    "protocol_operations_reconstructed": {
+      "backward": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "checkpoint_restore": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "checkpoint_save": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "clip": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "forward": {
+        "attempted": 22,
+        "failed": 0,
+        "pending": 1,
+        "returned": 21
+      },
+      "gradient_reset": {
+        "attempted": 2,
+        "failed": 0,
+        "pending": 0,
+        "returned": 2
+      },
+      "loss": {
+        "attempted": 21,
+        "failed": 0,
+        "pending": 0,
+        "returned": 21
+      },
+      "reference_control": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "step": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      }
+    },
+    "recorded_supervised_positions": 210,
+    "train_forward_attempts": 22,
+    "train_forward_returns": 21
+  },
+  "attempt_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1",
+  "audit_framework_model_GPU_execution": false,
+  "checks_passed": 20197,
+  "cleanup": {
+    "gpu_telemetry_cleanup_verified": true,
+    "job_closed_kill_on_close": true,
+    "lease_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\79cc43d289fb456fb99fa8a60c5e408f",
+    "lease_terminal_matches_supervisor_bytes": true,
+    "monitor_before_resume_verified": true,
+    "owned_worker_identity": {
+      "assigned_before_resume": true,
+      "breakaway_allowed": false,
+      "create_time": 1791165932.8741944,
+      "creation_filetime_100ns": 134356395328741943,
+      "job_handle": 860,
+      "job_kill_on_close": true,
+      "job_name": "Local\\SYNTH_NQ_JOB_6dc164b89ca04894bb7b080ee463fe92",
+      "pid": 226308,
+      "process_handle": 820
+    },
+    "owned_worker_identity_currently_alive": false,
+    "parameter_or_forward_cleanup_proof": "No graceful worker-finally/profile-remove/hook-remove receipt after OS kill. Qualified terminal supervisor/lease verifies owned Job containment separately.",
+    "sampler_threads_terminal_verified": true,
+    "unjoined_sampler_threads": []
+  },
+  "conclusion": "Preserved partial native mechanics only. Fail-closed termination under unchanged CPU freshness gate; no qualified checkpoint/resume or completed sustained9 result.",
+  "config_body_sha256": "6545bb9f5b161c46324f02e3fd19bb05b442781fe5828c0620c2a351e931bbff",
+  "config_file_sha256": "81fa2210734bf5fd8d86f5dbbf286f7990a040559c8e0bf69885a52d2e55b08e",
+  "config_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\configs\\SYNTH_BACKENDQ002_RECOMPUTE_A1.json",
+  "fresh_process_resume_qualified": false,
+  "full27_qualified": false,
+  "hash_closure": {
+    "after": {
+      "config": {
+        "bytes": 870689,
+        "sha256": "81fa2210734bf5fd8d86f5dbbf286f7990a040559c8e0bf69885a52d2e55b08e"
+      },
+      "data": {
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\candidate_records.jsonl": {
+          "bytes": 1127444,
+          "sha256": "90c151edb668416935608912a0d21c0425dbbd9f37a81a1796d4132dcee9f350"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\enrollment.json": {
+          "bytes": 49975,
+          "sha256": "2730f96e1e7b9b23bab6f5bfc869400d16fd42eca2071d004c68aacd2bb1defc"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\pilot_decisions.json": {
+          "bytes": 7492,
+          "sha256": "c2c78e3eb1e6f718c1c717a51288f5062b1a0db41da03852b4e1d2323d672598"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\plan.json": {
+          "bytes": 506279,
+          "sha256": "a7de5c99f772ece147b08249c332c8d3448e9747a8c2df64dcd0375ff36534d7"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\preparation_receipt.json": {
+          "bytes": 15022,
+          "sha256": "cb0b0ffe331664da1206c36b60a344a92b3f1bf6a0dd29cf1a89a45881cb82eb"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\schedule_result.json": {
+          "bytes": 90383,
+          "sha256": "2664eabfa4cfb9c4e28742cb58f4c6649b24eb80a16df3d5f2cf1a195a058744"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\token_pool_M1.jsonl": {
+          "bytes": 1399335,
+          "sha256": "69105d1b238b229eee13e04e7b479f1f3e8a191c4cdfb9597294f4fb1538ae95"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\token_pool_M2.jsonl": {
+          "bytes": 1399437,
+          "sha256": "34157fe3f99171e249824c66de484b556b68f65508ab3cc43def9129c9782253"
+        }
+      },
+      "lease": {
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\79cc43d289fb456fb99fa8a60c5e408f\\reservation.json": {
+          "bytes": 513,
+          "sha256": "0bacd2f5024fe1b9ace985d0abbe9b63bd34a8da934bc7a32182ad0fe233b8d5"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\79cc43d289fb456fb99fa8a60c5e408f\\resume.json": {
+          "bytes": 477,
+          "sha256": "778d590ae160b42ffadd70ea69d77398c999d2c0feb9fc3ae47faebeef9c06a0"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\79cc43d289fb456fb99fa8a60c5e408f\\terminal.json": {
+          "bytes": 3018941,
+          "sha256": "fc95a029a8ce3caa7d0a5d5861ee74271ddd90376dec7846d111bf35daf12ccb"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\79cc43d289fb456fb99fa8a60c5e408f\\worker.json": {
+          "bytes": 315,
+          "sha256": "211ffa694fb62da9c75e69a1e76aa70d70ba909af1454cdb36c4362112c41c3c"
+        }
+      },
+      "preservation_receipt": {
+        "bytes": 7572,
+        "sha256": "c57b2a140dcb75ab927e8a785489c2e3ac976bd44dca27bb0f12e8f65aecdca9"
+      },
+      "raw": {
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\RESOURCE_OBSERVATIONS.json": {
+          "bytes": 5560053,
+          "sha256": "d0f96e74a106febb77ca237636d9204cf9d71c9c2ae6841f0be41b4d3347b9c5"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\SUPERVISOR_RECEIPT.json": {
+          "bytes": 3018941,
+          "sha256": "fc95a029a8ce3caa7d0a5d5861ee74271ddd90376dec7846d111bf35daf12ccb"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\events.jsonl": {
+          "bytes": 387582,
+          "sha256": "f7539535ebd2dbbbed4ef274834923325b791cd67d1934ca98325f800d71b45d"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r01.json": {
+          "bytes": 131,
+          "sha256": "189901a98a94f33292fa39f836197d58d58261ca48b66d961980eaa6feb0e27e"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r02.json": {
+          "bytes": 112,
+          "sha256": "3bcdf6472066ccd8d3b0266de771e4036221364ca5cd1f645464f90065dd8a12"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r03.json": {
+          "bytes": 132,
+          "sha256": "ff69e85cd9b4240fade62646a470662daf948e30a50c6b2fc83c33bf7c0f9e04"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r04.json": {
+          "bytes": 129,
+          "sha256": "4dde62d62e09a9fc118b4c3a5a518d7a58ae0cd7aafeb37340b04f74bff959b4"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r05.json": {
+          "bytes": 112,
+          "sha256": "9f4e7aed169e0b52474379b39f81366c35c4cf8a3452ad0978a6184b6da7585e"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r06.json": {
+          "bytes": 129,
+          "sha256": "9f17859b742057ec40a93b87413d05ce6791f5556bceb66b08dbe2d1331d2387"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r07.json": {
+          "bytes": 113,
+          "sha256": "9e5801c1b11391f5b9fa8ef4843af616d17f075a2ac7a3ab59452e3c9e7d4334"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r08.json": {
+          "bytes": 132,
+          "sha256": "f723631aafd63cc07cb3ca05aa5614b1c3f938255e6aa703fc5d192f2a3cd693"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r09.json": {
+          "bytes": 111,
+          "sha256": "9d348c16c40e251a62c12dd60b3597b6a72a7b41a8430e135334b4acd1e2edc0"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r10.json": {
+          "bytes": 114,
+          "sha256": "b45e5eff6b8812ca11e3dbe34c54787b2057abe5abb1377d0f064add711a2d5d"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r11.json": {
+          "bytes": 113,
+          "sha256": "06468e90f1f32bf0b442efe33e0ac8d385ce1e318886a816ad0f9aa965d83003"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r12.json": {
+          "bytes": 114,
+          "sha256": "61419f7f3e05d6e633282b6411bf51b55c40e0853c7901b7148b4f0640cabe24"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r13.json": {
+          "bytes": 113,
+          "sha256": "c00fb12ca76c53282c8415e1909404170723fc4b97d7102ff24e32ef15e98e76"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r14.json": {
+          "bytes": 114,
+          "sha256": "df0b9f222deeb896694a8398fa4d526920ca2ab5cba3602722131d252bc723fe"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r15.json": {
+          "bytes": 128,
+          "sha256": "690d2a3c82f10dd30ec07372cd5d804d8304b113741e9544c6ed8e460201fd97"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r16.json": {
+          "bytes": 113,
+          "sha256": "1c4698b00bca6f99241c0c3107761501232799a5785f56ad45148bd3148dc757"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r17.json": {
+          "bytes": 133,
+          "sha256": "bec868f2c3b02177a778aaf0cfbc733d1918708002a3f202e957acf56e50451f"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r18.json": {
+          "bytes": 112,
+          "sha256": "718eac02c1c2e0250066deb3356fa8ab19ec1183f7282afaab99442d7c7efa9a"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r19.json": {
+          "bytes": 133,
+          "sha256": "bec868f2c3b02177a778aaf0cfbc733d1918708002a3f202e957acf56e50451f"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r20.json": {
+          "bytes": 129,
+          "sha256": "40bacf142d291d07067cba0b5d5e4088c4520fdb11ce17143e36079114845787"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u02_r01.json": {
+          "bytes": 113,
+          "sha256": "5044f2bd2017808f1df9e470d700b4a249f89d3bcb1cad2e3f403cd05e3d1f38"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_loader.json": {
+          "bytes": 36145,
+          "sha256": "475aaffe87ba2b89aba950438e24cd39e8248d2fd9943253530957cddb7ade36"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_worker_ownership_verified.json": {
+          "bytes": 265,
+          "sha256": "d9088c035caf45608eb4a4a71ae268986b4be5d29aa2b22f2cb267dd444f1765"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_zero_parity.json": {
+          "bytes": 172,
+          "sha256": "b2311c010801718c905e32dc9a39cac667c7e611db5305bfc2a59175fa9e6c3d"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\supervisor_heartbeat.jsonl": {
+          "bytes": 110970,
+          "sha256": "03cf975a9b713f166f89a3f23a810bdbb78791addcda0720134fa1fc35cd995b"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\supervisor_ownership.json": {
+          "bytes": 288,
+          "sha256": "88751628f1f4c04a8b1d13d67c3c856f6a2786a88dcaff459abb3145a1126775"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\worker.stderr.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\worker.stdout.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "runtime": {
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\__init__.py": {
+          "bytes": 92363,
+          "sha256": "7b6a0675824eb1fa2ff0cb1eb36e358dc454703e51dfa4e9a0e6ccd26a159f0c"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\_psutil_windows.pyd": {
+          "bytes": 70656,
+          "sha256": "0035450801bd7d938e9e146c5ec28e619cb5a5f4a18cdc53ac7e9734c7f94f78"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\_pswindows.py": {
+          "bytes": 36466,
+          "sha256": "0bbd52dcb214735be4168d11a2ae192d5bc7265c8cf72c611179476479687f54"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\__init__.py": {
+          "bytes": 221,
+          "sha256": "3bc1e524ebaba28b4de3b3ebad1edfc623190a1d4fc34e76b900fa34e0c37bbd"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\_safetensors_rust.pyd": {
+          "bytes": 734720,
+          "sha256": "80a2b3f7658854ade855c5fb6192ee38fe2c7fbfd38d1c7c1f4d2c44f67125e4"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\torch.py": {
+          "bytes": 20902,
+          "sha256": "81f477f2ab5e05e99308fc55ed26028eb2bf36334404e9c5558e4730184483f0"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_C.cp311-win_amd64.pyd": {
+          "bytes": 10240,
+          "sha256": "8c64a97873ac7730dfe4aa9740d5dbd5d904fdd0a214cec829a3665711927465"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_dynamo\\__init__.py": {
+          "bytes": 4505,
+          "sha256": "9265b24923a6c13f932746519115ff366f55fdee84031b7447348cd2a5593a0f"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_dynamo\\decorators.py": {
+          "bytes": 23775,
+          "sha256": "34d07ccd5425a43a1ebe06aee4f4bb63975b21c0adb4cbcb8fb9d8540e6c9651"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_dynamo\\eval_frame.py": {
+          "bytes": 70738,
+          "sha256": "18e1fc44d921b055f05edb9bdab557e030c5f0fe4db9168368ff95ffa11781d4"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_functorch\\_aot_autograd\\functional_utils.py": {
+          "bytes": 23276,
+          "sha256": "4725858bdb2c9c69d705ea53636f529310f34392734e907b382b6462b24e1bf6"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\fx\\traceback.py": {
+          "bytes": 7000,
+          "sha256": "533a5141b5ec9b8115d9329e39e78b6b94e524237fc76952687ab5dbf99495b2"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\asmjit.dll": {
+          "bytes": 358912,
+          "sha256": "8872de6689ff648bf3a31635a25c8e4746e5bbe3c92a2d0c9eb5b7e639775688"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\c10.dll": {
+          "bytes": 973312,
+          "sha256": "7b4bc7abb0b50cdfcfd4d6d58a310cd7e951f87621783af8d3eaa861d7719147"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\c10_cuda.dll": {
+          "bytes": 388608,
+          "sha256": "ff798a3e18a09291e993e9bba452152447c7507b605d683c8289bf5112efe024"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\caffe2_nvrtc.dll": {
+          "bytes": 16384,
+          "sha256": "fce25ac814e73e48ac6ab41a542cf085d492d5f72e11aae6139d2f9a33e1171e"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cublas64_12.dll": {
+          "bytes": 100188672,
+          "sha256": "6ed2a2b8a1a7d243ee76acc81bbbfaadddb3264e0526a785ef58a8c6420dd05d"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cublasLt64_12.dll": {
+          "bytes": 472802816,
+          "sha256": "0b58a51fa30b0af7640b80ca2a1c2f3f0b93d62774aa0a34af7ba8c090684d31"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudart64_12.dll": {
+          "bytes": 553984,
+          "sha256": "f95273031fc5ea44cdb37e0a696a1b15b9d84a4ee977299a6f6e652ef4d790cf"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn64_9.dll": {
+          "bytes": 438840,
+          "sha256": "c07cc47f2fa4a566593c7af4aa7e57edf09a985a0fddd14cb8d6f456e252af05"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_adv64_9.dll": {
+          "bytes": 241576488,
+          "sha256": "3527c9543bc464e083bbb29f0e49622bec968b5329cc9bb70ffadce2a4ca5fc6"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_cnn64_9.dll": {
+          "bytes": 4019752,
+          "sha256": "5087e9a39bb599db48350e2fc88ca37a86e83f2944ff0183bc56f3f9cbde2972"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_engines_precompiled64_9.dll": {
+          "bytes": 588910632,
+          "sha256": "680625354e9f2ac80d573cc94fc5190848198262557226edd482aaca4ccb9113"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_engines_runtime_compiled64_9.dll": {
+          "bytes": 8235560,
+          "sha256": "d0e8c076508e21a5a7b3c2b3f577df74f7a767e95e35133e81bdd38bf8839d8a"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_graph64_9.dll": {
+          "bytes": 2160680,
+          "sha256": "df730314816b59890db41428745c860b2be0112ed296892bbcc426296822aa54"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_heuristic64_9.dll": {
+          "bytes": 85741608,
+          "sha256": "ee6d4831251387ab52a549df7ce7e5256272426eeef23a36d172ca8c725afba1"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_ops64_9.dll": {
+          "bytes": 107721256,
+          "sha256": "e26d81b20ceda0fff0fce1b60f5c4a7c0b32650afa2ab49f0ea4496816bead5b"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cufft64_11.dll": {
+          "bytes": 291784192,
+          "sha256": "7be2aa7509d93202f55b9c940f880aec53063d8c20ce505ea9012990c2b6e088"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cufftw64_11.dll": {
+          "bytes": 163328,
+          "sha256": "e2a956e0104a917fa068086ad811255bf57e7571cd239cf49ec2ad994fd1f1c4"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cupti64_2024.1.0.dll": {
+          "bytes": 4571720,
+          "sha256": "2ccf07a7089840172e8b094e58c1566dce981347dcf9fda126697b280032f50d"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\curand64_10.dll": {
+          "bytes": 63308800,
+          "sha256": "d1ef0598bcf289f68dcf250a785e8b0937711389fb08b2201d8cd48ece021e01"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusolver64_11.dll": {
+          "bytes": 114861056,
+          "sha256": "ed31576024f5b077deda61e8bd4390285f851503cb2887c0d23f77b57b5ad352"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusolverMg64_11.dll": {
+          "bytes": 78133248,
+          "sha256": "4d02ddc4a89be48803f80ff36078f8c665bc1d9912b2e2e061241b11b3797758"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusparse64_12.dll": {
+          "bytes": 275632128,
+          "sha256": "eb5a4bf28503976f1dbf3fa1fd34dd6081c7525597458672e3f8e14e2d139476"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\fbgemm.dll": {
+          "bytes": 4961280,
+          "sha256": "78dce2d58d6306f8fe2d40758d32b2c37e63ccd1d8649b852a362043a3027bbb"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\libiomp5md.dll": {
+          "bytes": 1310600,
+          "sha256": "f608eedb25e44de3db1d3db984ac113f3a8406a92ea87061a77f390852fe1174"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\libiompstubs5md.dll": {
+          "bytes": 43912,
+          "sha256": "27613127ee63e4399b615bf5d105895b2dc18e3505bb92615827f7e11d88343a"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvJitLink_120_0.dll": {
+          "bytes": 38243840,
+          "sha256": "de34fa816105027720999d63639da185c8f9481874a20515e0cd57c32a821a6c"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvToolsExt64_1.dll": {
+          "bytes": 48128,
+          "sha256": "0fe54f1b80ad3e44da2a3d9f0956e7c3903029d6319689ce1c4068f7a20932f3"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvrtc-builtins64_124.dll": {
+          "bytes": 5559296,
+          "sha256": "3ba326d21bb242488c0284ebc32fd6dbc94025ecab34862015a5c95eb178c961"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvrtc64_120_0.dll": {
+          "bytes": 44733952,
+          "sha256": "e55461f252b519478e9bf09f8bd1f0f3b6e3064c9270fac6a29d6eb23216835c"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\shm.dll": {
+          "bytes": 14848,
+          "sha256": "ee01b7d46df1fed0fef904776b7cadd1b2453dd47b7fca745e24b79b4d3023ed"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch.dll": {
+          "bytes": 9728,
+          "sha256": "b3bbedcfbd34eee4c4efd06464e3929026c7f02bedd06fc4314cf6604f37aeac"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_cpu.dll": {
+          "bytes": 251258368,
+          "sha256": "6eb25a52d1e3a2c0598797942a78def81138df0c6602f0e009c7db2bfbe39232"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_cuda.dll": {
+          "bytes": 957267456,
+          "sha256": "37fcaf926c486739e4cb505acb167a55d8f2ffd021c78f8822365478935c4630"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_global_deps.dll": {
+          "bytes": 9728,
+          "sha256": "d3e4a7467f13f5eb42b904dff7f8324f18033518a2eb4b0690a71daaabc96787"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_python.dll": {
+          "bytes": 16924672,
+          "sha256": "5b06809e061c5c3b82ac4ba832beebb7d819ad32df4fc96654af7926729c121f"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\uv.dll": {
+          "bytes": 195072,
+          "sha256": "d6e517084425092066d4b26678320eb60edf2c79ade855bd67b829113f999da6"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\zlibwapi.dll": {
+          "bytes": 89088,
+          "sha256": "1f047faec08d9a35c304fb4a7cf13853589359a8f7cbfdd48c5d5807712dcf05"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\nn\\functional.py": {
+          "bytes": 247953,
+          "sha256": "0af69ca566d95e20abf038761893b2c0b4daf349f45dc42469eba5a8151187ea"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py": {
+          "bytes": 127450,
+          "sha256": "96f0fa51972a2d6acc0fa44a716afe5c9520e13d390a6380a6d7e7f20fda00cf"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\optim\\adam.py": {
+          "bytes": 36934,
+          "sha256": "a18d5e8d047b0790ed2a86cd61d3ddffc077dd04fb90e4e45f46251aedcd7b15"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\optim\\adamw.py": {
+          "bytes": 35973,
+          "sha256": "ed13eef9d2875966c5b0e66371344c9e5665d41eac826c05518d38e13081fe7d"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\testing\\_internal\\logging_tensor.py": {
+          "bytes": 7279,
+          "sha256": "6d203b1adb32b8e589c30c310b58053896abbd5a102075695b39e11b2f1064bb"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\utils\\_python_dispatch.py": {
+          "bytes": 29245,
+          "sha256": "036c568bb06dd3c3310a81afbe00361846be124ef260a9a723b902b25c3e01f5"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\utils\\_pytree.py": {
+          "bytes": 57102,
+          "sha256": "8aaf2b0b8c3e2de88d69afaff7b89cb4f2e66c4ffdf7db6ccc074188b97fb659"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\utils\\checkpoint.py": {
+          "bytes": 67661,
+          "sha256": "10041cb9a79b7ba3867931a61aa4334a7955eed9ad9a8d3319d7727c10b1556c"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\version.py": {
+          "bytes": 283,
+          "sha256": "b7d0c451533c0da1a2dd77ea0fc3f9e89743e466566c6778929e86d0bfd498a1"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\configuration_utils.py": {
+          "bytes": 70107,
+          "sha256": "23ca0a0c0dd1591ccdce5ced8dee09997f0656304f46b85fed725ade85fe25c9"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\dependency_versions_table.py": {
+          "bytes": 3142,
+          "sha256": "f8c51eb96aeea1380e8ed5a21323fd1ee6e267ab5c21cc5377c018ee39b8da6c"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\initialization.py": {
+          "bytes": 12277,
+          "sha256": "08d3146c713cdc1b2430171563a153949fd758d51aa1e2ad2fa25184a31ef082"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\integrations\\hub_kernels.py": {
+          "bytes": 35972,
+          "sha256": "7d36b07739be13398afe32f275b6381045240e89fabd5e422f7a8e3e3d738639"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\masking_utils.py": {
+          "bytes": 78233,
+          "sha256": "5f48e428ea02d1b6008acb45c147fcdb4eba89deea69627744662aa05da1b9f2"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_layers.py": {
+          "bytes": 30446,
+          "sha256": "5b03ff486dda560eff26bb25f453f879e19a0efd64564d3afcb1469e07f6d348"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_rope_utils.py": {
+          "bytes": 58056,
+          "sha256": "9592ba129bf723ed3fa54afcc48ddd3d40d2dac2947ce5cc37803c496ca320e8"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_utils.py": {
+          "bytes": 274811,
+          "sha256": "d8bf1879d6f582888b6cf47b4d63070260285a3bd1dc94ce7e1373304f74168a"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\models\\qwen3\\configuration_qwen3.py": {
+          "bytes": 3624,
+          "sha256": "49d9ccd0f29ccd977b93dba2004f84b867891b3d0509b71fd8ba3ed01054e64d"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\models\\qwen3\\modeling_qwen3.py": {
+          "bytes": 23353,
+          "sha256": "fbdcfeeb1b54135ca67ba7df924da92f4b264e1252b517eea2de989289ebaeab"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\utils\\generic.py": {
+          "bytes": 40859,
+          "sha256": "cd444f4d8f1baf5e8a54fb48b2cdc4b6bab0ef575571be2e6b119f584d2de916"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\utils\\output_capturing.py": {
+          "bytes": 12672,
+          "sha256": "28921dca36f8892e6f50c8b92ebfff3e9aff945f32a88c275e41b1dc0f1b65c1"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe": {
+          "bytes": 45568,
+          "sha256": "5d121182d0b09011d3fffd20191e415e02394ed31807b4570b2746c26256c1b3"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\collections\\__init__.py": {
+          "bytes": 52018,
+          "sha256": "64b09e7062bb7f41e080900d414988c289624aea0ee6ca4037f1e317a11374ee"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\contextlib.py": {
+          "bytes": 27414,
+          "sha256": "d732c045bc7450997f97b2f79cfdb1546b68d2655e89ab3170f3b19b3930d83c"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\enum.py": {
+          "bytes": 79583,
+          "sha256": "01addb65722daecee235caf6b345e4a910b1882aacc29e4fb846e0e0904043e6"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\platform.py": {
+          "bytes": 42273,
+          "sha256": "4a3cc68ba7354f8d5cc28c55315a7d77b77dcdbbaa3a092572a636b5fb5b6938"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\typing.py": {
+          "bytes": 120951,
+          "sha256": "eff3df4f1d65e13d690b8f427cada4dd3b88431dd1e7f319fda1bd0062113203"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\uuid.py": {
+          "bytes": 27597,
+          "sha256": "e936b632e7b14cbdad7da077edf59d1de77f5a4c8507a5e7d0028b1d336d9883"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\warnings.py": {
+          "bytes": 21110,
+          "sha256": "47328418f0365f0897a2d3789f684dbaba1d5b9c492871f1b72a35b8e2e92021"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\weakref.py": {
+          "bytes": 21513,
+          "sha256": "56f8d313fb74019e53eb9287400702fbce788b7fe30e097b0b6e06296f3f080c"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python311.dll": {
+          "bytes": 5846016,
+          "sha256": "dabb2dec30c6a63ab4f669ed0d2ac6fe465d0d498b509a2e2b488ab0984600cf"
+        },
+        "C:\\Windows\\System32\\kernel32.dll": {
+          "bytes": 844496,
+          "sha256": "8f8629741558b5df71def4e1dd8ef9645d4f806b949762c47757c50fea1a9e6d"
+        },
+        "C:\\Windows\\System32\\nvml.dll": {
+          "bytes": 1114752,
+          "sha256": "68fcc8750fcb90a41e70801d9dabb83fd7b61c39e966feceac30a9b3bcec509a"
+        }
+      },
+      "source": {
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_contract.py": {
+          "bytes": 31940,
+          "sha256": "24279b867b784be79232ff7aa51ef41189a93f189a99ced1062160c93627ff47"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_core.py": {
+          "bytes": 12336,
+          "sha256": "80ebaf6b60894ea9e0da24471d58fc3ec5af9085674d3af9babb08fe2563b68e"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_native.py": {
+          "bytes": 19169,
+          "sha256": "b0fd0129200de773e5b340b852f1940b075d82076786c0e9dbc19d6074639566"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_supervisor.py": {
+          "bytes": 12956,
+          "sha256": "8ead506468493b8ef6287a35c50a60758112483b3e8e00c0174bf279ce0ec021"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_worker.py": {
+          "bytes": 11332,
+          "sha256": "44cf0b9770d976e11767f4558fcf71d9c9c0994b269f2a89192a7c294314bb3b"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\checkpoint_successor_profile.py": {
+          "bytes": 9268,
+          "sha256": "1cf3cad34dfb05a73c6930fc29ac72538b3c38a15ad0772a8b5378eef55aa04f"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_component.py": {
+          "bytes": 22005,
+          "sha256": "48c57278339f4e42ef7487e296d6051edb55650e61d0397b1c73305720651b0b"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_contract.py": {
+          "bytes": 12107,
+          "sha256": "5fced90a3113e7f50abc95897cbf5d089a7a682f87d4285d5b42d99c04868caa"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_qual_worker.py": {
+          "bytes": 14397,
+          "sha256": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_contract.py": {
+          "bytes": 11490,
+          "sha256": "47d762107adc66d92ed35bc96f8e99e24d81f448c140b4670753771faade5eb0"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_loader.py": {
+          "bytes": 20718,
+          "sha256": "43229ee3ab59719ddc076ce252fdab029a9b5f43c11c66e9ccc84d092f378174"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_mechanics.py": {
+          "bytes": 38939,
+          "sha256": "e00a4c8ffe539b047a457a1aca49fd5998f053f9a5485a65d9a9153f4cd1986d"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_nvml.py": {
+          "bytes": 7475,
+          "sha256": "b09e186d5a2f4d249e2eea24e0693eb3f44280704f19ebfb17b6219882742329"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_precision.py": {
+          "bytes": 12831,
+          "sha256": "05d18fdec95860df8f54ba60a7cee16bc983f783fa51a5f009cf6dc1939736cc"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_process.py": {
+          "bytes": 9670,
+          "sha256": "3d36770a36be5ef9db2c9ab159b069e3dde6c6e61210c58513c5afa7c4e70540"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_supervisor.py": {
+          "bytes": 41883,
+          "sha256": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_worker.py": {
+          "bytes": 25043,
+          "sha256": "156c56c6b9980f30d950fd5245403cc58ec80cb5131fde69451156db9edc22d4"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\rs_contract.py": {
+          "bytes": 7033,
+          "sha256": "cef135a06d4449917798e7e40685ac3589615663bfe47662e0a49207b67ccc6a"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_native_chunk.py": {
+          "bytes": 27567,
+          "sha256": "96f361052c34750313731c1fad0fe07d5ed48d376ee59850370cfeae99f59047"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_schedule.py": {
+          "bytes": 16896,
+          "sha256": "292e2f29ce7fb78c81e092d84e3b2a278310c8c8eed408d680e4d2db7340bf1d"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_torch_backend.py": {
+          "bytes": 30755,
+          "sha256": "c1aaa4c2efdc50d3025eacaaa45e37930a278b70e580dd9f8344e7337bcac04d"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_qual_supervisor.py": {
+          "bytes": 27281,
+          "sha256": "c1512a34c96abcf77fff4aebdc550ba8f25f8be3840632a4518c0895b221119b"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_qualification.py": {
+          "bytes": 16688,
+          "sha256": "b23a393becc9fff7a136a0d1185217e825dcbfeca574e6e7c312533ef598bc35"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_recompute_scope.py": {
+          "bytes": 10163,
+          "sha256": "9430c4b791a8e87c1d1968f79995610d690e83e36036a2ca7223ddfd807e681a"
+        }
+      }
+    },
+    "before": {
+      "config": {
+        "bytes": 870689,
+        "sha256": "81fa2210734bf5fd8d86f5dbbf286f7990a040559c8e0bf69885a52d2e55b08e"
+      },
+      "data": {
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\candidate_records.jsonl": {
+          "bytes": 1127444,
+          "sha256": "90c151edb668416935608912a0d21c0425dbbd9f37a81a1796d4132dcee9f350"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\enrollment.json": {
+          "bytes": 49975,
+          "sha256": "2730f96e1e7b9b23bab6f5bfc869400d16fd42eca2071d004c68aacd2bb1defc"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\pilot_decisions.json": {
+          "bytes": 7492,
+          "sha256": "c2c78e3eb1e6f718c1c717a51288f5062b1a0db41da03852b4e1d2323d672598"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\plan.json": {
+          "bytes": 506279,
+          "sha256": "a7de5c99f772ece147b08249c332c8d3448e9747a8c2df64dcd0375ff36534d7"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\preparation_receipt.json": {
+          "bytes": 15022,
+          "sha256": "cb0b0ffe331664da1206c36b60a344a92b3f1bf6a0dd29cf1a89a45881cb82eb"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\schedule_result.json": {
+          "bytes": 90383,
+          "sha256": "2664eabfa4cfb9c4e28742cb58f4c6649b24eb80a16df3d5f2cf1a195a058744"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\token_pool_M1.jsonl": {
+          "bytes": 1399335,
+          "sha256": "69105d1b238b229eee13e04e7b479f1f3e8a191c4cdfb9597294f4fb1538ae95"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\token_pool_M2.jsonl": {
+          "bytes": 1399437,
+          "sha256": "34157fe3f99171e249824c66de484b556b68f65508ab3cc43def9129c9782253"
+        }
+      },
+      "lease": {
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\79cc43d289fb456fb99fa8a60c5e408f\\reservation.json": {
+          "bytes": 513,
+          "sha256": "0bacd2f5024fe1b9ace985d0abbe9b63bd34a8da934bc7a32182ad0fe233b8d5"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\79cc43d289fb456fb99fa8a60c5e408f\\resume.json": {
+          "bytes": 477,
+          "sha256": "778d590ae160b42ffadd70ea69d77398c999d2c0feb9fc3ae47faebeef9c06a0"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\79cc43d289fb456fb99fa8a60c5e408f\\terminal.json": {
+          "bytes": 3018941,
+          "sha256": "fc95a029a8ce3caa7d0a5d5861ee74271ddd90376dec7846d111bf35daf12ccb"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\79cc43d289fb456fb99fa8a60c5e408f\\worker.json": {
+          "bytes": 315,
+          "sha256": "211ffa694fb62da9c75e69a1e76aa70d70ba909af1454cdb36c4362112c41c3c"
+        }
+      },
+      "preservation_receipt": {
+        "bytes": 7572,
+        "sha256": "c57b2a140dcb75ab927e8a785489c2e3ac976bd44dca27bb0f12e8f65aecdca9"
+      },
+      "raw": {
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\RESOURCE_OBSERVATIONS.json": {
+          "bytes": 5560053,
+          "sha256": "d0f96e74a106febb77ca237636d9204cf9d71c9c2ae6841f0be41b4d3347b9c5"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\SUPERVISOR_RECEIPT.json": {
+          "bytes": 3018941,
+          "sha256": "fc95a029a8ce3caa7d0a5d5861ee74271ddd90376dec7846d111bf35daf12ccb"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\events.jsonl": {
+          "bytes": 387582,
+          "sha256": "f7539535ebd2dbbbed4ef274834923325b791cd67d1934ca98325f800d71b45d"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r01.json": {
+          "bytes": 131,
+          "sha256": "189901a98a94f33292fa39f836197d58d58261ca48b66d961980eaa6feb0e27e"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r02.json": {
+          "bytes": 112,
+          "sha256": "3bcdf6472066ccd8d3b0266de771e4036221364ca5cd1f645464f90065dd8a12"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r03.json": {
+          "bytes": 132,
+          "sha256": "ff69e85cd9b4240fade62646a470662daf948e30a50c6b2fc83c33bf7c0f9e04"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r04.json": {
+          "bytes": 129,
+          "sha256": "4dde62d62e09a9fc118b4c3a5a518d7a58ae0cd7aafeb37340b04f74bff959b4"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r05.json": {
+          "bytes": 112,
+          "sha256": "9f4e7aed169e0b52474379b39f81366c35c4cf8a3452ad0978a6184b6da7585e"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r06.json": {
+          "bytes": 129,
+          "sha256": "9f17859b742057ec40a93b87413d05ce6791f5556bceb66b08dbe2d1331d2387"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r07.json": {
+          "bytes": 113,
+          "sha256": "9e5801c1b11391f5b9fa8ef4843af616d17f075a2ac7a3ab59452e3c9e7d4334"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r08.json": {
+          "bytes": 132,
+          "sha256": "f723631aafd63cc07cb3ca05aa5614b1c3f938255e6aa703fc5d192f2a3cd693"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r09.json": {
+          "bytes": 111,
+          "sha256": "9d348c16c40e251a62c12dd60b3597b6a72a7b41a8430e135334b4acd1e2edc0"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r10.json": {
+          "bytes": 114,
+          "sha256": "b45e5eff6b8812ca11e3dbe34c54787b2057abe5abb1377d0f064add711a2d5d"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r11.json": {
+          "bytes": 113,
+          "sha256": "06468e90f1f32bf0b442efe33e0ac8d385ce1e318886a816ad0f9aa965d83003"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r12.json": {
+          "bytes": 114,
+          "sha256": "61419f7f3e05d6e633282b6411bf51b55c40e0853c7901b7148b4f0640cabe24"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r13.json": {
+          "bytes": 113,
+          "sha256": "c00fb12ca76c53282c8415e1909404170723fc4b97d7102ff24e32ef15e98e76"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r14.json": {
+          "bytes": 114,
+          "sha256": "df0b9f222deeb896694a8398fa4d526920ca2ab5cba3602722131d252bc723fe"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r15.json": {
+          "bytes": 128,
+          "sha256": "690d2a3c82f10dd30ec07372cd5d804d8304b113741e9544c6ed8e460201fd97"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r16.json": {
+          "bytes": 113,
+          "sha256": "1c4698b00bca6f99241c0c3107761501232799a5785f56ad45148bd3148dc757"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r17.json": {
+          "bytes": 133,
+          "sha256": "bec868f2c3b02177a778aaf0cfbc733d1918708002a3f202e957acf56e50451f"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r18.json": {
+          "bytes": 112,
+          "sha256": "718eac02c1c2e0250066deb3356fa8ab19ec1183f7282afaab99442d7c7efa9a"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r19.json": {
+          "bytes": 133,
+          "sha256": "bec868f2c3b02177a778aaf0cfbc733d1918708002a3f202e957acf56e50451f"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u01_r20.json": {
+          "bytes": 129,
+          "sha256": "40bacf142d291d07067cba0b5d5e4088c4520fdb11ce17143e36079114845787"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_ce_u02_r01.json": {
+          "bytes": 113,
+          "sha256": "5044f2bd2017808f1df9e470d700b4a249f89d3bcb1cad2e3f403cd05e3d1f38"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_loader.json": {
+          "bytes": 36145,
+          "sha256": "475aaffe87ba2b89aba950438e24cd39e8248d2fd9943253530957cddb7ade36"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_worker_ownership_verified.json": {
+          "bytes": 265,
+          "sha256": "d9088c035caf45608eb4a4a71ae268986b4be5d29aa2b22f2cb267dd444f1765"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\stage_zero_parity.json": {
+          "bytes": 172,
+          "sha256": "b2311c010801718c905e32dc9a39cac667c7e611db5305bfc2a59175fa9e6c3d"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\supervisor_heartbeat.jsonl": {
+          "bytes": 110970,
+          "sha256": "03cf975a9b713f166f89a3f23a810bdbb78791addcda0720134fa1fc35cd995b"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\supervisor_ownership.json": {
+          "bytes": 288,
+          "sha256": "88751628f1f4c04a8b1d13d67c3c856f6a2786a88dcaff459abb3145a1126775"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\worker.stderr.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq002_recompute_A_attempt1\\worker.stdout.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "runtime": {
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\__init__.py": {
+          "bytes": 92363,
+          "sha256": "7b6a0675824eb1fa2ff0cb1eb36e358dc454703e51dfa4e9a0e6ccd26a159f0c"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\_psutil_windows.pyd": {
+          "bytes": 70656,
+          "sha256": "0035450801bd7d938e9e146c5ec28e619cb5a5f4a18cdc53ac7e9734c7f94f78"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\_pswindows.py": {
+          "bytes": 36466,
+          "sha256": "0bbd52dcb214735be4168d11a2ae192d5bc7265c8cf72c611179476479687f54"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\__init__.py": {
+          "bytes": 221,
+          "sha256": "3bc1e524ebaba28b4de3b3ebad1edfc623190a1d4fc34e76b900fa34e0c37bbd"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\_safetensors_rust.pyd": {
+          "bytes": 734720,
+          "sha256": "80a2b3f7658854ade855c5fb6192ee38fe2c7fbfd38d1c7c1f4d2c44f67125e4"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\torch.py": {
+          "bytes": 20902,
+          "sha256": "81f477f2ab5e05e99308fc55ed26028eb2bf36334404e9c5558e4730184483f0"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_C.cp311-win_amd64.pyd": {
+          "bytes": 10240,
+          "sha256": "8c64a97873ac7730dfe4aa9740d5dbd5d904fdd0a214cec829a3665711927465"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_dynamo\\__init__.py": {
+          "bytes": 4505,
+          "sha256": "9265b24923a6c13f932746519115ff366f55fdee84031b7447348cd2a5593a0f"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_dynamo\\decorators.py": {
+          "bytes": 23775,
+          "sha256": "34d07ccd5425a43a1ebe06aee4f4bb63975b21c0adb4cbcb8fb9d8540e6c9651"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_dynamo\\eval_frame.py": {
+          "bytes": 70738,
+          "sha256": "18e1fc44d921b055f05edb9bdab557e030c5f0fe4db9168368ff95ffa11781d4"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_functorch\\_aot_autograd\\functional_utils.py": {
+          "bytes": 23276,
+          "sha256": "4725858bdb2c9c69d705ea53636f529310f34392734e907b382b6462b24e1bf6"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\fx\\traceback.py": {
+          "bytes": 7000,
+          "sha256": "533a5141b5ec9b8115d9329e39e78b6b94e524237fc76952687ab5dbf99495b2"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\asmjit.dll": {
+          "bytes": 358912,
+          "sha256": "8872de6689ff648bf3a31635a25c8e4746e5bbe3c92a2d0c9eb5b7e639775688"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\c10.dll": {
+          "bytes": 973312,
+          "sha256": "7b4bc7abb0b50cdfcfd4d6d58a310cd7e951f87621783af8d3eaa861d7719147"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\c10_cuda.dll": {
+          "bytes": 388608,
+          "sha256": "ff798a3e18a09291e993e9bba452152447c7507b605d683c8289bf5112efe024"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\caffe2_nvrtc.dll": {
+          "bytes": 16384,
+          "sha256": "fce25ac814e73e48ac6ab41a542cf085d492d5f72e11aae6139d2f9a33e1171e"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cublas64_12.dll": {
+          "bytes": 100188672,
+          "sha256": "6ed2a2b8a1a7d243ee76acc81bbbfaadddb3264e0526a785ef58a8c6420dd05d"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cublasLt64_12.dll": {
+          "bytes": 472802816,
+          "sha256": "0b58a51fa30b0af7640b80ca2a1c2f3f0b93d62774aa0a34af7ba8c090684d31"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudart64_12.dll": {
+          "bytes": 553984,
+          "sha256": "f95273031fc5ea44cdb37e0a696a1b15b9d84a4ee977299a6f6e652ef4d790cf"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn64_9.dll": {
+          "bytes": 438840,
+          "sha256": "c07cc47f2fa4a566593c7af4aa7e57edf09a985a0fddd14cb8d6f456e252af05"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_adv64_9.dll": {
+          "bytes": 241576488,
+          "sha256": "3527c9543bc464e083bbb29f0e49622bec968b5329cc9bb70ffadce2a4ca5fc6"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_cnn64_9.dll": {
+          "bytes": 4019752,
+          "sha256": "5087e9a39bb599db48350e2fc88ca37a86e83f2944ff0183bc56f3f9cbde2972"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_engines_precompiled64_9.dll": {
+          "bytes": 588910632,
+          "sha256": "680625354e9f2ac80d573cc94fc5190848198262557226edd482aaca4ccb9113"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_engines_runtime_compiled64_9.dll": {
+          "bytes": 8235560,
+          "sha256": "d0e8c076508e21a5a7b3c2b3f577df74f7a767e95e35133e81bdd38bf8839d8a"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_graph64_9.dll": {
+          "bytes": 2160680,
+          "sha256": "df730314816b59890db41428745c860b2be0112ed296892bbcc426296822aa54"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_heuristic64_9.dll": {
+          "bytes": 85741608,
+          "sha256": "ee6d4831251387ab52a549df7ce7e5256272426eeef23a36d172ca8c725afba1"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_ops64_9.dll": {
+          "bytes": 107721256,
+          "sha256": "e26d81b20ceda0fff0fce1b60f5c4a7c0b32650afa2ab49f0ea4496816bead5b"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cufft64_11.dll": {
+          "bytes": 291784192,
+          "sha256": "7be2aa7509d93202f55b9c940f880aec53063d8c20ce505ea9012990c2b6e088"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cufftw64_11.dll": {
+          "bytes": 163328,
+          "sha256": "e2a956e0104a917fa068086ad811255bf57e7571cd239cf49ec2ad994fd1f1c4"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cupti64_2024.1.0.dll": {
+          "bytes": 4571720,
+          "sha256": "2ccf07a7089840172e8b094e58c1566dce981347dcf9fda126697b280032f50d"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\curand64_10.dll": {
+          "bytes": 63308800,
+          "sha256": "d1ef0598bcf289f68dcf250a785e8b0937711389fb08b2201d8cd48ece021e01"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusolver64_11.dll": {
+          "bytes": 114861056,
+          "sha256": "ed31576024f5b077deda61e8bd4390285f851503cb2887c0d23f77b57b5ad352"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusolverMg64_11.dll": {
+          "bytes": 78133248,
+          "sha256": "4d02ddc4a89be48803f80ff36078f8c665bc1d9912b2e2e061241b11b3797758"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusparse64_12.dll": {
+          "bytes": 275632128,
+          "sha256": "eb5a4bf28503976f1dbf3fa1fd34dd6081c7525597458672e3f8e14e2d139476"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\fbgemm.dll": {
+          "bytes": 4961280,
+          "sha256": "78dce2d58d6306f8fe2d40758d32b2c37e63ccd1d8649b852a362043a3027bbb"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\libiomp5md.dll": {
+          "bytes": 1310600,
+          "sha256": "f608eedb25e44de3db1d3db984ac113f3a8406a92ea87061a77f390852fe1174"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\libiompstubs5md.dll": {
+          "bytes": 43912,
+          "sha256": "27613127ee63e4399b615bf5d105895b2dc18e3505bb92615827f7e11d88343a"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvJitLink_120_0.dll": {
+          "bytes": 38243840,
+          "sha256": "de34fa816105027720999d63639da185c8f9481874a20515e0cd57c32a821a6c"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvToolsExt64_1.dll": {
+          "bytes": 48128,
+          "sha256": "0fe54f1b80ad3e44da2a3d9f0956e7c3903029d6319689ce1c4068f7a20932f3"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvrtc-builtins64_124.dll": {
+          "bytes": 5559296,
+          "sha256": "3ba326d21bb242488c0284ebc32fd6dbc94025ecab34862015a5c95eb178c961"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvrtc64_120_0.dll": {
+          "bytes": 44733952,
+          "sha256": "e55461f252b519478e9bf09f8bd1f0f3b6e3064c9270fac6a29d6eb23216835c"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\shm.dll": {
+          "bytes": 14848,
+          "sha256": "ee01b7d46df1fed0fef904776b7cadd1b2453dd47b7fca745e24b79b4d3023ed"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch.dll": {
+          "bytes": 9728,
+          "sha256": "b3bbedcfbd34eee4c4efd06464e3929026c7f02bedd06fc4314cf6604f37aeac"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_cpu.dll": {
+          "bytes": 251258368,
+          "sha256": "6eb25a52d1e3a2c0598797942a78def81138df0c6602f0e009c7db2bfbe39232"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_cuda.dll": {
+          "bytes": 957267456,
+          "sha256": "37fcaf926c486739e4cb505acb167a55d8f2ffd021c78f8822365478935c4630"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_global_deps.dll": {
+          "bytes": 9728,
+          "sha256": "d3e4a7467f13f5eb42b904dff7f8324f18033518a2eb4b0690a71daaabc96787"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_python.dll": {
+          "bytes": 16924672,
+          "sha256": "5b06809e061c5c3b82ac4ba832beebb7d819ad32df4fc96654af7926729c121f"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\uv.dll": {
+          "bytes": 195072,
+          "sha256": "d6e517084425092066d4b26678320eb60edf2c79ade855bd67b829113f999da6"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\zlibwapi.dll": {
+          "bytes": 89088,
+          "sha256": "1f047faec08d9a35c304fb4a7cf13853589359a8f7cbfdd48c5d5807712dcf05"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\nn\\functional.py": {
+          "bytes": 247953,
+          "sha256": "0af69ca566d95e20abf038761893b2c0b4daf349f45dc42469eba5a8151187ea"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py": {
+          "bytes": 127450,
+          "sha256": "96f0fa51972a2d6acc0fa44a716afe5c9520e13d390a6380a6d7e7f20fda00cf"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\optim\\adam.py": {
+          "bytes": 36934,
+          "sha256": "a18d5e8d047b0790ed2a86cd61d3ddffc077dd04fb90e4e45f46251aedcd7b15"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\optim\\adamw.py": {
+          "bytes": 35973,
+          "sha256": "ed13eef9d2875966c5b0e66371344c9e5665d41eac826c05518d38e13081fe7d"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\testing\\_internal\\logging_tensor.py": {
+          "bytes": 7279,
+          "sha256": "6d203b1adb32b8e589c30c310b58053896abbd5a102075695b39e11b2f1064bb"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\utils\\_python_dispatch.py": {
+          "bytes": 29245,
+          "sha256": "036c568bb06dd3c3310a81afbe00361846be124ef260a9a723b902b25c3e01f5"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\utils\\_pytree.py": {
+          "bytes": 57102,
+          "sha256": "8aaf2b0b8c3e2de88d69afaff7b89cb4f2e66c4ffdf7db6ccc074188b97fb659"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\utils\\checkpoint.py": {
+          "bytes": 67661,
+          "sha256": "10041cb9a79b7ba3867931a61aa4334a7955eed9ad9a8d3319d7727c10b1556c"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\version.py": {
+          "bytes": 283,
+          "sha256": "b7d0c451533c0da1a2dd77ea0fc3f9e89743e466566c6778929e86d0bfd498a1"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\configuration_utils.py": {
+          "bytes": 70107,
+          "sha256": "23ca0a0c0dd1591ccdce5ced8dee09997f0656304f46b85fed725ade85fe25c9"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\dependency_versions_table.py": {
+          "bytes": 3142,
+          "sha256": "f8c51eb96aeea1380e8ed5a21323fd1ee6e267ab5c21cc5377c018ee39b8da6c"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\initialization.py": {
+          "bytes": 12277,
+          "sha256": "08d3146c713cdc1b2430171563a153949fd758d51aa1e2ad2fa25184a31ef082"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\integrations\\hub_kernels.py": {
+          "bytes": 35972,
+          "sha256": "7d36b07739be13398afe32f275b6381045240e89fabd5e422f7a8e3e3d738639"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\masking_utils.py": {
+          "bytes": 78233,
+          "sha256": "5f48e428ea02d1b6008acb45c147fcdb4eba89deea69627744662aa05da1b9f2"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_layers.py": {
+          "bytes": 30446,
+          "sha256": "5b03ff486dda560eff26bb25f453f879e19a0efd64564d3afcb1469e07f6d348"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_rope_utils.py": {
+          "bytes": 58056,
+          "sha256": "9592ba129bf723ed3fa54afcc48ddd3d40d2dac2947ce5cc37803c496ca320e8"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_utils.py": {
+          "bytes": 274811,
+          "sha256": "d8bf1879d6f582888b6cf47b4d63070260285a3bd1dc94ce7e1373304f74168a"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\models\\qwen3\\configuration_qwen3.py": {
+          "bytes": 3624,
+          "sha256": "49d9ccd0f29ccd977b93dba2004f84b867891b3d0509b71fd8ba3ed01054e64d"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\models\\qwen3\\modeling_qwen3.py": {
+          "bytes": 23353,
+          "sha256": "fbdcfeeb1b54135ca67ba7df924da92f4b264e1252b517eea2de989289ebaeab"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\utils\\generic.py": {
+          "bytes": 40859,
+          "sha256": "cd444f4d8f1baf5e8a54fb48b2cdc4b6bab0ef575571be2e6b119f584d2de916"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\utils\\output_capturing.py": {
+          "bytes": 12672,
+          "sha256": "28921dca36f8892e6f50c8b92ebfff3e9aff945f32a88c275e41b1dc0f1b65c1"
+        },
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe": {
+          "bytes": 45568,
+          "sha256": "5d121182d0b09011d3fffd20191e415e02394ed31807b4570b2746c26256c1b3"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\collections\\__init__.py": {
+          "bytes": 52018,
+          "sha256": "64b09e7062bb7f41e080900d414988c289624aea0ee6ca4037f1e317a11374ee"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\contextlib.py": {
+          "bytes": 27414,
+          "sha256": "d732c045bc7450997f97b2f79cfdb1546b68d2655e89ab3170f3b19b3930d83c"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\enum.py": {
+          "bytes": 79583,
+          "sha256": "01addb65722daecee235caf6b345e4a910b1882aacc29e4fb846e0e0904043e6"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\platform.py": {
+          "bytes": 42273,
+          "sha256": "4a3cc68ba7354f8d5cc28c55315a7d77b77dcdbbaa3a092572a636b5fb5b6938"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\typing.py": {
+          "bytes": 120951,
+          "sha256": "eff3df4f1d65e13d690b8f427cada4dd3b88431dd1e7f319fda1bd0062113203"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\uuid.py": {
+          "bytes": 27597,
+          "sha256": "e936b632e7b14cbdad7da077edf59d1de77f5a4c8507a5e7d0028b1d336d9883"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\warnings.py": {
+          "bytes": 21110,
+          "sha256": "47328418f0365f0897a2d3789f684dbaba1d5b9c492871f1b72a35b8e2e92021"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\weakref.py": {
+          "bytes": 21513,
+          "sha256": "56f8d313fb74019e53eb9287400702fbce788b7fe30e097b0b6e06296f3f080c"
+        },
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python311.dll": {
+          "bytes": 5846016,
+          "sha256": "dabb2dec30c6a63ab4f669ed0d2ac6fe465d0d498b509a2e2b488ab0984600cf"
+        },
+        "C:\\Windows\\System32\\kernel32.dll": {
+          "bytes": 844496,
+          "sha256": "8f8629741558b5df71def4e1dd8ef9645d4f806b949762c47757c50fea1a9e6d"
+        },
+        "C:\\Windows\\System32\\nvml.dll": {
+          "bytes": 1114752,
+          "sha256": "68fcc8750fcb90a41e70801d9dabb83fd7b61c39e966feceac30a9b3bcec509a"
+        }
+      },
+      "source": {
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_contract.py": {
+          "bytes": 31940,
+          "sha256": "24279b867b784be79232ff7aa51ef41189a93f189a99ced1062160c93627ff47"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_core.py": {
+          "bytes": 12336,
+          "sha256": "80ebaf6b60894ea9e0da24471d58fc3ec5af9085674d3af9babb08fe2563b68e"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_native.py": {
+          "bytes": 19169,
+          "sha256": "b0fd0129200de773e5b340b852f1940b075d82076786c0e9dbc19d6074639566"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_supervisor.py": {
+          "bytes": 12956,
+          "sha256": "8ead506468493b8ef6287a35c50a60758112483b3e8e00c0174bf279ce0ec021"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_worker.py": {
+          "bytes": 11332,
+          "sha256": "44cf0b9770d976e11767f4558fcf71d9c9c0994b269f2a89192a7c294314bb3b"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\checkpoint_successor_profile.py": {
+          "bytes": 9268,
+          "sha256": "1cf3cad34dfb05a73c6930fc29ac72538b3c38a15ad0772a8b5378eef55aa04f"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_component.py": {
+          "bytes": 22005,
+          "sha256": "48c57278339f4e42ef7487e296d6051edb55650e61d0397b1c73305720651b0b"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_contract.py": {
+          "bytes": 12107,
+          "sha256": "5fced90a3113e7f50abc95897cbf5d089a7a682f87d4285d5b42d99c04868caa"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_qual_worker.py": {
+          "bytes": 14397,
+          "sha256": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_contract.py": {
+          "bytes": 11490,
+          "sha256": "47d762107adc66d92ed35bc96f8e99e24d81f448c140b4670753771faade5eb0"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_loader.py": {
+          "bytes": 20718,
+          "sha256": "43229ee3ab59719ddc076ce252fdab029a9b5f43c11c66e9ccc84d092f378174"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_mechanics.py": {
+          "bytes": 38939,
+          "sha256": "e00a4c8ffe539b047a457a1aca49fd5998f053f9a5485a65d9a9153f4cd1986d"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_nvml.py": {
+          "bytes": 7475,
+          "sha256": "b09e186d5a2f4d249e2eea24e0693eb3f44280704f19ebfb17b6219882742329"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_precision.py": {
+          "bytes": 12831,
+          "sha256": "05d18fdec95860df8f54ba60a7cee16bc983f783fa51a5f009cf6dc1939736cc"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_process.py": {
+          "bytes": 9670,
+          "sha256": "3d36770a36be5ef9db2c9ab159b069e3dde6c6e61210c58513c5afa7c4e70540"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_supervisor.py": {
+          "bytes": 41883,
+          "sha256": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_worker.py": {
+          "bytes": 25043,
+          "sha256": "156c56c6b9980f30d950fd5245403cc58ec80cb5131fde69451156db9edc22d4"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\rs_contract.py": {
+          "bytes": 7033,
+          "sha256": "cef135a06d4449917798e7e40685ac3589615663bfe47662e0a49207b67ccc6a"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_native_chunk.py": {
+          "bytes": 27567,
+          "sha256": "96f361052c34750313731c1fad0fe07d5ed48d376ee59850370cfeae99f59047"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_schedule.py": {
+          "bytes": 16896,
+          "sha256": "292e2f29ce7fb78c81e092d84e3b2a278310c8c8eed408d680e4d2db7340bf1d"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_torch_backend.py": {
+          "bytes": 30755,
+          "sha256": "c1aaa4c2efdc50d3025eacaaa45e37930a278b70e580dd9f8344e7337bcac04d"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_qual_supervisor.py": {
+          "bytes": 27281,
+          "sha256": "c1512a34c96abcf77fff4aebdc550ba8f25f8be3840632a4518c0895b221119b"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_qualification.py": {
+          "bytes": 16688,
+          "sha256": "b23a393becc9fff7a136a0d1185217e825dcbfeca574e6e7c312533ef598bc35"
+        },
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_recompute_scope.py": {
+          "bytes": 10163,
+          "sha256": "9430c4b791a8e87c1d1968f79995610d690e83e36036a2ca7223ddfd807e681a"
+        }
+      }
+    },
+    "data_pins": {
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\candidate_records.jsonl": "90c151edb668416935608912a0d21c0425dbbd9f37a81a1796d4132dcee9f350",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\enrollment.json": "2730f96e1e7b9b23bab6f5bfc869400d16fd42eca2071d004c68aacd2bb1defc",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\pilot_decisions.json": "c2c78e3eb1e6f718c1c717a51288f5062b1a0db41da03852b4e1d2323d672598",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\plan.json": "a7de5c99f772ece147b08249c332c8d3448e9747a8c2df64dcd0375ff36534d7",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\preparation_receipt.json": "cb0b0ffe331664da1206c36b60a344a92b3f1bf6a0dd29cf1a89a45881cb82eb",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\schedule_result.json": "2664eabfa4cfb9c4e28742cb58f4c6649b24eb80a16df3d5f2cf1a195a058744",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\token_pool_M1.jsonl": "69105d1b238b229eee13e04e7b479f1f3e8a191c4cdfb9597294f4fb1538ae95",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\token_pool_M2.jsonl": "34157fe3f99171e249824c66de484b556b68f65508ab3cc43def9129c9782253"
+    },
+    "loader_model_asset_hashes_match_bound_pins": true,
+    "model_asset_proof_scope": "Preserved load-only receipt matches seven frozen asset pins; published weights/model state not independently reopened in audit.",
+    "preserved_files": {
+      "RESOURCE_OBSERVATIONS.json": {
+        "bytes": 5560053,
+        "sha256": "d0f96e74a106febb77ca237636d9204cf9d71c9c2ae6841f0be41b4d3347b9c5"
+      },
+      "SUPERVISOR_RECEIPT.json": {
+        "bytes": 3018941,
+        "sha256": "fc95a029a8ce3caa7d0a5d5861ee74271ddd90376dec7846d111bf35daf12ccb"
+      },
+      "events.jsonl": {
+        "bytes": 387582,
+        "sha256": "f7539535ebd2dbbbed4ef274834923325b791cd67d1934ca98325f800d71b45d"
+      },
+      "stage_ce_u01_r01.json": {
+        "bytes": 131,
+        "sha256": "189901a98a94f33292fa39f836197d58d58261ca48b66d961980eaa6feb0e27e"
+      },
+      "stage_ce_u01_r02.json": {
+        "bytes": 112,
+        "sha256": "3bcdf6472066ccd8d3b0266de771e4036221364ca5cd1f645464f90065dd8a12"
+      },
+      "stage_ce_u01_r03.json": {
+        "bytes": 132,
+        "sha256": "ff69e85cd9b4240fade62646a470662daf948e30a50c6b2fc83c33bf7c0f9e04"
+      },
+      "stage_ce_u01_r04.json": {
+        "bytes": 129,
+        "sha256": "4dde62d62e09a9fc118b4c3a5a518d7a58ae0cd7aafeb37340b04f74bff959b4"
+      },
+      "stage_ce_u01_r05.json": {
+        "bytes": 112,
+        "sha256": "9f4e7aed169e0b52474379b39f81366c35c4cf8a3452ad0978a6184b6da7585e"
+      },
+      "stage_ce_u01_r06.json": {
+        "bytes": 129,
+        "sha256": "9f17859b742057ec40a93b87413d05ce6791f5556bceb66b08dbe2d1331d2387"
+      },
+      "stage_ce_u01_r07.json": {
+        "bytes": 113,
+        "sha256": "9e5801c1b11391f5b9fa8ef4843af616d17f075a2ac7a3ab59452e3c9e7d4334"
+      },
+      "stage_ce_u01_r08.json": {
+        "bytes": 132,
+        "sha256": "f723631aafd63cc07cb3ca05aa5614b1c3f938255e6aa703fc5d192f2a3cd693"
+      },
+      "stage_ce_u01_r09.json": {
+        "bytes": 111,
+        "sha256": "9d348c16c40e251a62c12dd60b3597b6a72a7b41a8430e135334b4acd1e2edc0"
+      },
+      "stage_ce_u01_r10.json": {
+        "bytes": 114,
+        "sha256": "b45e5eff6b8812ca11e3dbe34c54787b2057abe5abb1377d0f064add711a2d5d"
+      },
+      "stage_ce_u01_r11.json": {
+        "bytes": 113,
+        "sha256": "06468e90f1f32bf0b442efe33e0ac8d385ce1e318886a816ad0f9aa965d83003"
+      },
+      "stage_ce_u01_r12.json": {
+        "bytes": 114,
+        "sha256": "61419f7f3e05d6e633282b6411bf51b55c40e0853c7901b7148b4f0640cabe24"
+      },
+      "stage_ce_u01_r13.json": {
+        "bytes": 113,
+        "sha256": "c00fb12ca76c53282c8415e1909404170723fc4b97d7102ff24e32ef15e98e76"
+      },
+      "stage_ce_u01_r14.json": {
+        "bytes": 114,
+        "sha256": "df0b9f222deeb896694a8398fa4d526920ca2ab5cba3602722131d252bc723fe"
+      },
+      "stage_ce_u01_r15.json": {
+        "bytes": 128,
+        "sha256": "690d2a3c82f10dd30ec07372cd5d804d8304b113741e9544c6ed8e460201fd97"
+      },
+      "stage_ce_u01_r16.json": {
+        "bytes": 113,
+        "sha256": "1c4698b00bca6f99241c0c3107761501232799a5785f56ad45148bd3148dc757"
+      },
+      "stage_ce_u01_r17.json": {
+        "bytes": 133,
+        "sha256": "bec868f2c3b02177a778aaf0cfbc733d1918708002a3f202e957acf56e50451f"
+      },
+      "stage_ce_u01_r18.json": {
+        "bytes": 112,
+        "sha256": "718eac02c1c2e0250066deb3356fa8ab19ec1183f7282afaab99442d7c7efa9a"
+      },
+      "stage_ce_u01_r19.json": {
+        "bytes": 133,
+        "sha256": "bec868f2c3b02177a778aaf0cfbc733d1918708002a3f202e957acf56e50451f"
+      },
+      "stage_ce_u01_r20.json": {
+        "bytes": 129,
+        "sha256": "40bacf142d291d07067cba0b5d5e4088c4520fdb11ce17143e36079114845787"
+      },
+      "stage_ce_u02_r01.json": {
+        "bytes": 113,
+        "sha256": "5044f2bd2017808f1df9e470d700b4a249f89d3bcb1cad2e3f403cd05e3d1f38"
+      },
+      "stage_loader.json": {
+        "bytes": 36145,
+        "sha256": "475aaffe87ba2b89aba950438e24cd39e8248d2fd9943253530957cddb7ade36"
+      },
+      "stage_worker_ownership_verified.json": {
+        "bytes": 265,
+        "sha256": "d9088c035caf45608eb4a4a71ae268986b4be5d29aa2b22f2cb267dd444f1765"
+      },
+      "stage_zero_parity.json": {
+        "bytes": 172,
+        "sha256": "b2311c010801718c905e32dc9a39cac667c7e611db5305bfc2a59175fa9e6c3d"
+      },
+      "supervisor_heartbeat.jsonl": {
+        "bytes": 110970,
+        "sha256": "03cf975a9b713f166f89a3f23a810bdbb78791addcda0720134fa1fc35cd995b"
+      },
+      "supervisor_ownership.json": {
+        "bytes": 288,
+        "sha256": "88751628f1f4c04a8b1d13d67c3c856f6a2786a88dcaff459abb3145a1126775"
+      },
+      "worker.stderr.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "worker.stdout.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "preserved_source_snapshot_pins": {
+      "backend_qual_contract.py": "24279b867b784be79232ff7aa51ef41189a93f189a99ced1062160c93627ff47",
+      "backend_qual_core.py": "80ebaf6b60894ea9e0da24471d58fc3ec5af9085674d3af9babb08fe2563b68e",
+      "backend_qual_native.py": "b0fd0129200de773e5b340b852f1940b075d82076786c0e9dbc19d6074639566",
+      "backend_qual_supervisor.py": "8ead506468493b8ef6287a35c50a60758112483b3e8e00c0174bf279ce0ec021",
+      "backend_qual_worker.py": "44cf0b9770d976e11767f4558fcf71d9c9c0994b269f2a89192a7c294314bb3b",
+      "checkpoint_successor_profile.py": "1cf3cad34dfb05a73c6930fc29ac72538b3c38a15ad0772a8b5378eef55aa04f",
+      "inference_component.py": "48c57278339f4e42ef7487e296d6051edb55650e61d0397b1c73305720651b0b",
+      "inference_contract.py": "5fced90a3113e7f50abc95897cbf5d089a7a682f87d4285d5b42d99c04868caa",
+      "inference_qual_worker.py": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e",
+      "native_contract.py": "47d762107adc66d92ed35bc96f8e99e24d81f448c140b4670753771faade5eb0",
+      "native_loader.py": "43229ee3ab59719ddc076ce252fdab029a9b5f43c11c66e9ccc84d092f378174",
+      "native_mechanics.py": "e00a4c8ffe539b047a457a1aca49fd5998f053f9a5485a65d9a9153f4cd1986d",
+      "native_nvml.py": "b09e186d5a2f4d249e2eea24e0693eb3f44280704f19ebfb17b6219882742329",
+      "native_precision.py": "05d18fdec95860df8f54ba60a7cee16bc983f783fa51a5f009cf6dc1939736cc",
+      "native_process.py": "3d36770a36be5ef9db2c9ab159b069e3dde6c6e61210c58513c5afa7c4e70540",
+      "native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691",
+      "native_worker.py": "156c56c6b9980f30d950fd5245403cc58ec80cb5131fde69451156db9edc22d4",
+      "rs_contract.py": "cef135a06d4449917798e7e40685ac3589615663bfe47662e0a49207b67ccc6a",
+      "study_native_chunk.py": "96f361052c34750313731c1fad0fe07d5ed48d376ee59850370cfeae99f59047",
+      "study_schedule.py": "292e2f29ce7fb78c81e092d84e3b2a278310c8c8eed408d680e4d2db7340bf1d",
+      "study_torch_backend.py": "c1aaa4c2efdc50d3025eacaaa45e37930a278b70e580dd9f8344e7337bcac04d",
+      "tests/test_backend_qual_supervisor.py": "c1512a34c96abcf77fff4aebdc550ba8f25f8be3840632a4518c0895b221119b",
+      "tests/test_backend_qualification.py": "b23a393becc9fff7a136a0d1185217e825dcbfeca574e6e7c312533ef598bc35",
+      "tests/test_backend_recompute_scope.py": "9430c4b791a8e87c1d1968f79995610d690e83e36036a2ca7223ddfd807e681a"
+    },
+    "published_weights_reopened_by_audit": false,
+    "runtime_pins": {
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\__init__.py": "7b6a0675824eb1fa2ff0cb1eb36e358dc454703e51dfa4e9a0e6ccd26a159f0c",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\_psutil_windows.pyd": "0035450801bd7d938e9e146c5ec28e619cb5a5f4a18cdc53ac7e9734c7f94f78",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\_pswindows.py": "0bbd52dcb214735be4168d11a2ae192d5bc7265c8cf72c611179476479687f54",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\__init__.py": "3bc1e524ebaba28b4de3b3ebad1edfc623190a1d4fc34e76b900fa34e0c37bbd",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\_safetensors_rust.pyd": "80a2b3f7658854ade855c5fb6192ee38fe2c7fbfd38d1c7c1f4d2c44f67125e4",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\torch.py": "81f477f2ab5e05e99308fc55ed26028eb2bf36334404e9c5558e4730184483f0",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_C.cp311-win_amd64.pyd": "8c64a97873ac7730dfe4aa9740d5dbd5d904fdd0a214cec829a3665711927465",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_dynamo\\__init__.py": "9265b24923a6c13f932746519115ff366f55fdee84031b7447348cd2a5593a0f",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_dynamo\\decorators.py": "34d07ccd5425a43a1ebe06aee4f4bb63975b21c0adb4cbcb8fb9d8540e6c9651",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_dynamo\\eval_frame.py": "18e1fc44d921b055f05edb9bdab557e030c5f0fe4db9168368ff95ffa11781d4",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_functorch\\_aot_autograd\\functional_utils.py": "4725858bdb2c9c69d705ea53636f529310f34392734e907b382b6462b24e1bf6",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\fx\\traceback.py": "533a5141b5ec9b8115d9329e39e78b6b94e524237fc76952687ab5dbf99495b2",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\asmjit.dll": "8872de6689ff648bf3a31635a25c8e4746e5bbe3c92a2d0c9eb5b7e639775688",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\c10.dll": "7b4bc7abb0b50cdfcfd4d6d58a310cd7e951f87621783af8d3eaa861d7719147",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\c10_cuda.dll": "ff798a3e18a09291e993e9bba452152447c7507b605d683c8289bf5112efe024",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\caffe2_nvrtc.dll": "fce25ac814e73e48ac6ab41a542cf085d492d5f72e11aae6139d2f9a33e1171e",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cublas64_12.dll": "6ed2a2b8a1a7d243ee76acc81bbbfaadddb3264e0526a785ef58a8c6420dd05d",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cublasLt64_12.dll": "0b58a51fa30b0af7640b80ca2a1c2f3f0b93d62774aa0a34af7ba8c090684d31",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudart64_12.dll": "f95273031fc5ea44cdb37e0a696a1b15b9d84a4ee977299a6f6e652ef4d790cf",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn64_9.dll": "c07cc47f2fa4a566593c7af4aa7e57edf09a985a0fddd14cb8d6f456e252af05",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_adv64_9.dll": "3527c9543bc464e083bbb29f0e49622bec968b5329cc9bb70ffadce2a4ca5fc6",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_cnn64_9.dll": "5087e9a39bb599db48350e2fc88ca37a86e83f2944ff0183bc56f3f9cbde2972",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_engines_precompiled64_9.dll": "680625354e9f2ac80d573cc94fc5190848198262557226edd482aaca4ccb9113",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_engines_runtime_compiled64_9.dll": "d0e8c076508e21a5a7b3c2b3f577df74f7a767e95e35133e81bdd38bf8839d8a",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_graph64_9.dll": "df730314816b59890db41428745c860b2be0112ed296892bbcc426296822aa54",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_heuristic64_9.dll": "ee6d4831251387ab52a549df7ce7e5256272426eeef23a36d172ca8c725afba1",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_ops64_9.dll": "e26d81b20ceda0fff0fce1b60f5c4a7c0b32650afa2ab49f0ea4496816bead5b",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cufft64_11.dll": "7be2aa7509d93202f55b9c940f880aec53063d8c20ce505ea9012990c2b6e088",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cufftw64_11.dll": "e2a956e0104a917fa068086ad811255bf57e7571cd239cf49ec2ad994fd1f1c4",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cupti64_2024.1.0.dll": "2ccf07a7089840172e8b094e58c1566dce981347dcf9fda126697b280032f50d",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\curand64_10.dll": "d1ef0598bcf289f68dcf250a785e8b0937711389fb08b2201d8cd48ece021e01",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusolver64_11.dll": "ed31576024f5b077deda61e8bd4390285f851503cb2887c0d23f77b57b5ad352",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusolverMg64_11.dll": "4d02ddc4a89be48803f80ff36078f8c665bc1d9912b2e2e061241b11b3797758",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusparse64_12.dll": "eb5a4bf28503976f1dbf3fa1fd34dd6081c7525597458672e3f8e14e2d139476",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\fbgemm.dll": "78dce2d58d6306f8fe2d40758d32b2c37e63ccd1d8649b852a362043a3027bbb",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\libiomp5md.dll": "f608eedb25e44de3db1d3db984ac113f3a8406a92ea87061a77f390852fe1174",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\libiompstubs5md.dll": "27613127ee63e4399b615bf5d105895b2dc18e3505bb92615827f7e11d88343a",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvJitLink_120_0.dll": "de34fa816105027720999d63639da185c8f9481874a20515e0cd57c32a821a6c",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvToolsExt64_1.dll": "0fe54f1b80ad3e44da2a3d9f0956e7c3903029d6319689ce1c4068f7a20932f3",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvrtc-builtins64_124.dll": "3ba326d21bb242488c0284ebc32fd6dbc94025ecab34862015a5c95eb178c961",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvrtc64_120_0.dll": "e55461f252b519478e9bf09f8bd1f0f3b6e3064c9270fac6a29d6eb23216835c",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\shm.dll": "ee01b7d46df1fed0fef904776b7cadd1b2453dd47b7fca745e24b79b4d3023ed",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch.dll": "b3bbedcfbd34eee4c4efd06464e3929026c7f02bedd06fc4314cf6604f37aeac",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_cpu.dll": "6eb25a52d1e3a2c0598797942a78def81138df0c6602f0e009c7db2bfbe39232",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_cuda.dll": "37fcaf926c486739e4cb505acb167a55d8f2ffd021c78f8822365478935c4630",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_global_deps.dll": "d3e4a7467f13f5eb42b904dff7f8324f18033518a2eb4b0690a71daaabc96787",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_python.dll": "5b06809e061c5c3b82ac4ba832beebb7d819ad32df4fc96654af7926729c121f",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\uv.dll": "d6e517084425092066d4b26678320eb60edf2c79ade855bd67b829113f999da6",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\zlibwapi.dll": "1f047faec08d9a35c304fb4a7cf13853589359a8f7cbfdd48c5d5807712dcf05",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\nn\\functional.py": "0af69ca566d95e20abf038761893b2c0b4daf349f45dc42469eba5a8151187ea",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py": "96f0fa51972a2d6acc0fa44a716afe5c9520e13d390a6380a6d7e7f20fda00cf",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\optim\\adam.py": "a18d5e8d047b0790ed2a86cd61d3ddffc077dd04fb90e4e45f46251aedcd7b15",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\optim\\adamw.py": "ed13eef9d2875966c5b0e66371344c9e5665d41eac826c05518d38e13081fe7d",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\testing\\_internal\\logging_tensor.py": "6d203b1adb32b8e589c30c310b58053896abbd5a102075695b39e11b2f1064bb",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\utils\\_python_dispatch.py": "036c568bb06dd3c3310a81afbe00361846be124ef260a9a723b902b25c3e01f5",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\utils\\_pytree.py": "8aaf2b0b8c3e2de88d69afaff7b89cb4f2e66c4ffdf7db6ccc074188b97fb659",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\utils\\checkpoint.py": "10041cb9a79b7ba3867931a61aa4334a7955eed9ad9a8d3319d7727c10b1556c",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\version.py": "b7d0c451533c0da1a2dd77ea0fc3f9e89743e466566c6778929e86d0bfd498a1",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\configuration_utils.py": "23ca0a0c0dd1591ccdce5ced8dee09997f0656304f46b85fed725ade85fe25c9",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\dependency_versions_table.py": "f8c51eb96aeea1380e8ed5a21323fd1ee6e267ab5c21cc5377c018ee39b8da6c",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\initialization.py": "08d3146c713cdc1b2430171563a153949fd758d51aa1e2ad2fa25184a31ef082",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\integrations\\hub_kernels.py": "7d36b07739be13398afe32f275b6381045240e89fabd5e422f7a8e3e3d738639",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\masking_utils.py": "5f48e428ea02d1b6008acb45c147fcdb4eba89deea69627744662aa05da1b9f2",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_layers.py": "5b03ff486dda560eff26bb25f453f879e19a0efd64564d3afcb1469e07f6d348",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_rope_utils.py": "9592ba129bf723ed3fa54afcc48ddd3d40d2dac2947ce5cc37803c496ca320e8",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_utils.py": "d8bf1879d6f582888b6cf47b4d63070260285a3bd1dc94ce7e1373304f74168a",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\models\\qwen3\\configuration_qwen3.py": "49d9ccd0f29ccd977b93dba2004f84b867891b3d0509b71fd8ba3ed01054e64d",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\models\\qwen3\\modeling_qwen3.py": "fbdcfeeb1b54135ca67ba7df924da92f4b264e1252b517eea2de989289ebaeab",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\utils\\generic.py": "cd444f4d8f1baf5e8a54fb48b2cdc4b6bab0ef575571be2e6b119f584d2de916",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\utils\\output_capturing.py": "28921dca36f8892e6f50c8b92ebfff3e9aff945f32a88c275e41b1dc0f1b65c1",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe": "5d121182d0b09011d3fffd20191e415e02394ed31807b4570b2746c26256c1b3",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\collections\\__init__.py": "64b09e7062bb7f41e080900d414988c289624aea0ee6ca4037f1e317a11374ee",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\contextlib.py": "d732c045bc7450997f97b2f79cfdb1546b68d2655e89ab3170f3b19b3930d83c",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\enum.py": "01addb65722daecee235caf6b345e4a910b1882aacc29e4fb846e0e0904043e6",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\platform.py": "4a3cc68ba7354f8d5cc28c55315a7d77b77dcdbbaa3a092572a636b5fb5b6938",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\typing.py": "eff3df4f1d65e13d690b8f427cada4dd3b88431dd1e7f319fda1bd0062113203",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\uuid.py": "e936b632e7b14cbdad7da077edf59d1de77f5a4c8507a5e7d0028b1d336d9883",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\warnings.py": "47328418f0365f0897a2d3789f684dbaba1d5b9c492871f1b72a35b8e2e92021",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\weakref.py": "56f8d313fb74019e53eb9287400702fbce788b7fe30e097b0b6e06296f3f080c",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python311.dll": "dabb2dec30c6a63ab4f669ed0d2ac6fe465d0d498b509a2e2b488ab0984600cf",
+      "C:\\Windows\\System32\\kernel32.dll": "8f8629741558b5df71def4e1dd8ef9645d4f806b949762c47757c50fea1a9e6d",
+      "C:\\Windows\\System32\\nvml.dll": "68fcc8750fcb90a41e70801d9dabb83fd7b61c39e966feceac30a9b3bcec509a"
+    },
+    "source_pins": {
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_contract.py": "24279b867b784be79232ff7aa51ef41189a93f189a99ced1062160c93627ff47",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_core.py": "80ebaf6b60894ea9e0da24471d58fc3ec5af9085674d3af9babb08fe2563b68e",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_native.py": "b0fd0129200de773e5b340b852f1940b075d82076786c0e9dbc19d6074639566",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_supervisor.py": "8ead506468493b8ef6287a35c50a60758112483b3e8e00c0174bf279ce0ec021",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_worker.py": "44cf0b9770d976e11767f4558fcf71d9c9c0994b269f2a89192a7c294314bb3b",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\checkpoint_successor_profile.py": "1cf3cad34dfb05a73c6930fc29ac72538b3c38a15ad0772a8b5378eef55aa04f",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_component.py": "48c57278339f4e42ef7487e296d6051edb55650e61d0397b1c73305720651b0b",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_contract.py": "5fced90a3113e7f50abc95897cbf5d089a7a682f87d4285d5b42d99c04868caa",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_qual_worker.py": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_contract.py": "47d762107adc66d92ed35bc96f8e99e24d81f448c140b4670753771faade5eb0",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_loader.py": "43229ee3ab59719ddc076ce252fdab029a9b5f43c11c66e9ccc84d092f378174",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_mechanics.py": "e00a4c8ffe539b047a457a1aca49fd5998f053f9a5485a65d9a9153f4cd1986d",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_nvml.py": "b09e186d5a2f4d249e2eea24e0693eb3f44280704f19ebfb17b6219882742329",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_precision.py": "05d18fdec95860df8f54ba60a7cee16bc983f783fa51a5f009cf6dc1939736cc",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_process.py": "3d36770a36be5ef9db2c9ab159b069e3dde6c6e61210c58513c5afa7c4e70540",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_worker.py": "156c56c6b9980f30d950fd5245403cc58ec80cb5131fde69451156db9edc22d4",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\rs_contract.py": "cef135a06d4449917798e7e40685ac3589615663bfe47662e0a49207b67ccc6a",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_native_chunk.py": "96f361052c34750313731c1fad0fe07d5ed48d376ee59850370cfeae99f59047",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_schedule.py": "292e2f29ce7fb78c81e092d84e3b2a278310c8c8eed408d680e4d2db7340bf1d",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_torch_backend.py": "c1aaa4c2efdc50d3025eacaaa45e37930a278b70e580dd9f8344e7337bcac04d",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_qual_supervisor.py": "c1512a34c96abcf77fff4aebdc550ba8f25f8be3840632a4518c0895b221119b",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_qualification.py": "b23a393becc9fff7a136a0d1185217e825dcbfeca574e6e7c312533ef598bc35",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_recompute_scope.py": "9430c4b791a8e87c1d1968f79995610d690e83e36036a2ca7223ddfd807e681a"
+    },
+    "unchanged": true
+  },
+  "native_execution_was_performed_in_owned_attempt": true,
+  "native_profile_fit_established": false,
+  "native_qualification_established": false,
+  "nine_sustained_updates_qualified": false,
+  "preserved_evidence_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\backendq002_recompute_A_attempt1_20261005",
+  "profile": "BF16_RESIDENT_FP32_QV8_EVAL28_FULL_NONREENTRANT_RECOMPUTE_V2",
+  "protected_bank_access": false,
+  "qualification_id": "SYNTH-BACKENDQ-002-FULLRECOMPUTE",
+  "recorded_at_utc": "2026-10-05T02:23:40.128921+00:00",
+  "resources": {
+    "CPU_samples": 1769,
+    "GPU_samples": 353,
+    "GPU_work_floor_bytes": 536870912,
+    "admission_observations": [
+      {
+        "GPU_index": 0,
+        "disk_free_bytes": 111380099072,
+        "gpu_free_bytes": 7520800768,
+        "gpu_observation_id": "22f4d44de06146feb3391487496113f1",
+        "gpu_sample_completed_monotonic": 21967.64,
+        "gpu_sample_started_monotonic": 21967.625,
+        "gpu_total_bytes": 8585740288,
+        "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+        "host_available_bytes": 14592544768,
+        "owned_process_identities": [],
+        "owned_process_samples": [],
+        "phase_latency_seconds": {
+          "RAM_available": 1.300000076298602e-05,
+          "disk_free": 7.250000271596946e-05,
+          "owned_job_PID_query": 0.0,
+          "owned_process_total": 3.9999940781854093e-07
+        },
+        "sample_completed_monotonic": 21967.64,
+        "sample_started_monotonic": 21967.64,
+        "worker_tree_rss_bytes": 0
+      },
+      {
+        "GPU_index": 0,
+        "disk_free_bytes": 111380099072,
+        "gpu_free_bytes": 7520800768,
+        "gpu_observation_id": "a16630dd9c264c2fa0da338e711298b1",
+        "gpu_sample_completed_monotonic": 21969.64,
+        "gpu_sample_started_monotonic": 21969.64,
+        "gpu_total_bytes": 8585740288,
+        "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+        "host_available_bytes": 14592974848,
+        "owned_process_identities": [],
+        "owned_process_samples": [],
+        "phase_latency_seconds": {
+          "RAM_available": 8.39999847812578e-06,
+          "disk_free": 8.289999823318794e-05,
+          "owned_job_PID_query": 0.0,
+          "owned_process_total": 4.00003045797348e-07
+        },
+        "sample_completed_monotonic": 21969.64,
+        "sample_started_monotonic": 21969.64,
+        "worker_tree_rss_bytes": 0
+      }
+    ],
+    "direct_terminal_Torch_free_or_allocator_peak_receipt_present": false,
+    "last_GPU_sample": {
+      "GPU_index": 0,
+      "gpu_free_bytes": 3122126848,
+      "gpu_observation_id": "d5abafca25a04d3e9d83b0a1cde27d58",
+      "gpu_sample_completed_monotonic": 22146.156,
+      "gpu_sample_started_monotonic": 22146.156,
+      "gpu_total_bytes": 8585740288,
+      "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+      "kind": "GPU"
+    },
+    "maximum_GPU_sample_envelope_seconds": 0.014999999999417923,
+    "maximum_GPU_start_gap_seconds": 0.5149999999994179,
+    "maximum_sampled_owned_tree_RSS_bytes": 1431900160,
+    "minimum_sampled_GPU_free_bytes": 3122126848,
+    "minimum_sampled_disk_free_bytes": 111376293888,
+    "minimum_sampled_host_available_bytes": 13073035264,
+    "observation_limits": "Sampled GPU/RAM/RSS/disk amounts stayed within gates; no direct terminal Torch free/peaks survived. Samples do not prove unsampled instants or full9 native fit.",
+    "whole_scope_seconds": 600
+  },
+  "schema_version": 1,
+  "scoring_authorized": false,
+  "sha256": "09bba2c3a6e31a8040a8d1b6d140e09ce524d0178317e8072a773ebd5505fe0d",
+  "source_commit": "fa9b76b2a4d1f62ea1817fe1638831e475767882",
+  "status": "VERIFIED_ABORTED_RECOMPUTE_A_STALE_EXTERNAL_CPU_WATCHDOG_NO_QUALIFICATION",
+  "study_training_authorized": false,
+  "study_warmstart_allowed": false,
+  "terminal": {
+    "elapsed_seconds": 193.04599999999846,
+    "failure": "stale_external_CPU_watchdog",
+    "finished_utc": "2026-10-05T02:08:30.140730+00:00",
+    "partial_outputs_frozen": true,
+    "returncode": 137,
+    "started_utc": "2026-10-05T02:05:17.097131+00:00",
+    "status": "OWNED_WORKER_ABORTED"
+  },
+  "unchanged_retry_authorized": false
+}
