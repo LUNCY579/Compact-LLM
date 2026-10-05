@@ -1,5 +1,26 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: next qualification work remains staged
+
+The collector-specific RAM/watchdog amendment is under independent review in
+`artifacts/short_ram_successor_work/`; it has not changed root collector sources.
+Its CPU barrier reproduces the old check-clock/publication ordering race, which
+does not establish batch04's cause. Review found two defects in the first staged
+candidate: concurrent duplicate abort callers could publish diagnostics before
+containment finished, and executed `ast.py` was bound in the profile but omitted
+from the actual runtime inventory. Preserve that candidate, fix both defects and
+revalidate before integration. A separate new-only auditor must admit the exact
+reviewed source/runtime/profile inventory through trusted external byte anchors;
+the old 83-source/64-runtime auditor cannot certify a changed scope. No unchanged
+failed-batch retry or partial-prefix admission is authorized.
+
+Three-chunk full-27 mechanics are being prepared under
+`artifacts/full27_qualification_work/`. Each arm must start fresh, restore complete
+state only within its distinct qualification recipe, consume all 27 global-LR
+updates and retain publication/cost lineage under unchanged per-scope limits.
+Staged code, CPU fakes or the completed one-update B do not qualify this work.
+Qualification archives remain barred from actual student training/evaluation.
+
 ## 2026-10-05 UTC: fresh C9 restore and update-ten continuation qualified
 
 The [normalized B config](configs/SYNTH_BACKENDQ003_NORMALIZED_WITNESS_B1.json)
