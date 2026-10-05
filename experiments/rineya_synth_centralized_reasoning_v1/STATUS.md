@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: final digest replay order resolved from pinned source
+
+The [source-only order receipt](evidence/loader_source_final_digest_order_20261005.json)
+binds all310 final digest names and their order to the unchanged loader hash.
+`_base_inventory` constructs its returned map in `_source_shapes` insertion order;
+`verify_frozen_base` iterates that map. Native parameter or sorted receipt order
+must not substitute. First-copy order still follows independently verified
+safetensor offsets during the terminal audit. No model/tensor bytes were read.
+The native audit implementation is incorporating these distinct order rules and
+restoring exact inherited runtime predicates; no native certification follows
+from source semantics alone.
+
 ## 2026-10-05 UTC: V2 audit observation controls pass independently
 
 The [focused independent review](evidence/long_v2_audit_focused_review_001_20261005)
