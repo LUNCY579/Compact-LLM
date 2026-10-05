@@ -1,5 +1,21 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: one-prefix CPU core independently reviewed
+
+The [injected CPU implementation](PREFIX_INPUT_CPU_001.md) passes16 frozen
+controls, Root16 and preserved-copy16 reproduction, plus six focused independent
+controls on identical bytes. It preserves exact predicate reads/short-circuit,
+bounded error evidence, guard-query and publication/IO conservation, immutable
+identity and final failure acceptance. Rejected prototypes remain preserved.
+No framework, CUDA tensor, model, decoder, grader or native dispatcher ran.
+
+The CPU core is accepted for fixture mechanics only and remains in its explicit
+reviewed evidence package. Native ownership integration, new tensor-permitting
+contract/source/runtime inventory, manifest/current admission and independent
+terminal auditor are still absent. Source-only integration planning continues;
+no old helper or permission has changed. M0 remains256/384 raw rows, all unscored.
+The actual acquisition/RS transfer/retention comparison remains unfinished.
+
 ## 2026-10-05 UTC: minimal input-construction design reviewed
 
 The [one-prefix diagnostic design](PREFIX_INPUT_DIAGNOSTIC_001.md) has independent
