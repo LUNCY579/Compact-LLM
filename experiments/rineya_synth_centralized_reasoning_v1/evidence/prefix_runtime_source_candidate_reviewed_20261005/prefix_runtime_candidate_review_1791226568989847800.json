@@ -1,0 +1,102 @@
+{
+  "Torch_OS_GPU_native_API_calls": false,
+  "Torch_source_roster": 1965,
+  "UNREAD_binaries": 40,
+  "binary_or_model_payload_bytes_read": false,
+  "candidate_body_sha256": "049747fa477da33363affdff23f7a52cd32ec0bc5ec1b786a6c4bbe6e30732fe",
+  "candidate_qualifies_native": false,
+  "conclusion": "Corrected candidate/helper accepted as source-only incomplete preparation. No current native/runtime/cache/external/worker closure authority.",
+  "conflict_aware_union": 2802,
+  "controls_passed": 12,
+  "derived_disjoint_sections": {
+    "Torch_source_additions": 1960,
+    "inherited65": 65,
+    "stdlib_additions": 777
+  },
+  "focused_controls": [
+    {
+      "name": "identical overlap permitted",
+      "passed": true
+    },
+    {
+      "name": "conflicting overlap rejected",
+      "passed": true
+    },
+    {
+      "name": "bool hash rejected",
+      "passed": true
+    },
+    {
+      "name": "duplicate JSON key rejected",
+      "passed": true
+    },
+    {
+      "name": "NaN JSON rejected",
+      "passed": true
+    },
+    {
+      "name": "overflow JSON float rejected",
+      "passed": true
+    },
+    {
+      "name": "finite executable roster excludes cache and data",
+      "passed": true
+    },
+    {
+      "name": "binary hash refused before read",
+      "passed": true
+    },
+    {
+      "name": "mismatched source size refused before read",
+      "passed": true
+    },
+    {
+      "name": "oversize file refused before read",
+      "passed": true
+    },
+    {
+      "name": "wrong external file pin refuses before parsing",
+      "passed": true
+    },
+    {
+      "name": "stdlib descriptor/map disagreement rejected",
+      "passed": true
+    }
+  ],
+  "forbidden_imports": [],
+  "inherited65_map_exact": true,
+  "kind": "INDEPENDENT_RUNTIME_CANDIDATE_SOURCE_JSON_INERT_CONTROLS_REVIEW",
+  "nine_bootstrap_source_checks": {
+    "__init__.py": "0901a8ad92b30f947405e28fc98dd21c578cfbe8796b0173de931f42079b1f89",
+    "_tensor.py": "777802929c0e33b318a3b1a429f7a2cd8330ca1f717501789523d1f9b39c264c",
+    "backends/__init__.py": "d1d4477e713dea810dd44e1a656700bf20205de52fd69dac907363e4fdbced23",
+    "backends/cuda/__init__.py": "0d864e2e3059775c9de18fb1e18bea27347c1d9405cfa42e51ac745721e84718",
+    "backends/cudnn/__init__.py": "5d5da196ffd6d003bd261e744aa498a6703a0cdd6b856d1e8039baae30f0715e",
+    "cuda/__init__.py": "92f2d2434ce713d81f58aece36fe1bbc8fd9942973dbda7ba12009de30ddd885",
+    "cuda/memory.py": "2b43eb5201246bfdac84ab3a315fae55894a54ae7096a11c811145768c6c339c",
+    "cuda/random.py": "0cf56b8237a578a6e0678ced8caed6935a87694988bdd28df9c3f322339dc71c",
+    "random.py": "71f36c94731b85b4e402ab22bbd37f1ca099581df265c933bb09d57019c44fdd"
+  },
+  "passed": true,
+  "review_harness_repair": "Corrected expected sorted suffix order; no reviewed candidate/helper bytes changed.",
+  "root_source_edits": false,
+  "same_worker_preflight_auditor_consumption": "Not implemented/verified; explicitly remains a mandatory closed gate.",
+  "sha256": "d41fda54230ba1d1bcf91acaccbb96404e92a3e96e264ba75e69afc99ab418de",
+  "source_after": {
+    "candidate": "93e4fe7996a9b39963f72c3d433f13ec97dfcde655bb9186fe5995c597fbb87d",
+    "helper": "79ccd72cc60268181e3cf7b5ad57b8295289ee55f807c77a31773511f6d015cf"
+  },
+  "source_before": {
+    "candidate": "93e4fe7996a9b39963f72c3d433f13ec97dfcde655bb9186fe5995c597fbb87d",
+    "helper": "79ccd72cc60268181e3cf7b5ad57b8295289ee55f807c77a31773511f6d015cf"
+  },
+  "stdlib779_metadata_exact": true,
+  "unresolved_native_qualification_obligations": [
+    "Root actual binary/interpreter/system byte qualification and missing expected pins",
+    "existing pyc may execute despite roster exclusion or -B; worker/source-loader cache identity policy unqualified",
+    "external bootstrap/declared dependencies and any used nonexecutable data require exact separately registered closure",
+    "identical immutable map/roster consumption by new preflight/worker/terminal auditor",
+    "current stdlib779 approved alias/interpreter/launcher/optional ZIP identity requalification"
+  ],
+  "whole36MB_source_hash_repeat_performed": false
+}

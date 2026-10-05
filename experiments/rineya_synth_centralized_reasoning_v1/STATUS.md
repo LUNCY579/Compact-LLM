@@ -1,5 +1,21 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: runtime source candidate and closed contract reviewed
+
+The [source-only runtime milestone](PREFIX_RUNTIME_CANDIDATE_001.md) passes20
+builder/Root CPU controls and independent runtime12/contract6 focused reviews
+on unchanged bytes. It records1,965 Torch source/stub hashes,40 unread binary
+obligations and exact inherited65/stdlib779 provenance; the known union has2,802
+paths. Parser bounds, cache roster policy, external anchors, map substitutions
+and source-loader pointer stability are checked. Prototypes remain preserved.
+
+The new contract validates metadata only; native entry/preflight/registration
+writing remain closed. Binary qualification, cache/external dependency/layout
+closure and actual owned worker/supervisor/auditor consumption are incomplete.
+No framework, model, binary, GPU/probe or original helper change occurred. Next
+implement/review those separate boundaries and current qualification. M0 remains
+256/384 raw rows, unscored; the full three-arm goal stays active and unanswered.
+
 ## 2026-10-05 UTC: owned diagnostic integration plan source-reviewed
 
 The [new owned-integration plan](evidence/prefix_input_owned_plan_reviewed_20261005/OWNED_INTEGRATION_PLAN_001.json)
