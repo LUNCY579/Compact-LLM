@@ -1,5 +1,38 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: current no-model phase diagnostic completed and audited
+
+The [frozen D001 scope](configs/SYNTH_CONTEXT_PHASE_NO_MODEL_D001.json) passed
+independent107-source/65-runtime/7-helper prelaunch review at
+`7e40a01538335d45442b9a63df371fdbeffde535` and fresh owned admission. It completed
+in32.578seconds (worker19.828seconds), without a model, loader, tensor workload,
+forward, backward, optimizer or grading call. All
+[297 raw files and107 source snapshots](evidence/context_phase_no_model_D001_attempt1_20261005)
+and the exact config are retained.
+
+The [independent audit](evidence/context_phase_no_model_D001_attempt1_independent_audit_20261005.json)
+passes5,827 checks:145 starts/returns,22 main phases,45 guards,44 initialization
+queries (10 false/34 true),34 guard memory queries and two direct memory queries;
+zero failed/pending/publication errors. Nested source-defined phase order,
+allocator/config/seed/peak-stat observations, version/growth/preload checks,
+exact before/after byte maps and all owned identity/lease/Job/sampler/NVML cleanup
+close. Last issued ordinal145 is a nested query; last completed outer guard143
+matches the worker ledger. Recorded phase envelopes include persistence and
+scheduling, not isolated service latency.
+
+All current resource/freshness/deadline gates passed. External GPU free minimum
+was7,160,782,848bytes; direct reads reported7,398,752,256free/8,585,216,000total.
+Eight Torch allocator readings were zero, which does not prove zero CUDA/driver/
+external-process memory. Optional Windows counters remained explicitly unsupported.
+The ownership verifier's separate return was not saved; pinned call order and
+actual Job/PID/create-time/FILETIME/lease evidence establish containment.
+
+This qualifies current no-model observations only. It does not locate the earlier
+unlogged failure, identify an allocating process, establish intrinsic collector
+or model fit, complete M0, authorize study training, or show transfer/retention.
+No source gate, floor or prior failure was discarded. A later workload still
+needs separately reviewed source/manifest and fresh resource admission.
+
 ## 2026-10-05 UTC: no-model phase diagnostic integrated
 
 The [context-phase diagnostic](CONTEXT_PHASE_DIAGNOSTIC_001.md) is integrated from

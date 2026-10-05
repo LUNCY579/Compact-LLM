@@ -1,0 +1,2079 @@
+{
+  "admission_observations": [
+    {
+      "GPU_index": 0,
+      "disk_free_bytes": 91117842432,
+      "gpu_free_bytes": 7291555840,
+      "gpu_observation_id": "520f9bedae684492af491def5842fb52",
+      "gpu_sample_completed_monotonic": 55980.578,
+      "gpu_sample_started_monotonic": 55980.546,
+      "gpu_total_bytes": 8585740288,
+      "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+      "host_available_bytes": 6332518400,
+      "owned_process_identities": [],
+      "owned_process_samples": [],
+      "phase_latency_seconds": {
+        "RAM_available": 1.1200005246791989e-05,
+        "disk_free": 7.300000288523734e-05,
+        "owned_job_PID_query": 0.0,
+        "owned_process_total": 3.00002284348011e-07
+      },
+      "sample_completed_monotonic": 55980.578,
+      "sample_started_monotonic": 55980.578,
+      "worker_tree_rss_bytes": 0
+    },
+    {
+      "GPU_index": 0,
+      "disk_free_bytes": 91117780992,
+      "gpu_free_bytes": 7291555840,
+      "gpu_observation_id": "293eab1f833449028020869552237851",
+      "gpu_sample_completed_monotonic": 55982.578,
+      "gpu_sample_started_monotonic": 55982.578,
+      "gpu_total_bytes": 8585740288,
+      "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+      "host_available_bytes": 6316285952,
+      "owned_process_identities": [],
+      "owned_process_samples": [],
+      "phase_latency_seconds": {
+        "RAM_available": 6.70000008540228e-06,
+        "disk_free": 8.659999730298296e-05,
+        "owned_job_PID_query": 0.0,
+        "owned_process_total": 3.00002284348011e-07
+      },
+      "sample_completed_monotonic": 55982.578,
+      "sample_started_monotonic": 55982.578,
+      "worker_tree_rss_bytes": 0
+    }
+  ],
+  "admission_only": false,
+  "attempted_worker_argv": [
+    "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe",
+    "-I",
+    "-B",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\context_phase_worker.py",
+    "--config",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\configs\\SYNTH_CONTEXT_PHASE_NO_MODEL_D001.json",
+    "--output-dir",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\context_phase_no_model_D001_attempt1"
+  ],
+  "bounds": {
+    "GPU_free_at_admission_GiB": 4.0,
+    "GPU_free_during_work_GiB": 0.5,
+    "disk_free_GiB": 4.0,
+    "external_watchdog_milliseconds": 100,
+    "preworker_available_GiB": 3.3125,
+    "system_available_reserve_GiB": 1.25,
+    "whole_scope_seconds": 600,
+    "worker_process_tree_RSS_GiB": 2.0
+  },
+  "cadence": {
+    "CPU_freshness_seconds": 0.2,
+    "CPU_watchdog_seconds": 0.1,
+    "GPU_freshness_seconds": 2.0,
+    "GPU_query_interval_seconds": 0.5,
+    "GPU_query_timeout_seconds": 2.0,
+    "admission_deadline_seconds": 30.0,
+    "admission_interval_seconds": 2.0,
+    "admission_samples": 2
+  },
+  "config_sha256": "53cfe48bef01d531c8c16555edc97eeebd02b76c9e5b995d20513e6b37c1b030",
+  "deadline_monotonic": 56574.968,
+  "dispatch_observation": {
+    "GPU_index": 0,
+    "disk_free_bytes": 91117780992,
+    "gpu_free_bytes": 7291555840,
+    "gpu_observation_id": "293eab1f833449028020869552237851",
+    "gpu_sample_completed_monotonic": 55982.578,
+    "gpu_sample_started_monotonic": 55982.578,
+    "gpu_total_bytes": 8585740288,
+    "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+    "host_available_bytes": 6316285952,
+    "owned_process_identities": [],
+    "owned_process_samples": [],
+    "phase_latency_seconds": {
+      "RAM_available": 1.049999991664663e-05,
+      "disk_free": 4.769999941345304e-05,
+      "owned_job_PID_query": 0.0,
+      "owned_process_total": 7.999988156370819e-07
+    },
+    "sample_completed_monotonic": 55982.578,
+    "sample_started_monotonic": 55982.578,
+    "worker_tree_rss_bytes": 0
+  },
+  "elapsed_seconds": 32.57800000000134,
+  "finished_utc": "2026-10-05T11:32:50.772540+00:00",
+  "gpu_telemetry_backend": "pinned_System32_NVML_read_only",
+  "gpu_telemetry_cleanup_verified": true,
+  "job_closed_kill_on_close": true,
+  "lease_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\af0ffd46398745809a803bdfe8a21c25",
+  "mechanical_qualification_established": false,
+  "output_dir": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\context_phase_no_model_D001_attempt1",
+  "owned_handle_alive_verified_after_launch": true,
+  "owned_worker_identity_currently_alive": false,
+  "partial_outputs": [
+    {
+      "bytes": 201,
+      "path": "phase_0001_end.json",
+      "sha256": "798839fa78bf83af729bd24f4123be0bc93cfff062d360680f3025c1b93f127c"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0001_start.json",
+      "sha256": "b160be16c0251e1270169c8664eb535ab68925ea84dec204f2f970077bffd70b"
+    },
+    {
+      "bytes": 224,
+      "path": "phase_0002_end.json",
+      "sha256": "e1cdda0d976174ac0f467b5f772b36917f8ff65bd6166d89c3c535f94009eb19"
+    },
+    {
+      "bytes": 160,
+      "path": "phase_0002_start.json",
+      "sha256": "761b4b5a6100ee25a249e51c9efb635d9b9c0245501e893f715c04ede3e4a845"
+    },
+    {
+      "bytes": 200,
+      "path": "phase_0003_end.json",
+      "sha256": "15d7f367b628dd9288af214331d0faf04326419a4766e15db0939f813e14a6dd"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0003_start.json",
+      "sha256": "ad0c36759db2d89734fffa6287b0fbad70591de8ab634af4f99f7227d2f6cded"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0004_end.json",
+      "sha256": "5b401ab2e8bb0c40b591bc6efb8f3e7d07ee5a6c7f1876d157438b5945cfad0f"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0004_start.json",
+      "sha256": "dc13b1bd870a5cf8c2637e7d5fef3d9b5486e8db11602524cd59401cd0561235"
+    },
+    {
+      "bytes": 214,
+      "path": "phase_0005_end.json",
+      "sha256": "6d97d97f75a2df4409c40b56aecbcd95e1857546c4b073c84b66d66e31c53abe"
+    },
+    {
+      "bytes": 186,
+      "path": "phase_0005_start.json",
+      "sha256": "ed02240ee46902e640a683150d3020a9db9374a188a24a71361b3487899a9717"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0006_end.json",
+      "sha256": "e6e9d4f9ac11fa7d3ea49bb413d02ee06a9012aabad4a36dc28c1eeee7f37057"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0006_start.json",
+      "sha256": "4ec0e8a4fd71d52b746ee9d190616e4c0d771dfe8110b4c65c5c5fb060c11fc9"
+    },
+    {
+      "bytes": 235,
+      "path": "phase_0007_end.json",
+      "sha256": "f0c45491d4c5a75beef3975ab1b7f14d743b7edb6d035e8b13fe036c4d19672f"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0007_start.json",
+      "sha256": "42d37b507f3032aeb34c0f8d50aef624175a1f3e35c4c4d2c0aaad21781c29d1"
+    },
+    {
+      "bytes": 213,
+      "path": "phase_0008_end.json",
+      "sha256": "908abcd24faf2986f8a7b9d5e81f5acde17b9c5038b5b05250ac2776b17ace93"
+    },
+    {
+      "bytes": 185,
+      "path": "phase_0008_start.json",
+      "sha256": "e3a192e0cdb4d1cef529fbb057c6c622dbcca395784270c148857610a58983a1"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0009_end.json",
+      "sha256": "5f3e42e834eeff07758a5c027c1f71e05e480effd207e9416bb67c4222f018e4"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0009_start.json",
+      "sha256": "42ebf5cd00d34a1985f336451b52562f1cfb86d690fb49a548db037910dd960b"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0010_end.json",
+      "sha256": "a0c269ef365fa60295da6ae1ff64aac141e1eb5b0536b1b3e591752cf2c8e42f"
+    },
+    {
+      "bytes": 192,
+      "path": "phase_0010_start.json",
+      "sha256": "decb0862ba74191e172649f0bd9c26460d159861861a1f0793803834ee2b39c2"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0011_end.json",
+      "sha256": "2cd8c9cd9885a86a9983703e497935e70c5222d567714afa0899ff1211919d0e"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0011_start.json",
+      "sha256": "0c32514a1430c8741bb19dc042813da14fca4616abbf5481c03dc3b5738d2c6f"
+    },
+    {
+      "bytes": 241,
+      "path": "phase_0012_end.json",
+      "sha256": "38208abbdbb522d8e6b2d831d615954f92b1a7a2ad1286fc7f36efe4e0227b5e"
+    },
+    {
+      "bytes": 179,
+      "path": "phase_0012_start.json",
+      "sha256": "81eb7105eef7a26cd5ecce5add8311132a48474b4ddba48de68c70b48b6d82d6"
+    },
+    {
+      "bytes": 218,
+      "path": "phase_0013_end.json",
+      "sha256": "112c58a7a1f13351ba704eb7f0b82b4be02867044d9a2ec4fc812f602f02f7db"
+    },
+    {
+      "bytes": 191,
+      "path": "phase_0013_start.json",
+      "sha256": "d4c1a8124aa4c7f1d91236ef6a93c03dc87934dda18c86e1d2f45f5c73c86a9f"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0014_end.json",
+      "sha256": "c4d90725018ca1b7050ffa1bc991e41d36e84cc8826ef42924d53cc7dfa1c194"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0014_start.json",
+      "sha256": "b6abe0402b29be75403a6b418c41e7d4a71ca22c0f62f1258659944cb7d04e59"
+    },
+    {
+      "bytes": 211,
+      "path": "phase_0015_end.json",
+      "sha256": "bb8546c5d5519f7228f4b5ca0c9dff7571bc0dca9c53a15d6de01c8e924c83e5"
+    },
+    {
+      "bytes": 183,
+      "path": "phase_0015_start.json",
+      "sha256": "59aec37a871f2be6f1a6e9aa68d5fbcec37d9fd63c52183d8d59932f76cc3621"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0016_end.json",
+      "sha256": "d78de68ff55e2db4ca276e7cf95b152edfa55adc189684524b79fe25caf4564d"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0016_start.json",
+      "sha256": "8fd40d6e13b71d38d730ab2131889ffea7bed41a92f2876b99d058a4ef54fa94"
+    },
+    {
+      "bytes": 241,
+      "path": "phase_0017_end.json",
+      "sha256": "c61ad5b868bf90edbd688628de5b050ca6200302ddcd5f8f39776c35f7ea40b9"
+    },
+    {
+      "bytes": 170,
+      "path": "phase_0017_start.json",
+      "sha256": "8a1577c582574e417b41b75b4914a2cf2c241df7893a26667a33139cc1933836"
+    },
+    {
+      "bytes": 211,
+      "path": "phase_0018_end.json",
+      "sha256": "19cede64ee726fe25a2cb81ee62044a1b37d1e8b1fe246ca83130dcfd33eed96"
+    },
+    {
+      "bytes": 183,
+      "path": "phase_0018_start.json",
+      "sha256": "a0d7c1bf00524c96db1da133619123386268ef86b1d6e9d66c85b8e05670df19"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0019_end.json",
+      "sha256": "f656553e35e176a94cacf0cfcda8a5b53e2bff0522c26ab8f569ed0b25e0d094"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0019_start.json",
+      "sha256": "ee3ab71983f0c1e4103524e91293ef4285973f32ac70915f3aa9a31db988fe56"
+    },
+    {
+      "bytes": 229,
+      "path": "phase_0020_end.json",
+      "sha256": "15d1db3082917a4a644c2a589205ef0da9dbd3cf04e82db72cbadf8c2b5c2a27"
+    },
+    {
+      "bytes": 201,
+      "path": "phase_0020_start.json",
+      "sha256": "256e95884ffd7935609d1416d184b5f318520b7cad6cb2a09ee5f77ad8e335b1"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0021_end.json",
+      "sha256": "13facc3d308d8c2c6367f6e84bd0f3250717ebf56f12ae2991d8e1005e50b840"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0021_start.json",
+      "sha256": "f42819cebf543b735dfac141d8be4897506e71050fd14f556ea0b0295210e5ba"
+    },
+    {
+      "bytes": 271,
+      "path": "phase_0022_end.json",
+      "sha256": "a86d4bfd90825f9c36e391d73fd77a615951a16542c6ad5c016326b2d2e6a4cf"
+    },
+    {
+      "bytes": 188,
+      "path": "phase_0022_start.json",
+      "sha256": "0d57ac3d73473a64ba0bd204c3cf823e9fd5f443ec5ab85754f2dd738ef3f213"
+    },
+    {
+      "bytes": 228,
+      "path": "phase_0023_end.json",
+      "sha256": "3fa9a1e293c5310b7bc0f8094bebf5f9fce920c0240b71a1b51a4f188fb8feb2"
+    },
+    {
+      "bytes": 200,
+      "path": "phase_0023_start.json",
+      "sha256": "2dce7043897d02991b781be389b7c050632ed43c5c00284000b913193d00e6dd"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0024_end.json",
+      "sha256": "6a5362f2c5ee5f3f8a8f27c87a731e0a91e2e4fb3173f987ab3b59f9bc243de0"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0024_start.json",
+      "sha256": "49c4bfce93950e48e953aa6191844e064e6f1345c8feb81fbda22b06835cbd0e"
+    },
+    {
+      "bytes": 207,
+      "path": "phase_0025_end.json",
+      "sha256": "9165f20ddd74d86cc060b1c284b142132d8e913f4dbaca54a13a0d77ce985a2e"
+    },
+    {
+      "bytes": 179,
+      "path": "phase_0025_start.json",
+      "sha256": "c67f18479378f54f00dfbf57faee152a9086ad03e94ab53ce929ed791813689e"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0026_end.json",
+      "sha256": "4a663d32b60d2994ab7e504f0fb88c65d0041fa5b29573c56b37e00ae1c5bf2a"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0026_start.json",
+      "sha256": "0ab8736126b41ff392dc708701913b4dff7ec52f86a9f0523a73fba38dc70996"
+    },
+    {
+      "bytes": 194,
+      "path": "phase_0027_end.json",
+      "sha256": "25c30a6d66f2fba30bd86bb37f70088712105dccae9d1774b54649ea75e0f17d"
+    },
+    {
+      "bytes": 166,
+      "path": "phase_0027_start.json",
+      "sha256": "d06ef9e19cc7a32c5964a5750219721bc18e051551c47fd36a780ab7f6dd3e95"
+    },
+    {
+      "bytes": 206,
+      "path": "phase_0028_end.json",
+      "sha256": "51dcd099451b96fb039ceadbf98e716c3851dfcfdf59315d1718b5b675bdf155"
+    },
+    {
+      "bytes": 178,
+      "path": "phase_0028_start.json",
+      "sha256": "da7688df72e5c0a8a484c6337244e928856ff19fece87eec1266cb6f1f5744ab"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0029_end.json",
+      "sha256": "83030ba8de47f3b282fe080952fa970839bf5c92a8c200c78906821bdaa993d5"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0029_start.json",
+      "sha256": "11a05f2f1f7cda892e1d1f6cd1beed2db021810fc7e7855a60b59efe4f93770a"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0030_end.json",
+      "sha256": "09b391508a0cde494e9d5442d0928a87def7f9b6f8a757e3d5a1b057bd6a42ec"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0030_start.json",
+      "sha256": "be80cf713adf2bf0116d856c3c26bbb9e81bf97a2e7788af2f472a7d8c11d079"
+    },
+    {
+      "bytes": 222,
+      "path": "phase_0031_end.json",
+      "sha256": "376d946530771524477dffa606f3988d8194e1004f00c0cf7b9a2a4c4785821d"
+    },
+    {
+      "bytes": 194,
+      "path": "phase_0031_start.json",
+      "sha256": "230db65debd0f19f7f16e0caff3bd6d7dbe72e86ab3b637c8081db4738301e02"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0032_end.json",
+      "sha256": "67a5b2558c498c8b8859db8c11ff399454366add50b346ef3c91ae9ba5c20b59"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0032_start.json",
+      "sha256": "c7c4635d08aac004668ededde1fa7fa467b6bbc607aead461aa3c60caa2ed669"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0033_end.json",
+      "sha256": "13ea7a188dc5f3da636ad099f0f27a65ddf531e9c7091c8aa0e025852e9c5a79"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0033_start.json",
+      "sha256": "1f3e83504308a8f850ed7a108d17e641fa6f1385b851b0dd9b74a3f8da0ee3c9"
+    },
+    {
+      "bytes": 228,
+      "path": "phase_0034_end.json",
+      "sha256": "992136a1ff555adf75e35ebcb25f8fc6febe1ef5aa9ba08da74984b3d2f95d01"
+    },
+    {
+      "bytes": 181,
+      "path": "phase_0034_start.json",
+      "sha256": "02e8b1cc22dda93d202f1b19d2a185fb0b997231ca1f15c91bb5313f8de85f4f"
+    },
+    {
+      "bytes": 221,
+      "path": "phase_0035_end.json",
+      "sha256": "8d45ff9c6447bc1e968f70d55cbb12a26067e64e518bd26884e85e8567901082"
+    },
+    {
+      "bytes": 193,
+      "path": "phase_0035_start.json",
+      "sha256": "d71523c29cc552f35e1249e4f54a78ddf312ea1412e21759231dce97b19c3caa"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0036_end.json",
+      "sha256": "8bb63fd8de52e22d6b62796df2427b3536616922e4e96c739484100ef981e15d"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0036_start.json",
+      "sha256": "e900d85f2f0dcfc02dec8fba414172060da622d956e75b4c4c1bc7f5c91fe9e4"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0037_end.json",
+      "sha256": "c83869f5f01a8aa51e49383a48c750de1e94ce34ab11fb4cadcb37778acc919d"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0037_start.json",
+      "sha256": "fa52c1a5adcde72341131df2b780212f321692d461396e9e922d6e1825477465"
+    },
+    {
+      "bytes": 218,
+      "path": "phase_0038_end.json",
+      "sha256": "88b3f160b9a0979386be3ec9212fd80e8b3d452ab3ca7ca93d7a5ec5b0d9b8ef"
+    },
+    {
+      "bytes": 190,
+      "path": "phase_0038_start.json",
+      "sha256": "08295008b7ecffbc0af1a9384459cdb46eecab4fd10b91108ae2a7b8bedca087"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0039_end.json",
+      "sha256": "267fd61c6b376c201339d4b3b7fa8d7e9b66c2687c64c9a322eae4dbb036b4a2"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0039_start.json",
+      "sha256": "62cd5ad566a2217b1295cec21449215c0b1599caf521940e933f3a8817978685"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0040_end.json",
+      "sha256": "6c11a7ce6405c044faca9480ab0375148201d3affbfb5eccf880bf978dfc8627"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0040_start.json",
+      "sha256": "bf5538dd2b35f66cc45e14b1b75da8aedcfe701450bd85af81dd57721e9f0a1c"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0041_end.json",
+      "sha256": "a22d68b515e655265cd0f38264ee3e1eef1ae3c47136dda5a8b8c87569eda6f0"
+    },
+    {
+      "bytes": 177,
+      "path": "phase_0041_start.json",
+      "sha256": "eb0644ea47c152d66e309fe60e266b1c547581c450fb1055d51bf4edb616c119"
+    },
+    {
+      "bytes": 216,
+      "path": "phase_0042_end.json",
+      "sha256": "37540b87c23db3843205a3d65df0e597d3c5605825f876ae4595db31a6146560"
+    },
+    {
+      "bytes": 188,
+      "path": "phase_0042_start.json",
+      "sha256": "d95b5e7c7814b8aac4477ce43617a6c8e26fc856ed63e5744ab37976ac851d3c"
+    },
+    {
+      "bytes": 201,
+      "path": "phase_0043_end.json",
+      "sha256": "332e4aa43a2ed89c841cde6f62b3b7df318f723da1893619b38b55767cbd7f18"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0043_start.json",
+      "sha256": "4073615b96769fb204a386d94fb4d2fc75d231e1fede62e75e541e7a109eac49"
+    },
+    {
+      "bytes": 218,
+      "path": "phase_0044_end.json",
+      "sha256": "4799eee5da5fdadb9907a67a372163faeb898d33b63e2223e6fbd021e8c7b528"
+    },
+    {
+      "bytes": 171,
+      "path": "phase_0044_start.json",
+      "sha256": "29e72ec3b05e0d9b51ff317d9d7d7f1292b4eda1295f2e4f9c660b9018583c00"
+    },
+    {
+      "bytes": 216,
+      "path": "phase_0045_end.json",
+      "sha256": "0cd4a718e0e82bee3832df857573cc55be7e35b2d6d045b26bb36dc40bed2ed8"
+    },
+    {
+      "bytes": 188,
+      "path": "phase_0045_start.json",
+      "sha256": "3ba64011859a2c9793085f053fbfce62fae40f95da085b973f3048ca11733b54"
+    },
+    {
+      "bytes": 201,
+      "path": "phase_0046_end.json",
+      "sha256": "ca5663b48080116303a8a38ce14faa80c6588d3880fd13c8d9460f6330554043"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0046_start.json",
+      "sha256": "dc4876579966eff58e8f0877215fc57c6aa277ce52716ef26dcc87ef22e7515d"
+    },
+    {
+      "bytes": 218,
+      "path": "phase_0047_end.json",
+      "sha256": "0fcaf57393cfc1d196787933999170ba2016c88e3d318546336ba4f13c9a7d3d"
+    },
+    {
+      "bytes": 171,
+      "path": "phase_0047_start.json",
+      "sha256": "f94b2de3472bf797575a726f7e014021bf2427d72295f38a18b055428ed6eb2f"
+    },
+    {
+      "bytes": 201,
+      "path": "phase_0048_end.json",
+      "sha256": "dbefef287c7ca6427b244bb9712ccaeffa1396119377159df5be54a28cc63cc3"
+    },
+    {
+      "bytes": 175,
+      "path": "phase_0048_start.json",
+      "sha256": "a0d9c1f7881962fd009ac535b55782cec0adc538968b4a8cc1034a101ffa5c27"
+    },
+    {
+      "bytes": 216,
+      "path": "phase_0049_end.json",
+      "sha256": "756f159a8a4418029b8c2dae74a332ba661b4c300fcc21b66577d236633e09a3"
+    },
+    {
+      "bytes": 188,
+      "path": "phase_0049_start.json",
+      "sha256": "feb4387967f2cb69916efc76ccfe0b484ac3da3e475e3dc8ac215a474bed5349"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0050_end.json",
+      "sha256": "1bdb4e22c17179f4a8bf138a8963b26721c4c608748c466e95fe5d8b58db25cc"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0050_start.json",
+      "sha256": "3766197cfd54602f0966b1b2d8c8d7fab5bcb606d6f8e6239edc3e12f5fe5dee"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0051_end.json",
+      "sha256": "9c5d3eb6012d98a18ddbb154f9e96e578658c84e7109a045a150ae683d876ee1"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0051_start.json",
+      "sha256": "4cc5fa17b645e74325002d020ac174e446192178c7195b5286fb081bbd1329ff"
+    },
+    {
+      "bytes": 222,
+      "path": "phase_0052_end.json",
+      "sha256": "87842a2f32b91fe5b6509b2b9823b794890efeca9bbe40bfed22b5c4c19a558a"
+    },
+    {
+      "bytes": 194,
+      "path": "phase_0052_start.json",
+      "sha256": "3456f7d431b322b52865de6bafa1d2aa0b26a280874e504c8fb8fb9f9428891c"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0053_end.json",
+      "sha256": "b05ba9b2b47feb59d01fc4df2ac2ee47d1f4efbd74966555ae14241c8d1b0d5b"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0053_start.json",
+      "sha256": "4408905177d1b6bbf81817547f78cd79313c875c9abebcc06c001246ab18d531"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0054_end.json",
+      "sha256": "182c24ef45ec78992202a51109d781dbed3502df3b0da3b1b69b0015930faa67"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0054_start.json",
+      "sha256": "f7218cad5820500d04e230af8118572da84fd299def749d9d73d77279b3c950c"
+    },
+    {
+      "bytes": 206,
+      "path": "phase_0055_end.json",
+      "sha256": "92db570ecc0814c1fe491ad42aba82e9ed82ec7ed0bd931ff0a76ffa78b1afea"
+    },
+    {
+      "bytes": 181,
+      "path": "phase_0055_start.json",
+      "sha256": "6163229cec9d9b0bbc0f62d4cb86ffefc6b572f124365dd45dcda44acf0efe5e"
+    },
+    {
+      "bytes": 221,
+      "path": "phase_0056_end.json",
+      "sha256": "9ea736f0b738327c96c21c33ef1b407e3a478052eaaccdf567224a8adad1d47f"
+    },
+    {
+      "bytes": 193,
+      "path": "phase_0056_start.json",
+      "sha256": "8546f9f57f0cfd13a31481f2ff04a9984cd433545df5d66d4689db15ca8da19a"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0057_end.json",
+      "sha256": "e9691e44edd802108ba0c73613401d1f14f5d4b028e2241fe9912197e8f74798"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0057_start.json",
+      "sha256": "48b92e583249db668a8b7eeb85f505ea25a9a25270c16edc3e518131be43a39e"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0058_end.json",
+      "sha256": "5acd18cc4e603832e0e7bc423ef6afa7c2a672b745ef1ad9fb3fc987e0dd0519"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0058_start.json",
+      "sha256": "de51711a0be4027a76aa0bf0f921092af01bd7f3231a699417db208a757af5ed"
+    },
+    {
+      "bytes": 221,
+      "path": "phase_0059_end.json",
+      "sha256": "30419439fa8137706d4289862565fce116e1b1835e025c5f97bb81906ae30f43"
+    },
+    {
+      "bytes": 193,
+      "path": "phase_0059_start.json",
+      "sha256": "0f184616a70c49d9b07d0df0dacf6ff5651c3d2c42c7b26183ba4d0969330bd3"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0060_end.json",
+      "sha256": "710c1a3010e5fef202fd0e69c50d97cfbec75113e3a16d4777726cdacc4c9865"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0060_start.json",
+      "sha256": "23910844ebe7cbf4179014ad4f036bc7c1f7b5847f0d2449443278c539980baf"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0061_end.json",
+      "sha256": "a3feb77e54df87db9b555876202dcd03b7a9c13fc4bc41106e464dd240453d30"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0061_start.json",
+      "sha256": "270d0f95afad0f6851b1de2066533f2bb7a6a923d9751afa529213e33ac09192"
+    },
+    {
+      "bytes": 205,
+      "path": "phase_0062_end.json",
+      "sha256": "8419f1c6409b2493f7facf240368cb96c7a9add9fe6dc47efd09349680f86f27"
+    },
+    {
+      "bytes": 180,
+      "path": "phase_0062_start.json",
+      "sha256": "e3bfb0e6b3baa3f40e3a29fba12351c3a77b59bf398fd81b38268cc7a98a885e"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0063_end.json",
+      "sha256": "3b3f37178253e6b897b0bc511f650e0844b791328935c9954749da9f5b3d6ee3"
+    },
+    {
+      "bytes": 192,
+      "path": "phase_0063_start.json",
+      "sha256": "1fe6a027cd5550ed5fcdf5414dedc663a6d1b6f968eabb063d0ab97dd616d9b9"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0064_end.json",
+      "sha256": "4be3a1e8ef13dd7f786a69ff26cffb06481c8d789c648d0784fc56d6d626a74f"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0064_start.json",
+      "sha256": "c485d80bb5728d6534c7d7148db96e6f8d1f2fd1ab0421e3de0c4648bdc15e92"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0065_end.json",
+      "sha256": "d5e0509a0645610ceee627d8cab92dd3c7ab8ee51c19d83198f299a95e620d8e"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0065_start.json",
+      "sha256": "de9bca8412c4e8b3f7b6dc9331348dfed876705e6ffec81330b560a332e6e782"
+    },
+    {
+      "bytes": 224,
+      "path": "phase_0066_end.json",
+      "sha256": "868f3aa5aaf637e22781390ca2b6278d157403efd61f1945377ef527019f5566"
+    },
+    {
+      "bytes": 196,
+      "path": "phase_0066_start.json",
+      "sha256": "7ff6b476b50e102c3a3a0c271d4994c29fab3087378e860ec75412727947b35e"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0067_end.json",
+      "sha256": "80e15d59df59e5de10fba22fd69645f0e4225c305f9491e5ae8796177bf09176"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0067_start.json",
+      "sha256": "2a2e51a39867136591764a8d6c583c0c0da314911bf1cf9a64ef4319e1772fe5"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0068_end.json",
+      "sha256": "b65f9003a49467921beb449f0a671f35dd1b058e9c5b96a4c0fef4ac9dea63c3"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0068_start.json",
+      "sha256": "5e08bd9d8287fc5b850681fd8f482b29923d2158e3be5900d9b9bd86f43f009d"
+    },
+    {
+      "bytes": 211,
+      "path": "phase_0069_end.json",
+      "sha256": "1a77b70c7c09658a49ccbd5eb53e22cd629762b16a23d34db411abca5553f7f6"
+    },
+    {
+      "bytes": 183,
+      "path": "phase_0069_start.json",
+      "sha256": "f738388ba091ad96ff2e872860ae61033323acf6b87bdd9c46fcb71b439843fe"
+    },
+    {
+      "bytes": 223,
+      "path": "phase_0070_end.json",
+      "sha256": "106db3f327ad4f6ac80c1be820116434e88333362f792340ba5e570d3d717e81"
+    },
+    {
+      "bytes": 195,
+      "path": "phase_0070_start.json",
+      "sha256": "eb6c94e8cf7484d8bfd07a69d6aec5f8bdc131a28260ec1a9616b95b265d3482"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0071_end.json",
+      "sha256": "aaa0216e3a80d5b8d02677c47c66951634c35a38dcd7e82841d511d99cece8f4"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0071_start.json",
+      "sha256": "c3e803c771e3552a142a45b3a286442c165580fda964c1854afab58e5931a38d"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0072_end.json",
+      "sha256": "8afc4d954a99eb208cfb6a18e9a00d8954ca62f73c8d60562c55381dd7cccdc2"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0072_start.json",
+      "sha256": "a70cdc5c8d6b8a8182f62fd6135ffef4badcc3a69eed62392c0d2c79a01aeb60"
+    },
+    {
+      "bytes": 205,
+      "path": "phase_0073_end.json",
+      "sha256": "0282298a0e6f8654faf25bde7eacd97ba070ab7e74b8de5663dcc3b8faae48e5"
+    },
+    {
+      "bytes": 177,
+      "path": "phase_0073_start.json",
+      "sha256": "bbe0ff30c301d2f86e7ce2279dda637e1981789a67432b83040c5b0fa66c454a"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0074_end.json",
+      "sha256": "3d299b3a8ad073b04495c62d6e687048dbeb81c9e9a5f1e48a27023b595e029e"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0074_start.json",
+      "sha256": "3608c4b8cc3204648c4505608c56d8211736772d249f3abc8493b12a6c73858a"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0075_end.json",
+      "sha256": "b429c9ef3fe91de482e5ae6e3585994ce38ad7a02f398fecf6e40643367ce58b"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0075_start.json",
+      "sha256": "e0d2fbf002416d00d7d58ee4a6c591f4a7d3a0465c38814787bea6010cadfecf"
+    },
+    {
+      "bytes": 192,
+      "path": "phase_0076_end.json",
+      "sha256": "1444cfd73fede1430c3c90ee7dc173cf9660481a9fe3c230966a66d6ceb6860d"
+    },
+    {
+      "bytes": 164,
+      "path": "phase_0076_start.json",
+      "sha256": "add75e3128abcbc36cbfab7b547d045eff6e30130646391b4d0ccba0d44c001e"
+    },
+    {
+      "bytes": 204,
+      "path": "phase_0077_end.json",
+      "sha256": "f16a0f73d40cb9b1ec37994cf6842b8cd05bbf64d2b9f70942b6a65830cb55b4"
+    },
+    {
+      "bytes": 176,
+      "path": "phase_0077_start.json",
+      "sha256": "99c9ec626a03b8dccfbb68e36bbb3833e35857cd62e456d92849243f4ae417f2"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0078_end.json",
+      "sha256": "1cb6cc693ce8c1b0238987a03436fad7c1f1743d19151e40442f3211da83c34f"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0078_start.json",
+      "sha256": "77121cc9cfb99b5f2456f3859e9703d68630d18fac555f41fb053e261f37ee8c"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0079_end.json",
+      "sha256": "4f3cc017153f1de3c628663d15f16257762f60e14d8d0317d9005530dc872b9d"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0079_start.json",
+      "sha256": "2b67a83dedd43f1ce23e4c4f815b3a6370700893bb808a02c7f1b962fb2cc9a7"
+    },
+    {
+      "bytes": 207,
+      "path": "phase_0080_end.json",
+      "sha256": "cd4716f1993ad005bea63cecdcaf20d4bc355d3203e1967e964fbb103d26dba4"
+    },
+    {
+      "bytes": 180,
+      "path": "phase_0080_start.json",
+      "sha256": "bf1ed5dfc925f95799539077dcef0664e22d055b18ab5fce4a2e16045646cd48"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0081_end.json",
+      "sha256": "f5eeb9aa969a2b4265dfedf03b94492b1f72c2eb05af04be2fb8c646eee06000"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0081_start.json",
+      "sha256": "9c021c786bf1d892e9965f89f355b5054a4fac5444fc2be2f5508f5f5ccdc033"
+    },
+    {
+      "bytes": 218,
+      "path": "phase_0082_end.json",
+      "sha256": "95e7479dcdbc2847823f1edecefb0cf4ce2d1986caf573c8614713f3e9292e5a"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0082_start.json",
+      "sha256": "17f4ccc6dc636b817a2d7bff2502ff5d1f67a7e4842d0142cdc22c65c9d45148"
+    },
+    {
+      "bytes": 234,
+      "path": "phase_0083_end.json",
+      "sha256": "5f9f1296b25c1bf30bbd01b76fd956a86ad2f3fe3f6b1e0336b11f27e94f3ca7"
+    },
+    {
+      "bytes": 166,
+      "path": "phase_0083_start.json",
+      "sha256": "a0a22a170da40463f4e25912cbf90a519ae93a510b53d1412d6ea12c88d8ce8c"
+    },
+    {
+      "bytes": 207,
+      "path": "phase_0084_end.json",
+      "sha256": "6275546dd9d23401c587fc9285495e6c7575d4c34846bef3ac79b34d08c396c0"
+    },
+    {
+      "bytes": 179,
+      "path": "phase_0084_start.json",
+      "sha256": "3ca88e9746f15b8ffa4dc12ab4109a1079c455c977c6780472eac027c78c6b4c"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0085_end.json",
+      "sha256": "df518b1f4a3b9eb975c4229d125fe2b8140dfe71fa067c0dc691b84f426b6ec7"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0085_start.json",
+      "sha256": "83824f4eefb590d5e8ffe7122d741a9523da60c91e27ca4f2b14943d370dbb45"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0086_end.json",
+      "sha256": "2b512341aa89f848e62c841035dc2b2eb1fadf899ec3024e5b881c31dabbfa80"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0086_start.json",
+      "sha256": "4bb4811f646668c42de256c96689756b0e722e45827d5ca1b88c184e564960d2"
+    },
+    {
+      "bytes": 213,
+      "path": "phase_0087_end.json",
+      "sha256": "dba8f25302bdaeb3334dd18bedeb651bf93b47ead9d974238aab9994a133f3a0"
+    },
+    {
+      "bytes": 185,
+      "path": "phase_0087_start.json",
+      "sha256": "9bbe2bd07e66da2bcf5e896652cae8eb0de0699d794424e205451a07df344f63"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0088_end.json",
+      "sha256": "8f0494cba1c31ce3adc529ab4d78746d2edb42e1bcbabd677085293ee27df5ae"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0088_start.json",
+      "sha256": "52ff3535ee7ba9c3ea27ac7d28f59479cdf84df2c1e603992dedf8fadb55807b"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0089_end.json",
+      "sha256": "a3e197988458226607a6ed15dfaef63a2907f88304a2db02b7be24d4bf72184a"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0089_start.json",
+      "sha256": "50db772f8e7330fe9e4297986541a9918a4861f42971b144d3dbff208ddbba53"
+    },
+    {
+      "bytes": 200,
+      "path": "phase_0090_end.json",
+      "sha256": "5b180571cce093185d5bf296904b0a70a1d984151d07118b66c5b838b27f733b"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0090_start.json",
+      "sha256": "3c9f1909c1f3394655de56ed16cf888575069ed0333eb7ad5f13454073a760eb"
+    },
+    {
+      "bytes": 212,
+      "path": "phase_0091_end.json",
+      "sha256": "4d512caf20e67466fc7fa1589a3886422b2ea4e5f09bc92de34d86cdea174137"
+    },
+    {
+      "bytes": 184,
+      "path": "phase_0091_start.json",
+      "sha256": "5a7d1afebe31489f7637a1f798088b1de267c90dac2051415d08332b10c1fed4"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0092_end.json",
+      "sha256": "c57e58bb7d8d3454044013408347ed96e83441a6eef95223fd9a28b0c65f70b1"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0092_start.json",
+      "sha256": "2c7786e2ca4351d53e05e0075300c1b34b903429c6054df451487585331dc024"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0093_end.json",
+      "sha256": "c30c4a3aa3d3ba23e7e3d182625b40c6fa390a104ab7fac38a1cacb5aac770a7"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0093_start.json",
+      "sha256": "9bfd3ae2401880bf32ab3b73f4ec68e9e59089545dde4f649add4b1a426c92b7"
+    },
+    {
+      "bytes": 218,
+      "path": "phase_0094_end.json",
+      "sha256": "18befa9381223a389bcf9fa346e6083d6efb15bc6fe40912a3e059cef4b59873"
+    },
+    {
+      "bytes": 190,
+      "path": "phase_0094_start.json",
+      "sha256": "7cb077acf5c3543ea5ee79817925833204af7ca0acda646970da17d45682b24e"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0095_end.json",
+      "sha256": "2e9fd8f160fef969a487fe131858fc3a6accfa60d05070f46bdc6ffab0393ea0"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0095_start.json",
+      "sha256": "057d665bd9ab91fda30aa2d1f11408e8743b0f39de5cc42ebf1a46e553a3cb0e"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0096_end.json",
+      "sha256": "14311d145ea635d86f44fef8db83ae82c38bc6c159ed727ed399679bac1e3fac"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0096_start.json",
+      "sha256": "bef3b57092e3f5d1ecc62d25be2a4f018f742642b693a841c9134bd727b88eb8"
+    },
+    {
+      "bytes": 205,
+      "path": "phase_0097_end.json",
+      "sha256": "9ecd065698273ae794ada73a66d9d3470fd859432b57c7f1a7096bfc1fd1add5"
+    },
+    {
+      "bytes": 177,
+      "path": "phase_0097_start.json",
+      "sha256": "922cacbb03fd982d45e86541402b9a25110046053971ea3da3dba3482c34e59c"
+    },
+    {
+      "bytes": 217,
+      "path": "phase_0098_end.json",
+      "sha256": "236341de6e67eefaa0a1bd47f01b12d971d915fa4594b02e1a119017d4c9678c"
+    },
+    {
+      "bytes": 189,
+      "path": "phase_0098_start.json",
+      "sha256": "7b88393fd42a1cd1df73c96c71f740c34899e2909a72656de6756bad6a068f9f"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0099_end.json",
+      "sha256": "cc112888f49b5feca1248f7d1f5909232f2172186b34f3578e617749938ae513"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0099_start.json",
+      "sha256": "78b8214ffcaf74078fbabf9b361b376dbd2c46887036ee1fe3e9ab66d992dca9"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0100_end.json",
+      "sha256": "6dc8866fbb13058f8092e7fb1606ce9638af864b84ea2ff1b7202c7527b1ca40"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0100_start.json",
+      "sha256": "aa8bf04e50529c71afae2a3c7687db2d73a4987e7f18b7940da21559662cd104"
+    },
+    {
+      "bytes": 221,
+      "path": "phase_0101_end.json",
+      "sha256": "e19b17788e353a004160b52ed60fe173362aea4bf4ca241ad74f9ada0d160dd3"
+    },
+    {
+      "bytes": 193,
+      "path": "phase_0101_start.json",
+      "sha256": "b962592ed1b91e3dc344027da0beeffdf834a3fd1684ab5dbcb767282d76e51b"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0102_end.json",
+      "sha256": "5b4092111278e16674edec264e4c955029470559642ce2a1e5c2ef9942129eda"
+    },
+    {
+      "bytes": 175,
+      "path": "phase_0102_start.json",
+      "sha256": "ab658ca09d0f15321a493640bf9520e997576ae9fdf86ba564be1c68bdf30db5"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0103_end.json",
+      "sha256": "6d3d7284c248e4a8d182e680609dac9d82e4e22311ddf556002b5b663fdeac84"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0103_start.json",
+      "sha256": "bd861956bbea2f53f088ffafd88b6bb89e976d309d95a806bceb8ecc3ad85423"
+    },
+    {
+      "bytes": 227,
+      "path": "phase_0104_end.json",
+      "sha256": "ee8419e4a0050b36119178171580f30ced3e1d76e9a7783e50d0050233053f3c"
+    },
+    {
+      "bytes": 180,
+      "path": "phase_0104_start.json",
+      "sha256": "d1319c34de4ea9ee1d8722b00343d02e956a26b97991521d5a523a9d6ff21fb4"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0105_end.json",
+      "sha256": "ac4618690d3de5799e4c1395efea16fbebf80b20fd6686af9e3b75c8a1869feb"
+    },
+    {
+      "bytes": 192,
+      "path": "phase_0105_start.json",
+      "sha256": "953ba8803169bb225b7818a3f65d7af1b312ed336024c791255721687a15e299"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0106_end.json",
+      "sha256": "d05a8f3c440bf1d8d9d14b4f178a7521d01da284910ea8310650114fb9abb857"
+    },
+    {
+      "bytes": 175,
+      "path": "phase_0106_start.json",
+      "sha256": "4513dbb79e8ad9f734ee3050a3036a9df86f9d3115e5b34451910a73502c2f1e"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0107_end.json",
+      "sha256": "7f7277227e80e3621f1865cfda0e44e650b863554521eca2fa56693d212e37f0"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0107_start.json",
+      "sha256": "a414a9dac55e60b8da3a00a977acf7c04cd30bd861b1c6fce121b66df0f4a42a"
+    },
+    {
+      "bytes": 225,
+      "path": "phase_0108_end.json",
+      "sha256": "f1e322fbc912b1ea45150a116cfb1578a3782d1d37782ce6f47beedadcded759"
+    },
+    {
+      "bytes": 197,
+      "path": "phase_0108_start.json",
+      "sha256": "b259060fc7f1f9eb481916c6fb594227b66fba33cabe698b89c9e15f0152e9e3"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0109_end.json",
+      "sha256": "e7fab662c311f6ac1c426499cbcef30b67371973e5ab2c9894d1e339aec014b0"
+    },
+    {
+      "bytes": 175,
+      "path": "phase_0109_start.json",
+      "sha256": "ad8764da413ea30b17333c94e82f0bacfb27d2d21850fbfcf2b69f80b6244c8c"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0110_end.json",
+      "sha256": "580ce6e47ea479d04ab554d85f925ebfe062bec9342712c4ff38cf7746dfc312"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0110_start.json",
+      "sha256": "1df07ed2862fbb43cfaf812a09ddfef990057be50547dff78e3a5dc1101d6cd3"
+    },
+    {
+      "bytes": 209,
+      "path": "phase_0111_end.json",
+      "sha256": "d1f3b68a60b86589468e51efd7a11f9e35410ce849b117d4fae28d6d56727faf"
+    },
+    {
+      "bytes": 184,
+      "path": "phase_0111_start.json",
+      "sha256": "59b7e099f04f4367a04db92dacd1f308d490732579e5eabe6894c122a037692f"
+    },
+    {
+      "bytes": 224,
+      "path": "phase_0112_end.json",
+      "sha256": "6c95bd8b3a338acfabaca288ba02d55df096839a6d0a38503e70a70b87cdad1b"
+    },
+    {
+      "bytes": 196,
+      "path": "phase_0112_start.json",
+      "sha256": "7979ecfe02806b60f81151c614b5512d012b406db59215a9a358223accce5896"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0113_end.json",
+      "sha256": "d7328b2d96a53bcce606f3cab4fb2964ea8680a6e326b47d5f791485b9d82d7b"
+    },
+    {
+      "bytes": 175,
+      "path": "phase_0113_start.json",
+      "sha256": "228bee53e0ab0e5caded6a49d9eb13c0cb8d9e043072c342a98fec7d8d843638"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0114_end.json",
+      "sha256": "6731048fba990937a28c070022830f40163cb51790f5b1663789bc611e42c1e3"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0114_start.json",
+      "sha256": "632a93ae5bc002aeacb112f4a8ec4b0009977da53215b5e74e5320f7057e3e25"
+    },
+    {
+      "bytes": 224,
+      "path": "phase_0115_end.json",
+      "sha256": "c45cdc75d69f0b707995c5cde085803b9a75dd7338c3a0daced3b37ce5f00e87"
+    },
+    {
+      "bytes": 196,
+      "path": "phase_0115_start.json",
+      "sha256": "99addb9ba7bb5988fc0670e4374902ba5dc8f34375a1b1007659d16eecdf7e15"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0116_end.json",
+      "sha256": "3e212c8508d2c35a8f613266dbc02cf716aac0ed545b035161f9e7282187dee3"
+    },
+    {
+      "bytes": 175,
+      "path": "phase_0116_start.json",
+      "sha256": "4a97d855aed65399b668cd9815269c0e6999668f110ecda8f5bb251e1111abe4"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0117_end.json",
+      "sha256": "f7a79c461017cb3861800e00465de0049e22ea6e2edb116e4f7a09d46f698cb0"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0117_start.json",
+      "sha256": "5432fd0bb525205846d7e878d17cd8fe070c51d086ba8a87fb29d6b43c38006e"
+    },
+    {
+      "bytes": 208,
+      "path": "phase_0118_end.json",
+      "sha256": "67bdbd1991f619cc17d8afd426e405afbf07e30acc92f4e4b4c75721460f12b3"
+    },
+    {
+      "bytes": 183,
+      "path": "phase_0118_start.json",
+      "sha256": "224ed742c38375a327ce35f630d057675b55e4989907ff8671edfe3a882be626"
+    },
+    {
+      "bytes": 223,
+      "path": "phase_0119_end.json",
+      "sha256": "c0ec00aa651bf4fb9238aea5bb9477c3c8e2bd4ca5d8e2625d662386c048b44e"
+    },
+    {
+      "bytes": 195,
+      "path": "phase_0119_start.json",
+      "sha256": "04dc575eb8bbac438dba2431e73103fa06d06360737b94d9552177903ec0949d"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0120_end.json",
+      "sha256": "68714aee0077b7eec317e90b4a67389e579956d84dbaca455bbf54116dc8942e"
+    },
+    {
+      "bytes": 175,
+      "path": "phase_0120_start.json",
+      "sha256": "68a46e6624d433dc2140430ed3b391f7d28f44c579d9be049d5eab03ab453536"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0121_end.json",
+      "sha256": "fe93c8354ac770d718368bdfdc0a4671f4577b11844431450e628851c0ffd2bf"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0121_start.json",
+      "sha256": "386ab4ca5d02d2aca607e297af2d396326347a2570cf7b4fd8609f4714a1ad64"
+    },
+    {
+      "bytes": 229,
+      "path": "phase_0122_end.json",
+      "sha256": "6045a811b33b4abd598eb19f6bc496d90b9a75cce280d7d17afd98eda6f65de6"
+    },
+    {
+      "bytes": 201,
+      "path": "phase_0122_start.json",
+      "sha256": "81521cdcacb4255fcad60b86b07a2ff8dedd17636d6af79b46c80a1a2da8f8c0"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0123_end.json",
+      "sha256": "e7c85ac31732c707fbd9025547dc297de313e2ca5472ea7a05583654a61fd6ae"
+    },
+    {
+      "bytes": 175,
+      "path": "phase_0123_start.json",
+      "sha256": "09d42998b1d175044381ea98a0739a3298bcf9a0846a1e974b608d1f6dea1ff5"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0124_end.json",
+      "sha256": "c70092f71da7933b5fcb2d4dbb3e073d222c061167697de0bfe5b77b10fd6541"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0124_start.json",
+      "sha256": "69dfdaa2d932cc7c01035a3460daba36518d6f76623fbcf9dfae6f17c7e78a8b"
+    },
+    {
+      "bytes": 213,
+      "path": "phase_0125_end.json",
+      "sha256": "cf1eebbab8320eac3d62ac92ca5e3328bf33dafd20c58aa859a34085def40309"
+    },
+    {
+      "bytes": 188,
+      "path": "phase_0125_start.json",
+      "sha256": "0258d041aa555e3a3c20124d2b2aed1741efff8a50a09e45833c69b0342d86d7"
+    },
+    {
+      "bytes": 228,
+      "path": "phase_0126_end.json",
+      "sha256": "b006d38f2eedd8b8a11dec15d290308ca5a7e5ed2ec110135182c22a32a2459a"
+    },
+    {
+      "bytes": 200,
+      "path": "phase_0126_start.json",
+      "sha256": "7df9c8dc3c0e3dba1903f8ee3919592cc0e7df7b449675d93230079f75024031"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0127_end.json",
+      "sha256": "f7d7b8b255fd6c3484f85cd3d8bdaea24f3ad76b074eb6ffb59e6106add14604"
+    },
+    {
+      "bytes": 175,
+      "path": "phase_0127_start.json",
+      "sha256": "6374f6bd1d6ec11b0920a5f09c7e0eae0b698b767d32849593b1acb03b723db0"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0128_end.json",
+      "sha256": "656ce225b5eb4164b7f5718e4a8a6181d91fc51189c680d90a7b42bcb20a40a6"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0128_start.json",
+      "sha256": "3a7ddd640943b4f2f26bbcf82cdf19d8514c22508db00b870ca406bcf52f87e5"
+    },
+    {
+      "bytes": 228,
+      "path": "phase_0129_end.json",
+      "sha256": "3481589adfb1df49c9237d88e3414359efa0159d600df3c602352f2e2c53570f"
+    },
+    {
+      "bytes": 200,
+      "path": "phase_0129_start.json",
+      "sha256": "398eb9d12a552021c6fb271b95fe45ffab5089835a0b2103a005de2675f597b6"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0130_end.json",
+      "sha256": "1dd004001d3795ee48f0f809aba44cc4ce94c64694325515bb91b83bcb7e1510"
+    },
+    {
+      "bytes": 175,
+      "path": "phase_0130_start.json",
+      "sha256": "1ced51206aa8effb9683a62474fa57bac7c7c7ba2c2c4e9b96671f67d2ae6250"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0131_end.json",
+      "sha256": "4ff4a8976fc9de0e4eceafa3a750cd2e22bb9655c6ac3ba6910770771bb3c9c2"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0131_start.json",
+      "sha256": "ef8ad914a23ff0b98b0570797feb24b87d6bdba8ec0586bf7c2a0449c2f46ba6"
+    },
+    {
+      "bytes": 212,
+      "path": "phase_0132_end.json",
+      "sha256": "6d0c4f4e69edcb09bce57bcfc0bdeddf176865af47cb148bb46db969bad4e7c7"
+    },
+    {
+      "bytes": 187,
+      "path": "phase_0132_start.json",
+      "sha256": "36de3615dae609ea9f90d25d114c49c91cb48e16b0c9f6fa19c4942bcf981c69"
+    },
+    {
+      "bytes": 226,
+      "path": "phase_0133_end.json",
+      "sha256": "7b31748979584e188c207d3bc76f265357d0f58f9e21f13d4d6d2c1d495ce9e2"
+    },
+    {
+      "bytes": 199,
+      "path": "phase_0133_start.json",
+      "sha256": "fbad167af0a342c8022003e783ccf87f55d63c0d18b1533386dfc1a312b3de9d"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0134_end.json",
+      "sha256": "03e3337c0f528c459124f81ce43e77744bf51c740113e003c9bad906fd0120f3"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0134_start.json",
+      "sha256": "c6e0f0ccdbf4dcb89c8b6672202833ed52cf61d24991ff64ab4ed71438c60838"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0135_end.json",
+      "sha256": "29f33cccb78752c1148582521455380de1b7b7bc647dddb639caec1a810476a7"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0135_start.json",
+      "sha256": "16401c5e92149cbce949e6ba8ff535b2771f1ec925217331ab81d6a43996529d"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0136_end.json",
+      "sha256": "bdb01c861d36368bd69d359b475b68d400b9f827a2b6d8475298cb357ff56ca2"
+    },
+    {
+      "bytes": 191,
+      "path": "phase_0136_start.json",
+      "sha256": "ead13490d66698762f790c2b6dd18f40634fc1b196d1b55bcab3fc651c49daf4"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0137_end.json",
+      "sha256": "a280b66b754eadf4bde48b9c8fd3a6a5bd5684724063f595c428d2cb9def943c"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0137_start.json",
+      "sha256": "689c366cd8dacbb4980033114291def3f6b3364969066b4ac60ef25471e5eef4"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0138_end.json",
+      "sha256": "df7f8d137dcacedfd246e3235c4a65ba93354c10c5bea71f3a730b94ff8ef221"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0138_start.json",
+      "sha256": "0de5d2ff8ce64af93e32617006e3b53402c64063908265fa2053e8fef631acf4"
+    },
+    {
+      "bytes": 309,
+      "path": "phase_0139_end.json",
+      "sha256": "76ea26df55f0a6e954aa6b714ccb67cfa64f63ac5d9b8f1553f2164d1cad3022"
+    },
+    {
+      "bytes": 178,
+      "path": "phase_0139_start.json",
+      "sha256": "702bdefa16b0af8743213827b1fd3f10699536ac897e220afebc7361adb95c19"
+    },
+    {
+      "bytes": 219,
+      "path": "phase_0140_end.json",
+      "sha256": "13add37295a02364477a243ed2dc82a63993d2110dab4e00941fca3ef577a2e8"
+    },
+    {
+      "bytes": 190,
+      "path": "phase_0140_start.json",
+      "sha256": "46e29e93f925224a857b816eee9205bc5dcde593d8de6378fe5cd30e1c26e5be"
+    },
+    {
+      "bytes": 202,
+      "path": "phase_0141_end.json",
+      "sha256": "0101386552925ae27a3c4cc48e2386180d9f5ec15e44a5565117232c639c3578"
+    },
+    {
+      "bytes": 174,
+      "path": "phase_0141_start.json",
+      "sha256": "26ead8df65e12d45f238f06321f8dd6d298d88b63ff5600731a6297fe2908f0a"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0142_end.json",
+      "sha256": "f64b3b643b11cf42d4ee148ecebbcab7e589af8c3a055cb41f0f9d94d1dfcadd"
+    },
+    {
+      "bytes": 172,
+      "path": "phase_0142_start.json",
+      "sha256": "d890dc8c312797de9baec5852abe91fef59655d1cdcc0c84bf1de2aa848bd8ef"
+    },
+    {
+      "bytes": 192,
+      "path": "phase_0143_end.json",
+      "sha256": "801191d01d9e19bb78db9ed032cc4751bab7f56270fea25456e776c25a0743f7"
+    },
+    {
+      "bytes": 164,
+      "path": "phase_0143_start.json",
+      "sha256": "e88f1af8e4c3845987a799499777051e98f627ff292bf74c209b991552121b19"
+    },
+    {
+      "bytes": 203,
+      "path": "phase_0144_end.json",
+      "sha256": "bb2cac91603880022f7f0189bf971a0cfb32b1dc7b0f70203ecbe9161dc40e0e"
+    },
+    {
+      "bytes": 175,
+      "path": "phase_0144_start.json",
+      "sha256": "67cc0b2294995849a76879849c671d4542584dc283b4014ba53874ad7624da07"
+    },
+    {
+      "bytes": 220,
+      "path": "phase_0145_end.json",
+      "sha256": "68e13289bc512b957953b9aec4f7d3874b68a51f5f9ae2956a71759172905b05"
+    },
+    {
+      "bytes": 173,
+      "path": "phase_0145_start.json",
+      "sha256": "d655bd449f3745a8059a2949eb7e473b12921cd1185f312ac0d971a9d58d8bdb"
+    },
+    {
+      "bytes": 738623,
+      "path": "RESOURCE_OBSERVATIONS.json",
+      "sha256": "cf28488601b0ba85b070a66c2eeff8eda36e686c137366c44e3ec1e39e0eca29"
+    },
+    {
+      "bytes": 14808,
+      "path": "supervisor_heartbeat.jsonl",
+      "sha256": "75a487f0a751b60d3029a67b0024324cd596d5985e8a2acd0c4a126c34a1d9d2"
+    },
+    {
+      "bytes": 289,
+      "path": "supervisor_ownership.json",
+      "sha256": "22971155adf4ed119ffbc784d3ef123b7185341b50767a56038ca21f031894e5"
+    },
+    {
+      "bytes": 0,
+      "path": "worker.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "worker.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 7092,
+      "path": "worker_result.json",
+      "sha256": "a57474b27a5e70e7cc46c719aeb1cdd86b9a3d324e8a5b285ba89b883e590a8d"
+    }
+  ],
+  "partial_outputs_frozen": true,
+  "preflight": {
+    "authorization": {
+      "forward": false,
+      "model_construction": false,
+      "model_loading": false,
+      "paid_services": false,
+      "production_training": false,
+      "protected_bank_access": false,
+      "scope": "CUDA_CONTEXT_PHASES_NO_MODEL_ONLY",
+      "scoring": false
+    },
+    "bindings": {
+      "ENV": {
+        "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+        "HF_HUB_OFFLINE": "1",
+        "TOKENIZERS_PARALLELISM": "false",
+        "TRANSFORMERS_OFFLINE": "1",
+        "USE_FLAX": "0",
+        "USE_HUB_KERNELS": "NO",
+        "USE_TF": "0",
+        "USE_TORCH": "1"
+      },
+      "helpers": {
+        "inference_qual_worker.py": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e",
+        "native_nvml.py": "b09e186d5a2f4d249e2eea24e0693eb3f44280704f19ebfb17b6219882742329",
+        "native_process.py": "3d36770a36be5ef9db2c9ab159b069e3dde6c6e61210c58513c5afa7c4e70540",
+        "native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691",
+        "native_worker.py": "156c56c6b9980f30d950fd5245403cc58ec80cb5131fde69451156db9edc22d4",
+        "short_ram_monitor.py": "7c810bce7c3ee46a8b6f40ebd9f07c12a130ddd9fbd366719a88ef7ae82a13ee",
+        "worker_ram_probe.py": "e4ec5e19241b877b99cc1ed933514c6fb09721658d91666df900a9a1e00f75a4"
+      },
+      "runtime": {
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\__init__.py": "7b6a0675824eb1fa2ff0cb1eb36e358dc454703e51dfa4e9a0e6ccd26a159f0c",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\_psutil_windows.pyd": "0035450801bd7d938e9e146c5ec28e619cb5a5f4a18cdc53ac7e9734c7f94f78",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\_pswindows.py": "0bbd52dcb214735be4168d11a2ae192d5bc7265c8cf72c611179476479687f54",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\__init__.py": "3bc1e524ebaba28b4de3b3ebad1edfc623190a1d4fc34e76b900fa34e0c37bbd",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\_safetensors_rust.pyd": "80a2b3f7658854ade855c5fb6192ee38fe2c7fbfd38d1c7c1f4d2c44f67125e4",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\torch.py": "81f477f2ab5e05e99308fc55ed26028eb2bf36334404e9c5558e4730184483f0",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_C.cp311-win_amd64.pyd": "8c64a97873ac7730dfe4aa9740d5dbd5d904fdd0a214cec829a3665711927465",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\asmjit.dll": "8872de6689ff648bf3a31635a25c8e4746e5bbe3c92a2d0c9eb5b7e639775688",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\c10.dll": "7b4bc7abb0b50cdfcfd4d6d58a310cd7e951f87621783af8d3eaa861d7719147",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\c10_cuda.dll": "ff798a3e18a09291e993e9bba452152447c7507b605d683c8289bf5112efe024",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\caffe2_nvrtc.dll": "fce25ac814e73e48ac6ab41a542cf085d492d5f72e11aae6139d2f9a33e1171e",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cublas64_12.dll": "6ed2a2b8a1a7d243ee76acc81bbbfaadddb3264e0526a785ef58a8c6420dd05d",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cublasLt64_12.dll": "0b58a51fa30b0af7640b80ca2a1c2f3f0b93d62774aa0a34af7ba8c090684d31",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudart64_12.dll": "f95273031fc5ea44cdb37e0a696a1b15b9d84a4ee977299a6f6e652ef4d790cf",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn64_9.dll": "c07cc47f2fa4a566593c7af4aa7e57edf09a985a0fddd14cb8d6f456e252af05",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_adv64_9.dll": "3527c9543bc464e083bbb29f0e49622bec968b5329cc9bb70ffadce2a4ca5fc6",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_cnn64_9.dll": "5087e9a39bb599db48350e2fc88ca37a86e83f2944ff0183bc56f3f9cbde2972",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_engines_precompiled64_9.dll": "680625354e9f2ac80d573cc94fc5190848198262557226edd482aaca4ccb9113",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_engines_runtime_compiled64_9.dll": "d0e8c076508e21a5a7b3c2b3f577df74f7a767e95e35133e81bdd38bf8839d8a",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_graph64_9.dll": "df730314816b59890db41428745c860b2be0112ed296892bbcc426296822aa54",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_heuristic64_9.dll": "ee6d4831251387ab52a549df7ce7e5256272426eeef23a36d172ca8c725afba1",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_ops64_9.dll": "e26d81b20ceda0fff0fce1b60f5c4a7c0b32650afa2ab49f0ea4496816bead5b",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cufft64_11.dll": "7be2aa7509d93202f55b9c940f880aec53063d8c20ce505ea9012990c2b6e088",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cufftw64_11.dll": "e2a956e0104a917fa068086ad811255bf57e7571cd239cf49ec2ad994fd1f1c4",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cupti64_2024.1.0.dll": "2ccf07a7089840172e8b094e58c1566dce981347dcf9fda126697b280032f50d",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\curand64_10.dll": "d1ef0598bcf289f68dcf250a785e8b0937711389fb08b2201d8cd48ece021e01",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusolver64_11.dll": "ed31576024f5b077deda61e8bd4390285f851503cb2887c0d23f77b57b5ad352",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusolverMg64_11.dll": "4d02ddc4a89be48803f80ff36078f8c665bc1d9912b2e2e061241b11b3797758",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusparse64_12.dll": "eb5a4bf28503976f1dbf3fa1fd34dd6081c7525597458672e3f8e14e2d139476",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\fbgemm.dll": "78dce2d58d6306f8fe2d40758d32b2c37e63ccd1d8649b852a362043a3027bbb",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\libiomp5md.dll": "f608eedb25e44de3db1d3db984ac113f3a8406a92ea87061a77f390852fe1174",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\libiompstubs5md.dll": "27613127ee63e4399b615bf5d105895b2dc18e3505bb92615827f7e11d88343a",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvJitLink_120_0.dll": "de34fa816105027720999d63639da185c8f9481874a20515e0cd57c32a821a6c",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvToolsExt64_1.dll": "0fe54f1b80ad3e44da2a3d9f0956e7c3903029d6319689ce1c4068f7a20932f3",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvrtc-builtins64_124.dll": "3ba326d21bb242488c0284ebc32fd6dbc94025ecab34862015a5c95eb178c961",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvrtc64_120_0.dll": "e55461f252b519478e9bf09f8bd1f0f3b6e3064c9270fac6a29d6eb23216835c",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\shm.dll": "ee01b7d46df1fed0fef904776b7cadd1b2453dd47b7fca745e24b79b4d3023ed",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch.dll": "b3bbedcfbd34eee4c4efd06464e3929026c7f02bedd06fc4314cf6604f37aeac",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_cpu.dll": "6eb25a52d1e3a2c0598797942a78def81138df0c6602f0e009c7db2bfbe39232",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_cuda.dll": "37fcaf926c486739e4cb505acb167a55d8f2ffd021c78f8822365478935c4630",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_global_deps.dll": "d3e4a7467f13f5eb42b904dff7f8324f18033518a2eb4b0690a71daaabc96787",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_python.dll": "5b06809e061c5c3b82ac4ba832beebb7d819ad32df4fc96654af7926729c121f",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\uv.dll": "d6e517084425092066d4b26678320eb60edf2c79ade855bd67b829113f999da6",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\zlibwapi.dll": "1f047faec08d9a35c304fb4a7cf13853589359a8f7cbfdd48c5d5807712dcf05",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\nn\\functional.py": "0af69ca566d95e20abf038761893b2c0b4daf349f45dc42469eba5a8151187ea",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py": "96f0fa51972a2d6acc0fa44a716afe5c9520e13d390a6380a6d7e7f20fda00cf",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\optim\\adam.py": "a18d5e8d047b0790ed2a86cd61d3ddffc077dd04fb90e4e45f46251aedcd7b15",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\optim\\adamw.py": "ed13eef9d2875966c5b0e66371344c9e5665d41eac826c05518d38e13081fe7d",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\version.py": "b7d0c451533c0da1a2dd77ea0fc3f9e89743e466566c6778929e86d0bfd498a1",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\configuration_utils.py": "23ca0a0c0dd1591ccdce5ced8dee09997f0656304f46b85fed725ade85fe25c9",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\dependency_versions_table.py": "f8c51eb96aeea1380e8ed5a21323fd1ee6e267ab5c21cc5377c018ee39b8da6c",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\initialization.py": "08d3146c713cdc1b2430171563a153949fd758d51aa1e2ad2fa25184a31ef082",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\integrations\\hub_kernels.py": "7d36b07739be13398afe32f275b6381045240e89fabd5e422f7a8e3e3d738639",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\masking_utils.py": "5f48e428ea02d1b6008acb45c147fcdb4eba89deea69627744662aa05da1b9f2",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_layers.py": "5b03ff486dda560eff26bb25f453f879e19a0efd64564d3afcb1469e07f6d348",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_rope_utils.py": "9592ba129bf723ed3fa54afcc48ddd3d40d2dac2947ce5cc37803c496ca320e8",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_utils.py": "d8bf1879d6f582888b6cf47b4d63070260285a3bd1dc94ce7e1373304f74168a",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\models\\qwen3\\configuration_qwen3.py": "49d9ccd0f29ccd977b93dba2004f84b867891b3d0509b71fd8ba3ed01054e64d",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\models\\qwen3\\modeling_qwen3.py": "fbdcfeeb1b54135ca67ba7df924da92f4b264e1252b517eea2de989289ebaeab",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\utils\\generic.py": "cd444f4d8f1baf5e8a54fb48b2cdc4b6bab0ef575571be2e6b119f584d2de916",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\utils\\output_capturing.py": "28921dca36f8892e6f50c8b92ebfff3e9aff945f32a88c275e41b1dc0f1b65c1",
+        "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe": "5d121182d0b09011d3fffd20191e415e02394ed31807b4570b2746c26256c1b3",
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\ast.py": "c513073798bdbf3cdef09327d0d2d381a53213a13a4ba3f02729695327539406",
+        "C:\\Windows\\System32\\kernel32.dll": "8f8629741558b5df71def4e1dd8ef9645d4f806b949762c47757c50fea1a9e6d",
+        "C:\\Windows\\System32\\nvml.dll": "68fcc8750fcb90a41e70801d9dabb83fd7b61c39e966feceac30a9b3bcec509a"
+      },
+      "source": {
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\AGENTS.md": "18ad3e200a859d3722919c68b95b83df057be85581b2b867a8aae099f79fb7e5",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\RINEYA_SYNTH_CENTRALIZED_REASONING.md": "271cce0fadefe3eecface205f282ba19b0be45d9c7491d11cb6b0a5374e886df",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\AGENTS.md": "3651a04fedc07d529cacc2cf991d630d2fcc9eae6d3ac2f8cbe2449f70b67229",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\NATIVE_QUALIFICATION_PROPOSAL.json": "afa8a990d3c377bdf2cbfc3aa78b6ff4326a1a2aa76bbabd88e2f5ae741e945d",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\PILOT_DECISIONS.json": "711336dbb5c6c68be8097f29159fcef934253292524bfe20936a1b2f32dc0ddd",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\audit_cpu.py": "cda2fd84856380ddd231142587b26bbe2016c8c24ce08ecbc4a6ddf7143f2d99",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\auditor.py": "90ca36386ceed25c8451e8ad623a967e27ed29e3fb140c490cb209c32147f2b0",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_contract.py": "ef2886476d29186199dcb45b8eb9767755c5cc8142d17159955874092b9d7582",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_core.py": "80ebaf6b60894ea9e0da24471d58fc3ec5af9085674d3af9babb08fe2563b68e",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_native.py": "22110c7e1b2fd7178105efe3f34ad3d8883b349c0cb53eaabfb2922ae9ea6221",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_supervisor.py": "8ead506468493b8ef6287a35c50a60758112483b3e8e00c0174bf279ce0ec021",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_worker.py": "b049e29a31a192c81009023536e315ebf5d8f584c66c0b0638434ae0e8033053",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\balanced_corpus.py": "0577bb4a15e08ae38b97289171bcd28cb4dc45544393f9e1f3075fbab270ca34",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\checkpoint_successor_profile.py": "1cf3cad34dfb05a73c6930fc29ac72538b3c38a15ad0772a8b5378eef55aa04f",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\context_phase_contract.py": "021f5b3afa037fcaf4e07db1c5596e5bb7c0f15aba13abf9d77d8942344c5d53",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\context_phase_supervisor.py": "f77ccb03cb94b5155996dc946722397ef0c3c0cadf4b5eac35242cba7c57e405",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\context_phase_worker.py": "a4c69bb350a8255c638881c634f732a6b44cf1f0a5da583ba7d7bd0f901d4278",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\cpu_tokenizer.py": "268d47037581e7d022cb4d4d53dd9b7e4454909c74b910572d2ba153e463b70f",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\dev_statistics.py": "2851ee7f7f2aa2399b7030a05b2bda14e85a8eff98ac23f71e7d918014d3059c",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evaluation_panel.py": "e8ed801cf258cd42edc2a8b08a560cd80914822bd000e833e08208c1bde46598",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\final_adapter_inference.py": "bfa342e0f317614503ef5b24c9f098243feee6f0b6cdfef55e7659778d0e5c85",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\full27_chunk.py": "62943cb47948ecda69fbe6193a032267228a1ce7b6b1a8aae5488b2b7676875e",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\full27_contract.py": "48e2ac09350ed80377743abbbfbcbc88da862e964c7400a2a58cfe015020f356",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\full27_supervisor.py": "b8a2ee83f4348664db94e94f50c611290f336ce55f5a9b1428ad6bdd4cf0066a",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\full27_worker.py": "11ded4200f121adc2faaf704c8fd18b923f5525f160c912663de6dc211cc73fe",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_component.py": "48c57278339f4e42ef7487e296d6051edb55650e61d0397b1c73305720651b0b",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_contract.py": "5fced90a3113e7f50abc95897cbf5d089a7a682f87d4285d5b42d99c04868caa",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_inputs.py": "620c75fcd4cf9eb696369506890c7af51e2811161301efeaec3a4181b2573dfd",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_qual_worker.py": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\long_context_guards.py": "c24a3e5c7317e232649efabce1438ba05721367ba2517b597f6f6f3afb85c511",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\long_inference_component.py": "5816724569a4e5a553428e6a05a0297fb928bbdf3de84c714566b40dba93d327",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\long_inference_inputs.py": "1279307544dbe41acfe523f29dcc0ecba8e72aa974eae48559a64b23ab109184",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\long_split_controller.py": "b30267fec2addb19f692a83e1f7e778900b496ab7c7deb711c09438c613c3a17",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\matching_schedule.py": "9661626fd27b372e532f1816783b7410e259f22838578f5a050b3a7059729805",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_contract.py": "47d762107adc66d92ed35bc96f8e99e24d81f448c140b4670753771faade5eb0",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_loader.py": "43229ee3ab59719ddc076ce252fdab029a9b5f43c11c66e9ccc84d092f378174",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_mechanics.py": "e00a4c8ffe539b047a457a1aca49fd5998f053f9a5485a65d9a9153f4cd1986d",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_nvml.py": "b09e186d5a2f4d249e2eea24e0693eb3f44280704f19ebfb17b6219882742329",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_precision.py": "05d18fdec95860df8f54ba60a7cee16bc983f783fa51a5f009cf6dc1939736cc",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_process.py": "3d36770a36be5ef9db2c9ab159b069e3dde6c6e61210c58513c5afa7c4e70540",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_worker.py": "156c56c6b9980f30d950fd5245403cc58ec80cb5131fde69451156db9edc22d4",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\pilot_trainable_inventory.json": "3bcb2a3d4e9324ab8fe4e6b7fb9f6de0c77c6801c3e0101fa63606ff46b7183d",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\prepare_corpus.py": "7a8985da55a627856b66d9b649f8fb5d1053deb65b9f5c8d0f72869ebb086c9d",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\qualification_supervisor.py": "0dc62c3b341ba74f3be3d7e8c5213e6b47ba0083ed6628d604336f2929c6a5a1",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\rs_contract.py": "cef135a06d4449917798e7e40685ac3589615663bfe47662e0a49207b67ccc6a",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\rs_solver.py": "6acf2fa26ef3f5a7b103818f4bb0eef972d5d975e9f3b39614ad6b253131acaf",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\rs_verifier.py": "36d2322ac077f4731b621defbc77ae39d1bfde2f1d0bcc15c73082b5f897ec98",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\score_import.py": "f859973eabc5ff0d04cd9befe0b41f97c7474abf8b1d46e768ebf4abc6ff551a",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\short_collection_contract.py": "1d66d5823d7485864a4f3d887870e62ed68978f08df90f5f7698c4766d2d365e",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\short_collection_supervisor.py": "f0d178cda0b20a804791ea9c95e89040d9d8dff38437f12ce0cbdddbaff9be09",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\short_collection_worker.py": "f0ee2c5fd92397ee1ff8cbbd55596e50c2251e9c313542f493fa3609162b7e5b",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\short_ram_monitor.py": "7c810bce7c3ee46a8b6f40ebd9f07c12a130ddd9fbd366719a88ef7ae82a13ee",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_engine.py": "9dd951e4a90c992bf740d0ec9eb6d2c7bf4cc5909de109bbfd13f34238c67382",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_native_chunk.py": "96f361052c34750313731c1fad0fe07d5ed48d376ee59850370cfeae99f59047",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_schedule.py": "292e2f29ce7fb78c81e092d84e3b2a278310c8c8eed408d680e4d2db7340bf1d",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_torch_backend.py": "c1aaa4c2efdc50d3025eacaaa45e37930a278b70e580dd9f8344e7337bcac04d",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\symbolic_checkpoint.py": "ace6d65efbe874fef4317a49dd3f393bdbd45d7d4d230895351d5cf948c7d99b",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\task_compiler.py": "1ae26b485d7a6ee48fe9667df51886c2c64af09d89dd0edcb622794d33642f60",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\task_retention_guards.py": "a2fee79b7fd6debb05e264b7f6599d788c8dec567de7a4e8497fe31318022094",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_qual_supervisor.py": "c1512a34c96abcf77fff4aebdc550ba8f25f8be3840632a4518c0895b221119b",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_qualification.py": "50cf018aecf9d27d669d07c885457edd40f1de074c6e930f0b29ce93bf4ca046",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_ram_scope.py": "af9a3706ac426c5afb1ab27ef45d13a854dfb9158cc412d3d8d566e67e84296c",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_recompute_scope.py": "d0a0a587da6feed6737eed0d305857cf9f8a23e293a5e955ebde33b68ce813d8",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_balanced_corpus.py": "79db2d6d19a36153a7f9707d40d01ee7392d71dafbbee4118e6d3260446e2637",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_checkpoint_successor_profile.py": "daaf528ebcda9fce41eb53f58df52dba0179cd1dbcb41dafef6cf96f1ec017e4",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_context_phase_diagnostic.py": "1bc7a769ca49c2883f84948342ae66db1d21371b860d4b8455294de793a4cffa",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_cpu_tokenizer.py": "bdad50239f517bd08c7d70e3b018ea0bf97d523952e38cdf19ecd87d08fcd49c",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_dev_statistics.py": "0030476c40cedf1b0a0bff41a16b560d8b6a64319af87c7321cb9f185d50d3d7",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_evaluation_panel.py": "60db4f07514e61652cf7d4186e7c7a568f35f0ef42b6bc0710108428a0408374",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_final_adapter_inference.py": "26f080ec0d705e0d82a07da111d74ad583f48f92791aec9de4018b23acc2afec",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_full27.py": "326cc802e7ff108a2184a04ee651fe5b902f7f1518b5d760204a412c97af0677",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_independent_full27_audit.py": "a806f56857cb425c9ff1f10f0b3b708a6b10e4a06dde969fae5401bae5458ad1",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_inference_component.py": "647db1c81cb90816846bf5ff612e59fd52dc9a2311df5a7d290f1c9a6c3d3552",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_inference_inputs.py": "65577cec5e9e2533e7bce7468888759543068b7fc1b3c55be0d1042c617a3c80",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_inference_qualification.py": "11c8755444a1ea99c44d0d9fd20a8658b2fddc89f4566134e165ca27f44a2cb4",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_long_context_guards.py": "af455419edee2a7493a4e75a07b2b937bc98a20176b542ca989c6de1cc62f80b",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_long_inference_component.py": "ef333b7ec890dc1ff229d656fff2981676918c6048f41f670e124982b417a85a",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_long_inference_inputs.py": "ee82fcfb9fd917a93c1566eaad8747693a32ccec7d7b28b172c159534cc1ff83",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_long_split_controller.py": "3decff6ae0b803869a20f27df0ac9df28d6e8136130e4ba3ecc9c8985e334452",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_matching_schedule.py": "e977b6b1bae1169cc1846995c4fedb90bb69170d622727bc20c93540bc3219b8",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_contract_worker.py": "daa1c5a104b0b3d2d135a8f73fd1959f5a0013af71faab44dc3f2d7ab5b7ea71",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_job_resources.py": "2cb1f5cf077a249244591801ab51f0aea9153145fd812e1e788273d92bbec50c",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_loader.py": "d11e4c3b7048bae92e0f0317cd2a42adc1edb885fcb961e26840fcaa5c8b3444",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_mechanics.py": "3abfea4b0215001ac279dec3150df5ef65ac826e2a21f3b8b1d7e0a34ce9469a",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_nvml.py": "407cf28e177f155f1ebd5151c74013727da5de491405558d3c3acb8cc51ce163",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_precision.py": "1d1b56b36f03aee0514c08b1d9a7b013bc26ff0ceaf60dc2196761417226218f",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_process.py": "05c78df76c4f785e7b656974cbb13c1b75355f9ede77676b2c60110dc2a1f942",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_supervisor.py": "eec30cc150f3a5f444dcfdb309083a318d9c45e742eee648c08e39b132215cc1",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_prepare_corpus.py": "c19a067792f578dc5f561d20a115dc5d4979cfd633387dafe4ad8c7707323f42",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_qualification_supervisor.py": "334c122a3918efece2fee50065587d0e1a982ccea7bad31da4297cb595234e1e",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_registration.py": "b2f4c4c0178cd247c8f48f19de0cf44484ec8c76675ad2eaed3518f1d61605bf",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_rs_semantics.py": "fa7e6106ff5a4c0222b9be4f1580411e83f2a041370e5ceb5aa09e1b9ce99547",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_score_import.py": "5a305b1ac446e238ee4a9bbfdb3877cd7f282881c6376092a1155789ddce0834",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_short_collection.py": "42f943d7bc9f5584097cb8df867c331f7b1eac4753937c4c6515e753fb386564",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_short_ram_successor.py": "a636ced68d16a1d62c455bf63fdee541bb17702146151903a9d3716ceca8db9f",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_source_policy2.py": "edae775bd64dad25dad2de70b96c21574b9659d7679950f035fa7db9aa1bd3aa",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_study_engine.py": "523de57174a31875b793fc8b38d8ee2917ad93efbdcf90f19b6ff88ef2706eb2",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_study_native_chunk.py": "505c42ae619df1c2962d2fc41db6de63f0557afc97ef0ba0bca8dc37676bcba7",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_study_schedule.py": "4c8e8c40cb4e87d97856157ef8e4852ec38cc5268f56702163f181f81069b894",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_study_torch_backend.py": "a869c08f439b4b9f17d2e32e7e5a2cdd43fca67ef672dc50ce3626d559482a0b",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_symbolic_checkpoint.py": "c136a676c9a39b0d82cb2ed8d635b56e164e0183f238e65fcba3d2cc0d126a1c",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_task_compiler.py": "bbf40a7068e6267bf4d604f21ef13a66f93f85313b9a349372cc8e42f7669c7e",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_task_retention_guards.py": "e4c013c9c5f4acd3c3ffae82d0c6f8c0abd0e13d776738a61eb2e92e84f7aa77",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_witness_normalization.py": "5f1471076b310e43efec3d223f68e78b2b4dbfca4877059b03dae7562fd8a964",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\validate_manifest.py": "1f8d37ed2570c6b6dfa800af6209edd85b933f2d35bde297d8228c5a37f8175d",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\worker_ram_probe.py": "e4ec5e19241b877b99cc1ed933514c6fb09721658d91666df900a9a1e00f75a4"
+      }
+    },
+    "config_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\configs\\SYNTH_CONTEXT_PHASE_NO_MODEL_D001.json",
+    "config_sha256": "53cfe48bef01d531c8c16555edc97eeebd02b76c9e5b995d20513e6b37c1b030",
+    "contract": "CONTEXT_PHASE_NO_MODEL_DIAGNOSTIC_STAGED_1",
+    "diagnostic_profile": {
+      "Windows_counters": "optional diagnostic only; unsupported explicit",
+      "external_NVML_authority_unchanged": true,
+      "guard_query_proxy": "one exact actual call; nonrecursive phase accounting; unchanged result/error",
+      "id": "CONTEXT_PHASE_NO_MODEL_DIAGNOSTIC_STAGED_1",
+      "native_fit_or_historical_cause_established": false,
+      "no_model": true,
+      "no_tensor_allocation": true
+    },
+    "helper_pins": {
+      "inference_qual_worker.py": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e",
+      "native_nvml.py": "b09e186d5a2f4d249e2eea24e0693eb3f44280704f19ebfb17b6219882742329",
+      "native_process.py": "3d36770a36be5ef9db2c9ab159b069e3dde6c6e61210c58513c5afa7c4e70540",
+      "native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691",
+      "native_worker.py": "156c56c6b9980f30d950fd5245403cc58ec80cb5131fde69451156db9edc22d4",
+      "short_ram_monitor.py": "7c810bce7c3ee46a8b6f40ebd9f07c12a130ddd9fbd366719a88ef7ae82a13ee",
+      "worker_ram_probe.py": "e4ec5e19241b877b99cc1ed933514c6fb09721658d91666df900a9a1e00f75a4"
+    },
+    "id": "SYNTH_CONTEXT_PHASE_NO_MODEL_D001",
+    "offline_environment": {
+      "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+      "HF_HUB_OFFLINE": "1",
+      "TOKENIZERS_PARALLELISM": "false",
+      "TRANSFORMERS_OFFLINE": "1",
+      "USE_FLAX": "0",
+      "USE_HUB_KERNELS": "NO",
+      "USE_TF": "0",
+      "USE_TORCH": "1"
+    },
+    "resources": {
+      "CPU_sample_max_age_seconds": 0.2,
+      "GPU_free_at_admission_GiB": 4.0,
+      "GPU_free_during_work_GiB": 0.5,
+      "GPU_probe_interval_seconds": 0.5,
+      "GPU_probe_timeout_seconds": 2.0,
+      "GPU_sample_max_age_seconds": 2.0,
+      "admission_poll_seconds": 2.0,
+      "admission_seconds": 30,
+      "disk_free_GiB": 4.0,
+      "external_watchdog_milliseconds": 100,
+      "preworker_available_GiB": 3.3125,
+      "system_available_reserve_GiB": 1.25,
+      "whole_scope_seconds": 600,
+      "worker_process_tree_RSS_GiB": 2.0
+    },
+    "runtime_pins": {
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\__init__.py": "7b6a0675824eb1fa2ff0cb1eb36e358dc454703e51dfa4e9a0e6ccd26a159f0c",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\_psutil_windows.pyd": "0035450801bd7d938e9e146c5ec28e619cb5a5f4a18cdc53ac7e9734c7f94f78",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\_pswindows.py": "0bbd52dcb214735be4168d11a2ae192d5bc7265c8cf72c611179476479687f54",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\__init__.py": "3bc1e524ebaba28b4de3b3ebad1edfc623190a1d4fc34e76b900fa34e0c37bbd",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\_safetensors_rust.pyd": "80a2b3f7658854ade855c5fb6192ee38fe2c7fbfd38d1c7c1f4d2c44f67125e4",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\safetensors\\torch.py": "81f477f2ab5e05e99308fc55ed26028eb2bf36334404e9c5558e4730184483f0",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\_C.cp311-win_amd64.pyd": "8c64a97873ac7730dfe4aa9740d5dbd5d904fdd0a214cec829a3665711927465",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\asmjit.dll": "8872de6689ff648bf3a31635a25c8e4746e5bbe3c92a2d0c9eb5b7e639775688",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\c10.dll": "7b4bc7abb0b50cdfcfd4d6d58a310cd7e951f87621783af8d3eaa861d7719147",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\c10_cuda.dll": "ff798a3e18a09291e993e9bba452152447c7507b605d683c8289bf5112efe024",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\caffe2_nvrtc.dll": "fce25ac814e73e48ac6ab41a542cf085d492d5f72e11aae6139d2f9a33e1171e",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cublas64_12.dll": "6ed2a2b8a1a7d243ee76acc81bbbfaadddb3264e0526a785ef58a8c6420dd05d",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cublasLt64_12.dll": "0b58a51fa30b0af7640b80ca2a1c2f3f0b93d62774aa0a34af7ba8c090684d31",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudart64_12.dll": "f95273031fc5ea44cdb37e0a696a1b15b9d84a4ee977299a6f6e652ef4d790cf",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn64_9.dll": "c07cc47f2fa4a566593c7af4aa7e57edf09a985a0fddd14cb8d6f456e252af05",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_adv64_9.dll": "3527c9543bc464e083bbb29f0e49622bec968b5329cc9bb70ffadce2a4ca5fc6",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_cnn64_9.dll": "5087e9a39bb599db48350e2fc88ca37a86e83f2944ff0183bc56f3f9cbde2972",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_engines_precompiled64_9.dll": "680625354e9f2ac80d573cc94fc5190848198262557226edd482aaca4ccb9113",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_engines_runtime_compiled64_9.dll": "d0e8c076508e21a5a7b3c2b3f577df74f7a767e95e35133e81bdd38bf8839d8a",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_graph64_9.dll": "df730314816b59890db41428745c860b2be0112ed296892bbcc426296822aa54",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_heuristic64_9.dll": "ee6d4831251387ab52a549df7ce7e5256272426eeef23a36d172ca8c725afba1",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cudnn_ops64_9.dll": "e26d81b20ceda0fff0fce1b60f5c4a7c0b32650afa2ab49f0ea4496816bead5b",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cufft64_11.dll": "7be2aa7509d93202f55b9c940f880aec53063d8c20ce505ea9012990c2b6e088",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cufftw64_11.dll": "e2a956e0104a917fa068086ad811255bf57e7571cd239cf49ec2ad994fd1f1c4",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cupti64_2024.1.0.dll": "2ccf07a7089840172e8b094e58c1566dce981347dcf9fda126697b280032f50d",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\curand64_10.dll": "d1ef0598bcf289f68dcf250a785e8b0937711389fb08b2201d8cd48ece021e01",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusolver64_11.dll": "ed31576024f5b077deda61e8bd4390285f851503cb2887c0d23f77b57b5ad352",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusolverMg64_11.dll": "4d02ddc4a89be48803f80ff36078f8c665bc1d9912b2e2e061241b11b3797758",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\cusparse64_12.dll": "eb5a4bf28503976f1dbf3fa1fd34dd6081c7525597458672e3f8e14e2d139476",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\fbgemm.dll": "78dce2d58d6306f8fe2d40758d32b2c37e63ccd1d8649b852a362043a3027bbb",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\libiomp5md.dll": "f608eedb25e44de3db1d3db984ac113f3a8406a92ea87061a77f390852fe1174",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\libiompstubs5md.dll": "27613127ee63e4399b615bf5d105895b2dc18e3505bb92615827f7e11d88343a",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvJitLink_120_0.dll": "de34fa816105027720999d63639da185c8f9481874a20515e0cd57c32a821a6c",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvToolsExt64_1.dll": "0fe54f1b80ad3e44da2a3d9f0956e7c3903029d6319689ce1c4068f7a20932f3",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvrtc-builtins64_124.dll": "3ba326d21bb242488c0284ebc32fd6dbc94025ecab34862015a5c95eb178c961",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\nvrtc64_120_0.dll": "e55461f252b519478e9bf09f8bd1f0f3b6e3064c9270fac6a29d6eb23216835c",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\shm.dll": "ee01b7d46df1fed0fef904776b7cadd1b2453dd47b7fca745e24b79b4d3023ed",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch.dll": "b3bbedcfbd34eee4c4efd06464e3929026c7f02bedd06fc4314cf6604f37aeac",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_cpu.dll": "6eb25a52d1e3a2c0598797942a78def81138df0c6602f0e009c7db2bfbe39232",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_cuda.dll": "37fcaf926c486739e4cb505acb167a55d8f2ffd021c78f8822365478935c4630",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_global_deps.dll": "d3e4a7467f13f5eb42b904dff7f8324f18033518a2eb4b0690a71daaabc96787",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\torch_python.dll": "5b06809e061c5c3b82ac4ba832beebb7d819ad32df4fc96654af7926729c121f",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\uv.dll": "d6e517084425092066d4b26678320eb60edf2c79ade855bd67b829113f999da6",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\lib\\zlibwapi.dll": "1f047faec08d9a35c304fb4a7cf13853589359a8f7cbfdd48c5d5807712dcf05",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\nn\\functional.py": "0af69ca566d95e20abf038761893b2c0b4daf349f45dc42469eba5a8151187ea",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py": "96f0fa51972a2d6acc0fa44a716afe5c9520e13d390a6380a6d7e7f20fda00cf",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\optim\\adam.py": "a18d5e8d047b0790ed2a86cd61d3ddffc077dd04fb90e4e45f46251aedcd7b15",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\optim\\adamw.py": "ed13eef9d2875966c5b0e66371344c9e5665d41eac826c05518d38e13081fe7d",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\version.py": "b7d0c451533c0da1a2dd77ea0fc3f9e89743e466566c6778929e86d0bfd498a1",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\configuration_utils.py": "23ca0a0c0dd1591ccdce5ced8dee09997f0656304f46b85fed725ade85fe25c9",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\dependency_versions_table.py": "f8c51eb96aeea1380e8ed5a21323fd1ee6e267ab5c21cc5377c018ee39b8da6c",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\initialization.py": "08d3146c713cdc1b2430171563a153949fd758d51aa1e2ad2fa25184a31ef082",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\integrations\\hub_kernels.py": "7d36b07739be13398afe32f275b6381045240e89fabd5e422f7a8e3e3d738639",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\masking_utils.py": "5f48e428ea02d1b6008acb45c147fcdb4eba89deea69627744662aa05da1b9f2",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_layers.py": "5b03ff486dda560eff26bb25f453f879e19a0efd64564d3afcb1469e07f6d348",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_rope_utils.py": "9592ba129bf723ed3fa54afcc48ddd3d40d2dac2947ce5cc37803c496ca320e8",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_utils.py": "d8bf1879d6f582888b6cf47b4d63070260285a3bd1dc94ce7e1373304f74168a",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\models\\qwen3\\configuration_qwen3.py": "49d9ccd0f29ccd977b93dba2004f84b867891b3d0509b71fd8ba3ed01054e64d",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\models\\qwen3\\modeling_qwen3.py": "fbdcfeeb1b54135ca67ba7df924da92f4b264e1252b517eea2de989289ebaeab",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\utils\\generic.py": "cd444f4d8f1baf5e8a54fb48b2cdc4b6bab0ef575571be2e6b119f584d2de916",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\utils\\output_capturing.py": "28921dca36f8892e6f50c8b92ebfff3e9aff945f32a88c275e41b1dc0f1b65c1",
+      "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe": "5d121182d0b09011d3fffd20191e415e02394ed31807b4570b2746c26256c1b3",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\ast.py": "c513073798bdbf3cdef09327d0d2d381a53213a13a4ba3f02729695327539406",
+      "C:\\Windows\\System32\\kernel32.dll": "8f8629741558b5df71def4e1dd8ef9645d4f806b949762c47757c50fea1a9e6d",
+      "C:\\Windows\\System32\\nvml.dll": "68fcc8750fcb90a41e70801d9dabb83fd7b61c39e966feceac30a9b3bcec509a"
+    },
+    "runtime_versions": {
+      "psutil": "7.2.2",
+      "python": "3.11.15",
+      "safetensors": "0.8.0",
+      "torch": "2.6.0+cu124",
+      "transformers": "5.14.1"
+    },
+    "sha256": "944db028d5c7fcc7a0210590ac551200a184e143af4973ef5c08a13faa84cc62",
+    "source_commit": "7e40a01538335d45442b9a63df371fdbeffde535",
+    "source_pins": {
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\AGENTS.md": "18ad3e200a859d3722919c68b95b83df057be85581b2b867a8aae099f79fb7e5",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\RINEYA_SYNTH_CENTRALIZED_REASONING.md": "271cce0fadefe3eecface205f282ba19b0be45d9c7491d11cb6b0a5374e886df",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\AGENTS.md": "3651a04fedc07d529cacc2cf991d630d2fcc9eae6d3ac2f8cbe2449f70b67229",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\NATIVE_QUALIFICATION_PROPOSAL.json": "afa8a990d3c377bdf2cbfc3aa78b6ff4326a1a2aa76bbabd88e2f5ae741e945d",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\PILOT_DECISIONS.json": "711336dbb5c6c68be8097f29159fcef934253292524bfe20936a1b2f32dc0ddd",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\audit_cpu.py": "cda2fd84856380ddd231142587b26bbe2016c8c24ce08ecbc4a6ddf7143f2d99",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\auditor.py": "90ca36386ceed25c8451e8ad623a967e27ed29e3fb140c490cb209c32147f2b0",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_contract.py": "ef2886476d29186199dcb45b8eb9767755c5cc8142d17159955874092b9d7582",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_core.py": "80ebaf6b60894ea9e0da24471d58fc3ec5af9085674d3af9babb08fe2563b68e",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_native.py": "22110c7e1b2fd7178105efe3f34ad3d8883b349c0cb53eaabfb2922ae9ea6221",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_supervisor.py": "8ead506468493b8ef6287a35c50a60758112483b3e8e00c0174bf279ce0ec021",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_worker.py": "b049e29a31a192c81009023536e315ebf5d8f584c66c0b0638434ae0e8033053",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\balanced_corpus.py": "0577bb4a15e08ae38b97289171bcd28cb4dc45544393f9e1f3075fbab270ca34",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\checkpoint_successor_profile.py": "1cf3cad34dfb05a73c6930fc29ac72538b3c38a15ad0772a8b5378eef55aa04f",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\context_phase_contract.py": "021f5b3afa037fcaf4e07db1c5596e5bb7c0f15aba13abf9d77d8942344c5d53",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\context_phase_supervisor.py": "f77ccb03cb94b5155996dc946722397ef0c3c0cadf4b5eac35242cba7c57e405",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\context_phase_worker.py": "a4c69bb350a8255c638881c634f732a6b44cf1f0a5da583ba7d7bd0f901d4278",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\cpu_tokenizer.py": "268d47037581e7d022cb4d4d53dd9b7e4454909c74b910572d2ba153e463b70f",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\dev_statistics.py": "2851ee7f7f2aa2399b7030a05b2bda14e85a8eff98ac23f71e7d918014d3059c",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evaluation_panel.py": "e8ed801cf258cd42edc2a8b08a560cd80914822bd000e833e08208c1bde46598",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\final_adapter_inference.py": "bfa342e0f317614503ef5b24c9f098243feee6f0b6cdfef55e7659778d0e5c85",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\full27_chunk.py": "62943cb47948ecda69fbe6193a032267228a1ce7b6b1a8aae5488b2b7676875e",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\full27_contract.py": "48e2ac09350ed80377743abbbfbcbc88da862e964c7400a2a58cfe015020f356",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\full27_supervisor.py": "b8a2ee83f4348664db94e94f50c611290f336ce55f5a9b1428ad6bdd4cf0066a",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\full27_worker.py": "11ded4200f121adc2faaf704c8fd18b923f5525f160c912663de6dc211cc73fe",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_component.py": "48c57278339f4e42ef7487e296d6051edb55650e61d0397b1c73305720651b0b",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_contract.py": "5fced90a3113e7f50abc95897cbf5d089a7a682f87d4285d5b42d99c04868caa",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_inputs.py": "620c75fcd4cf9eb696369506890c7af51e2811161301efeaec3a4181b2573dfd",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_qual_worker.py": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\long_context_guards.py": "c24a3e5c7317e232649efabce1438ba05721367ba2517b597f6f6f3afb85c511",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\long_inference_component.py": "5816724569a4e5a553428e6a05a0297fb928bbdf3de84c714566b40dba93d327",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\long_inference_inputs.py": "1279307544dbe41acfe523f29dcc0ecba8e72aa974eae48559a64b23ab109184",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\long_split_controller.py": "b30267fec2addb19f692a83e1f7e778900b496ab7c7deb711c09438c613c3a17",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\matching_schedule.py": "9661626fd27b372e532f1816783b7410e259f22838578f5a050b3a7059729805",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_contract.py": "47d762107adc66d92ed35bc96f8e99e24d81f448c140b4670753771faade5eb0",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_loader.py": "43229ee3ab59719ddc076ce252fdab029a9b5f43c11c66e9ccc84d092f378174",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_mechanics.py": "e00a4c8ffe539b047a457a1aca49fd5998f053f9a5485a65d9a9153f4cd1986d",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_nvml.py": "b09e186d5a2f4d249e2eea24e0693eb3f44280704f19ebfb17b6219882742329",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_precision.py": "05d18fdec95860df8f54ba60a7cee16bc983f783fa51a5f009cf6dc1939736cc",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_process.py": "3d36770a36be5ef9db2c9ab159b069e3dde6c6e61210c58513c5afa7c4e70540",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_worker.py": "156c56c6b9980f30d950fd5245403cc58ec80cb5131fde69451156db9edc22d4",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\pilot_trainable_inventory.json": "3bcb2a3d4e9324ab8fe4e6b7fb9f6de0c77c6801c3e0101fa63606ff46b7183d",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\prepare_corpus.py": "7a8985da55a627856b66d9b649f8fb5d1053deb65b9f5c8d0f72869ebb086c9d",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\qualification_supervisor.py": "0dc62c3b341ba74f3be3d7e8c5213e6b47ba0083ed6628d604336f2929c6a5a1",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\rs_contract.py": "cef135a06d4449917798e7e40685ac3589615663bfe47662e0a49207b67ccc6a",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\rs_solver.py": "6acf2fa26ef3f5a7b103818f4bb0eef972d5d975e9f3b39614ad6b253131acaf",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\rs_verifier.py": "36d2322ac077f4731b621defbc77ae39d1bfde2f1d0bcc15c73082b5f897ec98",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\score_import.py": "f859973eabc5ff0d04cd9befe0b41f97c7474abf8b1d46e768ebf4abc6ff551a",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\short_collection_contract.py": "1d66d5823d7485864a4f3d887870e62ed68978f08df90f5f7698c4766d2d365e",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\short_collection_supervisor.py": "f0d178cda0b20a804791ea9c95e89040d9d8dff38437f12ce0cbdddbaff9be09",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\short_collection_worker.py": "f0ee2c5fd92397ee1ff8cbbd55596e50c2251e9c313542f493fa3609162b7e5b",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\short_ram_monitor.py": "7c810bce7c3ee46a8b6f40ebd9f07c12a130ddd9fbd366719a88ef7ae82a13ee",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_engine.py": "9dd951e4a90c992bf740d0ec9eb6d2c7bf4cc5909de109bbfd13f34238c67382",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_native_chunk.py": "96f361052c34750313731c1fad0fe07d5ed48d376ee59850370cfeae99f59047",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_schedule.py": "292e2f29ce7fb78c81e092d84e3b2a278310c8c8eed408d680e4d2db7340bf1d",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_torch_backend.py": "c1aaa4c2efdc50d3025eacaaa45e37930a278b70e580dd9f8344e7337bcac04d",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\symbolic_checkpoint.py": "ace6d65efbe874fef4317a49dd3f393bdbd45d7d4d230895351d5cf948c7d99b",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\task_compiler.py": "1ae26b485d7a6ee48fe9667df51886c2c64af09d89dd0edcb622794d33642f60",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\task_retention_guards.py": "a2fee79b7fd6debb05e264b7f6599d788c8dec567de7a4e8497fe31318022094",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_qual_supervisor.py": "c1512a34c96abcf77fff4aebdc550ba8f25f8be3840632a4518c0895b221119b",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_qualification.py": "50cf018aecf9d27d669d07c885457edd40f1de074c6e930f0b29ce93bf4ca046",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_ram_scope.py": "af9a3706ac426c5afb1ab27ef45d13a854dfb9158cc412d3d8d566e67e84296c",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_backend_recompute_scope.py": "d0a0a587da6feed6737eed0d305857cf9f8a23e293a5e955ebde33b68ce813d8",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_balanced_corpus.py": "79db2d6d19a36153a7f9707d40d01ee7392d71dafbbee4118e6d3260446e2637",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_checkpoint_successor_profile.py": "daaf528ebcda9fce41eb53f58df52dba0179cd1dbcb41dafef6cf96f1ec017e4",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_context_phase_diagnostic.py": "1bc7a769ca49c2883f84948342ae66db1d21371b860d4b8455294de793a4cffa",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_cpu_tokenizer.py": "bdad50239f517bd08c7d70e3b018ea0bf97d523952e38cdf19ecd87d08fcd49c",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_dev_statistics.py": "0030476c40cedf1b0a0bff41a16b560d8b6a64319af87c7321cb9f185d50d3d7",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_evaluation_panel.py": "60db4f07514e61652cf7d4186e7c7a568f35f0ef42b6bc0710108428a0408374",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_final_adapter_inference.py": "26f080ec0d705e0d82a07da111d74ad583f48f92791aec9de4018b23acc2afec",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_full27.py": "326cc802e7ff108a2184a04ee651fe5b902f7f1518b5d760204a412c97af0677",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_independent_full27_audit.py": "a806f56857cb425c9ff1f10f0b3b708a6b10e4a06dde969fae5401bae5458ad1",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_inference_component.py": "647db1c81cb90816846bf5ff612e59fd52dc9a2311df5a7d290f1c9a6c3d3552",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_inference_inputs.py": "65577cec5e9e2533e7bce7468888759543068b7fc1b3c55be0d1042c617a3c80",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_inference_qualification.py": "11c8755444a1ea99c44d0d9fd20a8658b2fddc89f4566134e165ca27f44a2cb4",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_long_context_guards.py": "af455419edee2a7493a4e75a07b2b937bc98a20176b542ca989c6de1cc62f80b",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_long_inference_component.py": "ef333b7ec890dc1ff229d656fff2981676918c6048f41f670e124982b417a85a",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_long_inference_inputs.py": "ee82fcfb9fd917a93c1566eaad8747693a32ccec7d7b28b172c159534cc1ff83",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_long_split_controller.py": "3decff6ae0b803869a20f27df0ac9df28d6e8136130e4ba3ecc9c8985e334452",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_matching_schedule.py": "e977b6b1bae1169cc1846995c4fedb90bb69170d622727bc20c93540bc3219b8",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_contract_worker.py": "daa1c5a104b0b3d2d135a8f73fd1959f5a0013af71faab44dc3f2d7ab5b7ea71",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_job_resources.py": "2cb1f5cf077a249244591801ab51f0aea9153145fd812e1e788273d92bbec50c",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_loader.py": "d11e4c3b7048bae92e0f0317cd2a42adc1edb885fcb961e26840fcaa5c8b3444",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_mechanics.py": "3abfea4b0215001ac279dec3150df5ef65ac826e2a21f3b8b1d7e0a34ce9469a",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_nvml.py": "407cf28e177f155f1ebd5151c74013727da5de491405558d3c3acb8cc51ce163",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_precision.py": "1d1b56b36f03aee0514c08b1d9a7b013bc26ff0ceaf60dc2196761417226218f",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_process.py": "05c78df76c4f785e7b656974cbb13c1b75355f9ede77676b2c60110dc2a1f942",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_native_supervisor.py": "eec30cc150f3a5f444dcfdb309083a318d9c45e742eee648c08e39b132215cc1",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_prepare_corpus.py": "c19a067792f578dc5f561d20a115dc5d4979cfd633387dafe4ad8c7707323f42",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_qualification_supervisor.py": "334c122a3918efece2fee50065587d0e1a982ccea7bad31da4297cb595234e1e",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_registration.py": "b2f4c4c0178cd247c8f48f19de0cf44484ec8c76675ad2eaed3518f1d61605bf",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_rs_semantics.py": "fa7e6106ff5a4c0222b9be4f1580411e83f2a041370e5ceb5aa09e1b9ce99547",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_score_import.py": "5a305b1ac446e238ee4a9bbfdb3877cd7f282881c6376092a1155789ddce0834",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_short_collection.py": "42f943d7bc9f5584097cb8df867c331f7b1eac4753937c4c6515e753fb386564",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_short_ram_successor.py": "a636ced68d16a1d62c455bf63fdee541bb17702146151903a9d3716ceca8db9f",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_source_policy2.py": "edae775bd64dad25dad2de70b96c21574b9659d7679950f035fa7db9aa1bd3aa",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_study_engine.py": "523de57174a31875b793fc8b38d8ee2917ad93efbdcf90f19b6ff88ef2706eb2",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_study_native_chunk.py": "505c42ae619df1c2962d2fc41db6de63f0557afc97ef0ba0bca8dc37676bcba7",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_study_schedule.py": "4c8e8c40cb4e87d97856157ef8e4852ec38cc5268f56702163f181f81069b894",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_study_torch_backend.py": "a869c08f439b4b9f17d2e32e7e5a2cdd43fca67ef672dc50ce3626d559482a0b",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_symbolic_checkpoint.py": "c136a676c9a39b0d82cb2ed8d635b56e164e0183f238e65fcba3d2cc0d126a1c",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_task_compiler.py": "bbf40a7068e6267bf4d604f21ef13a66f93f85313b9a349372cc8e42f7669c7e",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_task_retention_guards.py": "e4c013c9c5f4acd3c3ffae82d0c6f8c0abd0e13d776738a61eb2e92e84f7aa77",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\tests\\test_witness_normalization.py": "5f1471076b310e43efec3d223f68e78b2b4dbfca4877059b03dae7562fd8a964",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\validate_manifest.py": "1f8d37ed2570c6b6dfa800af6209edd85b933f2d35bde297d8228c5a37f8175d",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\worker_ram_probe.py": "e4ec5e19241b877b99cc1ed933514c6fb09721658d91666df900a9a1e00f75a4"
+    },
+    "tolerances": {
+      "CE_absolute_error": 2e-06,
+      "reference_gradient_atol": 1e-06,
+      "reference_gradient_rtol": 1e-05,
+      "restoration": "bitwise",
+      "selected_logprob_max_error": 0.03125,
+      "selected_logprob_mean_error": 0.01,
+      "zero_adapter_max_error": 0.0
+    },
+    "worker_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\context_phase_worker.py"
+  },
+  "preflight_revalidated_before_current_observations": true,
+  "production_training_authorized": false,
+  "protected_bank_access": false,
+  "returncode": 0,
+  "sampler_threads_terminal_verified": true,
+  "schema_version": 1,
+  "short_RAM_monitor_diagnostic": {
+    "attempted": false,
+    "original_abort_reason_preserved": null,
+    "path": "SHORT_RAM_ABORT_DIAGNOSTIC.json",
+    "persisted": false,
+    "write_error": null
+  },
+  "started_utc": "2026-10-05T11:32:18.198782+00:00",
+  "status": "SUPERVISED_WORKER_EXITED_ZERO",
+  "unjoined_sampler_threads": [],
+  "worker_attempted": true,
+  "worker_identity": {
+    "assigned_before_resume": true,
+    "breakaway_allowed": false,
+    "create_time": 1791199945.8058531,
+    "creation_filetime_100ns": 134356735458058533,
+    "job_handle": 752,
+    "job_kill_on_close": true,
+    "job_name": "Local\\SYNTH_NQ_JOB_e867fc19b0894ce8a6aa8a0574206d45",
+    "pid": 505696,
+    "process_handle": 884
+  },
+  "worker_launched": true,
+  "worker_resume_monotonic": 55982.687,
+  "worker_resumed": true
+}
