@@ -1,5 +1,37 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: Q003 phase A denied before worker launch
+
+The [frozen Q003 phase-A config](configs/SYNTH_BACKENDQ003_WORKER_RAM_A1.json)
+passed independent current-source review at `18929a6b13b4fd703986cb6c22f69cd066e62266`.
+Fresh owned admission then observed 3,203,784,704 free GPU bytes, below the unchanged
+4,294,967,296-byte floor. RAM and disk passed. Admission stopped after 14.984
+seconds; no worker or Job was created, and no model, forward, backward, optimizer
+step or checkpoint work occurred. The
+[188-check independent denial audit](evidence/backendq003_worker_ram_A_admission_denial_audit_20261005.json)
+verifies all 26 source, 83 runtime, eight data and seven model-asset pins,
+config/raw/snapshot/lease closure, current observation freshness and terminal
+NVML/sampler cleanup. It makes no executed-Job-close claim for a Job that never
+existed. [Original receipt, config and source snapshots](evidence/backendq003_worker_ram_A_admission_denied_20261005)
+and the read-only post-denial GPU snapshot remain preserved. No application was
+controlled, and no per-app allocation or intrinsic profile-fit cause is assigned.
+
+Q003 has no native execution or qualification result. A future admission must
+observe sufficient current resources without lowering floors or terminating
+unrelated applications. No observation timeout or stale state is grounds to
+restart a live handle; this denied attempt is terminal. The research question
+remains unanswered, with 192/384 M0 outputs audited and no study training.
+
+The remaining CPU pipeline gap is a provenance adapter between audited raw
+collections, the full frozen 384-row/96-component panel, existing independent
+visible-response verification and the statistics inputs. Its staged fixtures can
+test missing/duplicate/reordered/wrong-arm/unaudited/partial rejection without
+grading captured outputs. Real grading must retain the whole cohort and still
+needs explicit finish-score policy registration: existing collection records EOS
+versus actual cap/truncation, while the text verifier does not specify correctness
+of valid JSON at the cap. Qualified language reference/reviewer authority is also
+still missing. These are remaining requirements, not a narrowed success claim.
+
 ## 2026-10-05 UTC: backend-only RAM amendment integrated and CPU-verified
 
 The independently reviewed [amendment 003](BACKEND_WORKER_RAM_AMENDMENT_003.md)

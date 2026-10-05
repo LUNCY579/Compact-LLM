@@ -1,0 +1,229 @@
+{
+  "DEV_collection_authorized": false,
+  "M0_M1_M2_transfer_retention_question_answered": false,
+  "admission": {
+    "CPU_sample_start_age_at_later_supervisor_finish_seconds": 0.01599999999598367,
+    "GPU_deficit_bytes": 1091182592,
+    "GPU_floor_failed": true,
+    "GPU_observed_free_bytes": 3203784704,
+    "GPU_query_envelope_seconds": 0.031000000002677552,
+    "GPU_required_free_bytes": 4294967296,
+    "GPU_sample_start_age_at_later_supervisor_finish_seconds": 0.046999999998661224,
+    "RAM_disk_amount_floors_passed": true,
+    "RAM_observed_available_bytes": 7015632896,
+    "RAM_required_available_bytes": 3556769792,
+    "disk_observed_free_bytes": 103957782528,
+    "disk_required_free_bytes": 4294967296,
+    "exact_admission_check_timestamp_logged": false,
+    "freshness_scope": "Monotonic observation chronology and age remain fresh through later terminal time; the recorded failure identifies the unchanged GPU amount floor. The later terminal time is not reported as the exact check timestamp.",
+    "no_per_application_or_future_admission_inference": true,
+    "observation": {
+      "GPU_index": 0,
+      "disk_free_bytes": 103957782528,
+      "gpu_free_bytes": 3203784704,
+      "gpu_observation_id": "c255623b19644fe282f573d0a7a69c75",
+      "gpu_sample_completed_monotonic": 33268.718,
+      "gpu_sample_started_monotonic": 33268.687,
+      "gpu_total_bytes": 8585740288,
+      "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+      "host_available_bytes": 7015632896,
+      "owned_process_identities": [],
+      "owned_process_samples": [],
+      "phase_latency_seconds": {
+        "RAM_available": 1.1299998732283711e-05,
+        "disk_free": 8.959999831859022e-05,
+        "owned_job_PID_query": 0.0,
+        "owned_process_total": 2.9999500839039683e-07
+      },
+      "sample_completed_monotonic": 33268.718,
+      "sample_started_monotonic": 33268.718,
+      "worker_tree_rss_bytes": 0
+    },
+    "observations_recorded": 1,
+    "read_only_later_GPU_note_body_sha256": "1b71495c2cc9fb1b46a280fc0dad7144fdb778cac2ab7765fa595c1eafe4a5fb",
+    "read_only_later_GPU_note_file_sha256": "f7feb594e9210b025be102c313d83812939bd1ae2f7c1f1addbe3a7f05a7337c",
+    "sample_age_limits_seconds": {
+      "CPU": 0.2,
+      "GPU": 2
+    },
+    "successful_admission": false
+  },
+  "attempt_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq003_worker_ram_A_attempt1",
+  "checks_passed": 188,
+  "cleanup": {
+    "GPU_telemetry_cleanup_verified": true,
+    "job_closed_claim_scope": "No worker Job existed; job-close fields are absent rather than asserted as an executed model cleanup.",
+    "lease_has_reservation_and_terminal_only": true,
+    "lease_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\013051003443474e84cc51cbebb149ac",
+    "lease_terminal_matches_raw_supervisor_bytes": true,
+    "no_worker_or_owned_Job_was_created": true,
+    "sampler_threads_terminal_verified": true,
+    "unjoined_sampler_threads": []
+  },
+  "conclusion": "One fresh read-only admission observation failed the unchanged4GiB GPU-free floor before any worker. Source/runtime/data/model/config/lease bytes close; no native model execution or new qualification exists. Resource availability does not identify an application or reject the research hypothesis; the full transfer/retention question remains unanswered.",
+  "config_body_sha256": "0345da000c062f7ec3a0f31af532a1a41f4ec99882b023d6a152ba54f3034ca6",
+  "config_file_sha256": "c6ed470752208d407844c4b73fdb7ac71245ace32e9f77dd73aa9bbe2cc1d365",
+  "config_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\configs\\SYNTH_BACKENDQ003_WORKER_RAM_A1.json",
+  "fresh_process_resume_qualified": false,
+  "full27_qualified": false,
+  "hash_closure": {
+    "after": {
+      "config": {
+        "bytes": 876776,
+        "sha256": "c6ed470752208d407844c4b73fdb7ac71245ace32e9f77dd73aa9bbe2cc1d365"
+      },
+      "data": {
+        "entries": 8,
+        "manifest_sha256": "2b4a8fe47fb4d1490abf485d2e105d3a2f38a232f804fdf50df33e81c618e744"
+      },
+      "lease": {
+        "entries": 2,
+        "manifest_sha256": "cf89e45c328d7baceb8fcc9ed0e3e2793c9527d3142a98a22ef2605cdbfcb461"
+      },
+      "model": {
+        "entries": 7,
+        "manifest_sha256": "dd2e71c23462cb6b6c8d412368214f9b35f3fee4edd7e1a6dedefd0cf5d5fed4"
+      },
+      "preservation_receipt": {
+        "bytes": 5404,
+        "sha256": "413b05f158d51f23573fb6e534e12e4b1a00fc671f2f3f4498c449e3de2be9ab"
+      },
+      "preserved_config": {
+        "bytes": 876776,
+        "sha256": "c6ed470752208d407844c4b73fdb7ac71245ace32e9f77dd73aa9bbe2cc1d365"
+      },
+      "preserved_raw": {
+        "entries": 1,
+        "manifest_sha256": "0ad8dc85b5d1031001d4c07c07e435a0cf925247aaf5706cdb169a492ab5e9be"
+      },
+      "raw": {
+        "entries": 1,
+        "manifest_sha256": "0ad8dc85b5d1031001d4c07c07e435a0cf925247aaf5706cdb169a492ab5e9be"
+      },
+      "read_only_GPU_note": {
+        "bytes": 568,
+        "sha256": "f7feb594e9210b025be102c313d83812939bd1ae2f7c1f1addbe3a7f05a7337c"
+      },
+      "runtime": {
+        "entries": 83,
+        "manifest_sha256": "b64a1657d11cd6aba840a61e0bca1d5baceeae158bcd1fdc0834f645da87a93e"
+      },
+      "source": {
+        "entries": 26,
+        "manifest_sha256": "59f8b5a540e40921b0c545179e458a986162d87a0bb0539d944640f6ad33159d"
+      },
+      "source_snapshots": {
+        "entries": 26,
+        "manifest_sha256": "c7f3c43ed89d56924d096efc158700a39794455907ae6b28eb57d305ba7758f5"
+      }
+    },
+    "all26_original_preserved_source_snapshots_verified": true,
+    "all26_source83_runtime8_data7_model_current_byte_pins_verified": true,
+    "all_equal": true,
+    "before": {
+      "config": {
+        "bytes": 876776,
+        "sha256": "c6ed470752208d407844c4b73fdb7ac71245ace32e9f77dd73aa9bbe2cc1d365"
+      },
+      "data": {
+        "entries": 8,
+        "manifest_sha256": "2b4a8fe47fb4d1490abf485d2e105d3a2f38a232f804fdf50df33e81c618e744"
+      },
+      "lease": {
+        "entries": 2,
+        "manifest_sha256": "cf89e45c328d7baceb8fcc9ed0e3e2793c9527d3142a98a22ef2605cdbfcb461"
+      },
+      "model": {
+        "entries": 7,
+        "manifest_sha256": "dd2e71c23462cb6b6c8d412368214f9b35f3fee4edd7e1a6dedefd0cf5d5fed4"
+      },
+      "preservation_receipt": {
+        "bytes": 5404,
+        "sha256": "413b05f158d51f23573fb6e534e12e4b1a00fc671f2f3f4498c449e3de2be9ab"
+      },
+      "preserved_config": {
+        "bytes": 876776,
+        "sha256": "c6ed470752208d407844c4b73fdb7ac71245ace32e9f77dd73aa9bbe2cc1d365"
+      },
+      "preserved_raw": {
+        "entries": 1,
+        "manifest_sha256": "0ad8dc85b5d1031001d4c07c07e435a0cf925247aaf5706cdb169a492ab5e9be"
+      },
+      "raw": {
+        "entries": 1,
+        "manifest_sha256": "0ad8dc85b5d1031001d4c07c07e435a0cf925247aaf5706cdb169a492ab5e9be"
+      },
+      "read_only_GPU_note": {
+        "bytes": 568,
+        "sha256": "f7feb594e9210b025be102c313d83812939bd1ae2f7c1f1addbe3a7f05a7337c"
+      },
+      "runtime": {
+        "entries": 83,
+        "manifest_sha256": "b64a1657d11cd6aba840a61e0bca1d5baceeae158bcd1fdc0834f645da87a93e"
+      },
+      "source": {
+        "entries": 26,
+        "manifest_sha256": "59f8b5a540e40921b0c545179e458a986162d87a0bb0539d944640f6ad33159d"
+      },
+      "source_snapshots": {
+        "entries": 26,
+        "manifest_sha256": "c7f3c43ed89d56924d096efc158700a39794455907ae6b28eb57d305ba7758f5"
+      }
+    },
+    "individual_maps_bound_by": "Exact config and self-hashed preservation receipt retain each original/preserved file path/hash/bytes; compact digests bind complete independently rehashed maps.",
+    "preservation_receipt_body_sha256": "eb25d0ab486542c608d4238fc25a25d3a43073e24ca611eab2cb185947ab9cad",
+    "preservation_receipt_file_sha256": "413b05f158d51f23573fb6e534e12e4b1a00fc671f2f3f4498c449e3de2be9ab",
+    "preservation_receipt_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\backendq003_worker_ram_A_admission_denied_20261005\\preservation_receipt.json"
+  },
+  "id": "SYNTH-BACKENDQ003-A-INDEPENDENT-ADMISSION-DENIAL-AUDIT",
+  "native_backend_fit_established": false,
+  "native_qualification_established": false,
+  "nine_sustained_updates_qualified": false,
+  "no_execution": {
+    "audit_framework_model_GPU_execution": false,
+    "audit_only_CPU_file_byte_hashing_performed": true,
+    "checkpoint_or_witness_operations": 0,
+    "declared_A_dose_was_not_consumed": true,
+    "framework_imported_by_model_worker": false,
+    "model_backward_calls": 0,
+    "model_forward_calls": 0,
+    "model_loaded_or_initialized": false,
+    "optimizer_steps": 0,
+    "owned_scope_qualification_artifact_present": false,
+    "owned_worker_Job_created": false,
+    "supervisor_read_only_NVML_observation_was_performed": true,
+    "worker_attempted": false,
+    "worker_launched": false,
+    "worker_ownership_or_identity_created": false,
+    "worker_resumed": false
+  },
+  "paid_services": false,
+  "phase": "A",
+  "preserved_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\backendq003_worker_ram_A_admission_denied_20261005",
+  "profile": "BF16_FP32_QV8_FULLRECOMPUTE_WORKER_PHYSICAL_AVAILABLE_V3",
+  "protected_bank_access": false,
+  "qualification_id": "SYNTH-BACKENDQ-003-WORKER-RAM",
+  "recorded_at_utc": "2026-10-05T05:23:34.066794+00:00",
+  "retry_authorized_by_audit": false,
+  "schema_version": 1,
+  "scoring_authorized": false,
+  "sha256": "f60a4ae6f7264f2613d09334c90258e512898be9afc4cdfac53c2c2a0233288f",
+  "source_commit": "18929a6b13b4fd703986cb6c22f69cd066e62266",
+  "status": "VERIFIED_GPU_ADMISSION_DENIED_BEFORE_ANY_WORKER_NO_NATIVE_QUALIFICATION",
+  "study_training_authorized": false,
+  "study_warmstart_allowed": false,
+  "terminal": {
+    "elapsed_seconds": 14.98399999999674,
+    "failure": "RuntimeError: admission_floor_gpu_free_bytes",
+    "finished_utc": "2026-10-05T05:13:51.953592+00:00",
+    "partial_outputs_frozen": true,
+    "returncode": null,
+    "started_utc": "2026-10-05T05:13:36.975855+00:00",
+    "status": "ADMISSION_DENIED",
+    "worker_attempted": false,
+    "worker_launched": false,
+    "worker_resumed": false
+  },
+  "unchanged_retry_performed": false,
+  "worker_RAM_native_optimization_verified": false
+}
