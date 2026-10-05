@@ -11,9 +11,11 @@ from pathlib import Path
 import os
 import subprocess
 import sys
+import ast
+import sysconfig
 
 HERE = Path(__file__).resolve().parent
-STAGED = HERE.name == "short_collection_work" and HERE.parent.name == "artifacts"
+STAGED = HERE.name == "short_ram_successor_work" and HERE.parent.name == "artifacts"
 PACKAGE = HERE.parents[1] if STAGED else HERE
 ROOT = PACKAGE.parents[1]
 sys.path.insert(0, str(PACKAGE))
@@ -23,7 +25,7 @@ from inference_component import ROW_FIELDS, validate_row
 from native_loader import ASSET_PINS, MODEL_DIR
 from rs_contract import canonical, digest, require
 
-VERSION = "synth-short-M0-one-fixed-batch-raw-collection-1"
+VERSION = "synth-short-M0-physical-RAM-coherent-monitor-staged-2"
 PURPOSE = "short_M0_raw_collection_one_fixed_batch_only"
 PLAN_DIR = PACKAGE / "evidence/short_collection_plan_cpu_20261004"
 PLAN_PATH = PLAN_DIR / "short_M0_collection_plan_cpu.json"
@@ -35,8 +37,63 @@ INFERENCE_AUDIT = PACKAGE / "evidence/infq001_attempt1_independent_audit_2026100
 AUTHORIZATION = {"scope": PURPOSE, "raw_DEV_collection": True, "owner_authority": "explicit_owner_goal_and_frozen_run_manifest",
                  "production_training": False, "scoring": False, "prior_correct_enrollment": False,
                  "language": False, "long_context": False, "protected_bank_access": False, "paid_services": False}
-SOURCE_NAMES = ("short_collection_contract.py", "short_collection_worker.py", "short_collection_supervisor.py")
+SOURCE_NAMES = ("short_collection_contract.py", "short_collection_worker.py", "short_collection_supervisor.py", "short_ram_monitor.py")
 ROWS_PER_BATCH, CONTEXT_CAP, GENERATION_CAP, FORWARD_CAP = 64, 512, 32, 2050
+HELPER_PINS = {
+    "native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691",
+    "inference_qual_worker.py": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e",
+    "native_process.py": "3d36770a36be5ef9db2c9ab159b069e3dde6c6e61210c58513c5afa7c4e70540",
+    "worker_ram_probe.py": "e4ec5e19241b877b99cc1ed933514c6fb09721658d91666df900a9a1e00f75a4",
+}
+RAM_PROOF = PACKAGE / "evidence/worker_ram_probe_cpu_20261005/CPU_ram_callback_comparison_20261005.json"
+RAM_PROOF_SHA = "4e1b9784258d4a80c4246d88c69a0de65426f50b64a203bcd9d56f717a3ed0a2"
+RAM_PRESERVATION = RAM_PROOF.with_name("preservation_receipt.json")
+RAM_PRESERVATION_SHA = "a265e279b51504ea2237034d450fb07faa4608d26d75eea83d0c95a298b71127"
+RAM_PRIMARY = PACKAGE / "evidence/available_ram_primary_source_review_20261005.json"
+RAM_PRIMARY_SHA = "156106209e38413373bfba45c3469eb67641fcc0ba6bb6ed5575bbcd8fbd7255"
+
+
+def successor_profile():
+    """Small CPU source/receipt binding only; no model/runtime-wide byte IO."""
+    for name, pin in HELPER_PINS.items():
+        require(native.filehash(PACKAGE/name) == pin, "unchanged helper/proven callback byte pin: " + name)
+    receipts = {}
+    for path, pin in ((RAM_PROOF, RAM_PROOF_SHA), (RAM_PRESERVATION, RAM_PRESERVATION_SHA), (RAM_PRIMARY, RAM_PRIMARY_SHA)):
+        require(native.filehash(path) == pin, "RAM CPU/primary evidence pin")
+        receipts[str(path.resolve())] = pin
+    proof = native.read_json(RAM_PROOF)
+    require(proof["status"] == "PASS_MATCHED512_DEFAULT_VS_DIRECT_RAM_CALLBACK_CPU_COMPONENT_ONLY"
+            and [f["factor"] for f in proof["factors"]] == ["default_psutil", "candidate_direct"], "proven matched CPU factors")
+    expected = {"attempted": 512, "returned": 512, "failed": 0, "pending": 0}
+    require(all(f["guard"]["counts"] == expected and all(c["counts"] == expected for c in f["callbacks"].values())
+                for f in proof["factors"]), "complete guard/callback CPU proof")
+    def body(path):
+        nodes = [n for n in ast.parse(path.read_text(encoding="utf-8")).body if isinstance(n, ast.FunctionDef) and n.name == "available_bytes"]
+        require(len(nodes) == 1, "one RAM callback body")
+        return ast.dump(nodes[0], include_attributes=False)
+    require(body(PACKAGE/"worker_ram_probe.py") == body(RAM_PROOF.parent/"worker_ram_probe.py"), "same proven fresh physical-RAM callback body")
+    ast_path = (Path(sysconfig.get_path("stdlib"))/"ast.py").resolve()
+    return {"id": "SHORT_M0_PHYSICAL_RAM_COHERENT_EXTERNAL_CHECK_V2", "helper_pins": deepcopy(HELPER_PINS),
+        "CPU_evidence_pins": receipts, "runtime_extension_pins": {str(ast_path): native.filehash(ast_path)},
+        "available_callback": "worker_ram_probe.available_bytes; fresh physical available every unchanged worker guard call",
+        "monitor": "collector-specific ShortRamMonitor; copy locked snapshots then capture check clock",
+        "CPU_freshness_seconds": .2, "CPU_cadence_seconds": .1, "all_floors_and_numerics_unchanged": True,
+        "abort_diagnostics": "bounded selected clock/sample/branch/thread/CPU-phase record written after containment; diagnostic IO cannot replace abort reason",
+        "batch04_causality_established": False, "native_collection_qualified": False,
+        "source_review_required_before_integration": True, "native_launch_authorized": False}
+
+
+def merge_runtime_inventory(core, profile):
+    """Retain the qualified64 byte pins and add only the executed AST source."""
+    require(type(core) is dict and len(core) == 64, "exact unchanged Native7 runtime64 required before additive extension")
+    require(profile.get("id") == "SHORT_M0_PHYSICAL_RAM_COHERENT_EXTERNAL_CHECK_V2", "known successor profile")
+    extension = profile.get("runtime_extension_pins")
+    require(type(extension) is dict and len(extension) == 1 and all(Path(path).name == "ast.py" for path in extension),
+            "exact singleton AST runtime extension")
+    require(not set(core).intersection(extension), "AST extension cannot replace qualified runtime pins")
+    require(all(type(pin) is str and len(pin) == 64 and all(c in "0123456789abcdef" for c in pin)
+                for pin in [*core.values(), *extension.values()]), "typed SHA256 runtime inventory")
+    return {**core, **extension}
 
 
 def integrated():
@@ -150,7 +207,9 @@ def build_scope(kind, ordinal):
     source_paths += [PACKAGE/parts[0] for parts in cpu_plan["source_pins"].values()]
     data = {str(path.resolve()):native.filehash(path) for path in source_paths}
     for name, pin in ASSET_PINS.items(): require(native.filehash(MODEL_DIR/name) == pin, "model/tokenizer asset drift")
-    scope = {"schema_version":1,"id":"SYNTH-SHORT-M0-%s-%02d"%(kind,ordinal),"contract":VERSION,
+    RAM_profile = successor_profile()
+    runtime = merge_runtime_inventory(runtime, RAM_profile)
+    scope = {"schema_version":1,"id":"SYNTH-SHORT-M0-RAM2-%s-%02d"%(kind,ordinal),"contract":VERSION,
         "authorization":deepcopy(AUTHORIZATION),"profile":qualified.PROFILE,"resources":deepcopy(native.RESOURCE_BOUNDS),
         "tolerances":deepcopy(native.TOLERANCES),"runtime_versions":{**native.RUNTIME,"tokenizers":"0.22.2"},
         "runtime_pins":runtime,"decoder_runtime_pins":_tokenizer_runtime(),"offline_environment":deepcopy(native.OFFLINE_ENV),
@@ -158,6 +217,7 @@ def build_scope(kind, ordinal):
         "inference1_audit_sha256":native.filehash(INFERENCE_AUDIT),"inference1_scope_transfer":"compute/numerics_only_new64row_scope_requires_supervised_completion",
         "model_dir":str(MODEL_DIR.resolve()),"model_pins":dict(ASSET_PINS),"seed":101,"model_role":"fresh_dense_M0_zero_B_only_no_STATE1_or_study_checkpoint",
         "cpu_plan_sha256":cpu_plan["sha256"],"batch_selector":{"source_kind":kind,"ordinal":ordinal},"batch":batch,
+        "short_RAM_monitor_profile": RAM_profile,
         "rows":batch["rows"],"source_packet_sha256":batch["source_packet_sha256"],
         "dose":{"context_cap":512,"maximum_generated_tokens":32,"rows":64,"maximum_capture_forwards":2048,
                 "maximum_capture_input_positions":batch["maximum_capture_input_positions"],"maximum_parity_forwards":2,

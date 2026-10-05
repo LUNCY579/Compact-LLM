@@ -21,6 +21,7 @@ import short_collection_contract as contract
 sys.path.insert(0,str(contract.PACKAGE))
 from inference_component import InferenceComponent, validate_row
 from inference_qual_worker import make_guard
+import worker_ram_probe
 from native_loader import load_titan, verify_frozen_base
 from native_precision import install_fp32_compute, install_qv_lora, install_fp32_activation_assertions, zero_lora_status
 from native_worker import Journal, verify_worker_ownership, preserve_terminal
@@ -148,7 +149,7 @@ def run(config_path,output):
     try:
         require((output/"supervisor_ownership.json").is_file(),"ownership receipt before framework required")
         owner=contract.native.read_json(output/"supervisor_ownership.json");ownership=verify_worker_ownership(owner,config_path);journal.evidence("worker_ownership_verified",ownership)
-        guard=make_guard(output,owner,start,lambda:torch);journal.guard=guard
+        guard=make_guard(output,owner,start,lambda:torch,available=worker_ram_probe.available_bytes);journal.guard=guard
         config=contract.preflight(config_path);report["source_commit"],report["config_sha256"]=config["source_commit"],config["config_sha256"]
         report["batch_selector"]=deepcopy(config["batch_selector"])
         for k,v in config["offline_environment"].items():os.environ[k]=v

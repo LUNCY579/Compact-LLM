@@ -11,11 +11,14 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
-WORK=Path(__file__).resolve().parents[1]
+HERE=Path(__file__).resolve().parent
+WORK=HERE.parent if HERE.name=="tests" else HERE
 sys.path.insert(0,str(WORK))
 import short_collection_contract as contract
 import short_collection_worker as worker
 import short_collection_supervisor as supervisor
+for target in (contract,worker,supervisor):
+    assert Path(target.__file__).resolve().parent==WORK.resolve(), "controls must exercise actual root/stage targets"
 sys.path.insert(0,str(contract.PACKAGE/"tests"))
 from test_inference_component import FakeTorch,Parameter,Decoder,Model,row
 from test_inference_qualification import HookedModel
@@ -103,9 +106,11 @@ class ContractTests(unittest.TestCase):
         for old,new in (("def supervise(","def _supervise_registered_batch("),("native_worker.py","short_collection_worker.py"),
                         ("mechanical_native_qualification_only",contract.PURPOSE),("mechanical qualification only","one fixed short M0 raw batch only")):
             expected=expected.replace(old,new)
-        self.assertEqual(expected,inspect.getsource(supervisor._supervise_registered_batch))
+        actual=inspect.getsource(supervisor._supervise_registered_batch).replace('        if monitor is not None:\n            receipt["short_RAM_monitor_diagnostic"] = monitor.diagnostic_receipt()\n','')
+        self.assertEqual(expected,actual)
         self.assertEqual(supervisor.ADAPTED_SUPERVISOR_SOURCE_SHA256,hashlib.sha256((contract.PACKAGE/"native_supervisor.py").read_bytes()).hexdigest())
-        for name in ("_WindowsOwnedWorker","_Monitor","_bounds_valid","resource_snapshot","_shutdown_gpu_probe"):
+        self.assertTrue(issubclass(supervisor._Monitor,qualified_supervisor._Monitor))
+        for name in ("_WindowsOwnedWorker","_bounds_valid","resource_snapshot","_shutdown_gpu_probe"):
             self.assertIs(getattr(supervisor,name),getattr(qualified_supervisor,name))
 
 

@@ -1,5 +1,23 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: reviewed short collector amendment integrated
+
+The [collector amendment](SHORT_COLLECTOR_RAM_AMENDMENT_002.md) is integrated
+with all [44 affected root CPU controls](evidence/short_ram_successor_root_cpu_validation_20261005.json)
+passing and source hashes unchanged during validation. It retains every original
+numerical/resource/freshness/ownership gate, uses the proven RAM callback, captures
+the check clock after snapshot selection and publishes abort diagnostics only
+after single-owner containment. Actual runtime closure includes all 64 original
+entries plus `ast.py`. Shared helpers and the old auditor remain byte-identical.
+The [full reviewed history](evidence/short_ram_successor_reviewed_cpu_20261005)
+retains rejected candidates and all fixes; root tests survive fresh checkout.
+
+No native run occurred during integration. A new fixed whole64-row batch04 scope,
+trusted exact-launch-HEAD inventory/profile registration and current owned
+admission are still required. The earlier failed44-row prefix stays unadmitted,
+and M0 remains192/384. The race reproduction does not prove batch04's cause.
+Scoring, retention enrollment and study training remain closed.
+
 ## 2026-10-05 UTC: TRAIN-only long mechanics inputs materialized
 
 The [CPU prompt preparation](evidence/long_train_prompts_cpu_20261005)

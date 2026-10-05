@@ -6,15 +6,16 @@ Integration requires the fixed batch contract; no generic purpose/worker bypass.
 from pathlib import Path
 import sys
 HERE=Path(__file__).resolve().parent
-PACKAGE=HERE.parents[1] if HERE.name=="short_collection_work" and HERE.parent.name=="artifacts" else HERE
+PACKAGE=HERE.parents[1] if HERE.name=="short_ram_successor_work" and HERE.parent.name=="artifacts" else HERE
 sys.path.insert(0,str(PACKAGE));sys.path.insert(0,str(HERE))
 import short_collection_contract as contract
 from native_supervisor import (
     ADMISSION_DEADLINE,ADMISSION_INTERVAL,BOUNDS,CPU_FRESHNESS,CPU_INTERVAL,GPU_FRESHNESS,GPU_INTERVAL,GPU_TIMEOUT,
-    _LaunchFailure,_Monitor,_WindowsOwnedWorker,_acquire_lease,_admission_failure,_bounds_valid,_cpu_snapshot,
+    _LaunchFailure,_WindowsOwnedWorker,_acquire_lease,_admission_failure,_bounds_valid,_cpu_snapshot,
     _gpu_pending_threads,_inventory,_json_new,_json_safe,_new_output,_pid_alive,_shutdown_gpu_probe,_utc,
     resource_snapshot,time
 )
+from short_ram_monitor import ShortRamMonitor as _Monitor
 ADAPTED_SUPERVISOR_SOURCE_SHA256="edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691"
 
 def _preflight(path):return contract.preflight(path)
@@ -185,6 +186,8 @@ def _supervise_registered_batch(config_path, output_dir, *, admission_only=False
         unjoined = list(unique.values())
         receipt["unjoined_sampler_threads"] = unjoined
         receipt["sampler_threads_terminal_verified"] = not unjoined
+        if monitor is not None:
+            receipt["short_RAM_monitor_diagnostic"] = monitor.diagnostic_receipt()
         if unjoined or receipt.get("gpu_telemetry_cleanup_verified") is False:
             receipt["status"] = "SUPERVISOR_SHUTDOWN_UNVERIFIED"
         receipt["finished_utc"] = _utc()
