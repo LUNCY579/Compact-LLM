@@ -1,5 +1,24 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: long native-extension plumbing integrated
+
+The [long native extension](LONG_NATIVE_QUALIFICATION_001.md) is integrated from
+independently reviewed repaired bytes. All
+[13 root controls](evidence/long_native_qualification_root_cpu_validation_20261005.json)
+pass in5.190seconds, with source hashes and17 original helpers unchanged. The
+[reviewed history](evidence/long_native_qualification_reviewed_cpu_20261005)
+retains8/11/12-control candidates, post-sink and removed-meter bypasses, source/
+AST omissions and their corrections. Model phases halt before cleanup on success
+and failure; frozen rosters and stored/final costs reconcile before completion.
+
+Native launch remains closed by missing complete encoder-runtime registration,
+independent native long-scope/cross-process auditor and actual model resource
+qualification. No encoder/runtime/model binary, framework/GPU, model, long native
+manifest or scope ran in CPU preparation/integration. Distinct qualification
+purposes and all resource/numerical/ownership limits remain. Current D001 evidence
+establishes no-model observations only; M0/full27/long measurements and the
+learning/retention comparison remain unfinished.
+
 ## 2026-10-05 UTC: current no-model phase diagnostic completed and audited
 
 The [frozen D001 scope](configs/SYNTH_CONTEXT_PHASE_NO_MODEL_D001.json) passed
