@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: registered selected-source reader boundary verified
+
+The [compiled-entry reader](REGISTERED_SOURCE_READER_CPU_001.md) passes six
+independent controls. Root's combined57 CPU controls pass with unchanged20-source
+hashes and no failures/errors/skips or forbidden imports. Physical/regular,
+typed descriptor, stable size/time/inode and exact SHA checks precede compilation;
+selected worker drift fails before later bindings.
+
+Full public registered/main context and source-loader orchestration remain open,
+as do current runtime/bootstrap/DLL/owned resource/GPU qualification. No native
+entry or study permission changes; M0 remains256/384 raw unscored rows and the
+actual M0/M1/M2 comparison remains unmeasured. Continue that concrete public
+consumption gate without treating the reader fix as complete native readiness.
+
 ## 2026-10-05 UTC: frozen module classification and public TRAIN verification
 
 The [loader classification repair](FROZEN_BOOTSTRAP_CPU_001.md) passes five new
