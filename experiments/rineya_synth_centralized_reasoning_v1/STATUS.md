@@ -1,5 +1,23 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: CPU candidate import mechanics independently reviewed
+
+The [reproducible CPU implementation](CANDIDATE_IMPORT_CPU_001.md) joins synthetic
+study/archive/restore/factor provenance and all384 candidate rows. Final31
+controls pass53.562seconds; Root31 preserved-copy reproduction passes49.203seconds
+without skips or framework imports. Independent13 focused controls reject
+resealed archive/factor/handle/read-set/trace/population mutations. Source hashes
+remain identical, and the dependency is the committed pinned schema. Rejected
+variants and predecessor receipts remain preserved.
+
+This implementation is accepted only for CPU fixture mechanics and remains in
+its explicit reviewed evidence package. Public native loaders refuse before
+paths; no original helper, model, checkpoint, legacy importer, scoring or study
+permission changed. Genuine native study/collector/auditor interfaces remain
+missing. M0 remains256/384 raw rows, all unscored. The owner will free GPU memory
+while CPU work continues; resumption still requires a new clean source inventory
+and fresh passing admission. The full three-arm objective remains unproved.
+
 ## 2026-10-05 UTC: candidate import specification reviewed
 
 The [candidate provenance specification](CANDIDATE_IMPORT_SPEC_001.md) now defines
