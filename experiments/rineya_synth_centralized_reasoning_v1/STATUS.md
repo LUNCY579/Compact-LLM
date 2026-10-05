@@ -58,6 +58,16 @@ resource/freshness relaxation, stale-value cache, writer durability reduction,
 unrelated app termination or unchanged retry is authorized. The study comparison
 and qualified language-reference/reviewer evidence remain outstanding.
 
+The [observed timing audit](evidence/recompute_A_observed_timing_audit_20261005.json)
+also exposes a separate throughput risk. The first complete update took 59.208
+seconds through gradient clearing and 69.994 seconds including its required base
+check. At that check, 410.847 seconds remained for nine updates, checkpoint and
+witness work, further checks and cleanup. These journal wall intervals include
+guards and durable writes; they are neither synchronized GPU timings nor a full
+runtime estimate. A disk-only change cannot establish full-scope fit. Measure
+matched-count journal/guard overhead on CPU before committing another full A
+scope, then obtain the required sustained/checkpoint timing under unchanged gates.
+
 ## 2026-10-05 UTC: amended backend and final-adapter helpers verified on CPU
 
 The [recomputation amendment](BACKEND_RECOMPUTATION_AMENDMENT_002.md) is integrated
