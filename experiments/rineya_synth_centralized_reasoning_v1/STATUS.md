@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: V2 audit observation controls pass independently
+
+The [focused independent review](evidence/long_v2_audit_focused_review_001_20261005)
+passes18 staged CPU controls in3.271seconds with unchanged source bytes. Exact
+inherited65/current consumption helpers,887 runtime union,824 observed additive
+hashes and phase-only normalization are checked. Re-signed omissions, conflicts,
+wrong phase/source/role, alias/ZIP/version drift and shortcut declarations reject.
+The preliminary source snapshot is retained separately from future revisions.
+
+This is tested schema/observation composition, not native certification. Actual
+externally anchored filesystem/preserved-byte/current-identity orchestration is
+still being implemented. No native PASS, model/GPU/encoder/framework execution,
+score, training or transfer result follows.
+
 ## 2026-10-05 UTC: loader order mismatch reproduced without model work
 
 The [independent negative control](evidence/loader_receipt_order_negative_control_20261005.json)
