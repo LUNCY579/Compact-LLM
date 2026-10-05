@@ -180,7 +180,8 @@ def boundary_update(model,optimizer,rows,recipe,operation, *, native_permit=None
     try:
         state=dict(model.named_parameters(remove_duplicate=False));state.update(dict(model.named_buffers(remove_duplicate=False)))
         state_bytes=sum(v.numel()*v.element_size() for v in {id(v):v for v in state.values()}.values())
-        with update._span(operation,'fingerprint',dict(metadata,reason='ce_pre_boundary_identity',state_bytes=state_bytes),device) as pre:
+        from .ce_operation_contracts import MODEL_FINGERPRINT
+        with update._span(operation,'fingerprint',dict(metadata,reason='ce_pre_boundary_identity',state_bytes=state_bytes,wall_contract=MODEL_FINGERPRINT),device) as pre:
             named,trainable,U=update._actual_optimizer(model,optimizer,recipe,torch)
             require(U==recipe['U_before'],'Adam applied U differs from caller proof')
             require(U>0 or not optimizer.state,'U0 requires genuinely fresh empty Adam; no inherited state')
@@ -254,7 +255,7 @@ def boundary_update(model,optimizer,rows,recipe,operation, *, native_permit=None
         optimizer_attempted=True
         with update._span(operation,'optimizer',dict(metadata,U_before=U,expected_U_after=U+1),device) as step:
             optimizer.step()
-        with update._span(operation,'fingerprint',dict(metadata,reason='ce_post_boundary_identity',state_bytes=state_bytes),device) as post:
+        with update._span(operation,'fingerprint',dict(metadata,reason='ce_post_boundary_identity',state_bytes=state_bytes,wall_contract=MODEL_FINGERPRINT),device) as post:
             _,_,U_after=update._actual_optimizer(model,optimizer,recipe,torch)
             require(U_after==U+1,'Adam U did not advance once')
             _finite_inventory(named,optimizer,torch)

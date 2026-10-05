@@ -27,6 +27,9 @@ import time
 import uuid
 
 from experiments.maxrl_comp002_pretraining_v1 import warmstart_checkpoint as streams
+from .ce_operation_contracts import (CP_FROZEN_HASH, CP_FILE_HASH, CP_DATA_HASH,
+    CP_PUBLICATION_HASH, CP_TENSOR_PAIR_HASH, CP_SAVE_FRESH, CP_RESTORE,
+    OPAQUE_CHECKPOINT_SAVE, OPAQUE_CHECKPOINT_RESTORE)
 
 SCHEMA = 'SKILL-ACQUISITION-NATIVE-CHECKPOINT-1'
 CHUNK = 1024 ** 2
@@ -285,6 +288,20 @@ class NativeCheckpoints:
             operation(kind, phase, operation_id=operation_id, checkpoint_event_sha256=event['sha256'], **fields)
         return event
 
+    def _frame_contract(self, operation):
+        qualification = (self.bindings.get('role') == 'qualification_only'
+            and self.bindings.get('checkpoint_mode') == 'CE8_NATIVE_QUALIFICATION_CHECKPOINT_1')
+        require(operation in ('save', 'restore'), 'fixed checkpoint frame contract')
+        token = (CP_SAVE_FRESH if qualification else OPAQUE_CHECKPOINT_SAVE) if operation == 'save' else (
+            CP_RESTORE if qualification else OPAQUE_CHECKPOINT_RESTORE)
+        return {'wall_contract': token}
+
+    def _require_fresh_history(self, manifests, contract):
+        owner = getattr(self.ledger, 'ledger', self.ledger)
+        spec = getattr(owner, 'spec', None) or {}
+        require(not (contract['wall_contract'] is CP_SAVE_FRESH and spec.get('operation_contracts') is not None)
+            or not manifests, 'fresh qualification checkpoint contract requires empty owned storage')
+
     def cost_snapshot(self):
         counts = {}
         known_wall = 0.0
@@ -319,9 +336,14 @@ class NativeCheckpoints:
         require(type(state_bytes) is int and state_bytes >= 0
                 and type(attempts) is int and attempts > 0, 'hash work bounds')
         identifier, start = uuid.uuid4().hex, time.perf_counter()
+        token = {'checkpoint_frozen_state': CP_FROZEN_HASH,
+            'checkpoint_payload_file': CP_FILE_HASH, 'checkpoint_payload_data': CP_DATA_HASH,
+            'checkpoint_streamed_publication': CP_PUBLICATION_HASH,
+            'checkpoint_restored_saved_and_live_tensor': CP_TENSOR_PAIR_HASH}.get(reason)
+        contract = {} if token is None else {'wall_contract': token}
         self._emit('fingerprint', 'started', identifier, state_bytes=state_bytes,
                    identity_hash_attempts_upper=attempts - 1, identity_hash_bytes_upper=0,
-                   reason=reason, checkpoint_hash_scope=True)
+                   reason=reason, checkpoint_hash_scope=True, **contract)
         try:
             yield
         except BaseException as error:
@@ -329,11 +351,11 @@ class NativeCheckpoints:
                        error={'type': type(error).__name__, 'message': str(error)[:1000]},
                        identity_hash_actual_known=False,
                        uncertainty_rule='entire admitted hash work remains charged',
-                       wall_seconds=time.perf_counter() - start)
+                       wall_seconds=time.perf_counter() - start, **contract)
             raise
         self._emit('fingerprint', 'returned', identifier,
                    identity_hash_attempts_actual=attempts, identity_hash_bytes_actual=state_bytes,
-                   wall_seconds=time.perf_counter() - start)
+                   wall_seconds=time.perf_counter() - start, **contract)
 
     def _metadata_hash_lower_bound(self, kind, progress=None):
         # Metadata hashing is priced by the enclosing opaque operation profile;
@@ -466,10 +488,11 @@ class NativeCheckpoints:
         operation_id, start = uuid.uuid4().hex, time.perf_counter()
         before_io = dict(self._io)
         maximum_write = 12 * self.numel + METADATA_RESERVE
+        contract = self._frame_contract('save')
         self._emit('checkpoint_save', 'started', operation_id, C=progress['C'], U=progress['U'],
                    generation=progress['generation'], symbolic_snapshot=progress['snapshot'],
                    write_bytes_upper=maximum_write, read_bytes_upper=8 * maximum_write,
-                   **self._metadata_hash_lower_bound('save', progress))
+                   **self._metadata_hash_lower_bound('save', progress), **contract)
         try:
             self._check_gate('save_validate')
             import torch
@@ -481,6 +504,7 @@ class NativeCheckpoints:
             self._validate_live_payload(tensors)
             versions = self._versions(tensors)
             manifests = self._latest()
+            self._require_fresh_history(manifests, contract)
             if len(manifests) >= 2:
                 self._verify(manifests[-1], model, optimizer)
                 for old in manifests[:-1]:
@@ -523,7 +547,7 @@ class NativeCheckpoints:
                        symbolic_snapshot=progress['snapshot'], manifest_sha256=manifest['manifest_sha256'],
                        bytes_read=self._io['bytes_read'] - before_io['bytes_read'],
                        bytes_written=self._io['bytes_written'] - before_io['bytes_written'],
-                       wall_seconds=time.perf_counter() - start)
+                       wall_seconds=time.perf_counter() - start, **contract)
             return manifest
         except BaseException as error:
             self._emit('checkpoint_save', 'failed', operation_id, C=progress['C'], U=progress['U'],
@@ -532,7 +556,7 @@ class NativeCheckpoints:
                        known_bytes_read=self._io['bytes_read'] - before_io['bytes_read'],
                        known_bytes_written=self._io['bytes_written'] - before_io['bytes_written'],
                        write_bytes_upper=maximum_write, read_bytes_upper=8 * maximum_write,
-                       wall_seconds=time.perf_counter() - start)
+                       wall_seconds=time.perf_counter() - start, **contract)
             raise
 
     def _file_hash(self, path):
@@ -673,8 +697,9 @@ class NativeCheckpoints:
         before_io = dict(self._io)
         maximum_read = 8 * (12 * self.numel + METADATA_RESERVE)
         maximum_write = METADATA_RESERVE
+        contract = self._frame_contract('restore')
         self._emit('checkpoint_restore', 'started', operation_id, read_bytes_upper=maximum_read,
-                   write_bytes_upper=maximum_write, **self._metadata_hash_lower_bound('restore'))
+                   write_bytes_upper=maximum_write, **self._metadata_hash_lower_bound('restore'), **contract)
         try:
             # Latest corruption fails closed. No older manifest is read as a fallback.
             manifest, payload, parameters, device, rng_tensors = self._verify(manifests[-1], model, optimizer)
@@ -726,7 +751,7 @@ class NativeCheckpoints:
                        manifest_sha256=manifest['manifest_sha256'],
                        bytes_read=self._io['bytes_read'] - before_io['bytes_read'],
                        bytes_written=self._io['bytes_written'] - before_io['bytes_written'],
-                       wall_seconds=time.perf_counter() - start)
+                       wall_seconds=time.perf_counter() - start, **contract)
             restored = dict(progress, generation=generation, snapshot=snapshot, symbolic_snapshot=snapshot)
             return {'C': restored['C'], 'U': restored['U'], 'history': restored['history'],
                     'progress': restored, 'generation': generation, 'snapshot': snapshot,
@@ -740,5 +765,5 @@ class NativeCheckpoints:
                        known_bytes_read=self._io['bytes_read'] - before_io['bytes_read'],
                        known_bytes_written=self._io['bytes_written'] - before_io['bytes_written'],
                        read_bytes_upper=maximum_read, write_bytes_upper=maximum_write,
-                       wall_seconds=time.perf_counter() - start)
+                       wall_seconds=time.perf_counter() - start, **contract)
             raise

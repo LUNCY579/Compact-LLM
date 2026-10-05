@@ -268,8 +268,9 @@ def boundary_update(model, optimizer, prompts, rollouts, recipe, operation):
     state.update(dict(model.named_buffers(remove_duplicate=False)))
     unique_state = {id(value): value for value in state.values()}
     state_bytes = sum(value.numel() * value.element_size() for value in unique_state.values())
+    from .ce_operation_contracts import MODEL_FINGERPRINT
     with _span(operation, "fingerprint", dict(metadata, reason="pre_update_identity_and_optimizer",
-                state_bytes=state_bytes), device) as identity_op:
+                state_bytes=state_bytes, wall_contract=MODEL_FINGERPRINT), device) as identity_op:
         before = runtime.state_digests(model)
         require(runtime.combine(before) == recipe["start_policy_id"], "model is not the sampled behavior snapshot")
         named, trainable, U_before = _actual_optimizer(model, optimizer, recipe, torch)
@@ -338,7 +339,7 @@ def boundary_update(model, optimizer, prompts, rollouts, recipe, operation):
         with _span(operation, "optimizer", dict(metadata, U_before=U_before, U_after=U_before + 1), device) as step_op:
             optimizer.step()
         result["optimizer_operation"] = step_op
-        with _span(operation, "fingerprint", dict(metadata, reason="post_update_state_proof", state_bytes=state_bytes), device) as final_op:
+        with _span(operation, "fingerprint", dict(metadata, reason="post_update_state_proof", state_bytes=state_bytes, wall_contract=MODEL_FINGERPRINT), device) as final_op:
             _, _, U_after = _actual_optimizer(model, optimizer, recipe, torch)
             require(U_after == U_before + 1, "Adam counter did not advance exactly once")
             for parameter in trainable:
@@ -506,7 +507,8 @@ def extract_donor(model, baseweights, warmdelta, names, out, bindings, *, native
     require(all(value.grad is None for value in named.values()), "extract only at a cleared optimizer boundary")
     meta = {key: bindings[key] for key in ("common_anchor_sha256", "own_start_sha256", "final_master_sha256")}
     state_bytes = sum(value.numel() * value.element_size() for value in {id(v): v for v in all_state.values()}.values())
-    with _span(operation, "fingerprint", dict(meta, reason="donor_final_master_and_frozen", state_bytes=state_bytes), device) as final_op:
+    from .ce_operation_contracts import MODEL_FINGERPRINT
+    with _span(operation, "fingerprint", dict(meta, reason="donor_final_master_and_frozen", state_bytes=state_bytes, wall_contract=MODEL_FINGERPRINT), device) as final_op:
         final_digests = runtime.state_digests(model)
         require(runtime.combine(final_digests) == bindings["final_master_sha256"], "final donor master drift")
         require(runtime.combine({k: v for k, v in final_digests.items() if k not in names}) == bindings["frozen_state_sha256"],
@@ -643,7 +645,7 @@ def extract_donor(model, baseweights, warmdelta, names, out, bindings, *, native
                 require(_file_sha(path) == expected, "reference changed during extraction")
             for component in components:
                 require(_file_sha(component["path"]) == component["file_sha256"], "own start changed during extraction")
-        with _span(operation, "fingerprint", dict(meta, reason="donor_master_unchanged", state_bytes=state_bytes), device) as proof_op:
+        with _span(operation, "fingerprint", dict(meta, reason="donor_master_unchanged", state_bytes=state_bytes, wall_contract=MODEL_FINGERPRINT), device) as proof_op:
             require(runtime.anchor_digest(model) == bindings["final_master_sha256"], "extraction mutated donor master")
             proof_op.update(policy_sha256=bindings["final_master_sha256"])
         return {"schema": "SKILL-ACQUISITION-DONOR-DELTA-1", "path": str(target), **written,

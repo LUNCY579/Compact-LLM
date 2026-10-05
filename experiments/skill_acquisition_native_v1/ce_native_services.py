@@ -21,6 +21,9 @@ import uuid
 
 from . import ce_controller as controller, ce_qualification as qualification, ce_worker_evidence as worker
 from . import ce_native_authority as authority
+from . import ce_operation_contracts as contracts
+from . import ce_rejected_return as rejected
+from . import ce_journal_limits as journal_limits
 
 SCHEMA = 'CE8-NATIVE-CONTROLLER-SERVICES-1'
 BOOTSTRAP = 'CE8-SERVICES-BOOTSTRAP-1'
@@ -28,6 +31,9 @@ PROFILE = ('read_bytes_upper', 'write_bytes_upper', 'identity_hash_attempts_uppe
 COUNTERS = ('read_bytes', 'write_bytes', 'hash_attempts', 'hash_bytes', 'metadata_bytes', 'operation_attempts', 'wall_seconds')
 INPUT_RESERVATION_RULE = 'CE8-INPUT-IO-EXPLICIT-RESERVATIONS-1'
 INPUT_ROW_BYTES = 64 * 1024
+PREPARATION_READER_RULE = 'CE8-PREPARATION-READER-EXPLICIT-RESERVATIONS-1'
+PREPARATION_READER_KINDS = ('qualification_reducer_overhead', 'qualification_artifact_readback')
+PREPARATION_EXPLICIT_KINDS = ['input_io', 'worker_source_verification', *PREPARATION_READER_KINDS]
 _REGISTERED_SERVICE_VERIFIERS = frozenset()
 _REGISTERED_ROLE_FACTORIES = frozenset()
 _REGISTERED_BOOTSTRAP_PREPAYMENT_TYPES = frozenset()
@@ -62,24 +68,56 @@ def _admit(permit, request, spec):
 
 
 def _profile(value):
-    require(type(value) is dict and set(value) == set(PROFILE)
+    require(type(value) is dict and set(value) in (set(PROFILE), set(PROFILE)|{'reducer_work_bytes_upper'})
             and all(type(value[key]) is int and value[key] >= 0 for key in PROFILE[:-1])
             and type(value['wall_s_upper']) in (int, float) and 0 < value['wall_s_upper'] < float('inf'), 'explicit finite service operation profile')
+    require(type(value.get('reducer_work_bytes_upper',0)) is int and value.get('reducer_work_bytes_upper',0)>=0,
+            'explicit finite preparation reducer work profile')
     return value
 
 
-def reservation_profile(spec,kind,fields):
+def validate_preparation_policy(spec):
+    marker=spec.get('preparation_reader_policy')
+    require(marker in (None,PREPARATION_READER_RULE),'unknown preparation reader reservation policy')
+    kinds=spec.get('explicit_reservation_kinds',['input_io'])
+    allowed=([['input_io'],['input_io','worker_source_verification']] if marker is None else [PREPARATION_EXPLICIT_KINDS])
+    require(type(kinds) is list and kinds in allowed,'exact finite source explicit reservation kinds')
+    if marker is not None:
+        require(contracts.manifest_from_spec(spec) is not None and spec.get('operation_profile_rule')==INPUT_RESERVATION_RULE,
+                'preparation reader policy needs frozen source contracts and input reservation rule')
+        for kind in PREPARATION_READER_KINDS:
+            require(kind in spec['operation_profiles'],'explicit preparation reader profile missing')
+            value=_profile(spec['operation_profiles'][kind]);work=value.get('reducer_work_bytes_upper',0)
+            require(work <= (512*1024**3 if kind=='qualification_reducer_overhead' else 0), 'fixed preparation reader work ceiling')
+            require(value['write_bytes_upper']==0 and (kind!='qualification_reducer_overhead' or value['read_bytes_upper']==0),
+                    'preparation reader profiles are read-only')
+    for kind,value in spec['operation_profiles'].items():
+        require('reducer_work_bytes_upper' not in value or marker is not None and kind in PREPARATION_READER_KINDS,
+                'optional work profile only for versioned preparation readers')
+    return marker
+
+
+def rejection_service_costs(policy):
+    cost=rejected.reservation_costs(policy)
+    return {'read_bytes':cost['io_read_bytes_upper'],'write_bytes':cost['io_write_bytes_upper'],
+        'hash_attempts':cost['identity_hash_attempts_upper'],'hash_bytes':cost['identity_hash_bytes_upper'],
+        'metadata_bytes':cost['metadata_bytes_upper'],'operation_attempts':cost['operation_attempts_upper'],
+        'wall_seconds':cost['wall_seconds_upper']}
+
+
+def reservation_profile(spec,kind,fields,*,contract_replay=False):
     """Permanent declared input reservation, bounded by frozen maxima.
 
     Opaque verification keeps its complete hash ceiling. This never consumes
     returned measurements, discounts completed work or changes other kinds.
     """
     maximum=_profile(spec['operation_profiles'][kind]);reserved=copy.deepcopy(maximum)
+    preparation=validate_preparation_policy(spec)
+    selected_contract=contracts.reservation_profile(spec,kind,fields,owner='bootstrap',maximum=maximum,replay=contract_replay)
     rule=spec.get('operation_profile_rule')
     require(rule in (None,INPUT_RESERVATION_RULE),'unknown source service reservation rule')
     explicit_kinds=spec.get('explicit_reservation_kinds',['input_io'])
-    require(type(explicit_kinds) is list and explicit_kinds in (['input_io'],['input_io','worker_source_verification']),
-            'exact finite source explicit reservation kinds')
+    require(type(explicit_kinds) is list,'exact finite source explicit reservation kinds')
     row_wall=spec.get('input_io_row_wall_s_upper')
     if row_wall is not None:
         require(rule==INPUT_RESERVATION_RULE and type(row_wall) in (int,float) and row_wall==5
@@ -106,6 +144,12 @@ def reservation_profile(spec,kind,fields):
         if field in fields:
             require(type(fields[field]) is int and 0<=fields[field]<=maximum[field.replace('_lower','_upper')],
                     'bootstrap profile below declared opaque lower work')
+    if preparation is not None and kind in PREPARATION_READER_KINDS:
+        work=fields.get('reducer_work_bytes_upper',0)
+        require(type(work) is int and 0<=work<=maximum.get('reducer_work_bytes_upper',0),'preparation reducer work exceeds profile')
+        if kind=='qualification_reducer_overhead': require(work>0,'positive preparation reducer work required')
+        if kind=='qualification_artifact_readback' and 'read_bytes_upper' in declared:
+            require(declared['read_bytes_upper']>0,'positive preparation readback extent')
     if kind in explicit_kinds and rule==INPUT_RESERVATION_RULE:
         for field in aliases:
             if field in declared:reserved[field]=declared[field]
@@ -117,7 +161,7 @@ def reservation_profile(spec,kind,fields):
         if not opaque and file_read and all(field in declared for field in hash_fields):
             require((declared[hash_fields[0]]==0)==(declared[hash_fields[1]]==0),'coherent explicit input hash reservation')
             for field in hash_fields:reserved[field]=declared[field]
-        small_row=(kind=='input_io' and row_wall is not None and type(fields.get('row_id')) is str and fields['row_id']
+        small_row=(contracts.manifest_from_spec(spec) is None and kind=='input_io' and row_wall is not None and type(fields.get('row_id')) is str and fields['row_id']
             and not opaque and all(field in declared for field in PROFILE[:-1])
             and declared['write_bytes_upper']==0 and declared['read_bytes_upper']<=INPUT_ROW_BYTES
             and declared['identity_hash_attempts_upper']<=4 and declared['identity_hash_bytes_upper']<=INPUT_ROW_BYTES
@@ -125,6 +169,11 @@ def reservation_profile(spec,kind,fields):
         if small_row:
             require('wall_s_upper' not in fields or fields['wall_s_upper']<=row_wall,'declared row work exceeds source fixed row wall ceiling')
             reserved['wall_s_upper']=row_wall
+    if fields.get('wall_contract') in contracts.OPAQUE_ROLES: return selected_contract
+    if preparation is not None and kind=='qualification_artifact_readback' and all(key in declared for key in ('read_bytes_upper','identity_hash_attempts_upper','identity_hash_bytes_upper')):
+        require(declared['read_bytes_upper']>0 and declared['identity_hash_attempts_upper']>0
+                and declared['identity_hash_bytes_upper']>=declared['read_bytes_upper'], 'positive complete preparation readback extent')
+    if contracts.manifest_from_spec(spec) is not None: reserved['wall_s_upper']=selected_contract['wall_s_upper']
     return reserved
 
 
@@ -155,6 +204,10 @@ class BootstrapLedger:
         self.started=self.last_clock=self.clock(); self.actual_wall_seconds=0.0
         require(type(self.started) in (int,float) and 0<=self.started<float('inf'), 'finite service clock origin')
         self.sealed = self.fatal = False
+        self.rejection_policy = rejected.policy_from_spec(spec, 'bootstrap')
+        journal_limits.limits_from_spec(spec, 'bootstrap')
+        self.rejection_ticket = self.rejection_record = self.rejection_unknown = None
+        self.rejection_used = False
         self._known_size=0;self._end_reserved=None;self._inspection_used=False
         self.header_path=self.directory/'SERVICE_BOOTSTRAP_HEADER.json'
         self.seal_path=self.directory/'SERVICE_BOOTSTRAP_SEAL.json'
@@ -168,10 +221,15 @@ class BootstrapLedger:
         # the service permit alone is not prepayment.
         _profile(spec.get('setup_bounds'))
         require(spec.get('operation_profile_rule') in (None,INPUT_RESERVATION_RULE),'unknown source service reservation rule')
-        require(type(spec.get('explicit_reservation_kinds',['input_io'])) is list
-                and spec.get('explicit_reservation_kinds',['input_io']) in (['input_io'],['input_io','worker_source_verification']),
-                'exact finite source explicit reservation kinds')
-        if spec.get('input_io_row_wall_s_upper') is not None:
+        validate_preparation_policy(spec)
+        if contracts.manifest_from_spec(spec) is not None:
+            contracts.validate_manifest(spec['operation_contracts'], spec['operation_profiles'], owner='bootstrap')
+            row_wall=spec.get('input_io_row_wall_s_upper')
+            if row_wall is not None:
+                require(spec.get('operation_profile_rule')==INPUT_RESERVATION_RULE and type(row_wall) in (int,float)
+                        and row_wall==5 and spec['operation_profiles']['input_io']['wall_s_upper']>=row_wall,
+                        'explicit source fixed five-second historical row ceiling')
+        elif spec.get('input_io_row_wall_s_upper') is not None:
             reservation_profile(spec,'input_io',{})
         if not synthetic_fixture:
             require(spec.get('operation_profile_rule')==INPUT_RESERVATION_RULE,'explicit native service input reservation rule required')
@@ -193,6 +251,9 @@ class BootstrapLedger:
         except BaseException:self.fatal=True;raise
         self._event('setup', {'setup_bounds': spec['setup_bounds']}, self._price(spec['setup_bounds']))
         self._event('origin',{'monotonic':self.started,'original_origin':self.started},{})
+        if self.rejection_policy is not None:
+            self.rejection_ticket = rejected.reservation_payload(self.rejection_policy, BOOTSTRAP, self.header)
+            self._event('rejection_reservation', self.rejection_ticket, rejection_service_costs(self.rejection_policy))
     def _price(self, profile):
         return {'read_bytes': profile['read_bytes_upper'], 'write_bytes': profile['write_bytes_upper'],
             'hash_attempts': profile['identity_hash_attempts_upper'], 'hash_bytes': profile['identity_hash_bytes_upper'],
@@ -203,6 +264,12 @@ class BootstrapLedger:
             'request_sha256': self.request_sha256, 'kind': kind, 'payload': payload}
         preimage = canonical(body); hashed = hashlib.sha256(preimage).hexdigest()
         raw = canonical(dict(body, sha256=hashed)) + b'\n'
+        try:
+            journal_limits.check_append(journal_limits.limits_from_spec(self.spec, 'bootstrap'),
+                rows=len(self.events), size=self._known_size, line_bytes=len(raw))
+        except ValueError:
+            self.fatal = True
+            raise
         require(len(raw) <= 1024 ** 2, 'bounded service metadata row')
         charges = dict(charges)
         for key, value in (('metadata_bytes', len(raw)), ('write_bytes', len(raw)), ('hash_attempts', 1), ('hash_bytes', len(preimage))):
@@ -223,6 +290,27 @@ class BootstrapLedger:
         return row
     def operation(self, kind, phase, operation_id, **fields):
         self._require_specification()
+        require(not self.sealed and not self.fatal, 'service bootstrap terminal/fatal; no further claims')
+        previous=self.operations.get(operation_id)
+        original_fields=dict(fields)
+        try:
+            fields=contracts.validate_live_fields(self.spec,kind,phase,fields,owner='bootstrap',
+                previous_role=previous.get('wall_contract') if previous else None)
+            if phase!='started' and previous:
+                contracts.check_wall_return(fields,previous['profile'])
+                for key,upper in rejected._ACTUAL.items():
+                    if key in fields:require(type(fields[key]) is int and 0<=fields[key]<=previous['profile'][upper],
+                                             'bootstrap actual work exceeds reserved profile: '+key)
+        except ValueError as error:
+            if self.rejection_policy is not None and phase in ('returned','failed') and previous and previous['kind']==kind and previous['phase']=='started':
+                self._retain_rejected_return(kind,phase,operation_id,original_fields,error)
+            elif phase!='started' and previous:
+                try:
+                    contracts.check_wall_return(fields,previous['profile'])
+                    for key,upper in rejected._ACTUAL.items():
+                        if key in fields:require(type(fields[key]) is int and 0<=fields[key]<=previous['profile'][upper], 'legacy actual overrun')
+                except ValueError:self.fatal=True
+            raise
         require(self._end_reserved is None, 'no service work after final reservation')
         require(not self.sealed and not self.fatal, 'service bootstrap terminal/fatal; no further claims')
         require(kind in self.spec['operation_profiles'] and phase in ('started', 'returned', 'failed'), 'priced service kind/phase required')
@@ -233,10 +321,16 @@ class BootstrapLedger:
             row = self._event('operation', {'operation': kind, 'phase': phase, 'operation_id': operation_id, 'fields': fields,
                               'reservation_profile':profile},
                               dict(self._price(profile), operation_attempts=1))
-            self.operations[operation_id] = {'kind': kind, 'phase': phase, 'profile': profile, 'started_seq': row['seq']}
+            self.operations[operation_id] = {'kind': kind, 'phase': phase, 'profile': profile, 'started_seq': row['seq'],
+                                             'wall_contract':str(fields['wall_contract']) if fields.get('wall_contract') is not None else None}
         else:
             previous = self.operations.get(operation_id)
             require(previous and previous['kind'] == kind and previous['phase'] == 'started', 'bootstrap matching return required')
+            started=self.events[previous['started_seq']]['payload']
+            require(previous['profile']==reservation_profile(self.spec,kind,started['fields'],contract_replay=True)
+                    and previous['profile']==started['reservation_profile'], 'permanent bootstrap selected reservation mutated')
+            try:contracts.check_wall_return(fields,previous['profile'])
+            except ValueError:self.fatal=True;raise
             actuals = {'bytes_read': 'read_bytes_upper', 'bytes_written': 'write_bytes_upper',
                 'identity_hash_attempts_actual': 'identity_hash_attempts_upper',
                 'identity_hash_bytes_actual': 'identity_hash_bytes_upper', 'wall_s': 'wall_s_upper'}
@@ -251,6 +345,37 @@ class BootstrapLedger:
             row = self._event('operation', {'operation': kind, 'phase': phase, 'operation_id': operation_id, 'fields': fields}, {})
             previous.update(phase=phase, returned_seq=row['seq'])
         return row
+    def _rejection_binding(self,previous):
+        return {'request_sha256':self.request_sha256,'owner_header_sha256':rejected.digest(self.header)}
+    def _retain_rejected_return(self,kind,phase,operation_id,fields,error):
+        self.fatal=True
+        try:
+            started=self.clock()
+            require(type(started) in (int,float) and 0<=started<float('inf'),'finite prepaid service rejection pipeline clock')
+            self._require_specification()
+            require(self.rejection_ticket is not None and not self.rejection_used, 'unused prepaid service rejection ticket')
+            self.rejection_used=True;previous=self.operations[operation_id]
+            payload=rejected.make_terminal_payload(self.rejection_policy,self.rejection_ticket,
+                self.events[previous['started_seq']],previous['profile'],self._rejection_binding(previous),
+                kind,operation_id,phase,fields,error)
+            rejected.validate_terminal_payload(payload,self.rejection_policy,self.rejection_ticket,
+                self.events[previous['started_seq']],previous['profile'],self._rejection_binding(previous))
+            body={'schema':BOOTSTRAP,'seq':len(self.events),'previous':self.events[-1]['sha256'],
+                'request_sha256':self.request_sha256,'kind':'terminal_rejected','payload':payload}
+            row=dict(body,sha256=rejected.digest(body));blob=canonical(row)+b'\n'
+            journal_limits.check_append(journal_limits.limits_from_spec(self.spec, 'bootstrap'),
+                rows=len(self.events), size=self._known_size, line_bytes=len(blob), terminal=True)
+            require(len(blob)<=self.rejection_policy['record_bytes_upper'], 'bounded prepaid service rejection row')
+            require(not self.path.is_symlink() and self.path.stat().st_size==self._known_size, 'original service rejection journal ownership')
+            with self.path.open('ab') as stream:
+                require(stream.write(blob)==len(blob),'short prepaid service rejection write');stream.flush();os.fsync(stream.fileno())
+            self.events.append(row);self._known_size+=len(blob);self.rejection_record=copy.deepcopy(payload)
+            elapsed=self.clock()-started
+            require(type(elapsed) in (int,float) and 0<=elapsed<=self.rejection_policy['publication_wall_s_upper'],
+                    'service rejection publication wall exceeded')
+        except BaseException as failure:
+            self.rejection_unknown={'type':type(failure).__name__,'message':str(failure)[:1000]}
+            error.rejection_evidence_failure=copy.deepcopy(self.rejection_unknown)
     __call__ = operation
     def _require_specification(self):
         require(not self._native or canonical(self.spec) == self._specification_bytes,
@@ -327,6 +452,9 @@ class BootstrapLedger:
             'path': str(self.path), 'fatal': self.fatal, 'native_qualified': False,
             'original_origin':self.started,'last_monotonic':self.last_clock,'actual_wall_seconds':self.actual_wall_seconds,
             'clock_ended':self.sealed,'end_reservation':copy.deepcopy(self._end_reserved),
+            **({'rejection_ticket':copy.deepcopy(self.rejection_ticket),'rejection_used':self.rejection_used,
+                'rejection_record':copy.deepcopy(self.rejection_record),'rejection_unknown':copy.deepcopy(self.rejection_unknown)}
+               if self.rejection_policy is not None else {}),
             'failed_operations':[key for key,value in self.operations.items() if value['phase']=='failed'],
             'claim':'retained service cost/clock evidence; independent raw replay and OS execution verification required'}
 
@@ -401,11 +529,17 @@ class NativeResourceGate:
             'registered service barriers cannot be lowered')
         from .ce_resource_evidence import validate_spec
         validate_spec(spec['resource_probe'])
-    def _sample(self, *, launch=False, stage=None):
+    def _sample(self, *, launch=False, stage=None, delegated=None):
         require(self.sample_attempts_upper is None or self.sample_attempts < self.sample_attempts_upper,
                 'resource sample attempt ceiling exhausted before observation')
         self.sample_attempts += 1
-        if self.supervisor is not None: self.supervisor.assert_parent_use()
+        if delegated is None:
+            if self.supervisor is not None: self.supervisor.assert_parent_use()
+        else:
+            from .ce_checkpoint_lease import SupervisorGpuLease
+            require(not launch and stage == 'checkpoint_resume' and type(self.supervisor) is SupervisorGpuLease,
+                    'exact supervisor for delegated checkpoint metadata observation')
+            self.supervisor.assert_delegated_metadata(*delegated)
         from .ce_resource_evidence import readonly_sample, enforce
         label = 'launch' if launch else stage
         require(type(label) is str and label, 'explicit controller resource barrier label')
@@ -427,6 +561,8 @@ class NativeResourceGate:
         return self._sample(launch=True)
     def __call__(self, stage):
         return self._sample(stage=stage)
+    def metadata_for_delegated_child(self, stage, owned, delegation):
+        return self._sample(stage=stage, delegated=(owned, delegation))
     def bind_recorder(self, recorder):
         from .ce_resource_evidence import NativeResourceRecorder
         require(type(recorder) is NativeResourceRecorder and self.recorder is None

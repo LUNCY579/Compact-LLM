@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import json
 import math
 import os
 from pathlib import Path
@@ -83,6 +84,23 @@ def _actual(result, keys, label, *, integer=True):
     return values[0]
 
 
+def _measurement_row(identifier, operation, worker_identity_sha256):
+    require(type(identifier) is str and identifier and type(operation) is dict
+            and operation.get('phase') == 'returned' and operation.get('worker_id') == worker_identity_sha256
+            and type(operation.get('started_seq')) is int and type(operation.get('returned_seq')) is int
+            and operation['returned_seq'] > operation['started_seq'], 'actual returned current-worker operation required')
+    result = operation.get('result'); require(type(result) is dict, 'retained actual operation results required')
+    return {'operation_id': identifier, 'kind': operation['kind'],
+        'elapsed_seconds': _actual(result, ('wall_s', 'wall_seconds', 'elapsed_seconds'), 'elapsed time', integer=False),
+        'io_read_bytes': _actual(result, ('bytes_read', 'io_read_bytes'), 'read bytes'),
+        'io_write_bytes': _actual(result, ('bytes_written', 'io_write_bytes'), 'write bytes'),
+        'identity_hash_attempts': _actual(result, ('identity_hash_attempts_actual', 'identity_hash_attempts'), 'hash attempts'),
+        'identity_hash_bytes': _actual(result, ('identity_hash_bytes_actual', 'identity_hash_bytes'), 'hash bytes'),
+        'io_observation_scope': result.get('io_observation_scope', 'tracked returned counters only'),
+        'started_seq': operation['started_seq'], 'returned_seq': operation['returned_seq'],
+        'qualification_stage': operation.get('stage'), 'attempt_id': operation.get('attempt_id')}
+
+
 def reduce_operations(operations, measured_kinds, *, worker_identity_sha256):
     """Derive work from actual returned fields; reserved profiles are evidence only."""
     require(type(operations) is dict and type(measured_kinds) is list and measured_kinds
@@ -93,25 +111,120 @@ def reduce_operations(operations, measured_kinds, *, worker_identity_sha256):
     for identifier, operation in operations.items():
         require(type(identifier) is str and identifier and type(operation) is dict, 'retained operation shape')
         if operation.get('kind') not in measured_kinds: continue
-        require(type(identifier) is str and identifier and type(operation) is dict
-                and operation.get('phase') == 'returned' and operation.get('worker_id') == worker_identity_sha256
-                and type(operation.get('started_seq')) is int and type(operation.get('returned_seq')) is int
-                and operation['returned_seq'] > operation['started_seq'], 'actual returned current-worker operation required')
-        result = operation.get('result'); require(type(result) is dict, 'retained actual operation results required')
-        measurements.append({'operation_id': identifier, 'kind': operation['kind'],
-            'elapsed_seconds': _actual(result, ('wall_s', 'wall_seconds', 'elapsed_seconds'), 'elapsed time', integer=False),
-            'io_read_bytes': _actual(result, ('bytes_read', 'io_read_bytes'), 'read bytes'),
-            'io_write_bytes': _actual(result, ('bytes_written', 'io_write_bytes'), 'write bytes'),
-            'identity_hash_attempts': _actual(result, ('identity_hash_attempts_actual', 'identity_hash_attempts'), 'hash attempts'),
-            'identity_hash_bytes': _actual(result, ('identity_hash_bytes_actual', 'identity_hash_bytes'), 'hash bytes'),
-            'io_observation_scope': result.get('io_observation_scope', 'tracked returned counters only'),
-            'started_seq': operation['started_seq'], 'returned_seq': operation['returned_seq'],
-            'qualification_stage': operation.get('stage'), 'attempt_id': operation.get('attempt_id')})
+        measurements.append(_measurement_row(identifier, operation, worker_identity_sha256))
         seen.add(operation['kind'])
     require(seen == set(measured_kinds), 'declared physical operation measurement coverage missing')
     return {'measured': True, 'operation_measurements': measurements,
         'measurement_scope': 'exact selected returned operation kinds; opaque operations without actual counters remain unmeasured',
-        'native_qualified': False, 'execution_verified': False}
+            'native_qualified': False, 'execution_verified': False}
+
+
+def _snapshot_source_view(owner):
+    """Reference-only equivalent of the frozen QualificationAccounting snapshot.
+
+    No full snapshot/JSON clone occurs before the 512MiB gate. This exact field
+    list must remain aligned with that source-owned snapshot; tests compare it.
+    Small progress/prepayment records are bounded metadata, not operation graphs.
+    """
+    from .ce_qualification_accounting import SCHEMA as ACCOUNTING_SCHEMA
+    require(type(owner.operations) is dict and len(owner.operations) <= 200000,
+            'resource operation graph count before snapshot view')
+    pending = [op for op in owner.operations.values() if op['phase'] == 'started']
+    return {'schema': ACCOUNTING_SCHEMA, 'fixture': owner.fixture, 'native_qualified': False,
+        'training_authorized': False, 'binding_sha256': owner.binding_sha256,
+        'ledger_head': owner._head(), 'events': len(owner.events), 'worker_proof': owner.proof,
+        'cumulative': owner.cumulative, 'stages': owner.by_stage,
+        'reducer_reserved_bytes': owner.reducer_reserved_bytes, 'reducer_by_stage': owner.reducer_by_stage,
+        'attempts': owner.attempts, 'pending_operations': pending,
+        'fatal': owner.fatal, 'unknown_wall': owner.unknown_wall, 'progress': owner.progress_record(),
+        **({'rejection_ticket': owner.rejection_ticket, 'rejection_used': owner.rejection_used,
+            'rejection_record': owner.rejection_record, 'rejection_unknown': owner.rejection_unknown}
+           if owner.rejection_policy is not None else {}),
+        'reservation_rule': 'permanent full upper charges; failed/unknown/restarted work never refunded',
+        'cost_scope': 'declared callback upper reservations and serialized journal costs; not complete native measured totals',
+        'complete_wall_accounting': not owner.worker_open and not owner.unknown_wall,
+        'actual_wall_seconds': owner.actual_wall_seconds, 'last_monotonic': owner.last_clock,
+        'worker_open': owner.worker_open, 'bootstrap_prepayment': owner.bootstrap_handle.evidence,
+        'native_accounting_status': 'FIXTURE_UNQUALIFIED' if owner.fixture else 'UNSUPPORTED_UNMEASURED',
+        'native_activation_gaps': owner.native_activation_gaps}
+
+
+def _report_preflight(recorder, accounting, spec, proof, binding, maximum):
+    """Cheap bounded source scan plus one-row measurement census, no row list."""
+    require(type(recorder.samples) is list and 0 < len(recorder.samples) <= 100000,
+            'resource sample graph count bound before reporting')
+    observed = reduce_samples(recorder.samples, [recorder.samples[0]['stage']],
+        worker_pid=proof['os_identity']['pid'], gpu_uuid=recorder.spec['gpu_uuid'], limits=spec['limits'])
+    observed.update(measured=True, operation_measurements=[],
+        measurement_scope='exact selected returned operation kinds; opaque operations without actual counters remain unmeasured',
+        native_qualified=False, execution_verified=False)
+    payload = {'resource_samples': recorder.samples, 'raw_operations': accounting.operations,
+        'accounting_snapshot': _snapshot_source_view(accounting), 'required_barriers': spec['required_barriers'],
+        'measured_operation_kinds': spec['measured_operation_kinds'], 'json_bytes_upper': maximum,
+        'reducer_work_bytes_upper': spec['reducer_work_bytes_upper'], 'limits': spec['limits'],
+        'observations': observed, 'worker_proof': proof,
+        'classification': 'actual barrier and explicit-operation evidence; independent OS/source/ledger verification still required'}
+    envelope = {'schema': RAW, **binding, 'evidence_kind': 'resource_io', 'payload': payload}
+    total = resource.bounded_json_graph_census(envelope, maximum_json_bytes=maximum)
+    selected, seen = 0, set()
+    for identifier, operation in accounting.operations.items():
+        require(type(operation) is dict, 'resource source operation shape')
+        if operation.get('kind') not in spec['measured_operation_kinds']: continue
+        row = _measurement_row(identifier, operation, proof['worker_identity_sha256'])
+        extent = resource.bounded_json_graph_census(row, maximum_json_bytes=maximum)
+        total['json_bytes'] += extent['json_bytes'] + int(selected > 0)
+        for key in ('nodes', 'containers', 'copied_container_bytes_upper'):
+            total[key] += extent[key]
+        total['max_scalar_json_bytes'] = max(total['max_scalar_json_bytes'], extent['max_scalar_json_bytes'])
+        total['encoder_workspace_bytes_upper'] = max(total['encoder_workspace_bytes_upper'], extent['encoder_workspace_bytes_upper'])
+        selected += 1; seen.add(operation['kind'])
+        require(total['json_bytes'] + 1 <= maximum and total['nodes'] <= resource.REPORT_CENSUS_NODES,
+                'complete resource graph/JSON bound before copying')
+    require(seen == set(spec['measured_operation_kinds']), 'declared resource measurement coverage missing')
+    # Measurement list pointers, deepcopy memo/container workspace, bounded
+    # scalar encoder plus bytes chunk, buffered IO/readback chunk and metadata.
+    total['copied_container_bytes_upper'] += 128 * selected
+    total['transient_bytes_upper'] = (total['copied_container_bytes_upper']
+        + total['encoder_workspace_bytes_upper'] + 8 * resource.CHUNK)
+    total['reducer_work_bytes_upper'] = (4 * (total['json_bytes'] + 1)
+        + total['copied_container_bytes_upper'] + total['encoder_workspace_bytes_upper'])
+    require(total['json_bytes'] + 1 <= maximum and total['max_scalar_json_bytes'] <= resource.CHUNK,
+            'resource scalar/JSON encoder extent exceeds preallocation bound')
+    require(total['transient_bytes_upper'] <= resource.REPORT_TRANSIENT_BYTES,
+            'resource graph/container/copy/encoder transient exceeds fixed512MiB')
+    require(total['reducer_work_bytes_upper'] <= spec['reducer_work_bytes_upper'],
+            'resource census/copy/reduction work exceeds fixed prepaid ceiling')
+    return envelope, total
+
+
+def _ascii_json_chunks(value):
+    encoder = json.JSONEncoder(sort_keys=True, separators=(',', ':'), ensure_ascii=True, allow_nan=False)
+    for text in encoder.iterencode(value):
+        require(len(text) <= resource.CHUNK, 'resource encoder scalar extent drift')
+        yield text.encode('ascii')
+
+
+def _stream_resource_envelope(path, envelope, *, maximum, expected_bytes):
+    """Bounded chunks and independent streamed readback; no whole JSON buffer."""
+    count = 0
+    with path.open('xb') as stream:
+        for block in _ascii_json_chunks(envelope):
+            count += len(block); require(count + 1 <= maximum, 'resource streamed JSON ceiling')
+            require(stream.write(block) == len(block), 'short resource artifact publication')
+        require(stream.write(b'\n') == 1, 'short resource artifact publication')
+        count += 1; stream.flush(); os.fsync(stream.fileno())
+    require(count == expected_bytes, 'resource streaming extent differs from paid graph census')
+    observed, read = hashlib.sha256(), 0
+    with path.open('rb') as stream:
+        for expected in _ascii_json_chunks(envelope):
+            block=stream.read(len(expected)); read += len(block)
+            require(block == expected, 'resource artifact streamed raw readback mismatch')
+            observed.update(block)
+        newline=stream.read(1); read += len(newline)
+        require(newline == b'\n' and stream.read(1) == b'', 'resource artifact newline/extent drift')
+        observed.update(newline)
+    require(read == count, 'resource artifact streamed raw readback extent mismatch')
+    return count, observed.hexdigest()
 
 
 def validate_binding(context, proof, accounting, binding):
@@ -148,16 +261,32 @@ def resource_adapter(context, permit, prepared, backend, accounting, proof, bind
     maximum, _ = validate_measurement_bounds(spec)
     require(type(spec.get('owned_directory')) is str and Path(spec['owned_directory']).is_absolute(),
             'resource artifact size/owner declared')
+    transients = getattr(backend.gate, 'spec', {}).get('host_transient_bytes', {})
+    require(type(transients) is dict
+            and transients.get('qualification_reducer_overhead') == 64 * resource.CHUNK
+            and type(transients.get('resource_io_measurement')) is int
+            and transients['resource_io_measurement'] >= resource.REPORT_TRANSIENT_BYTES
+            and type(transients.get('qualification_artifact')) is int
+            and transients['qualification_artifact'] >= resource.REPORT_TRANSIENT_BYTES,
+            'source reporting requires cheap64MiB and actual512MiB transient gates')
     recorder.framework = backend.torch
-    recorder.sample('final')
-    recorder.sample('resource_io_measurement')
     with update._span(backend.operation, 'qualification_reducer_overhead', {
         'qualification_stage': binding['stage'], 'attempt_id': binding['attempt_id'],
         'read_bytes_upper': 0, 'write_bytes_upper': 0,
         'identity_hash_attempts_upper': 0, 'identity_hash_bytes_upper': 0,
         'reducer_work_bytes_upper': spec['reducer_work_bytes_upper']}) as reduced:
-        samples = copy.deepcopy(recorder.samples)
-        operations = copy.deepcopy(accounting.operations)
+        # Fixed cheap64MiB guard precedes all census/view allocations. The
+        # first scan may refuse before the512MiB gate or any full graph copy.
+        backend.gate('qualification_reducer_overhead')
+        recorder.sample('final')
+        _report_preflight(recorder, accounting, spec, proof, binding, maximum)
+        # This exact stage owns the registered512MiB transient floor. Its new
+        # probe/clock facts are included by a second bounded census before copy.
+        backend.gate('resource_io_measurement')
+        source_envelope, plan = _report_preflight(recorder, accounting, spec, proof, binding, maximum)
+        envelope = copy.deepcopy(source_envelope)
+        payload = envelope['payload']
+        samples, operations = payload['resource_samples'], payload['raw_operations']
         observed = reduce_samples(samples, spec['required_barriers'], worker_pid=proof['os_identity']['pid'],
                                   gpu_uuid=recorder.spec['gpu_uuid'], limits=spec['limits'])
         measured = reduce_operations(operations, spec['measured_operation_kinds'], worker_identity_sha256=proof['worker_identity_sha256'])
@@ -166,15 +295,14 @@ def resource_adapter(context, permit, prepared, backend, accounting, proof, bind
         validate_stage_observations(context, 'resource_io_measurement', observed, prepared.receipt)
         # Raw reservations/failed/pending operations are retained separately
         # from selected actual measurements. Nothing is refunded as zero work.
-        payload = {'resource_samples': samples, 'raw_operations': operations, 'accounting_snapshot': accounting.snapshot(),
-            'required_barriers': spec['required_barriers'], 'measured_operation_kinds': spec['measured_operation_kinds'],
-            'json_bytes_upper': maximum, 'reducer_work_bytes_upper': spec['reducer_work_bytes_upper'],
-            'limits': spec['limits'], 'observations': observed, 'worker_proof': proof,
-            'classification': 'actual barrier and explicit-operation evidence; independent OS/source/ledger verification still required'}
-        payload_bytes = len(authority.canonical(payload))
-        require(payload_bytes <= maximum, 'resource raw reduction payload ceiling')
+        payload['observations'] = observed
+        exact = resource.bounded_json_graph_census(envelope, maximum_json_bytes=maximum)
+        require(exact['json_bytes'] + 1 == plan['json_bytes'] + 1,
+                'resource captured graph differs from prospective exact encoder extent')
         reduced.update(bytes_read=0, bytes_written=0, identity_hash_attempts_actual=0,
-                       identity_hash_bytes_actual=0, serialized_payload_bytes=payload_bytes)
+                       identity_hash_bytes_actual=0, serialized_envelope_bytes=exact['json_bytes'] + 1,
+                       resource_transient_bytes_upper=plan['transient_bytes_upper'],
+                       resource_reducer_work_bytes_upper=plan['reducer_work_bytes_upper'])
     root = Path(spec['owned_directory'])
     path = root / ('resource.' + binding['attempt_id'] + '.' + uuid.uuid4().hex + '.json')
     with update._span(backend.operation, 'qualification_artifact', {'qualification_stage': binding['stage'],
@@ -185,21 +313,16 @@ def resource_adapter(context, permit, prepared, backend, accounting, proof, bind
         owner = Path(context['bindings']['scope']['native_backend']['output_directory']).resolve()
         require(not root.is_symlink() and not path.is_symlink() and root.resolve().is_relative_to(owner)
                 and root.resolve() != owner and path.resolve().parent == root.resolve(), 'resource artifact escapes exact native owner')
-        envelope = {'schema': RAW, **binding, 'evidence_kind': 'resource_io', 'payload': payload}
-        raw = authority.canonical(envelope) + b'\n'; require(len(raw) <= maximum, 'resource evidence JSON ceiling')
-        binding_raw = authority.canonical(binding)
-        require(len(binding_raw) <= maximum, 'resource binding byte ceiling')
-        binding_sha = hashlib.sha256(binding_raw).hexdigest()
-        accounting.reserve_metadata('qualification_json', len(raw), write_id=uuid.uuid4().hex, path=str(path))
+        binding_census = resource.bounded_json_graph_census(binding, maximum_json_bytes=resource.CHUNK)
+        binding_hasher = hashlib.sha256()
+        for block in _ascii_json_chunks(binding): binding_hasher.update(block)
+        binding_sha = binding_hasher.hexdigest()
+        expected_bytes = exact['json_bytes'] + 1
+        accounting.reserve_metadata('qualification_json', expected_bytes, write_id=uuid.uuid4().hex, path=str(path))
         root.mkdir(parents=True, exist_ok=True)
-        with path.open('xb') as stream:
-            require(stream.write(raw) == len(raw), 'short resource artifact publication')
-            stream.flush(); os.fsync(stream.fileno())
-        with path.open('rb') as stream: readback = stream.read(len(raw) + 1)
-        require(readback == raw, 'resource artifact raw readback mismatch')
-        hashed = hashlib.sha256(readback).hexdigest()
-        written.update(bytes_read=len(readback), bytes_written=len(raw), identity_hash_attempts_actual=2,
-                       identity_hash_bytes_actual=len(binding_raw) + len(readback))
-    reference = {'path': str(path), 'sha256': hashed, 'bytes': len(raw), 'role': 'resource_io', 'binding_sha256': binding_sha}
+        size, hashed = _stream_resource_envelope(path, envelope, maximum=maximum, expected_bytes=expected_bytes)
+        written.update(bytes_read=size, bytes_written=size, identity_hash_attempts_actual=2,
+                       identity_hash_bytes_actual=binding_census['json_bytes'] + size)
+    reference = {'path': str(path), 'sha256': hashed, 'bytes': size, 'role': 'resource_io', 'binding_sha256': binding_sha}
     return {'observations': observed, 'raw_artifacts': [reference], 'native_qualified': False, 'execution_verified': False,
             'classification': 'barrier-sampled resources and explicitly measured operation subset; not native PASS or full-unit pricing'}

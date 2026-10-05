@@ -6,6 +6,8 @@ RPC flags are checked as protocol fields and never establish native PASS.
 """
 from __future__ import annotations
 
+from . import ce_operation_contracts as contracts
+
 import copy
 import hashlib
 import os
@@ -181,7 +183,7 @@ def _read_body(service, reference, actual_live):
             and profile['identity_hash_attempts_upper'] >= 16
             and profile['identity_hash_bytes_upper'] >= 16 * 4 * 1024 ** 2,
             'body byte and source/worker comparison envelope reserved before read')
-    with update._span(service.operation, 'input_io', dict(profile)) as returned:
+    with update._span(service.operation, 'input_io', dict(profile, wall_contract=contracts.OPAQUE_INPUT_FRAME)) as returned:
         root = Path(service.spec['resource']['resource_probe']['output_root']).resolve()
         path = Path(reference['path'])
         require(path.resolve().is_relative_to(root) and path.is_file() and not path.is_symlink()
@@ -210,7 +212,7 @@ def _compare_ready(service, actual_live, ready_proof):
     profile = services._profile(service.spec['bootstrap']['operation_profiles']['input_io'])
     require(profile['identity_hash_attempts_upper'] >= 1
             and profile['identity_hash_bytes_upper'] >= 4 * 1024 ** 2, 'ready identity comparison priced before hashing')
-    with update._span(service.operation, 'input_io', dict(profile)) as returned:
+    with update._span(service.operation, 'input_io', dict(profile, wall_contract=contracts.OPAQUE_INPUT_FRAME)) as returned:
         local.validate_parent_view(actual_live, ready_proof)
         preimage = worker.worker_identity_preimage(actual_live['os_identity'], actual_live['sources'],
             actual_live['request_sha256'], actual_live['scope_sha256'])
@@ -222,7 +224,7 @@ def _compare_ready(service, actual_live, ready_proof):
 
 def _read_final_seal(service, reference, body_reference, actual_live):
     profile = services._profile(service.spec['bootstrap']['operation_profiles']['input_io'])
-    with update._span(service.operation, 'input_io', dict(profile)) as returned:
+    with update._span(service.operation, 'input_io', dict(profile, wall_contract=contracts.OPAQUE_INPUT_FRAME)) as returned:
         root = Path(service.spec['resource']['resource_probe']['output_root']).resolve(); path = Path(reference['path'])
         require(path.resolve().is_relative_to(root) and path.is_file() and not path.is_symlink()
                 and path.stat().st_size == reference['bytes'], 'exact owned final body seal')
@@ -246,7 +248,7 @@ def _retain_parent_service_refs(service, final_seal):
     require(final_seal['parent_service_specification'] == entry._configuration()['service_spec']['bootstrap'],
             'final worker service ledger must equal the exact adopted parent specification')
     profile = services._profile(service.spec['bootstrap']['operation_profiles']['input_io'])
-    with update._span(service.operation, 'input_io', dict(profile)) as returned:
+    with update._span(service.operation, 'input_io', dict(profile, wall_contract=contracts.OPAQUE_INPUT_FRAME)) as returned:
         root = Path(service.spec['resource']['resource_probe']['output_root']).resolve()
         owner = Path(final_seal['parent_service_specification']['owned_directory'])
         require(owner.resolve().is_relative_to(root) and not owner.is_symlink(), 'actual configured parent service evidence owner')

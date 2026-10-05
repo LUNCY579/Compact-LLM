@@ -158,16 +158,28 @@ def isolated_writer(root):
     ledger.scope_role='qualification_only'; ledger.request_sha256=context['request_sha256']; ledger.scope_sha256=context['scope_sha256']
     ledger.active={'stage':bind['stage'],'attempt_id':bind['attempt_id'],'status':'STARTED'}
     ledger.operations={'probe-1':operation()}
-    ledger.snapshot=lambda:{'fixture':True,'native_qualified':False,'pending_operations':[]}
+    ledger.fixture=True; ledger.binding_sha256='f'*64; ledger.events=[]; ledger.proof={'fixture':True}
+    ledger.cumulative={}; ledger.by_stage={}; ledger.reducer_reserved_bytes=0; ledger.reducer_by_stage={}
+    ledger.attempts=[]; ledger.fatal=False; ledger.unknown_wall=False; ledger.worker_open=True
+    ledger.rejection_policy=None; ledger.rejection_ticket=None; ledger.rejection_used=False
+    ledger.rejection_record=None; ledger.rejection_unknown=None
+    ledger.actual_wall_seconds=0; ledger.last_clock=0; ledger.native_activation_gaps=[]
+    ledger.bootstrap_handle=SimpleNamespace(evidence={'fixture':True})
+    ledger._head=lambda:None; ledger.progress_record=lambda:{'C':0,'U':0}
     ledger.reserve_metadata=lambda *args,**kwargs:None
     dispatcher=SpyDispatcher(ledger)
     backend=object.__new__(NativeCEBackend)
-    backend.permit=token; backend.operation=dispatcher; backend.gate=lambda stage:None
+    backend.permit=token; backend.operation=dispatcher
     backend.torch=Trap()
     recorder=object.__new__(r.NativeResourceRecorder)
     recorder.permit=token; recorder.context=context; recorder.operation=dispatcher
     recorder.spec={'gpu_uuid':GPU}; recorder.samples=samples()
     recorder.sample=lambda stage:None
+    def fake_gate(stage):
+        if stage=='resource_io_measurement':recorder.sample(stage)
+    fake_gate.spec={'host_transient_bytes':{'qualification_reducer_overhead':64*r.CHUNK,
+        'resource_io_measurement':r.REPORT_TRANSIENT_BYTES,'qualification_artifact':r.REPORT_TRANSIENT_BYTES}}
+    backend.gate=fake_gate
     context['native_services']={'resource_recorder':recorder}
     proof={'worker_identity_sha256':WORKER,'os_identity':{'pid':1234},'fresh_process':False,'source_verified':False}
     return context,token,SimpleNamespace(receipt={}),backend,ledger,proof,bind

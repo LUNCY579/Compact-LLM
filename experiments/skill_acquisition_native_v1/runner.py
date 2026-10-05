@@ -25,6 +25,7 @@ import time
 import uuid
 
 from . import data, journal, plan, protocol, update
+from .ce_operation_contracts import FILE_HASH_LEAF, MODEL_FINGERPRINT, OPAQUE_INPUT_FRAME
 
 SCHEMA = "SKILL-ACQUISITION-NATIVE-RESULT-1"
 ROOT = Path(__file__).resolve().parents[2]
@@ -71,7 +72,7 @@ def observed_file(path, observer, maximum=None):
     require(maximum is None or size <= maximum, "input file byte bound")
     identifier, begin, count = uuid.uuid4().hex, time.perf_counter(), 0
     fields = dict(path=str(path),read_bytes_upper=size+1,write_bytes_upper=0,
-                  identity_hash_attempts_upper=1,identity_hash_bytes_upper=size+1)
+                  identity_hash_attempts_upper=1,identity_hash_bytes_upper=size+1,wall_contract=FILE_HASH_LEAF)
     observer("input_io","started",operation_id=identifier,**fields)
     h=hashlib.sha256()
     try:
@@ -85,10 +86,10 @@ def observed_file(path, observer, maximum=None):
         require(count==size,"input file shrank during hash")
     except BaseException:
         observer("input_io","failed",operation_id=identifier,known_bytes_read=count,
-                 wall_s=time.perf_counter()-begin)
+                 wall_s=time.perf_counter()-begin,wall_contract=FILE_HASH_LEAF)
         raise
     observer("input_io","returned",operation_id=identifier,bytes_read=count,
-             wall_s=time.perf_counter()-begin)
+             wall_s=time.perf_counter()-begin,wall_contract=FILE_HASH_LEAF)
     return {"path":str(path),"bytes":size,"sha256":h.hexdigest()}
 
 
@@ -111,15 +112,15 @@ def pinned_helper(path,load,observer):
     require(size<=1024**2,"pinned resource helper source byte bound")
     identifier=uuid.uuid4().hex
     observer("input_io","started",operation_id=identifier,path=str(path),read_bytes_upper=size,
-             write_bytes_upper=0,identity_hash_attempts_upper=1,identity_hash_bytes_upper=size)
+             write_bytes_upper=0,identity_hash_attempts_upper=1,identity_hash_bytes_upper=size,wall_contract=OPAQUE_INPUT_FRAME)
     try:
         module=load()
         require(Path(module.__file__).resolve()==path,"pinned helper origin drift")
     except BaseException:
-        observer("input_io","failed",operation_id=identifier,known_bytes_read=size)
+        observer("input_io","failed",operation_id=identifier,known_bytes_read=size,wall_contract=OPAQUE_INPUT_FRAME)
         raise
     observer("input_io","returned",operation_id=identifier,bytes_read=size,
-             scope="retained source-read/hash upper even when pinned helper cache already exists")
+             scope="retained source-read/hash upper even when pinned helper cache already exists",wall_contract=OPAQUE_INPUT_FRAME)
     return module
 
 
@@ -161,7 +162,7 @@ def model_identity_lower_bound(weights,warm,observer):
         identifier=uuid.uuid4().hex
         upper=min(path.stat().st_size,1024**2+8)
         observer("input_io","started",operation_id=identifier,path=str(path),read_bytes_upper=upper,
-                 write_bytes_upper=0,identity_hash_attempts_upper=0,identity_hash_bytes_upper=0)
+                 write_bytes_upper=0,identity_hash_attempts_upper=0,identity_hash_bytes_upper=0,wall_contract=OPAQUE_INPUT_FRAME)
         try:
             reader=update._TensorFile(path)
             try:
@@ -170,9 +171,9 @@ def model_identity_lower_bound(weights,warm,observer):
                 read=reader.start
             finally:reader.close()
         except BaseException:
-            observer("input_io","failed",operation_id=identifier,known_bytes_read=upper)
+            observer("input_io","failed",operation_id=identifier,known_bytes_read=upper,wall_contract=OPAQUE_INPUT_FRAME)
             raise
-        observer("input_io","returned",operation_id=identifier,bytes_read=read)
+        observer("input_io","returned",operation_id=identifier,bytes_read=read,wall_contract=OPAQUE_INPUT_FRAME)
         return amount,path.stat().st_size
     S,file_bytes=payload(weights,"BF16")
     W,_=payload(warm,"F32")
@@ -428,7 +429,7 @@ class NativeBackend:
                 foreach=settings["foreach"],capturable=settings["capturable"])
             require(not self.optimizer.state,"fresh native Adam must be lazy; no warm/pilot optimizer inheritance")
         self.model.eval()
-        with self.ops.span("fingerprint",state_bytes=self.state_bytes,reason="initial_inventory_frozen_proof") as proof:
+        with self.ops.span("fingerprint",state_bytes=self.state_bytes,reason="initial_inventory_frozen_proof",wall_contract=MODEL_FINGERPRINT) as proof:
             fingerprints=self.runtime.state_digests(self.model)
             require(self.runtime.combine(fingerprints)==self.packet["anchor"]["arm_sha256"],"inventory changed initial model")
             self.frozen_sha256=self.runtime.combine({n:h for n,h in fingerprints.items() if n not in self.trainable_names})
@@ -456,7 +457,7 @@ class NativeBackend:
                          "code_bundle_sha256":receipt["code_bundle_sha256"]}
 
     def fingerprint(self,operations,reason):
-        with operations.span("fingerprint",state_bytes=self.state_bytes,reason=reason) as proof:
+        with operations.span("fingerprint",state_bytes=self.state_bytes,reason=reason,wall_contract=MODEL_FINGERPRINT) as proof:
             digests=self.runtime.state_digests(self.model)
             policy=self.runtime.combine(digests)
             _,_,U=update._actual_optimizer(self.model,self.optimizer,dict(self.packet["update_recipe"],trainable_names=self.trainable_names),self.torch)
@@ -566,7 +567,7 @@ def inspect_results(output,ledger,operations,packet_sha256):
         # Parse under another reserved, durable read (the file hash above does
         # not supply bytes or authorize an unpriced reread).
         with operations.span("input_io",path=str(path),read_bytes_upper=actual["bytes"]+1,write_bytes_upper=0,
-                             identity_hash_attempts_upper=1,identity_hash_bytes_upper=actual["bytes"]+1) as record:
+                             identity_hash_attempts_upper=1,identity_hash_bytes_upper=actual["bytes"]+1,wall_contract=OPAQUE_INPUT_FRAME) as record:
             raw=bounded_bytes(path,actual["bytes"]);record["bytes_read"]=len(raw)
             require(len(raw)==actual["bytes"] and hashlib.sha256(raw).hexdigest()==actual["sha256"],"result changed while read")
             try:value=journal._load(raw)
@@ -745,7 +746,7 @@ def main(argv=None):
     raw=bounded_bytes(path,32*1024**2)
     packet=journal._load(raw)
     setup("input_io","started",operation_id="command-line-packet",path=str(path),read_bytes_upper=len(raw),
-          write_bytes_upper=0,identity_hash_attempts_upper=0,identity_hash_bytes_upper=0)
+          write_bytes_upper=0,identity_hash_attempts_upper=0,identity_hash_bytes_upper=0,wall_contract=OPAQUE_INPUT_FRAME)
     setup("input_io","returned",operation_id="command-line-packet",bytes_read=len(raw))
     try:
         run(packet,resume=args.resume,reason=args.resume_reason,started=begin,setup=setup)

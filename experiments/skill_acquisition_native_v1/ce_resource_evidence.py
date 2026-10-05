@@ -27,8 +27,79 @@ SPEC = 'CE8-RESOURCE-PROBE-SPEC-1'
 GIB = 1024 ** 3
 CHUNK = 1024 ** 2
 MAX_OUTPUT = 4096
+REPORT_TRANSIENT_BYTES = 512 * CHUNK
+REPORT_CENSUS_DEPTH = 32
+REPORT_CENSUS_NODES = 4000000
 UUID_PATTERN = r'GPU-[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}'
 require = authority.require
+
+
+def bounded_json_graph_census(value, *, maximum_json_bytes, maximum_nodes=REPORT_CENSUS_NODES,
+                              maximum_depth=REPORT_CENSUS_DEPTH):
+    """Depth-bounded streaming census; no clone, JSON string, or node queue.
+
+    Exact ASCII JSON extent excludes sort order, which cannot change extent.
+    Only builtin scalar/list/dict graphs are allowed. Repeated references are
+    conservatively counted repeatedly; active-ancestor cycles are rejected.
+    Container/copy/encoder workspace uppers are CPython3.11-specific analytic
+    allowances, not measured native fit. Immutable strings/numbers are shared
+    by deepcopy; dict/list and memo/encoder work are explicitly budgeted.
+    """
+    require(sys.implementation.name == 'cpython' and sys.version_info[:2] == (3, 11),
+            'resource graph allowances require pinned CPython3.11')
+    require(type(maximum_json_bytes) is int and maximum_json_bytes > 0
+            and type(maximum_nodes) is int and maximum_nodes > 0
+            and type(maximum_depth) is int and 1 <= maximum_depth <= REPORT_CENSUS_DEPTH,
+            'finite resource graph census limits')
+    counts = {'json_bytes': 0, 'nodes': 0, 'containers': 0, 'max_scalar_json_bytes': 0,
+              'copied_container_bytes_upper': 0, 'encoder_workspace_bytes_upper': 0}
+    ancestors = []
+    def add(amount):
+        counts['json_bytes'] += amount
+        require(counts['json_bytes'] <= maximum_json_bytes, 'resource JSON extent exceeds bound before encoding')
+    def string_size(text):
+        size = 2
+        for char in text:
+            code = ord(char)
+            size += 2 if char in '\"\\\b\f\n\r\t' else 6 if code < 32 or 127 <= code <= 65535 else 12 if code > 65535 else 1
+            require(size <= maximum_json_bytes, 'resource scalar string exceeds bound before encoding')
+        return size
+    def visit(item, depth, active_workspace=0):
+        counts['nodes'] += 1
+        require(counts['nodes'] <= maximum_nodes and depth <= maximum_depth,
+                'resource graph node/depth bound before allocation')
+        kind = type(item)
+        if item is None: add(4)
+        elif kind is bool: add(4 if item else 5)
+        elif kind is int:
+            require(item.bit_length() <= 1024, 'resource integer extent too large')
+            add(len(str(item)))
+        elif kind is float:
+            require(math.isfinite(item), 'resource JSON nonfinite scalar')
+            add(len(repr(item)))
+        elif kind is str:
+            size=string_size(item); add(size)
+            counts['max_scalar_json_bytes']=max(counts['max_scalar_json_bytes'],size)
+        elif kind in (list, dict):
+            require(id(item) not in ancestors, 'resource graph active cycle')
+            ancestors.append(id(item)); counts['containers'] += 1
+            length = len(item)
+            counts['copied_container_bytes_upper'] += 3 * sys.getsizeof(item) + 256 + 128 * length
+            workspace=active_workspace+256+(96*length if kind is dict else 0)
+            counts['encoder_workspace_bytes_upper']=max(counts['encoder_workspace_bytes_upper'],workspace)
+            add(2 + max(0, length - 1))
+            if kind is dict:
+                for key, child in item.items():
+                    require(type(key) is str, 'resource JSON keys must be builtin strings')
+                    key_size=string_size(key); add(key_size + 1)
+                    counts['max_scalar_json_bytes']=max(counts['max_scalar_json_bytes'],key_size)
+                    visit(child, depth + 1, workspace)
+            else:
+                for child in item: visit(child, depth + 1, workspace)
+            ancestors.pop()
+        else: require(False, 'resource graph contains arbitrary/non-JSON object')
+    visit(value, 0)
+    return counts
 
 
 def _number(value):

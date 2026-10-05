@@ -380,7 +380,38 @@ class CheckpointEntryProvider:
         runtime = services.NativeControllerServices(configuration['controller_request'], service_permit, configuration['service_spec'])
         payment = MetadataEntryPayment(runtime, configuration)
         self._active_runtime, self._active_payment = runtime, payment
-        return self._open_after_payment(configuration, runtime, payment, request_path)
+        return self._guarded_preparation(configuration, runtime, payment, request_path)
+
+    def _guarded_preparation(self, configuration, runtime, payment, request_path):
+        from .ce_entry_metadata_prepayment import run_preparation
+        prepared_entry, entered = None, False
+        def prepare():
+            nonlocal prepared_entry, entered
+            entered = True
+            prepared_entry = self._open_after_payment(configuration, runtime, payment, request_path)
+            return prepared_entry
+        try:
+            return run_preparation(runtime, configuration, prepare)
+        except BaseException as primary:
+            # A killed worker retains pending lifetime/preparation reservations.
+            # Returned failures retain the original lifetime cost as well.
+            # A successful body can still fail its deadline or returned append.
+            if prepared_entry is not None:
+                for handle in (prepared_entry.get('prefix_handle'), prepared_entry.get('parent_handle'),
+                               prepared_entry.get('worker_handle')):
+                    if handle is not None:
+                        try:
+                            require(type(handle) is worker.WinWorkerHandle, 'only original prepared entry handles may close')
+                            handle.close()
+                        except BaseException as failure: local.raw._accounting(primary, failure)
+            # Body failures already closed their handles/payment in the exact
+            # existing _open_after_payment exception path; do not retry them.
+            if (not entered or prepared_entry is not None) and payment.status in ('RESERVED', 'STARTED'):
+                try: payment.fail(primary)
+                except BaseException as failure:
+                    local.raw._accounting(primary, failure)
+                    raise primary from failure
+            raise
 
     def _open_after_payment(self, configuration, runtime, payment, request_path):
         bootstrap_operation = runtime.bootstrap.operation

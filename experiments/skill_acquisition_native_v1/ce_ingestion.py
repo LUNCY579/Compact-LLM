@@ -15,6 +15,7 @@ import time
 import uuid
 
 from . import ce_plan, ce_update
+from .ce_operation_contracts import TEACHER_ROW, PREPARED_ROW, OPAQUE_INPUT_FRAME
 
 SCHEMA = 'CE8-INGESTION-1'
 SOURCE_SCHEMA = 'CE8-INGESTION-SOURCES-1'
@@ -55,6 +56,7 @@ def _observe(operation, gate, stage, fields, work):
     require(callable(operation) and callable(gate), 'explicit observer and resource gate required')
     identifier, started = uuid.uuid4().hex, time.perf_counter()
     fields = dict(fields); kind = fields.pop('kind', 'input_io')
+    terminal_contract = {'wall_contract':fields['wall_contract']} if 'wall_contract' in fields else {}
     operation(kind, 'started', operation_id=identifier, **fields)
     try:
         gate(stage)
@@ -62,18 +64,22 @@ def _observe(operation, gate, stage, fields, work):
     except BaseException as error:
         try:
             operation(kind, 'failed', operation_id=identifier, wall_s=time.perf_counter() - started,
-                      error_type=type(error).__name__, error=str(error)[:1000])
+                      error_type=type(error).__name__, error=str(error)[:1000], **terminal_contract)
         except BaseException as accounting_error:
             error.accounting_failure = {'type': type(accounting_error).__name__,
                                         'message': str(accounting_error)[:1000]}
             raise error from accounting_error
         raise
-    operation(kind, 'returned', operation_id=identifier, wall_s=time.perf_counter() - started)
+    operation(kind, 'returned', operation_id=identifier, wall_s=time.perf_counter() - started, **terminal_contract)
     return value
 
 
 def _io(operation, gate, stage, fields, work):
-    return _observe(operation, gate, stage, dict(fields, kind='input_io'), work)
+    # Metadata/source scans keep their complete opaque ceiling; the fixed
+    # teacher-row caller supplies its separate guarded-row token explicitly.
+    declared = dict(fields, kind='input_io')
+    declared.setdefault('wall_contract', OPAQUE_INPUT_FRAME)
+    return _observe(operation, gate, stage, declared, work)
 
 
 def _reference(ref):
@@ -117,7 +123,8 @@ class VerifiedSources:
             return ce_plan._json(raw)
         return _io(operation, gate, stage, {'path': str(path), 'row_id': row_id,
             'read_bytes_upper': entry['bytes'], 'write_bytes_upper': 0,
-            'identity_hash_attempts_upper': 1, 'identity_hash_bytes_upper': entry['bytes']}, read)
+            'identity_hash_attempts_upper': 1, 'identity_hash_bytes_upper': entry['bytes'],
+            'wall_contract': TEACHER_ROW}, read)
 
 
 def verify_sources(preparation_ref, plan_ref, arm, outer_admission, *, operation, gate):
@@ -315,7 +322,7 @@ class PreparedRows:
         target = self.verified._target(row_id, self.operation, self.gate,
                                        stage=stage or 'ingestion_boundary')
         item = _observe(self.operation, self.gate, stage or 'ingestion_tokenizer', {'kind': 'tokenizer_render',
-            'row_id': row_id, 'target_sha256': target['target_sha256']}, lambda: self.renderer(self.tokenizer, target))
+            'row_id': row_id, 'target_sha256': target['target_sha256'], 'wall_contract': PREPARED_ROW}, lambda: self.renderer(self.tokenizer, target))
         require(type(item) is dict and item['id'] == row_id and item['target_sha256'] == target['target_sha256']
                 and ce_plan._hex(item.get('render_sha256')), 'rendered source identity/content drift')
         binding = ce_update.prepared_row_binding(item)

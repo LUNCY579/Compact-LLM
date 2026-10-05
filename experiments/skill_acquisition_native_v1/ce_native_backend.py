@@ -289,7 +289,8 @@ class NativeCEBackend:
         require(not self.closed and self.model is not None and self.optimizer is not None, 'native model/Adam not live')
 
     def _read_ref(self, reference):
-        with self._span('input_io', path=reference['path']):
+        from .ce_operation_contracts import BACKEND_REF_FRAME
+        with self._span('input_io', path=reference['path'], wall_contract=BACKEND_REF_FRAME):
             self.gate('input_io')
             from .runner import observed_file
             actual = observed_file(reference['path'], self.operation)
@@ -328,7 +329,8 @@ class NativeCEBackend:
             self.torch.manual_seed(seed); self.torch.cuda.manual_seed_all(seed)
             self.process_rng_seed = {'run_seed': seed, 'python': seed, 'numpy': seed % 2 ** 32,
                 'torch_cpu': seed, 'torch_cuda_all': seed, 'restore_replaces_all_process_rng': True}
-        with self._span('input_io', reason='native_bound_path_proof'):
+        from .ce_operation_contracts import OPAQUE_INPUT_FRAME
+        with self._span('input_io', reason='native_bound_path_proof', wall_contract=OPAQUE_INPUT_FRAME):
             self.gate('input_io')
             require(Path(self.runtime.MODEL_DIR).resolve() == Path(self.spec['model_dir']).resolve(), 'native model path changed')
             require(Path(self.runtime.ASSET_RECEIPT).resolve() == Path(self.spec['asset_receipt_ref']['path']).resolve()
@@ -375,11 +377,12 @@ class NativeCEBackend:
             'process_rng_seed': self.process_rng_seed, 'native_qualified': False}
 
     def fingerprint(self, reason, *, initial=False):
+        from .ce_operation_contracts import MODEL_FINGERPRINT
         self._admit('refresh_policy'); self._ready()
         state = dict(self.model.named_parameters(remove_duplicate=False))
         state.update(dict(self.model.named_buffers(remove_duplicate=False)))
         state_bytes = sum(value.numel() * value.element_size() for value in {id(v): v for v in state.values()}.values())
-        with self._span('fingerprint', reason=reason, state_bytes=state_bytes):
+        with self._span('fingerprint', reason=reason, state_bytes=state_bytes, wall_contract=MODEL_FINGERPRINT):
             self.gate('fingerprint')
             values = self.runtime.state_digests(self.model)
             policy = self.runtime.combine(values)
@@ -475,10 +478,11 @@ class NativeCEBackend:
         return result
 
     def save(self, checkpoints, journal):
+        from .ce_operation_contracts import CP_SAVE_ADAPTER
         self._admit('checkpoint_save'); self._ready(); self._journal(journal)
         progress = journal.progress_record()
         require(progress['C'] == progress['U'] == self.U, 'native save only at committed CE boundary')
-        with self._span('checkpoint_adapter_io'):
+        with self._span('checkpoint_adapter_io', wall_contract=CP_SAVE_ADAPTER):
             self.gate('checkpoint_adapter_io')
             manifest = checkpoints.save(self.model, self.optimizer, progress, self.operation)
             require(manifest['progress'] == progress, 'native saved progress readback changed')
@@ -486,9 +490,10 @@ class NativeCEBackend:
         return manifest
 
     def restore(self, checkpoints, journal):
+        from .ce_operation_contracts import CP_RESTORE_ADAPTER
         self._admit('checkpoint_restore'); self._ready(); self._journal(journal)
         checkpoints.attach_ledger(self.operation)
-        with self._span('checkpoint_adapter_io'):
+        with self._span('checkpoint_adapter_io', wall_contract=CP_RESTORE_ADAPTER):
             self.gate('checkpoint_adapter_io')
             restored = checkpoints.restore(self.model, self.optimizer)
         self.last_checkpoint_progress = None

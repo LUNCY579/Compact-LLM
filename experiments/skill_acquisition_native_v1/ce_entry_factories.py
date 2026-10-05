@@ -63,7 +63,11 @@ def _verify_entry_outer_authority(value, request_sha256, scope_sha256, phase):
 
 def _reserve_entry_outer(value, stage, refs):
     require(type(value) is _RowsMetadataAuthority and stage in STAGES, 'entry outer may admit only source/tokenizer/row metadata')
-    ingestion._observe(value.operation, value.gate, stage, dict(value.profile), lambda: None)
+    require(type(value.operation) is services.StableDispatcher,
+            'entry outer prepayment retains the original service bootstrap owner')
+    from .ce_operation_contracts import OPAQUE_INPUT_FRAME
+    ingestion._observe(value.operation.bootstrap.operation, value.gate, stage,
+                       dict(value.profile, wall_contract=OPAQUE_INPUT_FRAME), lambda: None)
 
 
 def _check_factory_origin(value):
@@ -74,7 +78,9 @@ def _check_factory_origin(value):
     def verify():
         require(Path(__file__).resolve() == Path(reference['path']).resolve()
                 == (Path(value.handle.spec['source_checkout']) / name).resolve(), 'entry factory running source origin drift')
-    ingestion._observe(value.operation, value.gate, 'ingestion_sources', dict(value.profile), verify)
+    from .ce_operation_contracts import OPAQUE_INPUT_FRAME
+    ingestion._observe(value.operation, value.gate, 'ingestion_sources',
+                       dict(value.profile, wall_contract=OPAQUE_INPUT_FRAME), verify)
     worker._file(reference, value.handle.budget)
 
 

@@ -17,6 +17,9 @@ import time
 import uuid
 
 from . import ce_journal as ce, ce_qualification as q, ce_native_authority as authority
+from . import ce_operation_contracts as contracts
+from . import ce_rejected_return as rejected
+from . import ce_journal_limits as journal_limits
 
 SCHEMA = 'CE8-QUALIFICATION-ACCOUNTING-1'
 SPEC = 'CE8-QUALIFICATION-ACCOUNTING-SPEC-1'
@@ -25,6 +28,7 @@ PROOF = 'CE8-QUALIFICATION-WORKER-PROOF-1'
 HEADER, JOURNAL = 'QUALIFICATION_BINDINGS.json', 'QUALIFICATION_RESERVATIONS.jsonl'
 MAX_LINE, CHUNK = 4 * 1024 ** 2, 1024 ** 2
 EXPLICIT_RESERVATION_RULE = 'CE8-QUALIFICATION-EXPLICIT-RESERVATIONS-1'
+EXPLICIT_RESERVATION_RULE_V2 = contracts.EXPLICIT_RESERVATION_RULE_V2
 EXPLICIT_RESERVATION_KINDS = ('input_io', 'qualification_artifact_readback', 'qualification_reducer_overhead')
 KINDS = ce.NATIVE_KINDS | frozenset(('journal_construct', 'qualification_mask',
     'qualification_likelihood', 'qualification_gradient_reset',
@@ -228,15 +232,17 @@ def _add(left, right): return {key: left.get(key, 0) + right.get(key, 0) for key
 def validate_reservation_rule(spec):
     """Only this frozen, finite declaration may select known-size ceilings."""
     rule = spec.get('operation_profile_rule')
-    require(rule in (None, EXPLICIT_RESERVATION_RULE), 'unknown qualification reservation rule')
+    require(rule in (None, EXPLICIT_RESERVATION_RULE, EXPLICIT_RESERVATION_RULE_V2), 'unknown qualification reservation rule')
     kinds = spec.get('explicit_reservation_kinds')
-    require((rule is None and kinds is None) or rule == EXPLICIT_RESERVATION_RULE
+    require((rule is None and kinds is None) or rule in (EXPLICIT_RESERVATION_RULE, EXPLICIT_RESERVATION_RULE_V2)
             and type(kinds) is list and kinds == list(EXPLICIT_RESERVATION_KINDS),
             'exact three qualification explicit reservation kinds')
+    if rule == EXPLICIT_RESERVATION_RULE_V2:
+        require(contracts.manifest_from_spec(spec) is not None, 'qualification reservation version 2 needs frozen source contracts')
     return rule
 
 
-def reservation_profile(spec, kind, fields, *, profiles=None):
+def reservation_profile(spec, kind, fields, *, profiles=None, contract_replay=False):
     """Select permanent declared bounds; opaque work keeps its full ceiling.
 
     Source callbacks derive known sizes from pinned rows/artifacts before work.
@@ -247,6 +253,11 @@ def reservation_profile(spec, kind, fields, *, profiles=None):
     require(kind in profiles, 'declared qualification operation')
     maximum = _profile(profiles[kind]); reserved = _clone(maximum)
     fields = _normalize(fields)
+    selected_contract = contracts.reservation_profile(spec, kind, fields, owner='qualification',
+        maximum=maximum, replay=contract_replay)
+    cp_extent = (rule == EXPLICIT_RESERVATION_RULE_V2 and fields.get('wall_contract') in contracts.CP_HASH_ROLES)
+    opaque_contract = fields.get('wall_contract') in contracts.OPAQUE_ROLES
+    opaque_model = rule == EXPLICIT_RESERVATION_RULE_V2 and fields.get('wall_contract') == str(contracts.MODEL_FINGERPRINT)
     for key in ce.PROFILE[:-1]:
         require(ce._int(fields.get(key, 0)) and fields.get(key, 0) <= maximum[key],
                 'profile below declared physical work')
@@ -260,13 +271,15 @@ def reservation_profile(spec, kind, fields, *, profiles=None):
                     'opaque hash lower exceeds qualification profile')
     hash_fields = ('identity_hash_attempts_upper', 'identity_hash_bytes_upper')
     complete_hash = all(key in fields for key in hash_fields)
-    if complete_hash:
+    if complete_hash and not cp_extent and not opaque_model:
         require((fields[hash_fields[0]] == 0) == (fields[hash_fields[1]] == 0),
                 'coherent explicit qualification hash reservation')
     require(ce._int(fields.get('reducer_work_bytes_upper', 0))
             and fields.get('reducer_work_bytes_upper', 0) <= maximum.get('reducer_work_bytes_upper', 0),
             'explicit reducer profile below work')
-    if rule is None or kind not in EXPLICIT_RESERVATION_KINDS: return reserved
+    if cp_extent or opaque_contract: return selected_contract
+    if rule is None or kind not in EXPLICIT_RESERVATION_KINDS: return selected_contract
+    reserved['wall_s_upper'] = selected_contract['wall_s_upper']
     opaque = any(key.startswith('opaque_') or key.startswith('identity_hash_') and key.endswith('_lower')
                  for key in fields)
     if kind == 'qualification_reducer_overhead':
@@ -366,6 +379,9 @@ class QualificationAccounting:
         require(type(profiles) is dict and set(profiles) == KINDS, 'explicit profile for every qualification operation required')
         for value in profiles.values(): _profile(value)
         validate_reservation_rule(spec)
+        rejected.policy_from_spec(spec, 'qualification')
+        if contracts.manifest_from_spec(spec) is not None:
+            contracts.validate_manifest(spec['operation_contracts'], profiles, owner='qualification')
         require(q.integer(profiles['qualification_reducer_overhead'].get('reducer_work_bytes_upper'), 1), 'explicit reducer work upper required')
         q._costs(spec.get('global_caps'))
         require(type(spec.get('stage_caps')) is dict and set(spec['stage_caps']) == set(q.STAGES), 'all exact qualification stage caps required')
@@ -418,6 +434,10 @@ class QualificationAccounting:
         self.reducer_reserved_bytes = 0
         self.reducer_by_stage = dict.fromkeys(q.STAGES, 0)
         self.fatal = self.unknown_wall = False
+        self.rejection_policy = rejected.policy_from_spec(spec, 'qualification')
+        journal_limits.limits_from_spec(spec, 'qualification')
+        self.rejection_ticket = self.rejection_record = self.rejection_unknown = None
+        self.rejection_used = False
         self.active = None
         self.operations, self.attempts, self.events, self.metadata_ids = {}, [], [], set()
         self.child_prefixes = set()
@@ -487,6 +507,8 @@ class QualificationAccounting:
             self._known_size = 0
         self._event('setup', {'profile': setup, 'header_costs': header_costs if self._header_cost_prepaid else {}})
         self._event('worker', {'proof': self.proof, 'monotonic': self._wall_origin})
+        if self.rejection_policy is not None and self.rejection_ticket is None:
+            self._event('rejection_reservation', rejected.reservation_payload(self.rejection_policy, SCHEMA, self.header))
 
     def _make_ce_state(self, context, rows):
         # Protected pure helper composition AFTER the outer admission. No base
@@ -536,12 +558,19 @@ class QualificationAccounting:
     def _event(self, kind, payload):
         self._admit()
         if self._wall_ready and kind not in ('wall', 'worker', 'end'): self.tick_wall()
-        if kind == 'operation' and payload.get('phase') == 'started' and self.spec.get('operation_profile_rule') == EXPLICIT_RESERVATION_RULE:
+        if kind == 'operation' and payload.get('phase') == 'started' and self.spec.get('operation_profile_rule') in (EXPLICIT_RESERVATION_RULE, EXPLICIT_RESERVATION_RULE_V2):
             payload = _clone(payload)
-            payload['reservation_profile'] = reservation_profile(self.spec, payload['kind'], payload['fields'], profiles=self.profiles)
+            payload['reservation_profile'] = reservation_profile(self.spec, payload['kind'], payload['fields'],
+                                                                 profiles=self.profiles, contract_replay=True)
         body = {'seq': len(self.events), 'previous': self._head(), 'binding_sha256': self.binding_sha256,
                 'kind': kind, 'payload': _clone(payload)}
         raw = canonical(dict(body, sha256=digest(body))) + b'\n'
+        try:
+            journal_limits.check_append(journal_limits.limits_from_spec(self.spec, 'qualification'),
+                rows=len(self.events), size=self._known_size, line_bytes=len(raw))
+        except ValueError:
+            self.fatal = True; self._ce.requires_restore = True
+            raise
         require(len(raw) <= MAX_LINE, 'qualification event ceiling')
         stage, amounts, action = self._prepare(kind, body['payload'])
         overhead = {'metadata_bytes_upper': len(raw), 'io_write_bytes_upper': len(raw),
@@ -561,9 +590,36 @@ class QualificationAccounting:
         body = {'seq': len(self.events), 'previous': self._head(), 'binding_sha256': self.binding_sha256,
                 'kind': kind, 'payload': payload}
         raw = canonical(dict(body, sha256=digest(body))) + b'\n'
-        self._charge(stage, _add(amounts, {'metadata_bytes_upper': len(raw), 'io_write_bytes_upper': len(raw),
-            'identity_hash_attempts_upper': 1, 'identity_hash_bytes_upper': len(canonical(body))})); action()
+        journal_limits.check_append(journal_limits.limits_from_spec(self.spec, 'qualification'),
+            rows=len(self.events), size=getattr(self, '_replay_bytes', 0) if replay else self._known_size,
+            line_bytes=len(raw), terminal=kind=='terminal_rejected')
+        overhead = {} if kind == 'terminal_rejected' else {'metadata_bytes_upper': len(raw), 'io_write_bytes_upper': len(raw),
+            'identity_hash_attempts_upper': 1, 'identity_hash_bytes_upper': len(canonical(body))}
+        if kind == 'terminal_rejected':
+            require(len(raw) <= self.rejection_policy['record_bytes_upper'], 'prepaid rejected row extent')
+        self._charge(stage, _add(amounts, overhead)); action()
+        if replay: self._replay_bytes = getattr(self, '_replay_bytes', 0) + len(raw)
     def _prepare(self, kind, payload):
+        require(not self.fatal, 'fatal rejection history cannot admit later events')
+        if kind == 'rejection_reservation':
+            require(self.rejection_policy is not None and self.rejection_ticket is None and not self.operations
+                    and self.active is None and payload == rejected.reservation_payload(self.rejection_policy, SCHEMA, self.header),
+                    'one exact rejected-return ticket before dependent work')
+            def apply_ticket():
+                self.rejection_ticket = _clone(payload)
+                self.reducer_reserved_bytes += self.rejection_policy['encoding_work_bytes_upper']
+            return None, rejected.reservation_costs(self.rejection_policy), apply_ticket
+        if kind == 'terminal_rejected':
+            require(self.rejection_ticket is not None and not self.rejection_used, 'prepaid unused rejection ticket required')
+            previous = self.operations.get(payload.get('operation_id'))
+            require(previous and previous['phase'] == 'started', 'rejection keeps original pending operation')
+            binding = self._rejection_binding(previous)
+            rejected.validate_terminal_payload(payload, self.rejection_policy, self.rejection_ticket,
+                self.events[previous['started_seq']], previous['profile'], binding)
+            def apply_rejection():
+                self.rejection_used = self.fatal = True
+                self.rejection_record = _clone(payload); self._ce.requires_restore = True
+            return None, {}, apply_rejection
         if kind == 'checkpoint_child_prefix':
             _validate_child_prefix(self.context, self._current_proof, payload)
             require(self.active is None and self._ce.progress['C'] == self._ce.progress['U'] == 0
@@ -654,10 +710,13 @@ class QualificationAccounting:
         if phase == 'started':
             require(self.worker_open and self.active is not None and oid not in self.operations, 'active unique physical qualification attempt')
             stage, aid = self.active['stage'], self.active['attempt_id']
+            if fields.get('wall_contract') in contracts.CP_HASH_ROLES | {str(contracts.CP_SAVE_FRESH), str(contracts.CP_RESTORE),
+                    str(contracts.CP_SAVE_ADAPTER), str(contracts.CP_RESTORE_ADAPTER)}:
+                require(stage == 'checkpoint_resume', 'source CP contract outside qualification checkpoint stage')
             for key, expected in (('qualification_stage', stage), ('attempt_id', aid), ('worker_id', self._current_proof['worker_identity_sha256'])):
                 require(key not in fields or fields[key] == expected, 'qualification callback identity changed')
-            profile = reservation_profile(self.spec, kind, fields, profiles=self.profiles)
-            if self.spec.get('operation_profile_rule') == EXPLICIT_RESERVATION_RULE:
+            profile = reservation_profile(self.spec, kind, fields, profiles=self.profiles, contract_replay=True)
+            if self.spec.get('operation_profile_rule') in (EXPLICIT_RESERVATION_RULE, EXPLICIT_RESERVATION_RULE_V2):
                 require(payload.get('reservation_profile') == profile, 'permanent qualification reservation profile drift')
             rid = fields.get('prompt_id', fields.get('row_id'))
             if rid is not None:
@@ -693,10 +752,16 @@ class QualificationAccounting:
         require(previous and previous['kind'] == kind and previous['phase'] == 'started'
                 and previous['worker_id'] == self._current_proof['worker_identity_sha256'], 'matching current-worker physical return required')
         require(previous.get('lifetime_cleanup') or self.active and previous['attempt_id'] == self.active['attempt_id'], 'physical return outside active stage')
-        require(previous['profile'] == reservation_profile(self.spec, kind, previous['fields'], profiles=self.profiles),
+        if contracts.manifest_from_spec(self.spec) is not None:
+            require(fields.get('wall_contract') == previous['fields'].get('wall_contract'),
+                    'terminal source role differs from permanent start')
+        require(previous['profile'] == reservation_profile(self.spec, kind, previous['fields'], profiles=self.profiles, contract_replay=True),
                 'permanent qualification reservation profile mutated')
         started = self.events[previous['started_seq']]['payload']
         require(_normalize(started['fields']) == previous['fields'], 'qualification operation declaration mutated')
+        try: contracts.check_wall_return(fields, previous['profile'])
+        except ValueError:
+            self.fatal = True; raise
         for key, upper in (('bytes_read', 'read_bytes_upper'), ('known_bytes_read', 'read_bytes_upper'), ('bytes_written', 'write_bytes_upper'), ('known_bytes_written', 'write_bytes_upper'),
                            ('identity_hash_attempts_actual', 'identity_hash_attempts_upper'), ('identity_hash_bytes_actual', 'identity_hash_bytes_upper'), ('wall_s', 'wall_s_upper')):
             if key in fields:
@@ -732,7 +797,64 @@ class QualificationAccounting:
     def begin_stage(self, stage, attempt_id):
         return self._event('begin', {'stage': stage, 'attempt_id': attempt_id})
     def operation(self, kind, phase, operation_id, **fields):
+        self._admit()
+        previous = self.operations.get(operation_id)
+        original_fields = dict(fields)
+        try:
+            fields = contracts.validate_live_fields(self.spec, kind, phase, fields, owner='qualification',
+                previous_role=previous['fields'].get('wall_contract') if previous else None)
+            if phase != 'started' and previous:
+                contracts.check_wall_return(fields, previous['profile'])
+                for key, upper in rejected._ACTUAL.items():
+                    if key in fields: require(ce._int(fields[key]) and fields[key] <= previous['profile'][upper],
+                                              'actual qualification work exceeds reservation')
+        except ValueError as error:
+            if self.rejection_policy is not None and phase in ('returned', 'failed') and previous and previous['kind'] == kind and previous['phase'] == 'started':
+                self._retain_rejected_return(kind, phase, operation_id, original_fields, error)
+            elif phase != 'started' and previous:
+                # Preserve legacy rejection behavior: wall/count overruns halt,
+                # while contract mismatch without policy still stays pending.
+                try:
+                    contracts.check_wall_return(fields, previous['profile'])
+                    for key, upper in rejected._ACTUAL.items():
+                        if key in fields: require(ce._int(fields[key]) and fields[key] <= previous['profile'][upper], 'legacy actual overrun')
+                except ValueError: self.fatal = True
+            raise
         return self._event('operation', {'kind': kind, 'phase': phase, 'id': operation_id, 'fields': fields})
+    def _rejection_binding(self, previous):
+        return {'request_sha256': self.request_sha256, 'scope_sha256': self.scope_sha256,
+            'stage': previous['stage'], 'attempt_id': previous['attempt_id'], 'worker_identity_sha256': previous['worker_id']}
+    def _retain_rejected_return(self, kind, phase, operation_id, fields, error):
+        self.fatal = True; self._ce.requires_restore = True
+        try:
+            started = self.clock()
+            require(q.finite(started), 'finite prepaid rejection pipeline clock')
+            require(self.rejection_ticket is not None and not self.rejection_used, 'unused prepaid rejection ticket')
+            if not self.fixture:
+                require(digest(self.spec) == self._spec_sha256 and digest(self.profiles) == self._profiles_sha256,
+                        'frozen rejection ticket owner/profile drift')
+            self.rejection_used = True; previous = self.operations[operation_id]
+            payload = rejected.make_terminal_payload(self.rejection_policy, self.rejection_ticket,
+                self.events[previous['started_seq']], previous['profile'], self._rejection_binding(previous),
+                kind, operation_id, phase, fields, error)
+            rejected.validate_terminal_payload(payload, self.rejection_policy, self.rejection_ticket,
+                self.events[previous['started_seq']], previous['profile'], self._rejection_binding(previous))
+            body = {'seq': len(self.events), 'previous': self._head(), 'binding_sha256': self.binding_sha256,
+                    'kind': 'terminal_rejected', 'payload': payload}
+            row = dict(body, sha256=digest(body)); raw = canonical(row) + b'\n'
+            journal_limits.check_append(journal_limits.limits_from_spec(self.spec, 'qualification'),
+                rows=len(self.events), size=self._known_size, line_bytes=len(raw), terminal=True)
+            require(len(raw) <= self.rejection_policy['record_bytes_upper'], 'bounded prepaid rejection row')
+            require(not self.path.is_symlink() and self.path.stat().st_size == self._known_size, 'original rejection journal ownership')
+            with self.path.open('ab') as stream:
+                require(stream.write(raw) == len(raw), 'short prepaid rejection write'); stream.flush(); os.fsync(stream.fileno())
+            self.events.append(ce._json(raw)); self._known_size += len(raw); self.rejection_record = _clone(payload)
+            elapsed = self.clock() - started
+            require(q.finite(elapsed) and elapsed <= self.rejection_policy['publication_wall_s_upper'],
+                    'rejection publication wall exceeded')
+        except BaseException as failure:
+            self.rejection_unknown = {'type': type(failure).__name__, 'message': str(failure)[:1000]}
+            error.rejection_evidence_failure = _clone(self.rejection_unknown)
     __call__ = operation
     def commit_boundary(self, result): return self._event('commit', {'result': result})
     def install_restore(self, record): return self._event('restore', {'record': record})
@@ -815,6 +937,9 @@ class QualificationAccounting:
             'reducer_reserved_bytes': self.reducer_reserved_bytes, 'reducer_by_stage': _clone(self.reducer_by_stage), 'attempts': _clone(self.attempts),
             'pending_operations': [_clone(op) for op in self.operations.values() if op['phase'] == 'started'],
             'fatal': self.fatal, 'unknown_wall': self.unknown_wall, 'progress': self.progress_record(),
+            **({'rejection_ticket': _clone(self.rejection_ticket), 'rejection_used': self.rejection_used,
+                'rejection_record': _clone(self.rejection_record), 'rejection_unknown': _clone(self.rejection_unknown)}
+               if self.rejection_policy is not None else {}),
             'reservation_rule': 'permanent full upper charges; failed/unknown/restarted work never refunded',
             'cost_scope': 'declared callback upper reservations and serialized journal costs; not complete native measured totals',
             'complete_wall_accounting': not self.worker_open and not self.unknown_wall,
@@ -851,6 +976,11 @@ def replay_state(context, header, prepared_receipt):
     state.metadata_root = Path(context['bindings']['scope']['native_backend']['output_directory'])
     state.external_predecessors = {'ingestion_tokenizer'} if state.spec.get('ingestion_bootstrap_ref') else set()
     state.fatal = state.unknown_wall = False
+    state.rejection_policy = rejected.policy_from_spec(state.spec, 'qualification')
+    journal_limits.limits_from_spec(state.spec, 'qualification')
+    state._known_size = 0
+    state.rejection_ticket = state.rejection_record = state.rejection_unknown = None
+    state.rejection_used = False
     state.active, state.operations, state.attempts, state.events, state.metadata_ids = None, {}, [], [], set()
     state.child_prefixes = set()
     state.cumulative = dict.fromkeys(COST_FIELDS, 0)

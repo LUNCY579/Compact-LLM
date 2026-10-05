@@ -57,8 +57,11 @@ def validate_spec(spec):
 
 
 def _paid(operation, bounds, kind, work):
+    from .ce_operation_contracts import OPAQUE_INPUT_FRAME
+    declared = dict(bounds)
+    if kind == 'input_io': declared['wall_contract'] = OPAQUE_INPUT_FRAME
     identifier, start = uuid.uuid4().hex, time.monotonic()
-    operation(kind, 'started', operation_id=identifier, **bounds)
+    operation(kind, 'started', operation_id=identifier, **declared)
     try: result = work()
     except BaseException as error:
         try: operation(kind, 'failed', operation_id=identifier, wall_s=time.monotonic() - start,

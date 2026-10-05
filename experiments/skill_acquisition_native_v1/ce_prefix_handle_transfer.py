@@ -100,7 +100,9 @@ def transfer_prefix(context, permit, prefix_handle, prefix_live_proof, prefix_ma
     remote = None
     def work():
         nonlocal remote
-        gate('checkpoint_resume')
+        require(type(gate) is services.NativeResourceGate,
+                'source-owned resource gate for delegated metadata transfer')
+        gate.metadata_for_delegated_child('checkpoint_resume', owned, delegation)
         terminal = worker.verify_worker_handle(prefix_handle, {key: prefix_live_proof[key] for key in
             ('worker_identity_sha256', 'request_sha256', 'scope_sha256')}, require_native=True, terminal=True)
         require(terminal['exit_code'] == 0 and terminal['os_identity'] == prefix_live_proof['os_identity'], 'original prefix terminal object')

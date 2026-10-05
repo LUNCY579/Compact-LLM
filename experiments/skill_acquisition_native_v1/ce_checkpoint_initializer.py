@@ -168,7 +168,8 @@ def copy_checkpoint_store(reader, references, binding, directory, *, owned_root,
             and profile['identity_hash_attempts_upper'] >= int(corrupt_last_byte)
             and profile['identity_hash_bytes_upper'] >= (payload_bytes + 1 if corrupt_last_byte else 0),
             'checkpoint copy/mutation analytical IO/hash lower bounds')
-    with update._span(operation, 'checkpoint_adapter_io', dict(profile, reason='isolated_corruption_copy' if corrupt_last_byte else 'original_prefix_import')) as result:
+    from .ce_operation_contracts import OPAQUE_CP_ADAPTER_FRAME
+    with update._span(operation, 'checkpoint_adapter_io', dict(profile, reason='isolated_corruption_copy' if corrupt_last_byte else 'original_prefix_import', wall_contract=OPAQUE_CP_ADAPTER_FRAME)) as result:
         gate('checkpoint_adapter_io')
         owner, target = Path(owned_root), Path(directory)
         require(owner.is_absolute() and target.is_absolute() and target != owner
@@ -361,7 +362,8 @@ class CheckpointChildInitializer:
         from . import checkpoint as base, update
         profile = owner.profiles['checkpoint_adapter_io']
         # Reserve path/stat/metadata/hash work before inspecting the saved store.
-        with update._span(self.operation, 'checkpoint_adapter_io', dict(profile, reason='current_saved_checkpoint_refs')) as result:
+        from .ce_operation_contracts import OPAQUE_CP_ADAPTER_FRAME
+        with update._span(self.operation, 'checkpoint_adapter_io', dict(profile, reason='current_saved_checkpoint_refs', wall_contract=OPAQUE_CP_ADAPTER_FRAME)) as result:
             self.gate('checkpoint_adapter_io')
             directory = Path(self.checkpoint_directory(context, request)); manifests = sorted(directory.glob('checkpoint-*.json'))
             require(manifests and len(manifests) <= 2, 'bounded own saved checkpoint manifest inventory')

@@ -20,7 +20,13 @@ class ResourceJSONBounds(unittest.TestCase):
         self.addCleanup(temporary.cleanup); self.root = Path(temporary.name)
         self.args = controls.isolated_writer(self.root)
         self.spec = self.args[0]['bindings']['scope']['resource_measurement']
-        self.spec.update(json_bytes_upper=16 * raw.CHUNK, reducer_work_bytes_upper=64 * raw.CHUNK)
+        self.spec.update(json_bytes_upper=16 * raw.CHUNK, reducer_work_bytes_upper=512 * raw.CHUNK)
+
+    def test_legacy64_mib_work_refuses_before_resource_publication(self):
+        self.spec['reducer_work_bytes_upper']=64 * raw.CHUNK
+        with self.assertRaisesRegex(ValueError,'copy/reduction work'):
+            self.artifact()
+        self.assertEqual(list(self.root.glob('resource.*.json')), [])
 
     def reader(self):
         self.events = []

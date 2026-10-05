@@ -23,6 +23,10 @@ from . import ce_resource_qualification as measurement, ce_bootstrap_accounting 
 from . import ce_publication as publication, ce_checkpoint_publication as branch_publication
 from . import ce_checkpoint_processes as processes, ce_checkpoint_initializer as initializer
 from . import ce_ingestion as ingestion, runner
+from . import ce_contract_registration as contract_registration
+from . import ce_rejected_return as rejected, ce_native_services as native_services
+from . import ce_journal_limits as journal_limits
+from . import ce_census_caps as census_caps
 
 SCHEMA = 'CE8-CANONICAL-QUALIFICATION-DRAFT-1'
 STATUS = 'DRAFT_UNAUTHORIZED_DISCARDED_QUALIFICATION'
@@ -90,7 +94,7 @@ def expected_receipt(prior,source_receipt,recipe_sha):
     return dict(body,receipt_sha256=digest(body))
 
 
-def qualification_profiles(proposal,receipt,source):
+def qualification_profiles(proposal,receipt,source,*,resource_probe=None):
     """No fixture prices: known payload/inventory work plus declared abort ceilings."""
     spec=proposal['native_backend']; asset=json.loads(spec['asset_receipt_utf8'])
     n=spec['inventory']['numel']; selected=4*n; full=2*asset['model_header']['data_bytes']
@@ -134,17 +138,28 @@ def qualification_profiles(proposal,receipt,source):
     # Numeric artifacts retain their separate 4 MiB execution/readback limit.
     profiles['qualification_artifact']=dict(profile(256*MIB+2,128*MIB,16,256*MIB,5),reducer_work_bytes_upper=128*MIB)
     profiles['qualification_artifact_readback']=profile(3*selected+64*MIB,0,8,3*selected+64*MIB,60)
-    profiles['qualification_reducer_overhead']=dict(profile(0,0,10000,128*GIB,60),reducer_work_bytes_upper=512*GIB)
+    # Checkpoint import/publication replay reserves up to200001 hash attempts
+    # before work. Explicit source fields select the permanently charged extent.
+    profiles['qualification_reducer_overhead']=dict(profile(0,0,1000000,128*GIB,60),reducer_work_bytes_upper=512*GIB)
     profiles['qualification_state_fingerprint']=profile(0,0,3*names+66,8*GIB,30)
-    profiles['qualification_lease']=profile(16388,4096,4,16384,5)
+    # Delegated enter/exit declare the same frozen600-second transfer profile.
+    profiles['qualification_lease']=profile(16388,4096,4,16384,600)
     profiles['donor_chunk']=dict(ceiling['donor_chunk'],wall_s_upper=1)
     for kind,wall in (('donor_reference',60),('donor_write',60),('donor_roundtrip',120)):
         profiles[kind]=dict(ceiling[kind],wall_s_upper=wall)
     profiles['resource_probe']=profile(64*MIB+1,0,1,64*MIB+1,10)
+    if resource_probe is not None:
+        # The executable extent is pinned metadata, not a measured resource
+        # price. Match the exact profile the final service packet will use.
+        size=resource_probe['nvidia_smi_ref']['bytes']+1
+        profiles['resource_probe']=profile(size,0,1,size,resource_probe['probe_bounds']['wall_s_upper'])
     profiles['resource_cuda_probe']=profile(wall=1)
+    guard_basis=contract_registration.compose_guarded_profiles(profiles)
+    contract_registration.apply_wall_maxima(profiles,'qualification')
     for value in profiles.values(): accounting._profile(value)
     return profiles,{'selected_fp32_bytes':selected,'full_fp32_source_bytes':full,'checkpoint_write_bytes':checkpoint_write,
         'source_file_bytes':source_bytes,'source_files':source_count,'max_prepared_hash_bytes':max_hash,
+        'guarded_wall_composition':guard_basis,
         'rule':'Known sizes/counts are analytical; remaining allowances are explicit fail-closed qualification ceilings, not measured prices.'}
 
 
@@ -193,7 +208,7 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
     require(output_root.is_absolute() and artifact_directory.is_absolute()
             and not output_root.is_relative_to(Path(source['source_checkout'])), 'separate absolute future qualification output owner')
     receipt=expected_receipt(prior_receipt,source_preview['receipt'],proposal['static_recipe_sha256'])
-    profiles,analytical=qualification_profiles(proposal,receipt,source)
+    profiles,analytical=qualification_profiles(proposal,receipt,source,resource_probe=resource_probe['spec'])
     metadata=64*MIB; selected=analytical['selected_fp32_bytes']; model=copy.deepcopy(proposal['native_backend'])
     for key in ('native_ledger_artifact_interface','nested_operation_profiles','qualification_output_directory_template',
                 'production_output_directory_template','resolved_output_directories','weight_header_metadata','asset_metadata_purpose'):
@@ -234,6 +249,7 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
     envelope['wall_seconds_upper']=262144
     stage_caps['resource_io_measurement']['metadata_bytes_upper']=256*MIB
     envelope['metadata_bytes_upper']=3*GIB
+    census_caps.apply_qualification(stage_caps, envelope)
     # Outer bootstrap/process/publication allowances are separately proposed.
     scope={'schema':qualification.SCOPE,'role':'qualification_only','approved':False,'qualification_authorized':False,
         'production_training_authorized':False,'evaluation_authorized':False,'arm':'canonical','choice_sha256':decision_ref['sha256'],
@@ -253,8 +269,11 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
             'delta_rebuild_reader_bounds':delta_readers,'artifact_chunk_bytes':MIB,'reader_bounds':reader},
         'qualifier_accounting':{'schema':accounting.SPEC,'owned_directory':str(output_root/'ledger'),
             'ingestion_receipt_sha256':receipt['receipt_sha256'],'operation_profiles':profiles,
-            'operation_profile_rule':accounting.EXPLICIT_RESERVATION_RULE,
+            'operation_profile_rule':accounting.EXPLICIT_RESERVATION_RULE_V2,
             'explicit_reservation_kinds':list(accounting.EXPLICIT_RESERVATION_KINDS),
+            'operation_contracts':contract_registration.manifest(),
+            'rejected_return_policy':rejected.default_policy(),
+            'journal_limits':journal_limits.default_limits('qualification'),
             'setup_bounds':profile(64*MIB,64*MIB,16,64*MIB,30),'stage_caps':stage_caps,'global_caps':envelope,
             'physical_wall_seconds_upper':19200},
         'resource_measurement':{'schema':measurement.SCHEMA,'required_barriers':['launch','before_model','after_runtime',
@@ -268,7 +287,7 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
             'local_issuer':{'schema':local.SPEC,'deadline_seconds':3600,'rpc_seconds':60,
                 'max_message_bytes':MIB,'max_messages':8,'max_request_bytes':4*MIB,
                 'operation_bounds':profile(4*MIB+1,MIB,64,256*MIB,60)}}}
-    lease_profile=profile(4*4097,4096,4,4*4096,5)
+    lease_profile=profile(4*4097,4096,4,4*4096,600)
     scope['checkpoint_lease']={'schema':lease.SPEC,'lock_path':str(Path(os.environ.get('TEMP',str(output_root.parent)))/'rineya-gpu-0.lock'),
         'label':'comp-rs-001-ce8-canonical-qualification','timeout_seconds':60,'terminal_verify_timeout_seconds':60,
         'lock_bytes_upper':4096,'helper_ref':{'path':proposal['resource_envelope']['gpu_lease_path'],
@@ -334,11 +353,15 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
         service_profiles[kind]=profile(wall=5)
     for kind in ('process_launch_parent','process_launch','process_launch_child','process_launch_child_census'):
         service_profiles[kind]=profile(wall=60)
-    service_profiles['input_io']=profile(128*MIB,64*MIB,20000,256*MIB,60)
+    service_profiles['input_io']=profile(512*MIB,64*MIB,20000,512*MIB,60)
     service_profiles['worker_source_verification']['write_bytes_upper']=0
     for kind in ('process_owned_stop','process_rpc_receive','process_rpc_send','process_terminal'):
         service_profiles[kind]['wall_s_upper']=19200
     service_profiles['qualification_finalizer_constructor']=profile(8*MIB,4*MIB,512,256*MIB,120)
+    # Child initializer/parent evidence verification execute before Q attaches.
+    # Their source reader starts must remain owned by this bootstrap ledger.
+    service_profiles['qualification_reducer_overhead']=dict(profile(0,0,1000000,128*GIB,60),reducer_work_bytes_upper=512*GIB)
+    service_profiles['qualification_artifact_readback']=dict(profile(3*selected+64*MIB,0,8,3*selected+64*MIB,60),reducer_work_bytes_upper=0)
     finalizer_bounds=dict(costs(256*GIB,GIB,10000000,2048*GIB,GIB,100000,7200),
                           reducer_work_bytes_upper=4096*GIB)
     finalizer_suffix=dict(costs(128*MIB,4*MIB,32,256*MIB,4*MIB,1000,120),
@@ -346,6 +369,7 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
     finalizer_reader={'operation_attempts_upper':100000,'io_read_bytes_upper':256*GIB,
         'identity_hash_attempts_upper':10000000,'identity_hash_bytes_upper':2048*GIB,
         'reducer_work_bytes_upper':4096*GIB}
+    contract_registration.apply_wall_maxima(service_profiles,'bootstrap')
     service={'schema':'CE8-NATIVE-CONTROLLER-SERVICES-1','approved_code_sha256':source['code_sha256'],
         'role_descriptors':{},'physical_deadline_seconds':19200,
         'supervision':{'schema':'CE8-QUALIFICATION-SUPERVISION-SPEC-1',
@@ -362,10 +386,15 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
         'bootstrap':{'owned_directory':str(output_root/'service-bootstrap'),
             'setup_bounds':profile(metadata,metadata,10000,metadata,60),
             'operation_profile_rule':'CE8-INPUT-IO-EXPLICIT-RESERVATIONS-1',
-            'explicit_reservation_kinds':['input_io','worker_source_verification'],
+            'operation_contracts':contract_registration.manifest(),
+            'rejected_return_policy':rejected.default_policy(),
+            'journal_limits':journal_limits.default_limits('bootstrap'),
+            'preparation_reader_policy':native_services.PREPARATION_READER_RULE,
+            'explicit_reservation_kinds':['input_io','worker_source_verification',
+                'qualification_reducer_overhead','qualification_artifact_readback'],
             'input_io_row_wall_s_upper':5,
             'physical_wall_seconds_upper':19200,
-            'finalization_bounds':profile(128*MIB,16*MIB,32,256*MIB,120),
+            'finalization_bounds':profile(512*MIB,16*MIB,32,1024*MIB,120),
             'operation_profiles':service_profiles,'caps':{'read_bytes':64*GIB,'write_bytes':4*GIB,'hash_attempts':2000000,
                 'hash_bytes':256*GIB,'metadata_bytes':4*GIB,'operation_attempts':100000,'wall_seconds':768000},
             'reservation_budget_basis':{'classification':'prospective hard uppers; not measured prices',
@@ -386,7 +415,16 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
     expectation={'schema':'CE8-PREPARED-RECEIPT-EXPECTATION-1','observed_current_scope':False,
         'prior_observed_tokenizer_receipt_sha256':prior_receipt['receipt_sha256'], 'current_source_metadata_revalidated':True,
         'tokenizer_recomputed':False,'expected_receipt':receipt,
-        'condition':'Actual fresh parent PreparedRows and every child must reproduce this exact receipt before model allocation.'}
+            'condition':'Actual fresh parent PreparedRows and every child must reproduce this exact receipt before model allocation.'}
+    budget_basis = census_caps.apply_service(service['bootstrap']['caps'])
+    service['bootstrap']['reservation_budget_basis'] = {
+        'classification':'prospective source-census ceilings; not measured prices or elapsed time',
+        'matrix_sha256':budget_basis['matrix_sha256'],
+        'source_cardinality_review':budget_basis['source_cardinality_review'],
+        'parent_service_reserved_wall_s_upper':2772435,
+        'common_service_wall_cap_s':service['bootstrap']['caps']['wall_seconds'],
+        'physical_wall_seconds_upper':19200,
+    }
     documents={'RECIPE.json':{'recipe':proposal['static_recipe']},'RUNTIME.json':{'decoding_preimage':proposal['runtime_preimage'],
         'decoding_sha256':proposal['runtime_preimage_sha256']},'ANCHORS.json':proposal['anchors'],
         'SOURCE_SNAPSHOT.json':source,'EXPECTED_PREPARED_RECEIPT.json':expectation,'SOURCE_REVALIDATION.json':source_preview,
@@ -406,6 +444,7 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
         'qualification_weights':'discarded; never production donor or reset anchor','analytical_work':analytical,
         'profile_status':'UNMEASURED_FINITE_UPPER_RESERVATIONS_FOR_DISCARDED_QUALIFICATION_ONLY',
         'root_physical_deadline_seconds':19200,'per_worker_leaf_caps':envelope,
+        'source_census_budget_basis':budget_basis,
         'additional_outer_reservations':{'scope_bootstrap':scope_boot_caps,'scope_process_ticket':outer_bounds,
             'scope_parent_publication_tickets':2,'service_bootstrap':service['bootstrap']['caps'],
             'checkpoint_processes':outer_bounds,'branch_publication_each':pub_bounds,
@@ -423,7 +462,10 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
         'checkpoint_save':{'total_starts_upper':6,'single_write_bytes_upper':12*proposal['inventory']['numel']+64*MIB},
         'checkpoint_restore':{'total_starts_upper':8,'corruption_failures_upper':3,'all_charged':True},
         'qualification_state_fingerprint':{'total_starts_upper':12,'hash_bytes_per_start_upper':8*GIB},
-        'supervisor_lease':{'owner':'original service bootstrap','single_wall_s_upper':5},
+        'supervisor_lease':{'owner':'original service bootstrap',
+            'single_wall_s_upper':service_profiles['supervisor_lease']['wall_s_upper'],
+            'parent_check_wall_s_upper':contract_registration.manifest()['contracts']['lease_parent_check']['wall_s_upper'],
+            'reservation_rule':'source-owned role selected before work; inclusive nested OS checks remain charged'},
         'supervisor_lease_acquire':{'max_starts':1,'single_wall_s_upper':180},
         'supervisor_lease_release':{'max_starts':1,'single_wall_s_upper':19200,'deferred':True}}
     return documents

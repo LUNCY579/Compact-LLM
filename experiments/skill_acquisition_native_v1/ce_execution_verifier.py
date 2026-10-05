@@ -161,6 +161,12 @@ def _seal(observed, state):
     require(observed.get('progress') == state.progress_record()
             and observed.get('fatal') is state.fatal and observed.get('unknown_wall') is state.unknown_wall
             and observed.get('worker_proof') == state.proof, 'seal CE progress/worker/failure state differs from replay')
+    if getattr(state, 'rejection_policy', None) is not None:
+        # The policy is independently derived from the immutable header/spec.
+        # Compare the four fields actually published by snapshot() exactly.
+        for name in ('rejection_ticket', 'rejection_used', 'rejection_record', 'rejection_unknown'):
+            require(name in observed and canonical(observed[name]) == canonical(getattr(state, name)),
+                    'seal prepaid rejection evidence differs from independent replay')
     require(observed.get('actual_wall_seconds') == state.actual_wall_seconds
             and observed.get('last_monotonic') == state.last_clock and observed.get('worker_open') is state.worker_open
             and observed.get('complete_wall_accounting') is (not state.worker_open and not state.unknown_wall),

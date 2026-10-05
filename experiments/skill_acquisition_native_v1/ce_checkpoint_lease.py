@@ -165,8 +165,10 @@ class SupervisorGpuLease:
 
     @contextmanager
     def _span(self,action):
+        from .ce_operation_contracts import LEASE_PARENT_CHECK, OPAQUE_LEASE_FRAME
+        contract = {'wall_contract': LEASE_PARENT_CHECK if action == 'check_parent_use' else OPAQUE_LEASE_FRAME}
         try:
-            with update._span(self.operation,'supervisor_lease',dict(self.spec['operation_bounds']['transfer'],lease_action=action)) as record:
+            with update._span(self.operation,'supervisor_lease',dict(self.spec['operation_bounds']['transfer'],lease_action=action,**contract)) as record:
                 yield record
         except BaseException:
             self.fatal=True
@@ -322,6 +324,20 @@ class SupervisorGpuLease:
     def assert_parent_use(self):
         self._admit(); require(self.state=='PARENT' and self.child is None, 'parent GPU use is suspended while a child may use it')
         with self._span('check_parent_use'): self._parent(); self._lock([])
+
+    def assert_delegated_metadata(self, owned, delegation):
+        """Observe one exact delegated child without granting parent GPU use."""
+        self._admit()
+        require(self.state == 'CHILD' and self.child is not None and self.child[0] is owned
+                and delegation == self.child[2] and self.backend is not None
+                and self.backend.model is None and self.backend.optimizer is None,
+                'delegated metadata requires the exact child and released parent model/Adam')
+        with self._span('check_delegated_metadata'):
+            self._parent()
+            proof = self._child_proof(owned)
+            require(proof == self.child[1] and proof['os_identity'] == delegation['child_os_identity'],
+                    'delegated metadata child OS/source identity changed')
+            self._lock([proof['os_identity']['pid']])
 
     def close(self):
         require(getattr(self,'seal',None) in (_SEAL,_FIXTURE_SEAL), 'source-owned lease release only')

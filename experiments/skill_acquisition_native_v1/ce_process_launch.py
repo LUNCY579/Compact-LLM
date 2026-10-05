@@ -331,6 +331,8 @@ class OwnedProcess:
         finish = time.perf_counter() + self._remaining(self.spec['handshake_seconds'])
         while time.perf_counter() < finish:
             candidates = self.budget.run('process_launch_child_census', lambda: _child_pids(self.os, launcher['pid']))
+            require(type(candidates) is list and len(candidates) <= 1,
+                    'one direct worker candidate for the fixed owned redirector topology')
             matches = []
             for pid in candidates:
                 handle = None
