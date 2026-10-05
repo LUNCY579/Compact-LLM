@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: actual outer filesystem CPU milestone preserved
+
+The [outer filesystem milestone](OUTER_FILESYSTEM_CPU_001.md) passes seven Root
+controls plus six independent focused controls. The committed-stdlib-path
+contract/loader revision passes19 controls; Root reproduced all26 from preserved
+bytes with no failures/errors/skips or forbidden imports. Real selected JSON,
+source hashes and finite roster walks execute;842 historical runtime obligations,
+Git and layout remain explicitly injected and unqualified.
+
+This accepts partial CPU filesystem/contract mechanics only. Actual producer,
+preservation and integrated auditor composition remains open, as do current
+runtime/bootstrap/binary and owned resource qualification. Native gates stay
+closed; no model/GPU/process action ran and no M0 row was added. The original
+M0/M1/M2 learning, transfer and preservation question remains unanswered.
+
 ## 2026-10-05 UTC: actual producer-source CPU milestone verified
 
 The [producer-source fixture path](OWNED_PRODUCER_CPU_001.md) passes six

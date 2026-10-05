@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [outer filesystem CPU milestone](OUTER_FILESYSTEM_CPU_001.md) reproduces26
+source controls from preserved bytes. Historical runtime/Git/layout seams remain
+explicitly injected; full native composition and qualification are still open.
+
 The [current800-test CPU receipt](evidence/full_cpu_protocol_integration_validation_003_20261005.json)
 passes with unchanged112 source hashes. Scoped encoder/stdlib byte inventories
 and independent long validators are integrated; additive native consumption and
