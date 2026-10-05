@@ -1,5 +1,23 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: no-model phase diagnostic integrated
+
+The [context-phase diagnostic](CONTEXT_PHASE_DIAGNOSTIC_001.md) is integrated from
+independently reviewed bytes. All
+[12 root controls](evidence/context_phase_diagnostic_root_cpu_validation_20261005.json)
+pass in0.356seconds, isolated CLI startup succeeds and all seven original helper
+hashes match. The [reviewed history](evidence/context_phase_diagnostic_reviewed_cpu_20261005)
+retains the source/test portability predecessor and the root verification harness
+lookup correction. Exact source omissions reject; metered nonrecursive guard
+queries preserve original call/result/error/threshold behavior.
+
+There is no model directory, row, loader/construction/forward/training/grading,
+cache/device-reset or external-process-control path. Actual framework/context
+imports require a new source-bound manifest and owned fresh admission under the
+unchanged resource/freshness/preload limits. No diagnostic manifest or native run
+was created during integration. Historical allocation cause, usable collector fit,
+M0 completion, native full27/long context and the learning comparison remain open.
+
 ## 2026-10-05 UTC: complete728-test CPU suite passes
 
 The [full root CPU run](evidence/full_cpu_protocol_integration_validation_002_20261005.json)
