@@ -1,5 +1,22 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: short M0 collector implemented; admission closed
+
+The [short M0 collector CPU receipt](evidence/short_collector_cpu_20261005/cpu_validation.json)
+records three reviewed modules and 16 passing root CPU/mock controls. The
+collector binds one of the 18 fixed 64-row batches, preserves token/row partials
+and terminal costs, requires unchanged base bytes and physical zero-B parity,
+and uses the existing owned-Job/resource/deadline/cleanup algorithm. Decoder
+Python/PYD import sources are pinned recursively; unfinished token prefixes
+are marked `in_progress`, while EOS and actual 32-token cap semantics remain
+distinct. The initial 14-test version and reviewed successor are preserved.
+
+No native collector config, baseline output, score or enrollment exists.
+Current VRAM is below the unchanged four-GiB admission floor. Collector
+integration grants no training, language/long-context, scoring or retention
+qualification. The next qualified run still requires a clean committed source
+scope, current host admission and an independent terminal audit.
+
 ## 2026-10-05 UTC: backend phase A failed its GPU floor
 
 The first [phase-A scope](configs/SYNTH_BACKENDQ001_A1.json) exited with worker

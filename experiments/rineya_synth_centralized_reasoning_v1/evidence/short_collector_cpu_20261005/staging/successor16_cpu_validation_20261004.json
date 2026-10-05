@@ -1,0 +1,37 @@
+{
+  "command": "python -m unittest discover -s experiments/rineya_synth_centralized_reasoning_v1/artifacts/short_collection_work -p test_short_collection.py -v",
+  "framework_model_GPU_native_calls": 0,
+  "initial14_sources_and_validation_preserved": "initial14pass_preserved_20261004",
+  "meaningful_new_controls": [
+    "executed tokenizers.implementations/nested Python source drift fails decoder binding",
+    "partial token31 in_progress/untruncated; real token32 cap and completed row truncated; EOS unchanged"
+  ],
+  "native_execution_authorized": false,
+  "recorded_at_utc": "2026-10-05T00:07:23.374545+00:00",
+  "root_source_edits": false,
+  "schema_version": 1,
+  "scoring_authorized": false,
+  "seconds": 6.233,
+  "skips": 0,
+  "sources": {
+    "short_collection_contract.py": {
+      "bytes": 14079,
+      "sha256": "498f2e2a3760ab3a0b7b7bf0442d5c5e66b26103774b64f3cf0c41841e2d91e9"
+    },
+    "short_collection_supervisor.py": {
+      "bytes": 12652,
+      "sha256": "ef4cb0592fa70dda72ce9220ba8c438565a582fa6db521f9ee78595fc57b5499"
+    },
+    "short_collection_worker.py": {
+      "bytes": 13930,
+      "sha256": "3457b56658900d6ba4de4c1753c3b80f719d4b4045dd27882cd40cf526e1f4a3"
+    },
+    "test_short_collection.py": {
+      "bytes": 16149,
+      "sha256": "eaef49a99d7f4ab158c3570dec22b5aef2c4243b0b39e5df0a0bf94dae7d08ed"
+    }
+  },
+  "status": "PASS_STAGED_SUCCESSOR16_CPU_MOCK_CONTROLS",
+  "tests": 16,
+  "training_authorized": false
+}

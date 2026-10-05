@@ -1,0 +1,34 @@
+{
+  "files": {
+    "short_collection_contract.py": {
+      "bytes": 13690,
+      "sha256": "628ad7b222eaf1fc8ff351ee66335b4a45f4bac5f81988abffa10b84babcaac5"
+    },
+    "short_collection_supervisor.py": {
+      "bytes": 12652,
+      "sha256": "ef4cb0592fa70dda72ce9220ba8c438565a582fa6db521f9ee78595fc57b5499"
+    },
+    "short_collection_worker.py": {
+      "bytes": 13745,
+      "sha256": "25d62c58966c61e5f1b059a13f39597eb28196c4782c813b2afd7a92e71e19ff"
+    },
+    "test_short_collection.py": {
+      "bytes": 12804,
+      "sha256": "2d4a5f56e0e251508498939dc406fe6ab462ca4259da6b4603b7a827efeacc7a"
+    }
+  },
+  "framework_model_GPU_native_calls": 0,
+  "native_launch_authorized": false,
+  "recorded_at_utc": "2026-10-05T00:02:50.973527+00:00",
+  "root_source_edits": false,
+  "schema_version": 1,
+  "status": "INITIAL_STAGED14_CPU_MOCK_TESTS_PASSED_SOURCES_PRESERVED",
+  "validation_observed": {
+    "command": "python -m unittest discover -s experiments/rineya_synth_centralized_reasoning_v1/artifacts/short_collection_work -p test_short_collection.py -v",
+    "execution_scope": "CPU_MOCK_AND_PINNED_LOCAL_TOKENIZER_ONLY",
+    "result": "OK",
+    "seconds": 3.334,
+    "skips": 0,
+    "tests": 14
+  }
+}
