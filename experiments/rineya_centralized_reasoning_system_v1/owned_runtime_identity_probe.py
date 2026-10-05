@@ -13,6 +13,7 @@ from ctypes import wintypes as w
 import hashlib
 import json
 import math
+import ntpath
 import os
 from pathlib import Path
 import subprocess
@@ -26,7 +27,10 @@ from .operations import OperationsStore, TERMINAL, canonical, host_state_path
 
 PACKAGE = native.PACKAGE
 ROOT = native.ROOT
-CONTRACT = PACKAGE / "contracts/OWNED_RUNTIME_IDENTITY_DIAGNOSTIC_002_V2.json"
+CONTRACT = PACKAGE / "contracts/OWNED_RUNTIME_IDENTITY_DIAGNOSTIC_002_V4.json"
+DESKTOP_AUTHORITY_SHA = "479b6c5284da978c491a6477a9064f21b585fa29e9991bf84d75960c380d18f0"
+DESKTOP_DISPOSITION_SHA = "b2a64e3bd3471d42db805d06cba44c1c4ffed6af79ff19dc9c2f4bb94954f49e"
+DESKTOP_CORRECTION_SHA = "84f56a6f566f988ce402e9342676f7db6988607194e3b12a37a4d22ff5a5f939"
 KEY = "CRS-OWNED-IDENTITY-002"
 SCOPE = "NO_MODEL_FRAMEWORK_IMPORT_IDENTITY_OBSERVATION"
 MAX_LOG = 16 * 1024 * 1024
@@ -269,7 +273,273 @@ def checked_contract(expected):
                    "unchanged runtime registry binding required")
     for path, expected_sha in cfg["runtime_file_sha256"].items():
         native.require(native.sha(path) == expected_sha, "installed import source drift")
+    correction = cfg["delegated_boundary_correction_006"]
+    native.require(correction["authority_path"] == "authorization/DELEGATED_DESKTOP_BOUNDARY_CORRECTION_006.json"
+                   and correction["authority_sha256"] == DESKTOP_CORRECTION_SHA
+                   and native.sha(PACKAGE / correction["authority_path"]) == DESKTOP_CORRECTION_SHA
+                   and correction["cumulative_source_review_round"] == 6, "finite sixth correction binding required")
+    checked_desktop_profile(cfg, native_cfg)
     return cfg, native_cfg
+
+
+def exact_windows_path(value):
+    native.require(type(value) is str and ntpath.isabs(value) and ntpath.normpath(value) == value
+                   and not any(part in value for part in ("*", "?", "/")), "exact absolute desktop path required")
+    return normalized(value)
+
+
+def unique_json(path):
+    def pairs(values):
+        result = {}
+        for key, value in values:
+            native.require(key not in result, "duplicate desktop JSON key")
+            result[key] = value
+        return result
+    return json.loads(Path(path).read_text(encoding="utf-8"), object_pairs_hook=pairs)
+
+
+def checked_desktop_profile(cfg, native_cfg):
+    """Probe-only cooperative policy. Never changes either native registry."""
+    reference = cfg["desktop_profile"]
+    native.require(reference["path"] == "contracts/DESKTOP_GPU_IDENTITIES_PROBE002_V1.json", "fixed probe-only profile required")
+    path = PACKAGE / reference["path"]
+    native.require(native.sha(path) == reference["sha256"], "desktop profile drift")
+    profile = unique_json(path)
+    native.require(profile["schema_version"] == 1 and profile["probe_key"] == KEY,
+                   "desktop profile scope mismatch")
+    authority = profile["authority"]
+    native.require(authority == cfg["owner_exception_desktop_profile"]["authority"]
+                   and authority["path"] == "authorization/OWNER_EXCEPTION_DESKTOP_PROFILE_GRANTED_2026-10-04.json"
+                   and authority["sha256"] == DESKTOP_AUTHORITY_SHA, "actual desktop authority binding required")
+    native.require(native.sha(PACKAGE / authority["path"]) == DESKTOP_AUTHORITY_SHA, "desktop authority drift")
+    grant = unique_json(PACKAGE / authority["path"])
+    native.require(grant.get("authorization_received") is True
+                   and grant["approved_current_scope"]["updated_prior_desktop_roles"] == 3
+                   and grant["approved_current_scope"]["new_Chrome_Edge_rows_authorized"] is False,
+                   "actual three-role authority required")
+    disposition_ref = profile["context_disposition"]
+    native.require(disposition_ref == {"path": "evidence/desktop_profile_integration_001/source/COOPERATIVE_CONTEXT_DISPOSITION.json",
+                                      "sha256": DESKTOP_DISPOSITION_SHA}
+                   and native.sha(PACKAGE / disposition_ref["path"]) == DESKTOP_DISPOSITION_SHA, "cooperative context disposition drift")
+    disposition = unique_json(PACKAGE / disposition_ref["path"])
+    native.require(disposition["authority_receipt_sha256"] == DESKTOP_AUTHORITY_SHA
+                   and disposition["actual_noncompute_workload_proved"] is False, "cooperative context authority mismatch")
+    native.require(profile["original_native_contract_sha256"] == cfg["preserved_native"]["native_contract_sha256"]
+                   and profile["original_owned_child_registry_sha256"] == cfg["registry_sha256"]
+                   and profile["original_desktop_registry"] == native_cfg["gpu_process_registry"], "original registries must remain unchanged")
+    rows = profile["updated_rows"]
+    native.require(type(rows) is list and len(rows) == 3 and {r["role_id"] for r in rows} == {"webview", "codex", "swift"}, "exactly three prior-role updates required")
+    paths = set()
+    for row in rows:
+        key = exact_windows_path(row["path"])
+        native.require(key not in paths and row["path"].endswith({"webview":"msedgewebview2.exe", "codex":"ChatGPT.exe", "swift":"codex-computer-use-swift.exe"}[row["role_id"]]), "duplicate or wrong desktop role")
+        paths.add(key)
+        native.require(type(row["sha256"]) is str and len(row["sha256"]) == 64
+                       and set(row["sha256"]) <= set("0123456789abcdef")
+                       and len(row["dependency_sha256"]) == 1, "exact desktop executable/dependency pins required")
+        for dep, digest in row["dependency_sha256"].items():
+            exact_windows_path(dep)
+            native.require(type(digest) is str and len(digest) == 64 and set(digest) <= set("0123456789abcdef"), "invalid desktop dependency pin")
+        native.require(row["owner_roots"] and len(set(row["owner_roots"])) == len(row["owner_roots"]), "explicit owner roots required")
+        native.require(set(row["allowed_ancestry_paths"]) == {row["path"], *row["owner_roots"]}, "exact role ancestry paths required")
+    policy = profile["context_policy"]
+    native.require(policy["max_depth"] == 8 and policy["freshness_seconds"] == 5
+                   and policy["actual_noncompute_workload_proved"] is False
+                   and policy["hidden_inprocess_GPU_operations"] == "UNMEASURED"
+                   and policy["inspection_pins_are_permissions"] is False, "bounded cooperative context policy required")
+    pins = profile["inspection_only_ancestor_sha256"]
+    allowed_pins = {row["path"]: row["sha256"] for row in rows}
+    for anchor in profile["inspection_only_original_anchors"]:
+        native.require(anchor in native_cfg["gpu_process_registry"], "inspection anchor must be an unchanged original desktop identity")
+        native.require(any(a["path"] == anchor["path"] and a["sha256"] == anchor["sha256"] for a in disposition["inspection_only_anchors"]), "undeclared inspection-only anchor")
+        allowed_pins[anchor["path"]] = anchor["sha256"]
+    native.require(pins == allowed_pins and len(profile["inspection_only_original_anchors"]) == 2, "inspection-only trust expansion refused")
+    for ancestor, digest in pins.items():
+        exact_windows_path(ancestor)
+        native.require(type(digest) is str and len(digest) == 64 and set(digest) <= set("0123456789abcdef"), "invalid inspection-only ancestor pin")
+    for row in rows:
+        for root in row["owner_roots"]:
+            native.require(root in pins, "owner root must have an inspection-only pin")
+    return profile
+
+
+def stable_desktop_hash(path, expected):
+    """No verdict cache: every observation rehashes selected physical bytes."""
+    before = Path(path).stat()
+    actual = native.sha(path)
+    after = Path(path).stat()
+    native.require((before.st_size, before.st_mtime_ns, before.st_ino) ==
+                   (after.st_size, after.st_mtime_ns, after.st_ino) and actual == expected, "desktop file hash/physical identity drift")
+    return actual
+
+
+def process_principal(pid):
+    """Actual Windows token SID and session, without command line/environment access."""
+    native.require(os.name == "nt", "Windows process token required")
+    kernel, adv = c.WinDLL("kernel32", use_last_error=True), c.WinDLL("advapi32", use_last_error=True)
+    kernel.OpenProcess.argtypes = [w.DWORD, w.BOOL, w.DWORD]; kernel.OpenProcess.restype = w.HANDLE
+    kernel.CloseHandle.argtypes = [w.HANDLE]; kernel.CloseHandle.restype = w.BOOL
+    adv.OpenProcessToken.argtypes = [w.HANDLE, w.DWORD, c.POINTER(w.HANDLE)]; adv.OpenProcessToken.restype = w.BOOL
+    adv.GetTokenInformation.argtypes = [w.HANDLE, c.c_int, c.c_void_p, w.DWORD, c.POINTER(w.DWORD)]; adv.GetTokenInformation.restype = w.BOOL
+    adv.ConvertSidToStringSidW.argtypes = [c.c_void_p, c.POINTER(w.LPWSTR)]; adv.ConvertSidToStringSidW.restype = w.BOOL
+    kernel.LocalFree.argtypes = [c.c_void_p]; kernel.LocalFree.restype = c.c_void_p
+    kernel.ProcessIdToSessionId.argtypes = [w.DWORD, c.POINTER(w.DWORD)]; kernel.ProcessIdToSessionId.restype = w.BOOL
+    handle = kernel.OpenProcess(0x1000, False, pid); token = w.HANDLE(); sid = w.LPWSTR()
+    native.require(bool(handle), "process token owner unavailable")
+    try:
+        native.require(bool(adv.OpenProcessToken(handle, 8, c.byref(token))), "process token unavailable")
+        needed = w.DWORD(); adv.GetTokenInformation(token, 1, None, 0, c.byref(needed))
+        native.require(0 < needed.value <= 65536, "bounded token owner required")
+        buffer = c.create_string_buffer(needed.value)
+        native.require(bool(adv.GetTokenInformation(token, 1, buffer, needed, c.byref(needed))), "token owner query failed")
+        native.require(bool(adv.ConvertSidToStringSidW(c.cast(buffer, c.POINTER(c.c_void_p))[0], c.byref(sid))), "token SID unavailable")
+        session = w.DWORD()
+        native.require(bool(kernel.ProcessIdToSessionId(pid, c.byref(session))), "process session unavailable")
+        return {"sid_sha256": hashlib.sha256(sid.value.encode("utf-8")).hexdigest(), "session": session.value}
+    finally:
+        if sid: kernel.LocalFree(c.cast(sid, c.c_void_p))
+        if token: kernel.CloseHandle(token)
+        kernel.CloseHandle(handle)
+
+
+def validate_desktop_context(profile, row, witness, principal, *, now):
+    native.require(type(principal) is dict and set(principal) == {"sid_sha256", "session"}
+                   and type(principal["sid_sha256"]) is str and len(principal["sid_sha256"]) == 64
+                   and type(principal["session"]) is int and principal["session"] > 0, "interactive SID/session unavailable")
+    native.require(witness.get("activity") == "PERMITTED_COOPERATIVE_DESKTOP_CONTEXT", "unknown or declared compute context refused")
+    native.require(witness.get("profile_sha256") == hashlib.sha256(canonical(profile)).hexdigest()
+                   and witness.get("authority_sha256") == DESKTOP_AUTHORITY_SHA, "desktop context provenance drift")
+    began, completed = witness["began_at"], witness["completed_at"]
+    native.require(all(type(v) in (int, float) and math.isfinite(v) for v in (began, completed, now))
+                   and 0 <= now - began <= 5 and began <= completed <= now, "desktop context stale/future/overrun")
+    chain = witness["chain"]
+    native.require(type(chain) is list and 1 <= len(chain) <= 8 and len({p["pid"] for p in chain}) == len(chain), "complete bounded noncyclic desktop ancestry required")
+    native.require(chain[0]["executable"] == row["path"] and chain[0]["sha256"] == row["sha256"], "wrong desktop context executable")
+    pins = profile["inspection_only_ancestor_sha256"]
+    for index, member in enumerate(chain):
+        native.require(member["executable"] in row["allowed_ancestry_paths"], "unrelated desktop ancestry context")
+        native.require(member["principal"] == principal and member["stable_after_checks"] is True, "desktop owner/session/PID/parent drift")
+        native.require(type(member["creation_time"]) in (int, float) and math.isfinite(member["creation_time"]), "desktop creation identity missing")
+        if index:
+            child = chain[index-1]
+            native.require(child["ppid"] == member["pid"] and member["creation_time"] <= child["creation_time"]
+                           and pins.get(member["executable"]) == member["sha256"], "unknown/drifted desktop parent")
+    native.require(chain[-1]["executable"] in row["owner_roots"] and pins.get(chain[-1]["executable"]) == chain[-1]["sha256"], "unowned desktop context")
+    boundary = witness.get("owner_boundary")
+    native.require(type(boundary) is dict and boundary.get("attained") is True
+                   and boundary.get("owner_pid") == chain[-1]["pid"]
+                   and boundary.get("owner_ppid") == chain[-1]["ppid"]
+                   and boundary.get("relation_rechecked") is True, "actual stable owner boundary required")
+    codex_path = next(r["path"] for r in profile["updated_rows"] if r["role_id"] == "codex")
+    reason, external = boundary.get("reason"), boundary.get("external_parent")
+    if chain[-1]["executable"] != codex_path:
+        native.require(reason == "NAMED_OWNER_ROOT" and external is None, "named owner-root boundary mismatch")
+    else:
+        native.require(type(external) is dict and external.get("pid") == chain[-1]["ppid"]
+                       and type(external["pid"]) is int and external["pid"] > 0, "Codex external-parent relation missing")
+        if reason == "OBSERVED_ABSENT_EXTERNAL_PARENT":
+            native.require(external.get("state") == "ABSENT" and external.get("absence_rechecked") is True,
+                           "external parent absence not rechecked")
+        else:
+            native.require(reason == "OBSERVED_NONFAMILY_PARENT" and external.get("state") == "LIVE"
+                           and type(external.get("executable")) is str and external["executable"] != codex_path
+                           and type(external.get("creation_time")) in (int, float)
+                           and math.isfinite(external["creation_time"])
+                           and external["creation_time"] <= chain[-1]["creation_time"]
+                           and external.get("stable_after_checks") is True, "complete Codex application boundary not observed")
+    return True
+
+
+def collect_desktop_context(profile, row, pid, principal):
+    import psutil
+    began, chain, boundary = time.time(), [], None
+    pins = profile["inspection_only_ancestor_sha256"]
+    for depth in range(8):
+        process = psutil.Process(pid)
+        created, executable, parent = process.create_time(), process.exe(), process.ppid()
+        expected = row["sha256"] if depth == 0 else pins.get(executable)
+        native.require(expected is not None, "unregistered inspection-only parent")
+        actual = stable_desktop_hash(executable, expected)
+        member = {"pid": pid, "creation_time": created, "executable": executable, "ppid": parent,
+                  "sha256": actual, "principal": process_principal(pid), "stable_after_checks": False}
+        chain.append(member)
+        if executable in row["owner_roots"]:
+            # Retain all same-executable Codex ancestors; stop at its app boundary.
+            boundary = {"attained": True, "owner_pid": pid, "owner_ppid": parent,
+                        "relation_rechecked": False, "external_parent": None}
+            if executable != next(r["path"] for r in profile["updated_rows"] if r["role_id"] == "codex"):
+                boundary["reason"] = "NAMED_OWNER_ROOT"; break
+            native.require(parent > 0, "Codex application boundary unavailable")
+            try:
+                outside = psutil.Process(parent)
+                outside_created, outside_executable = outside.create_time(), outside.exe()
+            except psutil.NoSuchProcess:
+                boundary.update(reason="OBSERVED_ABSENT_EXTERNAL_PARENT",
+                                external_parent={"pid": parent, "state": "ABSENT", "absence_rechecked": False})
+                break
+            if outside_executable != executable:
+                native.require(outside_created <= created, "external parent PID reused before owner-boundary observation")
+                boundary.update(reason="OBSERVED_NONFAMILY_PARENT", external_parent={"pid": parent,
+                                "state": "LIVE", "creation_time": outside_created, "executable": outside_executable,
+                                "stable_after_checks": False})
+                break
+            boundary = None
+        native.require(parent > 0, "orphaned desktop helper")
+        pid = parent
+    native.require(boundary is not None, "desktop ancestry depth exhausted before actual app boundary")
+    checked_paths = {member["executable"] for member in chain}
+    for candidate in profile["updated_rows"]:
+        if candidate["path"] in checked_paths:
+            for dep, digest in candidate["dependency_sha256"].items(): stable_desktop_hash(dep, digest)
+    for member in chain:
+        fresh = psutil.Process(member["pid"])
+        member["stable_after_checks"] = (fresh.create_time() == member["creation_time"] and fresh.exe() == member["executable"]
+                                        and fresh.ppid() == member["ppid"] and process_principal(member["pid"]) == member["principal"])
+    external = boundary["external_parent"]
+    if boundary["reason"] == "OBSERVED_ABSENT_EXTERNAL_PARENT":
+        try: psutil.Process(external["pid"]).create_time()
+        except psutil.NoSuchProcess: external["absence_rechecked"] = True
+        else: native.require(False, "previously absent external parent PID reused during checks")
+    elif boundary["reason"] == "OBSERVED_NONFAMILY_PARENT":
+        fresh = psutil.Process(external["pid"])
+        external["stable_after_checks"] = fresh.create_time() == external["creation_time"] and fresh.exe() == external["executable"]
+    boundary["relation_rechecked"] = chain[-1]["stable_after_checks"]
+    witness = {"began_at": began, "completed_at": time.time(), "chain": chain,
+               "owner_boundary": boundary,
+               "profile_sha256": hashlib.sha256(canonical(profile)).hexdigest(), "authority_sha256": DESKTOP_AUTHORITY_SHA,
+               "activity": "PERMITTED_COOPERATIVE_DESKTOP_CONTEXT", "actual_noncompute_workload_proved": False,
+               "hidden_inprocess_GPU_operations": "UNMEASURED"}
+    validate_desktop_context(profile, row, witness, principal, now=time.time())
+    return witness
+
+
+def collect_probe_telemetry(output, cfg, native_cfg):
+    import psutil
+    profile = checked_desktop_profile(cfg, native_cfg)
+    # Original helper sees only its preserved original registry. Updated rows are
+    # removed from unclassified only after current complete ownership checks.
+    telemetry = native.collect_telemetry(output, desktop_identities=native_cfg["gpu_process_registry"])
+    principal = process_principal(os.getpid())
+    rows = {normalized(r["path"]): r for r in profile["updated_rows"]}
+    telemetry["desktop_context_witnesses"] = []
+    telemetry["desktop_profile_sha256"] = cfg["desktop_profile"]["sha256"]
+    for process in telemetry["processes"]:
+        row = rows.get(normalized(process["name"]))
+        if row is None: continue
+        pid = process["pid"]
+        try:
+            native.require(pid not in telemetry["competing_gpu_pids"] and pid not in telemetry["unresolved_gpu_pids"], "known compute or unresolved desktop PID")
+            witness = collect_desktop_context(profile, row, pid, principal)
+            telemetry["desktop_context_witnesses"].append({"pid": pid, "witness": witness})
+            process.update(role=row["role"], executable_sha256=row["sha256"], cooperative_context_verified=True)
+            telemetry["unclassified_gpu_pids"] = [p for p in telemetry["unclassified_gpu_pids"] if p != pid]
+        except (OSError, psutil.Error, native.NativeBlocked) as error:
+            if pid not in telemetry["unclassified_gpu_pids"]: telemetry["unclassified_gpu_pids"].append(pid)
+            telemetry["desktop_context_witnesses"].append({"pid": pid, "unavailable": type(error).__name__ + ": " + str(error)})
+    telemetry["desktop_checks_completed_at"] = time.time()
+    telemetry["actual_noncompute_workload_proved"] = False
+    telemetry["hidden_inprocess_GPU_operations"] = "UNMEASURED"
+    return telemetry
 
 
 def reviewer_identity(value):
@@ -303,7 +573,9 @@ def checked_reviews(paths, expected, expected_roles=None):
 
 def probe_binding(contract_sha256, source):
     return {"source_commit": source["commit"], "contract_sha256": contract_sha256,
-            "probe_sha256": native.sha(__file__), "native_sha256": native.sha(native.__file__), "scope": SCOPE}
+            "probe_sha256": native.sha(__file__), "native_sha256": native.sha(native.__file__), "scope": SCOPE,
+            "desktop_profile_sha256": native.read_json(CONTRACT)["desktop_profile"]["sha256"],
+            "desktop_authority_sha256": DESKTOP_AUTHORITY_SHA}
 
 
 def recover_finalization(output, store, expected_binding):
@@ -692,10 +964,10 @@ def supervise(args, cfg, native_cfg):
     native.require(native.runtime_metadata() == native_cfg["runtime"], "probe runtime drift")
     output = args.output.resolve()
     native.require(output.is_relative_to(PACKAGE / "results") and not output.exists(), "new CRS probe output required")
-    telemetry = native.collect_telemetry(PACKAGE, desktop_identities=native_cfg["gpu_process_registry"])
+    telemetry = collect_probe_telemetry(PACKAGE, cfg, native_cfg)
     native.require(not native.admission_reasons(native_cfg, telemetry), "probe host admission closed")
     time.sleep(2)
-    second = native.collect_telemetry(PACKAGE, desktop_identities=native_cfg["gpu_process_registry"])
+    second = collect_probe_telemetry(PACKAGE, cfg, native_cfg)
     native.require(not native.admission_reasons(native_cfg, second), "second probe admission closed")
     output.mkdir(parents=True)
     store = OperationsStore(host_state_path(), output / "receipts")
@@ -817,7 +1089,7 @@ def supervise(args, cfg, native_cfg):
                     raise
                 next_guard = now + .1
             if now >= next_gpu:
-                gpu = native.collect_telemetry(output, desktop_identities=native_cfg["gpu_process_registry"])
+                gpu = collect_probe_telemetry(output, cfg, native_cfg)
                 watcher.check()
                 append(output / "OBSERVATIONS.jsonl", {"phase": "gpu_observation", "snapshot": gpu})
                 owned_ids = set(native.job_process_ids(job))
