@@ -19,6 +19,13 @@ and actual terminal I/O/current-identity certification remain pending, so native
 launch stays closed. M0 completion, model fit, language authority and the learning
 comparison remain unfinished. The800-test full run predates this integration.
 
+The preservation harness initially compared mixed slash/backslash inventory
+keys after copying, so its final map assertion failed before the receipt write.
+The [failure](evidence/encoder_runtime_v2_preservation_harness_failure_20261005.json)
+is retained. All42 source/history files were subsequently verified byte-identical
+with normalized relative keys in the completed preservation receipt. No source
+or copied bytes were changed by that correction.
+
 ## 2026-10-05 UTC: whole terminal-frame CPU composition integrated
 
 The [terminal composition helper](LONG_TERMINAL_COMPOSITION_001.md) is integrated
