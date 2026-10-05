@@ -16,8 +16,10 @@ require separately registered fresh scopes with cross-process identity and
 trace authentication. The prospective largest trace scope is 34 forwards /
 130,934 positions, including two short TRAIN parity calls; the three-scope total
 is 71 forwards / 266,353 positions. Exact TRAIN rows, a native driver, cross-scope
-verifier, resource qualification and enrollment remain absent. Independent
-component review is pending. No root inference integration or native launch,
+verifier, resource qualification and enrollment remain absent. The
+[independent component review](evidence/long_context_component_staged_independent_review_20261005.json)
+passes all 28 controls for the same bytes; it qualifies CPU mechanics only.
+No root inference integration or native launch,
 model/GPU execution, actual grading or authority expansion occurred.
 
 ## 2026-10-05 UTC: next qualification work remains staged
