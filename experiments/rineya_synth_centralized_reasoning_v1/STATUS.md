@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: candidate import specification reviewed
+
+The [candidate provenance specification](CANDIDATE_IMPORT_SPEC_001.md) now defines
+exact study-only final27/540 lineage, factor restore/preservation and complete384
+candidate imports. Independent source review corrected six substantive gaps and
+retained exact predecessors. Eighteen source-fidelity checks pass;43 adversarial
+controls are planned, not yet validated as an implementation. CPU implementation
+and independent review are underway in ignored staging; no root native interface
+or authority has been opened. Actual study/collector/auditor evidence, scoring
+and retention remain absent. The owner says they will free GPU memory while CPU
+work continues; that intent does not establish current native admission.
+
 ## 2026-10-05 UTC: batch05 admission denied before worker launch
 
 The exact fixed batch05 attempted fresh preflight/admission at clean launch HEAD

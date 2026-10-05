@@ -1,0 +1,458 @@
+{
+  "schema_version": 1,
+  "status": "PROPOSED_CLOSED_FIELD_SPECIFICATION_NOT_EXECUTABLE_JSON_SCHEMA_OR_NATIVE_REGISTRATION",
+  "native_api_implemented": false,
+  "real_native_authority_materialized": false,
+  "native_launch_authorized": false,
+  "scoring_authorized": false,
+  "training_authorized": false,
+  "missing_native_slots": [
+    "actual owned study authorization",
+    "three actual independently selected study chunk audits per candidate",
+    "actual final-study archive descriptor",
+    "actual qualified candidate restore/collection prerequisite",
+    "actual candidate collector registration/auditor",
+    "six complete actual candidate batch audits",
+    "actual externally selected postcapture import manifest with six batch audit/config anchors"
+  ],
+  "hash_conventions": {
+    "new_outer_ASCII_CANONICAL": "json sort_keys=true,separators=(comma,colon),ensure_ascii=true,allow_nan=false then ASCII SHA256; exclude only own sha256",
+    "existing_population_rows_raw_and_finish": "exact source score_import/rs_contract/inference_component conventions (ensure_ascii=true)",
+    "existing_study_recipe_metadata_publication_costs": "exact study_schedule/study_torch_backend conventions (ensure_ascii=false then UTF8); do not recanonicalize with outer convention",
+    "file_sha256": "exact raw file bytes; distinct from any body digest",
+    "unsealed_factor_restore_receipt": "new explicit caller ASCII-canonical digest of entire unchanged final_adapter_inference successful return including operation_costs; helper supplies no checksum",
+    "anchor_roles": "PlainFileAnchor is raw source bytes only; JsonDocumentAnchor states producer-role-specific sealed or unsealed ASCII/UTF8 convention; arbitrary convention substitutions reject"
+  },
+  "native_NULL_paths_hashes_or_stub_receipts_allowed": false,
+  "limits": {
+    "JSON_bytes": 16777216,
+    "JSONL_file_bytes": 33554432,
+    "JSONL_line_bytes": 65536,
+    "checkpoint_bytes": 33554432,
+    "raw_decoded_UTF8_bytes_per_row": 1048576,
+    "population_rows": 384,
+    "population_components": 96,
+    "batches": 6,
+    "rows_per_batch": 64
+  },
+  "schemas": {
+    "CheckpointDescriptor": {
+      "additional_fields_allowed": false,
+      "source": "study_torch_backend.snapshot_boundary/save_checkpoint",
+      "fields": {
+        "schema_version": "integer1",
+        "kind": "SYNTH_STUDY_TORCH_BOUNDARY_V1",
+        "path": "actual final archive path from selected descriptor",
+        "bytes": "integer1..33554432",
+        "sha256": "exact archive file SHA256",
+        "metadata": "StudyCheckpointMetadata, unchanged from source-defined producer",
+        "metadata_sha256": "study_torch_backend.digest(metadata)"
+      }
+    },
+    "StudyChunkAnchors": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "chunk_ordinal": "integer1|2|3 in exact array order",
+        "config": "JsonDocumentAnchor",
+        "result": "JsonDocumentAnchor",
+        "supervisor": "JsonDocumentAnchor",
+        "audit": "JsonDocumentAnchor for proposed owned STUDY audit; never full27 qualification audit",
+        "preservation": "JsonDocumentAnchor",
+        "inventory": "JsonDocumentAnchor"
+      }
+    },
+    "NativeCandidateSelection": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "schema_version": "integer1",
+        "kind": "PROPOSED_SYNTH_FINAL_STUDY_CANDIDATE_SELECTION_V1",
+        "authority_context_sha256": "external trusted selection-context SHA256; not self-issued approval",
+        "arm": "M1|M2",
+        "training_seed": "integer101",
+        "study_registration": "JsonDocumentAnchor for actual unchanged schedule registration",
+        "study_run_authorization": "JsonDocumentAnchor for separately admitted owned study run",
+        "study_chain_anchors": "exactly3 StudyChunkAnchors",
+        "final_descriptor_sha256": "study_schedule.digest(actual final CheckpointDescriptor)",
+        "collector_registration": "JsonDocumentAnchor for independent pre-capture qualified recipe/profile/whole-dose registration with no selection/candidate/config back-reference; never a derivative per-batch config",
+        "collector_auditor_source": "PlainFileAnchor for exact separately reviewed candidate auditor Python bytes",
+        "qualified_restore_collection_prerequisite": "JsonDocumentAnchor of genuine admitted candidate restore/collection qualification",
+        "panel_metadata_sha256": "b99ef70c05450743e61dda400beb6d620ddb4599006d4f039f98349953c99714",
+        "row_order_sha256": "11500cab9997616e70080d1a029cd4b241566c199726631f8386ec0d6be4215a",
+        "sha256": "new outer ASCII_CANONICAL digest of body excluding sha256"
+      }
+    },
+    "OwnedStudyChunkAudit": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "schema_version": "integer1",
+        "kind": "PROPOSED_SYNTH_STUDY_CHUNK_OWNED_INDEPENDENT_AUDIT_V1",
+        "status": "PROPOSED_PASS_STUDY_CHUNK_NATIVE_EXECUTION_ONLY",
+        "purpose": "separately reviewed study run purpose; NOT full27_three_fresh_process_nine_update_qualification_only",
+        "arm": "M1|M2",
+        "training_seed": "integer101",
+        "chunk_ordinal": "integer1|2|3",
+        "study_authorization_file_sha256": "exact externally selected admitted study authorization file SHA256",
+        "study_registration_body_sha256": "exact schedule body SHA256",
+        "recipe_sha256": "exact study_native_chunk.recipe body SHA256",
+        "source_commit": "lowercase40-hex exact study launch HEAD",
+        "selected_files": "closed map config/result/supervisor/preservation/inventory => JsonDocumentAnchor",
+        "previous_result_file_sha256": "null only at chunk1; actual previous selected study result otherwise",
+        "previous_resume_body_sha256": "null only at chunk1; actual previous selected study resume body otherwise",
+        "previous_terminal_costs_sha256": "null only at chunk1; actual latest preceding study costs otherwise",
+        "resume_descriptor_body_sha256": "actual study mechanism resume body SHA256",
+        "backend_descriptor_sha256": "study_schedule.digest(actual CheckpointDescriptor)",
+        "binding": "exact7-field study BINDING_FIELDS derived from schedule",
+        "hash_closure": "ImmutableClosure covering every consumed source/config/receipt/prior/publication/archive/raw/snapshot file and owned roster",
+        "owned_native_execution_verified": "true only from actual independently selected audit",
+        "qualification_artifacts_used": "false",
+        "scoring_authorized": "false",
+        "retention_certified": "false",
+        "confirmation_eligible": "false",
+        "sha256": "new outer ASCII_CANONICAL body digest",
+        "native_admission": "StudyNativeAdmission equal actual selected inner result.native_admission; actual factory timing checked through source-bound native auditor",
+        "fresh_start_attestation": "JsonDocumentAnchor of actual retained backend.fresh_start_attestation, UTF8_STUDY_SEALED_EXCLUDE_OWN_SHA256, joined to archive metadata digest and all source-defined zero-B/base/seed/empty-optimizer fields"
+      }
+    },
+    "CandidateIdentity": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "arm": "M1|M2",
+        "training_seed": "integer101",
+        "selection_file_sha256": "exact NativeCandidateSelection file SHA256",
+        "study_registration_body_sha256": "exact schedule body SHA256",
+        "study_recipe_sha256": "source-reconstructed exact study recipe SHA256",
+        "cohort_sha256": "exact arm occurrence order SHA256",
+        "final_descriptor_sha256": "study_schedule.digest(selected final descriptor)",
+        "final_checkpoint_file_sha256": "exact selected final archive bytes SHA256",
+        "final_binding": "exact7-field final27/540 binding",
+        "base_model_pins_sha256": "ASCII_CANONICAL digest of exact unchanged source-defined base assets map",
+        "tokenizer_binding_sha256": "exact source-defined tokenizer/template binding digest",
+        "sha256": "new outer ASCII_CANONICAL body digest"
+      }
+    },
+    "CandidateRowEnvelope": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "schema_version": "integer1",
+        "kind": "PROPOSED_SYNTH_FINAL_STUDY_CANDIDATE_RAW_ROW_V1",
+        "arm": "M1|M2",
+        "training_seed": "integer101",
+        "candidate_identity_sha256": "CandidateIdentity body SHA256",
+        "collection_recipe_sha256": "actual separately admitted collection recipe SHA256",
+        "source_commit": "actual lowercase40-hex capture launch HEAD",
+        "config_file_sha256": "actual candidate capture config file SHA256",
+        "batch_ordinal": "integer1..6",
+        "row_ordinal": "integer1..64",
+        "restore_receipt_sha256": "ASCII_UNSEALED_FULL_DOCUMENT digest of entire unchanged FactorRestoreReceipt including operation_costs; explicitly caller-defined outer provenance",
+        "raw": "exact successful source-defined InferenceRawReceipt",
+        "sha256": "new outer ASCII_CANONICAL body digest"
+      }
+    },
+    "InferenceRawReceipt": {
+      "additional_fields_allowed": false,
+      "source": "inference_component._receipt plus successful collect additions",
+      "fields": {
+        "schema_version": "integer1",
+        "implementation": "synth-prompt-only-inference-component-1",
+        "scope": "UNQUALIFIED_NATIVE_IMPLEMENTATION",
+        "status": "RAW_RESPONSE_COLLECTED_UNSCORED",
+        "row_id": "source-defined exact value/schema",
+        "prompt_sha256": "source-defined exact value/schema",
+        "prompt_ids_sha256": "source-defined exact value/schema",
+        "input_row_sha256": "source-defined exact value/schema",
+        "source_packet_sha256": "source-defined exact value/schema",
+        "prompt_tokens": "source-defined exact value/schema",
+        "raw_generated_ids": "integer token IDs0..151935; length1..32; first EOS stops",
+        "selected_logprobs": "finite nonpositive numeric LP array matching trace",
+        "trace": "exact1..32 RawTraceStep records",
+        "finish_reason": "source-defined exact value/schema",
+        "truncated": "source-defined exact value/schema",
+        "eos_token_id": "source-defined exact value/schema",
+        "context_cap": "integer512",
+        "maximum_generated_tokens": "integer32",
+        "decoding": "greedy_no_cache_no_grad",
+        "padding": "false",
+        "packing": "false",
+        "prompt_truncated": "false",
+        "oracle_inputs_read": "false",
+        "capability_correctness_scored": "false",
+        "native_launch_authorized": "false",
+        "native_qualification_established": "false",
+        "confirmation_eligible": "false",
+        "costs": "source-defined exact value/schema",
+        "decoded_response": "exact generated-only decoder string bounded1MiB",
+        "parameter_preservation": "source-defined exact value/schema"
+      }
+    },
+    "CandidateBatchAudit": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "schema_version": "integer1",
+        "kind": "PROPOSED_SYNTH_FINAL_STUDY_CANDIDATE_BATCH_AUDIT_V1",
+        "status": "PROPOSED_PASS_FINAL_STUDY_CANDIDATE_RAW_COLLECTION_MECHANICS_UNSCORED",
+        "arm": "M1|M2",
+        "training_seed": "integer101",
+        "candidate_identity_sha256": "actual CandidateIdentity digest",
+        "selection_file_sha256": "external NativeCandidateSelection file hash",
+        "source_commit": "actual capture launch HEAD",
+        "batch_selector": "exact {source_kind:atomic_RS_DEV,ordinal:integer1..6}",
+        "rows": "integer64",
+        "config": "JsonDocumentAnchor",
+        "worker": "JsonDocumentAnchor",
+        "supervisor": "JsonDocumentAnchor",
+        "preservation": "JsonDocumentAnchor",
+        "inventory": "JsonDocumentAnchor",
+        "restore_receipt": "JsonDocumentAnchor with ASCII_UNSEALED_FULL_DOCUMENT; exact FactorRestoreReceipt bytes/result",
+        "restore_receipt_body_sha256": "same explicit ASCII_UNSEALED_FULL_DOCUMENT digest of entire unchanged FactorRestoreReceipt, not a producer-supplied sha256",
+        "ordered_raw_row_manifest_sha256": "ASCII_CANONICAL digest of exact64 ordered row descriptors",
+        "raw_row_files": "exactly64 JsonDocumentAnchor references, immutable expected order",
+        "factor_hashes_before": "all112 exact source-defined adapter names => lowercase SHA256",
+        "factor_hashes_after": "exact equality with factor_hashes_before",
+        "base310_unchanged": "actual source-bound native unchanged-base evidence required",
+        "complete_trace_decode_cost_resource_owned_checks": "AuditFindings; independently selected exact auditor source must validate nested producer schemas",
+        "hash_closure": "ImmutableClosure covering every consumed source/config/receipt/prior/publication/archive/raw/snapshot file and owned roster",
+        "correctness_grade_performed": "false",
+        "scoring_authorized": "false",
+        "retention_certified": "false",
+        "confirmation_eligible": "false",
+        "sha256": "new outer ASCII_CANONICAL body digest",
+        "factor_observations": "FactorByteObservations for selected archive, copied resident-before-capture and resident-after-capture, matching every exact name/shape/byte count/hash"
+      }
+    },
+    "CandidateBatchValue": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "scope": "PROPOSED_PRESERVED_AUDITED_FINAL_STUDY_CANDIDATE_RAW_UNSCORED",
+        "arm": "M1|M2",
+        "training_seed": "integer101",
+        "ordinal": "integer1..6",
+        "source_kind": "atomic_RS_DEV",
+        "candidate_identity": "exact CandidateIdentity",
+        "inputs": "exact64 source-defined prompt-only rows",
+        "outputs": "exact64 CandidateRowEnvelope objects",
+        "source_packet_sha256": "existing prompt-row source digest",
+        "references": "closed selected reference map: audit/config/preservation/worker/supervisor/inventory/restore/selection plus exact64 raw_rows and all3 study_chain_anchors; source/runtime/decoder/data/base maps and their source Commit are bound by those selected records; loader anchors also contain exact postcapture import-selection file/context pins, never added to captured raw/audits",
+        "audit_passed": "true only from nonserializable native loader factory"
+      }
+    },
+    "CandidateImportPacket": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "schema_version": "integer1",
+        "kind": "PROPOSED_SYNTH_FINAL_STUDY_CANDIDATE_COMPLETE_IMPORT_V1",
+        "scope": "PROPOSED_PRESERVED_AUDITED_FINAL_STUDY_CANDIDATE_RAW_UNSCORED",
+        "status": "PROPOSED_COMPLETE384_CANDIDATE_IMPORT_UNSCORED_ALL_AUTHORITY_CLOSED",
+        "arm": "M1|M2",
+        "training_seed": "integer101",
+        "candidate_identity": "one exact CandidateIdentity shared by all6 batches",
+        "selection_file_sha256": "external selection file SHA256",
+        "population_registration": "unchanged exact load_frozen_panel result; its inner original scope/version/flags remain untouched",
+        "panel_metadata_sha256": "exact frozen compact002 metadata digest",
+        "row_order_sha256": "exact frozen full384 row order digest",
+        "rows": "exact384 immutable metadata/input/raw joins; no grades",
+        "batch_references": "all6 selected actual native batch references in original order",
+        "finish_policy": "JsonDocumentAnchor to unchanged DEV_FINISH_POLICY_001.json",
+        "scorer_sources": "exact original8 source descriptors; read/pin only, never call",
+        "statistics_sources": "exact DEV_STATISTICS_POLICY.json/dev_statistics.py descriptors",
+        "scoring_authorized": "false",
+        "training_authorized": "false",
+        "native_launch_authorized": "false",
+        "retention_certified": "false",
+        "language_qualification_established": "false",
+        "long_context_qualification_established": "false",
+        "protected_bank_access": "false",
+        "paid_services": "false",
+        "confirmation_eligible": "false",
+        "sha256": "new outer ASCII_CANONICAL body digest",
+        "import_selection_file_sha256": "exact externally selected postcapture CandidateImportSelection file SHA256; never copied into identity/capture records"
+      }
+    },
+    "ByteDescriptor": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "bytes": "nonboolean integer0..role-specific limit",
+        "sha256": "lowercase exact raw-file SHA256"
+      }
+    },
+    "ImmutableClosure": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "initial_files": "absolute selected paths => ByteDescriptor, captured before semantic reads",
+        "final_files": "exact equality with initial_files after all audit callbacks",
+        "initial_directory_rosters": "owned directory paths => complete sorted literal filename arrays",
+        "final_directory_rosters": "exact equality with initial_directory_rosters"
+      }
+    },
+    "StudyBinding": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "completed_updates": "nonboolean integer9|18|27",
+        "consumed_occurrences": "exact completed_updates*20",
+        "input_tokens": "exact cumulative frozen arm-schedule input tokens",
+        "supervised_tokens": "exact cumulative frozen arm-schedule supervised tokens",
+        "consumed_order_sha256": "study_schedule.digest(exact consumed occurrence IDs)",
+        "next_update_ordinal": "exact completed_updates+1",
+        "learning_rate": "finite float equal registered global LR for completed ordinal; final0.0"
+      }
+    },
+    "StudyCheckpointMetadata": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "schema_version": "integer1",
+        "kind": "SYNTH_STUDY_TORCH_BOUNDARY_V1",
+        "experiment": "SYNTH-CRS-001",
+        "scope": "UNQUALIFIED_NATIVE_IMPLEMENTATION",
+        "arm": "M1|M2",
+        "seed": "integer101",
+        "recipe_sha256": "exact study recipe digest",
+        "cohort_sha256": "exact arm occurrence-order digest",
+        "backend_source_sha256": "actual selected study_torch_backend.py source file SHA256",
+        "fresh_start_attestation_sha256": "actual retained fresh native zero-B/empty optimizer attestation digest",
+        "adapter_parameter_order": "exact ordered112 source-defined q/v names",
+        "adapter_inventory_sha256": "exact current source-defined inventory digest",
+        "binding": "StudyBinding",
+        "native_launch_authorized": "false",
+        "training_authorized": "false",
+        "native_resume_qualified": "false",
+        "qualification_STATE1_used": "false"
+      }
+    },
+    "RawTraceStep": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "token": "nonboolean integer0..151935",
+        "logprob": "nonboolean finite numeric <=0",
+        "prefix_length": "nonboolean integer == prompt_tokens + step0 for zero-based step0=0..31; equivalently prompt_tokens + step1 - 1 for one-based step1=1..32"
+      }
+    },
+    "AuditFindings": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "actual_capture_forwards": "nonboolean integer equal sum generated steps; <=2048",
+        "actual_capture_input_positions": "nonboolean integer equal sum(prompt_tokens+step0) over every actual zero-based trace step; no one-position offset",
+        "complete_raw_trace_and_token_prefix_checks": "exact64 ordered records binding raw trace hashes and all actual publication prefixes",
+        "generated_only_decode_checks": "exact64 ordered records binding generated-ID array hash, pinned decoder and exact UTF8 response hash",
+        "factor_copy_and_preservation_checks": "structured selected native112-factor byte/copy proof and equal before/after maps",
+        "base_preservation_checks": "structured actual310-base proof before/after under unchanged loader/profile",
+        "resource_and_owned_terminal_checks": "selected complete native resource/Job/lease/current identity/sampler/NVML/hook closure records",
+        "whole_scope_costs": "selected complete returned journal operations, physical dose and durable publication/cleanup costs",
+        "qualified_profile_and_dose": "exact selected candidate qualified profile and entire noncapture/capture work contract; no invented omission"
+      }
+    },
+    "PlainFileAnchor": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "path": "absolute regular non-reparse owned source/file path",
+        "bytes": "positive nonboolean integer within role limit",
+        "file_sha256": "lowercase SHA256 of exact file bytes; no JSON-body field for source bytes"
+      }
+    },
+    "JsonDocumentAnchor": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "path": "absolute regular non-reparse owned JSON document path",
+        "bytes": "positive nonboolean integer within role limit",
+        "file_sha256": "lowercase SHA256 of exact raw document file bytes",
+        "body_sha256": "computed only under the role-specific body_hash_convention",
+        "body_hash_convention": "one of ASCII_SEALED_EXCLUDE_OWN_SHA256, ASCII_UNSEALED_FULL_DOCUMENT, UTF8_STUDY_SEALED_EXCLUDE_OWN_SHA256, UTF8_STUDY_UNSEALED_FULL_DOCUMENT; convention fixed by producer role, not selected by untrusted JSON"
+      }
+    },
+    "CandidateBatchAnchors": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "batch_ordinal": "integer1..6, exact ordered array",
+        "audit": "JsonDocumentAnchor selected after actual capture by trusted Root/reviewer",
+        "config": "JsonDocumentAnchor for the exact capture configuration bound by that audit"
+      }
+    },
+    "CandidateImportSelection": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "schema_version": "integer1",
+        "kind": "PROPOSED_SYNTH_POSTCAPTURE_CANDIDATE_IMPORT_SELECTION_V1",
+        "import_authority_context_sha256": "externally supplied trusted import selection-context SHA256",
+        "pre_capture_selection_file_sha256": "exact unchanged externally selected NativeCandidateSelection bytes",
+        "candidate_identity_sha256": "one exact CandidateIdentity shared by six captures",
+        "arm": "M1|M2",
+        "training_seed": "integer101",
+        "batch_anchors": "exactly six CandidateBatchAnchors in original ordinal1..6 order",
+        "sha256": "new outer ASCII_CANONICAL digest excluding own sha256"
+      }
+    },
+    "FactorRestoreReceipt": {
+      "additional_fields_allowed": false,
+      "source": "exact successful unsealed final_adapter_inference.restore_final return; no schema_version or sha256 injected",
+      "fields": {
+        "CPU_fixture": "unchanged source-defined exact successful value/schema",
+        "RNG_policy": "unchanged source-defined exact successful value/schema",
+        "adapter_tensors_copied": "unchanged source-defined exact successful value/schema",
+        "arm": "unchanged source-defined exact successful value/schema",
+        "base_unchanged": "unchanged source-defined exact successful value/schema",
+        "caller_RNG_preserved": "unchanged source-defined exact successful value/schema",
+        "checkpoint_sha256": "unchanged source-defined exact successful value/schema",
+        "confirmation_eligible": "unchanged source-defined exact successful value/schema",
+        "evaluation_mode_preserved": "unchanged source-defined exact successful value/schema",
+        "final_binding": "unchanged source-defined exact successful value/schema",
+        "inference_allowed": "unchanged source-defined exact successful value/schema",
+        "native_launch_authorized": "unchanged source-defined exact successful value/schema",
+        "no_grad_required_for_all_raw_forwards": "unchanged source-defined exact successful value/schema",
+        "operation_costs": "source-defined conserved actual helper primitive counts; all attempted==returned, failed==pending==0; final_adapter_parameter_copy exactly112; keep all installation/archive/base/RNG/copy/query/cleanup names",
+        "optimizer_policy": "unchanged source-defined exact successful value/schema",
+        "optimizer_restored": "unchanged source-defined exact successful value/schema",
+        "prompt_boundary": "unchanged source-defined exact successful value/schema",
+        "real_final_study_chain_verified": "unchanged source-defined exact successful value/schema",
+        "scope": "unchanged source-defined exact successful value/schema",
+        "status": "unchanged source-defined exact successful value/schema",
+        "study_checkpoint_qualification_established": "unchanged source-defined exact successful value/schema",
+        "training_RNG_restored": "unchanged source-defined exact successful value/schema",
+        "training_authorized": "unchanged source-defined exact successful value/schema"
+      }
+    },
+    "FactorByteObservation": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "parameter_order": "exact selected source-defined112 q/v parameter order",
+        "parameters": "exact112 names => shape, dtype=float32, bytes=4*prod(shape), raw-byte sha256 under hash_recipe; every source shape retained",
+        "hash_recipe": "IEEE754_FP32_LITTLE_ENDIAN_CONTIGUOUS_ROW_MAJOR_RAW_BYTES_V1",
+        "maximum_hash_read_bytes": "nonboolean integer <=2097152; source-defined four bytes per element; current largest factor65536 bytes",
+        "total_factor_bytes": "integer4587520 under unchanged rank8/source inventory",
+        "sha256": "new outer ASCII_CANONICAL body digest"
+      }
+    },
+    "FactorByteObservations": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "archive": "FactorByteObservation from actual selected native archive/copy validation",
+        "resident_before_capture": "FactorByteObservation after actual successful factor-only restore",
+        "resident_after_capture": "FactorByteObservation after every original row/capture/cleanup operation; exact order/parameters/raw hashes equal archive and before"
+      }
+    },
+    "StudyNativeAdmission": {
+      "additional_fields_allowed": false,
+      "source": "exact six fields accepted and retained by study_native_chunk.run_chunk",
+      "fields": {
+        "binding": "StudyFactoryAdmissionBinding",
+        "authorized": "true under actual separately owned study authorization",
+        "owned_supervision_verified": "true from actual exact owned process/Job/resource scope",
+        "model_load_and_constructor_in_scope": "true, with actual before-factory native observation evidence",
+        "observed_monotonic": "finite actual source-recorded observation clock",
+        "expires_monotonic": "finite clock: observed <= actual accepted/factory-bound time <= expires <= observed+0.2; original200ms window unchanged"
+      }
+    },
+    "StudyFactoryAdmissionBinding": {
+      "additional_fields_allowed": false,
+      "fields": {
+        "schema_version": "integer1",
+        "stage": "study_chunk_before_model_load_and_backend_constructor",
+        "arm": "same selected M1|M2",
+        "chunk_ordinal": "same selected1|2|3",
+        "seed": "integer101",
+        "recipe_sha256": "exact study recipe body SHA256",
+        "cohort_sha256": "exact registered arm occurrence order SHA256",
+        "registration_sha256": "exact unchanged schedule registration body SHA256",
+        "source_binding_sha256": "study_schedule.digest(exact current study recipe)",
+        "execution_scope": "UNQUALIFIED_NATIVE_IMPLEMENTATION"
+      }
+    }
+  }
+}

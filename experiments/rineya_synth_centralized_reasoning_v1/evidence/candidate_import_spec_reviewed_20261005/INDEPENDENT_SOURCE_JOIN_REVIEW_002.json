@@ -1,0 +1,211 @@
+{
+  "exact_preserved_predecessors": {
+    "ADVERSARIAL_CONTROLS.md": {
+      "bytes": 8063,
+      "sha256": "43727360e72d02a9439ceac322c39fccd749a9a7f968ef5fa7537bf5eb6f439d"
+    },
+    "PROPOSED_SCHEMAS.json": {
+      "bytes": 18622,
+      "sha256": "424646f2aa608e9c830cb381d971824551de79baed1956782e9614ea726e2fc1"
+    },
+    "README.md": {
+      "bytes": 15125,
+      "sha256": "27264fdcb6faccf76c8ac9556015725b4b612f818d648a39a7c48e97e37b73a1"
+    },
+    "SOURCE_SPECIFICATION_VALIDATION_001.json": {
+      "bytes": 4495,
+      "sha256": "502e1129792cdbe9cb671a838cac338b937d2e0d3c58b3621fa036dbc66b62e5"
+    },
+    "validate_source_specification.py": {
+      "bytes": 5843,
+      "sha256": "52553bec9fc64c94b2ef31176d691de39132a195f137347ad8b1c72c053a0ec5"
+    }
+  },
+  "existing_source_policy_bytes_unchanged": true,
+  "experiment_code_or_HEAD_changed": false,
+  "fidelity_check_count": 18,
+  "final_artifacts": {
+    "ADVERSARIAL_CONTROLS.md": {
+      "bytes": 10448,
+      "sha256": "e8bf65a8ca03dfa985f3ab84c34f84dc2662e9d723c8425f4944fb78f75e3428"
+    },
+    "PROPOSED_SCHEMAS.json": {
+      "bytes": 27895,
+      "sha256": "60a7dbee449231716a3362472cb7c5683f87009a42f07973ec78e77dacef3f45"
+    },
+    "README.md": {
+      "bytes": 18137,
+      "sha256": "53e671020831283ac8dbb99bd9ca61076dd393463b07342a059fbe039315dd21"
+    },
+    "SOURCE_SPECIFICATION_VALIDATION_002.json": {
+      "bytes": 5115,
+      "sha256": "93a28bf17688ddbedddec2481c00a101007752ef9f6dba1bf38426442fd973a1"
+    },
+    "validate_source_specification.py": {
+      "bytes": 9523,
+      "sha256": "7c8bfb6392118a8cced3f6d51e22672b5c33006189a015e9d0a9537b7cd08823"
+    }
+  },
+  "findings": [
+    {
+      "disposition": "Explicit step0=0..31 / step1-1 in README, RawTraceStep and capture input-position arithmetic.",
+      "id": "F001",
+      "problem": "README one-based prefix wording contradicted actual pre-generation prefix source and its own zero-based JSON schema.",
+      "source": "inference_component.py:208-217"
+    },
+    {
+      "disposition": "Separate PlainFileAnchor from explicit producer-role JsonDocumentAnchor with sealed/unsealed ASCII/UTF8 conventions; preserve original scorer source descriptors.",
+      "id": "F002",
+      "problem": "A closed FileAnchor required a producer-convention JSON body digest for Python auditor source; plain source has no such JSON body. Unsealed JSON role handling was also unspecified.",
+      "source": "score_import.py:82-90; final_adapter_inference.py:141-221"
+    },
+    {
+      "disposition": "Independent postcapture CandidateImportSelection binds original pre-capture selection, candidate identity and six audit/config pairs; retained only in loader/output provenance. Clarified collector registration as independent recipe/profile/dose, never selection-dependent perbatch config.",
+      "id": "F003",
+      "problem": "No six externally selected actual candidate audit/config anchors; adding future hashes to pre-capture selection would create candidate identity/config/audit hash cycle.",
+      "source": "score_import.py:173-195; original proposed CandidateIdentity/Row/Batch fields"
+    },
+    {
+      "disposition": "Exact FactorRestoreReceipt field set, complete-result caller ASCII hash and all returned/no failed/pending helper primitives with exactly112 factor-copy returns.",
+      "id": "F004",
+      "problem": "restore_final emits an unsealed23-field successful result and operation_costs, no source-produced result checksum.",
+      "source": "final_adapter_inference.py:141-221"
+    },
+    {
+      "disposition": "Exact112 ordered FP32 four-byte/row-major/little-endian archive-before-after observations,2MiB bound,current4,587,520 total bytes/max65,536 per factor. No claim that current small factors actually overflow old BF16-oriented chunk loop; new typed convention is explicit.",
+      "id": "F005",
+      "problem": "New per-factor archive/copy/preservation byte observations had no defined FP32 producer convention/order/shape/byte count.",
+      "source": "native_loader.py:_adapter_shapes; study_torch_backend.py:_tensor_hash; final_adapter_inference.py:203"
+    },
+    {
+      "disposition": "Closed exact six-field admission plus ten-field request/source200ms timing and actual attestation anchor/archive hash join; no authority inferred from bool/hash alone.",
+      "id": "F006",
+      "problem": "Owned study audit named retained archive/recipe joins but omitted explicit actual result.native_admission and retained fresh-start attestation content.",
+      "source": "study_native_chunk.py:318-353; study_torch_backend.py:224-233"
+    }
+  ],
+  "model_runtime_binary_OS_GPU_probes_or_grades": false,
+  "native_contract_implemented": false,
+  "new_native_receipts_or_approvals_created": false,
+  "planned_adversarial_control_count": 43,
+  "predecessor_directory": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\candidate_import_plan_work\\pre_independent_source_join_review_20261005",
+  "recorded_utc": "2026-10-05T16:38:06.616288+00:00",
+  "schema_version": 1,
+  "sha256": "76e3a5cc967321da699e4a62935c67e0cf1d2d0e1afef933440ca068ad01ec6e",
+  "source_after": {
+    "DEV_FINISH_POLICY_001.json": {
+      "bytes": 7803,
+      "sha256": "db808f1b53b1ebd8c716a246e80a4eb13a8275aad643b13a05017c9162990e7d"
+    },
+    "DEV_STATISTICS_POLICY.json": {
+      "bytes": 3091,
+      "sha256": "9db137bfa6c0e0e07ec8161e4127ec0a2ec20bb2c224529face447986e876d11"
+    },
+    "final_adapter_inference.py": {
+      "bytes": 17843,
+      "sha256": "bfa342e0f317614503ef5b24c9f098243feee6f0b6cdfef55e7659778d0e5c85"
+    },
+    "full27_chunk.py": {
+      "bytes": 29480,
+      "sha256": "62943cb47948ecda69fbe6193a032267228a1ce7b6b1a8aae5488b2b7676875e"
+    },
+    "full27_contract.py": {
+      "bytes": 16587,
+      "sha256": "48e2ac09350ed80377743abbbfbcbc88da862e964c7400a2a58cfe015020f356"
+    },
+    "inference_component.py": {
+      "bytes": 22005,
+      "sha256": "48c57278339f4e42ef7487e296d6051edb55650e61d0397b1c73305720651b0b"
+    },
+    "native_loader.py": {
+      "bytes": 20718,
+      "sha256": "43229ee3ab59719ddc076ce252fdab029a9b5f43c11c66e9ccc84d092f378174"
+    },
+    "rs_contract.py": {
+      "bytes": 7033,
+      "sha256": "cef135a06d4449917798e7e40685ac3589615663bfe47662e0a49207b67ccc6a"
+    },
+    "score_import.py": {
+      "bytes": 19690,
+      "sha256": "f859973eabc5ff0d04cd9befe0b41f97c7474abf8b1d46e768ebf4abc6ff551a"
+    },
+    "short_collection_worker.py": {
+      "bytes": 13997,
+      "sha256": "f0ee2c5fd92397ee1ff8cbbd55596e50c2251e9c313542f493fa3609162b7e5b"
+    },
+    "study_native_chunk.py": {
+      "bytes": 27567,
+      "sha256": "96f361052c34750313731c1fad0fe07d5ed48d376ee59850370cfeae99f59047"
+    },
+    "study_schedule.py": {
+      "bytes": 16896,
+      "sha256": "292e2f29ce7fb78c81e092d84e3b2a278310c8c8eed408d680e4d2db7340bf1d"
+    },
+    "study_torch_backend.py": {
+      "bytes": 30755,
+      "sha256": "c1aaa4c2efdc50d3025eacaaa45e37930a278b70e580dd9f8344e7337bcac04d"
+    }
+  },
+  "source_before": {
+    "DEV_FINISH_POLICY_001.json": {
+      "bytes": 7803,
+      "sha256": "db808f1b53b1ebd8c716a246e80a4eb13a8275aad643b13a05017c9162990e7d"
+    },
+    "DEV_STATISTICS_POLICY.json": {
+      "bytes": 3091,
+      "sha256": "9db137bfa6c0e0e07ec8161e4127ec0a2ec20bb2c224529face447986e876d11"
+    },
+    "final_adapter_inference.py": {
+      "bytes": 17843,
+      "sha256": "bfa342e0f317614503ef5b24c9f098243feee6f0b6cdfef55e7659778d0e5c85"
+    },
+    "full27_chunk.py": {
+      "bytes": 29480,
+      "sha256": "62943cb47948ecda69fbe6193a032267228a1ce7b6b1a8aae5488b2b7676875e"
+    },
+    "full27_contract.py": {
+      "bytes": 16587,
+      "sha256": "48e2ac09350ed80377743abbbfbcbc88da862e964c7400a2a58cfe015020f356"
+    },
+    "inference_component.py": {
+      "bytes": 22005,
+      "sha256": "48c57278339f4e42ef7487e296d6051edb55650e61d0397b1c73305720651b0b"
+    },
+    "native_loader.py": {
+      "bytes": 20718,
+      "sha256": "43229ee3ab59719ddc076ce252fdab029a9b5f43c11c66e9ccc84d092f378174"
+    },
+    "rs_contract.py": {
+      "bytes": 7033,
+      "sha256": "cef135a06d4449917798e7e40685ac3589615663bfe47662e0a49207b67ccc6a"
+    },
+    "score_import.py": {
+      "bytes": 19690,
+      "sha256": "f859973eabc5ff0d04cd9befe0b41f97c7474abf8b1d46e768ebf4abc6ff551a"
+    },
+    "short_collection_worker.py": {
+      "bytes": 13997,
+      "sha256": "f0ee2c5fd92397ee1ff8cbbd55596e50c2251e9c313542f493fa3609162b7e5b"
+    },
+    "study_native_chunk.py": {
+      "bytes": 27567,
+      "sha256": "96f361052c34750313731c1fad0fe07d5ed48d376ee59850370cfeae99f59047"
+    },
+    "study_schedule.py": {
+      "bytes": 16896,
+      "sha256": "292e2f29ce7fb78c81e092d84e3b2a278310c8c8eed408d680e4d2db7340bf1d"
+    },
+    "study_torch_backend.py": {
+      "bytes": 30755,
+      "sha256": "c1aaa4c2efdc50d3025eacaaa45e37930a278b70e580dd9f8344e7337bcac04d"
+    }
+  },
+  "status": "SOURCE_ONLY_INDEPENDENT_REVIEW_CORRECTED_FUTURE_SPEC_NO_IMPLEMENTATION_OR_AUTHORITY",
+  "study_complete": false,
+  "unresolved_requirements": [
+    "actual independently owned study wrapper/auditor and three study receipts per arm; full27/shared archive kind cannot substitute",
+    "actual candidate restore/collector/auditor qualification with complete resource/numeric/dose/copy/cleanup evidence and durable factor maps",
+    "two-phase trusted pre-capture and postcapture selections, every six complete64-batch native records and immutable384 joins",
+    "separately reviewed three-arm scorer/finish/statistics/guard and language/long-context authority; this importer remains unscored"
+  ]
+}
