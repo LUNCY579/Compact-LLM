@@ -1,5 +1,22 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: private producer/preservation/audit CPU composition reproduced
+
+The [private source workflow](PRIVATE_WORKFLOW_CPU_001.md) passes46 selected
+controls from the preserved copy, with unchanged64-file hashes and zero
+failures/errors/skips or forbidden imports. Five combined controls exercise
+actual context/bindings/core/writer/preservation/independent-body paths, including
+retained producer failure, source/copy mutation and current live-birth refusal.
+The launcher/interpreter topology gap is repaired in the CPU source controls.
+Independent frozen composition5 and topology12 controls also pass; Root
+acceptance binds their unchanged source map to the preserved46-control replay.
+
+This accepts private CPU mechanics only. Historical842 runtime bytes and host
+observations remain injected; public native CLI/main, loader/bootstrap/runtime,
+current ownership/resource/GPU qualification remain open. No model/GPU job ran
+and no M0 row was added. The original M0/M1/M2 transfer and preservation study
+remains active and unanswered; all native launch gates remain closed.
+
 ## 2026-10-05 UTC: actual outer filesystem CPU milestone preserved
 
 The [outer filesystem milestone](OUTER_FILESYSTEM_CPU_001.md) passes seven Root

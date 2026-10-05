@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [private source workflow CPU milestone](PRIVATE_WORKFLOW_CPU_001.md)
+reproduces46 selected controls from preserved bytes. Public native execution,
+registered runtime loading and current host/GPU qualification remain open.
+
 The [outer filesystem CPU milestone](OUTER_FILESYSTEM_CPU_001.md) reproduces26
 source controls from preserved bytes. Historical runtime/Git/layout seams remain
 explicitly injected; full native composition and qualification are still open.

@@ -1,0 +1,26 @@
+test_actual_context_binding_core_writer_preserve_audit_private_CPU_path (test_full_native_cpu_workflow.FullNativeCPUWorkflow.test_actual_context_binding_core_writer_preserve_audit_private_CPU_path) ... ERROR
+
+======================================================================
+ERROR: test_actual_context_binding_core_writer_preserve_audit_private_CPU_path (test_full_native_cpu_workflow.FullNativeCPUWorkflow.test_actual_context_binding_core_writer_preserve_audit_private_CPU_path)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_full_native_cpu_workflow.py", line 48, in test_actual_context_binding_core_writer_preserve_audit_private_CPU_path
+    result=A._CPU_integrated_native_audit_fixture(target,original_directory=frame['raw'],contract=C,context=context,_capability=C._mint_CPU_native_context_fixture(),death_verifier=lambda _:False,expected_preservation_file_sha256=hashlib.sha256(raw).hexdigest(),expected_preservation_body_sha256=preservation['sha256'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\CPU_composed_native_sources__tksgy6h\CPU_OUTER_CONTEXT_FILESYSTEM\repository\experiments\rineya_synth_centralized_reasoning_v1\prefix_input_owned_auditor.py", line 858, in _CPU_integrated_native_audit_fixture
+    token=_mint_CPU_native_schema_fixture();result=_native_preserved_body(preserved_directory,original_directory=original_directory,manifest=manifest,source_pins=source_pins,expected_preservation_file_sha256=expected_preservation_file_sha256,expected_preservation_body_sha256=expected_preservation_body_sha256,expected_head=value['expected_head'],anchors={'config_path':value['config_path'],'anchors':value['anchors']},_CPU_fixture_capability=token)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\CPU_composed_native_sources__tksgy6h\CPU_OUTER_CONTEXT_FILESYSTEM\repository\experiments\rineya_synth_centralized_reasoning_v1\prefix_input_owned_auditor.py", line 677, in _native_preserved_body
+    reader.read(Path(source), descriptor, owned=False)
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\CPU_composed_native_sources__tksgy6h\CPU_OUTER_CONTEXT_FILESYSTEM\repository\experiments\rineya_synth_centralized_reasoning_v1\prefix_input_owned_auditor.py", line 138, in read
+    fields(expected, {"bytes", "sha256"}, "raw byte descriptor")
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\CPU_composed_native_sources__tksgy6h\CPU_OUTER_CONTEXT_FILESYSTEM\repository\experiments\rineya_synth_centralized_reasoning_v1\prefix_input_owned_auditor.py", line 101, in fields
+    require(type(value) is dict and set(value) == set(names), "exact " + label + " schema")
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\CPU_composed_native_sources__tksgy6h\CPU_OUTER_CONTEXT_FILESYSTEM\repository\experiments\rineya_synth_centralized_reasoning_v1\prefix_input_owned_auditor.py", line 72, in require
+    raise ValueError(message)
+ValueError: exact raw byte descriptor schema
+
+----------------------------------------------------------------------
+Ran 1 test in 2.258s
+
+FAILED (errors=1)
