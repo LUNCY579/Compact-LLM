@@ -22,6 +22,8 @@ disk-checkpoint qualification under unchanged gates. No retry is opened here.
 
 The [short M0 collector CPU receipt](evidence/short_collector_cpu_20261005/cpu_validation.json)
 records three reviewed modules and 16 passing root CPU/mock controls. The
+complete [555-test CPU run](evidence/short_collector_full_cpu_validation_20261005.json)
+also passes without skips or source changes. The
 collector binds one of the 18 fixed 64-row batches, preserves token/row partials
 and terminal costs, requires unchanged base bytes and physical zero-B parity,
 and uses the existing owned-Job/resource/deadline/cleanup algorithm. Decoder
