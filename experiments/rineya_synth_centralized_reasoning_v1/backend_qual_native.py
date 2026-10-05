@@ -124,6 +124,10 @@ class NativeAdapter:
             name = self.entries[index][0]
             moments[name] = {key: self._hash_tensor(item[key]) for key in ("step", "exp_avg", "exp_avg_sq")}
         groups = deepcopy(state["optimizer"]["param_groups"])
+        # Witnesses cross a JSON predecessor boundary; raw optimizer snapshots
+        # keep tuples, while the detached witness uses the JSON list form.
+        for group in groups:
+            group["betas"] = list(group["betas"])
         result = {"schema_version": 1, "kind": WITNESS_KIND, "scope": SCOPE, "arm": self.backend.arm, "seed": self.backend.seed,
                   "recipe_sha256": self.backend.recipe_sha256, "cohort_sha256": self.backend.cohort_sha256,
                   "backend_source_sha256": self.backend.backend_source_sha256,

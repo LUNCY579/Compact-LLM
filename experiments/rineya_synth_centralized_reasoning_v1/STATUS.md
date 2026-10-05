@@ -1,5 +1,23 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: detached witness representation repair integrated
+
+The reviewed four-line normalization is integrated in `backend_qual_native.py`.
+Only deep-copied detached witness `betas` become JSON lists. Raw AdamW state,
+checkpoint state, numerical/resource checks and strict full-witness equality are
+unchanged. Five root regression controls pass in 11.009 seconds, including four
+negative state-change controls; the
+[affected backend run](evidence/witness_normalization_root_backend_cpu_20261005.json)
+passes all 61 tests with unchanged source hashes. The
+[portable regression history](evidence/witness_normalization_portable_cpu_20261005)
+and original staged repair remain preserved.
+
+The earlier native A result is retained as its exact old-source qualification.
+The patched source changes the qualification recipe, so a newly frozen fresh A
+followed by fresh B is required. The previous C9 will not seed a patched B.
+No reuse gateway, state-check weakening, native continuation claim or study
+warmstart is introduced. The native failure and diagnosis remain recorded below.
+
 ## 2026-10-05 UTC: fresh B stopped on witness representation; state bytes matched
 
 The [frozen B config](configs/SYNTH_BACKENDQ003_WORKER_RAM_B1.json) passed current
