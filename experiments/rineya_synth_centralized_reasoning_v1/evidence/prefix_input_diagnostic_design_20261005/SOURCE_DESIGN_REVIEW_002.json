@@ -1,0 +1,50 @@
+{
+  "artifact_after": {
+    "INPUT_CONSTRUCTION_DIAGNOSTIC.md": "aeed49606a1711c5f707788e6dbb1147d4c9723807f5395ddf99d655d8c1187a",
+    "PROPOSED_DOSE.json": "892411db61a2709d2410001701c06bbe258be4184aef7cc47362817d9a8177ef",
+    "compact_design": "4fe59049fd2fb12b538b7d4b8788e2fa24fc748d1d100041b35b480b39e2a3b7"
+  },
+  "artifact_before": {
+    "INPUT_CONSTRUCTION_DIAGNOSTIC.md": "aeed49606a1711c5f707788e6dbb1147d4c9723807f5395ddf99d655d8c1187a",
+    "PROPOSED_DOSE.json": "892411db61a2709d2410001701c06bbe258be4184aef7cc47362817d9a8177ef",
+    "compact_design": "4fe59049fd2fb12b538b7d4b8788e2fa24fc748d1d100041b35b480b39e2a3b7"
+  },
+  "artifact_bytes_unchanged": true,
+  "check_count": 8,
+  "checks": [
+    "exact31 originalsuccess operations plus4 namedterminalqueries =35",
+    "exact4 terminalqueries counted once beforeworkerresultpublication",
+    "prospective35+1 optionalfirsterrorframes+8guards+14queries=58phases/116markers \u2264128",
+    "finaldoc/list/counts consistent; historical001 retained",
+    "compactRootrequesteddesign exactlyjoins revisedDose",
+    "6752logicalbytes are2int64tensors, notreservation/actualoverhead",
+    "nohandlercode/launch;exactoriginalshortcircuit/policy required",
+    "001receiptandexactprior54phase-draft sourcebytes retained"
+  ],
+  "counts": {
+    "guard_sites": 8,
+    "max_guard_queries": 14,
+    "max_markers": 116,
+    "max_optional_first_error_frames": 1,
+    "max_phases": 58,
+    "scope_marker_reserve": 128,
+    "success_operations": 35
+  },
+  "no_impl_native_launch_sourceHEAD_or_rootedit": true,
+  "optional_frame_capture_policy": "at most one bounded capture for first originalcaughtfailure; laterterminal/cleanup errors retainedseparatelywithoutreplacingprimary",
+  "recorded_utc": "2026-10-05T17:59:58.093205+00:00",
+  "schema_version": 1,
+  "sha256": "e037bcbeaa76c71a62a158c359a8353871be771f3a441d1f07ca43a1a9e64996",
+  "source_pin_snapshot": {
+    "context_phase_contract.py": "021f5b3afa037fcaf4e07db1c5596e5bb7c0f15aba13abf9d77d8942344c5d53",
+    "context_phase_supervisor.py": "f77ccb03cb94b5155996dc946722397ef0c3c0cadf4b5eac35242cba7c57e405",
+    "context_phase_worker.py": "a4c69bb350a8255c638881c634f732a6b44cf1f0a5da583ba7d7bd0f901d4278",
+    "inference_component.py": "48c57278339f4e42ef7487e296d6051edb55650e61d0397b1c73305720651b0b",
+    "inference_qual_worker.py": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e",
+    "native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691",
+    "short_ram_monitor.py": "7c810bce7c3ee46a8b6f40ebd9f07c12a130ddd9fbd366719a88ef7ae82a13ee",
+    "worker_ram_probe.py": "e4ec5e19241b877b99cc1ed933514c6fb09721658d91666df900a9a1e00f75a4"
+  },
+  "status": "PASS_PROSPECTIVE_SOURCE_JSON_DIAGNOSTIC_ACCOUNTING_ONLY_NO_CODE_OR_NATIVE_QUALIFICATION",
+  "superseded_draft001_preserved": true
+}

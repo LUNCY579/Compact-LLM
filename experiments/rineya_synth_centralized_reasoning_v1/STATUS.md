@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: minimal input-construction design reviewed
+
+The [one-prefix diagnostic design](PREFIX_INPUT_DIAGNOSTIC_001.md) has independent
+source/JSON review: exact422-token exposed prefix, two int64 input/mask tensors,
+6752 logical bytes, original predicates and unchanged resource/numerical/owned
+floors. Prospective35 operations plus failure/guard queries derive58 phases;
+implementation must reconstruct all counts and preserve source short-circuit
+expressions before admission. Native scope/auditor/manifest are absent.
+
+CPU implementation is beginning in isolated staging. No model, CUDA allocation,
+original helper edit, synchronization or driver/TDR change has occurred. The
+design grants no automatic failed-batch retry and no M0/scoring membership.
+M0 remains256/384 audited raw rows, all unscored. Full acquisition/RS transfer
+and prior-correct retention remain unproved; the original goal stays active.
+
 ## 2026-10-05 UTC: bounded exception-frame CPU helper reviewed
 
 The [failure-location helper](EXCEPTION_FRAME_DIAGNOSTIC_001.md) passes12 builder
