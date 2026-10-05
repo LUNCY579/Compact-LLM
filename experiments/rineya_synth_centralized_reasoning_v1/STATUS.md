@@ -1,5 +1,21 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: current V2 preview independently reconstructed
+
+The [current package candidate/review and V2 preview](evidence/encoder_runtime_v2_current_preview_reviewed_20261005)
+are preserved after independent exact file/body anchor selection. The root
+current-byte package reconstruction and complete V2 preview rebuild pass with887
+runtime entries and all65 inherited pins retained. The staging preview correctly
+rejects as a final owned registration. Earlier pre-integration evidence rejects
+stale source bytes, and conflicting overlap hashes fail.
+
+This remains CPU preparation: no final registration/config, model/encoder/GPU/
+framework execution or launch authority is issued. The preserved clean-check
+failure preceded reads; later source-specific preparation explicitly records
+unrelated dirty Git state and relevant-byte equality. The final native clean-
+commit requirement remains. Independent V2 observation/terminal certification,
+the new M0 auditor, current model fit and language authority are still pending.
+
 ## 2026-10-05 UTC: reviewed phase-observed M0 collector integrated
 
 The [Phase3 collector](SHORT_PHASE_COLLECTOR_003.md) imports exact original math,
