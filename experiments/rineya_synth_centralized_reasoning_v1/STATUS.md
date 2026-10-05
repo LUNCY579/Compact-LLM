@@ -1,5 +1,27 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: Q003 phase A completed and independently audited
+
+After the denied attempt ended without a worker, a read-only GPU observation
+showed 6,912 MiB free. A new owned admission attempt used the same frozen Q003
+config and refreshed every gate. It completed in 179.172 seconds. The
+[independent phase-A audit](evidence/backendq003_worker_ram_A_attempt2_independent_audit_20261005.json)
+passes 122,071 checks: 202 forwards / 48,112 positions, 200 CE/backward rows,
+ten full updates, 16 full-base checks and 11,256 normal paired decoder records.
+All 13,111 API calls returned without failed/pending work. Maximum CE error was
+4.768e-7 below the unchanged 2e-6 bound. Resource/freshness/deadline gates and
+owned process/sampler/NVML/lease cleanup pass. The
+[217 raw files and 26 source snapshots](evidence/backendq003_worker_ram_A_attempt2_20261005)
+are preserved, with all 83 runtime, eight data and seven model-asset pins bound.
+
+C9's 450 saved storages match W9: 112 FP32 factors, 224 Adam moments, 112 step-9
+scalars and two RNG storages. W9/W10 shapes/order/groups/global LR/RNG/cursors
+match the registered source. This qualifies sustained-nine plus continuous
+update-ten mechanics only. Saved W10 tensor bytes and actual fresh-process
+restore/continuation are not proved by this phase; B must verify them. C9 is a
+qualification artifact and never a study warmstart. No full-resumed-nine,
+full-27, study training, scores, transfer or retention result follows.
+
 ## 2026-10-05 UTC: Q003 phase A denied before worker launch
 
 The [frozen Q003 phase-A config](configs/SYNTH_BACKENDQ003_WORKER_RAM_A1.json)
