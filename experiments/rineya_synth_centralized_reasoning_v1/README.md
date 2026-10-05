@@ -9,6 +9,12 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [current800-test CPU receipt](evidence/full_cpu_protocol_integration_validation_003_20261005.json)
+passes with unchanged112 source hashes. Scoped encoder/stdlib byte inventories
+and independent long validators are integrated; additive native consumption and
+the final terminal audit driver remain under review. The three-arm learning,
+fresh-family transfer and prior-correct retention comparison is still unmeasured.
+
 The [480-test CPU receipt](evidence/inference_path_cpu_validation_20261004.json)
 and preserved [task](evidence/task_guards_root1_20261004) and
 [long-context](evidence/long_context_guards_root1_20261004) packets support the

@@ -1,5 +1,22 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: current800-test CPU suite passes
+
+The [full current CPU run](evidence/full_cpu_protocol_integration_validation_003_20261005.json)
+passes all800 tests in363.181seconds (364.171seconds command wall), using the
+pinned local tokenizer with CUDA disabled. All112 package/test source hashes
+match before/after at `dbfb6ddb`. This covers the original registration/compiler,
+matched data, controllers, qualification and newly integrated inventory/audit
+helpers together. It does not qualify native model fit, train M1/M2, grade M0,
+enroll guards or establish acquisition/transfer/retention.
+
+The phase-observed M0 collector, additive encoder-runtime registration and final
+long terminal driver remain in staging for review. A cross-process tie in the
+collector's prospective budget metadata was identified before integration and
+is being made deterministic. A current package-only byte candidate/review is
+also retained for the V2 registration; earlier candidates remain historical.
+Model resource fit and qualified language authority remain unresolved.
+
 ## 2026-10-05 UTC: finite standard-library byte inventory integrated
 
 The [stdlib inventory](STDLIB_INVENTORY_001.md) binds779 runtime/source files
