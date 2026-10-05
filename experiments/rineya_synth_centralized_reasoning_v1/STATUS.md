@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: CPU pre-score provenance adapter integrated
+
+The [pre-score adapter](SCORE_IMPORT.md) binds complete compact002 populations,
+ordered inputs, raw native M0 responses and externally trusted audit/config
+anchors. All [32 root CPU controls](evidence/score_import_root_cpu_validation_20261005.json)
+pass with unchanged source hashes. The
+[reviewed history](evidence/score_import_reviewed_cpu_20261005) preserves the
+rejected predecessor and repair of real-panel-to-fixture rebranding. Actual
+192-row M0 and failed batch04 imports, fabricated native records and M1/M2
+schemas remain rejected. No actual response was graded or model/GPU executed.
+The cap32 correctness policy and native scoring authority remain unregistered.
+
 ## 2026-10-05 UTC: fresh normalized phase A completed and audited
 
 The [fresh normalized A config](configs/SYNTH_BACKENDQ003_NORMALIZED_WITNESS_A1.json)
