@@ -1,5 +1,21 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: bounded exception-frame CPU helper reviewed
+
+The [failure-location helper](EXCEPTION_FRAME_DIAGNOSTIC_001.md) passes12 builder
+and12 Root CPU controls on identical source bytes, plus independent focused
+source/hook/bounds review. It records bounded original Python frame metadata,
+redacts unregistered names and never reads locals/tensors/files or invokes model,
+CUDA, OS or probe APIs. Exact predecessors, pins and the422-token exposed
+diagnostic-input proposal remain preserved.
+
+No original worker/helper/auditor or native permission has changed. Next design
+and independently review a separate minimal input-construction diagnostic scope;
+existing D001 forbids tensor allocation, and the exposed prefix cannot substitute
+for a prompt-only M0 row. No automatic whole64 rerun, CUDA synchronization,
+driver/TDR change or lower resource/numerical check is authorized. M0 remains
+256/384 audited raw rows and unscored; the actual three-arm question is unproved.
+
 ## 2026-10-05 UTC: resumed batch05 failed; both errors retained
 
 After the owner offered to free GPU memory, a bounded
