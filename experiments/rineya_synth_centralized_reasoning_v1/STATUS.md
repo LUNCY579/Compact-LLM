@@ -1,5 +1,48 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: Phase3 batch04 native raw audit passed
+
+The [new batch04 receipt](evidence/short_m0_atomic_batch04_phase3_attempt1_20261005_independent_audit_20261005.json)
+passes18,897 actual terminal/raw/model-byte/decoder/resource/ownership and phase
+checks at launch HEAD `dc4e52ef3a7b6b6cde51f1ab54a68b2d63be5510`. All64 rows
+reached EOS. Physical work was514 forwards and122,358 input positions, including
+two zero-B parity forwards; no backwards or optimizer updates occurred.
+Whole scope128.750seconds and worker114.937seconds stayed within600seconds.
+Peak owned RSS1,287,929,856bytes, minimum sampled GPU free4,966,002,688bytes,
+CPU125ms and GPU515ms maximum sample gaps retain the original floors/freshness.
+
+The [terminal preservation](evidence/short_m0_atomic_batch04_phase3_attempt1_20261005/preservation_receipt.json)
+binds591 immutable raw files,131 source snapshots, exact config/inventory and six
+auditor dependencies. Root freshly observed all seven recorded owned FILETIME
+births dead; the lease terminal equals the supervisor receipt. The full auditor
+verified52,372 ledger markers,310 tensor-copy/two-digest trees and682 tensor
+chunks, in addition to its inherited raw/numerical/resource checks. The phase-only
+subproof remains a prerequisite; the final full-audit completion flag is true.
+
+The [reviewed launch/preservation history](evidence/phase3_launch_registration_reviewed_20261005/ROOT_PRESERVATION.json)
+retains config54/template14/final-inventory16 reviews, seven copier controls,
+independent copy/corruption controls and the actual read-only terminal gate.
+Review found and corrected a missing final destination-byte recheck before any
+actual copy. The first actual audit refused the new untracked evidence leaf at
+the clean-tree gate before heavy reads. Its refusal is retained. The successful
+audit used a command-scoped Git exclusion containing only this new evidence leaf
+and exclusive audit output, preserving tracked source/config visibility and the
+launch HEAD; no shared Git configuration or audit predicate changed.
+The [final independent receipt review](evidence/phase3_launch_registration_reviewed_20261005/independent/phase3_completed_audit_metadata_review_1791217597598712800.json)
+passes24 source/metadata/byte-pair checks, including actual raw/source snapshot
+rehashes and the exact two-path temporary exclusion. It performs no model,
+decoder, GPU, probe or correctness execution.
+
+M0 now has256/384 independently audited raw rows, all unscored. Two64-row slices
+remain. Old failed/partial batch04 attempts stay excluded. This scoped successful
+collection does not establish the cause or cure of earlier failures, broad model
+fit, correctness, enrollment, training, transfer, retention or a three-arm result.
+Next freeze new batch05/06 manifests/inventories and require fresh admission,
+terminal preservation and independent audit for each. Full27 qualification for
+both arms, actual separately admitted study training/candidate collection/import,
+scoring registration, long-context qualification and language authority remain
+separate unfinished gates. The research question remains unanswered.
+
 ## 2026-10-05 UTC: Phase3 batch04 configuration independently reviewed
 
 The new [fixed batch04 config](configs/SYNTH_SHORT_M0_ATOMIC_BATCH04_PHASE3_A1.json)
