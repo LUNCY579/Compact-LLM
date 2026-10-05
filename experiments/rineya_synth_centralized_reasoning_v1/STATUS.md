@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: current Windows GPU counters recorded separately
+
+A [read-only current counter snapshot](evidence/ram2_windows_gpu_counter_context_20261005)
+records82 dedicated/shared GPU-process-memory readings. Windows reported
+2,706,288,640 dedicated bytes for an external Python process, with a separate
+creation-time/parent identity join. This observes a different current process
+from the failed owned worker; it does not establish past allocation attribution.
+Counter adapter mapping to the NVML UUID and counter/free-memory equivalence
+remain unqualified. These counters do not replace the pinned NVML admission or
+runtime floors. No process was terminated or controlled, and no worker/model
+was launched. This supports a potential future phase/ownership diagnostic only.
+
 ## 2026-10-05 UTC: recorded GPU chronology narrowed without a cause claim
 
 A [read-only chronology estimate](evidence/ram2_recorded_resource_chronology_estimate_20261005.json)
