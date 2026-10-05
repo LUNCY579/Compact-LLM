@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: owned diagnostic integration plan source-reviewed
+
+The [new owned-integration plan](evidence/prefix_input_owned_plan_reviewed_20261005/OWNED_INTEGRATION_PLAN_001.json)
+passes independent source/JSON review, retaining explicit tensor-only permission,
+actual execution/byte/ownership/resource/final-IO evidence and no CPU-to-native
+status conversion. Four new contract/worker/supervisor/auditor boundaries are
+defined. Old helpers and accepted CPU core bytes remain unchanged.
+
+Runtime65 is explicitly incomplete for the new scope; nine current Torch Python
+candidate surfaces are pinned but are not a complete roster or qualification.
+Finite source/runtime inventory preparation continues in isolated staging.
+No native implementation, config or launch has occurred. M0 remains256/384
+audited raw rows, unscored; actual training/transfer/retention remain unfinished.
+
 ## 2026-10-05 UTC: one-prefix CPU core independently reviewed
 
 The [injected CPU implementation](PREFIX_INPUT_CPU_001.md) passes16 frozen

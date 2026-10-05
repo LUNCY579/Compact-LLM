@@ -46,3 +46,12 @@ D001 and M0 authorization cannot be reused for new tensor work. This core proves
 no native execution, prior CUDA/TDR cause, model recovery or fit, M0 membership,
 training, correctness, retention or transfer. Full M0/M1/M2 evidence remains
 required.
+
+The later [owned-integration plan](evidence/prefix_input_owned_plan_reviewed_20261005/OWNED_INTEGRATION_PLAN_001.json)
+has [independent source/JSON review](evidence/prefix_input_owned_plan_reviewed_20261005/prefix_owned_plan_review_1791225634577830800.json).
+It defines new contract/worker/supervisor/auditor boundaries while preserving the
+accepted CPU core and old helpers. The inherited runtime65 map is explicitly not
+a complete execution closure for this new scope. Nine missing Torch Python
+surfaces have source-pinned candidate identities; actual additional runtime
+coverage and identical preflight/worker/auditor consumption remain open. The
+plan grants no native implementation, manifest or launch authority.
