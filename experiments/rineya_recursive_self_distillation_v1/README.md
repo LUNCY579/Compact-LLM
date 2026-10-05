@@ -11,6 +11,52 @@ Parent repository branch: `research/post-training-mimo-centralized-v1` at
 production inference, model weights, historical results and other experiments
 remain unchanged. A new experiment does not inherit a prior native execution grant.
 
+## Offline readiness continuation (2026-10-05)
+
+Current RSD source has no qualified parent, reviewed real catalog or native RSD
+receipt. Preserved E0 v2 is `BLOCKED_E0/HOST_RAM_GUARD`, with zero loads/updates;
+that September receipt does not measure today's host. Centralized E1 preparation
+is not an SFT parent. RSD remains secondary to CE8/pruning/matched_mlp.
+
+The new model-free readiness entry point writes only a new BusinessProject
+directory outside tracked checkouts:
+
+```powershell
+$py = "C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe"
+& $py -B -m experiments.rineya_recursive_self_distillation_v1.readiness --output "C:/Users/clclc/BusinessProject/rsd001-readiness-NEW"
+```
+
+`READINESS.json` and `SOURCE_MANIFEST.json` bind the inspected bytes and missing
+prerequisites. `MINIMAL_COMPARISON_PROPOSAL.json` selects only `sft`, `frozen` and
+`evolving`, seed101, four acquisition plus one independent replay task per update,
+and **two** updates at a prespecified evaluated step2. Teacher version0 is common
+at update1; refreshing first differs at update2. The configuration is
+`configs/tiny_guidance_v1.json`. No SRCL arm is selected. Input identities remain
+unresolved, so this is a prospective design draft requiring exact qualification
+and preregistration before native work, not completed enrollment or permission.
+
+Native binding **schema2** now requires `catalog_review`. E0 consumption checks
+the producer's result, source/runtime and supervisor/GO receipts, including
+zero-adapter parity, sampled likelihood, padding/causality and all original
+checks. Process-only PASS is insufficient. Relevant E0 producer bytes, including
+the mask and watchdog-contract dependencies at its recorded commit, must match;
+its historical Git HEAD need not equal RSD HEAD. Parent review/enrollment now
+parses a completed schema2 RSD ordinary-SFT training receipt and checks the
+exported adapter, base, input/source hashes, runtime, steps and terminal evaluation.
+Fixtures and unfinished/non-SFT receipts stay ineligible even with review flags.
+Unknown external SFT receipt formats require a separately reviewed provenance
+adapter contract; template flags or a newly written attestation cannot substitute
+for genuine completed training evidence.
+
+Catalog review uses the strict contract in `catalog_qualification.py`: schema1,
+experiment `RSD-001`, status `REVIEWED_CATALOG_NOT_CAPABILITY_EVIDENCE`,
+`evidence_kind: real_review`, exact catalog/exclusion file bindings, a named
+reviewer, source/revision coverage with separate hash-bound ownership/license and
+independent reference-review evidence, historical exclusion authority evidence,
+and grouping/reference/parent-training-overlap attestations. Hashes check drift;
+they cannot prove review truth, intermediate reasoning or semantic decontamination.
+Existing schema1 native bindings must be rebuilt rather than relabeled.
+
 ## What runs
 
 | Component | Implementation |
@@ -170,7 +216,7 @@ parent adapter and starts a fresh optimizer.
 Create a hash-bound parent-stage configuration (no model work):
 
 ```powershell
-& $py -B -m $m bind --e0-config $e0cfg --e0-result "$art/e0/E0_RESULT.json" --catalog "$art/catalog.json" --exclusions "$art/exclusions.json" --parent-stage --output "$art/binding-parent.json"
+& $py -B -m $m bind --e0-config $e0cfg --e0-result "$art/e0/E0_RESULT.json" --catalog "$art/catalog.json" --exclusions "$art/exclusions.json" --catalog-review "$art/catalog-review.json" --parent-stage --output "$art/binding-parent.json"
 & $py -B -m $m native --mode parent --arm sft --plan $plan --binding "$art/binding-parent.json" --output "$art/parent-run" --max-updates 1 --allow-model-load --allow-training
 ```
 
@@ -192,14 +238,16 @@ this study, not an all-EOS or all-wrong checkpoint. Only after that actual revie
 
 ```powershell
 & $py -B -m $m review-parent --candidate "$art/parent-run/PARENT_CANDIDATE.json" --reviewed-by "YOUR_REVIEWER_NAME" --confirm-reviewed-parent --output "$art/REVIEWED_PARENT.json"
-& $py -B -m $m bind --e0-config $e0cfg --e0-result "$art/e0/E0_RESULT.json" --catalog "$art/catalog.json" --exclusions "$art/exclusions.json" --parent "$art/REVIEWED_PARENT.json" --output "$art/binding-rsd.json"
+& $py -B -m $m bind --e0-config $e0cfg --e0-result "$art/e0/E0_RESULT.json" --catalog "$art/catalog.json" --exclusions "$art/exclusions.json" --catalog-review "$art/catalog-review.json" --parent "$art/REVIEWED_PARENT.json" --output "$art/binding-rsd.json"
 ```
 
 The review command records an operator attestation; it cannot prove that someone
 actually reviewed the evidence or that the model is competent. The original
 candidate and training receipt remain unchanged. Existing genuine SFT parents can
 use `configs/parent.template.json` with real adapter/evidence hashes and an actual
-review instead; do not manufacture a native-success receipt to satisfy this schema.
+review plus a separately reviewed provenance adapter contract instead; unsupported
+external receipt formats currently fail closed. Do not manufacture a native-success
+receipt to satisfy this schema.
 
 ## 5. Run the no-update privilege probe
 

@@ -509,13 +509,17 @@ class ExecutionTests(unittest.TestCase):
         self.assertEqual(main(["review-parent", "--candidate", str(self.root / "PARENT_CANDIDATE.json"),
                           "--reviewed-by", "test fixture reviewer", "--output", str(self.root / "unapproved.json")]), 2)
         self.assertFalse((self.root / "unapproved.json").exists())
+        self.assertEqual(main(["review-parent", "--candidate", str(self.root / "PARENT_CANDIDATE.json"),
+                          "--reviewed-by", "test fixture reviewer", "--confirm-reviewed-parent",
+                          "--output", str(self.root / "fixture-reviewed.json")]), 2)
+        self.assertFalse((self.root / "fixture-reviewed.json").exists())
     def test_unfinished_parent_cannot_export(self):
         from experiments.rineya_recursive_self_distillation_v1.native import export_parent
         with self.assertRaises(ValueError):
             export_parent(make_backend(self.plan), {"status": "PAUSED", "steps": 1}, self.root, {}, {})
     def test_bind_hashes_exact_files(self):
         paths = {}
-        for name in ("e0-config", "e0-result", "catalog", "exclusions"):
+        for name in ("e0-config", "e0-result", "catalog", "exclusions", "catalog-review"):
             paths[name] = self.root / (name + ".json")
             paths[name].write_text("{}")
         argv = ["bind", "--parent-stage", "--output", str(self.root / "binding.json")]

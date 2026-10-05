@@ -31,6 +31,8 @@ def source_identity(root: Path):
     own = Path(__file__).parent
     paths = list(own.glob("*.py"))
     paths += [root / CENTRAL / "scripts/qualify_native.py",
+              root / CENTRAL / "scripts/supervise_native.py",
+              root / "experiments/maxrl_comp002_pretraining_v1/mechanics.py",
               root / "experiments/opallo_native_collector_v1/supervisor.py",
               root / "experiments/opallo_native_collector_v1/contract.py"]
     return {p.relative_to(root).as_posix(): file_hash(p) for p in sorted(paths)}
@@ -48,35 +50,23 @@ def checked_file(spec, base: Path):
 def inputs(binding_path: Path, plan: Plan, root: Path, *, parent_stage=False):
     binding_path = binding_path.resolve()
     cfg = read_json(binding_path)
-    require(set(cfg) == {"schema", "e0_config", "e0_result", "parent", "catalog", "exclusions"}
-            and cfg["schema"] == 1, "native binding schema")
+    require(set(cfg) == {"schema", "e0_config", "e0_result", "parent", "catalog", "exclusions", "catalog_review"}
+            and cfg["schema"] == 2, "native binding schema2 with reviewed catalog required")
     require(not parent_stage or cfg["parent"] is None, "parent stage starts with zero LoRA, not a hidden warm start")
     require(parent_stage or cfg["parent"] is not None, "RSD treatment needs reviewed SFT parent")
     files = {k: checked_file(cfg[k], binding_path.parent) for k in cfg if k != "schema" and cfg[k] is not None}
-    e0, result = (read_json(files[k]) for k in ("e0_config", "e0_result"))
-    from experiments.post_training_mimo_centralized_v1.scripts.qualify_native import validate_config
-    validate_config(e0)  # Inherit the unchanged central identity, tolerances and floors.
-    require(result["status"] == "PASS_E0_SCOPED_NO_EFFICACY_CLAIM"
-            and result["config_sha256"] == file_hash(files["e0_config"]), "genuine matching E0 PASS required")
-    for key in ("exact_native_load", "save_reload_resume_bitwise", "frozen_base_unchanged",
-                "finite_scoped_backward", "eos_pad_mask"):
-        require(result["checks"].get(key) is True, "missing E0 check: " + key)
+    e0 = read_json(files["e0_config"])
+    from .e0_qualification import validate_e0_chain
+    e0_evidence = validate_e0_chain(files["e0_config"], files["e0_result"], root)
     adapter = source_receipt = None
     if not parent_stage:
-        parent = read_json(files["parent"])
-        require(parent.get("schema") == 1 and parent.get("base_weight_sha256") == BASE_SHA256
-                and parent.get("native_sft_completed") is True
-                and parent.get("parent_evaluation_reviewed") is True
-                and type(parent.get("optimizer_steps")) is int and parent["optimizer_steps"] > 0
-                and type(parent.get("reviewed_by")) is str and bool(parent["reviewed_by"].strip()),
-                "operator-reviewed real verified-SFT parent required; no fixture may authorize training")
-        adapter = checked_file(parent["adapter"], files["parent"].parent)
-        source_receipt = checked_file(parent["source_run_receipt"], files["parent"].parent)
-        require(adapter.suffix == ".safetensors", "adapter must be safetensors")
+        from .parent_qualification import validate_parent
+        adapter, source_receipt, _ = validate_parent(files["parent"])
     tasks, _ = load_catalog(files["catalog"])
     audit = validate_catalog(tasks, read_json(files["exclusions"]))
     require_training_roles(tasks)
-    require(not any("fixture" in t.provenance.casefold() for t in tasks), "fixture cannot enroll natively")
+    from .catalog_qualification import validate_catalog_review
+    catalog_review = validate_catalog_review(files["catalog"], files["exclusions"], files["catalog_review"])
     require(len({t.parent for t in tasks if t.split == "train_selection"}) >= 8,
             "need at least 8 independent selection parents for bounded qualification")
     sources = source_identity(root)
@@ -85,6 +75,7 @@ def inputs(binding_path: Path, plan: Plan, root: Path, *, parent_stage=False):
                 "adapter": file_hash(adapter) if adapter else "ZERO_LORA_ON_EXACT_TITAN",
                 "parent_evidence": file_hash(source_receipt) if source_receipt else "parent_stage",
                 "source": digest(sources), "sources": sources, "base": BASE_SHA256,
+                "e0_evidence": e0_evidence, "catalog_review": catalog_review,
                 "evidence": "native_exact_titan", "semantic_decontamination": False}
     return e0, tasks, adapter, identity, audit
 
@@ -344,7 +335,7 @@ def qualify(backend, tasks, plan, arm, checkpoint_path):
                             "longer contexts", "new runtime/plan/parent"], "results": [first, second, repeated]}
 
 
-def export_parent(backend, result, out, identity, runtime):
+def export_parent(backend, result, out, identity, runtime, *, source_commit=None):
     """Export a completed SFT candidate, never auto-approve its capability quality."""
     from safetensors.torch import save_file
     require(result["status"] == "COMPLETE" and result["steps"] > 0, "unfinished parent cannot be exported")
@@ -352,7 +343,10 @@ def export_parent(backend, result, out, identity, runtime):
     require(not adapter.exists(), "parent adapter already exists")
     save_file(backend.snapshot(), str(adapter))
     receipt = out / "PARENT_TRAINING_RECEIPT.json"
-    write_new(receipt, {"status": "COMPLETED_SFT_CANDIDATE_REVIEW_REQUIRED", "identity": identity,
+    write_new(receipt, {"schema": 2, "experiment": "RSD-001", "mode": "parent", "arm": "sft",
+                      "source_commit": source_commit,
+                      "exported_adapter": {"path": str(adapter.resolve()), "sha256": file_hash(adapter)},
+                      "status": "COMPLETED_SFT_CANDIDATE_REVIEW_REQUIRED", "identity": identity,
                       "runtime": runtime, "result": result, "native_efficacy_claim": False})
     write_new(out / "PARENT_CANDIDATE.json", {"schema": 1, "base_weight_sha256": BASE_SHA256,
               "native_sft_completed": True, "parent_evaluation_reviewed": False,
@@ -414,7 +408,7 @@ def worker(request_path):
                           dict(identity, runtime=runtime, arm=request["arm"]),
                           max_updates=request["max_updates"], resume=request["resume"]))
             if request["mode"] == "parent" and result["status"] == "COMPLETE":
-                export_parent(backend, result, out, identity, runtime)
+                export_parent(backend, result, out, identity, runtime, source_commit=request["source_commit"])
         else:
             # Bound diagnostic work too; not only optimizer work has a cost.
             counts = {"processed_tokens": 0, "generated_tokens": 0, "model_calls": 0}

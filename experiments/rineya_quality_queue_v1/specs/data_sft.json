@@ -1,0 +1,92 @@
+{
+  "id": "data_sft",
+  "priority": 4,
+  "title": "Verified ordinary-SFT data and parent readiness",
+  "checkout": "C:/Users/clclc/BusinessProject/Rineya-Dataset",
+  "expected_branch": null,
+  "owner": {
+    "thread_id": "01a109dd-a8bc-73d2-bf9c-5ebc09a00cde",
+    "title": "Plan Rineya dataset pipeline",
+    "host_id": "local"
+  },
+  "candidate": {
+    "model_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+    "adapter_sha256": null,
+    "checkpoint": "NOT_MEASURED",
+    "status": "NO_ADMITTED_COMPLETED_ORDINARY_SFT_PARENT"
+  },
+  "evidence": [
+    {"id": "dataset_milestone", "path": "C:/Users/clclc/BusinessProject/Rineya-Dataset/Rineya_Intelligence_Quality_Foundry_v1/program/20261005_canonical_train_milestone_v1/STATUS.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "dataset_milestone_interpretation", "path": "C:/Users/clclc/BusinessProject/Rineya-Dataset/Rineya_Intelligence_Quality_Foundry_v1/program/20261005_canonical_train_milestone_v1/MILESTONE.md", "classification": "preparation", "role": "source", "format": "text"},
+    {"id": "dataset_strategy", "path": "C:/Users/clclc/BusinessProject/Rineya-Dataset/Rineya_Intelligence_Quality_Foundry_v1/program/20261004_quality_strategy_v2/PLAN.md", "classification": "preparation", "role": "protocol", "format": "text"},
+    {"id": "dataset_next_actions", "path": "C:/Users/clclc/BusinessProject/Rineya-Dataset/Rineya_Intelligence_Quality_Foundry_v1/program/20261004_quality_strategy_v2/NEXT_ACTIONS.json", "classification": "preparation", "role": "proposal", "format": "json"},
+    {"id": "dataset_quality_policy", "path": "C:/Users/clclc/BusinessProject/Rineya-Dataset/Rineya_Intelligence_Quality_Foundry_v1/config/quality_policy.json", "classification": "preparation", "role": "protocol", "format": "json"},
+    {"id": "empty_output_contract", "path": "C:/Users/clclc/BusinessProject/Rineya-Dataset/Rineya_Intelligence_Quality_Foundry_v1/program/20261005_output_contract_plan_addendum_v1/ADDENDUM.md", "classification": "preparation", "role": "proposal", "format": "text"},
+    {"id": "empty_output_review", "path": "C:/Users/clclc/BusinessProject/Rineya-Dataset/Rineya_Intelligence_Quality_Foundry_v1/program/20261005_output_contract_plan_addendum_v1/REVIEW_STATUS.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "titan_static_receipt", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/post_training_mimo_centralized_v1/receipts/titan_static_v1/PRIMARY_STUDENT_RECEIPT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "central_current_best", "path": "C:/Users/clclc/BusinessProject/ChatBubble-post-training-Mimo/experiments/post_training_mimo_centralized_v1/CURRENT_BEST_RECIPE.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "central_blocked_audit", "path": "C:/Users/clclc/BusinessProject/ChatBubble-post-training-Mimo/experiments/post_training_mimo_centralized_v1/receipts/CONTINUATION_007_BLOCKED_AUDIT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "synth_current_status", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/STATUS.md", "classification": "preparation", "role": "source", "format": "text"},
+    {"id": "synth_pilot_decisions", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/PILOT_DECISIONS.json", "classification": "preparation", "role": "protocol", "format": "json"},
+    {"id": "synth_runtime_candidate", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/PREFIX_RUNTIME_CANDIDATE_001.md", "classification": "fixture", "role": "source", "format": "text"},
+    {"id": "synth_m0_admission_denial", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/evidence/short_m0_atomic_batch05_phase3_attempt1_20261005_admission_denial_audit.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "synth_m0_failed_attempt", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/evidence/short_m0_atomic_batch05_phase3_attempt2_20261005_failed_terminal_audit.json", "classification": "native", "role": "receipt", "format": "json"}
+  ],
+  "source_assets": [
+    {
+      "name": "Recorded unadapted Titan source",
+      "kind": "model_weights",
+      "path": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Titan-Experimental-1.0.0-devfreeze/model.safetensors",
+      "sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+      "evidence_id": "titan_static_receipt",
+      "json_pointer": "/weight_sha256",
+      "custody_status": "RECORDED_VERIFIED_METADATA"
+    }
+  ],
+  "metrics": [
+    {"name": "ordinary_sft_acquisition", "numerator": null, "denominator": null, "unit": "independent_parent_correctness", "evidence_id": "dataset_milestone_interpretation", "text_anchor": "No rows were admitted and training readiness remains false.", "status": "NOT_MEASURED"},
+    {"name": "source_correct_retention", "numerator": null, "denominator": null, "unit": "prior_correct_rows_preserved", "evidence_id": "dataset_strategy", "text_anchor": "Only this level supports learning or retention claims.", "status": "NOT_MEASURED"},
+    {"name": "reliable_answering", "numerator": null, "denominator": null, "unit": "qualified_complete_correct_responses", "evidence_id": "synth_current_status", "text_anchor": "256/384 raw rows, unscored; the full three-arm goal stays active and unanswered.", "status": "NOT_MEASURED"},
+    {"name": "full_target_eos_termination_fit", "numerator": null, "denominator": null, "unit": "qualified_supervised_positions", "evidence_id": "empty_output_contract", "text_anchor": "A valid empty target is not yet a qualified training sequence.", "status": "NOT_MEASURED"},
+    {"name": "response_length_without_quality_loss", "numerator": null, "denominator": null, "unit": "generated_tokens_per_complete_correct_response", "evidence_id": "empty_output_review", "text_anchor": "\"model_gains_or_retention_measured\": false", "status": "NOT_MEASURED"},
+    {"name": "fresh_family_reasoning_transfer", "numerator": null, "denominator": null, "unit": "independent_fresh_parent_correctness", "evidence_id": "synth_current_status", "text_anchor": "actual training/transfer/retention remain unfinished.", "status": "NOT_MEASURED"}
+  ],
+  "requirements": [
+    {"id": "canonical_file_mechanical_qa", "status": "PASS", "evidence_ids": ["dataset_milestone"], "reason": "73,600 canonical file rows have completed mechanical QA. Related30,000 chat exports are derivatives, not independent examples or native model evidence."},
+    {"id": "independent_public_reference_and_dual_row_review", "status": "BLOCKED", "evidence_ids": ["dataset_milestone_interpretation", "dataset_strategy"], "reason": "Fresh non-author semantic/adversarial review, production grader qualification and independent public-prompt reference closure remain separate admission gates."},
+    {"id": "source_use_ancestry_and_split_closure", "status": "BLOCKED", "evidence_ids": ["dataset_strategy", "dataset_next_actions"], "reason": "Source-bound rights/use, recoverable source ancestry, derivative role propagation and cross-split/semantic overlap closure are required; actor joins and renamed rows do not establish these."},
+    {"id": "complete_target_eos_masks_and_no_truncation", "status": "BLOCKED", "evidence_ids": ["empty_output_contract", "empty_output_review", "dataset_quality_policy"], "reason": "Actual renderer/loader/tokenizer full-target and terminal-EOS fit, first-supervised-position causal shift and prefix/history/padding masks are unqualified; instructed empty targets remain valid data but cannot imply qualified EOS-only supervision."},
+    {"id": "independent_replay_and_source_correct_guards", "status": "BLOCKED", "evidence_ids": ["dataset_strategy", "dataset_next_actions"], "reason": "Replay TRAIN must be disjoint from protected guards; source-correct and stage-relative acquired-skill membership needs actual qualified complete baseline responses and fixed denominators."},
+    {"id": "completed_qualified_sft_parent", "status": "BLOCKED", "evidence_ids": ["central_current_best", "central_blocked_audit", "synth_current_status"], "reason": "Central current-best has no parent or trained recipe. SYNTH M0 remains partial/unscored and study comparison unfinished; unfinished E1/SYNTH preparation cannot manufacture an SFT parent or import another lane permit."},
+    {"id": "synth_native_recovery_and_runtime_closure", "status": "BLOCKED", "evidence_ids": ["synth_m0_admission_denial", "synth_m0_failed_attempt", "synth_runtime_candidate"], "reason": "Batch05 attempt1 denied admission; attempt2 failed with CUDA illegal memory access then stale CPU telemetry. Partial rows stay excluded. Current source-only runtime candidate and CPU controls supply no native recovery/fit or model qualification."},
+    {"id": "quality_and_retention_behavior", "status": "NOT_MEASURED", "evidence_ids": ["dataset_milestone", "synth_current_status"], "reason": "No ordinary-SFT acquisition, fresh reasoning transfer, reliable-answering, broad retention or length-quality outcome is established by dataset QA or unscored model captures."},
+    {"id": "separate_owner_execution_authority", "status": "BLOCKED", "evidence_ids": ["dataset_next_actions", "dataset_quality_policy", "synth_pilot_decisions"], "reason": "The queue prepares an offline admission workflow only. Dataset, central E1 and SYNTH keep distinct owners/gates; no native/model jobs, training or parent promotion is authorized here."}
+  ],
+  "next_proposal": {
+    "phase": "OFFLINE_ORDINARY_SFT_ADMISSION_AND_PARENT_READINESS_PACKET",
+    "proposal_evidence_id": "dataset_next_actions",
+    "requires": ["independent_public_reference_and_dual_row_review", "source_use_ancestry_and_split_closure", "complete_target_eos_masks_and_no_truncation", "independent_replay_and_source_correct_guards", "separate_owner_execution_authority"],
+    "limits": {"native_model_jobs": 0, "native_optimizer_updates": 0, "native_evaluations": 0, "protected_bank_reads": 0, "qualified_total_tokens": 512, "max_completion_tokens_including_eos": 128, "target_truncation_allowed": false, "packing_allowed": false, "maximum_parent_repairs": 3},
+    "native_execution_authorized": false
+  },
+  "observed_patterns": [
+    {"evidence_id": "dataset_milestone", "text": "73,600 canonical rows passed file mechanics; row_admission, native_readiness and training_authorization remain false, with model gains and retention unmeasured."},
+    {"evidence_id": "empty_output_contract", "text": "657 instructed-empty IFC targets are semantically valid mechanics outcomes. Missing capture, wrong silence, truncation or all-masked termination cannot be turned into success; content and terminal supervision need separate actual counts."},
+    {"evidence_id": "synth_current_status", "text": "SYNTH has256/384 complete audited raw M0 rows, all unscored; no finished acquisition/RS transfer/retention comparison or admitted ordinary-SFT parent."},
+    {"evidence_id": "synth_m0_failed_attempt", "text": "Batch05 attempt2 preserves255 physical forwards/90,325 positions and19 partial final rows after two separately recorded failures; zero complete64-row population accepted. These are failed exposure/accounting records, not capability scores."}
+  ],
+  "exposure": {"status": "DATASET_PREPARATION_AND_PARTIAL_UNSCORED_SYNTH_CAPTURE", "scope": "Dataset TRAIN/CAL/DEV remain their declared exposed roles; completed and partial SYNTH model captures retain their original exposure. Protected CHECK/FINAL and confirmation bodies remain closed. Extracted Rineya-Dataset is NOT_GIT, so no branch is invented.", "protected_bank_access": false},
+  "quality_gates": [
+    {"id": "data_public_reference_correctness", "evidence_ids": ["dataset_strategy"], "rule": "Independently solve the actual public prompt; applicable wrong-output, evidence-dependence and invariance controls must pass for every accepted revision."},
+    {"id": "data_non_author_dual_review", "evidence_ids": ["dataset_strategy", "dataset_quality_policy"], "rule": "Two assigned distinct semantic/adversarial non-author reviewers bind exact public packets; critical/major disagreement remains HOLD."},
+    {"id": "data_ancestry_and_role_firewall", "evidence_ids": ["dataset_strategy"], "rule": "Permission and ancestry must be evidenced; parents, connected source dependencies and all derivatives retain prospective roles; no failed evaluation prompt or answer enters training."},
+    {"id": "data_full_target_and_required_eos", "evidence_ids": ["empty_output_contract", "dataset_quality_policy"], "rule": "Retain instructed empty strings, reject missing/incomplete/truncated/instruction-incorrect targets, and qualify actual required terminal EOS, boundaries, masks, causal shift and full lengths without truncation."},
+    {"id": "data_fixed_source_and_stage_retention", "evidence_ids": ["dataset_strategy", "dataset_next_actions"], "rule": "Protected source-correct evaluations stay disjoint from replay; acquired A is enrolled after A before B, with fixed row/parent membership and losses reported separately from repairs."},
+    {"id": "data_model_evidence_only_for_learning", "evidence_ids": ["dataset_strategy", "dataset_milestone"], "rule": "Dataset QA, tokenization, agent agreement and lower training loss cannot substitute for qualified matched base/candidate behavior, acquisition, transfer and retention evidence."}
+  ],
+  "completed_failed_attempts": [
+    {"id": "synth_m0_batch05_attempt1", "evidence_id": "synth_m0_admission_denial", "status": "ADMISSION_DENIED", "scope": "No worker or model work; recorded GPU free amount below unchanged admission floor. Preserve denial and require fresh owner-qualified admission."},
+    {"id": "synth_m0_batch05_attempt2", "evidence_id": "synth_m0_failed_attempt", "status": "FAILED_PARTIAL_EXCLUDED_FROM_COMPLETE_M0", "scope": "Worker CUDA error preceded later stale external CPU telemetry abort. All partial exposure/costs remain evidence; no automatic retry or quality credit."}
+  ],
+  "advancement": false
+}

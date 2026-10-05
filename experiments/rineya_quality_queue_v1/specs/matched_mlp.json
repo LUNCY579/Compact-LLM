@@ -1,0 +1,294 @@
+{
+  "id": "matched_mlp",
+  "priority": 3,
+  "title": "Exact-parent matched MLP reliability qualification",
+  "checkout": "C:/Users/clclc/BusinessProject/SupaExperiment-matched-mlp-shipping-v1",
+  "expected_branch": "research/supa-a1.1-matched-mlp-shipping-v1",
+  "owner": {
+    "thread_id": "01a10d63-d938-7ea0-8595-8b2ce76be38c",
+    "title": "Complete MLP-SHIP-001 M1 mechanics",
+    "host_id": "local"
+  },
+  "candidate": {
+    "model_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "adapter_sha256": "f2ccf8faa099ba9e0dc5b07474c6a3a4ec42f5bee9141422dd795d9ae6612d79",
+    "checkpoint": "NOT_MEASURED",
+    "status": "HISTORICAL_TRAINED_SIDECAR_CURRENT_NATIVE_QUALIFICATION_BLOCKED"
+  },
+  "evidence": [
+    {
+      "id": "transfer3_reconciliation",
+      "path": "C:/Users/clclc/BusinessProject/supa-run-outputs/nonrecurrent-reconciliation-20261005-01a10d63/reconciliation-final.json",
+      "classification": "historical",
+      "role": "receipt",
+      "format": "json"
+    },
+    {
+      "id": "reconciliation_interpretation",
+      "path": "C:/Users/clclc/BusinessProject/SupaExperiment-nonrecurrent-adaptation-v1/experiments/nonrecurrent_adaptation_v1/RECONCILIATION_2026-10-05.md",
+      "classification": "historical",
+      "role": "source",
+      "format": "text"
+    },
+    {
+      "id": "m1_failure",
+      "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/FINAL_AUDIT.json",
+      "classification": "preparation",
+      "role": "receipt",
+      "format": "json"
+    },
+    {
+      "id": "m1_final_handoff",
+      "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/M2_HANDOFF_FINAL.json",
+      "classification": "preparation",
+      "role": "receipt",
+      "format": "json"
+    },
+    {
+      "id": "m1_report",
+      "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/REPORT.md",
+      "classification": "preparation",
+      "role": "source",
+      "format": "text"
+    },
+    {
+      "id": "m1_next_attempt_proposal",
+      "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/NEXT_ATTEMPT_PROPOSAL.json",
+      "classification": "preparation",
+      "role": "proposal",
+      "format": "json"
+    },
+    {
+      "id": "mlp_preregistration",
+      "path": "C:/Users/clclc/BusinessProject/SupaExperiment-matched-mlp-shipping-v1/experiments/matched_mlp_shipping_v1/PREREGISTRATION.md",
+      "classification": "preparation",
+      "role": "protocol",
+      "format": "text"
+    },
+    {
+      "id": "m2_status",
+      "path": "C:/Users/clclc/BusinessProject/SupaExperiment-matched-mlp-m2-readiness-v1/experiments/matched_mlp_m2_v1/readiness/STATUS.json",
+      "classification": "preparation",
+      "role": "receipt",
+      "format": "json"
+    },
+    {
+      "id": "m2_proposal",
+      "path": "C:/Users/clclc/BusinessProject/SupaExperiment-matched-mlp-m2-readiness-v1/experiments/matched_mlp_m2_v1/readiness/NATIVE_RUN_PROPOSAL.md",
+      "classification": "preparation",
+      "role": "proposal",
+      "format": "text"
+    },
+    {
+      "id": "m2_fixture_receipt",
+      "path": "C:/Users/clclc/BusinessProject/SupaExperiment-matched-mlp-m2-readiness-v1/experiments/matched_mlp_m2_v1/readiness/evidence/2026-10-05-integration/RESULT.json",
+      "classification": "fixture",
+      "role": "receipt",
+      "format": "json"
+    }
+  ],
+  "source_assets": [
+    {
+      "name": "Exact Supa A1.1 frozen parent",
+      "kind": "model_weights",
+      "path": "C:/Users/clclc/BusinessProject/SupaExperiment-matched-mlp-shipping-v1/Rineya-Supa-A1.1/model.safetensors",
+      "sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+      "evidence_id": "m1_final_handoff",
+      "json_pointer": "/source_snapshot/model_files/model.safetensors",
+      "custody_status": "RECORDED_VERIFIED_METADATA"
+    },
+    {
+      "name": "Historical CAPABILITY-1 matched MLP sidecar",
+      "kind": "trained_adapter",
+      "path": "C:/Users/clclc/BusinessProject/SupaExperiment-matched-mlp-shipping-v1/experiments/nonrecurrent_adaptation_v1/evidence/2026-09-10-capability1/adapter/adapter.safetensors",
+      "sha256": "f2ccf8faa099ba9e0dc5b07474c6a3a4ec42f5bee9141422dd795d9ae6612d79",
+      "evidence_id": "m1_final_handoff",
+      "json_pointer": "/source_snapshot/adapter_tensor_sha256",
+      "custody_status": "RECORDED_VERIFIED_METADATA"
+    }
+  ],
+  "metrics": [
+    {
+      "name": "historical_bias0_answerable_correct",
+      "numerator": 204,
+      "denominator": 720,
+      "unit": "count",
+      "scope_unit": "correct_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/answerable",
+      "denominator_json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/answerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_bias0_unanswerable_correct",
+      "numerator": 240,
+      "denominator": 240,
+      "unit": "count",
+      "scope_unit": "correct_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/unanswerable",
+      "denominator_json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/unanswerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_bias0_answerable_repairs_vs_frozen",
+      "numerator": 54,
+      "denominator": 720,
+      "unit": "count",
+      "scope_unit": "paired_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/answerable_pair/better",
+      "denominator_json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/answerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_bias0_answerable_damages_vs_frozen",
+      "numerator": 43,
+      "denominator": 720,
+      "unit": "count",
+      "scope_unit": "paired_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/answerable_pair/worse",
+      "denominator_json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/answerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_canonical_bias_answerable_correct",
+      "numerator": 202,
+      "denominator": 720,
+      "unit": "count",
+      "scope_unit": "correct_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/answerable",
+      "denominator_json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/answerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_canonical_bias_unanswerable_correct",
+      "numerator": 240,
+      "denominator": 240,
+      "unit": "count",
+      "scope_unit": "correct_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/unanswerable",
+      "denominator_json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/unanswerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_canonical_bias_answerable_repairs_vs_frozen",
+      "numerator": 99,
+      "denominator": 720,
+      "unit": "count",
+      "scope_unit": "paired_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/answerable_pair/better",
+      "denominator_json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/answerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_canonical_bias_answerable_damages_vs_frozen",
+      "numerator": 6,
+      "denominator": 720,
+      "unit": "count",
+      "scope_unit": "paired_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/answerable_pair/worse",
+      "denominator_json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/answerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_bias0_state_tracking_correct_confounded_bank",
+      "numerator": 5,
+      "denominator": 360,
+      "unit": "count",
+      "scope_unit": "correct_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/gate_neutral/families/state_tracking/answerable/arms/matched_mlp/correct",
+      "denominator_json_pointer": "/historical_endpoint_tables/gate_neutral/families/state_tracking/answerable/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_canonical_state_tracking_correct_confounded_bank",
+      "numerator": 3,
+      "denominator": 360,
+      "unit": "count",
+      "scope_unit": "correct_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/canonical/families/state_tracking/answerable/arms/matched_mlp/correct",
+      "denominator_json_pointer": "/historical_endpoint_tables/canonical/families/state_tracking/answerable/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "reliable_answering_at_live_bias_3_75",
+      "numerator": null,
+      "denominator": null,
+      "unit": "paired_correct_rows",
+      "evidence_id": "reconciliation_interpretation",
+      "text_anchor": "Neither is a measured reduction at 3.75.",
+      "status": "NOT_MEASURED"
+    },
+    {
+      "name": "broad_conversation_retention",
+      "numerator": null,
+      "denominator": null,
+      "unit": "prior_correct_rows",
+      "evidence_id": "mlp_preregistration",
+      "text_anchor": "Add ordinary conversation/retention cases prospectively;",
+      "status": "NOT_MEASURED"
+    },
+    {
+      "name": "response_length_at_live_policy",
+      "numerator": null,
+      "denominator": null,
+      "unit": "generated_tokens_per_complete_response",
+      "evidence_id": "m1_report",
+      "text_anchor": "No pretrained model load or native forward,",
+      "status": "NOT_MEASURED"
+    },
+    {
+      "name": "reasoning_generalization",
+      "numerator": null,
+      "denominator": null,
+      "unit": "independent_parent_correctness",
+      "evidence_id": "reconciliation_interpretation",
+      "text_anchor": "state-tracking capability or population generalization.",
+      "status": "NOT_MEASURED"
+    }
+  ],
+  "requirements": [
+    {"id": "recorded_asset_custody", "status": "PASS", "evidence_ids": ["m1_final_handoff"], "reason": "Final offline postflight records unchanged exact parent and historical adapter bytes; this is metadata custody, not native endpoint qualification."},
+    {"id": "original_m1_native_mechanics", "status": "BLOCKED", "evidence_ids": ["m1_failure", "m1_report"], "reason": "One original-owner attempt failed at supervisor parent-PID identity before native import. Required native checks never ran."},
+    {"id": "fresh_owner_retry_authority", "status": "BLOCKED", "evidence_ids": ["m1_next_attempt_proposal"], "reason": "Original authorization is consumed; direct-interpreter next proposal needs separately reviewed fresh preflight and explicit owner authorization."},
+    {"id": "native_observer_and_complete_cal_derivation", "status": "BLOCKED", "evidence_ids": ["m2_proposal", "m2_fixture_receipt"], "reason": "Native observer/template/sensor/writer/containment qualification and exact complete CAL continuation derivation remain absent; visited-path logits cannot fill unvisited continuations."},
+    {"id": "fresh_open_bank_and_independent_review", "status": "BLOCKED", "evidence_ids": ["m2_proposal", "m2_fixture_receipt"], "reason": "Fresh source/rights/gold review and exact CAL/CHECK registration are not supplied; fixture projections are not data admission."},
+    {"id": "live_policy_behavior_and_retention", "status": "NOT_MEASURED", "evidence_ids": ["reconciliation_interpretation", "mlp_preregistration"], "reason": "Live bias3.75 quality, broad conversation retention, fair performance and length outcomes remain unmeasured."},
+    {"id": "m2_final_committed_source", "status": "BLOCKED", "evidence_ids": ["m2_fixture_receipt"], "reason": "Readiness receipt states additive source is local/uncommitted/unpublished; final reviewed source and resource bindings precede a native decision."},
+    {"id": "release_authority", "status": "BLOCKED", "evidence_ids": ["m2_status"], "reason": "CAL, CHECK, native execution, training and release are separate closed decisions; historical recommendation transfers no permit."}
+  ],
+  "next_proposal": {
+    "phase": "ORIGINAL_OWNER_REVIEW_OF_SOURCE_PRESERVING_M1_NEXT_ATTEMPT",
+    "proposal_evidence_id": "m1_next_attempt_proposal",
+    "requires": ["fresh_owner_retry_authority", "recorded_asset_custody"],
+    "limits": {"native_attempts_authorized_now": 0, "wall_seconds": 900, "process_tree_rss_mib": 6144, "host_available_mib_before_load": 6144, "cuda_free_mib_before_load": 6144, "cuda_reserved_ceiling_mib": 7168},
+    "native_execution_authorized": false
+  },
+  "observed_patterns": [
+    {"evidence_id": "transfer3_reconciliation", "text": "Historical bias0 MLP records204/720 answerable and240/240 unanswerable correctness with54 answerable repairs and43 damages versus frozen. Canonical bias records202/720 and240/240, with99 repairs and6 damages."},
+    {"evidence_id": "reconciliation_interpretation", "text": "The reliability/calibration pattern does not establish live3.75 quality or compositional reasoning. State tracking5/360 and3/360 remains non-significant and limited by E36/E38."},
+    {"evidence_id": "m1_report", "text": "Fresh M1 failure is a launcher ownership failure before native model work. CPU and launcher fixtures are software checks only."}
+  ],
+  "exposure": {"status": "HISTORICAL_DEVELOPMENT_EXPOSED_NEW_CAL_CHECK_UNREGISTERED", "scope": "TRANSFER-3 is spent development evidence. Fresh open CAL96/CHECK192 is only a prospective design; no protected-bank access is granted.", "protected_bank_access": false},
+  "quality_gates": [
+    {"id": "mlp_lower_registered_loss", "evidence_ids": ["mlp_preregistration"], "rule": "Select using CAL ONLY from the complete grid and unchanged frozen-at-live-3.75 control: strictly lower proxy loss."},
+    {"id": "mlp_no_unanswerable_regressions", "evidence_ids": ["mlp_preregistration"], "rule": "Zero unanswerable correct->incorrect pairs."},
+    {"id": "mlp_no_new_answerable_abstentions", "evidence_ids": ["mlp_preregistration"], "rule": "Zero newly introduced answerable abstentions."},
+    {"id": "mlp_no_family_answerable_net_loss", "evidence_ids": ["mlp_preregistration"], "rule": "No negative net answerable delta in any family."},
+    {"id": "mlp_complete_pairs_and_actual_replay", "evidence_ids": ["mlp_preregistration", "m2_proposal"], "rule": "No incomplete pair; actual selected-bias native replay must agree with qualified complete outcomes; first path divergence remains unresolved."},
+    {"id": "mlp_both_parent_controls", "evidence_ids": ["mlp_preregistration"], "rule": "CHECK must pass the same conservative gates against BOTH parent-selected and parent-at-live3.75 controls; no CHECK retuning."},
+    {"id": "mlp_release_retention_and_fair_performance", "evidence_ids": ["mlp_preregistration"], "rule": "Separately registered ordinary conversation/retention, exact selected-policy integrity/reload, matched latency/memory and explicit owner release authority are required."}
+  ],
+  "completed_failed_attempts": [
+    {"id": "m1_attempt_01", "evidence_id": "m1_failure", "status": "FAIL_CHILD_OR_MISSING_RECEIPT", "scope": "One attempt, zero retries; worker rejected immediate parent identity before native import. Preserve final failure and all exited-owner receipts."}
+  ],
+  "advancement": false
+}

@@ -81,7 +81,7 @@ def main(argv=None):
     p.add_argument("--step", required=True, type=int)
     p.add_argument("--output", required=True)
     p = sub.add_parser("bind", help="Hash explicit local input files; no qualification is granted")
-    for name in ("e0-config", "e0-result", "catalog", "exclusions", "output"):
+    for name in ("e0-config", "e0-result", "catalog", "exclusions", "catalog-review", "output"):
         p.add_argument("--" + name, required=True)
     group = p.add_mutually_exclusive_group(required=True)
     group.add_argument("--parent")
@@ -125,14 +125,16 @@ def main(argv=None):
             result = compare(args.left, args.right, args.step, Plan.load(args.plan))
             write_new(args.output, result)
         elif args.command == "bind":
-            result = {"schema": 1}
-            for name in ("e0_config", "e0_result", "catalog", "exclusions", "parent"):
+            result = {"schema": 2}
+            for name in ("e0_config", "e0_result", "catalog", "exclusions", "catalog_review", "parent"):
                 value = getattr(args, name)
                 path = Path(value).resolve() if value else None
                 result[name] = {"path": str(path), "sha256": file_hash(path)} if path else None
             write_new(args.output, result)
         elif args.command == "review-parent":
             require(args.confirm_reviewed_parent and args.reviewed_by.strip(), "explicit completed parent review required")
+            from .parent_qualification import validate_parent
+            validate_parent(args.candidate, require_review=False)
             result = read_json(args.candidate)
             require(result.get("native_sft_completed") is True and result.get("optimizer_steps", 0) > 0,
                     "not a completed native SFT candidate")
