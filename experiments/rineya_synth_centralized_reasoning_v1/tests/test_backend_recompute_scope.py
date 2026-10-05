@@ -33,9 +33,10 @@ def snapshot(phase):
 class Controls(unittest.TestCase):
     def test_actual_bound_contract_preserves_dose_base_recipe_limits_and_separate_profile(self):
         scope=contract.build_scope("A")
-        self.assertEqual("SYNTH-BACKENDQ-002-FULLRECOMPUTE",scope["id"])
+        self.assertEqual(contract.ID,scope["id"])
         self.assertEqual(contract.PROFILE,scope["base_compute_profile"])
-        self.assertEqual(contract.CHECKPOINT_PROFILE,scope["profile"])
+        self.assertEqual(contract.WORKER_PROFILE,scope["profile"])
+        self.assertEqual(contract.CHECKPOINT_PROFILE,scope["checkpoint_amendment"]["profile"])
         self.assertEqual((202,48112,200,10),tuple(scope["dose"][key] for key in ("maximum_forward_calls","expected_forward_input_positions","native_backwards","native_optimizer_steps")))
         self.assertEqual((16,9),tuple(scope["resource_feasibility"][key] for key in ("A_total_full_base_checks","B_total_full_base_checks")))
         self.assertEqual(contract.native.RESOURCE_BOUNDS,scope["resources"]);self.assertEqual(contract.native.TOLERANCES,scope["tolerances"])
@@ -45,7 +46,7 @@ class Controls(unittest.TestCase):
         self.assertTrue(scope["checkpoint_runtime_pins"])
         self.assertEqual(21,len(scope["checkpoint_runtime_pins"]))
         self.assertTrue(any(path.endswith("python311.dll") for path in scope["checkpoint_runtime_pins"]))
-        self.assertEqual({**contract.native.read_json(contract.PACKAGE/'configs/SYNTH_NQ001_PROC7.json')["runtime_pins"],**contract.checkpoint_runtime_files()},scope["runtime_pins"])
+        self.assertEqual({**contract.native.read_json(contract.PACKAGE/'configs/SYNTH_NQ001_PROC7.json')["runtime_pins"],**contract.checkpoint_runtime_files(),**contract.worker_ram_runtime_files()},scope["runtime_pins"])
         self.assertFalse(any(name in sys.modules for name in ("torch","transformers")))
         self.assertEqual(HERE,Path(worker.__file__).resolve().parent)
         self.assertIn(str(HERE/"tests/test_backend_recompute_scope.py"),scope["source_pins"])

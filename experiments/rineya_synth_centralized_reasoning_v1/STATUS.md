@@ -1,5 +1,36 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: backend-only RAM amendment integrated and CPU-verified
+
+The independently reviewed [amendment 003](BACKEND_WORKER_RAM_AMENDMENT_003.md)
+is integrated. Only the backend worker injects the fresh physical-available-RAM
+callback into its existing guard. The original inference/native helpers remain
+[byte-identical to their qualification](evidence/backend_ram_original_helpers_unchanged_20261005.json).
+The new profile and recipe bind the callback, helper, CPU comparison and primary
+review. All 82 prior runtime pins remain, with `ast.py` added for 83 total.
+Model, trainables, dose, masks, optimizer, numerics, decoder work, C9/W10 checks,
+resource floors, cadence, freshness, deadline and cleanup policies are retained.
+Old V1/V2 configs are rejected; no qualification checkpoint can warmstart study.
+
+Nine focused amendment controls and all 61 backend controls pass. The first
+[580-test aggregate](evidence/backend_ram_full_cpu_validation_20261005.json)
+preserves three outdated fixture expectations and two disabled local-tokenizer
+checks. The expectations were updated for the new combined profile/runtime pin
+and the independently tested RAM binding in a staging-location fixture. The
+[successor aggregate](evidence/backend_ram_full_cpu_validation002_20261005.json)
+passes all 580 tests in 322.625 seconds, with the pinned local tokenizer enabled,
+no skips and unchanged source hashes. The
+[staging history](evidence/backend_ram_scope_cpu_20261005/preservation_receipt.json)
+retains the missing-AST-pin and test-portability predecessors and their receipts.
+
+No native Q003 worker, C9/W10 continuation, full-nine/full-27 qualification,
+baseline retry, training or scoring is opened by CPU success. The next native
+step requires clean committed sources, a fresh write-once Q003 phase-A manifest,
+current host admission and an independent terminal audit under unchanged gates.
+The CPU watchdog failure's cause/prevention remains unresolved. The completed
+M0 population is still 192/384; batch 4 partials, language-review authority and
+the full three-arm result remain outstanding.
+
 ## 2026-10-05 UTC: fourth M0 batch aborted CPU freshness; partials preserved
 
 The [fourth fixed config](configs/SYNTH_SHORT_M0_ATOMIC_BATCH04_A1.json) was stopped

@@ -136,7 +136,10 @@ class QualificationTests(unittest.TestCase):
             scope=deepcopy(self.scopeA);change(scope)
             with self.assertRaises(ValueError): contract.validate_packet(scope)
     def test_stage_native_default_and_eager_preflight_denied_before_factory(self):
-        with patch.object(contract,"HERE",PACKAGE/"artifacts/backend_qual_work"):
+        # Isolate the location/authority gate from the independently tested
+        # RAM proof's location-dependent callback path.
+        with patch.object(contract,"HERE",PACKAGE/"artifacts/backend_qual_work"), \
+             patch.object(contract,"worker_ram_binding",return_value=deepcopy(self.scopeA["worker_ram_amendment"])):
             calls=[]
             with self.assertRaisesRegex(ValueError,"staged native"):
                 core.run_case(self.scopeA,lambda *a:calls.append(a),self.journal,self.guard,lambda *a:None)
@@ -202,9 +205,10 @@ class QualificationTests(unittest.TestCase):
             self.assertIn(str((PACKAGE/name).resolve()),pins)
         import inspect
         scope=contract.build_scope("A")
-        actual={**contract.native.runtime_files(),**contract.checkpoint_runtime_files()}
+        actual={**contract.native.runtime_files(),**contract.checkpoint_runtime_files(),**contract.worker_ram_runtime_files()}
         self.assertEqual(actual,scope["runtime_pins"])
         self.assertEqual(contract.checkpoint_runtime_files(),scope["checkpoint_runtime_pins"])
+        self.assertEqual(contract.worker_ram_runtime_files(),scope["worker_ram_runtime_pins"])
         self.assertGreater(len(actual),len(contract.native.runtime_files()))
         for filename,pin in actual.items():
             self.assertEqual(pin,contract.native.filehash(Path(filename)))

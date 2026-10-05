@@ -1,0 +1,195 @@
+--- C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\backend_qual_contract.py
++++ C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\backend_ram_scope_work\backend_qual_contract.py
+@@ -6,6 +6,7 @@
+ outputs. Native7 resource/numerical gates remain exact.
+ """
+ from __future__ import annotations
++import ast
+ from copy import deepcopy
+ from datetime import datetime
+ import json
+@@ -19,7 +20,7 @@
+ from importlib.metadata import distribution
+ 
+ HERE=Path(__file__).resolve().parent
+-PACKAGE=HERE.parents[1] if HERE.name in ("backend_qual_work","backend_recompute_scope_work") and HERE.parent.name=="artifacts" else HERE
++PACKAGE=HERE.parents[1] if HERE.name in ("backend_qual_work","backend_recompute_scope_work","backend_ram_scope_work") and HERE.parent.name=="artifacts" else HERE
+ ROOT=PACKAGE.parents[1]
+ for location in (PACKAGE,HERE):
+     if str(location) in sys.path: sys.path.remove(str(location))
+@@ -29,8 +30,8 @@
+ from native_loader import ASSET_PINS,MODEL_DIR
+ from rs_contract import canonical,digest,require
+ 
+-ID="SYNTH-BACKENDQ-002-FULLRECOMPUTE"
+-VERSION="synth-backend-crossprocess-full-recompute-qualification-2"
++ID="SYNTH-BACKENDQ-003-WORKER-RAM"
++VERSION="synth-backend-crossprocess-full-recompute-worker-ram-qualification-3"
+ SCOPE="backend_crossprocess_native_qualification_only"
+ WITNESS_KIND="SYNTH_BACKEND_QUAL_WITNESS_NOT_STUDY_CHECKPOINT"
+ AUTHORIZATION={"scope":SCOPE,"owner_authority":"user_goal_and_delegated_decisions_2026-10-04",
+@@ -46,6 +47,16 @@
+ NATIVE7_EVIDENCE=PACKAGE/"evidence/nq001_attempt7_20261003"
+ PROFILE="BF16_RESIDENT_FP32_ACTIVATIONS_QV8_V1"
+ CHECKPOINT_PROFILE="BF16_RESIDENT_FP32_QV8_EVAL28_FULL_NONREENTRANT_RECOMPUTE_V2"
++WORKER_PROFILE="BF16_FP32_QV8_FULLRECOMPUTE_WORKER_PHYSICAL_AVAILABLE_V3"
++RAM_PROOF_DIR=PACKAGE/"evidence/worker_ram_probe_cpu_20261005"
++RAM_PROOF=RAM_PROOF_DIR/"CPU_ram_callback_comparison_20261005.json"
++RAM_PROOF_SHA="4e1b9784258d4a80c4246d88c69a0de65426f50b64a203bcd9d56f717a3ed0a2"
++RAM_PRESERVATION=RAM_PROOF_DIR/"preservation_receipt.json"
++RAM_PRESERVATION_SHA="a265e279b51504ea2237034d450fb07faa4608d26d75eea83d0c95a298b71127"
++RAM_PROVEN_CALLBACK_SHA="596eff7cb29982ef9309b8cc9458de755357bbfef39a55b211f24987f3484d80"
++RAM_PRIMARY=PACKAGE/"evidence/available_ram_primary_source_review_20261005.json"
++RAM_PRIMARY_FILE_SHA="156106209e38413373bfba45c3469eb67641fcc0ba6bb6ed5575bbcd8fbd7255"
++RAM_PRIMARY_BODY_SHA="b04ca51ad6a39145797de6807862d08c8d46cf4fddcf169a97c325aef24149d1"
+ INSTALLER_SHA="1cf3cad34dfb05a73c6930fc29ac72538b3c38a15ad0772a8b5378eef55aa04f"
+ CPU_PROOF=PACKAGE/"artifacts/checkpoint_successor_work/cpu_full_recompute_identity_successor_20261005.json"
+ CPU_PROOF_SHA="1e238147e3cb168f853a44e03c1c23f4668c8e25fbfa4dd5ebabc06b2f918f7f"
+@@ -54,6 +65,48 @@
+     "torch/_dynamo/__init__.py","torch/_dynamo/eval_frame.py","torch/_dynamo/decorators.py"),
+     "transformers":("transformers/modeling_layers.py","transformers/modeling_utils.py","transformers/models/qwen3/modeling_qwen3.py")}
+ CHECKPOINT_STDLIB_FILES=("contextlib.py","platform.py","uuid.py","warnings.py","weakref.py","collections/__init__.py","typing.py","enum.py")
++
++
++def _callback_ast(path):
++    tree=ast.parse(Path(path).read_text(encoding="utf-8"))
++    functions=[node for node in tree.body if isinstance(node,ast.FunctionDef) and node.name=="available_bytes"]
++    require(len(functions)==1,"one proven fresh RAM callback")
++    return ast.dump(functions[0],include_attributes=False)
++
++
++def worker_ram_binding():
++    require(native.filehash(RAM_PROOF)==RAM_PROOF_SHA and native.filehash(RAM_PRESERVATION)==RAM_PRESERVATION_SHA
++            and native.filehash(RAM_PRIMARY)==RAM_PRIMARY_FILE_SHA,"worker RAM CPU/primary proof byte drift")
++    proof,preserved,primary=(native.read_json(path) for path in (RAM_PROOF,RAM_PRESERVATION,RAM_PRIMARY))
++    require(proof["status"]=="PASS_MATCHED512_DEFAULT_VS_DIRECT_RAM_CALLBACK_CPU_COMPONENT_ONLY"
++            and preserved["status"]=="PASS_BYTE_PRESERVED_MATCHED512_CPU_RAM_CALLBACK_COMPARISON"
++            and preserved["all3owned_CPU_process_identities_verified_terminal"] is True,"complete owned CPU RAM component proof")
++    require(primary["sha256"]==RAM_PRIMARY_BODY_SHA==digest({k:v for k,v in primary.items() if k!="sha256"})
++            and primary["status"]=="PRIMARY_SOURCE_AVAILABLE_RAM_SEMANTICS_REVIEW_NO_CANDIDATE_QUALIFICATION"
++            and primary["snapshot_byte_equality_established"] is False,"documented units/concept only; no volatile snapshot byte claim")
++    require(proof["source_before"]==proof["source_after"] and proof["CPU_runtime_before"]==proof["CPU_runtime_after"]
++            and all(proof["closed_flags"].get(k) is False for k in ("native_launch_authorized","training_authorized","GPU_NVML_called","framework_imported","published_weights_opened","snapshot_bitwise_equivalence_claimed")),"CPU fixture cannot become native qualification")
++    for name,entry in preserved["files"].items():
++        path=RAM_PROOF_DIR/name
++        require(path.is_file() and not path.is_symlink() and path.resolve().is_relative_to(RAM_PROOF_DIR.resolve())
++                and path.stat().st_size==entry["bytes"] and native.filehash(path)==entry["sha256"],"RAM CPU preserved evidence closure drift")
++    expected={"attempted":512,"returned":512,"failed":0,"pending":0}
++    require([factor["factor"] for factor in proof["factors"]]==["default_psutil","candidate_direct"]
++            and all(factor["guard"]["counts"]==expected and all(item["counts"]==expected for item in factor["callbacks"].values()) for factor in proof["factors"]),"matched512 complete guard/callback CPU factors")
++    proven=RAM_PROOF_DIR/"worker_ram_probe.py";candidate=HERE/"worker_ram_probe.py"
++    require(native.filehash(proven)==RAM_PROVEN_CALLBACK_SHA and _callback_ast(candidate)==_callback_ast(proven),"same proven callback body; only safe stage/root bootstrap differs")
++    for name,entry in primary["local_source_pins"].items():
++        require(native.filehash(Path(name))==entry["sha256"],"reviewed physical-memory source/runtime drift")
++    return {"profile":"WORKER_GLOBALMEMORYSTATUSEX_PHYSICAL_AVAILABLE_CALLBACK_V1",
++        "callback_path":str(candidate.resolve()),"callback_sha256":native.filehash(candidate),"callback_body_sha256":digest(_callback_ast(candidate)),
++        "helper_path":str((PACKAGE/"native_process.py").resolve()),"helper_sha256":native.filehash(PACKAGE/"native_process.py"),
++        "policy":"available callback only; fresh native_process.system_memory_status()['available_bytes'] every existing guard invocation",
++        "exact_fields":["available_bytes","total_bytes"],"validity":"nonboolean UInt64 int;0<=available<=total;total>0;API/errors propagate",
++        "numeric_cache":False,"fallback":False,"all_guard_floors_checks_frequency_unchanged":True,"inference_helpers_unchanged":True,
++        "CPU_proof_path":str(RAM_PROOF),"CPU_proof_file_sha256":RAM_PROOF_SHA,"CPU_preservation_file_sha256":RAM_PRESERVATION_SHA,
++        "primary_review_path":str(RAM_PRIMARY),"primary_review_file_sha256":RAM_PRIMARY_FILE_SHA,"primary_review_body_sha256":RAM_PRIMARY_BODY_SHA,
++        "source_runtime_policy":"existing82 runtime pins and Native7 helpers unchanged; CPU128 runtime closure is evidence only",
++        "volatile_snapshot_byte_equality_claimed":False,"native_profile_fit_qualified":False,"study_training_authorized":False}
+ 
+ 
+ def checkpoint_runtime_files():
+@@ -170,8 +223,10 @@
+            "study_torch_backend.py","study_native_chunk.py","study_schedule.py","rs_contract.py")]
+     paths += [HERE/name if name in ("backend_qual_contract.py","backend_qual_worker.py") else PACKAGE/name for name in SOURCE_NAMES]
+     paths += [PACKAGE/"checkpoint_successor_profile.py"]
+-    paths += sorted((HERE/"tests").glob("test_backend_qual*.py")) if HERE!=PACKAGE else sorted((PACKAGE/"tests").glob("test_backend_qual*.py"))
+-    paths += [HERE/"test_backend_recompute_scope.py"] if HERE!=PACKAGE else sorted((PACKAGE/"tests").glob("test_backend_recompute_scope*.py"))
++    paths += [HERE/"worker_ram_probe.py"]
++    paths += sorted((PACKAGE/"tests").glob("test_backend_qual*.py"))
++    paths += sorted((PACKAGE/"tests").glob("test_backend_recompute_scope*.py"))
++    paths += [HERE/"test_backend_ram_scope.py"] if HERE!=PACKAGE else sorted((PACKAGE/"tests").glob("test_backend_ram_scope*.py"))
+     require(all(path.is_file() and not path.is_symlink() for path in paths),"complete qualification source inventory")
+     return {str(path.resolve()):native.filehash(path) for path in paths}
+ 
+@@ -215,6 +270,7 @@
+            "checkpoint_amendment":{"profile":CHECKPOINT_PROFILE,"installer_sha256":INSTALLER_SHA,"CPU_proof_file_sha256":CPU_PROOF_SHA,
+                 "use_reentrant":False,"checkpoint_early_stop":False,"preserve_rng_state":True,"evaluation_mode":True,
+                 "phase_decoder_counts":{"A":{"no_grad":56,"forward":5600,"recompute":5600},"B":{"no_grad":56,"forward":1120,"recompute":1120}}},
++           "worker_ram_amendment":worker_ram_binding(),
+            "global_LR":schedule.learning_rates()[:10],"phase_design":"A9_plus_continuous10_BfreshC9_plus10_reference20",
+            "study_warmstart_allowed":False}
+     value["sha256"]=digest(value)
+@@ -222,9 +278,11 @@
+ 
+ 
+ def validate_packet(scope):
+-    require(scope.get("id")==ID and scope.get("phase") in ("A","B") and scope.get("authorization")==AUTHORIZATION,"exact backend qualification authority/phase")
++    require(scope.get("id")==ID and scope.get("contract")==VERSION and scope.get("phase") in ("A","B") and scope.get("authorization")==AUTHORIZATION,"exact backend qualification authority/phase")
+     require(scope.get("resources")==native.RESOURCE_BOUNDS and scope.get("tolerances")==native.TOLERANCES,"unchanged resource/numerical gates")
+-    require(scope.get("profile")==CHECKPOINT_PROFILE and scope.get("base_compute_profile")==PROFILE and scope.get("checkpoint_amendment")==checkpoint_binding(scope["phase"]),"exact distinct full-recompute profile/proof/work binding")
++    require(scope.get("profile")==WORKER_PROFILE and scope.get("base_compute_profile")==PROFILE and scope.get("checkpoint_amendment")==checkpoint_binding(scope["phase"]),"exact distinct full-recompute profile/proof/work binding")
++    require(scope.get("worker_ram_amendment")==worker_ram_binding()
++            and scope.get("qualification_recipe",{}).get("worker_ram_amendment")==scope["worker_ram_amendment"],"exact isolated worker RAM callback/source/proof policy")
+     require(scope.get("production_training_authorized") is False and scope.get("study_warmstart_allowed") is False
+             and scope.get("DEV_collection_authorized") is False and scope.get("quality_gain_established") is False
+             and scope.get("protected_bank_access") is False,"qualification cannot grant study/scoring/banks authority")
+@@ -233,7 +291,7 @@
+     require(scope["c9_binding"]==cursor(registration,9) and scope["c10_binding"]==cursor(registration,10),"exact C9/C10 cursor/input/supervised/globalLR")
+     recipe=scope["qualification_recipe"]
+     require(recipe["sha256"]==digest({k:v for k,v in recipe.items() if k!="sha256"}) and recipe["kind"]=="BACKEND_QUALIFICATION_ONLY_NEVER_STUDY_WARMSTART"
+-            and recipe["cohort_sha256"]==digest([r["row_id"] for r in rows]),"distinct qualification recipe/cohort")
++            and recipe.get("id")==ID and recipe["cohort_sha256"]==digest([r["row_id"] for r in rows]),"distinct qualification recipe/cohort")
+     expected={"A":{"train_forwards":200,"reference_forwards":0,"zero_parity_forwards":2,"maximum_forward_calls":202,"native_optimizer_steps":10,"native_backwards":200,"reference_autograd_calls":0},
+               "B":{"train_forwards":20,"reference_forwards":20,"zero_parity_forwards":2,"maximum_forward_calls":42,"native_optimizer_steps":1,"native_backwards":20,"reference_autograd_calls":20}}[scope["phase"]]
+     require(all(scope["dose"].get(key)==value for key,value in expected.items()) and scope["dose"]["maximum_forward_input_positions"]==102400
+@@ -258,8 +316,9 @@
+     observed=[_observed_duration(INF_EVIDENCE/"events.jsonl","verify_frozen_base"),_observed_duration(NATIVE7_EVIDENCE/"events.jsonl","frozen_base_postcheck")]
+     require(round(observed[0],3)==6.874 and round(observed[1],3)==45.900,"preregistered raw-event timing observations changed")
+     prior=native.read_json(PACKAGE/"configs/SYNTH_NQ001_PROC7.json")
+-    body={"schema_version":1,"id":ID,"contract":VERSION,"phase":phase,"profile":CHECKPOINT_PROFILE,"base_compute_profile":PROFILE,
++    body={"schema_version":1,"id":ID,"contract":VERSION,"phase":phase,"profile":WORKER_PROFILE,"base_compute_profile":PROFILE,
+           "checkpoint_amendment":checkpoint_binding(phase),"authorization":deepcopy(AUTHORIZATION),
++          "worker_ram_amendment":worker_ram_binding(),
+           "owned_qualification_authorized":authorize_owned_qualification,"staged_native_dispatch_forbidden":HERE!=PACKAGE,
+           "resources":deepcopy(native.RESOURCE_BOUNDS),"tolerances":deepcopy(native.TOLERANCES),"runtime_versions":deepcopy(native.RUNTIME),
+           "offline_environment":deepcopy(native.OFFLINE_ENV),"precision":deepcopy(prior["precision"]),"source_pins":sources,
+--- C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\backend_qual_worker.py
++++ C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\backend_ram_scope_work\backend_qual_worker.py
+@@ -12,7 +12,7 @@
+ import time
+ 
+ HERE=Path(__file__).resolve().parent
+-PACKAGE=HERE.parents[1] if HERE.name in ("backend_qual_work","backend_recompute_scope_work") and HERE.parent.name=="artifacts" else HERE
++PACKAGE=HERE.parents[1] if HERE.name in ("backend_qual_work","backend_recompute_scope_work","backend_ram_scope_work") and HERE.parent.name=="artifacts" else HERE
+ for location in (PACKAGE,HERE):
+     if str(location) in sys.path: sys.path.remove(str(location))
+     sys.path.insert(0,str(location))
+@@ -21,6 +21,7 @@
+ from backend_qual_core import run_case
+ from backend_qual_native import NativeAdapter
+ from inference_qual_worker import make_guard
++import worker_ram_probe
+ from native_worker import Journal,verify_worker_ownership,preserve_terminal
+ from native_loader import load_titan
+ from study_torch_backend import StudyTorchBackend
+@@ -85,7 +86,7 @@
+     owner=contract.native.read_json(output/"supervisor_ownership.json")
+     ownership=verify_worker_ownership(owner,config_path)
+     journal=DurableJournal(output);start=time.monotonic();torch=None;hooks=[];profiles=[]
+-    guard=make_guard(output,owner,start,lambda:torch)
++    guard=make_guard(output,owner,start,lambda:torch,available=worker_ram_probe.available_bytes)
+     journal.guard=guard;journal.evidence("worker_ownership_verified",ownership)
+     report={"status":"FAILED_SCOPED_BACKEND_QUALIFICATION","phase":config["phase"],"config_sha256":config["config_sha256"],
+             "production_training_authorized":False,"protected_bank_access":False,"study_warmstart_allowed":False,"quality_gain_established":False}
+--- C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\worker_ram_probe_work\worker_ram_probe.py
++++ C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\backend_ram_scope_work\worker_ram_probe.py
+@@ -7,9 +7,12 @@
+ from pathlib import Path
+ import sys
+ 
+-WORK=Path(__file__).resolve().parent;PACKAGE=WORK.parents[1]
++WORK=Path(__file__).resolve().parent
++PACKAGE=WORK.parents[1] if WORK.name in ('worker_ram_probe_work','backend_ram_scope_work') and WORK.parent.name=='artifacts' else WORK
+ sys.path.insert(0,str(PACKAGE))
+ import native_process
++if Path(native_process.__file__).resolve()!=(PACKAGE/'native_process.py').resolve():
++    raise ImportError('RAM callback must use exact package native_process helper')
+ 
+ 
+ def available_bytes(*,status_call=None):

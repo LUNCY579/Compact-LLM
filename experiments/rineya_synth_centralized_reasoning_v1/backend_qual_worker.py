@@ -12,7 +12,7 @@ import sys
 import time
 
 HERE=Path(__file__).resolve().parent
-PACKAGE=HERE.parents[1] if HERE.name in ("backend_qual_work","backend_recompute_scope_work") and HERE.parent.name=="artifacts" else HERE
+PACKAGE=HERE.parents[1] if HERE.name in ("backend_qual_work","backend_recompute_scope_work","backend_ram_scope_work") and HERE.parent.name=="artifacts" else HERE
 for location in (PACKAGE,HERE):
     if str(location) in sys.path: sys.path.remove(str(location))
     sys.path.insert(0,str(location))
@@ -21,6 +21,7 @@ import backend_qual_contract as contract
 from backend_qual_core import run_case
 from backend_qual_native import NativeAdapter
 from inference_qual_worker import make_guard
+import worker_ram_probe
 from native_worker import Journal,verify_worker_ownership,preserve_terminal
 from native_loader import load_titan
 from study_torch_backend import StudyTorchBackend
@@ -85,7 +86,7 @@ def run(config_path,output):
     owner=contract.native.read_json(output/"supervisor_ownership.json")
     ownership=verify_worker_ownership(owner,config_path)
     journal=DurableJournal(output);start=time.monotonic();torch=None;hooks=[];profiles=[]
-    guard=make_guard(output,owner,start,lambda:torch)
+    guard=make_guard(output,owner,start,lambda:torch,available=worker_ram_probe.available_bytes)
     journal.guard=guard;journal.evidence("worker_ownership_verified",ownership)
     report={"status":"FAILED_SCOPED_BACKEND_QUALIFICATION","phase":config["phase"],"config_sha256":config["config_sha256"],
             "production_training_authorized":False,"protected_bank_access":False,"study_warmstart_allowed":False,"quality_gain_established":False}

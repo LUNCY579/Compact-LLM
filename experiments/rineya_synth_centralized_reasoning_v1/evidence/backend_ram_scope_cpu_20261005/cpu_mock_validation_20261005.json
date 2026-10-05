@@ -1,0 +1,48 @@
+{
+  "closed_flags": {
+    "GPU_NVML_called": false,
+    "disk_or_CPU_watchdog_failure_prevention_established": false,
+    "framework_imported": false,
+    "fullrun_forecast": false,
+    "model_loaded": false,
+    "native_fit_qualified": false,
+    "native_launch_authorized": false,
+    "paid_services": false,
+    "protected_bank_access": false,
+    "root_source_edits": false,
+    "study_warmstart": false,
+    "training_authorized": false
+  },
+  "initial_control_startup_error": "test source syntax spacing error corrected before successful controls; no model/framework/native operation occurred",
+  "preserved_invariants": [
+    "fresh densebase/seed101/rank8FP32qv112/frozenBF16base",
+    "exact200wholeTRAIN/A202+B42forwards/A10+B1steps/LR/masks/CEgradienttolerances",
+    "fullrecomputeV2A56/5600/5600+B56/1120/1120regions",
+    "existing82runtime",
+    "basechecks16A/9B",
+    "600s/.2CPUfreshness/.1cadence/4GiBadmissiondisk/.5GiBworkGPU"
+  ],
+  "recorded_at_utc": "2026-10-05T04:39:12.213245+00:00",
+  "review_diff_sha256": "e1371280b3be77fcb5273b3fd34737e88dfde290ccd52ba57bc02dfaf1edb917",
+  "schema_version": 1,
+  "scope": "staged backend qualification profile003; CPU/mock proof only; no native permission or integration",
+  "seconds": 1.011,
+  "skips": 0,
+  "source_policy": "only staged worker bootstrap/import/available callback injection changed; original inference/native helpers unchanged",
+  "stage_source_hashes": {
+    "BACKEND_WORKER_RAM_AMENDMENT_003.md": "5ce9a391a9f8b731bfa964633440a5803ada90f9816b7dd9b9687ca109415b19",
+    "backend_qual_contract.py": "f120f01646a2dde36c3ed8df8043b53fbb8e0423e62958cc9cefd41876f4af83",
+    "backend_qual_worker.py": "b049e29a31a192c81009023536e315ebf5d8f584c66c0b0638434ae0e8033053",
+    "test_backend_ram_scope.py": "e59bf5113eb5f4d9ccbc39b9ffc144c787d1cb3182de5da355f7e8e3806b720e",
+    "worker_ram_probe.py": "e4ec5e19241b877b99cc1ed933514c6fb09721658d91666df900a9a1e00f75a4"
+  },
+  "status": "PASS_STAGE_ONLY_BACKEND_RAM_AMENDMENT003_STDLIB_MOCK_CONTROLS",
+  "tests": 8,
+  "untouched_root_hashes": {
+    "backend_qual_contract.py": "24279b867b784be79232ff7aa51ef41189a93f189a99ced1062160c93627ff47",
+    "backend_qual_worker.py": "44cf0b9770d976e11767f4558fcf71d9c9c0994b269f2a89192a7c294314bb3b",
+    "inference_qual_worker.py": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e",
+    "native_process.py": "3d36770a36be5ef9db2c9ab159b069e3dde6c6e61210c58513c5afa7c4e70540",
+    "native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691"
+  }
+}
