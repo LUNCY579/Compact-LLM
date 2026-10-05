@@ -1,5 +1,27 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: TRAIN-only long mechanics inputs materialized
+
+The [CPU prompt preparation](evidence/long_train_prompts_cpu_20261005)
+binds the first already-qualified INFQ001 TRAIN row to its exact M1 corpus
+record, unchanged tokenizer/template and retained original messages. Appended
+unrelated notes produce exactly 992/2016/4064 prompt tokens, each retokenized in
+full with a 32-token reservation and all-one masks. No guard prompts or oracle
+sidecars, model config/weights, frameworks or GPU were opened. These are
+numerical qualification inputs only; no semantic answer certification or
+training/evaluation use is claimed. The training corpus remains unchanged.
+
+The initial linear token-count assumption failed before output; its source and
+measured newline-boundary probes are preserved. The corrected positive-count
+construction passes complete text/token checks. The actual short parity source
+has 419 tokens, so its two calls cost 838 positions. This replaces the earlier
+unbound 390-position assumption for these cases: the largest prospective trace
+scope needs 34 forwards / 131,382 positions, bulk three forwards / 4,933 positions,
+and all three scopes total 71 forwards / 267,697 positions. Every individual scope
+still fits the unchanged 134,144-position ceiling. Independent input review and
+the complete native split driver/trace audit remain missing; no launch or long
+context qualification follows from this CPU materialization.
+
 ## 2026-10-05 UTC: long-context component staged and CPU-tested
 
 The [preserved long component](evidence/long_context_component_staged_cpu_20261005)
