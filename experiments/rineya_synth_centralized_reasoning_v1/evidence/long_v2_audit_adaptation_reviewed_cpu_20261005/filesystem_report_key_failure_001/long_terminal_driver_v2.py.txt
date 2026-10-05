@@ -1,0 +1,481 @@
+"""Staged terminal-driver composition; CPU fixtures never native audit authority."""
+from copy import deepcopy
+from pathlib import Path
+import hashlib,importlib.util,json,math,os,stat,sys
+HERE=Path(__file__).resolve().parent
+STAGED=HERE.name=="long_v2_audit_adaptation_work" and HERE.parent.name=="artifacts"
+PACKAGE=HERE.parents[1] if STAGED else HERE
+VALIDATOR=HERE/"long_native_auditor_v2.py"
+VALIDATOR_SHA256="1dcea32718c1599acaf0b6265a4d6e89285e55a49452be946cf35d91b4a0b2e7"
+PREDECESSOR_VALIDATOR_SHA256="d04b7bea64272017277213107b2c619f3b9e5c47b810042446bcd1a925bec56a"
+require=lambda value,message: None if value else (_ for _ in ()).throw(ValueError(message))
+require(VALIDATOR.is_file() and not VALIDATOR.is_symlink()
+    and hashlib.sha256(VALIDATOR.read_bytes()).hexdigest()==VALIDATOR_SHA256,"exact independently reviewed integrated validator bytes")
+sys.path.insert(0,str(PACKAGE))
+spec=importlib.util.spec_from_file_location("pinned_independent_long_native_validator",VALIDATOR)
+v=importlib.util.module_from_spec(spec);spec.loader.exec_module(v)
+canonical,digest=v.canonical,v.digest
+# Implementation availability is distinct from qualification. Staged native
+# dispatch refuses independently of module aliases; fixtures use the same IO
+# path with explicit injected probes and always receive the CPU kind.
+NATIVE_PASS_ENABLED=not STAGED
+ENCODER_V2_CONSUMPTION_REVIEWED=True
+CPU_KIND="CPU_LONG_TERMINAL_DRIVER_FIXTURE_CHECK_NOT_NATIVE_AUDIT"
+def seal(value):return {**value,"sha256":digest(value)}
+def closed_success(scope,result,sup,anchors):
+    v.validate_anchors(v.SIGNAL,anchors);v.checksum(scope);v.checksum(result)
+    require(scope["recipe"]["sha256"]==anchors["recipe_sha256"] and scope["recipe"]["context_cap"]==anchors["context_cap"]
+        and scope["role"]==anchors["role"] and scope["purpose"]==v.contract.PURPOSE
+        and scope["authorization"]==v.contract.AUTHORIZATION,"externally selected exact recipe/context/role/purpose")
+    require(scope["owned_qualification_authorized"] is True and scope["staged_native_dispatch_forbidden"] is False
+        and all(scope[k] is False for k in ("native_launch_authorized","native_long_context_qualified","study_training_authorized",
+            "study_warmstart_allowed","guard_enrollment_authorized","scoring_authorized")),"explicit qualification-only scope")
+    require(scope["resources"]==v.contract.native.RESOURCE_BOUNDS and scope["tolerances"]==v.contract.native.TOLERANCES
+        and scope["dose"]==v.contract.work(scope["row"],scope["role"]),"unchanged dose/numerical/resource contract")
+    require(result["status"]=="COMPLETE_NATIVE_LONG_SCOPE_PENDING_INDEPENDENT_AUDIT" and result["execution_scope"]==v.contract.NATIVE
+        and result["role"]==scope["role"] and result["recipe_sha256"]==scope["recipe"]["sha256"]
+        and result["source_commit"]==sup["preflight"]["source_commit"]==anchors["source_commit"]
+        and result["config_sha256"]==sup["config_sha256"]==anchors["config_file_sha256"],"complete same-purpose native result/config/source")
+    require(sup["status"]=="SUPERVISED_WORKER_EXITED_ZERO" and sup["returncode"]==0 and sup["partial_outputs_frozen"] is True
+        and all(sup[k] is True for k in ("job_closed_kill_on_close","sampler_threads_terminal_verified","gpu_telemetry_cleanup_verified"))
+        and sup["owned_worker_identity_currently_alive"] is False and sup["unjoined_sampler_threads"]==[],"completed owned terminal only")
+    require(0<result["wall_seconds"]<=sup["elapsed_seconds"]<600
+        and not any(result.get(k) for k in ("error","cleanup_error")) and not any(sup.get(k) for k in ("failure","containment_failure","sampler_shutdown_error")),
+        "no failed/partial/deadline/cleanup contradiction")
+    return True
+def validate_inventory(scope,inventory,anchors):
+    v.checksum(inventory)
+    require(inventory["kind"]==v.INVENTORY_KIND and inventory["source_commit"]==anchors["source_commit"]
+        and inventory["recipe_sha256"]==anchors["recipe_sha256"] and inventory["role"]==anchors["role"]
+        and inventory["context_cap"]==anchors["context_cap"],"externally bound exact complete inventory")
+    expected={"source":scope["source_pins"],"runtime":scope["runtime_pins"],"model":scope["model_pins"],"data":scope["data_pins"],
+        "encoder_assets":{str(Path(scope["tokenizer_binding"]["model_dir"])/name):item["sha256"] for name,item in scope["tokenizer_binding"]["assets"].items()},
+        "encoder_bindings":scope["tokenizer_binding"]["binding_sources"]}
+    require(inventory["maps"]==expected and inventory["counts"]=={name:len(value) for name,value in expected.items()},
+        "all exact externally selected path/hash maps, never count-only")
+    require(inventory["previous_references"]==scope["references"]
+        and inventory["encoder_registration"]==scope["encoder_registration"],"explicit previous-role/encoder external anchors")
+    require(inventory["validator_file_sha256"]==VALIDATOR_SHA256,"pinned independently reviewed validator")
+    return True
+def validate_registration_pending(scope,encoder,stdlib,anchors):
+    """Exact declared V2 schema remains insufficient to authenticate file IO."""
+    require(scope["encoder_registration"]["sha256"]==anchors["encoder_registration_file_sha256"],"exact independently selected encoder registration file")
+    require(encoder==scope["encoder_runtime_registration"],"entire selected encoder declaration")
+    v.validate_v2_registration_schema(scope)
+    require(stdlib==encoder["stdlib_inventory"],"entire finite stdlib declaration")
+    return {"declaration_schema_checked":True,"actual_native_file_IO_validated":False,"native_AUDIT_KIND_PASS_issued":False}
+def validate_previous(scope,previous,anchors):
+    wanted=list(v.contract.ROLES[:v.contract.ROLES.index(scope["role"])])
+    require(len(previous)==len(wanted) and len(scope["references"] or[])==len(wanted),"every independently audited prior role")
+    old_costs={"operations":{},"physical_calls":0,"input_positions":0};old_chain=None;jobs=set();items=[]
+    for expected_role,frame,reference in zip(wanted,previous,scope["references"] or[]):
+        require(set(reference)=={"result_path","result_sha256","supervisor_path","supervisor_sha256","audit_path","audit_sha256"},"closed independent prior file anchors")
+        result,sup,audit=frame["result"],frame["supervisor"],frame["audit"]
+        require(frame["result_file_sha256"]==reference["result_sha256"] and frame["supervisor_file_sha256"]==reference["supervisor_sha256"]
+            and frame["audit_file_sha256"]==reference["audit_sha256"],"exact trusted predecessor result/SUP/audit files")
+        v.checksum(result);v.checksum(audit)
+        require(result["role"]==audit["role"]==sup["preflight"]["role"]==expected_role
+            and result["execution_scope"]==v.contract.NATIVE and result["status"]=="COMPLETE_NATIVE_LONG_SCOPE_PENDING_INDEPENDENT_AUDIT"
+            and result["recipe_sha256"]==audit["recipe_sha256"]==sup["preflight"]["recipe"]["sha256"]==scope["recipe"]["sha256"],
+            "same source/context/recipe actual predecessor role")
+        require(audit["kind"]==v.contract.AUDIT_KIND and audit["status"]=="PASS_NATIVE_LONG_SCOPE_NUMERICAL_MECHANICS_ONLY"
+            and audit["purpose"]==v.contract.PURPOSE and audit["result_sha256"]==reference["result_sha256"]
+            and audit["supervisor_sha256"]==reference["supervisor_sha256"] and audit["config_sha256"]==result["config_sha256"]==sup["config_sha256"]
+            and audit["source_commit"]==result["source_commit"]==sup["preflight"]["source_commit"]
+                and audit["study_training_authorized"] is False and audit["scoring_authorized"] is False,"actual externally selected native predecessor audit, no authority transfer")
+        require(sup["status"]=="SUPERVISED_WORKER_EXITED_ZERO" and sup["returncode"]==0
+            and all(sup[k] is True for k in ("job_closed_kill_on_close","sampler_threads_terminal_verified","gpu_telemetry_cleanup_verified"))
+            and sup["owned_worker_identity_currently_alive"] is False,"prior Job/resources/worker terminal")
+        capsule=v.chain_payload(result["capsule_chain"],scope["recipe"])
+        require(capsule["CPU_fixture"] is False and capsule["role"]==expected_role and capsule["previous_capsule_sha256"]==old_chain,
+            "native-only prior capsule and exact latest whole lineage")
+        new=result["capsule_chain"]["cumulative_costs"]
+        v.delta(new["operations"],old_costs["operations"])
+        require(new["physical_calls"]>=old_costs["physical_calls"] and new["input_positions"]>=old_costs["input_positions"],"whole cumulative physical dose no rollback")
+        job=capsule["start_proof"]["owned_scope_identity"]["job_name"]
+        require(job not in jobs,"each independently fresh owned predecessor Job");jobs.add(job)
+        old_costs=new;old_chain=result["capsule_chain"]["sha256"];items.append(result)
+    return items,jobs
+def validate_frame(frame,anchors,*,CPU_fixture_mode=False):
+    """Composition over selected immutable JSON; does not authenticate file IO."""
+    require(type(CPU_fixture_mode) is bool,"explicit fixture provenance")
+    scope,result,sup=frame["scope"],frame["result"],frame["supervisor"]
+    v.validate_v2_registration_schema(scope)
+    closed_success(scope,result,sup,anchors);validate_inventory(scope,frame["inventory"],anchors)
+    v.validate_native_admission(scope,result,sup)
+    previous,jobs=validate_previous(scope,frame["previous"],anchors)
+    proof=v.validate_chain_memory(scope,result,previous);capsule=proof["capsule"]
+    require(capsule["start_proof"]["owned_scope_identity"]["job_name"] not in jobs,"current scope must have a new owned Job")
+    trace=v.validate_trace(scope,capsule);physical=v.validate_physical(scope,capsule)
+    observed=v.validate_observed_state(scope,capsule,frame["owner"])
+    if previous:
+        require(capsule["start_proof"]["identity_common"]==previous[0]["capsule_chain"]["capsule"]["start_proof"]["identity_common"],
+            "actual same independently observed source/model/encoder/dense-start/inference-start RNG and initial112 bytes")
+    if scope["role"]=="bulk":
+        v.validate_bulk_records(scope,capsule,previous)
+        require(result["bulk_comparison"]==capsule["comparison"],"durable actual bulk every-step comparison result")
+    else:require(capsule["comparison"] is None,"no bulk numerical summary on trace/stress roles")
+    report={"kind":CPU_KIND if CPU_fixture_mode else "LONG_TERMINAL_CHECK_PREVIEW_NO_NATIVE_AUDIT",
+        "status":"CPU_FIXTURE_CHECKS_ONLY" if CPU_fixture_mode else "CHECKED_JSON_PROVENANCE_PENDING_NATIVE_DRIVER",
+        "role":scope["role"],"context_cap":anchors["context_cap"],"trace":trace,"physical":physical,"state_hash_observations":observed,
+        "current_operations":proof["current_operations"],"native_AUDIT_KIND_PASS_issued":False,
+        "resume_authority":False,"scoring_authorized":False,"study_training_authorized":False,
+        "native_ready":False,"raw_RNG_restore_or_tensor_reread_verified":False}
+    return seal(report)
+def check_preserved_bytes(frame,original,preserved,config_info,inventory_info):
+    """Pure exact byte descriptors; caller's native IO/authentication remains gated."""
+    pres=frame["preservation"];v.checksum(pres)
+    require(original==pres["raw_files"]==preserved,"every original/preserved raw file byte descriptor")
+    require(config_info==pres["config_snapshot"] and inventory_info==pres["audit_inventory_snapshot"],"immutable selected config/inventory byte snapshots")
+    require(set(original)=={item["path"] for item in frame["supervisor"]["partial_outputs"]}|{"SUPERVISOR_RECEIPT.json"},"complete frozen native raw roster")
+    return True
+def audit_terminal(attempt,preserved,config,inventory,*,terminal_signal,anchors,output_path=None):
+    v.validate_anchors(terminal_signal,anchors)
+    require(not STAGED and not (Path(__file__).resolve().parent.name in
+        ("long_native_audit_work","long_v2_audit_adaptation_work") and Path(__file__).resolve().parent.parent.name=="artifacts"),
+        "staged native terminal dispatch forbidden before IO/probes")
+    return _terminal_files(attempt,preserved,config,inventory,terminal_signal=terminal_signal,anchors=anchors,
+        package=PACKAGE,fixture=False,identity_alive=_identity_alive,asset_checker=_check_assets,
+        commit_checker=v.contract.inference._committed_checkout,output_path=output_path)
+
+def validate_resource_frame(frame):
+    """Pure returned-record validation; never queries OS, devices or processes."""
+    sup,owner=frame["supervisor"],frame["owner"];resources=frame["resources"]
+    expected_bounds={"worker_process_tree_RSS_GiB":2.0,"system_available_reserve_GiB":1.25,"preworker_available_GiB":3.3125,
+        "GPU_free_at_admission_GiB":4.0,"GPU_free_during_work_GiB":.5,"disk_free_GiB":4.0,"whole_scope_seconds":600,"external_watchdog_milliseconds":100}
+    expected_cadence={"CPU_watchdog_seconds":.1,"CPU_freshness_seconds":.2,"GPU_query_interval_seconds":.5,
+        "GPU_query_timeout_seconds":2.0,"GPU_freshness_seconds":2.0,"admission_interval_seconds":2.,"admission_deadline_seconds":30.,"admission_samples":2}
+    require(sup["bounds"]==expected_bounds and sup["cadence"]==expected_cadence,"all fixed resource/freshness/cadence gates")
+    admissions=frame["admissions"];require(len(admissions)==2,"two current admission observations")
+    require(all(row["gpu_free_bytes"]>=4*1024**3 and row["host_available_bytes"]>=3.3125*1024**3 and row["disk_free_bytes"]>=4*1024**3
+        for row in admissions) and admissions[1]["sample_started_monotonic"]-admissions[0]["sample_started_monotonic"]>=2,"unchanged fresh admission amounts/interval")
+    cpu=[r for r in resources if r["kind"]=="CPU"];gpu=[r for r in resources if r["kind"]=="GPU"]
+    require(cpu and gpu and len(cpu)+len(gpu)==len(resources),"complete returned CPU/GPU record inventory")
+    identities={}
+    for row in cpu:
+        require(all(type(row[k]) is int and row[k]>=0 for k in ("host_available_bytes","worker_tree_rss_bytes","disk_free_bytes"))
+            and row["host_available_bytes"]>=1.25*1024**3 and row["worker_tree_rss_bytes"]<=2*1024**3 and row["disk_free_bytes"]>=4*1024**3,
+            "typed returned host/RSS/disk floors")
+        require(row["sample_started_monotonic"]<=row["sample_completed_monotonic"] and row["sample_completed_monotonic"]-row["sample_started_monotonic"]<=.2,"CPU sample service/freshness")
+        require(sum(item["rss_bytes"] for item in row["owned_process_samples"])==row["worker_tree_rss_bytes"]
+            and row["owned_process_identities"]==[{k:item[k] for k in ("pid","create_time","creation_filetime_100ns")} for item in row["owned_process_samples"]],"owned PID/createTime/FILETIME/RSS closure")
+        for item in row["owned_process_samples"]:
+            require(type(item["pid"]) is int and item["pid"]>0 and type(item["creation_filetime_100ns"]) is int and item["creation_filetime_100ns"]>0
+                and row["sample_started_monotonic"]<=item["sample_started_monotonic"]<=item["sample_completed_monotonic"]<=row["sample_completed_monotonic"],"owned process typed identity/timing")
+            require(identities.setdefault(item["pid"],item["create_time"])==item["create_time"],"no reused sampled identity")
+    uuid=admissions[0]["gpu_uuid"]
+    for row in gpu:
+        require(type(row["GPU_index"]) is int and row["GPU_index"]==0 and row["gpu_uuid"]==uuid and bool(row["gpu_observation_id"])
+            and type(row["gpu_free_bytes"]) is int and type(row["gpu_total_bytes"]) is int and .5*1024**3<=row["gpu_free_bytes"]<=row["gpu_total_bytes"],
+            "typed current same-device GPU floor")
+        require(row["gpu_sample_started_monotonic"]<=row["gpu_sample_completed_monotonic"] and row["gpu_sample_completed_monotonic"]-row["gpu_sample_started_monotonic"]<=2,"GPU service/freshness")
+    for rows,start,end,maxage in ((cpu,"sample_started_monotonic","sample_completed_monotonic",.2),(gpu,"gpu_sample_started_monotonic","gpu_sample_completed_monotonic",2.)):
+        require(all(b[start]>=a[start] and b[end]-a[start]<=maxage for a,b in zip(rows,rows[1:])),"returned sample cadence/publication freshness")
+    hb=frame["heartbeat"]
+    require(hb and all(item["supervisor_pid"]==owner["supervisor_pid"] for item in hb)
+        and all(0<=b["unix_seconds"]-a["unix_seconds"]<=.2 for a,b in zip(hb,hb[1:])),"same supervisor heartbeat chronology/freshness")
+    identity=sup["worker_identity"];ownership=frame["ownership"]
+    require(identity["assigned_before_resume"] is True and identity["job_kill_on_close"] is True and identity["breakaway_allowed"] is False
+        and identity["pid"]==owner["worker_pid"] and identity["job_name"]==owner["job_name"]==ownership["job_name"]
+        and ownership["owned_job_membership_verified"] is True and ownership["query_job_handle_closed_before_framework_import"] is True
+        and ownership["launcher_root_pid"]==identity["pid"] and ownership["actual_worker_pid"] in identities,"actual fresh owned interpreter/launcher Job")
+    resume=frame["lease"]["resume"];reservation=frame["lease"]["reservation"]
+    require(frame["lease"]["worker"]==identity==resume["worker_identity"] and resume["external_monitor_ready_before_resume"] is True
+        and resume["resumed_monotonic"]==sup["worker_resume_monotonic"] and resume["deadline_monotonic"]==sup["deadline_monotonic"]
+        and reservation["config_sha256"]==sup["config_sha256"] and reservation["supervisor"]=={"pid":owner["supervisor_pid"],"create_time":owner["supervisor_create_time"]}
+        and frame["lease"]["terminal"]==sup,"durable owned reservation/worker/resume/terminal chain")
+    direct=frame["direct_GPU"]
+    require(direct["CUDA_initialized"] is True and all(type(direct[k]) is int and direct[k]>=0 for k in ("peak_allocated_bytes","peak_reserved_bytes","free_bytes_final"))
+        and direct["peak_reserved_bytes"]>=direct["peak_allocated_bytes"] and direct["free_bytes_final"]>=.5*1024**3,"direct terminal allocator/current free observations")
+    return {"CPU_samples":len(cpu),"GPU_samples":len(gpu),"observed_owned_identities":identities,"OS_query_performed":False}
+def check_frame_bytes(frame,anchors):
+    """All supplied bytes authenticate to independently selected external anchors."""
+    blobs=frame["bytes"];selected=frame["selected_paths"]
+    for role,key in (("config","config_file_sha256"),("result","result_file_sha256"),("supervisor","supervisor_file_sha256"),
+        ("inventory","inventory_file_sha256"),("encoder","encoder_registration_file_sha256")):
+        raw=blobs[selected[role]];require(type(raw) is bytes and hashlib.sha256(raw).hexdigest()==anchors[key],"external exact "+role+" bytes")
+    payloads={"config":frame["scope"],"result":frame["result"],"supervisor":frame["supervisor"],"inventory":frame["inventory"]}
+    for role,payload in payloads.items():
+        decoded=json.loads(blobs[selected[role]],object_pairs_hook=v.contract.native._pairs,parse_constant=v.contract.native._bad_constant)
+        require(canonical(decoded)==canonical(payload),"byte-selected "+role+" object cannot be substituted")
+    pres=frame["preservation"];v.checksum(pres);require(pres["sha256"]==anchors["preservation_body_sha256"],"externally selected preservation body")
+    original={name:{"bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest()} for name,raw in frame["original_raw_bytes"].items()}
+    preserved={name:{"bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest()} for name,raw in frame["preserved_raw_bytes"].items()}
+    require(original==preserved==pres["raw_files"],"all immutable original/preserved raw bytes, no missing/extra outputs")
+    source={name:{"bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest()} for name,raw in frame["source_bytes"].items()}
+    snapshots={name:{"bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest()} for name,raw in frame["source_snapshot_bytes"].items()}
+    require(source==snapshots and {name:item["sha256"] for name,item in source.items()}==frame["scope"]["source_pins"],"all source bytes/current preserved snapshots exact")
+    return True
+def check_fixture_terminal(frame,anchors):
+    """Whole fixture path is hard-labelled and cannot issue declared native KIND."""
+    require(frame.get("CPU_fixture_driver") is True,"fixture driver label required")
+    check_frame_bytes(frame,anchors)
+    report=validate_frame(frame,anchors,CPU_fixture_mode=True)
+    resource=validate_resource_frame(frame)
+    return seal({**{k:value for k,value in report.items() if k!="sha256"},"resource_fixture":resource,
+        "all_supplied_byte_anchors_checked":True,"actual_native_file_IO_identity_or_encoder_registration_validated":False})
+
+
+def pointer(path,*,directory=False,parent=None):
+    """Reject every symlink/reparse ancestor before resolving selected evidence."""
+    path=Path(path);require(path.is_absolute() and ".." not in path.parts,"absolute nonescaping evidence pointer")
+    for part in (path,*path.parents):
+        details=part.lstat()
+        require(not stat.S_ISLNK(details.st_mode) and not getattr(details,"st_file_attributes",0)&0x400,
+            "symlink/reparse evidence pointer forbidden")
+    require(path.resolve()==path and (path.is_dir() if directory else path.is_file()),"exact regular evidence pointer")
+    if parent is not None:require(path.parent==Path(parent),"selected evidence belongs to exact owned leaf")
+    return path
+
+
+def bytes_info(path,maximum=32*1024**2):
+    path=pointer(path);before=path.stat();require(0<=before.st_size<=maximum,"bounded immutable selected file")
+    value=hashlib.sha256();total=0
+    with path.open("rb") as stream:
+        for raw in iter(lambda:stream.read(1024**2),b""):total+=len(raw);value.update(raw)
+    after=path.stat()
+    require(total==before.st_size==after.st_size and (before.st_mtime_ns,before.st_ino)==(after.st_mtime_ns,after.st_ino),
+        "selected file changed while hashing")
+    return {"bytes":total,"sha256":value.hexdigest()}
+
+
+def selected_json(path,sha=None,maximum=v.MAX_JSON):
+    path=pointer(path);info=bytes_info(path,maximum)
+    if sha is not None:require(v.hash64(sha) and info["sha256"]==sha,"external selected file hash "+path.name)
+    raw=path.read_bytes();require(len(raw)==info["bytes"] and hashlib.sha256(raw).hexdigest()==info["sha256"],"JSON bytes stable")
+    def finite(value):
+        parsed=float(value);require(math.isfinite(parsed),"finite JSON float required");return parsed
+    return json.loads(raw.decode("utf-8"),object_pairs_hook=v.contract.native._pairs,
+        parse_constant=v.contract.native._bad_constant,parse_float=finite)
+
+
+
+def evidence_anchor(item):
+    require(type(item) is dict and set(item)=={"path","file_sha256","body_sha256"}
+        and v.hash64(item["file_sha256"]) and v.hash64(item["body_sha256"]),"selected evidence file/body anchor")
+    body=selected_json(item["path"],item["file_sha256"],4*1024**2);v.checksum(body)
+    require(body["sha256"]==item["body_sha256"],"external selected evidence body")
+    return body
+
+
+def reconstruct_registration(scope,registration_path):
+    """Independent file/body/current-source joins; no execution of encoder assets."""
+    reg=selected_json(registration_path,scope["encoder_registration"]["sha256"],4*1024**2)
+    require(reg==scope["encoder_runtime_registration"],"whole selected registration file equals config declaration")
+    v.validate_v2_registration_schema(scope)
+    anchors=reg["evidence_anchors"]
+    package,stdlib,review,sreview=[evidence_anchor(anchors[key]) for key in ("package","stdlib","package_review","stdlib_review")]
+    enc,std=package["runtime_inventory"],stdlib["inventory"]
+    require(package["kind"]=="STAGED_CPU_LONG_ENCODER_INVENTORY_NOT_NATIVE_REGISTRATION_V1"
+        and all(package[k] is False for k in ("native_authority_issued","native_registration_written","native_config_written",
+            "complete_runtime_execution_closure_established")),"selected package preparation only")
+    require(stdlib["kind"]=="STAGED_CPU_STDLIB_RUNTIME_SUPERSET_NOT_NATIVE_REGISTRATION_V1"
+        and stdlib["fixture"] is False and stdlib["before_after_byte_equal"] is True
+        and stdlib["native_authority_issued"] is False and stdlib["complete_machine_trust_claimed"] is False,"nonfixture finite byte candidate")
+    require(enc==reg["encoder_inventory"] and std==reg["stdlib_inventory"]
+        and package["native_registration_preview"]==reg["prompt_registration_preview"],"whole exact encoder/stdlib/preview reconstruction")
+    preview=package["native_registration_preview"];v.checksum(preview)
+    from encoder_inventory import PACKET_SHA
+    packet=v.contract.PACKET
+    require(preview["input_packet"]["sha256"]==PACKET_SHA==bytes_info(packet)["sha256"]
+        and preview["chat_template_sha256"]==selected_json(packet)["tokenizer_binding"]["chat_template_sha256"],"current input/template join")
+    source_map={path:item["sha256"] for path,item in preview["source_pins"].items()}
+    require(source_map and all(bytes_info(path)["sha256"]==pin for path,pin in source_map.items()),"selected candidate current source bytes")
+    encoder_helper=bytes_info(PACKAGE/"encoder_inventory.py")["sha256"]
+    stdlib_helper=bytes_info(PACKAGE/"stdlib_inventory.py")["sha256"]
+    require(source_map.get(str(PACKAGE/"encoder_inventory.py"))==encoder_helper,"exact selected encoder helper")
+    require(review["status"]=="PASS_EXACT_ENCODER_PACKAGE_BYTE_REVIEW"
+        and review["candidate_file_sha256"]==anchors["package"]["file_sha256"] and review["candidate_body_sha256"]==package["sha256"]
+        and review["helper_source_sha256"]==encoder_helper and review["runtime_pins_sha256"]==digest(enc["runtime_pins"])
+        and review["observed_versions"]==enc["versions"] and review["input_packet_sha256"]==preview["input_packet"]["sha256"]
+        and review["chat_template_sha256"]==preview["chat_template_sha256"] and review["consumption_source_pins"]==source_map
+        and review["source_unchanged"] is True and review["encoder_framework_model_or_GPU_execution"] is False
+        and review["native_registration_or_config_written"] is False,"complete independent encoder candidate review joins")
+    require(stdlib["helper_source_sha256"]==stdlib_helper and sreview["status"]=="PASS_CURRENT779_RUNTIME_BYTE_SUPERSET"
+        and sreview["candidate_file_sha256"]==anchors["stdlib"]["file_sha256"] and sreview["candidate_body_sha256"]==stdlib["sha256"]
+        and sreview["runtime_files"]==779 and sreview["runtime_bytes"]==sum(item["bytes"] for item in std["files"].values())
+        and sreview["alias_binding"]==std["approved_alias_binding"] and sreview["optional_stdlib_zip"]==std["optional_stdlib_zip"]
+        and sreview["helper_source_before"]==sreview["helper_source_after"]==stdlib_helper
+        and sreview["forbidden_modules_loaded"]==[] and sreview["native_authority_issued"] is False
+        and sreview["encoder_framework_model_GPU_execution"] is False,"complete independent finite stdlib candidate review joins")
+    require(reg["consumption_source_pins"]=={str(PACKAGE/name):bytes_info(PACKAGE/name)["sha256"]
+        for name in ("encoder_inventory.py","stdlib_inventory.py","encoder_registration_v2.py","admitted_runtime_observer.py")},
+        "exact four current consumption helper pins")
+    rebuilt={**{key:deepcopy(value) for key,value in reg.items() if key not in
+        ("sha256","encoder_inventory","stdlib_inventory","additional_runtime_pins","runtime_pins","prompt_registration_preview")},
+        "encoder_inventory":deepcopy(enc),"stdlib_inventory":deepcopy(std),
+        "additional_runtime_pins":v.v2_merge(enc["runtime_pins"],std["runtime_pins"]),
+        "runtime_pins":v.v2_merge(v.contract.base_runtime_pins(),enc["runtime_pins"],std["runtime_pins"]),
+        "prompt_registration_preview":deepcopy(preview)}
+    require(reg==seal(rebuilt),"entire independent V2 registration reconstruction")
+    return reg
+
+
+def reconstruct_scope(scope):
+    """Rebuild every recipe/config field from exact current TRAIN and source pins."""
+    c=v.contract;cap=scope["recipe"]["context_cap"];role=scope["role"];prefix=scope["recipe"]["prefix_stress_ids"]
+    packet,item=c.selected(cap,prefix);prior=selected_json(PACKAGE/"configs/SYNTH_NQ001_PROC7.json")
+    sources=c.source_pins();runtime=v.v2_merge(c.base_runtime_pins(),scope["encoder_runtime_registration"]["runtime_pins"])
+    identity={"purpose":c.PURPOSE,"context_cap":cap,"packet_sha256":c.PACKET_SHA,"source_pins":sources,"runtime_pins":runtime,
+        "model_pins":dict(c.ASSET_PINS),"tokenizer_binding":deepcopy(packet["tokenizer_binding"]),"seed":101,
+        "precision":deepcopy(prior["precision"]),"tolerances":deepcopy(c.native.TOLERANCES),"prefix_stress_ids":deepcopy(prefix),
+        "qualified_short_helper_prerequisite":c.prerequisite.inference_binding(),
+        "declared_execution_scope_registration_sha256":scope["encoder_runtime_registration"]["sha256"]}
+    identity=seal(identity)
+    expected={"schema_version":1,"contract":c.VERSION,"purpose":c.PURPOSE,"authorization":deepcopy(c.AUTHORIZATION),
+        "owned_qualification_authorized":True,"staged_native_dispatch_forbidden":False,"recipe":identity,"role":role,"seed":101,
+        "row":item["row"],"messages":item["messages"],"short_parity_row":packet["short_parity_row"],
+        "prompt_hash_conventions":{"short":"SHA256_RENDERED_UTF8_CHAT_TEMPLATE","long":"SHA256_CANONICAL_MESSAGES_JSON"},
+        "source_item":item,"dose":c.work(item["row"],role),"source_pins":sources,"runtime_pins":runtime,"model_pins":dict(c.ASSET_PINS),
+        "model_dir":str(c.MODEL_DIR),"encoder_registration":deepcopy(scope["encoder_registration"]),
+        "encoder_runtime_registration":deepcopy(scope["encoder_runtime_registration"]),"tokenizer_binding":deepcopy(packet["tokenizer_binding"]),
+        "packet_path":str(c.PACKET),"packet_sha256":c.PACKET_SHA,"data_pins":deepcopy(prior["data_pins"]),
+        "runtime_versions":deepcopy(c.native.RUNTIME),"offline_environment":deepcopy(c.native.OFFLINE_ENV),
+        "precision":deepcopy(prior["precision"]),"resources":deepcopy(c.native.RESOURCE_BOUNDS),"tolerances":deepcopy(c.native.TOLERANCES),
+        "references":deepcopy(scope["references"]),"native_launch_authorized":False,"native_long_context_qualified":False,
+        "study_training_authorized":False,"study_warmstart_allowed":False,"guard_enrollment_authorized":False,"scoring_authorized":False}
+    require(scope==seal(expected),"every current config/recipe field independently reconstructed")
+    return expected
+
+
+def _identity_alive(identity):
+    """Future read-only exact identity check; access/errors never imply death."""
+    import native_supervisor
+    return native_supervisor._pid_alive(identity)
+
+
+def _check_assets(scope):
+    """Native only, after terminal and source/evidence anchors; no deserialization."""
+    import stdlib_inventory as std
+    require(std.alias_observation()==scope["encoder_runtime_registration"]["stdlib_inventory"]["approved_alias_binding"],"current exact alias")
+    std.validate_alias(std.alias_observation())
+    from encoder_inventory import runtime_roster
+    enc=scope["encoder_runtime_registration"]["encoder_inventory"]
+    observed=runtime_roster()
+    require(observed["paths"]==enc["paths"] and observed["packages"]==enc["packages"] and observed["versions"]==enc["versions"],"current encoder exact roster/version")
+    roster=std.roster(std.BASE,sys.executable,std.PYTHON_VERSION)
+    declared=scope["encoder_runtime_registration"]["stdlib_inventory"]
+    require(all(roster[key]==declared[key] for key in roster),"current finite stdlib exact roster/alias/ZIP")
+    maps=(scope["runtime_pins"],{str(Path(scope["model_dir"])/name):pin for name,pin in scope["model_pins"].items()},
+        scope["data_pins"],scope["tokenizer_binding"]["binding_sources"],
+        {str(Path(scope["tokenizer_binding"]["model_dir"])/name):item["sha256"] for name,item in scope["tokenizer_binding"]["assets"].items()})
+    for mapping in maps:
+        for path,pin in mapping.items():
+            # Inherited logical interpreter paths have the one independently
+            # matched approved alias; every other pointer is non-reparse.
+            logical=std.BASE.absolute();p=Path(path)
+            if p.is_relative_to(logical):p=std.PHYSICAL_BASE/p.relative_to(logical)
+            require(bytes_info(p,4*1024**3)["sha256"]==pin,"current complete runtime/model/data/encoder asset pin")
+    return True
+
+
+def _terminal_files(attempt,preserved,config,inventory,*,terminal_signal,anchors,package,fixture,
+        identity_alive,asset_checker,commit_checker,output_path=None):
+    v.validate_anchors(terminal_signal,anchors)
+    require(type(fixture) is bool and (fixture or not STAGED),"staged native dispatch forbidden")
+    package=pointer(package,directory=True);attempt=pointer(attempt,directory=True,parent=package/"artifacts")
+    require(not attempt.name.startswith("_"),"nonreserved owned native attempt")
+    preserved=pointer(preserved,directory=True)
+    require(preserved!=attempt and preserved.is_relative_to(package) and not preserved.is_relative_to(attempt),"separate owned preserved evidence")
+    config=pointer(config,parent=package/"configs");inventory=pointer(inventory,parent=preserved)
+    scope=selected_json(config,anchors["config_file_sha256"]);v.checksum(scope)
+    sup_path=attempt/"SUPERVISOR_RECEIPT.json";result_path=attempt/"worker_result.json"
+    sup=selected_json(sup_path,anchors["supervisor_file_sha256"]);result=selected_json(result_path,anchors["result_file_sha256"])
+    closed_success(scope,result,sup,anchors)
+    require(sup["output_dir"]==str(attempt) and sup["preflight"]=={**scope,"config_path":str(config),
+        "config_sha256":anchors["config_file_sha256"],"source_commit":anchors["source_commit"],"worker_path":str(PACKAGE/"long_native_worker.py")},
+        "entire exact recorded preflight/config/worker")
+    inv=selected_json(inventory,anchors["inventory_file_sha256"]);validate_inventory(scope,inv,anchors)
+    require(inv["terminal_driver_file_sha256"]==bytes_info(Path(__file__))["sha256"],"externally selected complete terminal driver bytes")
+    source_start={path:bytes_info(path) for path in scope["source_pins"]}
+    require({path:item["sha256"] for path,item in source_start.items()}==v.contract.source_pins()==scope["source_pins"],"complete exact current source pins")
+    regpath=pointer(scope["encoder_registration"]["path"],parent=package/"artifacts/long_native_audit_registrations")
+    require(bytes_info(regpath)["sha256"]==anchors["encoder_registration_file_sha256"],"externally selected final registration bytes")
+    reconstruct_registration(scope,regpath);reconstruct_scope(scope)
+    require(commit_checker(True)==anchors["source_commit"],"current clean committed source identity")
+    pres=selected_json(preserved/"PRESERVATION.json");v.checksum(pres)
+    require(pres["sha256"]==anchors["preservation_body_sha256"] and pres["attempt_path"]==str(attempt)
+        and pres["preserved_path"]==str(preserved),"selected exact preservation/body/paths")
+    raw=pointer(preserved/"raw",directory=True);snapshots=pointer(preserved/"source_snapshot",directory=True)
+    names=[item["path"] for item in sup["partial_outputs"]]
+    require(all(type(name) is str and name==Path(name).name and name not in (".","..") for name in names)
+        and len(names)==len(set(names)) and "SUPERVISOR_RECEIPT.json" not in names,"closed flat frozen raw roster")
+    names=set(names)|{"SUPERVISOR_RECEIPT.json"}
+    require(names=={p.name for p in attempt.iterdir()}=={p.name for p in raw.iterdir()}==set(pres["raw_files"]),"no omitted/extra raw outputs")
+    initial={name:bytes_info(pointer(attempt/name,parent=attempt)) for name in names}
+    require(initial==pres["raw_files"]=={name:bytes_info(pointer(raw/name,parent=raw)) for name in names},"all original/preserved immutable bytes")
+    require(all({k:item[k] for k in ("bytes","sha256")}==initial[item["path"]] for item in sup["partial_outputs"]),"supervisor complete frozen raw byte descriptors")
+    require(pres["config_snapshot"]==bytes_info(config)==bytes_info(preserved/"CONFIG_SNAPSHOT.json")
+        and pres["audit_inventory_snapshot"]==bytes_info(inventory),"selected immutable config/inventory snapshots")
+    require(pres["source_files"]==source_start and set(pres["source_snapshot_map"])==set(source_start),"complete exact source preservation roster")
+    seen=set()
+    for path,item in source_start.items():
+        name=pres["source_snapshot_map"][path]
+        require(type(name) is str and name==Path(name).name and name not in seen,"unique flat source snapshot")
+        seen.add(name);require(bytes_info(pointer(snapshots/name,parent=snapshots))==item,"exact preserved source bytes")
+    require(seen=={p.name for p in snapshots.iterdir()},"no missing/extra source snapshots")
+    previous=[]
+    for ref in scope["references"] or[]:
+        frame={}
+        for kind in ("result","supervisor","audit"):
+            p=pointer(ref[kind+"_path"])
+            require(p.is_relative_to(package),"prior role evidence remains owned")
+            frame[kind]=selected_json(p,ref[kind+"_sha256"]);frame[kind+"_file_sha256"]=bytes_info(p)["sha256"]
+        previous.append(frame)
+    owner=selected_json(attempt/"supervisor_ownership.json")
+    frame={"scope":scope,"result":result,"supervisor":sup,"inventory":inv,"previous":previous,"owner":owner}
+    composition=validate_frame(frame,anchors,CPU_fixture_mode=fixture)
+    # validate_publications independently reconstructs current journal delta,
+    # token-prefix cost records, publication bytes and whole capsule promotion.
+    journal=v.validate_event_journal(attempt/"events.jsonl",attempt)
+    prior,_=validate_previous(scope,previous,anchors)
+    publication=v.validate_publications(scope,result,prior,journal,attempt)
+    original_package=v.PACKAGE
+    try:
+        v.PACKAGE=package
+        resources=v.verify_resources(scope,sup,attempt)
+    finally:v.PACKAGE=original_package
+    observed={}
+    for row in selected_json(attempt/"RESOURCE_OBSERVATIONS.json"):
+        if row["kind"]=="CPU":
+            for item in row["owned_process_identities"]:
+                require(observed.setdefault(item["pid"],item)==item,"same raw FILETIME identity throughout owned sampling")
+    require(sup["worker_identity"]["pid"] in observed and all(sup["worker_identity"][key]==observed[sup["worker_identity"]["pid"]][key]
+        for key in ("pid","create_time","creation_filetime_100ns")),"launcher raw FILETIME recorded identity")
+    observed[owner["supervisor_pid"]]={"pid":owner["supervisor_pid"],"create_time":owner["supervisor_create_time"]}
+    require(all(identity_alive(deepcopy(identity)) is False for identity in observed.values()),"every currently dead exact owned PID identity")
+    require(asset_checker(scope) is True,"complete selected actual asset validation")
+    require(commit_checker(True)==anchors["source_commit"] and source_start=={path:bytes_info(path) for path in source_start}
+        and initial=={name:bytes_info(attempt/name) for name in names}
+        and initial=={name:bytes_info(raw/name) for name in names},"all source/raw bytes and clean commit stable through audit")
+    report={"kind":CPU_KIND if fixture else v.contract.AUDIT_KIND,
+        "status":"CPU_FILESYSTEM_TERMINAL_CHECKS_ONLY" if fixture else "PASS_NATIVE_LONG_SCOPE_NUMERICAL_MECHANICS_ONLY",
+        "purpose":v.contract.PURPOSE,"role":scope["role"],"context_cap":anchors["context_cap"],"recipe_sha256":anchors["recipe_sha256"],
+        "source_commit":anchors["source_commit"],"config_sha256":anchors["config_file_sha256"],"result_sha256":anchors["result_file_sha256"],
+        "supervisor_sha256":anchors["supervisor_file_sha256"],"inventory_sha256":anchors["inventory_file_sha256"],
+        "preservation_body_sha256":anchors["preservation_body_sha256"],"validator_file_sha256":VALIDATOR_SHA256,
+        "terminal_driver_file_sha256":inv["terminal_driver_file_sha256"],"resources":resources,"trace":composition["trace"],
+        "physical":composition["physical"],"state_hash_observations":composition["state_hash_observations"],
+        "current_operations":publication["current_operations"],"journal_calls":journal["calls"],"checked_identity_count":len(observed),
+        "exact_registration_config_recipe_reconstructed":True,"all_original_preserved_source_raw_bytes_verified":True,
+        "actual_identity_and_asset_probes_performed":not fixture,"CPU_injected_identity_asset_commit_probes":fixture,
+        "native_AUDIT_KIND_PASS_issued":not fixture,"resume_authority":False,"native_ready":False,
+        "study_training_authorized":False,"scoring_authorized":False,"native_long_context_qualified":False,
+        "raw_RNG_restore_or_tensor_reread_verified":False}
+    report=seal(report)
+    if output_path is not None:
+        output=Path(output_path);require(output.is_absolute() and output.parent==preserved and not output.exists()
+            and output.name not in ("PRESERVATION.json","CONFIG_SNAPSHOT.json",inventory.name),"new owned write-once audit output")
+        with output.open("xb") as stream:
+            raw_report=(canonical(report)+"\n").encode();require(stream.write(raw_report)==len(raw_report),"complete audit report")
+            stream.flush();os.fsync(stream.fileno())
+    return report
+
+
+def check_filesystem_fixture(attempt,preserved,config,inventory,*,terminal_signal,anchors,package,
+        identity_alive,asset_checker,commit_checker,output_path=None):
+    """Actual file orchestration; explicit fake probes cannot emit native audit."""
+    require(all(callable(fn) for fn in (identity_alive,asset_checker,commit_checker)),"explicit CPU probe injection required")
+    return _terminal_files(attempt,preserved,config,inventory,terminal_signal=terminal_signal,anchors=anchors,
+        package=package,fixture=True,identity_alive=identity_alive,asset_checker=asset_checker,
+        commit_checker=commit_checker,output_path=output_path)

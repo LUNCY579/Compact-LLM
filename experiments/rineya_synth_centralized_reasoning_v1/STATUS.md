@@ -1,5 +1,24 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: corrected V2 native terminal audit integrated
+
+The [V2 validator/terminal path](LONG_V2_NATIVE_AUDIT_002.md) is integrated as new
+files after the original25-pass candidate was rejected by mutation review. Exact
+first-read anchors and final file/directory rechecks now include snapshots,
+lease/prior-role records and registration/evidence; ignored overflowing floats
+reject. Full external config/registration/source/raw/resource/state/cost/identity
+orchestration is implemented, preserving original floors and old helper bytes.
+
+The corrected30-case independent review and
+[root30-case run](evidence/long_v2_terminal_root_cpu_validation_002_20261005.json)
+pass. Two staging tests required a separately reviewed root-layout correction;
+the [failed first run](evidence/long_v2_terminal_root_cpu_validation_001_20261005.json)
+and original test remain retained. All real probes were trapped in tests; no
+native model/encoder/GPU/asset/OS execution or audit receipt occurred. The next
+step is exact new inventory/current registration/config and fresh owned native
+qualification. M0 completion, full27 model fit, language authority and the actual
+three-arm result remain unfinished. The800-test full run predates these additions.
+
 ## 2026-10-05 UTC: Phase3 native auditor implemented and CPU-reviewed
 
 The [reviewed Phase3 terminal auditor](SHORT_PHASE_AUDIT_003.md) has a complete
