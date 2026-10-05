@@ -1,5 +1,26 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: fresh normalized phase A completed and audited
+
+The [fresh normalized A config](configs/SYNTH_BACKENDQ003_NORMALIZED_WITNESS_A1.json)
+completed in 171.437 seconds. The
+[independent audit](evidence/backendq003_normalized_witness_A_attempt1_independent_audit_20261005.json)
+passes 121,833 checks: 202 physical forwards / 48,112 positions, 200 CE/backward
+rows, ten updates, 16 base-content proofs and 11,256 paired decoder records.
+All 13,111 registered API calls returned; maximum CE error was 4.768e-7 under
+the unchanged 2e-6 bound. Resource, freshness, deadline and owned cleanup checks
+pass. All [217 raw outputs and 26 sources](evidence/backendq003_normalized_witness_A_attempt1_20261005)
+are byte-preserved with the frozen config and audit scripts. The initial audit
+script's flat-copy path assumption is retained; its correction changes only
+the preserved-copy lookup to this receipt's `raw/` layout.
+
+Independent symbolic C9 inspection matches all 450 storages to W9. Raw optimizer
+betas remain tuples; detached witnesses use JSON lists. W10 metadata matches the
+registered cursor and recipe. The normalized recipe is distinct from old Q003 A;
+only this new A can seed its B. Fresh-process continuation, resumed-nine/full-27,
+study training, scores and transfer/retention remain unqualified. The completed
+M0 population remains 192/384, and language review authority is still missing.
+
 ## 2026-10-05 UTC: detached witness representation repair integrated
 
 The reviewed four-line normalization is integrated in `backend_qual_native.py`.
