@@ -1,5 +1,38 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: admitted RAM2 worker stopped at runtime GPU floor
+
+After the denial was audited, a separate read-only observation showed
+7,275,827,200 free GPU bytes. A new exact-launch-HEAD inventory at
+`5000671122acf7fab4e030834fab6487c21d41d6` passed independent source/anchor review.
+Fresh supervisor admission then passed two 7,291,555,840-byte samples. The new
+owned worker stopped after 34.953 seconds when selected GPU free memory was
+505,769,984 bytes, below the unchanged 536,870,912-byte during-work floor.
+The selected CPU age was zero, with all freshness flags true. The logged reason
+is `runtime_GPU_free`, distinct from the older stale-CPU abort.
+
+The [independent failure audit](evidence/short_m0_atomic_batch04_ram2_attempt2_independent_failure_audit_20261005.json)
+passes 1,384 checks. Exactly one CUDA initialization API attempt and return are
+recorded; there is no recorded model construction, checkpoint load, forward,
+collection row, worker result or final310-base proof. The post-initialization
+phase is unlogged, so these records do not establish the memory-allocation cause
+or intrinsic collector fit. All nine raw files,90source/65runtime/17decoder/5data/
+7model byte maps, config, independently selected inventory, preceding observation,
+lease and diagnostic links match. All eight observed process identities are
+terminal, with exact identity/time joins and sampler/NVML/Job cleanup verified.
+The [raw evidence](evidence/short_m0_atomic_batch04_ram2_attempt2_20261005),
+both audit scripts and execution provenance retain the auditor's initial guessed
+process-count failure and its correction to the exact observed identity set.
+
+The diagnostic's pinned single-owner control flow publishes after containment;
+an exact termination-return timestamp was not persisted. A
+[separate post-abort process observation](evidence/ram2_post_abort_resource_context_20261005)
+has unavailable per-process GPU usage and cannot establish allocation attribution.
+No unrelated application was controlled. M0 remains192/384 and unscored. No
+unchanged retry, prior partial admission, lowered floor or cause/cure claim follows.
+CPU work continues on full27 qualification and source-bound long split controls;
+language reference/reviewer authority and the actual learning comparison remain open.
+
 ## 2026-10-05 UTC: amended M0 batch04 denied before worker launch
 
 The [fresh RAM2 config](configs/SYNTH_SHORT_M0_ATOMIC_BATCH04_RAM2_A1.json) and
