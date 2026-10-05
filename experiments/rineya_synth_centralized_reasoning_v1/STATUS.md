@@ -1,5 +1,55 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: resumed batch05 failed; both errors retained
+
+After the owner offered to free GPU memory, a bounded
+[no-worker resource check](evidence/short_m0_atomic_batch05_phase3_resource_check1_20261005/preservation_receipt.json)
+passed two fresh observations at7,329,910,784 and7,321,849,856 free bytes. New
+05A2/06A1 inventories at clean HEAD
+`1dc787533d4e57257c5ae20b8e5324fb49894b70` passed independent source/JSON review.
+Batch05 attempt2 repeated full preflight/admission, then ran under unchanged
+math, inputs, bounds and supervision. It did not complete.
+
+The worker recorded a CUDA illegal-memory-access error. The supervisor later
+aborted137 for stale external CPU telemetry: selected age0.641seconds exceeded
+the unchanged0.2-second limit. Whole scope was98.203seconds. The worker's error
+preceded that watchdog check by0.703seconds. The minimum sampled GPU free amount
+was4,599,869,440bytes, above the during-work floor; this does not explain the
+CUDA error or certify fit. Both errors remain separately recorded.
+
+The [failed terminal preservation](evidence/short_m0_atomic_batch05_phase3_attempt2_20261005/preservation_receipt.json)
+binds288 raw files,131 source snapshots, exact config/inventory/auditor bytes,
+19 partial row receipts and253 token fragments. Capture returned253 forwards
+and89,757 positions; including parity, physical work was255 forwards/90,325
+positions. No backward/update occurred. Root freshly verified all three recorded
+owned FILETIME births dead and exact lease/terminal cleanup. The
+[independent failed audit](evidence/short_m0_atomic_batch05_phase3_attempt2_20261005_failed_terminal_audit.json)
+verifies those byte/identity/recorded-cost joins while explicitly excluding all
+partial rows from the complete M0 population. Successful-native auditing was not
+invoked.
+
+The [source chronology review](evidence/phase3_batch05_attempt2_reviewed_20261005/BATCH05_A2_FAILURE_CHRONOLOGY_SOURCE_REVIEW_001.json)
+locates the reporting gap after row20 token08 at prefix421: the next component
+guard returned, then the error occurred before another model API/dose increment.
+Source places CUDA input/mask creation and their checks in that unobserved gap
+for prospective prefix422. The exact reporting call and originating kernel are
+unknown; a Python/API return does not certify asynchronous device execution.
+
+Separate [read-only Windows event payloads](evidence/phase3_batch05_attempt2_reviewed_20261005/ROOT_SYSTEM_GPU_EVENT_XML_001.json)
+record NVIDIA TDR reset/restart events at17:19:14.197–17:19:21.168UTC. Their timing
+overlaps the error; no causal explanation or CUDA-device mapping is established.
+No driver/TDR settings, resource floors or numerical checks were changed.
+
+M0 remains256/384 audited raw rows, all unscored; batch06 is unstarted. No further
+native collection or training follows this failed scope. Next review a separately
+registered bounded traceback-frame diagnostic, recording source/path/function/
+line without locals, tensors or extra model/CUDA calls. The current stderr is
+empty because the worker catches and serializes errors. This diagnostic would
+identify the Python reporting boundary only, not the initiating kernel. Preserve
+all previous evidence and require fresh qualification before resuming collection.
+The CPU candidate-import milestone is retained; the full three-arm goal remains
+active and unproved.
+
 ## 2026-10-05 UTC: CPU candidate import mechanics independently reviewed
 
 The [reproducible CPU implementation](CANDIDATE_IMPORT_CPU_001.md) joins synthetic

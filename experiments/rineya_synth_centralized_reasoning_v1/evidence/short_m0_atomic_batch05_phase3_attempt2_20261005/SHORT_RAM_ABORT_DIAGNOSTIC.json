@@ -1,0 +1,27 @@
+{
+  "CPU_freshness_seconds": 0.2,
+  "CPU_interval_seconds": 0.1,
+  "CPU_phase": {
+    "name": "sampling_CPU",
+    "sampler_monotonic": 10950.687,
+    "sampler_perf_counter": 10950.7132829
+  },
+  "CPU_predicate_branch": "over_200ms_age",
+  "CPU_predicate_flags": {
+    "age_nonnegative": true,
+    "age_within_200ms": false,
+    "amounts_nonnegative_int": true,
+    "chronology": true
+  },
+  "causal_OS_or_batch04_explanation_established": false,
+  "check_monotonic": 10950.687,
+  "check_thread_id": 105544,
+  "containment_invoked_before_diagnostic_IO": true,
+  "failure": "stale_external_CPU_watchdog",
+  "schema_version": 1,
+  "selected_CPU_age_seconds": 0.6409999999996217,
+  "selected_CPU_completed_monotonic": 10950.046,
+  "selected_CPU_started_monotonic": 10950.046,
+  "selected_GPU_completed_monotonic": 10949.656,
+  "selected_GPU_started_monotonic": 10949.656
+}

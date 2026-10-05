@@ -1,0 +1,482 @@
+{
+  "actual_decoder_grading_models_assets_probes_success_audit_or_retry": false,
+  "all_original_preserved_raw_pairs_verified": true,
+  "causal_cure_claim": false,
+  "critical_marker_window": [
+    {
+      "event": "attempt",
+      "historical_cause_established": false,
+      "monotonic": 10949.953,
+      "operation": "guard_cuda_is_initialized",
+      "ordinal": 18130,
+      "utc": "2026-10-05T17:19:14.174022+00:00"
+    },
+    {
+      "error": null,
+      "event": "returned",
+      "historical_cause_established": false,
+      "monotonic": 10949.953,
+      "operation": "guard_cuda_is_initialized",
+      "ordinal": 18130,
+      "result": true,
+      "utc": "2026-10-05T17:19:14.175193+00:00"
+    },
+    {
+      "event": "attempt",
+      "historical_cause_established": false,
+      "monotonic": 10949.953,
+      "operation": "guard_cuda_mem_get_info",
+      "ordinal": 18131,
+      "utc": "2026-10-05T17:19:14.175323+00:00"
+    },
+    {
+      "error": null,
+      "event": "returned",
+      "historical_cause_established": false,
+      "monotonic": 10949.953,
+      "operation": "guard_cuda_mem_get_info",
+      "ordinal": 18131,
+      "result": [
+        5012193280,
+        8585216000
+      ],
+      "utc": "2026-10-05T17:19:14.175323+00:00"
+    },
+    {
+      "error": null,
+      "event": "returned",
+      "historical_cause_established": false,
+      "monotonic": 10949.953,
+      "operation": "guard_after_inference_forward",
+      "ordinal": 18129,
+      "result": null,
+      "utc": "2026-10-05T17:19:14.176388+00:00"
+    },
+    {
+      "event": "attempt",
+      "historical_cause_established": false,
+      "monotonic": 10949.953,
+      "operation": "publication_raw_row0020_token08",
+      "ordinal": 18132,
+      "utc": "2026-10-05T17:19:14.177386+00:00"
+    },
+    {
+      "error": null,
+      "event": "returned",
+      "historical_cause_established": false,
+      "monotonic": 10949.953,
+      "operation": "publication_raw_row0020_token08",
+      "ordinal": 18132,
+      "result": null,
+      "utc": "2026-10-05T17:19:14.185364+00:00"
+    },
+    {
+      "event": "attempt",
+      "historical_cause_established": false,
+      "monotonic": 10949.953,
+      "operation": "guard_before_inference_forward",
+      "ordinal": 18133,
+      "utc": "2026-10-05T17:19:14.187694+00:00"
+    },
+    {
+      "event": "attempt",
+      "historical_cause_established": false,
+      "monotonic": 10949.968,
+      "operation": "guard_cuda_is_initialized",
+      "ordinal": 18134,
+      "utc": "2026-10-05T17:19:14.188693+00:00"
+    },
+    {
+      "error": null,
+      "event": "returned",
+      "historical_cause_established": false,
+      "monotonic": 10949.968,
+      "operation": "guard_cuda_is_initialized",
+      "ordinal": 18134,
+      "result": true,
+      "utc": "2026-10-05T17:19:14.188693+00:00"
+    },
+    {
+      "event": "attempt",
+      "historical_cause_established": false,
+      "monotonic": 10949.968,
+      "operation": "guard_cuda_mem_get_info",
+      "ordinal": 18135,
+      "utc": "2026-10-05T17:19:14.188693+00:00"
+    },
+    {
+      "error": null,
+      "event": "returned",
+      "historical_cause_established": false,
+      "monotonic": 10949.968,
+      "operation": "guard_cuda_mem_get_info",
+      "ordinal": 18135,
+      "result": [
+        5012193280,
+        8585216000
+      ],
+      "utc": "2026-10-05T17:19:14.188693+00:00"
+    },
+    {
+      "error": null,
+      "event": "returned",
+      "historical_cause_established": false,
+      "monotonic": 10949.968,
+      "operation": "guard_before_inference_forward",
+      "ordinal": 18133,
+      "result": null,
+      "utc": "2026-10-05T17:19:14.196015+00:00"
+    },
+    {
+      "event": "attempt",
+      "historical_cause_established": false,
+      "monotonic": 10949.968,
+      "operation": "publication_inference_failure_0020",
+      "ordinal": 18136,
+      "utc": "2026-10-05T17:19:14.200225+00:00"
+    },
+    {
+      "error": null,
+      "event": "returned",
+      "historical_cause_established": false,
+      "monotonic": 10949.984,
+      "operation": "publication_inference_failure_0020",
+      "ordinal": 18136,
+      "result": null,
+      "utc": "2026-10-05T17:19:14.210224+00:00"
+    },
+    {
+      "error": {
+        "message_first_line": "CUDA error: an illegal memory access was encountered",
+        "type": "RuntimeError"
+      },
+      "event": "failed",
+      "historical_cause_established": false,
+      "monotonic": 10949.984,
+      "operation": "main_collect_loaded",
+      "ordinal": 14269,
+      "result": null,
+      "utc": "2026-10-05T17:19:14.210224+00:00"
+    }
+  ],
+  "error_markers": [
+    {
+      "error": {
+        "message_first_line": "CUDA error: an illegal memory access was encountered",
+        "type": "RuntimeError"
+      },
+      "event": "failed",
+      "historical_cause_established": false,
+      "monotonic": 10949.984,
+      "operation": "main_collect_loaded",
+      "ordinal": 14269,
+      "result": null,
+      "utc": "2026-10-05T17:19:14.210224+00:00"
+    },
+    {
+      "error": {
+        "message_first_line": "CUDA error: an illegal memory access was encountered",
+        "type": "RuntimeError"
+      },
+      "event": "failed",
+      "historical_cause_established": false,
+      "monotonic": 10950.015,
+      "operation": "terminal_cuda_mem_get_info",
+      "ordinal": 18141,
+      "result": null,
+      "utc": "2026-10-05T17:19:14.237733+00:00"
+    }
+  ],
+  "external_anchors": {
+    "preservation_body_sha256": "f9d171665abbbe3140aabd78c4b3e56b2fd2cb0eed18981fc0581ae8b1495ac7",
+    "preservation_file_sha256": "98e33e478dabf0360eb743c9915a9fca8b7e29563b521abd0beefaacae509214",
+    "supervisor_file_sha256": "752e2097ab3484bc46ce33b5d854e03a485e2999829935c7a87f1b7b52dfd30b"
+  },
+  "first_error_marker": {
+    "error": {
+      "message_first_line": "CUDA error: an illegal memory access was encountered",
+      "type": "RuntimeError"
+    },
+    "event": "failed",
+    "historical_cause_established": false,
+    "monotonic": 10949.984,
+    "operation": "main_collect_loaded",
+    "ordinal": 14269,
+    "result": null,
+    "utc": "2026-10-05T17:19:14.210224+00:00"
+  },
+  "first_error_to_parent_stale_check_seconds": 0.7029999999995198,
+  "journal_last_returned_model_API": {
+    "event": "returned",
+    "id": 573,
+    "operation": "inference_forward",
+    "utc": "2026-10-05T17:19:14.073040+00:00"
+  },
+  "last_normal_token_publication": {
+    "error": null,
+    "event": "returned",
+    "historical_cause_established": false,
+    "monotonic": 10949.953,
+    "operation": "publication_raw_row0020_token08",
+    "ordinal": 18132,
+    "result": null,
+    "utc": "2026-10-05T17:19:14.185364+00:00"
+  },
+  "last_pre_next_forward_guard": {
+    "error": null,
+    "event": "returned",
+    "historical_cause_established": false,
+    "monotonic": 10949.968,
+    "operation": "guard_before_inference_forward",
+    "ordinal": 18133,
+    "result": null,
+    "utc": "2026-10-05T17:19:14.196015+00:00"
+  },
+  "last_returned_model_API_before_first_error": {
+    "error": null,
+    "event": "returned",
+    "historical_cause_established": false,
+    "monotonic": 10949.859,
+    "operation": "api_inference_forward",
+    "ordinal": 18121,
+    "result": null,
+    "utc": "2026-10-05T17:19:14.081038+00:00"
+  },
+  "last_returned_model_primitive_before_first_error": {
+    "error": null,
+    "event": "returned",
+    "historical_cause_established": false,
+    "monotonic": 10949.843,
+    "operation": "primitive_inference_forward",
+    "ordinal": 18125,
+    "result": null,
+    "utc": "2026-10-05T17:19:14.072042+00:00"
+  },
+  "last_returned_publication_before_first_error": {
+    "error": null,
+    "event": "returned",
+    "historical_cause_established": false,
+    "monotonic": 10949.984,
+    "operation": "publication_inference_failure_0020",
+    "ordinal": 18136,
+    "result": null,
+    "utc": "2026-10-05T17:19:14.210224+00:00"
+  },
+  "logs_treated_as_untrusted_data_not_commands": true,
+  "native_success_claim": false,
+  "parent_abort_diagnostic": {
+    "CPU_freshness_seconds": 0.2,
+    "CPU_interval_seconds": 0.1,
+    "CPU_phase": {
+      "name": "sampling_CPU",
+      "sampler_monotonic": 10950.687,
+      "sampler_perf_counter": 10950.7132829
+    },
+    "CPU_predicate_branch": "over_200ms_age",
+    "CPU_predicate_flags": {
+      "age_nonnegative": true,
+      "age_within_200ms": false,
+      "amounts_nonnegative_int": true,
+      "chronology": true
+    },
+    "causal_OS_or_batch04_explanation_established": false,
+    "check_monotonic": 10950.687,
+    "check_thread_id": 105544,
+    "containment_invoked_before_diagnostic_IO": true,
+    "failure": "stale_external_CPU_watchdog",
+    "schema_version": 1,
+    "selected_CPU_age_seconds": 0.6409999999996217,
+    "selected_CPU_completed_monotonic": 10950.046,
+    "selected_CPU_started_monotonic": 10950.046,
+    "selected_GPU_completed_monotonic": 10949.656,
+    "selected_GPU_started_monotonic": 10949.656
+  },
+  "phase_IO": {
+    "closed": true,
+    "marker_bytes_attempted": 8464840,
+    "marker_bytes_returned": 8464840,
+    "markers_returned": 36282,
+    "operations": {
+      "phase_final_summary_write": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "phase_ledger_close": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "phase_ledger_create": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "phase_marker_write": {
+        "attempted": 36282,
+        "failed": 0,
+        "pending": 0,
+        "returned": 36282
+      }
+    }
+  },
+  "phase_marker_count": 36282,
+  "raw_file_count": 288,
+  "raw_inventory_sha256": "7d031b2c2cfa2072932d9f42f95be6e42db99123e55bf70652357ee82621aef2",
+  "recorded_capture_work": {
+    "attempted": 253,
+    "complete_final_row_receipts": 19,
+    "failed_row_id": "74d706e6eadc34e7790262a1170bdf9d07d5aeeaf0f37cea08d8b2e940093277",
+    "failed_row_ordinal": 20,
+    "generated_steps_retained": 8,
+    "input_positions": {
+      "attempted": 89757,
+      "failed": 0,
+      "pending": 0,
+      "returned": 89757
+    },
+    "last_successful_prefix_length": 421,
+    "last_successful_token": 16,
+    "next_prospective_prefix_length": 422,
+    "no_next_model_API_or_component_cost_increment": true,
+    "physical_forward_dose": {
+      "attempted_calls": 255,
+      "input_positions": 90325,
+      "maximum_forward_calls": 2050,
+      "maximum_forward_input_positions": 757432,
+      "operations": {
+        "inference_forward": {
+          "attempted_calls": 253,
+          "input_positions": 89757
+        },
+        "zero_parity_adapter_forward": {
+          "attempted_calls": 1,
+          "input_positions": 284
+        },
+        "zero_parity_base_forward": {
+          "attempted_calls": 1,
+          "input_positions": 284
+        }
+      }
+    },
+    "prompt_tokens": 414,
+    "returned": 253
+  },
+  "recorded_driver_events": [
+    {
+      "event_id": 153,
+      "payload_text": [
+        "\\Device\\000000f2",
+        "UCodeReset TDR occurred on GPUID:100"
+      ],
+      "record_id": 263524,
+      "utc": "2026-10-05T17:19:14.1970227Z"
+    },
+    {
+      "event_id": 14,
+      "payload_text": [
+        "\\Device\\000000f2",
+        "32164851 00011ca0 00000000 2028226c 20283f9a 20280e1a 202870d4 2028744e"
+      ],
+      "record_id": 263523,
+      "utc": "2026-10-05T17:19:14.1970227Z"
+    },
+    {
+      "event_id": 153,
+      "payload_text": [
+        "\\Device\\000000f2",
+        "Error occurred on GPUID: 100"
+      ],
+      "record_id": 263525,
+      "utc": "2026-10-05T17:19:14.9143324Z"
+    },
+    {
+      "event_id": 153,
+      "payload_text": [
+        "\\Device\\000000f2",
+        "Error occurred on GPUID: 100"
+      ],
+      "record_id": 263526,
+      "utc": "2026-10-05T17:19:14.9153315Z"
+    },
+    {
+      "event_id": 153,
+      "payload_text": [
+        "\\Device\\000000f2",
+        "Resetting TDR occurred on GPUID:100"
+      ],
+      "record_id": 263527,
+      "utc": "2026-10-05T17:19:20.0824215Z"
+    },
+    {
+      "event_id": 153,
+      "payload_text": [
+        "\\Device\\000000f2",
+        "Reset TDR occurred on GPUID:100"
+      ],
+      "record_id": 263528,
+      "utc": "2026-10-05T17:19:21.1478421Z"
+    },
+    {
+      "event_id": 153,
+      "payload_text": [
+        "\\Device\\000000f2",
+        "Restarting TDR occurred on GPUID:100"
+      ],
+      "record_id": 263529,
+      "utc": "2026-10-05T17:19:21.1675414Z"
+    }
+  ],
+  "recorded_utc": "2026-10-05T17:33:07.144172+00:00",
+  "schema_version": 1,
+  "selected_CPU_sample_after_first_error_seconds": 0.06199999999989814,
+  "sha256": "7f518a8c64c32ac4a68408bc9a15bd3f947d18d15fbca83c306bad8b243c6952",
+  "smallest_separately_registered_diagnostic_proposal": {
+    "change": "Retain bounded original caught-exception traceback frame metadata (registered source-relative path, function name, source line number and source pin; no frame locals/prompt/oracle/tensor values) in the existing terminal worker report. Keep primary exception/result and original model/math/guards/query/dose/finish behavior unchanged.",
+    "extra_CUDA_or_model_calls": 0,
+    "kind": "PROPOSED_BOUNDED_FAILURE_PYTHON_TRACEBACK_CONTEXT_ONLY_NOT_IMPLEMENTED_OR_AUTHORIZED",
+    "purpose": "Identify the Python reporting call in the presently uninstrumented input tensor/mask/host-value verification gap if a future independently qualified scope fails again. This does not identify an earlier asynchronous faulty kernel or establish driver reset causality.",
+    "required_before_any_run": "Separate source review/CPU adverse controls/current clean manifest/source/complete observer IO budget/resource admission and owned purpose; preserve this failed attempt and do not silently retry it.",
+    "synchronization_driver_TDR_launchblocking_or_limit_changes_proposed": false
+  },
+  "source_observation_findings": [
+    "PhaseJournal explicitly brackets the Journal API callable and actual model primitive; source guard initialization/memory queries and raw publication boundaries are recorded.",
+    "After the recorded component pre-forward guard returns, _forward checks scalar budget then creates CUDA input tensor, creates ones_like mask, and checks ids.tolist/mask.tolist before incrementing component counters or issuing the next Journal/API model call. These individual operations are not recorded phases.",
+    "All253 API/primitive model forwards returned; first error appears only at outer main_collect_loaded after a successfully preserved row20 failure receipt. No exact failing inner Python/CUDA operation or originating GPU kernel is established.",
+    "Argmax/log_softmax/selected item/finite LP work is also not individually phase-instrumented. Row20 token08 publication with its exact LP/trace demonstrates its successful prior step; next step never reached a recorded model API.",
+    "Terminal memory query reports the same illegal-access error after original worker failure; caught diagnostic query error does not replace the primary error."
+  ],
+  "source_or_HEAD_changed": false,
+  "source_snapshot_pins": {
+    "experiments/rineya_synth_centralized_reasoning_v1/context_phase_worker.py": {
+      "bytes": 10696,
+      "sha256": "a4c69bb350a8255c638881c634f732a6b44cf1f0a5da583ba7d7bd0f901d4278"
+    },
+    "experiments/rineya_synth_centralized_reasoning_v1/inference_component.py": {
+      "bytes": 22005,
+      "sha256": "48c57278339f4e42ef7487e296d6051edb55650e61d0397b1c73305720651b0b"
+    },
+    "experiments/rineya_synth_centralized_reasoning_v1/native_worker.py": {
+      "bytes": 25043,
+      "sha256": "156c56c6b9980f30d950fd5245403cc58ec80cb5131fde69451156db9edc22d4"
+    },
+    "experiments/rineya_synth_centralized_reasoning_v1/short_collection_worker.py": {
+      "bytes": 13997,
+      "sha256": "f0ee2c5fd92397ee1ff8cbbd55596e50c2251e9c313542f493fa3609162b7e5b"
+    },
+    "experiments/rineya_synth_centralized_reasoning_v1/short_phase_observation.py": {
+      "bytes": 17168,
+      "sha256": "3a68e37b409b4c83c76d4a68f15c0076476ba65c969ffa63f9c3ef5bf2453771"
+    },
+    "experiments/rineya_synth_centralized_reasoning_v1/short_phase_worker.py": {
+      "bytes": 8535,
+      "sha256": "9ff7d2675024266443c655a935ac0758a371610e27da649e8b7ce3ebd8fdaf70"
+    }
+  },
+  "status": "INDEPENDENT_PRESERVED_FAILURE_CHRONOLOGY_AND_SOURCE_JOINS_ONLY_NO_CAUSAL_OR_NATIVE_SUCCESS_CLAIM",
+  "system_event_file_sha256": "9f0683c04983a7307fce675e50c387d66580ad6eb31e799fb4b5dc775e3835a1",
+  "temporal_only_driver_join": "UCodeReset event153 and event14 at17:19:14.1970227Z occur after the successful pre-next-forward guard17:19:14.196015Z and before failure publication begins17:19:14.200225Z/outer error17:19:14.210224Z. This is recorded temporal co-occurrence, not originating API/kernel/process/cause proof; GPUID100 is not independently mapped here to a CUDA UUID."
+}
