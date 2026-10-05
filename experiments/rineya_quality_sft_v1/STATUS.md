@@ -26,3 +26,17 @@ Next concrete dependency: the existing dataset owner returns an actual admitted
 export manifest or resolves its recorded construction/admission blockers. Then
 compile all rows, review exposure, qualify, measure/adjudicate source and run
 exactly the two individually selected SFT cells. No old experiment permit transfers.
+
+## Pattern research continuation
+
+An aggregate-only audit now independently reproduces the historical dose curve,
+four bundled-recipe draw contrasts and three mask/order contrasts. See
+RESEARCH_PATTERNS.md and pattern_audit.py. The expanded suite passes96CPUfixture
+tests,0failures/skips,1profilerwarning. It makes no new native or quality claim.
+
+New next-action evidence: quarter-dose training loses MORE source successes than
+the middle dose while starting at4x its first learning rate. Worlds, updates,
+warmup clock and integrated LR all change; lower total exposure is not a clean
+attenuation control. Future opposite-dose tests must hold allworlds/groups/early
+warmup fixed. The first two-arm quality screen remains unchanged. The research
+goal remains active; no reproducible broad-quality gain has been demonstrated.
