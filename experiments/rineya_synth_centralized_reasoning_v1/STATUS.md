@@ -1,5 +1,28 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: fresh C9 restore and update-ten continuation qualified
+
+The [normalized B config](configs/SYNTH_BACKENDQ003_NORMALIZED_WITNESS_B1.json)
+completed in 94.765 seconds. Its
+[independent audit](evidence/backendq003_normalized_witness_B_attempt1_independent_audit_20261005.json)
+passes 25,467 checks: 42 forwards / 10,650 positions, 20 reference and 20 training
+rows, one global update-ten step, nine base proofs, 2,296 paired decoder records
+and all 2,945 registered API calls returned without failed/pending work. All
+112 finite reference gradients have zero measured error at the unchanged
+1e-6 absolute / 1e-5 relative tolerances. Actual native C9 restore matches W9;
+fresh continuation matches continuous A's W10 bitwise, including factors, Adam
+state, RNG and cursor metadata. Byte/resource/freshness/deadline/owned cleanup
+closures pass. All [56 raw outputs and 26 source snapshots](evidence/backendq003_normalized_witness_B_attempt1_20261005)
+and the audit script are retained.
+
+The earlier failed B and representation diagnosis remain preserved. This new
+result qualifies sustained-nine plus one restored update for the exact recipe,
+not full resumed-nine or full-27. Qualification checkpoints remain barred as
+study warmstarts. A separate three-chunk qualification is required: each arm's
+full training positions exceed the unchanged 102,400-position single-scope cap.
+Actual M1/M2 study training, complete M0 baseline, scoring, language authority,
+long-context enrollment and transfer/retention remain pending.
+
 ## 2026-10-05 UTC: finish-rule choice frozen; native scoring remains closed
 
 The [finish policy](DEV_FINISH_POLICY_001.md) uses the strict whole-response
