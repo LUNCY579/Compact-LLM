@@ -1,5 +1,25 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: full27 qualification implementation integrated
+
+The [full27 qualification](FULL27_QUALIFICATION_001.md) is integrated from
+independently reviewed bytes. All [15 root controls](evidence/full27_qualification_root_cpu_validation_20261005.json)
+pass in32.637seconds (33.125seconds command wall) with unchanged source hashes.
+The [reviewed history](evidence/full27_qualification_reviewed_cpu_20261005)
+retains the15-pass predecessor and fresh-checkout test fix; the
+[helper/CLI validation](evidence/full27_qualification_root_helper_and_cli_validation_20261005.json)
+confirms all26 original A/B helpers unchanged. Both exact540-row schedules,
+global27 learning rates, restored/saved state, independent first-resumed reference
+gradients and complete posted-save/terminal/promotion costs are covered by CPU
+protocol fixtures. Qualification recipes/archives remain incompatible with study
+training/import.
+
+Native three-chunk fit is unestablished. No full27 manifest or worker was launched
+during integration; resource/freshness/numerical limits remain unchanged. Recent
+M0 GPU-floor failures still require usable resource evidence/diagnosis before
+further native work. Study training, complete M0, qualified scoring, independent
+language authority and the transfer/retention comparison remain open.
+
 ## 2026-10-05 UTC: admitted RAM2 worker stopped at runtime GPU floor
 
 After the denial was audited, a separate read-only observation showed
