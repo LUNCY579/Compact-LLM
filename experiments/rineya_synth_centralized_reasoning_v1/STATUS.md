@@ -1,5 +1,18 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: remaining native audit gaps identified from source
+
+The [source-bound audit review](evidence/audit_implementation_gap_review_20261005.json)
+identifies the next concrete work in the staged auditors. Phase3 needs bounded
+strict evidence reads and independent source/size-bound loader replay before its
+inherited full raw/model/resource audit can execute. The V2 long auditor needs
+exact current registration/evidence reconstruction and terminal filesystem/
+current-identity orchestration; consistent maps or a65-entry count are insufficient.
+The native entrypoints remain disabled while these gaps are implemented and
+reviewed. This review changes the next implementation actions, not the launch
+floors or the original three-arm decision criterion. No model/GPU/encoder/binary
+execution, scoring, training or transfer result was produced.
+
 ## 2026-10-05 UTC: current V2 preview independently reconstructed
 
 The [current package candidate/review and V2 preview](evidence/encoder_runtime_v2_current_preview_reviewed_20261005)
