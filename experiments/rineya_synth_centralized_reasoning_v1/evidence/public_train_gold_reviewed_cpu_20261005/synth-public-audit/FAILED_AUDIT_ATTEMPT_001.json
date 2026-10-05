@@ -1,0 +1,31 @@
+{
+  "status": "BLOCKED_WRONG_AUDITOR_ORDER_ASSUMPTION_BEFORE_ORACLE_ROWS",
+  "auditor_source_sha256": "c94aaef9aff36a303084e1ded8e2ea07d195c9817f02f957ff9e8d623addcdac",
+  "approved_inputs": {
+    "candidate_records.jsonl": {
+      "bytes": 1127444,
+      "sha256": "90c151edb668416935608912a0d21c0425dbbd9f37a81a1796d4132dcee9f350"
+    },
+    "student_pool_M1.jsonl": {
+      "bytes": 308162,
+      "sha256": "5e3ab59b30ea07ae29b89c712b9eb39de1392cd9cb62c92418858c1aa003e1b9"
+    },
+    "student_pool_M2.jsonl": {
+      "bytes": 308161,
+      "sha256": "8fde7abe77b5479288a913034f110c5197c6a5764281b294aea6576fd7123752"
+    },
+    "plan.json": {
+      "bytes": 506279,
+      "sha256": "a7de5c99f772ece147b08249c332c8d3448e9747a8c2df64dcd0375ff36534d7"
+    },
+    "enrollment.json": {
+      "bytes": 49975,
+      "sha256": "2730f96e1e7b9b23bab6f5bfc869400d16fd42eca2071d004c68aacd2bb1defc"
+    }
+  },
+  "preserved_error": "ValueError: exact approved record enrollment/order",
+  "diagnosis": "enrollment.record_ids is a sorted membership roster; actual candidate file and student export orders match320/320 perarm; no corpus failure inferred",
+  "source_files_modified": false,
+  "actual_oracle_rows_completed": 0,
+  "native_or_training_permission": false
+}

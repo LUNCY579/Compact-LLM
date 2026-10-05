@@ -1,0 +1,55 @@
+{
+  "DEV_protected_confirmation_bank_reads": 0,
+  "SYNTH_or_RDD_imports": [],
+  "approved_train_file_sha256": {
+    "candidate_records.jsonl": "90c151edb668416935608912a0d21c0425dbbd9f37a81a1796d4132dcee9f350",
+    "enrollment.json": "2730f96e1e7b9b23bab6f5bfc869400d16fd42eca2071d004c68aacd2bb1defc",
+    "plan.json": "a7de5c99f772ece147b08249c332c8d3448e9747a8c2df64dcd0375ff36534d7",
+    "schedule_result.json": "2664eabfa4cfb9c4e28742cb58f4c6649b24eb80a16df3d5f2cf1a195a058744",
+    "student_pool_M1.jsonl": "5e3ab59b30ea07ae29b89c712b9eb39de1392cd9cb62c92418858c1aa003e1b9",
+    "student_pool_M2.jsonl": "8fde7abe77b5479288a913034f110c5197c6a5764281b294aea6576fd7123752",
+    "training_occurrences.json": "9fb20d227e4b72d30dfe44be47e0764f9939544f7de34992c6ebce7a0b5d39dc"
+  },
+  "counts": {
+    "M1/R": 160,
+    "M1/S": 160,
+    "M2/R": 160,
+    "M2/S": 160,
+    "certificates": 824,
+    "nonunique_rows": 68,
+    "rows": 640
+  },
+  "exact_uniform_k_subset_baselines": {
+    "M1": {
+      "pool_fraction": "4387/138600",
+      "pool_percent": 3.165223665223665,
+      "schedule_fraction": "16399/602910",
+      "schedule_percent": 2.719974788940306
+    },
+    "M2": {
+      "pool_fraction": "13331/369600",
+      "pool_percent": 3.606872294372294,
+      "schedule_fraction": "75629/2411640",
+      "schedule_percent": 3.1359987394470155
+    }
+  },
+  "implementation_sha256": "f18d779b3affac60e7f15989d4000711b7e21417827ab78b01d276c2e6157923",
+  "interpretation": "Confirms these approved TRAIN targets and certificate density only; no neural improvement or isolated diversity-causality claim.",
+  "native_quality_retention_or_readiness_established": false,
+  "no_native_models_tokenizers_or_optimizer": true,
+  "owner_local_changes_are_recorded_not_altered_or_admitted": true,
+  "reviewed_audit_sha256": "9fec2144b09e9dc71d1a0cec5c44a40d38e20dcc1a3671401c941227bca57657",
+  "schema": "synth-third-implementation-public-train-proof-review-v1",
+  "sha256": "a7f3ff55243c89ac41ba84e28c1279028c9b596029771b19ad5fa8c4cac99352",
+  "source_after": {
+    "branch": "research/rineya-synth-centralized-reasoning-v1",
+    "head": "3cc7f5e69f05b5cee07b52d4eb30c668b2c2808e",
+    "status": "M experiments/rineya_synth_centralized_reasoning_v1/README.md\n M experiments/rineya_synth_centralized_reasoning_v1/STATUS.md\n?? experiments/rineya_synth_centralized_reasoning_v1/PRIVATE_WORKFLOW_CPU_001.md\n?? experiments/rineya_synth_centralized_reasoning_v1/evidence/prefix_private_workflow_reviewed_cpu_20261005/\n?? experiments/rineya_synth_centralized_reasoning_v1/evidence/prefix_private_workflow_root_replay_20261005.json\n?? experiments/rineya_synth_centralized_reasoning_v1/evidence/prefix_private_workflow_root_replay_20261005.txt"
+  },
+  "source_before": {
+    "branch": "research/rineya-synth-centralized-reasoning-v1",
+    "head": "3cc7f5e69f05b5cee07b52d4eb30c668b2c2808e",
+    "status": "M experiments/rineya_synth_centralized_reasoning_v1/README.md\n M experiments/rineya_synth_centralized_reasoning_v1/STATUS.md\n?? experiments/rineya_synth_centralized_reasoning_v1/PRIVATE_WORKFLOW_CPU_001.md\n?? experiments/rineya_synth_centralized_reasoning_v1/evidence/prefix_private_workflow_reviewed_cpu_20261005/\n?? experiments/rineya_synth_centralized_reasoning_v1/evidence/prefix_private_workflow_root_replay_20261005.json\n?? experiments/rineya_synth_centralized_reasoning_v1/evidence/prefix_private_workflow_root_replay_20261005.txt"
+  },
+  "status": "PASS_ACTUAL640_DP_AND_MEMOIZED_REFERENCE_RECHECK"
+}

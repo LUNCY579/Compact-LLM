@@ -1,0 +1,970 @@
+{
+  "DEV_oracle_reads": 0,
+  "TRAIN_public_data_refs": {
+    "candidate_records.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\candidate_records.jsonl",
+      "rows": 640,
+      "sha256": "90c151edb668416935608912a0d21c0425dbbd9f37a81a1796d4132dcee9f350"
+    },
+    "student_pool_M1.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\student_pool_M1.jsonl",
+      "rows": 320,
+      "sha256": "5e3ab59b30ea07ae29b89c712b9eb39de1392cd9cb62c92418858c1aa003e1b9"
+    },
+    "student_pool_M2.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\student_pool_M2.jsonl",
+      "rows": 320,
+      "sha256": "8fde7abe77b5479288a913034f110c5197c6a5764281b294aea6576fd7123752"
+    }
+  },
+  "adversarial_TRAIN_probes": [
+    {
+      "answer": "{\"answer\":[5,7]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "actual_R_target",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              5,
+              7
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "cd419b85b9fadcf25f64212c34703e19e1cdeb89aaebb1384e731d27b8f47238",
+      "source_row_id": "0014c41fad708a93727ec6ae0de82113a4aaf054e8c73515f7fec9a95cc3a1ba"
+    },
+    {
+      "answer": "{\"answer\":[0,2,5,8,10]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "actual_S_target",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              0,
+              1,
+              2,
+              3,
+              6
+            ],
+            [
+              0,
+              1,
+              2,
+              9,
+              10
+            ],
+            [
+              0,
+              2,
+              5,
+              8,
+              10
+            ],
+            [
+              1,
+              6,
+              7,
+              8,
+              9
+            ],
+            [
+              3,
+              5,
+              8,
+              9,
+              10
+            ],
+            [
+              4,
+              5,
+              6,
+              8,
+              9
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "11b3f82972a164ece93ccdfef08cd87b994cff35afc380c3143dfef601828a0d",
+      "source_row_id": "05167ac1f36e4f6bc3e84e1bdb02a8ec5d149923c52a9e9e024b58cf39beaadc"
+    },
+    {
+      "answer": "{\"answer\":[5,7]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "unrequested_distractor_cycle_does_not_change_R_answer",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              5,
+              7
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "348cd7fb9ce69a01957a0f82111eebdcce2ec4b394621d4278914262e6fae4ad",
+      "source_row_id": "0014c41fad708a93727ec6ae0de82113a4aaf054e8c73515f7fec9a95cc3a1ba"
+    },
+    {
+      "answer": "{\"answer\":[5,7]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "R_item_values_irrelevant_to_reference_certificate",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              5,
+              7
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "4bc4b35bf9c9e57d5a49ff46ec2a143bad74a4cd75c0e85aff186e9aee4380d2",
+      "source_row_id": "0014c41fad708a93727ec6ae0de82113a4aaf054e8c73515f7fec9a95cc3a1ba"
+    },
+    {
+      "answer": "{\"answer\":[5,7]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "bijective_alias_rename_preserves_R_answer",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              5,
+              7
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "c9d006c07dd52478a3b6a1b4fa77031459ba732ff9f034de0b35ddc4ee07fd58",
+      "source_row_id": "0014c41fad708a93727ec6ae0de82113a4aaf054e8c73515f7fec9a95cc3a1ba"
+    },
+    {
+      "answer": "{\"answer\":\"UNKNOWN\"}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "requested_missing_requires_UNKNOWN",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "unresolved_requested_reference",
+          "solutions": [],
+          "status": "insufficient_evidence"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "5fdd5bed873ec98fa37b64148fc1ee3adf8c31e9dd56f1b270d99d0a5248b504",
+      "source_row_id": "0014c41fad708a93727ec6ae0de82113a4aaf054e8c73515f7fec9a95cc3a1ba"
+    },
+    {
+      "answer": "{\"answer\":[5,7]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": false,
+      "expected_reason": "incorrect_answer",
+      "name": "requested_missing_rejects_old_partial_certificate",
+      "observed": {
+        "accepted": false,
+        "outcome": {
+          "reason": "unresolved_requested_reference",
+          "solutions": [],
+          "status": "insufficient_evidence"
+        },
+        "reason": "incorrect_answer"
+      },
+      "prompt_hash": "5fdd5bed873ec98fa37b64148fc1ee3adf8c31e9dd56f1b270d99d0a5248b504",
+      "source_row_id": "0014c41fad708a93727ec6ae0de82113a4aaf054e8c73515f7fec9a95cc3a1ba"
+    },
+    {
+      "answer": "{\"answer\":\"UNKNOWN\"}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "requested_cycle_requires_UNKNOWN",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "unresolved_requested_reference",
+          "solutions": [],
+          "status": "insufficient_evidence"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "6395347d34745474412c3f07b1dcc65a5ed9220ceaba5716e952bfba6dc06550",
+      "source_row_id": "0014c41fad708a93727ec6ae0de82113a4aaf054e8c73515f7fec9a95cc3a1ba"
+    },
+    {
+      "answer": "{\"answer\":[5,7]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": false,
+      "expected_reason": "incorrect_answer",
+      "name": "requested_cycle_rejects_old_partial_certificate",
+      "observed": {
+        "accepted": false,
+        "outcome": {
+          "reason": "unresolved_requested_reference",
+          "solutions": [],
+          "status": "insufficient_evidence"
+        },
+        "reason": "incorrect_answer"
+      },
+      "prompt_hash": "6395347d34745474412c3f07b1dcc65a5ed9220ceaba5716e952bfba6dc06550",
+      "source_row_id": "0014c41fad708a93727ec6ae0de82113a4aaf054e8c73515f7fec9a95cc3a1ba"
+    },
+    {
+      "answer": "{\"answer\":[5,7]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": false,
+      "expected_reason": "invalid_prompt",
+      "name": "extra_prompt_noise_outside_closed_renderer_refused",
+      "observed": {
+        "accepted": false,
+        "outcome": null,
+        "reason": "invalid_prompt"
+      },
+      "prompt_hash": "b84032d7c62cd1858438f3efb9c5f19178adb6169f9ae87962e806360d90b996",
+      "source_row_id": "0014c41fad708a93727ec6ae0de82113a4aaf054e8c73515f7fec9a95cc3a1ba"
+    },
+    {
+      "answer": "{\"answer\":[5,7]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": false,
+      "expected_reason": "invalid_prompt",
+      "name": "semantically_equivalent_noncanonical_JSON_prompt_refused",
+      "observed": {
+        "accepted": false,
+        "outcome": null,
+        "reason": "invalid_prompt"
+      },
+      "prompt_hash": "9cbd3241f1b085c9b34fd8af1db8ac160f32a2eac6c14d80f9cfca50ddb212b1",
+      "source_row_id": "0014c41fad708a93727ec6ae0de82113a4aaf054e8c73515f7fec9a95cc3a1ba"
+    },
+    {
+      "answer": "{\"answer\":[0,1,2,3,6]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "every_valid_S_certificate_0",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              0,
+              1,
+              2,
+              3,
+              6
+            ],
+            [
+              0,
+              1,
+              2,
+              9,
+              10
+            ],
+            [
+              0,
+              2,
+              5,
+              8,
+              10
+            ],
+            [
+              1,
+              6,
+              7,
+              8,
+              9
+            ],
+            [
+              3,
+              5,
+              8,
+              9,
+              10
+            ],
+            [
+              4,
+              5,
+              6,
+              8,
+              9
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "11b3f82972a164ece93ccdfef08cd87b994cff35afc380c3143dfef601828a0d",
+      "source_row_id": "05167ac1f36e4f6bc3e84e1bdb02a8ec5d149923c52a9e9e024b58cf39beaadc"
+    },
+    {
+      "answer": "{\"answer\":[0,1,2,9,10]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "every_valid_S_certificate_1",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              0,
+              1,
+              2,
+              3,
+              6
+            ],
+            [
+              0,
+              1,
+              2,
+              9,
+              10
+            ],
+            [
+              0,
+              2,
+              5,
+              8,
+              10
+            ],
+            [
+              1,
+              6,
+              7,
+              8,
+              9
+            ],
+            [
+              3,
+              5,
+              8,
+              9,
+              10
+            ],
+            [
+              4,
+              5,
+              6,
+              8,
+              9
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "11b3f82972a164ece93ccdfef08cd87b994cff35afc380c3143dfef601828a0d",
+      "source_row_id": "05167ac1f36e4f6bc3e84e1bdb02a8ec5d149923c52a9e9e024b58cf39beaadc"
+    },
+    {
+      "answer": "{\"answer\":[0,2,5,8,10]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "every_valid_S_certificate_2",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              0,
+              1,
+              2,
+              3,
+              6
+            ],
+            [
+              0,
+              1,
+              2,
+              9,
+              10
+            ],
+            [
+              0,
+              2,
+              5,
+              8,
+              10
+            ],
+            [
+              1,
+              6,
+              7,
+              8,
+              9
+            ],
+            [
+              3,
+              5,
+              8,
+              9,
+              10
+            ],
+            [
+              4,
+              5,
+              6,
+              8,
+              9
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "11b3f82972a164ece93ccdfef08cd87b994cff35afc380c3143dfef601828a0d",
+      "source_row_id": "05167ac1f36e4f6bc3e84e1bdb02a8ec5d149923c52a9e9e024b58cf39beaadc"
+    },
+    {
+      "answer": "{\"answer\":[1,6,7,8,9]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "every_valid_S_certificate_3",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              0,
+              1,
+              2,
+              3,
+              6
+            ],
+            [
+              0,
+              1,
+              2,
+              9,
+              10
+            ],
+            [
+              0,
+              2,
+              5,
+              8,
+              10
+            ],
+            [
+              1,
+              6,
+              7,
+              8,
+              9
+            ],
+            [
+              3,
+              5,
+              8,
+              9,
+              10
+            ],
+            [
+              4,
+              5,
+              6,
+              8,
+              9
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "11b3f82972a164ece93ccdfef08cd87b994cff35afc380c3143dfef601828a0d",
+      "source_row_id": "05167ac1f36e4f6bc3e84e1bdb02a8ec5d149923c52a9e9e024b58cf39beaadc"
+    },
+    {
+      "answer": "{\"answer\":[3,5,8,9,10]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "every_valid_S_certificate_4",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              0,
+              1,
+              2,
+              3,
+              6
+            ],
+            [
+              0,
+              1,
+              2,
+              9,
+              10
+            ],
+            [
+              0,
+              2,
+              5,
+              8,
+              10
+            ],
+            [
+              1,
+              6,
+              7,
+              8,
+              9
+            ],
+            [
+              3,
+              5,
+              8,
+              9,
+              10
+            ],
+            [
+              4,
+              5,
+              6,
+              8,
+              9
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "11b3f82972a164ece93ccdfef08cd87b994cff35afc380c3143dfef601828a0d",
+      "source_row_id": "05167ac1f36e4f6bc3e84e1bdb02a8ec5d149923c52a9e9e024b58cf39beaadc"
+    },
+    {
+      "answer": "{\"answer\":[4,5,6,8,9]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "every_valid_S_certificate_5",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              0,
+              1,
+              2,
+              3,
+              6
+            ],
+            [
+              0,
+              1,
+              2,
+              9,
+              10
+            ],
+            [
+              0,
+              2,
+              5,
+              8,
+              10
+            ],
+            [
+              1,
+              6,
+              7,
+              8,
+              9
+            ],
+            [
+              3,
+              5,
+              8,
+              9,
+              10
+            ],
+            [
+              4,
+              5,
+              6,
+              8,
+              9
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "11b3f82972a164ece93ccdfef08cd87b994cff35afc380c3143dfef601828a0d",
+      "source_row_id": "05167ac1f36e4f6bc3e84e1bdb02a8ec5d149923c52a9e9e024b58cf39beaadc"
+    },
+    {
+      "answer": "{\"answer\": [6, 3, 2, 1, 0]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "certificate_permutation_accepted",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              0,
+              1,
+              2,
+              3,
+              6
+            ],
+            [
+              0,
+              1,
+              2,
+              9,
+              10
+            ],
+            [
+              0,
+              2,
+              5,
+              8,
+              10
+            ],
+            [
+              1,
+              6,
+              7,
+              8,
+              9
+            ],
+            [
+              3,
+              5,
+              8,
+              9,
+              10
+            ],
+            [
+              4,
+              5,
+              6,
+              8,
+              9
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "11b3f82972a164ece93ccdfef08cd87b994cff35afc380c3143dfef601828a0d",
+      "source_row_id": "05167ac1f36e4f6bc3e84e1bdb02a8ec5d149923c52a9e9e024b58cf39beaadc"
+    },
+    {
+      "answer": "{\"answer\": [0, 1, 2, 3, 6], \"oracle\": true}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": false,
+      "expected_reason": "invalid_answer",
+      "name": "certificate_extra_metadata_key_refused",
+      "observed": {
+        "accepted": false,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              0,
+              1,
+              2,
+              3,
+              6
+            ],
+            [
+              0,
+              1,
+              2,
+              9,
+              10
+            ],
+            [
+              0,
+              2,
+              5,
+              8,
+              10
+            ],
+            [
+              1,
+              6,
+              7,
+              8,
+              9
+            ],
+            [
+              3,
+              5,
+              8,
+              9,
+              10
+            ],
+            [
+              4,
+              5,
+              6,
+              8,
+              9
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "invalid_answer"
+      },
+      "prompt_hash": "11b3f82972a164ece93ccdfef08cd87b994cff35afc380c3143dfef601828a0d",
+      "source_row_id": "05167ac1f36e4f6bc3e84e1bdb02a8ec5d149923c52a9e9e024b58cf39beaadc"
+    },
+    {
+      "answer": "{\"answer\":\"UNKNOWN\"}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": false,
+      "expected_reason": "incorrect_answer",
+      "name": "forged_UNKNOWN_candidate_refused_for_solved_source",
+      "observed": {
+        "accepted": false,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              0,
+              1,
+              2,
+              3,
+              6
+            ],
+            [
+              0,
+              1,
+              2,
+              9,
+              10
+            ],
+            [
+              0,
+              2,
+              5,
+              8,
+              10
+            ],
+            [
+              1,
+              6,
+              7,
+              8,
+              9
+            ],
+            [
+              3,
+              5,
+              8,
+              9,
+              10
+            ],
+            [
+              4,
+              5,
+              6,
+              8,
+              9
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "incorrect_answer"
+      },
+      "prompt_hash": "11b3f82972a164ece93ccdfef08cd87b994cff35afc380c3143dfef601828a0d",
+      "source_row_id": "05167ac1f36e4f6bc3e84e1bdb02a8ec5d149923c52a9e9e024b58cf39beaadc"
+    },
+    {
+      "answer": "{\"answer\":[0,1,2,3,6]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": false,
+      "expected_reason": "incorrect_answer",
+      "name": "public_target_sum_change_rejects_old_certificate",
+      "observed": {
+        "accepted": false,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              0,
+              1,
+              4,
+              7,
+              10
+            ],
+            [
+              0,
+              2,
+              5,
+              8,
+              9
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "incorrect_answer"
+      },
+      "prompt_hash": "f5c83623a2111ae24b2ca8ef94addbef78ee32260ad164734abd0332e1f37e7f",
+      "source_row_id": "05167ac1f36e4f6bc3e84e1bdb02a8ec5d149923c52a9e9e024b58cf39beaadc"
+    },
+    {
+      "answer": "{\"answer\":[5,7]}",
+      "evidence_kind": "TRAIN_DERIVED_MECHANICAL_PROBE_NOT_QUALITY_EVIDENCE",
+      "expected_accepted": true,
+      "expected_reason": "verified",
+      "name": "forged_external_metadata_cannot_override_public_messages",
+      "observed": {
+        "accepted": true,
+        "outcome": {
+          "reason": "valid",
+          "solutions": [
+            [
+              5,
+              7
+            ]
+          ],
+          "status": "solved"
+        },
+        "reason": "verified"
+      },
+      "prompt_hash": "cd419b85b9fadcf25f64212c34703e19e1cdeb89aaebb1384e731d27b8f47238",
+      "source_row_id": "0014c41fad708a93727ec6ae0de82113a4aaf054e8c73515f7fec9a95cc3a1ba"
+    }
+  ],
+  "consumed_fixture_notice": "These TRAIN-derived modified prompts and new guard fixtures are mechanics exposures; exclude their derivatives from future transfer/confirmation.",
+  "current_Titan_gains_verified": false,
+  "findings": [
+    {
+      "action": "Use independently reconstructed TRAIN public input parsing before outcome decisions; preserve the existing closed prompt grammar until separately registered amendment.",
+      "finding": "Primary direct-walk/DP and verifier fixed-point/combinations are different algorithms, but share validation and R/S parsing; agreement cannot independently certify public semantics.",
+      "id": "SHARED_PARSER"
+    },
+    {
+      "action": "Refuse/record invalid source separately from model wrong answers. Do not claim these probes qualify robustness to arbitrary natural renderings.",
+      "finding": "Canonical R/S parser requires byte equality to one of four renderers; ledger parser requires sorted LINK lines. Added noise, noncanonical JSON spacing/key ordering and alias line reorder are invalid sources even when mathematical facts are equivalent.",
+      "id": "CLOSED_RENDERING"
+    },
+    {
+      "action": "Prospectively retain semantic certificate scoring and format diagnostics separately.",
+      "finding": "R/S accepts any valid index subset, list order permutations and ordinary JSON whitespace; it is not limited to the compiler canonical target string. Extra answer keys, invalid index types and duplicate indices are explicitly outside the public answer contract.",
+      "id": "VALID_ALTERNATIVES"
+    },
+    {
+      "action": "Report insufficient reference evidence versus impossible subset versus invalid source separately; neither UNKNOWN success nor lack of it qualifies general epistemic abstention.",
+      "finding": "Requested missing/cycle reference paths and impossible exact subsets permit UNKNOWN because no valid certificate exists; unrequested unresolved aliases are ignored. Invalid prompt/schema is refused, not relabeled UNKNOWN.",
+      "id": "UNKNOWN_SCOPE"
+    },
+    {
+      "action": "A prospective measurement adapter must validate public sources first and maintain source-error, format, semantic, abstention and capping dimensions without dropping rows.",
+      "finding": "rs_verifier separates invalid_prompt/invalid_answer/incorrect_answer, but evaluation_panel.verify_response merges source and response failures into invalid_prompt_or_answer. Its Boolean accepted result does not separately expose semantic correctness and format conformance.",
+      "id": "STATUS_CONFLATION"
+    },
+    {
+      "action": "Require independent guard enrollment and scoped source-correct support; these public fixtures do not qualify long-context, dialogue or global preservation.",
+      "finding": "Literal strings, query order, instruction priorities and JSON null are explicitly stated in task-guard public rules. These are bounded exact-world tasks rather than one arbitrary corpus conversation phrase; source parsing remains tied to shared guard validation.",
+      "id": "GUARD_LITERAL_CONTRACTS"
+    }
+  ],
+  "guard_public_fixture_probes": [
+    {
+      "evidence_kind": "NEW_PUBLIC_FIXTURE_ONLY_NOT_GUARD_ENROLLMENT",
+      "literal_values_and_query_order_verified": true,
+      "missing_requires_JSON_null": true,
+      "rendering": "json_lines"
+    },
+    {
+      "evidence_kind": "NEW_PUBLIC_FIXTURE_ONLY_NOT_GUARD_ENROLLMENT",
+      "literal_values_and_query_order_verified": true,
+      "missing_requires_JSON_null": true,
+      "rendering": "typed_ledger"
+    }
+  ],
+  "historical_or_SYNTH_source_modified": false,
+  "native_forward_calls": 0,
+  "native_launch_authorized": false,
+  "native_model_loads": 0,
+  "no_new_quality_approval": true,
+  "optimizer_updates": 0,
+  "protected_bank_reads": 0,
+  "schema": "synth-public-contract-review-v1",
+  "source_refs": {
+    "evaluation_panel.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evaluation_panel.py",
+      "sha256": "e8ed801cf258cd42edc2a8b08a560cd80914822bd000e833e08208c1bde46598"
+    },
+    "rs_contract.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\rs_contract.py",
+      "sha256": "cef135a06d4449917798e7e40685ac3589615663bfe47662e0a49207b67ccc6a"
+    },
+    "rs_solver.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\rs_solver.py",
+      "sha256": "6acf2fa26ef3f5a7b103818f4bb0eef972d5d975e9f3b39614ad6b253131acaf"
+    },
+    "rs_verifier.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\rs_verifier.py",
+      "sha256": "36d2322ac077f4731b621defbc77ae39d1bfde2f1d0bcc15c73082b5f897ec98"
+    },
+    "task_retention_guards.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\task_retention_guards.py",
+      "sha256": "a2fee79b7fd6debb05e264b7f6599d788c8dec567de7a4e8497fe31318022094"
+    }
+  },
+  "status": "BOUNDED_MECHANICS_PASS_SHARED_PARSER_SCOPE_AND_STATUS_LIMITS_IDENTIFIED",
+  "student_exports": {
+    "candidate_to_student_projection_agrees": true,
+    "fields": [
+      "messages",
+      "target"
+    ],
+    "hidden_metadata_in_export": false,
+    "rows_per_arm": 320,
+    "visible_spec_metadata_agreements_shared_parser_only": 640
+  },
+  "tokenizer_loads": 0
+}

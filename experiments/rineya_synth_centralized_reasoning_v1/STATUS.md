@@ -1,5 +1,18 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: frozen module classification and public TRAIN verification
+
+The [loader classification repair](FROZEN_BOOTSTRAP_CPU_001.md) passes five new
+Root controls,19 regressions and independent24 controls. Genuine interpreter
+module identity precedes documentary source paths; counterfeit labels still
+fail. Namespace execution and current runtime qualification remain unproved.
+
+The [additional640-record public audit](PUBLIC_TRAIN_GOLD_AUDIT_001.md) is
+preserved with independently checked targets and exact current TRAIN/schedule
+pins. UNKNOWN exposure and certificate-density residuals are explicitly reported;
+no recipe, endpoint, guard enrollment or permission changes. Actual student
+learning remains unmeasured. Public orchestration source work continues.
+
 ## 2026-10-05 UTC: private producer/preservation/audit CPU composition reproduced
 
 The [private source workflow](PRIVATE_WORKFLOW_CPU_001.md) passes46 selected

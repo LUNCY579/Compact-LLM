@@ -1,0 +1,48 @@
+{
+  "schema": "synth-answerability-exposure-audit-v1",
+  "source_refs": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\candidate_records.jsonl",
+      "bytes": 1127444,
+      "sha256": "90c151edb668416935608912a0d21c0425dbbd9f37a81a1796d4132dcee9f350"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\schedule_result.json",
+      "bytes": 90383,
+      "sha256": "2664eabfa4cfb9c4e28742cb58f4c6649b24eb80a16df3d5f2cf1a195a058744"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\EVALUATION_PANEL_POLICY_002.json",
+      "bytes": 3106,
+      "sha256": "7e80d5d52ba6c0a14654151a3be40cfa177faf3a120953d5d177792d9a33ee92"
+    }
+  ],
+  "observed_training_exposure": {
+    "M1": {
+      "scheduled_sequences": 540,
+      "UNKNOWN_target_occurrences": 0,
+      "certificate_target_occurrences": 540,
+      "skills": {
+        "S": 348,
+        "R": 192
+      }
+    },
+    "M2": {
+      "scheduled_sequences": 540,
+      "UNKNOWN_target_occurrences": 0,
+      "certificate_target_occurrences": 540,
+      "skills": {
+        "S": 348,
+        "R": 192
+      }
+    }
+  },
+  "declared_DEV_UNKNOWN_rows": 48,
+  "declared_DEV_total_rows": 384,
+  "DECLARED_not_modelmeasured_or_actualDEVoracle_read": true,
+  "interpretation": "The frozen initial atomic study supervises solved certificates only. UNKNOWN is present in public instructions but never a target in540sequences. CurrentDEV includes a prespecified UNKNOWN shift; this is an intentional generalization test, not evidence of preserved abstention.",
+  "action": "Preserve initial study/no-replay recipe and require separate UNKNOWN/source-correct guard reporting. A matched answerability-supervision successor would be a new factor only after observed failure; no silent corpus amendment.",
+  "native_actions": 0,
+  "training_or_scoring_authorized": false,
+  "quality_gain_established": false
+}
