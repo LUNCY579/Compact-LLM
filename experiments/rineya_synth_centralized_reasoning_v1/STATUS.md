@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: whole-path mutation review found read-closure gaps
+
+The [independent mutation evidence](evidence/long_audit_mutation_holes_20261005)
+shows that the frozen25-test candidate accepted changes after semantic validation
+to preserved source snapshots, four lease files and three selected prior-role
+files. It also accepted a registration change before a late baseline and an
+ignored overflowing JSON float. These CPU reports issued no native audit kind.
+The findings reject that candidate's native readiness despite its happy-path
+tests. A complete first-read/final read-set check and strict finite parsing are
+being repaired, followed by the same independent mutation controls. No native
+model, encoder, GPU, asset or OS probe ran during review.
+
 ## 2026-10-05 UTC: provisional whole-filesystem audit failure retained
 
 The [provisional25-control root run](evidence/long_v2_filesystem_provisional_failure_20261005)
