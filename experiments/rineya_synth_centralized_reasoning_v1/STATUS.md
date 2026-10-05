@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: private worker-entry filesystem/loader consumption accepted
+
+The [registered main CPU milestone](REGISTERED_MAIN_CPU_001.md) passes70
+preserved-copy controls and independent frozen orchestration8. Actual bounded
+anchor/owner input, factory/context comparison, loader/install/import/remove,
+core/writer and failure cleanup are covered. A nested test package-locator
+failure was corrected without changing runtime implementation; all history is
+preserved. Bootstrap export proxies remain explicitly unqualified assumptions.
+
+Actual OS CLI, fresh bootstrap/environment, DLL/current runtime and owned
+resource/GPU qualification remain open. Native gates stay closed; no M0 row or
+study update/scoring occurred. M0 is still256/384 raw unscored rows and the full
+M0/M1/M2 acquisition/RS-transfer/preservation question remains unanswered.
+
 ## 2026-10-05 UTC: actual inert registered loader installation verified
 
 The [private registered-loader milestone](INERT_REGISTERED_LOADER_CPU_001.md)
