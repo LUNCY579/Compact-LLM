@@ -76,3 +76,13 @@ measured prices. Sealed/CHECK/FINAL access and serving changes stay separately g
 Tests use synthetic metadata/opaque bytes and temporary directories under
 BusinessProject. They verify contracts and source binding only; no Rineya
 capability, memory fit, throughput or native qualification follows from them.
+
+## Standing research consent
+
+The programme records direct human standing consent in each card as preparation
+evidence. It removes repeated consent questions within the recommended bounded
+research scope. Existing owners still bind each concrete phase to reviewed inputs,
+source, runtime, budgets and genuine prerequisite evidence. This offline index
+issues no execution grant; its closed permission fields describe the packet.
+Scientific admission, resource fit and every preservation gate remain independent
+requirements. Deployment and serving changes are outside this standing scope.

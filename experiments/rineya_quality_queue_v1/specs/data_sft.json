@@ -16,6 +16,7 @@
     "status": "NO_ADMITTED_COMPLETED_ORDINARY_SFT_PARENT"
   },
   "evidence": [
+    {"id": "standing_research_consent", "path": "C:/Users/clclc/BusinessProject/rineya-standing-research-authorization-20261005-01/AUTHORIZATION.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "dataset_milestone", "path": "C:/Users/clclc/BusinessProject/Rineya-Dataset/Rineya_Intelligence_Quality_Foundry_v1/program/20261005_canonical_train_milestone_v1/STATUS.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "dataset_milestone_interpretation", "path": "C:/Users/clclc/BusinessProject/Rineya-Dataset/Rineya_Intelligence_Quality_Foundry_v1/program/20261005_canonical_train_milestone_v1/MILESTONE.md", "classification": "preparation", "role": "source", "format": "text"},
     {"id": "dataset_strategy", "path": "C:/Users/clclc/BusinessProject/Rineya-Dataset/Rineya_Intelligence_Quality_Foundry_v1/program/20261004_quality_strategy_v2/PLAN.md", "classification": "preparation", "role": "protocol", "format": "text"},
@@ -52,6 +53,7 @@
     {"name": "fresh_family_reasoning_transfer", "numerator": null, "denominator": null, "unit": "independent_fresh_parent_correctness", "evidence_id": "synth_current_status", "text_anchor": "actual training/transfer/retention remain unfinished.", "status": "NOT_MEASURED"}
   ],
   "requirements": [
+    {"id": "standing_research_consent", "status": "PASS", "evidence_ids": ["standing_research_consent"], "reason": "Direct human standing consent covers the recommended bounded research progression without repeated consent questions. Exact owner phase grants, real source/data/runtime/resource qualification and registered preservation gates remain required; this index issues no execution grant."},
     {"id": "canonical_file_mechanical_qa", "status": "PASS", "evidence_ids": ["dataset_milestone"], "reason": "73,600 canonical file rows have completed mechanical QA. Related30,000 chat exports are derivatives, not independent examples or native model evidence."},
     {"id": "independent_public_reference_and_dual_row_review", "status": "BLOCKED", "evidence_ids": ["dataset_milestone_interpretation", "dataset_strategy"], "reason": "Fresh non-author semantic/adversarial review, production grader qualification and independent public-prompt reference closure remain separate admission gates."},
     {"id": "source_use_ancestry_and_split_closure", "status": "BLOCKED", "evidence_ids": ["dataset_strategy", "dataset_next_actions"], "reason": "Source-bound rights/use, recoverable source ancestry, derivative role propagation and cross-split/semantic overlap closure are required; actor joins and renamed rows do not establish these."},
@@ -60,12 +62,12 @@
     {"id": "completed_qualified_sft_parent", "status": "BLOCKED", "evidence_ids": ["central_current_best", "central_blocked_audit", "synth_current_status"], "reason": "Central current-best has no parent or trained recipe. SYNTH M0 remains partial/unscored and study comparison unfinished; unfinished E1/SYNTH preparation cannot manufacture an SFT parent or import another lane permit."},
     {"id": "synth_native_recovery_and_runtime_closure", "status": "BLOCKED", "evidence_ids": ["synth_m0_admission_denial", "synth_m0_failed_attempt", "synth_runtime_candidate"], "reason": "Batch05 attempt1 denied admission; attempt2 failed with CUDA illegal memory access then stale CPU telemetry. Partial rows stay excluded. Current source-only runtime candidate and CPU controls supply no native recovery/fit or model qualification."},
     {"id": "quality_and_retention_behavior", "status": "NOT_MEASURED", "evidence_ids": ["dataset_milestone", "synth_current_status"], "reason": "No ordinary-SFT acquisition, fresh reasoning transfer, reliable-answering, broad retention or length-quality outcome is established by dataset QA or unscored model captures."},
-    {"id": "separate_owner_execution_authority", "status": "BLOCKED", "evidence_ids": ["dataset_next_actions", "dataset_quality_policy", "synth_pilot_decisions"], "reason": "The queue prepares an offline admission workflow only. Dataset, central E1 and SYNTH keep distinct owners/gates; no native/model jobs, training or parent promotion is authorized here."}
+    {"id": "reviewed_owner_phase_grant", "status": "BLOCKED", "evidence_ids": ["dataset_next_actions", "dataset_quality_policy", "synth_pilot_decisions", "standing_research_consent"], "reason": "Standing research consent is available. Dataset, central E1 and SYNTH retain distinct owners and actual source-bound phase grants after qualification; this index supplies no native or parent-promotion grant."}
   ],
   "next_proposal": {
     "phase": "OFFLINE_ORDINARY_SFT_ADMISSION_AND_PARENT_READINESS_PACKET",
     "proposal_evidence_id": "dataset_next_actions",
-    "requires": ["independent_public_reference_and_dual_row_review", "source_use_ancestry_and_split_closure", "complete_target_eos_masks_and_no_truncation", "independent_replay_and_source_correct_guards", "separate_owner_execution_authority"],
+    "requires": ["independent_public_reference_and_dual_row_review", "source_use_ancestry_and_split_closure", "complete_target_eos_masks_and_no_truncation", "independent_replay_and_source_correct_guards", "reviewed_owner_phase_grant", "standing_research_consent"],
     "limits": {"native_model_jobs": 0, "native_optimizer_updates": 0, "native_evaluations": 0, "protected_bank_reads": 0, "qualified_total_tokens": 512, "max_completion_tokens_including_eos": 128, "target_truncation_allowed": false, "packing_allowed": false, "maximum_parent_repairs": 3},
     "native_execution_authorized": false
   },

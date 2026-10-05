@@ -11,6 +11,7 @@
     {"name": "historical deployed warm anchor", "kind": "full_state_fingerprint_not_model_file_hash", "sha256": "ff516ff86259c101a8cf55b4bf548e267f74719dc450ad34538f4383ca55d84b", "evidence_id": "warm_competence", "json_pointer": "/anchor/arm_sha256", "custody_status": "RECORDED_NATIVE_METADATA"}
   ],
   "evidence": [
+    {"id": "standing_research_consent", "path": "C:/Users/clclc/BusinessProject/rineya-standing-research-authorization-20261005-01/AUTHORIZATION.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "shared_source_custody", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-pruning-retention-confirm-v1/research/rineya_pruning_retention_confirm_v1/custody_inventory.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "warm_competence", "path": "C:/Users/clclc/.codex/worktrees/ce8-production-dev/ChatBubble-titan-model-soup-mini-v1/experiments/skill_acquisition_method_lab_v1/evidence/NATIVE_WARM_COMPETENCE_20261001.json", "classification": "historical", "role": "receipt", "format": "json"},
     {"id": "historical_signal_protocol", "path": "C:/Users/clclc/.codex/worktrees/ce8-production-dev/ChatBubble-titan-model-soup-mini-v1/experiments/skill_acquisition_method_lab_v1/README.md", "classification": "historical", "role": "protocol", "format": "text"},
@@ -38,6 +39,7 @@
     {"name": "natural_language_preservation", "numerator": null, "denominator": null, "unit": "count", "scope_unit": "independent_language_parent", "evidence_id": "registration_proposal", "text_anchor": "There is **no natural-language preservation bank** in this scope.", "status": "NOT_MEASURED"}
   ],
   "requirements": [
+    {"id": "standing_research_consent", "status": "PASS", "evidence_ids": ["standing_research_consent"], "reason": "Direct human standing consent covers the recommended bounded research progression without repeated consent questions. Exact owner phase grants, real source/data/runtime/resource qualification and registered preservation gates remain required; this index issues no execution grant."},
     {"id": "historical_R_signal", "status": "BLOCKED", "evidence_ids": ["warm_competence", "historical_signal_protocol"], "reason": "Original warm path is STOP_NO_SIGNAL: five mixed R groups are below its required fifteen; do not resume that stopped recipe."},
     {"id": "failed_attempt_preservation", "status": "PASS", "evidence_ids": ["attempt12_failure", "attempt13_cancellation", "attempt14_failure"], "reason": "Terminal records retain failed/cancelled pre-model attempts; this is preservation evidence, not native qualification."},
     {"id": "reviewed_source_owned_timing", "status": "BLOCKED", "evidence_ids": ["correction_review", "timing_contract_proposal", "source_contract_design_v3", "current_service_source", "failed_span"], "reason": "Both blanket timing patches were rejected. V3 is unapproved/unapplied: source-owned inclusive contracts, checkpoint hash extents, full parent/child census, aggregate recomposition, legacy replay/refusal tests and review remain required; unexplained failed-span time remains explicit."},
@@ -48,7 +50,7 @@
   "next_proposal": {
     "phase": "OFFLINE_SOURCE_OWNED_TIMING_REVIEW_AND_CENSUS",
     "proposal_evidence_id": "source_contract_design_v3",
-    "requires": ["failed_attempt_preservation"],
+    "requires": ["failed_attempt_preservation", "standing_research_consent"],
     "target_requirement": "reviewed_source_owned_timing",
     "review_candidate_ready_for_authorization": false,
     "limits": {"native_calls": 0, "model_loads": 0, "tokenizer_runs": 0, "optimizer_updates": 0, "automatic_retries": 0, "external_future_scope_physical_deadline_seconds": 19200, "external_future_scope_discarded_physical_optimizer_updates": 6, "external_future_scope_data_roles": ["train"], "qualification_weights": "discarded", "proposed_timing_bounds_applied": false, "fresh_native_dispatch_in_queue": 0, "CE6": false, "sham": false, "CE375": false, "DEV": false},

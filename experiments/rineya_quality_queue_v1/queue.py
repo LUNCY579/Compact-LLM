@@ -317,14 +317,14 @@ def build_packet(output, spec_dir=None):
                      "protected_bank_reads": 0, "owner_workers_launched": 0, "spend": 0}, **NO_ACTIONS}
     write_new(output / "QUEUE.json", queue)
     lines = ["Rineya retention-first quality queue", "", "Offline source-bound evidence. Every proposed candidate remains HOLD.",
-             "Historical gains are reported separately; no native action, bank read or promotion is authorized.", ""]
+             "Historical gains are separate; this packet grants no native action, bank read or promotion.", ""]
     for card in cards:
         lines += [str(card["priority"]) + ". " + card["title"], "Owner: " + card["owner"]["title"],
                   "Next proposal: " + card["next_proposal"]["phase"],
                   "Blockers: " + ", ".join(item["id"] for item in card["requirements"] if item["status"] != "PASS"), ""]
     lines += ["First proposed quality study: one-donor pruning versus acquisition-matched scalar attenuation.",
               "Keep CE8/pruning/matched MLP ahead of data/SFT and RSD. Defer SRCL and twelve-draw expansion.",
-              "Use existing owners. Finish source/data/runtime review and obtain separate phase authority before native work."]
+              "Use existing owners. Bind reviewed concrete phase grants after source/data/runtime qualification; standing consent does not waive prerequisites."]
     with (output / "REVIEW.txt").open("x", encoding="utf-8") as stream:
         stream.write("\n".join(lines) + "\n")
     for path in sorted(output.rglob("*")):

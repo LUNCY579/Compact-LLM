@@ -11,6 +11,7 @@
     {"name": "recovered REP001 seed23", "kind": "trained_tensor_values_not_full_model_or_additive_delta", "path": "C:/Users/clclc/BusinessProject/rineya-pruning-retention-confirm-v1/custody/research-records/delta-weight-screens-20260918/_trained_tensors/delta_T_seed23.safetensors", "sha256": "e7f171756d17d833f4a30bf700e23c5a1220b3d8175ceba276b6239e53f8fb10", "evidence_id": "custody_inventory", "json_pointer": "/selected_donor/sha256", "custody_status": "RECORDED_VERIFIED_METADATA"}
   ],
   "evidence": [
+    {"id": "standing_research_consent", "path": "C:/Users/clclc/BusinessProject/rineya-standing-research-authorization-20261005-01/AUTHORIZATION.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "custody_inventory", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-pruning-retention-confirm-v1/research/rineya_pruning_retention_confirm_v1/custody_inventory.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "protocol", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-pruning-retention-confirm-v1/research/rineya_pruning_retention_confirm_v1/PROTOCOL.md", "classification": "preparation", "role": "protocol", "format": "text"},
     {"id": "evaluation", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-pruning-retention-confirm-v1/research/rineya_pruning_retention_confirm_v1/EVALUATION.md", "classification": "preparation", "role": "protocol", "format": "text"},
@@ -29,6 +30,7 @@
     {"name": "fresh_acquisition_equivalence", "numerator": null, "denominator": null, "unit": "count", "scope_unit": "fresh_acquisition_parent", "evidence_id": "run_proposal", "json_pointer": "/interventions/selected_scalar", "status": "NOT_MEASURED"}
   ],
   "requirements": [
+    {"id": "standing_research_consent", "status": "PASS", "evidence_ids": ["standing_research_consent"], "reason": "Direct human standing consent covers the recommended bounded research progression without repeated consent questions. Exact owner phase grants, real source/data/runtime/resource qualification and registered preservation gates remain required; this index issues no execution grant."},
     {"id": "recorded_source_donor_custody", "status": "PASS", "evidence_ids": ["custody_inventory"], "reason": "Existing custody receipt records actual verified Supa source and one recovered seed23 FP32 trained-tensor payload; queue imports that metadata without rereading weights or rerunning algebra."},
     {"id": "offline_construction_mechanics", "status": "PASS", "evidence_ids": ["custody_inventory", "preparation_verification"], "reason": "Recorded payload algebra and 55 fixtures support exact N/4 masks, FP64 construction/one FP32 cast and unchanged tensors; no native or behavioral qualification follows."},
     {"id": "reviewed_Q0_runner", "status": "BLOCKED", "evidence_ids": ["run_proposal", "preparation_review"], "reason": "Native runner adaptation, independent code review and exact hash binding remain required before a Q0 grant is executable."},
@@ -41,7 +43,7 @@
   "next_proposal": {
     "phase": "Q0_NATIVE_SOURCE_QUALIFICATION_ONLY",
     "proposal_evidence_id": "run_proposal",
-    "requires": ["recorded_source_donor_custody", "offline_construction_mechanics", "reviewed_Q0_runner", "fresh_Q0_grant"],
+    "requires": ["recorded_source_donor_custody", "offline_construction_mechanics", "reviewed_Q0_runner", "fresh_Q0_grant", "standing_research_consent"],
     "target_requirement": "current_native_Q0",
     "limits": {"synthetic_prompts": 32, "total_greedy_paths": 64, "max_generated_tokens_per_path": 16, "native_forward_calls": 1536, "generated_tokens": 1024, "model_worker_wall_seconds": 3600, "model_worker_launches": 1, "automatic_retries": 0, "new_disk_bytes": 17179869184, "cloud_or_teacher_spend": 0, "fresh_bank_rows": 0, "training_tokens": 0, "optimizer_steps": 0, "host_rss_stop_bytes_unverified": 12884901888, "gpu_allocated_stop_bytes_unverified": 7301444403},
     "native_execution_authorized": false

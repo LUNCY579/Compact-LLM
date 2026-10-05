@@ -16,6 +16,8 @@
     "status": "HISTORICAL_TRAINED_SIDECAR_CURRENT_NATIVE_QUALIFICATION_BLOCKED"
   },
   "evidence": [
+    {"id": "standing_research_consent", "path": "C:/Users/clclc/BusinessProject/rineya-standing-research-authorization-20261005-01/AUTHORIZATION.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m1_additional_failure", "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/native-attempt-02-proposed/native.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {
       "id": "transfer3_reconciliation",
       "path": "C:/Users/clclc/BusinessProject/supa-run-outputs/nonrecurrent-reconciliation-20261005-01a10d63/reconciliation-final.json",
@@ -256,9 +258,10 @@
     }
   ],
   "requirements": [
+    {"id": "standing_research_consent", "status": "PASS", "evidence_ids": ["standing_research_consent"], "reason": "Direct human standing consent covers the recommended bounded research progression without repeated consent questions. Exact owner phase grants, real source/data/runtime/resource qualification and registered preservation gates remain required; this index issues no execution grant."},
     {"id": "recorded_asset_custody", "status": "PASS", "evidence_ids": ["m1_final_handoff"], "reason": "Final offline postflight records unchanged exact parent and historical adapter bytes; this is metadata custody, not native endpoint qualification."},
-    {"id": "original_m1_native_mechanics", "status": "BLOCKED", "evidence_ids": ["m1_failure", "m1_report"], "reason": "One original-owner attempt failed at supervisor parent-PID identity before native import. Required native checks never ran."},
-    {"id": "fresh_owner_retry_authority", "status": "BLOCKED", "evidence_ids": ["m1_next_attempt_proposal"], "reason": "Original authorization is consumed; direct-interpreter next proposal needs separately reviewed fresh preflight and explicit owner authorization."},
+    {"id": "original_m1_native_mechanics", "status": "BLOCKED", "evidence_ids": ["m1_failure", "m1_report", "m1_additional_failure"], "reason": "Original attempt failed immediate-parent identity before native import; the separately authorized direct-interpreter attempt failed the 6144MiB host-memory guard before model load. Native mechanics remain unqualified."},
+    {"id": "reviewed_source_bound_retry_grant", "status": "BLOCKED", "evidence_ids": ["m1_next_attempt_proposal", "m1_additional_failure", "standing_research_consent"], "reason": "Standing consent is available. Two consumed premodel failures remain preserved. A reviewed source-preserving memory-fit correction, exact runtime/input-bound retry grant and real unchanged-floor admission are still required; no automatic retry."},
     {"id": "native_observer_and_complete_cal_derivation", "status": "BLOCKED", "evidence_ids": ["m2_proposal", "m2_fixture_receipt"], "reason": "Native observer/template/sensor/writer/containment qualification and exact complete CAL continuation derivation remain absent; visited-path logits cannot fill unvisited continuations."},
     {"id": "fresh_open_bank_and_independent_review", "status": "BLOCKED", "evidence_ids": ["m2_proposal", "m2_fixture_receipt"], "reason": "Fresh source/rights/gold review and exact CAL/CHECK registration are not supplied; fixture projections are not data admission."},
     {"id": "live_policy_behavior_and_retention", "status": "NOT_MEASURED", "evidence_ids": ["reconciliation_interpretation", "mlp_preregistration"], "reason": "Live bias3.75 quality, broad conversation retention, fair performance and length outcomes remain unmeasured."},
@@ -268,7 +271,7 @@
   "next_proposal": {
     "phase": "ORIGINAL_OWNER_REVIEW_OF_SOURCE_PRESERVING_M1_NEXT_ATTEMPT",
     "proposal_evidence_id": "m1_next_attempt_proposal",
-    "requires": ["fresh_owner_retry_authority", "recorded_asset_custody"],
+    "requires": ["reviewed_source_bound_retry_grant", "recorded_asset_custody", "standing_research_consent"],
     "limits": {"native_attempts_authorized_now": 0, "wall_seconds": 900, "process_tree_rss_mib": 6144, "host_available_mib_before_load": 6144, "cuda_free_mib_before_load": 6144, "cuda_reserved_ceiling_mib": 7168},
     "native_execution_authorized": false
   },
@@ -288,6 +291,7 @@
     {"id": "mlp_release_retention_and_fair_performance", "evidence_ids": ["mlp_preregistration"], "rule": "Separately registered ordinary conversation/retention, exact selected-policy integrity/reload, matched latency/memory and explicit owner release authority are required."}
   ],
   "completed_failed_attempts": [
+    {"id": "m1_attempt_02", "evidence_id": "m1_additional_failure", "status": "FAIL_PREMODEL_INTEGRITY", "scope": "Separately authorized direct-interpreter attempt; zero model load attempts, task rows, backward calls and optimizer steps. Host-memory guard stopped the worker. Preserve original source, failure and exited-process evidence."},
     {"id": "m1_attempt_01", "evidence_id": "m1_failure", "status": "FAIL_CHILD_OR_MISSING_RECEIPT", "scope": "One attempt, zero retries; worker rejected immediate parent identity before native import. Preserve final failure and all exited-owner receipts."}
   ],
   "advancement": false
