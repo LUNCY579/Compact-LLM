@@ -1,5 +1,16 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: finish-rule choice frozen; native scoring remains closed
+
+The [finish policy](DEV_FINISH_POLICY_001.md) uses the strict whole-response
+verifier's Boolean `accepted` field for both EOS and cap32. A complete correct
+JSON answer may pass at the cap; malformed/extra text or incorrect answers fail.
+Finish metadata is retained, and no row is filtered. The timing is disclosed:
+192 M0 rows and failed batch04 already existed, but no actual responses were
+graded. This is not a prospective claim for those outputs. Complete actual
+arm/checkpoint/source/receipt registration and scoring qualification are still
+missing, so the native grading gate and importer remain closed.
+
 ## 2026-10-05 UTC: CPU pre-score provenance adapter integrated
 
 The [pre-score adapter](SCORE_IMPORT.md) binds complete compact002 populations,

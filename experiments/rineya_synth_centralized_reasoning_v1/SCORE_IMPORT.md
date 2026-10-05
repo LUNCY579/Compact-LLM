@@ -28,12 +28,14 @@ pass, including native identity rebranding, partial and failed batch rejection,
 forged native descriptors, population/order drift and stage/root portability.
 No captured response was graded, and no framework, model, GPU or solver ran.
 
-Before actual scoring, freeze a source- and receipt-bound policy specifying
-how valid whole-response JSON ending at the 32-token generation cap is treated.
+The later [finish policy](DEV_FINISH_POLICY_001.md) freezes the same strict
+whole-response correctness rule for EOS and generation-cap outputs, with its
+post-partial-M0 timing disclosed. Before actual scoring, complete the source-
+and receipt-bound registration for that policy.
 Bind the whole-response parser, generated-only decoding/audit evidence,
 complete population/order and all three arm/checkpoint identities. Both EOS
-and cap outputs currently remain unscored. Existing strict JSON verification
-does not by itself supply this finish policy.
+and cap outputs currently remain unscored. The finish policy grants no native
+scoring authorization.
 
 Candidate imports must later require actual qualified final-27/540 study
 checkpoints, three complete chunks and their publication/cost lineage.
