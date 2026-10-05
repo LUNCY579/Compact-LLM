@@ -10,7 +10,9 @@ chronology and owned Job/lease/cleanup evidence. Typed and altered fixtures reje
 It uses shared schema constants and canonical hashing; production publication
 and chain validators are not reused as independent arithmetic authority.
 
-The native `audit()` entrypoint remains hard-disabled. The final driver still
+The native `audit()` entrypoint remains hard-disabled. The
+[whole terminal-frame CPU composition](LONG_TERMINAL_COMPOSITION_001.md) is
+integrated with12 targeted controls. The final native driver still
 needs exact external inventory/config/result/supervisor/encoder/preservation/HEAD
 joins, complete registration validation, immutable raw/source verification and
 cross-process predecessor authority before it can certify an actual scope.

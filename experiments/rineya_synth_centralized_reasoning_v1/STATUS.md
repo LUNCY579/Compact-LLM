@@ -1,5 +1,22 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: whole terminal-frame CPU composition integrated
+
+The [terminal composition helper](LONG_TERMINAL_COMPOSITION_001.md) is integrated
+from independently reviewed bytes. All
+[12 root controls](evidence/long_terminal_composition_root_cpu_validation_20261005.json)
+pass, and the [17-file history](evidence/long_terminal_composition_reviewed_cpu_20261005)
+preserves rejected and portable predecessors. Selected raw/source/config/result/
+supervisor/inventory bytes, state, physical/cumulative costs, prior lineage and
+owned resource records are checked together as CPU fixtures.
+
+Native certification remains disabled. Actual filesystem/current-identity
+orchestration and exact V2 contract reconstruction/consumption are pending;
+consistent self-sealed maps and complete-runtime booleans cannot replace them.
+No native PASS, resume, score, enrollment, model/GPU/encoder execution or study
+result follows. The earlier800-test run predates this integration; this helper
+has its separate targeted12-control validation.
+
 ## 2026-10-05 UTC: current800-test CPU suite passes
 
 The [full current CPU run](evidence/full_cpu_protocol_integration_validation_003_20261005.json)
