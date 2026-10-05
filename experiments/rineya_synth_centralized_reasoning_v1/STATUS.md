@@ -1,5 +1,27 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: reviewed phase-observed M0 collector integrated
+
+The [Phase3 collector](SHORT_PHASE_COLLECTOR_003.md) imports exact original math,
+decoder and collection objects and records existing boundaries without additional
+resource guards/CUDA queries. It retains primitive returns before guard failures
+and closes the independent final phase/IO receipt after terminal diagnostics.
+All [20 root controls](evidence/short_phase_collection_root_cpu_validation_001_20261005.json)
+pass in38.769seconds;11 original helpers remain byte-identical. Independent20+20
+review, the deterministic hash-seed repair, teardown failure and inert fixture
+outputs are in the [564-file history](evidence/short_phase_collection_reviewed_cpu_20261005).
+
+The full64x32 CPU fixture fits declared ledger limits. The deterministic prospective
+budget is98442 markers/37,506,402 bytes, derived from registered names, result
+schemas and pinned loader/size metadata. Its tests do not measure native fsync
+speed or model fit. A [root harness path lookup failure](evidence/short_phase_collection_harness_path_failure_20261005.json)
+occurred before tests and is retained with its package-relative correction.
+
+Native launch remains closed by the new independent full terminal/raw/model/
+resource/complex-phase auditor and fresh source-bound manifest/inventory. No
+model/GPU/encoder/framework or scoring ran. Old failed/partial batches remain
+excluded; M0 is still192/384 raw rows and the three-arm result is unfinished.
+
 ## 2026-10-05 UTC: exact V2 runtime consumption integrated
 
 The [V2 runtime contract/observer](ENCODER_RUNTIME_V2_001.md) is integrated from
