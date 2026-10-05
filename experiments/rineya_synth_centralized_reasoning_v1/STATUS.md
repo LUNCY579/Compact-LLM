@@ -1,5 +1,22 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: Phase3 native auditor implemented and CPU-reviewed
+
+The [reviewed Phase3 terminal auditor](SHORT_PHASE_AUDIT_003.md) has a complete
+native entry rather than an unconditional failure. Exact current source/HEAD/
+inventory/profile/terminal preservation gates precede inherited full raw/model/
+decoder/resource closure and independent phase/loader replay. The root24 controls
+and independent54 controls pass on identical frozen source bytes. Histories and
+reviews are preserved with all original d69810 heavy predicates and explicit
+bounded IO facades. Fixture finish cannot convert into native completeness.
+
+No actual native audit, model/GPU/decoder/encoder/OS probe or binary read occurred
+in review. Next requires a clean new manifest and independently frozen exact
+source/auditor/profile/config/HEAD inventory, fresh owned admission, terminal
+preservation and actual full audit. M0 remains192/384 raw rows. V2 long-audit
+read-set mutation repairs, model fit, language authority and the three-arm
+learning comparison remain unfinished.
+
 ## 2026-10-05 UTC: whole-path mutation review found read-closure gaps
 
 The [independent mutation evidence](evidence/long_audit_mutation_holes_20261005)
