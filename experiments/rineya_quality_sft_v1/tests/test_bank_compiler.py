@@ -1,7 +1,9 @@
 """Small authored fixtures only; no real owner bank/admission or model calls."""
 import copy
+import io
 import json
 from pathlib import Path
+from types import SimpleNamespace
 import pytest
 
 from experiments.model_quality_gpu_v1.integrity import digest, file_hash, seal, unseal
@@ -190,7 +192,11 @@ def test_fixture_cannot_be_native_and_metadata_blocks_payload_access(tmp_path, m
         compile_plan(bundle, FixtureTokenizer(), {}, {"sha256": "e" * 64}, fixture=False)
     manifest["metadata"]["ancestry"][0]["status"] = "EXCLUDED"
     path.write_text(json.dumps(manifest), encoding="utf-8")
-    monkeypatch.setattr(B, "file_hash", lambda p: pytest.fail("Payload hash/read must not happen"))
+    original_read = B._bounded_bytes
+    def metadata_only(p, limit):
+        assert Path(p).suffix != ".jsonl", "Payload hash/read must not happen"
+        return original_read(p, limit)
+    monkeypatch.setattr(B, "_bounded_bytes", metadata_only)
     with pytest.raises(ValueError, match="ancestry"):
         B.read_owner_bundle(path, allow_fixture=True)
 
@@ -199,6 +205,7 @@ def test_declared_approval_without_attributable_receipt_rejected_before_payload(
     path, manifest = fixture_bundle(tmp_path)
     manifest.update(fixture_only=False, admission="ADMITTED")
     manifest["metadata"]["ancestry"][0]["status"] = "ADMITTED"
+    manifest["metadata"]["ancestry"][0]["role"] = "open_train_or_dev"
     binding = B.export_binding(manifest)
     manifest["review_manifest_sha256"] = binding
     reviews = []
@@ -214,11 +221,11 @@ def test_declared_approval_without_attributable_receipt_rejected_before_payload(
                         "reviewer_id": "fixture-author", "reviewer_role": "independent", "status": "APPROVED"})
     manifest["metadata"]["reviews"] = reviews
     path.write_text(json.dumps(manifest), encoding="utf-8")
-    original_hash = B.file_hash
-    def checked_hash(p):
+    original_read = B._bounded_bytes
+    def checked_read(p, limit):
         assert Path(p).suffix != ".jsonl", "Unreviewed payload read"
-        return original_hash(p)
-    monkeypatch.setattr(B, "file_hash", checked_hash)
+        return original_read(p, limit)
+    monkeypatch.setattr(B, "_bounded_bytes", checked_read)
     with pytest.raises(ValueError, match="Receipt contents"):
         B.read_owner_bundle(path)
 
@@ -233,6 +240,7 @@ def test_malformed_metadata_never_opens_payload(failure, tmp_path, monkeypatch):
     else:
         manifest.update(fixture_only=False, admission="ADMITTED")
         manifest["metadata"]["ancestry"][0]["status"] = "ADMITTED"
+        manifest["metadata"]["ancestry"][0]["role"] = "open_train_or_dev"
         manifest["review_manifest_sha256"] = B.export_binding(manifest)
         reviews = []
         for kind in sorted(B.REVIEW_KINDS):
@@ -242,11 +250,11 @@ def test_malformed_metadata_never_opens_payload(failure, tmp_path, monkeypatch):
                             "reviewer_id": "independent-invalid-fixture", "reviewer_role": "independent", "status": "APPROVED"})
         manifest["metadata"]["reviews"] = reviews
     if failure != "duplicate_manifest": path.write_text(json.dumps(manifest), encoding="utf-8")
-    original = B.file_hash
-    def checked_hash(p):
+    original = B._bounded_bytes
+    def checked_read(p, limit):
         assert Path(p).suffix != ".jsonl", "Payload must remain unread"
-        return original(p)
-    monkeypatch.setattr(B, "file_hash", checked_hash)
+        return original(p, limit)
+    monkeypatch.setattr(B, "_bounded_bytes", checked_read)
     with pytest.raises(ValueError):
         B.read_owner_bundle(path, allow_fixture=failure in {"owner", "duplicate_manifest"})
 
@@ -306,3 +314,140 @@ def test_plan_scope_design_and_group_tampering_rejected(tmp_path):
     body["design"]["max_updates"] = 33
     with pytest.raises(ValueError, match="fixed RQSFT design"):
         validate_plan(seal(body))
+
+
+@pytest.mark.parametrize("role", ["EXCLUDED", "excluded", "open_test_only", "CAL", "calibration",
+                                  "open-any-read", "ＦＩＸＴＵＲＥ", None, []])
+def test_eligible_status_cannot_launder_blocked_ancestry_role(role):
+    ancestry = [{"status": "ADMITTED", "role": role, "protected": False, "sha256": "d" * 64}]
+    with pytest.raises(ValueError, match="ancestry|Excluded"):
+        B._ancestry(ancestry, False)
+    # These are declarations, never an owner approval or a real payload read.
+    B._ancestry([dict(ancestry[0], role="open_train_or_dev")], False)
+    B._ancestry([dict(ancestry[0], role="many_readings_source")], False)
+
+
+def test_nonempty_target_cannot_claim_verified_empty():
+    rows = fixture_rows()
+    rows["train"][0]["empty_target_verified"] = True
+    with pytest.raises(ValueError, match="empty target"):
+        B.validate_rows(rows, True)
+
+
+@pytest.mark.parametrize("field", ["parent_id", "family", "scenario_id", "lexicon_id"])
+def test_pair_cannot_link_unrelated_world_metadata(field):
+    rows = fixture_rows()
+    if field == "parent_id":
+        # Preserve complete two-row parent counts while crossing the pair links.
+        rows["train"][1][field], rows["train"][3][field] = rows["train"][3][field], rows["train"][1][field]
+    else:
+        rows["train"][1][field] += "-unrelated"
+    with pytest.raises(ValueError, match="share its underlying"):
+        B.validate_rows(rows, True)
+
+
+@pytest.mark.parametrize("mutation", ["interior_blank", "extra_terminal_blank", "whitespace_record"])
+def test_physical_jsonl_rows_cannot_silently_disappear(mutation, tmp_path):
+    path, manifest = fixture_bundle(tmp_path)
+    payload = tmp_path / "train.jsonl"
+    raw = payload.read_bytes()
+    if mutation == "interior_blank": raw = raw.replace(b"\n", b"\n\n", 1)
+    if mutation == "extra_terminal_blank": raw += b"\n"
+    if mutation == "whitespace_record": raw = b" \t\n" + raw
+    payload.write_bytes(raw)
+    manifest["files"]["train"]["sha256"] = file_hash(payload)
+    manifest["review_manifest_sha256"] = B.export_binding(manifest)
+    path.write_text(json.dumps(manifest), encoding="utf-8")
+    with pytest.raises(ValueError, match="Physical JSONL"):
+        B.read_owner_bundle(path, allow_fixture=True)
+
+
+@pytest.mark.parametrize("endings", ["crlf", "no_terminal_lf", "unicode_content"])
+def test_exact_jsonl_content_and_valid_line_endings_survive(endings, tmp_path):
+    rows = fixture_rows()
+    if endings == "unicode_content":
+        rows["train"][0]["messages"][0]["content"] += "\u2028inside JSON string"
+    path, manifest = fixture_bundle(tmp_path, rows)
+    for split in ("train", "dev"):
+        payload = tmp_path / (split + ".jsonl")
+        raw = "\n".join(json.dumps(row, ensure_ascii=False) for row in rows[split]).encode("utf-8")
+        if endings == "crlf": raw = raw.replace(b"\n", b"\r\n") + b"\r\n"
+        elif endings == "unicode_content": raw += b"\n"
+        payload.write_bytes(raw)
+        manifest["files"][split]["sha256"] = file_hash(payload)
+    manifest["review_manifest_sha256"] = B.export_binding(manifest)
+    path.write_text(json.dumps(manifest), encoding="utf-8")
+    consumed = B.read_owner_bundle(path, allow_fixture=True)
+    assert consumed["train"] == rows["train"] and consumed["dev"] == rows["dev"]
+    assert consumed["manifest_sha256"] == file_hash(path)
+
+
+@pytest.mark.parametrize("suffix", [".json", ".jsonl"])
+def test_bytes_changed_after_hash_check_cannot_be_consumed(suffix, tmp_path, monkeypatch):
+    path = tmp_path / ("authored-race" + suffix)
+    path.write_bytes(b'{"synthetic":"before"}\n')
+    expected = file_hash(path)
+    original_hash = B._bounded_hash
+    def race(p, limit):
+        value = original_hash(p, limit)
+        Path(p).write_bytes(b'{"synthetic":"after"}\n')
+        return value
+    monkeypatch.setattr(B, "_bounded_hash", race)
+    with pytest.raises(ValueError, match="Consumed bytes"):
+        B._pinned_bytes(path, expected, 1024)
+
+
+def test_manifest_change_during_fixture_read_cannot_be_certified(tmp_path, monkeypatch):
+    path, _ = fixture_bundle(tmp_path)
+    original_validate = B.validate_rows
+    def race(*args):
+        audit = original_validate(*args)
+        path.write_bytes(path.read_bytes() + b"\n")
+        return audit
+    monkeypatch.setattr(B, "validate_rows", race)
+    with pytest.raises(ValueError, match="manifest changed"):
+        B.read_owner_bundle(path, allow_fixture=True)
+
+
+def test_inconsistent_export_authors_refuse_before_payload(tmp_path, monkeypatch):
+    path, manifest = fixture_bundle(tmp_path)
+    manifest.update(fixture_only=False, admission="ADMITTED")
+    manifest["metadata"]["ancestry"][0].update(status="ADMITTED", role="open_train_or_dev")
+    binding = B.export_binding(manifest)
+    manifest["review_manifest_sha256"] = binding
+    descriptors = []
+    for kind in sorted(B.REVIEW_KINDS):
+        reviewer = "AUTHORED_INVALID_REVIEWER_" + kind
+        receipt = {"schema": "RQSFT_OWNER_REVIEW_V1", "kind": kind,
+                   "owner_export_binding_sha256": binding, "status": "APPROVED",
+                   "reviewer_id": reviewer, "exporter_id": "AUTHORED_INCONSISTENT_EXPORTER_" + kind,
+                   "reviewer_role": "independent", "checks": {kind: True},
+                   "attribution": {"principal": reviewer, "record_reference": "BAD SYNTHETIC FIXTURE; NO REVIEW"}}
+        receipt_path = tmp_path / (kind + "-inconsistent.json")
+        receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+        descriptors.append({"kind": kind, "path": receipt_path.name, "sha256": file_hash(receipt_path),
+                            "reviewer_id": reviewer, "reviewer_role": "independent", "status": "APPROVED"})
+    manifest["metadata"]["reviews"] = descriptors
+    path.write_text(json.dumps(manifest), encoding="utf-8")
+    original_read = B._bounded_bytes
+    def metadata_read(p, limit):
+        assert Path(p).suffix != ".jsonl", "Unreviewed payload must remain unread"
+        return original_read(p, limit)
+    monkeypatch.setattr(B, "_bounded_bytes", metadata_read)
+    with pytest.raises(ValueError, match="same export author"):
+        B.read_owner_bundle(path)
+
+
+def test_growing_file_cannot_make_hash_read_past_cap(monkeypatch):
+    reads = []
+    class TrackingBytes(io.BytesIO):
+        def read(self, count=-1):
+            reads.append(count)
+            return super().read(count)
+    class GrowingFile:
+        def stat(self): return SimpleNamespace(st_size=0)
+        def open(self, mode): return TrackingBytes(b"x" * 8192)
+    monkeypatch.setattr(B, "regular", lambda path: GrowingFile())
+    with pytest.raises(ValueError, match="Consumed input exceeds"):
+        B._bounded_hash("authored-growth-fixture", 1024)
+    assert reads == [1025]

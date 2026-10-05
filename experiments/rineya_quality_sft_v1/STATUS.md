@@ -49,3 +49,24 @@ supervision reverses direction. Affine multipliers can commute, and downstream
 operations can erase local order differences. All examples are mathematical
 fixtures; actual Rineya gradients, bank certification and quality gains remain
 unmeasured. Mechanism metadata advice is UNVERIFIED, never an admission.
+
+## Admission-interface closing review
+
+The newer owner STATUS_003 and FINAL_CONSUMER receipts resolve the earlier
+20-parent/40-pair proposal mismatch in principle. They still report zero actual
+new rows/reservations and no admitted manifest. The fresh baseline/error map,
+blinded judgments, native qualification and both SFT outcomes remain missing.
+
+Consumer repairs reject explicit blocked roles despite eligible-looking statuses,
+cross-world pair links, inconsistent export authors, discarded blank JSONL records
+and changes between hash checking and byte consumption. Manifest custody is also
+checked at closure. These strengthen preparation without changing the fixed SFT
+recipe, quotas, floors or native opt-ins. Historical snapshots remain untouched.
+The complete expanded suite passes152CPU fixtures,0failures/skips,1profiler
+warning. No native model loads, optimizer updates or quality gains were measured.
+
+Current preparation/verification receipts are in
+`C:/Users/clclc/BusinessProject/rineya-quality-sft-records/admission-interface-20261005-003`.
+The earlier33fd119/72-test packet remains historical. A current clean commit and
+explicit raw-versus-LF-normalized hashes must be used for the next owner handoff;
+neither an old packet nor a fixture pass authorizes a native run.

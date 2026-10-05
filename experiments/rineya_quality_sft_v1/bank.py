@@ -8,12 +8,13 @@ The real exporter must supply the attributable review records itself.
 from __future__ import annotations
 
 from collections import Counter
+import hashlib
 from pathlib import Path
 import re
 import unicodedata
 
 from . import integrity as I
-from .integrity import decode, digest, file_hash, read_json, regular
+from .integrity import decode, digest, regular
 from . import EXPERIMENT
 from .contract import DATASET_OWNER, DEV_COUNTS, TRAIN_COUNTS
 
@@ -21,6 +22,7 @@ REVIEW_KINDS = {"rights", "gold", "partition", "shortcut"}
 DIMENSIONS = {"solving", "harder_transfer", "grounding_answerability", "output_contract", "communication"}
 SCORERS = {"exact", "number", "json_exact", "fixed_list", "semantic_review"}
 BLOCKED_ANCESTRY = {"EXCLUDED", "TEST_ONLY", "SEALED", "CONFIRMATION", "PROTECTED", "SPENT", "ANY_READ"}
+BLOCKED_ROLE_WORDS = {"EXCLUDED", "TEST", "SEALED", "CONFIRMATION", "PROTECTED", "SPENT", "CAL", "CALIBRATION"}
 
 
 def _sha(value):
@@ -50,13 +52,63 @@ def _ancestry(value, fixture):
     if not isinstance(value, list) or not value:
         raise ValueError("Explicit complete ancestry declarations required")
     for item in value:
-        if (not isinstance(item, dict) or item.get("protected") is not False
+        if not isinstance(item, dict):
+            raise ValueError("Structured ancestry declarations required")
+        role = _text(item.get("role"), "ancestry role")
+        # Check the role independently of an eligible-looking status. A new
+        # receipt cannot upgrade calibration/test controls or blocked roots.
+        words = re.findall(r"[A-Z0-9]+", unicodedata.normalize("NFKC", role).upper())
+        if (item.get("protected") is not False
                 or item.get("status") in BLOCKED_ANCESTRY
-                or item.get("role") in {"confirmation", "sealed", "protected"}):
+                or set(words) & BLOCKED_ROLE_WORDS
+                or any(words[i:i + 2] == ["ANY", "READ"] for i in range(len(words) - 1))
+                or (not fixture and "FIXTURE" in words)):
             raise ValueError("Excluded/test/protected ancestry cannot be admitted")
         allowed = {"ADMITTED", "SOURCE_VERIFIED"} | ({"FIXTURE_ONLY"} if fixture else set())
         if item.get("status") not in allowed or not _sha(item.get("sha256")):
             raise ValueError("Ancestry must be explicitly eligible and hash-pinned")
+
+
+def _bounded_bytes(path, limit):
+    target = regular(path)
+    if target.stat().st_size > limit:
+        raise ValueError("Input exceeds bounded reader limit")
+    with target.open("rb") as stream:
+        raw = stream.read(limit + 1)
+    if len(raw) > limit:
+        raise ValueError("Consumed input exceeds bounded reader limit")
+    return raw
+
+
+def _pinned_bytes(path, expected, limit):
+    """Bounded bytes actually decoded must match the reviewed raw-file hash."""
+    target = regular(path)
+    # Retain the independent pre-read custody check, then bind the actual read.
+    # The second comparison detects a change between that check and consumption.
+    if _bounded_hash(target, limit) != expected:
+        raise ValueError("Pinned input exceeds bound or differs from reviewed exact bytes")
+    raw = _bounded_bytes(target, limit)
+    if hashlib.sha256(raw).hexdigest() != expected:
+        raise ValueError("Consumed bytes differ from reviewed exact bytes or bound")
+    return raw
+
+
+def _bounded_hash(path, limit):
+    # Hashing has the same growth-resistant cap as the subsequent parsed read.
+    return hashlib.sha256(_bounded_bytes(path, limit)).hexdigest()
+
+
+def validate_review_principals(reviews):
+    """One immutable exporter; no review author may be that export author."""
+    exporters = set()
+    for review in reviews:
+        exporter = _text(review.get("exporter_id"), "export author identity")
+        reviewer = _text(review.get("reviewer_id"), "review author identity")
+        if reviewer in {exporter, DATASET_OWNER["thread_id"]}:
+            raise ValueError("Export author cannot independently review the export")
+        exporters.add(exporter)
+    if len(exporters) != 1:
+        raise ValueError("All four review receipts must identify the same export author")
 
 
 def export_binding(manifest):
@@ -152,9 +204,7 @@ def _header(manifest, base, allow_fixture):
         path = _safe_input(_text(review.get("path"), "review receipt path"), base)
         if path.suffix.casefold() != ".json" or path in paths.values():
             raise ValueError("Review must be a distinct metadata JSON receipt")
-        if file_hash(path) != review["sha256"]:
-            raise ValueError("Independent review receipt hash changed")
-        receipt = read_json(path, limit=1024 * 1024)
+        receipt = decode(_pinned_bytes(path, review["sha256"], 1024 * 1024).decode("utf-8"))
         if not isinstance(receipt, dict):
             raise ValueError("Independent review receipt must be an object")
         reviewer = receipt.get("reviewer_id")
@@ -169,6 +219,7 @@ def _header(manifest, base, allow_fixture):
         validated.append({"kind": review["kind"], "sha256": review["sha256"], "reviewer_id": reviewer,
                           "exporter_id": receipt["exporter_id"],
                           "attribution": attribution, "subject_sha256": binding})
+    validate_review_principals(validated)
     return fixture, paths, binding, validated
 
 
@@ -217,6 +268,7 @@ def validate_rows(banks, fixture):
             final = messages[-1]["content"]
             if (row.get("final_target_verified") is not True or final != final.strip()
                     or (final == "" and row.get("empty_target_verified") is not True)
+                    or (final != "" and row.get("empty_target_verified") is True)
                     or type(row.get("empty_target_verified")) is not bool):
                 raise ValueError("Missing/unverified target is not intentional verified empty target")
             evaluation = row.get("evaluation")
@@ -240,6 +292,10 @@ def validate_rows(banks, fixture):
             raise ValueError("Incomplete parent group; no pair splitting or silent refill")
     if any(len(rows) != 2 for rows in pair_rows.values()):
         raise ValueError("Every declared answerability pair requires exactly two views")
+    for pair in pair_rows.values():
+        if any(len({r[field] for r in pair}) != 1
+               for field in ("parent_id", "family", "scenario_id", "lexicon_id")):
+            raise ValueError("Evidence pair must share its underlying parent/family/scenario/lexicon")
     grounded = [r for r in banks["train"] if r["category"] == "grounded"]
     if any(r["pair_id"] is None for r in grounded) or len({r["pair_id"] for r in grounded}) != 40:
         raise ValueError("All 80 grounded TRAIN rows must form exactly 40 complete missing-evidence pairs")
@@ -264,19 +320,28 @@ def validate_rows(banks, fixture):
 
 def read_owner_bundle(manifest_path, allow_fixture=False):
     manifest_path = _safe_input(manifest_path, Path.cwd())
-    manifest = read_json(manifest_path, limit=1024 * 1024)
+    manifest_raw = _bounded_bytes(manifest_path, 1024 * 1024)
+    manifest_sha256 = hashlib.sha256(manifest_raw).hexdigest()
+    manifest = decode(manifest_raw.decode("utf-8"))
     fixture, paths, binding, reviews = _header(manifest, manifest_path.parent, allow_fixture)
     # No payload stat/hash/read occurs until all real review receipts above pass.
     banks = {}
     for split, path in paths.items():
-        path = regular(path)
-        if path.stat().st_size > 16 * 1024 * 1024 or file_hash(path) != manifest["files"][split]["sha256"]:
-            raise ValueError("Payload exceeds bound or differs from reviewed exact bytes")
-        rows = [decode(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        raw = _pinned_bytes(path, manifest["files"][split]["sha256"], 16 * 1024 * 1024)
+        lines = raw.decode("utf-8").split("\n")
+        # One ordinary terminal newline is allowed. Interior/extra blank records
+        # never disappear from the reviewed physical export; CRLF also works.
+        if lines[-1] == "":
+            lines.pop()
+        if len(lines) != manifest["files"][split]["rows"] or any(not line.strip() for line in lines):
+            raise ValueError("Physical JSONL records must exactly cover every declared row without blanks")
+        rows = [decode(line) for line in lines]
         if any(not isinstance(r, dict) for r in rows):
             raise ValueError("Every payload row must be an object")
         banks[split] = rows
     audit = validate_rows(banks, fixture)
+    if _bounded_hash(manifest_path, 1024 * 1024) != manifest_sha256:
+        raise ValueError("Owner manifest changed during consumption")
     return {**banks, "fixture_only": fixture, "owner": manifest["owner"],
-            "manifest": manifest, "manifest_path": str(manifest_path), "manifest_sha256": file_hash(manifest_path),
+            "manifest": manifest, "manifest_path": str(manifest_path), "manifest_sha256": manifest_sha256,
             "export_binding_sha256": binding, "reviews": reviews, "audit": audit}

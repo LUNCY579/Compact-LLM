@@ -6,7 +6,7 @@ import random
 
 from .integrity import digest, seal, unseal
 from . import EXPERIMENT, SOURCE_CORE, SOURCE_WEIGHT_SHA256
-from .bank import REVIEW_KINDS, _sha, validate_rows
+from .bank import REVIEW_KINDS, _sha, validate_rows, validate_review_principals
 from .contract import DATASET_OWNER, Design, validate_design
 
 
@@ -169,6 +169,7 @@ def validate_plan(value):
                     or not review.get("exporter_id") or review.get("attribution", {}).get("principal") != review["reviewer_id"]
                     or not review.get("attribution", {}).get("record_reference")):
                 raise ValueError("Native independently attributable review summary differs")
+        validate_review_principals(reviews)
     banks = {}
     eos = body["tokenizer"].get("eos_token_id")
     if type(eos) is not int or not 0 <= eos < 151936 or not _ids(body["tokenizer"].get("newline_ids")):

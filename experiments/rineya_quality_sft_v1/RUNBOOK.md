@@ -50,6 +50,14 @@ labels exclude previous assistant history; whole labels include all next-token
 positions. Verified intentionally empty targets supervise EOS alone. Missing
 captures are never empty-target success.
 
+The current admission reader also requires matching parent/family/scenario/lexicon
+within every pair, a consistent export author across bundle receipts, eligible
+ancestry roles and complete physical JSONL records. Hashes bind the bytes actually
+decoded, including a closing manifest recheck. CRLF and an unterminated last row
+are preserved; interior/extra blank records refuse. These are structural custody
+checks. Full passport coverage, global exclusions and actual semantic review are
+still the existing owner's obligations, not inferred from declarations.
+
 The output includes the exact sealed plan and `EXPOSURE_REVIEW_PENDING.json`.
 An actual independent reviewer checks native token IDs, causal boundaries,
 parent grouping, quotas, source/owner binding and costs before recording APPROVED

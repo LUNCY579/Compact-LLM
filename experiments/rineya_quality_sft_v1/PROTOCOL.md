@@ -22,6 +22,14 @@ generates no real bank. Rights/gold/pair/family/scenario/lexicon/shortcut review
 must be actual, independently attributable and byte-bound. Developer fixtures and
 EXCLUDED ancestry can never be upgraded to TRAIN. No protected-bank reads.
 
+The consumer rejects explicit blocked/calibration/fixture ancestry roles even
+when status claims eligibility. Each pair shares parent/family/scenario/lexicon
+identities; real semantic pairing and global exclusion proof remain owner gates.
+All four bundle receipts identify one export author distinct from reviewers.
+Complete physical JSONL records and the raw bytes actually parsed must match
+their pinned counts/hashes; blank records and custody races cannot be discarded.
+These checks establish structural custody, never reviewer truth or admission.
+
 Messages include complete histories and a final assistant target. Prior assistant
 turns remain in input. Response labels cover only final answer+EOS, never prior
 answers/header/thinking stub/trailing newline; whole labels cover all next-token
