@@ -1,0 +1,59 @@
+{
+  "actual_batch02_audit": {
+    "accounting": {
+      "API_attempted": 2147,
+      "API_failed": 0,
+      "API_pending": 0,
+      "API_returned": 2147,
+      "all_measurement_file_byte_links_verified": true,
+      "backwards": 0,
+      "capture_forwards": 1825,
+      "capture_input_positions": 646884,
+      "exact_component_prehook_API_and_per_token_cost_reconciliation": true,
+      "operation_accounting_scope": "registered_API_boundaries;internal_ATen_operations_not_individually_metered",
+      "optimizer_steps": 0,
+      "parity_forwards": 2,
+      "parity_input_positions": 520,
+      "physical_forwards": 1827,
+      "physical_input_positions": 647404
+    },
+    "body_sha256": "4613a0928f8e6b98eb650f78014411f6bb08fa2287de4b64d312857821ab106a",
+    "checks_passed": 59507,
+    "file_sha256": "ad29708910b9683609a93ab2cd31fa215379b5f8506d9f5171b771204c799e4f",
+    "finish_counts": {
+      "eos": 30,
+      "generation_cap": 34
+    },
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\short_m0_atomic_batch02_attempt1_independent_audit_20261005.json",
+    "status": "PASS_SCOPED_SHORT_M0_RAW_COLLECTION_MECHANICS_UNSCORED"
+  },
+  "all_audit_handles_terminal": true,
+  "batch01_original_audit_body_sha256": "5246ff75489bacf627069034ec9f433941edbc7e05a167b591d1c92974ef5782",
+  "batch01_original_audit_file_sha256": "0972d328fcd3fbcf7eadffadb38149448e237215e5bb5cd8c0e454b75066f44d",
+  "control_returncode": 0,
+  "control_stderr": "test_alternate_contract_profile_authority_or_selector_denied (test_auditor_controls.Controls.test_alternate_contract_profile_authority_or_selector_denied) ... ok\ntest_bad_independent_hash_and_selector_deny_before_paths (test_auditor_controls.Controls.test_bad_independent_hash_and_selector_deny_before_paths) ... ok\ntest_complete_mock_header_retains_all64 (test_auditor_controls.Controls.test_complete_mock_header_retains_all64) ... ok\ntest_default_signal_denies_before_any_read_hash_or_write (test_auditor_controls.Controls.test_default_signal_denies_before_any_read_hash_or_write) ... ok\ntest_forged_return_status_error_or_commit_denied (test_auditor_controls.Controls.test_forged_return_status_error_or_commit_denied) ... ok\ntest_incomplete_reordered_duplicate_or_unfrozen_terminal_denied (test_auditor_controls.Controls.test_incomplete_reordered_duplicate_or_unfrozen_terminal_denied) ... ok\ntest_isolated_cli_help_and_missing_signal_denial (test_auditor_controls.Controls.test_isolated_cli_help_and_missing_signal_denial) ... ok\ntest_target_oracle_columns_rejected_even_with_resigned_packet (test_auditor_controls.Controls.test_target_oracle_columns_rejected_even_with_resigned_packet) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.578s\n\nOK\n",
+  "control_stdout": "",
+  "control_wall_seconds": 0.9840000000003783,
+  "controls": 8,
+  "correctness_grade_performed": false,
+  "enrollment_performed": false,
+  "native_worker_launch_authorized": false,
+  "root_source_or_gate_edits": false,
+  "sha256": "5520215d625e7b55535c9ec86b889839a8a0627ad2e4e0d3f6a634cbabb962b4",
+  "source_after": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\short_m0_audit_work\\README.md": "c133e4479e890839735b18924d10f375678828de0296494db82e6ec74e9aa3e8",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\short_m0_audit_work\\auditor.py": "18f6a48fdd3e365523bdf4e5d03ffebf5f2e4a19366676382b39d483b23795ab",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\short_m0_audit_work\\batch01_executed_audit_code.py.txt": "0b05c0046621709058e0504128f7c94161432a8d12b55ce0d1b0fb1fcf3109af",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\short_m0_audit_work\\test_auditor_controls.py": "4077d3a5607c43da45e7d9ee3ee5301c476f85d48ffe968a522e7f37746c4bef"
+  },
+  "source_before": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\short_m0_audit_work\\README.md": "c133e4479e890839735b18924d10f375678828de0296494db82e6ec74e9aa3e8",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\short_m0_audit_work\\auditor.py": "18f6a48fdd3e365523bdf4e5d03ffebf5f2e4a19366676382b39d483b23795ab",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\short_m0_audit_work\\batch01_executed_audit_code.py.txt": "0b05c0046621709058e0504128f7c94161432a8d12b55ce0d1b0fb1fcf3109af",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\short_m0_audit_work\\test_auditor_controls.py": "4077d3a5607c43da45e7d9ee3ee5301c476f85d48ffe968a522e7f37746c4bef"
+  },
+  "stage_only": true,
+  "status": "PASS_STAGE_ONLY_REUSABLE_AUDITOR_LIGHT_CONTROLS_AND_ACTUAL_BATCH02_AUDIT",
+  "study_training_authorized": false,
+  "unchanged": true
+}

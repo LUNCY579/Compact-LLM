@@ -1,0 +1,1354 @@
+{
+  "GPU_NVML_called": false,
+  "factors": [
+    {
+      "GPU_guard_measured": false,
+      "current_CPU_guard_measured": false,
+      "decoder_counters": {
+        "forward_regions": 560,
+        "no_grad_regions": 0,
+        "recompute_regions": 560
+      },
+      "decoder_failed_or_pending": false,
+      "durability": {
+        "emit_failed": 0,
+        "emit_returned": 2552,
+        "emit_seconds": 0.9566951000597328,
+        "evidence_failed": 0,
+        "evidence_returned": 20,
+        "evidence_seconds": 0.09460710000348627,
+        "nested_timing_note": "evidence_seconds includes its emit; do not add it to emit_seconds"
+      },
+      "factor": "journal_only",
+      "guards": {
+        "attempted": 7722,
+        "elapsed_seconds": 0.0022553000817424618,
+        "failed": 0,
+        "returned": 7722
+      },
+      "per_record_durability_measured": true,
+      "primitive_operations": {
+        "base_storage_validate": {
+          "attempted": 41,
+          "failed": 0,
+          "pending": 0,
+          "returned": 41
+        },
+        "checkpoint_layer00_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer00_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer01_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer01_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer02_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer02_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer03_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer03_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer04_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer04_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer05_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer05_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer06_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer06_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer07_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer07_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer08_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer08_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer09_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer09_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer10_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer10_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer11_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer11_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer12_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer12_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer13_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer13_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer14_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer14_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer15_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer15_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer16_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer16_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer17_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer17_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer18_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer18_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer19_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer19_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer20_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer20_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer21_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer21_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer22_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer22_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer23_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer23_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer24_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer24_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer25_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer25_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer26_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer26_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer27_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer27_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "completion_CE_selected_NLL_check": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "consumed_gradient_clear": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "finite_gradient_clip": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "forward_array_integrity_validate": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "gradient_reset": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "optimizer_boundary_validate": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "optimizer_step": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "row_tensor_materialize": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "training_backward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "training_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        }
+      },
+      "protocol_operations": {
+        "backward": 20,
+        "clip": 1,
+        "forward": 20,
+        "gradient_reset": 1,
+        "loss": 20,
+        "step": 1
+      },
+      "scope": "CPU_COMPONENT_JOURNAL_GUARD_COUNTED_FAKE28_NO_NATIVE_AUTHORITY",
+      "status": "COMPLETE_CPU_COMPONENT_COUNTED_UPDATE_FRAME",
+      "wall_seconds": 1.0969089999998687
+    },
+    {
+      "GPU_guard_measured": false,
+      "current_CPU_guard_measured": true,
+      "decoder_counters": {
+        "forward_regions": 560,
+        "no_grad_regions": 0,
+        "recompute_regions": 560
+      },
+      "decoder_failed_or_pending": false,
+      "factor": "guard_only",
+      "guards": {
+        "attempted": 7722,
+        "elapsed_seconds": 85.2186316998559,
+        "failed": 0,
+        "returned": 7722
+      },
+      "per_record_durability_measured": false,
+      "primitive_operations": {
+        "base_storage_validate": {
+          "attempted": 41,
+          "failed": 0,
+          "pending": 0,
+          "returned": 41
+        },
+        "checkpoint_layer00_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer00_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer01_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer01_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer02_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer02_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer03_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer03_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer04_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer04_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer05_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer05_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer06_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer06_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer07_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer07_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer08_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer08_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer09_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer09_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer10_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer10_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer11_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer11_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer12_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer12_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer13_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer13_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer14_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer14_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer15_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer15_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer16_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer16_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer17_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer17_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer18_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer18_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer19_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer19_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer20_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer20_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer21_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer21_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer22_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer22_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer23_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer23_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer24_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer24_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer25_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer25_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer26_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer26_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer27_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer27_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "completion_CE_selected_NLL_check": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "consumed_gradient_clear": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "finite_gradient_clip": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "forward_array_integrity_validate": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "gradient_reset": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "optimizer_boundary_validate": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "optimizer_step": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "row_tensor_materialize": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "training_backward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "training_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        }
+      },
+      "protocol_operations": {
+        "backward": 20,
+        "clip": 1,
+        "forward": 20,
+        "gradient_reset": 1,
+        "loss": 20,
+        "step": 1
+      },
+      "scope": "CPU_COMPONENT_JOURNAL_GUARD_COUNTED_FAKE28_NO_NATIVE_AUTHORITY",
+      "status": "COMPLETE_CPU_COMPONENT_COUNTED_UPDATE_FRAME",
+      "wall_seconds": 85.3303491000006
+    },
+    {
+      "GPU_guard_measured": false,
+      "current_CPU_guard_measured": true,
+      "decoder_counters": {
+        "forward_regions": 560,
+        "no_grad_regions": 0,
+        "recompute_regions": 560
+      },
+      "decoder_failed_or_pending": false,
+      "durability": {
+        "emit_failed": 0,
+        "emit_returned": 2552,
+        "emit_seconds": 1.111820899783197,
+        "evidence_failed": 0,
+        "evidence_returned": 20,
+        "evidence_seconds": 0.07359460000589024,
+        "nested_timing_note": "evidence_seconds includes its emit; do not add it to emit_seconds"
+      },
+      "factor": "full_candidate",
+      "guards": {
+        "attempted": 7722,
+        "elapsed_seconds": 74.40866690015173,
+        "failed": 0,
+        "returned": 7722
+      },
+      "per_record_durability_measured": true,
+      "primitive_operations": {
+        "base_storage_validate": {
+          "attempted": 41,
+          "failed": 0,
+          "pending": 0,
+          "returned": 41
+        },
+        "checkpoint_layer00_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer00_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer01_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer01_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer02_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer02_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer03_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer03_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer04_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer04_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer05_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer05_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer06_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer06_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer07_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer07_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer08_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer08_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer09_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer09_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer10_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer10_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer11_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer11_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer12_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer12_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer13_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer13_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer14_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer14_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer15_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer15_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer16_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer16_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer17_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer17_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer18_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer18_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer19_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer19_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer20_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer20_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer21_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer21_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer22_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer22_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer23_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer23_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer24_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer24_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer25_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer25_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer26_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer26_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer27_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "checkpoint_layer27_recompute": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "completion_CE_selected_NLL_check": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "consumed_gradient_clear": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "finite_gradient_clip": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "forward_array_integrity_validate": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "gradient_reset": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "optimizer_boundary_validate": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "optimizer_step": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "row_tensor_materialize": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "training_backward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        },
+        "training_forward": {
+          "attempted": 20,
+          "failed": 0,
+          "pending": 0,
+          "returned": 20
+        }
+      },
+      "protocol_operations": {
+        "backward": 20,
+        "clip": 1,
+        "forward": 20,
+        "gradient_reset": 1,
+        "loss": 20,
+        "step": 1
+      },
+      "scope": "CPU_COMPONENT_JOURNAL_GUARD_COUNTED_FAKE28_NO_NATIVE_AUTHORITY",
+      "status": "COMPLETE_CPU_COMPONENT_COUNTED_UPDATE_FRAME",
+      "wall_seconds": 75.68944220000049
+    }
+  ],
+  "framework_imported": false,
+  "fullrun_estimate_performed": false,
+  "native_launch_authorized": false,
+  "scope": "CPU_COMPONENT_JOURNAL_GUARD_COUNTED_FAKE28_NO_NATIVE_AUTHORITY",
+  "source_after": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\journal_guard_cost_work\\journal_guard_benchmark.py": "2446fb8a5aa6f2944912a7d7f259dfe04386a932d70b38b0af67389df19bd8c1",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\journal_guard_cost_work\\test_journal_guard_benchmark.py": "d54c7c9652850c78c08a104ff6e4defdcacfd2208e2ea18197f89bdac5f33d35",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_core.py": "80ebaf6b60894ea9e0da24471d58fc3ec5af9085674d3af9babb08fe2563b68e",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_worker.py": "44cf0b9770d976e11767f4558fcf71d9c9c0994b269f2a89192a7c294314bb3b",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\checkpoint_successor_profile.py": "1cf3cad34dfb05a73c6930fc29ac72538b3c38a15ad0772a8b5378eef55aa04f",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_qual_worker.py": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_process.py": "3d36770a36be5ef9db2c9ab159b069e3dde6c6e61210c58513c5afa7c4e70540",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_worker.py": "156c56c6b9980f30d950fd5245403cc58ec80cb5131fde69451156db9edc22d4",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_native_chunk.py": "96f361052c34750313731c1fad0fe07d5ed48d376ee59850370cfeae99f59047",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_torch_backend.py": "c1aaa4c2efdc50d3025eacaaa45e37930a278b70e580dd9f8344e7337bcac04d"
+  },
+  "source_before": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\journal_guard_cost_work\\journal_guard_benchmark.py": "2446fb8a5aa6f2944912a7d7f259dfe04386a932d70b38b0af67389df19bd8c1",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\journal_guard_cost_work\\test_journal_guard_benchmark.py": "d54c7c9652850c78c08a104ff6e4defdcacfd2208e2ea18197f89bdac5f33d35",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_core.py": "80ebaf6b60894ea9e0da24471d58fc3ec5af9085674d3af9babb08fe2563b68e",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_worker.py": "44cf0b9770d976e11767f4558fcf71d9c9c0994b269f2a89192a7c294314bb3b",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\checkpoint_successor_profile.py": "1cf3cad34dfb05a73c6930fc29ac72538b3c38a15ad0772a8b5378eef55aa04f",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_qual_worker.py": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_process.py": "3d36770a36be5ef9db2c9ab159b069e3dde6c6e61210c58513c5afa7c4e70540",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_worker.py": "156c56c6b9980f30d950fd5245403cc58ec80cb5131fde69451156db9edc22d4",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_native_chunk.py": "96f361052c34750313731c1fad0fe07d5ed48d376ee59850370cfeae99f59047",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_torch_backend.py": "c1aaa4c2efdc50d3025eacaaa45e37930a278b70e580dd9f8344e7337bcac04d"
+  },
+  "status": "PASS_CPU_ONLY_JOURNAL_GUARD_FACTORS_NOT_NATIVE_FIT",
+  "training_authorized": false
+}

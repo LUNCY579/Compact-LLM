@@ -1,0 +1,75 @@
+{
+  "GPU_NVML_called": false,
+  "Job_closed": true,
+  "failure": {
+    "message": "[Errno 17] File exists: 'C:\\\\Users\\\\clclc\\\\BusinessProject\\\\ChatBubble-rineya-synth-centralized-reasoning-v1\\\\experiments\\\\rineya_synth_centralized_reasoning_v1\\\\artifacts\\\\journal_guard_cost_work\\\\measurement_20261004_224109\\\\supervisor_ownership.json'",
+    "type": "FileExistsError"
+  },
+  "framework_imported": false,
+  "inventory": [
+    {
+      "bytes": 280,
+      "path": "CPU_SCOPE.json",
+      "sha256": "596ffde07052a9140d3d1a97cdfd5c5af580b8a0db6d58529fd62fb52cbc02c2"
+    },
+    {
+      "bytes": 63,
+      "path": "supervisor_heartbeat.jsonl",
+      "sha256": "94ce9349062ac7ab75990aff61b52ed640a09e623e872179f9f7875c58740483"
+    },
+    {
+      "bytes": 289,
+      "path": "supervisor_ownership.json",
+      "sha256": "b3da30ddb520383b2b281fc242f76997325dc9c288667708aa6e5d9052987274"
+    },
+    {
+      "bytes": 0,
+      "path": "worker.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "worker.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "limits": {
+    "CPU_cadence": 0.1,
+    "CPU_freshness": 0.2,
+    "disk_GiB": 4.0,
+    "maximum_seconds": 600
+  },
+  "native_launch_authorized": false,
+  "observations": [],
+  "returncode": 137,
+  "scope": "CPU_COMPONENT_JOURNAL_GUARD_COUNTED_FAKE28_NO_NATIVE_AUTHORITY",
+  "source_after": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\journal_guard_cost_work\\journal_guard_benchmark.py": "30858aa07ccfc9ae3c185fb5e3b470741ba787270c066baf189a4de817110fd9",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\journal_guard_cost_work\\test_journal_guard_benchmark.py": "e30a9a3ffc9806c92e84c93adbb8a55048cd554bb49e248c01287e6f990073c1",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_core.py": "80ebaf6b60894ea9e0da24471d58fc3ec5af9085674d3af9babb08fe2563b68e",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_worker.py": "44cf0b9770d976e11767f4558fcf71d9c9c0994b269f2a89192a7c294314bb3b",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\checkpoint_successor_profile.py": "1cf3cad34dfb05a73c6930fc29ac72538b3c38a15ad0772a8b5378eef55aa04f",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_qual_worker.py": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_process.py": "3d36770a36be5ef9db2c9ab159b069e3dde6c6e61210c58513c5afa7c4e70540",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_worker.py": "156c56c6b9980f30d950fd5245403cc58ec80cb5131fde69451156db9edc22d4",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_native_chunk.py": "96f361052c34750313731c1fad0fe07d5ed48d376ee59850370cfeae99f59047",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_torch_backend.py": "c1aaa4c2efdc50d3025eacaaa45e37930a278b70e580dd9f8344e7337bcac04d"
+  },
+  "source_before": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\journal_guard_cost_work\\journal_guard_benchmark.py": "30858aa07ccfc9ae3c185fb5e3b470741ba787270c066baf189a4de817110fd9",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\journal_guard_cost_work\\test_journal_guard_benchmark.py": "e30a9a3ffc9806c92e84c93adbb8a55048cd554bb49e248c01287e6f990073c1",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_core.py": "80ebaf6b60894ea9e0da24471d58fc3ec5af9085674d3af9babb08fe2563b68e",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_worker.py": "44cf0b9770d976e11767f4558fcf71d9c9c0994b269f2a89192a7c294314bb3b",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\checkpoint_successor_profile.py": "1cf3cad34dfb05a73c6930fc29ac72538b3c38a15ad0772a8b5378eef55aa04f",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\inference_qual_worker.py": "1172838c31c1b9440337707826573012e06f9a6a26b606a62a43976d19e99f1e",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_process.py": "3d36770a36be5ef9db2c9ab159b069e3dde6c6e61210c58513c5afa7c4e70540",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_supervisor.py": "edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_worker.py": "156c56c6b9980f30d950fd5245403cc58ec80cb5131fde69451156db9edc22d4",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_native_chunk.py": "96f361052c34750313731c1fad0fe07d5ed48d376ee59850370cfeae99f59047",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\study_torch_backend.py": "c1aaa4c2efdc50d3025eacaaa45e37930a278b70e580dd9f8344e7337bcac04d"
+  },
+  "status": "FAILED_CPU_ONLY_COMPONENT_MEASUREMENT",
+  "training_authorized": false,
+  "wall_seconds": 0.0470000000022992
+}

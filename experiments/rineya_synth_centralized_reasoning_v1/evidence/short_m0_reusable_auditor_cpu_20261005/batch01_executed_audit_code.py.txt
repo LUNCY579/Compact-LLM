@@ -1,0 +1,138 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import collections,json,math,sys,importlib.metadata
+package=Path.cwd()/'experiments/rineya_synth_centralized_reasoning_v1';root=package.parents[1];sys.path.insert(0,str(package))
+import short_collection_contract as contract
+from inference_component import validate_row,ROW_FIELDS,EOS_IDS,VERSION
+from rs_contract import digest
+leaf=package/'artifacts/short_m0_atomic_batch01_attempt1';saved=package/'evidence/short_m0_atomic_batch01_attempt1_20261005';config_path=package/'configs/SYNTH_SHORT_M0_ATOMIC_BATCH01_A1.json';target=package/'evidence/short_m0_atomic_batch01_attempt1_independent_audit_20261005.json'
+checks=0
+def check(value,message):
+ global checks
+ checks+=1
+ if not value:raise ValueError(message)
+def info(path):return {'bytes':path.stat().st_size,'sha256':contract.native.filehash(path)}
+def read(path,limit=16*1024**2):return contract.native.read_json(path,limit)
+def jsonl(path):
+ result=[]
+ with path.open('rb') as stream:
+  for raw in stream:
+   check(len(raw)<=65536 and raw.endswith(b'\n'),'complete bounded JSONL')
+   result.append(json.loads(raw.decode(),object_pairs_hook=contract.native._pairs,parse_constant=contract.native._bad_constant))
+ return result
+check(not target.exists(),'write-once audit')
+scope=read(config_path);worker=read(leaf/'worker_result.json');sup=read(leaf/'SUPERVISOR_RECEIPT.json');pres=read(saved/'preservation_receipt.json');lease=Path(sup['lease_path'])
+check(pres['sha256']==digest({k:v for k,v in pres.items() if k!='sha256'})=='1888b921aeede1627738290cfe2dd9b38a65cb5a859d311654092f6878db477b','preservation canonical checksum')
+raw_names=sorted(path.name for path in leaf.iterdir() if path.is_file());check(len(raw_names)==1754 and set(raw_names)==set(pres['raw_files']),'exact raw inventory')
+def maps():
+ return {'original_raw':{name:info(leaf/name) for name in raw_names},'preserved_raw':{name:info(saved/name) for name in raw_names},'source':{path:info(Path(path)) for path in scope['source_pins']},'runtime':{path:info(Path(path)) for path in scope['runtime_pins']},'decoder':{path:info(Path(path)) for path in scope['decoder_runtime_pins']},'data':{path:info(Path(path)) for path in scope['data_pins']},'model':{name:info(Path(scope['model_dir'])/name) for name in scope['model_pins']},'source_snapshots':{name:info(saved/'source_snapshots'/name) for name in pres['source_snapshots']},'config':info(config_path),'preserved_config':info(saved/'config_snapshot.json'),'preservation_receipt':info(saved/'preservation_receipt.json'),'lease':{path.name:info(path) for path in lease.glob('*.json')}}
+before=maps()
+check(before['original_raw']==before['preserved_raw']==pres['raw_files'],'all1754 raw byte pairs')
+check(before['config']==before['preserved_config']==pres['config_snapshot'],'config byte closure')
+check(before['config']['sha256']=='f67b78be07ab042238f6d4c605c0ff744272b39aac27ac8ea9869a81f95f7616','exact config file')
+check(scope['sha256']==digest({k:v for k,v in scope.items() if k!='sha256'})=='206c855a4a1b59b992fd7adf86df7e9e630e04f1ecd1970aa97a54dabe295d23','config body')
+for section,scope_key,count in (('source','source_pins',83),('runtime','runtime_pins',64),('decoder','decoder_runtime_pins',17),('data','data_pins',5),('model','model_pins',7)):
+ check(len(before[section])==count,'pin count '+section)
+ for path,item in before[section].items():check(item['sha256']==scope[scope_key][path],'current '+section+' byte pin')
+check(before['source_snapshots']==pres['source_snapshots'] and len(before['source_snapshots'])==83,'83 source snapshots')
+for path,item in before['source'].items():check(before['source_snapshots'][Path(path).relative_to(root).as_posix()]==item,'snapshot joins original source')
+check(scope['runtime_pins']==contract.native.runtime_files() and scope['decoder_runtime_pins']==contract._tokenizer_runtime(),'actual interpreter/decoder closure')
+expected=contract.build_scope('atomic_RS_DEV',1);check(scope=={**expected,'sha256':digest(expected)},'full frozen current batch contract')
+check(sup['preflight']=={**scope,'config_path':str(config_path),'config_sha256':before['config']['sha256'],'worker_path':str(package/'short_collection_worker.py'),'source_commit':'d8179f54ef651b6f8a7053ab0748d46bd737b508','bindings':{'source':scope['source_pins'],'runtime':scope['runtime_pins'],'decoder':scope['decoder_runtime_pins'],'data':scope['data_pins'],'model':scope['model_pins']}},'supervisor exact preflight')
+check(worker['config_sha256']==sup['config_sha256']==before['config']['sha256'] and worker['source_commit']==pres['source_commit']==sup['preflight']['source_commit'],'source/config identity')
+check(sup['status']=='SUPERVISED_WORKER_EXITED_ZERO' and sup['returncode']==0 and sup['partial_outputs_frozen'] is True,'successful supervised terminal')
+check(worker['status']=='COMPLETE_SCOPED_SHORT_M0_RAW_COLLECTION_UNSCORED' and worker['error'] is None,'raw worker terminal')
+check(sup['elapsed_seconds']<600 and worker['wall_seconds']<600 and scope['resources']==contract.native.RESOURCE_BOUNDS and scope['tolerances']==contract.native.TOLERANCES,'unchanged resources/numerics/deadline')
+for item in sup['partial_outputs']:check(before['original_raw'][item['path']]=={'bytes':item['bytes'],'sha256':item['sha256']},'frozen supervisor inventory')
+check(len(sup['partial_outputs'])==1753,'supervisor receipt separately bound')
+events=jsonl(leaf/'events.jsonl');heartbeats=jsonl(leaf/'supervisor_heartbeat.jsonl');starts={};terminal={};operations={};measurements=[]
+for event in events:
+ kind=event['event']
+ if kind=='measurement_preserved':
+  check(before['original_raw'][event['path']]['sha256']==event['sha256'] and event['qualification_established'] is False,'fragment byte crosslink');measurements.append(event);continue
+ check(kind in ('attempt','returned','failed'),'closed event type')
+ ordinal=event['id'];name=event['operation'];cost=operations.setdefault(name,dict.fromkeys(('attempted','returned','failed','pending'),0))
+ if kind=='attempt':check(ordinal not in starts,'unique API attempt');starts[ordinal]=event;cost['attempted']+=1
+ else:check(ordinal in starts and ordinal not in terminal and starts[ordinal]['operation']==name,'matching API terminal');terminal[ordinal]=event;cost[kind]+=1
+for cost in operations.values():cost['pending']=cost['attempted']-cost['returned']-cost['failed'];check(cost['attempted']==cost['returned'] and cost['failed']==cost['pending']==0,'complete actual call conservation')
+check(set(starts)==set(range(1,2000)) and set(terminal)==set(starts),'1999 actual calls')
+check(worker['operation_accounting']['operations']==operations and worker['operation_accounting']['last_call']==1999,'worker API ledger matches events')
+check(worker['operation_accounting']['scope']=='registered_API_boundaries;internal_ATen_operations_not_individually_metered','truthful API scope')
+check(all(not any(term in name.lower() for term in ('backward','optimizer','gradient','checkpoint_restore','warmstart')) for name in operations),'no training/resume operations')
+for name,count in (('inference_forward',1677),('zero_parity_base_forward',1),('zero_parity_adapter_forward',1),('tensor_copy',310),('verify_frozen_base',1)):
+ check(operations[name]=={'attempted':count,'returned':count,'failed':0,'pending':0},'exact operation '+name)
+check(importlib.metadata.version('tokenizers')=='0.22.2','CPU decoder version')
+from tokenizers import Tokenizer
+decoder=Tokenizer.from_file(str(Path(scope['model_dir'])/'tokenizer.json'))
+check(decoder.token_to_id('<|im_end|>')==151645 and decoder.token_to_id('<|endoftext|>')==151643,'exact EOS decoder IDs')
+rows=scope['rows'];outputs=worker['collection']['rows'];check(len(rows)==len(outputs)==64 and len({row['row_id'] for row in rows})==64,'all64 fixed rows')
+check(digest(rows)==scope['source_packet_sha256']==worker['collection']['source_packet_sha256'],'source packet')
+capture_calls=capture_positions=0;finishes=collections.Counter();row_manifest=[];partial_names=[];final_names=[]
+def cost_snapshot(calls,positions):return {'attempted_forwards':calls,'input_positions':{'attempted':positions,'returned':positions,'failed':0,'pending':0},'maximum_attempted_forwards':2048,'maximum_input_positions':scope['dose']['maximum_capture_input_positions'],'operations':{'inference_forward':{'attempted':calls,'returned':calls,'failed':0,'pending':0}}}
+flags=('oracle_inputs_read','capability_correctness_scored','confirmation_eligible','native_launch_authorized','native_qualification_established','padding','packing','prompt_truncated')
+for ordinal,(row,output) in enumerate(zip(rows,outputs),1):
+ check(set(row)==ROW_FIELDS and validate_row(row)==row,'whole prompt-only row')
+ check(output['row_id']==row['row_id'] and output['prompt_sha256']==row['prompt_sha256'] and output['prompt_ids_sha256']==digest(row['prompt_ids']) and output['input_row_sha256']==digest(row),'exact row/prompt identity')
+ check(output['source_packet_sha256']==scope['source_packet_sha256'] and output['prompt_tokens']==row['prompt_tokens'],'frozen row assignment')
+ check(output['status']=='RAW_RESPONSE_COLLECTED_UNSCORED' and output['implementation']==VERSION and output['scope']=='UNQUALIFIED_NATIVE_IMPLEMENTATION','raw-only component state')
+ check(output['context_cap']==512 and output['maximum_generated_tokens']==32 and output['decoding']=='greedy_no_cache_no_grad' and all(output[key] is False for key in flags),'row closed flags/context')
+ ids=output['raw_generated_ids'];trace=output['trace'];lps=output['selected_logprobs'];check(1<=len(ids)<=32 and len(ids)==len(trace)==len(lps),'token/trace/LP count')
+ check(all(type(token) is int and 0<=token<151936 for token in ids) and not any(token in EOS_IDS for token in ids[:-1]),'typed IDs/first EOS stop')
+ eos=ids[-1] in EOS_IDS;check(output['finish_reason']==('eos' if eos else 'generation_cap') and output['truncated'] is (not eos) and output['eos_token_id']==(ids[-1] if eos else None) and (eos or len(ids)==32),'exact finish semantics')
+ check(output['decoded_response']==decoder.decode(list(ids),skip_special_tokens=True),'generated-only CPU decode exact')
+ for step,(token,lp,entry) in enumerate(zip(ids,lps,trace),1):
+  check(set(entry)=={'token','logprob','prefix_length'} and entry['token']==token and entry['logprob']==lp and entry['prefix_length']==row['prompt_tokens']+step-1 and math.isfinite(lp) and lp<=0,'finite LP/exact growing prefix')
+  capture_calls+=1;capture_positions+=entry['prefix_length']
+  name='stage_raw_row%04d_token%02d.json'%(ordinal,step);partial_names.append(name);partial=read(leaf/name)
+  for key in ('row_id','prompt_sha256','prompt_ids_sha256','input_row_sha256','source_packet_sha256','prompt_tokens','context_cap','maximum_generated_tokens','decoding','implementation','scope'):check(partial[key]==output[key],'partial identity')
+  check(partial['status']=='RAW_TOKEN_PARTIAL_UNSCORED' and partial['row_ordinal']==ordinal and partial['step_ordinal']==step and partial['raw_generated_ids']==ids[:step] and partial['selected_logprobs']==lps[:step] and partial['trace']==trace[:step] and partial['costs']==cost_snapshot(capture_calls,capture_positions),'durable partial prefix/cost')
+  partial_eos=token in EOS_IDS
+  check(partial['finish_reason']==('eos' if partial_eos else ('in_progress' if step<32 else 'generation_cap')) and partial['truncated'] is (not partial_eos and step==32) and partial['eos_token_id']==(token if partial_eos else None) and all(partial[key] is False for key in flags),'partial finish/flags')
+ check(output['costs']==cost_snapshot(capture_calls,capture_positions),'cumulative final-row costs')
+ check(output['parameter_preservation']==worker['parameter_preservation'],'perrow parameter invariant')
+ name='stage_inference_row_%04d.json'%ordinal;final_names.append(name);check(read(leaf/name)==output,'durable final row matches terminal')
+ finishes[output['finish_reason']]+=1
+ row_manifest.append({'ordinal':ordinal,'row_id':row['row_id'],'input_row_sha256':digest(row),'raw_output_sha256':digest(output),'generated_tokens':len(ids),'finish_reason':output['finish_reason']})
+check(capture_calls==1677 and capture_positions==569771,'exact capture totals')
+check(len(list(leaf.glob('stage_raw_row*.json')))==len(partial_names)==1677 and len(list(leaf.glob('stage_inference_row_*.json')))==64,'no missing/extra raw rows/tokens')
+check(worker['collection_costs']==worker['collection']['costs']==cost_snapshot(capture_calls,capture_positions),'component terminal costs')
+check(worker['last_partial_receipt']==outputs[-1],'last immutable receipt')
+expected_dose={'attempted_calls':1679,'input_positions':570293,'maximum_forward_calls':2050,'maximum_forward_input_positions':695242,'operations':{'inference_forward':{'attempted_calls':1677,'input_positions':569771},'zero_parity_base_forward':{'attempted_calls':1,'input_positions':261},'zero_parity_adapter_forward':{'attempted_calls':1,'input_positions':261}}}
+check(worker['forward_dose']==expected_dose and scope['rows'][0]['prompt_tokens']==261,'actual physical prehook dose')
+check(worker['zero_adapter_parity']['equal'] is True and worker['zero_adapter_parity']['maximum_error']==0 and worker['zero_adapter_parity']['capability_scored'] is False,'fresh physical zeroB parity')
+for key in ('zero_adapter_before','zero_adapter_after'):check(worker[key]['all_B_zero'] is True and worker[key]['qv_site_count']==56 and worker[key]['trainable_tensors']==112,'unchanged zeroB')
+check(worker['base_postcheck']['verified_source_tensors']==310 and worker['base_postcheck']['frozen_base_unchanged'] is True and worker['base_postcheck']['base_dtype']=='bfloat16' and worker['base_postcheck']['unique_base_parameters']==596049920 and worker['base_postcheck']['embedding_head_tie'] is True,'all310 independent native base bytes')
+check(worker['parameter_preservation']=={'independent_parameter_byte_verification_required':True,'mutation_counters_preserved':True,'objects_pointers_dtypes_flags_gradients_preserved':True,'parameter_aliases':423},'parameter object/pointer/flags/gradients')
+check(len(worker['activation_observations'])==198 and set(worker['activation_observations'].values())=={1679},'all198 F32 activation sites observed')
+check(worker['compute']['base_storage_dtype']=='bfloat16' and worker['compute']['activation_dtype']=='float32' and worker['compute']['base_parameter_objects_and_pointers_preserved'] is True and worker['compute']['linear_site_count']==197,'qualified BF16/F32 compute profile')
+check(worker['adapters']['rank']==8 and worker['adapters']['alpha']==16 and worker['adapters']['dropout']==0 and worker['adapters']['trainable_parameters']==1146880 and worker['adapters']['trainable_tensors']==112 and worker['adapters']['qv_site_count']==56,'exact zero adapter inventory')
+check({name:value['sha256'] for name,value in worker['loader']['asset_hashes'].items()}==scope['model_pins'] and worker['loader']['base_frozen'] is True and worker['loader']['FP32_base_copy_allocated'] is False,'exact independent model bytes/load receipt')
+check(read(leaf/'stage_loader.json')==worker['loader'] and read(leaf/'stage_zero_adapter_parity.json')==worker['zero_adapter_parity'],'loader/parity fragments')
+infer_audit=read(contract.INFERENCE_AUDIT);check(infer_audit['sha256']==digest({k:v for k,v in infer_audit.items() if k!='sha256'}) and infer_audit['status']=='PASS_SHORT_SCOPED_NATIVE_INFERENCE_MECHANICS' and infer_audit['short_scoped_native_inference_mechanics_verified'] is True,'bound prior numerical qualification')
+check(infer_audit['numerics']['all_bulk_argmax_equal'] is True and infer_audit['numerics']['two_exact_repeats_each'] is True and infer_audit['numerics']['maximum_selected_logprob_error']<=.03125 and infer_audit['numerics']['largest_row_mean_selected_logprob_error']<=.01,'unchanged prior numerical thresholds')
+resources=read(leaf/'RESOURCE_OBSERVATIONS.json');cpu=[row for row in resources if row.get('kind')=='CPU'];gpu=[row for row in resources if row.get('kind')=='GPU'];check(len(cpu)==3437 and len(gpu)==687,'resource counts')
+for row in cpu:
+ check(row['sample_started_monotonic']<=row['sample_completed_monotonic'] and sum(item['rss_bytes'] for item in row['owned_process_samples'])==row['worker_tree_rss_bytes'],'CPU sample/RSS accounting')
+ check(row['host_available_bytes']>=1.25*1024**3 and row['worker_tree_rss_bytes']<=2*1024**3 and row['disk_free_bytes']>=4*1024**3,'recorded CPU amount gates')
+for row in gpu:check(row['gpu_sample_started_monotonic']<=row['gpu_sample_completed_monotonic'] and row['gpu_free_bytes']>=.5*1024**3 and row['gpu_uuid']==sup['dispatch_observation']['gpu_uuid'],'GPU gate/identity')
+cpu_window=max(row['sample_completed_monotonic']-row['sample_started_monotonic'] for row in cpu);cpu_gap=max(b['sample_started_monotonic']-a['sample_started_monotonic'] for a,b in zip(cpu,cpu[1:]));cpu_publish_age=max(b['sample_completed_monotonic']-a['sample_started_monotonic'] for a,b in zip(cpu,cpu[1:]));gpu_window=max(row['gpu_sample_completed_monotonic']-row['gpu_sample_started_monotonic'] for row in gpu);gpu_gap=max(b['gpu_sample_started_monotonic']-a['gpu_sample_started_monotonic'] for a,b in zip(gpu,gpu[1:]));gpu_publish_age=max(b['gpu_sample_completed_monotonic']-a['gpu_sample_started_monotonic'] for a,b in zip(gpu,gpu[1:]))
+check(cpu_publish_age<=.2 and gpu_publish_age<=2,'recorded preceding-sample ages through next publication')
+reservation=read(lease/'reservation.json');resume=read(lease/'resume.json');owned=read(lease/'worker.json')
+check(all(row['supervisor_pid']==reservation['supervisor']['pid'] for row in heartbeats) and all(b['unix_seconds']>=a['unix_seconds'] for a,b in zip(heartbeats,heartbeats[1:])),'heartbeat identity/order')
+hb_gap=max(b['unix_seconds']-a['unix_seconds'] for a,b in zip(heartbeats,heartbeats[1:]));check(hb_gap<=2,'heartbeat observed gap')
+for observation in sup['admission_observations']+[sup['dispatch_observation']]:check(observation['gpu_free_bytes']>=4*1024**3 and observation['host_available_bytes']>=3.3125*1024**3 and observation['disk_free_bytes']>=4*1024**3,'admission amount gates')
+check(owned==sup['worker_identity']==resume['worker_identity'] and owned['assigned_before_resume'] is True and owned['job_kill_on_close'] is True and owned['breakaway_allowed'] is False and resume['external_monitor_ready_before_resume'] is True and resume['resumed_monotonic']==sup['worker_resume_monotonic'],'owned identity/monitor-before-resume')
+check(before['lease']['terminal.json']==before['original_raw']['SUPERVISOR_RECEIPT.json'] and reservation['config_sha256']==before['config']['sha256'] and reservation['output_dir']==str(leaf),'lease terminal/config closure')
+check(sup['job_closed_kill_on_close'] is True and sup['owned_worker_identity_currently_alive'] is False and sup['sampler_threads_terminal_verified'] is True and sup['gpu_telemetry_cleanup_verified'] is True and sup['unjoined_sampler_threads']==[],'terminal Job/samplers/NVML')
+gpu_final=read(leaf/'worker_GPU_final.json');check(gpu_final['CUDA_initialized'] is True and gpu_final['free_bytes_final']>=.5*1024**3,'direct terminal GPU diagnostic')
+check(worker['backwards']==worker['optimizer_steps']==0 and all(worker[key] is False for key in ('correctness_certified','retention_certified','scoring_authorized','production_training_authorized','language_qualification_established','long_context_qualification_established','protected_bank_access','paid_services','prior_correct_enrollment_performed','confirmation_eligible','quality_gain_established')),'all quality/training/enrollment flags closed')
+check(scope['authorization']==contract.AUTHORIZATION and scope['scoring_authorized'] is False and scope['training_authorized'] is False and scope['prior_correct_enrollment_performed'] is False,'raw-only owned authorization')
+after=maps();check(before==after,'all original/preserved/pin bytes stable')
+check(not any(name in sys.modules for name in ('torch','transformers')),'no framework/model execution in audit')
+def compact(values):return {key:({'entries':len(value),'manifest_sha256':digest(value)} if key in ('original_raw','preserved_raw','source','runtime','decoder','data','model','source_snapshots','lease') else value) for key,value in values.items()}
+audit={'schema_version':1,'id':'SYNTH-SHORT-M0-ATOMIC-BATCH01-INDEPENDENT-AUDIT','status':'PASS_SCOPED_SHORT_M0_RAW_COLLECTION_MECHANICS_UNSCORED','recorded_at_utc':datetime.now(timezone.utc).isoformat(),'checks_passed':checks,'source_commit':worker['source_commit'],'attempt_path':str(leaf),'preserved_path':str(saved),'config_path':str(config_path),'config_file_sha256':before['config']['sha256'],'config_body_sha256':scope['sha256'],'batch_selector':scope['batch_selector'],'source_packet_sha256':scope['source_packet_sha256'],'source_row_order_sha256':digest([row['row_id'] for row in rows]),'ordered_raw_row_receipts_sha256':digest(row_manifest),'rows':64,'per_token_fragments_verified':1677,'finish_counts':dict(finishes),'all_exact_row_prompt_token_trace_prefix_finish_decode_and_cost_joins':True,'supervisor_status':sup['status'],'worker_status':worker['status'],'wall_seconds':{'whole_scope':sup['elapsed_seconds'],'worker':worker['wall_seconds'],'limit':600},'accounting':{'physical_forwards':1679,'physical_input_positions':570293,'capture_forwards':1677,'capture_input_positions':569771,'parity_forwards':2,'parity_input_positions':522,'API_attempted':1999,'API_returned':1999,'API_failed':0,'API_pending':0,'operation_accounting_scope':worker['operation_accounting']['scope'],'backwards':0,'optimizer_steps':0,'exact_component_prehook_API_and_per_token_cost_reconciliation':True,'all_measurement_file_byte_links_verified':True},'model_preservation':{'fresh_dense_M0_and_no_STATE1_or_study_checkpoint':True,'base_dtype':'bfloat16','activation_dtype':'float32','physical_zero_B_parity_exact':True,'zero_B_before_after':True,'qv_sites':56,'trainable_zero_adapter_factors':112,'parameter_aliases_preserved':423,'all310_independent_native_base_bytes_unchanged':True,'activation_sites_observed':198,'all_activation_observation_counts':1679,'published_model_assets_independently_CPU_byte_hashed':True},'numerics':{'prior_INFQ1_audit_sha256':scope['inference1_audit_sha256'],'same_byte_bound_qualified_helpers_and_profile':True,'prior_max_selected_LP_error':infer_audit['numerics']['maximum_selected_logprob_error'],'prior_largest_mean_LP_error':infer_audit['numerics']['largest_row_mean_selected_logprob_error'],'max_limit':.03125,'mean_limit':.01,'all_current_selected_LPs_finite_nonpositive':True,'current_physical_zero_B_output_error':0,'scope_limit':'Prior four-TRAIN repeat/prefix-bulk qualification transfers compute mechanics only. Current64 raw outputs were not independently rerun for argmax/logit correctness, graded, or enrolled.'},'resources':{'CPU_samples':len(cpu),'GPU_samples':len(gpu),'minimum_sampled_host_available_bytes':min(row['host_available_bytes'] for row in cpu),'maximum_owned_tree_RSS_bytes':max(row['worker_tree_rss_bytes'] for row in cpu),'minimum_disk_free_bytes':min(row['disk_free_bytes'] for row in cpu),'minimum_sampled_GPU_free_bytes':min(row['gpu_free_bytes'] for row in gpu),'direct_terminal_GPU':gpu_final,'maximum_CPU_sample_envelope_seconds':cpu_window,'maximum_CPU_start_gap_seconds':cpu_gap,'maximum_preceding_CPU_age_at_next_sample_publication_seconds':cpu_publish_age,'maximum_GPU_sample_envelope_seconds':gpu_window,'maximum_GPU_start_gap_seconds':gpu_gap,'maximum_preceding_GPU_age_at_next_sample_publication_seconds':gpu_publish_age,'maximum_heartbeat_gap_seconds':hb_gap,'CPU_freshness_limit_seconds':.2,'GPU_freshness_limit_seconds':2,'all_registered_amount_cadence_freshness_and_deadline_gates_verified':True,'limits':'Sampled envelopes and successful pinned monitor checks support this one completed run; no broad sustained-training/native-fit conclusion.'},'cleanup':{'owned_job_identity_sha256':digest(owned),'assigned_before_resume':True,'external_monitor_ready_before_resume':True,'job_closed_kill_on_close':True,'owned_worker_identity_currently_alive':False,'sampler_threads_terminal_verified':True,'GPU_telemetry_cleanup_verified':True,'lease_path':str(lease),'lease_terminal_same_bytes_as_supervisor':True,'partial_outputs_frozen':True},'hash_closure':{'before':compact(before),'after':compact(after),'all_equal':True,'preservation_receipt_path':str(saved/'preservation_receipt.json'),'preservation_receipt_file_sha256':before['preservation_receipt']['sha256'],'preservation_receipt_body_sha256':pres['sha256'],'source83_runtime64_decoder17_data5_model7_raw1754_all_verified':True,'maps_bound_by_config_and_preservation_receipt':'Every individual path/byte/hash is retained in the immutable config/preservation receipt; compact manifest hashes here bind verified complete maps.'},'CPU_audit_decoder_version':'tokenizers0.22.2','audit_framework_model_GPU_execution':False,'correctness_grade_performed':False,'raw_collection_mechanics_verified':True,'correctness_certified':False,'retention_certified':False,'prior_correct_enrollment_performed':False,'scoring_authorized':False,'training_authorized':False,'language_qualification_established':False,'long_context_qualification_established':False,'protected_bank_access':False,'paid_services':False,'confirmation_eligible':False,'quality_gain_established':False,'M0_M1_M2_comparison_completed':False,'native_study_training_qualified':False,'conclusion':'One fixed64-row unchanged-M0 batch completed and its raw token/likelihood/finish/cost/preservation/resource evidence is independently closed. No correctness, enrollment, transfer or retention result is established.'}
+audit['sha256']=digest(audit)
+with target.open('x',encoding='utf-8',newline='\n') as stream:json.dump(audit,stream,sort_keys=True,indent=2);stream.write('\n')
+written=read(target);check(written['sha256']==digest({k:v for k,v in written.items() if k!='sha256'}),'saved audit checksum')
+print(json.dumps({'path':str(target),'file_sha256':contract.native.filehash(target),'body_sha256':audit['sha256'],'status':audit['status'],'checks_passed':audit['checks_passed'],'bytes':target.stat().st_size,'resources':audit['resources'],'hash_closure':audit['hash_closure']},indent=2))
+

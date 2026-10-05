@@ -1,5 +1,47 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: second M0 batch audited; CPU guard costs measured separately
+
+The [second fixed config](configs/SYNTH_SHORT_M0_ATOMIC_BATCH02_A1.json) completed
+all 64 rows in 458.062 seconds. Its
+[independent audit](evidence/short_m0_atomic_batch02_attempt1_independent_audit_20261005.json)
+passes 59,507 checks: 1,825 token prefixes, 1,827 physical forwards / 647,404
+positions and 2,147 returned API calls reconcile with the fixed packet. Thirty
+rows ended at EOS and 34 reached the generation cap. Zero-B parity, all 310 base
+tensors, resource/freshness checks and owned cleanup pass. The
+[1,902 raw files and 83 source snapshots](evidence/short_m0_atomic_batch02_attempt1_20261005)
+are preserved. The [reusable independent auditor](evidence/short_m0_reusable_auditor_cpu_20261005)
+retains eight passing light controls and the actual batch01 audit source.
+
+There are now 128 of 384 atomic/RS DEV rows captured and audited, with 63 EOS
+endings and 65 generation caps. Four atomic and twelve short task batches remain;
+no correctness grades, M0 enrollment, candidate outputs or comparison exist.
+Every remaining batch needs its own frozen config, fresh admission and audit.
+
+After all native and audit work stopped, the
+[CPU component benchmark](evidence/journal_guard_cost_cpu_20261005/CPU_component_cost_addendum_20261005.json)
+replayed the recorded 1,266 primitive calls and 1,120 decoder regions. Each
+factor executed 7,722 CPU guard sites derived from the current source; historical
+native guard counts were not logged. Journal-only wall time was 1.097 seconds,
+CPU-guard-only 85.330 seconds and combined 75.689 seconds. Combined guard time
+was 74.409 seconds; durable emits took 1.112 seconds, including the nested stage
+evidence emits. These are separate fresh-context observations, not additive
+timings or a causal explanation of the earlier native update. The scalar model
+has 28 metadata parameters and placeholder tensor/inventory/CE/optimizer bodies.
+Native parameter/tensor work and GPU guards remain unmeasured; no full-run
+forecast or qualification follows.
+
+The first CPU attempt failed before measurement on a duplicate constructor-owned
+receipt write. Its exact source and failure remain preserved. The reviewed
+successor consumes the original ownership receipt, passes six light controls and
+completed in an owned CPU Job with unchanged limits and verified terminal cleanup.
+[All 82 benchmark files](evidence/journal_guard_cost_cpu_20261005/preservation_receipt.json)
+and 37 current CPU runtime pins are retained. The next useful timing check is to
+separate owned-RSS, available-RAM and heartbeat callback costs under the same
+guards. No source integration, resource relaxation, durability reduction or
+native retry is opened. Qualified language references/reviewers and sustained
+training/continuation still block the full comparison; the question is unanswered.
+
 ## 2026-10-05 UTC: first fixed M0 baseline batch completed and audited
 
 The [first atomic DEV batch config](configs/SYNTH_SHORT_M0_ATOMIC_BATCH01_A1.json)
