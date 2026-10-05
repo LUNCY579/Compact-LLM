@@ -1,5 +1,27 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: CPU guard callback costs attributed; helpers unchanged
+
+The [512-call diagnostic](evidence/guard_component_cost_cpu_20261005/CPU_guard_callback_attribution_20261005.json)
+retains each original callback and all checks, adding timing wrappers only.
+Its loop took 5.661 seconds: available RAM 5.112 seconds, heartbeat reads 0.421
+seconds and owned-process RSS 0.108 seconds. Every callback and guard returned
+512 times without failed/pending work. Twelve source and 128 runtime pins match
+before/after; owned CPU processes are terminal. Six light controls pass, including
+metadata-failure preservation and fresh-start runtime-inventory stability.
+[Twenty-seven files](evidence/guard_component_cost_cpu_20261005/preservation_receipt.json)
+preserve actual counts before optional metadata, complete results and preparatory
+source history. This identifies a cost driver in this CPU context; GPU/body work,
+historical native causality and full-run fit remain unmeasured.
+
+The [primary-source review](evidence/available_ram_primary_source_review_20261005.json)
+binds psutil 7.2.2's page-based available-physical-memory computation and the
+existing `native_process.system_memory_status()['available_bytes']` byte field.
+Their documented meanings agree, while sequential snapshots are volatile. A
+future CPU candidate must retain fresh queries, every existing check/frequency,
+numeric floors and failure handling before separate native qualification. No
+helper substitution, gate relaxation, performance guarantee or retry is opened.
+
 ## 2026-10-05 UTC: second M0 batch audited; CPU guard costs measured separately
 
 The [second fixed config](configs/SYNTH_SHORT_M0_ATOMIC_BATCH02_A1.json) completed
