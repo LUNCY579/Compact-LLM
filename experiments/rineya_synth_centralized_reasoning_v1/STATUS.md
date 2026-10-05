@@ -1,5 +1,27 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: amended M0 batch04 denied before worker launch
+
+The [fresh RAM2 config](configs/SYNTH_SHORT_M0_ATOMIC_BATCH04_RAM2_A1.json) and
+independently selected exact-launch-HEAD inventory passed current prelaunch
+review. Fresh admission then found 3,754,221,568 free GPU bytes below the unchanged
+4,294,967,296-byte floor. RAM and disk passed. Admission ended in 10.907 seconds;
+no worker, Job, model/framework, forward, backward, optimizer, checkpoint,
+monitor callback or abort diagnostic ran. There was one read-only NVML resource
+observation, which is distinct from model work.
+
+The [independent denial audit](evidence/short_m0_atomic_batch04_ram2_admission_denial_independent_audit_20261005.json)
+passes 322 checks: exact config/inventory/profile/launchHEAD, complete90-source /
+65-runtime / 17-decoder / 5-data / 7-model byte maps, all preserved snapshots,
+timestamps/amounts, terminal lease and sampler/NVML cleanup. The
+[one raw receipt, 90 sources, config and trusted inventory](evidence/short_m0_atomic_batch04_ram2_admission_denial_20261005)
+and audit script are preserved. LaunchHEAD was `1a60e83ce826a76c841cd4ae95aba140449a99da`.
+M0 remains192/384, with the original failed partial still excluded. This denial
+does not qualify the amended native collector or establish the earlier cause.
+Future work needs changed resource evidence and a fresh owned admission with a
+new exact-launch-HEAD inventory; no unrelated application is terminated and no
+floor, population or numerical requirement is weakened.
+
 ## 2026-10-05 UTC: reviewed short collector amendment integrated
 
 The [collector amendment](SHORT_COLLECTOR_RAM_AMENDMENT_002.md) is integrated
@@ -36,8 +58,11 @@ has 419 tokens, so its two calls cost 838 positions. This replaces the earlier
 unbound 390-position assumption for these cases: the largest prospective trace
 scope needs 34 forwards / 131,382 positions, bulk three forwards / 4,933 positions,
 and all three scopes total 71 forwards / 267,697 positions. Every individual scope
-still fits the unchanged 134,144-position ceiling. Independent input review and
-the complete native split driver/trace audit remain missing; no launch or long
+still fits the unchanged 134,144-position ceiling. The
+[independent input review](evidence/long_train_prompts_cpu_independent_review_20261005.json)
+retokenizes all cases successfully and requires explicit short rendered-text
+versus long messages-JSON hash typing. The complete native split driver/trace
+audit remains missing; no launch or long
 context qualification follows from this CPU materialization.
 
 ## 2026-10-05 UTC: long-context component staged and CPU-tested
