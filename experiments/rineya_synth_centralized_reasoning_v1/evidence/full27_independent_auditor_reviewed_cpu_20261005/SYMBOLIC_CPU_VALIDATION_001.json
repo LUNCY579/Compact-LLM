@@ -1,0 +1,48 @@
+{
+  "actual_format_inspection": {
+    "Adam_moments": 224,
+    "Adam_steps": 112,
+    "CPU_and_CUDA0_RNG_byte_states": 2,
+    "actual_saved_C9_symbolic_match_before_final_schema_checks": true,
+    "checkpoint_sha256": "04f8608893f107167e0f761b8f0d8a6c249db18f4ae4786b9298c90dd4d42a08",
+    "factors": 112,
+    "finite_FP32_values": 3440752,
+    "pickle_bytes": 62039,
+    "pickle_protocol": 2,
+    "storage_count": 450,
+    "whitelisted_globals": [
+      "torch._utils _rebuild_tensor_v2",
+      "torch FloatStorage",
+      "torch ByteStorage",
+      "collections OrderedDict"
+    ],
+    "zip_members": 454
+  },
+  "closed_flags": {
+    "framework_imported": false,
+    "model_GPU_restore_replay_executed": false,
+    "native_audit_PASS_issued": false,
+    "native_qualification_established": false,
+    "pickle_callbacks_executed": false,
+    "pickle_loads_or_Unpickler_used": false,
+    "published_model_weights_or_runtime_binaries_read": false,
+    "study_training_authorized": false,
+    "study_warmstart_allowed": false
+  },
+  "elapsed_seconds": 5.203000000001339,
+  "fixtures": "Synthetic full-shape112 q/v archives at9/18/27; arbitrary RNG byte tensors. No model trained or restored; no Torch Generator encoding probe.",
+  "returncode": 0,
+  "schema_version": 1,
+  "source_after": {
+    "symbolic_checkpoint.py": "0e8ebffa768e40a8122a2509107995b16e67b3fabf5cd59cc680676b2c7ce327",
+    "test_symbolic_checkpoint.py": "9dcfe99424acfd10edcfe28c37726be9a89b6a7fc7dc687d30fea5c386dc22c6"
+  },
+  "source_before": {
+    "symbolic_checkpoint.py": "0e8ebffa768e40a8122a2509107995b16e67b3fabf5cd59cc680676b2c7ce327",
+    "test_symbolic_checkpoint.py": "9dcfe99424acfd10edcfe28c37726be9a89b6a7fc7dc687d30fea5c386dc22c6"
+  },
+  "status": "PASS_SYNTHETIC_SYMBOLIC_ARCHIVE_CPU_CONTROLS_NO_NATIVE_AUTHORITY",
+  "stderr": "..C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11-windows-x86_64-none\\Lib\\zipfile.py:1580: UserWarning: Duplicate name: 'archive/data/0'\n  return self._open_to_write(zinfo, force_zip64=force_zip64)\n........\n----------------------------------------------------------------------\nRan 10 tests in 4.934s\n\nOK\n",
+  "stdout": "",
+  "tests": 10
+}

@@ -1,0 +1,64 @@
+{
+  "closed_flags": {
+    "framework_imported": false,
+    "model_GPU_restore_replay_executed": false,
+    "native_audit_PASS_issued": false,
+    "native_qualification_established": false,
+    "pickle_callbacks_executed": false,
+    "pickle_loads_or_Unpickler_used": false,
+    "published_model_weights_or_runtime_binaries_read": false,
+    "study_training_authorized": false,
+    "study_warmstart_allowed": false
+  },
+  "current_actual_legacy_C9_symbolic_comparison": {
+    "Adam_moment_tensors": 224,
+    "Adam_step_tensors": 112,
+    "CPU_CUDA0_RNG_bytes_match": true,
+    "Python_RNG_private_probe_valid": true,
+    "Torch_RNG_encoding_probed": false,
+    "adapter_parameters": 1146880,
+    "adapter_tensors": 112,
+    "checkpoint_sha256": "04f8608893f107167e0f761b8f0d8a6c249db18f4ae4786b9298c90dd4d42a08",
+    "completed_updates": 9,
+    "finite_FP32_values": 3440752,
+    "framework_model_GPU_restore_replay_executed": false,
+    "metadata_order_cursor_groups_empty_gradients_match": true,
+    "native_audit_PASS_issued": false,
+    "native_qualification_established": false,
+    "nonnegative_second_moment_values": 1146880,
+    "status": "SYMBOLIC_ARCHIVE_MATCHES_BOUND_WITNESS_NO_NATIVE_AUTHORITY",
+    "storage_count": 450,
+    "study_training_authorized": false,
+    "study_warmstart_allowed": false
+  },
+  "observed_test_command": "python -I -B artifacts/full27_audit_work/test_symbolic_checkpoint.py",
+  "preserved_predecessor": "pre_protocol_inventory_review_001",
+  "primary_schema_source_pins": {
+    "native_precision.py": "05d18fdec95860df8f54ba60a7cee16bc983f783fa51a5f009cf6dc1939736cc",
+    "study_torch_backend.py": "c1aaa4c2efdc50d3025eacaaa45e37930a278b70e580dd9f8344e7337bcac04d"
+  },
+  "repairs": [
+    "first opcode must be PROTO2",
+    "native adapter_inventory_sha256 recomputed from exact112 ordered name/shape/dtype/cuda:0/trainability/parameter schema"
+  ],
+  "returncode": 0,
+  "schema_version": 1,
+  "scope_limits": [
+    "CPU fixtures are synthetic full-shape archives, not trained/native results",
+    "Actual legacyC9 checked through read_archive/compare_state only; public full27 verify_checkpoint correctly rejects old200-row cohort",
+    "No Torch Generator RNG encoding probe; CPU/CUDA byte equality only",
+    "Frozen base310content is not serialized; metadata digest only, caller auditor validates original native base proof",
+    "Hashes compare externally trusted anchors, not arbitrary self-signed authority"
+  ],
+  "source_after": {
+    "symbolic_checkpoint.py": "ace6d65efbe874fef4317a49dd3f393bdbd45d7d4d230895351d5cf948c7d99b",
+    "test_symbolic_checkpoint.py": "b774c00f3df6adc5daf979c3d4951ac73ee0b9f62c2e68bc8167923e5483fdb7"
+  },
+  "source_before": {
+    "symbolic_checkpoint.py": "ace6d65efbe874fef4317a49dd3f393bdbd45d7d4d230895351d5cf948c7d99b",
+    "test_symbolic_checkpoint.py": "b774c00f3df6adc5daf979c3d4951ac73ee0b9f62c2e68bc8167923e5483fdb7"
+  },
+  "status": "PASS12_SYNTHETIC_SYMBOLIC_ARCHIVE_CONTROLS_AND_LEGACY_C9_BYTE_MATCH_NO_NATIVE_AUTHORITY",
+  "tests": 12,
+  "unittest_seconds": 5.099
+}

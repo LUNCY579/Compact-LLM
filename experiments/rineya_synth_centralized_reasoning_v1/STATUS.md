@@ -1,5 +1,24 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: independent full27 auditor integrated
+
+The [independent chunk auditor](FULL27_INDEPENDENT_AUDIT_001.md) and inert saved-
+state inspector are integrated from independently reviewed bytes. All
+[34 root controls](evidence/full27_independent_auditor_root_cpu_validation_20261005.json)
+pass (22 protocol/resource/publication in1.459seconds;12 archive in4.677seconds)
+with unchanged source hashes and the native31-source closure retained. The
+[reviewed history](evidence/full27_independent_auditor_reviewed_cpu_20261005)
+preserves rejected fixture/parser/test versions and the fresh-root portability fix.
+Fixtures cannot issue native PASS or resume authority.
+
+Actual use requires genuine complete owned terminal receipts, externally selected
+immutable inventory/profile/config/result/supervisor/preservation/HEAD anchors,
+same-arm audited predecessor lineage, all API/dose/reference/decoder/base proofs,
+serialized450-storage witness equality and complete resource/cleanup/publication
+cost closure. No new native result, full27 fit, model replay, study warmstart,
+scoring or retention qualification follows. Native work remains held at the
+unresolved GPU/phase conditions; CPU-only context diagnostics are being prepared.
+
 ## 2026-10-05 UTC: CPU long split mechanics integrated
 
 The [long split mechanics](LONG_SPLIT_MECHANICS_001.md) is integrated after
