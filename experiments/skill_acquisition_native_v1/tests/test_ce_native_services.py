@@ -84,6 +84,24 @@ class NativeServicesTests(unittest.TestCase):
             dispatcher('fixture', 'started', operation_id='before')
         with self.assertRaises(s.worker.WorkerEvidenceError): dispatcher.attach_qualification_accounting(ledger)
 
+    def test_row_outer_reservation_keeps_original_owner_during_q_stage(self):
+        events=[]
+        bootstrap=SimpleNamespace(operation=lambda kind,phase,**fields: events.append(('bootstrap',kind,phase)))
+        def qualification(kind,phase,**fields):
+            if kind!='loss_forward': raise AssertionError('metadata reached active Q ledger')
+            events.append(('qualification',kind,phase))
+        active=SimpleNamespace(scope_role='qualification_only',active=object(),worker_open=True,operation=qualification)
+        dispatcher=s.StableDispatcher(bootstrap); dispatcher.attach_qualification_accounting(active)
+        dispatcher('outer_reservation','started',operation_id='row-source')
+        dispatcher('loss_forward','started',operation_id='native-work')
+        active.active=None
+        dispatcher('outer_reservation','returned',operation_id='row-source')
+        dispatcher('loss_forward','returned',operation_id='native-work')
+        self.assertEqual(events,[('bootstrap','outer_reservation','started'),
+            ('qualification','loss_forward','started'),('bootstrap','outer_reservation','returned'),
+            ('qualification','loss_forward','returned')])
+        self.assertNotIn('torch',sys.modules); self.assertNotIn('transformers',sys.modules)
+
     def test_supervisor_guards_and_release_keep_bootstrap_owner_after_q_end(self):
         from .test_ce_checkpoint_lease import spec,proof,FixtureModule
         from experiments.skill_acquisition_native_v1 import ce_checkpoint_lease as lease

@@ -21,6 +21,7 @@ REDUCTION = 'CE8-RAW-NUMERIC-REDUCTION-1'
 LOSS = 'mean_labeled_tokens_per_row_then_equal_rows'
 CHUNK = 1024 ** 2
 MAX_JSON = 4 * CHUNK
+MAX_RESOURCE_JSON = 128 * CHUNK
 # ensure_ascii encodes one astral character as two six-byte surrogate escapes.
 # 1024 source keys * (512 * 12 +64 hash chars+JSON framing), plus the bounded
 # stage/attempt and fixed hash fields, remains below eight MiB.
@@ -52,6 +53,11 @@ def digest(value): return hashlib.sha256(canonical(value)).hexdigest()
 def _hex(value): return type(value) is str and len(value) == 64 and not set(value) - set('0123456789abcdef')
 def _int(value, minimum=0): return type(value) is int and value >= minimum
 def _finite(value): return type(value) in (int, float) and math.isfinite(value)
+
+
+def resource_json_bound(value):
+    require(_int(value, 1) and value <= MAX_RESOURCE_JSON, 'finite bounded resource JSON ceiling')
+    return value
 
 
 def _accounting(error, failure):
@@ -216,8 +222,14 @@ class RawEvidenceReader:
             bytes_read=count, identity_hash_attempts_actual=1, identity_hash_bytes_actual=count,
             wall_s=time.perf_counter() - start)
 
-    def _envelope(self, reference, expected, kind, role):
-        require(_int(reference.get('bytes'), 1) and reference['bytes'] <= MAX_JSON, 'raw JSON byte ceiling')
+    def _envelope(self, reference, expected, kind, role, *, json_bytes_upper=None):
+        maximum = MAX_JSON
+        if json_bytes_upper is not None:
+            require(kind == role == 'resource_io' and type(expected) is dict
+                    and expected.get('stage') == 'resource_io_measurement',
+                    'explicit JSON ceiling only for resource evidence')
+            maximum = resource_json_bound(json_bytes_upper)
+        require(_int(reference.get('bytes'), 1) and reference['bytes'] <= maximum, 'raw JSON byte ceiling')
         raw = b''.join(self._blocks(reference, expected, role))
         with self._overhead('JSON_parse_and_linkage', work_bytes=8 * reference['bytes']):
             value = _json(raw)

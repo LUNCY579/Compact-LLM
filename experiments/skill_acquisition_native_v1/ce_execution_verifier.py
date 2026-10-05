@@ -353,6 +353,12 @@ def _resource_readback(context, state, payload, binding, *, reader, reference_by
     require(type(payload) is dict and payload.get('required_barriers') == spec['required_barriers']
             and payload.get('measured_operation_kinds') == spec['measured_operation_kinds']
             and payload.get('limits') == spec['limits'], 'raw resource scope differs from frozen measurement policy')
+    if 'json_bytes_upper' in spec:
+        maximum, work = resource.validate_measurement_bounds(spec)
+        require(raw.resource_json_bound(payload.get('json_bytes_upper')) == maximum
+                and type(payload.get('reducer_work_bytes_upper')) is int
+                and payload['reducer_work_bytes_upper'] == work,
+                'raw resource byte/work ceilings differ from frozen measurement policy')
     with reader._overhead('resource_original_journal_prefix', work_bytes=32 * reference_bytes + 32 * MAX_HEADER,
                           hash_attempts=MAX_EVENTS, hash_bytes=8 * reference_bytes + MAX_HEADER):
         prefix = _retained_prefix(context, state, payload.get('accounting_snapshot'))
@@ -505,7 +511,12 @@ def _reductions(context, state, attempt_workers, reader, child_bindings, child_l
             gaps.append('full saved-byte common-anchor/master/deployed rebuild and residuals require actual source execution provenance')
         elif stage == 'resource_io_measurement':
             require('resource_io' in by_role, 'raw barrier/operation resource artifact required')
-            payload = reader._envelope(by_role['resource_io'], expected, 'resource_io', 'resource_io')
+            spec = context['bindings']['scope'].get('resource_measurement')
+            require(type(spec) is dict, 'frozen resource measurement policy required before readback')
+            from .ce_resource_qualification import validate_measurement_bounds
+            maximum, _ = validate_measurement_bounds(spec)
+            payload = reader._envelope(by_role['resource_io'], expected, 'resource_io', 'resource_io',
+                                      json_bytes_upper=maximum)
             reductions[stage] = _resource_readback(context, state, payload, expected, reader=reader,
                 reference_bytes=by_role['resource_io']['bytes'])
             gaps.append('resource measurements retain their explicit IO subset; complete native unit prices and actual probe execution require verification')

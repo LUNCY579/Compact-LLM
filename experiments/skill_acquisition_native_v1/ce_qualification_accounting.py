@@ -24,6 +24,8 @@ FIXTURE = 'CE8-QUALIFICATION-ACCOUNTING-FIXTURE-1'
 PROOF = 'CE8-QUALIFICATION-WORKER-PROOF-1'
 HEADER, JOURNAL = 'QUALIFICATION_BINDINGS.json', 'QUALIFICATION_RESERVATIONS.jsonl'
 MAX_LINE, CHUNK = 4 * 1024 ** 2, 1024 ** 2
+EXPLICIT_RESERVATION_RULE = 'CE8-QUALIFICATION-EXPLICIT-RESERVATIONS-1'
+EXPLICIT_RESERVATION_KINDS = ('input_io', 'qualification_artifact_readback', 'qualification_reducer_overhead')
 KINDS = ce.NATIVE_KINDS | frozenset(('journal_construct', 'qualification_mask',
     'qualification_likelihood', 'qualification_gradient_reset',
     'qualification_reference_forward', 'qualification_candidate_forward',
@@ -223,6 +225,70 @@ def _price(value):
 def _add(left, right): return {key: left.get(key, 0) + right.get(key, 0) for key in COST_FIELDS}
 
 
+def validate_reservation_rule(spec):
+    """Only this frozen, finite declaration may select known-size ceilings."""
+    rule = spec.get('operation_profile_rule')
+    require(rule in (None, EXPLICIT_RESERVATION_RULE), 'unknown qualification reservation rule')
+    kinds = spec.get('explicit_reservation_kinds')
+    require((rule is None and kinds is None) or rule == EXPLICIT_RESERVATION_RULE
+            and type(kinds) is list and kinds == list(EXPLICIT_RESERVATION_KINDS),
+            'exact three qualification explicit reservation kinds')
+    return rule
+
+
+def reservation_profile(spec, kind, fields, *, profiles=None):
+    """Select permanent declared bounds; opaque work keeps its full ceiling.
+
+    Source callbacks derive known sizes from pinned rows/artifacts before work.
+    No returned measurement or caller wall value reduces this reservation.
+    """
+    rule = validate_reservation_rule(spec)
+    profiles = spec['operation_profiles'] if profiles is None else profiles
+    require(kind in profiles, 'declared qualification operation')
+    maximum = _profile(profiles[kind]); reserved = _clone(maximum)
+    fields = _normalize(fields)
+    for key in ce.PROFILE[:-1]:
+        require(ce._int(fields.get(key, 0)) and fields.get(key, 0) <= maximum[key],
+                'profile below declared physical work')
+    if 'wall_s_upper' in fields:
+        require(ce._finite(fields['wall_s_upper'], True) and fields['wall_s_upper'] <= maximum['wall_s_upper'],
+                'profile below declared wall work')
+    for stem in ('identity_hash_attempts', 'identity_hash_bytes'):
+        lower = stem + '_lower'
+        if lower in fields:
+            require(ce._int(fields[lower]) and fields[lower] <= maximum[stem + '_upper'],
+                    'opaque hash lower exceeds qualification profile')
+    hash_fields = ('identity_hash_attempts_upper', 'identity_hash_bytes_upper')
+    complete_hash = all(key in fields for key in hash_fields)
+    if complete_hash:
+        require((fields[hash_fields[0]] == 0) == (fields[hash_fields[1]] == 0),
+                'coherent explicit qualification hash reservation')
+    require(ce._int(fields.get('reducer_work_bytes_upper', 0))
+            and fields.get('reducer_work_bytes_upper', 0) <= maximum.get('reducer_work_bytes_upper', 0),
+            'explicit reducer profile below work')
+    if rule is None or kind not in EXPLICIT_RESERVATION_KINDS: return reserved
+    opaque = any(key.startswith('opaque_') or key.startswith('identity_hash_') and key.endswith('_lower')
+                 for key in fields)
+    if kind == 'qualification_reducer_overhead':
+        require(maximum['read_bytes_upper'] == maximum['write_bytes_upper'] == 0
+                and fields.get('read_bytes_upper', 0) == fields.get('write_bytes_upper', 0) == 0,
+                'qualification reducer reserves no physical IO')
+        if not complete_hash or opaque or 'reducer_work_bytes_upper' not in fields: return reserved
+        require(ce._int(fields['reducer_work_bytes_upper'], 1), 'positive explicit reducer work reservation')
+        reserved['reducer_work_bytes_upper'] = fields['reducer_work_bytes_upper']
+    else:
+        for key in ('read_bytes_upper', 'write_bytes_upper'):
+            if key in fields: reserved[key] = fields[key]
+        if kind == 'qualification_artifact_readback' and 'read_bytes_upper' in fields:
+            require(ce._int(fields['read_bytes_upper'], 1), 'positive artifact readback extent')
+            if complete_hash and not opaque:
+                require(fields[hash_fields[0]] >= 1 and fields[hash_fields[1]] >= fields['read_bytes_upper'],
+                        'artifact readback hash covers complete declared extent')
+    if complete_hash and not opaque:
+        for key in hash_fields: reserved[key] = fields[key]
+    return reserved
+
+
 class QualificationAccounting:
     def __init__(self, context, permit, proof, prepared_receipt=None, *,
                  bootstrap_handle=None, bootstrap_verifier=None, clock=None):
@@ -299,6 +365,7 @@ class QualificationAccounting:
         profiles = spec.get('operation_profiles')
         require(type(profiles) is dict and set(profiles) == KINDS, 'explicit profile for every qualification operation required')
         for value in profiles.values(): _profile(value)
+        validate_reservation_rule(spec)
         require(q.integer(profiles['qualification_reducer_overhead'].get('reducer_work_bytes_upper'), 1), 'explicit reducer work upper required')
         q._costs(spec.get('global_caps'))
         require(type(spec.get('stage_caps')) is dict and set(spec['stage_caps']) == set(q.STAGES), 'all exact qualification stage caps required')
@@ -469,6 +536,9 @@ class QualificationAccounting:
     def _event(self, kind, payload):
         self._admit()
         if self._wall_ready and kind not in ('wall', 'worker', 'end'): self.tick_wall()
+        if kind == 'operation' and payload.get('phase') == 'started' and self.spec.get('operation_profile_rule') == EXPLICIT_RESERVATION_RULE:
+            payload = _clone(payload)
+            payload['reservation_profile'] = reservation_profile(self.spec, payload['kind'], payload['fields'], profiles=self.profiles)
         body = {'seq': len(self.events), 'previous': self._head(), 'binding_sha256': self.binding_sha256,
                 'kind': kind, 'payload': _clone(payload)}
         raw = canonical(dict(body, sha256=digest(body))) + b'\n'
@@ -586,10 +656,9 @@ class QualificationAccounting:
             stage, aid = self.active['stage'], self.active['attempt_id']
             for key, expected in (('qualification_stage', stage), ('attempt_id', aid), ('worker_id', self._current_proof['worker_identity_sha256'])):
                 require(key not in fields or fields[key] == expected, 'qualification callback identity changed')
-            profile = self.profiles[kind]
-            for key in ce.PROFILE[:-1]: require(ce._int(fields.get(key, 0)) and fields.get(key, 0) <= profile[key], 'profile below declared physical work')
-            for stem in ('identity_hash_attempts', 'identity_hash_bytes'):
-                if stem + '_lower' in fields: require(ce._int(fields[stem + '_lower']) and fields[stem + '_lower'] <= profile[stem + '_upper'], 'opaque hash lower exceeds qualification profile')
+            profile = reservation_profile(self.spec, kind, fields, profiles=self.profiles)
+            if self.spec.get('operation_profile_rule') == EXPLICIT_RESERVATION_RULE:
+                require(payload.get('reservation_profile') == profile, 'permanent qualification reservation profile drift')
             rid = fields.get('prompt_id', fields.get('row_id'))
             if rid is not None:
                 require(rid in self.allowed_rows, 'row outside declared qualification witness scope')
@@ -624,9 +693,17 @@ class QualificationAccounting:
         require(previous and previous['kind'] == kind and previous['phase'] == 'started'
                 and previous['worker_id'] == self._current_proof['worker_identity_sha256'], 'matching current-worker physical return required')
         require(previous.get('lifetime_cleanup') or self.active and previous['attempt_id'] == self.active['attempt_id'], 'physical return outside active stage')
+        require(previous['profile'] == reservation_profile(self.spec, kind, previous['fields'], profiles=self.profiles),
+                'permanent qualification reservation profile mutated')
+        started = self.events[previous['started_seq']]['payload']
+        require(_normalize(started['fields']) == previous['fields'], 'qualification operation declaration mutated')
         for key, upper in (('bytes_read', 'read_bytes_upper'), ('known_bytes_read', 'read_bytes_upper'), ('bytes_written', 'write_bytes_upper'), ('known_bytes_written', 'write_bytes_upper'),
                            ('identity_hash_attempts_actual', 'identity_hash_attempts_upper'), ('identity_hash_bytes_actual', 'identity_hash_bytes_upper'), ('wall_s', 'wall_s_upper')):
-            if key in fields: require(ce._finite(fields[key]) and fields[key] <= previous['profile'][upper], 'actual qualification work exceeds reservation')
+            if key in fields:
+                valid = ce._finite(fields[key]) if key == 'wall_s' else ce._int(fields[key])
+                if not valid or fields[key] > previous['profile'][upper]:
+                    self.fatal = True
+                    raise ValueError('actual qualification work exceeds reservation')
         if previous['is_ce']:
             _, ce_action = self._ce._prepare_operation({'operation': kind, 'phase': phase, 'id': oid, 'fields': fields})
         else: ce_action = lambda: None
@@ -695,8 +772,9 @@ class QualificationAccounting:
                     'worker_identity_sha256': self._current_proof['worker_identity_sha256'], 'attempt_id': self.active['attempt_id']}
                 require(ref['binding_sha256'] == digest(expected) and type(ref['role']) is str and ref['role'], 'exact raw artifact stage/source/worker binding')
             oid = uuid.uuid4().hex
-            self.operation('qualification_artifact', 'started', oid, read_bytes_upper=ref['bytes'] + 1,
-                identity_hash_attempts_upper=1, identity_hash_bytes_upper=ref['bytes'] + 1)
+            self.operation('qualification_artifact_readback', 'started', oid, read_bytes_upper=ref['bytes'] + 1,
+                write_bytes_upper=0, identity_hash_attempts_upper=1, identity_hash_bytes_upper=ref['bytes'] + 1,
+                reducer_work_bytes_upper=0)
             observed, size = hashlib.sha256(), 0
             try:
                 with path.open('rb') as stream:
@@ -704,12 +782,12 @@ class QualificationAccounting:
                         size += len(block); require(size <= ref['bytes'], 'raw artifact grew'); observed.update(block)
                 require(size == ref['bytes'] and observed.hexdigest() == ref['sha256'], 'raw artifact changed')
             except BaseException as error:
-                try: self.operation('qualification_artifact', 'failed', oid, error_type=type(error).__name__, error=str(error)[:1000])
+                try: self.operation('qualification_artifact_readback', 'failed', oid, error_type=type(error).__name__, error=str(error)[:1000])
                 except BaseException as record_error:
                     error.accounting_failure = {'type': type(record_error).__name__, 'message': str(record_error)[:1000]}
                     raise error from record_error
                 raise
-            self.operation('qualification_artifact', 'returned', oid, bytes_read=size,
+            self.operation('qualification_artifact_readback', 'returned', oid, bytes_read=size,
                 identity_hash_attempts_actual=1, identity_hash_bytes_actual=size)
             checked.append(_clone(ref))
         return self._event('finish', {'stage': self.active['stage'], 'attempt_id': self.active['attempt_id'], 'raw_refs': checked})

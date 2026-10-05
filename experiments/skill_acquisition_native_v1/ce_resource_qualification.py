@@ -26,6 +26,16 @@ def _integer(value): return type(value) is int and value >= 0
 def _finite(value): return type(value) in (int, float) and math.isfinite(value) and value >= 0
 
 
+def validate_measurement_bounds(spec):
+    from .ce_qualification_artifacts import resource_json_bound, MAX_RESOURCE_JSON
+    require(type(spec) is dict, 'explicit resource measurement bounds required')
+    maximum = resource_json_bound(spec.get('json_bytes_upper'))
+    work = spec.get('reducer_work_bytes_upper')
+    require(type(work) is int and 4 * maximum <= work <= 4 * MAX_RESOURCE_JSON,
+            'positive bounded resource reducer work allowance')
+    return maximum, work
+
+
 def reduce_samples(samples, required_barriers, *, worker_pid, gpu_uuid, limits):
     """Pure arithmetic on exact retained OS/CUDA facts; not execution proof."""
     require(type(samples) is list and samples and type(required_barriers) is list and required_barriers
@@ -135,16 +145,16 @@ def resource_adapter(context, permit, prepared, backend, accounting, proof, bind
             'actual same-scope barrier recorder missing; sample flags are not measurements')
     spec = context['bindings']['scope'].get('resource_measurement')
     require(type(spec) is dict and spec.get('schema') == SCHEMA, 'explicit resource measurement/readback scope required')
-    require(type(spec.get('json_bytes_upper')) is int and spec['json_bytes_upper'] > 0
-            and type(spec.get('reducer_work_bytes_upper')) is int
-            and spec['reducer_work_bytes_upper'] >= 4 * spec['json_bytes_upper']
-            and type(spec.get('owned_directory')) is str and Path(spec['owned_directory']).is_absolute(), 'resource artifact size/owner declared')
+    maximum, _ = validate_measurement_bounds(spec)
+    require(type(spec.get('owned_directory')) is str and Path(spec['owned_directory']).is_absolute(),
+            'resource artifact size/owner declared')
     recorder.framework = backend.torch
     recorder.sample('final')
     recorder.sample('resource_io_measurement')
-    maximum = spec['json_bytes_upper']
     with update._span(backend.operation, 'qualification_reducer_overhead', {
         'qualification_stage': binding['stage'], 'attempt_id': binding['attempt_id'],
+        'read_bytes_upper': 0, 'write_bytes_upper': 0,
+        'identity_hash_attempts_upper': 0, 'identity_hash_bytes_upper': 0,
         'reducer_work_bytes_upper': spec['reducer_work_bytes_upper']}) as reduced:
         samples = copy.deepcopy(recorder.samples)
         operations = copy.deepcopy(accounting.operations)
@@ -158,6 +168,7 @@ def resource_adapter(context, permit, prepared, backend, accounting, proof, bind
         # from selected actual measurements. Nothing is refunded as zero work.
         payload = {'resource_samples': samples, 'raw_operations': operations, 'accounting_snapshot': accounting.snapshot(),
             'required_barriers': spec['required_barriers'], 'measured_operation_kinds': spec['measured_operation_kinds'],
+            'json_bytes_upper': maximum, 'reducer_work_bytes_upper': spec['reducer_work_bytes_upper'],
             'limits': spec['limits'], 'observations': observed, 'worker_proof': proof,
             'classification': 'actual barrier and explicit-operation evidence; independent OS/source/ledger verification still required'}
         payload_bytes = len(authority.canonical(payload))

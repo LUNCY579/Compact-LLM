@@ -64,7 +64,12 @@ class RegistrationTests(unittest.TestCase):
         self.assertGreaterEqual(profiles['qualification_tensor_write']['identity_hash_bytes_upper'],8*n+4*r.MIB)
         self.assertGreaterEqual(profiles['qualification_artifact']['reducer_work_bytes_upper'],4*r.MIB)
         self.assertEqual(profiles['cleanup']['wall_s_upper'],19200)
-        self.assertEqual(scope['qualifier_accounting']['global_caps'],self.proposal['qualification']['global_caps'])
+        expected=copy.deepcopy(self.proposal['qualification']['global_caps'])
+        expected['wall_seconds_upper']=262144
+        expected['metadata_bytes_upper']=3*r.GIB
+        self.assertEqual(scope['qualifier_accounting']['global_caps'],expected)
+        self.assertGreaterEqual(profiles['fingerprint']['identity_hash_bytes_upper'],
+            3*(12*n+64*r.MIB))
 
     def test_real_recipe_witness_contract_and_unapproved_backend_scope(self):
         doc=self.documents(); scope=doc['SCOPE.json']; receipt=doc['EXPECTED_PREPARED_RECEIPT.json']['expected_receipt']
@@ -104,10 +109,36 @@ class RegistrationTests(unittest.TestCase):
         old=copy.deepcopy(self.proposal['qualification']['stage_caps']['runtime_anchor'])
         old['identity_hash_bytes_upper']=cap['identity_hash_bytes_upper']
         self.assertEqual(cap,old)
-        self.assertEqual(spec['global_caps'],self.proposal['qualification']['global_caps'])
+        expected=copy.deepcopy(self.proposal['qualification']['global_caps'])
+        expected['wall_seconds_upper']=262144
+        expected['metadata_bytes_upper']=3*r.GIB
+        self.assertEqual(spec['global_caps'],expected)
         self.assertEqual(spec['physical_wall_seconds_upper'],19200)
         self.assertFalse(doc['SCOPE.json']['qualification_authorized'])
         self.assertNotIn('torch',sys.modules); self.assertNotIn('transformers',sys.modules)
+
+    def test_nested_wall_caps_and_resource_extent_preserve_physical_scope(self):
+        doc=self.documents(); scope=doc['SCOPE.json']; spec=scope['qualifier_accounting']
+        expected_walls={'ingestion_tokenizer':1800,'runtime_anchor':39600,'longest_masks':8192,
+            'likelihood_gradient_parity':16384,'adam_clipping':8192,'checkpoint_resume':65536,
+            'delta_roundtrip':98304,'resource_io_measurement':8192}
+        self.assertEqual({stage:cap['wall_seconds_upper'] for stage,cap in spec['stage_caps'].items()},expected_walls)
+        self.assertLess(sum(expected_walls.values()),spec['global_caps']['wall_seconds_upper'])
+        self.assertGreater(spec['stage_caps']['checkpoint_resume']['wall_seconds_upper'],
+            spec['operation_profiles']['cleanup']['wall_s_upper']+19200)
+        self.assertGreater(spec['stage_caps']['delta_roundtrip']['wall_seconds_upper'],6144*11+19200)
+        self.assertEqual(spec['physical_wall_seconds_upper'],19200)
+        self.assertEqual(scope['qualifier_execution']['json_artifact_bytes_upper'],4*r.MIB)
+        self.assertEqual(scope['resource_measurement']['json_bytes_upper'],128*r.MIB)
+        self.assertGreater(spec['stage_caps']['resource_io_measurement']['metadata_bytes_upper'],128*r.MIB)
+        self.assertGreater(spec['global_caps']['metadata_bytes_upper'],
+            sum(cap['metadata_bytes_upper'] for cap in spec['stage_caps'].values()))
+        self.assertEqual(doc['SERVICE_SPEC.json']['resource']['host_transient_bytes']['resource_io_measurement'],512*r.MIB)
+        self.assertEqual(doc['SERVICE_SPEC.json']['resource']['host_transient_bytes']['qualification_artifact'],512*r.MIB)
+        self.assertGreaterEqual(spec['operation_profiles']['qualification_artifact']['write_bytes_upper'],128*r.MIB)
+        self.assertEqual(spec['explicit_reservation_kinds'],['input_io','qualification_artifact_readback','qualification_reducer_overhead'])
+        self.assertEqual(len(scope['qualifier_execution']['adam_batches']),2)
+        self.assertFalse(scope['qualification_authorized']); self.assertFalse(scope['evaluation_authorized'])
 
     def test_foreign_choices_and_changed_source_inputs_cannot_build_selected_packet(self):
         bad=copy.deepcopy(self.decision); bad['choice']='paired_canonical_permuted'

@@ -107,11 +107,14 @@ def qualification_profiles(proposal,receipt,source):
     profiles['tokenizer_load']=dict(ceiling['tokenizer_load'],identity_hash_attempts_upper=64,wall_s_upper=60)
     profiles['module_import']=profile(_ceil(source_bytes+metadata),0,source_count+32,_ceil(source_bytes+metadata),30)
     state_bytes=full+2*selected+metadata
-    profiles['fingerprint']=profile(0,0,3*names+66,_ceil(state_bytes),30)
+    checkpoint_write=12*n+64*MIB
+    # Checkpoint fingerprint spans hash two payload passes plus the complete
+    # file, and report that total on return. Cover that known work as well as
+    # the ordinary model/Adam fingerprint; neither price is measured here.
+    profiles['fingerprint']=profile(0,0,3*names+66,_ceil(max(state_bytes,3*checkpoint_write)),30)
     profiles['inventory_configuration']=profile(0,0,tensors+32,_ceil(full+metadata),20)
     profiles['input_io']=dict(ceiling['input_io'],identity_hash_attempts_upper=64,wall_s_upper=5)
     profiles['cleanup']=profile(wall=proposal['qualification']['deferred_cleanup_lifetime_reservation']['wall_s_upper'])
-    checkpoint_write=12*n+64*MIB
     profiles['checkpoint_save']=profile(8*checkpoint_write,checkpoint_write,10000,32*GIB,60)
     profiles['checkpoint_restore']=profile(8*checkpoint_write,64*MIB,10000,64*GIB,60)
     profiles['checkpoint_adapter_io']=dict(ceiling['checkpoint_adapter_io'],wall_s_upper=60)
@@ -127,7 +130,9 @@ def qualification_profiles(proposal,receipt,source):
         profiles[kind]=profile(0,0,names+16,_ceil(selected+metadata),5)
     profiles['optimizer']=profile(wall=10)
     profiles['qualification_tensor_write']=profile(selected+1,selected,names+2,2*selected+metadata,60)
-    profiles['qualification_artifact']=dict(profile(2*4*MIB+2,4*MIB,16,64*MIB,5),reducer_work_bytes_upper=4*MIB)
+    # The resource packet retains preparation samples and all Q operations.
+    # Numeric artifacts retain their separate 4 MiB execution/readback limit.
+    profiles['qualification_artifact']=dict(profile(256*MIB+2,128*MIB,16,256*MIB,5),reducer_work_bytes_upper=128*MIB)
     profiles['qualification_artifact_readback']=profile(3*selected+64*MIB,0,8,3*selected+64*MIB,60)
     profiles['qualification_reducer_overhead']=dict(profile(0,0,10000,128*GIB,60),reducer_work_bytes_upper=512*GIB)
     profiles['qualification_state_fingerprint']=profile(0,0,3*names+66,8*GIB,30)
@@ -215,9 +220,20 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
     # Attempt12 rejected model_load before allocation: its 32 GiB hash
     # reservation cannot share a 32 GiB stage cap with the reference reads,
     # tokenizer, inventory and final fingerprint. This is a proposed stage
-    # amendment; operation profiles, global caps and physical deadline stay
-    # fixed. A fresh qualification grant must review this composed allowance.
+    # amendment. A fresh qualification grant must review all composed bounds;
+    # the physical deadline, resources and six-update workload remain fixed.
     stage_caps['runtime_anchor']['identity_hash_bytes_upper']=64*GIB
+    stage_caps['delta_roundtrip']['identity_hash_bytes_upper']=128*GIB
+    # Finite composed callback allowances include unchanged ten-second resource
+    # probes, one-second CUDA probes and independent physical clock charges.
+    # These nested reservations are abort ceilings, never completion estimates.
+    wall_caps={'longest_masks':8192,'likelihood_gradient_parity':16384,
+        'adam_clipping':8192,'checkpoint_resume':65536,'delta_roundtrip':98304,
+        'resource_io_measurement':8192}
+    for stage,wall in wall_caps.items(): stage_caps[stage]['wall_seconds_upper']=wall
+    envelope['wall_seconds_upper']=262144
+    stage_caps['resource_io_measurement']['metadata_bytes_upper']=256*MIB
+    envelope['metadata_bytes_upper']=3*GIB
     # Outer bootstrap/process/publication allowances are separately proposed.
     scope={'schema':qualification.SCOPE,'role':'qualification_only','approved':False,'qualification_authorized':False,
         'production_training_authorized':False,'evaluation_authorized':False,'arm':'canonical','choice_sha256':decision_ref['sha256'],
@@ -237,12 +253,14 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
             'delta_rebuild_reader_bounds':delta_readers,'artifact_chunk_bytes':MIB,'reader_bounds':reader},
         'qualifier_accounting':{'schema':accounting.SPEC,'owned_directory':str(output_root/'ledger'),
             'ingestion_receipt_sha256':receipt['receipt_sha256'],'operation_profiles':profiles,
+            'operation_profile_rule':accounting.EXPLICIT_RESERVATION_RULE,
+            'explicit_reservation_kinds':list(accounting.EXPLICIT_RESERVATION_KINDS),
             'setup_bounds':profile(64*MIB,64*MIB,16,64*MIB,30),'stage_caps':stage_caps,'global_caps':envelope,
             'physical_wall_seconds_upper':19200},
         'resource_measurement':{'schema':measurement.SCHEMA,'required_barriers':['launch','before_model','after_runtime',
             'after_update','after_checkpoint','after_delta','final','resource_io_measurement'],
             'measured_operation_kinds':['resource_probe','resource_cuda_probe'],'limits':limits,
-            'owned_directory':str(output_root/'resource'),'json_bytes_upper':4*MIB,'reducer_work_bytes_upper':16*MIB},
+            'owned_directory':str(output_root/'resource'),'json_bytes_upper':128*MIB,'reducer_work_bytes_upper':512*MIB},
         'checkpoint_qualification':{'schema':checkpoint.SPEC,'owned_directory':str(output_root/'checkpoints'),
             'state_proof_bounds':{key:profiles['qualification_state_fingerprint'][key] for key in backend.PROFILE_FIELDS},
             'child_initializer':{'schema':initializer.SPEC,'reader_bounds':reader,'max_store_bytes':4*selected+metadata,
@@ -361,6 +379,10 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
                 {'before_framework','before_model','ingestion_sources','ingestion_tokenizer','ingestion_boundary','ingestion_qualification_rows',
                  'qualification_artifact','qualification_parent_release','qualification_state_fingerprint',
                  'after_runtime','after_update','after_checkpoint','after_delta','final'}}}}
+    # The larger resource packet keeps its existing payload; reserve room for
+    # temporary copies and encoded buffers before the resource/write barriers.
+    for kind in ('resource_io_measurement','qualification_artifact'):
+        service['resource']['host_transient_bytes'][kind]=512*MIB
     expectation={'schema':'CE8-PREPARED-RECEIPT-EXPECTATION-1','observed_current_scope':False,
         'prior_observed_tokenizer_receipt_sha256':prior_receipt['receipt_sha256'], 'current_source_metadata_revalidated':True,
         'tokenizer_recomputed':False,'expected_receipt':receipt,
