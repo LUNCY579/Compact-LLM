@@ -23,6 +23,18 @@ Each retains134144 positions,600seconds and original resource/freshness and
 max0.03125/mean0.01 numerical limits. EOS-short coverage remains visible; full-window
 prefix stress cannot fabricate greedy continuation or capability measurement.
 
+Bulk evidence now retains every compared position, argmax token/LP, original
+selected token/LP, reference LP and absolute error. This permits independent
+recomputation of the actual-length maximum and mean rather than trusting summary
+fields. A failed numerical gate retains these diagnostics and costs. The worker
+also saves the already computed before/after112 adapter hash maps. Neither change
+adds model, tensor, resource-query or primitive calls. RNG evidence remains three
+hashes; no raw-state restoration or independent tensor reread is claimed. All
+[15 targeted CPU controls](evidence/long_native_evidence_root_cpu_validation_20261005.json)
+pass with the17 original helpers unchanged. An initial receipt-harness field
+lookup failed before tests; its [failure record](evidence/long_native_evidence_harness_lookup_failure_20261005.json)
+is retained with the correction.
+
 Model/component phases close before cleanup on both success and failure paths.
 Sinks and verification cannot issue additional model calls after meter removal.
 Posted-scope/capsule/durable-terminal/promotion costs reconcile before success;

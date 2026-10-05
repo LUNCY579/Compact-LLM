@@ -222,17 +222,24 @@ def run_scope(scope,factory,call,guard,preserve,*,admission=None,previous_fixtur
         elif role=='bulk':
             first,second=[p['capsule_chain']['capsule']['trace'] for p in previous[:2]]
             require(first==second,'complete cross-process greedy repeats match');trace=deepcopy(first)
-            logits=engine._forward(row['prompt_ids']+[t['token'] for t in trace[:-1]],'long_native_bulk_forward');errors=[];different=[]
+            logits=engine._forward(row['prompt_ids']+[t['token'] for t in trace[:-1]],'long_native_bulk_forward');errors=[];different=[];bulk_steps=[]
             for index,observed in enumerate(trace):
                 token,lp=engine._selected(logits,row['prompt_tokens']-1+index)
+                argmax_lp=lp
                 if token!=observed['token']:
                     different.append(index)
                     lp=float(collector('long_bulk_original_selected_LP',lambda:
                         engine.torch.log_softmax(logits[0,row['prompt_tokens']-1+index],dim=-1)[observed['token']].item()))
                     require(math.isfinite(lp) and lp<=0,'finite originally selected bulk logprob')
-                errors.append(abs(lp-observed['logprob']))
+                error=abs(lp-observed['logprob']);errors.append(error)
+                bulk_steps.append({'step':index,'position':row['prompt_tokens']-1+index,
+                    'argmax_token':token,'argmax_logprob':argmax_lp,
+                    'selected_token':observed['token'],'selected_logprob':lp,
+                    'trace_logprob':observed['logprob'],'absolute_error':error})
             del logits
-            comparison={'actual_compared_steps':len(trace),'argmax_differences':different,'maximum_error':max(errors),'mean_error':sum(errors)/len(errors)}
+            comparison={'actual_compared_steps':len(trace),'argmax_differences':different,'maximum_error':max(errors),'mean_error':sum(errors)/len(errors),
+                'bulk_steps':bulk_steps}
+            result['bulk_comparison']=deepcopy(comparison)
             require(not different and max(errors)<=.03125 and sum(errors)/len(errors)<=.01,'unchanged bulk numerical gates')
         else:
             require(scope['recipe']['prefix_stress_ids'] is not None,'separate stress predeclared')

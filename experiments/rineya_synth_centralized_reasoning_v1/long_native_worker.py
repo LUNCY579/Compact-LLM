@@ -135,7 +135,7 @@ class NativeFactory:
             'encoder_proof_sha256':digest(encoding),'dense_start_rng':dense_rng,'inference_start_rng':rng_start,'initial_adapter_sha256':digest(adapter_start),'seed':101}
         start={'kind':'NATIVE_OBSERVED_LONG_START','identity_common':common,'owned_scope_identity':deepcopy(self.owner),
             'actual_pin_maps':pins_before,'encoder':encoding,'loader':loader,'compute':compute,'adapters':adapters,
-            'actual_dense_zeroB_parity':parity,'zeroB':zero,'native_long_context_qualified':False}
+            'actual_dense_zeroB_parity':parity,'zeroB':zero,'adapter_byte_hashes_before':deepcopy(adapter_start),'native_long_context_qualified':False}
         engine=InferenceComponent(torch,model,NoDecode(),call,guard,self.journal.evidence,
             max_attempted_forwards=1 if scope['role']=='bulk' else 32,max_input_positions=scope['dose']['maximum_forward_input_positions']-838,
             context_cap=scope['dose']['context_cap'],generation_cap=32,device='cuda:0')
@@ -148,7 +148,7 @@ class NativeFactory:
             require(active['observations'] and all(value>0 for value in active['observations'].values()),'every FP32 activation site observed')
             actual_after=verified_files(scope,call,guard);require(actual_after==pins_before,'actual source/runtime/model/encoder bytes before/after')
             return {'kind':'NATIVE_OBSERVED_LONG_END','identity_common':common,'RNG_unchanged':True,'RNG_after':after_rng,
-                'base310_unchanged':True,'base_postcheck':base,'zeroB_unchanged':True,'zeroB_after':z,
+                'base310_unchanged':True,'base_postcheck':base,'zeroB_unchanged':True,'zeroB_after':z,'adapter_byte_hashes_after':deepcopy(after_adapter),
                 'activation_observations':deepcopy(active['observations']),'actual_pin_maps_after':actual_after,'native_long_context_qualified':False}
         return {'component':engine,'attest':lambda:deepcopy(start),'finalize':finalize,'cleanup':self.cleanup}
 

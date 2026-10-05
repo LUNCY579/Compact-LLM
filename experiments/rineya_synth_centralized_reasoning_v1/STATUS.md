@@ -1,5 +1,24 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: long-scope per-step numerical evidence retained
+
+The long bulk scope now preserves every compared token, position, argmax and
+selected log probability, reference log probability and absolute error. Existing
+maximum/mean limits and workload remain unchanged; numerical failures retain
+their measurements and costs. The native worker saves its already computed112
+adapter digest maps before/after. All
+[15 root CPU controls](evidence/long_native_evidence_root_cpu_validation_20261005.json)
+pass, and [independent review](evidence/long_native_evidence_independent_review_20261005.json)
+confirms unchanged17 original helpers and no extra model/tensor/query calls.
+An initial harness field lookup failed before test execution; its separate
+failure receipt is retained. This is evidence plumbing only: RNG hashes do not
+prove raw-state restoration, and no long model run or comparison result exists.
+
+Encoder dependency inventory, the independent long auditor and a phase-observed
+M0 collector successor are being prepared in CPU staging. They require review
+before integration or new source-bound launch registration. Current model
+resource qualification and qualified language authority remain unresolved.
+
 ## 2026-10-05 UTC: long native-extension plumbing integrated
 
 The [long native extension](LONG_NATIVE_QUALIFICATION_001.md) is integrated from

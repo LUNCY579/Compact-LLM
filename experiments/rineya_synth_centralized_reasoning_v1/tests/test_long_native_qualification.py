@@ -82,6 +82,36 @@ class Controls(unittest.TestCase):
             self.assertEqual(11,prior[2]['actual_costs']['physical_calls']);self.assertEqual(22837,prior[2]['actual_costs']['input_positions'])
             capsule=prior[3]['capsule_chain']['capsule'];self.assertFalse(capsule['greedy_EOS_respected']);self.assertFalse(capsule['full32_greedy_coverage'])
             self.assertEqual(45,prior[3]['actual_costs']['physical_calls']);self.assertEqual(154219,prior[3]['actual_costs']['input_positions'])
+    def test_bulk_steps_reconstruct_actual_EOS_and_full32_statistics(self):
+        for tokens in ([9,151645],[9]*32):
+            with tempfile.TemporaryDirectory(dir=HERE) as root:
+                prior=[]
+                for role in ('trace1','trace2','bulk'):
+                    result=self.execute(root,role,prior,Factory(tokens));prior.append(result)
+                    self.assertEqual('COMPLETE_CPU_FAKE_LONG_PROTOCOL',result['status'],result.get('error'))
+                capsule=result['capsule_chain']['capsule'];comparison=capsule['comparison'];steps=comparison['bulk_steps']
+                self.assertEqual(len(tokens),len(steps));self.assertEqual(comparison,result['bulk_comparison'])
+                for index,(step,observed) in enumerate(zip(steps,capsule['trace'])):
+                    self.assertEqual({'step','position','argmax_token','argmax_logprob','selected_token',
+                        'selected_logprob','trace_logprob','absolute_error'},set(step))
+                    self.assertEqual(index,step['step']);self.assertEqual(4063+index,step['position'])
+                    self.assertEqual(observed['token'],step['selected_token']);self.assertEqual(observed['logprob'],step['trace_logprob'])
+                    self.assertEqual(step['selected_token'],step['argmax_token']);self.assertEqual(step['selected_logprob'],step['argmax_logprob'])
+                    self.assertEqual(abs(step['selected_logprob']-step['trace_logprob']),step['absolute_error'])
+                errors=[step['absolute_error'] for step in steps]
+                self.assertEqual(max(errors),comparison['maximum_error']);self.assertEqual(sum(errors)/len(errors),comparison['mean_error'])
+                self.assertEqual(1,result['actual_costs']['operations']['long_native_bulk_forward']['returned'])
+                self.assertNotIn('long_bulk_original_selected_LP',result['actual_costs']['operations'])
+    def test_bulk_argmax_failure_retains_original_selected_probability_and_work(self):
+        with tempfile.TemporaryDirectory(dir=HERE) as root:
+            first=self.execute(root,'trace1',factory=Factory([9,151645]));second=self.execute(root,'trace2',[first],Factory([9,151645]))
+            result=self.execute(root,'bulk',[first,second],Factory([10,151645]))
+            self.assertEqual('FAILED_NATIVE_LONG_SCOPE',result['status']);self.assertIsNone(result['capsule_chain'])
+            comparison=result['bulk_comparison'];self.assertEqual([0],comparison['argmax_differences'])
+            step=comparison['bulk_steps'][0];self.assertEqual(10,step['argmax_token']);self.assertEqual(9,step['selected_token'])
+            self.assertLess(step['selected_logprob'],step['argmax_logprob']);self.assertEqual(10.,step['absolute_error'])
+            self.assertEqual(1,result['actual_costs']['operations']['long_bulk_original_selected_LP']['returned'])
+            self.assertEqual(3,result['physical_dose']['attempted_calls']);self.assertEqual(4903,result['physical_dose']['input_positions'])
     def test_hidden_metered_extra_call_cannot_expand_physical_budget(self):
         with tempfile.TemporaryDirectory(dir=HERE) as root:
             factory=Factory([9,151645])
