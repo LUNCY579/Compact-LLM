@@ -1,5 +1,42 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: third M0 batch audited; fresh RAM callback candidate measured
+
+The [third fixed M0 config](configs/SYNTH_SHORT_M0_ATOMIC_BATCH03_A1.json) completed
+64 rows in 231.828 seconds. Its
+[independent audit](evidence/short_m0_atomic_batch03_attempt1_independent_audit_20261005.json)
+passes 22,103 checks: all 64 EOS endings, 514 token prefixes, 516 physical forwards
+/ 120,375 positions and 836 returned API calls reconcile. Zero-B parity, all 310
+base tensors, resource/freshness limits and owned cleanup pass. The
+[591 raw files and 83 source snapshots](evidence/short_m0_atomic_batch03_attempt1_20261005)
+are preserved. There are now 192/384 audited atomic/RS DEV outputs, with 127 EOS
+endings and 65 generation caps. Three atomic and twelve short task batches remain.
+No correctness scoring, enrollment, M1/M2 output or transfer result exists.
+
+After native and audit work became terminal, the
+[matched CPU comparison](evidence/worker_ram_probe_cpu_20261005/CPU_ram_callback_comparison_20261005.json)
+ran 512 guards per callback under identical current checks. Default guard wall
+time was 6.514 seconds, including 5.909 seconds in the RAM callback. The staged
+candidate's guard wall time was 0.148 seconds, including 0.00398 seconds in fresh
+`native_process.system_memory_status()['available_bytes']` calls. Every guard
+and each of its three callbacks returned 512 times without failed/pending work.
+Fourteen source and 128 runtime pins match before/after; owned CPU processes are
+terminal. Six light controls cover fresh-call counts, API error propagation,
+invalid fields/types/ranges and unchanged resource/deadline/heartbeat checks.
+[Twenty-nine files](evidence/worker_ram_probe_cpu_20261005/preservation_receipt.json)
+retain partial counts before metadata, complete receipts and exact sources.
+
+This is a CPU component improvement in sequential fresh contexts. Volatile RAM
+readings are retained without asserting byte equality. Native tensor/body work,
+GPU guards, disk-stall prevention, whole-scope fit and continuation remain
+unqualified. Original inference helpers remain unchanged. The next training-fit
+step is a separately reviewed backend-only RAM-callback amendment, after package
+integration and appropriate CPU controls, followed by fresh scoped native A/B
+qualification with unchanged model, parameters, dose, optimizer, numerics and
+resource/freshness/deadline gates. No study training, unrestricted retry or gate
+relaxation is opened by these receipts. Language reference/reviewer authority
+and the full three-arm result remain outstanding.
+
 ## 2026-10-05 UTC: CPU guard callback costs attributed; helpers unchanged
 
 The [512-call diagnostic](evidence/guard_component_cost_cpu_20261005/CPU_guard_callback_attribution_20261005.json)
