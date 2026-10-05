@@ -1,5 +1,40 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: batch05 admission denied before worker launch
+
+The exact fixed batch05 attempted fresh preflight/admission at clean launch HEAD
+`9cabf4891221592be7946bb6ded7315bd2962185`. Its first observation recorded
+1,428,140,032 GPU free bytes, below the unchanged4,294,967,296-byte admission
+floor. The supervisor returned `ADMISSION_DENIED` in12.469seconds. No worker was
+attempted, launched or resumed; no model computation, forward, backward or
+optimizer update occurred. This is a current resource refusal, not an inference
+failure or evidence of its external cause.
+
+The [terminal evidence](evidence/short_m0_atomic_batch05_phase3_attempt1_20261005/preservation_receipt.json)
+preserves the one raw supervisor file,131 source snapshots and exact config,
+inventory and six auditor dependencies. Only reservation/terminal lease files
+exist, with exact terminal/supervisor byte equality; sampler/NVML cleanup and
+frozen empty partial output map are verified. No worker-death proof is needed
+because no worker existed. Its preservation is explicitly ineligible for the
+successful native auditor.
+
+The [independent denial audit](evidence/short_m0_atomic_batch05_phase3_attempt1_20261005_admission_denial_audit.json)
+verifies recorded admission/lifecycle/lease/byte/source joins without executing
+a model, decoder, resource probe or successful-native audit. The
+[reviewed inventory/adapter history](evidence/phase3_remaining_inventory_and_denial_reviewed_20261005/ROOT_PRESERVATION.json)
+retains both final inventory reviews, the exact one-site fixed05/06 copier
+adaptation, before-copy rejection controls and denial/preservation reviews.
+The original copier and six native auditor dependencies remain byte-identical.
+
+M0 remains256/384 independently audited raw rows, all unscored. No unchanged
+retry or batch06 launch occurred while the same resource condition is unresolved.
+Root requested GPU availability or explicit direction about an unrelated GPU job;
+no unrelated process has been stopped. Resumption requires an externally reviewed
+inventory at the then-current clean HEAD and genuinely fresh passing admission;
+old readiness observations do not substitute. CPU candidate-import implementation
+continues separately. Full training, scoring and all retention evidence remain
+unfinished; the full research goal remains active and unanswered.
+
 ## 2026-10-05 UTC: remaining M0 batch configs prepared
 
 Fixed [batch05](configs/SYNTH_SHORT_M0_ATOMIC_BATCH05_PHASE3_A1.json) and
