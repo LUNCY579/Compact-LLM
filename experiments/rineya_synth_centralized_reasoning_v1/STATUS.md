@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: Phase3 batch04 configuration independently reviewed
+
+The new [fixed batch04 config](configs/SYNTH_SHORT_M0_ATOMIC_BATCH04_PHASE3_A1.json)
+passes [54 independent metadata/source checks](evidence/phase3_batch04_config_independent_review_20261005.json).
+Its64 prompt-only rows equal the original registered192:256 slice; original math,
+512/32 limits,2050 calls and510720 positions remain. All131 current sources,
+runtime65/qualified64+AST, decoder17, data5, model7, profile/D001 provenance and
+unchanged floors are bound. This configuration was created without a model or
+GPU/probe/binary execution. It is not a result or scoring enrollment.
+
+The final exact launch HEAD and owned auditor inventory still need freezing after
+this config commit, independent inventory review and actual fresh preflight/
+resource admission. No worker has been started. Existing failed/partial batches
+stay excluded; M0 remains192/384 raw rows.
+
 ## 2026-10-05 UTC: corrected V2 native terminal audit integrated
 
 The [V2 validator/terminal path](LONG_V2_NATIVE_AUDIT_002.md) is integrated as new
