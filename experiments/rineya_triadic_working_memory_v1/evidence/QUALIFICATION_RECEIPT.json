@@ -1,0 +1,117 @@
+{
+  "experiment_id": "TWM-001",
+  "status": "REFERENCE_PASS_NATIVE_BLOCKED",
+  "recorded_utc": "2026-10-05T17:05:32.737404+00:00",
+  "environment": {
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu",
+    "transformers": null,
+    "cuda": false,
+    "device": "cpu",
+    "source_sha256": "6687b8f1948cdb82b7b7d5fa78fd2641c0e67108d603f2de19a69ce3d663b152"
+  },
+  "source_sha256": "6687b8f1948cdb82b7b7d5fa78fd2641c0e67108d603f2de19a69ce3d663b152",
+  "base_commit": "03db218ceebc61a2bc04f2482cf7e094045e01c1",
+  "tests": {
+    "command": "OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -m pytest -q experiments/rineya_triadic_working_memory_v1/tests",
+    "passed": 70,
+    "skipped": 4,
+    "failed": 0,
+    "by_module": {
+      "test_core": {
+        "passed": 21,
+        "skipped": 0,
+        "failed": 0
+      },
+      "test_harness": {
+        "passed": 21,
+        "skipped": 0,
+        "failed": 0
+      },
+      "test_native_contract": {
+        "passed": 8,
+        "skipped": 0,
+        "failed": 0
+      },
+      "test_qwen3_optional": {
+        "passed": 0,
+        "skipped": 4,
+        "failed": 0
+      },
+      "test_sidecar": {
+        "passed": 20,
+        "skipped": 0,
+        "failed": 0
+      }
+    },
+    "junit_sha256": "a66c2fd71b3747303f26fff9494eb060722724f2fbe51214a427abedbe6812e9"
+  },
+  "reference_smoke": {
+    "completed": true,
+    "arms": 5,
+    "task": "fixed_tensor_prefix_mean_regression",
+    "native_checkpoint": false
+  },
+  "pilot_budgets": [
+    {
+      "arm": "baseline",
+      "trainable_parameters": 0,
+      "recurrent_state_bytes": 0,
+      "convolution_history_bytes": 0,
+      "total_sidecar_buffer_bytes": 0
+    },
+    {
+      "arm": "stateless",
+      "trainable_parameters": 1106945,
+      "recurrent_state_bytes": 0,
+      "convolution_history_bytes": 0,
+      "total_sidecar_buffer_bytes": 0
+    },
+    {
+      "arm": "gdn_e1",
+      "trainable_parameters": 1060937,
+      "recurrent_state_bytes": 65536,
+      "convolution_history_bytes": 9216,
+      "total_sidecar_buffer_bytes": 74752
+    },
+    {
+      "arm": "triadic_e4",
+      "trainable_parameters": 1106133,
+      "recurrent_state_bytes": 262144,
+      "convolution_history_bytes": 9600,
+      "total_sidecar_buffer_bytes": 271744
+    },
+    {
+      "arm": "matrix_state_matched",
+      "trainable_parameters": 2639945,
+      "recurrent_state_bytes": 262144,
+      "convolution_history_bytes": 27648,
+      "total_sidecar_buffer_bytes": 289792
+    }
+  ],
+  "native": {
+    "tiny_qwen3_executed": false,
+    "real_rineya_checkpoint_loaded": false,
+    "cuda_executed": false,
+    "training_executed": false,
+    "benchmark_efficacy_measured": false,
+    "blockers": [
+      "No transformers installation in this working environment.",
+      "Attempt to install transformers==4.57.1 failed because package-index DNS/network was unavailable.",
+      "No mounted real Rineya checkpoint.",
+      "CPU-only PyTorch; no CUDA."
+    ]
+  },
+  "conclusions": {
+    "software_reference_qualified": true,
+    "native_model_qualified": false,
+    "model_quality_claim": false,
+    "retention_claim": false,
+    "latency_claim": false,
+    "production_promotion": false
+  },
+  "publication": {
+    "branch": "research/rineya-triadic-working-memory-v1",
+    "commit_identity": "See the enclosing GitHub commit and delivery publication receipt."
+  }
+}

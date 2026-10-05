@@ -1,0 +1,47 @@
+{
+  "experiment_id": "TWM-001",
+  "recorded_date": "2026-10-05",
+  "repository": "LUNCY579/ChatBubble",
+  "branch": "research/rineya-triadic-working-memory-v1",
+  "base_ref": "post-training-Mimo",
+  "base_commit": "03db218ceebc61a2bc04f2482cf7e094045e01c1",
+  "base_tree": "6a1e3b9b16789f7ce211e443654912859dd37ed0",
+  "paper": {
+    "title": "Triadic Linear Attention: Three-Dimensional Recurrent States for Long-Context Sequence Modeling",
+    "arxiv": "2609.36529v1",
+    "url": "https://arxiv.org/html/2609.36529v1"
+  },
+  "upstream_training": {
+    "repository": "OliverSieberling/TriadicLinearAttention",
+    "commit": "d69108ef0e41dac814cc3d918793d0b30132b832",
+    "model_blob": "d9e68d3eb0817d7c692795e75523a06d10c9ae28",
+    "url": "https://github.com/OliverSieberling/TriadicLinearAttention/tree/d69108ef0e41dac814cc3d918793d0b30132b832"
+  },
+  "upstream_kernels": {
+    "repository": "OliverSieberling/cute-triadic-gdn",
+    "commit": "2caa4098073da92c2ba0d573df6453ceb7dbce45",
+    "url": "https://github.com/OliverSieberling/cute-triadic-gdn/tree/2caa4098073da92c2ba0d573df6453ceb7dbce45",
+    "vendored": false,
+    "used_in_reference": false
+  },
+  "native_contract": {
+    "repository": "huggingface/transformers",
+    "version": "4.57.1",
+    "modeling_qwen3_blob": "81b16c4ee6b6eb30acc531bf8cddd31d07065ac1",
+    "url": "https://github.com/huggingface/transformers/blob/v4.57.1/src/transformers/models/qwen3/modeling_qwen3.py"
+  },
+  "adaptation_notes": [
+    "Independent reference implementation of the joint residual equation.",
+    "Additional sidecar on softmax Qwen3, not a replacement or a GDN upcycle.",
+    "Simplified learned decay parameterization and sidecar output gating differ from the full paper model.",
+    "No upstream code or binaries vendored; no upstream H100 timing claim transferred to RTX 4070."
+  ],
+  "governance": {
+    "new_branch_only": true,
+    "existing_experiments_modified": false,
+    "backbone_weights_modified": false,
+    "sealed_data_accessed": false,
+    "codex_tasks_created": false,
+    "production_defaults_changed": false
+  }
+}
