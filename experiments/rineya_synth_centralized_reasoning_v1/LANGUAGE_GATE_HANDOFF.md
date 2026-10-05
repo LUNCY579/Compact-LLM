@@ -1,8 +1,16 @@
 # Language preservation requirements still open
 
-The central program's public language proposal and authority audit report no
-qualified reference vectors, assigned graders or authored DEV panel. Its rubric
-requires separate adequacy, relevance, fluency and role-consistency judgments;
+The central program has authored and tokenized 64 DEV worlds, 16 CAL worlds and
+96 candidate controls under [Amendment 006](../post_training_mimo_centralized_v1/AMENDMENT_006.md).
+Its [candidate receipt](../post_training_mimo_centralized_v1/receipts/LANGUAGE_DEV_CAL_CANDIDATE_RECEIPT.json)
+and [delivery validation](../post_training_mimo_centralized_v1/receipts/DELIVERY_VALIDATION_005.json)
+record zero actual ratings, no qualified reference vectors and no assigned
+qualified graders. The original proposal remains an immutable earlier record;
+it is not evidence that authored candidates are absent. Authorship and
+tokenizer-only preparation do not qualify or enroll the language panel.
+The [current public-record audit](evidence/language_authority_current_audit_20261005.json)
+binds those counts and missing authority to five exact source hashes.
+The rubric requires separate adequacy, relevance, fluency and role-consistency judgments;
 literal correctness or JSON validity cannot establish fluency. Independent
 reference/control validity, identified reviewers, calibration, blinding,
 adjudication and complete cost limits must be established before certification.

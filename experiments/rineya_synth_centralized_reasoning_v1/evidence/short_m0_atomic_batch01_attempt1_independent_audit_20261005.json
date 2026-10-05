@@ -1,0 +1,240 @@
+{
+  "CPU_audit_decoder_version": "tokenizers0.22.2",
+  "M0_M1_M2_comparison_completed": false,
+  "accounting": {
+    "API_attempted": 1999,
+    "API_failed": 0,
+    "API_pending": 0,
+    "API_returned": 1999,
+    "all_measurement_file_byte_links_verified": true,
+    "backwards": 0,
+    "capture_forwards": 1677,
+    "capture_input_positions": 569771,
+    "exact_component_prehook_API_and_per_token_cost_reconciliation": true,
+    "operation_accounting_scope": "registered_API_boundaries;internal_ATen_operations_not_individually_metered",
+    "optimizer_steps": 0,
+    "parity_forwards": 2,
+    "parity_input_positions": 522,
+    "physical_forwards": 1679,
+    "physical_input_positions": 570293
+  },
+  "all_exact_row_prompt_token_trace_prefix_finish_decode_and_cost_joins": true,
+  "attempt_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\short_m0_atomic_batch01_attempt1",
+  "audit_framework_model_GPU_execution": false,
+  "batch_selector": {
+    "ordinal": 1,
+    "source_kind": "atomic_RS_DEV"
+  },
+  "checks_passed": 52820,
+  "cleanup": {
+    "GPU_telemetry_cleanup_verified": true,
+    "assigned_before_resume": true,
+    "external_monitor_ready_before_resume": true,
+    "job_closed_kill_on_close": true,
+    "lease_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\3902051044084ee3811f0f8c70951ca8",
+    "lease_terminal_same_bytes_as_supervisor": true,
+    "owned_job_identity_sha256": "22007500643243f60c5be98e6c9bbe148a87f4b3be450c96eab54e37330f6811",
+    "owned_worker_identity_currently_alive": false,
+    "partial_outputs_frozen": true,
+    "sampler_threads_terminal_verified": true
+  },
+  "conclusion": "One fixed64-row unchanged-M0 batch completed and its raw token/likelihood/finish/cost/preservation/resource evidence is independently closed. No correctness, enrollment, transfer or retention result is established.",
+  "config_body_sha256": "206c855a4a1b59b992fd7adf86df7e9e630e04f1ecd1970aa97a54dabe295d23",
+  "config_file_sha256": "f67b78be07ab042238f6d4c605c0ff744272b39aac27ac8ea9869a81f95f7616",
+  "config_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\configs\\SYNTH_SHORT_M0_ATOMIC_BATCH01_A1.json",
+  "confirmation_eligible": false,
+  "correctness_certified": false,
+  "correctness_grade_performed": false,
+  "finish_counts": {
+    "eos": 33,
+    "generation_cap": 31
+  },
+  "hash_closure": {
+    "after": {
+      "config": {
+        "bytes": 332728,
+        "sha256": "f67b78be07ab042238f6d4c605c0ff744272b39aac27ac8ea9869a81f95f7616"
+      },
+      "data": {
+        "entries": 5,
+        "manifest_sha256": "40e3eb993bf2e2c5a5795ceb3d7c3a59a688eda23f2648bd198299eaa0479402"
+      },
+      "decoder": {
+        "entries": 17,
+        "manifest_sha256": "2efaf1a10e5150aa0d67bf9fa4543aecd6df33a3e3e28048b3a53c8e305f0dd6"
+      },
+      "lease": {
+        "entries": 4,
+        "manifest_sha256": "7cfc8bee98dad4da90eb01372e39ce62e2e56f9c56e291fe28835aeae189a81a"
+      },
+      "model": {
+        "entries": 7,
+        "manifest_sha256": "dd2e71c23462cb6b6c8d412368214f9b35f3fee4edd7e1a6dedefd0cf5d5fed4"
+      },
+      "original_raw": {
+        "entries": 1754,
+        "manifest_sha256": "cd7632d91ee8ace99a099330393d4c52f7cb0cf0eece1a64955b1f3c90a03d5f"
+      },
+      "preservation_receipt": {
+        "bytes": 232321,
+        "sha256": "6adda04b40b6485801b079ab811a8c45c039aec191471803700bc87cac961cac"
+      },
+      "preserved_config": {
+        "bytes": 332728,
+        "sha256": "f67b78be07ab042238f6d4c605c0ff744272b39aac27ac8ea9869a81f95f7616"
+      },
+      "preserved_raw": {
+        "entries": 1754,
+        "manifest_sha256": "cd7632d91ee8ace99a099330393d4c52f7cb0cf0eece1a64955b1f3c90a03d5f"
+      },
+      "runtime": {
+        "entries": 64,
+        "manifest_sha256": "8f69e68ea50d0ad9fae86fc60960f7d56877837dcedd1b8c628366fe77182283"
+      },
+      "source": {
+        "entries": 83,
+        "manifest_sha256": "1d54df048c5790cbb5de3fc0309c87d8818b6b68cda4e9d44b3f2fa9cc6376e7"
+      },
+      "source_snapshots": {
+        "entries": 83,
+        "manifest_sha256": "f74126a2fa436834428a638dfc92b1c639e99e629455cbf5f88a0c6132cfc08c"
+      }
+    },
+    "all_equal": true,
+    "before": {
+      "config": {
+        "bytes": 332728,
+        "sha256": "f67b78be07ab042238f6d4c605c0ff744272b39aac27ac8ea9869a81f95f7616"
+      },
+      "data": {
+        "entries": 5,
+        "manifest_sha256": "40e3eb993bf2e2c5a5795ceb3d7c3a59a688eda23f2648bd198299eaa0479402"
+      },
+      "decoder": {
+        "entries": 17,
+        "manifest_sha256": "2efaf1a10e5150aa0d67bf9fa4543aecd6df33a3e3e28048b3a53c8e305f0dd6"
+      },
+      "lease": {
+        "entries": 4,
+        "manifest_sha256": "7cfc8bee98dad4da90eb01372e39ce62e2e56f9c56e291fe28835aeae189a81a"
+      },
+      "model": {
+        "entries": 7,
+        "manifest_sha256": "dd2e71c23462cb6b6c8d412368214f9b35f3fee4edd7e1a6dedefd0cf5d5fed4"
+      },
+      "original_raw": {
+        "entries": 1754,
+        "manifest_sha256": "cd7632d91ee8ace99a099330393d4c52f7cb0cf0eece1a64955b1f3c90a03d5f"
+      },
+      "preservation_receipt": {
+        "bytes": 232321,
+        "sha256": "6adda04b40b6485801b079ab811a8c45c039aec191471803700bc87cac961cac"
+      },
+      "preserved_config": {
+        "bytes": 332728,
+        "sha256": "f67b78be07ab042238f6d4c605c0ff744272b39aac27ac8ea9869a81f95f7616"
+      },
+      "preserved_raw": {
+        "entries": 1754,
+        "manifest_sha256": "cd7632d91ee8ace99a099330393d4c52f7cb0cf0eece1a64955b1f3c90a03d5f"
+      },
+      "runtime": {
+        "entries": 64,
+        "manifest_sha256": "8f69e68ea50d0ad9fae86fc60960f7d56877837dcedd1b8c628366fe77182283"
+      },
+      "source": {
+        "entries": 83,
+        "manifest_sha256": "1d54df048c5790cbb5de3fc0309c87d8818b6b68cda4e9d44b3f2fa9cc6376e7"
+      },
+      "source_snapshots": {
+        "entries": 83,
+        "manifest_sha256": "f74126a2fa436834428a638dfc92b1c639e99e629455cbf5f88a0c6132cfc08c"
+      }
+    },
+    "maps_bound_by_config_and_preservation_receipt": "Every individual path/byte/hash is retained in the immutable config/preservation receipt; compact manifest hashes here bind verified complete maps.",
+    "preservation_receipt_body_sha256": "1888b921aeede1627738290cfe2dd9b38a65cb5a859d311654092f6878db477b",
+    "preservation_receipt_file_sha256": "6adda04b40b6485801b079ab811a8c45c039aec191471803700bc87cac961cac",
+    "preservation_receipt_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\short_m0_atomic_batch01_attempt1_20261005\\preservation_receipt.json",
+    "source83_runtime64_decoder17_data5_model7_raw1754_all_verified": true
+  },
+  "id": "SYNTH-SHORT-M0-ATOMIC-BATCH01-INDEPENDENT-AUDIT",
+  "language_qualification_established": false,
+  "long_context_qualification_established": false,
+  "model_preservation": {
+    "activation_dtype": "float32",
+    "activation_sites_observed": 198,
+    "all310_independent_native_base_bytes_unchanged": true,
+    "all_activation_observation_counts": 1679,
+    "base_dtype": "bfloat16",
+    "fresh_dense_M0_and_no_STATE1_or_study_checkpoint": true,
+    "parameter_aliases_preserved": 423,
+    "physical_zero_B_parity_exact": true,
+    "published_model_assets_independently_CPU_byte_hashed": true,
+    "qv_sites": 56,
+    "trainable_zero_adapter_factors": 112,
+    "zero_B_before_after": true
+  },
+  "native_study_training_qualified": false,
+  "numerics": {
+    "all_current_selected_LPs_finite_nonpositive": true,
+    "current_physical_zero_B_output_error": 0,
+    "max_limit": 0.03125,
+    "mean_limit": 0.01,
+    "prior_INFQ1_audit_sha256": "b655ec5d883d398714564a0d72e2f987ec061489eaec803e49bb234513f7965e",
+    "prior_largest_mean_LP_error": 1.1913944035768509e-06,
+    "prior_max_selected_LP_error": 2.5331974029541016e-06,
+    "same_byte_bound_qualified_helpers_and_profile": true,
+    "scope_limit": "Prior four-TRAIN repeat/prefix-bulk qualification transfers compute mechanics only. Current64 raw outputs were not independently rerun for argmax/logit correctness, graded, or enrolled."
+  },
+  "ordered_raw_row_receipts_sha256": "b7f8f505ab529aca796d9b3d4c74ec739610b937c38aa92f954d5859d7ddfb3f",
+  "paid_services": false,
+  "per_token_fragments_verified": 1677,
+  "preserved_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\short_m0_atomic_batch01_attempt1_20261005",
+  "prior_correct_enrollment_performed": false,
+  "protected_bank_access": false,
+  "quality_gain_established": false,
+  "raw_collection_mechanics_verified": true,
+  "recorded_at_utc": "2026-10-05T03:24:15.026142+00:00",
+  "resources": {
+    "CPU_freshness_limit_seconds": 0.2,
+    "CPU_samples": 3437,
+    "GPU_freshness_limit_seconds": 2,
+    "GPU_samples": 687,
+    "all_registered_amount_cadence_freshness_and_deadline_gates_verified": true,
+    "direct_terminal_GPU": {
+      "CUDA_initialized": true,
+      "free_bytes_final": 5020581888,
+      "peak_allocated_bytes": 2172190208,
+      "peak_reserved_bytes": 2323644416
+    },
+    "limits": "Sampled envelopes and successful pinned monitor checks support this one completed run; no broad sustained-training/native-fit conclusion.",
+    "maximum_CPU_sample_envelope_seconds": 0.0470000000022992,
+    "maximum_CPU_start_gap_seconds": 0.14099999999962165,
+    "maximum_GPU_sample_envelope_seconds": 0.01599999999962165,
+    "maximum_GPU_start_gap_seconds": 0.5149999999994179,
+    "maximum_heartbeat_gap_seconds": 0.14696669578552246,
+    "maximum_owned_tree_RSS_bytes": 1286451200,
+    "maximum_preceding_CPU_age_at_next_sample_publication_seconds": 0.15600000000267755,
+    "maximum_preceding_GPU_age_at_next_sample_publication_seconds": 0.5309999999990396,
+    "minimum_disk_free_bytes": 107108188160,
+    "minimum_sampled_GPU_free_bytes": 4488388608,
+    "minimum_sampled_host_available_bytes": 9438019584
+  },
+  "retention_certified": false,
+  "rows": 64,
+  "schema_version": 1,
+  "scoring_authorized": false,
+  "sha256": "5246ff75489bacf627069034ec9f433941edbc7e05a167b591d1c92974ef5782",
+  "source_commit": "d8179f54ef651b6f8a7053ab0748d46bd737b508",
+  "source_packet_sha256": "164b9efc77ddf8a237cbf4f3a19e0fae8e8e859faef22d512c2db514ee0de4f5",
+  "source_row_order_sha256": "b632b1316a871ba377237c163cc8b99c00299fe73b728ec79118df911a3ed961",
+  "status": "PASS_SCOPED_SHORT_M0_RAW_COLLECTION_MECHANICS_UNSCORED",
+  "supervisor_status": "SUPERVISED_WORKER_EXITED_ZERO",
+  "training_authorized": false,
+  "wall_seconds": {
+    "limit": 600,
+    "whole_scope": 355.7340000000004,
+    "worker": 342.34400000000096
+  },
+  "worker_status": "COMPLETE_SCOPED_SHORT_M0_RAW_COLLECTION_UNSCORED"
+}

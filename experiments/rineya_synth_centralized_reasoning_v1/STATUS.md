@@ -1,5 +1,35 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: first fixed M0 baseline batch completed and audited
+
+The [first atomic DEV batch config](configs/SYNTH_SHORT_M0_ATOMIC_BATCH01_A1.json)
+was reviewed at committed source `d8179f54ef651b6f8a7053ab0748d46bd737b508`.
+The owned supervisor completed all 64 ordered prompt-only rows in 355.734 seconds
+under unchanged resource, freshness and deadline checks. There were 1,679
+physical forwards / 570,293 input positions, including two zero-adapter parity
+forwards. All 1,999 registered API attempts returned; no backwards, optimizer
+steps, checkpoint restores or scores were performed. Thirty-three rows ended
+at EOS and 31 reached the 32-token generation cap; these remain distinct.
+
+The [independent terminal audit](evidence/short_m0_atomic_batch01_attempt1_independent_audit_20261005.json)
+passes 52,820 checks. All 1,677 token prefixes, final rows, generated-only decode,
+finite likelihoods and costs reconcile. Physical zero-B parity and all 310 base
+tensors remain unchanged. CPU/GPU freshness, resource floors, the whole-scope
+deadline and owned process/sampler/NVML/lease cleanup pass. This qualifies this
+one raw collection scope; it establishes no correctness, enrollment, retention,
+study-training or transfer result. The
+[1,754 raw files, 83 source snapshots and config](evidence/short_m0_atomic_batch01_attempt1_20261005)
+are preserved with byte hashes.
+
+Only 64 of the registered 384 atomic/RS DEV rows and none of the 768 short task
+guard rows have been captured. The remaining five atomic and twelve task batches
+require their own new configs, current admission and independent terminal audits.
+Full-context qualification and the language authority gate remain open. The
+[language handoff](LANGUAGE_GATE_HANDOFF.md) now correctly distinguishes the
+central program's authored/tokenized candidates from its absent qualified
+references, reviewers and ratings. Sustained training still lacks successful A/B
+continuation evidence. The M0/M1/M2 research question remains unanswered.
+
 ## 2026-10-05 UTC: recomputation A aborted its CPU freshness gate
 
 The [amended A scope](configs/SYNTH_BACKENDQ002_RECOMPUTE_A1.json) was contained
