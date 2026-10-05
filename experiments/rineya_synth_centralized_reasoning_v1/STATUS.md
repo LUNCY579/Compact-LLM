@@ -1,5 +1,23 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: recorded GPU chronology narrowed without a cause claim
+
+A [read-only chronology estimate](evidence/ram2_recorded_resource_chronology_estimate_20261005.json)
+binds the immutable247 CPU/heartbeat records,49 GPU samples and CUDA event journal.
+An empirical wall-minus-monotonic offset estimates the first GPU-free decrease
+at09:28:50.561–09:28:50.577 UTC, preceding the recorded CUDA initialization
+attempt at09:28:53.224 UTC. This is not a synchronized clock proof, process-memory
+attribution or exclusion of unlogged Torch import/preload behavior. It does not
+establish intrinsic fit or permit a retry. New native diagnosis would need its
+own source-bound phase/allocation observations and unchanged resource gates.
+
+The full27 independent auditor is being built with inert serialized-state
+inspection and separate CPU-only fixtures. Long split review found mutable-budget
+and extra-call acceptance in the14-control candidate; its rejected predecessor
+is being preserved before fixed-budget/exact-role-prefix corrections. Neither
+unfinished pipeline grants native authority. Original helpers and both historical
+failure attempts remain retained.
+
 ## 2026-10-05 UTC: full27 qualification implementation integrated
 
 The [full27 qualification](FULL27_QUALIFICATION_001.md) is integrated from
