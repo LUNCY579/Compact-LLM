@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: actual inert registered loader installation verified
+
+The [private registered-loader milestone](INERT_REGISTERED_LOADER_CPU_001.md)
+passes29 Root and29 independent controls. Actual finder installation, selected
+inert source import/execution and removal run; capability/layout/source mutation
+and unregistered import refusals pass. Native path validation remains unchanged.
+
+This is private CPU importer mechanics only. Public main/registered context and
+loader orchestration is being implemented; actual runtime/bootstrap/DLL/owned
+resource/GPU qualification remains open. No native job, M0 row, scoring or study
+training ran; the full transfer/preservation question remains unanswered.
+
 ## 2026-10-05 UTC: registered selected-source reader boundary verified
 
 The [compiled-entry reader](REGISTERED_SOURCE_READER_CPU_001.md) passes six
