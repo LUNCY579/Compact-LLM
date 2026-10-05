@@ -51,8 +51,14 @@ All [13 root controls](evidence/long_native_qualification_root_cpu_validation_20
 pass in5.190seconds with unchanged source and17 original helper hashes. CPU proof
 does not establish physical native parity, RNG/source/OS authority or model fit.
 
-Remaining work: freeze every executing tokenizers/Jinja/MarkupSafe source/binary
-and template input, implement the independent terminal/cross-process token/LP/
+The [CPU encoder inventory](ENCODER_INVENTORY_001.md) binds the exact45-file
+tokenizers/Jinja/MarkupSafe package superset and template inputs. Complete
+standard-library runtime closure remains false; final admission rejects a
+missing or false declaration. The16 long controls include resealed incomplete
+registration rejection. No final registration or native manifest was written.
+
+Remaining work: review and bind the additive standard-library runtime roster,
+implement the independent terminal/cross-process token/LP/
 cost/state/resource/cleanup auditor, then qualify actual owned long scopes with
 fresh resource admission. D001's no-model observation is insufficient for that.
 Study training, guard enrollment, scoring, transfer and retention remain closed.

@@ -104,6 +104,8 @@ def encoder_registration(value):
     body=native.read_json(path)
     require(body['kind']=='SYNTH_LONG_ENCODER_RUNTIME_REGISTRATION_V1' and body['sha256']==digest({k:v for k,v in body.items() if k!='sha256'})
         and set(body['runtime_pins'])==set(encoder_runtime_paths()),'exact executing encoder source/binary roster')
+    require(body.get('complete_runtime_execution_closure_established') is True,
+        'complete reviewed encoder and stdlib execution closure required; package-only candidate cannot dispatch')
     return deepcopy(body)
 
 

@@ -264,6 +264,16 @@ assert not any(n in sys.modules for n in ('torch','transformers','tokenizers'))
         with self.assertRaisesRegex(ValueError,'additive AST'):contract.validate_runtime_pins(inherited)
         ast_key=next(key for key in runtime if Path(key).name=='ast.py');bad=deepcopy(runtime);bad[ast_key]='0'*64
         with self.assertRaisesRegex(ValueError,'additive AST'):contract.validate_runtime_pins(bad)
+    def test_package_only_encoder_candidate_cannot_dispatch_when_resealed(self):
+        for flag in (None,False):
+            with tempfile.TemporaryDirectory(dir=HERE) as root:
+                package=Path(root);directory=package/'artifacts/long_native_audit_registrations';directory.mkdir(parents=True)
+                body={'kind':'SYNTH_LONG_ENCODER_RUNTIME_REGISTRATION_V1','runtime_pins':{}}
+                if flag is not None:body['complete_runtime_execution_closure_established']=flag
+                body=core.seal(body);path=directory/'CPU_FIXTURE_NOT_REGISTRATION.json';path.write_text(core.canonical(body))
+                value={'path':str(path),'sha256':hashlib.sha256(path.read_bytes()).hexdigest()}
+                with patch.object(contract,'PACKAGE',package),patch.object(contract,'encoder_runtime_paths',return_value=[]):
+                    with self.assertRaisesRegex(ValueError,'package-only'):contract.encoder_registration(value)
 
 
 if __name__=='__main__':unittest.main()

@@ -1,5 +1,25 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: scoped CPU encoder inventory integrated
+
+The [encoder inventory](ENCODER_INVENTORY_001.md) binds the exact45-file
+tokenizers/Jinja2/MarkupSafe package superset, four assets, template, binding
+receipts and reviewed TRAIN packet. The
+[root validation](evidence/encoder_inventory_root_cpu_validation_20261005.json)
+passes10 inventory and16 long-scope CPU controls;17 original helpers remain
+unchanged. The [reviewed history](evidence/encoder_inventory_reviewed_cpu_20261005)
+retains18 staged files, candidates001–004, independent reviews and scope correction.
+
+Complete runtime execution closure remains explicitly false because the
+inherited65 pins omit standard-library sources used by the encoder. Final
+registration admission now rejects missing/false declarations; its
+[independent16-control review](evidence/encoder_incomplete_gate_independent_review_20261005.json)
+passes. The next finite additive roster must bind standard-library Python files,
+extensions and interpreter binaries and be consumed by reviewed contract/worker
+code. No final encoder registration, long native config, encoder/model/GPU
+execution or launch authority was created. Independent long auditing, current
+model resource qualification, M0 completion and language authority remain open.
+
 ## 2026-10-05 UTC: long-scope per-step numerical evidence retained
 
 The long bulk scope now preserves every compared token, position, argmax and
