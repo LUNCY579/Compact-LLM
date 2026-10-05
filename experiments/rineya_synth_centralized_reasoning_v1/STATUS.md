@@ -1,5 +1,24 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: remaining M0 batch configs prepared
+
+Fixed [batch05](configs/SYNTH_SHORT_M0_ATOMIC_BATCH05_PHASE3_A1.json) and
+[batch06](configs/SYNTH_SHORT_M0_ATOMIC_BATCH06_PHASE3_A1.json) retain the original
+whole64 prompt-only slices256:320 and320:384. Only seven batch-specific fields
+change from reviewed Phase3 batch04. The actual public plan/select and phase
+validators pass in separate source/JSON preparation and Root review; all131
+sources and runtime65/decoder17/data5/model7 maps, profile, math, authority and
+resource floors remain unchanged. The [reviewed metadata history](evidence/phase3_remaining_batch_configs_reviewed_20261005/ROOT_PRESERVATION.json)
+retains the candidate diff and exact owned config write checks.
+
+Each scope keeps512 context,32 generation and2050 maximum forwards; total maximum
+input positions are757432 and744084 respectively. No worker, model, decoder,
+runtime binary or host/GPU probe ran in preparation. Neither config is a result.
+The final clean launch HEAD, exact owned audit inventories and independent
+inventory review still need freezing; fresh preflight/resource admission,
+terminal preservation and full independent audit remain mandatory for each.
+M0 remains256/384 raw rows and unscored; the three-arm question is unanswered.
+
 ## 2026-10-05 UTC: Phase3 batch04 native raw audit passed
 
 The [new batch04 receipt](evidence/short_m0_atomic_batch04_phase3_attempt1_20261005_independent_audit_20261005.json)
