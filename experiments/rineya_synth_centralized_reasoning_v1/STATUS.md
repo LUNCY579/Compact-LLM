@@ -1,5 +1,37 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: fresh B stopped on witness representation; state bytes matched
+
+The [frozen B config](configs/SYNTH_BACKENDQ003_WORKER_RAM_B1.json) passed current
+review and fresh owned admission, then exited with worker failure in 52.047
+seconds. Its [independent failure audit](evidence/backendq003_worker_ram_B_attempt1_independent_failure_audit_20261005.json)
+passes 4,170 checks. Native C9 load/restore and the internal bitwise restore check
+returned; the later full-witness Python equality check failed before any reference
+or training row. There were two parity forwards / 390 positions, six base checks,
+56 no-grad decoder records and 425 returned API calls; no reference gradients,
+backwards or optimizer update ran. All byte/resource/freshness/deadline and owned
+cleanup closures pass. [Fourteen raw files and 26 source snapshots](evidence/backendq003_worker_ram_B_attempt1_20261005)
+are preserved. Fresh-process continuation remains unqualified.
+
+Stored restored W9 and A's detached W9 are byte-identical: 78,135 bytes,
+SHA256 `637c150918b43162a12de09c5f029328850775a08927f9ea5b9798749d02416d`.
+All factor/Adam/RNG hashes and metadata agree. Two read-only diagnoses identify
+the live optimizer `betas` tuple versus predecessor-JSON list as the representation
+difference. C9 pickle inspection confirms tuple betas without deserializing it;
+the rejected live object's Python types were not separately persisted, so that
+causal inference remains explicitly source-backed rather than a replay result.
+
+The [reviewed CPU repair](evidence/witness_normalization_cpu_20261005/preservation_receipt.json)
+adds only list normalization to deep-copied detached-witness betas. Raw optimizer
+and checkpoint state, tensor hashes and strict full-witness comparisons remain
+unchanged. Five CPU tests and four negative subcontrols reproduce the old failure,
+pass persisted A-to-B comparison and reject changed beta/tensor/RNG/cursor values.
+The patch is staged, not integrated. Because source hashes participate in the
+qualification recipe, its eventual integration requires fresh A then B under a
+new source-bound recipe; no old-C9 reuse gateway or unchanged failed-B retry is
+authorized. Native continuation, study training and the full comparison are still
+pending. The completed M0 baseline remains 192/384.
+
 ## 2026-10-05 UTC: Q003 phase A completed and independently audited
 
 After the denied attempt ended without a worker, a read-only GPU observation

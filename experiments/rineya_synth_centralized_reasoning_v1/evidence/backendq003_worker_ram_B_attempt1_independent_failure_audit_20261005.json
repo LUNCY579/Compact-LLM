@@ -1,0 +1,368 @@
+{
+  "B_W10_vs_A_W10_verified": false,
+  "DEV_collection_authorized": false,
+  "accounting": {
+    "API_scope": "registered_API_boundaries;internal_ATen_operations_not_individually_metered",
+    "checkpoint_restore_protocol_returned": 1,
+    "decoder_noGrad_records": 56,
+    "decoder_original_forward_recompute_records": 0,
+    "failed": 0,
+    "native_base_content_checks_completed": 6,
+    "native_base_content_checks_planned_B": 9,
+    "native_restore_component_operations": {
+      "checkpoint_CPU_RNG_restore": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "checkpoint_CUDA0_RNG_restore": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "checkpoint_adapter_restore": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "checkpoint_bitwise_restore_verify": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "checkpoint_gradient_clear": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "checkpoint_loaded_state_validate": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "checkpoint_optimizer_restore": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "checkpoint_python_RNG_restore": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "checkpoint_read_verified_bytes": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "checkpoint_weights_only_load": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      }
+    },
+    "no_operations_erased_by_external_witness_failure": true,
+    "pending": 0,
+    "physical_forward_calls": 2,
+    "physical_input_positions": 390,
+    "primitive_operations_manifest_sha256": "3c1458c59e9e42e91640f6ac1006d884b769876ec530a850b6f84f3c245192cf",
+    "protocol_operations": {
+      "backward": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "checkpoint_restore": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "checkpoint_save": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "clip": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "forward": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "gradient_reset": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "loss": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "reference_control": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      },
+      "step": {
+        "attempted": 0,
+        "failed": 0,
+        "pending": 0,
+        "returned": 0
+      }
+    },
+    "reference_forward_autograd_or_gradient_comparison_calls": 0,
+    "registered_API_attempted": 425,
+    "returned": 425,
+    "training_forward_back_step_calls": 0
+  },
+  "attempt_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq003_worker_ram_B_attempt1",
+  "audit_actual_restore_replay_Torch_model_GPU_execution": false,
+  "checks_passed": 4170,
+  "cleanup": {
+    "GPU_telemetry_cleanup_verified": true,
+    "assigned_before_resume": true,
+    "job_closed_kill_on_close": true,
+    "lease_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\2a4ea0ec20714c1585522ea057ef9c2e",
+    "lease_terminal_same_bytes_as_supervisor": true,
+    "monitor_started_before_resume": true,
+    "new_owned_B_process_and_Job_vs_A": true,
+    "owned_worker_identity_currently_alive": false,
+    "profile_forward_attributes_restored": true,
+    "sampler_threads_terminal_verified": true,
+    "unjoined_sampler_threads": []
+  },
+  "comparison_diagnosis": {
+    "canonical_content_and_digest_reproduction_equal": true,
+    "direct_equality_reproduction": false,
+    "limits": "Rejected live Python container types were not separately persisted. This is a frozen-source-supported, metadata-only reproduction; no live-object/model replay. No tensor-byte difference is observed in stored witnesses; do not claim completed fresh-process continuation or reference-gradient qualification.",
+    "reproduced_live_type": "tuple",
+    "reproduced_metadata_only_path": "/optimizer_groups/0/betas",
+    "source_byte_pins": {
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_core.py": "80ebaf6b60894ea9e0da24471d58fc3ec5af9085674d3af9babb08fe2563b68e",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\backend_qual_native.py": "b0fd0129200de773e5b340b852f1940b075d82076786c0e9dbc19d6074639566",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\native_mechanics.py": "e00a4c8ffe539b047a457a1aca49fd5998f053f9a5485a65d9a9153f4cd1986d"
+    },
+    "source_locations": {
+      "backend_qual_core.py": 110,
+      "backend_qual_native.py": 126,
+      "native_mechanics.py": 347
+    },
+    "source_supported_inference": "Live optimizer beta tuple survives deepcopy in returned witness; prior A witness was loaded as JSON arrays. Direct Python equality can reject tuple-versus-list metadata while canonical serialized content remains identical.",
+    "stored_A_and_B_type": "list"
+  },
+  "conclusion": "Failed B attempt retained. Actual native C9 restore and inner bitwise check returned; stored restored W9 equals A canonically, with a source-supported tuple/list direct-comparison issue. No reference-gradient control or update10 continuation ran; no fresh-resume/study qualification is established.",
+  "config_body_sha256": "ff3175e88e5699e5269223a4b5417f6575b65a7d73b1debff485304d616e101a",
+  "config_file_sha256": "0fd0d8031d5d71338f91f0948f22df24e6ce8dc8095c0e969d6dae6bf4bc31b6",
+  "config_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\configs\\SYNTH_BACKENDQ003_WORKER_RAM_B1.json",
+  "fresh_process_resume_qualified": false,
+  "full27_qualified": false,
+  "full_resumed9_qualified": false,
+  "hash_closure": {
+    "after": {
+      "bound_A_evidence": {
+        "entries": 5,
+        "manifest_sha256": "2f976adab9bd52c93772eb62ca7935ccfec2d585fddd3f02bae027b46590e5e8"
+      },
+      "config": {
+        "bytes": 877382,
+        "sha256": "0fd0d8031d5d71338f91f0948f22df24e6ce8dc8095c0e969d6dae6bf4bc31b6"
+      },
+      "data": {
+        "entries": 8,
+        "manifest_sha256": "2b4a8fe47fb4d1490abf485d2e105d3a2f38a232f804fdf50df33e81c618e744"
+      },
+      "lease": {
+        "entries": 4,
+        "manifest_sha256": "eaa903938c9744b18457ae518755a1cbbd4e549ad76d0b8478d7b4124d92ea16"
+      },
+      "model": {
+        "entries": 7,
+        "manifest_sha256": "dd2e71c23462cb6b6c8d412368214f9b35f3fee4edd7e1a6dedefd0cf5d5fed4"
+      },
+      "preservation_receipt": {
+        "bytes": 6893,
+        "sha256": "a93208c1aefa4a188d73d2a20ff57dcf988deab806383c49f7f3c2799a58726c"
+      },
+      "preserved_config": {
+        "bytes": 877382,
+        "sha256": "0fd0d8031d5d71338f91f0948f22df24e6ce8dc8095c0e969d6dae6bf4bc31b6"
+      },
+      "preserved_raw": {
+        "entries": 14,
+        "manifest_sha256": "6d3bfafe0e16a3c9674f413cb84bbc42aceede77375a729ed7bb623d03a34f5c"
+      },
+      "raw": {
+        "entries": 14,
+        "manifest_sha256": "6d3bfafe0e16a3c9674f413cb84bbc42aceede77375a729ed7bb623d03a34f5c"
+      },
+      "runtime": {
+        "entries": 83,
+        "manifest_sha256": "b64a1657d11cd6aba840a61e0bca1d5baceeae158bcd1fdc0834f645da87a93e"
+      },
+      "source": {
+        "entries": 26,
+        "manifest_sha256": "59f8b5a540e40921b0c545179e458a986162d87a0bb0539d944640f6ad33159d"
+      },
+      "source_snapshots": {
+        "entries": 26,
+        "manifest_sha256": "c7f3c43ed89d56924d096efc158700a39794455907ae6b28eb57d305ba7758f5"
+      }
+    },
+    "all14_raw26_source83_runtime8_data7_model26_snapshots_and_A_linked_bytes_verified": true,
+    "all_equal": true,
+    "before": {
+      "bound_A_evidence": {
+        "entries": 5,
+        "manifest_sha256": "2f976adab9bd52c93772eb62ca7935ccfec2d585fddd3f02bae027b46590e5e8"
+      },
+      "config": {
+        "bytes": 877382,
+        "sha256": "0fd0d8031d5d71338f91f0948f22df24e6ce8dc8095c0e969d6dae6bf4bc31b6"
+      },
+      "data": {
+        "entries": 8,
+        "manifest_sha256": "2b4a8fe47fb4d1490abf485d2e105d3a2f38a232f804fdf50df33e81c618e744"
+      },
+      "lease": {
+        "entries": 4,
+        "manifest_sha256": "eaa903938c9744b18457ae518755a1cbbd4e549ad76d0b8478d7b4124d92ea16"
+      },
+      "model": {
+        "entries": 7,
+        "manifest_sha256": "dd2e71c23462cb6b6c8d412368214f9b35f3fee4edd7e1a6dedefd0cf5d5fed4"
+      },
+      "preservation_receipt": {
+        "bytes": 6893,
+        "sha256": "a93208c1aefa4a188d73d2a20ff57dcf988deab806383c49f7f3c2799a58726c"
+      },
+      "preserved_config": {
+        "bytes": 877382,
+        "sha256": "0fd0d8031d5d71338f91f0948f22df24e6ce8dc8095c0e969d6dae6bf4bc31b6"
+      },
+      "preserved_raw": {
+        "entries": 14,
+        "manifest_sha256": "6d3bfafe0e16a3c9674f413cb84bbc42aceede77375a729ed7bb623d03a34f5c"
+      },
+      "raw": {
+        "entries": 14,
+        "manifest_sha256": "6d3bfafe0e16a3c9674f413cb84bbc42aceede77375a729ed7bb623d03a34f5c"
+      },
+      "runtime": {
+        "entries": 83,
+        "manifest_sha256": "b64a1657d11cd6aba840a61e0bca1d5baceeae158bcd1fdc0834f645da87a93e"
+      },
+      "source": {
+        "entries": 26,
+        "manifest_sha256": "59f8b5a540e40921b0c545179e458a986162d87a0bb0539d944640f6ad33159d"
+      },
+      "source_snapshots": {
+        "entries": 26,
+        "manifest_sha256": "c7f3c43ed89d56924d096efc158700a39794455907ae6b28eb57d305ba7758f5"
+      }
+    },
+    "individual_maps_bound_by": "Exact config and canonical preservation receipt retain every path/hash/byte; compact manifest digests bind complete independently rehashed maps.",
+    "preservation_receipt_body_sha256": "b4f9162287b779f2205a676974d4dffa93b4d924ef320f21cd45a268eef985f8",
+    "preservation_receipt_file_sha256": "a93208c1aefa4a188d73d2a20ff57dcf988deab806383c49f7f3c2799a58726c"
+  },
+  "id": "SYNTH-BACKENDQ003-B-ATTEMPT1-INDEPENDENT-FAILURE-AUDIT",
+  "native_update10_continuation_executed": false,
+  "new_native_attempt_or_retry_performed": false,
+  "paid_services": false,
+  "preserved_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\backendq003_worker_ram_B_attempt1_20261005",
+  "protected_bank_access": false,
+  "qualification_recipe_sha256": "e8109b21c2c8535143ab8bee9e3df044218c459dce9f6f5d8eec0a922bfa1db5",
+  "quality_gain_established": false,
+  "recorded_at_utc": "2026-10-05T06:49:49.395803+00:00",
+  "reference_gradient_comparison_qualified": false,
+  "resources": {
+    "CPU_maximum_preceding_age_at_next_publication_seconds": 0.14100000000325963,
+    "CPU_maximum_sample_envelope_seconds": 0.0,
+    "CPU_maximum_start_gap_seconds": 0.14100000000325963,
+    "CPU_samples": 340,
+    "GPU_maximum_preceding_age_at_next_publication_seconds": 0.5159999999959837,
+    "GPU_maximum_start_gap_seconds": 0.5159999999959837,
+    "GPU_samples": 67,
+    "all_amount_freshness_and600_deadline_gates_passed": true,
+    "direct_terminal_GPU": {
+      "CUDA_initialized": true,
+      "free_bytes_final": 5156896768,
+      "peak_allocated_bytes": 2095523840,
+      "peak_reserved_bytes": 2187329536
+    },
+    "maximum_heartbeat_gap_seconds": 0.12615680694580078,
+    "maximum_owned_tree_RSS_bytes": 1261416448,
+    "minimum_disk_free_bytes": 103460843520,
+    "minimum_sampled_GPU_free_bytes": 4874100736,
+    "minimum_sampled_host_available_bytes": 7202889728
+  },
+  "restore_evidence": {
+    "C9_descriptor_file_sha256": "ed8ac7b1d117ac583970f916181dac103425b3709ec100a766d63d53fbdd06a1",
+    "C9_metadata_sha256": "bdeeeb59473cfce3473e6c72dada1ca826f6939f0af71c4faefedf9327e84961",
+    "actual_checkpoint_bitwise_restore_verify_returned": true,
+    "actual_native_restore_invoked_in_owned_B_attempt": true,
+    "all112_factor_and_Adam_and_Python_CPU_CUDA0_RNG_hashes_equal": true,
+    "distinct_proof_scopes": "Pinned native backend verified restored tensors/moments/gradients/RNG against serialized C9 and returned. The core then rejected direct equality with independently detached A witness; these are separate checks. Matching stored JSON does not retroactively make the failed B scope pass.",
+    "external_in_memory_full_witness_comparison_rejected": true,
+    "gradients_all_None": true,
+    "prior_A_W9_body_sha256": "4d9e30266a37d5941e531e371fecbebe87d1ec8ee42eeaa3b983fa7873648c5b",
+    "restored_W9_body_sha256": "4d9e30266a37d5941e531e371fecbebe87d1ec8ee42eeaa3b983fa7873648c5b",
+    "restored_witness_file": {
+      "bytes": 78135,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq003_worker_ram_B_attempt1\\stage_restored_c9.json",
+      "sha256": "637c150918b43162a12de09c5f029328850775a08927f9ea5b9798749d02416d"
+    },
+    "source_bound_C9_binding": {
+      "completed_updates": 9,
+      "consumed_occurrences": 180,
+      "consumed_order_sha256": "9bec15f76da44dacf37270456f7c99527fdad78bc45b0e439ec2278cd660580b",
+      "input_tokens": 42592,
+      "learning_rate": 7.2e-05,
+      "next_update_ordinal": 10,
+      "supervised_tokens": 1916
+    },
+    "stored_JSON_field_differences": [],
+    "stored_restored_and_A_JSON_objects_exactly_equal": true
+  },
+  "schema_version": 1,
+  "scoring_authorized": false,
+  "sha256": "3ddffb5992c0f67d22c9efb68a463a4c5723cd59c4c2a4006690ea4d34da6794",
+  "source_commit": "52822ca539145bc84a0924f2c6bfbe73a88cfe4b",
+  "source_packet_sha256": "67744aaf1c77816b599496e684ecb85b673ee14e1b8bd44547b14faaef001d04",
+  "status": "VERIFIED_FAILED_FULL_WITNESS_COMPARISON_AFTER_RETURNED_NATIVE_C9_RESTORE_NO_CONTINUATION_QUALIFICATION",
+  "study_training_authorized": false,
+  "study_warmstart_allowed": false,
+  "terminal": {
+    "error": {
+      "message": "fresh-process C9 state must match independently detached A witness bitwise",
+      "type": "ValueError"
+    },
+    "partial_outputs_frozen": true,
+    "supervisor_status": "SUPERVISED_WORKER_FAILED",
+    "whole_seconds": 52.04699999999866,
+    "worker_returncode": 2,
+    "worker_seconds": 25.0,
+    "worker_status": "FAILED_SCOPED_BACKEND_QUALIFICATION"
+  }
+}
