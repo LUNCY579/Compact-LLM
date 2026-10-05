@@ -1,5 +1,16 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: loader order mismatch reproduced without model work
+
+The [independent negative control](evidence/loader_receipt_order_negative_control_20261005.json)
+reproduces that canonical JSON asset-map order differs from the pinned loader's
+actual source order despite the same exact seven assets. The Phase3 auditor's
+loader replay must use the source order and independently validate map contents;
+receipt dictionary iteration cannot establish execution order. First-copy tensor
+order follows verified safetensor offsets, and final digest order needs its
+source-defined native inventory evidence. This changes the audit implementation
+before any launch. No model/runtime binary, encoder or GPU was read or executed.
+
 ## 2026-10-05 UTC: remaining native audit gaps identified from source
 
 The [source-bound audit review](evidence/audit_implementation_gap_review_20261005.json)
