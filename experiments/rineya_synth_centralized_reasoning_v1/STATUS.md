@@ -1,5 +1,24 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: finite standard-library byte inventory integrated
+
+The [stdlib inventory](STDLIB_INVENTORY_001.md) binds779 runtime/source files
+totaling36,184,313 bytes, including all five valid empty Python sources, the
+executing Hermes launcher and the exact known interpreter junction identity.
+Two-pass hashing and independent current-byte reconstruction pass; optional
+python311.zip is absent and explicitly bound. Initial junction rejection is
+retained with the narrowly declared physical-directory successor.
+
+All [12 root CPU controls](evidence/stdlib_inventory_root_cpu_validation_20261005.json)
+pass with prior unrelated tokenizer imports; the
+[10-file reviewed history](evidence/stdlib_inventory_reviewed_cpu_20261005)
+retains the actual candidate, independent reviews, fresh-root controls and failure
+history. This is byte preparation only. Additive registration/contract/worker
+consumption and the final native audit driver remain unimplemented. No final
+registration, native config, encoder/model/framework/GPU execution or training
+result was created. Current model fit, complete M0 and language authority remain
+unresolved; the condition-diversity question is unanswered.
+
 ## 2026-10-05 UTC: independent long validators and CPU integration pass
 
 The [independent long validators](LONG_AUDIT_VALIDATORS_001.md) are integrated

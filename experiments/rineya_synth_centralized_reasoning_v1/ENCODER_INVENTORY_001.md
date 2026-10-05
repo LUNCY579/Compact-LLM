@@ -25,7 +25,9 @@ Lib Python files excluding site-packages, any standard-library ZIP, DLLs Python
 extensions and the interpreter runtime binaries. A size-only observation found
 738 Python files totaling12,257,785 bytes and34 DLLs files totaling17,623,552
 bytes. This is not a byte registration or a complete machine-trust claim.
-Contract and worker consumption of those additional pins remain to be reviewed.
+The [finite stdlib byte inventory](STDLIB_INVENTORY_001.md) now binds779 files,
+including the interpreter runtime and launcher. Contract and worker consumption
+of those additional pins remain to be reviewed; no registration authority follows.
 
 The [root validation](evidence/encoder_inventory_root_cpu_validation_20261005.json)
 passes10 inventory controls and16 long-scope controls with17 original helpers
