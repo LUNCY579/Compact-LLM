@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: actual producer-source CPU milestone verified
+
+The [producer-source fixture path](OWNED_PRODUCER_CPU_001.md) passes six
+producer/schema plus22 owned/replay controls, independently reproduced by Root
+with unchanged11-source hashes, no skips or framework imports. Six focused
+independent controls also pass. Actual emitted core/container bytes enter the
+auditor unchanged; CPU fixture identity is enforced. Historical relabel tests
+are explicitly excluded and retained.
+
+This acceptance covers only the source-producer CPU step. Full outer native
+factory/context/filesystem composition, loader/bootstrap/runtime qualification
+and current binary/owned admission remain open. No native entry or old helper
+changed, no model/probe/driver action ran, and no M0 row was added. Continue the
+actual workflow; the original three-arm goal remains active and unproved.
+
 ## 2026-10-05 UTC: additive offline quality packet owner-reviewed
 
 The [supplemental readiness/measurement package](SUPPLEMENTAL_QUALITY_PACKET_001.md)
