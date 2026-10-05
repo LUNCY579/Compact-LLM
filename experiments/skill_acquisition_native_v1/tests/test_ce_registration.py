@@ -80,6 +80,35 @@ class RegistrationTests(unittest.TestCase):
         b.validate_backend_spec(audit)
         self.assertFalse(scope['approved']); self.assertFalse(scope['qualification_authorized'])
 
+    def test_runtime_anchor_composed_reservations_fit_stage_cap(self):
+        doc=self.documents(); spec=doc['SCOPE.json']['qualifier_accounting']
+        profiles=spec['operation_profiles']; cap=spec['stage_caps']['runtime_anchor']
+        # The native loader has four outer input spans and three observed-file
+        # spans. The Q ledger reserves the complete profile for each, even
+        # when the inner file is smaller. Thirty-two probes and 1024 metadata
+        # events conservatively cover this fixed stage's guards/publication.
+        counts={'cleanup':1,'module_import':1,'configured_runtime':1,'process_rng_seed':1,
+            'input_io':7,'tokenizer_load':1,'model_load':1,'inventory_configuration':1,
+            'fingerprint':1,'qualification_artifact':1,'resource_probe':32,'resource_cuda_probe':32}
+        totals={key:sum(profiles[kind][key]*count for kind,count in counts.items())
+            for key in ('read_bytes_upper','identity_hash_attempts_upper','identity_hash_bytes_upper')}
+        totals['identity_hash_attempts_upper']+=1024
+        totals['identity_hash_bytes_upper']+=cap['metadata_bytes_upper']
+        self.assertGreater(totals['identity_hash_bytes_upper'],
+            self.proposal['qualification']['stage_caps']['runtime_anchor']['identity_hash_bytes_upper'])
+        for field,key in (('read_bytes_upper','io_read_bytes_upper'),
+                ('identity_hash_attempts_upper','identity_hash_attempts_upper'),
+                ('identity_hash_bytes_upper','identity_hash_bytes_upper')):
+            self.assertLessEqual(totals[field],cap[key])
+        self.assertEqual(cap['identity_hash_bytes_upper'],64*r.GIB)
+        old=copy.deepcopy(self.proposal['qualification']['stage_caps']['runtime_anchor'])
+        old['identity_hash_bytes_upper']=cap['identity_hash_bytes_upper']
+        self.assertEqual(cap,old)
+        self.assertEqual(spec['global_caps'],self.proposal['qualification']['global_caps'])
+        self.assertEqual(spec['physical_wall_seconds_upper'],19200)
+        self.assertFalse(doc['SCOPE.json']['qualification_authorized'])
+        self.assertNotIn('torch',sys.modules); self.assertNotIn('transformers',sys.modules)
+
     def test_foreign_choices_and_changed_source_inputs_cannot_build_selected_packet(self):
         bad=copy.deepcopy(self.decision); bad['choice']='paired_canonical_permuted'
         with self.assertRaises(ValueError): self.documents(decision=bad)

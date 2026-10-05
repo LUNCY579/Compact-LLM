@@ -212,8 +212,13 @@ def build_documents(proposal,decision,decision_ref,proposal_ref,prior_receipt,so
     delta_readers={role:dict(reader) for role in ('base','warm','output')}
     envelope=copy.deepcopy(proposal['qualification']['global_caps'])
     stage_caps=copy.deepcopy(proposal['qualification']['stage_caps'])
-    # Native model/CP reservations are the unchanged proposal hard caps. Outer
-    # bootstrap/process/publication allowances are separately proposed below.
+    # Attempt12 rejected model_load before allocation: its 32 GiB hash
+    # reservation cannot share a 32 GiB stage cap with the reference reads,
+    # tokenizer, inventory and final fingerprint. This is a proposed stage
+    # amendment; operation profiles, global caps and physical deadline stay
+    # fixed. A fresh qualification grant must review this composed allowance.
+    stage_caps['runtime_anchor']['identity_hash_bytes_upper']=64*GIB
+    # Outer bootstrap/process/publication allowances are separately proposed.
     scope={'schema':qualification.SCOPE,'role':'qualification_only','approved':False,'qualification_authorized':False,
         'production_training_authorized':False,'evaluation_authorized':False,'arm':'canonical','choice_sha256':decision_ref['sha256'],
         'static_recipe_sha256':proposal['static_recipe_sha256'],'native_execution_stages':sorted(authority.STAGES),
