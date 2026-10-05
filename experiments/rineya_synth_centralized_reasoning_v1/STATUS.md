@@ -1,5 +1,22 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: amended backend and final-adapter helpers verified on CPU
+
+The [recomputation amendment](BACKEND_RECOMPUTATION_AMENDMENT_002.md) is integrated
+with explicit decoder-region counts, 82 runtime pins and direct predecessor
+region/cost verification. Its [staging evidence](evidence/backend_recompute_scope_cpu_20261005)
+and 52 combined root backend controls pass. The
+[final-adapter helper](final_adapter_inference.py) requires a complete source-bound
+final27/540 three-chunk chain before native restoration, copies only q/v factors,
+privately validates archive RNG and preserves caller inference RNG. Its two
+CPU controls and [historical/successor evidence](evidence/final_adapter_inference_cpu_20261005)
+are retained; native/CUDA restoration remains unqualified.
+
+The complete [571-test CPU run](evidence/recompute_adapter_full_cpu_validation_20261005.json)
+passes without skips or source changes. Fresh resource admission and new scoped
+native qualification still precede sustained/resume claims. No baseline/study
+score or transfer/retention result exists; language-review authority is missing.
+
 ## 2026-10-05 UTC: counted full recomputation candidate integrated
 
 The [candidate installer](checkpoint_successor_profile.py) preserves evaluation

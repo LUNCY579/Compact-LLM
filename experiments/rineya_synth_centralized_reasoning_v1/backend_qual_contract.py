@@ -9,23 +9,28 @@ from __future__ import annotations
 from copy import deepcopy
 from datetime import datetime
 import json
+import hashlib
+import math
 import os
 from pathlib import Path
 import subprocess
 import sys
+import sysconfig
+from importlib.metadata import distribution
 
 HERE=Path(__file__).resolve().parent
-PACKAGE=HERE.parents[1] if HERE.name=="backend_qual_work" and HERE.parent.name=="artifacts" else HERE
+PACKAGE=HERE.parents[1] if HERE.name in ("backend_qual_work","backend_recompute_scope_work") and HERE.parent.name=="artifacts" else HERE
 ROOT=PACKAGE.parents[1]
 for location in (PACKAGE,HERE):
-    if str(location) not in sys.path: sys.path.insert(0,str(location))
+    if str(location) in sys.path: sys.path.remove(str(location))
+    sys.path.insert(0,str(location))
 import native_contract as native
 import study_schedule as schedule
 from native_loader import ASSET_PINS,MODEL_DIR
 from rs_contract import canonical,digest,require
 
-ID="SYNTH-BACKENDQ-001"
-VERSION="synth-backend-crossprocess-qualification-1"
+ID="SYNTH-BACKENDQ-002-FULLRECOMPUTE"
+VERSION="synth-backend-crossprocess-full-recompute-qualification-2"
 SCOPE="backend_crossprocess_native_qualification_only"
 WITNESS_KIND="SYNTH_BACKEND_QUAL_WITNESS_NOT_STUDY_CHECKPOINT"
 AUTHORIZATION={"scope":SCOPE,"owner_authority":"user_goal_and_delegated_decisions_2026-10-04",
@@ -40,6 +45,99 @@ INFERENCE_CONFIG_SHA="a26897bfbe36ce284221c6f4182c487d0d76287e708fe84de75f4e57fc
 INF_EVIDENCE=PACKAGE/"evidence/infq001_attempt1_20261004"
 NATIVE7_EVIDENCE=PACKAGE/"evidence/nq001_attempt7_20261003"
 PROFILE="BF16_RESIDENT_FP32_ACTIVATIONS_QV8_V1"
+CHECKPOINT_PROFILE="BF16_RESIDENT_FP32_QV8_EVAL28_FULL_NONREENTRANT_RECOMPUTE_V2"
+INSTALLER_SHA="1cf3cad34dfb05a73c6930fc29ac72538b3c38a15ad0772a8b5378eef55aa04f"
+CPU_PROOF=PACKAGE/"artifacts/checkpoint_successor_work/cpu_full_recompute_identity_successor_20261005.json"
+CPU_PROOF_SHA="1e238147e3cb168f853a44e03c1c23f4668c8e25fbfa4dd5ebabc06b2f918f7f"
+CHECKPOINT_PRIMARY_FILES={"torch":("torch/utils/checkpoint.py","torch/utils/_pytree.py","torch/utils/_python_dispatch.py",
+    "torch/fx/traceback.py","torch/_functorch/_aot_autograd/functional_utils.py","torch/testing/_internal/logging_tensor.py",
+    "torch/_dynamo/__init__.py","torch/_dynamo/eval_frame.py","torch/_dynamo/decorators.py"),
+    "transformers":("transformers/modeling_layers.py","transformers/modeling_utils.py","transformers/models/qwen3/modeling_qwen3.py")}
+CHECKPOINT_STDLIB_FILES=("contextlib.py","platform.py","uuid.py","warnings.py","weakref.py","collections/__init__.py","typing.py","enum.py")
+
+
+def checkpoint_runtime_files():
+    paths=[Path(distribution(package).locate_file(name)).resolve() for package,names in CHECKPOINT_PRIMARY_FILES.items() for name in names]
+    paths += [(Path(sysconfig.get_path("stdlib"))/name).resolve() for name in CHECKPOINT_STDLIB_FILES]
+    paths += [(Path(sys.base_prefix)/"python311.dll").resolve()]
+    require(all(path.is_file() and not path.is_symlink() for path in paths),"current local checkpoint/decoder primary dependency closure")
+    return {str(path):native.filehash(path) for path in paths}
+
+
+def checkpoint_binding(phase):
+    require(native.filehash(PACKAGE/"checkpoint_successor_profile.py")==INSTALLER_SHA and native.filehash(CPU_PROOF)==CPU_PROOF_SHA,"reviewed installer/CPU proof bytes changed")
+    proof=native.read_json(CPU_PROOF)
+    require(proof.get("child_returncode")==0 and proof.get("CUDA_initialized") is False and proof.get("published_weights_opened") is False
+            and proof.get("all112_grad_Adam_moments_RNG_byte_equal") is True and proof.get("continuous_vs_restored_update2_bitwise_equal") is True
+            and proof["aggregate_full_regions"]=={"forward_regions":1680,"recompute_regions":1680,"all_recomputations_normal_exit":True,"failed":0,"pending":0},"bounded actual tinyCPU full-recompute proof required")
+    groups=200 if phase=="A" else 40
+    return {"profile":CHECKPOINT_PROFILE,"base_compute_profile":PROFILE,"authority_transfer":"Native7/INFQ base-compute helpers only; checkpoint profile still requires new owned A/B qualification",
+            "installer_path":str(PACKAGE/"checkpoint_successor_profile.py"),"installer_sha256":INSTALLER_SHA,"CPU_proof_path":str(CPU_PROOF),"CPU_proof_file_sha256":CPU_PROOF_SHA,
+            "decoder_layers":28,"evaluation_mode":True,"dropout":0.0,"actual_use_cache":False,"use_reentrant":False,"checkpoint_early_stop":False,"preserve_rng_state":True,
+            "no_grad_bypass_preserved":True,"counts":{"no_grad":56,"forward":groups*28,"recompute":groups*28,"per_layer_no_grad":2,"per_layer_forward":groups,"per_layer_recompute":groups},
+            "work_is_additional_not_training_dose":"Recomputed decoder calls are separate physical work; no extra rows, labels, backward/optimizer updates or token-budget permission",
+            "duration_scope":"actual original decoder-function calls; controller/model wall remains separate", "native_profile_fit_qualified":False,"study_training_authorized":False}
+
+
+def validate_decoder_work(snapshot,amendment):
+    require(type(snapshot) is dict and snapshot.get("use_reentrant") is False and snapshot.get("checkpoint_early_stop") is False
+            and snapshot.get("preserve_rng_state") is True and snapshot.get("failed_or_pending") is False,"full normal-exit checkpoint mechanism/work required")
+    counts=amendment["counts"]
+    require(snapshot["counters"]=={"forward_regions":counts["forward"],"recompute_regions":counts["recompute"],"no_grad_regions":counts["no_grad"]},"additional decoder work cannot be omitted")
+    require(set(snapshot["layers"])=={str(index) for index in range(28)},"all28 layer work fields")
+    for layer,phases in snapshot["layers"].items():
+        require(set(phases)=={"forward","recompute","no_grad"},"exact per-layer phase closure")
+        for phase,item in phases.items():
+            expected=counts["per_layer_"+phase]
+            require({key:item[key] for key in ("attempted","returned","failed","pending")}=={"attempted":expected,"returned":expected,"failed":0,"pending":0}
+                    and type(item["elapsed_seconds"]) in (int,float) and math.isfinite(item["elapsed_seconds"]) and item["elapsed_seconds"]>=0,"actual complete normal-return layer phase/duration")
+    identities={}
+    for record in snapshot["regions"]:
+        require(type(record) is dict and type(record["region_id"]) is int and record["region_id"]>0 and type(record["layer"]) is int,"actual region identity/layer types")
+        key=(record["region_id"],record["phase"])
+        require(key not in identities and record["phase"] in ("forward","recompute","no_grad") and 0<=record["layer"]<28
+                and record["status"]=="returned" and type(record["elapsed_seconds"]) in (int,float)
+                and math.isfinite(record["elapsed_seconds"]) and record["elapsed_seconds"]>=0,"no duplicate/failed/pending actual region")
+        identities[key]=record
+    require(len(identities)==sum(counts[phase] for phase in ("forward","recompute","no_grad")),"complete physical region denominator")
+    for (identity,phase),record in identities.items():
+        if phase=="no_grad": require((identity,"forward") not in identities and (identity,"recompute") not in identities,"no-grad bypass cannot recompute")
+        else:
+            peer=identities.get((identity,"recompute" if phase=="forward" else "forward"))
+            require(peer is not None and peer["layer"]==record["layer"],"paired same-layer forward/recompute identity")
+    for layer,phases in snapshot["layers"].items():
+        for phase,item in phases.items():
+            records=[record for record in identities.values() if record["layer"]==int(layer) and record["phase"]==phase]
+            require(len(records)==counts["per_layer_"+phase] and math.isclose(sum(record["elapsed_seconds"] for record in records),item["elapsed_seconds"],rel_tol=1e-12,abs_tol=1e-12),"actual per-layer counts/durations reconcile")
+    return True
+
+
+def verify_decoder_evidence(result,phase,evidence_leaf):
+    summaries=result.get("decoder_work")
+    require(type(summaries) is list and len(summaries)==1,"one complete predecessor decoder-work summary")
+    summary=deepcopy(summaries[0]);item=summary.pop("region_file",None)
+    require(type(item) is dict and set(item)=={"path","rows","bytes","sha256"},"decoder region byte/row closure required")
+    path=Path(item["path"])
+    require(path.is_absolute() and not path.is_symlink() and path.is_file() and path.resolve().parent==Path(evidence_leaf).resolve(),"decoder region file must belong to A owned leaf")
+    expected=checkpoint_binding(phase);rows=sum(expected["counts"][name] for name in ("forward","recompute","no_grad"))
+    require(item["rows"]==rows and type(item["bytes"]) is int and 0<item["bytes"]<=16*1024**2 and path.stat().st_size==item["bytes"],"bounded complete decoder-region byte/row count")
+    records=[];hasher=hashlib.sha256();size=0
+    with path.open("rb") as stream:
+        for _ in range(rows+1):
+            raw=stream.readline(4097)
+            if not raw: break
+            require(len(raw)<=4096 and raw.endswith(b"\n"),"bounded complete decoder-region JSONL record")
+            hasher.update(raw);size+=len(raw)
+            records.append(json.loads(raw.decode("utf-8"),object_pairs_hook=native._pairs,parse_constant=native._bad_constant))
+    require(len(records)==rows and size==item["bytes"] and hasher.hexdigest()==item["sha256"],"exact read decoder-region bytes/hash/rows")
+    summary["regions"]=records
+    require(summary.get("removed") is True,"exact forward attributes restored before successful predecessor")
+    validate_decoder_work(summary,expected)
+    for index in range(28):
+        for phase_name in ("forward","recompute","no_grad"):
+            count=expected["counts"]["per_layer_"+phase_name]
+            require(result["primitive_operations"].get("checkpoint_layer%02d_%s"%(index,phase_name))=={"attempted":count,"returned":count,"failed":0,"pending":0},"actual additional decoder primitive costs conserved")
+    return True
 
 
 def selected_packet():
@@ -70,8 +168,10 @@ def source_pins():
     paths=[PACKAGE/name for name in ("native_contract.py","native_loader.py","native_mechanics.py","native_precision.py",
            "native_process.py","native_nvml.py","native_supervisor.py","native_worker.py","inference_qual_worker.py","inference_contract.py","inference_component.py",
            "study_torch_backend.py","study_native_chunk.py","study_schedule.py","rs_contract.py")]
-    paths += [HERE/name for name in SOURCE_NAMES]
+    paths += [HERE/name if name in ("backend_qual_contract.py","backend_qual_worker.py") else PACKAGE/name for name in SOURCE_NAMES]
+    paths += [PACKAGE/"checkpoint_successor_profile.py"]
     paths += sorted((HERE/"tests").glob("test_backend_qual*.py")) if HERE!=PACKAGE else sorted((PACKAGE/"tests").glob("test_backend_qual*.py"))
+    paths += [HERE/"test_backend_recompute_scope.py"] if HERE!=PACKAGE else sorted((PACKAGE/"tests").glob("test_backend_recompute_scope*.py"))
     require(all(path.is_file() and not path.is_symlink() for path in paths),"complete qualification source inventory")
     return {str(path.resolve()):native.filehash(path) for path in paths}
 
@@ -112,6 +212,9 @@ def _qualification_recipe(registration,rows,sources):
            "backend_source_sha256":native.filehash(PACKAGE/"study_torch_backend.py"),
            "registration_sha256":registration["sha256"],"cohort_sha256":digest([row["row_id"] for row in rows]),
            "packet_sha256":digest(rows),"source_pins":sources,"source_decision_pins":registration["source_and_decision_pins"],
+           "checkpoint_amendment":{"profile":CHECKPOINT_PROFILE,"installer_sha256":INSTALLER_SHA,"CPU_proof_file_sha256":CPU_PROOF_SHA,
+                "use_reentrant":False,"checkpoint_early_stop":False,"preserve_rng_state":True,"evaluation_mode":True,
+                "phase_decoder_counts":{"A":{"no_grad":56,"forward":5600,"recompute":5600},"B":{"no_grad":56,"forward":1120,"recompute":1120}}},
            "global_LR":schedule.learning_rates()[:10],"phase_design":"A9_plus_continuous10_BfreshC9_plus10_reference20",
            "study_warmstart_allowed":False}
     value["sha256"]=digest(value)
@@ -121,6 +224,7 @@ def _qualification_recipe(registration,rows,sources):
 def validate_packet(scope):
     require(scope.get("id")==ID and scope.get("phase") in ("A","B") and scope.get("authorization")==AUTHORIZATION,"exact backend qualification authority/phase")
     require(scope.get("resources")==native.RESOURCE_BOUNDS and scope.get("tolerances")==native.TOLERANCES,"unchanged resource/numerical gates")
+    require(scope.get("profile")==CHECKPOINT_PROFILE and scope.get("base_compute_profile")==PROFILE and scope.get("checkpoint_amendment")==checkpoint_binding(scope["phase"]),"exact distinct full-recompute profile/proof/work binding")
     require(scope.get("production_training_authorized") is False and scope.get("study_warmstart_allowed") is False
             and scope.get("DEV_collection_authorized") is False and scope.get("quality_gain_established") is False
             and scope.get("protected_bank_access") is False,"qualification cannot grant study/scoring/banks authority")
@@ -154,11 +258,13 @@ def build_scope(phase,*,predecessor=None,authorize_owned_qualification=False):
     observed=[_observed_duration(INF_EVIDENCE/"events.jsonl","verify_frozen_base"),_observed_duration(NATIVE7_EVIDENCE/"events.jsonl","frozen_base_postcheck")]
     require(round(observed[0],3)==6.874 and round(observed[1],3)==45.900,"preregistered raw-event timing observations changed")
     prior=native.read_json(PACKAGE/"configs/SYNTH_NQ001_PROC7.json")
-    body={"schema_version":1,"id":ID,"contract":VERSION,"phase":phase,"profile":PROFILE,"authorization":deepcopy(AUTHORIZATION),
+    body={"schema_version":1,"id":ID,"contract":VERSION,"phase":phase,"profile":CHECKPOINT_PROFILE,"base_compute_profile":PROFILE,
+          "checkpoint_amendment":checkpoint_binding(phase),"authorization":deepcopy(AUTHORIZATION),
           "owned_qualification_authorized":authorize_owned_qualification,"staged_native_dispatch_forbidden":HERE!=PACKAGE,
           "resources":deepcopy(native.RESOURCE_BOUNDS),"tolerances":deepcopy(native.TOLERANCES),"runtime_versions":deepcopy(native.RUNTIME),
           "offline_environment":deepcopy(native.OFFLINE_ENV),"precision":deepcopy(prior["precision"]),"source_pins":sources,
-          "runtime_pins":deepcopy(prior["runtime_pins"]),"data_pins":deepcopy(prior["data_pins"]),"model_dir":str(MODEL_DIR),"model_pins":dict(ASSET_PINS),
+          "runtime_pins":{**deepcopy(prior["runtime_pins"]),**checkpoint_runtime_files()},"checkpoint_runtime_pins":checkpoint_runtime_files(),
+          "data_pins":deepcopy(prior["data_pins"]),"model_dir":str(MODEL_DIR),"model_pins":dict(ASSET_PINS),
           "inference_qualification":qualified,"qualification_recipe":_qualification_recipe(registration,rows,sources),"seed":101,"arm":"M1",
           "rows":rows,"source_packet_sha256":digest(rows),"global_learning_rates":schedule.learning_rates()[:10],"dose":dose,
           "c9_binding":cursor(registration,9),"c10_binding":cursor(registration,10),"predecessor":deepcopy(predecessor),
@@ -205,6 +311,7 @@ def verify_predecessor(predecessor,scope,*,native_supervised=True):
     counts=result["primitive_operations"]
     require(type(counts) is dict and counts and all(set(item)=={"attempted","returned","failed","pending"}
             and all(type(n) is int and n>=0 for n in item.values()) and item["attempted"]==item["returned"] and not item["failed"] and not item["pending"] for item in counts.values()),"failed/pending A cannot seed B")
+    if native_supervised: verify_decoder_evidence(result,"A",path.parent)
     descriptor=verify_descriptor_bytes(result["checkpoint_c9"])
     require(descriptor["kind"]=="SYNTH_STUDY_TORCH_BOUNDARY_V1" and descriptor["metadata"].get("recipe_sha256")==scope["qualification_recipe"]["sha256"]
             and descriptor["metadata"].get("cohort_sha256")==scope["qualification_recipe"]["cohort_sha256"] and descriptor["metadata"].get("binding")==scope["c9_binding"],"C9 qualification-only recipe/cohort/cursor")
@@ -252,7 +359,7 @@ def preflight(path,*,require_clean=True):
     require(body.get("sha256")==digest({k:v for k,v in body.items() if k!="sha256"}) and body.get("owned_qualification_authorized") is True,"owned qualification checksum/explicit authorization")
     expected=build_scope(body["phase"],predecessor=body["predecessor"],authorize_owned_qualification=True)
     require(canonical({k:v for k,v in body.items() if k!="sha256"})==canonical(expected),"frozen qualification source/row/authority/dose contract changed")
-    require(native.runtime_files()==body["runtime_pins"],"executing interpreter/current runtime closure changed")
+    require({**native.runtime_files(),**checkpoint_runtime_files()}==body["runtime_pins"] and checkpoint_runtime_files()==body["checkpoint_runtime_pins"],"executing interpreter/current checkpoint runtime closure changed")
     for path,pin in body["runtime_pins"].items(): require(native.filehash(Path(path))==pin,"runtime byte drift")
     for name,pin in body["model_pins"].items(): require(native.filehash(MODEL_DIR/name)==pin,"native model/tokenizer bytes changed")
     if body["phase"]=="B": verify_predecessor(body["predecessor"],body)

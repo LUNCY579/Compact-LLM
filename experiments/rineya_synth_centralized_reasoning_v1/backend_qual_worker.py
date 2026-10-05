@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 from copy import deepcopy
 import importlib.metadata
+import math
 import os
 from pathlib import Path
 import random
@@ -11,9 +12,11 @@ import sys
 import time
 
 HERE=Path(__file__).resolve().parent
-PACKAGE=HERE.parents[1] if HERE.name=="backend_qual_work" and HERE.parent.name=="artifacts" else HERE
+PACKAGE=HERE.parents[1] if HERE.name in ("backend_qual_work","backend_recompute_scope_work") and HERE.parent.name=="artifacts" else HERE
 for location in (PACKAGE,HERE):
-    if str(location) not in sys.path: sys.path.insert(0,str(location))
+    if str(location) in sys.path: sys.path.remove(str(location))
+    sys.path.insert(0,str(location))
+import checkpoint_successor_profile as checkpoint_profile
 import backend_qual_contract as contract
 from backend_qual_core import run_case
 from backend_qual_native import NativeAdapter
@@ -40,6 +43,38 @@ def remove_hooks(hooks):
     return errors
 
 
+def validate_decoder_work(snapshot,amendment):
+    return contract.validate_decoder_work(snapshot,amendment)
+
+def install_profile(model,torch,checkpoint,early_stop_context,call,guard,profiles):
+    def install_owned():
+        installed=checkpoint_profile.install(model,torch,checkpoint,early_stop_context=early_stop_context,
+                                             expected_layers=28,call=call,guard=guard)
+        # Ownership is recorded before the outer journal's after-return checks.
+        profiles.append(installed)
+        return installed
+    return call("qualification_full_checkpoint_install",install_owned)
+
+
+def close_profiles(profiles,output,report):
+    errors=[]
+    for index,installed in enumerate(profiles):
+        snapshot=installed["snapshot"]()
+        # Keep every partial region on failure; never shrink its denominator.
+        path=Path(output)/("decoder_regions_%02d.jsonl"%index)
+        with path.open("xb",buffering=0) as stream:
+            for record in snapshot["regions"]:
+                raw=(canonical(record)+"\n").encode();require(stream.write(raw)==len(raw),"complete decoder region write")
+            os.fsync(stream.fileno())
+        summary={key:value for key,value in snapshot.items() if key!="regions"}
+        summary["region_file"]={"path":str(path),"rows":len(snapshot["regions"]),"bytes":path.stat().st_size,"sha256":contract.native.filehash(path)}
+        report.setdefault("decoder_work",[]).append(summary)
+        if not snapshot.get("removed"):
+            try: installed["remove"]()
+            except BaseException as error: errors.append({"type":type(error).__name__,"message":str(error)})
+    return errors
+
+
 def run(config_path,output):
     """Only an integrated, committed, explicit qualification scope can proceed."""
     # Stage/native authority rejection precedes any owned-Job, framework or GPU API.
@@ -49,7 +84,7 @@ def run(config_path,output):
     require((output/"supervisor_ownership.json").is_file(),"owned supervisor dispatch required")
     owner=contract.native.read_json(output/"supervisor_ownership.json")
     ownership=verify_worker_ownership(owner,config_path)
-    journal=DurableJournal(output);start=time.monotonic();torch=None;hooks=[]
+    journal=DurableJournal(output);start=time.monotonic();torch=None;hooks=[];profiles=[]
     guard=make_guard(output,owner,start,lambda:torch)
     journal.guard=guard;journal.evidence("worker_ownership_verified",ownership)
     report={"status":"FAILED_SCOPED_BACKEND_QUALIFICATION","phase":config["phase"],"config_sha256":config["config_sha256"],
@@ -93,17 +128,45 @@ def run(config_path,output):
         backend=StudyTorchBackend(torch,model,call,resource_guard,arm="M1",seed=101,
                     recipe_sha256=scope["qualification_recipe"]["sha256"],cohort_sha256=scope["qualification_recipe"]["cohort_sha256"],
                     execution_scope="UNQUALIFIED_NATIVE_IMPLEMENTATION",source_hashes=source_hashes)
-        return NativeAdapter(torch,backend,call,resource_guard,dose)
+        def install_checkpoint():
+            from torch.utils.checkpoint import checkpoint,set_checkpoint_early_stop
+            return install_profile(model,torch,checkpoint,set_checkpoint_early_stop,call,resource_guard,profiles)
+        installed=install_checkpoint()
+        class CheckpointAdapter(NativeAdapter):
+            def close(self):
+                try: installed["remove"]()
+                finally: super().close()
+        return CheckpointAdapter(torch,backend,call,resource_guard,dose)
     try:
         report=run_case(config,factory,journal.call,guard,preserve,admission=admission)
         report["source_commit"]=config["source_commit"]
         if report["status"].startswith("PASS_SCOPED"):
+            require(len(profiles)==1,"exactly one checkpoint profile")
+            validate_decoder_work(profiles[0]["snapshot"](),config["checkpoint_amendment"])
             contract.preflight(config_path);guard("qualification_completed")
     except BaseException as error:
         report["status"]="FAILED_SCOPED_BACKEND_QUALIFICATION";report["error"]={"type":type(error).__name__,"message":str(error)}
         try: journal.emit({"event":"worker_failed","error":report["error"]})
         except BaseException as failure: report["journal_shutdown_error"]={"type":type(failure).__name__,"message":str(failure)}
     finally:
+        cleanup_costs_before=journal.snapshot()["operations"]
+        try:
+            profile_errors=close_profiles(profiles,output,report)
+            if profile_errors: report["status"]="FAILED_SCOPED_BACKEND_QUALIFICATION";report["checkpoint_cleanup_errors"]=profile_errors
+        except BaseException as error:
+            report["status"]="FAILED_SCOPED_BACKEND_QUALIFICATION";report["decoder_work_preservation_error"]={"type":type(error).__name__,"message":str(error)}
+            # Persistence/journal failures still restore attributes on all paths.
+            for installed in profiles:
+                try: installed["remove"]()
+                except BaseException as failure: report.setdefault("checkpoint_cleanup_errors",[]).append({"type":type(failure).__name__,"message":str(failure)})
+        cleanup_costs_after=journal.snapshot()["operations"]
+        for name,item in cleanup_costs_after.items():
+            prior=cleanup_costs_before.get(name,dict.fromkeys(("attempted","returned","failed","pending"),0))
+            delta={key:item[key]-prior[key] for key in item}
+            if any(delta.values()):
+                require(name=="checkpoint_remove_attributes" and all(value>=0 for value in delta.values()),"only explicit profile cleanup may append after core cost snapshot")
+                target=report.setdefault("primitive_operations",{}).setdefault(name,dict.fromkeys(delta,0))
+                for key,value in delta.items(): target[key]+=value
         cleanup_errors=remove_hooks(hooks)
         if cleanup_errors:
             report["status"]="FAILED_SCOPED_BACKEND_QUALIFICATION";report["hook_cleanup_errors"]=cleanup_errors

@@ -201,7 +201,13 @@ class QualificationTests(unittest.TestCase):
         for name in ("inference_contract.py","inference_component.py","study_native_chunk.py","study_torch_backend.py"):
             self.assertIn(str((PACKAGE/name).resolve()),pins)
         import inspect
-        self.assertIn('native.runtime_files()==body["runtime_pins"]',inspect.getsource(contract.preflight))
+        scope=contract.build_scope("A")
+        actual={**contract.native.runtime_files(),**contract.checkpoint_runtime_files()}
+        self.assertEqual(actual,scope["runtime_pins"])
+        self.assertEqual(contract.checkpoint_runtime_files(),scope["checkpoint_runtime_pins"])
+        self.assertGreater(len(actual),len(contract.native.runtime_files()))
+        for filename,pin in actual.items():
+            self.assertEqual(pin,contract.native.filehash(Path(filename)))
         self.assertEqual("96f361052c34750313731c1fad0fe07d5ed48d376ee59850370cfeae99f59047",contract.native.filehash(PACKAGE/"study_native_chunk.py"))
     def test_hook_cleanup_failure_marks_failed_and_still_preserves_terminal(self):
         failures=worker.remove_hooks([type("BadHook",(),{"remove":lambda self:(_ for _ in ()).throw(RuntimeError("injected remove failure"))})()])

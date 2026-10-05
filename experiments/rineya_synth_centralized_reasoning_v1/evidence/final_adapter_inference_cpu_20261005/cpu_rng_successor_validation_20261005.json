@@ -1,0 +1,42 @@
+{
+  "CPU_fixture_tensor_inventory": 8,
+  "CUDA_initialized": false,
+  "CUDA_preservation_native_tested": false,
+  "RNG_policy": "archive Python/CPU/CUDA0 states validated privately and never applied; caller CPU/CUDA0 state saved and restored in finally around transient factor initialization even if journal or guard refuses cleanup",
+  "controls": [
+    "framework-free parent/module import",
+    "CPU_RANDOM_TINY final27/540 fixture restores exact raw output and leaves base bytes unchanged",
+    "archive CPU RNG exact shape and private Generator.set_state encoding validation before qv installation/copy",
+    "caller-local CPU RNG exact before/after successful transient qv initialization",
+    "caller-local CPU RNG exact after actual initialization failure, post-install journal failure, cleanup journal refusal, cleanup guard refusal",
+    "cleanup actual returned cost retained in all four failure controls; model poisoned; no final adapter copy",
+    "12 final-kind/dose/arm/recipe/source/hash/tensor/moment/gradient/RNG negatives before copy",
+    "returned-copy failure retains operation cost and denies raw collection"
+  ],
+  "native_launch_authorized": false,
+  "native_restore_required_inventory": 112,
+  "optimizer_restored": false,
+  "preserved_initial": {
+    "directory": "experiments/rineya_synth_centralized_reasoning_v1/artifacts/adapter_inference_work/initial2pass_preserved_20261005",
+    "file_hashes": {
+      "cpu_validation_20261005.json": "3b9fb8dce43e4ddcd04b860be3521e5f5225ec75d8b5585e2109e0fb6ad6e6d5",
+      "final_adapter_inference.py": "9b45997d59b1e78df876e7acc7846098786fcd373af738fa94837d89f20adda5",
+      "test_final_adapter_inference.py": "98a419fba7df1ed70fc9901eec46d7958f9f1c5fed22b5becc3e970a2938bd28"
+    }
+  },
+  "published_weights_opened": false,
+  "recorded_at_utc": "2026-10-05T01:39:45.022288+00:00",
+  "root_source_edits": false,
+  "schema_version": 1,
+  "scope": "CPU_RANDOM_TINY_FINAL_ADAPTER_INFERENCE_FIXTURE; native implementation remains unqualified",
+  "seconds": 7.174,
+  "skips": 0,
+  "source_hashes": {
+    "final_adapter_inference.py": "bfa342e0f317614503ef5b24c9f098243feee6f0b6cdfef55e7659778d0e5c85",
+    "test_final_adapter_inference.py": "a99f9f32af046730c02fb282f090e556f70050eb7ab3ed43b0dd0f43f419b598"
+  },
+  "status": "PASS_STAGED_FINAL_ADAPTER_INFERENCE_RNG_SUCCESSOR_CPU_CONTROLS",
+  "study_training_qualified": false,
+  "tests": 2,
+  "training_RNG_restored": false
+}
