@@ -1,5 +1,25 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: long-context component staged and CPU-tested
+
+The [preserved long component](evidence/long_context_component_staged_cpu_20261005)
+passes 28 stdlib CPU controls: six new cases and 22 existing semantic cases
+explicitly rebound to the derived module. Its only algorithm delta admits
+1024/2048/4096 envelopes in a separate staged file; the original short helper
+is byte-identical. Full-length sparse fixtures exercise two complete 32-token
+traces and bulk selected-token comparisons at 992/2016/4064 prompt tokens.
+Their exact fake results do not establish native numerical or memory fit.
+
+The unchanged 134,144-position ceiling stops a 4064-token case after one full
+trace, before overspending. Preserving both repeats and bulk verification will
+require separately registered fresh scopes with cross-process identity and
+trace authentication. The prospective largest trace scope is 34 forwards /
+130,934 positions, including two short TRAIN parity calls; the three-scope total
+is 71 forwards / 266,353 positions. Exact TRAIN rows, a native driver, cross-scope
+verifier, resource qualification and enrollment remain absent. Independent
+component review is pending. No root inference integration or native launch,
+model/GPU execution, actual grading or authority expansion occurred.
+
 ## 2026-10-05 UTC: next qualification work remains staged
 
 The collector-specific RAM/watchdog amendment is under independent review in
