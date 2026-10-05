@@ -1,5 +1,16 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: provisional whole-filesystem audit failure retained
+
+The [provisional25-control root run](evidence/long_v2_filesystem_provisional_failure_20261005)
+passed24 cases and failed returned-report versus written-receipt equality. Source
+also changed during the run, so it is not final review evidence. The builder
+identified integer PID map keys being converted to strings by JSON and normalized
+them before sealing/writing, retaining the equality assertion. A frozen independent
+rerun is required. This exercised the new filesystem/preservation/config/state/
+resource/cost path with injected CPU probes; no native/model/GPU/encoder execution
+or audit authority was produced.
+
 ## 2026-10-05 UTC: final digest replay order resolved from pinned source
 
 The [source-only order receipt](evidence/loader_source_final_digest_order_20261005.json)
