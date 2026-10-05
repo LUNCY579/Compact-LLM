@@ -1,7 +1,7 @@
 """CPU synthetic installed-roster controls; no encoder/framework execution."""
 from copy import deepcopy
 from pathlib import Path
-import json,sys,tempfile,unittest
+import json,sys,tempfile,unittest,subprocess
 from unittest.mock import patch
 HERE=Path(__file__).resolve().parent
 STAGED=HERE.name=='long_encoder_registration_work' and HERE.parent.name=='artifacts'
@@ -20,6 +20,11 @@ class Distribution:
 
 class Controls(unittest.TestCase):
     def setUp(self):
+        # Other CPU suites legitimately import tokenizer packages. These tests
+        # inventory inert synthetic files; check the real process gate below in
+        # an isolated interpreter rather than inheriting unrelated imports.
+        self.gate=inventory.no_execution
+        gate_patch=patch.object(inventory,'no_execution',return_value=None);gate_patch.start();self.addCleanup(gate_patch.stop)
         self.temp=tempfile.TemporaryDirectory(dir=HERE);self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name)
         self.distributions={}
         for name,version in (('tokenizers','0.22.2'),('jinja2','3.1.6'),('markupsafe','3.0.3')):
@@ -81,7 +86,22 @@ class Controls(unittest.TestCase):
     def test_no_final_registration_config_or_encoder_execution_authority(self):
         body={'CPU_fixture_only':True,'native_authority_issued':False}
         with self.assertRaisesRegex(ValueError,'staging-only'):inventory.save_staged_candidate(self.root/'registration.json',body)
-        self.assertFalse(any(n.split('.',1)[0] in inventory.FORBIDDEN for n in sys.modules))
+    def test_isolated_import_and_forbidden_module_gate_before_runtime_reads(self):
+        script='''import sys,importlib.util
+spec=importlib.util.spec_from_file_location("isolated_encoder_inventory",sys.argv[1])
+module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+assert not any(n.split('.',1)[0] in module.FORBIDDEN for n in sys.modules)
+module.no_execution()
+for name in module.FORBIDDEN:
+ sys.modules[name]=object()
+ try:
+  module.runtime_roster(lambda name:(_ for _ in ()).throw(AssertionError("runtime metadata read before gate")))
+ except ValueError as error:assert "inventory cannot contain" in str(error)
+ else:raise AssertionError("forbidden loaded module admitted")
+ finally:sys.modules.pop(name)
+'''
+        result=subprocess.run([sys.executable,'-I','-B','-c',script,str(CODE/'encoder_inventory.py')],capture_output=True,text=True,timeout=30)
+        self.assertEqual(0,result.returncode,result.stderr)
 
 
 if __name__=='__main__':unittest.main()

@@ -64,7 +64,7 @@ additional native query occurs. Its fake factory cannot issue native success;
 durable source, supervisor, ownership and external review joins remain required.
 
 Remaining work: review and bind the additive standard-library runtime roster,
-implement the independent terminal/cross-process token/LP/
+complete the [independent validator](LONG_AUDIT_VALIDATORS_001.md) terminal driver and cross-process token/LP/
 cost/state/resource/cleanup auditor, then qualify actual owned long scopes with
 fresh resource admission. D001's no-model observation is insufficient for that.
 Study training, guard enrollment, scoring, transfer and retention remain closed.

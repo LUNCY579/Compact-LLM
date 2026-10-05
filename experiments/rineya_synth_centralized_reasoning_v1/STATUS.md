@@ -1,5 +1,27 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: independent long validators and CPU integration pass
+
+The [independent long validators](LONG_AUDIT_VALIDATORS_001.md) are integrated
+from reviewed bytes. They check tokens/LPs, physical prefixes/dose, bulk arithmetic,
+admission observations, publication/cumulative costs, state hashes and owned
+resource/cleanup evidence. The final native terminal driver remains hard-disabled;
+no native PASS, training, scoring or predecessor authority is issued.
+
+All [60 affected root controls](evidence/long_audit_validators_root_cpu_validation_20261005.json)
+pass together in9.806seconds, including prior unrelated tokenizer/source imports.
+Import/source-closure assertions now inspect their own modules in isolated
+interpreters. The earlier combined40 test-only failure and corrected
+[40-control receipt](evidence/isolated_import_test_portability_002_20261005.json)
+are retained with [independent review/history](evidence/import_test_portability_reviewed_20261005).
+Production import/resource/launch predicates remain unchanged. The
+[17-file validator history](evidence/long_audit_validators_reviewed_cpu_20261005)
+retains earlier bulk-schema, missing-import and import-test variants.
+
+Complete encoder/stdlib registration and native terminal audit integration remain
+open. The CPU byte-only standard-library candidate and phase-observed short M0
+successor are in staging; neither has launched a model or completed the comparison.
+
 ## 2026-10-05 UTC: factory admission observation retained
 
 The long-scope result retains a defensive copy of its already checked fresh200ms

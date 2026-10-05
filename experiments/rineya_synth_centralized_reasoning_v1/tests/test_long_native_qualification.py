@@ -174,7 +174,11 @@ assert not any(n in sys.modules for n in ('torch','transformers','tokenizers'))
 """
                 result=subprocess.run([sys.executable,'-I','-B','-c',script,str(stage),str(Path(contract.native.__file__).parent)],capture_output=True,text=True,timeout=30)
                 self.assertEqual(0,result.returncode,result.stderr)
-        self.assertFalse(any(name in sys.modules for name in ('torch','transformers','tokenizers')))
+        # Other CPU suites may already have tokenizers loaded. Inspect these
+        # modules' own import behavior in an isolated interpreter.
+        code="import sys;sys.path.insert(0,sys.argv[1]);import long_native_contract,long_native_core,long_native_worker,long_native_supervisor;assert not any(n in sys.modules for n in ('torch','transformers','tokenizers'))"
+        result=subprocess.run([sys.executable,'-I','-B','-c',code,str(PACKAGE)],capture_output=True,text=True,timeout=30)
+        self.assertEqual(0,result.returncode,result.stderr)
     def test_factory_admission_observation_persists_without_fixture_native_success(self):
         with tempfile.TemporaryDirectory(dir=HERE) as root:
             factory=Factory([9,151645]);factory.execution_scope=contract.NATIVE;observed=[]
@@ -274,10 +278,18 @@ assert not any(n in sys.modules for n in ('torch','transformers','tokenizers'))
             key=str((PACKAGE/name).resolve());self.assertIn(key,actual)
             bad=deepcopy(actual);bad.pop(key)
             with self.assertRaisesRegex(ValueError,'executing package'):contract.validate_source_pins(bad)
-        # Inspect only loaded package source paths, never framework/binary files.
-        imported={str(Path(m.__file__).resolve()) for m in sys.modules.values() if getattr(m,'__file__',None)
-            and Path(m.__file__).suffix=='.py' and Path(m.__file__).resolve().parent==PACKAGE.resolve()}
-        self.assertLessEqual(imported,set(actual))
+        # Inspect this native import closure in isolation; other CPU suites may
+        # have loaded unrelated package sources in the parent interpreter.
+        script="""import sys
+from pathlib import Path
+sys.path.insert(0,sys.argv[1])
+import long_native_contract as c,long_native_core,long_native_worker,long_native_supervisor
+imported={str(Path(m.__file__).resolve()) for m in sys.modules.values() if getattr(m,'__file__',None)
+ and Path(m.__file__).suffix=='.py' and Path(m.__file__).resolve().parent==c.PACKAGE.resolve()}
+assert imported<=set(c.source_pins()),sorted(imported-set(c.source_pins()))
+"""
+        result=subprocess.run([sys.executable,'-I','-B','-c',script,str(PACKAGE)],capture_output=True,text=True,timeout=30)
+        self.assertEqual(0,result.returncode,result.stderr)
         inherited=contract.native.read_json(PACKAGE/'configs/SYNTH_NQ001_PROC7.json')['runtime_pins']
         runtime=contract.base_runtime_pins();self.assertEqual(64,len(inherited));self.assertEqual(65,len(runtime))
         self.assertEqual(inherited,{key:runtime[key] for key in inherited})

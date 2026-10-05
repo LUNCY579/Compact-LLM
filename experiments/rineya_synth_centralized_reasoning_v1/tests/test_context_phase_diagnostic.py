@@ -3,6 +3,7 @@ from copy import deepcopy
 import importlib.util
 from pathlib import Path
 import sys
+import subprocess
 import tempfile
 from types import SimpleNamespace
 import unittest
@@ -163,7 +164,10 @@ class Controls(unittest.TestCase):
                     module=load('explicit_'+name,stage/(name+'.py'),False)
                     self.assertIs(module.contract,stage_contract)
                     with self.assertRaisesRegex(ValueError,'staged NO_MODEL'):getattr(module,function)('UNUSED','UNUSED')
-        self.assertFalse(any(k in sys.modules for k in ('torch','transformers','tokenizers')))
+        # A preceding CPU tokenizer suite may have loaded these packages.
+        code="import sys;sys.path.insert(0,sys.argv[1]);import context_phase_worker;assert not any(n in sys.modules for n in ('torch','transformers','tokenizers'))"
+        result=subprocess.run([sys.executable,'-I','-B','-c',code,str(PACKAGE)],capture_output=True,text=True,timeout=30)
+        self.assertEqual(0,result.returncode,result.stderr)
 
 
 if __name__=='__main__':unittest.main()
