@@ -1,0 +1,57 @@
+{
+  "CUDA_initialized": false,
+  "checkpoint_recompute_regions": {
+    "forward_regions": 1120,
+    "recompute_regions": 1120
+  },
+  "child_returncode": 0,
+  "continuous_vs_restored_update2_bitwise_equal": true,
+  "finished_at_utc": "2026-10-05T00:21:30.492426+00:00",
+  "independent_gradient_rows": 20,
+  "native_launch_authorized": false,
+  "output_CE_all112_grad_Adam_moments_RNG_bitwise_equal": true,
+  "parent_framework_free": true,
+  "profile": {
+    "KV_heads": 1,
+    "accumulation_sequences": 20,
+    "adapter_parameters": 6272,
+    "adapter_tensors": 112,
+    "alpha": 16,
+    "atol": 1e-06,
+    "attention_heads": 2,
+    "base_dtype": "bfloat16",
+    "compute_dtype": "float32",
+    "context_cap": 64,
+    "dropout": 0.0,
+    "head_dim": 4,
+    "hidden_size": 8,
+    "intermediate_size": 16,
+    "layers": 28,
+    "loss": "completion_plus_EOS_sequence_mean_then_mean_over20",
+    "name": "CPU_RANDOM_TINY_QWEN_NONREENTRANT_28_LAYER_112_FACTOR_CONTROL",
+    "native_parameters_and_budget_unchanged": true,
+    "native_result": false,
+    "rank": 8,
+    "rtol": 1e-05,
+    "training_updates": 2,
+    "vocab_size": 32
+  },
+  "published_weights_opened": false,
+  "saved_storage_checkpoint": {
+    "saved_FP32_bytes": 12724,
+    "saved_unique_bytes": 12804,
+    "saved_unique_storages": 37
+  },
+  "saved_storage_plain": {
+    "saved_FP32_bytes": 284756,
+    "saved_unique_bytes": 286156,
+    "saved_unique_storages": 922
+  },
+  "source_hashes": {
+    "checkpoint_profile.py": "adbc97a1d4d021f698a16e29949590770442756c182b0a9097e7f1672847def4",
+    "prove_cpu_checkpoint.py": "92b060ca5a6f6c97432bcc3fad8cb2e2f5444bbf5863a2380401cddd06b28e40"
+  },
+  "started_at_utc": "2026-10-05T00:20:55.014010+00:00",
+  "status": "PASS_CPU_RANDOM_TINY_QWEN_CHECKPOINT_CONTROL_NATIVE_UNQUALIFIED",
+  "study_training_qualified": false
+}

@@ -1,0 +1,122 @@
+{
+  "CPU_profile": {
+    "KV_heads": 1,
+    "accumulation_sequences": 20,
+    "adapter_parameters": 6272,
+    "adapter_tensors": 112,
+    "alpha": 16,
+    "atol": 1e-06,
+    "attention_heads": 2,
+    "base_dtype": "bfloat16",
+    "compute_dtype": "float32",
+    "context_cap": 64,
+    "dropout": 0.0,
+    "head_dim": 4,
+    "hidden_size": 8,
+    "intermediate_size": 16,
+    "layers": 28,
+    "loss": "completion_plus_EOS_sequence_mean_then_mean_over20",
+    "name": "CPU_RANDOM_TINY_QWEN_NONREENTRANT_28_LAYER_112_FACTOR_CONTROL",
+    "native_parameters_and_budget_unchanged": true,
+    "native_result": false,
+    "rank": 8,
+    "rtol": 1e-05,
+    "training_updates": 2,
+    "vocab_size": 32
+  },
+  "CPU_proof_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\checkpoint_profile_work\\cpu_checkpoint_proof_20261005.json",
+  "CPU_proof_sha256": "700b1a4455d9e55f24f0f6bcebb97043ec3ff243658b8908c0b1868eca664ba7",
+  "CPU_proof_status": "PASS_CPU_RANDOM_TINY_QWEN_CHECKPOINT_CONTROL_NATIVE_UNQUALIFIED",
+  "GPU_calls_performed_by_investigation": 0,
+  "actual_artifact_sha256": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq001_A_attempt1\\RESOURCE_OBSERVATIONS.json": "cfa31a0a5441139571d0a91bdd77fd54c7e05058c41c4ade7dad2021b29962b6",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq001_A_attempt1\\SUPERVISOR_RECEIPT.json": "84475ca283358c13055a513cc6e64ba7a3906b167ae71da2b71c446301e14459",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq001_A_attempt1\\events.jsonl": "e7c1eb1b31eb3a5b8bcb4ae2399add3b8375125e4d70fa5b135e5f2307a7e592",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq001_A_attempt1\\worker_GPU_final.json": "0433129b4bec0b41b9256f2bbd253f12ab08185826d4e569234d6218a70dc032",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\backendq001_A_attempt1\\worker_result.json": "8e633721782fa3c5644d151444b1ab1d714f99bbbf41626bfb5df466f7c49ef3",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\nq001_attempt7_20261003\\RESOURCE_OBSERVATIONS.json": "8802a6d9b896afcd6015a0e33aa54f870c4a012a6c4a9d627aa7e32d01318f13",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\nq001_attempt7_20261003\\SUPERVISOR_RECEIPT.json": "063b86ff434fde45ccdb8017c7f1fc2062ebbce0cd02e45298af3ebe8801f523",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\nq001_attempt7_20261003\\events.jsonl": "8e7e6e7161f1b4c5c378b62b47441e671fdc4209fa2085097156883cf697e402",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\nq001_attempt7_20261003\\worker_GPU_final.json": "c7255aede16a02e69fa9b60c374031b7f63d569e1843252877cc0551a2744be1",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\nq001_attempt7_20261003\\worker_result.json": "38b7478f39f5374027e0e8b70767e24958ed8b1652336980877b7aed718ac22c"
+  },
+  "comparison": [
+    {
+      "CUDA_free_terminal_bytes": 417288192,
+      "GPU_total_bytes": 8585740288,
+      "NVML_minimum_observed_free_bytes": 746250240,
+      "Torch_peak_allocated_bytes": 4276709888,
+      "Torch_peak_reserved_bytes": 4313841664,
+      "admission_GPU_free_bytes": [
+        7436652544,
+        7436652544
+      ],
+      "error": {
+        "message": "native GPU free floor",
+        "type": "ValueError"
+      },
+      "run": "backend_A_failed",
+      "scope_seconds": 108.95299999999952,
+      "supervisor_status": "SUPERVISED_WORKER_FAILED",
+      "terminal_non_Torch_peak_reserved_residual_lower_bound_bytes": 3854610432,
+      "worker_status": "FAILED_SCOPED_BACKEND_QUALIFICATION"
+    },
+    {
+      "CUDA_free_terminal_bytes": 912314368,
+      "GPU_total_bytes": 8585740288,
+      "NVML_minimum_observed_free_bytes": 867180544,
+      "Torch_peak_allocated_bytes": 5822790144,
+      "Torch_peak_reserved_bytes": 6201278464,
+      "admission_GPU_free_bytes": [
+        7289409536,
+        7289409536
+      ],
+      "error": null,
+      "run": "Native7_passed",
+      "scope_seconds": 353.43700000000536,
+      "supervisor_status": "SUPERVISED_WORKER_EXITED_ZERO",
+      "terminal_non_Torch_peak_reserved_residual_lower_bound_bytes": 1472147456,
+      "worker_status": "PASS_SCOPED_NATIVE_MECHANICS"
+    }
+  ],
+  "continuation_equal": true,
+  "dtype_or_tolerance_lowered": false,
+  "failed_A_preserved": true,
+  "followup_requirements": [
+    "Independent review and source-bound successor registration; old uncheckpointed failed scope remains preserved and is not retried unchanged.",
+    "Explicitly account all layer forward/recompute work and numerical/reference controls in the successor; same complete rows, trainable inventory, LR, context, resource floors, tolerances and training dose.",
+    "Native resource and timing qualification is still required. Tiny saved-storage measurements do not imply native fit, peak reservedVRAM, or study success."
+  ],
+  "local_primary_source_sha256": {
+    "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\torch\\utils\\checkpoint.py": "10041cb9a79b7ba3867931a61aa4334a7955eed9ad9a8d3319d7727c10b1556c",
+    "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_layers.py": "5b03ff486dda560eff26bb25f453f879e19a0efd64564d3afcb1469e07f6d348",
+    "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\modeling_utils.py": "d8bf1879d6f582888b6cf47b4d63070260285a3bd1dc94ce7e1373304f74168a",
+    "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\transformers\\models\\qwen3\\modeling_qwen3.py": "fbdcfeeb1b54135ca67ba7df924da92f4b264e1252b517eea2de989289ebaeab"
+  },
+  "native_launch_authorized": false,
+  "native_limits_changed": false,
+  "native_model_result_obtained": false,
+  "native_parameter_inventory_changed": false,
+  "observed_conclusions": [
+    "A failed its unchanged CUDA free floor after its first returned195-token TRAIN forward, before loss/backward/update.",
+    "A had more admission freeVRAM and smaller Torch allocator peaks than Native7, which completed its different short scope.",
+    "Terminal total-minus-free-minus-peak-reserved residual is a lower bound on memory outside the recorded Torch peak reservation, not per-process attribution or proof of which application changed.",
+    "Available evidence does not isolate graph allocation from external/context/allocator effects, so unchanged retry and native readiness are not justified."
+  ],
+  "output_CE_all112_grads_Adam_RNG_equal": true,
+  "plausible_controllable_mechanism": "Frozen BF16 weights are cast to FP32 in qualified precision._linear; autograd may retain those casts plus layer activations for input gradients. Per-layer nonreentrant checkpoint recomputation avoids saving layer intermediates while leaving dtype/storage/LoRA/loss/data unchanged.",
+  "primary_source_findings": [
+    "Qwen3DecoderLayer inherits GradientCheckpointingLayer; its installed official checkpoint route is gated by gradient_checkpointing and training. Merely enabling the flag while the existing backend remains eval would not apply it.",
+    "Pinned PyTorch checkpoint supports use_reentrant=False with autograd.grad and frozen inputs; reentrant mode requires gradient-bearing input/output and lacks the same autograd.grad support.",
+    "CPU experiment uses explicit nonreentrant wrappers only during grad-enabled forwards, preserves eval/zero dropout and RNG, and leaves no-grad parity behavior unchanged."
+  ],
+  "published_weights_deserialized": false,
+  "recorded_at_utc": "2026-10-05T00:28:55.152853+00:00",
+  "root_source_edits": false,
+  "saved_storage_reduction_fraction": 0.955255175498679,
+  "saved_unique_storage_checkpoint_bytes": 12804,
+  "saved_unique_storage_plain_bytes": 286156,
+  "schema_version": 1,
+  "status": "CONTROLLED_CPU_MEMORY_SUCCESSOR_PREPARED_NATIVE_UNQUALIFIED",
+  "study_training_qualified": false
+}

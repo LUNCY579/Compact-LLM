@@ -1,0 +1,40 @@
+{
+  "CPU_profile": "Random actual28-layer tiny Qwen,112q/v factors, BF16frozenbase/F32compute/zero dropout/eval,20rows/update; no publishedmodel or CUDA initialization.",
+  "equality_semantics": {
+    "adapter_gradients_Adam_parameters_moments_steps_and_RNG": "byte-aware native_mechanics.equal_tree",
+    "completion_CE": "Python float equality",
+    "logits": "torch.equal exact numerical equality, not signed-zero byte identity",
+    "original_combined_bitwise_boolean_interpretation": "Apply bytewise language only to equal_tree-controlled gradient/state/RNG comparisons; output/CE tests are exact numerical."
+  },
+  "native_launch_authorized": false,
+  "native_limits_or_parameters_lowered": false,
+  "native_readiness_inferred": false,
+  "preserved_original_receipts": {
+    "actual_memory_comparison_and_successor_20261005.json": "f513470dd4ce543594308ceb8cd087e3222b7ec3775e23e411939f780cbe3e45",
+    "cpu_checkpoint_proof_20261005.json": "700b1a4455d9e55f24f0f6bcebb97043ec3ff243658b8908c0b1868eca664ba7"
+  },
+  "recompute_counter_coverage": {
+    "additional_recompute_regions_outside_original_counter": 560,
+    "fresh_restored_update2_rows": 20,
+    "note": "Original1120 counter is not the total across the fresh restored continuation branch.",
+    "original_checkpoint_branch_forward_regions": 1120,
+    "original_checkpoint_branch_recompute_regions": 1120,
+    "original_checkpoint_branch_rows": 40
+  },
+  "recorded_at_utc": "2026-10-05T00:31:49.577483+00:00",
+  "root_source_edits": false,
+  "saved_storage_measurement": {
+    "checkpointed_bytes": 12804,
+    "measured_quantity": "Unique storage bytes observed by saved_tensors_hooks for first-row forward plus completion loss; includes preexisting and cast-weight storages.",
+    "not_measured": [
+      "total live tensor memory",
+      "process RSS",
+      "CUDA allocated/reserved peaks",
+      "native memory fit"
+    ],
+    "plain_bytes": 286156
+  },
+  "schema_version": 1,
+  "status": "INDEPENDENT_REVIEW_INTERPRETATION_CLARIFIED_CPU_ONLY",
+  "study_training_qualified": false
+}

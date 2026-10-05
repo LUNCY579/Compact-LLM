@@ -1,5 +1,23 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: CPU recomputation mechanism proof passed
+
+The [preserved CPU proof](evidence/checkpoint_memory_cpu_20261005/preservation_receipt.json)
+uses a separately declared random tiny 28-layer Qwen, BF16 base/FP32 compute,
+evaluation mode, 112 q/v factor tensors and 6,272 tiny trainable parameters.
+It retains the native study's chosen 1,146,880 parameters and 131,072-token budget.
+Two complete 20-sequence updates match the uncheckpointed path in outputs/CE,
+all gradients, clip/Adam state and Python/CPU RNG; an independent 20-row
+autograd reference passes and fresh in-memory continuation matches.
+
+First-row saved-for-backward unique storage fell from 286,156 to 12,804 bytes.
+This includes saved weight/cast storage and is not peak RAM/VRAM or native-fit
+evidence. The original 40-row branch recomputed 1,120 decoder regions; fresh
+20-row continuation adds 560. No published weights or CUDA were used. A bounded
+successor must account for recomputation explicitly, preserve exact method and
+parameter state, pass CPU controls, then obtain separate supervised native and
+disk-checkpoint qualification under unchanged gates. No retry is opened here.
+
 ## 2026-10-05 UTC: short M0 collector implemented; admission closed
 
 The [short M0 collector CPU receipt](evidence/short_collector_cpu_20261005/cpu_validation.json)
