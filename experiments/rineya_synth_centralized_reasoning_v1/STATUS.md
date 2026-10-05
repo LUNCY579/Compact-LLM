@@ -1,5 +1,30 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: fourth M0 batch aborted CPU freshness; partials preserved
+
+The [fourth fixed config](configs/SYNTH_SHORT_M0_ATOMIC_BATCH04_A1.json) was stopped
+at the unchanged external CPU freshness gate after 140.359 seconds. The
+[independent failure audit](evidence/short_m0_atomic_batch04_attempt1_independent_failure_audit_20261005.json)
+passes 12,610 checks on 407 raw files, 83 source snapshots, runtime/decoder/data/
+model pins and owned cleanup. All 673 recorded API attempts returned, including
+353 capture forwards. There are 352 valid token prefixes and 44 final EOS rows.
+Row 45 is durable through token 10; its token-11 file is zero bytes and has no
+publication event. That token, likelihood and finish are unknown. The entire
+64-row packet is retained, with 20 unfinished rows. No terminal worker result,
+final zero-B check, direct CUDA peaks or final 310-base-byte proof exists.
+[Original bytes and snapshots](evidence/short_m0_atomic_batch04_attempt1_20261005)
+remain immutable; these partials are not an additional completed baseline batch.
+
+Returned CPU sample envelopes were at most 16 ms; the last published phases were
+submillisecond. Exact abort-check time/input/branch and the in-flight sampler or
+heartbeat phase were not logged. This does not reproduce or identify the earlier
+323-ms disk phase. No OS/disk cause, harmless false-positive claim or prevention
+by the RAM callback candidate is established. Every owned process, sampler,
+NVML and lease cleanup is terminal. The completed audited M0 population remains
+192/384. Scoring, enrollment, an unchanged batch-4 retry and gate relaxation stay
+closed. Continue the separately reviewed backend-only RAM amendment and required
+CPU controls; it still needs its own native qualification under unchanged gates.
+
 ## 2026-10-05 UTC: third M0 batch audited; fresh RAM callback candidate measured
 
 The [third fixed M0 config](configs/SYNTH_SHORT_M0_ATOMIC_BATCH03_A1.json) completed

@@ -1,0 +1,493 @@
+{
+  "CPU_freshness": {
+    "CPU_nominal_interval_seconds": 0.1,
+    "CPU_start_age_limit_seconds": 0.2,
+    "cause_scope": "Owned worker terminated for the recorded CPU freshness predicate failure. Every returned CPU envelope is at most16ms; all recorded intersample/publication ages are under200ms and the last returned disk phase is118.2 microseconds. No returned sample demonstrates a323ms disk query or identifies a stalled phase.",
+    "derived_finish_interval_is_not_abort_check_age": true,
+    "exact_abort_check_timestamp_logged": false,
+    "freshness_predicate_scope": "Checks age and chronological ordering of the sample relative to monitor.check now; actual failing now/sample branch is not recorded.",
+    "in_flight_sampler_or_heartbeat_phase_at_abort_logged": false,
+    "last_CPU_start_gap_seconds": 0.09400000000096043,
+    "last_CPU_start_to_supervisor_finish_derived_seconds": 1.125,
+    "last_heartbeat": {
+      "supervisor_pid": 345720,
+      "unix_seconds": 1791174625.5407584
+    },
+    "last_model_return_to_last_heartbeat_seconds": 0.004526376724243164,
+    "last_published_CPU_sample": {
+      "disk_free_bytes": 105214058496,
+      "host_available_bytes": 9566650368,
+      "kind": "CPU",
+      "owned_process_identities": [
+        {
+          "create_time": 1791174497.0245223,
+          "creation_filetime_100ns": 134356480970245225,
+          "pid": 352268
+        },
+        {
+          "create_time": 1791174497.166836,
+          "creation_filetime_100ns": 134356480971668361,
+          "pid": 347320
+        },
+        {
+          "create_time": 1791174497.1960068,
+          "creation_filetime_100ns": 134356480971960068,
+          "pid": 351496
+        }
+      ],
+      "owned_process_samples": [
+        {
+          "api_latency_seconds": {
+            "CloseHandle_seconds": 3.0000010156072676e-06,
+            "GetProcessTimes_seconds": 1.179999890155159e-05,
+            "IsProcessInJob_seconds": 6.099999154685065e-06,
+            "K32GetProcessMemoryInfo_seconds": 9.499999578110874e-06,
+            "OpenProcess_seconds": 0.00019260000044596381,
+            "WaitForSingleObject_seconds": 8.800001523923129e-06
+          },
+          "create_time": 1791174497.0245223,
+          "creation_filetime_100ns": 134356480970245225,
+          "pid": 352268,
+          "rss_bytes": 5304320,
+          "sample_completed_monotonic": 30662.312,
+          "sample_started_monotonic": 30662.312,
+          "terminal_confirmed": false
+        },
+        {
+          "api_latency_seconds": {
+            "CloseHandle_seconds": 1.3999997463542968e-06,
+            "GetProcessTimes_seconds": 5.000001692678779e-06,
+            "IsProcessInJob_seconds": 2.5000008463393897e-06,
+            "K32GetProcessMemoryInfo_seconds": 5.899997631786391e-06,
+            "OpenProcess_seconds": 1.2399999832268804e-05,
+            "WaitForSingleObject_seconds": 2.3000029614195228e-06
+          },
+          "create_time": 1791174497.166836,
+          "creation_filetime_100ns": 134356480971668361,
+          "pid": 347320,
+          "rss_bytes": 7811072,
+          "sample_completed_monotonic": 30662.312,
+          "sample_started_monotonic": 30662.312,
+          "terminal_confirmed": false
+        },
+        {
+          "api_latency_seconds": {
+            "CloseHandle_seconds": 1.1999982234556228e-06,
+            "GetProcessTimes_seconds": 1.1999996786471456e-05,
+            "IsProcessInJob_seconds": 1.6000012692529708e-06,
+            "K32GetProcessMemoryInfo_seconds": 5.199999577598646e-06,
+            "OpenProcess_seconds": 5.300000339047983e-06,
+            "WaitForSingleObject_seconds": 1.5000005078036338e-06
+          },
+          "create_time": 1791174497.1960068,
+          "creation_filetime_100ns": 134356480971960068,
+          "pid": 351496,
+          "rss_bytes": 1235746816,
+          "sample_completed_monotonic": 30662.312,
+          "sample_started_monotonic": 30662.312,
+          "terminal_confirmed": false
+        }
+      ],
+      "phase_latency_seconds": {
+        "RAM_available": 9.100000170292333e-06,
+        "disk_free": 0.00011819999781437218,
+        "owned_job_PID_query": 9.14999982342124e-05,
+        "owned_process_total": 0.00040689999877940863
+      },
+      "sample_completed_monotonic": 30662.312,
+      "sample_started_monotonic": 30662.312,
+      "worker_tree_rss_bytes": 1248862208
+    },
+    "last_recorded_model_API_return": {
+      "event": "returned",
+      "id": 673,
+      "operation": "inference_forward",
+      "utc": "2026-10-05T04:30:25.536232+00:00"
+    },
+    "limits": [
+      "Abort-check time/input and any unfinished sampler/heartbeat operation are unlogged; precise age/predicate branch cannot be computed.",
+      "A later returned sample, scheduling delay, heartbeat IO interval or publication/check ordering cannot be selected as the cause from this evidence.",
+      "Phase timers include call wall time, including possible descheduling. No OS/application/disk cause attribution and no gate relaxation.",
+      "Supervisor finish interval includes containment/shutdown/inventory and must not be reported as freshness age at abort."
+    ],
+    "maximum_heartbeat_gap_seconds": 0.12690091133117676,
+    "maximum_preceding_age_at_next_recorded_publication_seconds": 0.13999999999941792,
+    "maximum_recorded_phase_seconds": {
+      "RAM_available": 0.00018169999748351984,
+      "disk_free": 0.0006343000022752676,
+      "owned_job_PID_query": 0.0008713999995961785,
+      "owned_process_total": 0.00164289999884204
+    },
+    "maximum_recorded_sample_start_gap_seconds": 0.13999999999941792,
+    "maximum_returned_sample_envelope_seconds": 0.01600000000325963,
+    "previous_CPU_sample_started_monotonic": 30662.218,
+    "reported_reason": "stale_external_CPU_watchdog"
+  },
+  "CPU_generated_only_decode_performed": true,
+  "attempt_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\short_m0_atomic_batch04_attempt1",
+  "audit_framework_model_GPU_execution": false,
+  "batch_selector": {
+    "ordinal": 4,
+    "source_kind": "atomic_RS_DEV"
+  },
+  "checks_passed": 12610,
+  "cleanup": {
+    "GPU_telemetry_cleanup_verified": true,
+    "assigned_before_resume": true,
+    "job_closed_kill_on_close": true,
+    "lease_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\30a4c9bfb5814ab8836b5b1b55e11ab9",
+    "lease_terminal_matches_supervisor_bytes": true,
+    "monitor_ready_before_resume": true,
+    "owned_identity_sha256": "e86b1ece947a8d1f326f5295556a0dd5dc786ef305b1e6d6a5fd4010d1977d25",
+    "owned_worker_identity_currently_alive": false,
+    "sampler_threads_terminal_verified": true,
+    "scope": "Pinned supervisor verifies OS-owned containment separately; no graceful worker finalization/base proof is inferred after kill.",
+    "unjoined_sampler_threads": [],
+    "worker_graceful_hook_or_parameter_cleanup_receipt_present": false
+  },
+  "complete_raw_finish_counts": {
+    "eos": 44,
+    "generation_cap": 0
+  },
+  "complete_raw_row_manifest_sha256": "27c2a5f1d4371c4bebcce5e24b88677cdec296b997a261a6934c167d93cf26fe",
+  "complete_raw_rows": 44,
+  "completed64_raw_collection": false,
+  "conclusion": "Failed original64-row packet retained.44 raw rows and352 token prefixes are valid partial evidence; returned forward353 has no preserved token/LP. No full collection, final310-base proof, scoring, enrollment, transfer or retention result.",
+  "config_body_sha256": "af62630fdd7c5d6f55c3100585469bc87bb13d09bb73485d21bdc2bd9dad0aa5",
+  "config_file_sha256": "0b4bbb54f852ba611c4973ce58eaff728118128877c1f808c57ce740ea2a0149",
+  "config_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\configs\\SYNTH_SHORT_M0_ATOMIC_BATCH04_A1.json",
+  "confirmation_eligible": false,
+  "correctness_certified": false,
+  "correctness_grade_performed": false,
+  "hash_closure": {
+    "after": {
+      "config": {
+        "bytes": 261315,
+        "sha256": "0b4bbb54f852ba611c4973ce58eaff728118128877c1f808c57ce740ea2a0149"
+      },
+      "data": {
+        "entries": 5,
+        "manifest_sha256": "40e3eb993bf2e2c5a5795ceb3d7c3a59a688eda23f2648bd198299eaa0479402"
+      },
+      "decoder": {
+        "entries": 17,
+        "manifest_sha256": "2efaf1a10e5150aa0d67bf9fa4543aecd6df33a3e3e28048b3a53c8e305f0dd6"
+      },
+      "lease": {
+        "entries": 4,
+        "manifest_sha256": "b83c9272c39ab2e4ca3986f6126adf9e729af250984fe973dfb079ebdb9db622"
+      },
+      "model": {
+        "entries": 7,
+        "manifest_sha256": "dd2e71c23462cb6b6c8d412368214f9b35f3fee4edd7e1a6dedefd0cf5d5fed4"
+      },
+      "preservation_receipt": {
+        "bytes": 65336,
+        "sha256": "62e55171eab5a1265921e89cf523106445e8851a7ccab57f58e12a05377a9a9d"
+      },
+      "preserved_config": {
+        "bytes": 261315,
+        "sha256": "0b4bbb54f852ba611c4973ce58eaff728118128877c1f808c57ce740ea2a0149"
+      },
+      "preserved_raw": {
+        "entries": 407,
+        "manifest_sha256": "06f01f61c7f0dd1ad0d1a9337d8a7ffb9dfcc32c5b877294ff5f6845b19c8691"
+      },
+      "raw": {
+        "entries": 407,
+        "manifest_sha256": "06f01f61c7f0dd1ad0d1a9337d8a7ffb9dfcc32c5b877294ff5f6845b19c8691"
+      },
+      "runtime": {
+        "entries": 64,
+        "manifest_sha256": "8f69e68ea50d0ad9fae86fc60960f7d56877837dcedd1b8c628366fe77182283"
+      },
+      "source": {
+        "entries": 83,
+        "manifest_sha256": "1d54df048c5790cbb5de3fc0309c87d8818b6b68cda4e9d44b3f2fa9cc6376e7"
+      },
+      "source_snapshots": {
+        "entries": 83,
+        "manifest_sha256": "f74126a2fa436834428a638dfc92b1c639e99e629455cbf5f88a0c6132cfc08c"
+      }
+    },
+    "all407_raw83_source64_runtime17_decoder5_data7_model_byte_pins_verified": true,
+    "all_equal": true,
+    "before": {
+      "config": {
+        "bytes": 261315,
+        "sha256": "0b4bbb54f852ba611c4973ce58eaff728118128877c1f808c57ce740ea2a0149"
+      },
+      "data": {
+        "entries": 5,
+        "manifest_sha256": "40e3eb993bf2e2c5a5795ceb3d7c3a59a688eda23f2648bd198299eaa0479402"
+      },
+      "decoder": {
+        "entries": 17,
+        "manifest_sha256": "2efaf1a10e5150aa0d67bf9fa4543aecd6df33a3e3e28048b3a53c8e305f0dd6"
+      },
+      "lease": {
+        "entries": 4,
+        "manifest_sha256": "b83c9272c39ab2e4ca3986f6126adf9e729af250984fe973dfb079ebdb9db622"
+      },
+      "model": {
+        "entries": 7,
+        "manifest_sha256": "dd2e71c23462cb6b6c8d412368214f9b35f3fee4edd7e1a6dedefd0cf5d5fed4"
+      },
+      "preservation_receipt": {
+        "bytes": 65336,
+        "sha256": "62e55171eab5a1265921e89cf523106445e8851a7ccab57f58e12a05377a9a9d"
+      },
+      "preserved_config": {
+        "bytes": 261315,
+        "sha256": "0b4bbb54f852ba611c4973ce58eaff728118128877c1f808c57ce740ea2a0149"
+      },
+      "preserved_raw": {
+        "entries": 407,
+        "manifest_sha256": "06f01f61c7f0dd1ad0d1a9337d8a7ffb9dfcc32c5b877294ff5f6845b19c8691"
+      },
+      "raw": {
+        "entries": 407,
+        "manifest_sha256": "06f01f61c7f0dd1ad0d1a9337d8a7ffb9dfcc32c5b877294ff5f6845b19c8691"
+      },
+      "runtime": {
+        "entries": 64,
+        "manifest_sha256": "8f69e68ea50d0ad9fae86fc60960f7d56877837dcedd1b8c628366fe77182283"
+      },
+      "source": {
+        "entries": 83,
+        "manifest_sha256": "1d54df048c5790cbb5de3fc0309c87d8818b6b68cda4e9d44b3f2fa9cc6376e7"
+      },
+      "source_snapshots": {
+        "entries": 83,
+        "manifest_sha256": "f74126a2fa436834428a638dfc92b1c639e99e629455cbf5f88a0c6132cfc08c"
+      }
+    },
+    "individual_maps_bound_by": "Frozen config and checksum-bound preservation receipt retain every path/hash/byte; compact full-manifest digests bind independently rehashed complete maps.",
+    "preservation_body_sha256": "41d1a434e12ac841b86e63bd04ac2a53cc740ed941a92ecb237b6d49ffbbb5c9",
+    "preservation_file_sha256": "62e55171eab5a1265921e89cf523106445e8851a7ccab57f58e12a05377a9a9d",
+    "preservation_receipt_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\short_m0_atomic_batch04_attempt1_20261005\\preservation_receipt.json"
+  },
+  "id": "SYNTH-SHORT-M0-ATOMIC-BATCH04-INDEPENDENT-FAILURE-AUDIT",
+  "language_qualification_established": false,
+  "last_valid_durable_token_ordinal": 10,
+  "long_context_qualification_established": false,
+  "original_packet_rows": 64,
+  "original_row_order_sha256": "a4fe31211215312c8d36d731bb00d958e1660a265fd2bbb7a8fd150d43cca948",
+  "paid_services": false,
+  "partial_accounting": {
+    "backward_or_optimizer_calls_recorded": 0,
+    "capture_forward_attempted": 353,
+    "capture_forward_returned": 353,
+    "dose_inference_limits": "353 capture API returns and two parity returns are recorded. Positions for the unpreserved step use the unchanged source-row sequence and its known prefix; no terminal prehook/component/API ledger survived. No unobserved token, LP, EOS, or finish is imputed.",
+    "empty_partial_file": {
+      "bytes": 0,
+      "measurement_event_present": false,
+      "path": "stage_raw_row0045_token11.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "valid_token_receipt": false
+    },
+    "final310_base_byte_proof_present": false,
+    "final_zeroB_postcheck_present": false,
+    "initial_zeroB_parity": {
+      "capability_scored": false,
+      "dose": {
+        "attempted_calls": 2,
+        "input_positions": 384,
+        "maximum_forward_calls": 2050,
+        "maximum_forward_input_positions": 510720,
+        "operations": {
+          "zero_parity_adapter_forward": {
+            "attempted_calls": 1,
+            "input_positions": 192
+          },
+          "zero_parity_base_forward": {
+            "attempted_calls": 1,
+            "input_positions": 192
+          }
+        }
+      },
+      "equal": true,
+      "maximum_error": 0.0
+    },
+    "last_valid_partial_costs": {
+      "attempted_forwards": 352,
+      "input_positions": {
+        "attempted": 84715,
+        "failed": 0,
+        "pending": 0,
+        "returned": 84715
+      },
+      "maximum_attempted_forwards": 2048,
+      "maximum_input_positions": 510336,
+      "operations": {
+        "inference_forward": {
+          "attempted": 352,
+          "failed": 0,
+          "pending": 0,
+          "returned": 352
+        }
+      }
+    },
+    "last_valid_partial_receipt_sha256": "c11359159e253de9f152b44cead5f8a9f29714c1569fdac446c5422ad5c6e5ea",
+    "model_API_pending_vs_collection_incomplete": "All recorded model/API calls returned; incomplete token persistence and batch work are separate from failed/pending native API counts.",
+    "operations_reconstructed_from_durable_events": {
+      "checkpoint_load": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "cuda_context_init": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "generated_decoder_construct": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "inference_forward": {
+        "attempted": 353,
+        "failed": 0,
+        "pending": 0,
+        "returned": 353
+      },
+      "install_activation_hooks": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "install_fp32_compute": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "install_qv_lora": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "model_construct": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "tensor_copy": {
+        "attempted": 310,
+        "failed": 0,
+        "pending": 0,
+        "returned": 310
+      },
+      "zero_lora_query_before": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "zero_parity_adapter_forward": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      },
+      "zero_parity_base_forward": {
+        "attempted": 1,
+        "failed": 0,
+        "pending": 0,
+        "returned": 1
+      }
+    },
+    "parameter_metadata_preserved_on44_complete_rows": true,
+    "physical_forward_attempts_returns_inferred": 355,
+    "physical_input_positions_inferred": 85300,
+    "registered_API_attempted": 673,
+    "registered_API_failed": 0,
+    "registered_API_pending": 0,
+    "registered_API_returned": 673,
+    "returned_capture_input_positions_inferred": 84916,
+    "returned_forward_without_preserved_token_LP": 1,
+    "that_forward_journal_id": 673,
+    "that_forward_ordinal": 353,
+    "that_forward_prefix_length_from_fixed_sequence": 201,
+    "that_token_LP_or_EOS_finish_known": false,
+    "valid_preserved_token_prefixes": 352,
+    "worker_terminal_or_direct_GPU_diagnostics_present": false
+  },
+  "partial_row_ordinal": 45,
+  "preserved_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\short_m0_atomic_batch04_attempt1_20261005",
+  "prior_correct_enrollment_performed": false,
+  "protected_bank_access": false,
+  "quality_gain_established": false,
+  "recorded_at_utc": "2026-10-05T04:43:02.848734+00:00",
+  "replay_or_resume_performed": false,
+  "resources": {
+    "CPU_samples": 1287,
+    "GPU_samples": 257,
+    "direct_terminal_Torch_free_or_allocator_peak_available": false,
+    "last_GPU_sample": {
+      "GPU_index": 0,
+      "gpu_free_bytes": 4963725312,
+      "gpu_observation_id": "053d4ec2551d41608a00bcd49a28aaad",
+      "gpu_sample_completed_monotonic": 30662.312,
+      "gpu_sample_started_monotonic": 30662.312,
+      "gpu_total_bytes": 8585740288,
+      "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+      "kind": "GPU"
+    },
+    "limits": "Published amounts do not establish unsampled instants, exact failing check age, model fit, or completed collection.",
+    "maximum_owned_tree_RSS_bytes": 1252495360,
+    "minimum_disk_free_bytes": 105190277120,
+    "minimum_published_GPU_free_bytes": 4963725312,
+    "minimum_published_host_available_bytes": 8320753664,
+    "published_amount_gates_hold": true,
+    "whole_scope_limit_seconds": 600
+  },
+  "retention_certified": false,
+  "schema_version": 1,
+  "scoring_authorized": false,
+  "sha256": "84f0be56a891069175a125a107575d15c22443c03ea422f4fceb64288ea00115",
+  "source_commit": "c14bc094608f43adb672e826bbdb91f68a7c0041",
+  "source_packet_sha256": "00c74f4b6ba6153b36ebf8d9c14a1ba8bf9a9ea023318ed25f6dee700ee51932",
+  "status": "VERIFIED_ABORTED_SHORT_M0_PARTIAL_COLLECTION_CPU_FRESHNESS_NO_COMPLETED_BATCH",
+  "terminal": {
+    "elapsed_seconds": 140.35900000000038,
+    "failure": "stale_external_CPU_watchdog",
+    "finished_utc": "2026-10-05T04:30:26.663546+00:00",
+    "partial_outputs_frozen": true,
+    "returncode": 137,
+    "started_utc": "2026-10-05T04:28:06.298046+00:00",
+    "status": "OWNED_WORKER_ABORTED"
+  },
+  "training_authorized": false,
+  "unchanged_retry_authorized": false,
+  "unfinished_original_rows": 20,
+  "unstarted_row_ordinals": [
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64
+  ],
+  "whole_packet_denominator_preserved": true
+}
