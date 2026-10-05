@@ -1,5 +1,23 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: counted full recomputation candidate integrated
+
+The [candidate installer](checkpoint_successor_profile.py) preserves evaluation
+mode and parameter objects/storage/dtypes/flags, disables checkpoint early-stop,
+uses nonreentrant full decoder recomputation and bypasses it under no-grad.
+Seven focused root controls pass, including sticky checkpoint/guard failures,
+partial installation, exact attribute restoration and replacement-object
+identity rejection. No backend scope or native permission is changed yet.
+
+The [current-source tiny CPU proof](evidence/checkpoint_full_recompute_cpu_20261005/cpu_full_recompute_identity_successor_20261005.json)
+passes output/CE numerical equality, all 112 gradient/Adam/RNG comparisons,
+independent gradients and in-memory continuation. All 1,680 forward regions and
+1,680 recomputations are paired and return normally without failed/pending work;
+before/after source hashes match. Historical pre-fix proofs remain preserved.
+Saved-storage and tiny-shape limits remain explicit; native VRAM/disk-resume fit
+is unqualified. A separate source-bound backend amendment with actual additional
+work counts is being prepared under unchanged parameters, dose and gates.
+
 ## 2026-10-05 UTC: CPU recomputation mechanism proof passed
 
 The [preserved CPU proof](evidence/checkpoint_memory_cpu_20261005/preservation_receipt.json)
