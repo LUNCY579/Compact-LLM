@@ -1,0 +1,31 @@
+{
+  "changed_files": {
+    "run_preserved_DLL_cpu.py": {
+      "bytes": 3048,
+      "sha256": "62d8fd41f093eb58f6de74633804977e11e5930704161bc831b972e6bba0e0e0",
+      "stage_bytes_match": true
+    },
+    "test_frozen_bootstrap_loader.py": {
+      "bytes": 3386,
+      "sha256": "e55c01810425db4ae48ed0706862bf72f5fdda20634fedec351f94f95c0473fb",
+      "stage_bytes_match": true
+    },
+    "test_worker_bindings.py": {
+      "bytes": 18762,
+      "sha256": "1b39abf4b7c11887e0d1f485db26078f25f92990e6e913d67dfcc8e165dedd8b",
+      "stage_bytes_match": true
+    }
+  },
+  "fixture_only": true,
+  "kind": "ROOT_DLL_CPU_COMBINED_TEST_ONLY_REPAIR_012",
+  "native_qualification": false,
+  "original_failure_output": "ROOT_COMBINED_DLL_CPU_REPLAY_009.txt",
+  "original_failure_receipt": "ROOT_COMBINED_DLL_CPU_REPLAY_009.json",
+  "original_source": "history/first_combined_replay_009",
+  "reasons": [
+    "Historical bootstrap classification tests explicitly choose CPU-only finder install",
+    "Tripwire permits only already-injected fileless marker-bearing three inert helper module names and records each import"
+  ],
+  "runtime_implementation_changed": false,
+  "sha256": "1079754cd55eb28bf86389b0b0f0c8b53a867fd59d53a68667442e67b4063d9e"
+}

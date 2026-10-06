@@ -1,0 +1,24 @@
+test_actual_installed_finder_refuses_arbitrary_guard_object (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_arbitrary_guard_object) ... 
+  test_actual_installed_finder_refuses_arbitrary_guard_object (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_arbitrary_guard_object) (guard_kind='object') ... FAIL
+  test_actual_installed_finder_refuses_arbitrary_guard_object (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_arbitrary_guard_object) (guard_kind='SimpleNamespace') ... FAIL
+
+======================================================================
+FAIL: test_actual_installed_finder_refuses_arbitrary_guard_object (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_arbitrary_guard_object) (guard_kind='object')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_library_boundary_manifest.py", line 374, in test_actual_installed_finder_refuses_arbitrary_guard_object
+    with self.assertRaisesRegex(ValueError, 'installed selected context-bound library finder'):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_actual_installed_finder_refuses_arbitrary_guard_object (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_arbitrary_guard_object) (guard_kind='SimpleNamespace')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_library_boundary_manifest.py", line 374, in test_actual_installed_finder_refuses_arbitrary_guard_object
+    with self.assertRaisesRegex(ValueError, 'installed selected context-bound library finder'):
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.753s
+
+FAILED (failures=2)

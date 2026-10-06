@@ -1,0 +1,96 @@
+test_CPU_selected_boundary_cannot_enter_public_native_loader_or_bindings (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_CPU_selected_boundary_cannot_enter_public_native_loader_or_bindings) ... ok
+test_actual_finder_removed_from_importer_cannot_satisfy_native_selector (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_finder_removed_from_importer_cannot_satisfy_native_selector) ... ok
+test_actual_installed_CPU_finder_cannot_satisfy_native_selector (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_CPU_finder_cannot_satisfy_native_selector) ... ok
+test_actual_installed_finder_encloses_framework_supplier_and_cleans_up (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_encloses_framework_supplier_and_cleans_up) ... ok
+test_actual_installed_finder_refuses_arbitrary_guard_object (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_arbitrary_guard_object) ... 
+  test_actual_installed_finder_refuses_arbitrary_guard_object (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_arbitrary_guard_object) (guard_kind='object') ... FAIL
+  test_actual_installed_finder_refuses_arbitrary_guard_object (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_arbitrary_guard_object) (guard_kind='SimpleNamespace') ... FAIL
+test_actual_installed_finder_refuses_inactive_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_inactive_library_guard) ... 
+  test_actual_installed_finder_refuses_inactive_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_inactive_library_guard) (guard_state='active') ... FAIL
+  test_actual_installed_finder_refuses_inactive_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_inactive_library_guard) (guard_state='failed') ... FAIL
+  test_actual_installed_finder_refuses_inactive_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_inactive_library_guard) (guard_state='closed') ... FAIL
+test_actual_installed_finder_refuses_method_from_another_finder (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_method_from_another_finder) ... ok
+test_actual_installed_finder_refuses_missing_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_missing_library_guard) ... ok
+test_actual_installed_finder_refuses_nullcontext_and_arbitrary_callbacks (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_nullcontext_and_arbitrary_callbacks) ... ok
+test_actual_installed_finder_refuses_wrong_compile_descriptor (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_wrong_compile_descriptor) ... ok
+test_actual_installed_finder_refuses_wrong_context_projection (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_wrong_context_projection) ... ok
+test_actual_metadata_rosters_and_selected_bytes_accept_inert_library_subset (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_metadata_rosters_and_selected_bytes_accept_inert_library_subset) ... ok
+test_actual_provider_bytes_drift_refused_before_supplier_observation (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_provider_bytes_drift_refused_before_supplier_observation) ... ok
+test_installed_finder_refuses_library_drift_before_framework_delegate (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_installed_finder_refuses_library_drift_before_framework_delegate) ... ok
+test_resealed_equal_library_runtime_role_drift_refused_by_native_metadata (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_resealed_equal_library_runtime_role_drift_refused_by_native_metadata) ... ok
+test_resealed_library_descriptor_drift_refused_by_actual_runtime_subset_join (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_resealed_library_descriptor_drift_refused_by_actual_runtime_subset_join) ... ok
+test_resealed_library_only_role_drift_refused (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_resealed_library_only_role_drift_refused) ... ok
+test_resealed_library_outside_runtime_map_refused (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_resealed_library_outside_runtime_map_refused) ... ok
+test_resealed_provider_descriptor_drift_refused_by_actual_source_join (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_resealed_provider_descriptor_drift_refused_by_actual_source_join) ... ok
+test_resealed_provider_path_drift_refused_by_actual_source_join (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_resealed_provider_path_drift_refused_by_actual_source_join) ... ok
+test_resealed_python_source_as_library_refused (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_resealed_python_source_as_library_refused) ... ok
+test_CPU_context_never_reaches_native_library_enclosure (test_framework_library_enclosure.FrameworkLibraryEnclosureControls.test_CPU_context_never_reaches_native_library_enclosure) ... ok
+test_actual_shared_supplier_import_is_inside_boundary (test_framework_library_enclosure.FrameworkLibraryEnclosureControls.test_actual_shared_supplier_import_is_inside_boundary) ... ok
+test_boundary_refusal_prevents_framework_supplier (test_framework_library_enclosure.FrameworkLibraryEnclosureControls.test_boundary_refusal_prevents_framework_supplier) ... ok
+test_native_binding_without_enforced_boundary_refuses_before_suppliers (test_framework_library_enclosure.FrameworkLibraryEnclosureControls.test_native_binding_without_enforced_boundary_refuses_before_suppliers) ... ok
+test_noop_callback_does_not_replace_actual_installed_library_scope (test_framework_library_enclosure.FrameworkLibraryEnclosureControls.test_noop_callback_does_not_replace_actual_installed_library_scope) ... ok
+
+======================================================================
+FAIL: test_actual_installed_finder_refuses_arbitrary_guard_object (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_arbitrary_guard_object) (guard_kind='object')
+----------------------------------------------------------------------
+ValueError: actual installed selected library guard identity
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_library_boundary_manifest.py", line 374, in test_actual_installed_finder_refuses_arbitrary_guard_object
+    with self.assertRaisesRegex(ValueError, 'installed selected context-bound library finder'):
+AssertionError: "installed selected context-bound library finder" does not match "actual installed selected library guard identity"
+
+======================================================================
+FAIL: test_actual_installed_finder_refuses_arbitrary_guard_object (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_arbitrary_guard_object) (guard_kind='SimpleNamespace')
+----------------------------------------------------------------------
+ValueError: actual installed selected library guard identity
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_library_boundary_manifest.py", line 374, in test_actual_installed_finder_refuses_arbitrary_guard_object
+    with self.assertRaisesRegex(ValueError, 'installed selected context-bound library finder'):
+AssertionError: "installed selected context-bound library finder" does not match "actual installed selected library guard identity"
+
+======================================================================
+FAIL: test_actual_installed_finder_refuses_inactive_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_inactive_library_guard) (guard_state='active')
+----------------------------------------------------------------------
+ValueError: active unfailed unclosed library guard before native import
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_library_boundary_manifest.py", line 360, in test_actual_installed_finder_refuses_inactive_library_guard
+    with self.assertRaisesRegex(ValueError, 'installed selected context-bound library finder'):
+AssertionError: "installed selected context-bound library finder" does not match "active unfailed unclosed library guard before native import"
+
+======================================================================
+FAIL: test_actual_installed_finder_refuses_inactive_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_inactive_library_guard) (guard_state='failed')
+----------------------------------------------------------------------
+ValueError: active unfailed unclosed library guard before native import
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_library_boundary_manifest.py", line 360, in test_actual_installed_finder_refuses_inactive_library_guard
+    with self.assertRaisesRegex(ValueError, 'installed selected context-bound library finder'):
+AssertionError: "installed selected context-bound library finder" does not match "active unfailed unclosed library guard before native import"
+
+======================================================================
+FAIL: test_actual_installed_finder_refuses_inactive_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_inactive_library_guard) (guard_state='closed')
+----------------------------------------------------------------------
+ValueError: active unfailed unclosed library guard before native import
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_library_boundary_manifest.py", line 360, in test_actual_installed_finder_refuses_inactive_library_guard
+    with self.assertRaisesRegex(ValueError, 'installed selected context-bound library finder'):
+AssertionError: "installed selected context-bound library finder" does not match "active unfailed unclosed library guard before native import"
+
+----------------------------------------------------------------------
+Ran 26 tests in 17.160s
+
+FAILED (failures=5)

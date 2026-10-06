@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-05 UTC: partial DLL boundary CPU source milestone
+
+The [DLL boundary controls](LIBRARY_BOUNDARY_CPU_001.md) pass156 preserved-copy
+checks plus independent focused23 and frozen manifest30. Extension/framework
+imports share selected dependency/event/cleanup checks; original installation
+records reject finite no-op, object and CPU-mode substitutions. Two old test
+fixtures and one runner tripwire were repaired; failures and exact sources remain.
+
+Independent reconstruction of selected code with forged globals/closure still
+passes the selector. Native factory readiness remains unproved. A qualified
+load/unload observer, complete fresh-bootstrap directory trace, finite additive
+Windows identities, current byte/owned-resource evidence and reviewed registration
+remain open. No new native action, M0 row, study training/scoring or permission.
+M0 remains256/384 raw unscored rows; M1/M2 transfer and preservation unmeasured.
+
 ## 2026-10-05 UTC: private worker-entry filesystem/loader consumption accepted
 
 The [registered main CPU milestone](REGISTERED_MAIN_CPU_001.md) passes70

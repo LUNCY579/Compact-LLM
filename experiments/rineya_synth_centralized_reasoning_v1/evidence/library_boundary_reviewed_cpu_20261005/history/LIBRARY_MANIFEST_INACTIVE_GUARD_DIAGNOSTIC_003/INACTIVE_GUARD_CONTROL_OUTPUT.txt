@@ -1,0 +1,33 @@
+test_actual_installed_finder_refuses_inactive_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_inactive_library_guard) ... 
+  test_actual_installed_finder_refuses_inactive_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_inactive_library_guard) (guard_state='active') ... FAIL
+  test_actual_installed_finder_refuses_inactive_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_inactive_library_guard) (guard_state='failed') ... FAIL
+  test_actual_installed_finder_refuses_inactive_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_inactive_library_guard) (guard_state='closed') ... FAIL
+
+======================================================================
+FAIL: test_actual_installed_finder_refuses_inactive_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_inactive_library_guard) (guard_state='active')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_library_boundary_manifest.py", line 360, in test_actual_installed_finder_refuses_inactive_library_guard
+    with self.assertRaisesRegex(ValueError, 'installed selected context-bound library finder'):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_actual_installed_finder_refuses_inactive_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_inactive_library_guard) (guard_state='failed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_library_boundary_manifest.py", line 360, in test_actual_installed_finder_refuses_inactive_library_guard
+    with self.assertRaisesRegex(ValueError, 'installed selected context-bound library finder'):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_actual_installed_finder_refuses_inactive_library_guard (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_refuses_inactive_library_guard) (guard_state='closed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_library_boundary_manifest.py", line 360, in test_actual_installed_finder_refuses_inactive_library_guard
+    with self.assertRaisesRegex(ValueError, 'installed selected context-bound library finder'):
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.748s
+
+FAILED (failures=3)

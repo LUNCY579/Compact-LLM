@@ -1,0 +1,32 @@
+test_CPU_selected_boundary_cannot_enter_public_native_loader_or_bindings (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_CPU_selected_boundary_cannot_enter_public_native_loader_or_bindings) ... ok
+test_actual_installed_finder_encloses_framework_supplier_and_cleans_up (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_encloses_framework_supplier_and_cleans_up) ... ERROR
+test_actual_metadata_rosters_and_selected_bytes_accept_inert_library_subset (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_metadata_rosters_and_selected_bytes_accept_inert_library_subset) ... ok
+test_actual_provider_bytes_drift_refused_before_supplier_observation (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_provider_bytes_drift_refused_before_supplier_observation) ... ok
+test_installed_finder_refuses_library_drift_before_framework_delegate (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_installed_finder_refuses_library_drift_before_framework_delegate) ... ok
+test_resealed_equal_library_runtime_role_drift_refused_by_native_metadata (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_resealed_equal_library_runtime_role_drift_refused_by_native_metadata) ... ok
+test_resealed_library_descriptor_drift_refused_by_actual_runtime_subset_join (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_resealed_library_descriptor_drift_refused_by_actual_runtime_subset_join) ... ok
+test_resealed_library_only_role_drift_refused (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_resealed_library_only_role_drift_refused) ... ok
+test_resealed_library_outside_runtime_map_refused (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_resealed_library_outside_runtime_map_refused) ... ok
+test_resealed_provider_descriptor_drift_refused_by_actual_source_join (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_resealed_provider_descriptor_drift_refused_by_actual_source_join) ... ok
+test_resealed_provider_path_drift_refused_by_actual_source_join (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_resealed_provider_path_drift_refused_by_actual_source_join) ... ok
+test_resealed_python_source_as_library_refused (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_resealed_python_source_as_library_refused) ... ok
+
+======================================================================
+ERROR: test_actual_installed_finder_encloses_framework_supplier_and_cleans_up (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_encloses_framework_supplier_and_cleans_up)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_library_boundary_manifest.py", line 213, in test_actual_installed_finder_encloses_framework_supplier_and_cleans_up
+    api = worker.real_torch_bindings(context, {}, 'CPU_unused', framework_boundary=finder.framework_import)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\CPU_library_manifest_0h4vilq1\CPU_OUTER_CONTEXT_FILESYSTEM\repository\experiments\rineya_synth_centralized_reasoning_v1\prefix_input_owned_worker.py", line 71, in real_torch_bindings
+    framework_boundary=_installed_framework_boundary(value,framework_boundary)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\CPU_library_manifest_0h4vilq1\CPU_OUTER_CONTEXT_FILESYSTEM\repository\experiments\rineya_synth_centralized_reasoning_v1\prefix_input_owned_worker.py", line 80, in _installed_framework_boundary
+    selected=str(C.PACKAGE/'prefix_registered_loader.py');expected=value['config']['source_files'][selected]
+                                                                   ~~~~~^^^^^^^^^^
+KeyError: 'config'
+
+----------------------------------------------------------------------
+Ran 12 tests in 8.502s
+
+FAILED (errors=1)

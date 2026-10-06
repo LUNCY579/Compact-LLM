@@ -1,0 +1,34 @@
+{
+  "counterfeit_installed_finder_accepted": true,
+  "finding": "The selector accepts caller-created unrelated classes with copied writable pins/context/state and spoofed co_filename. No installed-source registry or exact compiled class provenance is consumed.",
+  "fixture_only": true,
+  "forbidden_import_attempts": [],
+  "injected_assumptions": [
+    "plain context projection, no native context issuance",
+    "counterfeit finder and guard, selected filenames and copied source pins"
+  ],
+  "kind": "INDEPENDENT_CALLER_SUPPLIED_COUNTERFEIT_DLL_BOUNDARY_SELECTOR_REPRODUCTION",
+  "native_PASS": false,
+  "native_authority_issued": false,
+  "native_or_host_api_calls": [],
+  "native_stage_opened": false,
+  "no_observed_library_guard_delegate_reached": true,
+  "recommended_fix": "A source-authenticated closure validator must bind actual installation records to exact finder/guard classes/functions, original projection/pins and fixture/native mode; invalidate on removal/failure and require the current unique installation and active original guard.",
+  "root_source_edits": false,
+  "sha256": "c6d55299efd62e8868c5f6017a0e02413a8fbecea01c60dfc139925f7bb22a76",
+  "source_after": {
+    "prefix_input_owned_worker.py": "fd39b1baf594d5c9bd701d3410ac67048b28087c540bb8d00e435bfc8e73bf21",
+    "prefix_library_policy.py": "c88c5c5116e491cd23b30d3f8d82c5a02bcc92c22133fce6c246d9ebe9e5eb05",
+    "prefix_native_pipeline.py": "35efab8ea700c5feaede1152cbd17d7d622ae2d66304619c2f182ccae4cdf469",
+    "prefix_registered_loader.py": "56a24d8800e9752958725230868eec6216ffaf5f8a6d94e80fab1a8b06ae8321",
+    "prefix_tensor_contract.py": "35ce106c094207d5b74455820ae856fe090f1fcaf48baf86fb56bd32a6c53e41"
+  },
+  "source_before": {
+    "prefix_input_owned_worker.py": "fd39b1baf594d5c9bd701d3410ac67048b28087c540bb8d00e435bfc8e73bf21",
+    "prefix_library_policy.py": "c88c5c5116e491cd23b30d3f8d82c5a02bcc92c22133fce6c246d9ebe9e5eb05",
+    "prefix_native_pipeline.py": "35efab8ea700c5feaede1152cbd17d7d622ae2d66304619c2f182ccae4cdf469",
+    "prefix_registered_loader.py": "56a24d8800e9752958725230868eec6216ffaf5f8a6d94e80fab1a8b06ae8321",
+    "prefix_tensor_contract.py": "35ce106c094207d5b74455820ae856fe090f1fcaf48baf86fb56bd32a6c53e41"
+  },
+  "source_code_executed": "exact AST-extracted current worker selector only"
+}

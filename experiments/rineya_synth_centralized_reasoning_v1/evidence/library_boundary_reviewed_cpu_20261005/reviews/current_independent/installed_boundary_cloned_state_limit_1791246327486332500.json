@@ -1,0 +1,35 @@
+{
+  "exact_selected_finder_guard_validator_code_with_counterfeit_globals_and_closure_accepted": true,
+  "finding": "Executable code equality plus class/global consistency does not authenticate the identity/provenance of a caller-created module namespace or installation record closure.",
+  "fixture_only": true,
+  "forbidden_import_attempts": [],
+  "genuine_installer_memory_mutated": false,
+  "injected_assumptions": [
+    "plain selector input, no actual native context issuance",
+    "same-process caller constructed selected CodeType copies with counterfeit class globals and a counterfeit validator record closure"
+  ],
+  "kind": "INDEPENDENT_SAME_PROCESS_CLONED_VALIDATOR_GLOBAL_CLOSURE_AUTHORITY_LIMIT_REPRODUCTION",
+  "native_PASS": false,
+  "native_authority_issued": false,
+  "native_factory_readiness_proven": false,
+  "native_stage_opened": false,
+  "root_source_edits": false,
+  "scope": "Known unresolved same-process authority limitation. The finite no-op/object substitution controls remain useful; this does not authorize a generic anti-tamper redesign or any native opening. Native runtime/library observer/host/source qualification remain absent.",
+  "sha256": "389f6af6b8bda1d7368081cf1a9890ee53f0668eb4fe504eaa7b415fe1b39e4f",
+  "source_after": {
+    "prefix_input_owned_worker.py": "296430d070ee4f6bb245dce5ba5f47fa7684909c16e3951b4d8aaa46e495fca2",
+    "prefix_library_policy.py": "c88c5c5116e491cd23b30d3f8d82c5a02bcc92c22133fce6c246d9ebe9e5eb05",
+    "prefix_native_pipeline.py": "35efab8ea700c5feaede1152cbd17d7d622ae2d66304619c2f182ccae4cdf469",
+    "prefix_registered_loader.py": "45809312bc5b025a0a00521594c792b8940523bf1d8bc047bb0570957714a26d",
+    "prefix_tensor_contract.py": "35ce106c094207d5b74455820ae856fe090f1fcaf48baf86fb56bd32a6c53e41"
+  },
+  "source_before": {
+    "prefix_input_owned_worker.py": "296430d070ee4f6bb245dce5ba5f47fa7684909c16e3951b4d8aaa46e495fca2",
+    "prefix_library_policy.py": "c88c5c5116e491cd23b30d3f8d82c5a02bcc92c22133fce6c246d9ebe9e5eb05",
+    "prefix_native_pipeline.py": "35efab8ea700c5feaede1152cbd17d7d622ae2d66304619c2f182ccae4cdf469",
+    "prefix_registered_loader.py": "45809312bc5b025a0a00521594c792b8940523bf1d8bc047bb0570957714a26d",
+    "prefix_tensor_contract.py": "35ce106c094207d5b74455820ae856fe090f1fcaf48baf86fb56bd32a6c53e41"
+  },
+  "sources_unchanged": true,
+  "unobserved_noop_boundary_delegate_reached": true
+}
