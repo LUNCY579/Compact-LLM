@@ -1,5 +1,24 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: task guard pipeline CPU wiring reviewed; GPU still below floor
+
+[Task pipeline preparation](TASK_GUARD_PIPELINE_PREPARATION_CPU_001.md) joins
+12originalmockcollector64-row batches to whole task768/192component metadata.
+Four authored and independent four controls pass. Distinct pipeline/collector
+source maps, approved capture manifest/config/rows/models and retained references
+are checked. Failed fixture/dose/scope predecessors remain preserved.
+
+Native original saved-audit loader and dispatcher are wired/source-inspected,
+not executed. Genuine task captures/audit/scorer qualification and permission
+remain absent; long2304 decoded guard collector and language authority missing.
+Complete scored M0 and matched learning/transfer/retention remain unmeasured.
+
+Read-only CIM/vendorCLI inventory at17:59:21UTC: hostavailable13,892,517,888B,
+GPUfree2661MiB<unchanged4096MiBfloor. This is volatile inventory, not pinned
+supervisor/CPUfreshness/disk/Job admission. No worker launched, model loaded,
+scoring performed, unrelated process stopped or resource check lowered.
+The full original comparison goal remains active and no quality gain is claimed.
+
 ## 2026-10-06 UTC: both-arm CPU continuation and config schema verified
 
 [Terminal continuation](STUDY_TERMINAL_AUDIT_PREPARATION_CPU_001.md) now exercises

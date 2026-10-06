@@ -25,6 +25,12 @@ the selected engine config schema. Initial eight, final focused three and
 independent final eight controls pass; native qualification and transfer remain
 unmeasured.
 
+The [task guard pipeline CPU preparation](TASK_GUARD_PIPELINE_PREPARATION_CPU_001.md)
+joins twelve original mock 64-row captures to task768/192 metadata. Four authored
+and independent four controls pass. Genuine capture/audit/scorer evidence and
+long/language guard production remain unresolved; current GPU inventory is below
+the unchanged admission floor.
+
 The [private source workflow CPU milestone](PRIVATE_WORKFLOW_CPU_001.md)
 reproduces46 selected controls from preserved bytes. Public native execution,
 registered runtime loading and current host/GPU qualification remain open.
