@@ -13,9 +13,13 @@
     "model_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
     "adapter_sha256": "f2ccf8faa099ba9e0dc5b07474c6a3a4ec42f5bee9141422dd795d9ae6612d79",
     "checkpoint": "NOT_MEASURED",
-    "status": "HISTORICAL_TRAINED_SIDECAR_CURRENT_NATIVE_QUALIFICATION_BLOCKED"
+    "status": "M1_NATIVE_MECHANICS_PASS_M2_BEHAVIOR_NOT_MEASURED"
   },
   "evidence": [
+    {"id": "m1_native_pass_run", "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/native-attempt-03-thin-canonical-proposed/RUN.json", "classification": "native", "role": "receipt", "format": "json"},
+    {"id": "m1_native_pass_result", "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/native-attempt-03-thin-canonical-proposed/native.json", "classification": "native", "role": "receipt", "format": "json"},
+    {"id": "m1_native_pass_outcome", "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/thin-observer-review-01/thin-execution-04/ATTEMPT_OUTCOME.json", "classification": "native", "role": "receipt", "format": "json"},
+    {"id": "m1_native_pass_independent_audit", "path": "C:/Users/clclc/BusinessProject/rineya-mlp-native-pass-independent-review-20261006-01/REPORT.json", "classification": "native", "role": "receipt", "format": "json"},
     {"id": "standing_research_consent", "path": "C:/Users/clclc/BusinessProject/rineya-standing-research-authorization-20261005-01/AUTHORIZATION.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "m1_additional_failure", "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/native-attempt-02-proposed/native.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {
@@ -258,21 +262,35 @@
     }
   ],
   "requirements": [
+    {"id": "reviewed_m2_observer_qualification_scope", "status": "BLOCKED", "evidence_ids": ["m2_proposal", "m2_fixture_receipt", "m1_native_pass_independent_audit"], "reason": "The existing M2 owner must bind the accepted exact M1 handoff, committed observer/template/sensor/writer source, runtime, a bounded qualification scope and current hardware admission. Complete CAL coverage and independent data admission remain separate; no M1 permit transfer."},
     {"id": "standing_research_consent", "status": "PASS", "evidence_ids": ["standing_research_consent"], "reason": "Direct human standing consent covers the recommended bounded research progression without repeated consent questions. Exact owner phase grants, real source/data/runtime/resource qualification and registered preservation gates remain required; this index issues no execution grant."},
     {"id": "recorded_asset_custody", "status": "PASS", "evidence_ids": ["m1_final_handoff"], "reason": "Final offline postflight records unchanged exact parent and historical adapter bytes; this is metadata custody, not native endpoint qualification."},
-    {"id": "original_m1_native_mechanics", "status": "BLOCKED", "evidence_ids": ["m1_failure", "m1_report", "m1_additional_failure"], "reason": "Original attempt failed immediate-parent identity before native import; the separately authorized direct-interpreter attempt failed the 6144MiB host-memory guard before model load. Native mechanics remain unqualified."},
-    {"id": "reviewed_source_bound_retry_grant", "status": "BLOCKED", "evidence_ids": ["m1_next_attempt_proposal", "m1_additional_failure", "standing_research_consent"], "reason": "Standing consent is available. Two consumed premodel failures remain preserved. A reviewed source-preserving memory-fit correction, exact runtime/input-bound retry grant and real unchanged-floor admission are still required; no automatic retry."},
-    {"id": "native_observer_and_complete_cal_derivation", "status": "BLOCKED", "evidence_ids": ["m2_proposal", "m2_fixture_receipt"], "reason": "Native observer/template/sensor/writer/containment qualification and exact complete CAL continuation derivation remain absent; visited-path logits cannot fill unvisited continuations."},
+    {"id": "original_m1_native_mechanics", "status": "PASS", "evidence_ids": ["m1_native_pass_run", "m1_native_pass_result", "m1_native_pass_outcome", "m1_native_pass_independent_audit"], "reason": "Exact original-source attempt03 completed PASS_NATIVE_MECHANICS_ONLY with immutable source/base/adapter, policy isolation, restoration/reload, finite full-vocabulary captures and owned Job exit. Cache parity compares tokens only; uncached vectors were not retained. No task-bank, backward or optimizer work; no quality or retention claim."},
+    {"id": "reviewed_source_bound_retry_grant", "status": "PASS", "evidence_ids": ["m1_native_pass_outcome", "m1_native_pass_independent_audit", "standing_research_consent"], "reason": "The one exact canonical invocation completed under its own standing-authorized action and unchanged original guards. Two prior failures and zero-attempt preflights remain preserved. This completed action grants no future retry or M2 phase."},
+    {"id": "native_observer_and_complete_cal_derivation", "status": "BLOCKED", "evidence_ids": ["m2_proposal", "m2_fixture_receipt"], "reason": "M1 mechanics are now qualified. M2 observer/template/sensor/writer/containment qualification and complete registered CAL grid continuation outcomes remain absent. Three visited trace arms cannot supply unvisited outcomes after divergence; selected-bias replay cannot retroactively complete CAL."},
     {"id": "fresh_open_bank_and_independent_review", "status": "BLOCKED", "evidence_ids": ["m2_proposal", "m2_fixture_receipt"], "reason": "Fresh source/rights/gold review and exact CAL/CHECK registration are not supplied; fixture projections are not data admission."},
     {"id": "live_policy_behavior_and_retention", "status": "NOT_MEASURED", "evidence_ids": ["reconciliation_interpretation", "mlp_preregistration"], "reason": "Live bias3.75 quality, broad conversation retention, fair performance and length outcomes remain unmeasured."},
     {"id": "m2_final_committed_source", "status": "BLOCKED", "evidence_ids": ["m2_fixture_receipt"], "reason": "Readiness receipt states additive source is local/uncommitted/unpublished; final reviewed source and resource bindings precede a native decision."},
     {"id": "release_authority", "status": "BLOCKED", "evidence_ids": ["m2_status"], "reason": "CAL, CHECK, native execution, training and release are separate closed decisions; historical recommendation transfers no permit."}
   ],
   "next_proposal": {
-    "phase": "ORIGINAL_OWNER_REVIEW_OF_SOURCE_PRESERVING_M1_NEXT_ATTEMPT",
-    "proposal_evidence_id": "m1_next_attempt_proposal",
-    "requires": ["reviewed_source_bound_retry_grant", "recorded_asset_custody", "standing_research_consent"],
-    "limits": {"native_attempts_authorized_now": 0, "wall_seconds": 900, "process_tree_rss_mib": 6144, "host_available_mib_before_load": 6144, "cuda_free_mib_before_load": 6144, "cuda_reserved_ceiling_mib": 7168},
+    "phase": "OFFLINE_M2_OBSERVER_QUALIFICATION_AND_COMPLETE_CAL_COVERAGE_REVIEW",
+    "proposal_evidence_id": "m2_proposal",
+    "requires": [
+      "original_m1_native_mechanics",
+      "recorded_asset_custody",
+      "reviewed_m2_observer_qualification_scope",
+      "standing_research_consent"
+    ],
+    "limits": {
+      "native_attempts_authorized_now": 0,
+      "model_calls": 0,
+      "task_bank_reads": 0,
+      "optimizer_updates": 0,
+      "future_calibration_rows": 96,
+      "future_check_rows": 192,
+      "live_unknown_bias": 3.75
+    },
     "native_execution_authorized": false
   },
   "observed_patterns": [
@@ -291,6 +309,7 @@
     {"id": "mlp_release_retention_and_fair_performance", "evidence_ids": ["mlp_preregistration"], "rule": "Separately registered ordinary conversation/retention, exact selected-policy integrity/reload, matched latency/memory and explicit owner release authority are required."}
   ],
   "completed_failed_attempts": [
+    {"id": "m1_attempt_03", "evidence_id": "m1_native_pass_independent_audit", "status": "PASS_NATIVE_MECHANICS_ONLY", "scope": "One actual model load; zero task rows, backward calls and optimizer steps. Original900-second/6144MiB supervisor completed45.75seconds with observed peak2243.93359375MiB. Capture and terminal audit is mechanical-only; static readiness inventory model_calls0 is not the actual executed-call count."},
     {"id": "m1_attempt_02", "evidence_id": "m1_additional_failure", "status": "FAIL_PREMODEL_INTEGRITY", "scope": "Separately authorized direct-interpreter attempt; zero model load attempts, task rows, backward calls and optimizer steps. Host-memory guard stopped the worker. Preserve original source, failure and exited-process evidence."},
     {"id": "m1_attempt_01", "evidence_id": "m1_failure", "status": "FAIL_CHILD_OR_MISSING_RECEIPT", "scope": "One attempt, zero retries; worker rejected immediate parent identity before native import. Preserve final failure and all exited-owner receipts."}
   ],
