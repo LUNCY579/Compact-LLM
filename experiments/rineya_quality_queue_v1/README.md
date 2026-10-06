@@ -96,6 +96,15 @@ fits its registered storage cap. Every diverged continuation and full vector
 must remain reconstructable, with independent restoration checks before any
 reviewed downstream adoption.
 
+`f16_inspection.inspect_finite_argmax_row` separately checks every supplied F16
+value for finiteness and computes the lowest token ID at the numerical maximum.
+It compares integer bit patterns without converting or rounding floats; signed
+zeros tie. The optional expected ID must agree. This checks explicit row bytes
+only: native origin, fixed case/arm/bias/prefix, runtime and full capture custody
+still require independent binding. It performs no file or model I/O. Nonfinite
+rows fail inspection but remain eligible for unchanged lossless archival as
+rejected evidence; no bytes are silently removed or repaired.
+
 ## Standing research consent
 
 The programme records direct human standing consent in each card as preparation
