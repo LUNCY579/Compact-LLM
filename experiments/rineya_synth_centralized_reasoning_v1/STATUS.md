@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: corrected treatment raw collection/import CPU path reviewed
+
+[Treatment preparation](TREATMENT_EVALUATION_PREPARATION_CPU_001.md) implements
+conditional registered final-adapter restore/384-row capture and independent raw
+lineage import. Corrected18 controls plus independent18 pass, exact source hashes
+unchanged; authored metadata/read traps deny all20 deliberate real-data probes.
+Early approval and exact qualified domain bindings precede archive/panel/assets.
+
+The unaccepted predecessor read public DEV/TRAIN inputs contrary to instruction;
+its original source/receipts and honest exposure disclosure remain preserved.
+No model responses were graded or protected/model data consumed. Genuine native
+final-adapter qualification, complete scored M0/enrollment, owned factory and
+explicit treatment permission are still missing. No native/training/scoring or
+model-quality claim follows. Hardware question remains pending; full goal active.
+
 ## 2026-10-06 UTC: final M0 scorer promoted; closed registration remains incomplete
 
 [M0 promotion](M0_SCORING_REGISTRATION_CPU_001.md) copies exact independently
