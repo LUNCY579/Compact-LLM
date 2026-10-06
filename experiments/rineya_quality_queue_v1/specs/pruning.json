@@ -40,7 +40,9 @@
     {"id": "rqp_recorder_v1b_partial_review", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-recorder-benchmark-independent-review-20261006-01/V1B_PARTIAL_REVIEW.json", "classification": "fixture", "role": "receipt", "format": "json"},
     {"id": "rqp_recorder_v1c_bounded_pass_review", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-recorder-benchmark-independent-review-20261006-01/V1C_REVIEW.json", "classification": "fixture", "role": "receipt", "format": "json"},
     {"id": "rqp_production_resource_source_reconciled", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-recorder-benchmark-independent-review-20261006-01/PRODUCTION_RESOURCE_SOURCE_REVIEW_RECONCILED.json", "classification": "preparation", "role": "receipt", "format": "json"},
-    {"id": "rqp_v7b_actual_partial_terminal_review", "path": "C:/Users/clclc/BusinessProject/rineya-quality-pilot-v1/v7b-terminal-independent-review-20261006-01/REPORT.json", "classification": "fixture", "role": "receipt", "format": "json"}
+    {"id": "rqp_v7b_actual_partial_terminal_review", "path": "C:/Users/clclc/BusinessProject/rineya-quality-pilot-v1/v7b-terminal-independent-review-20261006-01/REPORT.json", "classification": "fixture", "role": "receipt", "format": "json"},
+    {"id": "rqp_full_capture_cost_review_request", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-full-capture-cost-source-review-20261006-01/REVIEW_REQUEST.json", "classification": "preparation", "role": "proposal", "format": "json"},
+    {"id": "rqp_v7b_descriptive_event_census", "path": "C:/Users/clclc/BusinessProject/rineya-quality-pilot-v1/v7b-run003-narrow-event-census-001/CENSUS.json", "classification": "fixture", "role": "receipt", "format": "json"}
   ],
   "metrics": [
     {"name": "historical_seed23_full_source_correct_retention", "numerator": 38, "denominator": 47, "unit": "count", "scope_unit": "spent_source_correct_case", "evidence_id": "historical_rep001", "text_anchor": "| 23 | ctrl | 229 | 3/3 | 71 | 56 | 38 | 152 | 0.1221 | 8 |", "denominator_text_anchor": "retained /47", "status": "MEASURED"},
@@ -136,6 +138,16 @@
     "evidence_ids": ["rqp_v7b_actual_partial_terminal_review"],
     "status": "WALL_CAP_INCOMPLETE_ALL_TAILS_RETAINED_NOT_FULL_COVERAGE",
     "statement": "The newly authorized one-worker V7b audit stops at the900-second cooperative wall cap with saved exit1 and actual process lifetime900.5421125s.6530baseattempts/successes outof29385prospective,153732callreservations,521493eventsreserved/521492written,102289nodes and18474observations remain partial. All8physicalfilehashes totaling61,607,393bytes andall4rawtails are retained; logicalreserved670,320,898bytes is separate. Source/test/scorer posthash claims are attributed to saved owner evidence, not replayed constructor/generator verification. Variant/stage identities and fullknownrecordclosure remain UNKNOWN; all-six freshness/nativequalification/qualitygain are not established. Budget751786/quarantine1d0656 unchanged. No automaticretry/refund/extra native Q0 allowance follows; next is bounded representative full-call-capture profiling and source-equivalent optimization without case/guard/cap reduction."
+  },
+  "full_capture_cost_preparation": {
+    "evidence_ids": ["rqp_full_capture_cost_review_request"],
+    "status": "SOURCE_STRUCTURAL_COST_HYPOTHESES_NOT_MEASURED",
+    "statement": "Repeated typed-node traversal/hash, context copies, trace/light/path guards, periodic full-root scans and durable writer operations are concrete source review targets. Their relative costs are unmeasured. The existing owner received a request for a separately enrolled representative full-call-capture profile with nested component counts/timing and unchanged-versus-instrumented logical equivalence. Exact descriptors/instrumented source and diagnostic admission remain missing. No whole-scope fit, optimization adoption, full rerun, native attempt, cap or guard change follows. Preserve the registered nine source variants, five test states, 29385 full-scope base attempts and source006 expected setup failure."
+  },
+  "partial_event_census": {
+    "evidence_ids": ["rqp_v7b_descriptive_event_census"],
+    "status": "DESCRIPTIVE_COMPLETE_PERSISTED_EVENT_STREAM_ONLY",
+    "statement": "The saved narrow census reports521492 persisted events and582256560 decoded bytes in5.375seconds/19062784bytes observed RSS. It counts153731 CALL_STARTED,153636 CALL_RETURN and93 CALL_RAISED; these counts remain distinct from153732 reserved calls. Four generator functions dominate the recorded call mix, while large-panel/test setup costs remain unmeasured. Root verified the named census hash and read its metadata only. The census explicitly does not establish typed-node/CAS closure, exact stage coverage, full historical exposure or scientific admission; the existing owner is preparing additive whole-stream semantic validation without another recovered-source run."
   },
   "completed_failed_attempts": [
     {"evidence_id": "historical_rep001", "outcome": "HISTORICAL_SEED29_FIRST_TRAINING_REFUSED_DIRTY_SOURCE", "text_anchor": "`ValueError: native execution requires a clean checkout`.", "new_native_attempt_performed": false},
