@@ -91,7 +91,11 @@
       "classification": "fixture",
       "role": "receipt",
       "format": "json"
-    }
+    },
+    {"id": "m2_minimum_scope_independent_review", "path": "C:/Users/clclc/BusinessProject/rineya-m2-next-proposal-independent-review-20261006-01/NEXT_PHASE_PROPOSAL_REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m2_served_scope_provisional_review", "path": "C:/Users/clclc/BusinessProject/rineya-m2-next-proposal-independent-review-20261006-01/SERVED_SCOPE_PROVISIONAL_REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "lossless_archive_fixture", "path": "C:/Users/clclc/BusinessProject/rineya-vector-archive-fixtures-20261006-01/combined-queue-01/FIXTURE_RESULT.json", "classification": "fixture", "role": "receipt", "format": "json"},
+    {"id": "lossless_capture_repacking", "path": "C:/Users/clclc/BusinessProject/rineya-vector-archive-native-capture-audit-20261006-01/REPACKING_RECEIPT.json", "classification": "preparation", "role": "receipt", "format": "json"}
   ],
   "source_assets": [
     {
@@ -262,7 +266,7 @@
     }
   ],
   "requirements": [
-    {"id": "reviewed_m2_observer_qualification_scope", "status": "BLOCKED", "evidence_ids": ["m2_proposal", "m2_fixture_receipt", "m1_native_pass_independent_audit"], "reason": "The existing M2 owner must bind the accepted exact M1 handoff, committed observer/template/sensor/writer source, runtime, a bounded qualification scope and current hardware admission. Complete CAL coverage and independent data admission remain separate; no M1 permit transfer."},
+    {"id": "reviewed_m2_observer_qualification_scope", "status": "BLOCKED", "evidence_ids": ["m2_proposal", "m2_fixture_receipt", "m1_native_pass_independent_audit", "m2_minimum_scope_independent_review", "m2_served_scope_provisional_review"], "reason": "The accepted exact M1 handoff is mechanics-only. The minimum M2 observer proposal with 128-input/16-output caps remains distinct from the proposed query-last/r1 served boundary of 1024-input/64-output. Tiny cases and declared caps do not demonstrate boundary coverage. Exact committed provider, physical owner/deadline/sensors/writer and current resource admission must qualify through the original owner; no M1 permit transfer."},
     {"id": "standing_research_consent", "status": "PASS", "evidence_ids": ["standing_research_consent"], "reason": "Direct human standing consent covers the recommended bounded research progression without repeated consent questions. Exact owner phase grants, real source/data/runtime/resource qualification and registered preservation gates remain required; this index issues no execution grant."},
     {"id": "recorded_asset_custody", "status": "PASS", "evidence_ids": ["m1_final_handoff"], "reason": "Final offline postflight records unchanged exact parent and historical adapter bytes; this is metadata custody, not native endpoint qualification."},
     {"id": "original_m1_native_mechanics", "status": "PASS", "evidence_ids": ["m1_native_pass_run", "m1_native_pass_result", "m1_native_pass_outcome", "m1_native_pass_independent_audit"], "reason": "Exact original-source attempt03 completed PASS_NATIVE_MECHANICS_ONLY with immutable source/base/adapter, policy isolation, restoration/reload, finite full-vocabulary captures and owned Job exit. Cache parity compares tokens only; uncached vectors were not retained. No task-bank, backward or optimizer work; no quality or retention claim."},
@@ -271,7 +275,8 @@
     {"id": "fresh_open_bank_and_independent_review", "status": "BLOCKED", "evidence_ids": ["m2_proposal", "m2_fixture_receipt"], "reason": "Fresh source/rights/gold review and exact CAL/CHECK registration are not supplied; fixture projections are not data admission."},
     {"id": "live_policy_behavior_and_retention", "status": "NOT_MEASURED", "evidence_ids": ["reconciliation_interpretation", "mlp_preregistration"], "reason": "Live bias3.75 quality, broad conversation retention, fair performance and length outcomes remain unmeasured."},
     {"id": "m2_final_committed_source", "status": "BLOCKED", "evidence_ids": ["m2_fixture_receipt"], "reason": "Readiness receipt states additive source is local/uncommitted/unpublished; final reviewed source and resource bindings precede a native decision."},
-    {"id": "release_authority", "status": "BLOCKED", "evidence_ids": ["m2_status"], "reason": "CAL, CHECK, native execution, training and release are separate closed decisions; historical recommendation transfers no permit."}
+    {"id": "release_authority", "status": "BLOCKED", "evidence_ids": ["m2_status"], "reason": "CAL, CHECK, native execution, training and release are separate closed decisions; historical recommendation transfers no permit."},
+    {"id": "complete_full_vector_storage_and_continuation", "status": "BLOCKED", "evidence_ids": ["m2_minimum_scope_independent_review", "lossless_capture_repacking", "lossless_archive_fixture"], "reason": "The complete registered 34-profile CAL must retain every full vector on every actual visited/diverged continuation within the original cumulative storage/I/O limits. Lossless canonical-row deduplication with actual UNKNOWN patches and optional zlib reconstructs the small preserved M1 sample exactly; its measured sample savings do not establish worst-case CAL fit. Independent streaming writer/restoration/accounting integration remains unqualified; no approximation, missing paths or reduced grid."}
   ],
   "next_proposal": {
     "phase": "OFFLINE_M2_OBSERVER_QUALIFICATION_AND_COMPLETE_CAL_COVERAGE_REVIEW",
@@ -296,7 +301,8 @@
   "observed_patterns": [
     {"evidence_id": "transfer3_reconciliation", "text": "Historical bias0 MLP records204/720 answerable and240/240 unanswerable correctness with54 answerable repairs and43 damages versus frozen. Canonical bias records202/720 and240/240, with99 repairs and6 damages."},
     {"evidence_id": "reconciliation_interpretation", "text": "The reliability/calibration pattern does not establish live3.75 quality or compositional reasoning. State tracking5/360 and3/360 remains non-significant and limited by E36/E38."},
-    {"evidence_id": "m1_report", "text": "Fresh M1 failure is a launcher ownership failure before native model work. CPU and launcher fixtures are software checks only."}
+    {"evidence_id": "m1_report", "text": "Fresh M1 failure is a launcher ownership failure before native model work. CPU and launcher fixtures are software checks only."},
+    {"evidence_ids": ["lossless_capture_repacking", "lossless_archive_fixture"], "statement": "The archive helper is pure standard-library byte mechanics with a separately trusted manifest root, exact row/provenance hashes, finite chunk limits and closed permissions. The preserved M1 capture repacking was offline: no new model call, task-bank access, loss or floating-point conversion. Original captures remain immutable; archive totals exclude the separate provenance receipt and originals. This is a possible storage design, not model-quality evidence or a production fit/adoption claim."}
   ],
   "exposure": {"status": "HISTORICAL_DEVELOPMENT_EXPOSED_NEW_CAL_CHECK_UNREGISTERED", "scope": "TRANSFER-3 is spent development evidence. Fresh open CAL96/CHECK192 is only a prospective design; no protected-bank access is granted.", "protected_bank_access": false},
   "quality_gates": [

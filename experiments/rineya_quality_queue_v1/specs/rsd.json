@@ -17,7 +17,8 @@
     {"id": "comparison_proposal", "path": "C:/Users/clclc/BusinessProject/rsd001-readiness-20261005-01/MINIMAL_COMPARISON_PROPOSAL.json", "classification": "preparation", "role": "proposal", "format": "json"},
     {"id": "cpu_verification", "path": "C:/Users/clclc/BusinessProject/rsd001-readiness-20261005-01/FIXTURE_VERIFICATION_RECEIPT.json", "classification": "fixture", "role": "receipt", "format": "json"},
     {"id": "failed_e0", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-recursive-self-distillation-v1/experiments/post_training_mimo_centralized_v1/results/e0_titan_v2/E0_RESULT.json", "classification": "native", "role": "receipt", "format": "json"},
-    {"id": "tiny_plan", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-recursive-self-distillation-v1/experiments/rineya_recursive_self_distillation_v1/configs/tiny_guidance_v1.json", "classification": "preparation", "role": "proposal", "format": "json"}
+    {"id": "tiny_plan", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-recursive-self-distillation-v1/experiments/rineya_recursive_self_distillation_v1/configs/tiny_guidance_v1.json", "classification": "preparation", "role": "proposal", "format": "json"},
+    {"id": "paper_method_provenance", "path": "C:/Users/clclc/BusinessProject/rsd001-paper-provenance-20261006-01/PAPER_METHOD_PROVENANCE.json", "classification": "preparation", "role": "receipt", "format": "json"}
   ],
   "metrics": [
     {"name": "current_parent_unaided_quality", "numerator": null, "denominator": null, "status": "NOT_MEASURED"},
@@ -45,7 +46,8 @@
   },
   "observed_patterns": [
     {"evidence_ids": ["readiness", "cpu_verification"], "statement": "RSD has software evidence only and no capability result. Parent and teacher eligibility are unqualified."},
-    {"evidence_ids": ["comparison_proposal"], "statement": "Only sft/frozen/evolving are selected, seed101, two updates, step2 comparison. Teacher refreshing first differs at update2; one-update equality is not a test of co-evolution."}
+    {"evidence_ids": ["comparison_proposal"], "statement": "Only sft/frozen/evolving are selected, seed101, two updates, step2 comparison. Teacher refreshing first differs at update2; one-update equality is not a test of co-evolution."},
+    {"evidence_ids": ["paper_method_provenance", "protocol"], "statement": "Primary paper provenance and local mechanism alignment are recorded. Published results do not qualify the exact Rineya parent, probe, catalog or native arms. SRCL remains deferred; no six-treatment expansion."}
   ],
   "exposure": {"training": "No native RSD parent or treatment updates", "evaluation": "No native probe or calibration/retention evaluation", "protected_bank_access": false},
   "quality_gates": [
