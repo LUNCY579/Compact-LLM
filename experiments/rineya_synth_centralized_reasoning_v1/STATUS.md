@@ -1,5 +1,22 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: repaired observer rebind and concrete M0 scoring preparation
+
+[Registration003](OBSERVER_STARTUP_REGISTRATION_003.md) rebinds the repaired driver
+with17 source/2,923 runtime identities, actual3,953,707,644-byte validation and
+independent seal/digest review. No hardware admission or native probe occurred;
+RAM/GPU resource-change question remains pending and floors are unchanged.
+
+[M0 scoring source](M0_SCORING_PREPARATION_CPU_001.md) now has frozen-verifier
+semantic qualification, complete384/96 producer, write-once publication and
+independent saved-packet replay. Fifteen authored/synthetic controls and
+independent15 pass. Native scoring remains staged/approval/qualification gated;
+no real responses were consumed. Existing importer/finish/recipe bytes remain.
+
+Actual M0 is256/384 raw unscored rows. Native observer, M1/M2 training, fresh
+family/RS transfer and prior-correct preservation remain unmeasured. The original
+goal stays active; CPU code and receipts do not establish model-quality gains.
+
 ## 2026-10-06 UTC: attempt002 denied; original evidence and CPU repairs retained
 
 [Admission outcome](OBSERVER_ADMISSION_DENIAL_002.md) records RAM2.10GB and
