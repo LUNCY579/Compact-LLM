@@ -1,0 +1,17 @@
+# Passive selected runtime byte inventory
+
+A bounded read-only inventory has now hashed 2,813 explicitly selected files totaling 3,847,546,935 bytes. All 2,811 predeclared expected hashes match, including the original 65 pins, standard-library 779 pins and all 40 Torch binary installation-record hashes. The two newly selected System32 files, ntdll.dll and psapi.dll, have measured byte identities. The selection is finite; no directory/process discovery, DLL loading, model deserialization, Torch import or CUDA work occurred.
+
+[Successful raw receipt](evidence/passive_runtime_inventory_reviewed_cpu_20261006/PASSIVE_HOST_INVENTORY_002.json), [selection](evidence/passive_runtime_inventory_reviewed_cpu_20261006/ROOT_SELECTION_001.json) and [Root review](evidence/passive_runtime_inventory_reviewed_cpu_20261006/ROOT_PASSIVE_HOST_REVIEW_002.json) are preserved. The inventory body SHA256 is `1fb617bb17d026bc237465dea0a748e97481811e054e4469771c61fd9bd718e7`. These are current file observations for the selected read window, not a full installed runtime or loaded-module closure.
+
+## Actual first failure and correction
+
+Attempt001 matched 2,023 files, then stopped before reading python.exe because Windows path stat and opened-handle fstat reported different permission bits. Size, modification time, file identity and regular-file type agreed. The [original failure](evidence/passive_runtime_inventory_reviewed_cpu_20261006/PASSIVE_HOST_INVENTORY_001.json), initial source and [metadata diagnosis](evidence/passive_runtime_inventory_reviewed_cpu_20261006/WINDOWS_MODE_DIAGNOSIS_001.json) remain preserved. The corrected reader compares opened regular-file type, size, modification time and identity; full path metadata checks remain. An inert .exe fixture verifies the Windows mode behavior and a swapped-handle fixture still rejects a different identity.
+
+The [preserved corrected reader](evidence/passive_runtime_inventory_reviewed_cpu_20261006/current_reader_002/inventory.py) passes [eight focused controls](evidence/passive_runtime_inventory_reviewed_cpu_20261006/ROOT_PRESERVED_CPU_REPLAY_001.json) with unchanged source bytes. Reads use a finite map, 1 MiB chunks, declared size plus one growth sentinel, 16 GiB total ceiling and 600-second deadline. Unexpected aliases, sizes, hashes, handle identities, growth, truncation and late pointer changes refuse. Failure receipts retain the reached completed observations and current read counts without inventing completed hashes.
+
+## Remaining work
+
+The former observer-only source has a circular first-startup gate: it requires positive bootstrap qualification and a predeclared exact loaded baseline before it measures either. A [prospective sequence](evidence/passive_runtime_inventory_reviewed_cpu_20261006/NEXT_NATIVE_SCOPE_DRAFT_001.md) describes one owned startup plus observer measurement, using finite prospective byte inputs and measured baseline/bootstrap outputs. A separate CPU source amendment is under preparation. This proposal is not an executable dispatch manifest or permission record.
+
+No current module execution, fresh bootstrap, resource admission, Windows notifications, collector lifetime or native result is qualified by this inventory. Native launch and study authority remain false. Package AGENTS.md still requires an exact separate run manifest and explicit permission. M0 remains 256/384 raw unscored rows; actual M1/M2 training, fresh-family and held-out RS transfer, and prior-correct preservation remain unmeasured. The research question remains unanswered.

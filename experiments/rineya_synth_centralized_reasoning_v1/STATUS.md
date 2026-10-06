@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: actual passive selected runtime byte inventory
+
+[Passive inventory](PASSIVE_RUNTIME_INVENTORY_CPU_001.md) read all 2,813 selected
+files (3,847,546,935 bytes); all 2,811 expected hashes match, including original
+65/779 pins and all 40 Torch binary records. New ntdll/psapi identities are
+measured. The first Windows permission-bit comparison failure remains preserved;
+the corrected reader passes eight preserved-copy controls with unchanged bytes.
+
+The finite file inventory does not qualify startup, live namespace/module closure,
+resources, Windows observer behavior or native work. A circular first-startup
+source gate is being amended prospectively; exact committed dispatch and explicit
+new-run permission remain open. No DLL/model/CUDA action, M0 row, study update or
+score occurred. Actual matched M1/M2 transfer and preservation remain unmeasured.
+
 ## 2026-10-06 UTC: executable observer-only source qualification package
 
 The [separate observer-only source](OBSERVER_ONLY_QUALIFICATION_CPU_001.md) now
