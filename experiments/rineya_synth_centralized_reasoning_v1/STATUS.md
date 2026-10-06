@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: prospective observer startup source amendment audited
+
+[Startup amendment](OBSERVER_STARTUP_MEASUREMENT_CPU_001.md) passes 51
+preserved-copy controls plus independent focused15 with unchanged source bytes.
+Bootstrap and module baseline are measured outputs; unknowns retain original
+observations and withhold fixture work. Implementation ancestry is separate from
+later dispatch HEAD, removing the self-referential commit requirement. Actual
+inert contract/supervisor/worker and original terminal replay agree.
+
+The prior source and every diagnostic remain preserved. This is audited CPU
+source, not a promoted native dispatch. Exact implementation/config registration,
+explicit permission and fresh owned admission remain open. No observer/fixture
+load, model/CUDA action, M0 row, training or score occurred. Actual M1/M2 transfer
+and prior-correct preservation remain unmeasured; the full goal stays active.
+
 ## 2026-10-06 UTC: actual passive selected runtime byte inventory
 
 [Passive inventory](PASSIVE_RUNTIME_INVENTORY_CPU_001.md) read all 2,813 selected

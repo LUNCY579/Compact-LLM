@@ -1,0 +1,603 @@
+--- observer_only_qualification_work/audit.py
++++ observer_startup_measurement_work/audit.py
+@@ -139,6 +139,32 @@
+     _raw_rows(drain['raw_rows'],result['events']['events'])
+     return {'counts':counts,'first_clock':parse(lines[0])['monotonic'],'last_clock':clock,'returned':returned}
+ 
++def replay_startup(startup,*,result,selected_context):
++    """Replay measured originals against a prospective admission, not a prior fact."""
++    fields(startup,{'schema_version','kind','scope','source_commit','implementation_commit','config_sha256','context_sha256','bootstrap_policy_sha256','bootstrap','initial_module_snapshots','unknown_libraries','fixture_only','namespace_execution_proven','native_PASS','native_authority_issued','sha256'},'measured startup inventory')
++    value=selected_context;config=value['config'];runtime=value['runtime']
++    require(type(startup['schema_version']) is int and startup['schema_version']==1 and startup['kind']=='OBSERVER_STARTUP_INVENTORY_V1' and startup['scope']==SCOPE and startup['sha256']==digest({k:v for k,v in startup.items() if k!='sha256'}),'original measured startup schema/body')
++    require(startup['source_commit']==value['expected_head'] and startup['implementation_commit']==config['implementation_commit'] and startup['config_sha256']==value['anchors']['expected_config_file'] and startup['context_sha256']==digest(value) and startup['bootstrap_policy_sha256']==digest(runtime.get('cache_policy',{})),'external dispatch/implementation/context/import-policy joins')
++    require(startup['fixture_only'] is value['fixture_only'] and startup['namespace_execution_proven'] is startup['native_PASS'] is startup['native_authority_issued'] is False,'startup observation grants no namespace/native authority')
++    observed=startup['initial_module_snapshots'];require(type(observed) is list and len(observed)==2 and same(observed[0],result['initial_modules']),'original first complete baseline retained, no admitted-map substitution')
++    first=modules(observed[0],runtime['files']);second=modules(observed[1],runtime['files'])
++    require(first==second and set(first)<=set(runtime['allowed_initial_loaded_libraries']) and startup['unknown_libraries']==[],'paired original baseline inside prospective admission; no unknown modules')
++    bootstrap=startup['bootstrap'];fields(bootstrap,{'kind','imports','modules','unknown_modules','fixture_only','namespace_execution_proven'},'measured bootstrap')
++    require(bootstrap['kind']=='MEASURED_BOOTSTRAP_IMPORTS_V1' and bootstrap['imports']==['ctypes','ctypes.wintypes','_ctypes'] and bootstrap['fixture_only'] is value['fixture_only'] and bootstrap['namespace_execution_proven'] is False and bootstrap['unknown_modules']==[] and type(bootstrap['modules']) is list and len(bootstrap['modules'])<=4096,'bounded original bootstrap measurement, no unselected namespaces')
++    selected=runtime.get('cache_policy',{}).get('allowed_bootstrap_modules',{});names=set()
++    def normalized(text):
++        p=Path(text);layout=runtime.get('stdlib_layout',{});logical=layout.get('logical_base_prefix')
++        return str(Path(layout['physical_base_prefix'])/p.relative_to(logical)) if logical is not None and p.is_relative_to(logical) else str(p)
++    for row in bootstrap['modules']:
++        fields(row,{'name','origin','classification','source_sha256','error'},'original namespace origin')
++        require(type(row['name']) is str and row['name'] not in names,'unique original namespace names');names.add(row['name'])
++        require(row['error'] is None,'no hidden original namespace origin/byte verification error')
++        if row['classification']=='builtin_or_frozen':require(row['origin'] in ('built-in','frozen') and row['source_sha256'] is None,'interpreter-reported builtin/frozen origin; no execution proof')
++        else:
++            entry=selected.get(row['name']);require(row['classification']=='source_or_extension' and type(entry) is dict and row['origin']==normalized(entry['path']) and row['source_sha256']==entry['source_sha256'],'measured namespace source/extension exact prospective admission')
++    if not value['fixture_only']:require(set(bootstrap['imports'])<=names,'actual explicit bootstrap imports measured')
++    return {'initial_libraries':first,'namespace_execution_proven':False,'native_authority_issued':False}
++
+ def _sealed(value,pin):require(type(value) is dict and sha(pin) and value.get('sha256')==pin==digest({k:v for k,v in value.items() if k!='sha256'}),'external sealed body identity')
+ def _birth(value):
+     fields(value,{'pid','creation_filetime_100ns'},'PID/FILETIME birth');require(all(uint(n) and n>0 for n in value.values()),'positive original birth');return value
+@@ -175,12 +201,12 @@
+     require(type(fixture) is bool and value['native_PASS'] is value['native_authority_issued'] is False and config['scope']==SCOPE,'observer-only original scope; no authority conversion')
+     permission=config['permission'];require(type(permission) is dict and permission.get('allocations')==0 and type(permission.get('allocations')) is int and all(permission.get(k) is False for k in ('model','torch_import','CUDA_context','tensor_allocation','forward','backward','optimizer','decoder','scoring','protected_bank_access','M0_membership','paid_services')),'no model/framework/device/tensor/study permission')
+     _sealed(config,value['anchors']['expected_config_body']);_sealed(runtime,value['anchors']['expected_runtime_body']);_sealed(registration,value['anchors']['expected_registration_body'])
+-    require(same(config['runtime_files'],runtime['files']) and same(config['source_files'],registration['source_files']) and same(runtime['files'],registration['runtime_files']) and registration['config_body_sha256']==config['sha256'] and registration['runtime_body_sha256']==runtime['sha256'] and config['source_commit']==runtime['source_commit']==registration['source_commit']==value['expected_head'],'original source/runtime/run registration closure')
++    require(same(config['runtime_files'],runtime['files']) and same(config['source_files'],registration['source_files']) and same(runtime['files'],registration['runtime_files']) and registration['config_body_sha256']==config['sha256'] and registration['runtime_body_sha256']==runtime['sha256'] and config['implementation_commit']==runtime['implementation_commit']==registration['implementation_commit'] and config['implementation_commit']!=value['expected_head'],'original source/runtime/run registration closure')
+     reader=ReadSet();root=Path(preserved_directory).absolute();original=Path(original_directory).absolute();require(root!=original,'independent original and preserved observer leaves')
+     p=root/'PRESERVATION.json';pres=parse(reader.read(p,{'bytes':p.lstat().st_size,'sha256':expected_preservation_file_sha256}));_sealed(pres,expected_preservation_body_sha256)
+     fields(pres,{'kind','scope','manifest_sha256','raw_files','source_files','source_snapshot_files','lease_files','current_death_observation','fixture_only','native_authority_issued','sha256'},'observer-only preservation')
+     require(pres['kind']=='PRESERVED_OBSERVER_ONLY_QUALIFICATION_V1' and pres['scope']==SCOPE and pres['manifest_sha256']==config['sha256'] and pres['fixture_only'] is fixture and pres['native_authority_issued'] is False and same(pres['source_files'],config['source_files']),'original observer preservation/context/source joins')
+-    needed={'OBSERVER_PHASES.jsonl','OBSERVER_WORKER_RESULT.json','SUPERVISOR_RECEIPT.json','RESOURCE_OBSERVATIONS.json','supervisor_ownership.json','OWNED_EXTERNAL_ANCHORS.json','worker.stdout.log','worker.stderr.log','supervisor_heartbeat.jsonl'}
++    needed={'OBSERVER_STARTUP_INVENTORY.json','OBSERVER_PHASES.jsonl','OBSERVER_WORKER_RESULT.json','SUPERVISOR_RECEIPT.json','RESOURCE_OBSERVATIONS.json','supervisor_ownership.json','OWNED_EXTERNAL_ANCHORS.json','worker.stdout.log','worker.stderr.log','supervisor_heartbeat.jsonl'}
+     names=set(pres['raw_files']);require(needed<=names and len(names)<=256 and all(type(n) is str and Path(n).name==n and Path(n).suffix in ('.json','.jsonl','.log','.txt') for n in names),'finite full flat observer raw population')
+     require(reader.roster(original)==names,'original whole observer roster');raw={}
+     for n,d in pres['raw_files'].items():raw[n]=reader.read(root/n,d);require(reader.read(original/n,d)==raw[n],'all original/preserved observer raw bytes')
+@@ -233,7 +259,9 @@
+     binding=result['abi_binding'];require(type(binding) is dict and set(binding)=={'path','descriptor','abi','dll_handle'} and binding['path']==observer['binary']['path'] and binding['descriptor']==observer['binary']['descriptor'] and binding['abi']==observer['abi'] and uint(binding['dll_handle']) and binding['dll_handle']>0,'actual selected observer handle/bytes/ABI binding')
+     libraries={p:d for p,d in runtime['files'].items() if Path(p).suffix.lower() in ('.dll','.pyd','.exe')}
+     replay=replay_observer_records(result,library_files=libraries,observer_binding=binding,fixture_path=config['binary_fixture']['path'],owned_birth=born,source_commit=value['expected_head'],config_sha256=value['anchors']['expected_config_file'])
+-    require(set(replay['initial_libraries'])==set(runtime['initial_loaded_libraries']) and replay['initial_libraries'].get(observer['binary']['path'])==binding['dll_handle'],'complete externally selected initial collector/module baseline')
++    startup=replay_startup(data['OBSERVER_STARTUP_INVENTORY.json'],result=result,selected_context=value)
++    require(startup['initial_libraries']==replay['initial_libraries'],'independent startup/worker baseline joins')
++    require(set(replay['initial_libraries'])<=set(runtime['allowed_initial_loaded_libraries']) and replay['initial_libraries'].get(observer['binary']['path'])==binding['dll_handle'],'complete externally selected initial collector/module baseline')
+     phases=replay_phases(raw['OBSERVER_PHASES.jsonl'],result=result,selected_context=value)
+     require(type(sup['worker_resume_monotonic']) in (int,float) and type(sup['deadline_monotonic']) in (int,float) and sup['worker_resume_monotonic']<=phases['first_clock']<=phases['last_clock']<=sup['deadline_monotonic'] and 0<=sup['deadline_monotonic']-sup['worker_resume_monotonic']<=600,'all observer work inside original owned600s window')
+     _resources(sup,samples,phases['first_clock'],phases['last_clock'])
+@@ -266,7 +294,7 @@
+     """
+     here=Path(__file__).resolve().parent
+     package=next(p for p in here.parents if p.name=='rineya_synth_centralized_reasoning_v1')
+-    require(here==package/'observer_only_qualification_v1','staged/preserved observer auditor has no native authority')
++    require(here==package/'observer_startup_measurement_v1','staged/preserved observer auditor has no native authority')
+     contract.native_gate();value=contract.context_value(context)
+     require(value.get('fixture_only') is False,'CPU observer context cannot enter registered audit')
+     return audit_terminal(preserved_directory,original_directory=original_directory,selected_context=value,
+--- observer_only_qualification_work/contract.py
++++ observer_startup_measurement_work/contract.py
+@@ -8,7 +8,7 @@
+ import hashlib,json,math,stat,subprocess,time
+ HERE=Path(__file__).resolve().parent
+ PACKAGE=next(p for p in HERE.parents if p.name=='rineya_synth_centralized_reasoning_v1')
+-EXPECTED=PACKAGE/'observer_only_qualification_v1'
++EXPECTED=PACKAGE/'observer_startup_measurement_v1'
+ SCOPE='NO_MODEL_NATIVE_LIBRARY_OBSERVER_LOAD_UNLOAD'
+ PERMISSION={'observer_dll':True,'fixture_dll':True,'register_notifications':True,'load_fixture':True,'unload_fixture':True,'model':False,'torch_import':False,'CUDA_context':False,'tensor_allocation':False,'allocations':0,'forward':False,'backward':False,'optimizer':False,'decoder':False,'scoring':False,'protected_bank_access':False,'M0_membership':False,'paid_services':False}
+ RESOURCES={'CPU_sample_max_age_seconds':.2,'GPU_free_at_admission_GiB':4.0,'GPU_free_during_work_GiB':.5,'GPU_probe_interval_seconds':.5,'GPU_probe_timeout_seconds':2.0,'GPU_sample_max_age_seconds':2.0,'admission_poll_seconds':2.0,'admission_seconds':30,'disk_free_GiB':4.0,'external_watchdog_milliseconds':100,'preworker_available_GiB':3.3125,'system_available_reserve_GiB':1.25,'whole_scope_seconds':600,'worker_process_tree_RSS_GiB':2.0}
+@@ -68,13 +68,14 @@
+     require(type(value) is dict and value.get('sha256')==body_sha==digest({k:v for k,v in value.items() if k!='sha256'}),'original external JSON body');return value
+ 
+ def _schema(config,runtime,registration,head,*,fixture_only):
+-    fields={'kind','scope','permission','resources','source_commit','source_files','runtime_files','observer_registration','binary_fixture','worker_path','offline_environment','native_launch_authorized','sha256'}
+-    require(type(config) is dict and set(config)==fields and config['kind']=='REGISTERED_OBSERVER_ONLY_QUALIFICATION_V1' and config['scope']==SCOPE,'exact observer-only config scope')
++    fields={'kind','scope','permission','resources','implementation_commit','source_files','runtime_files','observer_registration','binary_fixture','worker_path','offline_environment','native_launch_authorized','sha256'}
++    require(type(config) is dict and set(config)==fields and config['kind']=='REGISTERED_OBSERVER_STARTUP_MEASUREMENT_V1' and config['scope']==SCOPE,'exact observer-only config scope')
+     require(canonical(config['permission'])==canonical(PERMISSION) and canonical(config['resources'])==canonical(RESOURCES),'unchanged observer-only permission/resource envelope')
+-    require(type(head) is str and len(head)==40 and all(c in '0123456789abcdef' for c in head) and config['source_commit']==runtime['source_commit']==registration['source_commit']==head,'same observer-only registered source HEAD')
+-    require(type(runtime) is dict and set(runtime)=={'kind','source_commit','files','inherited65_map','stdlib779_map','windows_library_identities','library_event_observer','stdlib_layout','cache_policy','initial_loaded_libraries','qualification_review','sha256'} and runtime['kind']=='OBSERVER_ONLY_COMPLETE_CURRENT_RUNTIME_V1','exact observer-only runtime schema')
++    implementation=config['implementation_commit']
++    require(type(head) is str and len(head)==40 and all(c in '0123456789abcdef' for c in head) and type(implementation) is str and len(implementation)==40 and all(c in '0123456789abcdef' for c in implementation) and implementation!=head and implementation==runtime['implementation_commit']==registration['implementation_commit'],'same implementation ancestor; distinct externally selected dispatch HEAD')
++    require(type(runtime) is dict and set(runtime)=={'kind','implementation_commit','files','inherited65_map','stdlib779_map','windows_library_identities','library_event_observer','stdlib_layout','cache_policy','allowed_initial_loaded_libraries','qualification_review','sha256'} and runtime['kind']=='PROSPECTIVE_OBSERVER_STARTUP_BYTE_ADMISSION_V1','exact observer-only runtime schema')
+     require(config['runtime_files']==runtime['files'] and config['observer_registration']==runtime['library_event_observer'],'same selected observer/runtime maps')
+-    require(type(registration) is dict and set(registration)=={'kind','source_commit','config_body_sha256','runtime_body_sha256','source_files','runtime_files','profile_sha256','worker_path','owner_approval','native_launch_authorized','sha256'} and registration['kind']=='ROOT_REGISTERED_OBSERVER_ONLY_LAUNCH_V1','exact observer-only registration')
++    require(type(registration) is dict and set(registration)=={'kind','implementation_commit','config_body_sha256','runtime_body_sha256','source_files','runtime_files','profile_sha256','worker_path','owner_approval','native_launch_authorized','sha256'} and registration['kind']=='ROOT_REGISTERED_OBSERVER_STARTUP_LAUNCH_V1','exact observer-only registration')
+     require(registration['config_body_sha256']==config['sha256'] and registration['runtime_body_sha256']==runtime['sha256'] and registration['source_files']==config['source_files'] and registration['runtime_files']==runtime['files'],'external observer-only registration joins')
+     require(registration['profile_sha256']==digest({'scope':SCOPE,'permission':PERMISSION,'resources':RESOURCES,'ABI':ABI}) and registration['worker_path']==config['worker_path'],'fixed observer-only profile/worker joins')
+     require(config['worker_path']==str(EXPECTED/'worker.py'),'exact distinct observer-only worker entry')
+@@ -99,7 +100,7 @@
+             require(d['role'] in allowed and suffix in allowed[d['role']],'observer-only source/runtime role suffix; no model assets')
+             if d['role']=='observer_binary':require(text==observer['binary']['path'] and mapping is files,'observer binary only exact singleton')
+             if d['role']=='observer_fixture_binary':require(text==fixture['path'] and mapping is files,'fixture binary only exact singleton')
+-    require(type(runtime['initial_loaded_libraries']) is list and runtime['initial_loaded_libraries'] and len(set(runtime['initial_loaded_libraries']))==len(runtime['initial_loaded_libraries']) and all(p in files and Path(p).suffix.lower() in {'.exe','.dll','.pyd'} for p in runtime['initial_loaded_libraries']),'complete selected initial module baseline')
++    require(type(runtime['allowed_initial_loaded_libraries']) is list and runtime['allowed_initial_loaded_libraries'] and len(set(runtime['allowed_initial_loaded_libraries']))==len(runtime['allowed_initial_loaded_libraries']) and all(p in files and Path(p).suffix.lower() in {'.exe','.dll','.pyd'} for p in runtime['allowed_initial_loaded_libraries']),'finite allowed initial module population; no prior loaded-baseline claim')
+     return {'config':config,'runtime':runtime,'registration':registration,'expected_head':head,'fixture_only':fixture_only,'native_PASS':False,'native_authority_issued':False}
+ 
+ def _shared_inventory_checks(value):
+@@ -125,17 +126,19 @@
+     # this is a pure adapter of metadata fields, not a tensor launch/context.
+     observer=runtime['library_event_observer'];selected_libraries={p:d for p,d in files.items() if Path(p).suffix.lower() in {'.dll','.pyd','.exe'}}
+     proxy={**runtime,'library_search_policy':{'enforced_boundary':{'library_files':selected_libraries,'search_directories':sorted({str(Path(p).parent) for p in selected_libraries})}}}
+-    module.library_event_observer_registration(config,proxy)
+-    cache=runtime['cache_policy'];require(type(cache) is dict and set(cache)=={'preloaded_bootstrap_modules','fresh_bootstrap_evidence'},'observer-only fresh bootstrap source policy')
+-    modules=cache['preloaded_bootstrap_modules'];require(type(modules) is dict and modules and all(name.split('.',1)[0]!='torch' for name in modules),'fresh non-Torch observer bootstrap modules')
++    module.library_event_observer_registration({**config,'source_commit':config['implementation_commit']},proxy)
++    _bootstrap_admission_checks(config,runtime)
++
++
++def _bootstrap_admission_checks(config,runtime):
++    files=runtime['files'];observer=runtime['library_event_observer']
++    cache=runtime['cache_policy'];require(type(cache) is dict and set(cache)=={'mode','allowed_bootstrap_modules','imports'} and cache['mode']=='MEASURE_BYTE_VERIFIED_STARTUP_V1' and cache['imports']==['ctypes','ctypes.wintypes','_ctypes'],'prospective byte-bound explicit startup import policy')
++    modules=cache['allowed_bootstrap_modules'];require(type(modules) is dict and 0<len(modules)<=4096 and set(cache['imports'])<=set(modules) and all(name.split('.',1)[0]!='torch' for name in modules),'finite prospective non-Torch bootstrap module admission')
+     for name,row in modules.items():
+-        require(type(name) is str and type(row) is dict and set(row)=={'path','source_sha256'} and row['path'] in files and files[row['path']]['sha256']==row['source_sha256'] and Path(row['path']).suffix.lower() in {'.py','.pyd'},'selected observer-only bootstrap source/extension identity')
+-    anchor=cache['fresh_bootstrap_evidence'];require(type(anchor) is dict and set(anchor)=={'path','file_sha256','body_sha256'},'external observer-only bootstrap evidence anchor')
+-    bootstrap=_selected_json(anchor['path'],anchor['file_sha256'],anchor['body_sha256'])
+-    require(set(bootstrap)=={'kind','source_commit','preloaded_modules_sha256','fresh_process_bootstrap_qualified','environment_and_loader_assumptions_qualified','current_module_execution_proven','sha256'} and bootstrap['kind']=='ROOT_QUALIFIED_OBSERVER_ONLY_FRESH_BOOTSTRAP_V1' and bootstrap['source_commit']==value['expected_head'] and bootstrap['preloaded_modules_sha256']==digest(modules) and bootstrap['fresh_process_bootstrap_qualified'] is bootstrap['environment_and_loader_assumptions_qualified'] is True and bootstrap['current_module_execution_proven'] is False,'externally qualified observer bootstrap assumptions; namespace execution not inferred')
++        require(type(name) is str and type(row) is dict and set(row)=={'path','source_sha256'} and row['path'] in {**config['source_files'],**files} and {**config['source_files'],**files}[row['path']]['sha256']==row['source_sha256'] and {**config['source_files'],**files}[row['path']]['role'] in {'python_source','extension_binary'} and Path(row['path']).suffix.lower() in {'.py','.pyd'},'selected observer-only bootstrap source/extension identity')
+     review_anchor=runtime['qualification_review'];require(type(review_anchor) is dict and set(review_anchor)=={'path','file_sha256','body_sha256'},'external current byte review anchor')
+     review=_selected_json(review_anchor['path'],review_anchor['file_sha256'],review_anchor['body_sha256'])
+-    require(set(review)=={'kind','source_commit','source_inventory_sha256','runtime_inventory_sha256','observer_registration_sha256','initial_loaded_libraries_sha256','bootstrap_sha256','complete_current_byte_review','sha256'} and review['kind']=='ROOT_REVIEWED_OBSERVER_ONLY_CURRENT_BYTE_CLOSURE_V1' and review['source_commit']==value['expected_head'] and review['source_inventory_sha256']==digest(config['source_files']) and review['runtime_inventory_sha256']==digest(files) and review['observer_registration_sha256']==digest(observer) and review['initial_loaded_libraries_sha256']==digest(runtime['initial_loaded_libraries']) and review['bootstrap_sha256']==bootstrap['sha256'] and review['complete_current_byte_review'] is True,'independent exact observer-only byte/bootstrap/module review')
++    require(set(review)=={'kind','implementation_commit','source_inventory_sha256','runtime_inventory_sha256','observer_registration_sha256','allowed_initial_loaded_libraries_sha256','bootstrap_policy_sha256','complete_current_byte_review','sha256'} and review['kind']=='ROOT_REVIEWED_OBSERVER_STARTUP_BYTE_ADMISSION_V1' and review['implementation_commit']==config['implementation_commit'] and review['source_inventory_sha256']==digest(config['source_files']) and review['runtime_inventory_sha256']==digest(files) and review['observer_registration_sha256']==digest(observer) and review['allowed_initial_loaded_libraries_sha256']==digest(runtime['allowed_initial_loaded_libraries']) and review['bootstrap_policy_sha256']==digest(cache) and review['complete_current_byte_review'] is True,'independent prospective byte/import/library admission review; no prior loaded/bootstrap qualification')
+ 
+ def _factory():
+     records={}
+@@ -164,12 +167,22 @@
+     value['config_path']=str(Path(config_path).absolute());value['anchors']={'expected_config_file':expected_config_file,'expected_config_body':expected_config_body,'runtime_path':str(runtime_path),'expected_runtime_file':expected_runtime_file,'expected_runtime_body':expected_runtime_body,'registration_path':str(registration_path),'expected_registration_file':expected_registration_file,'expected_registration_body':expected_registration_body,'expected_head':expected_head}
+     return value
+ 
++def _committed_dispatch_checks(value,config_path):
++    """Separate committed implementation bytes from later registered JSON bytes."""
++    head=subprocess.run(['git','rev-parse','HEAD'],cwd=PACKAGE.parents[1],capture_output=True,text=True,check=True).stdout.strip();dirty=subprocess.run(['git','status','--porcelain'],cwd=PACKAGE.parents[1],capture_output=True,text=True,check=True).stdout
++    require(head==value['expected_head'] and not dirty,'current clean committed observer-only source HEAD')
++    subprocess.run(['git','merge-base','--is-ancestor',value['config']['implementation_commit'],head],cwd=PACKAGE.parents[1],check=True,capture_output=True)
++    repository=PACKAGE.parents[1]
++    for selected in (config_path,value['anchors']['runtime_path'],value['anchors']['registration_path']):
++        committed=subprocess.run(['git','show',head+':'+Path(selected).relative_to(repository).as_posix()],cwd=repository,capture_output=True,check=True).stdout
++        require(committed==read_bytes(selected),'exact external config/runtime/registration bytes committed at dispatch HEAD')
++    for selected,d in value['config']['source_files'].items():
++        committed=subprocess.run(['git','show',value['config']['implementation_commit']+':'+Path(selected).relative_to(repository).as_posix()],cwd=repository,capture_output=True,check=True).stdout
++        require(len(committed)==d['bytes'] and hashlib.sha256(committed).hexdigest()==d['sha256'],'exact selected implementation-ancestor source bytes')
++
+ def validate_context(config_path,**anchors):
+     native_gate();value=_read_context(config_path,**anchors)
+-    head=subprocess.run(['git','rev-parse','HEAD'],cwd=PACKAGE.parents[1],capture_output=True,text=True,check=True).stdout.strip();dirty=subprocess.run(['git','status','--porcelain'],cwd=PACKAGE.parents[1],capture_output=True,text=True,check=True).stdout
+-    require(head==value['expected_head'] and not dirty,'current clean committed observer-only source HEAD')
+-    committed=subprocess.run(['git','show',head+':'+Path(config_path).relative_to(PACKAGE.parents[1]).as_posix()],cwd=PACKAGE.parents[1],capture_output=True,check=True).stdout
+-    require(committed==read_bytes(config_path),'observer-only config committed at registered HEAD')
++    _committed_dispatch_checks(value,config_path)
+     return _mint(value)
+ def revalidate_context(context):
+     native_gate();value=context_value(context);require(value['fixture_only'] is False,'CPU observer-only context has no native authority')
+--- observer_only_qualification_work/run_cpu_replay.py
++++ observer_startup_measurement_work/run_cpu_replay.py
+@@ -11,12 +11,12 @@
+   return original(name,*args,**kwargs)
+  builtins.__import__=imports;start=time.monotonic()
+  try:
+-  with (HERE/'ROOT_OBSERVER_ONLY_CPU_REPLAY_001.txt').open('x',encoding='utf-8') as out:
++  with (HERE/'STARTUP_MEASUREMENT_CPU_REPLAY_003.txt').open('x',encoding='utf-8') as out:
+    result=unittest.TextTestRunner(stream=out,verbosity=2).run(unittest.defaultTestLoader.discover(str(HERE),pattern='test_*.py'))
+  finally:builtins.__import__=original
+  after={n:sha(HERE/n) for n in sources}
+- v={'kind':'ROOT_PRESERVED_OBSERVER_ONLY_EXECUTABLE_SOURCE_CPU_REPLAY','tests':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'skips':len(result.skipped),'seconds':time.monotonic()-start,'source_before':sources,'source_after':after,'sources_unchanged':sources==after,'forbidden_actual_import_attempts':attempts,'native_observer_DLL_loaded_or_registered':False,'native_PASS':False,'native_authority_issued':False,'current_host_inventory_qualified':False,'complete_native_dispatch_registration':False}
++ v={'kind':'STAGED_OBSERVER_STARTUP_MEASUREMENT_SOURCE_CPU_REPLAY','tests':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'skips':len(result.skipped),'seconds':time.monotonic()-start,'source_before':sources,'source_after':after,'sources_unchanged':sources==after,'forbidden_actual_import_attempts':attempts,'native_observer_DLL_loaded_or_registered':False,'native_PASS':False,'native_authority_issued':False,'current_host_inventory_qualified':False,'complete_native_dispatch_registration':False}
+  v['sha256']=hashlib.sha256(json.dumps(v,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+- with (HERE/'ROOT_OBSERVER_ONLY_CPU_REPLAY_001.json').open('x',encoding='utf-8') as out:out.write(json.dumps(v,sort_keys=True,indent=2)+'\n')
++ with (HERE/'STARTUP_MEASUREMENT_CPU_REPLAY_003.json').open('x',encoding='utf-8') as out:out.write(json.dumps(v,sort_keys=True,indent=2)+'\n')
+  print(json.dumps(v));return not(result.wasSuccessful() and sources==after and not attempts and not result.skipped)
+ if __name__=='__main__':raise SystemExit(main())
+--- observer_only_qualification_work/supervisor.py
++++ observer_startup_measurement_work/supervisor.py
+@@ -12,8 +12,8 @@
+ PACKAGE=next(p for p in HERE.parents if p.name=='rineya_synth_centralized_reasoning_v1')
+ SCOPE='NO_MODEL_NATIVE_LIBRARY_OBSERVER_LOAD_UNLOAD'
+ ORIGINAL_SHA='edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691'
+-CONTRACT_BOOTSTRAP_SHA='120711643b25b2d633f2f7b7e681f88995d8583af03cca5232e2ba00696c17da'
+-WORKER_RELATIVE='observer_only_qualification_v1/worker.py'
++CONTRACT_BOOTSTRAP_SHA='b6d722cefb32c4f5735b2937c7edd6d68c551e2a1555bbe41f4e7518fc20ad1c'
++WORKER_RELATIVE='observer_startup_measurement_v1/worker.py'
+ BOUNDS={'preworker_available_GiB':3.3125,'system_available_reserve_GiB':1.25,'worker_process_tree_RSS_GiB':2.0,
+  'GPU_free_at_admission_GiB':4.0,'GPU_free_during_work_GiB':.5,'disk_free_GiB':4.0,
+  'external_watchdog_milliseconds':100,'whole_scope_seconds':600}
+@@ -64,7 +64,7 @@
+     if cpu_capability is None:current=contract.revalidate_context(context)
+     else:current=contract._CPU_revalidate_context(context,_capability=cpu_capability)
+     require(current==value,'original observer-only context cannot rebase')
+-    require(value['config']['kind']=='REGISTERED_OBSERVER_ONLY_QUALIFICATION_V1' and value['config']['resources']==contract.RESOURCES,'registered observer-only scope/resources')
++    require(value['config']['kind']=='REGISTERED_OBSERVER_STARTUP_MEASUREMENT_V1' and value['config']['resources']==contract.RESOURCES,'registered observer-only scope/resources')
+     expected=contract.PACKAGE/WORKER_RELATIVE
+     require(value['config']['worker_path']==str(expected),'exact observer-only worker entry')
+     projected=contract.preflight(context)
+--- observer_only_qualification_work/test_audit.py
++++ observer_startup_measurement_work/test_audit.py
+@@ -48,7 +48,7 @@
+         self.raw=self.package/'artifacts/observer_only_CPU';self.raw.mkdir(parents=True);self.preserved=self.package/'evidence/observer_only_CPU';self.preserved.parent.mkdir(parents=True)
+         self.sources={}
+         for name in ('contract.py','worker.py','audit.py'):
+-            p=self.package/'observer_only_qualification_v1'/name;p.parent.mkdir(exist_ok=True)
++            p=self.package/'observer_startup_measurement_v1'/name;p.parent.mkdir(exist_ok=True)
+             raw=(HERE/name).read_bytes();p.write_bytes(raw);self.sources[str(p)]=desc(raw,'python_source')
+         self.C=source(HERE/'contract.py');self.W=source(HERE/'worker.py')
+         native_supervisor=HERE.parents[1]/'native_supervisor.py';p=self.package/'native_supervisor.py';p.write_bytes(native_supervisor.read_bytes());self.sources[str(p)]=desc(p.read_bytes(),'python_source')
+@@ -59,9 +59,9 @@
+         self.birth={'pid':12345,'creation_filetime_100ns':134000000000000001};self.alive=False
+         bp=self.package/'CPU_BUILD.json';build=sealed({'kind':'CPU_INJECTED_BUILD_RECEIPT','source_commit':'a'*40,'abi':self.abi});self.write(bp,build)
+         registration_observer={'kind':'ROOT_REGISTERED_NATIVE_LIBRARY_OBSERVER_V1','adapter_source':{'path':next(iter(self.sources)),'descriptor':next(iter(self.sources.values()))},'native_source_files':{},'binary':{'path':self.observer,'descriptor':self.binaries[self.observer]},'abi':self.abi,'build_receipt':{'path':str(bp),'file_sha256':hashlib.sha256(bp.read_bytes()).hexdigest(),'body_sha256':build['sha256']}}
+-        config=sealed({'scope':A.SCOPE,'permission':deepcopy(self.C.PERMISSION),'resources':deepcopy(self.C.RESOURCES),'source_commit':'a'*40,'source_files':self.sources,'runtime_files':self.binaries,'observer_registration':registration_observer,'binary_fixture':{'path':self.fixture,'descriptor':self.binaries[self.fixture]},'worker_path':str(self.package/'observer_only_qualification_v1/worker.py'),'native_launch_authorized':False})
+-        runtime=sealed({'source_commit':'a'*40,'files':self.binaries,'library_event_observer':registration_observer,'initial_loaded_libraries':[self.interpreter,self.observer]})
+-        reg=sealed({'source_commit':'a'*40,'config_body_sha256':config['sha256'],'runtime_body_sha256':runtime['sha256'],'source_files':self.sources,'runtime_files':self.binaries,'profile_sha256':'b'*64})
++        config=sealed({'scope':A.SCOPE,'permission':deepcopy(self.C.PERMISSION),'resources':deepcopy(self.C.RESOURCES),'implementation_commit':'e'*40,'source_files':self.sources,'runtime_files':self.binaries,'observer_registration':registration_observer,'binary_fixture':{'path':self.fixture,'descriptor':self.binaries[self.fixture]},'worker_path':str(self.package/'observer_startup_measurement_v1/worker.py'),'native_launch_authorized':False})
++        runtime=sealed({'implementation_commit':'e'*40,'files':self.binaries,'library_event_observer':registration_observer,'allowed_initial_loaded_libraries':[self.interpreter,self.observer,self.fixture]})
++        reg=sealed({'implementation_commit':'e'*40,'config_body_sha256':config['sha256'],'runtime_body_sha256':runtime['sha256'],'source_files':self.sources,'runtime_files':self.binaries,'profile_sha256':'b'*64})
+         self.value={'config':config,'runtime':runtime,'registration':reg,'expected_head':'a'*40,'config_path':str(self.package/'configs/CPU.json'),'anchors':{'expected_config_file':'c'*64,'expected_config_body':config['sha256'],'expected_runtime_body':runtime['sha256'],'expected_registration_body':reg['sha256']},'fixture_only':True,'native_PASS':False,'native_authority_issued':False}
+         self.context=self.C._CPU_context_value_fixture(self.value,_capability=self.C._CPU_capability())
+         self.binding={'path':self.observer,'descriptor':self.binaries[self.observer],'abi':self.abi,'dll_handle':202}
+@@ -114,6 +114,16 @@
+ 
+     def test_actual_worker_outputs_flow_full_original_copy_terminal_audit(self):
+         self.build();r=self.audit();self.assertTrue(r['observer_mechanics_recorded']);self.assertFalse(r['native_PASS']);self.assertFalse(r['native_observer_qualified']);self.assertFalse(r['tensor_authority'])
++        self.assertNotIn(self.fixture,{row['path'] for row in self.result['initial_modules']['libraries']})
++    def test_startup_replay_uses_original_baseline_not_prospective_admission_as_truth(self):
++        self.build();packet=A.parse((self.raw/'OBSERVER_STARTUP_INVENTORY.json').read_bytes())
++        r=A.replay_startup(packet,result=self.result,selected_context=self.value)
++        self.assertEqual(r['initial_libraries'],{self.interpreter:101,self.observer:202})
++        self.assertNotIn(self.fixture,r['initial_libraries'])
++        packet['initial_module_snapshots'][0]['libraries'].append({'path':self.fixture,'module_handle':303})
++        packet=sealed({k:v for k,v in packet.items() if k!='sha256'})
++        with self.assertRaisesRegex(ValueError,'first complete baseline retained'):
++            A.replay_startup(packet,result=self.result,selected_context=self.value)
+     def test_missing_or_extra_baseline_library_rejected(self):
+         self.build();r=self.reseal_result(lambda r:r['initial_modules']['libraries'].pop())
+         with self.assertRaises(ValueError):self.replay(r)
+--- observer_only_qualification_work/test_contract.py
++++ observer_startup_measurement_work/test_contract.py
+@@ -4,9 +4,10 @@
+ from unittest.mock import patch
+ import unittest
+ import contract as C
++import supervisor as S
+ class ContractControls(unittest.TestCase):
+     def setUp(self):
+-        self.head='a'*40;root=C.PACKAGE;self.worker=str(C.EXPECTED/'worker.py')
++        self.head='a'*40;self.implementation='e'*40;root=C.PACKAGE;self.worker=str(C.EXPECTED/'worker.py')
+         def d(role,bytes=1):return {'bytes':bytes,'sha256':'b'*64,'role':role}
+         sources={str(C.EXPECTED/n):d('python_source') for n in ('contract.py','worker.py','supervisor.py','audit.py')}
+         native={str(root/('prefix_library_observer.'+n)):d('native_observer_source') for n in ('c','h')};sources.update(native)
+@@ -14,13 +15,69 @@
+         binary={'path':str(root/'native_library_observer.dll'),'descriptor':d('observer_binary')};fixture={'path':str(root/'observer_only_fixture.dll'),'descriptor':d('observer_fixture_binary')}
+         observer={'kind':'ROOT_REGISTERED_NATIVE_LIBRARY_OBSERVER_V1','adapter_source':adapter,'native_source_files':native,'binary':binary,'abi':dict(C.ABI),'build_receipt':{'path':str(root/'native_library_observer_build.json'),'file_sha256':'c'*64,'body_sha256':'d'*64}}
+         files={binary['path']:binary['descriptor'],fixture['path']:fixture['descriptor']}
+-        self.runtime=C.seal({'kind':'OBSERVER_ONLY_COMPLETE_CURRENT_RUNTIME_V1','source_commit':self.head,'files':files,'inherited65_map':{},'stdlib779_map':{},'windows_library_identities':{},'library_event_observer':observer,'stdlib_layout':{},'cache_policy':{},'initial_loaded_libraries':[binary['path']],'qualification_review':{}})
+-        self.config=C.seal({'kind':'REGISTERED_OBSERVER_ONLY_QUALIFICATION_V1','scope':C.SCOPE,'permission':deepcopy(C.PERMISSION),'resources':deepcopy(C.RESOURCES),'source_commit':self.head,'source_files':sources,'runtime_files':files,'observer_registration':observer,'binary_fixture':fixture,'worker_path':self.worker,'offline_environment':{'HF_HUB_OFFLINE':'1'},'native_launch_authorized':False})
+-        self.registration=C.seal({'kind':'ROOT_REGISTERED_OBSERVER_ONLY_LAUNCH_V1','source_commit':self.head,'config_body_sha256':self.config['sha256'],'runtime_body_sha256':self.runtime['sha256'],'source_files':sources,'runtime_files':files,'profile_sha256':C.digest({'scope':C.SCOPE,'permission':C.PERMISSION,'resources':C.RESOURCES,'ABI':C.ABI}),'worker_path':self.worker,'owner_approval':{'approved':False,'scope':C.SCOPE,'evidence_reference':''},'native_launch_authorized':False})
++        self.runtime=C.seal({'kind':'PROSPECTIVE_OBSERVER_STARTUP_BYTE_ADMISSION_V1','implementation_commit':self.implementation,'files':files,'inherited65_map':{},'stdlib779_map':{},'windows_library_identities':{},'library_event_observer':observer,'stdlib_layout':{},'cache_policy':{},'allowed_initial_loaded_libraries':[binary['path']],'qualification_review':{}})
++        self.config=C.seal({'kind':'REGISTERED_OBSERVER_STARTUP_MEASUREMENT_V1','scope':C.SCOPE,'permission':deepcopy(C.PERMISSION),'resources':deepcopy(C.RESOURCES),'implementation_commit':self.implementation,'source_files':sources,'runtime_files':files,'observer_registration':observer,'binary_fixture':fixture,'worker_path':self.worker,'offline_environment':{'HF_HUB_OFFLINE':'1'},'native_launch_authorized':False})
++        self.registration=C.seal({'kind':'ROOT_REGISTERED_OBSERVER_STARTUP_LAUNCH_V1','implementation_commit':self.implementation,'config_body_sha256':self.config['sha256'],'runtime_body_sha256':self.runtime['sha256'],'source_files':sources,'runtime_files':files,'profile_sha256':C.digest({'scope':C.SCOPE,'permission':C.PERMISSION,'resources':C.RESOURCES,'ABI':C.ABI}),'worker_path':self.worker,'owner_approval':{'approved':False,'scope':C.SCOPE,'evidence_reference':''},'native_launch_authorized':False})
+     def schema(self):return C._schema(self.config,self.runtime,self.registration,self.head,fixture_only=True)
+     def test_separate_scope_metadata_keeps_zero_model_tensor_permission(self):
+         value=self.schema();self.assertTrue(value['fixture_only']);self.assertFalse(value['native_authority_issued'])
+         self.assertEqual(value['config']['permission']['allocations'],0)
++        self.assertEqual(value['config']['implementation_commit'],self.implementation)
++        self.assertNotEqual(value['config']['implementation_commit'],value['expected_head'])
++    def test_embedded_dispatch_HEAD_and_mixed_implementation_are_refused(self):
++        self.runtime['implementation_commit']='f'*40
++        with self.assertRaisesRegex(ValueError,'implementation ancestor'):self.schema()
++        for value in (self.config,self.runtime,self.registration):value['implementation_commit']=self.head
++        with self.assertRaisesRegex(ValueError,'implementation ancestor'):self.schema()
++    def test_bootstrap_main_source_admitted_from_source_map_without_runtime_duplication(self):
++        import tempfile,hashlib
++        with tempfile.TemporaryDirectory(prefix='CPU_bootstrap_admission_') as td:
++            root=Path(td).resolve();sources={};files={};modules={}
++            for name,leaf,role,mapping in (('__main__','worker.py','python_source',sources),('ctypes','ctypes.py','python_source',files),('ctypes.wintypes','wintypes.py','python_source',files),('_ctypes','_ctypes.pyd','extension_binary',files)):
++                path=root/leaf;raw=('INERT source admission '+name).encode('ascii');path.write_bytes(raw)
++                mapping[str(path)]={'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'role':role}
++                modules[name]={'path':str(path),'source_sha256':mapping[str(path)]['sha256']}
++            config={'implementation_commit':self.implementation,'source_files':sources}
++            runtime={'files':files,'library_event_observer':{},'allowed_initial_loaded_libraries':[],'cache_policy':{'mode':'MEASURE_BYTE_VERIFIED_STARTUP_V1','imports':['ctypes','ctypes.wintypes','_ctypes'],'allowed_bootstrap_modules':modules}}
++            review=C.seal({'kind':'ROOT_REVIEWED_OBSERVER_STARTUP_BYTE_ADMISSION_V1','implementation_commit':self.implementation,'source_inventory_sha256':C.digest(sources),'runtime_inventory_sha256':C.digest(files),'observer_registration_sha256':C.digest({}),'allowed_initial_loaded_libraries_sha256':C.digest([]),'bootstrap_policy_sha256':C.digest(runtime['cache_policy']),'complete_current_byte_review':True})
++            path=root/'review.json';path.write_bytes((C.canonical(review)+'\n').encode('ascii'))
++            runtime['qualification_review']={'path':str(path),'file_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'body_sha256':review['sha256']}
++            C._bootstrap_admission_checks(config,runtime)
++            self.assertNotIn(modules['__main__']['path'],files)
++            modules['__main__']['source_sha256']='f'*64
++            with self.assertRaisesRegex(ValueError,'bootstrap source/extension identity'):C._bootstrap_admission_checks(config,runtime)
++    def test_ancestor_and_exact_committed_sources_join_distinct_later_JSON_bytes(self):
++        import tempfile,hashlib,subprocess
++        from types import SimpleNamespace
++        with tempfile.TemporaryDirectory(prefix='CPU_dispatch_source_') as td:
++            repository=Path(td).resolve();package=repository/'experiments/rineya_synth_centralized_reasoning_v1';package.mkdir(parents=True)
++            paths={name:package/name for name in ('config.json','runtime.json','registration.json','worker.py')}
++            for name,path in paths.items():path.write_bytes(('INERT original '+name).encode('ascii'))
++            original={name:path.read_bytes() for name,path in paths.items()};raw=original['worker.py']
++            value={'expected_head':self.head,'config':{'implementation_commit':self.implementation,'source_files':{str(paths['worker.py']):{'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'role':'python_source'}}},'anchors':{'runtime_path':str(paths['runtime.json']),'registration_path':str(paths['registration.json'])}}
++            calls=[]
++            def run(args,**kwargs):
++                calls.append(args)
++                if args[1]=='rev-parse':return SimpleNamespace(stdout=self.head+'\n')
++                if args[1]=='status':return SimpleNamespace(stdout='')
++                if args[1]=='merge-base':return SimpleNamespace(stdout=b'')
++                commit,path=args[2].split(':',1);name=Path(path).name
++                self.assertEqual(commit,self.implementation if name=='worker.py' else self.head)
++                return SimpleNamespace(stdout=original[name])
++            with patch.object(C,'PACKAGE',package),patch.object(C.subprocess,'run',side_effect=run):
++                C._committed_dispatch_checks(value,paths['config.json'])
++            self.assertIn(['git','merge-base','--is-ancestor',self.implementation,self.head],calls)
++            def invalid(args,**kwargs):
++                if args[1]=='merge-base':raise subprocess.CalledProcessError(1,args)
++                return run(args,**kwargs)
++            with patch.object(C,'PACKAGE',package),patch.object(C.subprocess,'run',side_effect=invalid):
++                with self.assertRaises(subprocess.CalledProcessError):C._committed_dispatch_checks(value,paths['config.json'])
++            original['worker.py']=b'INERT foreign committed source'
++            with patch.object(C,'PACKAGE',package),patch.object(C.subprocess,'run',side_effect=run):
++                with self.assertRaisesRegex(ValueError,'implementation-ancestor source bytes'):C._committed_dispatch_checks(value,paths['config.json'])
++            original['worker.py']=raw;paths['runtime.json'].write_bytes(b'changed JSON')
++            with patch.object(C,'PACKAGE',package),patch.object(C.subprocess,'run',side_effect=run):
++                with self.assertRaisesRegex(ValueError,'bytes committed at dispatch HEAD'):C._committed_dispatch_checks(value,paths['config.json'])
+     def test_each_model_tensor_or_CUDA_flag_is_rejected(self):
+         for name in ('model','torch_import','CUDA_context','tensor_allocation','forward','backward','optimizer','scoring'):
+             config=deepcopy(self.config);config['permission'][name]=True
+@@ -64,9 +121,16 @@
+             anchors={'expected_config_file':cf,'expected_config_body':config['sha256'],'runtime_path':str(runtime_path),'expected_runtime_file':rf,'expected_runtime_body':runtime['sha256'],'registration_path':str(registration_path),'expected_registration_file':sf,'expected_registration_body':registration['sha256'],'expected_head':self.head}
+             # Pure schema plus actual JSON/anchor readers; physical historical
+             # map bytes and shared inventory are explicit fixture seams only.
+-            with patch.object(C,'PACKAGE',root),patch.object(C,'EXPECTED',root/'observer_only_qualification_v1'),patch.object(C,'_shared_inventory_checks'),patch.object(C,'file_descriptor'):
++            with patch.object(C,'PACKAGE',root),patch.object(C,'EXPECTED',root/'observer_startup_measurement_v1'),patch.object(C,'_shared_inventory_checks'),patch.object(C,'file_descriptor'):
+                 context=C._CPU_context_fixture(config_path,_capability=C._CPU_capability(),**anchors)
+                 self.assertTrue(C.context_value(context)['fixture_only'])
++                # Actual selected JSON -> actual contract schema/factory ->
++                # supervisor purpose projection, with only the explicitly
++                # inert host inventory/byte prerequisite seams above.
++                projection=S.preflight_projection(C,context,config_path,cpu_capability=C._CPU_capability())
++                self.assertEqual(projection['worker_path'],config['worker_path'])
++                self.assertEqual(projection['source_commit'],self.head)
++                self.assertEqual(projection['authorization']['scope'],C.SCOPE)
+                 config_path.write_bytes(config_path.read_bytes()+b' ')
+                 with self.assertRaisesRegex(ValueError,'external file bytes'):
+                     C._CPU_context_fixture(config_path,_capability=C._CPU_capability(),**anchors)
+--- observer_only_qualification_work/test_supervisor.py
++++ observer_startup_measurement_work/test_supervisor.py
+@@ -65,7 +65,7 @@
+         self.temp=tempfile.TemporaryDirectory(prefix='CPU_observer_supervisor_');self.addCleanup(self.temp.cleanup)
+         self.C=contract();self.host=Host(self.temp.name);self.output=Path(self.temp.name)/'output';self.output.mkdir()
+         self.value={'config_path':str(Path(self.temp.name)/'config.json'),'expected_head':'a'*40,
+-          'config':{'kind':'REGISTERED_OBSERVER_ONLY_QUALIFICATION_V1','worker_path':str(self.C.PACKAGE/S.WORKER_RELATIVE),
++          'config':{'kind':'REGISTERED_OBSERVER_STARTUP_MEASUREMENT_V1','worker_path':str(self.C.PACKAGE/S.WORKER_RELATIVE),
+                     'resources':dict(self.C.RESOURCES),'source_files':{}},
+           'runtime':{'files':{}},'registration':{'profile_sha256':'b'*64},
+           'anchors':{'expected_config_file':'c'*64},'fixture_only':True,'native_PASS':False,'native_authority_issued':False}
+--- observer_only_qualification_work/test_worker.py
++++ observer_startup_measurement_work/test_worker.py
+@@ -60,11 +60,11 @@
+     observer=str(package/'native_library_observer.dll');fixture=str(package/'observer_only_fixture.dll');interpreter=str(package/'CPU_python.exe')
+     c=W.C;registration={'binary':{'path':observer,'descriptor':binaries[observer]},'abi':deepcopy(c.ABI),
+         'adapter_source':{'path':str(package/'worker.py'),'descriptor':sources[str(package/'worker.py')]}}
+-    config=c.seal({'kind':'REGISTERED_OBSERVER_ONLY_QUALIFICATION_V1','scope':c.SCOPE,'permission':deepcopy(c.PERMISSION),
+-        'resources':deepcopy(c.RESOURCES),'source_commit':'a'*40,'source_files':sources,'runtime_files':binaries,
++    config=c.seal({'kind':'REGISTERED_OBSERVER_STARTUP_MEASUREMENT_V1','scope':c.SCOPE,'permission':deepcopy(c.PERMISSION),
++        'resources':deepcopy(c.RESOURCES),'implementation_commit':'e'*40,'source_files':sources,'runtime_files':binaries,
+         'observer_registration':registration,'binary_fixture':{'path':fixture,'descriptor':binaries[fixture]},
+         'worker_path':str(package/'worker.py'),'offline_environment':{'CPU_INERT_OFFLINE':'1'},'native_launch_authorized':False})
+-    runtime=c.seal({'source_commit':'a'*40,'files':binaries,'library_event_observer':registration,'initial_loaded_libraries':[interpreter,observer]})
++    runtime=c.seal({'implementation_commit':'e'*40,'files':binaries,'library_event_observer':registration,'allowed_initial_loaded_libraries':[interpreter,observer]})
+     value={'config':config,'runtime':runtime,'registration':{'profile_sha256':'b'*64},'expected_head':'a'*40,
+         'config_path':str(package/'configs/CPU_OBSERVER.json'),'anchors':{'expected_config_file':'c'*64},
+         'fixture_only':True,'native_PASS':False,'native_authority_issued':False}
+@@ -119,6 +119,43 @@
+         result=self.run_worker();self.assertEqual(result['status'],'OBSERVER_OPERATIONS_FAILED')
+         self.assertNotIn('load',self.provider.calls);self.assertEqual(self.transport.calls.count('stop'),1)
+         self.assertEqual(result['phase_counts']['initial_module_baseline']['failed'],1)
++        observed=self.c.parse((self.output/'OBSERVER_STARTUP_INVENTORY.json').read_bytes())
++        self.assertEqual(len(observed['initial_module_snapshots']),2)
++        self.assertEqual(observed['initial_module_snapshots'][0],result['initial_modules'])
++        self.assertEqual(observed['unknown_libraries'],[{'path':self.provider.extra,'module_handle':999}])
++        self.assertEqual(result['phase_counts']['fixture_load']['attempted'],0)
++    def test_first_bootstrap_actor_runs_once_after_bytes_before_provider(self):
++        calls=[];original=self.c.file_descriptor
++        def checking(path,d,**kwargs):calls.append(('bytes',path));return original(path,d,**kwargs)
++        def bootstrap():
++            self.assertEqual(self.provider.calls,[]);self.assertEqual(self.transport.calls,[])
++            selected=set(self.value['config']['source_files'])|set(self.value['runtime']['files'])
++            self.assertEqual({p for event,p in calls if event=='bytes'},selected)
++            calls.append(('bootstrap',None))
++            return {'kind':'MEASURED_BOOTSTRAP_IMPORTS_V1','imports':['ctypes','ctypes.wintypes','_ctypes'],
++                'modules':[],'unknown_modules':[],'fixture_only':True,'namespace_execution_proven':False}
++        with patch.object(self.c,'file_descriptor',side_effect=checking):
++            result=W._CPU_run_fixture(self.context,self.c,self.transport,self.provider,self.output,_capability=self.cap,clock=self.clock,bootstrap_actor=bootstrap)
++        self.assertEqual(result['status'],'OBSERVER_OPERATIONS_RETURNED_PENDING_TERMINAL_AUDIT')
++        self.assertEqual(calls.count(('bootstrap',None)),1)
++        packet=self.c.parse((self.output/'OBSERVER_STARTUP_INVENTORY.json').read_bytes())
++        self.assertFalse(packet['namespace_execution_proven']);self.assertFalse(packet['native_PASS'])
++    def test_original_unknown_bootstrap_preserved_before_any_provider_or_fixture(self):
++        unknown={'name':'CPU_unselected','origin':'CPU_UNKNOWN.py','classification':'source_or_extension','source_sha256':None,'error':None}
++        def bootstrap():return {'kind':'MEASURED_BOOTSTRAP_IMPORTS_V1','imports':['ctypes','ctypes.wintypes','_ctypes'],
++            'modules':[unknown],'unknown_modules':[unknown],'fixture_only':True,'namespace_execution_proven':False}
++        result=W._CPU_run_fixture(self.context,self.c,self.transport,self.provider,self.output,_capability=self.cap,clock=self.clock,bootstrap_actor=bootstrap)
++        packet=self.c.parse((self.output/'OBSERVER_STARTUP_INVENTORY.json').read_bytes())
++        self.assertEqual(packet['bootstrap']['unknown_modules'],[unknown])
++        self.assertEqual(packet['initial_module_snapshots'],[])
++        self.assertEqual(result['status'],'OBSERVER_OPERATIONS_FAILED');self.assertEqual(result['phase_counts']['fixture_load']['attempted'],0)
++        self.assertEqual(self.provider.calls,[]);self.assertEqual(self.transport.calls,[])
++    def test_allowed_unloaded_candidate_is_input_not_required_observed_baseline(self):
++        value=deepcopy(self.value);value['runtime']['allowed_initial_loaded_libraries'].append(self.transport.fixture)
++        context=self.c._CPU_context_value_fixture(value,_capability=self.cap)
++        result=W._CPU_run_fixture(context,self.c,self.transport,self.provider,self.output,_capability=self.cap,clock=self.clock)
++        self.assertEqual(result['status'],'OBSERVER_OPERATIONS_RETURNED_PENDING_TERMINAL_AUDIT')
++        self.assertNotIn(self.transport.fixture,{row['path'] for row in result['initial_modules']['libraries']})
+     def test_failed_fixture_unload_is_not_retried_and_prevents_success(self):
+         self.provider.unload_result=False;result=self.run_worker()
+         self.assertEqual(result['status'],'OBSERVER_OPERATIONS_FAILED');self.assertEqual(self.provider.calls.count('unload'),1)
+--- observer_only_qualification_work/worker.py
++++ observer_startup_measurement_work/worker.py
+@@ -14,7 +14,7 @@
+     if expected is not None and hashlib.sha256(raw).hexdigest()!=expected:raise ValueError('exact observer-only bootstrap contract source')
+     module=ModuleType('observer_only_'+path.stem);module.__file__=str(path)
+     exec(compile(raw,str(path),'exec'),module.__dict__);return module
+-C=_module(HERE/'contract.py','120711643b25b2d633f2f7b7e681f88995d8583af03cca5232e2ba00696c17da')
++C=_module(HERE/'contract.py','b6d722cefb32c4f5735b2937c7edd6d68c551e2a1555bbe41f4e7518fc20ad1c')
+ OPS=('source_preflight','owned_identity','observer_binding','observer_start','initial_module_baseline',
+     'fixture_load','loaded_module_snapshot','fixture_unload','unloaded_module_snapshot',
+     'observer_stop','final_event_drain','final_source_preflight')
+@@ -57,7 +57,7 @@
+     text=b''.join(v.to_bytes(2,'little') for v in value).decode('utf-16-le','strict')
+     c.require('\0' not in text,'observer name has no embedded NUL');return text
+ 
+-def _operation_body(context,contract,make_transport,make_provider,output,clock,revalidate):
++def _operation_body(context,contract,make_transport,make_provider,output,clock,revalidate,bootstrap_actor):
+     c=contract;value=c.context_value(context);config=value['config'];output=Path(output).absolute()
+     c.require(config['scope']==c.SCOPE and c.canonical(config['permission'])==c.canonical(c.PERMISSION) and c.canonical(config['resources'])==c.canonical(c.RESOURCES),'distinct no-model observer-only scope/permission/resource profile')
+     c.require(output.resolve()==output and output.is_dir(),'existing exact observer-only output leaf')
+@@ -67,6 +67,13 @@
+         'owned_identity':None,'abi_binding':None,'fixture_handle':None,'initial_modules':None,
+         'loaded_modules':None,'unloaded_modules':None,'events':None,'final_collector_snapshot':None,'prefix':[],'raw_rows':[]}
+     phase_stream=(output/'OBSERVER_PHASES.jsonl').open('xb')
++    startup={'schema_version':1,'kind':'OBSERVER_STARTUP_INVENTORY_V1','scope':c.SCOPE,
++        'source_commit':value['expected_head'],'implementation_commit':config['implementation_commit'],
++        'config_sha256':value['anchors']['expected_config_file'],'context_sha256':c.digest(value),
++        'bootstrap_policy_sha256':c.digest(value['runtime'].get('cache_policy',{})),
++        'bootstrap':None,'initial_module_snapshots':[],'unknown_libraries':[],
++        'fixture_only':value['fixture_only'],'namespace_execution_proven':False,
++        'native_PASS':False,'native_authority_issued':False}
+     def tick():
+         nonlocal last_clock
+         now=clock();c.require(type(now) in (int,float) and math.isfinite(now) and now>=last_clock and now-started<=c.RESOURCES['whole_scope_seconds'],'bounded nondecreasing observer-only clock')
+@@ -88,11 +95,16 @@
+             try:row(op,'failed',exception=record)
+             except BaseException as ledger_error:errors.append({'operation':op,'error':_error(ledger_error)})
+             raise
+-    def preflight():
++    def preflight(*,first=False):
+         current=revalidate();c.require(current==value,'original observer-only context cannot rebase')
+         total=0
+         for mapping in (config['source_files'],value['runtime']['files']):
+             for path,descriptor in mapping.items():c.file_descriptor(path,descriptor);total+=descriptor['bytes']
++        if first:
++            observed=bootstrap_actor()
++            startup['bootstrap']=c.parse(c.canonical(observed))
++            c.require(type(observed) is dict and set(observed)=={'kind','imports','modules','unknown_modules','fixture_only','namespace_execution_proven'} and observed['kind']=='MEASURED_BOOTSTRAP_IMPORTS_V1' and observed['imports']==['ctypes','ctypes.wintypes','_ctypes'] and type(observed['modules']) is list and type(observed['unknown_modules']) is list and observed['fixture_only'] is value['fixture_only'] and observed['namespace_execution_proven'] is False,'original measured bootstrap import projection')
++            c.require(not observed['unknown_modules'],'unselected original bootstrap modules; fixture work withheld')
+         if state['events'] is not None:
+             before=_snapshot(c,state['transport'].snapshot(),closed=True)
+             rows=state['transport'].copy_rows(before['published_prefix'])
+@@ -113,11 +125,17 @@
+         snapshot=_snapshot(c,state['transport'].snapshot(),closed=False);c.require(snapshot['published_prefix']==0,'empty original event prefix before fixture work')
+         return {'status':status,'snapshot':snapshot}
+     def modules(which):
+-        observed=state['provider'].modules();mapping=_modules(c,observed)
+-        repeated=state['provider'].modules();c.require(_modules(c,repeated)==mapping,'stable complete module snapshot across two bounded observations')
++        observed=state['provider'].modules();state[which]=c.parse(c.canonical(observed))
++        if which=='initial_modules':startup['initial_module_snapshots'].append(state[which])
++        mapping=_modules(c,observed)
++        repeated=state['provider'].modules()
++        if which=='initial_modules':startup['initial_module_snapshots'].append(c.parse(c.canonical(repeated)))
++        c.require(_modules(c,repeated)==mapping,'stable complete module snapshot across two bounded observations')
+         fixture=config['binary_fixture']['path']
+         if which=='initial_modules':
+-            c.require(set(mapping)==set(value['runtime']['initial_loaded_libraries']) and fixture not in mapping,'exact complete registered initial module population')
++            admitted=set(value['runtime']['allowed_initial_loaded_libraries'])
++            startup['unknown_libraries']=[row for row in observed['libraries'] if row['path'] not in admitted]
++            c.require(not startup['unknown_libraries'] and fixture not in mapping,'observed initial modules inside prospective byte admission; fixture work withheld on unknown modules')
+             c.require(mapping.get(state['abi_binding']['path'])==state['abi_binding']['dll_handle'],'collector binding joins actual initial modules')
+         elif which=='loaded_modules':
+             before=_modules(c,state['initial_modules']);c.require(mapping=={**before,fixture:state['fixture_handle']},'exact one fixture module added; every initial handle conserved')
+@@ -154,7 +172,7 @@
+         return {'events':state['events'],'snapshot':after,'raw_rows':state['raw_rows']}
+     primary=None
+     try:
+-        invoke('source_preflight',preflight);invoke('owned_identity',identity);invoke('observer_binding',binding)
++        invoke('source_preflight',lambda:preflight(first=True));invoke('owned_identity',identity);invoke('observer_binding',binding)
+         invoke('observer_start',start);invoke('initial_module_baseline',lambda:modules('initial_modules'))
+         invoke('fixture_load',load);invoke('loaded_module_snapshot',lambda:modules('loaded_modules'))
+         invoke('fixture_unload',unload);invoke('unloaded_module_snapshot',lambda:modules('unloaded_modules'))
+@@ -180,6 +198,10 @@
+             try:invoke('final_event_drain',drain)
+             except BaseException:pass
+         phase_stream.close()
++    startup=c.seal(startup);startup_raw=(c.canonical(startup)+'\n').encode('ascii')
++    c.require(len(startup_raw)<=c.MAX_JSON,'bounded complete original startup inventory')
++    with (output/'OBSERVER_STARTUP_INVENTORY.json').open('xb') as stream:stream.write(startup_raw);stream.flush();os.fsync(stream.fileno())
++    c.require(c.read_bytes(output/'OBSERVER_STARTUP_INVENTORY.json')==startup_raw,'exact durable original startup inventory')
+     complete=primary is None and not errors and all(row['returned']==1 for row in counts.values())
+     result={'schema_version':1,'kind':'OBSERVER_ONLY_WORKER_RESULT','scope':c.SCOPE,
+         'status':'OBSERVER_OPERATIONS_RETURNED_PENDING_TERMINAL_AUDIT' if complete else 'OBSERVER_OPERATIONS_FAILED',
+@@ -191,11 +213,14 @@
+     c.require(c.read_bytes(output/'OBSERVER_WORKER_RESULT.json')==raw,'exact durable observer-only result readback')
+     return result
+ 
+-def _CPU_run_fixture(context,contract,transport,provider,output,*,_capability,clock=time.monotonic):
++def _CPU_run_fixture(context,contract,transport,provider,output,*,_capability,clock=time.monotonic,bootstrap_actor=None):
+     contract._check_CPU_capability(_capability);value=contract.context_value(context)
+     contract.require(value['fixture_only'] is True and value['native_PASS'] is value['native_authority_issued'] is False,'private separate observer-only CPU context only')
++    if bootstrap_actor is None:
++        def bootstrap_actor():return {'kind':'MEASURED_BOOTSTRAP_IMPORTS_V1','imports':['ctypes','ctypes.wintypes','_ctypes'],
++            'modules':[],'unknown_modules':[],'fixture_only':True,'namespace_execution_proven':False}
+     return _operation_body(context,contract,lambda:transport,lambda:provider,output,clock,
+-        lambda:contract._CPU_revalidate_context(context,_capability=_capability))
++        lambda:contract._CPU_revalidate_context(context,_capability=_capability),bootstrap_actor)
+ 
+ class _NativeProvider:
+     def __init__(self,context,contract,owner):
+@@ -243,8 +268,10 @@
+             path=Path(raw)
+             if path.is_relative_to(logical):raw=str(Path(layout['physical_base_prefix'])/path.relative_to(logical))
+             matches=[path for path in self.value['runtime']['files'] if path.casefold()==raw.casefold()]
+-            self.C.require(len(matches)==1,'exact original qualified module identity')
+-            out.append({'path':matches[0],'module_handle':int(handle)})
++            self.C.require(len(matches)<=1,'unambiguous original module byte identity')
++            # Unknown originals must survive in the raw baseline before the
++            # shared body refuses fixture work; they are never hashed here.
++            out.append({'path':matches[0] if matches else raw,'module_handle':int(handle)})
+         return {'kind':'OBSERVED_PROCESS_LIBRARY_SNAPSHOT','complete':True,'libraries':sorted(out,key=lambda row:row['path'])}
+     def load_fixture(self,path):
+         self.k.LoadLibraryExW.argtypes=[self.c.c_wchar_p,self.c.c_void_p,self.c.c_uint32];self.k.LoadLibraryExW.restype=self.c.c_void_p
+@@ -260,6 +287,47 @@
+     module=ModuleType('observer_only_selected_adapter');module.__file__=selected['path']
+     exec(compile(raw,selected['path'],'exec'),module.__dict__);module.__compiled_source_descriptor__=dict(selected['descriptor'])
+     return module._Win32Transport(context,contract)
++
++def _native_bootstrap(context,contract):
++    """Measure a first explicit import after approval and complete byte checks.
++
++    Origin/selected-byte joins do not prove the execution history of preloaded
++    Python namespaces or defend against malicious arbitrary same-process code.
++    """
++    contract.native_gate();value=contract.context_value(context)
++    contract.require(value['fixture_only'] is False,'CPU cannot import native bootstrap')
++    import sys
++    from importlib.machinery import PathFinder
++    policy=value['runtime']['cache_policy'];selected=policy['allowed_bootstrap_modules'];layout=value['runtime']['stdlib_layout']
++    def normalized(path):return str(contract.qualified_path(path,layout))
++    # Find exact admitted source/extension origins before executing any of the
++    # three explicitly registered bootstrap imports.
++    for name in policy['imports']:
++        parent=[str(Path(selected['ctypes']['path']).parent)] if name=='ctypes.wintypes' else None
++        spec=PathFinder.find_spec(name,parent)
++        contract.require(spec is not None and type(spec.origin) is str and normalized(spec.origin)==normalized(selected[name]['path']),'byte-admitted bootstrap resolver origin before explicit import')
++        contract.file_descriptor(selected[name]['path'],value['runtime']['files'][selected[name]['path']],layout=layout)
++    __import__('ctypes');__import__('ctypes.wintypes');__import__('_ctypes')
++    contract.require(len(sys.modules)<=4096,'bounded original startup namespace population')
++    rows=[];unknown=[]
++    for name,module in sorted(tuple(sys.modules.items())):
++        if module is None:continue
++        namespace=vars(module);spec=namespace.get('__spec__');origin=getattr(spec,'origin',None) or namespace.get('__file__')
++        classification='builtin_or_frozen' if origin in ('built-in','frozen') else 'source_or_extension'
++        row={'name':name,'origin':origin if type(origin) is str else None,'classification':classification,'source_sha256':None,'error':None}
++        if classification!='builtin_or_frozen':
++            entry=selected.get(name)
++            if entry is None or type(origin) is not str:unknown.append(row)
++            else:
++                try:
++                    actual=normalized(origin);expected=normalized(entry['path'])
++                    contract.require(actual==expected,'original measured bootstrap module origin')
++                    contract.file_descriptor(entry['path'],{**value['config']['source_files'],**value['runtime']['files']}[entry['path']],layout=layout)
++                    row['origin']=actual;row['source_sha256']=entry['source_sha256']
++                except (OSError,ValueError) as error:row['error']=_error(error);unknown.append(row)
++        rows.append(row)
++    return {'kind':'MEASURED_BOOTSTRAP_IMPORTS_V1','imports':list(policy['imports']),'modules':rows,
++        'unknown_modules':unknown,'fixture_only':False,'namespace_execution_proven':False}
+ 
+ def main():
+     C.native_gate()
+@@ -271,7 +339,7 @@
+     C.require(owner['config_sha256']==external['anchors']['expected_config_file'],'original observer-only owner/config receipt')
+     value=C.context_value(context)
+     for key,setting in value['config']['offline_environment'].items():os.environ[key]=setting
+-    result=_operation_body(context,C,lambda:_native_transport(context,C),lambda:_NativeProvider(context,C,owner),args.output_dir,time.monotonic,lambda:C.revalidate_context(context))
++    result=_operation_body(context,C,lambda:_native_transport(context,C),lambda:_NativeProvider(context,C,owner),args.output_dir,time.monotonic,lambda:C.revalidate_context(context),lambda:_native_bootstrap(context,C))
+     return 0 if result['status']=='OBSERVER_OPERATIONS_RETURNED_PENDING_TERMINAL_AUDIT' else 2
+ 
+ if __name__=='__main__':raise SystemExit(main())

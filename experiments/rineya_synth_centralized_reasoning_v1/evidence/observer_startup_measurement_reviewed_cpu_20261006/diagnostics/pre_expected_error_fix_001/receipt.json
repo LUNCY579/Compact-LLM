@@ -1,0 +1,63 @@
+{
+  "kind": "CPU_SOURCE_DIAGNOSTIC",
+  "source_files": {
+    "audit.py": {
+      "bytes": 39729,
+      "sha256": "77a21b67f62e51441b2729a3f9897ee5a910ea560381534338128fa2767a63d3"
+    },
+    "contract.py": {
+      "bytes": 23730,
+      "sha256": "327789a21cc4b6674870acd02494f335465d4c9fee313826e1cbf76d13c886a5"
+    },
+    "preserve.py": {
+      "bytes": 5763,
+      "sha256": "9bcf7acb38105a884c26fe2760557df07d62867be4519f2e45c3e6b3d5180152"
+    },
+    "run_cpu_replay.py": {
+      "bytes": 1909,
+      "sha256": "3629af2a8c0cd13967c15aadab6cb46e3af07aff2a788f2fd104f611ec7475cd"
+    },
+    "supervisor.py": {
+      "bytes": 10165,
+      "sha256": "174377156d335e8fb290b38fb19f6019d37e86c20aafc8a084497fd7f872664a"
+    },
+    "test_audit.py": {
+      "bytes": 15272,
+      "sha256": "b07afeba4bcf6e72a15dfa0ddb2847bf548ea0ce00b4a4c754f15da11decadc4"
+    },
+    "test_composition.py": {
+      "bytes": 2757,
+      "sha256": "2e05fedb540aad762b9afbc5c152b6d2804d509e13cc1d565e199bafe147c2d4"
+    },
+    "test_contract.py": {
+      "bytes": 12574,
+      "sha256": "a9c5a48fe33db0209d8290af9075489413ec0f7fe585037ec1632c624212387f"
+    },
+    "test_preserve.py": {
+      "bytes": 2430,
+      "sha256": "2cf92fc6c5a3e6b164d765be7aed1f86b9859a8e4312f9d5e37a320c0062856a"
+    },
+    "test_supervisor.py": {
+      "bytes": 9178,
+      "sha256": "1a9d2238e5687ee1fc5270a2b2a9f0606729cb7ad5e54c5161e0d873d050c5ac"
+    },
+    "test_worker.py": {
+      "bytes": 16484,
+      "sha256": "115d82abbd89b1c4622ab6621a1e8cf2f4e7f749786decbae838b4dd27e4bf29"
+    },
+    "worker.py": {
+      "bytes": 30709,
+      "sha256": "bcba29763977ede7e43fdbfc355b62373d77d9c20147dfc993b5f7a0d46c1a7f"
+    }
+  },
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "test_contract.ContractControls.test_ancestor_and_exact_committed_sources_join_distinct_later_JSON_bytes",
+    "-v"
+  ],
+  "returncode": 1,
+  "native_PASS": false,
+  "native_authority_issued": false
+}

@@ -1,0 +1,18 @@
+test_ancestor_and_exact_committed_sources_join_distinct_later_JSON_bytes (test_contract.ContractControls.test_ancestor_and_exact_committed_sources_join_distinct_later_JSON_bytes) ... FAIL
+
+======================================================================
+FAIL: test_ancestor_and_exact_committed_sources_join_distinct_later_JSON_bytes (test_contract.ContractControls.test_ancestor_and_exact_committed_sources_join_distinct_later_JSON_bytes)
+----------------------------------------------------------------------
+ValueError: exact external config/runtime/registration bytes committed at dispatch HEAD
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\observer_startup_measurement_work\test_contract.py", line 62, in test_ancestor_and_exact_committed_sources_join_distinct_later_JSON_bytes
+    with self.assertRaisesRegex(ValueError,'JSON bytes committed'):C._committed_dispatch_checks(value,paths['config.json'])
+AssertionError: "JSON bytes committed" does not match "exact external config/runtime/registration bytes committed at dispatch HEAD"
+
+----------------------------------------------------------------------
+Ran 1 test in 0.022s
+
+FAILED (failures=1)
