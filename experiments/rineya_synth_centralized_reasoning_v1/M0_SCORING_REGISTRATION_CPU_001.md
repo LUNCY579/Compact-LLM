@@ -1,0 +1,9 @@
+# M0 scorer source promotion and closed registration
+
+The exact independently reviewed scorer and saved-packet auditor are copied to m0_scoring_v1. Final19 CPU controls pass; focused independent4 checks cover the package-location and complete pre-read registration validation changes. Public source recognizes only its expected package path and refuses missing approved anchors before importer/capture access. Original score_import, finish policy, baseline-first amendment and training recipe remain unchanged.
+
+Registration validation now rejects all six null/malformed batch descriptors, missing or malformed panel/order SHA256 fields, and invalid output paths before importing the panel/capture path. Preserved-copy package resolution uses the known package ancestor. The18/15/13 predecessors, authored qualification and immutable synthetic publication remain preserved; no real model response or panel/oracle data was read in promotion.
+
+The closed template003 records four known successful raw-audit metadata references (256 rows), while batches5/6, panel registration body hash, trusted complete-roster selection, independent review and native scoring approval remain unresolved. Every scoring/training/owner-launch permission is false. A CPU fixture qualification cannot issue native scoring authority or supply the missing full384/96 population. Model asset identities in the template are source declarations only.
+
+Files and receipts are under evidence/m0_scoring_registration_preparation_reviewed_cpu_20261006/final004. Actual use needs exact independently reviewed M0-only registration, trusted approval/qualification and the complete baseline; output must be the selected external location. Guard-domain scoring/enrollment and treatment launch remain separate. No native scoring, training, model/tokenizer load or outcome measurement occurred. The condition-diversity transfer question remains unanswered.

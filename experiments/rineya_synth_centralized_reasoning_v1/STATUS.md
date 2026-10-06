@@ -1,5 +1,25 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: final M0 scorer promoted; closed registration remains incomplete
+
+[M0 promotion](M0_SCORING_REGISTRATION_CPU_001.md) copies exact independently
+reviewed scorer/auditor sources to m0_scoring_v1. Nineteen CPU controls and
+focused independent4 cover complete pre-read batch/panel/order validation;
+prior15 whole-response/publication/replay controls remain preserved. Missing
+approved anchors reject before importer access at the promoted public path.
+
+The closed template003 binds19-control source but keeps native permissions false:
+known raw metadata256 rows, batches5/6 and complete-panel hash/review/approval
+unresolved. No real responses were graded, model/tokenizer loaded or protected
+bank consumed. Original importer/finish/recipe bytes are unchanged.
+
+Treatment collector preparation remains under review. Its historical13 tests
+read public DEV inputs/TRAIN metadata contrary to authored-only test instructions;
+that disclosure and unaccepted predecessor are preserved. Corrected fixtures,
+early approval and complete scorer-binding validation are being verified before
+acceptance. No native treatment or model-quality result is claimed. RAM/GPU
+resource-change question remains pending; the full transfer goal stays active.
+
 ## 2026-10-06 UTC: repaired observer rebind and concrete M0 scoring preparation
 
 [Registration003](OBSERVER_STARTUP_REGISTRATION_003.md) rebinds the repaired driver
