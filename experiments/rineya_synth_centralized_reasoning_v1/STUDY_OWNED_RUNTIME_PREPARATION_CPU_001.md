@@ -1,5 +1,14 @@
 # Owned STUDY runtime: CPU preparation
 
+The later seal repair is preserved under
+`evidence/study_owned_runtime_seal_repair_cpu_20261006/current001`. Terminal-audit
+integration found that the worker added owned fields after the engine sealed its
+report. The corrected producer reseals the complete report before durable
+publication, retaining the nested scientific envelopes unchanged. Seven authored
+and independent seven controls pass, including successful and partial whole-body
+checksum assertions. The earlier source and receipt remain preserved as evidence
+of the defect; their checksum is not accepted for the resulting worker report.
+
 The staged `owned_study.py` supplies the eight callbacks required by the
 [STUDY training composition](STUDY_TRAINING_PREPARATION_CPU_001.md) and a conditional
 worker entry. It consumes the original scientific chunk engine rather than

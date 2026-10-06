@@ -1,5 +1,24 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: worker seal repair and terminal consumer CPU review complete
+
+[Terminal auditor preparation](STUDY_TERMINAL_AUDIT_PREPARATION_CPU_001.md) consumes
+corrected authored worker/journal/checkpoint/publication output with original
+resource/resume validators. Five authored and independent five controls pass;
+callback changes to selected bytes/lease/rosters reject. Prior versions retained.
+
+[Worker receipt repair](STUDY_OWNED_RUNTIME_PREPARATION_CPU_001.md) reseals the
+whole report after owned wrapper fields are added; nested scientific envelopes
+unchanged. Seven authored and independent seven controls pass. Original stale
+seal is preserved and rejected by the new consumer.
+
+Only authored chunk1 is exercised. Native configured metadata/Sampler paths and
+later chunks remain source-inspected; full config FIELDS set not yet explicit.
+No native worker, training, model scoring, resume authority or quality result.
+Genuine qualification, complete scored M0, all qualified guards, native packet,
+STUDY permission and resource admission remain outstanding. The full original
+condition-diversity transfer/retention goal remains active and unmeasured.
+
 ## 2026-10-06 UTC: owned STUDY runtime CPU wiring reviewed
 
 [Owned runtime preparation](STUDY_OWNED_RUNTIME_PREPARATION_CPU_001.md) supplies
