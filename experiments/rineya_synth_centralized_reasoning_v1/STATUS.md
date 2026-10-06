@@ -1,5 +1,24 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: both-arm CPU continuation and config schema verified
+
+[Terminal continuation](STUDY_TERMINAL_AUDIT_PREPARATION_CPU_001.md) now exercises
+three fresh authored workers per arm through original checkpoint/resume and
+receipt consumer logic, ending27/540. Initial eight, final focused three and
+independent final eight controls pass. Doses derive from authored registrations;
+final scalar state preserves update ordinals/LR0/cleared gradients/Adam moments.
+
+Config validation consumes the approved engine's exact24-field literal schema
+and checks native installed source path/pin. Previous five-control evidence and
+predecessor sources remain preserved. Altered prior/latest tests prove descriptor
+and checksum/provenance refusal, not fully rebound semantic rollback resistance.
+
+Native tensor/optimizer/RNG equivalence, configured metadata/Sampler execution,
+qualified guards/complete scored M0, current resource admission and the matched
+learning comparison remain unproven. No model, native APIs, training corpus or
+scoring read occurred; no native/resume/quality authority follows. Full original
+condition-diversity transfer and prior-correct preservation goal remains active.
+
 ## 2026-10-06 UTC: worker seal repair and terminal consumer CPU review complete
 
 [Terminal auditor preparation](STUDY_TERMINAL_AUDIT_PREPARATION_CPU_001.md) consumes

@@ -16,8 +16,14 @@ M0 scoring, guard evidence and post-Job training audit remain outstanding.
 
 The [terminal auditor CPU preparation](STUDY_TERMINAL_AUDIT_PREPARATION_CPU_001.md)
 adds a reviewed authored chunk-one receipt consumer and fixes the worker's outer
-checksum. Five authored and independent five consumer controls pass; actual
-native audit, later-chunk replay and the learning comparison remain unmeasured.
+checksum. Its first milestone passes five authored and independent five consumer
+controls; actual native audit and the learning comparison remain unmeasured.
+
+The same [terminal continuation preparation](STUDY_TERMINAL_AUDIT_PREPARATION_CPU_001.md)
+now replays both authored arms through three fresh scopes to27/540 and enforces
+the selected engine config schema. Initial eight, final focused three and
+independent final eight controls pass; native qualification and transfer remain
+unmeasured.
 
 The [private source workflow CPU milestone](PRIVATE_WORKFLOW_CPU_001.md)
 reproduces46 selected controls from preserved bytes. Public native execution,

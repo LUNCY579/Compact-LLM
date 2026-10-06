@@ -1,5 +1,26 @@
 # Independent STUDY terminal auditor: CPU preparation
 
+The later continuation candidate is preserved under
+`evidence/study_terminal_continuation_reviewed_cpu_20261006/current001`. Its config
+validator reads the approved engine's literal 24-field schema without importing
+its helpers and rejects missing/extra fields, another kind, M0 and non-integer or
+out-of-range chunk ordinals. Native use additionally binds the exact installed
+engine path and approved source bytes.
+
+The authored producer/consumer tests now exercise both arms through three fresh
+workers, restoring the preceding STUDY archive each time and retaining exact
+scientific publications and cumulative costs. Each finishes at 27 updates and 540
+occurrences with the dose from its authored registration. Final scalar checkpoint
+state includes all update ordinals, zero final learning rate, cleared gradients
+and populated Adam moments; recorded backward and optimizer returns remain
+540/27. The original eight-control candidate passed, and the final three focused
+controls passed with unchanged source. An independent replay of all eight controls
+also passes on the final
+source, with 58,027 monitored reads and no denied inputs or forbidden imports.
+Altered prior/latest and qualification-state controls establish
+checksum/descriptor/provenance refusal, not a fully rebound
+semantic attack proof. These remain authored CPU fixtures.
+
 The staged auditor consumes the corrected owned worker report, original supervisor
 receipt, journal, scientific resume publications, resource observations and four
 lease files. It retains the original resource and event validators with three
@@ -30,8 +51,9 @@ report after wrapper fields are added; seven authored and independent seven
 controls pass. The auditor rejects the earlier malformed report rather than
 relaxing its checksum requirement.
 
-Native configured execution and later-chunk audit branches remain source-inspected
-only; the native config's complete field set is not yet explicitly enforced.
+Native configured execution remains source-inspected only. The earlier five-control
+milestone's later-chunk and complete-schema gaps are addressed by the authored
+continuation checks above.
 Successful Windows Job/sampler/death observation, direct activation-hook
 cleanup evidence, genuine sustained/resume qualification, complete scored M0,
 qualified guards and a selected native packet remain outstanding. Source review
