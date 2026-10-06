@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: first approved driver attempt failed before worker creation
+
+The approved OBSERVER_STARTUP_001 driver completed with exit1. Its finite helper
+loader refused psutil._common before the supervisor or owned worker was created.
+No observer/fixture work was reached. Original driver and incomplete-preservation
+receipts are retained in evidence/observer_startup_attempt001_20261006; failure
+is not qualification. Review also found an embedded snapshot error-list alias;
+the original snapshot file remains valid and unchanged while its later embedded
+copy is invalid. Both concrete source/registration defects are being corrected.
+
+The next attempt uses the same approved zero-model qualification scope, reviewed
+finite Windows psutil source closure, a revised implementation and exact dispatch
+registration, and fresh admission. Model/STUDY/scoring authority remains absent;
+the three-arm learning and transfer result is still unmeasured.
+
 ## 2026-10-06 UTC: exact observer implementation promoted; approval verified
 
 [Implementation](OBSERVER_STARTUP_IMPLEMENTATION_001.md) is promoted byte for
