@@ -8,6 +8,7 @@ reduced again before the final receipt can be composed.
 from __future__ import annotations
 
 import copy
+from types import MappingProxyType
 
 from . import ce_qualification_artifacts as raw, ce_execution_verifier as execution
 from . import ce_qualification as q, ce_qualification_accounting as accounting
@@ -91,6 +92,7 @@ def clock_suffix(last, origin, observed, reservation_upper, physical_upper):
 def _expected_bootstrap_owners(context, *, child=False):
     scope = context['bindings']['scope']; receipt_sha = context['prepared_receipt']['receipt_sha256']
     spec = accounting.accounting_specification(context)
+    require(len(raw.canonical(spec))<=raw.MAX_JSON,'bounded exact Q setup owner preimage')
     setup = accounting._price(spec['setup_bounds']); setup['metadata_bytes_upper'] = 2 * accounting.MAX_LINE
     result = [{'owner': {'accounting_spec_sha256': digest(spec), 'prepared_receipt_sha256': receipt_sha}, 'bounds': setup}]
     if not child:
@@ -99,6 +101,7 @@ def _expected_bootstrap_owners(context, *, child=False):
     else:
         from .ce_checkpoint_publication import publication_specification
         publication_spec = publication_specification(context)
+    require(len(raw.canonical(publication_spec))<=raw.MAX_JSON,'bounded exact publication owner preimage')
     result.append({'owner': {'accounting_spec_sha256': digest(publication_spec), 'prepared_receipt_sha256': receipt_sha},
                    'bounds': publication_spec['bounds']})
     return result
@@ -107,9 +110,13 @@ def _expected_bootstrap_owners(context, *, child=False):
 def replay_scope_bootstrap(context, capsule, proof, *, reader, preflight, child=False, outer_evidence=()):
     require(type(capsule) is dict and capsule.get('schema') == boot.SCHEMA
             and type(capsule.get('snapshot')) is dict, 'exact retained scope bootstrap capsule')
+    # The child accounting accessor additionally hashes its derived spec owner.
+    with reader._overhead('finalizer_scope_expected_owner_construction',work_bytes=24*raw.MAX_JSON,
+                          hash_attempts=3,hash_bytes=3*raw.MAX_JSON):
+        expected_owners=_expected_bootstrap_owners(context,child=child)
     result = bootstrap.verify_bootstrap(context, capsule['header_ref'], capsule['journal_ref'],
         reader=reader, outer_preflight=preflight, expected_workers={proof['worker_identity_sha256']: proof},
-        expected_owners=_expected_bootstrap_owners(context, child=child), outer_evidence=outer_evidence)
+        expected_owners=expected_owners, outer_evidence=outer_evidence)
     snapshot = capsule['snapshot']
     require(snapshot['binding_sha256'] == result['binding_sha256'] and snapshot['ledger_head'] == result['ledger_head']
             and snapshot['cumulative'] == result['derived_totals'] and snapshot['tickets'] == result['derived_tickets']
@@ -150,6 +157,42 @@ def compare_child_replay(retained, independent, bundle, *, parent_binding):
     return results
 
 
+def _paid_child_constructor_linkage(owner,child_original,child,late,specification,configuration,binding):
+    """Three exact context/spec/bootstrap preimages, selected before any SHA."""
+    if child.get('mode')=='synthetic_fixture':return
+    with owner.reader._overhead('finalizer_child_context_and_constructor_linkage',work_bytes=24*raw.MAX_JSON,
+                              hash_attempts=3,hash_bytes=3*raw.MAX_JSON):
+        require(len(raw.canonical(child_original))<=raw.MAX_JSON
+                and len(raw.canonical(specification))<=raw.MAX_JSON
+                and len(raw.canonical(specification['bootstrap']))<=raw.MAX_JSON,
+                'bounded exact child context/spec/bootstrap identity preimages')
+        require(late.get('static_recipe_sha256')==child['static_recipe_sha256']
+                and late.get('child_context_sha256')==digest(child_original),'late child frozen context/recipe identity')
+        payment=late['constructor_prepayment']
+        constructor=execution._read_json(owner.reader,payment['reservation_ref'],binding,'child_constructor_prepayment')
+        require(payment.get('schema')==constructor.get('schema')=='CE8-SERVICE-CONSTRUCTOR-PREPAYMENT-1'
+                and payment.get('consumed') is True and payment['request_sha256']==child['request_sha256']
+                and payment['service_spec_sha256']==digest(specification)
+                and payment['bootstrap_spec_sha256']==digest(specification['bootstrap'])
+                and constructor['bounds']==payment['bounds']==specification['constructor_prepayment']['bounds']
+                and constructor['service_spec_sha256']==payment['service_spec_sha256']
+                and constructor['request_sha256']==child['request_sha256'],'actual child constructor reservation/source linkage')
+
+
+def _paid_source_configuration(owner):
+    """Validate the already-intaken supervisor configuration beneath this owner."""
+    from . import ce_qualification_entry as entry,ce_qualification_configuration as intake
+    # Supervisor.main installed this before the actual worker launch. Refuse a
+    # cold cache rather than loading metadata under a zero-read reader profile.
+    require(type(entry._SOURCE_CONFIGURATION) is MappingProxyType,'original supervisor configuration must already be cached')
+    with owner.reader._overhead('finalizer_cached_source_configuration_validation',
+                              work_bytes=8*intake.MAX_CONFIGURATION,hash_attempts=1,
+                              hash_bytes=intake.MAX_CONFIGURATION):
+        require(len(raw.canonical(dict(entry._SOURCE_CONFIGURATION)))<=intake.MAX_CONFIGURATION,
+                'bounded cached exact source configuration')
+        return entry._configuration()
+
+
 def _child_costs(context, bundle, terminal_results, binding, owner):
     """Late source-ended child capsules are separate from live branch bodies."""
     refs = bundle.get('child_final_cost_clock_refs')
@@ -174,18 +217,7 @@ def _child_costs(context, bundle, terminal_results, binding, owner):
         service = late['service_bootstrap_evidence']; specification = late['service_specification']
         configuration = execution._read_json(owner.reader, late['configuration_ref'], binding, 'child_configuration')
         require(configuration['service_spec'] == specification, 'child final service differs from original frozen configuration')
-        if child.get('mode') != 'synthetic_fixture':
-            require(late.get('static_recipe_sha256') == child['static_recipe_sha256']
-                    and late.get('child_context_sha256') == digest(child_original), 'late child frozen context/recipe identity')
-            payment = late['constructor_prepayment']
-            constructor = execution._read_json(owner.reader, payment['reservation_ref'], binding, 'child_constructor_prepayment')
-            require(payment.get('schema') == constructor.get('schema') == 'CE8-SERVICE-CONSTRUCTOR-PREPAYMENT-1'
-                    and payment.get('consumed') is True and payment['request_sha256'] == child['request_sha256']
-                    and payment['service_spec_sha256'] == digest(specification)
-                    and payment['bootstrap_spec_sha256'] == digest(specification['bootstrap'])
-                    and constructor['bounds'] == payment['bounds'] == specification['constructor_prepayment']['bounds']
-                    and constructor['service_spec_sha256'] == payment['service_spec_sha256']
-                    and constructor['request_sha256'] == child['request_sha256'], 'actual child constructor reservation/source linkage')
+        _paid_child_constructor_linkage(owner,child_original,child,late,specification,configuration,binding)
         sr = service_replay.verify_service_bootstrap(child, specification['bootstrap'], service['header_ref'], service['journal_ref'],
             service['seal_ref'], reader=owner.reader, outer_preflight=owner.preflight)
         stamp = terminal_results[branch]['terminal_observed_monotonic']
@@ -299,9 +331,10 @@ def _reduce_body(configuration, envelope, body, context, prepared, child_replay,
 def verify_supervision(service, result, owner):
     """Consume actual retained parent provenance before owned-handle closure."""
     require(type(service) is services.NativeControllerServices, 'actual source metadata service required')
-    service._admit()
     from .ce_finalizer_accounting import FinalizerCostOwner
     require(type(owner) is FinalizerCostOwner and owner.native is True, 'actual native permanent finalizer cost owner required')
+    owner._require()  # Original permanent control reservation covers guard SHA.
+    service._admit()
     require(type(result) is dict and getattr(service, '_qualification_supervision_result', None) is result
             and owner.service is service and type(result.get('terminal_handle')) is worker.WinWorkerHandle,
             'exact source-owned supervision result and retained parent handle')
@@ -309,8 +342,7 @@ def verify_supervision(service, result, owner):
                                             ('request_sha256', 'scope_sha256', 'worker_identity_sha256')}
     observation = owner.observe_parent_terminal(result['terminal_handle'], expected)
     require(observation.proof == envelope['terminal_worker_proof'], 'retained parent handle differs from actual supervised terminal')
-    from . import ce_qualification_entry as entry
-    configuration = entry._configuration()
+    configuration = _paid_source_configuration(owner)
     binding = _binding(envelope, configuration['service_spec']['scope_adapters']['static_recipe_sha256'])
     retained = execution._read_json(owner.reader, result['raw_artifact'], binding, 'qualification_supervision')
     require(retained == envelope, 'actual supervision artifact differs from original source result')
@@ -321,6 +353,10 @@ def verify_supervision(service, result, owner):
     children = execution._read_json(owner.reader, envelope['checkpoint_child_terminal_replay_ref'], binding, 'checkpoint_terminal_replay')
     scope = execution._read_json(owner.reader, envelope['final_scope_bootstrap_evidence_ref'], binding, 'scope_bootstrap_evidence')
     payload = _reduce_body(configuration, envelope, body, context, prepared, children, scope, observation, owner)
+    # Every raw chain/numeric/OS check above still consumes original evidence.
+    # Only persisted serialization externalizes exact offset lists; the issued
+    # opaque object and paid preclose readback compare this same compact value.
+    payload = owner.compact_replay_receipt(payload)
     payload['preclose_replay_ref'] = owner.write_json('PRE_CLOSE_QUALIFICATION_REPLAY.json', payload)
     return _issue(owner, service, result, observation, payload)
 
@@ -353,6 +389,9 @@ def consume_verified(value, supervisor_end_observation):
         evidence['seal_ref'], reader=owner.reader, outer_preflight=owner.preflight)
     suffix = owner.validate_service_suffix(result, supervisor_end_observation)
     require(result['recorded_clock_ended'] and not result['derived_snapshot']['pending'], 'final supervisor cost/clock remains unfinished')
+    require(not result['derived_snapshot']['failed_operations']
+            and not result['derived_snapshot']['fatal'],
+            'final supervisor service failure history cannot qualify')
     snap = result['derived_snapshot']
     suffix['physical_deadline'] = clock_suffix(snap['last_monotonic'], snap['original_origin'], supervisor_end_observation.monotonic,
         snap['end_reservation']['bounds']['wall_s_upper'], service.spec['bootstrap']['physical_wall_seconds_upper'])
@@ -364,11 +403,11 @@ def consume_verified(value, supervisor_end_observation):
         'scope_sha256': value._payload['scope_sha256'], 'static_recipe_sha256': value._payload['static_recipe_sha256'],
         'arm': value._payload['arm'], 'preclose_replay_ref': value._payload['preclose_replay_ref'],
         'finalizer_header_ref': copy.deepcopy(owner.header_ref), 'expected_finalizer_seal_path': str(owner.seal_path),
-        'cost_owner_binding_sha256': digest(owner.header),
         'qualification_claim_scope': copy.deepcopy(CLAIM_SCOPE),
         'supervisor_service_replay': result, 'supervisor_terminal_suffix': suffix,
         'qualification_gaps': gaps, 'classification': 'discarded native mechanics qualification; no acquisition or training grant'}
-    receipt = dict(body, receipt_sha256=digest(body))
+    body = owner.compact_replay_receipt(body)
+    receipt = owner.make_final_receipt(body)
     reference = owner.write_json('QUALIFICATION_RECEIPT.json', receipt)
     candidate = {'receipt_ref': reference, 'proof_complete': passed, 'native_qualified': False,
                  'completion_pending_cost_seal': True, 'qualification_gaps': gaps}

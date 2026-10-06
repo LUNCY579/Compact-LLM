@@ -18,11 +18,21 @@ import uuid
 from . import ce_native_services as services, ce_qualification as q
 from . import ce_qualification_artifacts as raw, ce_worker_evidence as worker
 from . import update
+from . import ce_finalizer_receipts as receipts
+from . import ce_resource_evidence as graph
 
 SCHEMA='CE8-QUALIFICATION-FINALIZER-COSTS-1'
 SPEC='CE8-QUALIFICATION-FINALIZER-SPEC-1'
 COST_FIELDS=q.COST_FIELDS+('reducer_work_bytes_upper',)
 MAX_JSON=4*1024**2
+CONTROL_SPEC_BYTES=16*1024
+CONTROL_CHECKS=1000000
+CONTROL_GUARD_HASHES=64
+CONTROL_GUARD_HASH_BYTES=1024**3
+CONTROL_RESERVATION={'operation_attempts_upper':1,'io_read_bytes_upper':0,'io_write_bytes_upper':0,
+    'metadata_bytes_upper':0,'identity_hash_attempts_upper':receipts.FINALIZER_RECORDS+CONTROL_GUARD_HASHES,
+    'identity_hash_bytes_upper':receipts.FINALIZER_RECORDS*receipts.FINALIZER_LINE_BYTES+CONTROL_GUARD_HASH_BYTES,
+    'reducer_work_bytes_upper':512*1024**3,'wall_seconds_upper':0}
 _OWNER_SEAL,_OBSERVATION_SEAL,_FIXTURE_SEAL=object(),object(),object()
 require,canonical,digest=raw.require,raw.canonical,raw.digest
 KINDS=frozenset(('qualification_reducer_overhead','qualification_artifact_readback','qualification_artifact',
@@ -56,6 +66,18 @@ def validate_specification(spec,output_root):
             and suffix['identity_hash_bytes_upper']>=8*MAX_JSON
             and suffix['operation_attempts_upper']>=8 and suffix['wall_seconds_upper']<=120,
             'permanent finalizer suffix below known write/hash/readback costs')
+    suffix_metadata=receipts.FINAL_RECEIPT_BYTES+receipts.FINAL_SUFFIX_JOURNAL_BYTES+receipts.FINAL_SEAL_BYTES
+    suffix_read=MAX_JSON+receipts.FINALIZER_JOURNAL_BYTES+receipts.FINAL_SEAL_BYTES+receipts.FINAL_RECEIPT_BYTES+4
+    require(suffix['io_write_bytes_upper']>=suffix_metadata and suffix['metadata_bytes_upper']>=suffix_metadata
+            and suffix['io_read_bytes_upper']>=suffix_read
+            and suffix['identity_hash_attempts_upper']>=receipts.FINAL_SUFFIX_RECORDS+4
+            and suffix['identity_hash_bytes_upper']>=suffix_read+receipts.FINAL_RECEIPT_BYTES
+            and suffix['operation_attempts_upper']>=8,
+            'complete compact receipt/rows/seal/header/journal suffix envelope')
+    full_metadata=(receipts.MAX_TABLES*receipts.OFFSET_BYTES+receipts.FINALIZER_JOURNAL_BYTES
+                   +2*MAX_JSON+receipts.FINAL_RECEIPT_BYTES+receipts.FINAL_SEAL_BYTES)
+    require(full['io_write_bytes_upper']>=full_metadata and full['metadata_bytes_upper']>=full_metadata,
+            'full owner covers all exact offset companions and original metadata')
     require(type(spec['reader_bounds']) is dict and set(spec['reader_bounds'])==set(raw.BUDGET_FIELDS)
             and all(type(value) is int and value>=0 for value in spec['reader_bounds'].values())
             and all(value<=full[key] for key,value in spec['reader_bounds'].items()),'finalizer reader within full permanent envelope')
@@ -97,6 +119,10 @@ class ServiceEndObservation:
 class FinalizerCostOwner:
     def __init__(self,service):
         require(type(service) is services.NativeControllerServices,'actual source supervisor service before finalizer work')
+        # Full metadata caps came from this exact source service. Charging the
+        # control ticket performs no paths, IO, callbacks or native work and
+        # admits no authority; the opaque service guard still precedes files.
+        self._reserve_control(service.spec['supervision']['finalizer'])
         services._admit(service.permit,service.request,service.spec)
         require(service.context is None and type(getattr(service,'_qualification_launch_spec',None)) is dict,
                 'original metadata-only qualification supervisor')
@@ -108,16 +134,29 @@ class FinalizerCostOwner:
             self._initialize(spec,root,service._qualification_launch_spec['request_sha256'],
                 service._qualification_launch_spec['scope_sha256'],service,native=True,clock=time.monotonic)
 
+    def _reserve_control(self,spec):
+        # Numeric permanent bounds are selected before clones, serialization,
+        # guard hashes or paths. No recursive callback can admit this ticket.
+        require(type(spec) is dict and type(spec.get('self_bounds')) is dict,'explicit control-plane permanent owner bounds')
+        self.spec=spec;self.counts=dict.fromkeys(COST_FIELDS,0);self._suffix_before=None
+        self._control_prepaid=False;self._control_checks=0
+        self._charge(CONTROL_RESERVATION);self._control_prepaid=True
+
     def _initialize(self,spec,root,request_sha256,scope_sha256,service,*,native,clock):
+        if not getattr(self,'_control_prepaid',False):self._reserve_control(spec)
+        require(self.spec is spec,'same selected permanent owner before initialization')
+        graph.bounded_json_graph_census(spec,maximum_json_bytes=CONTROL_SPEC_BYTES,maximum_nodes=512,maximum_depth=16)
         self.spec=validate_specification(spec,root);self._spec_bytes=canonical(self.spec)
         require(raw._hex(request_sha256) and raw._hex(scope_sha256),'finalizer exact logical request/scope')
         self._seal,self.native,self.service=_OWNER_SEAL,native,service
         self.request_sha256,self.scope_sha256=request_sha256,scope_sha256
         self.clock=clock;self.origin=self.last_clock=clock()
         require(type(self.origin) in (int,float) and 0<=self.origin<float('inf'),'finalizer source monotonic origin')
-        self.counts=dict.fromkeys(COST_FIELDS,0);self.operations={};self.events=[];self.receipts={}
+        self.operations={};self.events=[];self.receipts={}
         self.fatal=self.closed=False;self._suffix_origin=self._suffix_before=None;self._known_size=0
         self._terminal_observation=self._service_end_observation=None
+        self._offset_tables={};self._offset_plans=0
+        self._suffix_event_origin=None;self._suffix_byte_origin=None
         self._final_evidence=self._final_evidence_bytes=None
         self._delta_rebuild_started=self._delta_rebuild_operation=self._delta_rebuild_wall=None
         self.operation=self.operation # one callback identity for all independent readers
@@ -127,6 +166,7 @@ class FinalizerCostOwner:
         self.header={'schema':SCHEMA,'native':native,'request_sha256':request_sha256,'scope_sha256':scope_sha256,
             'specification':copy.deepcopy(self.spec),'original_origin':self.origin,
             'permanent_reserved_bounds':copy.deepcopy(self.spec['self_bounds']),
+            'control_plane_reservation':dict(CONTROL_RESERVATION),
             'authority':'original source supervisor metadata permit; no model authority'}
         require(not self.directory.is_symlink(),'regular finalizer owner')
         self.directory.mkdir(parents=True,exist_ok=True)
@@ -143,6 +183,9 @@ class FinalizerCostOwner:
         self.reader=raw.RawEvidenceReader(self.operation,self.spec['reader_bounds'],self.root)
 
     def _require(self):
+        require(self._control_prepaid and self._control_checks<CONTROL_CHECKS,'permanent bounded control-plane allowance')
+        self._control_checks+=1
+        graph.bounded_json_graph_census(self.spec,maximum_json_bytes=CONTROL_SPEC_BYTES,maximum_nodes=512,maximum_depth=16)
         require(type(self) is FinalizerCostOwner and self._seal is _OWNER_SEAL
                 and not self.closed and not self.fatal and canonical(self.spec)==self._spec_bytes,
                 'actual live immutable finalizer cost owner')
@@ -160,10 +203,23 @@ class FinalizerCostOwner:
 
     def _event(self,kind,payload):
         self._require()
+        require(len(self.events)<receipts.FINALIZER_RECORDS,'bounded control-plane row count before encoding')
+        prospective={'schema':SCHEMA,'seq':len(self.events),'previous':self.events[-1]['sha256'] if self.events else None,
+            'request_sha256':self.request_sha256,'scope_sha256':self.scope_sha256,'kind':kind,'payload':payload}
+        graph.bounded_json_graph_census(prospective,maximum_json_bytes=receipts.FINALIZER_LINE_BYTES-128,
+            maximum_nodes=50000,maximum_depth=32)
         body={'schema':SCHEMA,'seq':len(self.events),'previous':self.events[-1]['sha256'] if self.events else None,
             'request_sha256':self.request_sha256,'scope_sha256':self.scope_sha256,'kind':kind,'payload':copy.deepcopy(payload)}
         preimage=canonical(body);row=dict(body,sha256=digest(body));blob=canonical(row)+b'\n'
         require(len(blob)<=MAX_JSON,'bounded finalizer event')
+        require(len(blob)<=receipts.FINALIZER_LINE_BYTES
+            and len(self.events)+1<=receipts.FINALIZER_RECORDS
+            and self._known_size+len(blob)<=receipts.FINALIZER_JOURNAL_BYTES,
+            'fixed finalizer producer record/line/byte envelope')
+        if self._suffix_event_origin is not None:
+            require(len(self.events)+1-self._suffix_event_origin<=receipts.FINAL_SUFFIX_RECORDS
+                and self._known_size+len(blob)-self._suffix_byte_origin<=receipts.FINAL_SUFFIX_JOURNAL_BYTES,
+                'fixed finalizer suffix record/byte envelope')
         self._charge({'io_write_bytes_upper':len(blob),'metadata_bytes_upper':len(blob),
             'identity_hash_attempts_upper':1,'identity_hash_bytes_upper':len(preimage)})
         try:
@@ -283,6 +339,124 @@ class FinalizerCostOwner:
         return {'observed_after':stamp,'recorded_end':end,'suffix_upper_seconds':bounds['wall_s_upper'],
                 'observed_suffix_seconds_upper':stamp-end,'native_observation':self.native}
 
+    def externalize_offsets(self,rows,journal_ref):
+        """Exact companion under this owner's full prepayment, before suffix.
+
+        Raw verifiers supplied rows and the exact original journal identity.
+        A companion preserves all offsets; no summary is a qualification grant.
+        """
+        self._require();require(self._suffix_origin is None,'offset companions must precede final suffix')
+        require(self._offset_plans<receipts.MAX_TABLE_PLANS,'fixed64 offset planning starts')
+        self._offset_plans+=1
+        plan_id=uuid.uuid4().hex
+        self.operation('finalizer_metadata','started',plan_id,reason='exact_offset_table_plan',
+            reducer_work_bytes_upper=2*receipts.OFFSET_BYTES,
+            identity_hash_attempts_upper=1,identity_hash_bytes_upper=receipts.OFFSET_BYTES)
+        try:
+            plan=receipts.offset_plan(rows,journal_ref)
+            self.operation('finalizer_metadata','returned',plan_id,
+                planned_records=plan['records'],planned_bytes=plan['bytes'],planned_sha256=plan['sha256'])
+        except BaseException as primary:
+            try:self.operation('finalizer_metadata','failed',plan_id,error={'type':type(primary).__name__,'message':str(primary)[:1000]})
+            except BaseException as failure:raw._accounting(primary,failure);raise primary from failure
+            raise
+        key=canonical(plan['original_journal_ref'])
+        if key in self._offset_tables:
+            previous=self._offset_tables[key]
+            require(previous['records']==plan['records'] and previous['artifact_ref']['bytes']==plan['bytes']
+                and previous['artifact_ref']['sha256']==plan['sha256'],'same original journal offset table changed')
+            return copy.deepcopy(previous)
+        require(len(self._offset_tables)<receipts.MAX_TABLES,'fixed9 original replay tables')
+        identifier=uuid.uuid4().hex
+        self.operation('finalizer_json_write','started',identifier,reason='exact_offset_table_companion',
+            io_write_bytes_upper=receipts.OFFSET_BYTES,io_read_bytes_upper=receipts.OFFSET_BYTES+1,
+            metadata_bytes_upper=receipts.OFFSET_BYTES,identity_hash_attempts_upper=2,
+            identity_hash_bytes_upper=2*receipts.OFFSET_BYTES)
+        try:
+            path=self.directory/('ORIGINAL_OFFSETS_%02d.jsonl'%len(self._offset_tables))
+            require(not path.is_symlink() and not os.path.lexists(path),'create-only exact offset companion')
+            size=0;hashed=hashlib.sha256()
+            with path.open('xb') as stream:
+                for block in receipts.offset_blocks(rows):
+                    size+=len(block);require(size<=plan['bytes'],'offset companion encoding changed')
+                    require(stream.write(block)==len(block),'short exact offset companion write');hashed.update(block)
+                stream.flush();os.fsync(stream.fileno())
+            require(size==plan['bytes'] and hashed.hexdigest()==plan['sha256'],'offset companion differs from paid exact plan')
+            read=0;read_hash=hashlib.sha256()
+            with path.open('rb') as stream:
+                while block:=stream.read(min(raw.CHUNK,plan['bytes']+1-read)):
+                    read+=len(block);require(read<=plan['bytes'],'offset companion grew during readback');read_hash.update(block)
+            require(read==plan['bytes'] and read_hash.hexdigest()==plan['sha256'],'offset companion exact raw readback mismatch')
+            reference={'path':str(path),'sha256':plan['sha256'],'bytes':plan['bytes']}
+            result={'schema':receipts.OFFSET_SCHEMA,'original_journal_ref':copy.deepcopy(journal_ref),
+                'artifact_ref':reference,'records':plan['records'],'format':'canonicalASCIIoffsetrowsJSONL',
+                'claim':'exact offsets from complete original raw replay; this artifact supplies no authority'}
+            self._offset_tables[key]=copy.deepcopy(result)
+            self.operation('finalizer_json_write','returned',identifier,bytes_written=size,bytes_read=read,
+                identity_hash_attempts_actual=2,identity_hash_bytes_actual=size+read,reference=reference)
+            return result
+        except BaseException as primary:
+            try:self.operation('finalizer_json_write','failed',identifier,error={'type':type(primary).__name__,'message':str(primary)[:1000]})
+            except BaseException as failure:raw._accounting(primary,failure);raise primary from failure
+            raise
+
+    def compact_replay_receipt(self,value):
+        self._require();require(self._suffix_origin is None,'raw replay compaction precedes suffix')
+        identifier=uuid.uuid4().hex
+        self.operation('finalizer_metadata','started',identifier,reason='bounded_compact_replay_graph',
+            reducer_work_bytes_upper=512*1024**2)
+        try:
+            result=receipts.compact_replays(value,self.externalize_offsets)
+            self.operation('finalizer_metadata','returned',identifier)
+            return result
+        except BaseException as primary:
+            try:self.operation('finalizer_metadata','failed',identifier,error={'type':type(primary).__name__,'message':str(primary)[:1000]})
+            except BaseException as failure:raw._accounting(primary,failure);raise primary from failure
+            raise
+
+    def validate_final_receipt_shape(self,value):
+        self._require();require(self._suffix_origin is None,'fixed receipt shape precedes suffix')
+        identifier=uuid.uuid4().hex
+        self.operation('finalizer_metadata','started',identifier,reason='final_source_receipt_shape',
+            reducer_work_bytes_upper=8*receipts.FINAL_RECEIPT_BYTES)
+        try:
+            result=receipts.final_receipt_shape(value)
+            self.operation('finalizer_metadata','returned',identifier,shape_counts=result)
+            return result
+        except BaseException as primary:
+            try:self.operation('finalizer_metadata','failed',identifier,error={'type':type(primary).__name__,'message':str(primary)[:1000]})
+            except BaseException as failure:raw._accounting(primary,failure);raise primary from failure
+            raise
+
+    def make_final_receipt(self,body):
+        """Pay for the header binding, receipt identity, and fixed shape first."""
+        self._require();require(self._suffix_origin is None,'final receipt identities precede suffix')
+        require(type(body) is dict and 'receipt_sha256' not in body
+                and 'cost_owner_binding_sha256' not in body,'source receipt body without caller identities')
+        identifier=uuid.uuid4().hex
+        self.operation('finalizer_metadata','started',identifier,reason='final_source_receipt_digest_and_shape',
+            reducer_work_bytes_upper=8*(MAX_JSON+receipts.FINAL_RECEIPT_BYTES),
+            identity_hash_attempts_upper=2,
+            identity_hash_bytes_upper=MAX_JSON+receipts.FINAL_RECEIPT_BYTES)
+        try:
+            candidate=dict(body,cost_owner_binding_sha256='0'*64,receipt_sha256='0'*64)
+            shape=receipts.final_receipt_shape(candidate)
+            header_blob=canonical(self.header)
+            require(len(header_blob)<=MAX_JSON,'bounded original finalizer header preimage')
+            candidate['cost_owner_binding_sha256']=hashlib.sha256(header_blob).hexdigest()
+            candidate.pop('receipt_sha256')
+            preimage=canonical(candidate)
+            require(len(preimage)<=receipts.FINAL_RECEIPT_BYTES,'bounded final receipt identity preimage')
+            candidate['receipt_sha256']=hashlib.sha256(preimage).hexdigest()
+            self.operation('finalizer_metadata','returned',identifier,shape_counts=shape,
+                identity_hash_attempts_actual=2,
+                identity_hash_bytes_actual=len(header_blob)+len(preimage))
+            return candidate
+        except BaseException as primary:
+            try:self.operation('finalizer_metadata','failed',identifier,error={'type':type(primary).__name__,'message':str(primary)[:1000]})
+            except BaseException as failure:raw._accounting(primary,failure);raise primary from failure
+            raise
+
     def write_json(self,name,value):
         self._require();require(type(name) is str and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,80}\.json',name),'owned finite finalizer JSON name')
         if name=='QUALIFICATION_RECEIPT.json':self.begin_finalization()
@@ -290,6 +464,8 @@ class FinalizerCostOwner:
         self.operation('finalizer_metadata','started',encode,reducer_work_bytes_upper=8*self.spec['max_receipt_bytes'])
         try:
             blob=canonical(value)+b'\n';require(len(blob)<=self.spec['max_receipt_bytes'],'finalizer receipt ceiling')
+            if name=='QUALIFICATION_RECEIPT.json':
+                require(len(blob)<=receipts.FINAL_RECEIPT_BYTES,'bounded compact final qualification receipt')
             self.operation('finalizer_metadata','returned',encode)
         except BaseException as error:
             self.operation('finalizer_metadata','failed',encode,error={'type':type(error).__name__,'message':str(error)[:1000]});raise
@@ -315,13 +491,14 @@ class FinalizerCostOwner:
         self._require()
         if self._suffix_origin is not None:return
         self.tick();self._suffix_origin=self.clock();self._suffix_before=dict(self.counts)
+        self._suffix_event_origin=len(self.events);self._suffix_byte_origin=self._known_size
         self._event('permanent_final_suffix',{'bounds':self.spec['finalization_bounds'],'monotonic':self._suffix_origin})
 
     def close_and_seal(self):
         self._require();require(not any(op['phase']=='started' for op in self.operations.values()),'all finalizer operations terminal before seal')
         self.begin_finalization()
         self.tick();self._event('end',{'original_origin':self.origin,'monotonic':self.last_clock,'receipts':self.receipts})
-        snapshot=self.snapshot();blob=canonical(snapshot)+b'\n';require(len(blob)<=MAX_JSON,'bounded finalizer cost seal')
+        snapshot=self.snapshot();blob=canonical(snapshot)+b'\n';require(len(blob)<=receipts.FINAL_SEAL_BYTES,'bounded finalizer cost seal')
         self._charge({'operation_attempts_upper':1,'io_write_bytes_upper':len(blob),'metadata_bytes_upper':len(blob)})
         references={}
         try:

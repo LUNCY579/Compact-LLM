@@ -214,7 +214,9 @@ def verify_service_bootstrap(context, specification, header_ref, journal_ref, se
         require(ended and not fatal and seal == snapshot, 'service seal refund/status/clock/fatal mismatch')
         require(sum(ref['bytes'] for ref in refs) <= reservation['bounds']['read_bytes_upper'], 'final actual readback exceeds original service reservation')
     return {'schema': SCHEMA, 'status': 'UNQUALIFIED', 'derived_totals': totals, 'derived_snapshot': snapshot,
-        'original_offsets': offsets, 'recorded_wall_seconds': actual_wall, 'original_origin': origin,
+        'original_offsets': offsets,
+        'original_journal_ref': {key:journal_ref[key] for key in ('path','sha256','bytes')},
+        'recorded_wall_seconds': actual_wall, 'original_origin': origin,
         'recorded_clock_ended': ended, 'final_suffix_reserved': reservation is not None,
         'suffix_actual_wall_verified': False, 'execution_verified': False, 'native_qualified': False,
         'rejected_return_retained': rejection_used,
