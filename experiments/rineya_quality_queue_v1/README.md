@@ -105,6 +105,33 @@ still require independent binding. It performs no file or model I/O. Nonfinite
 rows fail inspection but remain eligible for unchanged lossless archival as
 rejected evidence; no bytes are silently removed or repaired.
 
+## Unselected fixed-3.75 analysis prototypes
+
+`primary375_analysis.validate_primary375_registration` checks bounded declarations
+for the fixed parent/unchanged-MLP comparison, 96 CAL/192 CHECK, 1024/64 decoding,
+explicit margin/confidence/claim scope, scorer domain and review commitments.
+It validates their shape only. It does not verify the truth of a review, select
+actual method values, qualify confidence inference or grant bank/native access.
+`primary375_paired_tally` requires every enrolled CHECK pair and the exact
+48 answerable/16 unanswerable cases per family. It reports supplied correctness
+and refusal axes separately, including repairs, losses, family net changes and
+the exact inherited proxy. A positive aggregate never overrides a failed
+observed preservation gate. Confidence, shortcut floors, semantic adjudication,
+retention, costs and actual source/data/native qualification stay external.
+
+`cluster_statistics.stratified_cluster_bootstrap_interval` is an exploratory
+metadata prototype. It resamples whole declared parent components within fixed
+families, keeps case-weighted family ratios and combines an equal-family mean.
+Inputs must supply complete, unique typed joins; declared IDs do not establish
+semantic ancestry or independence. Seed and draw count are explicit, and the
+local RNG leaves caller inputs and the global RNG unchanged. Percentile ranks
+use the exact supplied binary-float confidence ratio; they differ from treating
+a printed decimal as an exact rational. Resampled rates use floating-point
+arithmetic, and Monte Carlo percentiles have no exact coverage guarantee.
+Zero observed differences can yield a degenerate interval without excluding
+future harms. Neither prototype is selected as an experimental acceptance rule;
+all fixtures are synthetic metadata and provide no Rineya capability evidence.
+
 ## Standing research consent
 
 The programme records direct human standing consent in each card as preparation
