@@ -1,0 +1,9 @@
+# Observer attempt002: concrete failure repairs
+
+Attempt001 exited1 before supervisor/worker creation because the finite registry omitted psutil._common and _ntuples. Its original driver and failure snapshot are preserved unchanged. The snapshot file is valid; its previously embedded copy acquired a third error through a shared mutable list and retained the old hash. This is a failed attempt, not native qualification.
+
+The successor changes only the two exposed defects. The selected Windows psutil core is explicit before helper imports: package init, _common, _ntuples, _pswindows and _psutil_windows. Descriptor-derived source/extension loading still rejects undeclared names and checks selected bytes before extension creation; generic fallback stays closed. Two new Python runtime descriptors add37,514 bytes. Every inherited65/stdlib779 path/hash is unchanged. The driver now detaches JSON values before sealing so later error additions cannot mutate the stored/embedded snapshot body.
+
+The revised driver passes10 CPU controls, including real relative imports of an inert helper package, missing-core refusal and actual early-failure snapshot integrity after subsequent errors. The generator passes9 controls. Source/metadata hashes stay unchanged; no native/framework import or host observation is substituted by these fixtures. Preserved source and receipts are under evidence/observer_startup_retry002_preparation_20261006.
+
+Fresh implementation and later exact dispatch commits, current selected-byte revalidation, independent review and unchanged owned admission are required for attempt002. The verified approval covers the same bounded zero-model qualification stage. Output root, ABI,12 operations, resource/mutex/Job/lease lifecycle and all model/STUDY/scoring exclusions remain unchanged. No retry has occurred at this source milestone.

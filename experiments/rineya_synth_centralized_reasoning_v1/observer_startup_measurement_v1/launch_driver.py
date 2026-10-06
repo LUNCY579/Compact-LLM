@@ -15,6 +15,7 @@ CONTRACT_SHA='b6d722cefb32c4f5735b2937c7edd6d68c551e2a1555bbe41f4e7518fc20ad1c'
 ROOT=Path(r'C:\Users\clclc\BusinessProject\rineya-observer-startup-qualification-20261006')
 ROOT_RECORD=PACKAGE/'configs/SYNTH_OBSERVER_STARTUP_OUTPUT_ROOT_V1.json'
 HELPERS=('native_process','native_nvml','native_supervisor')
+PSUTIL_CORE=('psutil','psutil._common','psutil._ntuples','psutil._pswindows','psutil._psutil_windows')
 
 def require(value,message):
     if not value:raise ValueError(message)
@@ -140,11 +141,18 @@ class SelectedNamespaces:
         candidates=[p for p in files if Path(p).name=='__init__.py' and Path(p).parent.name=='psutil'];require(len(candidates)==1,'one selected psutil package root');roots['psutil']=str(Path(candidates[0]).parent)
         self.table['_ctypes']=(policy['_ctypes']['path'],False)
         for family,root in roots.items():
-            for path,d in self.descriptors.items():
+            # Psutil is a finite Windows-only selected runtime closure. Its
+            # package source cannot introduce another member via sys.path.
+            population=files if family=='psutil' else self.descriptors
+            for path,d in population.items():
                 p=Path(path)
                 if not p.is_relative_to(root) or p.suffix.lower() not in ('.py','.pyd'):continue
                 rel=p.relative_to(root);parts=list(rel.parts);package=p.name=='__init__.py';parts=parts[:-1] if package else [*parts[:-1],parts[-1].split('.')[0]]
-                name='.'.join([family,*parts]);require(name not in self.table,'unique selected helper module name');self.table[name]=(path,package)
+                name='.'.join([family,*parts])
+                if family=='psutil' and name not in PSUTIL_CORE:continue
+                require(d['role']==('extension_binary' if p.suffix.lower()=='.pyd' else 'python_source'),'exact selected helper source/extension role')
+                require(name not in self.table,'unique selected helper module name');self.table[name]=(path,package)
+        require(set(PSUTIL_CORE)<=set(self.table),'complete finite selected psutil Windows core before helper import')
         self.families=(*HELPERS,'psutil','ctypes','_ctypes')
     def find_spec(self,fullname,path=None,target=None):
         if fullname.split('.',1)[0] not in self.families:return None
@@ -183,7 +191,9 @@ class SelectedNamespaces:
         # Preserve object/code lifetimes; never unload any native extension/DLL.
 
 def write_json(c,path,value):
-    value=c.seal(value);raw=(c.canonical(value)+'\n').encode('ascii');require(len(raw)<=c.MAX_JSON,'bounded complete driver receipt')
+    # Detach every nested container: later error accumulation must not change
+    # the already sealed snapshot returned to its parent driver receipt.
+    value=c.seal(c.parse(c.canonical(value)));raw=(c.canonical(value)+'\n').encode('ascii');require(len(raw)<=c.MAX_JSON,'bounded complete driver receipt')
     with Path(path).open('xb') as stream:stream.write(raw);stream.flush();os.fsync(stream.fileno())
     require(c.read_bytes(path)==raw,'exact durable driver receipt');return value
 
