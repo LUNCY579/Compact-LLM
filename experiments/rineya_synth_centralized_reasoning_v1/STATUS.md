@@ -1,5 +1,23 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: STUDY and guard importer CPU integrations reviewed
+
+[STUDY composition](STUDY_TRAINING_PREPARATION_CPU_001.md) reuses the original
+three9/180 chunk/backend/checkpoint protocol and distinct future STUDY factory.
+Corrected14 authored controls plus independent14 pass; original backend hook
+cleanup omission is repaired and its unaccepted predecessor retained.
+
+[Guard importer](GUARD_IMPORT_PREPARATION_CPU_001.md) retains authored task768/
+long2304 populations and original enrollment arithmetic. Empty-domain defect
+fixed; correctedfocused8 plus independentfocused4 pass, original15 retained.
+Missinglanguage remainsINCONCLUSIVE and native guard routes stay closed.
+
+No native/model/training/scoring/outcome action occurred. Genuine qualification,
+complete M0 scores, owned runtime/audit adapters, qualified guard/language evidence
+and separate permissions remain missing. Hardware resource question is pending;
+no unrelated process is stopped or floor lowered. Original full goal stays active
+and actual condition-diversity transfer plus prior-correct preservation unmeasured.
+
 ## 2026-10-06 UTC: corrected treatment raw collection/import CPU path reviewed
 
 [Treatment preparation](TREATMENT_EVALUATION_PREPARATION_CPU_001.md) implements

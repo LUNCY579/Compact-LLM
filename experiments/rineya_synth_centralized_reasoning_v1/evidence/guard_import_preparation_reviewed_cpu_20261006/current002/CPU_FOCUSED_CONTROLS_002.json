@@ -1,0 +1,52 @@
+{
+  "actual_selected_read_counts": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\DEV_STATISTICS_POLICY.json": 4,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\TASK_RETENTION_GUARD_POLICY.json": 4,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\SOURCE_FROZEN_002\\CPU_guard_3bp4o8ne\\CPU_AUTHORED_EXTERNALLY_FROZEN_LONG_DOMAIN_labels.json": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\SOURCE_FROZEN_002\\CPU_guard_3bp4o8ne\\CPU_AUTHORED_EXTERNALLY_FROZEN_LONG_DOMAIN_qualification.json": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\SOURCE_FROZEN_002\\CPU_guard_3bp4o8ne\\CPU_AUTHORED_EXTERNALLY_FROZEN_LONG_DOMAIN_scorer.py": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\SOURCE_FROZEN_002\\CPU_guard_3bp4o8ne\\synth_task_retention001_labels.json": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\SOURCE_FROZEN_002\\CPU_guard_3bp4o8ne\\synth_task_retention001_qualification.json": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\SOURCE_FROZEN_002\\CPU_guard_3bp4o8ne\\synth_task_retention001_scorer.py": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\SOURCE_FROZEN_002\\guard_import.py": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\train.json": 4,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\long_context_guards_root1_20261004\\policy_inputs.jsonl": 4,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\score_import.py": 2,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\weights.safetensors": 4
+  },
+  "available_controls": 16,
+  "errors": 0,
+  "failures": 0,
+  "forbidden_imports": [],
+  "intentional_read_path_denials": 20,
+  "kind": "CPU_AUTHORED_GUARD_NONEMPTY_DOMAIN_REPAIR_FOCUSED_CONTROLS",
+  "limits": [
+    "Focused controls run after one nonempty-domain predicate repair; unchanged full15 predecessor retained separately.",
+    "CPU authored task768/192 and long2304/192 only; real panel/data/labels/model/API inputs forbidden."
+  ],
+  "monitored_selected_reads": 29,
+  "native_launch_authorized": false,
+  "predecessor_full15_pass_receipt": "../pre_empty_domain_review_001/CPU_CONTROLS_001.json",
+  "quality_gain_established": false,
+  "selected_controls": [
+    "test_nonempty_exact_declared_domain_population_required",
+    "test_long_external_domain_and_joined_world_strata_reject",
+    "test_exact_domain_and_source_evidence_reject",
+    "test_original_enrollment_reproduces_source_correct_membership_missing_language",
+    "test_public_native_gates_and_forged_capability_before_helpers",
+    "test_whole_task_roster_and_unmodified_original_raw_contract",
+    "test_whole_long_roster_original_strata_and_external_domain_retained",
+    "test_actual_public_data_and_model_read_paths_are_trapped"
+  ],
+  "source_after": {
+    "guard_import.py": "4a60f07bacb67d0af7bf91119dcfd9d6a0b115a55e13cbf884a6079c6dad8481",
+    "test_guard_import.py": "5451340c433141ad15cd240bb083ae41af0d5d523f31cb93a009027c5cadcbe3"
+  },
+  "source_before": {
+    "guard_import.py": "4a60f07bacb67d0af7bf91119dcfd9d6a0b115a55e13cbf884a6079c6dad8481",
+    "test_guard_import.py": "5451340c433141ad15cd240bb083ae41af0d5d523f31cb93a009027c5cadcbe3"
+  },
+  "source_unchanged": true,
+  "tests": 8,
+  "wall_seconds": 32.03099999999995
+}

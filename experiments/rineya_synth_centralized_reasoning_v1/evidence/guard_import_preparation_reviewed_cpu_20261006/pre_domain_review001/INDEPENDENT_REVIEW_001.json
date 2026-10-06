@@ -1,0 +1,66 @@
+{
+  "all_actual_read_paths_and_counts": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\DEV_STATISTICS_POLICY.json": 4,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\TASK_RETENTION_GUARD_POLICY.json": 4,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\CPU_guard_4mew37f4\\bad_scorer_qualification.json": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\CPU_guard_4mew37f4\\synth_task_retention001_labels.json": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\CPU_guard_4mew37f4\\synth_task_retention001_qualification.json": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\CPU_guard_4mew37f4\\synth_task_retention001_scorer.py": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\CPU_guard_j6wd814b\\CPU_AUTHORED_EXTERNALLY_FROZEN_LONG_DOMAIN_labels.json": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\CPU_guard_j6wd814b\\CPU_AUTHORED_EXTERNALLY_FROZEN_LONG_DOMAIN_qualification.json": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\CPU_guard_j6wd814b\\CPU_AUTHORED_EXTERNALLY_FROZEN_LONG_DOMAIN_scorer.py": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\CPU_guard_j6wd814b\\synth_task_retention001_labels.json": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\CPU_guard_j6wd814b\\synth_task_retention001_qualification.json": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\CPU_guard_j6wd814b\\synth_task_retention001_scorer.py": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\guard_import_preparation_work\\guard_import.py": 1,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\data\\crossed_source2_v1_20261003\\train.json": 4,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\long_context_guards_root1_20261004\\policy_inputs.jsonl": 4,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\score_import.py": 2,
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\weights.safetensors": 4
+  },
+  "candidate_accepted": false,
+  "controls_success": true,
+  "findings": [
+    {
+      "class": "long_context",
+      "id": "EMPTY_LONG_DECLARED_DOMAIN_ACCEPTED",
+      "native_gate_bypassed": false,
+      "rows": 0
+    }
+  ],
+  "fixture_only": true,
+  "forbidden_imports": [],
+  "intentional_real_path_denials": 20,
+  "kind": "INDEPENDENT_GUARD_IMPORT_FOCUSED_CPU_REVIEW_V1",
+  "limits": [
+    "Original guard raw row loop and exact source/labels/scorer qualification are exercised only on authored captures/labels.",
+    "Actual task/long/native panels,captures,scorers,TRAIN/model/tokenizer/API bytes and outcomes were not read.",
+    "Long row loop changes only the fixed512 assertion to source-bound1024/2048/4096; this is a CPU contract adaptation, not native long-context qualification.",
+    "Task and long import public entries and original loader path are closed before reads; no hidden native readiness claim.",
+    "Missing language is observed INCONCLUSIVE/MISSING_REQUIRED_CLASS:language; no substitute annotations or domain supplied."
+  ],
+  "monitored_read_count": 33,
+  "native_PASS": false,
+  "native_launch_authorized": false,
+  "quality_gain_established": false,
+  "scoring_authorized": false,
+  "seconds": 20.327999999999975,
+  "selected_tests": [
+    "test_original_enrollment_reproduces_source_correct_membership_missing_language",
+    "test_public_native_gates_and_forged_capability_before_helpers",
+    "test_semantically_wrong_scorer_rejects_reproduced_negative_control",
+    "test_actual_public_data_and_model_read_paths_are_trapped",
+    "test_independent_empty_declared_domain_probe"
+  ],
+  "sha256": "f8a76a2c5e974f6b84253cae385ae70e3c25c89b53c92ec304bc8b6c410184a2",
+  "source_after": {
+    "guard_import.py": "afbd1aa6370088000e2b713584b96f59df001aefa25bf3bb7d9a1dbd066bae3f",
+    "test_guard_import.py": "195db9c7dd6b15a5fd0db90c5b9254d47696b518ffa9b57a2dbe86504d081254"
+  },
+  "source_before": {
+    "guard_import.py": "afbd1aa6370088000e2b713584b96f59df001aefa25bf3bb7d9a1dbd066bae3f",
+    "test_guard_import.py": "195db9c7dd6b15a5fd0db90c5b9254d47696b518ffa9b57a2dbe86504d081254"
+  },
+  "source_unchanged": true,
+  "tests": 5
+}
