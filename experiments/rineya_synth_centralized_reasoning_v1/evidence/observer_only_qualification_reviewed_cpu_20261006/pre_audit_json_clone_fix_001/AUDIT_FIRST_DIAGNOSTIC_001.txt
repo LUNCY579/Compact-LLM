@@ -1,0 +1,29 @@
+test_actual_worker_outputs_flow_full_original_copy_terminal_audit (test_audit.ObserverAuditControls.test_actual_worker_outputs_flow_full_original_copy_terminal_audit) ... ERROR
+
+======================================================================
+ERROR: test_actual_worker_outputs_flow_full_original_copy_terminal_audit (test_audit.ObserverAuditControls.test_actual_worker_outputs_flow_full_original_copy_terminal_audit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\observer_only_qualification_work\test_audit.py", line 114, in test_actual_worker_outputs_flow_full_original_copy_terminal_audit
+    self.build();r=self.audit();self.assertTrue(r['observer_mechanics_recorded']);self.assertFalse(r['native_PASS']);self.assertFalse(r['native_observer_qualified']);self.assertFalse(r['tensor_authority'])
+                   ^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\observer_only_qualification_work\test_audit.py", line 106, in audit
+    return A._CPU_audit_fixture(self.preserved,original_directory=self.raw,context=self.context,contract=self.C,_capability=self.C._CPU_capability(),expected_preservation_file_sha256=hashlib.sha256(raw).hexdigest(),expected_preservation_body_sha256=self.pres['sha256'],fresh_death=lambda _:self.alive)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\observer_only_qualification_work\audit.py", line 234, in _CPU_audit_fixture
+    return audit_terminal(preserved_directory,original_directory=original_directory,selected_context=value,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\observer_only_qualification_work\audit.py", line 153, in audit_terminal
+    value=parse(canonical(selected_context));projection=canonical(value);require(same(revalidate(),value),'same original externally selected observer context')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\observer_only_qualification_work\audit.py", line 32, in parse
+    require(type(raw) is bytes and len(raw)<=MAX_JSON,'bounded actual JSON bytes')
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\observer_only_qualification_work\audit.py", line 16, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: bounded actual JSON bytes
+
+----------------------------------------------------------------------
+Ran 1 test in 0.284s
+
+FAILED (errors=1)

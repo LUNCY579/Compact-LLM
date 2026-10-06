@@ -1,0 +1,30 @@
+{
+  "current_host_qualification_verified": false,
+  "errors": 0,
+  "failures": 0,
+  "fixture_only": true,
+  "forbidden_import_attempts": [],
+  "kind": "OBSERVER_CONTRACT_PRESERVER_READONLY_SOURCE_REVIEW_001",
+  "native_PASS": false,
+  "seconds": 0.15600000000085856,
+  "sha256": "658e79ec521a68640f45b7e842d223db38b4bdc6301bc2678e5ffd9e464c8924",
+  "shared_inventory_checks_and_current_binary_bytes_explicitly_mocked": true,
+  "skips": 0,
+  "source_after": {
+    "contract.py": "822416b36e6eb6ad86d2d66bf99b5d6966bc195b9f5b5b501bc6a4d12a530f35",
+    "preserve.py": "573673c6966e3b23e9a811fa19810d6cfee1ea577fb7864a24c49e9762b5d723",
+    "test_contract.py": "2ec17ac102bd6cc930a9fadec7b35c3b2dab7cfdb349aba592270e14f3057a80"
+  },
+  "source_before": {
+    "contract.py": "822416b36e6eb6ad86d2d66bf99b5d6966bc195b9f5b5b501bc6a4d12a530f35",
+    "preserve.py": "573673c6966e3b23e9a811fa19810d6cfee1ea577fb7864a24c49e9762b5d723",
+    "test_contract.py": "2ec17ac102bd6cc930a9fadec7b35c3b2dab7cfdb349aba592270e14f3057a80"
+  },
+  "source_findings": [
+    "descriptor loop must cap actual reads and check inside deadline",
+    "preserver must verify final source_snapshot child roster",
+    "preserver partial map must reject duplicate entries"
+  ],
+  "sources_unchanged": true,
+  "tests": 11
+}

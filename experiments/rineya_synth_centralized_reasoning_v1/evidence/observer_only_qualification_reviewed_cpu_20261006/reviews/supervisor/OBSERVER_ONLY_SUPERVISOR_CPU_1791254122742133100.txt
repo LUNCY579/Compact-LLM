@@ -1,0 +1,27 @@
+test_admission_denied_floor_no_worker_no_resume (test_supervisor.ObserverSupervisorControls.test_admission_denied_floor_no_worker_no_resume) ... ok
+test_current_live_birth_cannot_be_qualified_from_zero_exit (test_supervisor.ObserverSupervisorControls.test_current_live_birth_cannot_be_qualified_from_zero_exit) ... ok
+test_exact_original_shared_lifecycle_scope_three_changes_and_cleanup (test_supervisor.ObserverSupervisorControls.test_exact_original_shared_lifecycle_scope_three_changes_and_cleanup) ... ok
+test_original_source_hash_mutation_rejected_before_compile (test_supervisor.ObserverSupervisorControls.test_original_source_hash_mutation_rejected_before_compile) ... ok
+test_pre_resume_failure_still_kills_only_owned_Job_and_joins (test_supervisor.ObserverSupervisorControls.test_pre_resume_failure_still_kills_only_owned_Job_and_joins) ... ok
+test_public_native_and_forged_CPU_capability_refuse_before_lifecycle (test_supervisor.ObserverSupervisorControls.test_public_native_and_forged_CPU_capability_refuse_before_lifecycle) ... ok
+test_stale_CPU_admission_no_worker (test_supervisor.ObserverSupervisorControls.test_stale_CPU_admission_no_worker) ... ok
+test_unjoined_native_call_refuses_frozen_terminal (test_supervisor.ObserverSupervisorControls.test_unjoined_native_call_refuses_frozen_terminal) ... ok
+test_worker_failure_status_kept_no_success (test_supervisor.ObserverSupervisorControls.test_worker_failure_status_kept_no_success) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.170s
+
+OK
+
+CLI --help stage refusal:
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\observer_only_qualification_work\supervisor.py", line 135, in <module>
+    contract=contract_module();contract.native_gate()
+                               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\observer_only_qualification_work\contract.py", line 33, in native_gate
+    def native_gate():require(HERE==EXPECTED,'staged/preserved observer-only source has no native authority')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\observer_only_qualification_work\contract.py", line 20, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: staged/preserved observer-only source has no native authority

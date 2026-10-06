@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: executable observer-only source qualification package
+
+The [separate observer-only source](OBSERVER_ONLY_QUALIFICATION_CPU_001.md) now
+contains concrete worker, original-lifecycle supervisor, preserver and independent
+auditor. Forty-four preserved-copy CPU controls pass with unchanged hashes;
+independent corrected-boundary/consumer22 pass. The controlled no-entry fixture
+DLL is built but not loaded. All native/study authority remains false.
+
+Current host inventory/bootstrap byte qualification, exact committed dispatch
+registration, fresh owned admission and explicit new-run permission remain open.
+This is executable source, not a launch-ready manifest. No observer Windows run,
+model/GPU work, M0 row, study update or score occurred. M1/M2 fresh-family and RS
+transfer plus enrolled preservation remain unmeasured; the full goal is unchanged.
+
 ## 2026-10-06 UTC: compiled observer candidate and trusted startup source
 
 The [observer candidate](NATIVE_LIBRARY_OBSERVER_CANDIDATE_001.md) is built and
