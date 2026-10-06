@@ -1,5 +1,22 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: owned STUDY runtime CPU wiring reviewed
+
+[Owned runtime preparation](STUDY_OWNED_RUNTIME_PREPARATION_CPU_001.md) supplies
+staged eight-callback and conditional worker wiring to the original scientific
+engine and supervised lifecycle. Seven authored controls, independent seven and
+five distinct interface controls pass. Actual supervisor log files and cached
+module origin defects are fixed; failed predecessors remain preserved.
+
+The authored nine-update/180-occurrence worker uses original journal, guard,
+publication and failure-cost interfaces. Native configured execution remains
+source-only. No Windows Job success branch, model load, training or scoring ran.
+Post-Job trained-chunk audit, genuine sustained/resume qualification, complete
+scored M0, all qualified guards and a selected native packet remain missing.
+Separate STUDY permission and unchanged resource admission are still required.
+The owner will free GPU resources; no unrelated process is stopped. The original
+condition-diversity transfer and prior-correct preservation goal is unmeasured.
+
 ## 2026-10-06 UTC: STUDY and guard importer CPU integrations reviewed
 
 [STUDY composition](STUDY_TRAINING_PREPARATION_CPU_001.md) reuses the original

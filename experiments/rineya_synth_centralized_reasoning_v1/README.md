@@ -9,6 +9,11 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [owned STUDY runtime CPU preparation](STUDY_OWNED_RUNTIME_PREPARATION_CPU_001.md)
+supplies staged worker/callback wiring with seven authored controls, independent
+seven and five interface controls passing. Genuine native qualification, complete
+M0 scoring, guard evidence and post-Job training audit remain outstanding.
+
 The [private source workflow CPU milestone](PRIVATE_WORKFLOW_CPU_001.md)
 reproduces46 selected controls from preserved bytes. Public native execution,
 registered runtime loading and current host/GPU qualification remain open.
