@@ -199,17 +199,47 @@ def write_json(c,path,value):
 
 def failure_snapshot(c,value,output,target,death,errors):
     """Separate incomplete evidence, never a relaxed original preservation PASS."""
-    target.mkdir();files={};total=0
+    target.mkdir();files={};total=0;originals={};lease_files={};snapshots={};denial=None
+    def copy(path,raw):
+        nonlocal total
+        total+=len(raw);require(total<=64*1024**2,'bounded complete partial evidence bytes')
+        with Path(path).open('xb') as stream:
+            require(stream.write(raw)==len(raw),'complete exclusive failure evidence copy');stream.flush();os.fsync(stream.fileno())
+        require(c.read_bytes(path)==raw,'exact durable failure evidence copy')
+        return {'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}
     if output.exists():
         names=sorted(p.name for p in output.iterdir());require(len(names)<=256,'bounded partial output roster')
         for name in names:
-            raw=c.read_bytes(output/name);total+=len(raw);require(total<=64*1024**2,'bounded complete partial evidence bytes')
-            (target/name).write_bytes(raw);files[name]={'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}
+            raw=c.read_bytes(output/name);files[name]=copy(target/name,raw);originals[output/name]=raw
     owned=[];sup=output/'SUPERVISOR_RECEIPT.json'
     if sup.exists():
-        record=c.parse(c.read_bytes(sup))
+        sup_raw=c.read_bytes(sup);record=c.parse(sup_raw)
         for birth in observed_births(c,record,output):owned.append({'identity':birth,'currently_alive':death(dict(birth))})
-    return write_json(c,target/'DRIVER_FAILURE_SNAPSHOT.json',{'kind':'OBSERVER_DRIVER_FAILURE_SNAPSHOT_V1','scope':c.SCOPE,'source_commit':value['expected_head'],'config_sha256':value['anchors']['expected_config_file'],'raw_files':files,'owned_death_observations':owned,'owned_birth_status':'OBSERVED' if owned else 'UNAVAILABLE','errors':errors,'complete_original_preservation':False,'fixture_only':value['fixture_only'],'native_PASS':False,'native_authority_issued':False})
+        if record.get('status')=='ADMISSION_DENIED' and all(record.get(k) is False for k in ('worker_attempted','worker_launched','worker_resumed')):
+            require(not owned and 'worker_identity' not in record and 'launch_failure' not in record,'denial preservation cannot invent or suppress an owned worker')
+            denial={k:record[k] for k in ('status','worker_attempted','worker_launched','worker_resumed')}
+            if 'lease_path' in record:
+                lease=Path(record['lease_path']).absolute();lease_root=output.parent/'_native_gpu_leases'
+                require(lease.parent==lease_root and c.physical(lease)==lease,'exact original denied lease under selected external output root')
+                lease_names=sorted(p.name for p in lease.iterdir())
+                require(lease_names==['reservation.json','terminal.json'],'exact actual preworker denial lease population')
+                require(c.read_bytes(lease/'terminal.json')==sup_raw,'denied lease terminal byte-identical original SUP')
+                for name in lease_names:
+                    original=lease/name;raw=c.read_bytes(original);leaf='lease_'+name
+                    lease_files[name]={'source_path':str(original),'path':leaf,**copy(target/leaf,raw)};originals[original]=raw
+            sources=value['config']['source_files'];require(len(sources)<=4096,'bounded selected denial source population')
+            (target/'source_snapshots').mkdir()
+            for source,descriptor in sources.items():
+                c.file_descriptor(source,descriptor);raw=c.read_bytes(source)
+                name=hashlib.sha256(source.encode('utf-8')).hexdigest()+Path(source).suffix
+                snapshots[source]={'path':'source_snapshots/'+name,'role':descriptor['role'],**copy(target/'source_snapshots'/name,raw)};originals[Path(source)]=raw
+            for original,raw in originals.items():require(c.read_bytes(original)==raw,'final original denial evidence bytes unchanged')
+            require(sorted(p.name for p in output.iterdir())==names,'final original denied raw roster unchanged')
+            if lease_files:require(sorted(p.name for p in lease.iterdir())==lease_names,'final original denied lease roster unchanged')
+    body={'kind':'OBSERVER_DRIVER_FAILURE_SNAPSHOT_V1','scope':c.SCOPE,'source_commit':value['expected_head'],'config_sha256':value['anchors']['expected_config_file'],'raw_files':files,'owned_death_observations':owned,'owned_birth_status':'OBSERVED' if owned else 'UNAVAILABLE','errors':errors,'complete_original_preservation':False,'fixture_only':value['fixture_only'],'native_PASS':False,'native_authority_issued':False}
+    if denial is not None:
+        body.update(admission_denial=denial,lease_files=lease_files,source_files=value['config']['source_files'],source_snapshot_files=snapshots,external_anchors={'config_path':value['config_path'],'anchors':value['anchors']})
+    return write_json(c,target/'DRIVER_FAILURE_SNAPSHOT.json',body)
 
 def _entry_body(context,c,output,target,receipt_path,supervise,preserve,audit,death,revalidate,proof):
     value=c.context_value(context);require(revalidate()==value,'same original driver context before lifecycle')

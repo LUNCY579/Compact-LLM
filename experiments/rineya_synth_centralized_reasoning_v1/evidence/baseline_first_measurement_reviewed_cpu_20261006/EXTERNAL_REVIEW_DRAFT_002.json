@@ -1,0 +1,258 @@
+{
+  "schema": "synth-baseline-first-measurement-amendment-review-v2",
+  "status": "REVIEW_DRAFT_CLOSED_NOT_SCORING_REGISTRATION",
+  "purpose": "Resolve the explicit human ordering: complete qualified-scored M0 and independently enroll source-correct guards before treatment outcomes; preserve all historical policies.",
+  "created_at_utc": "2026-10-06T03:00:23.8212602Z",
+  "source_snapshot_head": "e54a84be9dbf0d5d28ba2c3edd86aae057173839",
+  "owner_chat": {
+    "title": "Build CPU-only R/S task compiler",
+    "thread_id": "01a1002f-e445-7680-8aa3-1d7bb05c9774"
+  },
+  "authority": {
+    "native_scoring": false,
+    "owner_adopted": false,
+    "protected_bank_access": false,
+    "dispatch_manifest": false,
+    "confirmation": false,
+    "training": false,
+    "promotion": false,
+    "human_review_complete": false,
+    "native_model_execution": false
+  },
+  "predecessor": {
+    "body_sha256": "261c82b7ea60d72a57d8039dd5d7d334db4984ebbea9a485cdc9c1d1ab2721d6",
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\DEV_FINISH_POLICY_001.json",
+    "disposition": "Preserve original bytes and requirements. This draft requires separate prospective adoption; no reinterpretation or automatic supersession.",
+    "timing_disclosure": {
+      "actual_responses_graded": false,
+      "completed_M0_rows_at_decision": 192,
+      "failed_batch04_not_admitted": true,
+      "policy_frozen_before_remaining_M0_or_any_M1_M2_collection": true,
+      "policy_not_claimed_prospective_to_existing_M0_outputs": true,
+      "registered_after_M0_collection": true
+    },
+    "file_sha256": "db808f1b53b1ebd8c716a246e80a4eb13a8275aad643b13a05017c9162990e7d"
+  },
+  "precise_change": {
+    "old_requirement": "Actual qualified final27/540 M1/M2 endpoints before ANY native scoring",
+    "all_other_gates": "Preserved; no permission, resource, numerical, source, byte, cohort, decoder, family or qualification exception.",
+    "proposed_requirement": "Qualified complete M0-only scoring and guard enrollment may precede treatment. Actual M1/M2 endpoints are required only when importing treatment scores and making a comparison."
+  },
+  "invariant_finish_policy": {
+    "allowed_finish_reasons": [
+      "eos",
+      "generation_cap"
+    ],
+    "error_or_interruption": "Retain attempted outputs and failure receipts; never shrink384 or rebrand an interrupted collection as complete.",
+    "correctness": {
+      "eos": "Pass only when evaluation_panel.verify_response(full_messages, full_generated_only_decoded_response)[accepted] is exactly bool True; never use truthiness of the returned dictionary.",
+      "finish_stratification": "Preserve EOS/cap and raw IDs/trace metadata for descriptive reporting only; do not filter population or select policy by finish results.",
+      "generation_cap": "Same exact accepted-field rule as EOS; absence of EOS is not an extra correctness failure. A valid complete JSON answer may pass.",
+      "malformed_or_extra_text": "Fail; never extract the last JSON object, repair JSON, continue generation or replace the response.",
+      "parser": "evaluation_panel.verify_response on full decoded generated-only response; exact single answer field and inherited integer/UNKNOWN semantics; no oracle sidecar"
+    },
+    "prompt_truncation_allowed": false,
+    "maximum_generated_tokens": 32,
+    "scope": "Fixed public384-row R/S/RS DEV panel only. Retention guards retain their separately registered full-context, decoding, cap and semantic endpoints; no R/S verifier substitution for dialogue/language/long-context."
+  },
+  "source_and_statistics_closure": {
+    "panel_anchor_verification": "Descriptors copied from hash-verified finish policy; no DEV panel/prompt/token population opened by this draft.",
+    "scorer_sources": [
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\fresh_dev_compact002_20261003\\code_snapshot\\EVALUATION_PANEL_POLICY.json",
+        "bytes": 2163,
+        "sha256": "1b30b9041b8f009702dc75f284f8637d3cffef6f445cd8deca632ddee0f7c242",
+        "name": "EVALUATION_PANEL_POLICY.json"
+      },
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\fresh_dev_compact002_20261003\\code_snapshot\\EVALUATION_PANEL_POLICY_002.json",
+        "bytes": 3106,
+        "sha256": "7e80d5d52ba6c0a14654151a3be40cfa177faf3a120953d5d177792d9a33ee92",
+        "name": "EVALUATION_PANEL_POLICY_002.json"
+      },
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\fresh_dev_compact002_20261003\\code_snapshot\\balanced_corpus.py",
+        "bytes": 18956,
+        "sha256": "0577bb4a15e08ae38b97289171bcd28cb4dc45544393f9e1f3075fbab270ca34",
+        "name": "balanced_corpus.py"
+      },
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\fresh_dev_compact002_20261003\\code_snapshot\\evaluation_panel.py",
+        "bytes": 41113,
+        "sha256": "e8ed801cf258cd42edc2a8b08a560cd80914822bd000e833e08208c1bde46598",
+        "name": "evaluation_panel.py"
+      },
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\fresh_dev_compact002_20261003\\code_snapshot\\rs_contract.py",
+        "bytes": 7033,
+        "sha256": "cef135a06d4449917798e7e40685ac3589615663bfe47662e0a49207b67ccc6a",
+        "name": "rs_contract.py"
+      },
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\fresh_dev_compact002_20261003\\code_snapshot\\rs_solver.py",
+        "bytes": 2037,
+        "sha256": "6acf2fa26ef3f5a7b103818f4bb0eef972d5d975e9f3b39614ad6b253131acaf",
+        "name": "rs_solver.py"
+      },
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\fresh_dev_compact002_20261003\\code_snapshot\\rs_verifier.py",
+        "bytes": 3704,
+        "sha256": "36d2322ac077f4731b621defbc77ae39d1bfde2f1d0bcc15c73082b5f897ec98",
+        "name": "rs_verifier.py"
+      },
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\fresh_dev_compact002_20261003\\code_snapshot\\task_compiler.py",
+        "bytes": 17220,
+        "sha256": "1ae26b485d7a6ee48fe9667df51886c2c64af09d89dd0edcb622794d33642f60",
+        "name": "task_compiler.py"
+      }
+    ],
+    "current_importer": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\score_import.py",
+      "native_grading": "REFUSED",
+      "sha256": "f859973eabc5ff0d04cd9befe0b41f97c7474abf8b1d46e768ebf4abc6ff551a"
+    },
+    "public_panel_anchors": {
+      "panel.json": {
+        "bytes": 985582,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\fresh_dev_compact002_20261003\\panel.json",
+        "sha256": "495cadc57d97d232acc0f093257b1dc0c4ae29897d17bd319e158e0cc7af9acb"
+      },
+      "policy/prompts.json": {
+        "bytes": 482943,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\fresh_dev_compact002_20261003\\policy\\prompts.json",
+        "sha256": "a7baf928b38ebccd86173340e27d3cae8467ef71e49df71c48785b2e682a2957"
+      },
+      "prompt_token_inputs_cpu.json": {
+        "bytes": 825953,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\fresh_dev_compact002_20261003\\prompt_token_inputs_cpu.json",
+        "sha256": "4664c1770a88a6345c6bfa02cad3c7bdf667c3037f8811364049b503a6b90a4f"
+      }
+    },
+    "statistics_sources": [
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\DEV_STATISTICS_POLICY.json",
+        "bytes": 3091,
+        "sha256": "9db137bfa6c0e0e07ec8161e4127ec0a2ec20bb2c224529face447986e876d11",
+        "name": "DEV_STATISTICS_POLICY.json"
+      },
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\dev_statistics.py",
+        "bytes": 23360,
+        "sha256": "2851ee7f7f2aa2399b7030a05b2bda14e85a8eff98ac23f71e7d918014d3059c",
+        "name": "dev_statistics.py"
+      }
+    ]
+  },
+  "phases": [
+    {
+      "missing": [
+        "Remaining128 raw rows and their independent qualification/audits"
+      ],
+      "required": [
+        "All six64-row batches independently audited with external trusted audit/config anchors",
+        "Complete384 rows/96 parents, same source, prompt/order and decoding contract",
+        "Retain all attempts and verify EOS/cap trace/cost joins"
+      ],
+      "id": "A_COMPLETE_M0_COLLECTION",
+      "execution_permission": false
+    },
+    {
+      "missing": [
+        "CompleteM0 audits",
+        "Qualified scoring/import integration",
+        "Actual qualified guard source scores and independent enrollment"
+      ],
+      "requires_treatment_checkpoints": false,
+      "required": [
+        "Separately reviewed source/receipt-bound M0-only scoring registration and explicit scope-matching scoring authorization",
+        "Qualified verifier operating on full generated-only decoded responses with the frozen accepted-is-bool-True rule",
+        "Independently frozen disjoint arithmetic/retrieval/abstention/dialogue guard populations; long-context native qualification separate",
+        "Source-correct membership derived by the same qualified semantic endpoint from the complete preselected guard cohort",
+        "Keep all guard rows; zero source-correct support remains UNDEFINED",
+        "Separately qualified domain-specific guard scorers and independent language authority; apply each enrolled semantic endpoint consistently to source and candidate. R/S evaluation_panel.verify_response is not a general retention scorer."
+      ],
+      "id": "B_M0_ONLY_SCORING_AND_GUARD_ENROLLMENT",
+      "execution_permission": false
+    },
+    {
+      "execution_permission": false,
+      "required": [
+        "Exact source/runtime/data/tokenizer/prompt/verifier/policy byte anchors",
+        "Final27 endpoint selection, fixed family weights, exact LR sequence, training seed101 and540/27 exposure",
+        "Frozen complete M0 scores and guard membership plus source-correct denominators before first treatment update",
+        "Prespecified actual original GD steps9/27 and retention of every checkpoint",
+        "Prospective failure/transfer/advancement rules; no treatment outcome-driven changes"
+      ],
+      "id": "C_FREEZE_TREATMENT_PACKET",
+      "unknown_future_weights": "Bind fixed source identity and endpoint selection before training; bind actual resulting checkpoint bytes to immutable completion lineage after save. Never require a future checkpoint hash to exist before it is produced."
+    },
+    {
+      "execution_permission": false,
+      "required": [
+        "Fresh independently approved exact source-native fit/backward/save-reload qualification and current owned admission",
+        "Separate training grant for frozenM1/M2 sequential540-sequence27-update runs",
+        "Actual final27/540 endpoints, all checkpoints, all original exports and complete three-chunk cost/publication receipts",
+        "Treatment score imports qualify exact actual checkpoint hashes against prior frozen selection rules and all baseline/guard anchors",
+        "Same verifier/decoding/denominator forM0/M1/M2; damaged cases separate from repairs"
+      ],
+      "id": "D_SEQUENTIAL_M1_M2_AND_COMPARISON"
+    },
+    {
+      "execution_permission": false,
+      "required": [
+        "BothM1/M2 must have complete frozen trajectories before selection; human-selected3pp macroR/S andRS gains with neither atomic skill declining",
+        "Zero newly failed enrolled source-correct guards; repairs cannot cancel losses",
+        "If only one candidate qualifies, select that candidate. When both qualify, preferM1 unless eligibleM2 improves macroR/S overM1 by at least3pp. ClaimM2 advantage only with that3pp contrast.",
+        "Two additional independent training draws before fresh confirmation",
+        "Separate successor registration/confirmation/promotion decisions; historical5pp-CI policy preserved"
+      ],
+      "id": "E_ADVANCEMENT_ONLY",
+      "exact_selection_rules": {
+        "both_candidates_must_complete": true,
+        "M2_advantage_claim": "Requires >=3/100 macro_R_S_M2_minus_M1 independently of sole-eligible selection",
+        "only_M1_eligible": "M1",
+        "damage_cancellation": false,
+        "only_M2_eligible": "M2",
+        "neither_eligible": "NO_SELECTION",
+        "both_eligible": "M2 only if macro_R_S_M2_minus_M1 >=3/100, else M1"
+      }
+    }
+  ],
+  "unresolved_bindings": {
+    "M0_qualified_score_receipt": null,
+    "native_original_GD_export_parity": null,
+    "guard_population_and_qualified_enrollment": null,
+    "frozen_current_treatment_packet": null,
+    "long_context_qualification": null,
+    "M2_actual_final_checkpoint": null,
+    "M1_actual_final_checkpoint": null,
+    "M0_complete_audit_roster": null,
+    "M0_scoring_registration": null,
+    "M0_scoring_authorization": null
+  },
+  "observed_model_quality_evidence": {
+    "M1_M2_quality_results": "UNMEASURED",
+    "M0_qualified_scored": 0,
+    "actual_native_parity": "UNQUALIFIED",
+    "M0_raw_audited": 256,
+    "quality_gain_established": false,
+    "M0_raw_required": 384
+  },
+  "preparation_boundary": {
+    "grant_changes": 0,
+    "native_dll_operations": 0,
+    "optimizer_updates": 0,
+    "DEV_or_guard_oracle_reads": 0,
+    "source_changes": 0,
+    "model_or_tokenizer_loads": 0,
+    "actual_response_consumption": 0,
+    "fixture_passes_are_capability_evidence": false
+  },
+  "supersedes_review_draft": {
+    "sha256": "cb94deff7db4798b2451d3274e7fe034c3717709a447849476e263d17eb57576",
+    "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-pattern-research-20261005\\resumed-audit-001\\BASELINE_FIRST_MEASUREMENT_AMENDMENT_REVIEW_DRAFT_001.json",
+    "original_preserved": true,
+    "reason": "Independent review corrected eligibility-conditioned M1 preference and guard scorer scope; no outcome inspected."
+  }
+}

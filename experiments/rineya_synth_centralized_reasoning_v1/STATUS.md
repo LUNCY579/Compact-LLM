@@ -1,5 +1,21 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: attempt002 denied; original evidence and CPU repairs retained
+
+[Admission outcome](OBSERVER_ADMISSION_DENIAL_002.md) records RAM2.10GB and
+GPU0.50GB below unchanged3.56GB/4.29GB floors. No worker was created; sampler/
+NVML cleanup is verified. Driver handle is gone and observed driver PIDs absent.
+Raw receipts/valid seals/actual two-file lease are preserved; independent16 joins
+pass. No observer, fixture, model/CUDA, M0 row, study update or score occurred.
+
+Denial-only evidence preservation now passes15 focused controls plus independent5;
+full worker audit stays closed. The baseline-first metadata amendment passes3,
+with14 old anchors and all recipe/finish/statistical policies unchanged. Native
+scoring remains closed. Owner resource-change question is pending; no unrelated
+process is stopped and no floor is lowered. New driver bytes need exact future
+registration before another attempt. The complete transfer/preservation goal is
+active and still unmeasured.
+
 ## 2026-10-06 UTC: first approved driver attempt failed before worker creation
 
 The approved OBSERVER_STARTUP_001 driver completed with exit1. Its finite helper

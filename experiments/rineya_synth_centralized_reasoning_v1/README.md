@@ -101,3 +101,7 @@ The manifest is a **design registration, not an execution permit or completed
 preregistration**. Checkpoint bindings, data hashes, resource ceilings, numerical
 qualification, outcome margins, and launch approval must be filled in a separate
 future run manifest. Never convert missing bindings into permissive defaults.
+
+The [baseline-first measurement amendment](BASELINE_FIRST_MEASUREMENT_AMENDMENT_001.md)
+removes the future-treatment checkpoint dependency from qualified M0-only scoring
+and enrollment. It preserves the finish rule and all native/scoring gates.

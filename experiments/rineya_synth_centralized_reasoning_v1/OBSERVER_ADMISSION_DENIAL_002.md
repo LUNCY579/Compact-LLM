@@ -1,0 +1,13 @@
+# Admission denial and CPU continuation
+
+Attempt002 is terminal. The original supervisor denied admission before worker creation; available RAM was2,103,115,776 bytes versus3,556,769,792 required and free GPU memory498,843,648 bytes versus4,294,967,296 required. Disk passed. Worker attempted/launched/resumed are all exactly false. Sampler and NVML cleanup are verified, with no unjoined sampler threads. The original driver handle is now missing and both previously observed driver PIDs are absent; the final shell exit code was not returned and is not invented.
+
+Original raw supervisor/anchors, driver receipt, valid standalone/embedded failure snapshot, and actual reservation/terminal lease bytes are retained under evidence/observer_startup_attempt002_20261006. Independent review passes16 seal/byte/anchor joins. No observer, fixture, model/CUDA, M0, optimizer or scoring work occurred. This is admission evidence, not qualification or a learning result.
+
+The additive denial-preservation source copies the actual two-file unlaunched lease and selected source snapshots while retaining FAILED/incomplete status and false PASS/authority. Full worker preservation and terminal audit requirements stay unchanged. Fifteen focused CPU controls pass (five new plus ten existing); independent five pass. The new public driver SHA is0a1c3bc0939f79c34f43cb46cf91cccc2d374735b6146405e5a36fe5b53a740a. Prior implementations/configurations and failures remain preserved. A new implementation/dispatch registration must bind these revised bytes before any next native attempt.
+
+The resource floors remain unchanged. A question to the owner requests freeing both RAM and GPU memory or naming an explicitly authorized process; no unrelated process is stopped. The existing approval for the bounded observer stage remains valid, but it does not supply resources or model/STUDY/scoring permission.
+
+The additive baseline-first CPU amendment is also adopted: qualified complete M0 scoring/enrollment can precede future treatment-checkpoint production, while the original complete treatment-import/comparison prerequisites remain. All14 historical anchors, finish/EOS-cap/timing, final27/540,384/96, statistical/retention policies and training recipe are unchanged. Three metadata controls pass. This amendment grants no native scoring and consumes no responses.
+
+The original research question remains unanswered. M0 is256/384 raw unscored rows; actual matched M1/M2 training, fresh-family/RS transfer and prior-correct preservation remain unmeasured. Native progress requires a verified resource change and fresh unchanged admission. CPU preparation is not model-quality evidence.
