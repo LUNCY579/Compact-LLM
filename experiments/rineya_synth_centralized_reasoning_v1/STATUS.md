@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: exact observer implementation promoted; approval verified
+
+[Implementation](OBSERVER_STARTUP_IMPLEMENTATION_001.md) is promoted byte for
+byte, with a concrete helper-bound launch/preserve/audit driver. Eight focused
+composition controls and independent8 pass. Counted external-output/lease path
+adapters retain original mutex/lifecycle/resource bounds; actual recorded birth
+rows replace an absent SUP consumer field without rewriting raw receipts.
+
+Direct human approval is verified for this same bounded zero-model qualification
+stage. Exact later dispatch registration, selected-byte review and fresh owned
+admission remain required. No observer/fixture or model/CUDA action has occurred
+in this implementation milestone. The full three-arm transfer and preservation
+question remains unmeasured and active.
+
 ## 2026-10-06 UTC: prospective observer startup source amendment audited
 
 [Startup amendment](OBSERVER_STARTUP_MEASUREMENT_CPU_001.md) passes 51
