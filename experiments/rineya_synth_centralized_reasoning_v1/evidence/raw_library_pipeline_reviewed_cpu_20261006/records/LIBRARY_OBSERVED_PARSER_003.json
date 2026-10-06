@@ -1,0 +1,47 @@
+{
+  "actual_native_producer_integration_verified": false,
+  "errors": 0,
+  "excluded_actual_producer_tests": [
+    "test_actual_current_guard_emits_complete_packet_consumed_independently",
+    "test_actual_current_guard_original_delegate_failure_packet_preserved"
+  ],
+  "excluded_reason": "Current helper source lacks export_raw_packet; exact actual-test AttributeError diagnostics retained in DRAFT002. This25-control receipt does not claim producer integration.",
+  "failures": 0,
+  "fixture_only": true,
+  "kind": "OBSERVED_LIBRARY_PARSER_MANUAL_CPU_PREFIX_003",
+  "native_PASS": false,
+  "native_authority_issued": false,
+  "seconds": 0.75,
+  "sha256": "7b4b286bb1efacfbdffd5f0d3097d314eaff15bc2b3cadacd79a9b50646f9f32",
+  "skips": 0,
+  "source_after": {
+    "prefix_library_evidence.py": {
+      "bytes": 36167,
+      "sha256": "bf311cbe5651adf757f7abfab0090d9573b83c0bcd5e3d021320d19f7ce2adc8"
+    },
+    "test_library_evidence.py": {
+      "bytes": 14135,
+      "sha256": "5d33994d2bc362a032d61f1b82e1ff85203084990d1f40b066a4d8f5da48970b"
+    },
+    "test_library_failure_evidence.py": {
+      "bytes": 13515,
+      "sha256": "eac9ea3fb0f6e11579e6315521a3c2b8b498c439d9d7997f6474d690c67e5bd6"
+    }
+  },
+  "source_before": {
+    "prefix_library_evidence.py": {
+      "bytes": 36167,
+      "sha256": "bf311cbe5651adf757f7abfab0090d9573b83c0bcd5e3d021320d19f7ce2adc8"
+    },
+    "test_library_evidence.py": {
+      "bytes": 14135,
+      "sha256": "5d33994d2bc362a032d61f1b82e1ff85203084990d1f40b066a4d8f5da48970b"
+    },
+    "test_library_failure_evidence.py": {
+      "bytes": 13515,
+      "sha256": "eac9ea3fb0f6e11579e6315521a3c2b8b498c439d9d7997f6474d690c67e5bd6"
+    }
+  },
+  "source_bytes_unchanged": true,
+  "tests": 25
+}

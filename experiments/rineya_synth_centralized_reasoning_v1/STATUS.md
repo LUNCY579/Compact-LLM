@@ -1,5 +1,21 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: actual raw library producer-to-terminal path verified on CPU
+
+The [raw library pipeline](RAW_LIBRARY_PIPELINE_CPU_001.md) passes 283 controls
+from preserved source bytes, plus independent terminal 14. Actual reads produce
+raw checkpoints; the worker publishes after cleanup; preservation copies the
+original bytes; the auditor consumes selected verifier bytes and external plans.
+Executing-child birth and original owned clock-window joins reject substitutions.
+Partial failures retain unknown observations and original errors without success.
+
+Native observer, current bootstrap/runtime/resources and reviewed registration
+remain unqualified. Pre-core sidecars can be replayed as incomplete evidence;
+the full tensor terminal body still needs core/report/startup ownership provenance.
+No native action, M0 row, study training or scoring occurred. M0 remains 256/384
+raw unscored rows; M1/M2 fresh-family and RS transfer plus prior-correct
+preservation remain unmeasured. The full study goal remains active and unanswered.
+
 ## 2026-10-06 UTC: original-instance entry and honest managed-scope CPU successor
 
 The [owned-entry milestone](OWNED_LIBRARY_ENTRY_CPU_001.md) passes209 preserved-copy

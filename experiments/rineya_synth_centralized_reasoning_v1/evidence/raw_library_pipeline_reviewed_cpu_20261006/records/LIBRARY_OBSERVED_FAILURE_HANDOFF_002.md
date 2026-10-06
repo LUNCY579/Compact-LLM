@@ -1,0 +1,24 @@
+# Observed library packet complete/failure replay — source freeze007
+
+`validate_observed_packet` independently consumes actual `OBSERVED_LIBRARY_GUARD_RAW_PACKET_V2` bytes. The historical CPU V1 parser/tests remain separate. Inputs are externally selected policy, library/source descriptors, source/context/original scope/owner receipt/PID-FILETIME identity, ordered boundary plan and packet-file SHA. The boundary plan must come from the separately qualified registration; it is never inferred from incoming producer rows. The parser imports no producer and opens no libraries or host files.
+
+The observed packet retains exact `identity`, `policy_sha256`, `library_files`, `observations`, `failure_records`, `terminal`, `producer_claims`, provenance/false-authority flags and body checksum. Checkpoints retain emitted boundary `{id,parent_id,name}` alongside ID, ordinal, monotonic nanoseconds, scope/snapshot/cumulative events/directory identities/cleanup. Complete replay checks exact plan order/nesting, all transitions and terminal cleanup. Failure replay independently counts reached/returned/failed/unreached boundaries and verified events; incomplete evidence never becomes complete conservation.
+
+`observation_errors` has only the five actual observation components. Every error has a retained error record with the same observation ordinal and bounded `{type,message,message_exact}` value. Each boundary-error point has a failure record for that same boundary and observation. Source/checkpoint/clock failures remain failure-record stages, not blanket excuses for missing observations. Synthetic `OBSERVATION_NOT_REACHED` markers require their own linked records. A null clock requires failed/incomplete status, false recording completeness and an exact-point clock failure record; no timestamp is invented. Unavailable messages remain null only with `message_exact=False`, making diagnostic evidence explicitly incomplete.
+
+Failed startup may retain an unbound packet identity. Its independently supplied recipe identity must have unavailable/null birth and a selected owner-receipt SHA; output explicitly reports `packet_identity_bound=False`. It does not fabricate a FILETIME birth or claim the raw packet authenticated one. A clean closed guard after an outside ownership failure may honestly have no raw errors and `guard_failed=False`; it is accepted only as incomplete/unqualified with unavailable birth, intact initial/terminal observations and zero entered boundaries. The main error belongs to the surrounding envelope, not a fabricated guard error.
+
+Incoming fixture provenance is preserved. Nonfixture metadata is not relabeled as CPU evidence and still supplies no NativePASS, observer/current-byte qualification or actual native journal integration. V2 managed scopes retain foreign registrations as UNOBSERVED. The same 16MiB/4096-library/65536-event/4096-checkpoint/64-depth/600-second recorded bounds and strict duplicate/nonfinite/overflow parser remain.
+
+Freeze007 passes31 controls in0.939seconds (whole1.078), with unchanged before/after hashes, zero errors/failures/skips. Six controls execute actual source-produced inert guard packets: complete nested boundaries, original delegate failure, failed startup/unbound identity, unrepresentable original message, missing original clock and clean guard/outside ownership failure. Other controls exercise independently resealed plan/errors/components/counts/identities/events/cleanup/provenance negatives.
+
+| File | Bytes | SHA256 |
+| --- | ---: | --- |
+| prefix_library_evidence.py | 38428 | aebab23452fa53ad71edbd4762620d929b4b8a936d41eb278f3b1f15ff1a57f2 |
+| test_library_evidence.py | 14135 | 5d33994d2bc362a032d61f1b82e1ff85203084990d1f40b066a4d8f5da48970b |
+| test_library_failure_evidence.py | 17540 | 1233e45cc0666723896db947edd6657ae3116bddbea134cfa73bda22742ff499 |
+| prefix_library_policy.py (producer dependency; owned by reviewer) | 51669 | fd33450f7149c50d506ee5b55329a81c045d43641d9ed68bfc41323d97c3c9b7 |
+
+Actual output/receipt: `LIBRARY_OBSERVED_FREEZE_007.txt`/`.json`; body `ec9b233f6b8cf155d01f2f975bde0e00165cfd2ff11d30256886735a928c92c9`. Earlier missing-export, component-interface and startup-cleanup mismatches, provisional permissive interface, duplicate-discovery output and predecessor2e4a bytes are retained in this stage's `pre_observed_*` directories and DRAFT001–005/006 records. None is presented as the final strict proof.
+
+Run `python -B -m unittest test_library_evidence test_library_failure_evidence -v` from this stage. No C/W/P/L/S/A/helper implementation was edited by this task. Actual native observer, current runtime/bootstrap/resources and worker/preserver/auditor terminal integration qualification remain separate Root work; no host binary/model/GPU/ctypes/native import or OS probe was performed. Actual M1/M2/transfer remain unmeasured.
