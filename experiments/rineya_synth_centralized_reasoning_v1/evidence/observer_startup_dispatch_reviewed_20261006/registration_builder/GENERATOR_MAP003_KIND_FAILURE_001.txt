@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\observer_dispatch_registration_work\generator.py", line 187, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\observer_dispatch_registration_work\generator.py", line 177, in main
+    data=inputs(args.promotion,promotion_file_sha256=args.promotion_file_sha256,promotion_body_sha256=args.promotion_body_sha256)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\observer_dispatch_registration_work\generator.py", line 156, in inputs
+    require(promotion['kind'] in {'ROOT_EXACT_OBSERVER_STARTUP_PROMOTION_MAP_V1','ROOT_EXACT_OBSERVER_STARTUP_PROMOTION_MAP_V2'} and promotion['native_PASS'] is promotion['native_launch_authorized'] is False,'closed exact source promotion map')
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\observer_dispatch_registration_work\generator.py", line 31, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: closed exact source promotion map
