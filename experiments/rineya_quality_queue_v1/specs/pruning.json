@@ -27,7 +27,11 @@
     {"id": "rqp_interruption_review", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-interruption-independent-review-20261005-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "rqp_open_v3_review", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-open-v3-independent-review-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "rqp_content_recovery_v3_review", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-content-recovery-independent-review-20261005-01/V3_DELTA_REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
-    {"id": "rqp_user_token_amendment", "path": "C:/Users/clclc/BusinessProject/rineya-quality-pilot-v1/qualification-token-amendment-001/USER_APPROVAL.json", "classification": "preparation", "role": "receipt", "format": "json"}
+    {"id": "rqp_user_token_amendment", "path": "C:/Users/clclc/BusinessProject/rineya-quality-pilot-v1/qualification-token-amendment-001/USER_APPROVAL.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "rqp_current_binding_review", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-current-binding-independent-review-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "rqp_actual_recovery_review", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-recovery-transaction-independent-review-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "rqp_q0_003_terminal_review", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-q0-003-failure-independent-review-20261006-01/REPORT.json", "classification": "native", "role": "receipt", "format": "json"},
+    {"id": "rqp_six_dll_exact_amendment_review", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-six-dll-amendment-independent-review-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"}
   ],
   "metrics": [
     {"name": "historical_seed23_full_source_correct_retention", "numerator": 38, "denominator": 47, "unit": "count", "scope_unit": "spent_source_correct_case", "evidence_id": "historical_rep001", "text_anchor": "| 23 | ctrl | 229 | 3/3 | 71 | 56 | 38 | 152 | 0.1221 | 8 |", "denominator_text_anchor": "retained /47", "status": "MEASURED"},
@@ -48,11 +52,12 @@
     {"id": "source_correct_quotas", "status": "NOT_MEASURED", "evidence_ids": ["evaluation", "run_proposal"], "reason": "Source-only ordered screening and eligibility freeze require separate Q1 source-screening authority; candidate outcomes cannot select eligibility."},
     {"id": "scalar_and_confirmation_freeze", "status": "BLOCKED", "evidence_ids": ["protocol", "run_proposal"], "reason": "Alpha remains unselected. Calibration acquisition alone chooses it; final masks/artifacts/runtime/scorer/eligibility FREEZE and separate Q2 approval precede candidate confirmation."},
     {"id": "rqp_interruption_accounting_preserved", "status": "PASS", "evidence_ids": ["rqp_interruption_review"], "reason": "Scoped accounting review only: RQP's incomplete attempt retains two launches, 416 forward/token reservations and 1350.097054 conservative charged seconds; exact exit remains unknown. No counter refund/reset, native PASS or automatic retry follows."},
-    {"id": "rqp_qualification_token_amendment_recorded", "status": "PASS", "evidence_ids": ["rqp_user_token_amendment"], "reason": "Exact USER_APPROVAL receipt records a direct-human 1024-to-1536 qualification-token ceiling change for one complete retry, retaining 416 prior reservations. Worst cumulative totals are 1440 tokens and 1445 forwards; forward ceiling 1536, phase 3600 seconds, study 43200 seconds and other stated caps/design remain unchanged. This is a scoped cap approval, not a native gate or dispatch grant."},
+    {"id": "rqp_qualification_token_amendment_recorded", "status": "PASS", "evidence_ids": ["rqp_user_token_amendment", "rqp_q0_003_terminal_review"], "reason": "Direct human1024-to1536 token amendment and the exact one additional launch are preserved. That retry is now consumed by Q0-native-003 runtime-coverage failure;3 total launches and 416 old token/forward reservations remain. Nominal token arithmetic is not another launch permit."},
     {"id": "rqp_open_v3_reference_answerability", "status": "PASS", "evidence_ids": ["rqp_open_v3_review"], "reason": "Independent stdlib public-prompt solvers match 864/864 raw targets and answerability labels with no schema/render contradictions. Cal96/96 parents, DEV384/384 and TRAIN384/192 including 96 binding parents times three views plus 96 anchors. Raw flags remain false/PENDING; this is reference evidence, not source accuracy, dataset admission, donor replication or model quality."},
-    {"id": "rqp_amended_source_runtime_admission", "status": "BLOCKED", "evidence_ids": ["rqp_pilot_readiness", "rqp_pilot_runbook", "rqp_open_v3_review"], "reason": "A fresh exact amended-source/runtime byte inventory, independently reviewed mapped-library coverage and matching phase grant are required. The OPEN V3 review recorded runtime_binding.py drift from its 8ff546 authoring identity; later source fixes do not silently replace that immutable packet binding or the older grant."},
+    {"id": "rqp_amended_source_runtime_admission", "status": "BLOCKED", "evidence_ids": ["rqp_current_binding_review", "rqp_q0_003_terminal_review", "rqp_six_dll_exact_amendment_review"], "reason": "Exact 15-source 3df binding and prior byte replay were reviewed; actual CUDA preload stopped on six unregistered origins before source model construction. The additive six-pin technical amendment now covers all 212 retained origins without new OS exclusions. Corrected-runtime native preload/full qualification, new exact phase decision and real resource admission are absent; old9020/3bad or grant65255 cannot transfer to it."},
     {"id": "rqp_family_exclusion_closure", "status": "BLOCKED", "evidence_ids": ["rqp_open_v3_review", "rqp_content_recovery_v3_review"], "reason": "No current/enumerated-known scoped alias overlap was found, but 4439 recovered records are only conditional known-record closure. Retain 384 PROCESS source-prompt-only identity holds, missing original fixture/loader custody and historical content-domain joins, incomplete alpha-renaming/descendant closure and UNKNOWN pretraining contact. Planner rows have no actual lexical choice point; no tokenizer replay or all-six scientific PASS is established."},
-    {"id": "rqp_quarantine_recovery_and_budget_admission", "status": "BLOCKED", "evidence_ids": ["rqp_interruption_review", "rqp_user_token_amendment", "rqp_pilot_runbook"], "reason": "One complete RQP retry is now within the amended token arithmetic, but has not run. Explicit quarantine recovery disposition, fresh resource/serial admission, exact cumulative launch/phase grant and complete-repeat time/disk feasibility under unchanged caps remain required. Prior two launches and failed staging stay charged/preserved; nominal remaining qualification time is 2249.902946 seconds, not measured fit."}
+    {"id": "rqp_quarantine_recovery_and_budget_admission", "status": "BLOCKED", "evidence_ids": ["rqp_actual_recovery_review", "rqp_q0_003_terminal_review", "rqp_user_token_amendment"], "reason": "Observed prior marker archival/recovery preserved bytes and charges; it is not crash-safe unattended recovery. The subsequent316-second attempt failed, slot closed and new quarantine blocks advancement.3 launches / 1666.097054 seconds/416 reservations and failed staging remain; one approved retry consumed. No fourth launch, failure-reserve transfer, refund or scientific advancement is authorized."},
+    {"id": "rqp_six_dll_metadata_coverage", "status": "PASS", "evidence_ids": ["rqp_q0_003_terminal_review", "rqp_six_dll_exact_amendment_review"], "reason": "Exact 47 preserved external references plus6 observed-origin byte pins make53; roots, source15 map, interpreter, loader paths, policy, limitations and72 OS exclusions stay unchanged. All212 retained failed-run origins reconcile as173 byte pins plus39 pre-existing exclusions. Genuine technical byte approval/replay is bound, but no native/ABI/future-library qualification or consumed launch allowance is restored."}
   ],
   "next_proposal": {
     "study_id": "PRSC-001",
@@ -65,14 +70,35 @@
   },
   "related_rqp_bounded_proposal": {
     "study_id": "RQP-001",
-    "phase": "ONE_COMPLETE_SYNTHETIC_SOURCE_ZERO_QUALIFICATION_RETRY_AFTER_FRESH_ADMISSION",
-    "proposal_evidence_id": "rqp_user_token_amendment",
+    "phase": "OFFLINE_EXACT_SIX_DLL_ORIGIN_AND_CUSTODY_CLOSURE_REVIEW",
+    "proposal_evidence_id": "rqp_q0_003_terminal_review",
     "owner_thread_id": "01a10d57-2559-7083-9076-be45f4714994",
-    "requires": ["rqp_interruption_accounting_preserved", "rqp_qualification_token_amendment_recorded", "rqp_amended_source_runtime_admission", "rqp_quarantine_recovery_and_budget_admission"],
-    "limits": {"synthetic_prompts": 32, "greedy_paths": 64, "max_generated_tokens_per_path": 16, "complete_repeat_generated_tokens_upper": 1024, "complete_repeat_forward_calls_upper": 1029, "all_attempt_qualification_generated_token_ceiling": 1536, "all_attempt_qualification_forward_ceiling": 1536, "qualification_worker_seconds": 3600, "study_worker_seconds": 43200, "previous_launches_charged": 2, "prior_generated_token_reservations": 416, "prior_forward_reservations": 416, "allowed_additional_complete_retries": 1, "automatic_retries": 0, "scientific_bank_rows": 0, "training_tokens": 0, "optimizer_steps": 0},
-    "token_budget_fits_fixed_repeat": true,
-    "time_resource_disk_and_current_launch_grant_fit": "NOT_MEASURED_OR_ADMITTED",
-    "quarantine": "INTERRUPTED_QUALIFICATION_QUARANTINED",
+    "requires": [
+      "rqp_interruption_accounting_preserved",
+      "rqp_qualification_token_amendment_recorded",
+      "rqp_amended_source_runtime_admission",
+      "rqp_quarantine_recovery_and_budget_admission"
+    ],
+    "limits": {
+      "native_attempts_authorized_now": 0,
+      "new_model_calls": 0,
+      "scientific_bank_rows": 0,
+      "training_tokens": 0,
+      "optimizer_steps": 0,
+      "all_attempt_qualification_generated_token_ceiling": 1536,
+      "all_attempt_qualification_forward_ceiling": 1536,
+      "qualification_worker_seconds": 3600,
+      "study_worker_seconds": 43200,
+      "previous_launches_charged": 3,
+      "previous_worker_seconds_charged": 1666.097054,
+      "prior_generated_token_reservations": 416,
+      "prior_forward_reservations": 416,
+      "allowed_additional_complete_retries": 0,
+      "automatic_retries": 0
+    },
+    "qualification_repeat_permission": "CONSUMED_NO_NEW_GRANT",
+    "nominal_remaining_phase_seconds": 1933.902946,
+    "quarantine": "QUALIFICATION_RUNTIME_COVERAGE_FAILURE_NATIVE_HOLD",
     "native_execution_authorized": false,
     "original_PRSC_qualification_transferred": false
   },
@@ -82,7 +108,9 @@
     {"evidence_ids": ["preparation_verification", "preparation_review"], "statement": "October 5 preparation completed 55 offline fixtures and verified custody/algebra; current model calls, training and confirmation reads remained zero."},
     {"evidence_ids": ["rqp_interruption_review"], "statement": "The related RQP incomplete Q0 transaction retained 416 attempted/reserved forwards and tokens, two launches and a conservative 1350.097054-second charge. Those counters do not certify completed probes or a qualification PASS."},
     {"evidence_ids": ["rqp_open_v3_review", "rqp_content_recovery_v3_review"], "statement": "RQP OPEN V3 reference correctness and answerability are verified for 864 raw public rows; all-six freshness/exclusion/separation admission remains withheld. Correct targets, recovered catalogue membership and multiple views from one parent cannot replace unseen-content closure or model preservation evidence."},
-    {"evidence_ids": ["rqp_user_token_amendment"], "statement": "The recorded human token amendment preserves old charges and fixed probes while permitting one complete retry within 1536 cumulative qualification tokens. All other native/source/resource/quarantine prerequisites and original PRSC permissions remain separate."}
+    {"evidence_ids": ["rqp_user_token_amendment"], "statement": "The recorded human token amendment preserves old charges and fixed probes while permitting one complete retry within 1536 cumulative qualification tokens. All other native/source/resource/quarantine prerequisites and original PRSC permissions remain separate."},
+    {"evidence_ids": ["rqp_actual_recovery_review", "rqp_q0_003_terminal_review"], "statement": "Recovery completion preserved the archived old quarantine and historicalf723 ledger. Current751 ledger advances by the third launch and full 316 s; that is charged accounting, not drift to conceal or a refund. Runtime refusal retains212 mapped origins and exact six missing paths/hashes. All qualifying pairs and new reserved generation/forward operations remain zero; framework/CUDA preload activity is not a model-quality result."},
+    {"evidence_ids": ["rqp_six_dll_exact_amendment_review"], "statement": "The amendment changes only47-to53 exact external pins and inventory timestamp; it is byte registration rather than a broad System32 exemption. A stale PENDING handoff label is historical; a separate completed technical approval exists. Neither metadata replay nor previous failed-run mapped coverage is a fresh native PASS or model gain."}
   ],
   "exposure": {"training": "Historical seed23 donor training is spent; no new donor training is authorized or performed by this queue.", "evaluation": "REP001 reported historical spent-suite outcomes; new PRSC calibration/confirmation is specifications only.", "related_RQP_OPEN_V3": "864 public prompts/targets were independently reviewed with stdlib solvers. Raw reference flags stay false/PENDING; semantic freshness and complete historical exclusions remain HOLD/UNKNOWN. No validation payload, current RQP candidate outputs or model outcome was read by that review.", "not_read": ["new calibration model outputs", "confirmation cases/references", "source confirmation responses", "candidate confirmation responses", "sealed banks"]},
   "quality_gates": [
@@ -93,7 +121,8 @@
   ],
   "completed_failed_attempts": [
     {"evidence_id": "historical_rep001", "outcome": "HISTORICAL_SEED29_FIRST_TRAINING_REFUSED_DIRTY_SOURCE", "text_anchor": "`ValueError: native execution requires a clean checkout`.", "new_native_attempt_performed": false},
-    {"evidence_id": "rqp_interruption_review", "study_id": "RQP-001", "outcome": "Q0_NATIVE_002_INTERRUPTED_QUARANTINED_INCOMPLETE_NOT_PASS", "new_native_attempt_performed": true, "qualification_pass": false, "worker_launches_retained": 2, "forward_and_token_reservations_retained_each": 416, "conservative_worker_seconds_charged": 1350.097054, "automatic_retry": false, "budget_reset_or_refund": false}
+    {"evidence_id": "rqp_interruption_review", "study_id": "RQP-001", "outcome": "Q0_NATIVE_002_INTERRUPTED_QUARANTINED_INCOMPLETE_NOT_PASS", "new_native_attempt_performed": true, "qualification_pass": false, "worker_launches_retained": 2, "forward_and_token_reservations_retained_each": 416, "conservative_worker_seconds_charged": 1350.097054, "automatic_retry": false, "budget_reset_or_refund": false},
+    {"evidence_id": "rqp_q0_003_terminal_review", "study_id": "RQP-001", "outcome": "Q0_NATIVE_003_RUNTIME_COVERAGE_FAILURE_BEFORE_SOURCE_MODEL_CONSTRUCTION", "worker_exit_code": 2, "supervisor_timeout": false, "worker_seconds_charged": 316, "all_attempt_launches": 3, "all_attempt_seconds": 1666.097054, "all_attempt_forward_token_reservations_each": 416, "qualification_pass": false, "automatic_retry": false}
   ],
   "advancement": false
 }
