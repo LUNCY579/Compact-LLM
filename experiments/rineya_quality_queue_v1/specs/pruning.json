@@ -42,7 +42,11 @@
     {"id": "rqp_production_resource_source_reconciled", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-recorder-benchmark-independent-review-20261006-01/PRODUCTION_RESOURCE_SOURCE_REVIEW_RECONCILED.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "rqp_v7b_actual_partial_terminal_review", "path": "C:/Users/clclc/BusinessProject/rineya-quality-pilot-v1/v7b-terminal-independent-review-20261006-01/REPORT.json", "classification": "fixture", "role": "receipt", "format": "json"},
     {"id": "rqp_full_capture_cost_review_request", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-full-capture-cost-source-review-20261006-01/REVIEW_REQUEST.json", "classification": "preparation", "role": "proposal", "format": "json"},
-    {"id": "rqp_v7b_descriptive_event_census", "path": "C:/Users/clclc/BusinessProject/rineya-quality-pilot-v1/v7b-run003-narrow-event-census-001/CENSUS.json", "classification": "fixture", "role": "receipt", "format": "json"}
+    {"id": "rqp_v7b_descriptive_event_census", "path": "C:/Users/clclc/BusinessProject/rineya-quality-pilot-v1/v7b-run003-narrow-event-census-001/CENSUS.json", "classification": "fixture", "role": "receipt", "format": "json"},
+    {"id": "rqp_postterminal_v1a_static_review", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-postterminal-auditor-v1a-independent-review-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "rqp_audit001_pre_stream_summary", "path": "C:/Users/clclc/BusinessProject/rineya-quality-pilot-v1/v1-helper-independent-static-review-001/full-v7b-postterminal-audit-source-001/audit-run-001/AUDIT_SUMMARY.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "rqp_audit001_independent_metadata_comparison", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-audit-run001-terminal-review-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "rqp_audit001_metadata_comparison_source", "path": "C:/Users/clclc/BusinessProject/rineya-rqp-audit-run001-terminal-review-20261006-01/compare_saved_metadata.py", "classification": "preparation", "role": "source", "format": "text"}
   ],
   "metrics": [
     {"name": "historical_seed23_full_source_correct_retention", "numerator": 38, "denominator": 47, "unit": "count", "scope_unit": "spent_source_correct_case", "evidence_id": "historical_rep001", "text_anchor": "| 23 | ctrl | 229 | 3/3 | 71 | 56 | 38 | 152 | 0.1221 | 8 |", "denominator_text_anchor": "retained /47", "status": "MEASURED"},
@@ -154,5 +158,10 @@
     {"evidence_id": "rqp_interruption_review", "study_id": "RQP-001", "outcome": "Q0_NATIVE_002_INTERRUPTED_QUARANTINED_INCOMPLETE_NOT_PASS", "new_native_attempt_performed": true, "qualification_pass": false, "worker_launches_retained": 2, "forward_and_token_reservations_retained_each": 416, "conservative_worker_seconds_charged": 1350.097054, "automatic_retry": false, "budget_reset_or_refund": false},
     {"evidence_id": "rqp_q0_003_terminal_review", "study_id": "RQP-001", "outcome": "Q0_NATIVE_003_RUNTIME_COVERAGE_FAILURE_BEFORE_SOURCE_MODEL_CONSTRUCTION", "worker_exit_code": 2, "supervisor_timeout": false, "worker_seconds_charged": 316, "all_attempt_launches": 3, "all_attempt_seconds": 1666.097054, "all_attempt_forward_token_reservations_each": 416, "qualification_pass": false, "automatic_retry": false}
   ],
+  "postterminal_auditor_readiness": {
+    "evidence_ids": ["rqp_postterminal_v1a_static_review", "rqp_audit001_pre_stream_summary", "rqp_audit001_independent_metadata_comparison", "rqp_audit001_metadata_comparison_source"],
+    "status": "V1A_PRE_STREAM_FAILURE_RETAINED_COMPLETION_SCHEMA_SUCCESSOR_REQUIRED",
+    "statement": "The v1a source fixes witness-kind agreement and RAW custody/contact/admission/prompt-annotation checks, while permitting return or raised completion fields to be absent. Root relayed exact producer return/raise schema requirements to the existing owner. Its one own audit dispatch exits1 before tape/SQLite work: saved streams[]/counts{}, UNVERIFIED_HOLD, exact owner/stdout mismatch. Independent strict Python metadata comparison verifies only creation_utc differs textually (16:22+00 versus11:22-05), both strings denote the same instant and all other proof values/types match. Strict receipt equality stays required; copy original JSON values without timezone conversion. Failed source/plan/grant/output remain preserved. A separately reviewed lossless completion-schema successor and fresh exact audit-only binding are required; no automatic retry, native004 permission, recovered-source rerun, population closure or model gain follows."
+  },
   "advancement": false
 }
