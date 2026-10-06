@@ -77,6 +77,25 @@ Tests use synthetic metadata/opaque bytes and temporary directories under
 BusinessProject. They verify contracts and source binding only; no Rineya
 capability, memory fit, throughput or native qualification follows from them.
 
+## Lossless vector archive prototype
+
+`vector_archive.pack_rows` accepts explicit opaque little-endian F16 row bytes,
+unique logical slots, domains and independently supplied source hashes. It
+stores the actual two-byte UNKNOWN value with each row, canonicalizes only that
+slot to zero, and shares blobs only when the remaining bytes are exactly equal.
+The optional `zlib` codec is lossless; no floating-point conversion occurs.
+`restore_rows` verifies the separately trusted manifest root and every blob and
+row hash before returning the original bytes, order and provenance.
+
+The helper is in memory only, with a default 64 MiB logical-byte allowance and
+at most 4,096 rows per archive. Callers retain the trusted root, source bindings,
+file headers and cumulative storage/I/O accounting outside the helper. It has
+no writer, model loader or worker integration. Compression can expand data;
+small-sample savings do not prove that the complete 34-profile MLP calibration
+fits its registered storage cap. Every diverged continuation and full vector
+must remain reconstructable, with independent restoration checks before any
+reviewed downstream adoption.
+
 ## Standing research consent
 
 The programme records direct human standing consent in each card as preparation
