@@ -1,0 +1,1 @@
+The first direct tool run reported 10 tests passing in 7.050 seconds. Its console was returned by the tool but not separately saved; this note is an observation, not reconstructed actual output. Final frozen run will save its actual output.

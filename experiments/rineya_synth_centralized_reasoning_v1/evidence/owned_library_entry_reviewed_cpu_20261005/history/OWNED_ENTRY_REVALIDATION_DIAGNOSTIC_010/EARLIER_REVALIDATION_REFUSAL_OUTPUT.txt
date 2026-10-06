@@ -1,0 +1,18 @@
+test_selected_pipeline_drift_after_install_refuses_before_framework_and_removes (test_registered_worker_orchestration.RegisteredWorkerOrchestrationControls.test_selected_pipeline_drift_after_install_refuses_before_framework_and_removes) ... FAIL
+
+======================================================================
+FAIL: test_selected_pipeline_drift_after_install_refuses_before_framework_and_removes (test_registered_worker_orchestration.RegisteredWorkerOrchestrationControls.test_selected_pipeline_drift_after_install_refuses_before_framework_and_removes)
+----------------------------------------------------------------------
+ValueError: registered runtime exact stable bytes
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_registered_worker_orchestration.py", line 130, in test_selected_pipeline_drift_after_install_refuses_before_framework_and_removes
+    with self.assertRaisesRegex(ValueError,'exact stable source module'):self.run_main()
+AssertionError: "exact stable source module" does not match "registered runtime exact stable bytes"
+
+----------------------------------------------------------------------
+Ran 1 test in 1.233s
+
+FAILED (failures=1)

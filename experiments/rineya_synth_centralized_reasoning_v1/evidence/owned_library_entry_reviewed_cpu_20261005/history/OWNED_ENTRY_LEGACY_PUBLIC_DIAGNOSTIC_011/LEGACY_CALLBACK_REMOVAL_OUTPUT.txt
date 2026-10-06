@@ -1,0 +1,48 @@
+test_actual_installed_finder_encloses_framework_supplier_and_cleans_up (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_encloses_framework_supplier_and_cleans_up) ... ERROR
+test_actual_shared_supplier_import_is_inside_boundary (test_framework_library_enclosure.FrameworkLibraryEnclosureControls.test_actual_shared_supplier_import_is_inside_boundary) ... ERROR
+test_actual_registered_entry_consumes_selected_worker_before_other_bindings (test_registered_source_consumption.RegisteredSourceConsumption.test_actual_registered_entry_consumes_selected_worker_before_other_bindings) ... ERROR
+
+======================================================================
+ERROR: test_actual_installed_finder_encloses_framework_supplier_and_cleans_up (test_library_boundary_manifest.LibraryBoundaryManifestControls.test_actual_installed_finder_encloses_framework_supplier_and_cleans_up)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_library_boundary_manifest.py", line 261, in test_actual_installed_finder_encloses_framework_supplier_and_cleans_up
+    api = worker.real_torch_bindings(context, {}, 'CPU_unused', framework_boundary=finder.framework_import)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\CPU_library_manifest_664wcka6\CPU_OUTER_CONTEXT_FILESYSTEM\repository\experiments\rineya_synth_centralized_reasoning_v1\prefix_input_owned_worker.py", line 72, in real_torch_bindings
+    C.require(False,'native bindings require actual owned main entry; caller callbacks refused')
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\prefix_tensor_contract.py", line 47, in require
+    if not v:raise ValueError(m)
+             ^^^^^^^^^^^^^^^^^^^
+ValueError: native bindings require actual owned main entry; caller callbacks refused
+
+======================================================================
+ERROR: test_actual_shared_supplier_import_is_inside_boundary (test_framework_library_enclosure.FrameworkLibraryEnclosureControls.test_actual_shared_supplier_import_is_inside_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_framework_library_enclosure.py", line 25, in test_actual_shared_supplier_import_is_inside_boundary
+    result=self.W.real_torch_bindings(self.context,{},'unused',framework_boundary=boundary)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\prefix_input_owned_worker.py", line 72, in real_torch_bindings
+    C.require(False,'native bindings require actual owned main entry; caller callbacks refused')
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\prefix_tensor_contract.py", line 47, in require
+    if not v:raise ValueError(m)
+             ^^^^^^^^^^^^^^^^^^^
+ValueError: native bindings require actual owned main entry; caller callbacks refused
+
+======================================================================
+ERROR: test_actual_registered_entry_consumes_selected_worker_before_other_bindings (test_registered_source_consumption.RegisteredSourceConsumption.test_actual_registered_entry_consumes_selected_worker_before_other_bindings)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\test_registered_source_consumption.py", line 55, in test_actual_registered_entry_consumes_selected_worker_before_other_bindings
+    with self.assertRaisesRegex(ValueError,'exact selected compiled source descriptor'):namespace['CPU_actual_entry']('CPU_metadata_config',{},'CPU_metadata_output')
+                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\prefix_input_owned_execution_work\prefix_native_pipeline.py", line 55, in CPU_actual_entry
+    C.stage_native_gate();C.require(False,'registered pipeline requires actual owned main entry; caller callbacks refused')
+                          ^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'require'
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.015s
+
+FAILED (errors=3)

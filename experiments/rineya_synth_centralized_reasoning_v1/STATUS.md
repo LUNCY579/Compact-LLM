@@ -1,5 +1,24 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: original-instance entry and honest managed-scope CPU successor
+
+The [owned-entry milestone](OWNED_LIBRARY_ENTRY_CPU_001.md) passes209 preserved-copy
+controls, frozen62 and independent13 on unchanged bytes. Main retains its exact
+worker/contract/context/installer; opaque handles reject foreign instances and
+public callbacks refuse. Primary errors survive cleanup failure as explicit cause.
+
+[Amendment002](LIBRARY_OBSERVATION_AMENDMENT_002.md) records honest V2 managed
+scope with foreign registrations UNOBSERVED; Root66 controls retain old V1 tests.
+[Windows identities](WINDOWS_LIBRARY_IDENTITIES_CPU_001.md) pass12 Root controls;
+[offline raw replay](LIBRARY_EVIDENCE_CPU_001.md) passes13. All predecessors,
+diagnostics and the test-ownership race remain recorded without reconstructed bytes.
+
+Actual raw-packet emission/failure accounting/terminal consumption, qualified
+native observer/bootstrap/current runtime/owned resources and reviewed launch
+registration remain open. No native action, M0 row, training or scoring occurred.
+M0 remains256/384 raw unscored rows. Actual matched M1/M2 learning, fresh-family
+and held-out RS transfer, and prior-correct preservation remain unmeasured.
+
 ## 2026-10-05 UTC: partial DLL boundary CPU source milestone
 
 The [DLL boundary controls](LIBRARY_BOUNDARY_CPU_001.md) pass156 preserved-copy
