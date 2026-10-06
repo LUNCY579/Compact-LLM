@@ -1,0 +1,983 @@
+Microsoft (R) COFF/PE Dumper Version 14.44.35227.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file native_build_001\prefix_library_observer.obj
+
+File Type: COFF OBJECT
+
+a_add:
+  0000000000000000: F0 0F C1 11        lock xadd   dword ptr [rcx],edx
+  0000000000000004: 8B C2              mov         eax,edx
+  0000000000000006: C3                 ret
+
+a_load:
+  0000000000000000: 33 D2              xor         edx,edx
+  0000000000000002: 33 C0              xor         eax,eax
+  0000000000000004: F0 0F B1 11        lock cmpxchg dword ptr [rcx],edx
+  0000000000000008: C3                 ret
+
+a_or:
+  0000000000000000: F0 09 11           lock or     dword ptr [rcx],edx
+  0000000000000003: C3                 ret
+
+a_store:
+  0000000000000000: 87 11              xchg        edx,dword ptr [rcx]
+  0000000000000002: C3                 ret
+
+copy_name:
+  0000000000000000: 48 89 5C 24 08     mov         qword ptr [rsp+8],rbx
+  0000000000000005: 48 89 74 24 10     mov         qword ptr [rsp+10h],rsi
+  000000000000000A: 48 89 7C 24 18     mov         qword ptr [rsp+18h],rdi
+  000000000000000F: 48 8B 7C 24 28     mov         rdi,qword ptr [rsp+28h]
+  0000000000000014: 45 33 D2           xor         r10d,r10d
+  0000000000000017: 41 8B F0           mov         esi,r8d
+  000000000000001A: 48 8B DA           mov         rbx,rdx
+  000000000000001D: 4C 8B D9           mov         r11,rcx
+  0000000000000020: 44 89 17           mov         dword ptr [rdi],r10d
+  0000000000000023: 48 85 D2           test        rdx,rdx
+  0000000000000026: 74 7A              je          00000000000000A2
+  0000000000000028: 4C 39 52 08        cmp         qword ptr [rdx+8],r10
+  000000000000002C: 74 74              je          00000000000000A2
+  000000000000002E: 0F B7 02           movzx       eax,word ptr [rdx]
+  0000000000000031: 66 85 C0           test        ax,ax
+  0000000000000034: 74 6C              je          00000000000000A2
+  0000000000000036: A8 01              test        al,1
+  0000000000000038: 75 68              jne         00000000000000A2
+  000000000000003A: 66 3B 42 02        cmp         ax,word ptr [rdx+2]
+  000000000000003E: 77 62              ja          00000000000000A2
+  0000000000000040: 44 8B C0           mov         r8d,eax
+  0000000000000043: 41 D1 E8           shr         r8d,1
+  0000000000000046: 44 3B C6           cmp         r8d,esi
+  0000000000000049: 76 13              jbe         000000000000005E
+  000000000000004B: 41 8B C1           mov         eax,r9d
+  000000000000004E: 48 8B 5C 24 08     mov         rbx,qword ptr [rsp+8]
+  0000000000000053: 48 8B 74 24 10     mov         rsi,qword ptr [rsp+10h]
+  0000000000000058: 48 8B 7C 24 18     mov         rdi,qword ptr [rsp+18h]
+  000000000000005D: C3                 ret
+  000000000000005E: 45 85 C0           test        r8d,r8d
+  0000000000000061: 74 2A              je          000000000000008D
+  0000000000000063: 41 8B D0           mov         edx,r8d
+  0000000000000066: 66 66 0F 1F 84 00  nop         word ptr [rax+rax+0000000000000000h]
+                    00 00 00 00
+  0000000000000070: 48 8B 43 08        mov         rax,qword ptr [rbx+8]
+  0000000000000074: 4D 8D 5B 02        lea         r11,[r11+2]
+  0000000000000078: 4D 8D 52 02        lea         r10,[r10+2]
+  000000000000007C: 41 0F B7 4C 02 FE  movzx       ecx,word ptr [r10+rax-2]
+  0000000000000082: 66 41 89 4B FE     mov         word ptr [r11-2],cx
+  0000000000000087: 48 83 EA 01        sub         rdx,1
+  000000000000008B: 75 E3              jne         0000000000000070
+  000000000000008D: 44 89 07           mov         dword ptr [rdi],r8d
+  0000000000000090: 33 C0              xor         eax,eax
+  0000000000000092: 48 8B 5C 24 08     mov         rbx,qword ptr [rsp+8]
+  0000000000000097: 48 8B 74 24 10     mov         rsi,qword ptr [rsp+10h]
+  000000000000009C: 48 8B 7C 24 18     mov         rdi,qword ptr [rsp+18h]
+  00000000000000A1: C3                 ret
+  00000000000000A2: 48 8B 5C 24 08     mov         rbx,qword ptr [rsp+8]
+  00000000000000A7: B8 02 00 00 00     mov         eax,2
+  00000000000000AC: 48 8B 74 24 10     mov         rsi,qword ptr [rsp+10h]
+  00000000000000B1: 48 8B 7C 24 18     mov         rdi,qword ptr [rsp+18h]
+  00000000000000B6: C3                 ret
+
+dropped:
+  0000000000000000: B8 01 00 00 00     mov         eax,1
+  0000000000000005: F0 0F C1 41 30     lock xadd   dword ptr [rcx+30h],eax
+  000000000000000A: 83 F8 FF           cmp         eax,0FFFFFFFFh
+  000000000000000D: 75 08              jne         0000000000000017
+  000000000000000F: F0 81 49 10 00 01  lock or     dword ptr [rcx+10h],100h
+                    00 00
+  0000000000000017: C3                 ret
+
+fault:
+  0000000000000000: F0 09 51 10        lock or     dword ptr [rcx+10h],edx
+  0000000000000004: C3                 ret
+
+notification:
+  0000000000000000: 48 83 EC 68        sub         rsp,68h
+  0000000000000004: 48 85 D2           test        rdx,rdx
+  0000000000000007: 75 0D              jne         0000000000000016
+  0000000000000009: 49 8B C8           mov         rcx,r8
+  000000000000000C: E8 00 00 00 00     call        plo_core_record
+  0000000000000011: 48 83 C4 68        add         rsp,68h
+  0000000000000015: C3                 ret
+  0000000000000016: 8B 02              mov         eax,dword ptr [rdx]
+  0000000000000018: 45 33 C9           xor         r9d,r9d
+  000000000000001B: 89 44 24 24        mov         dword ptr [rsp+24h],eax
+  000000000000001F: 48 8B 42 18        mov         rax,qword ptr [rdx+18h]
+  0000000000000023: 89 4C 24 20        mov         dword ptr [rsp+20h],ecx
+  0000000000000027: 48 8B 4A 08        mov         rcx,qword ptr [rdx+8]
+  000000000000002B: 48 89 44 24 28     mov         qword ptr [rsp+28h],rax
+  0000000000000030: 8B 42 20           mov         eax,dword ptr [rdx+20h]
+  0000000000000033: 89 44 24 30        mov         dword ptr [rsp+30h],eax
+  0000000000000037: 48 85 C9           test        rcx,rcx
+  000000000000003A: 75 0C              jne         0000000000000048
+  000000000000003C: 44 89 4C 24 38     mov         dword ptr [rsp+38h],r9d
+  0000000000000041: 4C 89 4C 24 40     mov         qword ptr [rsp+40h],r9
+  0000000000000046: EB 1A              jmp         0000000000000062
+  0000000000000048: 0F B7 01           movzx       eax,word ptr [rcx]
+  000000000000004B: 66 89 44 24 38     mov         word ptr [rsp+38h],ax
+  0000000000000050: 0F B7 41 02        movzx       eax,word ptr [rcx+2]
+  0000000000000054: 66 89 44 24 3A     mov         word ptr [rsp+3Ah],ax
+  0000000000000059: 48 8B 41 08        mov         rax,qword ptr [rcx+8]
+  000000000000005D: 48 89 44 24 40     mov         qword ptr [rsp+40h],rax
+  0000000000000062: 48 8B 4A 10        mov         rcx,qword ptr [rdx+10h]
+  0000000000000066: 48 85 C9           test        rcx,rcx
+  0000000000000069: 75 1C              jne         0000000000000087
+  000000000000006B: 48 8D 54 24 20     lea         rdx,[rsp+20h]
+  0000000000000070: 44 89 4C 24 48     mov         dword ptr [rsp+48h],r9d
+  0000000000000075: 49 8B C8           mov         rcx,r8
+  0000000000000078: 4C 89 4C 24 50     mov         qword ptr [rsp+50h],r9
+  000000000000007D: E8 00 00 00 00     call        plo_core_record
+  0000000000000082: 48 83 C4 68        add         rsp,68h
+  0000000000000086: C3                 ret
+  0000000000000087: 0F B7 01           movzx       eax,word ptr [rcx]
+  000000000000008A: 48 8D 54 24 20     lea         rdx,[rsp+20h]
+  000000000000008F: 66 89 44 24 48     mov         word ptr [rsp+48h],ax
+  0000000000000094: 0F B7 41 02        movzx       eax,word ptr [rcx+2]
+  0000000000000098: 66 89 44 24 4A     mov         word ptr [rsp+4Ah],ax
+  000000000000009D: 48 8B 41 08        mov         rax,qword ptr [rcx+8]
+  00000000000000A1: 49 8B C8           mov         rcx,r8
+  00000000000000A4: 48 89 44 24 50     mov         qword ptr [rsp+50h],rax
+  00000000000000A9: E8 00 00 00 00     call        plo_core_record
+  00000000000000AE: 48 83 C4 68        add         rsp,68h
+  00000000000000B2: C3                 ret
+
+plo_core_copy:
+  0000000000000000: 48 89 5C 24 08     mov         qword ptr [rsp+8],rbx
+  0000000000000005: 48 89 6C 24 10     mov         qword ptr [rsp+10h],rbp
+  000000000000000A: 48 89 74 24 18     mov         qword ptr [rsp+18h],rsi
+  000000000000000F: 57                 push        rdi
+  0000000000000010: 41 56              push        r14
+  0000000000000012: 41 57              push        r15
+  0000000000000014: 48 83 EC 20        sub         rsp,20h
+  0000000000000018: 49 8B D9           mov         rbx,r9
+  000000000000001B: 41 8B F0           mov         esi,r8d
+  000000000000001E: 44 8B FA           mov         r15d,edx
+  0000000000000021: 48 8B E9           mov         rbp,rcx
+  0000000000000024: 48 85 C9           test        rcx,rcx
+  0000000000000027: 0F 84 93 00 00 00  je          00000000000000C0
+  000000000000002D: 48 85 DB           test        rbx,rbx
+  0000000000000030: 0F 84 8A 00 00 00  je          00000000000000C0
+  0000000000000036: 4C 8B 74 24 68     mov         r14,qword ptr [rsp+68h]
+  000000000000003B: 4D 85 F6           test        r14,r14
+  000000000000003E: 0F 84 7C 00 00 00  je          00000000000000C0
+  0000000000000044: 41 81 F8 00 10 00  cmp         r8d,1000h
+                    00
+  000000000000004B: 77 73              ja          00000000000000C0
+  000000000000004D: B8 FD 33 A6 C9     mov         eax,0C9A633FDh
+  0000000000000052: F7 64 24 60        mul         eax,dword ptr [rsp+60h]
+  0000000000000056: C1 EA 0B           shr         edx,0Bh
+  0000000000000059: 44 3B C2           cmp         r8d,edx
+  000000000000005C: 77 62              ja          00000000000000C0
+  000000000000005E: 33 FF              xor         edi,edi
+  0000000000000060: 41 89 3E           mov         dword ptr [r14],edi
+  0000000000000063: E8 00 00 00 00     call        prefix
+  0000000000000068: 44 8B C0           mov         r8d,eax
+  000000000000006B: 44 3B F8           cmp         r15d,eax
+  000000000000006E: 77 50              ja          00000000000000C0
+  0000000000000070: 45 2B C7           sub         r8d,r15d
+  0000000000000073: 44 3B C6           cmp         r8d,esi
+  0000000000000076: 44 0F 47 C6        cmova       r8d,esi
+  000000000000007A: 45 85 C0           test        r8d,r8d
+  000000000000007D: 74 3A              je          00000000000000B9
+  000000000000007F: 90                 nop
+  0000000000000080: 42 8D 0C 3F        lea         ecx,[rdi+r15]
+  0000000000000084: 48 69 D1 28 0A 00  imul        rdx,rcx,0A28h
+                    00
+  000000000000008B: B9 28 0A 00 00     mov         ecx,0A28h
+  0000000000000090: 48 03 55 00        add         rdx,qword ptr [rbp]
+  0000000000000094: 0F 1F 40 00        nop         dword ptr [rax]
+  0000000000000098: 0F 1F 84 00 00 00  nop         dword ptr [rax+rax]
+                    00 00
+  00000000000000A0: 0F B6 02           movzx       eax,byte ptr [rdx]
+  00000000000000A3: 48 8D 52 01        lea         rdx,[rdx+1]
+  00000000000000A7: 88 03              mov         byte ptr [rbx],al
+  00000000000000A9: 48 FF C3           inc         rbx
+  00000000000000AC: 48 83 E9 01        sub         rcx,1
+  00000000000000B0: 75 EE              jne         00000000000000A0
+  00000000000000B2: FF C7              inc         edi
+  00000000000000B4: 41 3B F8           cmp         edi,r8d
+  00000000000000B7: 72 C7              jb          0000000000000080
+  00000000000000B9: 45 89 06           mov         dword ptr [r14],r8d
+  00000000000000BC: 33 C0              xor         eax,eax
+  00000000000000BE: EB 05              jmp         00000000000000C5
+  00000000000000C0: B8 FF FF FF FF     mov         eax,0FFFFFFFFh
+  00000000000000C5: 48 8B 5C 24 40     mov         rbx,qword ptr [rsp+40h]
+  00000000000000CA: 48 8B 6C 24 48     mov         rbp,qword ptr [rsp+48h]
+  00000000000000CF: 48 8B 74 24 50     mov         rsi,qword ptr [rsp+50h]
+  00000000000000D4: 48 83 C4 20        add         rsp,20h
+  00000000000000D8: 41 5F              pop         r15
+  00000000000000DA: 41 5E              pop         r14
+  00000000000000DC: 5F                 pop         rdi
+  00000000000000DD: C3                 ret
+
+plo_core_drain:
+  0000000000000000: 40 57              push        rdi
+  0000000000000002: 48 83 EC 20        sub         rsp,20h
+  0000000000000006: 48 8B F9           mov         rdi,rcx
+  0000000000000009: 48 85 C9           test        rcx,rcx
+  000000000000000C: 75 0B              jne         0000000000000019
+  000000000000000E: B8 FF FF FF FF     mov         eax,0FFFFFFFFh
+  0000000000000013: 48 83 C4 20        add         rsp,20h
+  0000000000000017: 5F                 pop         rdi
+  0000000000000018: C3                 ret
+  0000000000000019: 48 89 74 24 40     mov         qword ptr [rsp+40h],rsi
+  000000000000001E: 33 F6              xor         esi,esi
+  0000000000000020: 33 C0              xor         eax,eax
+  0000000000000022: F0 0F B1 71 0C     lock cmpxchg dword ptr [rcx+0Ch],esi
+  0000000000000027: 83 C0 FC           add         eax,0FFFFFFFCh
+  000000000000002A: A9 FD FF FF FF     test        eax,0FFFFFFFDh
+  000000000000002F: 74 10              je          0000000000000041
+  0000000000000031: 48 8B 74 24 40     mov         rsi,qword ptr [rsp+40h]
+  0000000000000036: B8 FE FF FF FF     mov         eax,0FFFFFFFEh
+  000000000000003B: 48 83 C4 20        add         rsp,20h
+  000000000000003F: 5F                 pop         rdi
+  0000000000000040: C3                 ret
+  0000000000000041: 33 C0              xor         eax,eax
+  0000000000000043: F0 0F B1 71 20     lock cmpxchg dword ptr [rcx+20h],esi
+  0000000000000048: 75 54              jne         000000000000009E
+  000000000000004A: 33 C0              xor         eax,eax
+  000000000000004C: F0 0F B1 71 1C     lock cmpxchg dword ptr [rcx+1Ch],esi
+  0000000000000051: 75 4B              jne         000000000000009E
+  0000000000000053: 48 89 5C 24 38     mov         qword ptr [rsp+38h],rbx
+  0000000000000058: 33 C0              xor         eax,eax
+  000000000000005A: F0 0F B1 71 18     lock cmpxchg dword ptr [rcx+18h],esi
+  000000000000005F: 8B 59 08           mov         ebx,dword ptr [rcx+8]
+  0000000000000062: 3B C3              cmp         eax,ebx
+  0000000000000064: 0F 42 D8           cmovb       ebx,eax
+  0000000000000067: E8 00 00 00 00     call        prefix
+  000000000000006C: 3B C3              cmp         eax,ebx
+  000000000000006E: 48 8B 5C 24 38     mov         rbx,qword ptr [rsp+38h]
+  0000000000000073: 75 29              jne         000000000000009E
+  0000000000000075: B8 01 00 00 00     mov         eax,1
+  000000000000007A: B9 05 00 00 00     mov         ecx,5
+  000000000000007F: 87 47 2C           xchg        eax,dword ptr [rdi+2Ch]
+  0000000000000082: 87 4F 0C           xchg        ecx,dword ptr [rdi+0Ch]
+  0000000000000085: 33 C0              xor         eax,eax
+  0000000000000087: F0 0F B1 77 10     lock cmpxchg dword ptr [rdi+10h],esi
+  000000000000008C: 48 8B 74 24 40     mov         rsi,qword ptr [rsp+40h]
+  0000000000000091: F7 D8              neg         eax
+  0000000000000093: 1B C0              sbb         eax,eax
+  0000000000000095: 83 E0 FC           and         eax,0FFFFFFFCh
+  0000000000000098: 48 83 C4 20        add         rsp,20h
+  000000000000009C: 5F                 pop         rdi
+  000000000000009D: C3                 ret
+  000000000000009E: 48 8B 74 24 40     mov         rsi,qword ptr [rsp+40h]
+  00000000000000A3: B8 FD FF FF FF     mov         eax,0FFFFFFFDh
+  00000000000000A8: 48 83 C4 20        add         rsp,20h
+  00000000000000AC: 5F                 pop         rdi
+  00000000000000AD: C3                 ret
+
+plo_core_init:
+  0000000000000000: 4C 8B C9           mov         r9,rcx
+  0000000000000003: 48 85 C9           test        rcx,rcx
+  0000000000000006: 0F 84 8F 00 00 00  je          000000000000009B
+  000000000000000C: 48 85 D2           test        rdx,rdx
+  000000000000000F: 0F 84 86 00 00 00  je          000000000000009B
+  0000000000000015: 41 8D 40 FF        lea         eax,[r8-1]
+  0000000000000019: 3D FF 0F 00 00     cmp         eax,0FFFh
+  000000000000001E: 0F 87 77 00 00 00  ja          000000000000009B
+  0000000000000024: 48 89 11           mov         qword ptr [rcx],rdx
+  0000000000000027: B8 01 00 00 00     mov         eax,1
+  000000000000002C: 44 89 41 08        mov         dword ptr [rcx+8],r8d
+  0000000000000030: 87 41 0C           xchg        eax,dword ptr [rcx+0Ch]
+  0000000000000033: 33 C0              xor         eax,eax
+  0000000000000035: 87 41 10           xchg        eax,dword ptr [rcx+10h]
+  0000000000000038: 33 C0              xor         eax,eax
+  000000000000003A: 87 41 14           xchg        eax,dword ptr [rcx+14h]
+  000000000000003D: 33 C0              xor         eax,eax
+  000000000000003F: 87 41 18           xchg        eax,dword ptr [rcx+18h]
+  0000000000000042: 33 C0              xor         eax,eax
+  0000000000000044: 87 41 1C           xchg        eax,dword ptr [rcx+1Ch]
+  0000000000000047: 33 C0              xor         eax,eax
+  0000000000000049: 87 41 20           xchg        eax,dword ptr [rcx+20h]
+  000000000000004C: B9 00 00 00 80     mov         ecx,80000000h
+  0000000000000051: 8B C1              mov         eax,ecx
+  0000000000000053: 41 87 41 24        xchg        eax,dword ptr [r9+24h]
+  0000000000000057: 41 87 49 28        xchg        ecx,dword ptr [r9+28h]
+  000000000000005B: 33 C0              xor         eax,eax
+  000000000000005D: 41 87 41 2C        xchg        eax,dword ptr [r9+2Ch]
+  0000000000000061: 33 C0              xor         eax,eax
+  0000000000000063: 41 87 41 30        xchg        eax,dword ptr [r9+30h]
+  0000000000000067: 45 85 C0           test        r8d,r8d
+  000000000000006A: 74 2C              je          0000000000000098
+  000000000000006C: 45 8B C0           mov         r8d,r8d
+  000000000000006F: 90                 nop
+  0000000000000070: 48 8B C2           mov         rax,rdx
+  0000000000000073: B9 28 0A 00 00     mov         ecx,0A28h
+  0000000000000078: 0F 1F 84 00 00 00  nop         dword ptr [rax+rax+0000000000000000h]
+                    00 00
+  0000000000000080: C6 00 00           mov         byte ptr [rax],0
+  0000000000000083: 48 FF C0           inc         rax
+  0000000000000086: 48 83 E9 01        sub         rcx,1
+  000000000000008A: 75 F4              jne         0000000000000080
+  000000000000008C: 87 4A 24           xchg        ecx,dword ptr [rdx+24h]
+  000000000000008F: 48 8B D0           mov         rdx,rax
+  0000000000000092: 49 83 E8 01        sub         r8,1
+  0000000000000096: 75 D8              jne         0000000000000070
+  0000000000000098: 33 C0              xor         eax,eax
+  000000000000009A: C3                 ret
+  000000000000009B: B8 FF FF FF FF     mov         eax,0FFFFFFFFh
+  00000000000000A0: C3                 ret
+
+plo_core_record:
+  0000000000000000: 40 55              push        rbp
+  0000000000000002: 57                 push        rdi
+  0000000000000003: 41 57              push        r15
+  0000000000000005: 48 83 EC 30        sub         rsp,30h
+  0000000000000009: 33 ED              xor         ebp,ebp
+  000000000000000B: 4C 8B FA           mov         r15,rdx
+  000000000000000E: 48 8B F9           mov         rdi,rcx
+  0000000000000011: 48 85 C9           test        rcx,rcx
+  0000000000000014: 0F 84 D3 01 00 00  je          00000000000001ED
+  000000000000001A: 48 39 29           cmp         qword ptr [rcx],rbp
+  000000000000001D: 0F 84 CA 01 00 00  je          00000000000001ED
+  0000000000000023: 48 89 74 24 58     mov         qword ptr [rsp+58h],rsi
+  0000000000000028: BE 01 00 00 00     mov         esi,1
+  000000000000002D: 8B C6              mov         eax,esi
+  000000000000002F: F0 0F C1 41 14     lock xadd   dword ptr [rcx+14h],eax
+  0000000000000034: 83 F8 FF           cmp         eax,0FFFFFFFFh
+  0000000000000037: 75 08              jne         0000000000000041
+  0000000000000039: F0 81 49 10 00 01  lock or     dword ptr [rcx+10h],100h
+                    00 00
+  0000000000000041: 8B C6              mov         eax,esi
+  0000000000000043: F0 0F C1 41 1C     lock xadd   dword ptr [rcx+1Ch],eax
+  0000000000000048: 83 F8 FF           cmp         eax,0FFFFFFFFh
+  000000000000004B: 75 08              jne         0000000000000055
+  000000000000004D: F0 81 49 10 00 01  lock or     dword ptr [rcx+10h],100h
+                    00 00
+  0000000000000055: 33 C0              xor         eax,eax
+  0000000000000057: F0 0F B1 69 0C     lock cmpxchg dword ptr [rcx+0Ch],ebp
+  000000000000005C: FF C8              dec         eax
+  000000000000005E: 83 F8 02           cmp         eax,2
+  0000000000000061: 76 31              jbe         0000000000000094
+  0000000000000063: F0 81 49 10 80 00  lock or     dword ptr [rcx+10h],80h
+                    00 00
+  000000000000006B: F0 0F C1 71 30     lock xadd   dword ptr [rcx+30h],esi
+  0000000000000070: 83 FE FF           cmp         esi,0FFFFFFFFh
+  0000000000000073: 75 08              jne         000000000000007D
+  0000000000000075: F0 81 49 10 00 01  lock or     dword ptr [rcx+10h],100h
+                    00 00
+  000000000000007D: F0 FF 49 1C        lock dec    dword ptr [rcx+1Ch]
+  0000000000000081: B8 FE FF FF FF     mov         eax,0FFFFFFFEh
+  0000000000000086: 48 8B 74 24 58     mov         rsi,qword ptr [rsp+58h]
+  000000000000008B: 48 83 C4 30        add         rsp,30h
+  000000000000008F: 41 5F              pop         r15
+  0000000000000091: 5F                 pop         rdi
+  0000000000000092: 5D                 pop         rbp
+  0000000000000093: C3                 ret
+  0000000000000094: 33 C0              xor         eax,eax
+  0000000000000096: F0 0F B1 69 10     lock cmpxchg dword ptr [rcx+10h],ebp
+  000000000000009B: A9 01 01 00 00     test        eax,101h
+  00000000000000A0: 75 1D              jne         00000000000000BF
+  00000000000000A2: 8B C6              mov         eax,esi
+  00000000000000A4: F0 0F C1 41 18     lock xadd   dword ptr [rcx+18h],eax
+  00000000000000A9: 3B 41 08           cmp         eax,dword ptr [rcx+8]
+  00000000000000AC: 72 3A              jb          00000000000000E8
+  00000000000000AE: 83 F8 FF           cmp         eax,0FFFFFFFFh
+  00000000000000B1: 75 08              jne         00000000000000BB
+  00000000000000B3: F0 81 49 10 00 01  lock or     dword ptr [rcx+10h],100h
+                    00 00
+  00000000000000BB: F0 09 71 10        lock or     dword ptr [rcx+10h],esi
+  00000000000000BF: F0 0F C1 71 30     lock xadd   dword ptr [rcx+30h],esi
+  00000000000000C4: 83 FE FF           cmp         esi,0FFFFFFFFh
+  00000000000000C7: 75 08              jne         00000000000000D1
+  00000000000000C9: F0 81 49 10 00 01  lock or     dword ptr [rcx+10h],100h
+                    00 00
+  00000000000000D1: F0 FF 49 1C        lock dec    dword ptr [rcx+1Ch]
+  00000000000000D5: B8 FC FF FF FF     mov         eax,0FFFFFFFCh
+  00000000000000DA: 48 8B 74 24 58     mov         rsi,qword ptr [rsp+58h]
+  00000000000000DF: 48 83 C4 30        add         rsp,30h
+  00000000000000E3: 41 5F              pop         r15
+  00000000000000E5: 5F                 pop         rdi
+  00000000000000E6: 5D                 pop         rbp
+  00000000000000E7: C3                 ret
+  00000000000000E8: 8B D0              mov         edx,eax
+  00000000000000EA: 4C 89 74 24 68     mov         qword ptr [rsp+68h],r14
+  00000000000000EF: 4C 69 F2 28 0A 00  imul        r14,rdx,0A28h
+                    00
+  00000000000000F6: 48 8D 42 01        lea         rax,[rdx+1]
+  00000000000000FA: 4C 03 31           add         r14,qword ptr [rcx]
+  00000000000000FD: 49 89 06           mov         qword ptr [r14],rax
+  0000000000000100: 4D 85 FF           test        r15,r15
+  0000000000000103: 75 1A              jne         000000000000011F
+  0000000000000105: B8 02 00 00 00     mov         eax,2
+  000000000000010A: 49 89 6E 10        mov         qword ptr [r14+10h],rbp
+  000000000000010E: 41 89 46 20        mov         dword ptr [r14+20h],eax
+  0000000000000112: 49 89 6E 08        mov         qword ptr [r14+8],rbp
+  0000000000000116: 49 89 6E 18        mov         qword ptr [r14+18h],rbp
+  000000000000011A: E9 A8 00 00 00     jmp         00000000000001C7
+  000000000000011F: 41 8B 07           mov         eax,dword ptr [r15]
+  0000000000000122: 4D 8D 4E 18        lea         r9,[r14+18h]
+  0000000000000126: 41 89 46 10        mov         dword ptr [r14+10h],eax
+  000000000000012A: 41 8B 47 10        mov         eax,dword ptr [r15+10h]
+  000000000000012E: 41 89 46 14        mov         dword ptr [r14+14h],eax
+  0000000000000132: 49 8B 47 08        mov         rax,qword ptr [r15+8]
+  0000000000000136: 48 89 5C 24 50     mov         qword ptr [rsp+50h],rbx
+  000000000000013B: 4C 89 64 24 60     mov         qword ptr [rsp+60h],r12
+  0000000000000140: 4D 8D 66 1C        lea         r12,[r14+1Ch]
+  0000000000000144: 49 89 46 08        mov         qword ptr [r14+8],rax
+  0000000000000148: 41 89 29           mov         dword ptr [r9],ebp
+  000000000000014B: 41 89 2C 24        mov         dword ptr [r12],ebp
+  000000000000014F: 41 8B 07           mov         eax,dword ptr [r15]
+  0000000000000152: 3B C6              cmp         eax,esi
+  0000000000000154: 74 0B              je          0000000000000161
+  0000000000000156: 83 F8 02           cmp         eax,2
+  0000000000000159: B9 10 00 00 00     mov         ecx,10h
+  000000000000015E: 0F 45 E9           cmovne      ebp,ecx
+  0000000000000161: 41 83 7F 04 00     cmp         dword ptr [r15+4],0
+  0000000000000166: 75 07              jne         000000000000016F
+  0000000000000168: 49 83 7F 08 00     cmp         qword ptr [r15+8],0
+  000000000000016D: 75 03              jne         0000000000000172
+  000000000000016F: 83 CD 02           or          ebp,2
+  0000000000000172: 4C 89 4C 24 20     mov         qword ptr [rsp+20h],r9
+  0000000000000177: 49 8D 57 18        lea         rdx,[r15+18h]
+  000000000000017B: 41 B9 04 00 00 00  mov         r9d,4
+  0000000000000181: 49 8D 4E 28        lea         rcx,[r14+28h]
+  0000000000000185: 41 B8 00 04 00 00  mov         r8d,400h
+  000000000000018B: E8 00 00 00 00     call        copy_name
+  0000000000000190: 8B D8              mov         ebx,eax
+  0000000000000192: 4C 89 64 24 20     mov         qword ptr [rsp+20h],r12
+  0000000000000197: 49 8D 57 28        lea         rdx,[r15+28h]
+  000000000000019B: 41 B9 08 00 00 00  mov         r9d,8
+  00000000000001A1: 49 8D 8E 28 08 00  lea         rcx,[r14+828h]
+                    00
+  00000000000001A8: 41 B8 00 01 00 00  mov         r8d,100h
+  00000000000001AE: 0B DD              or          ebx,ebp
+  00000000000001B0: E8 00 00 00 00     call        copy_name
+  00000000000001B5: 4C 8B 64 24 60     mov         r12,qword ptr [rsp+60h]
+  00000000000001BA: 0B C3              or          eax,ebx
+  00000000000001BC: 48 8B 5C 24 50     mov         rbx,qword ptr [rsp+50h]
+  00000000000001C1: 41 89 46 20        mov         dword ptr [r14+20h],eax
+  00000000000001C5: 74 04              je          00000000000001CB
+  00000000000001C7: F0 09 47 10        lock or     dword ptr [rdi+10h],eax
+  00000000000001CB: 41 87 76 24        xchg        esi,dword ptr [r14+24h]
+  00000000000001CF: F0 FF 4F 1C        lock dec    dword ptr [rdi+1Ch]
+  00000000000001D3: 4C 8B 74 24 68     mov         r14,qword ptr [rsp+68h]
+  00000000000001D8: F7 D8              neg         eax
+  00000000000001DA: 48 8B 74 24 58     mov         rsi,qword ptr [rsp+58h]
+  00000000000001DF: 1B C0              sbb         eax,eax
+  00000000000001E1: 83 E0 FC           and         eax,0FFFFFFFCh
+  00000000000001E4: 48 83 C4 30        add         rsp,30h
+  00000000000001E8: 41 5F              pop         r15
+  00000000000001EA: 5F                 pop         rdi
+  00000000000001EB: 5D                 pop         rbp
+  00000000000001EC: C3                 ret
+  00000000000001ED: B8 FF FF FF FF     mov         eax,0FFFFFFFFh
+  00000000000001F2: 48 83 C4 30        add         rsp,30h
+  00000000000001F6: 41 5F              pop         r15
+  00000000000001F8: 5F                 pop         rdi
+  00000000000001F9: 5D                 pop         rbp
+  00000000000001FA: C3                 ret
+
+plo_core_registered:
+  0000000000000000: 4C 8B C9           mov         r9,rcx
+  0000000000000003: 48 85 C9           test        rcx,rcx
+  0000000000000006: 74 5D              je          0000000000000065
+  0000000000000008: 33 C9              xor         ecx,ecx
+  000000000000000A: 33 C0              xor         eax,eax
+  000000000000000C: F0 41 0F B1 49 0C  lock cmpxchg dword ptr [r9+0Ch],ecx
+  0000000000000012: 83 F8 01           cmp         eax,1
+  0000000000000015: 75 4E              jne         0000000000000065
+  0000000000000017: 8B C2              mov         eax,edx
+  0000000000000019: 41 87 41 24        xchg        eax,dword ptr [r9+24h]
+  000000000000001D: 85 D2              test        edx,edx
+  000000000000001F: 75 1A              jne         000000000000003B
+  0000000000000021: 4D 85 C0           test        r8,r8
+  0000000000000024: 74 15              je          000000000000003B
+  0000000000000026: B8 01 00 00 00     mov         eax,1
+  000000000000002B: B9 02 00 00 00     mov         ecx,2
+  0000000000000030: 41 87 41 20        xchg        eax,dword ptr [r9+20h]
+  0000000000000034: 41 87 49 0C        xchg        ecx,dword ptr [r9+0Ch]
+  0000000000000038: 33 C0              xor         eax,eax
+  000000000000003A: C3                 ret
+  000000000000003B: F0 41 83 49 10 20  lock or     dword ptr [r9+10h],20h
+  0000000000000041: 4D 85 C0           test        r8,r8
+  0000000000000044: B8 03 00 00 00     mov         eax,3
+  0000000000000049: 0F 95 C1           setne       cl
+  000000000000004C: 4D 85 C0           test        r8,r8
+  000000000000004F: 41 87 49 20        xchg        ecx,dword ptr [r9+20h]
+  0000000000000053: B9 06 00 00 00     mov         ecx,6
+  0000000000000058: 0F 44 C1           cmove       eax,ecx
+  000000000000005B: 41 87 41 0C        xchg        eax,dword ptr [r9+0Ch]
+  000000000000005F: B8 FC FF FF FF     mov         eax,0FFFFFFFCh
+  0000000000000064: C3                 ret
+  0000000000000065: B8 FE FF FF FF     mov         eax,0FFFFFFFEh
+  000000000000006A: C3                 ret
+
+plo_core_snapshot:
+  0000000000000000: 48 89 5C 24 18     mov         qword ptr [rsp+18h],rbx
+  0000000000000005: 57                 push        rdi
+  0000000000000006: 48 83 EC 20        sub         rsp,20h
+  000000000000000A: 48 8B DA           mov         rbx,rdx
+  000000000000000D: 48 8B F9           mov         rdi,rcx
+  0000000000000010: 48 85 C9           test        rcx,rcx
+  0000000000000013: 0F 84 FC 00 00 00  je          0000000000000115
+  0000000000000019: 48 85 D2           test        rdx,rdx
+  000000000000001C: 0F 84 F3 00 00 00  je          0000000000000115
+  0000000000000022: 48 83 39 00        cmp         qword ptr [rcx],0
+  0000000000000026: 0F 84 E9 00 00 00  je          0000000000000115
+  000000000000002C: 48 89 6C 24 30     mov         qword ptr [rsp+30h],rbp
+  0000000000000031: 33 ED              xor         ebp,ebp
+  0000000000000033: 48 89 74 24 38     mov         qword ptr [rsp+38h],rsi
+  0000000000000038: BE 01 00 00 00     mov         esi,1
+  000000000000003D: 89 32              mov         dword ptr [rdx],esi
+  000000000000003F: C7 42 04 28 0A 00  mov         dword ptr [rdx+4],0A28h
+                    00
+  0000000000000046: C7 42 08 48 00 00  mov         dword ptr [rdx+8],48h
+                    00
+  000000000000004D: 8B 41 08           mov         eax,dword ptr [rcx+8]
+  0000000000000050: 89 42 0C           mov         dword ptr [rdx+0Ch],eax
+  0000000000000053: 33 C0              xor         eax,eax
+  0000000000000055: C7 42 10 00 04 00  mov         dword ptr [rdx+10h],400h
+                    00
+  000000000000005C: C7 42 14 00 01 00  mov         dword ptr [rdx+14h],100h
+                    00
+  0000000000000063: F0 0F B1 69 0C     lock cmpxchg dword ptr [rcx+0Ch],ebp
+  0000000000000068: 89 42 18           mov         dword ptr [rdx+18h],eax
+  000000000000006B: 33 C0              xor         eax,eax
+  000000000000006D: F0 0F B1 69 10     lock cmpxchg dword ptr [rcx+10h],ebp
+  0000000000000072: 89 42 1C           mov         dword ptr [rdx+1Ch],eax
+  0000000000000075: 33 C0              xor         eax,eax
+  0000000000000077: F0 0F B1 69 14     lock cmpxchg dword ptr [rcx+14h],ebp
+  000000000000007C: 89 42 20           mov         dword ptr [rdx+20h],eax
+  000000000000007F: 33 C0              xor         eax,eax
+  0000000000000081: F0 0F B1 69 18     lock cmpxchg dword ptr [rcx+18h],ebp
+  0000000000000086: 89 42 24           mov         dword ptr [rdx+24h],eax
+  0000000000000089: E8 00 00 00 00     call        prefix
+  000000000000008E: 89 43 28           mov         dword ptr [rbx+28h],eax
+  0000000000000091: 33 C0              xor         eax,eax
+  0000000000000093: F0 0F B1 6F 1C     lock cmpxchg dword ptr [rdi+1Ch],ebp
+  0000000000000098: 89 43 2C           mov         dword ptr [rbx+2Ch],eax
+  000000000000009B: 33 C0              xor         eax,eax
+  000000000000009D: F0 0F B1 6F 20     lock cmpxchg dword ptr [rdi+20h],ebp
+  00000000000000A2: 89 43 30           mov         dword ptr [rbx+30h],eax
+  00000000000000A5: 33 C0              xor         eax,eax
+  00000000000000A7: F0 0F B1 6F 24     lock cmpxchg dword ptr [rdi+24h],ebp
+  00000000000000AC: 89 43 34           mov         dword ptr [rbx+34h],eax
+  00000000000000AF: 33 C0              xor         eax,eax
+  00000000000000B1: F0 0F B1 6F 28     lock cmpxchg dword ptr [rdi+28h],ebp
+  00000000000000B6: 89 43 38           mov         dword ptr [rbx+38h],eax
+  00000000000000B9: 33 C0              xor         eax,eax
+  00000000000000BB: F0 0F B1 6F 2C     lock cmpxchg dword ptr [rdi+2Ch],ebp
+  00000000000000C0: 89 43 3C           mov         dword ptr [rbx+3Ch],eax
+  00000000000000C3: 33 C0              xor         eax,eax
+  00000000000000C5: F0 0F B1 6F 30     lock cmpxchg dword ptr [rdi+30h],ebp
+  00000000000000CA: 83 7B 18 05        cmp         dword ptr [rbx+18h],5
+  00000000000000CE: 89 43 44           mov         dword ptr [rbx+44h],eax
+  00000000000000D1: 75 26              jne         00000000000000F9
+  00000000000000D3: 39 6B 1C           cmp         dword ptr [rbx+1Ch],ebp
+  00000000000000D6: 75 21              jne         00000000000000F9
+  00000000000000D8: 39 6B 2C           cmp         dword ptr [rbx+2Ch],ebp
+  00000000000000DB: 75 1C              jne         00000000000000F9
+  00000000000000DD: 39 6B 30           cmp         dword ptr [rbx+30h],ebp
+  00000000000000E0: 75 17              jne         00000000000000F9
+  00000000000000E2: 39 73 3C           cmp         dword ptr [rbx+3Ch],esi
+  00000000000000E5: 75 12              jne         00000000000000F9
+  00000000000000E7: 39 6B 34           cmp         dword ptr [rbx+34h],ebp
+  00000000000000EA: 75 0D              jne         00000000000000F9
+  00000000000000EC: 39 6B 38           cmp         dword ptr [rbx+38h],ebp
+  00000000000000EF: 75 08              jne         00000000000000F9
+  00000000000000F1: 8B 43 28           mov         eax,dword ptr [rbx+28h]
+  00000000000000F4: 39 43 24           cmp         dword ptr [rbx+24h],eax
+  00000000000000F7: 74 02              je          00000000000000FB
+  00000000000000F9: 8B F5              mov         esi,ebp
+  00000000000000FB: 48 8B 6C 24 30     mov         rbp,qword ptr [rsp+30h]
+  0000000000000100: 33 C0              xor         eax,eax
+  0000000000000102: 89 73 40           mov         dword ptr [rbx+40h],esi
+  0000000000000105: 48 8B 74 24 38     mov         rsi,qword ptr [rsp+38h]
+  000000000000010A: 48 8B 5C 24 40     mov         rbx,qword ptr [rsp+40h]
+  000000000000010F: 48 83 C4 20        add         rsp,20h
+  0000000000000113: 5F                 pop         rdi
+  0000000000000114: C3                 ret
+  0000000000000115: 48 8B 5C 24 40     mov         rbx,qword ptr [rsp+40h]
+  000000000000011A: B8 FF FF FF FF     mov         eax,0FFFFFFFFh
+  000000000000011F: 48 83 C4 20        add         rsp,20h
+  0000000000000123: 5F                 pop         rdi
+  0000000000000124: C3                 ret
+
+plo_core_stop_begin:
+  0000000000000000: 48 85 C9           test        rcx,rcx
+  0000000000000003: 75 06              jne         000000000000000B
+  0000000000000005: B8 FF FF FF FF     mov         eax,0FFFFFFFFh
+  000000000000000A: C3                 ret
+  000000000000000B: 33 D2              xor         edx,edx
+  000000000000000D: 33 C0              xor         eax,eax
+  000000000000000F: F0 0F B1 51 0C     lock cmpxchg dword ptr [rcx+0Ch],edx
+  0000000000000014: 83 C0 FE           add         eax,0FFFFFFFEh
+  0000000000000017: 83 F8 01           cmp         eax,1
+  000000000000001A: 76 06              jbe         0000000000000022
+  000000000000001C: B8 FE FF FF FF     mov         eax,0FFFFFFFEh
+  0000000000000021: C3                 ret
+  0000000000000022: B8 03 00 00 00     mov         eax,3
+  0000000000000027: 87 41 0C           xchg        eax,dword ptr [rcx+0Ch]
+  000000000000002A: 33 C0              xor         eax,eax
+  000000000000002C: C3                 ret
+
+plo_core_unregistered:
+  0000000000000000: 48 85 C9           test        rcx,rcx
+  0000000000000003: 74 33              je          0000000000000038
+  0000000000000005: 45 33 C0           xor         r8d,r8d
+  0000000000000008: 33 C0              xor         eax,eax
+  000000000000000A: F0 44 0F B1 41 0C  lock cmpxchg dword ptr [rcx+0Ch],r8d
+  0000000000000010: 83 F8 03           cmp         eax,3
+  0000000000000013: 75 23              jne         0000000000000038
+  0000000000000015: 8B C2              mov         eax,edx
+  0000000000000017: 87 41 28           xchg        eax,dword ptr [rcx+28h]
+  000000000000001A: 85 D2              test        edx,edx
+  000000000000001C: 74 0B              je          0000000000000029
+  000000000000001E: F0 83 49 10 40     lock or     dword ptr [rcx+10h],40h
+  0000000000000023: B8 FC FF FF FF     mov         eax,0FFFFFFFCh
+  0000000000000028: C3                 ret
+  0000000000000029: 44 87 41 20        xchg        r8d,dword ptr [rcx+20h]
+  000000000000002D: B8 04 00 00 00     mov         eax,4
+  0000000000000032: 87 41 0C           xchg        eax,dword ptr [rcx+0Ch]
+  0000000000000035: 33 C0              xor         eax,eax
+  0000000000000037: C3                 ret
+  0000000000000038: B8 FE FF FF FF     mov         eax,0FFFFFFFEh
+  000000000000003D: C3                 ret
+
+plobs_abi_version:
+  0000000000000000: B8 01 00 00 00     mov         eax,1
+  0000000000000005: C3                 ret
+
+plobs_copy_rows:
+  0000000000000000: 48 89 5C 24 08     mov         qword ptr [rsp+8],rbx
+  0000000000000005: 48 89 6C 24 10     mov         qword ptr [rsp+10h],rbp
+  000000000000000A: 48 89 74 24 18     mov         qword ptr [rsp+18h],rsi
+  000000000000000F: 57                 push        rdi
+  0000000000000010: 48 83 EC 20        sub         rsp,20h
+  0000000000000014: 49 8B D8           mov         rbx,r8
+  0000000000000017: 8B FA              mov         edi,edx
+  0000000000000019: 8B E9              mov         ebp,ecx
+  000000000000001B: 4D 85 C0           test        r8,r8
+  000000000000001E: 0F 84 9D 00 00 00  je          00000000000000C1
+  0000000000000024: 48 8B 74 24 50     mov         rsi,qword ptr [rsp+50h]
+  0000000000000029: 48 85 F6           test        rsi,rsi
+  000000000000002C: 0F 84 8F 00 00 00  je          00000000000000C1
+  0000000000000032: 81 FA 00 10 00 00  cmp         edx,1000h
+  0000000000000038: 0F 87 83 00 00 00  ja          00000000000000C1
+  000000000000003E: B8 FD 33 A6 C9     mov         eax,0C9A633FDh
+  0000000000000043: 41 F7 E1           mul         eax,r9d
+  0000000000000046: C1 EA 0B           shr         edx,0Bh
+  0000000000000049: 3B FA              cmp         edi,edx
+  000000000000004B: 77 74              ja          00000000000000C1
+  000000000000004D: 48 8D 0D 00 00 00  lea         rcx,[global_core]
+                    00
+  0000000000000054: C7 06 00 00 00 00  mov         dword ptr [rsi],0
+  000000000000005A: E8 00 00 00 00     call        prefix
+  000000000000005F: 44 8B C8           mov         r9d,eax
+  0000000000000062: 3B E8              cmp         ebp,eax
+  0000000000000064: 77 5B              ja          00000000000000C1
+  0000000000000066: 44 2B CD           sub         r9d,ebp
+  0000000000000069: 44 3B CF           cmp         r9d,edi
+  000000000000006C: 44 0F 47 CF        cmova       r9d,edi
+  0000000000000070: 45 33 C0           xor         r8d,r8d
+  0000000000000073: 45 85 C9           test        r9d,r9d
+  0000000000000076: 74 42              je          00000000000000BA
+  0000000000000078: 0F 1F 84 00 00 00  nop         dword ptr [rax+rax]
+                    00 00
+  0000000000000080: 41 8D 0C 28        lea         ecx,[r8+rbp]
+  0000000000000084: 48 69 D1 28 0A 00  imul        rdx,rcx,0A28h
+                    00
+  000000000000008B: B9 28 0A 00 00     mov         ecx,0A28h
+  0000000000000090: 48 03 15 00 00 00  add         rdx,qword ptr [global_core]
+                    00
+  0000000000000097: 66 0F 1F 84 00 00  nop         word ptr [rax+rax]
+                    00 00 00
+  00000000000000A0: 0F B6 02           movzx       eax,byte ptr [rdx]
+  00000000000000A3: 48 8D 52 01        lea         rdx,[rdx+1]
+  00000000000000A7: 88 03              mov         byte ptr [rbx],al
+  00000000000000A9: 48 FF C3           inc         rbx
+  00000000000000AC: 48 83 E9 01        sub         rcx,1
+  00000000000000B0: 75 EE              jne         00000000000000A0
+  00000000000000B2: 41 FF C0           inc         r8d
+  00000000000000B5: 45 3B C1           cmp         r8d,r9d
+  00000000000000B8: 72 C6              jb          0000000000000080
+  00000000000000BA: 44 89 0E           mov         dword ptr [rsi],r9d
+  00000000000000BD: 33 C0              xor         eax,eax
+  00000000000000BF: EB 05              jmp         00000000000000C6
+  00000000000000C1: B8 FF FF FF FF     mov         eax,0FFFFFFFFh
+  00000000000000C6: 48 8B 5C 24 30     mov         rbx,qword ptr [rsp+30h]
+  00000000000000CB: 48 8B 6C 24 38     mov         rbp,qword ptr [rsp+38h]
+  00000000000000D0: 48 8B 74 24 40     mov         rsi,qword ptr [rsp+40h]
+  00000000000000D5: 48 83 C4 20        add         rsp,20h
+  00000000000000D9: 5F                 pop         rdi
+  00000000000000DA: C3                 ret
+
+plobs_snapshot:
+  0000000000000000: 83 FA 48           cmp         edx,48h
+  0000000000000003: 74 06              je          000000000000000B
+  0000000000000005: B8 FF FF FF FF     mov         eax,0FFFFFFFFh
+  000000000000000A: C3                 ret
+  000000000000000B: 48 8B D1           mov         rdx,rcx
+  000000000000000E: 48 8D 0D 00 00 00  lea         rcx,[global_core]
+                    00
+  0000000000000015: E9 00 00 00 00     jmp         plo_core_snapshot
+
+plobs_start:
+  0000000000000000: 48 83 EC 28        sub         rsp,28h
+  0000000000000004: 4C 8B CA           mov         r9,rdx
+  0000000000000007: 4C 8B D1           mov         r10,rcx
+  000000000000000A: 48 85 C9           test        rcx,rcx
+  000000000000000D: 0F 84 9F 01 00 00  je          00000000000001B2
+  0000000000000013: 48 85 D2           test        rdx,rdx
+  0000000000000016: 0F 84 96 01 00 00  je          00000000000001B2
+  000000000000001C: 83 3D 00 00 00 00  cmp         dword ptr [ever_started],0
+                    00
+  0000000000000023: 74 15              je          000000000000003A
+  0000000000000025: F0 81 0D 10 00 00  lock or     dword ptr [global_core+10h],200h
+                    00 00 02 00 00
+  0000000000000030: B8 FE FF FF FF     mov         eax,0FFFFFFFEh
+  0000000000000035: 48 83 C4 28        add         rsp,28h
+  0000000000000039: C3                 ret
+  000000000000003A: 48 89 5C 24 30     mov         qword ptr [rsp+30h],rbx
+  000000000000003F: 48 8D 15 00 00 00  lea         rdx,[global_rows]
+                    00
+  0000000000000046: 48 89 15 00 00 00  mov         qword ptr [global_core],rdx
+                    00
+  000000000000004D: 33 DB              xor         ebx,ebx
+  000000000000004F: 48 89 7C 24 20     mov         qword ptr [rsp+20h],rdi
+  0000000000000054: 41 B8 00 10 00 00  mov         r8d,1000h
+  000000000000005A: 44 89 05 08 00 00  mov         dword ptr [global_core+8],r8d
+                    00
+  0000000000000061: BF 01 00 00 00     mov         edi,1
+  0000000000000066: 89 3D 00 00 00 00  mov         dword ptr [ever_started],edi
+  000000000000006C: 8B C7              mov         eax,edi
+  000000000000006E: 87 05 0C 00 00 00  xchg        eax,dword ptr [global_core+0Ch]
+  0000000000000074: 8B C3              mov         eax,ebx
+  0000000000000076: 8B CB              mov         ecx,ebx
+  0000000000000078: 87 05 10 00 00 00  xchg        eax,dword ptr [global_core+10h]
+  000000000000007E: 87 0D 14 00 00 00  xchg        ecx,dword ptr [global_core+14h]
+  0000000000000084: 8B C3              mov         eax,ebx
+  0000000000000086: 8B CB              mov         ecx,ebx
+  0000000000000088: 87 05 18 00 00 00  xchg        eax,dword ptr [global_core+18h]
+  000000000000008E: 87 0D 1C 00 00 00  xchg        ecx,dword ptr [global_core+1Ch]
+  0000000000000094: B9 00 00 00 80     mov         ecx,80000000h
+  0000000000000099: 8B C3              mov         eax,ebx
+  000000000000009B: 87 05 20 00 00 00  xchg        eax,dword ptr [global_core+20h]
+  00000000000000A1: 8B C1              mov         eax,ecx
+  00000000000000A3: 87 05 24 00 00 00  xchg        eax,dword ptr [global_core+24h]
+  00000000000000A9: 87 0D 28 00 00 00  xchg        ecx,dword ptr [global_core+28h]
+  00000000000000AF: 8B C3              mov         eax,ebx
+  00000000000000B1: 8B CB              mov         ecx,ebx
+  00000000000000B3: 87 05 2C 00 00 00  xchg        eax,dword ptr [global_core+2Ch]
+  00000000000000B9: 87 0D 30 00 00 00  xchg        ecx,dword ptr [global_core+30h]
+  00000000000000BF: 90                 nop
+  00000000000000C0: 48 8B C2           mov         rax,rdx
+  00000000000000C3: B9 28 0A 00 00     mov         ecx,0A28h
+  00000000000000C8: 0F 1F 84 00 00 00  nop         dword ptr [rax+rax]
+                    00 00
+  00000000000000D0: 88 18              mov         byte ptr [rax],bl
+  00000000000000D2: 48 FF C0           inc         rax
+  00000000000000D5: 48 2B CF           sub         rcx,rdi
+  00000000000000D8: 75 F6              jne         00000000000000D0
+  00000000000000DA: 8B CB              mov         ecx,ebx
+  00000000000000DC: 87 4A 24           xchg        ecx,dword ptr [rdx+24h]
+  00000000000000DF: 48 8B D0           mov         rdx,rax
+  00000000000000E2: 4C 2B C7           sub         r8,rdi
+  00000000000000E5: 75 D9              jne         00000000000000C0
+  00000000000000E7: 4C 89 0D 00 00 00  mov         qword ptr [unregister_function],r9
+                    00
+  00000000000000EE: 4C 8D 05 00 00 00  lea         r8,[global_core]
+                    00
+  00000000000000F5: 4C 8D 0D 00 00 00  lea         r9,[registration_cookie]
+                    00
+  00000000000000FC: 48 89 1D 00 00 00  mov         qword ptr [registration_cookie],rbx
+                    00
+  0000000000000103: 48 8D 15 00 00 00  lea         rdx,[notification]
+                    00
+  000000000000010A: 33 C9              xor         ecx,ecx
+  000000000000010C: 41 FF D2           call        r10
+  000000000000010F: 48 8B 15 00 00 00  mov         rdx,qword ptr [registration_cookie]
+                    00
+  0000000000000116: 44 8B C0           mov         r8d,eax
+  0000000000000119: 33 C0              xor         eax,eax
+  000000000000011B: F0 0F B1 1D 0C 00  lock cmpxchg dword ptr [global_core+0Ch],ebx
+                    00 00
+  0000000000000123: 3B C7              cmp         eax,edi
+  0000000000000125: 75 75              jne         000000000000019C
+  0000000000000127: 41 8B C8           mov         ecx,r8d
+  000000000000012A: 87 0D 24 00 00 00  xchg        ecx,dword ptr [global_core+24h]
+  0000000000000130: 45 85 C0           test        r8d,r8d
+  0000000000000133: 75 27              jne         000000000000015C
+  0000000000000135: 48 85 D2           test        rdx,rdx
+  0000000000000138: 74 22              je          000000000000015C
+  000000000000013A: 87 3D 20 00 00 00  xchg        edi,dword ptr [global_core+20h]
+  0000000000000140: 48 8B 7C 24 20     mov         rdi,qword ptr [rsp+20h]
+  0000000000000145: B8 02 00 00 00     mov         eax,2
+  000000000000014A: 87 05 0C 00 00 00  xchg        eax,dword ptr [global_core+0Ch]
+  0000000000000150: 8B C3              mov         eax,ebx
+  0000000000000152: 48 8B 5C 24 30     mov         rbx,qword ptr [rsp+30h]
+  0000000000000157: 48 83 C4 28        add         rsp,28h
+  000000000000015B: C3                 ret
+  000000000000015C: F0 83 0D 10 00 00  lock or     dword ptr [global_core+10h],20h
+                    00 20
+  0000000000000164: 48 8B 7C 24 20     mov         rdi,qword ptr [rsp+20h]
+  0000000000000169: 48 85 D2           test        rdx,rdx
+  000000000000016C: B8 03 00 00 00     mov         eax,3
+  0000000000000171: B9 06 00 00 00     mov         ecx,6
+  0000000000000176: 0F 95 C3           setne       bl
+  0000000000000179: 48 85 D2           test        rdx,rdx
+  000000000000017C: 87 1D 20 00 00 00  xchg        ebx,dword ptr [global_core+20h]
+  0000000000000182: 0F 44 C1           cmove       eax,ecx
+  0000000000000185: BB FC FF FF FF     mov         ebx,0FFFFFFFCh
+  000000000000018A: 87 05 0C 00 00 00  xchg        eax,dword ptr [global_core+0Ch]
+  0000000000000190: 8B C3              mov         eax,ebx
+  0000000000000192: 48 8B 5C 24 30     mov         rbx,qword ptr [rsp+30h]
+  0000000000000197: 48 83 C4 28        add         rsp,28h
+  000000000000019B: C3                 ret
+  000000000000019C: 48 8B 7C 24 20     mov         rdi,qword ptr [rsp+20h]
+  00000000000001A1: BB FE FF FF FF     mov         ebx,0FFFFFFFEh
+  00000000000001A6: 8B C3              mov         eax,ebx
+  00000000000001A8: 48 8B 5C 24 30     mov         rbx,qword ptr [rsp+30h]
+  00000000000001AD: 48 83 C4 28        add         rsp,28h
+  00000000000001B1: C3                 ret
+  00000000000001B2: B8 FF FF FF FF     mov         eax,0FFFFFFFFh
+  00000000000001B7: 48 83 C4 28        add         rsp,28h
+  00000000000001BB: C3                 ret
+
+plobs_stop:
+  0000000000000000: 40 57              push        rdi
+  0000000000000002: 48 83 EC 20        sub         rsp,20h
+  0000000000000006: 48 8B F9           mov         rdi,rcx
+  0000000000000009: 48 85 C9           test        rcx,rcx
+  000000000000000C: 0F 84 4C 01 00 00  je          000000000000015E
+  0000000000000012: 83 FA 48           cmp         edx,48h
+  0000000000000015: 0F 85 43 01 00 00  jne         000000000000015E
+  000000000000001B: 48 89 74 24 38     mov         qword ptr [rsp+38h],rsi
+  0000000000000020: 33 F6              xor         esi,esi
+  0000000000000022: 33 C0              xor         eax,eax
+  0000000000000024: 48 89 5C 24 30     mov         qword ptr [rsp+30h],rbx
+  0000000000000029: F0 0F B1 35 0C 00  lock cmpxchg dword ptr [global_core+0Ch],esi
+                    00 00
+  0000000000000031: 83 F8 05           cmp         eax,5
+  0000000000000034: 75 2A              jne         0000000000000060
+  0000000000000036: 48 8B D1           mov         rdx,rcx
+  0000000000000039: 48 8D 0D 00 00 00  lea         rcx,[global_core]
+                    00
+  0000000000000040: E8 00 00 00 00     call        plo_core_snapshot
+  0000000000000045: 39 77 40           cmp         dword ptr [rdi+40h],esi
+  0000000000000048: B8 FC FF FF FF     mov         eax,0FFFFFFFCh
+  000000000000004D: 48 8B 5C 24 30     mov         rbx,qword ptr [rsp+30h]
+  0000000000000052: 0F 45 C6           cmovne      eax,esi
+  0000000000000055: 48 8B 74 24 38     mov         rsi,qword ptr [rsp+38h]
+  000000000000005A: 48 83 C4 20        add         rsp,20h
+  000000000000005E: 5F                 pop         rdi
+  000000000000005F: C3                 ret
+  0000000000000060: 83 C0 FC           add         eax,0FFFFFFFCh
+  0000000000000063: A9 FD FF FF FF     test        eax,0FFFFFFFDh
+  0000000000000068: 0F 84 C1 00 00 00  je          000000000000012F
+  000000000000006E: 33 C0              xor         eax,eax
+  0000000000000070: F0 0F B1 35 0C 00  lock cmpxchg dword ptr [global_core+0Ch],esi
+                    00 00
+  0000000000000078: 83 C0 FE           add         eax,0FFFFFFFEh
+  000000000000007B: 83 F8 01           cmp         eax,1
+  000000000000007E: 76 26              jbe         00000000000000A6
+  0000000000000080: BB FE FF FF FF     mov         ebx,0FFFFFFFEh
+  0000000000000085: 33 C0              xor         eax,eax
+  0000000000000087: F0 0F B1 35 0C 00  lock cmpxchg dword ptr [global_core+0Ch],esi
+                    00 00
+  000000000000008F: 83 F8 06           cmp         eax,6
+  0000000000000092: 74 7D              je          0000000000000111
+  0000000000000094: 48 8B 74 24 38     mov         rsi,qword ptr [rsp+38h]
+  0000000000000099: 8B C3              mov         eax,ebx
+  000000000000009B: 48 8B 5C 24 30     mov         rbx,qword ptr [rsp+30h]
+  00000000000000A0: 48 83 C4 20        add         rsp,20h
+  00000000000000A4: 5F                 pop         rdi
+  00000000000000A5: C3                 ret
+  00000000000000A6: B8 03 00 00 00     mov         eax,3
+  00000000000000AB: 87 05 0C 00 00 00  xchg        eax,dword ptr [global_core+0Ch]
+  00000000000000B1: 48 8B 0D 00 00 00  mov         rcx,qword ptr [registration_cookie]
+                    00
+  00000000000000B8: FF 15 00 00 00 00  call        qword ptr [unregister_function]
+  00000000000000BE: 8B D0              mov         edx,eax
+  00000000000000C0: 33 C0              xor         eax,eax
+  00000000000000C2: F0 0F B1 35 0C 00  lock cmpxchg dword ptr [global_core+0Ch],esi
+                    00 00
+  00000000000000CA: 83 F8 03           cmp         eax,3
+  00000000000000CD: 75 32              jne         0000000000000101
+  00000000000000CF: 8B CA              mov         ecx,edx
+  00000000000000D1: 87 0D 28 00 00 00  xchg        ecx,dword ptr [global_core+28h]
+  00000000000000D7: 85 D2              test        edx,edx
+  00000000000000D9: 74 0F              je          00000000000000EA
+  00000000000000DB: F0 83 0D 10 00 00  lock or     dword ptr [global_core+10h],40h
+                    00 40
+  00000000000000E3: BB FC FF FF FF     mov         ebx,0FFFFFFFCh
+  00000000000000E8: EB 27              jmp         0000000000000111
+  00000000000000EA: 8B C6              mov         eax,esi
+  00000000000000EC: B9 04 00 00 00     mov         ecx,4
+  00000000000000F1: 87 05 20 00 00 00  xchg        eax,dword ptr [global_core+20h]
+  00000000000000F7: 87 0D 0C 00 00 00  xchg        ecx,dword ptr [global_core+0Ch]
+  00000000000000FD: 8B DE              mov         ebx,esi
+  00000000000000FF: EB 09              jmp         000000000000010A
+  0000000000000101: BB FE FF FF FF     mov         ebx,0FFFFFFFEh
+  0000000000000106: 85 D2              test        edx,edx
+  0000000000000108: 75 07              jne         0000000000000111
+  000000000000010A: 48 89 35 00 00 00  mov         qword ptr [registration_cookie],rsi
+                    00
+  0000000000000111: 33 C0              xor         eax,eax
+  0000000000000113: F0 0F B1 35 0C 00  lock cmpxchg dword ptr [global_core+0Ch],esi
+                    00 00
+  000000000000011B: 83 F8 04           cmp         eax,4
+  000000000000011E: 74 0F              je          000000000000012F
+  0000000000000120: 33 C0              xor         eax,eax
+  0000000000000122: F0 0F B1 35 0C 00  lock cmpxchg dword ptr [global_core+0Ch],esi
+                    00 00
+  000000000000012A: 83 F8 06           cmp         eax,6
+  000000000000012D: 75 0E              jne         000000000000013D
+  000000000000012F: 48 8D 0D 00 00 00  lea         rcx,[global_core]
+                    00
+  0000000000000136: E8 00 00 00 00     call        plo_core_drain
+  000000000000013B: 8B D8              mov         ebx,eax
+  000000000000013D: 48 8B D7           mov         rdx,rdi
+  0000000000000140: 48 8D 0D 00 00 00  lea         rcx,[global_core]
+                    00
+  0000000000000147: E8 00 00 00 00     call        plo_core_snapshot
+  000000000000014C: 48 8B 74 24 38     mov         rsi,qword ptr [rsp+38h]
+  0000000000000151: 8B C3              mov         eax,ebx
+  0000000000000153: 48 8B 5C 24 30     mov         rbx,qword ptr [rsp+30h]
+  0000000000000158: 48 83 C4 20        add         rsp,20h
+  000000000000015C: 5F                 pop         rdi
+  000000000000015D: C3                 ret
+  000000000000015E: B8 FF FF FF FF     mov         eax,0FFFFFFFFh
+  0000000000000163: 48 83 C4 20        add         rsp,20h
+  0000000000000167: 5F                 pop         rdi
+  0000000000000168: C3                 ret
+
+prefix:
+  0000000000000000: 45 33 DB           xor         r11d,r11d
+  0000000000000003: 4C 8B D1           mov         r10,rcx
+  0000000000000006: 41 8B D3           mov         edx,r11d
+  0000000000000009: 33 C0              xor         eax,eax
+  000000000000000B: F0 44 0F B1 59 18  lock cmpxchg dword ptr [rcx+18h],r11d
+  0000000000000011: 3B 41 08           cmp         eax,dword ptr [rcx+8]
+  0000000000000014: 44 8B C8           mov         r9d,eax
+  0000000000000017: 44 0F 47 49 08     cmova       r9d,dword ptr [rcx+8]
+  000000000000001C: 45 85 C9           test        r9d,r9d
+  000000000000001F: 74 21              je          0000000000000042
+  0000000000000021: 8B CA              mov         ecx,edx
+  0000000000000023: 4C 69 C1 28 0A 00  imul        r8,rcx,0A28h
+                    00
+  000000000000002A: 49 8B 0A           mov         rcx,qword ptr [r10]
+  000000000000002D: 33 C0              xor         eax,eax
+  000000000000002F: F0 45 0F B1 5C 08  lock cmpxchg dword ptr [r8+rcx+24h],r11d
+                    24
+  0000000000000036: 83 F8 01           cmp         eax,1
+  0000000000000039: 75 07              jne         0000000000000042
+  000000000000003B: FF C2              inc         edx
+  000000000000003D: 41 3B D1           cmp         edx,r9d
+  0000000000000040: 72 DF              jb          0000000000000021
+  0000000000000042: 8B C2              mov         eax,edx
+  0000000000000044: C3                 ret
+
+  Summary
+
+      A28050 .bss
+         348 .chks64
+         140 .debug$S
+           3 .drectve
+         168 .pdata
+         C26 .text$mn
+          9E .voltbl
+         224 .xdata

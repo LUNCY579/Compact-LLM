@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-06 UTC: compiled observer candidate and trusted startup source
+
+The [observer candidate](NATIVE_LIBRARY_OBSERVER_CANDIDATE_001.md) is built and
+preserved: portable mock core 20 cases/123 checks pass; static PE/callback review
+finds no imports/entrypoint and exact exports/local callback calls. Adapter,
+registration, original-context startup hooks and failure-only preservation are
+implemented; 324 preserved-copy CPU controls pass with unchanged bytes.
+
+The observer DLL has not been loaded or registered. Windows notification/lifetime,
+fresh bootstrap/current runtime/resource qualification, complete observer-only
+executable registration and explicit new-run permission remain open. Native
+terminal auditor startup/runtime binding remains a separate qualification gap.
+No model/GPU inference, training, M0 row or scoring occurred. Actual M1/M2
+fresh-family/RS transfer and prior-correct preservation remain unmeasured.
+
 ## 2026-10-06 UTC: actual raw library producer-to-terminal path verified on CPU
 
 The [raw library pipeline](RAW_LIBRARY_PIPELINE_CPU_001.md) passes 283 controls

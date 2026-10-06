@@ -1,0 +1,112 @@
+{
+  "DLL_loaded": false,
+  "PE": {
+    "bytes": 5632,
+    "delay_imports": [
+      0,
+      0
+    ],
+    "entrypoint": 0,
+    "exports": {
+      "plobs_abi_version": 5472,
+      "plobs_copy_rows": 5488,
+      "plobs_snapshot": 5712,
+      "plobs_start": 5744,
+      "plobs_stop": 6192
+    },
+    "imports": [
+      0,
+      0
+    ],
+    "machine": 34404,
+    "sections": [
+      {
+        "name": ".text",
+        "raw_offset": 1024,
+        "raw_size": 2560,
+        "rva": 4096,
+        "virtual_size": 2533
+      },
+      {
+        "name": ".rdata",
+        "raw_offset": 3584,
+        "raw_size": 1536,
+        "rva": 8192,
+        "virtual_size": 1150
+      },
+      {
+        "name": ".data",
+        "raw_offset": 0,
+        "raw_size": 0,
+        "rva": 12288,
+        "virtual_size": 10649680
+      },
+      {
+        "name": ".pdata",
+        "raw_offset": 5120,
+        "raw_size": 512,
+        "rva": 10665984,
+        "virtual_size": 348
+      }
+    ]
+  },
+  "Windows_API_called": false,
+  "callback_indirect_external_targets": [],
+  "callback_reachable_graph": {
+    "copy_name": [],
+    "notification": [
+      "plo_core_record",
+      "plo_core_record",
+      "plo_core_record"
+    ],
+    "plo_core_record": [
+      "copy_name",
+      "copy_name"
+    ]
+  },
+  "kind": "INDEPENDENT_OWNED_OBSERVER_PE_CALLBACK_GRAPH_STATIC_REVIEW",
+  "limits": [
+    "PE bytes independently show zero entry/import/delay-import directories and five nonforwarded exports.",
+    "Callback/local call reachability uses the saved object disassembly and symbol provenance; static review is not dynamic execution/lifetime proof.",
+    "Start/stop intentionally invoke supplied registration/unregister function pointers outside the callback graph.",
+    "Native callback scheduling, actual unregister/quiescence, loader-lock behavior, complete runtime/bootstrap/ownership/resource evidence and launch permission remain unqualified."
+  ],
+  "linked_PE_callback_graph": {
+    "copy_name": [],
+    "notification": [
+      "plo_core_record",
+      "plo_core_record",
+      "plo_core_record"
+    ],
+    "plo_core_record": [
+      "copy_name",
+      "copy_name"
+    ]
+  },
+  "native_PASS": false,
+  "native_authority_issued": false,
+  "observer_registered": false,
+  "owned_artifact_after": {
+    "DLL_DISASSEMBLY.txt": "e65a701f5fb1b980f801cb60c461c82ea13a71ba0628a74b62e65a49dcf2c6e8",
+    "EXPORTS.txt": "b89e10a943c45e676f3e3306f6b447fb0b882fa683954726efcf1b015fbf88a0",
+    "IMPORTS.txt": "8ef71483e4285d1b0c09d1682fa0a74f2ed3e189c9b121cb0ff799ebfbd960e9",
+    "OBJECT_DISASSEMBLY.txt": "ac5d9485f8880c51b1e3521d446c06dd06e6b65fe85553d5dea011b0861352f8",
+    "SYMBOLS.txt": "519cde0f9e4ddc7e1de90277c254e28148a1203cb42b0894e9da41fc9f9eb9ba",
+    "native_library_observer.dll": "8f6ac9f0edcd716b62e06054ec6ca503d961b598177144ffcb1493656e24c679"
+  },
+  "owned_artifact_before": {
+    "DLL_DISASSEMBLY.txt": "e65a701f5fb1b980f801cb60c461c82ea13a71ba0628a74b62e65a49dcf2c6e8",
+    "EXPORTS.txt": "b89e10a943c45e676f3e3306f6b447fb0b882fa683954726efcf1b015fbf88a0",
+    "IMPORTS.txt": "8ef71483e4285d1b0c09d1682fa0a74f2ed3e189c9b121cb0ff799ebfbd960e9",
+    "OBJECT_DISASSEMBLY.txt": "ac5d9485f8880c51b1e3521d446c06dd06e6b65fe85553d5dea011b0861352f8",
+    "SYMBOLS.txt": "519cde0f9e4ddc7e1de90277c254e28148a1203cb42b0894e9da41fc9f9eb9ba",
+    "native_library_observer.dll": "8f6ac9f0edcd716b62e06054ec6ca503d961b598177144ffcb1493656e24c679"
+  },
+  "passed": true,
+  "sha256": "37b04d2e4ee02131316a87b44969a3b524deb03d18c9d4b592589672155df104",
+  "source_hashes": {
+    "prefix_library_observer.c": "436d26bd0dfc71e659295e9a87a9bb48b73ead68602b4b46077bd5c003618855",
+    "prefix_library_observer.h": "7a6a8a33fafd53e279f5c0aec6eab00b38add190cc2f0b9e99b5536b02ebd9d7"
+  },
+  "unregister_quiescence_qualified": false
+}
