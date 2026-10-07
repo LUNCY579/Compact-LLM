@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: passive psutil preload/source/cache assumptions checked
+
+[Psutil assumptions](PSUTIL_BOOTSTRAP_ASSUMPTIONS_CPU_001.md) supply seven verified
+cache/source pairs, three byte-selected extensions and exact System32 pdh.dll.
+Independent Root review hashes1,195,813bytes and compares full code graphs/paths.
+Original63/59bootstrap observation stays unchanged. A39-library baseline is an
+explicit falsifiable candidate; actual preload/library execution is unobserved.
+
+Next code work is full generic role/cache/observer/roster qualification and separate
+own-process preload/main validation. Keep unknown lazy imports and baseline drift
+as failure evidence; no union allowance or native permission is introduced.
+
 ## 2026-10-07 UTC: partial native import binder components CPU reviewed
 
 [Partial binder002](IMPORT_PARTIAL_BINDER_CPU_002.md) fixes own-context observer
