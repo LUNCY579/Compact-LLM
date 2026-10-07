@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: partial native import binder components CPU reviewed
+
+[Partial binder002](IMPORT_PARTIAL_BINDER_CPU_002.md) fixes own-context observer
+registry, source-sliced ownership helpers, failed-acquisition cleanup, partial raw
+writer and selected measurement identity. Five authored/Root and independent
+component controls pass with31selectedpins unchanged.39files retain current/
+failed predecessors and resource-helper controls. No native APIs or facts ran.
+
+This is not runnable or approvable. Next work must complete generic role/cache/
+namespace/observer/bootstrap/source-roster reader checks, psutil preload and main/
+baseline qualification, approved schema and durable helper paths. Keep those
+mandatory gates closed; don't replace them with equal file maps or CPU fixtures.
+Exact new registration/owner permission and full three-arm learning remain pending.
+
 ## 2026-10-07 UTC: import-only original supervisor adapter CPU reviewed
 
 [Supervisor001](IMPORT_ONLY_SUPERVISOR_CPU_001.md) supplies six source-bound
