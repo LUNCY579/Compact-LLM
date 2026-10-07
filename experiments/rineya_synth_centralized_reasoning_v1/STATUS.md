@@ -1,5 +1,18 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: optional bounded library topology rule drafted
+
+[Grammar draft](LIBRARY_BOUNDARY_GRAMMAR_CPU_DRAFT_001.md) replaces only a
+prospective predeclared sibling order with finite path/LIFO/create-exec grammar
+in an isolated candidate. Original exact DLL effect/event/snapshot replay stays
+unchanged. Four authored and independent controls pass; sixteen files preserve
+draft/source/receipts. Public policy and native gates are unchanged.
+
+Integration and meaningful required Torch extensions/exact effect expectations
+remain pending. Synthetic effects are not native observations. The active source
+work is the separate denied-by-default owned dispatcher/grant enrollment, followed
+by exact runtime/config/registration construction; no launch is authorized here.
+
 ## 2026-10-07 UTC: reviewed tensor implementation publicly applied, gates closed
 
 [Closed source promotion](TENSOR_CLOSED_SOURCE_PROMOTION_CPU_002.md) applies eleven
