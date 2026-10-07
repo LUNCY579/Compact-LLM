@@ -43,6 +43,17 @@ The historical 35-operation/128-marker design is a reference; actual current
 implemented success and failure paths must determine the final dose. A prospective
 boolean or an observer field rename cannot supply any missing native evidence.
 
+Current source review also identifies a registration cycle in the historical tensor
+contract. Its config, runtime and registration embed the same `source_commit`
+required as current HEAD, while the selected config must already be the Git blob
+at that commit. A normal committed config cannot contain the hash of the commit
+that contains it. The prospective repair must separate an implementation ancestor
+from the externally selected dispatch HEAD, retaining exact source blobs at the
+ancestor, clean current HEAD and committed selected JSON bytes at dispatch. This
+is a source registration correction, not relaxed byte or launch qualification.
+The original contract and its evidence remain preserved until that distinct
+repair is implemented and independently tested.
+
 The original resource limits remain: 4 GiB admission GPU free, 3.3125 GiB host
 available, 4 GiB disk free, 2 GiB owned tree RSS maximum, 1.25 GiB host reserve,
 0.5 GiB work GPU free, 600-second whole scope, 0.2-second CPU and 2-second GPU
