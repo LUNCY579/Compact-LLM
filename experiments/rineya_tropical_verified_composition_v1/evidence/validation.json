@@ -1,0 +1,39 @@
+{
+  "branch_parent_sha": "03db218ceebc61a2bc04f2482cf7e094045e01c1",
+  "codex_tasks": 0,
+  "compileall": "PASS",
+  "complete_pilot_executions_including_repeat": 2,
+  "date_utc": "2026-10-07T20:53:56.057398+00:00",
+  "demo": "PASS_SCRIPTED_FIXTURE",
+  "evidence_sha256": {
+    "mechanism.json": "5ac02534122af2f0500468c2a53e8e405da35a0af0660f8a7ed15b43a819df06",
+    "native_preflight.json": "fbea53ff5e4b68901d7d12b5002570179e84d0153a7716996505847e7581a3b6",
+    "tests.junit.xml.gz": "7a6ad721e78db6722276adbe119a2320f0548861df6de83e09195b90aaf5b1b2",
+    "tests.txt": "1c9d93b0895078894648f16a095b00da7e8b2fe7b175ad06baa90d5490922818",
+    "toy_pilot.json.gz": "b1fc7f8424d6b868d46c17b6eb8a5320e563b7068acc0771522d9017d3a1b05d"
+  },
+  "experiment": "TRVC-001",
+  "full_toy_repeat": "EXACT_JSON_EQUAL_ON_REPEATED_RUN_SAME_HOST",
+  "inspected_main_sha": "b0ca54bdc1b69e2b19d7baeca2e3fdde3ff0a7b2",
+  "native_preflight_exit": 2,
+  "native_rineya_model_loads": 0,
+  "native_status": "BLOCKED_NATIVE_UNQUALIFIED",
+  "optimizer_steps_in_pilot_and_repeat": 336,
+  "optimizer_steps_per_full_pilot": 168,
+  "runtime": {
+    "device": "cpu",
+    "pytest": "9.0.2",
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu"
+  },
+  "status": "SCOPED_CPU_SOFTWARE_AND_TOY_VALIDATION_ONLY",
+  "test_results": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 129
+  },
+  "unique_toy_treatment_conditions": 21,
+  "user_gpu_jobs": 0,
+  "validation_scope": "Only this self-contained experiment package, not the full ChatBubble suite or GitHub Actions"
+}
