@@ -1,0 +1,23 @@
+{
+  "kind": "READ_ONLY_HOST_INVENTORY_NO_ADMISSION",
+  "observed_utc": "2026-10-07T02:21:14.6503940Z",
+  "source_commands": [
+    "Get-CimInstance Win32_OperatingSystem",
+    "nvidia-smi --query-gpu=index,uuid,memory.total,memory.used,memory.free --format=csv,noheader,nounits"
+  ],
+  "free_physical_memory_kib": 6225788,
+  "gpu_csv": "0, GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9, 8188, 6755, 1194",
+  "gpu_command_exit_code": 0,
+  "gpu_free_mib": 1194,
+  "required_gpu_free_mib": 4096,
+  "gpu_floor_met": false,
+  "inventory_only": true,
+  "native_admission": false,
+  "native_worker_launched": false,
+  "native_PASS": false,
+  "quality_gain_established": false,
+  "limitations": [
+    "CIM and vendor CLI inventory only; no pinned supervisor freshness, disk or owned Job admission.",
+    "Availability is volatile; no native qualification follows."
+  ]
+}

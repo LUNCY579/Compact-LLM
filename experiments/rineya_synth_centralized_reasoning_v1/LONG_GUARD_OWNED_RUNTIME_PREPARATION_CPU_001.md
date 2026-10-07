@@ -37,10 +37,12 @@ actual compiled supervisor body rejects at its closed preflight before lease,
 resource or worker creation; successful Windows containment is not exercised.
 
 The first eight-control run changed source while live and is unaccepted even
-though its test assertions passed. Its before/after hashes and outputs are
+though its test assertions passed. Its before/after hashes and test receipts are
 retained, but the original before-edit runtime bytes were not copied and are not
 fully reconstructable. The later stable predecessor and final sources/receipts
 are preserved under `evidence/long_guard_owned_runtime_reviewed_cpu_20261007/`.
+CPU fixture stage/token files are temporary and removed after the assertions;
+the retained receipts and read traces are not a permanent native capture archive.
 
 Remaining dependencies include the actual decoded qualification auditor, exact
 owner-approved source/qualification preflight, an independent native post-Job
@@ -48,6 +50,16 @@ capture auditor and native saved-batch admission. No new native permission is
 provided by these CPU controls. M0 still lacks two of six audited batches and
 complete scoring. Language evidence has zero actual ratings/qualified graders;
 64 DEV worlds are below the recorded minimum of 94 eligible components.
+
+That 94-component figure is derived advancement precision for three domains and
+two arms, with a 5% retention bound at zero observed losses. More declared domains
+can require greater support. It is not a
+universal hard-coded training sample floor. A 64-component panel can yield
+exploratory point estimates but cannot satisfy that advancement bound. The current
+registered STUDY path independently requires qualified all-domain M0 enrollment
+before treatment; zero language ratings and qualified graders leave that
+requirement unresolved. Neither the G2/G3 distinction nor insufficient precision
+authorizes bypassing the existing registration.
 
 Read-only inventory at 2026-10-07 01:58:07 UTC observed 1,047 MiB GPU memory free,
 below the unchanged 4,096 MiB floor, and 7,149,035,520 bytes of host available

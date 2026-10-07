@@ -42,6 +42,12 @@ supplies actual loading/lifecycle call paths with nine authored and eight
 independent focused CPU controls passing. Public qualification, approved-source
 preflight and native terminal admission remain closed; this is not native readiness.
 
+The [decoded-long terminal consumer CPU preparation](LONG_GUARD_TERMINAL_AUDIT_PREPARATION_CPU_001.md)
+joins the already-loaded mock runtime's enriched Journal, physical costs and raw
+bytes to authored host records. Eight corrected authored controls and two affected
+checks pass; independent evidence is three negatives plus a corrected positive
+reported separately. Native production qualification remains absent.
+
 The [private source workflow CPU milestone](PRIVATE_WORKFLOW_CPU_001.md)
 reproduces46 selected controls from preserved bytes. Public native execution,
 registered runtime loading and current host/GPU qualification remain open.

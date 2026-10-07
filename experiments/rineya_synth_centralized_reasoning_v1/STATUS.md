@@ -1,5 +1,27 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: decoded-long CPU terminal consumer reviewed
+
+[Terminal consumer preparation](LONG_GUARD_TERMINAL_AUDIT_PREPARATION_CPU_001.md)
+joins produced mock-worker/rawprefix/final/batch/enrichedJournal/physical2050
+counts to authoredSUP/resource/ownership/4lease/death evidence. Canonicaltyping,
+exactleafpaths,boundedpre-read andfinalbyte/roster checks implemented. Corrected
+8authored+finalaffected2pass. Independent3negativespass; aggregatepositivefixture
+failedduplicatelogsetup, thenpositiveonly1passesafterfixture-onlyrepair.
+No singlecorrected4controlaggregatePASSclaimed; predecessors retained.
+
+Native asset-loaderprefix/currentdecodedqualifier/sourcepreflight/terminal
+admission remainabsentclosed. CPUalready-loadedproducer isnotnativeJob/loader
+qualification. Fixturestagefilesaretemporary; receipts/sourcessnapshots/readtraces
+retained. No actualmodel/nativeAPI/scoring/training/otherprocesscontrol.
+
+Policyauditclarifies94components isderivedadvancementprecision (3domains/2arms),
+notuniversaltrainingfloor; moredomainsmayneedmore. ExistingregisteredSTUDYstill
+requirescompletequalifiedM0/all-domain enrollment beforefirsttreatment. M0raw
+256/384unscored,languagezeroqualifiedgraders/ratings,andactualtrainingqualabsent.
+Freshreadonly02:21:14UTC GPU1194MiB<unchanged4096floor, hostfree6225788KiB;
+notpinnedadmission. Fullcondition-diversity transfer/priorcorrect goalunmeasured.
+
 ## 2026-10-07 UTC: owned decoded-long source composition reviewed; native gate closed
 
 [Owned runtime preparation](LONG_GUARD_OWNED_RUNTIME_PREPARATION_CPU_001.md)
