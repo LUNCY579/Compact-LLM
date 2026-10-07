@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: regular package/submodule CPU successor reviewed
+
+[Package-path successor](TENSOR_PACKAGE_PATHS_CPU_001.md) imports inert regular
+packages, children and nested modules through registered source loaders. Final
+four authored/Root controls and independent four pass; immutable parent identity,
+source/execution-record/current-byte checks and owned cache roots are verified.
+Exact predecessor and failed fixture receipts remain preserved. New originless
+namespaces refuse; no full old eight-control regression rerun is claimed.
+
+Native entry/provider/current runtime qualification and full amended reader remain
+absent. The Git join is a separate reviewed CPU component, not a current native
+manifest. Public sources remain unchanged; no tensor/model/training/scoring or
+transfer/retention result is established.
+
 ## 2026-10-07 UTC: registration commit-cycle CPU join reviewed
 
 [Git join candidate](TENSOR_REGISTRATION_CYCLE_CPU_001.md) constructs distinct

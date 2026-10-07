@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [regular package CPU successor](TENSOR_PACKAGE_PATHS_CPU_001.md) passes
+four authored and four independent controls for package and nested source imports.
+Actual runtime qualification and the amended native reader remain open.
+
 The [CPU registration Git join](TENSOR_REGISTRATION_CYCLE_CPU_001.md) verifies
 six authored and four independent controls using real implementation/dispatch
 commits. The full native reader remains unwired and closed.
