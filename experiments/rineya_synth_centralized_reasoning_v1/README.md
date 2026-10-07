@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [full amended CPU reader](TENSOR_AMENDED_READER_CPU_001.md) passes four
+authored and four independent controls with real Git and inert physical files.
+Historical descriptor and layout seams remain injected; native entry stays closed.
+
 The [regular package CPU successor](TENSOR_PACKAGE_PATHS_CPU_001.md) passes
 four authored and four independent controls for package and nested source imports.
 Actual runtime qualification and the amended native reader remain open.

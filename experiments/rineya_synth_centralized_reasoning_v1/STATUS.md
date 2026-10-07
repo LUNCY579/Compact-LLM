@@ -1,5 +1,18 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: full amended manifest reader CPU composition reviewed
+
+[Reader composition](TENSOR_AMENDED_READER_CPU_001.md) passes final four authored,
+Root four and independent four controls. Actual metadata, physical rosters,
+bootstrap/cache, descriptor and real implementation/dispatch Git joins execute;
+70 real descriptor calls/35 paths are separated from 842 injected historical
+paths. The initial long-path Git failure and exact successor remain preserved.
+
+Native entry and current runtime/live-provider qualification remain closed;
+public sources are unchanged. Package initializer child imports require a distinct
+active-initialization successor; prior package results cover completed parents.
+The exact current native tensor packet and actual model comparison remain absent.
+
 ## 2026-10-07 UTC: regular package/submodule CPU successor reviewed
 
 [Package-path successor](TENSOR_PACKAGE_PATHS_CPU_001.md) imports inert regular

@@ -1,0 +1,17 @@
+{
+  "cat_file_size_had_passed": true,
+  "correction": "copied staged helper consumes same immutable object using cat-file blob after unchanged size check",
+  "git_command": [
+    "git",
+    "-c",
+    "maintenance.auto=false",
+    "-c",
+    "gc.auto=0",
+    "show",
+    "a8b0f47d303bee10332162d507998bb404cdb7bb:experiments/rineya_synth_centralized_reasoning_v1/evidence/exception_frame_helper_reviewed_cpu_20261005/exception_frames.py"
+  ],
+  "kind": "CPU_GIT_SOURCE_LONG_PATH_FAILURE_DISCLOSURE",
+  "native_authority_issued": false,
+  "source": "transcribed exact tool chunk c492ca output; not a reconstructed raw file",
+  "stderr": "fatal: failed to stat 'a8b0f47d303bee10332162d507998bb404cdb7bb:experiments/rineya_synth_centralized_reasoning_v1/evidence/exception_frame_helper_reviewed_cpu_20261005/exception_frames.py': Filename too long\n"
+}
