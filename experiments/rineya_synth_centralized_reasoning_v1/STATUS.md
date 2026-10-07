@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: preservation/identity-bound terminal postrun source applied
+
+[Postrun001](IMPORT_POSTRUN_CPU_001.md) adds a scoped CLI that requires preserve→
+terminal audit before unqualified completion. Independently derived context,
+producer and executing-birth expectations reject raw identity rebinding. Registered
+target is checked before supervision; no-resume denials keep raw receipts without
+fake audit. Seven authored/Root and six independent CPU controls pass; forty pins
+unchanged. Root applies/loads actual public helper and terminal sources with no grant.
+
+Final run registration/source inventory must include this helper and terminal
+successor. Actual immutable dispatch, fresh qualification/admission and separate
+owner permission remain pending. No native, model/training/scoring or transfer
+result follows;36files preserve source/predecessors/CPU fixture evidence.
+
 ## 2026-10-07 UTC: packet-bound import terminal consumer CPU applied
 
 [Terminalaudit002](IMPORT_TERMINAL_AUDIT_CPU_002.md) joins actual six packet anchors
