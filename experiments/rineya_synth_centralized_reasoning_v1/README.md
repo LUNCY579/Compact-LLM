@@ -37,6 +37,11 @@ rewriting their packet hashes. Full-population producer controls and final
 focused independent eight controls pass on explicitly separated versions.
 Native loaded assets, worker/decoder qualification and launch remain closed.
 
+The [owned decoded-long source composition](LONG_GUARD_OWNED_RUNTIME_PREPARATION_CPU_001.md)
+supplies actual loading/lifecycle call paths with nine authored and eight
+independent focused CPU controls passing. Public qualification, approved-source
+preflight and native terminal admission remain closed; this is not native readiness.
+
 The [private source workflow CPU milestone](PRIVATE_WORKFLOW_CPU_001.md)
 reproduces46 selected controls from preserved bytes. Public native execution,
 registered runtime loading and current host/GPU qualification remain open.

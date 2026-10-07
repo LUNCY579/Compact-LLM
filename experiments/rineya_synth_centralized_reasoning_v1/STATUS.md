@@ -1,5 +1,26 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: owned decoded-long source composition reviewed; native gate closed
+
+[Owned runtime preparation](LONG_GUARD_OWNED_RUNTIME_PREPARATION_CPU_001.md)
+supplies actual original asset/lifecycle calls and cap-specific decoded collection
+composition. Final nine authored and independent focused eight controls pass;
+physical2050 cap includes2x419parity separately from2048capture. Hook cleanup,
+strict heartbeat, terminal sealing and compiledSUPclosed-preflight denial tested.
+
+Public/nativeworker/dispatcher qualifier and approvedbytepreflight remainstatic
+closed; no actualmodel/API/WindowsJobsuccess/nativecapture/scoring. Genuine
+decodedqualification and nativepostJobconsumer remainabsent, so sourcecomposition
+is not native-ready. First source-changed test isunaccepted; beforeedit byteswere
+notfullysaved. Stable predecessor/final sources and original receipts retained.
+
+Freshreadonlyinventory01:58:07UTC GPU1047MiB<unchanged4096floor and
+hostavailable7,149,035,520B; inventorynotnativeadmission. M0still256/384rawunscored,
+batches5/6 andfullscoringunresolved. Languagezeroactualratings/qualifiedgraders;
+64DEVworlds<94eligibleminimum. Actualfull27/resumed9qualification remainsabsent.
+The full matchedcondition-diversity/freshfamilyRS/priorcorrect comparison remains
+active and unmeasured; no syntheticCPUrecord establishes modelquality gains.
+
 ## 2026-10-07 UTC: decoded long guard CPU producer and saved audit reviewed
 
 [Long collection preparation](LONG_GUARD_COLLECTION_PREPARATION_CPU_001.md)
