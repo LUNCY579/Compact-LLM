@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: externally anchored gate/owned dispatcher candidate reviewed
+
+[Gate/dispatcher candidate](TENSOR_GATE_DISPATCH_CPU_CANDIDATE_002.md) supplies
+twelve staged sources, exact separate-grant/source/Git enrollment and explicit
+V2 parent/child/terminal anchors. Six authored/Root and independent controls pass;
+32 frozen pins remain stable. CPU records cannot pass native gate. Grant references
+remain absent and templates unapproved.43 files preserve graph/receipts/trust scope.
+
+The public eleven-source gate remains unchanged and refusing. Current library
+effects and exact runtime/config/registration remain unresolved; actual owner
+grant and resource/terminal evidence are absent. Next work must freeze the actual
+diagnostic/observation registration before requesting distinct permission. No
+native, model/training/scoring or transfer result follows.
+
 ## 2026-10-07 UTC: static Torch/selected Windows dependency bytes reviewed
 
 [Static dependency evidence](TORCH_STATIC_DEPENDENCY_CPU_001.md) records38 Torch

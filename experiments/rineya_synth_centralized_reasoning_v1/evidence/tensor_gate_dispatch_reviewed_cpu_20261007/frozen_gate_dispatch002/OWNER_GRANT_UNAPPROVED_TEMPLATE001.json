@@ -1,0 +1,41 @@
+{
+  "approved": false,
+  "dispatch_binding_sha256": null,
+  "kind": "SEPARATE_TWO_TENSOR_OWNER_SCOPE_GRANT",
+  "permission": {
+    "M0_membership": false,
+    "allocations": 2,
+    "backward": false,
+    "decoder": false,
+    "dtype": "int64",
+    "forward": false,
+    "logical_bytes": 6752,
+    "model": false,
+    "optimizer": false,
+    "scoring": false,
+    "shape": [
+      1,
+      422
+    ]
+  },
+  "resources": {
+    "CPU_sample_max_age_seconds": 0.2,
+    "GPU_free_at_admission_GiB": 4.0,
+    "GPU_free_during_work_GiB": 0.5,
+    "GPU_probe_interval_seconds": 0.5,
+    "GPU_probe_timeout_seconds": 2.0,
+    "GPU_sample_max_age_seconds": 2.0,
+    "admission_poll_seconds": 2.0,
+    "admission_seconds": 30,
+    "disk_free_GiB": 4.0,
+    "external_watchdog_milliseconds": 100,
+    "preworker_available_GiB": 3.3125,
+    "system_available_reserve_GiB": 1.25,
+    "whole_scope_seconds": 600,
+    "worker_process_tree_RSS_GiB": 2.0
+  },
+  "scope": "ONE_EXPOSED_PREFIX_CUDA_INT64_INPUT_MASK_ONLY",
+  "sha256": "deabd5be94e9c05d61e2892bb7743fb62a2663f4778c9235c658e70e52add665",
+  "source_inventory_sha256": null,
+  "trusted_owner_origin": null
+}
