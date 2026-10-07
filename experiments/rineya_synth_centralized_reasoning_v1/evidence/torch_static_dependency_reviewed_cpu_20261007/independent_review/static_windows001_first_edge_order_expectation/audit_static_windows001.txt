@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\library_expectation_registration_work\independent_review\audit_static_windows001.py", line 24, in <module>
+    assert edges==s['literal_dependency_edges'];required=sorted({p for e in edges if e['kind']=='import' and e['classification']=='SELECTED_UNIQUE_LITERAL_NAME' for p in e['selected_candidates']});assert required==s['ordinary_import_unique_selected_candidate_paths'] and len(required)==34
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

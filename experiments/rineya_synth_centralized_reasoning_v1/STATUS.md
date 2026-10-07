@@ -1,5 +1,18 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: static Torch/selected Windows dependency bytes reviewed
+
+[Static dependency evidence](TORCH_STATIC_DEPENDENCY_CPU_001.md) records38 Torch
+PE images/244 edges and the source's37 DLL load obligations. Two missing System32
+identities are passively hashed and added to a separate8716-entry tensor candidate.
+Independent static classification plus five actual PE/hash probes pass. Fourteen
+files preserve source/records/review; original8714 and observer8716 maps remain.
+
+API sets, delay resolution and exact native boundary effects are unresolved;
+static imports are not load observations. Current source work is the separate
+closed grant/dispatcher enrollment and exact registration, with permission absent.
+No model/training/transfer evidence follows.
+
 ## 2026-10-07 UTC: optional bounded library topology rule drafted
 
 [Grammar draft](LIBRARY_BOUNDARY_GRAMMAR_CPU_DRAFT_001.md) replaces only a
