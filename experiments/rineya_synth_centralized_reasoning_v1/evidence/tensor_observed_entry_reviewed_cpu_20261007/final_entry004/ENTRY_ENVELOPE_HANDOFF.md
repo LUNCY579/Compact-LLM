@@ -1,0 +1,13 @@
+# Linked entry-envelope CPU candidate
+
+Author entry004: five controls pass; the exact original writer and core execute with private inert closures. Native closures/API/framework calls did not execute. The native gate is unchanged and unconditionally closed. Public sources remain unchanged.
+
+The actual worker __main__ now defers C compilation. The entry reads three pinned writer-definition sources, extracts original counts/projected/error/Ledger AST and source-derived constants without executing C, opens the original bounded journal, then calls the common six-phase body. These minimum writer bootstrap reads and interpreter/parser initialization precede the first marker and are explicit bootstrap provenance/external ownership scope, not claimed to be metered Python internals.
+
+The same journal enters the original core through exactly one constructor replacement and one exact combined-order predicate replacement. Native definitions retain exactly the five original native status adaptations behind the closed gate. Core finish defers the seal. Original worker installer/context/ownership/owned-return/library evidence logic is retained; cleanup and publication are internally handed off to phase6, followed by original root restoration and final seal. Primary, cleanup, and publication failure chains remain distinct. The original 128 marker ceiling and 600 second supervisor ceiling are unchanged.
+
+The five CPU controls exercise original writer/core success, early source/preload failure, combined provider/cleanup failure, final publication failure, source ordering/native closure structure, and 129th marker refusal. Private actions update costs during execution and those counts appear in the same final summary. Native action functions are source-inspected only. No native authority is minted.
+
+Remaining current-native obligations: exact future tensor main/provider/grant; whole native transitive source/cache/API subcost instrumentation; native provider binding/install phase boundaries (factory construction precedes the core; some original installer/binding work remains inside original lifecycle); fresh own-process alias/cache/main checks; real observer/DLL/framework/resource evidence. This candidate does not establish native readiness or qualify an actual tensor result.
+
+Preservation: pre_entry_closure002 contains final six-control journal predecessor; pre_entry_envelope003 contains repaired seven-control journal graph; pre_entry_first001 and pre_entry_constants002 contain both failed entry variants; pre_entry_positive003 contains first five-pass source graph. Failed entry001/002 execution=True flags were attempted markers and did not prove writer/core completion; final receipts use explicit attempted/completed fields.

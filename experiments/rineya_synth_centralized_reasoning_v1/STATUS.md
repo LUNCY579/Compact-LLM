@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: observed admission and one-journal entry CPU reviewed
+
+[Observed entry evidence](TENSOR_OBSERVED_ENTRY_CPU_001.md) consumes exact009
+module/cache provenance and preserves raw qualified aliases in the common
+importer. Final admission9, shared-journal7 and entry5 authored/Root controls pass;
+independent reviews cover their exact intermediate/final scopes. The original
+writer/core and private inert actions share one journal, with failure cleanup,
+final publication and the unchanged128-marker ceiling.107 files preserve sources,
+receipts and failed variants.
+
+Actual native closures/provider and transitive read/API accounting remain
+unexecuted and unqualified. Public tensor sources/gates stay unchanged. Finish
+the actual source-bound counters and concrete tensor packet; no unchanged observer
+repeat is needed. No training/scoring or fresh transfer/retention result follows.
+
 ## 2026-10-07 UTC: actual frozen tensor-prelude observer009 reviewed
 
 [Observer009 outcome](OBSERVER_STARTUP_OUTCOME_009.md) completes all twelve

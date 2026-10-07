@@ -1,0 +1,140 @@
+{
+  "actual_success_traces": [
+    {
+      "actual_markers": 120,
+      "durable_startup_costs": {
+        "startup_ctypes_observer_binding": {
+          "API_calls": 0,
+          "IO_calls": 0,
+          "cache_bytes": 0,
+          "cache_reads": 0,
+          "source_bytes": 30,
+          "source_reads": 3
+        },
+        "startup_native_provider_binding": {
+          "API_calls": 0,
+          "IO_calls": 0,
+          "cache_bytes": 0,
+          "cache_reads": 0,
+          "source_bytes": 50,
+          "source_reads": 5
+        },
+        "startup_owned_cleanup_publication": {
+          "API_calls": 0,
+          "IO_calls": 1,
+          "cache_bytes": 0,
+          "cache_reads": 0,
+          "source_bytes": 0,
+          "source_reads": 0
+        },
+        "startup_owned_metadata_profile": {
+          "API_calls": 0,
+          "IO_calls": 0,
+          "cache_bytes": 0,
+          "cache_reads": 0,
+          "source_bytes": 20,
+          "source_reads": 2
+        },
+        "startup_registered_roots_loader": {
+          "API_calls": 0,
+          "IO_calls": 0,
+          "cache_bytes": 0,
+          "cache_reads": 0,
+          "source_bytes": 40,
+          "source_reads": 4
+        },
+        "startup_source_qualification": {
+          "API_calls": 0,
+          "IO_calls": 0,
+          "cache_bytes": 0,
+          "cache_reads": 0,
+          "source_bytes": 10,
+          "source_reads": 1
+        }
+      },
+      "exact_nonguard_order": [
+        "startup_source_qualification",
+        "startup_owned_metadata_profile",
+        "startup_ctypes_observer_binding",
+        "startup_registered_roots_loader",
+        "startup_native_provider_binding",
+        "initial_config_preflight",
+        "worker_ownership_verify",
+        "publication_ownership_verified",
+        "disk_admission",
+        "torch_import",
+        "torch_version_read",
+        "post_import_growth_observation",
+        "cuda_context_init",
+        "pre_input_direct_CUDA_mem_get_info",
+        "original_precision_thread_configuration",
+        "Python_seed_101",
+        "Torch_CPU_seed_101",
+        "Torch_CUDA_seed_all_101",
+        "CUDA_reset_peak_memory_stats",
+        "input_tensor_create",
+        "mask_ones_like_create",
+        "input_is_tensor",
+        "input_shape_matches",
+        "input_dtype_long",
+        "input_device_cuda0",
+        "input_exact_tolist",
+        "mask_is_tensor",
+        "mask_shape_matches",
+        "mask_dtype_long",
+        "mask_device_cuda0",
+        "mask_exact_tolist",
+        "input_reference_release",
+        "mask_reference_release",
+        "final_config_preflight",
+        "terminal_cuda_is_initialized",
+        "terminal_cuda_max_memory_allocated",
+        "terminal_cuda_max_memory_reserved",
+        "terminal_cuda_mem_get_info",
+        "publication_input_check_summary",
+        "publication_worker_result",
+        "startup_owned_cleanup_publication"
+      ],
+      "source_bound": {
+        "constructor_changes": 1,
+        "core_marker_maximum": 116,
+        "finish_override": "source-owned SharedLedger.finish; owner seals after cleanup",
+        "maximum_markers": 128,
+        "order_changes": 1,
+        "startup_marker_maximum": 12
+      }
+    }
+  ],
+  "close_failure_and_cleanup_error_not_complete": true,
+  "errors": 0,
+  "failures": 0,
+  "kind": "INDEPENDENT_CPU_SHARED_CORE_JOURNAL_CLOSURE_REVIEW_003",
+  "marker129_refused_without_action_execution": true,
+  "native_API_DLL_ctypes_framework_tensor_called": false,
+  "native_PASS": false,
+  "native_authority_issued": false,
+  "native_provider_or_whole_runtime_qualified": false,
+  "original_durable_writer_and_core_execute_on_same_instance": true,
+  "prior_close_failure_probe_preserved_in_history": {
+    "old_failed_close_left_successflagTrue": true,
+    "old_pipeline_sha256": "6575bef2cb1ca4139c8e9cdd9fbfd05100588c5856e1d57453834658c161a884",
+    "tool_chunk_id": "0596b3"
+  },
+  "sha256": "df5b2ad98f277403ad7d7620f815f5b8c5580011499b248c870aa616ae83bff3",
+  "site_disabled": true,
+  "source_after": {
+    "prefix_input_owned_worker.py": "01b297a318ad9fb969655bfc486532eeb654321fcc29e5b56ad6a2f8fb220e2a",
+    "prefix_native_pipeline.py": "4f163834a4e18eb8dc71fe34ee7acc80734c6b08fd90dd97457cd6bb7714ab49",
+    "prefix_tensor_contract.py": "fd86efe022e1c2f36b5a431b37e271cedfd4dd1654ffd3d6d7e0890acea8895f",
+    "test_shared_journal.py": "693a1d4c1d9d441669178c19ac79e340c64df8794955f3c57082ad5787a1fb57"
+  },
+  "source_before": {
+    "prefix_input_owned_worker.py": "01b297a318ad9fb969655bfc486532eeb654321fcc29e5b56ad6a2f8fb220e2a",
+    "prefix_native_pipeline.py": "4f163834a4e18eb8dc71fe34ee7acc80734c6b08fd90dd97457cd6bb7714ab49",
+    "prefix_tensor_contract.py": "fd86efe022e1c2f36b5a431b37e271cedfd4dd1654ffd3d6d7e0890acea8895f",
+    "test_shared_journal.py": "693a1d4c1d9d441669178c19ac79e340c64df8794955f3c57082ad5787a1fb57"
+  },
+  "startup_subcost_values_authored_fixture_not_native_API_measurement": true,
+  "tests_run": 4,
+  "worker_main_entry_and_early_import_accounting_executed": false
+}

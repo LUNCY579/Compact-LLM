@@ -9,6 +9,11 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [observed admission and entry CPU evidence](TENSOR_OBSERVED_ENTRY_CPU_001.md)
+preserves exact009 cache/source assumptions and one journal through startup,
+core and cleanup. Native closures/provider and full read/API accounting remain
+unqualified; the original training/transfer comparison is still pending.
+
 The [actual frozen-prelude observer009](OBSERVER_STARTUP_OUTCOME_009.md)
 passes its bounded native audit, including independent59-cache/source equivalence
 and cleanup. Distinct tensor-main/loader qualification and permission remain open.
