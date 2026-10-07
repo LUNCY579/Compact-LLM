@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: import-only original supervisor adapter CPU reviewed
+
+[Supervisor001](IMPORT_ONLY_SUPERVISOR_CPU_001.md) supplies six source-bound
+adaptations of the original owned supervisor. Five authored/Root and independent
+controls pass for argv/fullV2 anchors, Job-before-resume, unchanged admission,
+failed/unjoined cleanup and partial preservation. Nineteen files retain exact
+source/receipts/fixture failures. Host callbacks remain inert CPU facts.
+
+Native worker/binder source is being integrated and remains unreviewed; final
+registration, real owner grant and fresh actual lifecycle facts are absent.
+No native/model/training or transfer result follows.
+
 ## 2026-10-07 UTC: program-bound closed import registration CPU reviewed
 
 [Closed registration002](IMPORT_CLOSED_REGISTRATION_CPU_002.md) saves exact config/

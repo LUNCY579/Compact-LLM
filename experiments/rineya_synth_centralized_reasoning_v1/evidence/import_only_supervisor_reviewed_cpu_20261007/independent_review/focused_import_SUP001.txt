@@ -1,0 +1,31 @@
+test_original_owned_flow_V2argv_Job_before_resume_terminal (__main__.Independent.test_original_owned_flow_V2argv_Job_before_resume_terminal) ... ok
+test_original_low_floor_denied_without_worker (__main__.Independent.test_original_low_floor_denied_without_worker) ... ok
+test_failed_worker_and_unjoined_probe_refuse_completion (__main__.Independent.test_failed_worker_and_unjoined_probe_refuse_completion) ... FAIL
+test_separate_grant_default_denial_before_source_worker (__main__.Independent.test_separate_grant_default_denial_before_source_worker) ... ok
+test_actual_partial_raw_leases_sources_and_absent_worker_result_preserved (__main__.Independent.test_actual_partial_raw_leases_sources_and_absent_worker_result_preserved) ... ok
+
+======================================================================
+FAIL: test_failed_worker_and_unjoined_probe_refuse_completion (__main__.Independent.test_failed_worker_and_unjoined_probe_refuse_completion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\torch_import_observation_work\native_candidate\independent_review\focused_import_SUP001.py", line 19, in test_failed_worker_and_unjoined_probe_refuse_completion
+    self.host.pending=[{'name':'CPU_pending','ident':1,'operation':'CPU_inert'}];result,_=self.run_body();self.assertFalse(result['sampler_threads_terminal_verified']);self.assertFalse(result['partial_outputs_frozen']);self.assertTrue(result['unjoined_sampler_threads']);DETAILS['actual_unjoined_probe_terminal_refusal']=True
+                                                                                          ^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\torch_import_observation_work\native_candidate\frozen_import_supervisor001\test_import_supervisor.py", line 21, in run_body
+    tree,proof=S._adapt_supervise(RAW,SOURCE,self.worker);exec(compile(tree,str(SOURCE),'exec'),namespace);return namespace['supervise'](self.config,self.output),proof
+                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\native_supervisor.py", line 685, in supervise
+    output = _new_output(output_dir)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\torch_import_observation_work\native_candidate\frozen_import_supervisor001\test_import_supervisor.py", line 16, in new_output
+    def new_output(request):output=host.new_output(request);host.write_new(output/'OWNED_EXTERNAL_ANCHORS.json',self.refs);return output
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\evidence\observer_startup_measurement_reviewed_cpu_20261006\test_supervisor.py", line 24, in write_new
+    name=str(path);assert name not in self.writes;self.writes[name]=value
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.102s
+
+FAILED (failures=1)
