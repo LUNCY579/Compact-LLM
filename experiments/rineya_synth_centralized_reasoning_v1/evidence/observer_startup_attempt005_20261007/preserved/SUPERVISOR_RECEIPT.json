@@ -1,0 +1,216 @@
+{
+  "admission_observations": [
+    {
+      "GPU_index": 0,
+      "disk_free_bytes": 45792673792,
+      "gpu_free_bytes": 7496998912,
+      "gpu_observation_id": "66d403538ecb4818999cc27fd478455a",
+      "gpu_sample_completed_monotonic": 3909.609,
+      "gpu_sample_started_monotonic": 3909.578,
+      "gpu_total_bytes": 8585740288,
+      "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+      "host_available_bytes": 17328939008,
+      "owned_process_identities": [],
+      "owned_process_samples": [],
+      "phase_latency_seconds": {
+        "RAM_available": 2.2000000171829015e-05,
+        "disk_free": 0.00013870000020688167,
+        "owned_job_PID_query": 0.0,
+        "owned_process_total": 9.000000318337698e-07
+      },
+      "sample_completed_monotonic": 3909.609,
+      "sample_started_monotonic": 3909.609,
+      "worker_tree_rss_bytes": 0
+    },
+    {
+      "GPU_index": 0,
+      "disk_free_bytes": 45792673792,
+      "gpu_free_bytes": 7496998912,
+      "gpu_observation_id": "42c519fc5c324cc48404b5a141550ccf",
+      "gpu_sample_completed_monotonic": 3911.609,
+      "gpu_sample_started_monotonic": 3911.609,
+      "gpu_total_bytes": 8585740288,
+      "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+      "host_available_bytes": 17325260800,
+      "owned_process_identities": [],
+      "owned_process_samples": [],
+      "phase_latency_seconds": {
+        "RAM_available": 1.8199999885837315e-05,
+        "disk_free": 9.950000003300374e-05,
+        "owned_job_PID_query": 0.0,
+        "owned_process_total": 8.000001798791345e-07
+      },
+      "sample_completed_monotonic": 3911.609,
+      "sample_started_monotonic": 3911.609,
+      "worker_tree_rss_bytes": 0
+    }
+  ],
+  "admission_only": false,
+  "attempted_worker_argv": [
+    "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe",
+    "-I",
+    "-B",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\observer_startup_measurement_v1\\worker.py",
+    "--config",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\configs\\SYNTH_OBSERVER_STARTUP_CONFIG_005.json",
+    "--output-dir",
+    "C:\\Users\\clclc\\BusinessProject\\rineya-observer-startup-qualification-20261006\\OBSERVER_STARTUP_005_20261007_0516"
+  ],
+  "bounds": {
+    "GPU_free_at_admission_GiB": 4.0,
+    "GPU_free_during_work_GiB": 0.5,
+    "disk_free_GiB": 4.0,
+    "external_watchdog_milliseconds": 100,
+    "preworker_available_GiB": 3.3125,
+    "system_available_reserve_GiB": 1.25,
+    "whole_scope_seconds": 600,
+    "worker_process_tree_RSS_GiB": 2.0
+  },
+  "cadence": {
+    "CPU_freshness_seconds": 0.2,
+    "CPU_watchdog_seconds": 0.1,
+    "GPU_freshness_seconds": 2.0,
+    "GPU_query_interval_seconds": 0.5,
+    "GPU_query_timeout_seconds": 2.0,
+    "admission_deadline_seconds": 30.0,
+    "admission_interval_seconds": 2.0,
+    "admission_samples": 2
+  },
+  "config_sha256": "6e505503570a8c68682c8fb2e00adec79cb9034d7dab1737f39ae295b00f622b",
+  "deadline_monotonic": 4482.0779999999995,
+  "dispatch_observation": {
+    "GPU_index": 0,
+    "disk_free_bytes": 45792673792,
+    "gpu_free_bytes": 7496998912,
+    "gpu_observation_id": "42c519fc5c324cc48404b5a141550ccf",
+    "gpu_sample_completed_monotonic": 3911.609,
+    "gpu_sample_started_monotonic": 3911.609,
+    "gpu_total_bytes": 8585740288,
+    "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+    "host_available_bytes": 17325260800,
+    "owned_process_identities": [],
+    "owned_process_samples": [],
+    "phase_latency_seconds": {
+      "RAM_available": 6.9000002440589014e-06,
+      "disk_free": 5.9699999837903306e-05,
+      "owned_job_PID_query": 0.0,
+      "owned_process_total": 2.0000015865662135e-07
+    },
+    "sample_completed_monotonic": 3911.609,
+    "sample_started_monotonic": 3911.609,
+    "worker_tree_rss_bytes": 0
+  },
+  "elapsed_seconds": 99.32799999999997,
+  "finished_utc": "2026-10-07T05:19:30.632819+00:00",
+  "gpu_telemetry_backend": "pinned_System32_NVML_read_only",
+  "gpu_telemetry_cleanup_verified": true,
+  "job_closed_kill_on_close": true,
+  "lease_path": "C:\\Users\\clclc\\BusinessProject\\rineya-observer-startup-qualification-20261006\\_native_gpu_leases\\417427da22e34255ba741b387c216f80",
+  "mechanical_qualification_established": false,
+  "output_dir": "C:\\Users\\clclc\\BusinessProject\\rineya-observer-startup-qualification-20261006\\OBSERVER_STARTUP_005_20261007_0516",
+  "owned_handle_alive_verified_after_launch": true,
+  "owned_worker_identity_currently_alive": false,
+  "partial_outputs": [
+    {
+      "bytes": 18806,
+      "path": "OBSERVER_PHASES.jsonl",
+      "sha256": "f133b7902e871c9fd1b79bac9b73e395b53285cf1c5211052e2562054378f5b5"
+    },
+    {
+      "bytes": 30445,
+      "path": "OBSERVER_STARTUP_INVENTORY.json",
+      "sha256": "7eb97d662207c09432c13fecd4b1a1c8d5898350183731440c92cb97c8b0c155"
+    },
+    {
+      "bytes": 13921,
+      "path": "OBSERVER_WORKER_RESULT.json",
+      "sha256": "7efb421d6eb7884bf1b67f80c688c70fdadcac23d4616da48ccbe70f71f8d942"
+    },
+    {
+      "bytes": 1310,
+      "path": "OWNED_EXTERNAL_ANCHORS.json",
+      "sha256": "7080df0815c6c734bd6a4fe2d1d38ab0b85cec2b5d8b18c573ac157eddb53481"
+    },
+    {
+      "bytes": 2203869,
+      "path": "RESOURCE_OBSERVATIONS.json",
+      "sha256": "892896e3f8d1a476e226285eb085696e63c2236c7386b5cc18ab79f1378cad7e"
+    },
+    {
+      "bytes": 43072,
+      "path": "supervisor_heartbeat.jsonl",
+      "sha256": "5c869813d73ffbc74b3046b1a4bbd9eff68b5eb997f2b3efb2612690fd4b004c"
+    },
+    {
+      "bytes": 286,
+      "path": "supervisor_ownership.json",
+      "sha256": "07c60703db7cdae6d06f2c4cd88e511a42432db9af8f247e41b420da4394e0a5"
+    },
+    {
+      "bytes": 0,
+      "path": "worker.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "worker.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "partial_outputs_frozen": true,
+  "preflight": {
+    "authorization": {
+      "paid_services": false,
+      "production_training": false,
+      "protected_bank_access": false,
+      "scope": "NO_MODEL_NATIVE_LIBRARY_OBSERVER_LOAD_UNLOAD"
+    },
+    "config_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\configs\\SYNTH_OBSERVER_STARTUP_CONFIG_005.json",
+    "config_sha256": "6e505503570a8c68682c8fb2e00adec79cb9034d7dab1737f39ae295b00f622b",
+    "profile_sha256": "e08239cf3ad28d4b9c7e2703e1a77d4d96e1cf61a5d3c09edfc669a79d28a650",
+    "resources": {
+      "CPU_sample_max_age_seconds": 0.2,
+      "GPU_free_at_admission_GiB": 4.0,
+      "GPU_free_during_work_GiB": 0.5,
+      "GPU_probe_interval_seconds": 0.5,
+      "GPU_probe_timeout_seconds": 2.0,
+      "GPU_sample_max_age_seconds": 2.0,
+      "admission_poll_seconds": 2.0,
+      "admission_seconds": 30,
+      "disk_free_GiB": 4.0,
+      "external_watchdog_milliseconds": 100,
+      "preworker_available_GiB": 3.3125,
+      "system_available_reserve_GiB": 1.25,
+      "whole_scope_seconds": 600,
+      "worker_process_tree_RSS_GiB": 2.0
+    },
+    "runtime_inventory_sha256": "554d9aa6bf4b140fb46e25d375c88de63031f931ae71a37d13b1beb81bdd7f81",
+    "source_commit": "f91e68c04c4efac8fcec69ad4b0a7fb18611a40e",
+    "source_inventory_sha256": "7c7bae3423822b502392719abfbda5a18a537b97f7dc5264442e75a1dbd0711c",
+    "worker_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\observer_startup_measurement_v1\\worker.py"
+  },
+  "preflight_revalidated_before_current_observations": true,
+  "production_training_authorized": false,
+  "protected_bank_access": false,
+  "returncode": 0,
+  "sampler_threads_terminal_verified": true,
+  "schema_version": 1,
+  "started_utc": "2026-10-07T05:17:51.299102+00:00",
+  "status": "SUPERVISED_WORKER_EXITED_ZERO",
+  "unjoined_sampler_threads": [],
+  "worker_attempted": true,
+  "worker_identity": {
+    "assigned_before_resume": true,
+    "breakaway_allowed": false,
+    "create_time": 1791350300.84013,
+    "creation_filetime_100ns": 134358239008401301,
+    "job_handle": 488,
+    "job_kill_on_close": true,
+    "job_name": "Local\\SYNTH_NQ_JOB_72100c24723849599d2d4f8706a39e9b",
+    "pid": 66336,
+    "process_handle": 820
+  },
+  "worker_launched": true,
+  "worker_resume_monotonic": 3911.671,
+  "worker_resumed": true
+}

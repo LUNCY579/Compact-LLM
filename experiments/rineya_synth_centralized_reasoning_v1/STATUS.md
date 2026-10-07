@@ -1,5 +1,22 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: actual observer mechanics completed and reviewed
+
+[Attempt005 outcome](OBSERVER_STARTUP_OUTCOME_005.md) records all twelve approved
+zero-model operations returning successfully. Two genuine fixture events and
+35/36/35 module snapshots join sealed unregister/drain and final source checks.
+Independent review verifies ten raw files, 17 sources, four leases, 40 recorded
+dead births and 837 resource rows under the unchanged floors and cadence.
+Attempts003/004 and their finite admission repairs remain preserved.
+
+The original native qualification/PASS, tensor, fit, scoring and STUDY flags
+remain false. The observed observer window supplies no model-quality result.
+No repeat observer run is needed; current live-interface acceptance and the
+separate tensor qualification contract are the next boundary. Complete scored
+M0 and qualified prior-correct guards remain unresolved: 256/384 raw unscored
+M0 rows and zero actual language ratings/qualified graders. Actual M1/M2 training,
+fresh-family/held-out RS transfer and retention remain unmeasured.
+
 ## 2026-10-07 UTC: decoded-long CPU terminal consumer reviewed
 
 [Terminal consumer preparation](LONG_GUARD_TERMINAL_AUDIT_PREPARATION_CPU_001.md)
