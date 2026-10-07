@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [current runtime byte/roster refresh](TENSOR_RUNTIME_REFRESH_CPU_001.md)
+supplies an independently reviewed8,714-entry tensor candidate. Fresh launch
+qualification and actual provider/resource observations remain pending.
+
 The [closed two-tensor proposal V2](TWO_TENSOR_PROSPECTIVE_V2_CPU_001.md) has four
 passing authored/Root and independent controls. Its source/runtime/permission
 witnesses remain explicit pending items; it grants no native or training launch.

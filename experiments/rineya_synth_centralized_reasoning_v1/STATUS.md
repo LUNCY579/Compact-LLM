@@ -1,5 +1,35 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: current runtime byte/physical roster candidate reviewed
+
+[Runtime refresh](TENSOR_RUNTIME_REFRESH_CPU_001.md) matches all original2986
+runtime descriptors and hashes5730 added leaves in existing external roots.
+Expanded8716 and tensor8714 maps preserve exact roles/denominators; eighteen
+physical rosters remain stable. Independent role/roster audit and31-file sample
+hash pass. Original incomplete roster and zero-read count failure remain retained.
+
+This is two-window passive byte evidence, not fresh launch qualification or
+actual tensor/provider/resource facts. The next implementation step is reviewed
+closed source promotion and exact registration/cache/library expectations;
+fresh caller hashing and separate owner permission remain mandatory. No model
+training/scoring or transfer/retention result follows.
+
+## 2026-10-07 UTC: next native diagnostic witness timing clarified
+
+Source audit of the frozen V2 candidate finds no requirement that the future
+tensor process has already executed before launch. Prelaunch witnesses are the
+reviewed promoted source/gate, exact implementation/dispatch registration,
+current byte/roster/cache/library assumptions and separate owner permission.
+Current main frame, owned birth, provider/ABI and DLL identities are checked
+inside the intended supervised process; resource/death/cleanup evidence is
+audited afterward. Keep those run-produced witnesses pending until observed.
+
+Requiring all five descriptive proposal groups to be completed before launch
+would create a planning cycle that the source does not impose. Another unchanged
+observer run would not establish tensor-main facts. Current continuation is
+closed-gate source promotion preparation and bounded current runtime byte review;
+no tensor or training run is authorized by this timing clarification.
+
 ## 2026-10-07 UTC: concrete closed two-tensor proposal V2 reviewed
 
 [Closed proposal V2](TWO_TENSOR_PROSPECTIVE_V2_CPU_001.md) binds corrected sources,
