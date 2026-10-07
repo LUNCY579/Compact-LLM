@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [CPU registration Git join](TENSOR_REGISTRATION_CYCLE_CPU_001.md) verifies
+six authored and four independent controls using real implementation/dispatch
+commits. The full native reader remains unwired and closed.
+
 The [CPU tensor startup integration](TENSOR_BOOTSTRAP_INTEGRATION_CPU_001.md)
 passes eight authored controls and seven independent controls, including real
 inert registered-source execution. Native entry and registration remain closed.

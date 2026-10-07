@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: registration commit-cycle CPU join reviewed
+
+[Git join candidate](TENSOR_REGISTRATION_CYCLE_CPU_001.md) constructs distinct
+implementation and externally selected dispatch commits in real temporary Git.
+Final six authored controls and independent four pass. Root's earlier six-control
+replay and final affected three parser checks are reported separately. Exact
+packet/source blobs, ancestry, clean HEAD, maps, bounded reads and strict parsers
+are verified; predecessors remain preserved.
+
+Full amended metadata and native-reader wiring remain unexecuted/absent, public
+contracts unchanged and native entry closed. The startup loader also needs its
+package/submodule successor: prior eight/seven controls cover a top-level inert
+module. No current tensor launch packet or model-quality result is established.
+
 ## 2026-10-07 UTC: finite tensor startup CPU loader integration reviewed
 
 [Integrated candidate](TENSOR_BOOTSTRAP_INTEGRATION_CPU_001.md) executes inert
