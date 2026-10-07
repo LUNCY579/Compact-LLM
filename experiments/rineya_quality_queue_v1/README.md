@@ -132,6 +132,28 @@ Zero observed differences can yield a degenerate interval without excluding
 future harms. Neither prototype is selected as an experimental acceptance rule;
 all fixtures are synthetic metadata and provide no Rineya capability evidence.
 
+## Unselected atomic-R coverage diagnostic
+
+`r_lookup_diagnostic.analyze_atomic_r_fixture` accepts only explicitly supplied
+synthetic atomic-R metadata. It validates the existing finite public grammar,
+then compares separate request-traversal and synchronous graph-closure routes.
+Repeated requested aliases are valid. Distinct aliases can share an endpoint.
+A reachable cycle or dangling alias requires UNKNOWN; unrequested bad components
+are distractors. Any unresolved request prevents a partial endpoint set from
+becoming an answer. Malformed input, operational failure and route disagreement
+raise; they do not become semantic UNKNOWN.
+
+The diagnostic labels these coverage dimensions and returns one sorted fixture
+reference, without scoring responses, rendering prompts, generating banks,
+loading tokenizers/models or selecting a treatment. Its partial logical counts
+are not inclusive resource prices. Tests use hand-checked edge cases,
+invariances, maximum-domain cases and 300 bounded two-alias graphs/request
+sequences. Such agreement is software evidence within a shared grammar, not
+epistemic independence, actual-bank coverage or Rineya quality evidence. The
+canonical-only CE8 study, stopped warm path, thresholds and enrolled data stay
+unchanged. Actual public-prompt/reference, ancestry, native token/mask/EOS/fit
+and retention evidence remain separately required.
+
 ## Standing research consent
 
 The programme records direct human standing consent in each card as preparation
