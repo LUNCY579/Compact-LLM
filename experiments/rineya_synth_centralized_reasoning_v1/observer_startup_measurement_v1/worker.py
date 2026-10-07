@@ -14,7 +14,7 @@ def _module(path,expected=None):
     if expected is not None and hashlib.sha256(raw).hexdigest()!=expected:raise ValueError('exact observer-only bootstrap contract source')
     module=ModuleType('observer_only_'+path.stem);module.__file__=str(path)
     exec(compile(raw,str(path),'exec'),module.__dict__);return module
-C=_module(HERE/'contract.py','007f29152f991a00e9cae15befc5d392e5c86794ab70477082f9ec7cfa305d44')
+C=_module(HERE/'contract.py','57053cfe829146cd593e25f7bc8b460dd1670783c17509e3b1571ae4e59c961e')
 OPS=('source_preflight','owned_identity','observer_binding','observer_start','initial_module_baseline',
     'fixture_load','loaded_module_snapshot','fixture_unload','unloaded_module_snapshot',
     'observer_stop','final_event_drain','final_source_preflight')
@@ -104,9 +104,18 @@ def _operation_body(context,contract,make_transport,make_provider,output,clock,r
             observed=bootstrap_actor()
             startup['bootstrap']=c.parse(c.canonical(observed))
             expected_fields={'kind','imports','modules','unknown_modules','fixture_only','namespace_execution_proven'}
-            if value['runtime']['cache_policy']['mode']==c.NO_SITE_MODE:
-                expected_fields.add('interpreter_profile');c.require(c.canonical(observed.get('interpreter_profile'))==c.canonical(value['runtime']['cache_policy']['interpreter_profile']),'actual original no-site profile before fixture work')
+            if value['runtime']['cache_policy']['mode'] in (c.NO_SITE_MODE,c.PRELUDE_MODE):
+                expected_fields.add('interpreter_profile');
+                if value['runtime']['cache_policy']['mode']==c.PRELUDE_MODE:expected_fields.add('tensor_prelude')
+                c.require(c.canonical(observed.get('interpreter_profile'))==c.canonical(value['runtime']['cache_policy']['interpreter_profile']),'actual original no-site profile before fixture work')
             c.require(type(observed) is dict and set(observed)==expected_fields and observed['kind']=='MEASURED_BOOTSTRAP_IMPORTS_V1' and observed['imports']==['ctypes','ctypes.wintypes','_ctypes'] and type(observed['modules']) is list and type(observed['unknown_modules']) is list and observed['fixture_only'] is value['fixture_only'] and observed['namespace_execution_proven'] is False,'original measured bootstrap import projection')
+            if value['runtime']['cache_policy']['mode']==c.PRELUDE_MODE:
+                prelude=observed['tensor_prelude'];unknown=[row['name'] for row in prelude['modules_after_ctypes'] if row.get('error') is not None or (type(row.get('cached')) is dict and row['cached'].get('error') is not None)]
+                startup['bootstrap']['tensor_prelude']['metadata_unknowns']=unknown
+                c.require(unknown==[],'unselected/error prelude source/cache metadata; fixture work withheld')
+                selected=value['runtime']['cache_policy']['tensor_prelude'];plan=c._selected_json(selected['path'],selected['file_sha256'],selected['body_sha256'])
+                helper=_module(HERE/'prelude.py',value['config']['source_files'][str(HERE/'prelude.py')]['sha256'])
+                helper.validate_record(startup['bootstrap']['tensor_prelude'],plan,{**value['runtime']['files'],**value['config']['source_files']},value['runtime']['cache_policy']['allowed_cache_files'],guard_boundary=False)
             c.require(not observed['unknown_modules'],'unselected original bootstrap modules; fixture work withheld')
         if state['events'] is not None:
             before=_snapshot(c,state['transport'].snapshot(),closed=True)
@@ -130,6 +139,12 @@ def _operation_body(context,contract,make_transport,make_provider,output,clock,r
     def modules(which):
         observed=state['provider'].modules();state[which]=c.parse(c.canonical(observed))
         if which=='initial_modules':startup['initial_module_snapshots'].append(state[which])
+        if which=='initial_modules' and startup.get('bootstrap',{}).get('tensor_prelude') is not None:
+            selected=value['runtime']['cache_policy']['tensor_prelude'];plan=c._selected_json(selected['path'],selected['file_sha256'],selected['body_sha256'])
+            helper=_module(HERE/'prelude.py',value['config']['source_files'][str(HERE/'prelude.py')]['sha256'])
+            startup['bootstrap']['tensor_prelude']['modules_at_guard_boundary']=helper.module_snapshot(value['runtime']['stdlib_layout'],{**value['runtime']['files'],**value['config']['source_files']},{p:d for p,d in value['runtime']['files'].items() if d['role']=='qualified_bytecode_cache'})
+            startup['bootstrap']['tensor_prelude']['importers_at_guard_boundary']=helper.importer_snapshot()
+            helper.validate_record(startup['bootstrap']['tensor_prelude'],plan,{**value['runtime']['files'],**value['config']['source_files']},value['runtime']['cache_policy']['allowed_cache_files'],guard_boundary=True,ordinary_modules=startup['bootstrap']['modules'])
         mapping=_modules(c,observed)
         repeated=state['provider'].modules()
         if which=='initial_modules':startup['initial_module_snapshots'].append(c.parse(c.canonical(repeated)))
@@ -350,7 +365,7 @@ def _measure_bootstrap_modules(value,contract,population):
     return {'kind':'MEASURED_BOOTSTRAP_IMPORTS_V1','imports':list(policy['imports']),'modules':rows,
         'unknown_modules':unknown,'fixture_only':value['fixture_only'],'namespace_execution_proven':False}
 
-def _native_bootstrap(context,contract):
+def _native_bootstrap(context,contract,prelude_state=None):
     """Measure a first explicit import after approval and complete byte checks.
 
     Origin/selected-byte joins do not prove the execution history of preloaded
@@ -363,7 +378,17 @@ def _native_bootstrap(context,contract):
     policy=value['runtime']['cache_policy'];selected=policy['allowed_bootstrap_modules'];layout=value['runtime']['stdlib_layout']
     def normalized(path):return str(contract.qualified_path(path,layout))
     profile=None
-    if policy['mode']==contract.NO_SITE_MODE:profile=_measure_no_site_profile(contract,value,sys)
+    if policy['mode'] in (contract.NO_SITE_MODE,contract.PRELUDE_MODE):profile=_measure_no_site_profile(contract,value,sys)
+    prelude_result=None
+    if policy['mode']==contract.PRELUDE_MODE:
+        selected=policy['tensor_prelude'];plan=contract._selected_json(selected['path'],selected['file_sha256'],selected['body_sha256'])
+        helper_path=HERE/'prelude.py';descriptor=value['config']['source_files'][str(helper_path)];contract.file_descriptor(helper_path,descriptor);module=_module(helper_path,descriptor['sha256'])
+        prelude_result,transition,compiled=module.source_prelude(plan,contract,value,cpu_only=False)
+        contract.require(prelude_state is not None,'retained original prelude cleanup state')
+        prelude_state.update(module=module,transition=transition,compiled=compiled)
+        selected=policy['allowed_bootstrap_modules']
+        expected={**policy['interpreter_profile'],'path':transition['after']};projected={**value,'runtime':{**value['runtime'],'cache_policy':{**policy,'interpreter_profile':expected}}}
+        _measure_no_site_profile(contract,projected,sys)
     # Find exact admitted source/extension origins before executing any of the
     # three explicitly registered bootstrap imports.
     for name in policy['imports']:
@@ -374,6 +399,10 @@ def _native_bootstrap(context,contract):
     __import__('ctypes');__import__('ctypes.wintypes');__import__('_ctypes')
     measured=_measure_bootstrap_modules(value,contract,tuple(sys.modules.items()))
     if profile is not None:measured['interpreter_profile']=profile
+    if prelude_result is not None:
+        prelude_result['modules_after_ctypes']=prelude_state['module'].module_snapshot(layout,{**value['runtime']['files'],**value['config']['source_files']},{p:d for p,d in value['runtime']['files'].items() if d['role']=='qualified_bytecode_cache'})
+        prelude_result['importers_after_ctypes']=prelude_state['module'].importer_snapshot()
+        measured['tensor_prelude']=prelude_result
     return measured
 
 def main():
@@ -386,7 +415,15 @@ def main():
     C.require(owner['config_sha256']==external['anchors']['expected_config_file'],'original observer-only owner/config receipt')
     value=C.context_value(context)
     for key,setting in value['config']['offline_environment'].items():os.environ[key]=setting
-    result=_operation_body(context,C,lambda:_native_transport(context,C),lambda:_NativeProvider(context,C,owner),args.output_dir,time.monotonic,lambda:C.revalidate_context(context),lambda:_native_bootstrap(context,C))
-    return 0 if result['status']=='OBSERVER_OPERATIONS_RETURNED_PENDING_TERMINAL_AUDIT' else 2
+    prelude_state={}
+    try:result=_operation_body(context,C,lambda:_native_transport(context,C),lambda:_NativeProvider(context,C,owner),args.output_dir,time.monotonic,lambda:C.revalidate_context(context),lambda:_native_bootstrap(context,C,prelude_state))
+    except BaseException as primary:
+        if prelude_state:
+            try:prelude_state['module'].restore_roots(prelude_state['transition'])
+            except BaseException as cleanup:raise primary from cleanup
+        raise
+    else:
+        if prelude_state:prelude_state['module'].restore_roots(prelude_state['transition'])
+        return 0 if result['status']=='OBSERVER_OPERATIONS_RETURNED_PENDING_TERMINAL_AUDIT' else 2
 
 if __name__=='__main__':raise SystemExit(main())

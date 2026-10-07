@@ -12,7 +12,7 @@ HERE=Path(__file__).resolve().parent
 PACKAGE=next(p for p in HERE.parents if p.name=='rineya_synth_centralized_reasoning_v1')
 SCOPE='NO_MODEL_NATIVE_LIBRARY_OBSERVER_LOAD_UNLOAD'
 ORIGINAL_SHA='edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691'
-CONTRACT_BOOTSTRAP_SHA='007f29152f991a00e9cae15befc5d392e5c86794ab70477082f9ec7cfa305d44'
+CONTRACT_BOOTSTRAP_SHA='57053cfe829146cd593e25f7bc8b460dd1670783c17509e3b1571ae4e59c961e'
 WORKER_RELATIVE='observer_startup_measurement_v1/worker.py'
 BOUNDS={'preworker_available_GiB':3.3125,'system_available_reserve_GiB':1.25,'worker_process_tree_RSS_GiB':2.0,
  'GPU_free_at_admission_GiB':4.0,'GPU_free_during_work_GiB':.5,'disk_free_GiB':4.0,
@@ -105,7 +105,7 @@ def supervise(config_path,output_dir,**anchors):
         original._json_new(leaf/'OWNED_EXTERNAL_ANCHORS.json',{'config_path':value['config_path'],'anchors':value['anchors']})
         return leaf
     namespace['_new_output']=output
-    body,source_proof=adapted_body(raw,namespace,no_site=value['runtime']['cache_policy']['mode']==contract.NO_SITE_MODE)
+    body,source_proof=adapted_body(raw,namespace,no_site=value['runtime']['cache_policy']['mode']in (contract.NO_SITE_MODE,contract.PRELUDE_MODE))
     receipt=body(config_path,output_dir)
     # The original terminal/lease bytes stay identical to the returned receipt.
     # Source adaptation/observer scope are a separate return envelope.
@@ -129,7 +129,7 @@ def _CPU_supervise_fixture(context,host,output_dir,*,contract,_capability,admiss
         leaf=host.new_output(request)
         host.write_new(leaf/'OWNED_EXTERNAL_ANCHORS.json',{'config_path':value['config_path'],'anchors':value['anchors']})
         return leaf
-    namespace={**FIXED,'Path':Path,'math':math,'PACKAGE':contract.PACKAGE,'sys':SimpleNamespace(executable=value['runtime']['cache_policy']['interpreter_profile']['executable'] if value['runtime']['cache_policy']['mode']==contract.NO_SITE_MODE else 'CPU_INERT_PYTHON'),
+    namespace={**FIXED,'Path':Path,'math':math,'PACKAGE':contract.PACKAGE,'sys':SimpleNamespace(executable=value['runtime']['cache_policy']['interpreter_profile']['executable'] if value['runtime']['cache_policy']['mode']in (contract.NO_SITE_MODE,contract.PRELUDE_MODE) else 'CPU_INERT_PYTHON'),
         'time':SimpleNamespace(monotonic=host.clock,sleep=host.sleep),'_utc':host.utc,'_json_safe':lambda v:v,
         '_new_output':output,'_json_new':host.write_new,'_acquire_lease':host.acquire_lease,
         '_release_lease':host.release_lease,'resource_snapshot':host.observation,'_cpu_snapshot':host.cpu_observation,
@@ -141,7 +141,7 @@ def _CPU_supervise_fixture(context,host,output_dir,*,contract,_capability,admiss
     exec(compile(ast.Module(body=functions,type_ignores=[]),str(PACKAGE/'native_supervisor.py'),'exec'),namespace)
     cap=contract._CPU_capability()
     namespace['_preflight']=lambda request:preflight_projection(contract,context,request,cpu_capability=cap)
-    body,proof=adapted_body(raw,namespace,no_site=value['runtime']['cache_policy']['mode']==contract.NO_SITE_MODE)
+    body,proof=adapted_body(raw,namespace,no_site=value['runtime']['cache_policy']['mode']in (contract.NO_SITE_MODE,contract.PRELUDE_MODE))
     result=body(value['config_path'],output_dir,admission_only=admission_only)
     return {'kind':'CPU_ORIGINAL_OBSERVER_ONLY_SUPERVISOR_BODY_FIXTURE','fixture_only':True,'native_PASS':False,
             'native_authority_issued':False,'scope':SCOPE,'source_adaptation':proof,'receipt':result,'cleanup_verified':cleanup_verified(result)}

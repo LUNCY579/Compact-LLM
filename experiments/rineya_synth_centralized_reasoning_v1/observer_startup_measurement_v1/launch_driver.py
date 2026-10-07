@@ -11,7 +11,7 @@ import ast,hashlib,importlib.machinery,importlib.util,os,sys,time
 HERE=Path(__file__).resolve().parent
 PACKAGE=next(p for p in HERE.parents if p.name=='rineya_synth_centralized_reasoning_v1')
 EXPECTED=PACKAGE/'observer_startup_measurement_v1'
-CONTRACT_SHA='007f29152f991a00e9cae15befc5d392e5c86794ab70477082f9ec7cfa305d44'
+CONTRACT_SHA='57053cfe829146cd593e25f7bc8b460dd1670783c17509e3b1571ae4e59c961e'
 ROOT=Path(r'C:\Users\clclc\BusinessProject\rineya-observer-startup-qualification-20261006')
 ROOT_RECORD=PACKAGE/'configs/SYNTH_OBSERVER_STARTUP_OUTPUT_ROOT_V1.json'
 HELPERS=('native_process','native_nvml','native_supervisor')
@@ -84,7 +84,7 @@ def supervisor_adapter(s,root,*,profile_mode=None):
                 count+=1;return [n,*ast.parse('namespace.update(_driver_path_helpers(raw,original.__dict__,_driver_root))').body]
             return n
     node=Install().visit(node);require(count==1,'one selected supervisor namespace pathname adapter insertion')
-    proof={'supervisor_namespace_insertions':count,'new_output_path_changes':1,'lease_path_changes':1,'original_lifecycle_changes':6 if profile_mode=='MEASURE_BYTE_VERIFIED_STARTUP_NO_SITE_V3' else 3,'mutex_identity_changed':False}
+    proof={'supervisor_namespace_insertions':count,'new_output_path_changes':1,'lease_path_changes':1,'original_lifecycle_changes':6 if profile_mode in ('MEASURE_BYTE_VERIFIED_STARTUP_NO_SITE_V3','MEASURE_FROZEN_TENSOR_PRELUDE_NO_SITE_V4') else 3,'mutex_identity_changed':False}
     def helper_factory(raw,namespace,external):
         require(hashlib.sha256(raw).hexdigest()==s.ORIGINAL_SHA,'exact original supervisor before pathname adaptations')
         new,_=_external_function(raw,'_new_output',namespace,external);lease,_=_external_function(raw,'_acquire_lease',namespace,external)
@@ -285,7 +285,7 @@ def run_registered(config_path,external_path,run_name):
     c.file_descriptor(__file__,value['config']['source_files'][str(Path(__file__).absolute())])
     for name in ('TEMP','TMP','PYTHONPYCACHEPREFIX'):
         directory=root/name.lower();directory.mkdir(exist_ok=True);os.environ[name]=str(directory)
-    if value['runtime']['cache_policy']['mode']==c.NO_SITE_MODE:
+    if value['runtime']['cache_policy']['mode']in (c.NO_SITE_MODE,c.PRELUDE_MODE):
         worker=selected_module(c,value,HERE/'worker.py');worker._measure_no_site_profile(c,value,sys)
     sys.dont_write_bytecode=True
     namespaces=None

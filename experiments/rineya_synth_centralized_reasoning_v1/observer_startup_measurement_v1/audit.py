@@ -142,8 +142,14 @@ def replay_phases(raw,*,result,selected_context):
 def replay_bootstrap_modules(bootstrap,runtime,*,fixture_only):
     """Replay exact source origins or separately observed finite namespace paths."""
     base={'kind','imports','modules','unknown_modules','fixture_only','namespace_execution_proven'}
-    no_site=runtime.get('cache_policy',{}).get('mode')=='MEASURE_BYTE_VERIFIED_STARTUP_NO_SITE_V3'
-    fields(bootstrap,base|{'interpreter_profile'} if no_site else base,'measured bootstrap')
+    no_site=runtime.get('cache_policy',{}).get('mode') in ('MEASURE_BYTE_VERIFIED_STARTUP_NO_SITE_V3','MEASURE_FROZEN_TENSOR_PRELUDE_NO_SITE_V4')
+    prelude=runtime.get('cache_policy',{}).get('mode')=='MEASURE_FROZEN_TENSOR_PRELUDE_NO_SITE_V4'
+    fields(bootstrap,base|{'interpreter_profile','tensor_prelude'} if prelude else base|{'interpreter_profile'} if no_site else base,'measured bootstrap')
+    if prelude:
+        record=bootstrap['tensor_prelude'];require(type(record) is dict and record.get('kind')=='OBSERVED_FROZEN_TENSOR_SOURCE_PRELUDE' and record.get('tensor_main_executed') is record.get('Torch_called') is record.get('native_authority_issued') is False and len(record.get('compiled_helpers',[]))==3 and record.get('metadata_unknowns')==[],'original exact tensor definitions only, no tensor entry')
+        for row in record['modules_after_ctypes']:
+            require(row.get('error') is None and (row.get('cached') is None or row['cached'].get('error') is None),'no hidden selected source/cache metadata error')
+        require(record['registered_root_transition']['before']==bootstrap['interpreter_profile']['path'] and record['registered_root_transition']['hook_invoked'] is False and record['registered_root_transition']['after']==record['importers_after_ctypes']['path'],'original no-site registered root transition')
     if no_site:require(same(bootstrap['interpreter_profile'],runtime['cache_policy']['interpreter_profile']) and bootstrap['interpreter_profile'].get('source_execution_history_proven') is False,'original measured no-site interpreter profile joins exact admission')
     require(bootstrap['kind']=='MEASURED_BOOTSTRAP_IMPORTS_V1' and bootstrap['imports']==['ctypes','ctypes.wintypes','_ctypes'] and bootstrap['fixture_only'] is fixture_only and bootstrap['namespace_execution_proven'] is False and bootstrap['unknown_modules']==[] and type(bootstrap['modules']) is list and len(bootstrap['modules'])<=4096,'bounded original bootstrap measurement, no unselected namespaces')
     selected=runtime.get('cache_policy',{}).get('allowed_bootstrap_modules',{});namespaces=runtime.get('cache_policy',{}).get('allowed_namespace_packages',{});names=set()
@@ -177,6 +183,12 @@ def replay_startup(startup,*,result,selected_context):
     first=modules(observed[0],runtime['files']);second=modules(observed[1],runtime['files'])
     require(first==second and set(first)<=set(runtime['allowed_initial_loaded_libraries']) and startup['unknown_libraries']==[],'paired original baseline inside prospective admission; no unknown modules')
     replay_bootstrap_modules(startup['bootstrap'],runtime,fixture_only=value['fixture_only'])
+    if runtime['cache_policy']['mode']=='MEASURE_FROZEN_TENSOR_PRELUDE_NO_SITE_V4':
+        from types import ModuleType
+        selected=runtime['cache_policy']['tensor_prelude'];plan=_strict_selected_prelude_json(selected)
+        helper_path=Path(value['config_path']).parent.parent/'observer_startup_measurement_v1/prelude.py';pin=config['source_files'][str(helper_path)];helper_reader=ReadSet();raw=helper_reader.read(helper_path,{'bytes':pin['bytes'],'sha256':pin['sha256']});helper_reader.verify();require(len(raw)==pin['bytes'] and hashlib.sha256(raw).hexdigest()==pin['sha256'],'exact selected pure prelude validator source')
+        helper=ModuleType('audited_prelude_metadata');helper.__file__=str(helper_path);exec(compile(raw,str(helper_path),'exec'),helper.__dict__)
+        helper.validate_record(startup['bootstrap']['tensor_prelude'],plan,{**runtime['files'],**config['source_files']},runtime['cache_policy']['allowed_cache_files'],guard_boundary=True,ordinary_modules=startup['bootstrap']['modules'])
     return {'initial_libraries':first,'namespace_execution_proven':False,'native_authority_issued':False}
 
 def _sealed(value,pin):require(type(value) is dict and sha(pin) and value.get('sha256')==pin==digest({k:v for k,v in value.items() if k!='sha256'}),'external sealed body identity')
@@ -204,7 +216,7 @@ def _resources(sup,samples,first,last):
         rows=clocks[kind];require(rows and rows[0]<=resume+age and rows[-1]>=last-age and any(first<=t<=last for t in rows) and all(b-a<=age for a,b in zip(rows,rows[1:])),'observer whole recorded work telemetry coverage/cadence')
 
 def replay_worker_command(sup,value,original):
-    if value['runtime']['cache_policy']['mode']=='MEASURE_BYTE_VERIFIED_STARTUP_NO_SITE_V3':
+    if value['runtime']['cache_policy']['mode'] in ('MEASURE_BYTE_VERIFIED_STARTUP_NO_SITE_V3','MEASURE_FROZEN_TENSOR_PRELUDE_NO_SITE_V4'):
         expected=[value['runtime']['cache_policy']['interpreter_profile']['executable'],'-I','-S','-B',value['config']['worker_path'],'--config',value['config_path'],'--output-dir',str(original)]
         require(sup.get('attempted_worker_argv')==expected,'actual no-site worker command exact registered interpreter/flags/worker/config/output')
 
@@ -320,3 +332,7 @@ def audit_registered(preserved_directory,*,original_directory,context,contract,e
     return audit_terminal(preserved_directory,original_directory=original_directory,selected_context=value,
         expected_preservation_file_sha256=expected_preservation_file_sha256,expected_preservation_body_sha256=expected_preservation_body_sha256,
         revalidate=lambda:contract.revalidate_context(context),fresh_death=fresh_death)
+
+
+def _strict_selected_prelude_json(selected):
+    reader=ReadSet();path=Path(selected['path']);raw=reader.read(path,{'bytes':path.lstat().st_size,'sha256':selected['file_sha256']});value=parse(raw);_sealed(value,selected['body_sha256']);reader.verify();return value

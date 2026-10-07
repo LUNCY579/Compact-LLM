@@ -17,6 +17,7 @@ MAX_JSON=16*1024**2
 ABI={'version':1,'row_capacity':4096,'full_capacity':1024,'base_capacity':256,'row_bytes':2600,'snapshot_bytes':72,'architecture':'x64'}
 STARTUP_SITE=Path(r'C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Lib\site-packages')
 NO_SITE_MODE='MEASURE_BYTE_VERIFIED_STARTUP_NO_SITE_V3'
+PRELUDE_MODE='MEASURE_FROZEN_TENSOR_PRELUDE_NO_SITE_V4'
 def expected_no_site_profile(layout=None):
     logical=Path(r'C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none') if layout is None else Path(layout['logical_base_prefix'])
     return {'flags':{'isolated':1,'no_site':1,'ignore_environment':1,'dont_write_bytecode':1,'no_user_site':1},
@@ -167,7 +168,7 @@ def _directory_roster(root,selected,*,suffix=None,layout=None):
 def _startup_admitted_roles(config,runtime):
     """Observer-only exact exceptions; shared tensor runtime roots stay closed."""
     cache=runtime['cache_policy']
-    if cache.get('mode') in {'MEASURE_BYTE_VERIFIED_STARTUP_V1',NO_SITE_MODE}:return {}
+    if cache.get('mode') in {'MEASURE_BYTE_VERIFIED_STARTUP_V1',NO_SITE_MODE,PRELUDE_MODE}:return {}
     require(set(cache)=={'mode','allowed_bootstrap_modules','imports','startup_hook_sources','allowed_namespace_packages'} and cache['mode']=='MEASURE_BYTE_VERIFIED_STARTUP_V2','exact prospective startup V2 fields')
     files=runtime['files'];modules=cache['allowed_bootstrap_modules'];roles={}
     for name,leaf in STARTUP_MODULE_LEAVES.items():
@@ -186,10 +187,17 @@ def _startup_admitted_roles(config,runtime):
 
 def _bootstrap_admission_checks(config,runtime):
     files=runtime['files'];observer=runtime['library_event_observer']
-    cache=runtime['cache_policy'];require(type(cache) is dict and cache.get('mode') in {'MEASURE_BYTE_VERIFIED_STARTUP_V1','MEASURE_BYTE_VERIFIED_STARTUP_V2',NO_SITE_MODE} and cache['imports']==['ctypes','ctypes.wintypes','_ctypes'],'prospective byte-bound explicit startup import policy')
+    cache=runtime['cache_policy'];require(type(cache) is dict and cache.get('mode') in {'MEASURE_BYTE_VERIFIED_STARTUP_V1','MEASURE_BYTE_VERIFIED_STARTUP_V2',NO_SITE_MODE,PRELUDE_MODE} and cache['imports']==['ctypes','ctypes.wintypes','_ctypes'],'prospective byte-bound explicit startup import policy')
     if cache['mode']=='MEASURE_BYTE_VERIFIED_STARTUP_V1':require(set(cache)=={'mode','allowed_bootstrap_modules','imports'},'original startup V1 fields')
-    elif cache['mode']==NO_SITE_MODE:
-        require(set(cache)=={'mode','allowed_bootstrap_modules','imports','interpreter_profile'} and canonical(cache['interpreter_profile'])==canonical(expected_no_site_profile(runtime['stdlib_layout'])),'exact registered no-site interpreter profile')
+    elif cache['mode'] in (NO_SITE_MODE,PRELUDE_MODE):
+        require(set(cache)==({'mode','allowed_bootstrap_modules','imports','interpreter_profile','tensor_prelude','allowed_cache_files'} if cache['mode']==PRELUDE_MODE else {'mode','allowed_bootstrap_modules','imports','interpreter_profile'}) and canonical(cache['interpreter_profile'])==canonical(expected_no_site_profile(runtime['stdlib_layout'])),'exact registered no-site interpreter profile')
+        if cache['mode']==PRELUDE_MODE:
+            entry=cache['tensor_prelude'];require(type(entry) is dict and set(entry)=={'path','file_sha256','body_sha256'},'selected frozen source prelude plan anchor')
+            plan=_selected_json(entry['path'],entry['file_sha256'],entry['body_sha256'])
+            caches=cache['allowed_cache_files'];require(type(caches) is dict and 0<len(caches)<=4096 and all(files.get(p)==d and d['role']=='qualified_bytecode_cache' and Path(p).suffix=='.pyc' and Path(p).parent.name=='__pycache__' for p,d in caches.items()),'finite exact selected cache bytes, no inferred execution')
+            require(plan['kind']=='FROZEN_CLOSED_TENSOR_SOURCE_PRELUDE_PLAN' and plan['compile_order']==['prefix_input_owned_worker.py','registration_git_join.py','prefix_registered_loader.py'] and plan['native_authority_issued'] is plan['source_execution_history_proven'] is False,'exact closed tensor definition-only prelude')
+            for row in plan['sources'].values():require(config['source_files'].get(row['path'])==row['descriptor'],'all frozen tensor source leaves selected in observer source inventory')
+            for path,d in plan['helper_sources'].items():require(config['source_files'].get(path)==d,'selected frozen Git helper definition')
         require(not(set(STARTUP_MODULE_LEAVES)&set(cache['allowed_bootstrap_modules'])),'site startup modules excluded from no-site bootstrap')
     else:
         _startup_admitted_roles(config,runtime)
