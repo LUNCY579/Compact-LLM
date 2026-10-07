@@ -14,7 +14,7 @@ def _module(path,expected=None):
     if expected is not None and hashlib.sha256(raw).hexdigest()!=expected:raise ValueError('exact observer-only bootstrap contract source')
     module=ModuleType('observer_only_'+path.stem);module.__file__=str(path)
     exec(compile(raw,str(path),'exec'),module.__dict__);return module
-C=_module(HERE/'contract.py','eda31c599f9b93402e0d4a0500386a01d38b0701c643a1e8fb1327f388f44965')
+C=_module(HERE/'contract.py','007f29152f991a00e9cae15befc5d392e5c86794ab70477082f9ec7cfa305d44')
 OPS=('source_preflight','owned_identity','observer_binding','observer_start','initial_module_baseline',
     'fixture_load','loaded_module_snapshot','fixture_unload','unloaded_module_snapshot',
     'observer_stop','final_event_drain','final_source_preflight')
@@ -103,7 +103,10 @@ def _operation_body(context,contract,make_transport,make_provider,output,clock,r
         if first:
             observed=bootstrap_actor()
             startup['bootstrap']=c.parse(c.canonical(observed))
-            c.require(type(observed) is dict and set(observed)=={'kind','imports','modules','unknown_modules','fixture_only','namespace_execution_proven'} and observed['kind']=='MEASURED_BOOTSTRAP_IMPORTS_V1' and observed['imports']==['ctypes','ctypes.wintypes','_ctypes'] and type(observed['modules']) is list and type(observed['unknown_modules']) is list and observed['fixture_only'] is value['fixture_only'] and observed['namespace_execution_proven'] is False,'original measured bootstrap import projection')
+            expected_fields={'kind','imports','modules','unknown_modules','fixture_only','namespace_execution_proven'}
+            if value['runtime']['cache_policy']['mode']==c.NO_SITE_MODE:
+                expected_fields.add('interpreter_profile');c.require(c.canonical(observed.get('interpreter_profile'))==c.canonical(value['runtime']['cache_policy']['interpreter_profile']),'actual original no-site profile before fixture work')
+            c.require(type(observed) is dict and set(observed)==expected_fields and observed['kind']=='MEASURED_BOOTSTRAP_IMPORTS_V1' and observed['imports']==['ctypes','ctypes.wintypes','_ctypes'] and type(observed['modules']) is list and type(observed['unknown_modules']) is list and observed['fixture_only'] is value['fixture_only'] and observed['namespace_execution_proven'] is False,'original measured bootstrap import projection')
             c.require(not observed['unknown_modules'],'unselected original bootstrap modules; fixture work withheld')
         if state['events'] is not None:
             before=_snapshot(c,state['transport'].snapshot(),closed=True)
@@ -288,6 +291,25 @@ def _native_transport(context,contract):
     exec(compile(raw,selected['path'],'exec'),module.__dict__);module.__compiled_source_descriptor__=dict(selected['descriptor'])
     return module._Win32Transport(context,contract)
 
+def _measure_no_site_profile(contract,value,interpreter):
+    """Metadata only; never call a path hook or infer execution history."""
+    from importlib.machinery import BuiltinImporter,FrozenImporter,PathFinder,FileFinder,ExtensionFileLoader,SourceFileLoader,SourcelessFileLoader,EXTENSION_SUFFIXES,SOURCE_SUFFIXES,BYTECODE_SUFFIXES
+    from types import FunctionType
+    import zipimport
+    expected=value['runtime']['cache_policy']['interpreter_profile']
+    contract.require(len(interpreter.meta_path)==3 and all(a is b for a,b in zip(interpreter.meta_path,(BuiltinImporter,FrozenImporter,PathFinder))),'exact actual standard meta-path identities')
+    hooks=interpreter.path_hooks;contract.require(len(hooks)==2 and hooks[0] is zipimport.zipimporter and type(hooks[1]) is FunctionType,'exact actual standard path-hook kinds')
+    outer=FileFinder.path_hook.__func__;expected_code=next(c for c in outer.__code__.co_consts if type(c) is type(outer.__code__) and c.co_name=='path_hook_for_FileFinder')
+    hook=hooks[1];contract.require(hook.__code__ is expected_code and hook.__globals__ is outer.__globals__ and type(hook.__closure__) is tuple and len(hook.__closure__)==2 and hook.__closure__[0].cell_contents is FileFinder,'original standard FileFinder path-hook code/globals/class')
+    details=hook.__closure__[1].cell_contents;wanted=((ExtensionFileLoader,EXTENSION_SUFFIXES),(SourceFileLoader,SOURCE_SUFFIXES),(SourcelessFileLoader,BYTECODE_SUFFIXES))
+    contract.require(type(details) is tuple and len(details)==3 and all(type(row) is tuple and len(row)==2 and row[0] is target[0] and type(row[1]) is list and row[1]==target[1] for row,target in zip(details,wanted)),'exact standard FileFinder suffix/loader closure')
+    contract.require(type(interpreter.path) is list and len(interpreter.path)==4 and all(type(p) is str for p in interpreter.path),'exact typed finite initial interpreter path')
+    flags={name:getattr(interpreter.flags,name) for name in expected['flags']}
+    contract.require(all(type(v) is int for v in flags.values()),'actual interpreter flag integers')
+    observed={**{name:getattr(interpreter,name) for name in ('executable','prefix','exec_prefix','base_prefix','base_exec_prefix')},'flags':flags,'path':list(interpreter.path),'meta_path':list(expected['meta_path']),'path_hooks':list(expected['path_hooks']),'source_execution_history_proven':False}
+    contract.require(contract.canonical(observed)==contract.canonical(expected),'actual no-site interpreter flags/prefix/path profile')
+    return observed
+
 def _measure_bootstrap_modules(value,contract,population):
     """Measure already supplied namespace metadata; never import it."""
     policy=value['runtime']['cache_policy'];selected=policy['allowed_bootstrap_modules'];layout=value['runtime']['stdlib_layout']
@@ -340,6 +362,8 @@ def _native_bootstrap(context,contract):
     from importlib.machinery import PathFinder
     policy=value['runtime']['cache_policy'];selected=policy['allowed_bootstrap_modules'];layout=value['runtime']['stdlib_layout']
     def normalized(path):return str(contract.qualified_path(path,layout))
+    profile=None
+    if policy['mode']==contract.NO_SITE_MODE:profile=_measure_no_site_profile(contract,value,sys)
     # Find exact admitted source/extension origins before executing any of the
     # three explicitly registered bootstrap imports.
     for name in policy['imports']:
@@ -348,7 +372,9 @@ def _native_bootstrap(context,contract):
         contract.require(spec is not None and type(spec.origin) is str and normalized(spec.origin)==normalized(selected[name]['path']),'byte-admitted bootstrap resolver origin before explicit import')
         contract.file_descriptor(selected[name]['path'],value['runtime']['files'][selected[name]['path']],layout=layout)
     __import__('ctypes');__import__('ctypes.wintypes');__import__('_ctypes')
-    return _measure_bootstrap_modules(value,contract,tuple(sys.modules.items()))
+    measured=_measure_bootstrap_modules(value,contract,tuple(sys.modules.items()))
+    if profile is not None:measured['interpreter_profile']=profile
+    return measured
 
 def main():
     C.native_gate()

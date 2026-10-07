@@ -141,7 +141,10 @@ def replay_phases(raw,*,result,selected_context):
 
 def replay_bootstrap_modules(bootstrap,runtime,*,fixture_only):
     """Replay exact source origins or separately observed finite namespace paths."""
-    fields(bootstrap,{'kind','imports','modules','unknown_modules','fixture_only','namespace_execution_proven'},'measured bootstrap')
+    base={'kind','imports','modules','unknown_modules','fixture_only','namespace_execution_proven'}
+    no_site=runtime.get('cache_policy',{}).get('mode')=='MEASURE_BYTE_VERIFIED_STARTUP_NO_SITE_V3'
+    fields(bootstrap,base|{'interpreter_profile'} if no_site else base,'measured bootstrap')
+    if no_site:require(same(bootstrap['interpreter_profile'],runtime['cache_policy']['interpreter_profile']) and bootstrap['interpreter_profile'].get('source_execution_history_proven') is False,'original measured no-site interpreter profile joins exact admission')
     require(bootstrap['kind']=='MEASURED_BOOTSTRAP_IMPORTS_V1' and bootstrap['imports']==['ctypes','ctypes.wintypes','_ctypes'] and bootstrap['fixture_only'] is fixture_only and bootstrap['namespace_execution_proven'] is False and bootstrap['unknown_modules']==[] and type(bootstrap['modules']) is list and len(bootstrap['modules'])<=4096,'bounded original bootstrap measurement, no unselected namespaces')
     selected=runtime.get('cache_policy',{}).get('allowed_bootstrap_modules',{});namespaces=runtime.get('cache_policy',{}).get('allowed_namespace_packages',{});names=set()
     def normalized(text):
@@ -200,6 +203,11 @@ def _resources(sup,samples,first,last):
     for kind,age in (('CPU',.2),('GPU',2.0)):
         rows=clocks[kind];require(rows and rows[0]<=resume+age and rows[-1]>=last-age and any(first<=t<=last for t in rows) and all(b-a<=age for a,b in zip(rows,rows[1:])),'observer whole recorded work telemetry coverage/cadence')
 
+def replay_worker_command(sup,value,original):
+    if value['runtime']['cache_policy']['mode']=='MEASURE_BYTE_VERIFIED_STARTUP_NO_SITE_V3':
+        expected=[value['runtime']['cache_policy']['interpreter_profile']['executable'],'-I','-S','-B',value['config']['worker_path'],'--config',value['config_path'],'--output-dir',str(original)]
+        require(sup.get('attempted_worker_argv')==expected,'actual no-site worker command exact registered interpreter/flags/worker/config/output')
+
 def audit_terminal(preserved_directory,*,original_directory,selected_context,expected_preservation_file_sha256,expected_preservation_body_sha256,revalidate,fresh_death):
     """Full original/snapshot/record replay; host interfaces externally bound.
 
@@ -243,6 +251,7 @@ def audit_terminal(preserved_directory,*,original_directory,selected_context,exp
     # The qualified contract performs exact compiler/source/binary build joins;
     # retaining its original independently selected receipt prevents rebasing.
     sup=data['SUPERVISOR_RECEIPT.json'];owner=data['supervisor_ownership.json'];launcher=_birth({k:sup['worker_identity'][k] for k in ('pid','creation_filetime_100ns')})
+    replay_worker_command(sup,value,original)
     require(sup['status']=='SUPERVISED_WORKER_EXITED_ZERO' and type(sup['returncode']) is int and sup['returncode']==0 and all(sup[k] is True for k in ('worker_attempted','worker_launched','worker_resumed','preflight_revalidated_before_current_observations','job_closed_kill_on_close','sampler_threads_terminal_verified','gpu_telemetry_cleanup_verified','partial_outputs_frozen')) and sup['owned_worker_identity_currently_alive'] is False and sup['unjoined_sampler_threads']==[],'actual successful owned terminal/Job/samplers/telemetry cleanup')
     require(sup['output_dir']==str(original) and sup['config_sha256']==value['anchors']['expected_config_file'] and sup['preflight']['source_commit']==value['expected_head'] and sup['preflight']['authorization']['scope']==SCOPE and sup['preflight']['profile_sha256']==registration['profile_sha256'] and same(sup['preflight']['resources'],config['resources']),'exact observer-only supervisor/profile/resources')
     require(owner['worker_pid']==launcher['pid'] and owner['config_sha256']==sup['config_sha256'] and owner['job_name']==sup['worker_identity']['job_name'] and sup['worker_identity']['assigned_before_resume'] is sup['worker_identity']['job_kill_on_close'] is True and sup['worker_identity']['breakaway_allowed'] is False,'original suspended launcher/Job/config ownership')

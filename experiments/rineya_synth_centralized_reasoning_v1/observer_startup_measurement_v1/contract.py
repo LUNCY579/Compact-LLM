@@ -16,6 +16,16 @@ OPS=('source_preflight','owned_identity','observer_binding','observer_start','in
 MAX_JSON=16*1024**2
 ABI={'version':1,'row_capacity':4096,'full_capacity':1024,'base_capacity':256,'row_bytes':2600,'snapshot_bytes':72,'architecture':'x64'}
 STARTUP_SITE=Path(r'C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Lib\site-packages')
+NO_SITE_MODE='MEASURE_BYTE_VERIFIED_STARTUP_NO_SITE_V3'
+def expected_no_site_profile(layout=None):
+    logical=Path(r'C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none') if layout is None else Path(layout['logical_base_prefix'])
+    return {'flags':{'isolated':1,'no_site':1,'ignore_environment':1,'dont_write_bytecode':1,'no_user_site':1},
+      'executable':str(STARTUP_SITE.parents[1]/'Scripts/python.exe'),'prefix':str(logical),'exec_prefix':str(logical),'base_prefix':str(logical),'base_exec_prefix':str(logical),
+      'path':[str(logical/'python311.zip'),str(logical/'DLLs'),str(logical/'Lib'),str(logical)],
+      'meta_path':[{'module':'_frozen_importlib','name':'BuiltinImporter'},{'module':'_frozen_importlib','name':'FrozenImporter'},{'module':'_frozen_importlib_external','name':'PathFinder'}],
+      'path_hooks':[{'module':'zipimport','name':'zipimporter'},{'module':'_frozen_importlib_external','name':'path_hook_for_FileFinder'}],
+      'source_execution_history_proven':False}
+
 STARTUP_MODULE_LEAVES={'__editable___hermes_agent_0_17_0_finder':'__editable___hermes_agent_0_17_0_finder.py','__editable___recursive_state_forgetting_0_1_0_finder':'__editable___recursive_state_forgetting_0_1_0_finder.py','__editable___rineya_tgsa_research_0_2_0_finder':'__editable___rineya_tgsa_research_0_2_0_finder.py','_distutils_hack':'_distutils_hack/__init__.py','_virtualenv':'_virtualenv.py','pywin32_bootstrap':'win32/lib/pywin32_bootstrap.py'}
 STARTUP_HOOK_LEAVES=('__editable__.hermes_agent-0.17.0.pth','__editable__.recursive_state_forgetting-0.1.0.pth','__editable__.rineya_tgsa_research-0.2.0.pth','_virtualenv.pth','distutils-precedence.pth','pywin32.pth')
 STARTUP_NAMESPACE_LEAVES=('pythoncom311.dll','pywintypes311.dll')
@@ -157,7 +167,7 @@ def _directory_roster(root,selected,*,suffix=None,layout=None):
 def _startup_admitted_roles(config,runtime):
     """Observer-only exact exceptions; shared tensor runtime roots stay closed."""
     cache=runtime['cache_policy']
-    if cache.get('mode')=='MEASURE_BYTE_VERIFIED_STARTUP_V1':return {}
+    if cache.get('mode') in {'MEASURE_BYTE_VERIFIED_STARTUP_V1',NO_SITE_MODE}:return {}
     require(set(cache)=={'mode','allowed_bootstrap_modules','imports','startup_hook_sources','allowed_namespace_packages'} and cache['mode']=='MEASURE_BYTE_VERIFIED_STARTUP_V2','exact prospective startup V2 fields')
     files=runtime['files'];modules=cache['allowed_bootstrap_modules'];roles={}
     for name,leaf in STARTUP_MODULE_LEAVES.items():
@@ -176,8 +186,11 @@ def _startup_admitted_roles(config,runtime):
 
 def _bootstrap_admission_checks(config,runtime):
     files=runtime['files'];observer=runtime['library_event_observer']
-    cache=runtime['cache_policy'];require(type(cache) is dict and cache.get('mode') in {'MEASURE_BYTE_VERIFIED_STARTUP_V1','MEASURE_BYTE_VERIFIED_STARTUP_V2'} and cache['imports']==['ctypes','ctypes.wintypes','_ctypes'],'prospective byte-bound explicit startup import policy')
+    cache=runtime['cache_policy'];require(type(cache) is dict and cache.get('mode') in {'MEASURE_BYTE_VERIFIED_STARTUP_V1','MEASURE_BYTE_VERIFIED_STARTUP_V2',NO_SITE_MODE} and cache['imports']==['ctypes','ctypes.wintypes','_ctypes'],'prospective byte-bound explicit startup import policy')
     if cache['mode']=='MEASURE_BYTE_VERIFIED_STARTUP_V1':require(set(cache)=={'mode','allowed_bootstrap_modules','imports'},'original startup V1 fields')
+    elif cache['mode']==NO_SITE_MODE:
+        require(set(cache)=={'mode','allowed_bootstrap_modules','imports','interpreter_profile'} and canonical(cache['interpreter_profile'])==canonical(expected_no_site_profile(runtime['stdlib_layout'])),'exact registered no-site interpreter profile')
+        require(not(set(STARTUP_MODULE_LEAVES)&set(cache['allowed_bootstrap_modules'])),'site startup modules excluded from no-site bootstrap')
     else:
         _startup_admitted_roles(config,runtime)
         hooks=cache['startup_hook_sources'];_directory_roster(hooks['directory'],hooks['files'],suffix='.pth',layout=runtime['stdlib_layout'])
