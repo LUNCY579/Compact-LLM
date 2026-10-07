@@ -1,5 +1,18 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: full generic import qualifier logic CPU reviewed
+
+[Qualifier002](IMPORT_RUNTIME_QUALIFIER_CPU_002.md) retains exact generic source/
+role/roster/known65+779/cache63+59/alias/main/observer/build/Windows checks. Actual
+public helper paths are corrected by one source-bound adaptation. Four authored/
+Root and six independent semantic controls pass with36pins unchanged. File and
+roster reader seams are explicitly injected; no fresh full hash/native proof.
+
+Additional-preload positive and own-process main/psutil/baseline integration remain
+pending. The selected qualifier is called before native context minting; actual
+integrated reader/bootstrap and source/Git registration still need review. No
+owner grant, model training/scoring or fresh transfer/retention result follows.
+
 ## 2026-10-07 UTC: passive psutil preload/source/cache assumptions checked
 
 [Psutil assumptions](PSUTIL_BOOTSTRAP_ASSUMPTIONS_CPU_001.md) supply seven verified
