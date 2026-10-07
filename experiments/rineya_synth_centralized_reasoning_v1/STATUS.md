@@ -1,5 +1,18 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: full passive preload overlay qualification CPU reviewed
+
+[Overlay qualifier003](IMPORT_PRELOAD_QUALIFIER_CPU_003.md) joins exact separate
+ten-row/7-cache preload assumptions and pdh into8,724runtime descriptors. Cached
+kind is canonicalstr; historical63/59/two maps remain intact. Five authored/Root
+and independent semantic controls pass with36pins unchanged. Eighteen files
+preserve overlay logic/receipts; injected readers establish no fresh hash/native facts.
+
+Bootstrap001 metadata checks also pass but need module-name/spec/loader identity
+tightening found by independent review. Actual psutil/current-main/loaders/baseline
+and integrated source reader/registration remain pending. No launch or model
+training/scoring/transfer result follows.
+
 ## 2026-10-07 UTC: full generic import qualifier logic CPU reviewed
 
 [Qualifier002](IMPORT_RUNTIME_QUALIFIER_CPU_002.md) retains exact generic source/

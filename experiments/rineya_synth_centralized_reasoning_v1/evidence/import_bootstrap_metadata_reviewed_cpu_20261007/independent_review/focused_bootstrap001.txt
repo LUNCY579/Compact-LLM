@@ -1,0 +1,33 @@
+test_actual_cache_code_source_shape_and_historical_conservation (__main__.Independent.test_actual_cache_code_source_shape_and_historical_conservation) ... ok
+test_wrong_code_history_missing_population_spec_and_cache_field_refuse (__main__.Independent.test_wrong_code_history_missing_population_spec_and_cache_field_refuse) ... ERROR
+test_actual_authored_main_frame_wrong_namespace_and_rebound_code_refuse (__main__.Independent.test_actual_authored_main_frame_wrong_namespace_and_rebound_code_refuse) ... ok
+test_closed_native_preload_unknown_finder_and_source_qualifier_order (__main__.Independent.test_closed_native_preload_unknown_finder_and_source_qualifier_order) ... ok
+
+======================================================================
+ERROR: test_wrong_code_history_missing_population_spec_and_cache_field_refuse (__main__.Independent.test_wrong_code_history_missing_population_spec_and_cache_field_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\torch_import_observation_work\native_candidate\independent_review\focused_bootstrap001.py", line 18, in test_wrong_code_history_missing_population_spec_and_cache_field_refuse
+    with self.assertRaises(ValueError):H.verify_additional_preloads(self.value,C,{'CPU_additional':self.module})
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\torch_import_observation_work\native_candidate\frozen_bootstrap001\import_bootstrap.py", line 20, in verify_additional_preloads
+    contract.require(type(name) is str and name in modules,'every selected additional preload is actually present');result[name]=verify_current_module(name,modules[name],row,contract,files,value['runtime']['stdlib_layout'])
+                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\torch_import_observation_work\native_candidate\frozen_bootstrap001\import_bootstrap.py", line 8, in verify_current_module
+    physical=str(contract.qualified_path(origin,layout=layout));spec_origin=str(contract.qualified_path(spec.origin,layout=layout));contract.require(physical==spec_origin==row['path'] and files.get(physical)==row['descriptor'],'current preload source/spec exact descriptor')
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\torch_import_observation_work\native_candidate\frozen_bootstrap001\predecessors\prefix_tensor_contract.py", line 44, in qualified_path
+    meta=part.lstat();require(not part.is_symlink() and not(getattr(meta,'st_file_attributes',0)&0x400),'no reparse alias')
+         ^^^^^^^^^^^^
+  File "C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\pathlib.py", line 1163, in lstat
+    return self.stat(follow_symlinks=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\pathlib.py", line 1013, in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified: 'C:\\Users\\clclc\\AppData\\Local\\Temp\\CPU_additive_preload_ywkgqj3q\\different.py'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.064s
+
+FAILED (errors=1)
