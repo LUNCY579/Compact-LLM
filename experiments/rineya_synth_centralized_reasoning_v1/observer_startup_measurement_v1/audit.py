@@ -158,10 +158,13 @@ def replay_bootstrap_modules(bootstrap,runtime,*,fixture_only):
         return str(Path(layout['physical_base_prefix'])/p.relative_to(logical)) if logical is not None and p.is_relative_to(logical) else str(p)
     for row in bootstrap['modules']:
         base={'name','origin','classification','source_sha256','error'}
-        fields(row,base|{'spec_search_locations','module_search_locations','namespace_files','namespace_files_sha256'} if row.get('classification')=='namespace_package' else base,'original namespace origin')
+        fields(row,base|{'alias_metadata'} if row.get('classification')=='stdlib_class_alias' else base|{'spec_search_locations','module_search_locations','namespace_files','namespace_files_sha256'} if row.get('classification')=='namespace_package' else base,'original namespace origin')
         require(type(row['name']) is str and row['name'] not in names,'unique original namespace names');names.add(row['name'])
         require(row['error'] is None,'no hidden original namespace origin/byte verification error')
         if row['classification']=='builtin_or_frozen':require(row['origin'] in ('built-in','frozen') and row['source_sha256'] is None,'interpreter-reported builtin/frozen origin; no execution proof')
+        elif row['classification']=='stdlib_class_alias':
+            meta=row['alias_metadata'];entry=selected.get('typing');require(row['name'] in ('typing.io','typing.re') and type(entry) is dict and meta['owner_path']==normalized(entry['path']) and meta['owner_sha256']==entry['source_sha256'] and row['origin'] is row['source_sha256'] is None,'finite typing alias original owner source join')
+            require(meta['class_name']==row['name'] and meta['class_qualname']==row['name'].rpartition('.')[2] and meta['exports']==(['IO','TextIO','BinaryIO'] if row['name']=='typing.io' else ['Pattern','Match']) and meta['owner_class_identity_verified'] is meta['owner_export_identities_verified'] is meta['metaclass_code_equivalence_verified'] is True and meta['source_execution_history_proven'] is False,'original exact typing class alias metadata')
         elif row['classification']=='namespace_package':
             entry=namespaces.get(row['name'])
             require(type(entry) is dict and set(entry)=={'search_locations','files','files_sha256'} and row['origin'] is row['source_sha256'] is None,'selected namespace distinct from source origin')

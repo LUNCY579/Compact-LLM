@@ -346,10 +346,24 @@ def _measure_bootstrap_modules(value,contract,population):
     rows=[];unknown=[]
     for name,module in sorted(population):
         if module is None:continue
+        if name in ('typing.io','typing.re'):
+            row={'name':name,'origin':None,'classification':'stdlib_class_alias','source_sha256':None,'error':None}
+            try:
+                helper_path=HERE/'prelude.py';helper=_module(helper_path,value['config']['source_files'][str(helper_path)]['sha256']);row['alias_metadata']=helper.typing_alias_metadata(name,module,dict(population),{**value['runtime']['files'],**value['config']['source_files']},layout)
+            except (OSError,ValueError,TypeError) as error:row['error']=_error(error);unknown.append(row)
+            rows.append(row);continue
+        if type(module) is not ModuleType:
+            row={'name':name,'origin':None,'classification':'source_or_extension','source_sha256':None,'error':{'type':'ValueError','message':'unselected non-module object'}};rows.append(row);unknown.append(row);continue
         namespace=vars(module);spec=namespace.get('__spec__');origin=getattr(spec,'origin',None) or namespace.get('__file__')
         classification='builtin_or_frozen' if origin in ('built-in','frozen') else 'source_or_extension'
         row={'name':name,'origin':origin if type(origin) is str else None,'classification':classification,'source_sha256':None,'error':None}
-        if name in namespaces and origin is None:
+        if name in ('typing.io','typing.re'):
+            try:
+                helper_path=HERE/'prelude.py';helper=_module(helper_path,value['config']['source_files'][str(helper_path)]['sha256'])
+                metadata=helper.typing_alias_metadata(name,module,dict(population),{**value['runtime']['files'],**value['config']['source_files']},layout)
+                row.update(classification='stdlib_class_alias',origin=None,alias_metadata=metadata)
+            except (OSError,ValueError,TypeError) as error:row['error']=_error(error);unknown.append(row)
+        elif name in namespaces and origin is None:
             row.update(classification='namespace_package',spec_search_locations=None,module_search_locations=None,namespace_files=None,namespace_files_sha256=None)
             try:
                 entry=namespaces[name]

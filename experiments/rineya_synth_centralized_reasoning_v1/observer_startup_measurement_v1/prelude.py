@@ -34,6 +34,29 @@ def fingerprint(code):
         if type(x) is int:require(x.bit_length()<=32768,'bounded code integer')
         require(type(x) in (str,bytes,int,float,complex,bool,type(None),type(Ellipsis)),'literal metadata only');return x
     require(type(code) is CodeType,'cached object is code metadata');return visit(code)
+ALIAS_EXPORTS={'typing.io':('IO','TextIO','BinaryIO'),'typing.re':('Pattern','Match')}
+def typing_alias_metadata(name,alias,population,selected_files,layout):
+    require(name in ALIAS_EXPORTS,'only two exact CPython typing class aliases')
+    owner=population.get('typing');require(type(owner) is ModuleType and vars(owner).get('__name__')=='typing','exact owning typing module')
+    owner_ns=vars(owner);spec=owner_ns.get('__spec__');origin=getattr(spec,'origin',None) or owner_ns.get('__file__');require(type(origin) is str,'typing owner source origin')
+    candidate=str(Path(origin).absolute());logical=Path(layout['logical_base_prefix']);physical=Path(layout['physical_base_prefix']);candidate=str(physical/Path(candidate).relative_to(logical)) if Path(candidate).is_relative_to(logical) else candidate
+    pin=selected_files.get(candidate);require(type(pin) is dict and pin['role']=='python_source' and Path(candidate).name=='typing.py','selected typing owner bytes before alias source read')
+    raw=bounded_bytes(normalized(origin,layout));require(len(raw)==pin['bytes'] and hashlib.sha256(raw).hexdigest()==pin['sha256'],'exact selected typing owner bytes')
+    short=name.rpartition('.')[2];require(owner_ns.get(short) is alias,'same owner export/sys.modules class alias object')
+    meta=owner_ns.get('_DeprecatedType');require(type(meta) is type and type(alias) is meta,'exact owner deprecated-alias metaclass')
+    require(type.__getattribute__(alias,'__name__')==name and type.__getattribute__(alias,'__qualname__')==short and type.__getattribute__(alias,'__module__')=='typing','exact renamed class alias identity metadata')
+    members=type.__getattribute__(alias,'__dict__');require(members.get('__all__')==list(ALIAS_EXPORTS[name]) and all(members.get(export) is owner_ns.get(export) and export in owner_ns for export in ALIAS_EXPORTS[name]),'exact owner exported object identities')
+    fn=type.__getattribute__(meta,'__dict__').get('__getattribute__');require(type(fn) is FunctionType and fn.__globals__ is owner_ns,'exact owner metaclass function/global identity')
+    compiled=compile(raw,fn.__code__.co_filename,'exec');class_code=next((c for c in compiled.co_consts if type(c) is CodeType and c.co_name=='_DeprecatedType'),None);require(class_code is not None,'source-defined deprecated metaclass')
+    expected=next((c for c in class_code.co_consts if type(c) is CodeType and c.co_name=='__getattribute__'),None);require(expected is not None and normalized(fn.__code__.co_filename,layout)==candidate and fingerprint(fn.__code__)==fingerprint(expected),'actual metaclass code matches selected typing source')
+    return {'owner_name':'typing','owner_path':candidate,'owner_bytes':pin['bytes'],'owner_sha256':pin['sha256'],'class_name':name,'class_qualname':short,'metaclass_name':'_DeprecatedType','exports':list(ALIAS_EXPORTS[name]),'owner_class_identity_verified':True,'owner_export_identities_verified':True,'metaclass_code_equivalence_verified':True,'source_execution_history_proven':False}
+
+def validate_typing_alias_row(name,alias_metadata,selected_files):
+    require(name in ALIAS_EXPORTS and type(alias_metadata) is dict,'selected alias metadata only')
+    pin=selected_files.get(alias_metadata.get('owner_path'));require(type(pin) is dict and pin['role']=='python_source' and alias_metadata['owner_name']=='typing' and alias_metadata['owner_bytes']==pin['bytes'] and alias_metadata['owner_sha256']==pin['sha256'] and Path(alias_metadata['owner_path']).name=='typing.py','original alias owner source descriptor join')
+    require(alias_metadata['class_name']==name and alias_metadata['class_qualname']==name.rpartition('.')[2] and alias_metadata['metaclass_name']=='_DeprecatedType' and alias_metadata['exports']==list(ALIAS_EXPORTS[name]) and alias_metadata['owner_class_identity_verified'] is alias_metadata['owner_export_identities_verified'] is alias_metadata['metaclass_code_equivalence_verified'] is True and alias_metadata['source_execution_history_proven'] is False,'exact finite alias identity record; no history claim')
+    return True
+
 def cache_metadata(module,source,layout,selected_files=None,cache_files=None):
     cached=vars(module).get('__cached__');row={'path':cached if type(cached) is str else None,'bytes':None,'sha256':None,'source_equivalence':None,'error':None}
     if cached is None:return row
@@ -50,8 +73,19 @@ def module_snapshot(layout,selected_files=None,cache_files=None):
     require(len(sys.modules)<=4096,'bounded current module population');rows=[]
     for name,module in sorted(tuple(sys.modules.items())):
         if module is None:continue
+        if name in ALIAS_EXPORTS:
+            row={'name':name,'spec_origin':None,'origin':None,'source_sha256':None,'source_bytes':None,'cached':None,'cached_attribute_present':False,'cached_value_kind':'missing','classification':'stdlib_class_alias','error':None,'current_execution_history_proven':False}
+            try:row['alias_metadata']=typing_alias_metadata(name,module,sys.modules,selected_files,layout)
+            except (OSError,ValueError,TypeError) as e:row['error']={'type':type(e).__name__,'message':str(e)[:2048]}
+            rows.append(row);continue
+        if type(module) is not ModuleType:
+            rows.append({'name':name,'spec_origin':None,'origin':None,'source_sha256':None,'source_bytes':None,'cached':None,'cached_attribute_present':False,'cached_value_kind':'missing','error':{'type':'ValueError','message':'unselected non-module object'},'current_execution_history_proven':False});continue
         namespace=vars(module);spec=namespace.get('__spec__');origin=getattr(spec,'origin',None) or namespace.get('__file__');row={'name':name,'spec_origin':getattr(spec,'origin',None),'origin':origin if type(origin) is str else None,'source_sha256':None,'source_bytes':None,'cached':None,'cached_attribute_present':'__cached__' in namespace,'cached_value_kind':'missing' if '__cached__' not in namespace else 'none' if namespace['__cached__'] is None else type(namespace['__cached__']).__name__,'error':None,'current_execution_history_proven':False}
-        if origin not in ('built-in','frozen'):
+        if name in ALIAS_EXPORTS:
+            try:
+                row['classification']='stdlib_class_alias';row['alias_metadata']=typing_alias_metadata(name,module,sys.modules,selected_files,layout);row['cached_attribute_present']=False;row['cached_value_kind']='missing'
+            except (OSError,ValueError,TypeError) as e:row['error']={'type':type(e).__name__,'message':str(e)[:2048]}
+        elif origin not in ('built-in','frozen'):
             try:
                 require(type(origin) is str,'unselected fileless namespace');candidate=str(Path(origin).absolute());logical=Path(layout['logical_base_prefix']);physical=Path(layout['physical_base_prefix']);candidate=str(physical/Path(candidate).relative_to(logical)) if Path(candidate).is_relative_to(logical) else candidate
                 require(type(selected_files) is dict and candidate in selected_files,'unselected module origin recorded without byte read');path=normalized(origin,layout);raw=bounded_bytes(path);pin=selected_files[path];require(len(raw)==pin['bytes'] and hashlib.sha256(raw).hexdigest()==pin['sha256'],'selected original module byte identity');row.update(origin=path,source_sha256=hashlib.sha256(raw).hexdigest(),source_bytes=len(raw));row['cached']=cache_metadata(module,path,layout,selected_files,cache_files)
@@ -118,7 +152,9 @@ def validate_record(record,plan,selected_files,cache_files,*,guard_boundary,ordi
             if not present:require(kind=='missing' and (cached is None or cached['path'] is None),'missing cached attribute not erased/qualified')
             elif kind=='none':require(cached is None or cached['path'] is None,'explicit None cached attribute has no byte identity')
             else:require(kind=='str' and type(cached) is dict and type(cached['path']) is str,'actual cached string observation cannot be erased')
-            if row['origin'] in ('built-in','frozen'):require(row['source_sha256'] is row['source_bytes'] is None,'builtin/frozen documentary metadata is not source byte qualification')
+            if row.get('classification')=='stdlib_class_alias':
+                validate_typing_alias_row(row['name'],row['alias_metadata'],selected_files);require(row['origin'] is row['source_sha256'] is row['source_bytes'] is row['cached'] is None,'class alias has no invented module/source/cache origin')
+            elif row['origin'] in ('built-in','frozen'):require(row['source_sha256'] is row['source_bytes'] is None,'builtin/frozen documentary metadata is not source byte qualification')
             else:
                 pin=selected_files.get(row['origin']);require(type(pin) is dict and row['source_sha256']==pin['sha256'] and row['source_bytes']==pin['bytes'],'original observed module source descriptor joins')
                 cached=row['cached']
