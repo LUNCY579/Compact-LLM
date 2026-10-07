@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: actual site-disabled observer006 completed and reviewed
+
+[Observer006 outcome](OBSERVER_STARTUP_OUTCOME_006.md) passes all twelve approved
+no-model operations under-I-S-B. Actual95-module bootstrap, exact flags/argv,
+35/36/35 library snapshots and two UTF16 fixture events verify. Independent audit
+joins ten raw files,17 sources, four leases,46 recorded dead births and803 resource
+rows with unchanged floors/cadence and cleanup. Original false authority flags
+and observed-window limits remain intact; all prior profiles/failures are retained.
+
+No further unchanged observer cycle is needed. The next concrete tensor packet
+must bind its own actual source/cache/startup/provider/library conditions using
+this evidence without renaming or filling missing observations. Current source
+promotion, exact registration and separate Torch/CUDA/tensor permission remain
+outstanding. M0 and actual three-arm training/transfer/retention remain unmeasured.
+
 ## 2026-10-07 UTC: active initializer CPU successor reviewed
 
 [Active initialization](TENSOR_ACTIVE_INITIALIZER_CPU_001.md) passes final five

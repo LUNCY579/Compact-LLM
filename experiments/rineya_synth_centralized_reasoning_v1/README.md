@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [actual site-disabled observer006](OBSERVER_STARTUP_OUTCOME_006.md) passes
+twelve bounded operations with independent byte/resource/cleanup audit. Its
+observed profile is retained; the distinct tensor/model registration remains open.
+
 The [active initializer CPU successor](TENSOR_ACTIVE_INITIALIZER_CPU_001.md)
 passes five authored and five independent controls for initializer-to-child imports.
 Current native runtime/provider qualification and registration remain open.
