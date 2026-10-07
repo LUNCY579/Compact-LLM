@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: selected boundary metering CPU reviewed
+
+[Selected boundary counters](TENSOR_SOURCE_METERING_CPU_001.md) pass six authored,
+Root and independent controls. Actual inert file/Git boundaries and original
+observer/provider methods retain attempts/returns/failures/pending and successful
+byte counts in the same journal. Exact35-core multiplicity now refuses repeated
+operations; intended native failure scope stays closed and truthful.
+
+Installation/provider preparation still falls outside its startup markers in
+this frozen graph. Durable source/cache categories and linked terminal consumer
+integration also need correction. Partial failed bytes, interpreter internals
+and internal native calls are not claimed measured. Public native gates remain
+closed; no model training or transfer/retention result follows.
+
 ## 2026-10-07 UTC: observed admission and one-journal entry CPU reviewed
 
 [Observed entry evidence](TENSOR_OBSERVED_ENTRY_CPU_001.md) consumes exact009

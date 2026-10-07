@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [selected source/API counters](TENSOR_SOURCE_METERING_CPU_001.md) pass six
+authored, Root and independent CPU controls. Actual startup installation,
+durable category replay and native terminal integration remain unfinished.
+
 The [observed admission and entry CPU evidence](TENSOR_OBSERVED_ENTRY_CPU_001.md)
 preserves exact009 cache/source assumptions and one journal through startup,
 core and cleanup. Native closures/provider and full read/API accounting remain

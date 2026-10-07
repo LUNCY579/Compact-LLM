@@ -1,0 +1,59 @@
+test_actual_git_blob_and_exact_reader_and_restoration (__main__.Controls.test_actual_git_blob_and_exact_reader_and_restoration) ... ok
+test_actual_source_hash_sealed_roster_cache_leaf_counts (__main__.Controls.test_actual_source_hash_sealed_roster_cache_leaf_counts) ... ok
+test_failed_hash_and_read_and_no_clobber (__main__.Controls.test_failed_hash_and_read_and_no_clobber) ... FAIL
+test_original_core_repeat_dose_refuses_at_final_seal (__main__.Controls.test_original_core_repeat_dose_refuses_at_final_seal) ... ERROR
+test_original_observer_provider_methods_and_inert_failure (__main__.Controls.test_original_observer_provider_methods_and_inert_failure) ... ok
+test_same_original_writer_native_mode_failure_shape_without_permit (__main__.Controls.test_same_original_writer_native_mode_failure_shape_without_permit) ... ERROR
+
+======================================================================
+ERROR: test_original_core_repeat_dose_refuses_at_final_seal (__main__.Controls.test_original_core_repeat_dose_refuses_at_final_seal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_observed_admission_work\independent_review\focused_metering_review_002.py", line 89, in test_original_core_repeat_dose_refuses_at_final_seal
+    self.m.leave();ledger,phases=W._entry_journal_bootstrap(self.root);P=load(WORK/'prefix_native_pipeline.py','independent_repeat_pipeline');F=load(W.C.CORE/'fixture_support.py','independent_repeat_fixture')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_observed_admission_work\pre_placement_metering002\prefix_input_owned_worker.py", line 581, in _entry_journal_bootstrap
+    path=Path(text);before=path.lstat()
+                           ^^^^^^^^^^^^
+  File "C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\pathlib.py", line 1163, in lstat
+    return self.stat(follow_symlinks=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\pathlib.py", line 1013, in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\tensor_observed_admission_work\\pre_placement_metering002\\evidence\\prefix_input_core_reviewed_cpu_20261005\\pipeline.py'
+
+======================================================================
+ERROR: test_same_original_writer_native_mode_failure_shape_without_permit (__main__.Controls.test_same_original_writer_native_mode_failure_shape_without_permit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_observed_admission_work\independent_review\focused_metering_review_002.py", line 97, in test_same_original_writer_native_mode_failure_shape_without_permit
+    self.m.leave();ledger,phases=W._entry_journal_bootstrap(self.root);ledger.entry_scope='ONE_EXPOSED_PREFIX_CUDA_INT64_INPUT_MASK_ONLY'
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_observed_admission_work\pre_placement_metering002\prefix_input_owned_worker.py", line 581, in _entry_journal_bootstrap
+    path=Path(text);before=path.lstat()
+                           ^^^^^^^^^^^^
+  File "C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\pathlib.py", line 1163, in lstat
+    return self.stat(follow_symlinks=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\pathlib.py", line 1013, in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\tensor_observed_admission_work\\pre_placement_metering002\\evidence\\prefix_input_core_reviewed_cpu_20261005\\pipeline.py'
+
+======================================================================
+FAIL: test_failed_hash_and_read_and_no_clobber (__main__.Controls.test_failed_hash_and_read_and_no_clobber)
+----------------------------------------------------------------------
+ValueError: registered runtime exact stable bytes
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_observed_admission_work\independent_review\focused_metering_review_002.py", line 54, in test_failed_hash_and_read_and_no_clobber
+    with self.assertRaisesRegex(ValueError,'hash'):C.file_descriptor(p,{'bytes':3,'sha256':'0'*64,'role':'python_source'})
+AssertionError: "hash" does not match "registered runtime exact stable bytes"
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.116s
+
+FAILED (failures=1, errors=2)
