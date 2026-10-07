@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: separate import-effect guard/raw replay CPU implemented
+
+[Measurement implementation](TORCH_IMPORT_MEASUREMENT_CPU_004.md) derives actual
+direct/nested effects under fixed byte-selected identities instead of invented
+expected zero/union effects. Six authored/Root and four independent probes pass.
+Unknown/unload/duplicate/event-loss/outside-boundary and forged-effect cases
+refuse. Original exact validator is unchanged; measurement result stays unqualified.
+
+The dedicated import-only program/config/registration remains unfinished and
+unapproved. Scope excludes explicit user CUDA initialization, tensors and model
+work, while honestly allowing Torch-import driver interactions. No native load
+effects or transfer/retention result were produced. Twelve files preserve source,
+inert fixtures and failed predecessor.
+
 ## 2026-10-07 UTC: externally anchored gate/owned dispatcher candidate reviewed
 
 [Gate/dispatcher candidate](TENSOR_GATE_DISPATCH_CPU_CANDIDATE_002.md) supplies
