@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: corrected closed import-only source graph publicly applied
+
+[Publicgraph002](IMPORT_PUBLIC_GRAPH_CPU_002.md) applies ten reviewed direct-package
+program/dispatcher sources and eleven pinned durable dependencies. Four authored/
+Root and six independent controls pass, including actual inert11-op22-marker flow
+and raw replay. Root checks oldtarget bytes/absence then loads eight actualpublic
+modules under native-import trap; absentgrant/gate/dispatcher refuse.74files retain
+failedgraph001 and corrected source/application evidence.
+
+Full source/resource/Job/lease/death/journal terminal audit is still pending; raw
+replay alone is insufficient. Exact implementation/dispatch/run registration,
+fresh qualification/admission and separate owner permission remain absent. No
+native or model/training/scoring/transfer result follows; baseline39 stays an
+unobserved falsifiable assumption.
+
 ## 2026-10-07 UTC: selected reader/full qualifier CPU integration reviewed
 
 [Readerintegration001](IMPORT_READER_INTEGRATION_CPU_001.md) executes actual sealed

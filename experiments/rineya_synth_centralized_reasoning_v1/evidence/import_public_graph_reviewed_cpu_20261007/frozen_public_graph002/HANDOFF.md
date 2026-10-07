@@ -1,0 +1,11 @@
+# Corrected closed import-only public graph002
+
+Ten sources, four author controls003 PASS0.518s. Current Cc669/W63d/Da2b/SUP007/H749/resource15e9/G55bc/Rce8/A27ae unchanged from001. Public Q now1ff0f415: exactly two location adaptations (SOURCE to durable C80 evidence and PACKAGE includes direct HERE). Its generic qualification body is unchanged. Public-shaped control now actually loads Q/original_helpers and asserts its actual PACKAGE/CORE paths.
+
+Graph001 is not a promotion pass: independent6-control run retained5pass/1missing independent replay helper error, and author002 positive Q-load retainedStopIteration because direct HERE was excluded. Those exact failed receipts/graphs are preserved; graph001plan never overwritten. This corrected plan adds the real aebab independent library-evidence helper as an explicit transitive byte dependency and preserved copy, not merely a fixture patch. Provider2f8/Core/source utility/runtime helpers remain pinned. G/R bytes unchanged (their file-parent ancestry already works at public location).
+
+Existing four controls cover compile/pins/actual public-shaped C/W/SUP/Q/dispatcher loading/default grant denial/CPU context refusal/contract drift/source-retained main proof/no Torch CUDA endpoints. Independent review will execute actual inert worker22markers and A measured raw replay. This is source graph/default denial, not native/full run qualification.
+
+The raw A is an independent measured-effect replay only; it does not yet provide the complete original source/resource/Job/lease/death/11op terminal consumer. Root assigned a separate terminal-audit module next. That remains necessary before any permission/run packet. All grants absent, expectedbaseline39 remains unobserved/falsifiable, native/bootstrap/during-run facts remain future evidence. No public source or gate changed.
+
+PUBLIC_IMPORT_SOURCE_PLAN002 pins ten public targets/current absence or old descriptors and eleven durable transitive dependencies includingaebab. frozen_public_graph002 preserves sources/test/receipt/plan/original-relative dependency copies. Default-deny public source application may proceed only after Root/independent review; no owner consent is inferred.
