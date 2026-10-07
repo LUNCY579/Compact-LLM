@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [CPU tensor startup integration](TENSOR_BOOTSTRAP_INTEGRATION_CPU_001.md)
+passes eight authored controls and seven independent controls, including real
+inert registered-source execution. Native entry and registration remain closed.
+
 The [finite tensor startup CPU candidate](TENSOR_BOOTSTRAP_CANDIDATE_CPU_001.md)
 passes thirteen authored controls and seven independent controls, with a verified
 fourteen-file projection. Native provider and contract integration remain absent.
