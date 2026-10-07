@@ -1,0 +1,21 @@
+test_full_record_actual_native_preserved_body_CPU_replay (__main__.Controls.test_full_record_actual_native_preserved_body_CPU_replay) ... ok
+test_missing_schema_and_rebound_reference_refuse_after_reseal (__main__.Controls.test_missing_schema_and_rebound_reference_refuse_after_reseal) ... ok
+test_rebound_actual_gate_document_refused (__main__.Controls.test_rebound_actual_gate_document_refused) ... FAIL
+test_ninth_anchor_rebind_and_document_bytes_refused (__main__.Controls.test_ninth_anchor_rebind_and_document_bytes_refused) ... ok
+
+======================================================================
+FAIL: test_rebound_actual_gate_document_refused (__main__.Controls.test_rebound_actual_gate_document_refused)
+----------------------------------------------------------------------
+ValueError: separate original grant and human-origin receipt documents
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_source_promotion_work\gate_dispatch_candidate\test_V2terminal_join.py", line 31, in test_rebound_actual_gate_document_refused
+    with self.assertRaisesRegex(ValueError,'cannot rebind'):self.audit()
+AssertionError: "cannot rebind" does not match "separate original grant and human-origin receipt documents"
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.054s
+
+FAILED (failures=1)

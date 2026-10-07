@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: full V2 terminal gate-document join CPU corrected
+
+[Terminal correction](GATE_TERMINAL_V2_JOIN_CPU_003.md) repairs a staged mismatch
+between full version2 owned anchors and legacy two-field audit input. Original/
+preserved bytes, all nine independent caller anchors and both gate document refs
+now join. Four authored/Root and independent controls pass. Sixteen files preserve
+corrected/prior sources and fixture failures. C/P/W and public gates are unchanged.
+
+Current source work remains the dedicated import-only worker and separate closed
+config/runtime/registration. Native permission and actual effects remain absent.
+No training or fresh transfer/retention result follows.
+
 ## 2026-10-07 UTC: separate import-effect guard/raw replay CPU implemented
 
 [Measurement implementation](TORCH_IMPORT_MEASUREMENT_CPU_004.md) derives actual
