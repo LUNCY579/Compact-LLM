@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [closed two-tensor proposal V2](TWO_TENSOR_PROSPECTIVE_V2_CPU_001.md) has four
+passing authored/Root and independent controls. Its source/runtime/permission
+witnesses remain explicit pending items; it grants no native or training launch.
+
 The [required boundary maps and main-source correction](TENSOR_MAIN_CORRECTIONS_CPU_001.md)
 passes focused CPU controls and independent review. Current native main/runtime
 facts and the exact run registration remain pending.

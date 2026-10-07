@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: concrete closed two-tensor proposal V2 reviewed
+
+[Closed proposal V2](TWO_TENSOR_PROSPECTIVE_V2_CPU_001.md) binds corrected sources,
+four helpers, original00963/59/2 admission, separate unobserved tensor main,
+422-input/6,752-byte dose and source-derived41 operations/64 phases/128 markers.
+Four authored/Root and four independent controls pass;23 files preserve exact
+packet/source snapshots and review. All launch/runtime/authority flags remain
+false, with owner/implementation/dispatch identities absent.
+
+The finite remaining witnesses are full current runtime byte/roster review,
+actual main/provider/bootstrap/library facts, reviewed source promotion/Git
+dispatch, separate native gate/owner permission, and fresh resource/terminal
+evidence. No unchanged observer repeat is needed. No model training/scoring or
+fresh transfer/retention result follows. The original three-arm goal stays active.
+
 ## 2026-10-07 UTC: required boundary maps/direct-main source CPU corrected
 
 [Main and boundary corrections](TENSOR_MAIN_CORRECTIONS_CPU_001.md) reject omitted
