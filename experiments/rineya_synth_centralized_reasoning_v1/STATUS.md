@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: required boundary maps/direct-main source CPU corrected
+
+[Main and boundary corrections](TENSOR_MAIN_CORRECTIONS_CPU_001.md) reject omitted
+counter populations and supply distinct current-frame/source equivalence for
+direct-main preparation. Root boundary6/main4 and independent boundary4/main4
+controls pass with selected pins unchanged. Actual native phase1/script startup
+and initial loading history remain unobserved; isolated main fixture dispatch
+adaptation is explicit.44 files preserve final/predecessor/failed-review evidence.
+
+The exact closed two-tensor proposal is being assembled from these sources and
+actual009 admission. Source promotion, current runtime/provider/library facts,
+native preparation and separate registration/permission remain pending. No
+unchanged observer repeat or model training/transfer result follows.
+
 ## 2026-10-07 UTC: provisional early failure/native-purpose consumer CPU joined
 
 [Early/native-purpose composition](TENSOR_EARLY_NATIVE_CONSUMER_CPU_001.md)

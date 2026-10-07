@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [required boundary maps and main-source correction](TENSOR_MAIN_CORRECTIONS_CPU_001.md)
+passes focused CPU controls and independent review. Current native main/runtime
+facts and the exact run registration remain pending.
+
 The [provisional early failure/native-purpose consumer](TENSOR_EARLY_NATIVE_CONSUMER_CPU_001.md)
 passes joined CPU controls and independent review. Fixture resource/death records
 remain CPU metadata; the next exact tensor proposal and native gates stay closed.
