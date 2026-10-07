@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [closed consolidated tensor packet](SITE_DISABLED_TENSOR_PACKET_CPU_001.md)
+passes five authored and four independent controls. Eleven actual qualification
+witnesses remain pending; validation grants no native context or permission.
+
 The [actual site-disabled observer006](OBSERVER_STARTUP_OUTCOME_006.md) passes
 twelve bounded operations with independent byte/resource/cleanup audit. Its
 observed profile is retained; the distinct tensor/model registration remains open.
