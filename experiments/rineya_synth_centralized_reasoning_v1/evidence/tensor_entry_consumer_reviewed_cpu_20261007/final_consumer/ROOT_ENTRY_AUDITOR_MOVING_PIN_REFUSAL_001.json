@@ -1,0 +1,12 @@
+{
+  "kind": "ROOT_CPU_TEST_REFUSED_MOVING_PRODUCER_BEFORE_CONTROLS",
+  "command": "python -I -S -B test_entry_auditor.py ROOT_ENTRY_AUDITOR_CONTROLS_001.json",
+  "exit_code": 1,
+  "failure": "AssertionError at test_entry_auditor.py line 25: SHA256 producer source must match PRODUCER_PINS",
+  "expected_producer_version": "placement_category003",
+  "actual_producer_was_being_updated_to_version": "placement_category004",
+  "tests_executed": 0,
+  "candidate_failure_claimed": false,
+  "native_API_or_framework_called": false,
+  "native_authority_issued": false
+}

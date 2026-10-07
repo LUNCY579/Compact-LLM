@@ -1,5 +1,21 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: phase5 handoff and categorical consumer CPU reviewed
+
+[Entry consumer evidence](TENSOR_ENTRY_CONSUMER_CPU_001.md) records source-owned
+phase5 acquisition/preparation and phase6 failure cleanup. Root final004
+placement5/meter6 and separate consumer7 controls pass; independent focused6
+passes with frozen pins unchanged. Actual inert importer, original writer/core,
+preserved-byte replay, categories and forgery refusal execute. Native factory/
+pipeline preparation remains source-inspected only.97 files retain versions,
+failed fixtures, pin refusals and receipts.
+
+The native shared-entry consumer remains closed. Its finite follow-up is actual
+provisional early-failure publication plus manifest/SUP/resource/lease/death joins
+through the existing native consumer. No native run or training/transfer result
+follows. Keep the exact tensor registration/permission and current host/source
+qualification separate; no unchanged observer cycle is needed.
+
 ## 2026-10-07 UTC: selected boundary metering CPU reviewed
 
 [Selected boundary counters](TENSOR_SOURCE_METERING_CPU_001.md) pass six authored,

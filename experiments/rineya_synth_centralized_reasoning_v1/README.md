@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [phase5 handoff and categorical consumer](TENSOR_ENTRY_CONSUMER_CPU_001.md)
+passes final focused CPU controls and independent review. Native preparation and
+whole terminal composition remain unqualified; the exact tensor run stays closed.
+
 The [selected source/API counters](TENSOR_SOURCE_METERING_CPU_001.md) pass six
 authored, Root and independent CPU controls. Actual startup installation,
 durable category replay and native terminal integration remain unfinished.
