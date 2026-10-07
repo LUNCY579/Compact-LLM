@@ -36,7 +36,8 @@
     {"id": "job_census_and_wrapper_binding_review", "path": "C:/Users/clclc/BusinessProject/rineya-ce8-census-and-wrapper-binding-review-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "job_census_diagnosis_availability", "path": "C:/Users/clclc/BusinessProject/rineya-ce8-census-diagnosis-availability-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "current_runtime_v2_deadline_cost_review", "path": "C:/Users/clclc/BusinessProject/rineya-ce8-current-integration-review-20261006-01/REPORT_FINISHED.json", "classification": "preparation", "role": "receipt", "format": "json"},
-    {"id": "current_consumer_alignment_cap_review", "path": "C:/Users/clclc/BusinessProject/rineya-ce8-current-integration-review-20261006-01/CURRENT_ALIGNMENT_CAP_REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"}
+    {"id": "current_consumer_alignment_cap_review", "path": "C:/Users/clclc/BusinessProject/rineya-ce8-current-integration-review-20261006-01/CURRENT_ALIGNMENT_CAP_REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "current_decoder_lineage_reuse_cost_review", "path": "C:/Users/clclc/BusinessProject/comp-rs-001-records/ce8-load-reuse-independent-review-20261007-01/CURRENT_SOURCE_DRIFT_ADDENDUM.json", "classification": "preparation", "role": "receipt", "format": "json"}
   ],
   "metrics": [
     {"name": "historical_warm_R_strict_success", "numerator": 6, "denominator": 1200, "unit": "count", "scope_unit": "sample", "evidence_id": "warm_competence", "json_pointer": "/summary/R/successes", "denominator_json_pointer": "/summary/R/samples", "status": "MEASURED"},
@@ -95,6 +96,11 @@
     "evidence_ids": ["current_consumer_alignment_cap_review"],
     "status": "KNOWN_REFERENCE_TOTALS_VERIFIED_OVER_ENTRY_CAPS_NO_DELEGATION_ADOPTION_CLOSED",
     "statement": "Independent named-metadata/source inspection reproduces all seven recorded cost totals for the current consumer-alignment candidate. Its known-reference lower bound is39155216 read bytes,608 hash attempts and34751409 hash bytes, exceeding unchanged entry caps by5600784 bytes,96 attempts and1196977 bytes respectively. Each validation pass has295 references/9214771 bytes; the saved OS schedule repeats76 references/3130930 hashed bytes per pass. The current source still recursively validates this schedule in both passes, so saved OS PASS or omitted accounting cannot establish delegated savings. Fresh child loader/context/lifecycle, venv-to-base image relation, whole-wrapper/root/grant costs and actual adoption remain unresolved. This source review performed no imports/tests/native/model/bank execution and establishes no learning result."
+  },
+  "decoder_lineage_reuse_current_state": {
+    "evidence_ids": ["current_decoder_lineage_reuse_cost_review"],
+    "status": "SOURCE_PRICING_OMISSION_CORRECTED_COMPLETE_FROZEN_PRICE_AND_AUTHENTIC_REUSE_ABSENT",
+    "statement": "The independent review found active source drift from the published pricing pin and a concrete13-lineage-reference-per-pass pricing omission in historical63ab source. Owner sourcef1c628 now includes those refs and adds capture hash/byte/operation/metadata terms, preserving the earlier finding. Both fresh205-file validations remain direct. Conditional count arithmetic is519+26+5=550 hashes; even all7 proposed LOAD-only savings would leave543,31 above the unchanged512 ceiling. These are conditional source-count bounds, not measured spending or actual credit. Existing same-pass seven-entry cache differs from the proposed unimplemented LOAD-only ticket. No reuse savings are admitted without the same actual owner, retained exact immutable bytes/source handles, grant/root/controller birth/original clock/nonce, one-time consumption, complete inclusive pricing and genuine loader/custody proof. Current published pricing remains stale/unfrozen, with later module/adapter/runtime/selector/physical costs and all model gates unresolved. No source/cap or PID rewrite, fresh-validation drop, borrowed permit, native or quality PASS follows."
   },
   "advancement": false
 }
