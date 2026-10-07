@@ -1,0 +1,16 @@
+{
+  "arm": "layered",
+  "seed": 20261007,
+  "actor_steps": 60,
+  "critic_steps": 12,
+  "max_prompt_tokens": 1024,
+  "max_new_tokens": 256,
+  "max_context_tokens": 2048,
+  "train_last_layers": 4,
+  "trainable_fraction_cap": 0.05,
+  "learning_rate": 0.00001,
+  "min_eval_groups": 128,
+  "max_retention_drop": 0.01,
+  "min_acquisition_gain": 0.05,
+  "required_suites": ["acquisition", "retention", "instruction", "general_qa", "roleplay_contract", "abstention", "long_context"]
+}

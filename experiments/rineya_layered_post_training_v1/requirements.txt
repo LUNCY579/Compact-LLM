@@ -1,0 +1,8 @@
+# Install in an isolated research environment; preserve the main project's lockfiles.
+# CPU validation used torch 2.10.0+cpu. Install a matching CUDA build separately for native work.
+torch>=2.6
+safetensors>=0.4.5
+psutil>=5.9
+pytest>=8
+# Native loader only; the native dependency/hardware combination still requires qualification.
+transformers>=4.51
