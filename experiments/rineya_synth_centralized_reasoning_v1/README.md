@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [provisional early failure/native-purpose consumer](TENSOR_EARLY_NATIVE_CONSUMER_CPU_001.md)
+passes joined CPU controls and independent review. Fixture resource/death records
+remain CPU metadata; the next exact tensor proposal and native gates stay closed.
+
 The [phase5 handoff and categorical consumer](TENSOR_ENTRY_CONSUMER_CPU_001.md)
 passes final focused CPU controls and independent review. Native preparation and
 whole terminal composition remain unqualified; the exact tensor run stays closed.

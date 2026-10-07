@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: provisional early failure/native-purpose consumer CPU joined
+
+[Early/native-purpose composition](TENSOR_EARLY_NATIVE_CONSUMER_CPU_001.md)
+passes Root writer5 and joined consumer5 controls, with independent joined5 and
+frozen pins unchanged. Actual provisional writer/failure paths join original
+preservation/Reader/replay predicates. SUP/Job/resource/death fixture records are
+invented CPU metadata and establish no native event facts.68 files preserve
+sources, versioned controls and fixture failures.
+
+Nonfixture native entry remains closed. The next concrete two-tensor proposal
+must bind this exact source graph to actual009 V2 admission, current runtime/
+provider/source promotion and a separate manifest/permission. No unchanged
+observer repeat is needed. No model training, scoring or transfer/retention
+result follows; the original three-arm question remains open.
+
 ## 2026-10-07 UTC: phase5 handoff and categorical consumer CPU reviewed
 
 [Entry consumer evidence](TENSOR_ENTRY_CONSUMER_CPU_001.md) records source-owned

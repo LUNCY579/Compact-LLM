@@ -1,0 +1,58 @@
+test_actual_early_writer_join_absent_core_facts (__main__.Independent.test_actual_early_writer_join_absent_core_facts) ... ERROR
+test_actual_early_writer_failure_native_body_refuses_missing_envelope (__main__.Independent.test_actual_early_writer_failure_native_body_refuses_missing_envelope) ... ok
+test_full_inert_core_native_schema_flags (__main__.Independent.test_full_inert_core_native_schema_flags) ... ERROR
+test_native_gate_and_resealed_membership_refuse (__main__.Independent.test_native_gate_and_resealed_membership_refuse) ... ok
+test_resealed_called_source_pin_override_refuse (__main__.Independent.test_resealed_called_source_pin_override_refuse) ... ok
+
+======================================================================
+ERROR: test_actual_early_writer_join_absent_core_facts (__main__.Independent.test_actual_early_writer_join_absent_core_facts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_observed_admission_work\independent_review\focused_early_native_join001.py", line 46, in test_actual_early_writer_join_absent_core_facts
+    value=self.native_replay();self.assertEqual(value['status'],'CPU_NATIVE_SCHEMA_FAILURE_PRESERVED');self.assertTrue(value['precore_facts_unavailable']);self.assertFalse(value['native_shared_entry_terminal_qualified']);TRACES.append({'case':'actual early writer','status':value['status'],'markers':final['markers'],'raw_envelope_consumed':True})
+          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_observed_admission_work\final_native_entry_consumer001\test_native_entry_auditor.py", line 90, in native_replay
+    return A._native_preserved_body(self.preserved,original_directory=self.output,manifest=self.manifest,source_pins=self.manifest['source_files'],expected_preservation_file_sha256=BASE.descriptor(self.preserved/'PRESERVATION.json')['sha256'],expected_preservation_body_sha256=self.preservation['sha256'],expected_head='a'*40,anchors=self.anchors,_CPU_fixture_capability=A._mint_CPU_native_schema_fixture() if capability else None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_observed_admission_work\final_native_entry_consumer001\prefix_input_owned_auditor.py", line 1073, in _native_preserved_body
+    prefix = _input(reader)
+             ^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_observed_admission_work\final_native_entry_consumer001\prefix_input_owned_auditor.py", line 282, in _input
+    require(path.lstat().st_size <= 16384, "bounded exposed input before read")
+            ^^^^^^^^^^^^
+  File "C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\pathlib.py", line 1163, in lstat
+    return self.stat(follow_symlinks=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\pathlib.py", line 1013, in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\tensor_observed_admission_work\\final_native_entry_consumer001\\evidence\\exception_frame_helper_reviewed_cpu_20261005\\root\\ROOT_FAILURE_PREFIX_INPUT_001.json'
+
+======================================================================
+ERROR: test_full_inert_core_native_schema_flags (__main__.Independent.test_full_inert_core_native_schema_flags)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_observed_admission_work\independent_review\focused_early_native_join001.py", line 52, in test_full_inert_core_native_schema_flags
+    self.fixture();value=self.native_replay();self.assertEqual(value['status'],'CPU_NATIVE_SCHEMA_COMPLETE');self.assertTrue(value['shared_entry_composition_source_exercised']);self.assertFalse(value['native_shared_entry_terminal_qualified']);self.assertFalse(value['native_authority_issued']);TRACES.append({'case':'full inert core','status':value['status']})
+                         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_observed_admission_work\final_native_entry_consumer001\test_native_entry_auditor.py", line 90, in native_replay
+    return A._native_preserved_body(self.preserved,original_directory=self.output,manifest=self.manifest,source_pins=self.manifest['source_files'],expected_preservation_file_sha256=BASE.descriptor(self.preserved/'PRESERVATION.json')['sha256'],expected_preservation_body_sha256=self.preservation['sha256'],expected_head='a'*40,anchors=self.anchors,_CPU_fixture_capability=A._mint_CPU_native_schema_fixture() if capability else None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_observed_admission_work\final_native_entry_consumer001\prefix_input_owned_auditor.py", line 1073, in _native_preserved_body
+    prefix = _input(reader)
+             ^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_observed_admission_work\final_native_entry_consumer001\prefix_input_owned_auditor.py", line 282, in _input
+    require(path.lstat().st_size <= 16384, "bounded exposed input before read")
+            ^^^^^^^^^^^^
+  File "C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\pathlib.py", line 1163, in lstat
+    return self.stat(follow_symlinks=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\pathlib.py", line 1013, in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\tensor_observed_admission_work\\final_native_entry_consumer001\\evidence\\exception_frame_helper_reviewed_cpu_20261005\\root\\ROOT_FAILURE_PREFIX_INPUT_001.json'
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.007s
+
+FAILED (errors=2)
