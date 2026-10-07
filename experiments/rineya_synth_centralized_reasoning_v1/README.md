@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [actual frozen-prelude observer009](OBSERVER_STARTUP_OUTCOME_009.md)
+passes its bounded native audit, including independent59-cache/source equivalence
+and cleanup. Distinct tensor-main/loader qualification and permission remain open.
+
 The [closed consolidated tensor packet](SITE_DISABLED_TENSOR_PACKET_CPU_001.md)
 passes five authored and four independent controls. Eleven actual qualification
 witnesses remain pending; validation grants no native context or permission.
