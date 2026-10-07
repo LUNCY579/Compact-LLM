@@ -1,5 +1,21 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: active initializer CPU successor reviewed
+
+[Active initialization](TENSOR_ACTIVE_INITIALIZER_CPU_001.md) passes final five
+authored/Root controls and independent five. Actual inert initializers import
+children/nested modules while exact code/globals frames are active; completion
+is recorded only after return, failures revoke active records and repeated source
+execution refuses. Original context/checker/token and import state restoration
+remain checked. Exact predecessor/re-execution variant and traces are preserved.
+
+Current runtime bytes, live startup/provider evidence, public source promotion
+and the exact native tensor registration remain unqualified. Native entry stays
+closed; no Torch/CUDA/model/training/scoring work occurred in these CPU controls.
+The original fresh-family/RS transfer and prior-correct three-arm goal is active
+and unmeasured. The next work must complete actual current registration evidence,
+not add unrelated CPU protocols or infer authority from these fixtures.
+
 ## 2026-10-07 UTC: full amended manifest reader CPU composition reviewed
 
 [Reader composition](TENSOR_AMENDED_READER_CPU_001.md) passes final four authored,

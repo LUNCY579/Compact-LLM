@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [active initializer CPU successor](TENSOR_ACTIVE_INITIALIZER_CPU_001.md)
+passes five authored and five independent controls for initializer-to-child imports.
+Current native runtime/provider qualification and registration remain open.
+
 The [full amended CPU reader](TENSOR_AMENDED_READER_CPU_001.md) passes four
 authored and four independent controls with real Git and inert physical files.
 Historical descriptor and layout seams remain injected; native entry stays closed.
