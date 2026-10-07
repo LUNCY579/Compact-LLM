@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [reviewed tensor source graph](TENSOR_CLOSED_SOURCE_PROMOTION_CPU_002.md)
+is now in the direct package. Actual public links pass and native gates refuse;
+the separate run registration and owner permission remain pending.
+
 The [current runtime byte/roster refresh](TENSOR_RUNTIME_REFRESH_CPU_001.md)
 supplies an independently reviewed8,714-entry tensor candidate. Fresh launch
 qualification and actual provider/resource observations remain pending.

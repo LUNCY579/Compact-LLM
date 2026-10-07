@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: reviewed tensor implementation publicly applied, gates closed
+
+[Closed source promotion](TENSOR_CLOSED_SOURCE_PROMOTION_CPU_002.md) applies eleven
+reviewed direct-package leaves. Exact C predecessor-path and dependent P/W pin
+changes retain eight other source identities. Four authored/Root and six
+independent controls pass; Root checks old target bytes/absence, applies the plan
+and loads five actual public modules under a native-import trap. Four gate calls
+still refuse.46 files preserve old/new graph and reviewed/application evidence.
+
+This closes source-location supply, not native readiness. Gate enrollment,
+implementation/dispatch registration, complete runtime/cache/library expectations,
+fresh admission and separate owner permission remain pending. Actual main/provider/
+library/terminal facts are run-produced. No model training/scoring or transfer
+result follows; no unchanged observer run is needed.
+
 ## 2026-10-07 UTC: current runtime byte/physical roster candidate reviewed
 
 [Runtime refresh](TENSOR_RUNTIME_REFRESH_CPU_001.md) matches all original2986

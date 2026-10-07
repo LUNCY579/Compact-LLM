@@ -1,0 +1,33 @@
+test_actual_direct_main_metadata_helper_on_public_shape (__main__.Controls.test_actual_direct_main_metadata_helper_on_public_shape) ... ok
+test_actual_private_writer_and_consumer_replay_public_shape (__main__.Controls.test_actual_private_writer_and_consumer_replay_public_shape) ... ERROR
+test_actual_public_mirror_links_closed_gates_and_bad_pin (__main__.Controls.test_actual_public_mirror_links_closed_gates_and_bad_pin) ... ok
+test_actual_source_validator_helper_omission_and_closed_plan (__main__.Controls.test_actual_source_validator_helper_omission_and_closed_plan) ... ok
+test_actual_target_predecessors_durable_six_and_compile_all (__main__.Controls.test_actual_target_predecessors_durable_six_and_compile_all) ... ok
+test_exact_three_file_delta_and_eight_unchanged_sources (__main__.Controls.test_exact_three_file_delta_and_eight_unchanged_sources) ... FAIL
+
+======================================================================
+ERROR: test_actual_private_writer_and_consumer_replay_public_shape (__main__.Controls.test_actual_private_writer_and_consumer_replay_public_shape)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_source_promotion_work\independent_review\focused_promotion_location002.py", line 72, in test_actual_private_writer_and_consumer_replay_public_shape
+    selected={r['path']:{'bytes':r['bytes'],'sha256':r['sha256']} for r in ledger.entry_bootstrap_sources};raw={n:desc(output/n) for n in A.RAW_CORE};prefix=json.loads(W.source_core()['C'].INPUT.read_bytes())['prefix_ids'];value=A._CPU_shared_entry_bytes(preserved,original_directory=output,raw_files=raw,report_file='CPU_RETURN.json',report_descriptor=desc(output/'CPU_RETURN.json'),prefix=prefix,selected_source_pins=selected);self.assertTrue(value['source_outcome_completed']);self.assertFalse(value['native_authority_issued']);DETAILS['public_shape_private_writer_consumer_actual']=True
+                                                                                                                                                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\AppData\Local\Temp\independent_closed_promotion_g1taug40\experiments\rineya_synth_centralized_reasoning_v1\prefix_input_owned_auditor.py", line 640, in _CPU_shared_entry_bytes
+    require(type(report_file) is str and report_file == "CPU_ENTRY_RETURN.json", "explicit fixture report name")
+  File "C:\Users\clclc\AppData\Local\Temp\independent_closed_promotion_g1taug40\experiments\rineya_synth_centralized_reasoning_v1\prefix_input_owned_auditor.py", line 79, in require
+    raise ValueError(message)
+ValueError: explicit fixture report name
+
+======================================================================
+FAIL: test_exact_three_file_delta_and_eight_unchanged_sources (__main__.Controls.test_exact_three_file_delta_and_eight_unchanged_sources)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\tensor_source_promotion_work\independent_review\focused_promotion_location002.py", line 31, in test_exact_three_file_delta_and_eight_unchanged_sources
+    self.assertEqual(new,old)
+AssertionError: '"""A[374 chars]\': 75016, \'sha256\': \'de99dbcf40f3ba094c393[21737 chars]2}\n' != '"""A[374 chars]\': 74855, \'sha256\': \'de99dbcf40f3ba094c393[21737 chars]2}\n'
+Diff is 22020 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.782s
+
+FAILED (failures=1, errors=1)

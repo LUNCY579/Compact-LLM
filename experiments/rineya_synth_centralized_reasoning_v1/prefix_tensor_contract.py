@@ -103,8 +103,7 @@ def _admission_factory():
 mint_cpu_admission,verify_cpu_admission=_admission_factory()
 
 def stage_native_gate():
-    # Integration must install a separately reviewed direct package module.
-    require(HERE==PACKAGE,'ignored/preserved stage has no native authority')
+    require(False,'CPU-only registration-cycle candidate has no native entry')
 def sha(value):return type(value) is str and len(value)==64 and all(c in '0123456789abcdef' for c in value)
 def sealed_json(path,file_pin,body_pin,*,budget=None):
     require(sha(file_pin) and sha(body_pin),'external SHA256 anchors');raw=read_bytes(path,budget=budget);require(hashlib.sha256(raw).hexdigest()==file_pin,'external file anchor');value=parse(raw)
@@ -147,7 +146,7 @@ def native_metadata(config,registration,runtime,expected_head,*,budget=None):
     required={'prefix_tensor_contract.py','prefix_input_owned_worker.py','prefix_input_owned_supervisor.py','prefix_input_owned_auditor.py','prefix_registered_loader.py','prefix_native_pipeline.py'}
     require(required<={Path(p).name for p in sources} and all(str(PACKAGE/name) in sources for name in required),'all new exact direct-package source boundaries')
     require(all(str(PACKAGE/name) in sources and sources[str(PACKAGE/name)]['sha256']==pin for name,pin in original['helper_pins'].items()),'helper source map byte pins')
-    cache=runtime['cache_policy'];require(type(cache) is dict and set(cache)=={'mode','allow_unregistered','source_loader_sha256','Torch_root','preloaded_module_cache_pins','namespace_roots','preloaded_bootstrap_modules','fresh_bootstrap_evidence'},'exact qualified cache/bootstrap policy schema');require(cache['mode']=='all_registered_python_source_compiled_without_cache' and cache['allow_unregistered'] is False and cache['source_loader_sha256']==sources[str(PACKAGE/'prefix_registered_loader.py')]['sha256'] and cache['Torch_root']==str(SITE/'torch'),'qualified fail-closed source/cache loader')
+    cache=runtime['cache_policy'];require(type(cache) is dict and set(cache)==({'mode','allow_unregistered','source_loader_sha256','Torch_root','preloaded_module_cache_pins','namespace_roots','preloaded_bootstrap_modules','fresh_bootstrap_evidence','bootstrap_admission_version','preloaded_class_aliases','bootstrap_observation','typing_alias_helper','interpreter_profile','tensor_main_source'} if cache.get('bootstrap_admission_version')==2 else {'mode','allow_unregistered','source_loader_sha256','Torch_root','preloaded_module_cache_pins','namespace_roots','preloaded_bootstrap_modules','fresh_bootstrap_evidence'}),'exact qualified cache/bootstrap policy schema');require(cache['mode'] in ('all_registered_python_source_compiled_without_cache','registered_source_with_observed_bootstrap_v2') and cache['allow_unregistered'] is False and cache['source_loader_sha256']==sources[str(PACKAGE/'prefix_registered_loader.py')]['sha256'] and cache['Torch_root']==str(SITE/'torch'),'qualified fail-closed source/cache loader')
     require(set(runtime['external_dependency_files'])<=set(files) and runtime['external_dependency_files'],'explicit nonempty external bootstrap dependency closure')
     windows=_windows_library_identities(runtime,budget=budget)
     observer=library_event_observer_registration(config,runtime,budget=budget)
@@ -361,23 +360,49 @@ def _git_exception_policy(exceptions,sources,files):
             if entry['role']=='run_output':require(len(parts)>=3 and parts[0]=='artifacts' and (parts[1]=='_native_gpu_leases' or parts[1].startswith('prefix_input_owned_run_')),'exact run/lease leaf under owned output root')
             else:require(len(parts)>=3 and parts[0]=='evidence' and parts[1].startswith('prefix_input_owned_'),'exact owned preservation evidence leaf')
 
+def observed_bootstrap_maps(original):
+    rows=original['bootstrap']['tensor_prelude']['modules_at_guard_boundary'];modules={};aliases={};pins={}
+    require(type(rows) is list and rows,'complete selected observer009 snapshot')
+    for row in rows:
+        name=row['name']
+        if name=='__main__':continue
+        require(row['error'] is None,'original observed bootstrap row has no error')
+        if row.get('classification')=='stdlib_class_alias':aliases[name]=row['alias_metadata'];continue
+        if row['origin'] in ('built-in','frozen'):continue
+        cached=row['cached'];modules[name]={'path':row['origin'],'source_sha256':row['source_sha256'],'cache_path':cached['path'] if cached is not None else None,'cache_sha256':cached['sha256'] if cached is not None else None,'cached_attribute_present':row['cached_attribute_present'],'cached_value_kind':row['cached_value_kind']}
+        if cached is not None and cached['path'] is not None:
+            require(cached['source_equivalence'] is True and cached['error'] is None,'observed cache bytes/source equivalence');pins[cached['path']]={'bytes':cached['bytes'],'sha256':cached['sha256'],'role':'qualified_bytecode_cache'}
+    require(set(aliases)=={'typing.io','typing.re'},'two exact selected typing aliases')
+    return modules,pins,aliases
+
 def _bootstrap_policy(value,budget=None):
     runtime=value['runtime'];files={**runtime['files'],**value['config']['source_files']};cache=runtime['cache_policy'];layout=runtime['stdlib_layout'];require(layout==QUALIFIED_LAYOUT,'exact separately qualified interpreter alias/layout')
     pins=cache['preloaded_module_cache_pins'];require(type(pins) is dict and len(pins)<=4096 and all(p in files and files[p]==d and Path(p).suffix=='.pyc' and Path(p).parent.name=='__pycache__' for p,d in pins.items()),'exact explicit preloaded bytecode cache leaves')
     modules=cache['preloaded_bootstrap_modules'];require(type(modules) is dict and 0<len(modules)<=4096,'explicit finite external-qualified fresh bootstrap modules')
     used=set()
     for name,entry in modules.items():
-        require(type(name) is str and name and name.split('.',1)[0]!='torch' and type(entry) is dict and set(entry)=={'path','source_sha256','cache_path','cache_sha256'},'exact fresh non-Torch bootstrap module assumption')
+        require(type(name) is str and name and name.split('.',1)[0]!='torch' and type(entry) is dict and set(entry)==({'path','source_sha256','cache_path','cache_sha256','cached_attribute_present','cached_value_kind'} if cache.get('bootstrap_admission_version')==2 else {'path','source_sha256','cache_path','cache_sha256'}),'exact fresh non-Torch bootstrap module assumption')
         p=entry['path'];require(p in files and Path(p).suffix in ('.py','.pyd') and entry['source_sha256']==files[p]['sha256'] and not Path(p).is_relative_to(SITE/'torch'),'bootstrap module exact qualified source/extension bytes')
         cp=entry['cache_path'];require((cp is None and entry['cache_sha256'] is None) or (Path(p).suffix=='.py' and cp in pins and entry['cache_sha256']==pins[cp]['sha256'] and Path(cp)==Path(p).parent/'__pycache__'/(Path(p).stem+'.cpython-311.pyc')),'bootstrap exact3.11 cache/source assumptions');used.add(cp) if cp is not None else None
         if budget is not None:budget.check()
     require(used==set(pins),'no arbitrary unrostered cache payloads')
+    if cache.get('bootstrap_admission_version')==2:
+        require(canonical(cache['interpreter_profile'])==canonical(expected_no_site_profile(layout)),'exact version2 no-site profile')
+        require(set(cache['preloaded_class_aliases'])=={'typing.io','typing.re'},'exact two observed typing aliases')
+        for name,row in cache['preloaded_class_aliases'].items():
+            require(row['owner_path'] in files and row['owner_sha256']==files[row['owner_path']]['sha256'] and row['class_name']==name and row['source_execution_history_proven'] is False,'finite alias owner source observation')
+        observation=cache['bootstrap_observation'];require(set(observation)=={'path','file_sha256','body_sha256'},'selected original009 source assumptions anchor')
+        original=sealed_json(observation['path'],observation['file_sha256'],observation['body_sha256'],budget=budget);require(canonical(cache['interpreter_profile'])==canonical(original['bootstrap']['interpreter_profile']),'exact selected original009 no-site profile observation')
+        require(original['bootstrap']['tensor_prelude']['tensor_main_executed'] is False,'observer program source assumptions do not qualify tensor main')
+        require('__main__' not in modules,'observer main excluded from future tensor assumptions')
+        observed_modules,observed_pins,observed_aliases=observed_bootstrap_maps(original);require(canonical(modules)==canonical(observed_modules) and canonical(pins)==canonical(observed_pins) and canonical(cache['preloaded_class_aliases'])==canonical(observed_aliases),'exact ordinary/cache/alias maps derived from selected original009, not rebound claims')
+        main=cache['tensor_main_source'];require(type(main) is dict and set(main)=={'path','descriptor','cached_attribute_present','cached_value_kind','cache_path','cache_sha256'} and main['path']==str(PACKAGE/'prefix_input_owned_worker.py') and value['config']['source_files'].get(main['path'])==main['descriptor'] and main['cached_attribute_present'] is True and main['cached_value_kind']=='none' and main['cache_path'] is main['cache_sha256'] is None,'separate exact current tensor main source descriptor; not observer main rename')
     namespaces=cache['namespace_roots'];require(type(namespaces) is dict and len(namespaces)<=4096,'finite exact qualified namespace roots')
     for name,roots in namespaces.items():
         require(type(name) is str and name and type(roots) is list and roots and len(roots)==len(set(roots)) and all(type(p) is str and str(Path(p))==p and any(Path(q).parent==Path(p) for q in files) for p in roots),'exact namespace roots with registered immediate source children')
     anchor=cache['fresh_bootstrap_evidence'];require(type(anchor) is dict and set(anchor)=={'path','file_sha256','body_sha256'},'external selected fresh-bootstrap assumptions anchor')
     review=sealed_json(anchor['path'],anchor['file_sha256'],anchor['body_sha256'],budget=budget)
-    require(set(review)=={'kind','source_commit','preloaded_bootstrap_modules_sha256','fresh_process_bootstrap_qualified','environment_and_loader_assumptions_qualified','current_module_execution_proven','sha256'} and review['kind']=='ROOT_QUALIFIED_FRESH_BOOTSTRAP_BYTE_SOURCE_ASSUMPTIONS' and review['source_commit']==value['expected_head'] and review['preloaded_bootstrap_modules_sha256']==digest(modules) and review['fresh_process_bootstrap_qualified'] is True and review['environment_and_loader_assumptions_qualified'] is True and review['current_module_execution_proven'] is False,'external bootstrap assumptions; equivalence is not current execution proof')
+    require(set(review)=={'kind','source_commit','preloaded_bootstrap_modules_sha256','fresh_process_bootstrap_qualified','environment_and_loader_assumptions_qualified','current_module_execution_proven','sha256'} and review['kind']=='ROOT_QUALIFIED_FRESH_BOOTSTRAP_BYTE_SOURCE_ASSUMPTIONS' and review['source_commit']==value.get('implementation_commit',value['expected_head']) and review['preloaded_bootstrap_modules_sha256']==digest(modules) and review['fresh_process_bootstrap_qualified'] is True and review['environment_and_loader_assumptions_qualified'] is True and review['current_module_execution_proven'] is False,'external bootstrap assumptions; equivalence is not current execution proof')
 
 def qualification_rosters(value,*,budget=None):
     config=value['config'];runtime=value['runtime'];registration=value['registration']
@@ -398,7 +423,7 @@ def qualification_rosters(value,*,budget=None):
     review_fields={'kind','source_commit','source_inventory_sha256','runtime_closure_sha256','rosters_sha256','cache_policy_sha256','library_search_policy_sha256','complete_current_byte_review','sha256'}
     require(set(review)==(review_fields|{'library_boundary_plan_sha256'} if 'library_boundary_plan' in runtime else review_fields),'exact independent qualified review schema')
     if 'library_boundary_plan' in runtime:require(review['library_boundary_plan_sha256']==digest(library_boundary_plan(runtime)),'independent selected library boundary plan review join')
-    require(review['kind']=='ROOT_REVIEWED_TENSOR_RUNTIME_ROSTER_LIBRARY_SOURCE_CACHE_CLOSURE' and review['source_commit']==value['expected_head'] and review['complete_current_byte_review'] is True,'externally selected current native qualification review')
+    require(review['kind']=='ROOT_REVIEWED_TENSOR_RUNTIME_ROSTER_LIBRARY_SOURCE_CACHE_CLOSURE' and review['source_commit']==value.get('implementation_commit',value['expected_head']) and review['complete_current_byte_review'] is True,'externally selected current native qualification review')
     require(review['source_inventory_sha256']==digest(config['source_files']) and review['runtime_closure_sha256']==digest(runtime['files']) and review['rosters_sha256']==digest(rosters) and review['cache_policy_sha256']==digest(runtime['cache_policy']) and review['library_search_policy_sha256']==digest(runtime['library_search_policy']),'qualification review exact maps/rules joins')
     search=runtime['library_search_policy'];require(type(search) is dict and set(search) in ({'mode','roster_names','unregistered_search_allowed'},{'mode','roster_names','unregistered_search_allowed','enforced_boundary'}) and search['mode']=='qualified_complete_registered_DLL_search_rosters' and search['unregistered_search_allowed'] is False and search['roster_names'] and set(search['roster_names'])<=set(rosters),'qualified exact loader-search-roster policy')
     if 'enforced_boundary' in search:
@@ -465,4 +490,122 @@ def revalidate_context(context):
     stage_native_gate();original=context_value(context);require(original.get('fixture_only',False) is False,'CPU native-context fixture has no native consumer authority');current=validate_native_manifest(original['config_path'],**original['anchors']);require(context_value(current)==original,'immutable original native source/runtime/config/HEAD identity');return original
 def native_entry(*args,**kwargs):
     stage_native_gate();return validate_native_manifest(*args,**kwargs)
+
+
+
+def _CPU_amended_metadata(config,registration,runtime,expected_head,*,_capability,budget=None):
+    _check_CPU_native_context_fixture(_capability)
+    implementation=config.get('source_commit')
+    require(type(expected_head) is str and len(expected_head)==40 and all(c in '0123456789abcdef' for c in expected_head) and implementation!=expected_head,'distinct externally selected dispatch HEAD')
+    value=native_metadata(config,registration,runtime,implementation,budget=budget)
+    value.update(expected_head=expected_head,implementation_commit=implementation,fixture_only=True,native_PASS=False,native_authority_issued=False)
+    return value
+
+
+def _CPU_read_amended_manifest(config_path,*,_capability,**anchors):
+    """Full private CPU reader; native public entry remains closed."""
+    _check_CPU_native_context_fixture(_capability)
+    fields={'expected_config_file','expected_config_body','registration_path','expected_registration_file','expected_registration_body','runtime_path','expected_runtime_file','expected_runtime_body','expected_head'}
+    require(set(anchors)==fields and all(type(v) is str and v for v in anchors.values()),'exact typed external CPU reader anchors before reads')
+    budget=QualificationBudget()
+    config=sealed_json(config_path,anchors['expected_config_file'],anchors['expected_config_body'],budget=budget)
+    runtime=sealed_json(anchors['runtime_path'],anchors['expected_runtime_file'],anchors['expected_runtime_body'],budget=budget)
+    registration=sealed_json(anchors['registration_path'],anchors['expected_registration_file'],anchors['expected_registration_body'],budget=budget)
+    value=_CPU_amended_metadata(config,registration,runtime,anchors['expected_head'],_capability=_capability,budget=budget)
+    load_input(budget=budget);qualification_rosters(value,budget=budget)
+    path=Path(config_path).absolute();require(path.parent==PACKAGE/'configs' and str(path)==registration['config_path'],'exact selected direct config path')
+    for mapping in (config['source_files'],runtime['files']):
+        for selected,d in mapping.items():file_descriptor(selected,d,layout=runtime['stdlib_layout'],budget=budget)
+    helper_path=PACKAGE/'registration_git_join.py';d=config['source_files'].get(str(helper_path));require(type(d) is dict and d.get('role')=='python_source','selected source-bound Git join helper')
+    raw=read_bytes(helper_path,budget=budget);require(len(raw)==d['bytes'] and hashlib.sha256(raw).hexdigest()==d['sha256'],'exact selected Git helper source bytes')
+    from types import ModuleType
+    helper=ModuleType('CPU_selected_registration_git_join');helper.__file__=str(helper_path);exec(compile(raw,str(helper_path),'exec'),helper.__dict__);helper.__compiled_source_descriptor__=dict(d)
+    if globals().get('__source_meter__') is not None:__source_meter__.bind_git(helper)
+    packets={'config':{'path':str(path),'file_sha256':anchors['expected_config_file'],'body_sha256':anchors['expected_config_body']},'runtime':{'path':anchors['runtime_path'],'file_sha256':anchors['expected_runtime_file'],'body_sha256':anchors['expected_runtime_body']},'registration':{'path':anchors['registration_path'],'file_sha256':anchors['expected_registration_file'],'body_sha256':anchors['expected_registration_body']}}
+    joined=helper._CPU_join(PACKAGE.parents[1],packets=packets,source_files=config['source_files'],implementation_commit=value['implementation_commit'],expected_head=value['expected_head'],git_output_exceptions=registration['git_output_exceptions'],_capability=helper._CPU_capability())
+    for label,selected in (('config',config),('runtime',runtime),('registration',registration)):
+        entry=packets[label];require(sealed_json(entry['path'],entry['file_sha256'],entry['body_sha256'],budget=budget)==selected,'same selected packet after full reader/Git joins')
+    qualification_rosters(value,budget=budget)
+    for mapping in (config['source_files'],runtime['files']):
+        for selected,d in mapping.items():file_descriptor(selected,d,layout=runtime['stdlib_layout'],budget=budget)
+    value.update(config_path=str(path),anchors=dict(anchors),CPU_git_join=joined,status='CPU_FULL_AMENDED_READER_RETURNED_UNQUALIFIED')
+    budget.check();return _mint_native_context(value)
+
+
+def expected_no_site_profile(layout=None):
+    logical = Path('C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11-windows-x86_64-none') if layout is None else Path(layout['logical_base_prefix'])
+    return {'flags': {'isolated': 1, 'no_site': 1, 'ignore_environment': 1, 'dont_write_bytecode': 1, 'no_user_site': 1}, 'executable': str(SITE.parents[1] / 'Scripts/python.exe'), 'prefix': str(logical), 'exec_prefix': str(logical), 'base_prefix': str(logical), 'base_exec_prefix': str(logical), 'path': [str(logical / 'python311.zip'), str(logical / 'DLLs'), str(logical / 'Lib'), str(logical)], 'meta_path': [{'module': '_frozen_importlib', 'name': 'BuiltinImporter'}, {'module': '_frozen_importlib', 'name': 'FrozenImporter'}, {'module': '_frozen_importlib_external', 'name': 'PathFinder'}], 'path_hooks': [{'module': 'zipimport', 'name': 'zipimporter'}, {'module': '_frozen_importlib_external', 'name': 'path_hook_for_FileFinder'}], 'source_execution_history_proven': False}
+
+PROSPECTIVE_PENDING_FIELDS=('additional_prelude_DLL_identities', 'current_full_runtime_byte_and_roster_review', 'owned_resource_admission_and_terminal_interface_review', 'post_prelude_paired_initial_DLL_baseline', 'prelude_standard_importer_and_cache_identity_trace', 'registered_PACKAGE_SITE_root_transition', 'selected_cache_byte_source_equivalence', 'selected_prelude_module_origin_and_cached_fields', 'separate_tensor_scope_owner_approval', 'tensor_main_source_promotion_and_exact_dispatch', 'torch_framework_and_extension_transitions')
+
+def validate_prospective_packet(packet):
+    """Closed source/dose inventory, never a NativeContext or launch permit."""
+    fields={'kind','scope','native_launch_authorized','owner_approval','permission','implementation_commit','dispatch_head','source_candidates','observed_program_specific_observer006','pending','native_PASS','native_authority_issued','model_fit_established','training_or_transfer_result','resources','input','bootstrap_plan','runtime_candidate','operation_registration','save_cleanup_registration','helper_sources','sha256'}
+    require(type(packet) is dict and set(packet)==fields and packet['sha256']==digest({k:v for k,v in packet.items() if k!='sha256'}),'exact sealed prospective packet fields')
+    require(type(packet) is dict and packet.get('kind')=='CLOSED_SITE_DISABLED_TWO_TENSOR_PROSPECTIVE_PACKET' and packet.get('scope')==NATIVE_SCOPE,'exact prospective two-tensor scope')
+    require(packet.get('native_launch_authorized') is packet.get('native_PASS') is packet.get('native_authority_issued') is packet.get('model_fit_established') is packet.get('training_or_transfer_result') is False and packet.get('owner_approval') is None,'all prospective run/qualification authority closed')
+    require(packet.get('implementation_commit') is packet.get('dispatch_head') is None,'source candidates are not a committed launch registration')
+    expected={**PERMISSION,'torch_import':True,'CUDA_context':True,'production_training':False,'protected_bank_access':False,'paid_services':False}
+    require(canonical(packet['permission'])==canonical(expected) and canonical(packet['resources'])==canonical(RESOURCES),'exact prospective dose/permission/resources; no model work')
+    require(packet['input']=={'path':str(INPUT),'file_sha256':INPUT_FILE,'body_sha256':INPUT_BODY,'prefix_ids_sha256':PREFIX_SHA,'positions':422,'diagnostic_history_only':True},'exact exposed diagnostic input; no M0 membership')
+    require(type(packet['pending']) is dict and set(packet['pending'])==set(PROSPECTIVE_PENDING_FIELDS) and all(v is None for v in packet['pending'].values()),'explicit unresolved observations, no fabricated truthy witnesses')
+    required={'prefix_tensor_contract.py','prefix_input_owned_worker.py','prefix_input_owned_supervisor.py','prefix_input_owned_auditor.py','prefix_registered_loader.py','prefix_native_pipeline.py'}
+    require(type(packet['source_candidates']) is dict and set(packet['source_candidates'])==required,'one exact six-module consolidated source roster')
+    for name,d in packet['source_candidates'].items():
+        require(type(d) is dict and set(d)=={'source','path','bytes','sha256','predecessor_descriptor'} and d['path']==str(HERE/name),'exact own consolidated candidate/provenance fields')
+        predecessor_root=HERE/'predecessor_sources' if HERE.parent.name=='artifacts' else PACKAGE/'evidence/site_disabled_tensor_packet_reviewed_cpu_20261007/predecessor_sources';predecessor=read_bytes(predecessor_root/name);require(d['predecessor_descriptor']=={'bytes':len(predecessor),'sha256':hashlib.sha256(predecessor).hexdigest(),'role':'python_source'} and read_bytes(d['source'])==predecessor,'preserved original source provenance byte join')
+        raw=read_bytes(d['path']);require(Path(d['path']).name==name and d['bytes']==len(raw) and d['sha256']==hashlib.sha256(raw).hexdigest(),'current consolidated source candidate bytes')
+    runtime=packet['runtime_candidate'];require(type(runtime) is dict and set(runtime)=={'basis_path','file_sha256','body_sha256','files','tensor_preloaded_bootstrap_modules','tensor_preloaded_module_cache_pins','library_boundary_transitions','native_runtime_qualified'} and runtime['basis_path']==str(PACKAGE/'configs/SYNTH_OBSERVER_STARTUP_RUNTIME_006.json') and runtime['tensor_preloaded_bootstrap_modules'] is runtime['tensor_preloaded_module_cache_pins'] is runtime['library_boundary_transitions'] is None and runtime['native_runtime_qualified'] is False,'exact pending tensor runtime fields')
+    original=sealed_json(runtime['basis_path'],runtime['file_sha256'],runtime['body_sha256']);require(runtime['files']==original['files'],'unchanged observed-program runtime byte candidates, not tensor qualification')
+    require(type(packet['helper_sources']) is dict and set(packet['helper_sources'])=={str(HERE/'registration_git_join.py')},'one nonempty exact selected Git helper map')
+    for path,d in packet['helper_sources'].items():
+        require(path==str(HERE/'registration_git_join.py'),'one exact current Git helper candidate');raw=read_bytes(path);require(d=={'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'role':'python_source'},'current selected Git helper bytes')
+    references=packet['observed_program_specific_observer006'];require(references['tensor_main_observed'] is references['tensor_bootstrap_qualified'] is False,'observer program facts cannot qualify tensor main')
+    expected_paths={str(PACKAGE/'evidence/observer_startup_attempt006_20261007'/rel) for rel in ('DRIVER_RESULT.json','preserved/OBSERVER_STARTUP_INVENTORY.json')}
+    require(set(references['artifact_refs'])==expected_paths,'exact preserved observer006 artifacts')
+    for text,d in references['artifact_refs'].items():
+        raw=read_bytes(text);value=parse(raw);require(d=={'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'body_sha256':value['sha256']},'observer006 artifact original file/body joins')
+    require(packet['bootstrap_plan']['interpreter_profile']==expected_no_site_profile(QUALIFIED_LAYOUT) and packet['bootstrap_plan']['source_execution_history_proven'] is False,'prospective exact no-site profile and no execution-history qualification')
+    return {'kind':'VALIDATED_CLOSED_TWO_TENSOR_PROSPECTIVE_SOURCE_PACKET','scope':NATIVE_SCOPE,'native_launch_authorized':False,'native_authority_issued':False,'pending_observation_count':len(packet['pending'])}
+
+
+def _amended_manifest_value(config_path,*,_capability=None,_cpu_fixture=False,**anchors):
+    """Full private CPU reader; native public entry remains closed."""
+    if _cpu_fixture:_check_CPU_native_context_fixture(_capability)
+    else:stage_native_gate()
+    fields={'expected_config_file','expected_config_body','registration_path','expected_registration_file','expected_registration_body','runtime_path','expected_runtime_file','expected_runtime_body','expected_head'}
+    require(set(anchors)==fields and all(type(v) is str and v for v in anchors.values()),'exact typed external CPU reader anchors before reads')
+    budget=QualificationBudget()
+    config=sealed_json(config_path,anchors['expected_config_file'],anchors['expected_config_body'],budget=budget)
+    runtime=sealed_json(anchors['runtime_path'],anchors['expected_runtime_file'],anchors['expected_runtime_body'],budget=budget)
+    registration=sealed_json(anchors['registration_path'],anchors['expected_registration_file'],anchors['expected_registration_body'],budget=budget)
+    implementation=config['source_commit']
+    if _cpu_fixture:value=_CPU_amended_metadata(config,registration,runtime,anchors['expected_head'],_capability=_capability,budget=budget)
+    else:
+        require(implementation!=anchors['expected_head'],'distinct implementation and dispatch source identities')
+        value=native_metadata(config,registration,runtime,implementation,budget=budget);value.update(expected_head=anchors['expected_head'],implementation_commit=implementation,fixture_only=False,native_PASS=False,native_authority_issued=False)
+    load_input(budget=budget);qualification_rosters(value,budget=budget)
+    path=Path(config_path).absolute();require(path.parent==PACKAGE/'configs' and str(path)==registration['config_path'],'exact selected direct config path')
+    for mapping in (config['source_files'],runtime['files']):
+        for selected,d in mapping.items():file_descriptor(selected,d,layout=runtime['stdlib_layout'],budget=budget)
+    helper_path=PACKAGE/'registration_git_join.py';d=config['source_files'].get(str(helper_path));require(type(d) is dict and d.get('role')=='python_source','selected source-bound Git join helper')
+    raw=read_bytes(helper_path,budget=budget);require(len(raw)==d['bytes'] and hashlib.sha256(raw).hexdigest()==d['sha256'],'exact selected Git helper source bytes')
+    from types import ModuleType
+    helper=ModuleType('CPU_selected_registration_git_join');helper.__file__=str(helper_path);exec(compile(raw,str(helper_path),'exec'),helper.__dict__);helper.__compiled_source_descriptor__=dict(d)
+    if globals().get('__source_meter__') is not None:__source_meter__.bind_git(helper)
+    packets={'config':{'path':str(path),'file_sha256':anchors['expected_config_file'],'body_sha256':anchors['expected_config_body']},'runtime':{'path':anchors['runtime_path'],'file_sha256':anchors['expected_runtime_file'],'body_sha256':anchors['expected_runtime_body']},'registration':{'path':anchors['registration_path'],'file_sha256':anchors['expected_registration_file'],'body_sha256':anchors['expected_registration_body']}}
+    joined=helper._CPU_join(PACKAGE.parents[1],packets=packets,source_files=config['source_files'],implementation_commit=value['implementation_commit'],expected_head=value['expected_head'],git_output_exceptions=registration['git_output_exceptions'],_capability=helper._CPU_capability())
+    for label,selected in (('config',config),('runtime',runtime),('registration',registration)):
+        entry=packets[label];require(sealed_json(entry['path'],entry['file_sha256'],entry['body_sha256'],budget=budget)==selected,'same selected packet after full reader/Git joins')
+    qualification_rosters(value,budget=budget)
+    for mapping in (config['source_files'],runtime['files']):
+        for selected,d in mapping.items():file_descriptor(selected,d,layout=runtime['stdlib_layout'],budget=budget)
+    value.update(config_path=str(path),anchors=dict(anchors),CPU_git_join=joined,status='CPU_FULL_AMENDED_READER_RETURNED_UNQUALIFIED' if _cpu_fixture else 'REGISTERED_AMENDED_SOURCE_READER_RETURNED_PENDING_NATIVE_AUDIT')
+    budget.check();return value
+
+def _CPU_read_amended_manifest(config_path,*,_capability,**anchors):
+    return _mint_native_context(_amended_manifest_value(config_path,_capability=_capability,_cpu_fixture=True,**anchors))
+
+_native_manifest_value=_amended_manifest_value
+
 if __name__=='__main__':native_entry()
