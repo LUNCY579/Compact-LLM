@@ -15,6 +15,10 @@ RESOURCES={'CPU_sample_max_age_seconds':.2,'GPU_free_at_admission_GiB':4.0,'GPU_
 OPS=('source_preflight','owned_identity','observer_binding','observer_start','initial_module_baseline','fixture_load','loaded_module_snapshot','fixture_unload','unloaded_module_snapshot','observer_stop','final_event_drain','final_source_preflight')
 MAX_JSON=16*1024**2
 ABI={'version':1,'row_capacity':4096,'full_capacity':1024,'base_capacity':256,'row_bytes':2600,'snapshot_bytes':72,'architecture':'x64'}
+STARTUP_SITE=Path(r'C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Lib\site-packages')
+STARTUP_MODULE_LEAVES={'__editable___hermes_agent_0_17_0_finder':'__editable___hermes_agent_0_17_0_finder.py','__editable___recursive_state_forgetting_0_1_0_finder':'__editable___recursive_state_forgetting_0_1_0_finder.py','__editable___rineya_tgsa_research_0_2_0_finder':'__editable___rineya_tgsa_research_0_2_0_finder.py','_distutils_hack':'_distutils_hack/__init__.py','_virtualenv':'_virtualenv.py','pywin32_bootstrap':'win32/lib/pywin32_bootstrap.py'}
+STARTUP_HOOK_LEAVES=('__editable__.hermes_agent-0.17.0.pth','__editable__.recursive_state_forgetting-0.1.0.pth','__editable__.rineya_tgsa_research-0.2.0.pth','_virtualenv.pth','distutils-precedence.pth','pywin32.pth')
+STARTUP_NAMESPACE_LEAVES=('pythoncom311.dll','pywintypes311.dll')
 
 def require(value,message):
     if not value:raise ValueError(message)
@@ -96,7 +100,7 @@ def _schema(config,runtime,registration,head,*,fixture_only):
     for mapping in (sources,files):
         for text,d in mapping.items():
             require(type(text) is str and Path(text).is_absolute() and '..' not in Path(text).parts and type(d) is dict and set(d)=={'bytes','sha256','role'} and type(d['bytes']) is int and 0<=d['bytes']<=8*1024**3 and sha(d['sha256']),'typed bounded original byte map')
-            suffix=Path(text).suffix.lower();allowed={'python_source':{'.py'},'source_json':{'.json'},'source_markdown':{'.md'},'native_observer_source':{'.c','.h'},'fixture_source':{'.c'},'observer_binary':{'.dll'},'observer_fixture_binary':{'.dll'},'interpreter_binary':{'.exe','.dll','.zip','.pyd'},'windows_system_binary':{'.dll'},'extension_binary':{'.dll','.pyd'},'python_stub':{'.pyi'},'qualified_bytecode_cache':{'.pyc'},'torch_binary':{'.dll','.pyd'}}
+            suffix=Path(text).suffix.lower();allowed={'python_source':{'.py'},'startup_hook_source':{'.pth'},'source_json':{'.json'},'source_markdown':{'.md'},'native_observer_source':{'.c','.h'},'fixture_source':{'.c'},'observer_binary':{'.dll'},'observer_fixture_binary':{'.dll'},'interpreter_binary':{'.exe','.dll','.zip','.pyd'},'windows_system_binary':{'.dll'},'extension_binary':{'.dll','.pyd'},'python_stub':{'.pyi'},'qualified_bytecode_cache':{'.pyc'},'torch_binary':{'.dll','.pyd'}}
             require(d['role'] in allowed and suffix in allowed[d['role']],'observer-only source/runtime role suffix; no model assets')
             if d['role']=='observer_binary':require(text==observer['binary']['path'] and mapping is files,'observer binary only exact singleton')
             if d['role']=='observer_fixture_binary':require(text==fixture['path'] and mapping is files,'fixture binary only exact singleton')
@@ -118,9 +122,10 @@ def _shared_inventory_checks(value):
     observer=runtime['library_event_observer']
     windows=runtime['windows_library_identities'];require(type(windows) is dict and len(windows)<=4096 and not(set(windows)&(set(runtime['inherited65_map'])|set(runtime['stdlib779_map']))),'finite additive Windows identities preserve original maps')
     for path,d in windows.items():require(Path(path).parent==Path(r'C:\Windows\System32') and Path(path).suffix.lower()=='.dll' and files.get(path)==d and d['role']=='windows_system_binary','exact selected Windows dependency singleton')
+    startup_roles=_startup_admitted_roles(config,runtime)
     for path,d in files.items():
         if path in (config['binary_fixture']['path'],observer['binary']['path']):continue
-        role='windows_system_binary' if path in windows else module.runtime_role(path,runtime['inherited65_map'])
+        role=startup_roles[path] if path in startup_roles else 'windows_system_binary' if path in windows else module.runtime_role(path,runtime['inherited65_map'])
         require(d['role']==role,'exact finite observer-only runtime role/root assignment')
     # The old observer registration validator needs the selected library map;
     # this is a pure adapter of metadata fields, not a tensor launch/context.
@@ -130,9 +135,53 @@ def _shared_inventory_checks(value):
     _bootstrap_admission_checks(config,runtime)
 
 
+def _directory_roster(root,selected,*,suffix=None,layout=None):
+    """Read exact finite directory identities without importing their contents."""
+    root=qualified_path(root,layout);require(root.is_dir() and type(selected) is dict and 0<len(selected)<=64,'finite physical startup directory roster')
+    expected={str(qualified_path(path,layout)):d for path,d in selected.items()}
+    require(len(expected)==len(selected) and all(Path(path).parent==root for path in expected),'immediate exact startup file leaves')
+    def capture():
+        children=tuple(root.iterdir());require(len(children)<=32768,'bounded immediate startup directory')
+        chosen={}
+        for child in children:
+            if suffix is not None and child.suffix.lower()!=suffix:continue
+            meta=child.lstat();require(stat.S_ISREG(meta.st_mode) and not child.is_symlink() and not(getattr(meta,'st_file_attributes',0)&0x400),'startup roster regular physical files only')
+            chosen[str(child)]=meta
+        require(set(chosen)==set(expected),'exact complete startup directory roster')
+        return {path:(s.st_size,s.st_mtime_ns,s.st_ino) for path,s in chosen.items()}
+    before=capture()
+    for path,d in expected.items():file_descriptor(path,d,layout=layout)
+    require(capture()==before,'stable startup roster during byte verification')
+    return expected
+
+def _startup_admitted_roles(config,runtime):
+    """Observer-only exact exceptions; shared tensor runtime roots stay closed."""
+    cache=runtime['cache_policy']
+    if cache.get('mode')=='MEASURE_BYTE_VERIFIED_STARTUP_V1':return {}
+    require(set(cache)=={'mode','allowed_bootstrap_modules','imports','startup_hook_sources','allowed_namespace_packages'} and cache['mode']=='MEASURE_BYTE_VERIFIED_STARTUP_V2','exact prospective startup V2 fields')
+    files=runtime['files'];modules=cache['allowed_bootstrap_modules'];roles={}
+    for name,leaf in STARTUP_MODULE_LEAVES.items():
+        path=str(STARTUP_SITE/leaf);entry=modules.get(name);d=files.get(path)
+        require(type(d) is dict and d.get('role')=='python_source' and entry=={'path':path,'source_sha256':d.get('sha256')},'exact observer-only startup module singleton')
+        roles[path]='python_source'
+    hooks=cache['startup_hook_sources'];require(type(hooks) is dict and set(hooks)=={'directory','files'} and hooks['directory']==str(STARTUP_SITE) and type(hooks['files']) is dict and set(hooks['files'])=={str(STARTUP_SITE/leaf) for leaf in STARTUP_HOOK_LEAVES},'exact six startup hook source leaves')
+    for path,d in hooks['files'].items():require(files.get(path)==d and d.get('role')=='startup_hook_source','startup hook selected bytes/role');roles[path]='startup_hook_source'
+    namespaces=cache['allowed_namespace_packages'];require(type(namespaces) is dict and set(namespaces)=={'pywin32_system32'},'one exact prospective originless namespace')
+    entry=namespaces['pywin32_system32'];root=STARTUP_SITE/'pywin32_system32'
+    require(type(entry) is dict and set(entry)=={'search_locations','files','files_sha256'} and entry['search_locations']==[str(root)] and type(entry['files']) is dict and set(entry['files'])=={str(root/leaf) for leaf in STARTUP_NAMESPACE_LEAVES} and entry['files_sha256']==digest(entry['files']),'exact namespace path and two-file roster')
+    require('pywin32_system32' not in modules,'namespace distinct from source module admission')
+    for path,d in entry['files'].items():require(files.get(path)==d and d.get('role')=='extension_binary','namespace selected DLL byte/role joins');roles[path]='extension_binary'
+    require(len(roles)==14 and not(set(roles)&(set(runtime['inherited65_map'])|set(runtime['stdlib779_map'])|set(config['source_files']))),'finite additive observer startup leaves only')
+    return roles
+
 def _bootstrap_admission_checks(config,runtime):
     files=runtime['files'];observer=runtime['library_event_observer']
-    cache=runtime['cache_policy'];require(type(cache) is dict and set(cache)=={'mode','allowed_bootstrap_modules','imports'} and cache['mode']=='MEASURE_BYTE_VERIFIED_STARTUP_V1' and cache['imports']==['ctypes','ctypes.wintypes','_ctypes'],'prospective byte-bound explicit startup import policy')
+    cache=runtime['cache_policy'];require(type(cache) is dict and cache.get('mode') in {'MEASURE_BYTE_VERIFIED_STARTUP_V1','MEASURE_BYTE_VERIFIED_STARTUP_V2'} and cache['imports']==['ctypes','ctypes.wintypes','_ctypes'],'prospective byte-bound explicit startup import policy')
+    if cache['mode']=='MEASURE_BYTE_VERIFIED_STARTUP_V1':require(set(cache)=={'mode','allowed_bootstrap_modules','imports'},'original startup V1 fields')
+    else:
+        _startup_admitted_roles(config,runtime)
+        hooks=cache['startup_hook_sources'];_directory_roster(hooks['directory'],hooks['files'],suffix='.pth',layout=runtime['stdlib_layout'])
+        for entry in cache['allowed_namespace_packages'].values():_directory_roster(entry['search_locations'][0],entry['files'],layout=runtime['stdlib_layout'])
     modules=cache['allowed_bootstrap_modules'];require(type(modules) is dict and 0<len(modules)<=4096 and set(cache['imports'])<=set(modules) and all(name.split('.',1)[0]!='torch' for name in modules),'finite prospective non-Torch bootstrap module admission')
     for name,row in modules.items():
         require(type(name) is str and type(row) is dict and set(row)=={'path','source_sha256'} and row['path'] in {**config['source_files'],**files} and {**config['source_files'],**files}[row['path']]['sha256']==row['source_sha256'] and {**config['source_files'],**files}[row['path']]['role'] in {'python_source','extension_binary'} and Path(row['path']).suffix.lower() in {'.py','.pyd'},'selected observer-only bootstrap source/extension identity')

@@ -139,6 +139,30 @@ def replay_phases(raw,*,result,selected_context):
     _raw_rows(drain['raw_rows'],result['events']['events'])
     return {'counts':counts,'first_clock':parse(lines[0])['monotonic'],'last_clock':clock,'returned':returned}
 
+def replay_bootstrap_modules(bootstrap,runtime,*,fixture_only):
+    """Replay exact source origins or separately observed finite namespace paths."""
+    fields(bootstrap,{'kind','imports','modules','unknown_modules','fixture_only','namespace_execution_proven'},'measured bootstrap')
+    require(bootstrap['kind']=='MEASURED_BOOTSTRAP_IMPORTS_V1' and bootstrap['imports']==['ctypes','ctypes.wintypes','_ctypes'] and bootstrap['fixture_only'] is fixture_only and bootstrap['namespace_execution_proven'] is False and bootstrap['unknown_modules']==[] and type(bootstrap['modules']) is list and len(bootstrap['modules'])<=4096,'bounded original bootstrap measurement, no unselected namespaces')
+    selected=runtime.get('cache_policy',{}).get('allowed_bootstrap_modules',{});namespaces=runtime.get('cache_policy',{}).get('allowed_namespace_packages',{});names=set()
+    def normalized(text):
+        p=Path(text);layout=runtime.get('stdlib_layout',{});logical=layout.get('logical_base_prefix')
+        return str(Path(layout['physical_base_prefix'])/p.relative_to(logical)) if logical is not None and p.is_relative_to(logical) else str(p)
+    for row in bootstrap['modules']:
+        base={'name','origin','classification','source_sha256','error'}
+        fields(row,base|{'spec_search_locations','module_search_locations','namespace_files','namespace_files_sha256'} if row.get('classification')=='namespace_package' else base,'original namespace origin')
+        require(type(row['name']) is str and row['name'] not in names,'unique original namespace names');names.add(row['name'])
+        require(row['error'] is None,'no hidden original namespace origin/byte verification error')
+        if row['classification']=='builtin_or_frozen':require(row['origin'] in ('built-in','frozen') and row['source_sha256'] is None,'interpreter-reported builtin/frozen origin; no execution proof')
+        elif row['classification']=='namespace_package':
+            entry=namespaces.get(row['name'])
+            require(type(entry) is dict and set(entry)=={'search_locations','files','files_sha256'} and row['origin'] is row['source_sha256'] is None,'selected namespace distinct from source origin')
+            require(type(row['spec_search_locations']) is type(row['module_search_locations']) is list and row['spec_search_locations']==row['module_search_locations']==entry['search_locations'] and row['spec_search_locations'] and all(type(p) is str and p==normalized(p) for p in row['spec_search_locations']),'two exact ordered original namespace search path observations')
+            require(type(row['namespace_files']) is dict and row['namespace_files']==entry['files'] and row['namespace_files_sha256']==entry['files_sha256']==digest(row['namespace_files']) and all(runtime['files'].get(path)==d for path,d in row['namespace_files'].items()),'fresh measured namespace roster joins selected runtime bytes')
+        else:
+            entry=selected.get(row['name']);require(row['classification']=='source_or_extension' and type(entry) is dict and row['origin']==normalized(entry['path']) and row['source_sha256']==entry['source_sha256'],'measured namespace source/extension exact prospective admission')
+    if not fixture_only:require(set(bootstrap['imports'])<=names,'actual explicit bootstrap imports measured')
+    return names
+
 def replay_startup(startup,*,result,selected_context):
     """Replay measured originals against a prospective admission, not a prior fact."""
     fields(startup,{'schema_version','kind','scope','source_commit','implementation_commit','config_sha256','context_sha256','bootstrap_policy_sha256','bootstrap','initial_module_snapshots','unknown_libraries','fixture_only','namespace_execution_proven','native_PASS','native_authority_issued','sha256'},'measured startup inventory')
@@ -149,20 +173,7 @@ def replay_startup(startup,*,result,selected_context):
     observed=startup['initial_module_snapshots'];require(type(observed) is list and len(observed)==2 and same(observed[0],result['initial_modules']),'original first complete baseline retained, no admitted-map substitution')
     first=modules(observed[0],runtime['files']);second=modules(observed[1],runtime['files'])
     require(first==second and set(first)<=set(runtime['allowed_initial_loaded_libraries']) and startup['unknown_libraries']==[],'paired original baseline inside prospective admission; no unknown modules')
-    bootstrap=startup['bootstrap'];fields(bootstrap,{'kind','imports','modules','unknown_modules','fixture_only','namespace_execution_proven'},'measured bootstrap')
-    require(bootstrap['kind']=='MEASURED_BOOTSTRAP_IMPORTS_V1' and bootstrap['imports']==['ctypes','ctypes.wintypes','_ctypes'] and bootstrap['fixture_only'] is value['fixture_only'] and bootstrap['namespace_execution_proven'] is False and bootstrap['unknown_modules']==[] and type(bootstrap['modules']) is list and len(bootstrap['modules'])<=4096,'bounded original bootstrap measurement, no unselected namespaces')
-    selected=runtime.get('cache_policy',{}).get('allowed_bootstrap_modules',{});names=set()
-    def normalized(text):
-        p=Path(text);layout=runtime.get('stdlib_layout',{});logical=layout.get('logical_base_prefix')
-        return str(Path(layout['physical_base_prefix'])/p.relative_to(logical)) if logical is not None and p.is_relative_to(logical) else str(p)
-    for row in bootstrap['modules']:
-        fields(row,{'name','origin','classification','source_sha256','error'},'original namespace origin')
-        require(type(row['name']) is str and row['name'] not in names,'unique original namespace names');names.add(row['name'])
-        require(row['error'] is None,'no hidden original namespace origin/byte verification error')
-        if row['classification']=='builtin_or_frozen':require(row['origin'] in ('built-in','frozen') and row['source_sha256'] is None,'interpreter-reported builtin/frozen origin; no execution proof')
-        else:
-            entry=selected.get(row['name']);require(row['classification']=='source_or_extension' and type(entry) is dict and row['origin']==normalized(entry['path']) and row['source_sha256']==entry['source_sha256'],'measured namespace source/extension exact prospective admission')
-    if not value['fixture_only']:require(set(bootstrap['imports'])<=names,'actual explicit bootstrap imports measured')
+    replay_bootstrap_modules(startup['bootstrap'],runtime,fixture_only=value['fixture_only'])
     return {'initial_libraries':first,'namespace_execution_proven':False,'native_authority_issued':False}
 
 def _sealed(value,pin):require(type(value) is dict and sha(pin) and value.get('sha256')==pin==digest({k:v for k,v in value.items() if k!='sha256'}),'external sealed body identity')

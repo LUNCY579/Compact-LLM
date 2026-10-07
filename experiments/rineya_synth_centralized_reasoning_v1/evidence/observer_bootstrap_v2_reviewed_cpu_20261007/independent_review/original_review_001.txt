@@ -1,0 +1,41 @@
+Preserved original review tool output, chunk 4a5a10, exit code 1.
+The original tool call fed original_review_001.py text to pinned Python -I -S -B -.
+This transcript is unaccepted because the reviewer expected only ValueError for a safely refused missing file. No implementation change was made for this harness mistake.
+
+test_location_flag_and_missing_path_refused (__main__.IndependentControls.test_location_flag_and_missing_path_refused) ... ok
+test_namespace_origin_metadata_refused (__main__.IndependentControls.test_namespace_origin_metadata_refused) ... ok
+test_missing_dll_and_missing_pth_refused (__main__.IndependentControls.test_missing_dll_and_missing_pth_refused) ... ERROR
+test_finite_roles_refuse_extra_namespace_and_widened_directory (__main__.IndependentControls.test_finite_roles_refuse_extra_namespace_and_widened_directory) ... ok
+test_auditor_refuses_path_disagreement_duplicate_name_and_authority (__main__.IndependentControls.test_auditor_refuses_path_disagreement_duplicate_name_and_authority) ... ok
+test_frozen_constants_unchanged (__main__.IndependentControls.test_frozen_constants_unchanged) ... ok
+
+======================================================================
+ERROR: test_missing_dll_and_missing_pth_refused (__main__.IndependentControls.test_missing_dll_and_missing_pth_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<stdin>", line 16, in test_missing_dll_and_missing_pth_refused
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\observer_startup_measurement_v1\contract.py", line 141, in _directory_roster
+    expected={str(qualified_path(path,layout)):d for path,d in selected.items()}
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\observer_startup_measurement_v1\contract.py", line 141, in <dictcomp>
+    expected={str(qualified_path(path,layout)):d for path,d in selected.items()}
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\observer_startup_measurement_v1\contract.py", line 57, in qualified_path
+    return physical(p)
+           ^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\observer_startup_measurement_v1\contract.py", line 42, in physical
+    meta=part.lstat();require(not part.is_symlink() and not(getattr(meta,'st_file_attributes',0)&0x400),'observer-only reparse/alias refused')
+         ^^^^^^^^^^^^
+  File "C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\pathlib.py", line 1163, in lstat
+    return self.stat(follow_symlinks=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\pathlib.py", line 1013, in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified: 'C:\\Users\\clclc\\AppData\\Local\\Temp\\observer_cpu_bootstrap_wl_mkugp\\site\\__editable__.hermes_agent-0.17.0.pth'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.212s
+
+FAILED (errors=1)
+{"errors": 1, "failures": 0, "kind": "INDEPENDENT_CPU_OBSERVER_BOOTSTRAP_V2_FOCUSED_REVIEW", "namespace_execution_proven": false, "native_PASS": false, "native_run": false, "site_disabled": true, "source_sha256": {"audit.py": "5f3b05da14f6eb1c568a874ad8dc6845f735fc969636db32198a728112ce0f10", "contract.py": "eda31c599f9b93402e0d4a0500386a01d38b0701c643a1e8fb1327f388f44965", "worker.py": "7e04fd2252fa2d8e4b8c7682ac2d7168a471b45aea6a302341e86b3debb06c4e"}, "tests": 6}

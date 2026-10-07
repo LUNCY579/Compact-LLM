@@ -14,7 +14,7 @@ def _module(path,expected=None):
     if expected is not None and hashlib.sha256(raw).hexdigest()!=expected:raise ValueError('exact observer-only bootstrap contract source')
     module=ModuleType('observer_only_'+path.stem);module.__file__=str(path)
     exec(compile(raw,str(path),'exec'),module.__dict__);return module
-C=_module(HERE/'contract.py','b6d722cefb32c4f5735b2937c7edd6d68c551e2a1555bbe41f4e7518fc20ad1c')
+C=_module(HERE/'contract.py','eda31c599f9b93402e0d4a0500386a01d38b0701c643a1e8fb1327f388f44965')
 OPS=('source_preflight','owned_identity','observer_binding','observer_start','initial_module_baseline',
     'fixture_load','loaded_module_snapshot','fixture_unload','unloaded_module_snapshot',
     'observer_stop','final_event_drain','final_source_preflight')
@@ -288,6 +288,46 @@ def _native_transport(context,contract):
     exec(compile(raw,selected['path'],'exec'),module.__dict__);module.__compiled_source_descriptor__=dict(selected['descriptor'])
     return module._Win32Transport(context,contract)
 
+def _measure_bootstrap_modules(value,contract,population):
+    """Measure already supplied namespace metadata; never import it."""
+    policy=value['runtime']['cache_policy'];selected=policy['allowed_bootstrap_modules'];layout=value['runtime']['stdlib_layout']
+    namespaces=policy.get('allowed_namespace_packages',{})
+    def normalized(path):return str(contract.qualified_path(path,layout))
+    contract.require(type(population) is tuple and len(population)<=4096,'bounded original startup namespace population')
+    rows=[];unknown=[]
+    for name,module in sorted(population):
+        if module is None:continue
+        namespace=vars(module);spec=namespace.get('__spec__');origin=getattr(spec,'origin',None) or namespace.get('__file__')
+        classification='builtin_or_frozen' if origin in ('built-in','frozen') else 'source_or_extension'
+        row={'name':name,'origin':origin if type(origin) is str else None,'classification':classification,'source_sha256':None,'error':None}
+        if name in namespaces and origin is None:
+            row.update(classification='namespace_package',spec_search_locations=None,module_search_locations=None,namespace_files=None,namespace_files_sha256=None)
+            try:
+                entry=namespaces[name]
+                contract.require(spec is not None and getattr(spec,'origin',None) is None and getattr(spec,'has_location',None) is False and namespace.get('__file__') is None,'namespace has no source or extension origin')
+                spec_paths=getattr(spec,'submodule_search_locations',None);module_paths=namespace.get('__path__')
+                contract.require(spec_paths is not None and module_paths is not None,'both original namespace search path observations')
+                row['spec_search_locations']=list(spec_paths);row['module_search_locations']=list(module_paths)
+                contract.require(all(type(p) is str for p in row['spec_search_locations']+row['module_search_locations']) and row['spec_search_locations']==row['module_search_locations']==entry['search_locations'],'exact ordered original namespace search paths')
+                contract.require([normalized(p) for p in row['spec_search_locations']]==entry['search_locations'],'namespace search paths are exact physical directories')
+                observed=contract._directory_roster(entry['search_locations'][0],entry['files'],layout=layout)
+                contract.require(contract.digest(observed)==entry['files_sha256'],'fresh namespace roster byte digest')
+                row['namespace_files']=observed;row['namespace_files_sha256']=contract.digest(observed)
+            except (OSError,ValueError,TypeError) as error:row['error']=_error(error);unknown.append(row)
+        elif classification!='builtin_or_frozen':
+            entry=selected.get(name)
+            if entry is None or type(origin) is not str:unknown.append(row)
+            else:
+                try:
+                    actual=normalized(origin);expected=normalized(entry['path'])
+                    contract.require(actual==expected,'original measured bootstrap module origin')
+                    contract.file_descriptor(entry['path'],{**value['config']['source_files'],**value['runtime']['files']}[entry['path']],layout=layout)
+                    row['origin']=actual;row['source_sha256']=entry['source_sha256']
+                except (OSError,ValueError) as error:row['error']=_error(error);unknown.append(row)
+        rows.append(row)
+    return {'kind':'MEASURED_BOOTSTRAP_IMPORTS_V1','imports':list(policy['imports']),'modules':rows,
+        'unknown_modules':unknown,'fixture_only':value['fixture_only'],'namespace_execution_proven':False}
+
 def _native_bootstrap(context,contract):
     """Measure a first explicit import after approval and complete byte checks.
 
@@ -308,26 +348,7 @@ def _native_bootstrap(context,contract):
         contract.require(spec is not None and type(spec.origin) is str and normalized(spec.origin)==normalized(selected[name]['path']),'byte-admitted bootstrap resolver origin before explicit import')
         contract.file_descriptor(selected[name]['path'],value['runtime']['files'][selected[name]['path']],layout=layout)
     __import__('ctypes');__import__('ctypes.wintypes');__import__('_ctypes')
-    contract.require(len(sys.modules)<=4096,'bounded original startup namespace population')
-    rows=[];unknown=[]
-    for name,module in sorted(tuple(sys.modules.items())):
-        if module is None:continue
-        namespace=vars(module);spec=namespace.get('__spec__');origin=getattr(spec,'origin',None) or namespace.get('__file__')
-        classification='builtin_or_frozen' if origin in ('built-in','frozen') else 'source_or_extension'
-        row={'name':name,'origin':origin if type(origin) is str else None,'classification':classification,'source_sha256':None,'error':None}
-        if classification!='builtin_or_frozen':
-            entry=selected.get(name)
-            if entry is None or type(origin) is not str:unknown.append(row)
-            else:
-                try:
-                    actual=normalized(origin);expected=normalized(entry['path'])
-                    contract.require(actual==expected,'original measured bootstrap module origin')
-                    contract.file_descriptor(entry['path'],{**value['config']['source_files'],**value['runtime']['files']}[entry['path']],layout=layout)
-                    row['origin']=actual;row['source_sha256']=entry['source_sha256']
-                except (OSError,ValueError) as error:row['error']=_error(error);unknown.append(row)
-        rows.append(row)
-    return {'kind':'MEASURED_BOOTSTRAP_IMPORTS_V1','imports':list(policy['imports']),'modules':rows,
-        'unknown_modules':unknown,'fixture_only':False,'namespace_execution_proven':False}
+    return _measure_bootstrap_modules(value,contract,tuple(sys.modules.items()))
 
 def main():
     C.native_gate()

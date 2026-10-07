@@ -11,7 +11,7 @@ import ast,hashlib,importlib.machinery,importlib.util,os,sys,time
 HERE=Path(__file__).resolve().parent
 PACKAGE=next(p for p in HERE.parents if p.name=='rineya_synth_centralized_reasoning_v1')
 EXPECTED=PACKAGE/'observer_startup_measurement_v1'
-CONTRACT_SHA='b6d722cefb32c4f5735b2937c7edd6d68c551e2a1555bbe41f4e7518fc20ad1c'
+CONTRACT_SHA='eda31c599f9b93402e0d4a0500386a01d38b0701c643a1e8fb1327f388f44965'
 ROOT=Path(r'C:\Users\clclc\BusinessProject\rineya-observer-startup-qualification-20261006')
 ROOT_RECORD=PACKAGE/'configs/SYNTH_OBSERVER_STARTUP_OUTPUT_ROOT_V1.json'
 HELPERS=('native_process','native_nvml','native_supervisor')

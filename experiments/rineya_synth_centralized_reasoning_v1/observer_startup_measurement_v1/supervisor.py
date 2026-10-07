@@ -12,7 +12,7 @@ HERE=Path(__file__).resolve().parent
 PACKAGE=next(p for p in HERE.parents if p.name=='rineya_synth_centralized_reasoning_v1')
 SCOPE='NO_MODEL_NATIVE_LIBRARY_OBSERVER_LOAD_UNLOAD'
 ORIGINAL_SHA='edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691'
-CONTRACT_BOOTSTRAP_SHA='b6d722cefb32c4f5735b2937c7edd6d68c551e2a1555bbe41f4e7518fc20ad1c'
+CONTRACT_BOOTSTRAP_SHA='eda31c599f9b93402e0d4a0500386a01d38b0701c643a1e8fb1327f388f44965'
 WORKER_RELATIVE='observer_startup_measurement_v1/worker.py'
 BOUNDS={'preworker_available_GiB':3.3125,'system_available_reserve_GiB':1.25,'worker_process_tree_RSS_GiB':2.0,
  'GPU_free_at_admission_GiB':4.0,'GPU_free_during_work_GiB':.5,'disk_free_GiB':4.0,
