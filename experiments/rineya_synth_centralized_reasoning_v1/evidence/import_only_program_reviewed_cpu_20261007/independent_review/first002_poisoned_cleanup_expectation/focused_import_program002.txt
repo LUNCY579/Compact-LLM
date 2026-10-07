@@ -1,0 +1,18 @@
+test_actual_integrated_source_loader_guard_writer_replay_stops_after_version (__main__.Independent.test_actual_integrated_source_loader_guard_writer_replay_stops_after_version) ... ok
+test_actual_failed_framework_preserves_raw_cleanup_and_failed_operation (__main__.Independent.test_actual_failed_framework_preserves_raw_cleanup_and_failed_operation) ... FAIL
+test_actual_capability_context_scope_grant_refusals_and_forbidden_probes (__main__.Independent.test_actual_capability_context_scope_grant_refusals_and_forbidden_probes) ... ok
+test_actual_original_ledger_cap_and_unimplemented_native_main_source (__main__.Independent.test_actual_original_ledger_cap_and_unimplemented_native_main_source) ... ok
+
+======================================================================
+FAIL: test_actual_failed_framework_preserves_raw_cleanup_and_failed_operation (__main__.Independent.test_actual_failed_framework_preserves_raw_cleanup_and_failed_operation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\evidence\import_only_program_reviewed_cpu_20261007\independent_review\focused_import_program002.py", line 19, in test_actual_failed_framework_preserves_raw_cleanup_and_failed_operation
+    self.assertTrue(self.P.closed);raw=(self.output/'IMPORT_LIBRARY_MEASUREMENT.json').read_bytes();value=A.replay(raw,policy=self.policy,grammar=self.grammar,identity=self.identity,files=self.files,sources=self.sources);self.assertEqual(value['status'],'MEASUREMENT_FAILURE_PRESERVED');final=json.loads((self.output/'PHASE_ACCOUNTING_FINAL.json').read_bytes());self.assertEqual(final['operations']['framework_import']['failed'],1);self.assertEqual(final['operations']['framework_import']['pending'],0);self.assertEqual(final['operations']['measurement_cleanup']['returned'],1);DETAILS['actual_failed_import_raw_replay']=True
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.452s
+
+FAILED (failures=1)

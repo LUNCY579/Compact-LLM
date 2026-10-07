@@ -1,5 +1,18 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: dedicated import-only CPU program reviewed
+
+[CPU program002](IMPORT_ONLY_PROGRAM_CPU_002.md) executes eleven operations/
+22success markers through original writer, registered source loader, measurement
+guard and raw replay. Four authored/Root and independent controls pass, including
+failed import cleanup/raw preservation and scope/128-marker refusals.26 files
+preserve source/predecessors/receipts. Ownership/resources remain inert fixtures.
+
+Native binder/main and pre-return constructor partial-raw acquisition are still
+unimplemented in this preserved version. A separate native source integration is
+underway; actual grant/run and source-bound executable registration remain pending.
+No native effects, training/scoring or transfer/retention result follows.
+
 ## 2026-10-07 UTC: full V2 terminal gate-document join CPU corrected
 
 [Terminal correction](GATE_TERMINAL_V2_JOIN_CPU_003.md) repairs a staged mismatch
