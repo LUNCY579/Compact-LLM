@@ -1,5 +1,18 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: selected reader/full qualifier CPU integration reviewed
+
+[Readerintegration001](IMPORT_READER_INTEGRATION_CPU_001.md) executes actual sealed
+packet/source reads and selected full qualifier before a CPU-only return. Four
+authored/Root and independent controls pass with40pins unchanged. Main/role/cache/
+qualifier pin mutations refuse before return. File/roster seams and Git-input spy
+are explicit; no native context, current bytes or bootstrap facts are inferred.
+
+The next concrete source delivery is one direct-package import graph/dispatcher,
+retained checked-main proof and durable helper references. Own-process bootstrap,
+baseline, exact registration and separate owner permission remain pending. No
+training/scoring or fresh-family/RS transfer result follows.
+
 ## 2026-10-07 UTC: additive module/spec/loader identity CPU tightened
 
 [Bootstrapidentity002](IMPORT_BOOTSTRAP_IDENTITY_CPU_002.md) adds selected names,

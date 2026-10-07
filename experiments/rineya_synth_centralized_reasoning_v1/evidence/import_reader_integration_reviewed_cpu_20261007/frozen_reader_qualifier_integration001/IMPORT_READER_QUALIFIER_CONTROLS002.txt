@@ -1,0 +1,21 @@
+test_actual_reader_loads_pinned_qualifier_before_CPU_return (__main__.Controls.test_actual_reader_loads_pinned_qualifier_before_CPU_return) ... ok
+test_source_bound_main_and_role_mutations_refuse_before_mint (__main__.Controls.test_source_bound_main_and_role_mutations_refuse_before_mint) ... FAIL
+test_cache_association_rebind_refuses_before_mint (__main__.Controls.test_cache_association_rebind_refuses_before_mint) ... ok
+test_wrong_qualifier_pin_refuses_before_execution_or_mint (__main__.Controls.test_wrong_qualifier_pin_refuses_before_execution_or_mint) ... ok
+
+======================================================================
+FAIL: test_source_bound_main_and_role_mutations_refuse_before_mint (__main__.Controls.test_source_bound_main_and_role_mutations_refuse_before_mint)
+----------------------------------------------------------------------
+ValueError: fixture selected byte identity
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\torch_import_observation_work\native_candidate\test_import_reader_qualification.py", line 48, in test_source_bound_main_and_role_mutations_refuse_before_mint
+    with self.assertRaisesRegex(ValueError,'role'):self.call_reader()
+AssertionError: "role" does not match "fixture selected byte identity"
+
+----------------------------------------------------------------------
+Ran 4 tests in 3.943s
+
+FAILED (failures=1)
