@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: finite tensor startup CPU candidate reviewed
+
+[Startup candidate](TENSOR_BOOTSTRAP_CANDIDATE_CPU_001.md) verifies the exact
+fourteen-file projection and source-derived inert finder/namespace identities.
+Final thirteen authored controls and Root replay pass; independent final seven
+pass. Exact predecessors remain preserved. Cache quarantine, path types,
+exception-table metadata, normal restoration and explicit concurrent-mutation
+cleanup failure are checked. Native enrollment, contract integration and actual
+live startup identity evidence remain absent; public source bytes are unchanged.
+
+[Next qualification sequence](NEXT_QUALIFICATION_AFTER_OBSERVER_005.md) prioritizes
+the exposed two-tensor input/mask diagnostic, then a separate short model qualifier.
+No model/tensor launch permission or completed current packet follows from this
+CPU candidate. The original three-arm transfer/retention question remains open.
+
 ## 2026-10-07 UTC: actual observer mechanics completed and reviewed
 
 [Attempt005 outcome](OBSERVER_STARTUP_OUTCOME_005.md) records all twelve approved
@@ -629,7 +644,7 @@ for prospective prefix422. The exact reporting call and originating kernel are
 unknown; a Python/API return does not certify asynchronous device execution.
 
 Separate [read-only Windows event payloads](evidence/phase3_batch05_attempt2_reviewed_20261005/ROOT_SYSTEM_GPU_EVENT_XML_001.json)
-record NVIDIA TDR reset/restart events at17:19:14.197–17:19:21.168UTC. Their timing
+record NVIDIA TDR reset/restart events at17:19:14.197â€“17:19:21.168UTC. Their timing
 overlaps the error; no causal explanation or CUDA-device mapping is established.
 No driver/TDR settings, resource floors or numerical checks were changed.
 
@@ -1053,7 +1068,7 @@ receipts and reviewed TRAIN packet. The
 [root validation](evidence/encoder_inventory_root_cpu_validation_20261005.json)
 passes10 inventory and16 long-scope CPU controls;17 original helpers remain
 unchanged. The [reviewed history](evidence/encoder_inventory_reviewed_cpu_20261005)
-retains18 staged files, candidates001–004, independent reviews and scope correction.
+retains18 staged files, candidates001â€“004, independent reviews and scope correction.
 
 Complete runtime execution closure remains explicitly false because the
 inherited65 pins omit standard-library sources used by the encoder. Final
@@ -1226,7 +1241,7 @@ was launched. This supports a potential future phase/ownership diagnostic only.
 A [read-only chronology estimate](evidence/ram2_recorded_resource_chronology_estimate_20261005.json)
 binds the immutable247 CPU/heartbeat records,49 GPU samples and CUDA event journal.
 An empirical wall-minus-monotonic offset estimates the first GPU-free decrease
-at09:28:50.561–09:28:50.577 UTC, preceding the recorded CUDA initialization
+at09:28:50.561â€“09:28:50.577 UTC, preceding the recorded CUDA initialization
 attempt at09:28:53.224 UTC. This is not a synchronized clock proof, process-memory
 attribution or exclusion of unlogged Torch import/preload behavior. It does not
 establish intrinsic fit or permit a retry. New native diagnosis would need its
@@ -2049,7 +2064,7 @@ transfer/retention result is claimed. The next sampler investigation keeps every
 resource, numerical and dose limit fixed and requires CPU controls before launch.
 
 The [direct process/RAM successor](NQ_PROCESS_AMENDMENT_006.md) removes the
-measured 25–35-ms RAM-query bottleneck with exact read-only parity controls.
+measured 25â€“35-ms RAM-query bottleneck with exact read-only parity controls.
 [SYNTH_NQ001_PROC7.json](configs/SYNTH_NQ001_PROC7.json) freezes 25 source and
 64 runtime bindings, including System32 kernel32.dll. Its static preflight and
 [288 CPU tests](evidence/process7_final_cpu_validation_20261003.json) passed,
@@ -2063,12 +2078,12 @@ and independent rule-parser fixes now pass negative controls. The
 [rebuilt root-bound bundle](evidence/fresh_dev_root2_20261003) and
 [CPU receipt](evidence/evaluation_panel_root_control_20261003.json) preserve
 all rows and source bindings. Its
-measured prompts span 185–572 tokens; 59 rows exceed the current 480-token prompt
+measured prompts span 185â€“572 tokens; 59 rows exceed the current 480-token prompt
 allowance plus 32 generation tokens. Preserve every row; native evaluation is
 unadmitted until a separate envelope or source amendment is registered. DEV
 labels are CPU-exposed, and prior-correct membership remains unenrolled.
 
-## Current native qualification handoff — 2026-10-03
+## Current native qualification handoff â€” 2026-10-03
 
 Attempt 5 is now terminal and failed before its first optimizer step: a milestone
 producer used an uppercase stage name rejected by the writer. Twenty forward/
@@ -2085,7 +2100,7 @@ Its [255-test CPU run](evidence/boundary6_final_cpu_validation_20261003.json)
 passed without skips, with unchanged before/after source hashes and actual
 worker-journal integration. Static preflight passed; native execution is pending.
 
-Earlier attempts 1–4 are terminal and preserved.
+Earlier attempts 1â€“4 are terminal and preserved.
 Attempt 4 loaded the pinned base and reached one backward call, but the external
 GPU observation became stale before any optimizer step. No native qualification
 pass or M0/M1/M2 capability result exists. Its raw receipt and source snapshot are
@@ -2179,7 +2194,7 @@ performed. Native launch flags remain closed. A null at this small dose cannot
 reject condition diversity generally; retain uncertainty and preregister any
 successor before fresh evaluation. Preserve CRS-001 and all prior discoveries.
 
-## Founding status and next handoff — 2026-10-02
+## Founding status and next handoff â€” 2026-10-02
 
 
 **State:** `DESIGN_REGISTERED_NATIVE_UNQUALIFIED`.

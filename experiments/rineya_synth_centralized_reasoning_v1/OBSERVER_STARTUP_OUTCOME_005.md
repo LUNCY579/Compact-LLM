@@ -41,6 +41,9 @@ runtime/live-interface acceptance remains external to the replay auditor; its
 false flags must not be changed to manufacture authority. There is no missing
 thirteenth worker operation or reason to repeat the same successful fixture run.
 
+[Next qualification sequence](NEXT_QUALIFICATION_AFTER_OBSERVER_005.md) identifies
+the two-tensor input diagnostic before the separate short model qualifier.
+
 The next model stage needs its separately registered tensor qualifier and
 compiled-source/cache/bootstrap contract. Observer V2 evidence must not be
 renamed into the tensor contract's different bootstrap fields. Complete scored

@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The [finite tensor startup CPU candidate](TENSOR_BOOTSTRAP_CANDIDATE_CPU_001.md)
+passes thirteen authored controls and seven independent controls, with a verified
+fourteen-file projection. Native provider and contract integration remain absent.
+
 The [actual observer outcome](OBSERVER_STARTUP_OUTCOME_005.md) records twelve
 successful zero-model operations and independently verified fixture events,
 resource coverage and cleanup. Its authority flags remain false; the separate
@@ -111,7 +115,7 @@ The founding checks are NOT a dataset audit, native-model test,
 training job, or benchmark; later CPU compiler tests are described below. See [local evidence](evidence/local_validation.json).
 There are no automatic network calls, paid services, model downloads, or GPU jobs.
 
-## CPU compiler milestone — 2026-10-03
+## CPU compiler milestone â€” 2026-10-03
 
 The retained manifest checker still validates founding metadata only. Test
 discovery now includes independent R/S semantics, source/parent isolation,
