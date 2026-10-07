@@ -1,5 +1,18 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: packet-bound import terminal consumer CPU applied
+
+[Terminalaudit002](IMPORT_TERMINAL_AUDIT_CPU_002.md) joins actual six packet anchors
+and caller metadata before preserved raw/journal/IO/measurement/SUP/resources/
+leases/source/death/clock replay. Five authored/Root and six independent controls
+pass with27pins unchanged. Root applies and loads the pure public source.31files
+preserve prior gaps and reviewed/current evidence; supervisory event facts are
+authored CPU fixtures, not actual native observations.
+
+Postrun dispatcher invocation is being integrated. Actual final source commits/
+registration, fresh qualification/admission and separate owner grant remain absent.
+No native or model/training/scoring/transfer result follows.
+
 ## 2026-10-07 UTC: public closed proposal resource/profile wrapper corrected
 
 [Closedproposal003](IMPORT_PUBLIC_PROPOSAL_CPU_003.md) binds194sources/8724runtime
