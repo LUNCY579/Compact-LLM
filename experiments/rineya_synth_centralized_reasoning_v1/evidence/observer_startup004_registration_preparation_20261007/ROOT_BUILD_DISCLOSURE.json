@@ -1,0 +1,19 @@
+{
+  "failures_before_publication": [
+    {
+      "reason": "Caller passed stdlib layout with extra python_version instead of exact five alias fields; rejected before hashing.",
+      "stage": "reader_alias_table"
+    },
+    {
+      "reason": "Caller compared observed files including physical_path to bare descriptors; reader completed but caller assertion failed before packet publication.",
+      "stage": "descriptor_result_comparison"
+    }
+  ],
+  "kind": "ROOT_REGISTRATION004_BUILD_CALLER_DISCLOSURE",
+  "model_or_native_invocation": false,
+  "native_PASS": false,
+  "old003_packets_changed": false,
+  "sha256": "bd19639d53888c523cb17852ed896d5c1f42b55283141fc610dcdc1af3e0c046",
+  "successful_builder": "build_registration004.py",
+  "successful_descriptor_projection": "bytes,sha256,role"
+}
