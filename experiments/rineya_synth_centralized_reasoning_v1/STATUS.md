@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: additive module/spec/loader identity CPU tightened
+
+[Bootstrapidentity002](IMPORT_BOOTSTRAP_IDENTITY_CPU_002.md) adds selected names,
+typed loader object/path and dual package-root checks to cached-source equivalence.
+Five authored/Root and independent controls pass with22pins unchanged.34files
+preserve source/priorhelper/failedisolatedfixture and exact companion bytes.
+Actual worker/psutil preload and baseline39 remain unobserved.
+
+Next code work is complete selected-reader/qualifier-before-context integration
+and source-bound own bootstrap admission, followed by exact executable registration/
+new permission. No native or training/scoring/transfer result follows.
+
 ## 2026-10-07 UTC: full passive preload overlay qualification CPU reviewed
 
 [Overlay qualifier003](IMPORT_PRELOAD_QUALIFIER_CPU_003.md) joins exact separate
