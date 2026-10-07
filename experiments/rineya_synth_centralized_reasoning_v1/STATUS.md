@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: program-bound closed import registration CPU reviewed
+
+[Closed registration002](IMPORT_CLOSED_REGISTRATION_CPU_002.md) saves exact config/
+runtime/registration for the frozen CPU program. Actual validator joins11sources,
+8716runtime files/18rosters/cache59 and observed00963source/two-alias maps. Four
+authored/Root and independent controls pass with43selectedpins unchanged.31files
+preserve source/packets/fixtures. Commit/grant/dispatch identities remain absent.
+
+No usable nine launch anchors or native permit are produced. Native binder/main,
+approved schema, source promotion/Git and fresh qualification remain pending in
+the separate implementation. No training/scoring or transfer/retention result.
+
 ## 2026-10-07 UTC: dedicated import-only CPU program reviewed
 
 [CPU program002](IMPORT_ONLY_PROGRAM_CPU_002.md) executes eleven operations/
