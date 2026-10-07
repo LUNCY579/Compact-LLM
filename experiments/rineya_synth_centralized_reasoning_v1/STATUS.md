@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: public closed proposal resource/profile wrapper corrected
+
+[Closedproposal003](IMPORT_PUBLIC_PROPOSAL_CPU_003.md) binds194sources/8724runtime
+entries and full passive/preload maps. Independent002 review found a coordinated
+resource-lowering reseal accepted by its incomplete wrapper. The preserved003
+fix enforces original full resources/profile; five authored/Root and independent
+controls pass with213pins unchanged.43files retain packets/failedwrapper/counterexample.
+
+Actual commit/dispatch/review/owner grant remains absent; full terminal consumer
+is under independent review. No executable run authorization or native/model/
+training/scoring/transfer result follows.
+
 ## 2026-10-07 UTC: corrected closed import-only source graph publicly applied
 
 [Publicgraph002](IMPORT_PUBLIC_GRAPH_CPU_002.md) applies ten reviewed direct-package

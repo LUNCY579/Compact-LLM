@@ -1,0 +1,27 @@
+test_owner_review_and_dispatch_anchor_forgery_refuse (__main__.Controls.test_owner_review_and_dispatch_anchor_forgery_refuse) ... ok
+test_saved_exact_nested_bytes_source_maps_and_actual_Q_fieldsets (__main__.Controls.test_saved_exact_nested_bytes_source_maps_and_actual_Q_fieldsets) ... FAIL
+test_scope_permission_and_resource_weakening_refuse (__main__.Controls.test_scope_permission_and_resource_weakening_refuse) ... 
+  test_scope_permission_and_resource_weakening_refuse (__main__.Controls.test_scope_permission_and_resource_weakening_refuse) (kind='resources') ... FAIL
+test_source_runtime_and_additive_reference_rebind_refuse (__main__.Controls.test_source_runtime_and_additive_reference_rebind_refuse) ... ok
+
+======================================================================
+FAIL: test_saved_exact_nested_bytes_source_maps_and_actual_Q_fieldsets (__main__.Controls.test_saved_exact_nested_bytes_source_maps_and_actual_Q_fieldsets)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\torch_import_registration_work\public_graph_stage\independent_review\focused_closed_public_proposal002.py", line 24, in test_saved_exact_nested_bytes_source_maps_and_actual_Q_fieldsets
+    raw=(FROZEN/('IMPORT_'+n.upper()+'_CLOSED002.json')).read_bytes();self.assertEqual(raw,(M.canonical(P[n])+'\n').encode())
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'{"G[2377118 chars]rsion":"2.6.0+cu124","whole_program_entry_observed":false}\r\n' != b'{"G[2377118 chars]rsion":"2.6.0+cu124","whole_program_entry_observed":false}\n'
+
+======================================================================
+FAIL: test_scope_permission_and_resource_weakening_refuse (__main__.Controls.test_scope_permission_and_resource_weakening_refuse) (kind='resources')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\torch_import_registration_work\public_graph_stage\independent_review\focused_closed_public_proposal002.py", line 48, in test_scope_permission_and_resource_weakening_refuse
+    with self.subTest(kind=kind),self.assertRaises(ValueError):check(reseal(p))
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 2.374s
+
+FAILED (failures=2)
