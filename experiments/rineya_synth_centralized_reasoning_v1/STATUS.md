@@ -1,5 +1,26 @@
 # Status and next handoff
 
+## 2026-10-07 UTC: decoded long guard CPU producer and saved audit reviewed
+
+[Long collection preparation](LONG_GUARD_COLLECTION_PREPARATION_CPU_001.md)
+implements original longcomponent decoded collection plus per-token/final Journal
+preservation. Frozen36homogeneous64batch indices preserve canonical world/length/
+variant order and rawcapturepacket hashes across all2304/192worlds.
+
+Initial four controls exercised full36producer+canonical saved join on retained
+pre-review source. Corrected three-envelope controls and final targeted newline
+control pass; independent final eight focused controls pass (three envelopes,
+causal/type/rebound JSON/sink-failure/nativeclosed checks). No finalfull36 rerun is
+claimed. Originalsource/data/math/decoderpolicies remain unchanged.
+
+Native loadedasset/ownedlongworker/decoderqualification/launch and native saved
+loader remain absent/closed; nativeclock/tensor qualification and scorer/language/
+M0 baseline evidence remain unproven. GPUread-onlyinventory at01:21:25UTC:
+941MiB<unchanged4096MiBfloor, hostavailable12,183,846,912B. Inventory isn't
+pinnedresourceadmission. No native/model/scoring/training/unrelatedstop occurred.
+The full condition-diversity transfer/prior-correct comparison remains active
+and unmeasured; CPU records issue no quality or retention authority.
+
 ## 2026-10-06 UTC: task guard pipeline CPU wiring reviewed; GPU still below floor
 
 [Task pipeline preparation](TASK_GUARD_PIPELINE_PREPARATION_CPU_001.md) joins

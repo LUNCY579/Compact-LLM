@@ -31,6 +31,12 @@ and independent four controls pass. Genuine capture/audit/scorer evidence and
 long/language guard production remain unresolved; current GPU inventory is below
 the unchanged admission floor.
 
+The [decoded long guard CPU preparation](LONG_GUARD_COLLECTION_PREPARATION_CPU_001.md)
+preserves 2,304 canonical rows across 36 homogeneous capture batches without
+rewriting their packet hashes. Full-population producer controls and final
+focused independent eight controls pass on explicitly separated versions.
+Native loaded assets, worker/decoder qualification and launch remain closed.
+
 The [private source workflow CPU milestone](PRIVATE_WORKFLOW_CPU_001.md)
 reproduces46 selected controls from preserved bytes. Public native execution,
 registered runtime loading and current host/GPU qualification remain open.
