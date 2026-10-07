@@ -1,0 +1,29 @@
+{
+  "experiment": "RSR-001",
+  "status": "CPU_QUALIFIED_NATIVE_NOT_RUN",
+  "paper": "arxiv:2610.02826v1",
+  "parent_commit": "19551ddebc87c93161c303865ce6d0f130de0093",
+  "target": "initial 0.6B Rineya; unchanged model architecture",
+  "native_training_parents_proposal": 256,
+  "discovery": {
+    "h0_resampling": ["H0", "H0", "H0", "H0", "H0", "H0"],
+    "portfolio": ["H0", "H0", "H1", "H1", "H2", "H2"],
+    "budget_scope": "same total per-task caps in each strategy",
+    "h2_privilege": "public tool feedback only; never hidden-grader continuation"
+  },
+  "reconstruction": {"candidates": 2, "executions_per_candidate": 2, "max_revisions": 2, "per_parent_export_cap": 4},
+  "arms": ["base", "direct", "one_pass", "recursive", "corrected_separate_optional"],
+  "tracks": ["self", "teacher_assisted_separate"],
+  "evaluation": {
+    "harness": "H0",
+    "attempts": 3,
+    "roles": ["calibration", "retention_eval"],
+    "sealed": "BLOCKED; needs independent frozen evaluator",
+    "primary": "verified held-out task completion without private guidance",
+    "uncertainty_unit": "original task parent",
+    "gain_screen_proposal": 0.05,
+    "retention_margin_example_not_preregistered": -0.02
+  },
+  "native_gates": ["fresh host grant", "loader/tokenizer qualification", "public-prefix fidelity", "resource qualification", "matched actual training receipts", "independent confirmation", "reload fidelity"],
+  "not_implemented": ["native checkpoint loading/persistence/resume", "independent retention replay", "arbitrary terminal/code-repair environment", "semantic holdout proof", "external provider adapters", "hard callback timeout isolation"]
+}

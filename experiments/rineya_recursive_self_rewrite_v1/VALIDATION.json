@@ -1,0 +1,46 @@
+{
+  "experiment": "RSR-001",
+  "date": "2026-10-07",
+  "parent_commit": "19551ddebc87c93161c303865ce6d0f130de0093",
+  "status": "CPU_QUALIFIED_NATIVE_NOT_RUN",
+  "python": "3.13.5",
+  "torch": "2.10.0+cpu",
+  "tests": {
+    "command": "python -m unittest discover -s experiments/rineya_recursive_self_rewrite_v1/tests -v",
+    "passed": 86,
+    "failed": 0,
+    "skipped": 0,
+    "scope": "79 standard-library tests + 7 tiny-CPU optimizer/backend tests"
+  },
+  "demo": {
+    "verified": true,
+    "evidence": "FIXTURE_ONLY",
+    "source_hash": "fe3f6e7fc60a76fdbc9c2b629cb7d9f68364f878df9ecd96c1e0124301c25c38",
+    "source_attempts": 144,
+    "rewrite_attempts": 96,
+    "dataset_actions": {
+      "direct": 28,
+      "one_pass": 112,
+      "recursive": 112
+    }
+  },
+  "pinned_rhd_git_blobs": {
+    "contracts.py": "527b6e035e444cd56193de024d4a94b9281129d7",
+    "environment.py": "9fe2a782659500f01aa00abdf23005dfd8eee349"
+  },
+  "full_rhd_suite": "NOT_RUN; exact contracts/environment blobs used by scoped integration tests",
+  "native_rineya": {
+    "model_loading": "NOT_RUN",
+    "inference": "NOT_RUN",
+    "training": "NOT_RUN",
+    "retention": "NOT_RUN",
+    "confirmation": "NOT_RUN"
+  },
+  "remote_ci": "NOT_RUN",
+  "code_source_hash": "fe3f6e7fc60a76fdbc9c2b629cb7d9f68364f878df9ecd96c1e0124301c25c38",
+  "boundaries": [
+    "No Rineya checkpoint/GPU/teacher API used",
+    "No automated task or paid call launched",
+    "Tiny CPU optimizer updates are fixture evidence, not Rineya training"
+  ]
+}
