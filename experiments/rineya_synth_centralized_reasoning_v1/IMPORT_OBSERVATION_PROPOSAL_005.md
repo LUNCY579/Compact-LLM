@@ -33,3 +33,9 @@ and explicit permission; do not flip its closed flags to manufacture approval.â€
 This proposal therefore remains closed pending that separate human permission.
 The M0/M1/M2 training, fresh-family transfer and prior-correct retention result
 remain incomplete; this observation cannot establish a learning gain.
+
+An additional [external read-only review](evidence/import005_external_review_20261008/IMPORT005_READ_ONLY_REVIEW_20261008T214145Z.json)
+found no concrete blocking mismatch at the frozen proposal commit. It checked
+packet seals/references, source Git objects, profile/anchor joins and CLI wiring;
+it did not repeat the full runtime hash or execute selected code. This review
+creates no human approval or native launch authority.
