@@ -17,6 +17,30 @@ def read(path):
     with p.open('rb') as f:o=os.fstat(f.fileno());raw=f.read(b.st_size+1);c=os.fstat(f.fileno())
     a=p.stat();identity=lambda x:(x.st_size,x.st_mtime_ns,x.st_ino,stat.S_IFMT(x.st_mode))
     require(len(raw)==b.st_size and identity(b)==identity(o)==identity(c)==identity(a),'stable bounded opened registration/source bytes');return raw
+def future_leaf(text,root):
+    require(type(text) is str and 0<len(text)<=4096 and not any(c in text for c in '*?'),'bounded exact future leaf')
+    p=Path(text);require(p.is_absolute() and str(p)==text and '..' not in p.parts and p!=root and p.is_relative_to(root),'literal futureleaf insideworkspace')
+    current=p
+    while not current.exists():current=current.parent
+    require(current.is_dir() or current==p,'futureleaf nearestexisting ancestor directory')
+    physical(current);require(p.resolve(strict=False)==p,'futureleaf no alias/reparse mapping')
+    if p.exists():require(p.is_file() and not p.is_symlink(),'exceptionleaf regular whenpresent')
+    return p
+def exception_policy(exceptions,root,sources,packet_paths,runtime):
+    native=runtime.get('library_event_observer',{}).get('native_source_files',{})
+    if native:require(type(native) is dict and set(native)=={str(root/'experiments/rineya_synth_centralized_reasoning_v1'/name) for name in ('prefix_library_observer.c','prefix_library_observer.h')} and all(sources.get(p)==d and d.get('role')=='native_observer_source' for p,d in native.items()),'exactregisterednativeobserveroriginalleaves')
+    for text,entry in exceptions.items():
+        p=future_leaf(text,root);require(text not in sources and text not in packet_paths and type(entry) is dict and entry.get('role') in ('run_output','evidence_output','evidence_source_snapshot'),'originalpacket/source neverexception')
+        parts=p.relative_to(root).parts;require(len(parts)>=4 and parts[0]=='experiments' and parts[1]=='rineya_synth_centralized_reasoning_v1','exact registered experimentworkspace')
+        local=parts[2:]
+        if entry['role']=='evidence_source_snapshot':
+            require(set(entry)=={'role','source_path'} and len(local)==4 and local[0]=='evidence' and local[1].startswith('prefix_input_owned_') and local[2]=='source_snapshots','exactsourcecopyparent')
+            source=entry['source_path'];require(source in sources and local[3]==hashlib.sha256(source.encode()).hexdigest()+Path(source).suffix,'hashderivedsourcecopyonly')
+            suffix=Path(source).suffix.lower();require(suffix in ('.py','.json','.md') or suffix in ('.c','.h') and sources[source]['role']=='native_observer_source' and native.get(source)==sources[source] and len(native)==2,'onlyexactregisterednativeobserver source snapshots')
+        else:
+            require(entry=={'role':entry['role']} and p.suffix.lower() in ('.json','.jsonl','.txt','.log','.snapshot'),'nonexecutableexactoutputleaf')
+            if entry['role']=='run_output':require(local[0]=='artifacts' and (local[1]=='_native_gpu_leases' or local[1].startswith('prefix_input_owned_')),'exact ownedrun/leaseleaf')
+            else:require(len(local)==3 and local[0]=='evidence' and local[1].startswith('prefix_input_owned_'),'exact flat preservationoutputleaf')
 def pairs(rows):
     out={}
     for key,value in rows:require(key not in out,'duplicate registration JSON field');out[key]=value
@@ -45,13 +69,15 @@ def _CPU_join(repository,*,packets,source_files,implementation_commit,expected_h
         return account(subprocess.run(['git','-c','maintenance.auto=false','-c','gc.auto=0',*args],cwd=root,capture_output=True,check=True,timeout=min(30,max(.001,600-(time.monotonic()-started)))).stdout)
     require(git('rev-parse','HEAD').decode('ascii').strip()==expected_head,'actual clean dispatch HEAD exact')
     git('merge-base','--is-ancestor',implementation_commit,expected_head)
-    selected_packet_paths={entry.get('path') for entry in packets.values() if type(entry) is dict}
-    for text,entry in git_output_exceptions.items():
-        require(type(text) is str and physical(text).is_relative_to(root) and str(Path(text))==text and Path(text).suffix.lower() in {'.json','.jsonl','.txt','.log','.snapshot'} and entry=={'role':'run_output'} and text not in source_files and text not in selected_packet_paths,'exact physical registered nonexecutable output leaf exception')
+    selected_packet_paths={entry.get('path') for entry in packets.values() if type(entry) is dict};preview={}
+    for name,entry in packets.items():
+        require(type(entry) is dict and set(entry)=={'path','file_sha256','body_sha256'} and sha(entry['file_sha256']) and sha(entry['body_sha256']),'exactexternalpacketanchors');raw=account(read(entry['path']));require(hashlib.sha256(raw).hexdigest()==entry['file_sha256'],'previewpacketbyteanchor');value=parse(raw);require(value['sha256']==entry['body_sha256']==digest({k:v for k,v in value.items() if k!='sha256'}),'previewpacketbodyanchor');preview[name]=value
+    require(preview['config'].get('source_files')==preview['registration'].get('source_files')==source_files and preview['runtime'].get('files')==preview['config'].get('runtime_files')==preview['registration'].get('runtime_files'),'exceptionpolicy selectedoriginalmaps')
+    exception_policy(git_output_exceptions,root,source_files,selected_packet_paths,preview['runtime'])
     dirty=git('status','--porcelain=v1','-z','--untracked-files=all')
     for row in dirty.split(b'\0'):
         if not row:continue
-        require(row.startswith(b'?? '),'tracked changes never exempted');path=str(root/row[3:].decode('utf-8','strict'));require(git_output_exceptions.get(path)=={'role':'run_output'},'only exact registered output leaf exemption')
+        require(row.startswith(b'?? '),'tracked changes never exempted');path=str(root/row[3:].decode('utf-8','strict'));require(path in git_output_exceptions,'onlyexactregistered outputleafexemption')
     def relative(text):
         p=physical(text);require(p.is_relative_to(root) and p!=root,'selected Git leaf in repository');return p.relative_to(root).as_posix()
     originals={};values={}

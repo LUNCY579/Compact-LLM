@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-08: import observation launch corrections
+
+[Reviewed corrections](IMPORT_LAUNCH_CORRECTIONS_CPU_001.md) preserve original
+fresh RAM sampling without module path side effects, handle the installed
+TorchVersion metadata, and register exact future outputs and two native observer
+source snapshots. CPU checks and default permission refusal pass. The added
+copy preload qualifier passes five authored/Root and four independent CPU checks.
+The earlier d39 byte
+audit is retained with all196 source Git blobs checked; it does not cover later
+edits. Final current source registration/byte review and separate permission
+remain required. No new native or M0/M1/M2 transfer result is established.
+
 ## 2026-10-07 UTC: preservation/identity-bound terminal postrun source applied
 
 [Postrun001](IMPORT_POSTRUN_CPU_001.md) adds a scoped CLI that requires preserve→

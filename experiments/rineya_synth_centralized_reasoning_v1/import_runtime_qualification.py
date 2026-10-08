@@ -21,16 +21,38 @@ CONFIG_FIELDS={'schema_version','kind','scope','source_commit','permission','res
 RUNTIME_FIELDS={'kind','source_commit','files','rosters','cache_policy','initial35_expectation','initial35_provenance','observed_library_allowed_files','exact_effects_or_order_prequalified','native_runtime_qualified','metadata_references','inherited65_map','stdlib779_map','external_dependency_files','library_search_policy','stdlib_layout','windows_library_identities','library_event_observer','measurement_policy','measurement_grammar','typing_alias_helper','sha256'}
 REGISTRATION_FIELDS={'kind','scope','source_commit','config_path','config_body_sha256','runtime_body_sha256','source_files','runtime_files','profile_sha256','git_output_exceptions','native_launch_authorized','owner_approval','qualification_review_path','qualification_review_file_sha256','qualification_review_body_sha256','sha256'}
 def _seal(value):require(type(value) is dict and value.get('sha256')==B.digest({k:v for k,v in value.items() if k!='sha256'}),'exact separate qualification packet seal')
-def passive_preload_overlay(receipt):
+def import_git_exception_policy(exceptions,sources,files,observer,helpers):
+    require(type(exceptions) is dict and len(exceptions)<=4096,'finite exactregisteredexceptionpopulation');native=observer['native_source_files'];require(type(native) is dict and len(native)==2 and {Path(p).suffix.lower() for p in native}=={'.c','.h'},'exacttwo nativeobserver source leaves');common={}
+    for text,entry in exceptions.items():
+        if type(entry) is dict and entry.get('role')=='evidence_source_snapshot' and Path(entry.get('source_path','')).suffix.lower() in ('.c','.h'):
+            require(set(entry)=={'role','source_path'} and entry['source_path'] in native and sources.get(entry['source_path'])==native[entry['source_path']] and native[entry['source_path']]['role']=='native_observer_source','onlyexactselectednativeobserver exception');p=Path(text);parts=p.relative_to(PACKAGE).parts
+            require(p.is_absolute() and str(p)==text and '..' not in p.parts and text not in sources and text not in files and len(parts)==4 and parts[0]=='evidence' and parts[1].startswith('prefix_input_owned_') and parts[2]=='source_snapshots' and parts[3]==hashlib.sha256(entry['source_path'].encode()).hexdigest()+Path(entry['source_path']).suffix,'exactnativeobserver hashderivedsnapshotleaf')
+        else:common[text]=entry
+    helpers._git_exception_policy(common,sources,files)
+def passive_preload_overlay(receipt,*,helpers=None,budget=None):
+    helpers=B if helpers is None else helpers
     require(type(receipt) is dict and receipt.get('original_observed63_59_maps_not_rewritten') is True and
         receipt.get('psutil_source_or_extension_imported') is False,'source-only independently selected passive preload receipt')
+    kind=receipt.get('kind')
+    if kind=='PASSIVE_PSUTIL_BOOTSTRAP_SOURCE_CACHE_PE_ASSUMPTIONS001':
+        require('schema_version' not in receipt and len(receipt['source_modules'])==7 and len(receipt['extension_modules'])==3 and len(receipt['additional_cache_candidates'])==7,'exact original version1 preload population');expected_count=10
+    else:
+        require(kind=='PASSIVE_IMPORT_BOOTSTRAP_SOURCE_CACHE_PE_ASSUMPTIONS002' and type(receipt.get('schema_version')) is int and receipt['schema_version']==2,'exact extended preload version/kind')
+        reference={'path':str(PACKAGE/'evidence/psutil_bootstrap_assumptions_reviewed_cpu_20261007/PASSIVE_PSUTIL_BOOTSTRAP_ASSUMPTIONS001.json'),'file_sha256':'4a47c0cf98946ce5f31ace0f358dcf5e39652b2293ea7b97785f51635cebf3ae','body_sha256':'4e5b197de6a7bca410574991274b238c3679d3d8a572541c026176a6eb6e4aaf'}
+        require(receipt.get('predecessor_reference')==reference,'exact independently selected version1 predecessor');prior=helpers.sealed_json(reference['path'],reference['file_sha256'],reference['body_sha256'],budget=budget);passive_preload_overlay(prior,helpers=helpers,budget=budget)
+        source=str(Path(helpers.QUALIFIED_LAYOUT['physical_base_prefix'])/'Lib/copy.py');cache=str(Path(source).parent/'__pycache__/copy.cpython-311.pyc')
+        require(set(receipt['source_modules'])==set(prior['source_modules'])|{'copy'} and set(receipt['additional_cache_candidates'])==set(prior['additional_cache_candidates'])|{cache} and all(receipt['source_modules'][n]==row for n,row in prior['source_modules'].items()) and all(receipt['additional_cache_candidates'][p]==row for p,row in prior['additional_cache_candidates'].items()) and receipt['extension_modules']==prior['extension_modules'],'only exact copy source/cache addition to original overlay')
+        row=receipt['source_modules']['copy'];candidate=receipt['additional_cache_candidates'][cache]
+        require(row['path']==source and row['descriptor']=={'bytes':8681,'sha256':'27dcfc53a4b9d4fbc3d90c74e549eb6eca9301524d6d2fbff9a6589cf51b6fd5','role':'python_source'} and row['source_execution_history_proven'] is False and row['already_observed009'] is False,'exact added copy source bytes no history')
+        require(candidate['source_path']==source and candidate['descriptor']=={'bytes':11243,'sha256':'9753f133122a6321e83e87753f5f81900beadeb5ffa5c8f0a0883a0d699f18ff','role':'qualified_bytecode_cache'} and candidate['cache_executed'] is False and candidate['code_source_equivalence'] is True and receipt.get('copy_source_or_cache_executed') is False,'exact added copy cache bytes/source equivalence, no execution')
+        require(receipt['source_derived_baseline_expectation']==prior['source_derived_baseline_expectation'] and receipt['explicit_baseline_added_paths']==prior['explicit_baseline_added_paths'] and receipt['new_exact_System32_candidate']==prior['new_exact_System32_candidate'],'original39/Pdh expectations unchanged');expected_count=11
     caches=receipt['additional_cache_candidates'];overlay={}
     for name,row in receipt['source_modules'].items():
         matched=[(p,c) for p,c in caches.items() if c['source_path']==row['path']];require(len(matched)==1,'exact one selected Python preload cache candidate');path,cache=matched[0]
         require(cache['code_source_equivalence'] is True and cache['cache_executed'] is False,'passive added cache equivalence, no execution')
         overlay[name]={'path':row['path'],'descriptor':row['descriptor'],'cached_attribute_present':True,'cached_value_kind':'str','cache_path':path,'cache_descriptor':cache['descriptor'],'source_execution_history_proven':False}
     for name,row in receipt['extension_modules'].items():overlay[name]={'path':row['path'],'descriptor':row['descriptor'],'cached_attribute_present':False,'cached_value_kind':'missing','cache_path':None,'cache_descriptor':None,'source_execution_history_proven':False}
-    require(len(overlay)==10 and len(caches)==7,'exact passive7 Python/3 extension candidates');return overlay
+    require(len(overlay)==expected_count and len(caches)==expected_count-3,'exact versioned passive source/extension/cache population');return overlay
 def _source_roster(value,helpers,budget):
     # Original package discovery excludes only owned artifacts/evidence/cache.
     result=helpers.package_source_roster();selected=value['config']['source_files'];known_required={str(PACKAGE/name) for name in ('import_observation_worker.py','import_observation_contract.py','import_observation_auditor.py','import_observation_supervisor.py','import_runtime_qualification.py','import_resource_guard.py','measurement_guard.py','measurement_replay.py')}
@@ -67,7 +89,7 @@ def _cache(value,helpers,budget):
     require(type(additional) is dict and len(additional)<=128 and not set(additional).intersection(set(modules)|set(aliases)|{'__main__'}),'finite separate own-program preload population')
     if additional:
         reference=runtime['metadata_references'].get('additional_preload');require(type(reference) is dict and set(reference)=={'path','file_sha256','body_sha256'},'independent passive preload byte receipt selection')
-        receipt=helpers.sealed_json(reference['path'],reference['file_sha256'],reference['body_sha256'],budget=budget);require(additional==passive_preload_overlay(receipt),'separate preload map equals source-derived passive receipt')
+        receipt=helpers.sealed_json(reference['path'],reference['file_sha256'],reference['body_sha256'],budget=budget);require(additional==passive_preload_overlay(receipt,helpers=helpers,budget=budget),'separate preload map equals source-derived passive receipt')
     for name,row in additional.items():
         require(type(name) is str and name and type(row) is dict and set(row)=={'path','descriptor','cached_attribute_present','cached_value_kind','cache_path','cache_descriptor','source_execution_history_proven'},'exact separate preload descriptor/cache schema')
         p=row['path'];require(files.get(p)==row['descriptor'] and row['source_execution_history_proven'] is False and Path(p).suffix in ('.py','.pyd'),'selected added preload source bytes, no history claim')
@@ -105,7 +127,7 @@ def _qualify(value,budget,helpers):
             if mapping is files:require(d['role']==('observer_binary' if p in observer_files else 'windows_system_binary' if p in windows else helpers.runtime_role(p,runtime['inherited65_map'])),'original exact root-role assignment')
             helpers.file_descriptor(p,d,layout=runtime['stdlib_layout'],budget=budget)
     require(not set(files).intersection(sources) or all(files[p]==sources[p] for p in set(files).intersection(sources)),'conflict-free source/runtime overlap')
-    helpers._git_exception_policy(registration['git_output_exceptions'],sources,files)
+    import_git_exception_policy(registration['git_output_exceptions'],sources,files,observer,helpers)
     covered=set();rosters=runtime['rosters'];require(type(rosters) is dict and len(rosters)==18,'exact declared18 physical roots')
     for name,row in rosters.items():
         require(type(row) is dict and set(row)=={'root','suffixes','excluded_directory_names','recursive','files'},'exact runtime roster policy')

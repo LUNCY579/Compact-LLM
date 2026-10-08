@@ -1,0 +1,28 @@
+test_original_V1_and_full_V2_8725_native2_qualifier (__main__.Controls.test_original_V1_and_full_V2_8725_native2_qualifier) ... ERROR
+test_wrong_kind_version_or_predecessor_reference_refuse (__main__.Controls.test_wrong_kind_version_or_predecessor_reference_refuse) ... ok
+test_arbitrary_added_module_or_copy_byte_rebinding_refuse (__main__.Controls.test_arbitrary_added_module_or_copy_byte_rebinding_refuse) ... ok
+test_changed_original_baseline_or_cache_execution_refuse (__main__.Controls.test_changed_original_baseline_or_cache_execution_refuse) ... ok
+test_resealed_unknown_native_snapshot_stays_closed (__main__.Controls.test_resealed_unknown_native_snapshot_stays_closed) ... ok
+
+======================================================================
+ERROR: test_original_V1_and_full_V2_8725_native2_qualifier (__main__.Controls.test_original_V1_and_full_V2_8725_native2_qualifier)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\import_extended_overlay_qualification_work\test_extended_overlay.py", line 23, in test_original_V1_and_full_V2_8725_native2_qualifier
+    prior=json.loads((PACKAGE/'evidence/psutil_bootstrap_assumptions_reviewed_cpu_20261007/PASSIVE_PSUTIL_BOOTSTRAP_ASSUMPTIONS001.json').read_bytes());self.assertEqual(len(Q.passive_preload_overlay(prior,helpers=self.B)),10);self.extended();result=Q._qualify(self.value,Q.QualificationBudget(),self.B);self.assertFalse(result['current_module_execution_proven']);self.assertEqual(len(self.value['runtime']['files']),8725);self.assertEqual(len(self.value['runtime']['cache_policy']['additional_preload_sources']),11);self.assertEqual(len(self.value['config']['source_files']),len(self.value['registration']['source_files']))
+                                                                                                                                                                                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\import_extended_overlay_qualification_work\import_runtime_qualification.py", line 119, in _qualify
+    _source_roster(value,helpers,budget);_cache(value,helpers,budget)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\import_extended_overlay_qualification_work\import_runtime_qualification.py", line 79, in _cache
+    own=cache['separate_main_source'];require(type(own) is dict and set(own)=={'path','descriptor'} and own['path']==value['config']['main_source']==str(PACKAGE/'import_observation_worker.py') and value['config']['source_files'].get(own['path'])==own['descriptor'],'exact separate current import main source')
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-synth-centralized-reasoning-v1\experiments\rineya_synth_centralized_reasoning_v1\artifacts\import_extended_overlay_qualification_work\import_runtime_qualification.py", line 10, in require
+    if not v:raise ValueError(m)
+             ^^^^^^^^^^^^^^^^^^^
+ValueError: exact separate current import main source
+
+----------------------------------------------------------------------
+Ran 5 tests in 6.671s
+
+FAILED (errors=1)

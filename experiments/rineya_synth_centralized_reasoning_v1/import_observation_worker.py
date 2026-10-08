@@ -1,6 +1,6 @@
 """One owned import/version/effect observation; explicit user CUDA/tensors absent."""
 from pathlib import Path
-from types import ModuleType,SimpleNamespace
+from types import ModuleType,SimpleNamespace,FunctionType
 from copy import deepcopy
 from datetime import datetime,timezone
 import ast,hashlib,importlib,os,time
@@ -23,7 +23,7 @@ def original_ledger(output):
     facade=SimpleNamespace(CPU_SCOPE=C.SCOPE,LIMITS={'maximum_markers':128,'maximum_marker_bytes':65536,'maximum_ledger_bytes':8388608,'maximum_worker_json_bytes':16*1024**2},require=C.require,canonical=C.canonical)
     namespace={'C':facade,'Path':Path,'deepcopy':deepcopy,'datetime':datetime,'timezone':timezone,'time':time,'os':os};exec(compile(ast.Module(body=nodes,type_ignores=[]),str(source),'exec'),namespace);return namespace['Ledger'](output)
 
-def _run_import_body(api,output,measurement_factory,identity,*,owned_cleanup=None):
+def _run_import_body(api,output,measurement_factory,identity,*,owned_cleanup=None,expected_version=None):
     C.require(type(api) is dict and set(api)=={'source_qualification','ownership_verify','resource_guard','framework'} and all(callable(v) for v in api.values()),'exact private import-only API boundary')
     ledger=original_ledger(output);measurement=None;primary=None;cleanup=None;version=None;raw=None;report={'scope':C.SCOPE,'status':'MEASUREMENT_FAILURE_PRESERVED','native_PASS':False,'native_authority_issued':False,'model_forwards':0,'tensor_allocations':0,'user_CUDA_context_requested':False}
     try:
@@ -31,8 +31,12 @@ def _run_import_body(api,output,measurement_factory,identity,*,owned_cleanup=Non
         def imported():
             with measurement.framework_import():return api['framework']()
         module=ledger.call('framework_import',imported)
-        version=ledger.call('torch_version_read',lambda:getattr(module,'__version__'))
-        C.require(type(version) is str and 0<len(version)<=128,'bounded actual import version metadata')
+        def read_version():
+            raw_version=getattr(module,'__version__');C.require(isinstance(raw_version,str),'Unicode import version metadata')
+            plain_version=str.__str__(raw_version);C.require(type(plain_version) is str and 0<len(plain_version)<=128,'bounded plain import version metadata')
+            if expected_version is not None:C.require(type(expected_version) is str and 0<len(expected_version)<=128 and plain_version==expected_version,'exact pinned import version metadata')
+            return plain_version
+        version=ledger.call('torch_version_read',read_version)
         ledger.call('resource_after_import',lambda:api['resource_guard']('after_import'))
         ledger.call('measurement_observations',lambda:{'scope':measurement.provider.scope(),'libraries':measurement.provider.libraries(),'events':measurement.provider.events()})
     except BaseException as error:primary=error
@@ -128,6 +132,42 @@ def _cleanup_acquired_state(state):
     return result if measurement is not None else {'measurement_not_acquired':True,'owned_roots_restored':True}
 
 
+def _selected_ram_available(value):
+    """Keep the original fresh RAM body without executing its path-mutating module."""
+    native_path=C.PACKAGE/'native_process.py';ram_path=C.PACKAGE/'worker_ram_probe.py'
+    native_descriptor=value['config']['source_files'][str(native_path)];ram_descriptor=value['config']['source_files'][str(ram_path)]
+    C.file_descriptor(native_path,native_descriptor);C.file_descriptor(ram_path,ram_descriptor)
+    native_raw=C.read_bytes(native_path);ram_raw=C.read_bytes(ram_path)
+    native=selected_module(native_path,native_descriptor)
+    native_code=compile(native_raw,str(native_path),'exec');ram_code=compile(ram_raw,str(ram_path),'exec')
+    def functions(code):
+        found={code.co_qualname:code}
+        for item in code.co_consts:
+            if type(item) is type(code):found.update(functions(item))
+        return found
+    expected=functions(native_code);expected_ram=functions(ram_code)
+    nodes=[node for node in ast.parse(ram_raw,str(ram_path)).body if isinstance(node,ast.FunctionDef) and node.name=='available_bytes']
+    C.require(len(nodes)==1,'one unchanged selected RAM source function')
+    namespace={'__name__':'owned_import_ram_available_slice','__file__':str(ram_path),'native_process':native}
+    C.require(len(nodes[0].args.kwonlyargs)==1 and nodes[0].args.kwonlyargs[0].arg=='status_call' and len(nodes[0].args.kw_defaults)==1 and isinstance(nodes[0].args.kw_defaults[0],ast.Constant) and nodes[0].args.kw_defaults[0].value is None,'original RAM function keyword default')
+    # Retain compiler import-symbol metadata from the full pinned source, while
+    # executing only this function code. No RAM module import/path code runs.
+    available=FunctionType(expected_ram['available_bytes'],namespace);available.__kwdefaults__={'status_call':None};namespace['available_bytes']=available
+    system=native.system_memory_status;sampler=native.Sampler;memory=sampler.memory_status;constructor=sampler.__init__
+    def verify():
+        C.require(type(native) is ModuleType and native.__file__==str(native_path) and native.__compiled_source_descriptor__==native_descriptor,'exact selected private RAM helper module/file/pin')
+        C.require(native.system_memory_status is system and native.Sampler is sampler and sampler.memory_status is memory and sampler.__init__ is constructor,'unchanged selected RAM method identities')
+        C.require(system.__globals__ is native.__dict__ and memory.__globals__ is native.__dict__ and constructor.__globals__ is native.__dict__ and available.__globals__ is namespace and namespace['native_process'] is native,'exact selected RAM helper globals')
+        C.require(native._SYSTEM_SAMPLER is None or type(native._SYSTEM_SAMPLER) is sampler,'owned selected sampler class; API wrapper cache is not a RAM value')
+        for name,method in (('system_memory_status',system),('Sampler.memory_status',memory),('Sampler.__init__',constructor)):
+            C.require(method.__code__.co_filename==str(native_path) and C.code_fingerprint(method.__code__)==C.code_fingerprint(expected[name]),'original selected native RAM method/code')
+        C.require(available.__code__.co_filename==str(ram_path) and C.code_fingerprint(available.__code__)==C.code_fingerprint(expected_ram['available_bytes']),'unchanged available_bytes source code')
+    verify()
+    def fresh_available():
+        verify();return available()
+    fresh_available.__source_binding__={'native_process':dict(native_descriptor),'available_bytes':dict(ram_descriptor),'source_function':'available_bytes','native_status_function':'system_memory_status','numeric_RAM_cache':False}
+    return fresh_available
+
 def _native_factory(context,owner,output,*,current_main_proof=None):
     C.stage_native_gate();value=C.context_value(context);C.require(value['scope']==C.SCOPE and value['fixture_only'] is False,'actual separate import observation context only')
     utilities=_selected_shared_worker(C,value);state={'current_main_proof':current_main_proof,'utilities':utilities,'context':context,'owner':owner,'output':Path(output),'measurement':None,'finder':None}
@@ -137,8 +177,8 @@ def _native_factory(context,owner,output,*,current_main_proof=None):
     def ownership():
         state['native_worker']=_ownership_source_slice(value);return state['native_worker'].verify_worker_ownership(owner,value['config_path'])
     def resource(stage):
-        native=state['native_worker'];ram_path=C.PACKAGE/'worker_ram_probe.py';ram=selected_module(ram_path,value['config']['source_files'][str(ram_path)])
-        if 'resource_guard' not in state:state['resource_guard']=state['resource_module'].bind(output,owner,time.monotonic(),owned_resources=native.owned_job_resources,heartbeat_reader=native.read_heartbeat,available=ram.available_bytes)
+        native=state['native_worker']
+        if 'resource_guard' not in state:state['resource_guard']=state['resource_module'].bind(output,owner,time.monotonic(),owned_resources=native.owned_job_resources,heartbeat_reader=native.read_heartbeat,available=_selected_ram_available(value))
         return state['resource_guard'](stage)
     def measurement_factory():
         G=selected_module(HERE/'measurement_guard.py',value['config']['source_files'][str(HERE/'measurement_guard.py')]);adapter_path=C.PACKAGE/'prefix_library_observer.py';adapter=selected_module(adapter_path,value['config']['source_files'][str(adapter_path)]);observer=adapter.make_native_observer(context,C,owner);C._register_library_event_observer(context,adapter,observer,observer.abi_binding());state['observer']=observer
@@ -156,12 +196,12 @@ def _native_factory(context,owner,output,*,current_main_proof=None):
     return api,measurement_factory,state
 
 def _run_native_owned(context,owner,output,*,current_main_proof=None):
-    api,factory,state=_native_factory(context,owner,output,current_main_proof=current_main_proof);identity={}
+    api,factory,state=_native_factory(context,owner,output,current_main_proof=current_main_proof);identity={};value=C.context_value(context)
     def acquire():
         try:measurement=factory()
         finally:identity.update(state.get('identity',{}))
         return measurement
-    return _run_import_body(api,output,acquire,identity,owned_cleanup=lambda:_cleanup_acquired_state(state))
+    return _run_import_body(api,output,acquire,identity,owned_cleanup=lambda:_cleanup_acquired_state(state),expected_version=value['config']['torch_version'])
 
 def main():
     import argparse
