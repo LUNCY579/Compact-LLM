@@ -1,5 +1,15 @@
 # Status and next handoff
 
+## 2026-10-08: final import-observation proposal ready for owner review
+
+[Proposal005](IMPORT_OBSERVATION_PROPOSAL_005.md) binds actual implementation8dcc,
+196 sources/8,725 runtime files,18 rosters and67 cache/source graphs. The complete
+150.031-second byte window and independent review pass; all196 source bytes
+match Git blobs. Full qualifier replay joins all8,921 descriptors/18 rosters.
+Five closed recipe checks pass. One bounded import attempt awaits separate
+explicit owner permission, followed by its exact approved dispatch registration
+and live admission. No native launch or training/transfer gain is claimed.
+
 ## 2026-10-08: import observation launch corrections
 
 [Reviewed corrections](IMPORT_LAUNCH_CORRECTIONS_CPU_001.md) preserve original
