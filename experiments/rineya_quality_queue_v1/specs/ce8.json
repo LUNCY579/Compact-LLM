@@ -270,7 +270,9 @@
     {"id": "ascii_wire_prefix_source_review", "path": "C:/Users/clclc/BusinessProject/ce8-ascii-wire-prefix-source-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "ascii_wire_prefix_source_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-ascii-wire-prefix-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "ascii_wire_whole_price_source_review", "path": "C:/Users/clclc/BusinessProject/ce8-ascii-wire-whole-price-source-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
-    {"id": "ascii_wire_whole_price_source_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-ascii-wire-whole-price-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"}
+    {"id": "ascii_wire_whole_price_source_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-ascii-wire-whole-price-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "failure_closure_partial_capture_source_review", "path": "C:/Users/clclc/BusinessProject/ce8-failure-closure-source-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "failure_closure_partial_capture_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-failure-closure-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"}
   ],
   "metrics": [
     {"name": "historical_warm_R_strict_success", "numerator": 6, "denominator": 1200, "unit": "count", "scope_unit": "sample", "evidence_id": "warm_competence", "json_pointer": "/summary/R/successes", "denominator_json_pointer": "/summary/R/samples", "status": "MEASURED"},
@@ -324,21 +326,24 @@
     {"id": "durable_log_and_image_scoped_source_parts", "status": "PASS", "evidence_ids": ["durable_log_image_streaming_source_review", "durable_log_image_streaming_pin_index"], "reason": "Narrow frozen-source and separately attributed synthetic control support for guarded sidecars, write-count distinctions, partial/refused retention and bounded image comparison. No complete source/physical fit, native durability, custody, adoption or quality result. Old points/controls remain preserved and overlapping suites are not independent experiments."},
     {"id": "streaming_prefix_release_and_generated_domain", "status": "BLOCKED", "evidence_ids": ["durable_log_image_streaming_source_review", "durable_log_image_streaming_pin_index", "ascii_wire_prefix_source_review", "ascii_wire_prefix_source_pin_index", "ascii_wire_whole_price_source_review", "ascii_wire_whole_price_source_pin_index"], "reason": "Historical streaming-v1 acquisition-before-finally and generic escape examples remain preserved against their old source. Current frozen ASCII/phase source closes the targeted sidecar phase/domain prefix cleanup and validates generated ASCII escape extent before iterencode. Direct ordinal copy removes the full encoded-piece allocation. This resolves those specific source gaps; universal generated graph/cardinality/preallocation, all iterator/error/native lifetimes, complete PREP/all-seven/current assembly, physical and final I/O remain unproved. The combined readiness gate therefore stays BLOCKED. A withdrawn incomplete-slice UnboundLocalError allegation is historical, not a current defect; no generic-input example is claimed as reachable current generated output."},
     {"id": "ascii_prefix_and_copy_source_support", "status": "PASS", "evidence_ids": ["ascii_wire_prefix_source_review", "ascii_wire_prefix_source_pin_index", "ascii_wire_whole_price_source_review", "ascii_wire_whole_price_source_pin_index"], "reason": "Narrow frozen-source support only: prefix predicates are inside initialized outer cleanup protection; release authenticates original ownership without adding time; generated escaped pieces are checked before iterencode and copied directly into fixed wire under original-clock 64-character group guards. Original evidence, sticky failures, no refunds and issuer refusal remain. No hard preemption, universal allocation, source adoption, current assembly or physical/native qualification is proved."},
-    {"id": "complete_occupied_lifetime_current_bindings", "status": "BLOCKED", "evidence_ids": ["ascii_wire_prefix_source_review", "ascii_wire_prefix_source_pin_index", "ascii_wire_whole_price_source_review", "ascii_wire_whole_price_source_pin_index"], "reason": "Named 31218/32768 encoder recipe with 1550 remainder is partial logical arithmetic. Normal/tail vectors remain inherited component sums with zero metadata headroom. Universal producer/graph/probe/encoder/error/native FileIO/Thread lifetimes, reachable cleanup/control, complete PREP traversal/callback/publication, actual current ENTRY/PACKET/domain assembly and final publisher/exit I/O remain missing. Original scalar/copy counts inside eight bounded exporter groups do not prove inclusive physical operation/timing costs. All G1-G11 limits, prior failed qualification and automatic eligibility-publication rejection remain binding."}
+    {"id": "complete_occupied_lifetime_current_bindings", "status": "BLOCKED", "evidence_ids": ["ascii_wire_prefix_source_review", "ascii_wire_prefix_source_pin_index", "ascii_wire_whole_price_source_review", "ascii_wire_whole_price_source_pin_index"], "reason": "Named 31218/32768 encoder recipe with 1550 remainder is partial logical arithmetic. Normal/tail vectors remain inherited component sums with zero metadata headroom. Universal producer/graph/probe/encoder/error/native FileIO/Thread lifetimes, reachable cleanup/control, complete PREP traversal/callback/publication, actual current ENTRY/PACKET/domain assembly and final publisher/exit I/O remain missing. Original scalar/copy counts inside eight bounded exporter groups do not prove inclusive physical operation/timing costs. All G1-G11 limits, prior failed qualification and automatic eligibility-publication rejection remain binding."},
+    {"id": "original_failed_prep_subset_source_route", "status": "PASS", "evidence_ids": ["failure_closure_partial_capture_source_review", "failure_closure_partial_capture_pin_index"], "reason": "Narrow source support: original PREP failure subset is positively selected before normal work, uses the same 1800s owner clock and conserves original caps. Failed ordinary work stays refused; exact original pin closes may use selected failure resources without retrying unknown prior closes. Source route availability is not actual emergency export/closure, complete repricing, current assembly or native/model qualification."},
+    {"id": "partial_capture_secondary_errors_and_prep_disposition", "status": "BLOCKED", "evidence_ids": ["failure_closure_partial_capture_source_review", "failure_closure_partial_capture_pin_index"], "reason": "Stable failure-closure source retains stream before descriptor identity construction. If capture fails and original clock admits cleanup, the code sets attempt flag then dereferences missing identity before actual close, preventing dispatch while retaining the stream. Reader finally can omit a secondary cleanup error when primary exists. Failed-PREP publisher retains opened stream/partial file without complete disposition. These are static source paths, not observed native leaks/bypasses or permission to dispatch after expiry. Separate capture/logical selection/actual dispatch/observed return, bounded primary/capture/secondary ledger and same-owner one-shot disposition must be source-qualified under unchanged guards/caps."}
   ],
   "next_proposal": {
-    "phase": "OFFLINE_OCCUPIED_LIFETIME_AND_CURRENT_ASSEMBLY_REVIEW",
-    "proposal_evidence_id": "ascii_wire_whole_price_source_review",
+    "phase": "OFFLINE_PARTIAL_CAPTURE_AND_FAILED_PREP_DISPOSITION_REVIEW",
+    "proposal_evidence_id": "failure_closure_partial_capture_source_review",
     "requires": [
       "standing_research_consent",
       "failed_attempt_preservation",
-      "ascii_prefix_and_copy_source_support",
+      "original_failed_prep_subset_source_route",
+      "partial_capture_secondary_errors_and_prep_disposition",
       "complete_occupied_lifetime_current_bindings",
       "cpu_component_strict_timeout_qualification"
     ],
-    "target_requirement": "complete_occupied_lifetime_current_bindings",
+    "target_requirement": "partial_capture_secondary_errors_and_prep_disposition",
     "review_candidate_ready_for_authorization": false,
-    "scope": "Existing CE8 owner prepares one exact frozen occupied-lifetime and current-source all-seven composition covering normal/refusal/late/error/cleanup, actual PREP traversal/callback/publication, current non-dispatch source bindings and final physical I/O/exit observation requirements under unchanged caps. Targeted prefix and duplicate-copy source corrections receive narrow credit; arbitrary-object escape examples and withdrawn incomplete-slice allegations are not current generated-domain defects. Source-derived 31218 encoder recipe does not establish full fit or actual timing. Preserve STOP_NO_SIGNAL, source histories, uncertain spending, original errors/blocks/partial files, sticky failures and issuer refusal. Do not retry/delegate/switch tools for the rejected verification plus native-eligibility publication, or create substitute authority. No Root native/candidate execution, model/tokenizer/optimizer/evaluation, bank read, grant, cap or serving change.",
+    "scope": "Existing CE8 owner freezes fixed partial descriptor capture, identity-independent original one-shot stream cleanup and a bounded noncompensating primary/capture/secondary-error ledger. Bind the failed-PREP publisher retained stream/partial file and final terminal observation/disposition. Distinguish logical selection, actual dispatch and observed return; preserve original ownership, budgets/clock/quarantine, unknown closes, raw evidence and all failed attempts. No post-expiry calls, reopen/retry, refund or cap reduction. New diagnostics/frame/CRT costs must then compose with whole PREP/root/tail occupied-lifetime and current-source all-seven plan. Current source remains NoAdmit and complete_three_fix_implementation=false. Unbound price helper drift and absent initial price review are historical observations, not current approved price. Issuer refusal and rejected verification plus native-eligibility publication remain binding; no tool switch/delegation/substitute authority, Root native execution, model/tokenizer/evaluation/optimizer, bank read, grant or serving change.",
     "limits": {
       "native_calls": 0,
       "model_loads": 0,
@@ -889,5 +894,63 @@
     "limits": "Source scalar/copy/clock counts are bounded recipe declarations within original eight exporter groups. They are not inclusive scalar/native cost or platform-timing proof. Normal metadata/tail metadata/control have no declared headroom; complete occupied lifetimes/PREP/current assembly/final I/O remain unproved.",
     "historical_point": "The previous streaming source state remains an inspected historical point, not current prefix defect evidence or source adoption.",
     "next_action": "Existing CE8 owner prepares one exact frozen occupied-lifetime and current-source all-seven composition covering normal/refusal/late/error/cleanup, actual PREP traversal/callback/publication, current non-dispatch source bindings and final physical I/O/exit observation requirements under unchanged caps. Targeted prefix and duplicate-copy source corrections receive narrow credit; arbitrary-object escape examples and withdrawn incomplete-slice allegations are not current generated-domain defects. Source-derived 31218 encoder recipe does not establish full fit or actual timing. Preserve STOP_NO_SIGNAL, source histories, uncertain spending, original errors/blocks/partial files, sticky failures and issuer refusal. Do not retry/delegate/switch tools for the rejected verification plus native-eligibility publication, or create substitute authority. No Root native/candidate execution, model/tokenizer/optimizer/evaluation, bank read, grant, cap or serving change."
+  },
+  "retained_pre_failure_closure_next_proposal": {
+    "phase": "OFFLINE_OCCUPIED_LIFETIME_AND_CURRENT_ASSEMBLY_REVIEW",
+    "proposal_evidence_id": "ascii_wire_whole_price_source_review",
+    "requires": [
+      "standing_research_consent",
+      "failed_attempt_preservation",
+      "ascii_prefix_and_copy_source_support",
+      "complete_occupied_lifetime_current_bindings",
+      "cpu_component_strict_timeout_qualification"
+    ],
+    "target_requirement": "complete_occupied_lifetime_current_bindings",
+    "review_candidate_ready_for_authorization": false,
+    "scope": "Existing CE8 owner prepares one exact frozen occupied-lifetime and current-source all-seven composition covering normal/refusal/late/error/cleanup, actual PREP traversal/callback/publication, current non-dispatch source bindings and final physical I/O/exit observation requirements under unchanged caps. Targeted prefix and duplicate-copy source corrections receive narrow credit; arbitrary-object escape examples and withdrawn incomplete-slice allegations are not current generated-domain defects. Source-derived 31218 encoder recipe does not establish full fit or actual timing. Preserve STOP_NO_SIGNAL, source histories, uncertain spending, original errors/blocks/partial files, sticky failures and issuer refusal. Do not retry/delegate/switch tools for the rejected verification plus native-eligibility publication, or create substitute authority. No Root native/candidate execution, model/tokenizer/optimizer/evaluation, bank read, grant, cap or serving change.",
+    "limits": {
+      "native_calls": 0,
+      "model_loads": 0,
+      "tokenizer_runs": 0,
+      "optimizer_updates": 0,
+      "automatic_retries": 0,
+      "external_future_scope_physical_deadline_seconds": 19200,
+      "external_future_scope_discarded_physical_optimizer_updates": 6,
+      "external_future_scope_data_roles": [
+        "train"
+      ],
+      "qualification_weights": "discarded",
+      "historical_core_service_mechanics_adopted": true,
+      "current_routing_source_adopted": false,
+      "separate_envelope_source_adopted": false,
+      "physical_wrapper_qualified": false,
+      "fresh_native_dispatch_in_queue": 0,
+      "CE6": false,
+      "sham": false,
+      "CE375": false,
+      "DEV": false
+    },
+    "native_execution_authorized": false,
+    "requires_scope": "Advancement prerequisites remain holds; they need not pass for this offline source review. This proposal is not a dispatch, retry or eligibility-publication input."
+  },
+  "failure_closure_current_source_point": {
+    "evidence_ids": [
+      "failure_closure_partial_capture_source_review",
+      "failure_closure_partial_capture_pin_index"
+    ],
+    "status": "FAILED_PREP_ROUTE_SUPPORTED_CAPTURE_ERROR_DISPOSITION_AND_COMPLETE_COST_HELD",
+    "stable_freeze_sha256": "f8e46b989f244de4463085eb81ce18c87c06881c76896f40b18a6048162853d6",
+    "source_findings": "Capture failure can leave identity None and prevent actual close after the selection flag changes. Reader cleanup can omit secondary error. Failed-PREP publisher preserves stream/partial file without complete disposition. No actual native failure or bypass was observed.",
+    "partial_logical_recipe": {
+      "cached_frame_mapping": 528,
+      "named_encoder": 31746,
+      "selected_working": 32768,
+      "named_remainder": 1022,
+      "diagnostic_graph_candidate": 21992,
+      "complete_fit": false
+    },
+    "scope": "Logical candidates do not prove heap/physical fit. Do not double-count a graph delta already enveloped by a graph gate. Complete new costs, partial construction/CRT/Thread/log/image/cleanup/current assembly/final I/O remain open.",
+    "price_evidence": "29 stable source/preserved pins; drifting unbound helper excluded from current verified subset. Initial price review absence is a historical observation; no later helper/review/body adopted.",
+    "next_action": "Existing CE8 owner freezes fixed partial descriptor capture, identity-independent original one-shot stream cleanup and a bounded noncompensating primary/capture/secondary-error ledger. Bind the failed-PREP publisher retained stream/partial file and final terminal observation/disposition. Distinguish logical selection, actual dispatch and observed return; preserve original ownership, budgets/clock/quarantine, unknown closes, raw evidence and all failed attempts. No post-expiry calls, reopen/retry, refund or cap reduction. New diagnostics/frame/CRT costs must then compose with whole PREP/root/tail occupied-lifetime and current-source all-seven plan. Current source remains NoAdmit and complete_three_fix_implementation=false. Unbound price helper drift and absent initial price review are historical observations, not current approved price. Issuer refusal and rejected verification plus native-eligibility publication remain binding; no tool switch/delegation/substitute authority, Root native execution, model/tokenizer/evaluation/optimizer, bank read, grant or serving change."
   }
 }
