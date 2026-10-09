@@ -1,5 +1,17 @@
 # Status and next handoff
 
+## 2026-10-09: import006 denied before worker; standing authorization active
+
+[Outcome006](IMPORT_OBSERVATION_OUTCOME_006.md) preserves the actual approved
+attempt. Supervisor historical lease checking could not import psutil under
+the no-site parent invocation. No admission sample or worker attempt occurred;
+postrun retained the denial with no semantic worker audit. All196 source
+snapshots and dispatch/approval/raw logs are preserved. A scoped parent bootstrap
+fix is in progress under [standing owner authorization](OWNER_AUTHORIZATION_20261009.md).
+Resource/numerical limits remain unchanged; no Torch/model/training/transfer
+result is established. Continue with a separately reviewed successor, then the
+original M0/M1/M2 comparison.
+
 ## 2026-10-08: final import-observation proposal ready for owner review
 
 [Proposal005](IMPORT_OBSERVATION_PROPOSAL_005.md) binds actual implementation8dcc,
