@@ -1,5 +1,15 @@
 # Status and next handoff
 
+## 2026-10-09: import009 reached actual admission; GPU floor denied
+
+[Outcome009](IMPORT_OBSERVATION_OUTCOME_009.md) records successful progression
+through corrected parent entry to actual NVML/RAM/disk admission. GPUfree1.73GiB
+is below unchanged4GiB; no workerattempt/resume/Torch/model result. Full denial,
+lease/currentbytes/approval/source evidence retained. Later read-only GPU query
+still1779MiB free. Wait for resource state change, then register a fresh output
+and rerun live checks under standing authorization; no unrelated job stop or
+threshold reduction. Full M0/M1/M2 comparison remains pending.
+
 ## 2026-10-09: exact psutil extension-name correction applied
 
 [DeclaredName001](PSUTIL_DECLARED_NAME_CPU_001.md) accepts observed psutil_windows

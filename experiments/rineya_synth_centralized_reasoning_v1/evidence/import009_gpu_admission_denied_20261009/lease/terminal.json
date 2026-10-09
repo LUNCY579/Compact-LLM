@@ -1,0 +1,119 @@
+{
+  "admission_observations": [
+    {
+      "GPU_index": 0,
+      "disk_free_bytes": 49776996352,
+      "gpu_free_bytes": 1862463488,
+      "gpu_observation_id": "6450fd6075aa47f3a39db6bb850e1ece",
+      "gpu_sample_completed_monotonic": 10163.25,
+      "gpu_sample_started_monotonic": 10163.171,
+      "gpu_total_bytes": 8585740288,
+      "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+      "host_available_bytes": 11702751232,
+      "owned_process_identities": [],
+      "owned_process_samples": [],
+      "phase_latency_seconds": {
+        "RAM_available": 1.5699999494245276e-05,
+        "disk_free": 9.279999903810676e-05,
+        "owned_job_PID_query": 0.0,
+        "owned_process_total": 5.999991117278114e-07
+      },
+      "sample_completed_monotonic": 10163.25,
+      "sample_started_monotonic": 10163.25,
+      "worker_tree_rss_bytes": 0
+    }
+  ],
+  "admission_only": false,
+  "attempted_worker_argv": [
+    "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe",
+    "-I",
+    "-S",
+    "-B",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\import_observation_worker.py",
+    "--config",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\import_approved_dispatch009\\IMPORT_OBSERVATION_CONFIG_009.json",
+    "--output-dir",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\prefix_input_owned_import_observation_004"
+  ],
+  "bounds": {
+    "GPU_free_at_admission_GiB": 4.0,
+    "GPU_free_during_work_GiB": 0.5,
+    "disk_free_GiB": 4.0,
+    "external_watchdog_milliseconds": 100,
+    "preworker_available_GiB": 3.3125,
+    "system_available_reserve_GiB": 1.25,
+    "whole_scope_seconds": 600,
+    "worker_process_tree_RSS_GiB": 2.0
+  },
+  "cadence": {
+    "CPU_freshness_seconds": 0.2,
+    "CPU_watchdog_seconds": 0.1,
+    "GPU_freshness_seconds": 2.0,
+    "GPU_query_interval_seconds": 0.5,
+    "GPU_query_timeout_seconds": 2.0,
+    "admission_deadline_seconds": 30.0,
+    "admission_interval_seconds": 2.0,
+    "admission_samples": 2
+  },
+  "config_sha256": "7309e24736f6e7430ce9404225742d47f3ddfa0ac462be9ebff1023f1302f1bd",
+  "deadline_monotonic": 10532.453,
+  "elapsed_seconds": 230.79700000000048,
+  "failure": "RuntimeError: admission_floor_gpu_free_bytes",
+  "finished_utc": "2026-10-09T17:31:31.473676+00:00",
+  "gpu_telemetry_backend": "pinned_System32_NVML_read_only",
+  "gpu_telemetry_cleanup_verified": true,
+  "lease_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\_native_gpu_leases\\b8849728966a4df7990401dc9bfdb510",
+  "mechanical_qualification_established": false,
+  "output_dir": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\prefix_input_owned_import_observation_004",
+  "partial_outputs": [
+    {
+      "bytes": 2268,
+      "path": "OWNED_EXTERNAL_ANCHORS.json",
+      "sha256": "1bf83b12d94bfe3f26cfe7a566b6550d0895fc6bcd18d8e2eb28e6aecb518408"
+    }
+  ],
+  "partial_outputs_frozen": true,
+  "preflight": {
+    "authorization": {
+      "paid_services": false,
+      "production_training": false,
+      "protected_bank_access": false,
+      "scope": "OWNED_TORCH_IMPORT_LIBRARY_EFFECT_OBSERVATION_ONLY"
+    },
+    "config_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\import_approved_dispatch009\\IMPORT_OBSERVATION_CONFIG_009.json",
+    "config_sha256": "7309e24736f6e7430ce9404225742d47f3ddfa0ac462be9ebff1023f1302f1bd",
+    "profile_sha256": "d989ac276994c718932b7adbb7b24b35c7fc5925eb9b65cb2d58c9538d3aa6bd",
+    "resources": {
+      "CPU_sample_max_age_seconds": 0.2,
+      "GPU_free_at_admission_GiB": 4.0,
+      "GPU_free_during_work_GiB": 0.5,
+      "GPU_probe_interval_seconds": 0.5,
+      "GPU_probe_timeout_seconds": 2.0,
+      "GPU_sample_max_age_seconds": 2.0,
+      "admission_poll_seconds": 2.0,
+      "admission_seconds": 30,
+      "disk_free_GiB": 4.0,
+      "external_watchdog_milliseconds": 100,
+      "preworker_available_GiB": 3.3125,
+      "system_available_reserve_GiB": 1.25,
+      "whole_scope_seconds": 600,
+      "worker_process_tree_RSS_GiB": 2.0
+    },
+    "runtime_inventory_sha256": "f8f645bb8a9fe5c7ac128f1ed12f52b68b672bd8fb6556a38d2bfd398ad184b4",
+    "source_commit": "bc5a3e092132d5977e387255231ef985ee57cb30",
+    "source_inventory_sha256": "3e3aec185fbb98e5e202c5a4ecb0f1b06cdb5f66450710848c9db3db20c1595e",
+    "worker_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\import_observation_worker.py"
+  },
+  "preflight_revalidated_before_current_observations": true,
+  "production_training_authorized": false,
+  "protected_bank_access": false,
+  "returncode": null,
+  "sampler_threads_terminal_verified": true,
+  "schema_version": 1,
+  "started_utc": "2026-10-09T17:27:40.681628+00:00",
+  "status": "ADMISSION_DENIED",
+  "unjoined_sampler_threads": [],
+  "worker_attempted": false,
+  "worker_launched": false,
+  "worker_resumed": false
+}
