@@ -1,5 +1,14 @@
 # Status and next handoff
 
+## 2026-10-09: exact psutil extension-name correction applied
+
+[DeclaredName001](PSUTIL_DECLARED_NAME_CPU_001.md) accepts observed psutil_windows
+only for the exact selected psutil._psutil_windows namespace/path/binary pin.
+Full spec/loader/cache/source checks and all other names remain strict. Five
+authored/Root and independent CPU controls pass. Proceed with fresh009 source/
+runtime registration and automatic import attempt; prior actual failures and
+observed native parent metadata stay preserved. No worker/Torch/model gain claim.
+
 ## 2026-10-09: exact parent extension metadata observed
 
 [Observation003](PARENT_EXTENSION_METADATA_OBSERVATION_003.md) reproduces actual

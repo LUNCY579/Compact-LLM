@@ -4,7 +4,12 @@ from types import ModuleType,CodeType
 import hashlib,importlib,importlib.abc,importlib.machinery,importlib.util,marshal,sys
 
 def verify_current_module(name,module,row,contract,files,layout):
-    contract.require(type(module) is ModuleType,'exact current preload module type');data=vars(module);spec=data.get('__spec__');origin=data.get('__file__');contract.require(data.get('__name__')==name and spec is not None and spec.name==name and type(origin) is str and type(spec.origin) is str,'exact selected preload module/spec name and origin')
+    contract.require(type(module) is ModuleType,'exact current preload module type');data=vars(module);spec=data.get('__spec__');origin=data.get('__file__');declared_name=name
+    if name=='psutil._psutil_windows':
+        # The exact installed extension declares psutil_windows; its import spec
+        # and loader retain the full psutil._psutil_windows namespace.
+        contract.require(row['path']==str(contract.SITE/'psutil/_psutil_windows.pyd') and row['descriptor']=={'bytes':70656,'role':'extension_binary','sha256':'0035450801bd7d938e9e146c5ec28e619cb5a5f4a18cdc53ac7e9734c7f94f78'},'exact observed psutil extension declared-name binding');declared_name='psutil_windows'
+    contract.require(data.get('__name__')==declared_name and spec is not None and spec.name==name and type(origin) is str and type(spec.origin) is str,'exact selected preload module/spec name and origin')
     loader=data.get('__loader__');wanted=importlib.machinery.SourceFileLoader if Path(row['path']).suffix=='.py' else importlib.machinery.ExtensionFileLoader
     contract.require(type(loader) is wanted and spec.loader is loader and loader.name==name and str(contract.qualified_path(loader.path,layout=layout))==row['path'],'actual original standard preload loader identity/name/path')
     locations=spec.submodule_search_locations
