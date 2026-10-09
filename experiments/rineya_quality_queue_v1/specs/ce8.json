@@ -266,7 +266,11 @@
     {"id": "owned_log_v1_workspace_contract", "path": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-owned-log-deadline-source-v1/LOG_DEADLINE_WORKSPACE_CONTRACT.md", "classification": "preparation", "role": "proposal", "format": "text"},
     {"id": "owned_log_v1_harness_source", "path": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-owned-log-deadline-source-v1/harness.py", "classification": "preparation", "role": "source", "format": "text"},
     {"id": "durable_log_image_streaming_source_review", "path": "C:/Users/clclc/BusinessProject/ce8-durable-log-and-bounded-image-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
-    {"id": "durable_log_image_streaming_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-durable-log-and-bounded-image-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"}
+    {"id": "durable_log_image_streaming_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-durable-log-and-bounded-image-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "ascii_wire_prefix_source_review", "path": "C:/Users/clclc/BusinessProject/ce8-ascii-wire-prefix-source-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "ascii_wire_prefix_source_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-ascii-wire-prefix-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "ascii_wire_whole_price_source_review", "path": "C:/Users/clclc/BusinessProject/ce8-ascii-wire-whole-price-source-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "ascii_wire_whole_price_source_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-ascii-wire-whole-price-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"}
   ],
   "metrics": [
     {"name": "historical_warm_R_strict_success", "numerator": 6, "denominator": 1200, "unit": "count", "scope_unit": "sample", "evidence_id": "warm_competence", "json_pointer": "/summary/R/successes", "denominator_json_pointer": "/summary/R/samples", "status": "MEASURED"},
@@ -318,32 +322,23 @@
     {"id": "owned_log_v1_deadline_source_support", "status": "PASS", "evidence_ids": ["owned_log_v1_source_review", "owned_log_v1_pin_index", "owned_log_v1_offline_freeze", "owned_log_v1_independent_source_controls", "owned_log_v1_workspace_contract", "owned_log_v1_harness_source"], "reason": "Narrow frozen-source/overlapping synthetic control support for original-clock checks, ownership capture before late guards, write accounting, one-attempt close and unbuffered output. No actual native timing, hard API bound, source adoption, live custody, complete price or Rineya gain credit. Old V3 failure remains unchanged."},
     {"id": "owned_log_v1_late_block_durability_and_complete_price", "status": "BLOCKED", "evidence_ids": ["owned_log_v1_source_review", "owned_log_v1_pin_index", "owned_log_v1_offline_freeze", "owned_log_v1_independent_source_controls", "owned_log_v1_workspace_contract", "owned_log_v1_harness_source", "durable_log_image_streaming_source_review", "durable_log_image_streaming_pin_index"], "reason": "Historical owned-log-deadline v1 held late bytes in RAM only. Later frozen durable-log source implements guarded sidecars, so the old missing-exporter statement is not the current source blocker. Expiry can still refuse publication and host exit can lose undurable bytes; no native loss-free recovery guarantee is established. Complete workspace/transient/PREP/Thread/FileIO/domain/all-seven price and current bindings remain missing. Frozen streaming introduces prefix-scope-release and escaped-piece/preallocation gaps. Preserve all old points and uncertainty, unchanged caps/deadlines and policy refusal; source support grants no execution."},
     {"id": "durable_log_and_image_scoped_source_parts", "status": "PASS", "evidence_ids": ["durable_log_image_streaming_source_review", "durable_log_image_streaming_pin_index"], "reason": "Narrow frozen-source and separately attributed synthetic control support for guarded sidecars, write-count distinctions, partial/refused retention and bounded image comparison. No complete source/physical fit, native durability, custody, adoption or quality result. Old points/controls remain preserved and overlapping suites are not independent experiments."},
-    {"id": "streaming_prefix_release_and_generated_domain", "status": "BLOCKED", "evidence_ids": ["durable_log_image_streaming_source_review", "durable_log_image_streaming_pin_index"], "reason": "Frozen streaming parts remain NoAdmit. Capability acquisition precedes phase/domain predicates outside producer finally; a prefix refusal can quarantine the active scope and block failure export. Generic escaped pieces allocate before their bound check, with actual generated-failure domain/peak still unproved. Existing owner must cover prefix/initialization faults immediately after acquisition and close exact preallocation/lifetime mapping or bounded encoding, then complete all-seven source/PREP/current rebind review without cap or guard weakening."}
+    {"id": "streaming_prefix_release_and_generated_domain", "status": "BLOCKED", "evidence_ids": ["durable_log_image_streaming_source_review", "durable_log_image_streaming_pin_index", "ascii_wire_prefix_source_review", "ascii_wire_prefix_source_pin_index", "ascii_wire_whole_price_source_review", "ascii_wire_whole_price_source_pin_index"], "reason": "Historical streaming-v1 acquisition-before-finally and generic escape examples remain preserved against their old source. Current frozen ASCII/phase source closes the targeted sidecar phase/domain prefix cleanup and validates generated ASCII escape extent before iterencode. Direct ordinal copy removes the full encoded-piece allocation. This resolves those specific source gaps; universal generated graph/cardinality/preallocation, all iterator/error/native lifetimes, complete PREP/all-seven/current assembly, physical and final I/O remain unproved. The combined readiness gate therefore stays BLOCKED. A withdrawn incomplete-slice UnboundLocalError allegation is historical, not a current defect; no generic-input example is claimed as reachable current generated output."},
+    {"id": "ascii_prefix_and_copy_source_support", "status": "PASS", "evidence_ids": ["ascii_wire_prefix_source_review", "ascii_wire_prefix_source_pin_index", "ascii_wire_whole_price_source_review", "ascii_wire_whole_price_source_pin_index"], "reason": "Narrow frozen-source support only: prefix predicates are inside initialized outer cleanup protection; release authenticates original ownership without adding time; generated escaped pieces are checked before iterencode and copied directly into fixed wire under original-clock 64-character group guards. Original evidence, sticky failures, no refunds and issuer refusal remain. No hard preemption, universal allocation, source adoption, current assembly or physical/native qualification is proved."},
+    {"id": "complete_occupied_lifetime_current_bindings", "status": "BLOCKED", "evidence_ids": ["ascii_wire_prefix_source_review", "ascii_wire_prefix_source_pin_index", "ascii_wire_whole_price_source_review", "ascii_wire_whole_price_source_pin_index"], "reason": "Named 31218/32768 encoder recipe with 1550 remainder is partial logical arithmetic. Normal/tail vectors remain inherited component sums with zero metadata headroom. Universal producer/graph/probe/encoder/error/native FileIO/Thread lifetimes, reachable cleanup/control, complete PREP traversal/callback/publication, actual current ENTRY/PACKET/domain assembly and final publisher/exit I/O remain missing. Original scalar/copy counts inside eight bounded exporter groups do not prove inclusive physical operation/timing costs. All G1-G11 limits, prior failed qualification and automatic eligibility-publication rejection remain binding."}
   ],
   "next_proposal": {
-    "phase": "OFFLINE_STREAMING_PREFIX_DOMAIN_AND_COMPLETE_WORKSPACE_REVIEW",
-    "proposal_evidence_id": "durable_log_image_streaming_source_review",
+    "phase": "OFFLINE_OCCUPIED_LIFETIME_AND_CURRENT_ASSEMBLY_REVIEW",
+    "proposal_evidence_id": "ascii_wire_whole_price_source_review",
     "requires": [
-      "failed_attempt_preservation",
-      "current_source_accounting_mechanics",
       "standing_research_consent",
-      "actor_v5_explicit_owner_routing_source",
-      "actor_v6_fault_envelope_source",
-      "registered_empty_stdlib_source_scope",
-      "v2_copy_only_terminal_metadata",
-      "reusable_poll_allocation_source",
-      "actual_target_metadata_terminal",
-      "static_preparation_view_source",
-      "direct_membership_and_cpu_loading_source",
-      "initial_retry_control_accounting_correction",
-      "durable_v1_supported_source_parts",
-      "durable_v2_reviewed_source_and_metadata",
-      "timing_actor_supported_parts_and_compilation",
-      "clarified_consumer_non_dispatch_metadata"
+      "failed_attempt_preservation",
+      "ascii_prefix_and_copy_source_support",
+      "complete_occupied_lifetime_current_bindings",
+      "cpu_component_strict_timeout_qualification"
     ],
-    "target_requirement": "streaming_prefix_release_and_generated_domain",
+    "target_requirement": "complete_occupied_lifetime_current_bindings",
     "review_candidate_ready_for_authorization": false,
-    "scope": "Frozen sidecars implement at most two create-only <=2048-byte dispositions under the existing tail, retaining refused/partial/failed files and original payload until readback/hash/observed close and outer guard complete. Expiry still refuses publication; no loss-free host-exit or physical durability guarantee. Bounded-image source removes root Path.resolve work but remains unqualified. Declared normal 105982 operations/1048576 metadata has zero headroom; tail 16 / read 36932 / write+hash 36864 / 3 SHA and wire 26352<32768 are partial logical arithmetic. Complete workspace, reachable cleanup, PREP/current bindings and physical/exit/IO proof are absent. Streaming became frozen during review; its independent review supports parts but finds capability acquired before phase/domain predicates outside finally, allowing prefix refusal to leave active scope and block failure export. Generic 4096 ASCII-control input yields 24578-character piece before 4096 check; actual generated-failure reachability/preallocation map is unproved. Issuer/policy remain closed; no grant, model, E0, parent or RSD qualification follows. Existing CE8 owner received the exact pinned source finding for outer release/quarantine coverage and escaped-field/source-lifetime review. Preserve all failures and controls; no rejected publication retry or substitute authority.",
+    "scope": "Existing CE8 owner prepares one exact frozen occupied-lifetime and current-source all-seven composition covering normal/refusal/late/error/cleanup, actual PREP traversal/callback/publication, current non-dispatch source bindings and final physical I/O/exit observation requirements under unchanged caps. Targeted prefix and duplicate-copy source corrections receive narrow credit; arbitrary-object escape examples and withdrawn incomplete-slice allegations are not current generated-domain defects. Source-derived 31218 encoder recipe does not establish full fit or actual timing. Preserve STOP_NO_SIGNAL, source histories, uncertain spending, original errors/blocks/partial files, sticky failures and issuer refusal. Do not retry/delegate/switch tools for the rejected verification plus native-eligibility publication, or create substitute authority. No Root native/candidate execution, model/tokenizer/optimizer/evaluation, bank read, grant, cap or serving change.",
     "limits": {
       "native_calls": 0,
       "model_loads": 0,
@@ -366,7 +361,8 @@
       "CE375": false,
       "DEV": false
     },
-    "native_execution_authorized": false
+    "native_execution_authorized": false,
+    "requires_scope": "Advancement prerequisites remain holds; they need not pass for this offline source review. This proposal is not a dispatch, retry or eligibility-publication input."
   },
   "observed_patterns": [
     {"evidence_ids": ["warm_competence"], "statement": "Historical R success was 6/1200 with natural EOS on all 1200 responses and mean generated length 19.82; insufficient R competence is not explained by response truncation on that read."},
@@ -826,5 +822,72 @@
     "status": "GUARDED_SIDECAR_SOURCE_SUPPORTED_STREAMING_PREFIX_DOMAIN_AND_FULL_FIT_HELD",
     "statement": "Frozen sidecars implement at most two create-only <=2048-byte dispositions under the existing tail, retaining refused/partial/failed files and original payload until readback/hash/observed close and outer guard complete. Expiry still refuses publication; no loss-free host-exit or physical durability guarantee. Bounded-image source removes root Path.resolve work but remains unqualified. Declared normal 105982 operations/1048576 metadata has zero headroom; tail 16 / read 36932 / write+hash 36864 / 3 SHA and wire 26352<32768 are partial logical arithmetic. Complete workspace, reachable cleanup, PREP/current bindings and physical/exit/IO proof are absent. Streaming became frozen during review; its independent review supports parts but finds capability acquired before phase/domain predicates outside finally, allowing prefix refusal to leave active scope and block failure export. Generic 4096 ASCII-control input yields 24578-character piece before 4096 check; actual generated-failure reachability/preallocation map is unproved. Issuer/policy remain closed; no grant, model, E0, parent or RSD qualification follows.",
     "historical_scope": "Initial streaming no-freeze inventory remains a historical point; a later freeze does not establish complete source fit or adoption."
+  },
+  "retained_pre_ascii_next_proposal": {
+    "phase": "OFFLINE_STREAMING_PREFIX_DOMAIN_AND_COMPLETE_WORKSPACE_REVIEW",
+    "proposal_evidence_id": "durable_log_image_streaming_source_review",
+    "requires": [
+      "failed_attempt_preservation",
+      "current_source_accounting_mechanics",
+      "standing_research_consent",
+      "actor_v5_explicit_owner_routing_source",
+      "actor_v6_fault_envelope_source",
+      "registered_empty_stdlib_source_scope",
+      "v2_copy_only_terminal_metadata",
+      "reusable_poll_allocation_source",
+      "actual_target_metadata_terminal",
+      "static_preparation_view_source",
+      "direct_membership_and_cpu_loading_source",
+      "initial_retry_control_accounting_correction",
+      "durable_v1_supported_source_parts",
+      "durable_v2_reviewed_source_and_metadata",
+      "timing_actor_supported_parts_and_compilation",
+      "clarified_consumer_non_dispatch_metadata"
+    ],
+    "target_requirement": "streaming_prefix_release_and_generated_domain",
+    "review_candidate_ready_for_authorization": false,
+    "scope": "Frozen sidecars implement at most two create-only <=2048-byte dispositions under the existing tail, retaining refused/partial/failed files and original payload until readback/hash/observed close and outer guard complete. Expiry still refuses publication; no loss-free host-exit or physical durability guarantee. Bounded-image source removes root Path.resolve work but remains unqualified. Declared normal 105982 operations/1048576 metadata has zero headroom; tail 16 / read 36932 / write+hash 36864 / 3 SHA and wire 26352<32768 are partial logical arithmetic. Complete workspace, reachable cleanup, PREP/current bindings and physical/exit/IO proof are absent. Streaming became frozen during review; its independent review supports parts but finds capability acquired before phase/domain predicates outside finally, allowing prefix refusal to leave active scope and block failure export. Generic 4096 ASCII-control input yields 24578-character piece before 4096 check; actual generated-failure reachability/preallocation map is unproved. Issuer/policy remain closed; no grant, model, E0, parent or RSD qualification follows. Existing CE8 owner received the exact pinned source finding for outer release/quarantine coverage and escaped-field/source-lifetime review. Preserve all failures and controls; no rejected publication retry or substitute authority.",
+    "limits": {
+      "native_calls": 0,
+      "model_loads": 0,
+      "tokenizer_runs": 0,
+      "optimizer_updates": 0,
+      "automatic_retries": 0,
+      "external_future_scope_physical_deadline_seconds": 19200,
+      "external_future_scope_discarded_physical_optimizer_updates": 6,
+      "external_future_scope_data_roles": [
+        "train"
+      ],
+      "qualification_weights": "discarded",
+      "historical_core_service_mechanics_adopted": true,
+      "current_routing_source_adopted": false,
+      "separate_envelope_source_adopted": false,
+      "physical_wrapper_qualified": false,
+      "fresh_native_dispatch_in_queue": 0,
+      "CE6": false,
+      "sham": false,
+      "CE375": false,
+      "DEV": false
+    },
+    "native_execution_authorized": false
+  },
+  "ascii_prefix_and_occupied_lifetime_source_point": {
+    "evidence_ids": [
+      "ascii_wire_prefix_source_review",
+      "ascii_wire_prefix_source_pin_index",
+      "ascii_wire_whole_price_source_review",
+      "ascii_wire_whole_price_source_pin_index"
+    ],
+    "status": "TARGETED_PREFIX_AND_COPY_REPAIR_SUPPORTED_COMPLETE_PRICE_AND_PHYSICAL_HELD",
+    "current_source_credit": "Specific old phase/domain prefix now protected; generated escape extent authenticates before iterencode; full piece.encode allocation removed. Complete-source review withdraws the later alleged UnboundLocalError while preserving its original record.",
+    "named_logical_encoder": {
+      "bytes": 31218,
+      "working": 32768,
+      "remainder": 1550,
+      "physical_or_whole_path_fit": false
+    },
+    "limits": "Source scalar/copy/clock counts are bounded recipe declarations within original eight exporter groups. They are not inclusive scalar/native cost or platform-timing proof. Normal metadata/tail metadata/control have no declared headroom; complete occupied lifetimes/PREP/current assembly/final I/O remain unproved.",
+    "historical_point": "The previous streaming source state remains an inspected historical point, not current prefix defect evidence or source adoption.",
+    "next_action": "Existing CE8 owner prepares one exact frozen occupied-lifetime and current-source all-seven composition covering normal/refusal/late/error/cleanup, actual PREP traversal/callback/publication, current non-dispatch source bindings and final physical I/O/exit observation requirements under unchanged caps. Targeted prefix and duplicate-copy source corrections receive narrow credit; arbitrary-object escape examples and withdrawn incomplete-slice allegations are not current generated-domain defects. Source-derived 31218 encoder recipe does not establish full fit or actual timing. Preserve STOP_NO_SIGNAL, source histories, uncertain spending, original errors/blocks/partial files, sticky failures and issuer refusal. Do not retry/delegate/switch tools for the rejected verification plus native-eligibility publication, or create substitute authority. No Root native/candidate execution, model/tokenizer/optimizer/evaluation, bank read, grant, cap or serving change."
   }
 }
