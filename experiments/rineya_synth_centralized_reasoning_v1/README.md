@@ -17,6 +17,11 @@ all-domain enrollment and the full training comparison remain pending.
 adds saved-receipt replay and corrects source-member/capture-anchor seams. Native
 evidence-provider qualification and promotion remain explicitly unaccepted.
 
+The [actual original-INFQ exposure projection](INFQ_EXPOSURE_PROJECTION_CPU_001.md)
+now reconstructs and audits all84 historical forward inputs/28627 positions.
+This closes one recorded scope, while global exposure and native admission remain
+unqualified.
+
 The [externally anchored gate/owned dispatcher candidate](TENSOR_GATE_DISPATCH_CPU_CANDIDATE_002.md)
 passes six authored/Root and independent CPU controls. Public gates still refuse;
 the exact runtime/run registration and real owner grant remain absent.

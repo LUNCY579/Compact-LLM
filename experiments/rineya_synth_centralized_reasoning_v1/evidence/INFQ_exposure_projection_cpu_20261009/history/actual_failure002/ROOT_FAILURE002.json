@@ -1,0 +1,37 @@
+{
+  "exit_code": 1,
+  "failure": "typed strictly ordered global API call IDs, no nested attempts",
+  "failure_type": "ValueError",
+  "first_nested": [
+    {
+      "child": {
+        "id": 4,
+        "operation": "tensor_copy"
+      },
+      "parent": {
+        "id": 3,
+        "operation": "checkpoint_load"
+      }
+    },
+    {
+      "child": {
+        "id": 5,
+        "operation": "tensor_copy"
+      },
+      "parent": {
+        "id": 3,
+        "operation": "checkpoint_load"
+      }
+    }
+  ],
+  "input_after_hashes_match": true,
+  "kind": "ROOT_ACTUAL_INFQ_PROJECTION_FAILURE002",
+  "model_GPU_optimizer_or_scoring_performed": false,
+  "nested_call_count": 310,
+  "output_created": false,
+  "phase": "actual original global API nesting",
+  "program_sha256": "53b378ebb4d55c9f369335a858b22b9af9445c8ebdd0c328700df5a1b7213a3f",
+  "scope_sha256": "67a5d8251d7bedf4f9fb2ff24845cdecf7b471ae6b535c966e32d13bc4581bfd",
+  "sha256": "50a1f85569f5a9169c057f58c3a7cdbf66f6e5f9f377f1116f6f2717bdb0d67d",
+  "tool_wall_seconds": 0.354275
+}

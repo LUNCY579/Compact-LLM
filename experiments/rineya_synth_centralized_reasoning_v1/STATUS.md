@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-09: actual original-INFQ input projection audited
+
+[INFQProjection001](INFQ_EXPOSURE_PROJECTION_CPU_001.md) closes all84 historical
+forward inputs/28627 positions from the original403-call journal and recorded
+prompts/traces. Independent actual audit verifies105 selected files/95 raw byte
+commitments, exact call/cost/publication/mask/token/source joins and unchanged
+outputs. Four TRAIN controls map to two shared parents023/038. Five focused CPU
+controls pass; two actual schema failures are preserved. Inputs are source-recipe
+reconstructions, not independent per-call token telemetry. Global exposure and
+R/S-to-arithmetic family mapping remain unqualified; no model/tokenizer/GPU/
+optimizer/scoring or protected-bank action ran. Complete comparable lineage,
+owner chronology, grading providers/ratings and current native admission remain
+pending. The full M0/M1/M2 transfer+retention result is still unanswered.
+
 ## 2026-10-09: conditional raw auditor complete; measurement candidate unqualified
 
 [MeasurementStage001](ARITHMETIC_MEASUREMENT_STAGE_CPU_001.md) preserves the
