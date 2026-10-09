@@ -14,6 +14,15 @@ solver, scorer, target population or model outcome participates in selection.
 Native model/training consumption is0; future actual occurrence receipts remain
 separate and pending. CPU candidate reconstruction is recorded honestly.
 
+The zero-consumption fields are this producer's closed-state declarations, not
+observations of every possible external exposure. Ledger replay proves original
+allocation construction and selected-parent/order joins; the stored population
+SHA alone does not authenticate saved rendering rows. Actual saved-population
+recompilation and CPU tokenization are separately bound in their own receipts,
+and future model occurrences require separate observed lineage. The512 finite
+preselection candidates and512 grouped display rows are distinct populations;
+neither supplies512 independent retention units.
+
 Five authored/Root and independent controls pass. Missing, duplicate, reordered,
 relabelled, hash/filter/selection/parent/source/policy/schema and fabricated
 consumption mutations reject. The independent review regenerated the actual
