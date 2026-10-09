@@ -274,7 +274,9 @@
     {"id": "failure_closure_partial_capture_source_review", "path": "C:/Users/clclc/BusinessProject/ce8-failure-closure-source-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "failure_closure_partial_capture_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-failure-closure-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "partial_capture_ledger_source_repair_review", "path": "C:/Users/clclc/BusinessProject/ce8-partial-capture-ledger-source-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
-    {"id": "partial_capture_ledger_source_repair_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-partial-capture-ledger-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"}
+    {"id": "partial_capture_ledger_source_repair_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-partial-capture-ledger-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "complete_close_ledger_source_review", "path": "C:/Users/clclc/BusinessProject/ce8-complete-close-ledger-source-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "complete_close_ledger_source_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-complete-close-ledger-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"}
   ],
   "metrics": [
     {"name": "historical_warm_R_strict_success", "numerator": 6, "denominator": 1200, "unit": "count", "scope_unit": "sample", "evidence_id": "warm_competence", "json_pointer": "/summary/R/successes", "denominator_json_pointer": "/summary/R/samples", "status": "MEASURED"},
@@ -330,24 +332,26 @@
     {"id": "ascii_prefix_and_copy_source_support", "status": "PASS", "evidence_ids": ["ascii_wire_prefix_source_review", "ascii_wire_prefix_source_pin_index", "ascii_wire_whole_price_source_review", "ascii_wire_whole_price_source_pin_index"], "reason": "Narrow frozen-source support only: prefix predicates are inside initialized outer cleanup protection; release authenticates original ownership without adding time; generated escaped pieces are checked before iterencode and copied directly into fixed wire under original-clock 64-character group guards. Original evidence, sticky failures, no refunds and issuer refusal remain. No hard preemption, universal allocation, source adoption, current assembly or physical/native qualification is proved."},
     {"id": "complete_occupied_lifetime_current_bindings", "status": "BLOCKED", "evidence_ids": ["ascii_wire_prefix_source_review", "ascii_wire_prefix_source_pin_index", "ascii_wire_whole_price_source_review", "ascii_wire_whole_price_source_pin_index"], "reason": "Named 31218/32768 encoder recipe with 1550 remainder is partial logical arithmetic. Normal/tail vectors remain inherited component sums with zero metadata headroom. Universal producer/graph/probe/encoder/error/native FileIO/Thread lifetimes, reachable cleanup/control, complete PREP traversal/callback/publication, actual current ENTRY/PACKET/domain assembly and final publisher/exit I/O remain missing. Original scalar/copy counts inside eight bounded exporter groups do not prove inclusive physical operation/timing costs. All G1-G11 limits, prior failed qualification and automatic eligibility-publication rejection remain binding."},
     {"id": "original_failed_prep_subset_source_route", "status": "PASS", "evidence_ids": ["failure_closure_partial_capture_source_review", "failure_closure_partial_capture_pin_index"], "reason": "Narrow source support: original PREP failure subset is positively selected before normal work, uses the same 1800s owner clock and conserves original caps. Failed ordinary work stays refused; exact original pin closes may use selected failure resources without retrying unknown prior closes. Source route availability is not actual emergency export/closure, complete repricing, current assembly or native/model qualification."},
-    {"id": "partial_capture_secondary_errors_and_prep_disposition", "status": "BLOCKED", "evidence_ids": ["failure_closure_partial_capture_source_review", "failure_closure_partial_capture_pin_index", "partial_capture_ledger_source_repair_review", "partial_capture_ledger_source_repair_pin_index"], "reason": "Original missing-identity/library-close/PREP disposition findings remain historical. Current partial/ledger source preallocates diagnostic statuses, preserves partial capture and removes the None-identity close dependency; actual stream.close error types are retained separately; same-clock failed-PREP finally cleanup and authenticated metadata failure routing are supported. Combined gate stays BLOCKED because before/after operation guards can still yield cleanup refusal detail lost when a primary exists, and complete error/graph/price/current assembly/physical terminal closure remains missing. No actual native failure/bypass or post-expiry dispatch is inferred."},
+    {"id": "partial_capture_secondary_errors_and_prep_disposition", "status": "BLOCKED", "evidence_ids": ["failure_closure_partial_capture_source_review", "failure_closure_partial_capture_pin_index", "partial_capture_ledger_source_repair_review", "partial_capture_ledger_source_repair_pin_index", "complete_close_ledger_source_review", "complete_close_ledger_source_pin_index"], "reason": "Original missing-identity/library-close/PREP disposition and before/after cleanup guard-detail findings remain historical at their pinned predecessors. The partial/ledger source supports status/partial capture, removal of the None-identity dependency, separate library errors and same-clock failed-PREP cleanup/routing. The new complete-close R1 source additionally retains bounded first secondary detail across guard/refusal/action/afterguard paths while preserving the original primary and one-shot close. This combined gate remains BLOCKED for exact current source/domain/all-seven non-dispatch assembly, trusted bootstrap and actual physical/terminal closure. Price61 prospective logical acceptance is separately attributed and supplies no current executable/native admission. No actual native failure/bypass or post-expiry dispatch is inferred."},
     {"id": "partial_capture_library_error_and_prep_window_source_support", "status": "PASS", "evidence_ids": ["partial_capture_ledger_source_repair_review", "partial_capture_ledger_source_repair_pin_index"], "reason": "Narrow source repair support: statuses exist before output opens and retain partial getter state; close no longer depends on successful descriptor construction. Two fixed slots retain actual library close error types separately. Same-clock one-shot failed-PREP cleanup and exact authenticated metadata registration/materializer window preserve original owner/time/caps/handoff refusal. Actual terminal closure, every guard/refusal event, whole price and physical/native qualification remain held."},
-    {"id": "cleanup_guard_refusal_and_full_ledger_composition", "status": "BLOCKED", "evidence_ids": ["partial_capture_ledger_source_repair_review", "partial_capture_ledger_source_repair_pin_index"], "reason": "Secondary slots are populated around stream.close only. Original clock/reservation before/after guard refusals can reach readerfinally with a primary already present and lose distinct detail, while no close dispatch may occur. Preserve bounded no-dispatch refusal/selection/dispatch/observed-return events without replacing primary, retries or expiry override. Conditional graph22696 exceeds22528 gate by168 as an incomplete conservative source recipe, not observed overflow or universal NoFit. Full ledger source-unit/occupied-lifetime/PREP/current non-dispatch assembly and physical terminal I/O/lease proof remain open; initial price60 review absence is historical and no later helper/publication is adopted."}
+    {"id": "cleanup_guard_refusal_and_full_ledger_composition", "status": "BLOCKED", "evidence_ids": ["partial_capture_ledger_source_repair_review", "partial_capture_ledger_source_repair_pin_index", "complete_close_ledger_source_review", "complete_close_ledger_source_pin_index"], "reason": "The new frozen R1 branch repair retains bounded first secondary detail for original before/admission/guard/callback/action and returned-guard failures while preserving the original primary, no-dispatch refusals, one-shot close and observed-return state. That targeted source obligation is now supported; older reader-finally detail loss remains historical. Price61 separately accepts the prospective complete logical recipe under named closed producer/source-unit domains: graph 22184 is within 22528 by 344. The focused semantic receipt defers whole-price/current all-seven composition rather than contradicting that wider attributed logical acceptance. Exact current target/ENTRY/PACKET/native source binding and permitted non-dispatch assembly, trusted pre-owner bootstrap, actual physical/terminal I/O/API/exit/Job0/handle/pin/lease/final-publisher closure remain unqualified. Preserve the old conditional 22696/168 arithmetic and all failures; no current executable/native eligibility, refund, retry, grant or substitute publication follows."},
+    {"id": "complete_close_r1_guard_refusal_action_afterguard_source_support", "status": "PASS", "evidence_ids": ["complete_close_ledger_source_review", "complete_close_ledger_source_pin_index"], "reason": "Narrow frozen-source support from the independently pinned review: the outer close_stream try includes its one-shot precheck and entire original perform operation. Before/admission/guard/callback/action and afterguard failures retain the first bounded secondary type even with an original primary present. No-dispatch refusals keep the close latch false; an action error permits one unknown close; an observed returned close remains returned despite late guard refusal; later attempts do not overwrite or retry. This is source control-flow/ledger support, not actual API success, an unbounded history, current assembly, physical closure or native/model/E0/parent/RSD authority."}
   ],
   "next_proposal": {
-    "phase": "OFFLINE_CLEANUP_GUARD_DETAIL_AND_WHOLE_LEDGER_REVIEW",
-    "proposal_evidence_id": "partial_capture_ledger_source_repair_review",
+    "phase": "OFFLINE_CURRENT_SOURCE_DOMAIN_NON_DISPATCH_ASSEMBLY_AND_PHYSICAL_PREPARATION",
+    "proposal_evidence_id": "complete_close_ledger_source_review",
     "requires": [
       "standing_research_consent",
       "failed_attempt_preservation",
       "partial_capture_library_error_and_prep_window_source_support",
+      "complete_close_r1_guard_refusal_action_afterguard_source_support",
       "cleanup_guard_refusal_and_full_ledger_composition",
       "complete_occupied_lifetime_current_bindings",
       "cpu_component_strict_timeout_qualification"
     ],
     "target_requirement": "cleanup_guard_refusal_and_full_ledger_composition",
     "review_candidate_ready_for_authorization": false,
-    "scope": "Existing CE8 owner retains a bounded cleanup guard/refusal/afterguard event separately from actual library close failure and the original primary error. Distinguish logical selection, no-dispatch refusal, actual dispatch and observed return under original one-shot ownership/time/caps/handoff/quarantine. Current targeted missing-identity/library-error/PREP routing repairs receive narrow source credit; preserve older failures and no refund/retry. Then freeze one complete ledger graph/typename/probe/encoder/cached-frame/partial-error/PREP/callback/publisher/native-workspace/current-source all-seven composition and non-dispatch assembly. The conditional22696 graph recipe above22528 does not prove reachable overflow or universal NoFit; no error dropping, text-equality discount, cap raise or arbitrary free source work may claim fit. Trusted pre-owner startup and actual physical/native/terminal I/O/lease closure remain separate evidence. Issuer refusal and rejected verification plus native-eligibility publication are binding; no tool/delegation/substitute workaround, Root native/model/tokenizer/scorer/optimizer/evaluation, protected bank, promotion or serving action.",
+    "scope": "Existing CE8 owner next prepares and reviews exact current target/ENTRY/PACKET/native source and authenticated closed producer-domain bindings plus permitted create-only non-dispatch assembly. Credit the targeted R1 bounded first-secondary guard/refusal/action/afterguard source repair and preserve prior defects, failed attempts, uncertain spending and no-refund/one-shot/quarantine rules. Price61's wider prospective logical recipe acceptance is attributed separately from the focused semantic receipt's whole-price/current-all-seven deferral; no prospective 216 reference or earlier target becomes current custody. Keep trusted pre-owner interpreter/bootstrap/accounting construction and actual RAM/RSS/commit/own-child I/O/API timing/exit/Job0/handle/pin/lease/final-publisher/last-I/O qualification as separate unproved requirements. Retain issuer refusal and automatic rejection of verification plus native-eligibility publication. This proposal supplies no executable eligibility, native/API/model/tokenizer/scorer/optimizer/evaluation call, denial workaround, substitute tool/delegation/publication, cap raise, retry, grant, permit transfer, protected-bank access, promotion or serving action.",
     "limits": {
       "native_calls": 0,
       "model_loads": 0,
@@ -371,7 +375,7 @@
       "DEV": false
     },
     "native_execution_authorized": false,
-    "requires_scope": "Advancement prerequisites remain holds; they need not pass for this offline source review. This proposal is not a dispatch, retry or eligibility-publication input."
+    "requires_scope": "Advancement prerequisites remain holds; they need not pass for this offline source review. This proposal is not a dispatch, retry, native-eligibility-publication input or policy-denial workaround."
   },
   "observed_patterns": [
     {"evidence_ids": ["warm_competence"], "statement": "Historical R success was 6/1200 with natural EOS on all 1200 responses and mean generated length 19.82; insufficient R competence is not explained by response truncation on that read."},
@@ -1015,5 +1019,110 @@
     "limits": "Full repricing, simultaneous lifetimes, actual current assembly, pre-owner startup, physical resource/exit/handle/pin/lease closure and native/model qualification remain unproved. Source reviews and17/11 saved controls are overlapping software evidence, not training replication or Rineya gains.",
     "price_scope": "Price59 binds partial predecessor; its complete-file/component formulas are not adopted as ledger whole-price. Price60 was absent at initial fixed point; no unbound helper/later publication followed.",
     "next_action": "Existing CE8 owner retains a bounded cleanup guard/refusal/afterguard event separately from actual library close failure and the original primary error. Distinguish logical selection, no-dispatch refusal, actual dispatch and observed return under original one-shot ownership/time/caps/handoff/quarantine. Current targeted missing-identity/library-error/PREP routing repairs receive narrow source credit; preserve older failures and no refund/retry. Then freeze one complete ledger graph/typename/probe/encoder/cached-frame/partial-error/PREP/callback/publisher/native-workspace/current-source all-seven composition and non-dispatch assembly. The conditional22696 graph recipe above22528 does not prove reachable overflow or universal NoFit; no error dropping, text-equality discount, cap raise or arbitrary free source work may claim fit. Trusted pre-owner startup and actual physical/native/terminal I/O/lease closure remain separate evidence. Issuer refusal and rejected verification plus native-eligibility publication are binding; no tool/delegation/substitute workaround, Root native/model/tokenizer/scorer/optimizer/evaluation, protected bank, promotion or serving action."
+  },
+  "retained_pre_complete_close_next_proposal": {
+    "phase": "OFFLINE_CLEANUP_GUARD_DETAIL_AND_WHOLE_LEDGER_REVIEW",
+    "proposal_evidence_id": "partial_capture_ledger_source_repair_review",
+    "requires": [
+      "standing_research_consent",
+      "failed_attempt_preservation",
+      "partial_capture_library_error_and_prep_window_source_support",
+      "cleanup_guard_refusal_and_full_ledger_composition",
+      "complete_occupied_lifetime_current_bindings",
+      "cpu_component_strict_timeout_qualification"
+    ],
+    "target_requirement": "cleanup_guard_refusal_and_full_ledger_composition",
+    "review_candidate_ready_for_authorization": false,
+    "scope": "Existing CE8 owner retains a bounded cleanup guard/refusal/afterguard event separately from actual library close failure and the original primary error. Distinguish logical selection, no-dispatch refusal, actual dispatch and observed return under original one-shot ownership/time/caps/handoff/quarantine. Current targeted missing-identity/library-error/PREP routing repairs receive narrow source credit; preserve older failures and no refund/retry. Then freeze one complete ledger graph/typename/probe/encoder/cached-frame/partial-error/PREP/callback/publisher/native-workspace/current-source all-seven composition and non-dispatch assembly. The conditional22696 graph recipe above22528 does not prove reachable overflow or universal NoFit; no error dropping, text-equality discount, cap raise or arbitrary free source work may claim fit. Trusted pre-owner startup and actual physical/native/terminal I/O/lease closure remain separate evidence. Issuer refusal and rejected verification plus native-eligibility publication are binding; no tool/delegation/substitute workaround, Root native/model/tokenizer/scorer/optimizer/evaluation, protected bank, promotion or serving action.",
+    "limits": {
+      "native_calls": 0,
+      "model_loads": 0,
+      "tokenizer_runs": 0,
+      "optimizer_updates": 0,
+      "automatic_retries": 0,
+      "external_future_scope_physical_deadline_seconds": 19200,
+      "external_future_scope_discarded_physical_optimizer_updates": 6,
+      "external_future_scope_data_roles": [
+        "train"
+      ],
+      "qualification_weights": "discarded",
+      "historical_core_service_mechanics_adopted": true,
+      "current_routing_source_adopted": false,
+      "separate_envelope_source_adopted": false,
+      "physical_wrapper_qualified": false,
+      "fresh_native_dispatch_in_queue": 0,
+      "CE6": false,
+      "sham": false,
+      "CE375": false,
+      "DEV": false
+    },
+    "native_execution_authorized": false,
+    "requires_scope": "Advancement prerequisites remain holds; they need not pass for this offline source review. This proposal is not a dispatch, retry or eligibility-publication input."
+  },
+  "complete_close_guard_ledger_source_point": {
+    "evidence_ids": [
+      "complete_close_ledger_source_review",
+      "complete_close_ledger_source_pin_index"
+    ],
+    "status": "TARGETED_R1_SOURCE_REPAIR_SUPPORTED_PROSPECTIVE_LOGICAL_PRICE_ATTRIBUTED_CURRENT_ASSEMBLY_PHYSICAL_POLICY_HELD",
+    "review_pin": {
+      "bytes": 13056,
+      "sha256": "6d7e614c73a1046f3bdebe883a13c97783d7428dcfb6020bd55293455b9a997c"
+    },
+    "pin_index": {
+      "bytes": 12046,
+      "sha256": "be28c9958f6104ea9ddd1ca4d2a5b89ae5c3f50db4cdb4b83e94e08cd6d7a79a",
+      "safe_named_pins": 26,
+      "matched_current_source_support_refs": 19,
+      "declared_mismatches": 0,
+      "drift": []
+    },
+    "R1_source_resolution": "Outer close_stream try covers one-shot precheck and entire perform operation. Preserve first secondary type separately from primary across zero-dispatch guard/admission refusal, one attempted unknown close, observed returned close with later guard error, and subsequent no-retry/no-overwrite states.",
+    "retained_storage_source_recipe": {
+      "two_blocks_each": 1536,
+      "two_blocks_total": 3072,
+      "state_selected": 5120,
+      "total_selected": 8192,
+      "declared_state_upper": 5076,
+      "declared_total_upper": 8148,
+      "registered_operation_read_persisted_caps_unchanged": true
+    },
+    "price61_attribution": {
+      "decision": "SOURCE_LOGICAL_PROOF_ACCEPTED_PHYSICAL_QUALIFICATION_AND_CURRENT_ASSEMBLY_PENDING",
+      "scope": "Prospective complete named source-owned logical recipe under authenticated closed producer and source-unit contracts; acceptance attributed to the pinned independent price report, not raw runtime/resource reproof by this queue.",
+      "graph_upper": 22184,
+      "graph_gate": 22528,
+      "graph_margin": 344,
+      "probe_occurrence_upper": 979,
+      "probe_capacity": 1024,
+      "probe_margin": 45,
+      "build_upper": 32424,
+      "build_cap": 32768,
+      "encode_upper": 31786,
+      "encode_cap": 32768,
+      "root_metadata_declared_upper_and_cap": 1048576,
+      "tail_control_declared_groups": 16,
+      "tail_control_spare_groups": 0,
+      "diagnostic_text_bound": "128 type + 128 module + 4*256 argument + 8*256 note =3328 replaces the inherited 3840 overbound by 512 through disjoint producer-domain accounting. No evidence deletion, selected-fee discount, free work or cap increase.",
+      "physical_source_unit_limit": "Logical metadata/library/getter/clock/iterator/callback recipes do not establish Python allocator/native backing, OS stack/runtime mappings, observed API latency or RSS/commit/I/O/pre-expiry completion.",
+      "historical_conditional_graph": "22696 exceeds 22528 by 168 at the older incomplete recipe; preserved as historical conditional arithmetic, not observed overflow or universal NoFit."
+    },
+    "focused_semantic_review": {
+      "scope": "Source-extracted synthetic close/clock paths and reader integration; whole-price/current full-source/all-seven remains outside this focused receipt.",
+      "saved_builder_controls": 10,
+      "saved_additional_controls": 5,
+      "reviewer_runs": 0,
+      "actual_native_API_actor_model_runs": 0,
+      "scientific_independent_draws": false
+    },
+    "current_target_ENTRY_PACKET_native_bindings": false,
+    "current_non_dispatch_assembly_executed": false,
+    "trusted_pre_owner_bootstrap_qualified": false,
+    "physical_native_terminal_qualification": false,
+    "issuer_refusal_and_policy_denial_preserved": true,
+    "review_is_eligibility_or_dispatch_input": false,
+    "actual_calls_by_queue": 0,
+    "model_behavior_retention_E0_parent_RSD_evidence": "NOT_MEASURED",
+    "next_action": "Review the exact current source/domain/non-dispatch assembly proposal and separate physical requirements through the existing owner. Preserve all historical source/proposal/failed-attempt evidence and denial boundaries; no substitute eligibility publication or retry."
   }
 }
