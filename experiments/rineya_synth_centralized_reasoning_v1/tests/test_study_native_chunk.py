@@ -115,6 +115,7 @@ class QuadraticAdam:
         return {"schema_version":1,"kind":chunk.BACKEND_KIND,"experiment":"SYNTH-CRS-001","scope":self.execution_scope,
                 "arm":self.arm,"seed":101,"recipe_sha256":self.recipe_sha256,"cohort_sha256":self.cohort_sha256,
                 "backend_source_sha256":self.backend_source_sha256,"fresh_start_attestation_sha256":self._attestation["sha256"],
+                "adapter_parameter_order":["AUTHORED_SCALAR"],"adapter_inventory_sha256":schedule.digest(["AUTHORED_SCALAR"]),
                 "binding":deepcopy(binding),"native_launch_authorized":False,"training_authorized":False,"native_resume_qualified":False,"qualification_STATE1_used":False}
     def save_checkpoint(self,path,binding):
         expected={"completed_updates":self.completed_updates,"consumed_occurrences":len(self.order),"input_tokens":self.input_tokens,

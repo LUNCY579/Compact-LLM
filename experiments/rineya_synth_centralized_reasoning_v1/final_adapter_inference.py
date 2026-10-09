@@ -97,7 +97,11 @@ def verify_final_chain(registration,arm,chain,latest):
 
 
 def _validate_archive(torch,payload,descriptor,binding,shapes,parameter_order,rng_keys):
+    chunks._scientific_metadata(descriptor)
     require(type(payload) is dict and set(payload)=={'metadata','state','occurrence_order'},'complete study archive schema; no qualification STATE1')
+    require(type(payload['metadata']) is dict and set(payload['metadata']) == chunks.METADATA_FIELDS
+            and type(payload['metadata']['schema_version']) is int and payload['metadata']['schema_version'] == 1
+            and payload['metadata']['kind'] == backend.KIND, 'exact scientific archive metadata kind/schema')
     require(backend.canonical(payload['metadata'])==backend.canonical(descriptor['metadata']),'same verified metadata bytes/binding')
     order=payload['occurrence_order']
     require(type(order) is list and len(order)==540 and all(type(x) is str and x for x in order)
@@ -171,6 +175,7 @@ def restore_final(torch,model,reader,call,guard,*,arm,registration=None,chunk_ch
             shapes=profile['expected_adapter_shapes'];layers=profile['expected_layers'];linears=profile['expected_linear_sites'];expected_device='cpu';rng_keys={'python','cpu'}
         require(type(binding) is dict and set(binding)==backend.BINDING_FIELDS and binding['completed_updates']==27
                 and binding['consumed_occurrences']==540 and binding['next_update_ordinal']==28 and type(binding['learning_rate']) is float and binding['learning_rate']==0.0,'only complete final27/540 recipe; reject C9/partial')
+        chunks._scientific_metadata(descriptor)
         require(type(descriptor) is dict and set(descriptor)=={'schema_version','kind','path','bytes','sha256','metadata','metadata_sha256'}
                 and descriptor['kind']==backend.KIND and descriptor['metadata_sha256']==backend.digest(metadata),'exact archive descriptor; qualification STATE1 rejected')
         require(metadata['arm']==arm and metadata['seed']==101 and backend.canonical(metadata['binding'])==backend.canonical(binding)

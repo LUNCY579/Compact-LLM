@@ -1,5 +1,15 @@
 # Status and next handoff
 
+## 2026-10-09: retained/scientific wrapper schema correction applied
+
+[Schema001](RETAINED_SCHEMA_CORRECTION_CPU_001.md) separates common validation
+from strict scientific/retained kinds and exact integer versions, including
+resume/envelope/record and pre-read final restore. Scientific17-field metadata
+rejects retained disguises. All21 authored/independent CPU controls pass, Root6
+targeted controls pass; legacy authored scalar fixture gains2 inventory fields
+with AST-only compatibility check. Original backend/state/cost/ref/9-18-27 checks
+remain intact. Native training/export parity/transfer still unproven; GPUblocked.
+
 ## 2026-10-09: accepted all27 retention producer implemented offline
 
 [Retention001](STUDY_RETAINED_UPDATES_CPU_001.md) applies separate nonresumable

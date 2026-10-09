@@ -34,6 +34,12 @@ RETAINED_RECORD_KIND = "SYNTH_STUDY_RETAINED_UPDATE_RECORD_V1"
 PRODUCER_POLICY_KIND = "SYNTH_STUDY_ALL_UPDATE_RETENTION_POLICY_V1"
 RETAINED_CALLS = ("retained_update_path", "retained_update_save", "retained_update_verify",
                   "retained_update_publish_write", "retained_update_publish_verify")
+METADATA_FIELDS = {"schema_version", "kind", "experiment", "scope", "arm", "seed",
+                   "recipe_sha256", "cohort_sha256", "backend_source_sha256",
+                   "fresh_start_attestation_sha256", "adapter_parameter_order", "adapter_inventory_sha256",
+                   "binding", "native_launch_authorized", "training_authorized",
+                   "native_resume_qualified", "qualification_STATE1_used"}
+DESCRIPTOR_FIELDS = {"schema_version", "kind", "path", "bytes", "sha256", "metadata", "metadata_sha256"}
 BINDING_FIELDS = {"completed_updates", "consumed_occurrences", "input_tokens", "supervised_tokens",
                   "consumed_order_sha256", "next_update_ordinal", "learning_rate"}
 METHODS = ("reset_gradients", "forward", "completion_loss", "backward", "finite_clip_gradients",
@@ -248,9 +254,18 @@ def _verify_publication(publication, payload):
     return deepcopy(publication)
 
 
-def _descriptor(descriptor, expected, current_recipe):
-    require(type(descriptor) is dict and set(descriptor)=={"schema_version","kind","path","bytes","sha256","metadata","metadata_sha256"}
-            and type(descriptor["schema_version"]) is int and descriptor["schema_version"]==1 and descriptor["kind"]==BACKEND_KIND,"exact study backend descriptor; STATE1 forbidden")
+def _scientific_metadata(descriptor):
+    require(type(descriptor) is dict and set(descriptor) == DESCRIPTOR_FIELDS
+            and type(descriptor["schema_version"]) is int and descriptor["schema_version"] == 1
+            and descriptor["kind"] == BACKEND_KIND, "exact scientific descriptor kind/schema")
+    metadata = descriptor["metadata"]
+    require(type(metadata) is dict and set(metadata) == METADATA_FIELDS
+            and type(metadata["schema_version"]) is int and metadata["schema_version"] == 1
+            and metadata["kind"] == BACKEND_KIND, "exact scientific metadata kind/schema")
+    return deepcopy(metadata)
+
+
+def _descriptor_common(descriptor, expected, current_recipe):
     metadata=descriptor["metadata"]
     require(type(metadata) is dict and descriptor["metadata_sha256"]==schedule.digest(metadata)
             and schedule.canonical(metadata.get("binding"))==schedule.canonical(expected) and set(expected)==BINDING_FIELDS,"backend metadata/cursor checksum")
@@ -262,6 +277,11 @@ def _descriptor(descriptor, expected, current_recipe):
     _hash(metadata.get("fresh_start_attestation_sha256"))
     _read_bytes(descriptor["path"],descriptor["bytes"],descriptor["sha256"])
     return deepcopy(descriptor)
+
+
+def _descriptor(descriptor, expected, current_recipe):
+    _scientific_metadata(descriptor)
+    return _descriptor_common(descriptor, expected, current_recipe)
 
 
 def _project(costs, operation):
@@ -304,21 +324,19 @@ def _retained_costs(costs, completed, *, after_save=False):
 
 
 def _retained_descriptor(descriptor, expected, current_recipe):
-    require(type(descriptor) is dict and set(descriptor) ==
-            {"schema_version", "kind", "path", "bytes", "sha256", "metadata", "metadata_sha256"}
+    require(type(descriptor) is dict and set(descriptor) == DESCRIPTOR_FIELDS
             and type(descriptor["schema_version"]) is int and descriptor["schema_version"] == 1
             and descriptor["kind"] == RETAINED_BACKEND_KIND, "distinct nonresumable retained kind")
     metadata = descriptor["metadata"]
-    require(type(metadata) is dict and metadata.get("kind") == RETAINED_BACKEND_KIND
+    require(type(metadata) is dict and set(metadata) == METADATA_FIELDS | {"resumable", "producer_policy_sha256"}
+            and type(metadata["schema_version"]) is int and metadata["schema_version"] == 1
+            and metadata.get("kind") == RETAINED_BACKEND_KIND
             and metadata.get("resumable") is False
             and metadata.get("producer_policy_sha256") == schedule.digest(current_recipe["retained_update_policy"])
             and descriptor["metadata_sha256"] == schedule.digest(metadata)
             and schedule.canonical(metadata.get("binding")) == schedule.canonical(expected),
             "retained metadata/cursor/policy binding")
-    # Reuse exact scientific descriptor checks without ever publishing its kind.
-    view = deepcopy(descriptor); view["kind"] = BACKEND_KIND
-    _descriptor(view, expected, current_recipe)
-    return deepcopy(descriptor)
+    return _descriptor_common(descriptor, expected, current_recipe)
 
 
 def _retained_publication(ledger, preserve, operation, payload, entry, field):
@@ -336,7 +354,8 @@ def _retained_entry(entry, registration, arm, ordinal, current_recipe):
     fields = {"schema_version", "kind", "arm", "seed", "recipe_sha256", "producer_policy_sha256",
               "binding", "backend_descriptor", "posted_save_costs", "GD_export_parity_required",
               "GD_export_parity_qualified", "sha256"}
-    require(type(record) is dict and set(record) == fields and record["schema_version"] == 1
+    require(type(record) is dict and set(record) == fields
+            and type(record["schema_version"]) is int and record["schema_version"] == 1
             and record["kind"] == RETAINED_RECORD_KIND and record["arm"] == arm and record["seed"] == 101
             and record["recipe_sha256"] == current_recipe["sha256"]
             and record["producer_policy_sha256"] == schedule.digest(current_recipe["retained_update_policy"])
@@ -386,6 +405,7 @@ def _publish(ledger, preserve, operation, payload):
 
 def _validate_resume(resume, registration, arm, chunk, current_recipe, latest):
     require(type(resume) is dict and set(resume)=={"schema_version","kind","status","envelope","publication","durable_terminal","terminal_publication","promotion","promotion_publication","terminal_costs","sha256"}
+            and type(resume["schema_version"]) is int and resume["schema_version"] == 1
             and resume["kind"]==KIND and resume["status"]=="SUCCESSFUL_STUDY_CHUNK_PROTOCOL_ONLY"
             and resume["sha256"]==schedule.digest({k:v for k,v in resume.items() if k!="sha256"}),"successful prior chunk descriptor only; STATE1 forbidden")
     envelope=resume["envelope"]
@@ -393,6 +413,7 @@ def _validate_resume(resume, registration, arm, chunk, current_recipe, latest):
     retained = "retained_update_policy" in current_recipe
     if retained: envelope_fields.add("retained_updates")
     require(type(envelope) is dict and set(envelope)==envelope_fields
+            and type(envelope["schema_version"]) is int and envelope["schema_version"] == 1
             and envelope["kind"]==KIND and envelope["seed"]==101 and envelope["native_resume_qualified"] is False and envelope["training_authorized"] is False
             and envelope["sha256"]==schedule.digest({k:v for k,v in envelope.items() if k!="sha256"})
             and envelope["recipe"]==current_recipe and envelope["arm"]==arm and envelope["chunk_ordinal"]==chunk-1,
