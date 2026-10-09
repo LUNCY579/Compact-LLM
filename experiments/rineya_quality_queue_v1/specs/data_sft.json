@@ -272,7 +272,9 @@
     {"id": "arithmetic_projection_converter_source_review", "path": "C:/Users/clclc/BusinessProject/rineya-token-projection-source-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "arithmetic_projection_converter_source_pin_index", "path": "C:/Users/clclc/BusinessProject/rineya-token-projection-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "arithmetic_measurement_stage_source_review", "path": "C:/Users/clclc/BusinessProject/rineya-arithmetic-measurement-stage-source-review-20261009-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
-    {"id": "arithmetic_measurement_stage_source_pin_index", "path": "C:/Users/clclc/BusinessProject/rineya-arithmetic-measurement-stage-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"}
+    {"id": "arithmetic_measurement_stage_source_pin_index", "path": "C:/Users/clclc/BusinessProject/rineya-arithmetic-measurement-stage-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "infq_historical_projection_metadata_review", "path": "C:/Users/clclc/BusinessProject/rineya-infq-exposure-projection-metadata-review-20261009-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "infq_historical_projection_metadata_pin_index", "path": "C:/Users/clclc/BusinessProject/rineya-infq-exposure-projection-metadata-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"}
   ],
   "source_assets": [
     {
@@ -354,11 +356,12 @@
     {"id": "arithmetic_additive_projection_seal_support", "status": "PASS", "evidence_ids": ["arithmetic_actual_cpu_tokenfit_metadata_review", "arithmetic_actual_cpu_tokenfit_pin_index", "arithmetic_projection_converter_source_review", "arithmetic_projection_converter_source_pin_index"], "reason": "Original standalone projected metadata retained the full-result SHA and was unsupported; bytes/pending history remain preserved. Additive corrected projection has its own seal, explicit original full-result digest and byte-bound array refs; saved validators report full rejoin/original preservation without tokenizer repeat. Source review supports that construction, not raw payload reproof by Root, semantic/model quality or complete converter resource qualification."},
     {"id": "arithmetic_projection_converter_complete_preio_bounds", "status": "BLOCKED", "evidence_ids": ["arithmetic_projection_converter_source_review", "arithmetic_projection_converter_source_pin_index"], "reason": "Recorded converter calls read_bytes on helper, original receipt and receipt-named outputs before size validation, then invokes parse/project/join rather than bounded read_join.32MiB pre-I/O/read-spy control support applies to the helper entry and tiny inert controls, not the full converter preallocation/physical-read path. No observed overflow/bad conversion/rewrite is claimed. Future current-source converter qualification needs prospectively bounded exact reference reads under existing phase; preserve actual corrected output and original files without retokenization."},
     {"id": "arithmetic_measurement_stage_fixed_validator_member_capture_source_support", "status": "PASS", "evidence_ids": ["arithmetic_measurement_stage_source_review", "arithmetic_measurement_stage_source_pin_index"], "reason": "Narrow frozen-source preparation support: fixture Prepared and private NativePrepared types are distinct; staged public preparation/scoring calls reject native integration. Nonfixture proofs use the fixed own validator path and literal validate function plus separately selected external approval/review references. Complete selected-source membership requires exact input/semantic vector order/cardinality, typed indices, unrepeated contiguous source blocks and every original index once. Capture claims bind replay-derived audit/request/config/input/model/source anchors rather than caller A/B labels. These mechanics and overlapping 6/5/7 CPU seam controls do not supply genuine source/reviewer/scorer authority, native measurements, complete exposure, owner chronology, source-correct M0 enrollment, admission or capability."},
-    {"id": "arithmetic_measurement_stage_genuine_exposure_chronology_and_m0_qualification", "status": "BLOCKED", "evidence_ids": ["arithmetic_measurement_stage_source_review", "arithmetic_measurement_stage_source_pin_index"], "reason": "All genuine prerequisites remain missing: authenticated original available/consumed source universe/member/count projections, every original per-call causal input including failed/partial prefixes, compatible actual INFQ schema and R/S-to-arithmetic mappings, a source-derived owner/treatment/candidate chronology producer, genuine external scorer/reviewer/whole-response authority and eight qualified capture/config/model/runtime/resource/raw audits. Existing four-contact/84-forward metadata is partial and does not reconstruct all causal inputs. Qualified flags, content hashes, typed contexts and private fixture callbacks cannot provide these observations or authority. Full original 384-row M0, all-domain source-correct membership/independent support/precision, dialogue, genuine long-context, native qualification, completed useful SFT parent, exact E0, RSD and gains remain held. Five prototype domain names do not select actual statistical D or replace a prospectively frozen roster."}
+    {"id": "arithmetic_measurement_stage_genuine_exposure_chronology_and_m0_qualification", "status": "BLOCKED", "evidence_ids": ["arithmetic_measurement_stage_source_review", "arithmetic_measurement_stage_source_pin_index", "infq_historical_projection_metadata_review", "infq_historical_projection_metadata_pin_index"], "reason": "The new saved independent auditor attributes source-recipe reconstruction of all84/28627 inputs for one successful historical INFQ scope. This narrows the earlier four-contact projection gap for that scope only; it does not establish independent prehook telemetry, authentic prospective executed-launcher bytes or global exposure closure. Compatible actual-schema integration, other successful/failed/partial native exposure scopes, authenticated available/consumed source universe/member/counts, R/S-to-arithmetic mapping/disjointness and owner/treatment chronology remain held. Genuine external scorer/reviewer/whole-response authority, eight qualified captures, full original384 M0, frozen all-domain roster/source-correct independent support/precision, dialogue, genuine long-context, current native qualification, completed useful ordinary-SFT parent, exact E0, catalog/probes/RSD arms and model gains remain missing. Qualified flags, content hashes and CPU seams cannot supply observations or authority. Five prototype domain names do not select actual statistical D."},
+    {"id": "infq_single_historical_source_recipe_reconstruction_attributed", "status": "PASS", "evidence_ids": ["infq_historical_projection_metadata_review", "infq_historical_projection_metadata_pin_index"], "reason": "Narrow preparation evidence only: saved independent actual audit attributes84 source-recipe forwards/28627 positions (2 parity/838,78 greedy-prefix/26544,4 bulk/1245),403 journal calls and only documented310 tensor-copy children under loader3. Original95 byte links/105 selected-file stability are auditor claims, not Root raw rehash. All13 safe metadata/note pins match. Original prehook did not independently record every vector; saved hashes/postexecution launcher preservation do not prove prospective execution identity. Whole candidate prompt/target/spec fields were parsed; no target-specific semantic processing/grading/emission was reported, and zero extraction does not mean zero exposure. Both failed CPU attempts exit1/no output/unchanged originals remain preserved. No complete exposure/retention membership, family mapping, chronology, semantic/M0/native/parent/E0/RSD eligibility or capability is established."}
   ],
   "next_proposal": {
-    "phase": "OFFLINE_COMPATIBLE_EXPOSURE_MEMBER_CAUSAL_CHRONOLOGY_AUTHORITY_REVIEW",
-    "proposal_evidence_id": "arithmetic_measurement_stage_source_review",
+    "phase": "OFFLINE_COMPATIBLE_INFQ_SOURCE_RECIPE_SCHEMA_INTEGRATION_REVIEW",
+    "proposal_evidence_id": "infq_historical_projection_metadata_review",
     "target_requirement": "arithmetic_measurement_stage_genuine_exposure_chronology_and_m0_qualification",
     "requires": [
       "standing_research_consent",
@@ -373,7 +376,8 @@
       "arithmetic_exact_reported_cpu_tokenfit_point",
       "arithmetic_projection_converter_complete_preio_bounds",
       "arithmetic_measurement_stage_fixed_validator_member_capture_source_support",
-      "arithmetic_measurement_stage_genuine_exposure_chronology_and_m0_qualification"
+      "arithmetic_measurement_stage_genuine_exposure_chronology_and_m0_qualification",
+      "infq_single_historical_source_recipe_reconstruction_attributed"
     ],
     "limits": {
       "native_model_jobs": 0,
@@ -384,7 +388,7 @@
       "solver_execution_by_queue": 0,
       "parent_reservations_by_queue": 0
     },
-    "scope": "Existing SYNTH/data owners next prepare and review exact compatible original-source universe/member/count and available/consumed exposure projections, original per-call causal manifests including failed/partial prefixes, source-aware schema mappings and a genuinely derived owner-state chronology producer. Credit only the fixed frozen-validator/native-fixture split, selected-vector completeness and replay-derived capture-anchor source mechanics. No current prototype domain list selects actual D, roster, support, draw or thresholds. Genuine external scorer/reviewer authority, eight qualified captures, full 384 M0, source-correct independent enrollment/precision, dialogue and separate long-context remain blocked. Prior CPU token-fit and additive seal support remain at their exact measured point; capture-plan doses are prospective bounds rather than observed costs, and complete converter pre-I/O qualification remains held. Root/queue reviewers do not read raw INFQ 84-input reconstruction/configuration or embedded prompt arrays, generate proofs, run candidates/runtime/imports/models/tokenizers/scoring/evaluations, repeat tests or issue grants. Preserve all prior outputs/proposals, failed/partial attempts, negative native acceptance, unknown exposure and NoAdmit. Exact E0 precedes native ordinary-SFT parent training; a genuinely completed useful reviewed parent/catalog/probes/arm mechanics precedes RSD. No permit transfer, promotion, serving change or unfinished-parent substitution.",
+    "scope": "Through the existing SYNTH owner, inspect and prepare an exact compatible source-contract adapter for the preserved actual INFQ nested hash/accounting schema and sanitized reconstruction metadata. Preserve source-recipe reconstruction versus independently observed token telemetry; accept neither a private mint nor a content hash as chronology/source/scorer authority. Credit the attributed84/28627 successful historical scope without another raw reconstruction replay. Broader original exposure/member universe, failed/partial scopes, R/S-to-arithmetic family mapping/disjointness and authenticated owner chronology still require separately qualified artifacts. Genuine grader/reviewer authority, eight captures, full384 M0, actual roster/independent support/precision, dialogue/long-context, current native resource/runtime and completed useful ordinary-SFT parent/exact E0/catalog/probes/arms remain held. Preserve both CPU failures, prior point/proposal/source snapshots, rejected/unused candidates, whole-candidate parsing disclosure and interrupted transactions. Root performs source/sanitized-metadata review only; this proposal authorizes no raw/protected data, candidate/runtime/model/tokenizer/scorer execution, reconstruction repeat, native job, grant, enrollment, promotion or serving change. Existing source owner may use inert synthetic shape/negative controls only within its accepted source scope. Exact E0 precedes native SFT-parent training; unfinished E1/SYNTH remains ineligible.",
     "native_execution_authorized": false,
     "requires_scope": "Scientific advancement prerequisites remain holds. This bounded source/sanitized-metadata preparation proposal does not execute those phases, provide an eligibility input or require repeated human consent."
   },
@@ -1009,7 +1013,7 @@
     "native_execution_authorized": false,
     "requires_scope": "Required scientific advancement prerequisites; BLOCKED entries remain holds. This source-only preparation proposal does not execute those phases or require repeated human consent."
   },
-  "arithmetic_measurement_stage_source_preparation_current_point": {
+  "retained_pre_infq_projection_measurement_stage_source_point": {
     "evidence_ids": [
       "arithmetic_measurement_stage_source_review",
       "arithmetic_measurement_stage_source_pin_index"
@@ -1057,5 +1061,96 @@
     "actual_calls_by_queue": 0,
     "review_is_grant_or_dispatch_input": false,
     "next_action": "Through the existing owner, review authenticated compatible original-source/exposure/member/per-call projections and an owner-state chronology producer, then separately qualify actual current captures and genuine grading providers. No Root raw reconstruction, candidate execution, test repeat, source promotion, new grant or native dispatch."
+  },
+  "retained_pre_infq_projection_next_proposal": {
+    "phase": "OFFLINE_COMPATIBLE_EXPOSURE_MEMBER_CAUSAL_CHRONOLOGY_AUTHORITY_REVIEW",
+    "proposal_evidence_id": "arithmetic_measurement_stage_source_review",
+    "target_requirement": "arithmetic_measurement_stage_genuine_exposure_chronology_and_m0_qualification",
+    "requires": [
+      "standing_research_consent",
+      "synth_accepted_retention_mechanism_coverage",
+      "source_use_ancestry_and_split_closure",
+      "independent_replay_and_source_correct_guards",
+      "complete_target_eos_masks_and_no_truncation",
+      "completed_qualified_sft_parent",
+      "synth_snapshot_native_export_and_current_binding",
+      "arithmetic_frozen_roster_and_independent_support",
+      "arithmetic_actual_population_occurrence_and_lineage",
+      "arithmetic_exact_reported_cpu_tokenfit_point",
+      "arithmetic_projection_converter_complete_preio_bounds",
+      "arithmetic_measurement_stage_fixed_validator_member_capture_source_support",
+      "arithmetic_measurement_stage_genuine_exposure_chronology_and_m0_qualification"
+    ],
+    "limits": {
+      "native_model_jobs": 0,
+      "native_optimizer_updates": 0,
+      "native_evaluations": 0,
+      "protected_bank_reads": 0,
+      "actual_tokenizer_calls_by_queue": 0,
+      "solver_execution_by_queue": 0,
+      "parent_reservations_by_queue": 0
+    },
+    "scope": "Existing SYNTH/data owners next prepare and review exact compatible original-source universe/member/count and available/consumed exposure projections, original per-call causal manifests including failed/partial prefixes, source-aware schema mappings and a genuinely derived owner-state chronology producer. Credit only the fixed frozen-validator/native-fixture split, selected-vector completeness and replay-derived capture-anchor source mechanics. No current prototype domain list selects actual D, roster, support, draw or thresholds. Genuine external scorer/reviewer authority, eight qualified captures, full 384 M0, source-correct independent enrollment/precision, dialogue and separate long-context remain blocked. Prior CPU token-fit and additive seal support remain at their exact measured point; capture-plan doses are prospective bounds rather than observed costs, and complete converter pre-I/O qualification remains held. Root/queue reviewers do not read raw INFQ 84-input reconstruction/configuration or embedded prompt arrays, generate proofs, run candidates/runtime/imports/models/tokenizers/scoring/evaluations, repeat tests or issue grants. Preserve all prior outputs/proposals, failed/partial attempts, negative native acceptance, unknown exposure and NoAdmit. Exact E0 precedes native ordinary-SFT parent training; a genuinely completed useful reviewed parent/catalog/probes/arm mechanics precedes RSD. No permit transfer, promotion, serving change or unfinished-parent substitution.",
+    "native_execution_authorized": false,
+    "requires_scope": "Scientific advancement prerequisites remain holds. This bounded source/sanitized-metadata preparation proposal does not execute those phases, provide an eligibility input or require repeated human consent."
+  },
+  "infq_historical_source_recipe_projection_current_point": {
+    "evidence_ids": [
+      "infq_historical_projection_metadata_review",
+      "infq_historical_projection_metadata_pin_index"
+    ],
+    "status": "SINGLE_HISTORICAL_SOURCE_RECIPE_RECONSTRUCTION_ATTRIBUTED_BROADER_QUALIFICATION_HELD",
+    "review_pin": {
+      "bytes": 9778,
+      "sha256": "10cbfb177ecddd2c5c692e5e5cbe66a593b0cc4258cae214a1794c40d11a3fab"
+    },
+    "pin_index": {
+      "bytes": 12383,
+      "sha256": "e3c594b38665dd28c2fe6886d929d1b0c1222f3bba14a9d8dcfef9ca8461c8a9",
+      "safe_named_pins": 13,
+      "strict_metadata_files": 10,
+      "drift": []
+    },
+    "attributed_successful_historical_scope": {
+      "forward_calls": 84,
+      "input_positions": 28627,
+      "parity_calls": 2,
+      "parity_positions": 838,
+      "greedy_prefix_calls": 78,
+      "greedy_prefix_positions": 26544,
+      "bulk_calls": 4,
+      "bulk_positions": 1245,
+      "global_journal_calls": 403,
+      "documented_loader_tensor_copy_children": 310,
+      "selected_source_rows": 4,
+      "shared_source_parents": 2,
+      "reported_original_byte_links": 95,
+      "reported_selected_files_unchanged": 105
+    },
+    "attribution_limit": "Saved actual auditor rebuilt original source-recipe vectors/masks/IDs/timeline/cost joins. Root checked safe metadata identities and partition totals only; original raw links and vectors were not followed or rehashed. This is not independent per-call prehook telemetry or a scientific replication.",
+    "content_exposure": "Producer and saved actual auditor parsed the entire candidate JSONL including prompt/target/spec fields, extracting seven identity fields. No target-specific semantic processing/grading/emission reported does not mean content was unread. This is not a fresh blind/gold-free semantic qualification.",
+    "execution_provenance": "Postexecution source preservation and saved program/frozen-producer hashes remain attributed provenance anchors, not independent proof of prospective exact executed launcher bytes or current runtime qualification.",
+    "failures_preserved": "Two original CPU failures exit1, no output, originals unchanged as reported; additive schema/loader-nesting correction does not replace failures or historical pending flags.",
+    "resource_scope": "Reported cooperative CPU wall checkpoints only. No Root resource/liveness measurement, RSS/hard-containment/native performance qualification or resource-floor relaxation.",
+    "remaining_holds": [
+      "compatible actual-schema reconstruction-versus-observation adapter",
+      "other successful/failed/partial native exposure universe",
+      "authenticated available/consumed source membership and counts",
+      "R/S-to-arithmetic family mapping and retention disjointness",
+      "authenticated owner/treatment chronology",
+      "genuine external grading and reviewer authority",
+      "eight qualified captures and full384 M0",
+      "frozen roster/source-correct independent support and precision",
+      "dialogue and genuine long-context",
+      "current native model/runtime/resource qualification",
+      "completed useful ordinary-SFT parent and exact E0",
+      "RSD catalog/probes/teacher/parent/arm qualification"
+    ],
+    "model_quality_retention_and_gain": "NOT_MEASURED",
+    "native_execution_authorized": false,
+    "review_is_grant_or_dispatch_input": false,
+    "actual_calls_by_queue": 0,
+    "owner_restart_or_ownership_transfer": false,
+    "next_action": "Through the existing SYNTH owner, inspect and prepare an exact compatible source-contract adapter for the preserved actual INFQ nested hash/accounting schema and sanitized reconstruction metadata. Preserve source-recipe reconstruction versus independently observed token telemetry; accept neither a private mint nor a content hash as chronology/source/scorer authority. Credit the attributed84/28627 successful historical scope without another raw reconstruction replay. Broader original exposure/member universe, failed/partial scopes, R/S-to-arithmetic family mapping/disjointness and authenticated owner chronology still require separately qualified artifacts. Genuine grader/reviewer authority, eight captures, full384 M0, actual roster/independent support/precision, dialogue/long-context, current native resource/runtime and completed useful ordinary-SFT parent/exact E0/catalog/probes/arms remain held. Preserve both CPU failures, prior point/proposal/source snapshots, rejected/unused candidates, whole-candidate parsing disclosure and interrupted transactions. Root performs source/sanitized-metadata review only; this proposal authorizes no raw/protected data, candidate/runtime/model/tokenizer/scorer execution, reconstruction repeat, native job, grant, enrollment, promotion or serving change. Existing source owner may use inert synthetic shape/negative controls only within its accepted source scope. Exact E0 precedes native SFT-parent training; unfinished E1/SYNTH remains ineligible."
   }
 }
