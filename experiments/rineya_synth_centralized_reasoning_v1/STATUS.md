@@ -1,5 +1,15 @@
 # Status and next handoff
 
+## 2026-10-09: arithmetic CPU token fit complete with additive projection repair
+
+[TokenFit001](ARITHMETIC_TOKENMEASUREMENT_CPU_001.md) records512 actual rows,
+0overflows, maxima225prompt/9EOScompletion/234total and stable identities for
+1392 selected files. Cooperative28.895s/161.8MB within600s/512MiB. Independent actualrow/
+byte/mask audit confirmsjoined fullresult. Originalprojectedsealunsupported remains
+preserved; reviewed pureJSON additiveprojection nowselfseals andjoinsoriginalarrays
+withouttokenizerrepeat. Sevenwrapper+threeprojectionCPUcontrols pass. No model/GPU/
+scoring/M0 qualification; disjointness/membership/dialogue/longcontext remain open.
+
 ## 2026-10-09: arithmetic CPU tokens measured; projection correction pending
 
 [TokenOutcome001](ARITHMETIC_TOKENMEASUREMENT_OUTCOME_001.md) preserves actual
