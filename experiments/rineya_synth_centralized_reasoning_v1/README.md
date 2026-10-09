@@ -13,6 +13,10 @@ Latest CPU continuation: [closed arithmetic capture adapter and actual plan](ARI
 Its source and actual512 token-plan joins pass scoped CPU audits; native grading,
 all-domain enrollment and the full training comparison remain pending.
 
+[Conditional raw audit and measurement candidate](ARITHMETIC_MEASUREMENT_STAGE_CPU_001.md)
+adds saved-receipt replay and corrects source-member/capture-anchor seams. Native
+evidence-provider qualification and promotion remain explicitly unaccepted.
+
 The [externally anchored gate/owned dispatcher candidate](TENSOR_GATE_DISPATCH_CPU_CANDIDATE_002.md)
 passes six authored/Root and independent CPU controls. Public gates still refuse;
 the exact runtime/run registration and real owner grant remain absent.

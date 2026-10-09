@@ -1,5 +1,20 @@
 # Status and next handoff
 
+## 2026-10-09: conditional raw auditor complete; measurement candidate unqualified
+
+[MeasurementStage001](ARITHMETIC_MEASUREMENT_STAGE_CPU_001.md) preserves the
+separate arithmetic RAM2 raw auditor and read-only saved-receipt replay. Six new
+authored/Root/independent CPU controls pass; the heavy genuine audit is unexecuted.
+Candidate measurement002 passes seven focused CPU controls for typed contexts,
+whole-source membership and actual capture-anchor binding. Independent review
+explicitly refuses native qualification/promotion acceptance. Original-source
+authority/schema, all partial causal prefixes, owner chronology and qualified
+task/dialogue/long-context providers remain unresolved; prototype domain names
+do not register D. Partial INFQ-to-TRAIN metadata is preserved without claiming
+complete exposure coverage. GPU free1790MiB remains below unchanged4096MiB.
+No new model, grading, enrollment or training occurred; the full comparison is
+still pending under standing owner authorization.
+
 ## 2026-10-09: arithmetic capture CPU adapter and actual plan audited
 
 [CaptureCPU001](ARITHMETIC_CAPTURE_CPU_001.md) preserves a distinct closed

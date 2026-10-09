@@ -1,0 +1,129 @@
+"""Small authored admission/source/terminal controls; no heavy native audit."""
+from copy import deepcopy
+from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
+import ast
+import hashlib
+import json
+import sys
+import tempfile
+import time
+import unittest
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+import arithmetic_raw_auditor as A
+
+
+def fixture():
+    inventories = {name: {"AUTHORED_" + name + "_%02d" % n: "a" * 64 for n in range(count)}
+                   for name, count in (("source", 3), ("runtime", 65), ("decoder", 17), ("data", 4), ("model", 7))}
+    row = {"row_id": "a" * 64, "prompt_sha256": "b" * 64, "prompt_ids": [1], "prompt_tokens": 1, "attention_mask": [1]}
+    rows = [{**row, "row_id": A.digest(["AUTHORED", n])} for n in range(64)]
+    profile = {"id": "SHORT_M0_PHYSICAL_RAM_COHERENT_EXTERNAL_CHECK_V2"}
+    scope = {"contract": "synth-short-M0-physical-RAM-coherent-monitor-staged-2", "rows": rows,
+             "short_RAM_monitor_profile": profile, "batch_selector": {"source_kind": A.KIND, "ordinal": 1},
+             "source_packet_sha256": A.digest(rows), "model_role": "fresh_dense_M0_zero_B_only_no_STATE1_or_study_checkpoint",
+             "dose": {"rows": 64, "maximum_forward_calls": 2050, "context_cap": 512, "maximum_generated_tokens": 32},
+             **{key: deepcopy(inventories[name]) for name, key in A.SECTIONS.items()}}
+    registration = {"id": A.REGISTRATION_ID, "schema_version": 1, "source_commit": "a" * 40,
+                    "profile_body_sha256": A.digest(profile), "inventories": inventories,
+                    "counts": {name: len(rows) for name, rows in inventories.items()}}
+    registration["sha256"] = A.digest(registration)
+    plan = {"fixture_only": False, "rows": 512, "parent_components": 128,
+            "batches": {A.KIND: [{"rows": rows, "source_packet_sha256": A.digest(rows)} for _ in range(8)]}}
+    plan["sha256"] = A.digest(plan)
+    return scope, plan, registration
+
+
+class Controls(unittest.TestCase):
+    def test_exact_admission_does_not_infer_native_authority_and_refuses_source_kind_order_and_inventory_drift(self):
+        scope, plan, registration = fixture()
+        args = {"selected": (A.KIND, 1), "source_commit": "a" * 40,
+                "profile_sha256": registration["profile_body_sha256"]}
+        value = A.admit(scope, plan, registration, deepcopy(scope), **args)
+        self.assertFalse(value["native_PASS"])
+        for selected in (("task_guard_DEV", 1), (A.KIND, 9), (A.KIND, True)):
+            with self.subTest(selected=selected), self.assertRaises(ValueError):
+                A.admit(scope, plan, registration, scope, **{**args, "selected": selected})
+        for change in (lambda s: s["rows"].reverse(), lambda s: s["runtime_pins"].pop(next(iter(s["runtime_pins"]))),
+                       lambda s: s["dose"].update(maximum_forward_calls=2049)):
+            altered = deepcopy(scope); change(altered)
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                A.admit(altered, plan, registration, scope, **args)
+
+    def test_full_original_raw_trace_decode_dose_model_resources_ownership_block_is_identical(self):
+        tree, changes, text = A.prepared_source()
+        original = A.ORIGINAL.read_text()
+        start = " events=jsonl(leaf/'events.jsonl')"; stop = " def compact(values):"
+        self.assertEqual(original[original.index(start):original.index(stop)], text[text.index(start):text.index(stop)])
+        self.assertEqual(8, len(changes))
+        self.assertEqual(5, len(tree.body))
+        self.assertIn("counts.get(\"data\")==4", text)
+        self.assertIn("str(CAPTURE/'arithmetic_capture_owned.py')", text)
+
+    def test_original_early_terminal_checks_refuse_partial_failures_oracle_fields_and_false_source_commit(self):
+        tree, _, _ = A.prepared_source()
+        node = next(n for n in tree.body if n.name == "_early_terminal_checks")
+        ns = {"digest": A.digest, "ROW_FIELDS": {"row_id", "prompt_sha256", "prompt_ids", "prompt_tokens", "attention_mask"},
+              "CONTRACT_VERSION": "synth-short-M0-physical-RAM-coherent-monitor-staged-2",
+              "contract": SimpleNamespace(AUTHORIZATION={"scope": "AUTHORED_ARITHMETIC"})}
+        exec(compile(ast.Module(body=[node], type_ignores=[]), str(A.ORIGINAL), "exec"), ns)
+        scope, _, _ = fixture(); scope.update(authorization=ns["contract"].AUTHORIZATION, profile="BF16_RESIDENT_FP32_ACTIVATIONS_QV8_V1")
+        worker = {"status": "COMPLETE_SCOPED_SHORT_M0_RAW_COLLECTION_UNSCORED", "error": None, "source_commit": "a" * 40,
+                  "collection": {"rows": [{"row_id": r["row_id"]} for r in scope["rows"]], "source_packet_sha256": scope["source_packet_sha256"]}}
+        sup = {"status": "SUPERVISED_WORKER_EXITED_ZERO", "returncode": 0, "partial_outputs_frozen": True,
+               "preflight": {"source_commit": "a" * 40}}
+        preservation = {"source_commit": "a" * 40}
+        def call(s, w, u, p):
+            ns["_early_terminal_checks"](s, w, u, p, (A.KIND, 1), A.require)
+        call(scope, worker, sup, preservation)
+        for mutate in (lambda s, w, u, p: w.update(error={"error": "failed"}),
+                       lambda s, w, u, p: w["collection"]["rows"].pop(),
+                       lambda s, w, u, p: s["rows"][0].update(labels=[1]),
+                       lambda s, w, u, p: p.update(source_commit="b" * 40),
+                       lambda s, w, u, p: u.update(status="ADMISSION_DENIED")):
+            values = [deepcopy(v) for v in (scope, worker, sup, preservation)]; mutate(*values)
+            with self.subTest(mutate=mutate), self.assertRaises(ValueError): call(*values)
+
+    def test_missing_signal_anchors_or_integration_denies_before_any_evidence_or_package_execution(self):
+        kwargs = {"expected_selector": (A.KIND, 1), "expected_config_file_sha256": "a" * 64,
+                  "expected_preservation_body_sha256": "b" * 64, "inventory_registration_path": "unused",
+                  "expected_inventory_registration_file_sha256": "c" * 64, "expected_profile_body_sha256": "d" * 64,
+                  "expected_plan_file_sha256": "e" * 64, "expected_source_commit": "a" * 40}
+        with patch.object(Path, "open", side_effect=AssertionError("unexpected evidence read")):
+            with self.assertRaisesRegex(ValueError, "signal before reads"):
+                A.audit_terminal("unused", "unused", "unused", **kwargs)
+            with self.assertRaisesRegex(ValueError, "anchors required"):
+                A.audit_terminal("unused", "unused", "unused", **{**kwargs, "expected_plan_file_sha256": None}, terminal_preservation_signal=A.SIGNAL)
+            with self.assertRaisesRegex(ValueError, "staged arithmetic"):
+                A.audit_terminal("unused", "unused", "unused", **kwargs, terminal_preservation_signal=A.SIGNAL)
+        self.assertFalse(any(name in sys.modules for name in ("torch", "transformers", "tokenizers", "ctypes", "psutil")))
+
+    def test_selected_JSON_descriptor_drift_and_nonfinite_are_refused(self):
+        with tempfile.TemporaryDirectory(dir=HERE) as directory:
+            path = Path(directory) / "authored.json"; raw = b'{"value":1}'
+            path.write_bytes(raw); ref = {"path": str(path), "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
+            self.assertEqual({"value": 1}, A.read_ref(ref))
+            path.write_bytes(raw + b" ")
+            with self.assertRaises(ValueError): A.read_ref(ref)
+            for raw in (b'{"value":1,"value":2}', b'{"value":1e999}', b'{"value":NaN}'):
+                path.write_bytes(raw); ref.update(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+                with self.assertRaises(ValueError): A.read_ref(ref)
+
+
+if __name__ == "__main__":
+    files = ("arithmetic_raw_auditor.py", "test_arithmetic_raw_auditor.py")
+    before = {name: hashlib.sha256((HERE / name).read_bytes()).hexdigest() for name in files}
+    started = time.monotonic(); result = unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(Controls))
+    value = {"kind": "AUTHORED_ARITHMETIC_RAW_AUDITOR_CPU_CONTROLS001", "tests": result.testsRun,
+             "success": result.wasSuccessful(), "errors": len(result.errors), "failures": len(result.failures),
+             "seconds": time.monotonic() - started, "source_before": before,
+             "source_after": {name: hashlib.sha256((HERE / name).read_bytes()).hexdigest() for name in files},
+             "heavy_audit_or_decoder_model_or_native_API_executed": False, "native_PASS": False,
+             "limits": ["Pure admission and source-preserved early64 terminal controls only; no real capture exists.",
+                        "The complete inherited heavy audit is conditionally implemented but unexecuted."]}
+    value["sha256"] = A.digest(value)
+    (HERE / "CPU_CONTROLS001.json").write_bytes((A.canonical(value) + "\n").encode("ascii"))
+    raise SystemExit(0 if result.wasSuccessful() else 1)
