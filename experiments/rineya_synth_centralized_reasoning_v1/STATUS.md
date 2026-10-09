@@ -1,5 +1,14 @@
 # Status and next handoff
 
+## 2026-10-09: verified closed retention/export binding package preserved
+
+[BindingPackage001](RETENTION_BINDING_PACKAGE_CPU_001.md) preserves exact external
+handoff/code/receipts; Root's explicit replay passes69 inert controls. Structural
+joins require54 retained updates, six scientific snapshots and four actual GD
+step9/27 exports with separate parity references. All admission/execution/parity/
+quality flags stay false. Exact metadata-only per-update schedule binding is
+being completed; actual native STUDY identities and parity remain pending.
+
 ## 2026-10-09: retained/scientific wrapper schema correction applied
 
 [Schema001](RETAINED_SCHEMA_CORRECTION_CPU_001.md) separates common validation
