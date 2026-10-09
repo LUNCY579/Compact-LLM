@@ -9,6 +9,10 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+Latest CPU continuation: [closed arithmetic capture adapter and actual plan](ARITHMETIC_CAPTURE_CPU_001.md).
+Its source and actual512 token-plan joins pass scoped CPU audits; native grading,
+all-domain enrollment and the full training comparison remain pending.
+
 The [externally anchored gate/owned dispatcher candidate](TENSOR_GATE_DISPATCH_CPU_CANDIDATE_002.md)
 passes six authored/Root and independent CPU controls. Public gates still refuse;
 the exact runtime/run registration and real owner grant remain absent.

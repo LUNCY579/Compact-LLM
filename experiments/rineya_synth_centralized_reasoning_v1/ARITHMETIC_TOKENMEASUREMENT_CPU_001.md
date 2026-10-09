@@ -22,6 +22,10 @@ has its own seal, explicit original full-result digest and byte-bound policy/
 oracle references. Pure JSON conversion verified both seals/full rejoin and
 original file preservation; no tokenizer repeat occurred. Three authored/Root/
 independent controls cover stale references, malformed metadata and bounded
+reads through the helper's `read_join` entry. The actual additive converter used
+`read_bytes` before validation; those bounded-read controls do not qualify the
+complete converter. Its valid corrected output and original files remain
+preserved. Future converter execution needs bounded, prospectively selected
 reads. Future runner source is retained separately and still requires a fresh
 current byte selection before execution.
 

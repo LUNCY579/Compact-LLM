@@ -1,5 +1,19 @@
 # Status and next handoff
 
+## 2026-10-09: arithmetic capture CPU adapter and actual plan audited
+
+[CaptureCPU001](ARITHMETIC_CAPTURE_CPU_001.md) preserves a distinct closed
+arithmetic512/128/eight64 adapter. Six authored/Root/independent controls pass
+the original collector/raw-import kernels, scope/path ABI, prompt-file binding,
+full-response scoring seam and grouped enrollment. Independent direct audit
+joins all512 actual prompt/message/token/source rows and verifies upper dose
+16400 forwards/2295832 positions; 13 selected input/source pins stay unchanged.
+Original384/768 contracts and native resource/numerical checks remain intact.
+Source remains staged. Native scorer/enrollment registrations and compatible
+raw audit are still unfinished; fixtures confer no native authority. Current
+GPU admission, model/runtime qualification, complete guards and full M0/M1/M2
+transfer+retention results remain pending under standing owner authorization.
+
 ## 2026-10-09: conditional support calculation preserved, no roster selected
 
 [SupportNote001](ARITHMETIC_CONDITIONAL_SUPPORT_NOTE_001.md) verifies nine exact
