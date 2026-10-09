@@ -27,7 +27,7 @@
     {"id": "titan_static_receipt", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/post_training_mimo_centralized_v1/receipts/titan_static_v1/PRIMARY_STUDENT_RECEIPT.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "central_current_best", "path": "C:/Users/clclc/BusinessProject/ChatBubble-post-training-Mimo/experiments/post_training_mimo_centralized_v1/CURRENT_BEST_RECIPE.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "central_blocked_audit", "path": "C:/Users/clclc/BusinessProject/ChatBubble-post-training-Mimo/experiments/post_training_mimo_centralized_v1/receipts/CONTINUATION_007_BLOCKED_AUDIT.json", "classification": "preparation", "role": "receipt", "format": "json"},
-    {"id": "synth_current_status", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/STATUS.md", "classification": "preparation", "role": "source", "format": "text"},
+    {"id": "synth_current_status", "path": "C:/Users/clclc/BusinessProject/rineya-quality-progress-20261009-17/SYNTH_STATUS_FIXED_POINT.md", "classification": "preparation", "role": "source", "format": "text"},
     {"id": "synth_amended_reader_cpu_composition", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/TENSOR_AMENDED_READER_CPU_001.md", "classification": "preparation", "role": "receipt", "format": "text"},
     {"id": "synth_pilot_decisions", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/PILOT_DECISIONS.json", "classification": "preparation", "role": "protocol", "format": "json"},
     {"id": "synth_runtime_candidate", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/PREFIX_RUNTIME_CANDIDATE_001.md", "classification": "fixture", "role": "source", "format": "text"},
@@ -255,7 +255,13 @@
     {"id": "synth_parent_import_diagnostic_source_review", "path": "C:/Users/clclc/BusinessProject/rineya-synth-import-diagnostic-source-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "synth_parent_import_diagnostic_pin_index", "path": "C:/Users/clclc/BusinessProject/rineya-synth-import-diagnostic-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "synth_retained_snapshot_kind_source_finding", "path": "C:/Users/clclc/BusinessProject/rineya-synth-retained-snapshot-kind-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
-    {"id": "synth_retained_snapshot_kind_pin_index", "path": "C:/Users/clclc/BusinessProject/rineya-synth-retained-snapshot-kind-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"}
+    {"id": "synth_retained_snapshot_kind_pin_index", "path": "C:/Users/clclc/BusinessProject/rineya-synth-retained-snapshot-kind-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "synth_snapshot_schema_repair_review", "path": "C:/Users/clclc/BusinessProject/rineya-synth-snapshot-schema-repair-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "synth_snapshot_schema_repair_pin_index", "path": "C:/Users/clclc/BusinessProject/rineya-synth-snapshot-schema-repair-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "synth_retention_coverage_gap_source_note", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/RETENTION_DOMAIN_COVERAGE_GAP_20261009.md", "classification": "preparation", "role": "source", "format": "text"},
+    {"id": "synth_accepted_quality_screen_policy", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/evidence/supplemental_quality_packet_reviewed_20261005/QUALITY_SCREEN_POLICY_001.json", "classification": "preparation", "role": "protocol", "format": "json"},
+    {"id": "synth_task_guard_mechanism_policy", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/TASK_RETENTION_GUARD_POLICY.json", "classification": "preparation", "role": "protocol", "format": "json"},
+    {"id": "synth_dialogue_language_gate_handoff", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/LANGUAGE_GATE_HANDOFF.md", "classification": "preparation", "role": "source", "format": "text"}
   ],
   "source_assets": [
     {
@@ -325,34 +331,23 @@
     {"id": "b15_both_saved_metadata_and_continuity", "status": "PASS", "evidence_ids": ["b15_phase2_continuity_root_review", "b15_original_context_resumption", "b15_phase2_saved_review", "b15_phase2_core", "b15_phase2_capture", "coverage_summary014"], "reason": "Narrow strict saved-metadata PASS only. Local continuity declarations and saved tuple joins support scoped B15 closure; authenticated history, truthful full-read, semantic freshness, admission and model quality remain unproved. No replay or execution authority follows."},
     {"id": "b16_b18_saved_metadata_and_handoff", "status": "PASS", "evidence_ids": ["b16_b18_saved_metadata_review", "b16_b18_saved_metadata_pin_index", "coverage_summary017", "b17_access_handoff_instruction_correction"], "reason": "Narrow saved-metadata only: both phases and audits align at288/454 procedural coverage. Handoff and method corrections remain reported administrative evidence. No semantic truth, authentic history, admission, native fit, completed parent or quality gain follows."},
     {"id": "synth_import_diagnostic_source_point", "status": "PASS", "evidence_ids": ["synth_parent_import_diagnostic_source_review", "synth_parent_import_diagnostic_pin_index"], "reason": "Narrow source/metadata comparison only: failed setups and isolated declared-name mismatch are preserved, newer correction and observer review scopes are separately bound. No diagnostic replay, binary verification, native/model qualification or SFT-parent eligibility follows."},
-    {"id": "synth_retained_snapshot_wrapper_type_and_schema", "status": "BLOCKED", "evidence_ids": ["synth_retained_snapshot_kind_source_finding", "synth_retained_snapshot_kind_pin_index"], "reason": "Pinned source separates retained updates from scientific checkpoints and backend training restore rejects retained metadata before deserialization. Wrapper predicates separately lack exact inner scientific-kind/schema checks, and resume/envelope schema_version values/types are not fully validated; retained ==1 equality admits bool/float lookalikes. This is a static wrapper-layer gap, not an observed whole-chain forgery, native resume/bypass or weakened backend restore. Source changed during inspection; current observed direct package copies and inert controls do not establish a complete freeze, native export parity9/27, qualified completed SFT parent or RSD authority. Existing owner must refine separate common/scientific/retained validation and malformed controls without dropping transaction/source/cost guards."}
+    {"id": "synth_retained_snapshot_wrapper_type_and_schema", "status": "PASS", "evidence_ids": ["synth_retained_snapshot_kind_source_finding", "synth_retained_snapshot_kind_pin_index", "synth_snapshot_schema_repair_review", "synth_snapshot_schema_repair_pin_index"], "reason": "Current pinned source repair resolves the earlier wrapper inner-kind/schema-version gaps: scientific and retained validation are separate without kind coercion, and versions require exact integer 1. Final restore rejects retained kind before archive reads and rechecks loaded metadata. Original finding and its old source versions remain preserved historical evidence. This PASS is source/inert-control support only; native export at steps 9/27, current source/runtime/resource/phase binding, completed useful SFT parent and E0/RSD remain blocked."},
+    {"id": "synth_snapshot_schema_repair_source_support", "status": "PASS", "evidence_ids": ["synth_snapshot_schema_repair_review", "synth_snapshot_schema_repair_pin_index"], "reason": "Narrow source/recognized inert-control support resolves the pinned wrapper kind/version gaps. Original source finding remains preserved; two source reviewers find no remaining boundary defect at the repaired point. No Torch/checkpoint/native/export execution by these reviewers, no whole-source operational qualification or completed parent/E0/RSD authority."},
+    {"id": "synth_snapshot_native_export_and_current_binding", "status": "BLOCKED", "evidence_ids": ["synth_snapshot_schema_repair_review", "synth_snapshot_schema_repair_pin_index"], "reason": "Actual native export parity at steps9/27, complete M0/independent guard enrollment, fresh exact source/runtime/resource/phase binding and genuinely completed useful ordinary-SFT parent are absent. Inert controls and AST-only legacy fixture adjustment do not replace those prerequisites; unfinished E1/SYNTH remains ineligible."},
+    {"id": "synth_accepted_retention_mechanism_coverage", "status": "BLOCKED", "evidence_ids": ["synth_retention_coverage_gap_source_note", "synth_accepted_quality_screen_policy", "synth_task_guard_mechanism_policy", "synth_dialogue_language_gate_handoff"], "reason": "Accepted supplemental arithmetic, retrieval, abstention and dialogue source-correct retention plus separate genuine long-context qualification/enrollment remain incomplete. Task/language/long-context classes do not prove those mechanisms. Task candidates are unenrolled; instruction-following cannot supply arithmetic. Authored language candidates lack qualified ratings/reference vectors/graders. Structural registries and grouped renderings cannot supply independently qualified M0-correct support. Missing support is UNDEFINED and blocking. Preserve the distinct supplemental 3pp/zero-damage screen and unchanged historical 5pp-plus-CI policy; select no new margin, dose or population here."}
   ],
   "next_proposal": {
-    "phase": "OFFLINE_NEXT_BATCH_BINDING_AND_SFT_PARENT_PREREQUISITE_REVIEW",
-    "proposal_evidence_id": "b16_b18_saved_metadata_review",
-    "target_requirement": "fresh_per_batch_canonical_context_barrier",
+    "phase": "OFFLINE_RETENTION_SOURCE_COVERAGE_AND_PARENT_PREREQUISITE_REVIEW",
+    "proposal_evidence_id": "synth_retention_coverage_gap_source_note",
+    "target_requirement": "synth_accepted_retention_mechanism_coverage",
     "requires": [
       "standing_research_consent",
-      "contrast_g6_measured_activation_join",
-      "review_plan_terminal_success_rule",
-      "public_packaging_binding_coverage",
-      "b01_saved_phase1_metadata_terminal",
-      "b01_phase2_authority_source_scope",
-      "b01_phase2_fail_first_source_clause",
-      "b01_phase2_fail_precedence_wording",
-      "b01_phase2_supplied_context_metadata",
-      "b02_both_scoped_metadata_phases",
-      "b03_both_scoped_metadata_phases",
-      "b04_both_metadata_and_partial_export_source",
-      "versioned_audit_serialization_and_b06_metadata",
-      "b07_both_saved_metadata_phases",
-      "b08_both_saved_metadata_phases",
-      "b09_timestamp_and_both_saved_metadata",
-      "b10_both_saved_metadata_and_alias_provenance",
-      "b11_both_saved_metadata_phases",
-      "b12_b13_metadata_closure_with_exposure_limits",
-      "b14_metadata_closure_b15_phase1_scope",
-      "b15_both_saved_metadata_and_continuity"
+      "synth_accepted_retention_mechanism_coverage",
+      "source_use_ancestry_and_split_closure",
+      "independent_replay_and_source_correct_guards",
+      "complete_target_eos_masks_and_no_truncation",
+      "completed_qualified_sft_parent",
+      "synth_snapshot_native_export_and_current_binding"
     ],
     "limits": {
       "native_model_jobs": 0,
@@ -363,8 +358,9 @@
       "solver_execution_by_queue": 0,
       "parent_reservations_by_queue": 0
     },
-    "scope": "B16 through B18 both saved metadata phases report 32 accepts / 64 calls, exit 0 / no timeout,64/219 unchanged postpins and 32 joint HOLDs each. Summary017 binds 288/454 procedural occurrences, 576 records per phase, 166 remaining, B19 next and qualified/admitted 0. B17 actors reportedly found a missing administrative output contract before access-report publication; its explicit handoff correction is instruction metadata, not authentic semantic reading/history or unchanged raw-payload proof. In-memory adaptation assertion remains method evidence. All raw data/derivatives stay excluded, full-row/admission HOLD, semantic/provenance/model/capacity/eligibility UNKNOWN and native/gains unmeasured. Preserve independent reviewer exposure restrictions, exact per-batch bindings and no replay/refill. SYNTH metadata001/002 preserve incomplete-parent-import setup failures;003 reproduces original CLI/supervisor/monitor setup and isolates a declared psutil extension-name mismatch among 11 modules. New exact-source correction has saved inert controls and still requires fresh source/runtime successor bindings. The old 6485-byte observer review does not cover the newer 7702-byte diagnostic; its separate metadata review is attributed. Selected source and008 config/runtime anchors are recorded unchanged, not binary/runtime rehash or native/model proof. Metadata/source diagnostics do not create a completed ordinary-SFT parent, E0, physical fit or RSD eligibility; unfinished E1/SYNTH remains ineligible. Existing dataset/SYNTH owners continue their exact source and batch work. Exact E0 precedes native SFT-parent training; useful completed ordinary-SFT parent, independent retention and qualified catalog/probes precede RSD. No Root data reads, native launch or permit transfer.",
-    "native_execution_authorized": false
+    "scope": "Source/sanitized-metadata review of accepted arithmetic/retrieval/abstention/dialogue coverage and separate genuine long-context qualification/enrollment. Structural class/mechanism joins must identify missing qualified populations, scorers, semantic authority, token fit, disjointness and independent M0-correct membership without claiming or enrolling them. Review the arithmetic candidate as a bounded source-preparation point; 512 grouped rows are not 512 independent parents. Existing dataset/SYNTH owners continue per-batch exclusion/ancestry/target-fit review and checkpoint/source/runtime preparation. Preserve all incomplete attempts and uncertain spending; do not substitute unfinished E1/SYNTH for a parent. Exact E0 precedes native ordinary-SFT parent training; a genuinely completed useful parent with every retention source reviewed, qualified catalog/probes and separate arm mechanics precedes RSD. No Root raw-data/candidate imports, native execution, grants, new thresholds or permit transfer.",
+    "native_execution_authorized": false,
+    "requires_scope": "Required scientific advancement prerequisites; BLOCKED entries remain holds. This source-only preparation proposal does not execute those phases or require repeated human consent."
   },
   "retained_resource003_next_proposal": {
     "phase": "OFFLINE_RESOURCE003_OWNED_LAUNCHER_AND_POSITIVE_PREFIX_PREPARATION",
@@ -795,5 +791,86 @@
     "source_scope": "Retained snapshots1 through27 have a distinct non-resumable type; scientific resume remains9/18/27 and actual export parity9/27 is still required. Preserve old and updated eight-control receipt points and exact mutable-source versions; no inert tests are actual model parity.",
     "finding_scope": "Strong backend training restore remains separate from weaker wrapper validation. No checkpoint/tensor read, actual resume/bypass, new worker, grant, source promotion or parent qualification occurred in this review.",
     "next_action": "Existing SYNTH owner receives the exact source finding for type/schema and targeted fixture refinement, then complete current source freeze/review before separately admitted native evidence. Root issues no execution decision or permit transfer."
+  },
+  "synth_snapshot_schema_repair_current_state": {
+    "evidence_ids": [
+      "synth_snapshot_schema_repair_review",
+      "synth_snapshot_schema_repair_pin_index"
+    ],
+    "status": "PINNED_SOURCE_KIND_VERSION_REPAIR_SUPPORTED_NATIVE_EXPORT_BINDING_AND_PARENT_HELD",
+    "statement": "Current pinned source separates common validation from scientific/retained kind checks without coercion. Resume/envelope/record and inner metadata versions require exact integer 1, rejecting bool/float aliases. Final restore rejects retained metadata before archive reads and rechecks loaded metadata; original transaction/source/cursor/optimizer/RNG/cumulative-cost guards remain. Eight core, seven terminal and six targeted controls, 21 independent replays of those same suites and separate Root 6 replay are overlapping software evidence, not independent scientific experiments or native export parity. Legacy authored fixture inventory fields were corrected with AST-only scope, not dataset execution or schema weakening. Actual native export parity at steps 9/27, fresh runtime/resource/phase binding, completed useful ordinary-SFT parent, E0 and RSD remain unestablished.",
+    "old_finding_scope": "Earlier wrapper/schema gaps are preserved against their exact old source; current repair does not rewrite historical controls or create an actual resume/bypass result."
+  },
+  "synth_retention_coverage_and_status_point": {
+    "evidence_ids": [
+      "synth_current_status",
+      "synth_retention_coverage_gap_source_note",
+      "synth_accepted_quality_screen_policy",
+      "synth_task_guard_mechanism_policy",
+      "synth_dialogue_language_gate_handoff"
+    ],
+    "status": "FIXED_SOURCE_POINT_WITH_ACCEPTED_RETENTION_MECHANISM_GAPS",
+    "status_snapshot": {
+      "original_mutable_path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/STATUS.md",
+      "fixed_path": "C:/Users/clclc/BusinessProject/rineya-quality-progress-20261009-17/SYNTH_STATUS_FIXED_POINT.md",
+      "sha256": "e901e4faa5e818f6fcf43f10cc8e1ac927184ecd9c7c29ff0ef59a56ea66931e",
+      "bytes": 184829,
+      "meaning": "Historical inspected source point, not a claim of current mutable-source identity or scientific truth."
+    },
+    "verification_history": "V92 explicit live verification failed after the owner edited STATUS.md. Preserve V91/V92, the failed-verification receipt and the fixed-point diff. This snapshot records the changed point without weakening live verification or chasing future status edits.",
+    "new_status_declarations": "The snapshot declares an arithmetic CPU candidate with 128 canonical parents and 512 grouped exposed rows, plus a structural four-source registry. These are source/preparation declarations. They do not establish 512 independent units, native scorer/token-fit/disjointness, M0 enrollment, qualified dialogue/long-context, completed parent, retention or Rineya gain.",
+    "next_action": "Existing SYNTH owner reviews exact arithmetic population/scorer semantic authority, native full-fit/disjointness and independent source-correct enrollment prerequisites while dialogue and long-context qualification stay separately open. Root limits work to source/sanitized metadata; exact E0 still precedes native ordinary-SFT parent training.",
+    "existing_owners": [
+      {
+        "thread_id": "01a1002f-e445-7680-8aa3-1d7bb05c9774",
+        "title": "Build CPU-only R/S task compiler",
+        "scope": "SYNTH source and retention prerequisite preparation"
+      },
+      {
+        "thread_id": "01a109dd-a8bc-73d2-bf9c-5ebc09a00cde",
+        "title": "Plan Rineya dataset pipeline",
+        "scope": "Dataset ancestry/exclusion and independent review preparation"
+      }
+    ],
+    "owner_limit": "Existing chat identity and activity are coordination metadata, not authenticated live native-process custody or scientific evidence. No competing worker or native authority is created."
+  },
+  "retained_pre_coverage_next_proposal": {
+    "phase": "OFFLINE_NEXT_BATCH_BINDING_AND_SFT_PARENT_PREREQUISITE_REVIEW",
+    "proposal_evidence_id": "b16_b18_saved_metadata_review",
+    "target_requirement": "fresh_per_batch_canonical_context_barrier",
+    "requires": [
+      "standing_research_consent",
+      "contrast_g6_measured_activation_join",
+      "review_plan_terminal_success_rule",
+      "public_packaging_binding_coverage",
+      "b01_saved_phase1_metadata_terminal",
+      "b01_phase2_authority_source_scope",
+      "b01_phase2_fail_first_source_clause",
+      "b01_phase2_fail_precedence_wording",
+      "b01_phase2_supplied_context_metadata",
+      "b02_both_scoped_metadata_phases",
+      "b03_both_scoped_metadata_phases",
+      "b04_both_metadata_and_partial_export_source",
+      "versioned_audit_serialization_and_b06_metadata",
+      "b07_both_saved_metadata_phases",
+      "b08_both_saved_metadata_phases",
+      "b09_timestamp_and_both_saved_metadata",
+      "b10_both_saved_metadata_and_alias_provenance",
+      "b11_both_saved_metadata_phases",
+      "b12_b13_metadata_closure_with_exposure_limits",
+      "b14_metadata_closure_b15_phase1_scope",
+      "b15_both_saved_metadata_and_continuity"
+    ],
+    "limits": {
+      "native_model_jobs": 0,
+      "native_optimizer_updates": 0,
+      "native_evaluations": 0,
+      "protected_bank_reads": 0,
+      "actual_tokenizer_calls_by_queue": 0,
+      "solver_execution_by_queue": 0,
+      "parent_reservations_by_queue": 0
+    },
+    "scope": "B16 through B18 both saved metadata phases report 32 accepts / 64 calls, exit 0 / no timeout,64/219 unchanged postpins and 32 joint HOLDs each. Summary017 binds 288/454 procedural occurrences, 576 records per phase, 166 remaining, B19 next and qualified/admitted 0. B17 actors reportedly found a missing administrative output contract before access-report publication; its explicit handoff correction is instruction metadata, not authentic semantic reading/history or unchanged raw-payload proof. In-memory adaptation assertion remains method evidence. All raw data/derivatives stay excluded, full-row/admission HOLD, semantic/provenance/model/capacity/eligibility UNKNOWN and native/gains unmeasured. Preserve independent reviewer exposure restrictions, exact per-batch bindings and no replay/refill. SYNTH metadata001/002 preserve incomplete-parent-import setup failures;003 reproduces original CLI/supervisor/monitor setup and isolates a declared psutil extension-name mismatch among 11 modules. New exact-source correction has saved inert controls and still requires fresh source/runtime successor bindings. The old 6485-byte observer review does not cover the newer 7702-byte diagnostic; its separate metadata review is attributed. Selected source and008 config/runtime anchors are recorded unchanged, not binary/runtime rehash or native/model proof. Metadata/source diagnostics do not create a completed ordinary-SFT parent, E0, physical fit or RSD eligibility; unfinished E1/SYNTH remains ineligible. Existing dataset/SYNTH owners continue their exact source and batch work. Exact E0 precedes native SFT-parent training; useful completed ordinary-SFT parent, independent retention and qualified catalog/probes precede RSD. No Root data reads, native launch or permit transfer.",
+    "native_execution_authorized": false
   }
 }
