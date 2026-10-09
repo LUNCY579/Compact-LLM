@@ -1,5 +1,14 @@
 # Status and next handoff
 
+## 2026-10-09: import008 parent metadata verification failure
+
+[Outcome008](IMPORT_OBSERVATION_OUTCOME_008.md) preserves exit1 before output
+creation: parent psutil loading returned, then a selected module/spec identity
+predicate failed. No admission sample/worker/Torch/model result. The actual
+traceback and current byte/source evidence are retained. Identify the exact
+module metadata and repair only the demonstrated assumption; continue under
+standing authorization with unchanged checks and separate successor registration.
+
 ## 2026-10-09: parent future import correction applied
 
 [Future008](IMPORT_PARENT_FUTURE_CPU_008.md) adds the exact selected __future__
