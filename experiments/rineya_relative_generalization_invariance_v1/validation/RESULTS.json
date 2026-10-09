@@ -1,0 +1,48 @@
+{
+  "commands": [
+    "python -m compileall -q rgi tests",
+    "python -m coverage run --branch --source=rgi -m pytest -q",
+    "python -m rgi demo --out /mnt/data/rgi_final_demo"
+  ],
+  "coverage": {
+    "covered_branches": 183,
+    "covered_lines": 782,
+    "excluded_lines": 0,
+    "missing_branches": 49,
+    "missing_lines": 161,
+    "num_branches": 232,
+    "num_partial_branches": 17,
+    "num_statements": 943,
+    "percent_branches_covered": 78.87931034482759,
+    "percent_branches_covered_display": "79",
+    "percent_covered": 82.12765957446808,
+    "percent_covered_display": "82",
+    "percent_statements_covered": 82.92682926829268,
+    "percent_statements_covered_display": "83"
+  },
+  "cuda_executed": false,
+  "experiment": "RGI-001",
+  "native_rineya_executed": false,
+  "optional_install_attempt": "Unavailable in this environment: pip DNS/network resolution failed.",
+  "peft_stack_qualified": false,
+  "python": "3.13.5",
+  "quality_improvement_established": false,
+  "release_permitted": false,
+  "skips": [
+    "Transformers not installed: optional real tiny Qwen3 loader/collector test",
+    "PEFT not installed: optional real tiny Qwen3 adapter training/stack test"
+  ],
+  "tests_failed": 0,
+  "tests_passed": 141,
+  "tests_skipped": 2,
+  "torch_fixture": "Locally constructed causal prefix-mean backbone with a low-rank head; not Qwen3 or Rineya.",
+  "transformers_loader_qualified": false,
+  "validation_date": "2026-10-09",
+  "versions": {
+    "coverage": "7.13.3",
+    "numpy": "2.3.5",
+    "psutil": "7.2.2",
+    "pytest": "9.0.2",
+    "torch": "2.10.0+cpu"
+  }
+}
