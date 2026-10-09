@@ -29,6 +29,11 @@ FAKE_SCOPE = "CPU_PROTOCOL_FAKE"
 NATIVE_SCOPE = "UNQUALIFIED_NATIVE_IMPLEMENTATION"
 KIND = "SYNTH_STUDY_CHUNK_PROTOCOL_V1"
 BACKEND_KIND = "SYNTH_STUDY_TORCH_BOUNDARY_V1"
+RETAINED_BACKEND_KIND = "SYNTH_STUDY_RETAINED_UPDATE_V1"
+RETAINED_RECORD_KIND = "SYNTH_STUDY_RETAINED_UPDATE_RECORD_V1"
+PRODUCER_POLICY_KIND = "SYNTH_STUDY_ALL_UPDATE_RETENTION_POLICY_V1"
+RETAINED_CALLS = ("retained_update_path", "retained_update_save", "retained_update_verify",
+                  "retained_update_publish_write", "retained_update_publish_verify")
 BINDING_FIELDS = {"completed_updates", "consumed_occurrences", "input_tokens", "supervised_tokens",
                   "consumed_order_sha256", "next_update_ordinal", "learning_rate"}
 METHODS = ("reset_gradients", "forward", "completion_loss", "backward", "finite_clip_gradients",
@@ -59,19 +64,40 @@ def _framework_free():
     require(not any(name.split(".",1)[0] in FRAMEWORKS for name in sys.modules), "no framework before owned native admission")
 
 
-def recipe(registration, arm, scope):
+def producer_policy():
+    return {"schema_version": 1, "kind": PRODUCER_POLICY_KIND,
+            "retain_update_ordinals": list(range(1, 28)), "resume_update_ordinals": [9, 18, 27],
+            "GD_export_parity_update_ordinals": [9, 27], "actual_export_parity_required": True,
+            "metadata_substitutes_for_parity": False, "retained_archives_resumable": False}
+
+
+def validate_producer_policy(value):
+    require(type(value) is dict and schedule.canonical(value) == schedule.canonical(producer_policy()),
+            "exact registered all27 retained-update policy")
+    return deepcopy(value)
+
+
+def recipe(registration, arm, scope, *, retained_update_policy=None):
     require(arm in ("M1","M2") and scope in (FAKE_SCOPE,NATIVE_SCOPE), "adapted arm and explicit protocol scope")
     value = {"schema_version":1, "registration_sha256":registration["sha256"], "arm":arm, "seed":101,
              "cohort_sha256":registration["arms"][arm]["occurrence_order_sha256"],
              "source_pins":deepcopy(registration["source_and_decision_pins"]), "execution_scope":scope,
              "chunk_source_sha256":schedule.filehash(__file__),
              "backend_source_sha256":schedule.filehash(PACKAGE/"study_torch_backend.py")}
+    if retained_update_policy is not None:
+        value["retained_update_policy"] = validate_producer_policy(retained_update_policy)
     value["sha256"] = schedule.digest(value)
     return value
 
 
 def binding(registration, arm, completed):
     require(type(completed) is int and completed in (9,18,27), "complete nine-update boundary")
+    return retained_binding(registration, arm, completed)
+
+
+def retained_binding(registration, arm, completed):
+    require(arm in ("M1", "M2") and type(completed) is int and 1 <= completed <= 27,
+            "retained complete update1..27")
     updates=registration["arms"][arm]["updates"][:completed]
     ids=[identity for update in updates for identity in update["occurrence_row_ids"]]
     return {"completed_updates":completed, "consumed_occurrences":completed*20,
@@ -262,6 +288,95 @@ def _complete_costs(costs, expected, chunk, *, posted=False):
             "exact global dose costs")
 
 
+def _retained_costs(costs, completed, *, after_save=False):
+    validate_costs(costs, successful=True)
+    for name in RETAINED_CALLS:
+        n = completed - int(after_save and name.endswith(("publish_write", "publish_verify")))
+        require(costs["primitive_operations"].get(name, {key: 0 for key in
+                ("attempted", "returned", "failed", "pending")}) ==
+                {"attempted": n, "returned": n, "failed": 0, "pending": 0},
+                "exact cumulative retained primitive cost " + name)
+    n = sum(step < completed if after_save else step <= completed for step in (9, 27))
+    for name in ("GD_export_parity_request_write", "GD_export_parity_request_verify"):
+        want = {"attempted": n, "returned": n, "failed": 0, "pending": 0}
+        actual = costs["primitive_operations"].get(name, {key: 0 for key in want})
+        require(actual == want, "exact cumulative GD parity request cost " + name)
+
+
+def _retained_descriptor(descriptor, expected, current_recipe):
+    require(type(descriptor) is dict and set(descriptor) ==
+            {"schema_version", "kind", "path", "bytes", "sha256", "metadata", "metadata_sha256"}
+            and type(descriptor["schema_version"]) is int and descriptor["schema_version"] == 1
+            and descriptor["kind"] == RETAINED_BACKEND_KIND, "distinct nonresumable retained kind")
+    metadata = descriptor["metadata"]
+    require(type(metadata) is dict and metadata.get("kind") == RETAINED_BACKEND_KIND
+            and metadata.get("resumable") is False
+            and metadata.get("producer_policy_sha256") == schedule.digest(current_recipe["retained_update_policy"])
+            and descriptor["metadata_sha256"] == schedule.digest(metadata)
+            and schedule.canonical(metadata.get("binding")) == schedule.canonical(expected),
+            "retained metadata/cursor/policy binding")
+    # Reuse exact scientific descriptor checks without ever publishing its kind.
+    view = deepcopy(descriptor); view["kind"] = BACKEND_KIND
+    _descriptor(view, expected, current_recipe)
+    return deepcopy(descriptor)
+
+
+def _retained_publication(ledger, preserve, operation, payload, entry, field):
+    publication = ledger.primitive(operation + "_write", lambda:
+        preserve({"event": operation, "payload": deepcopy(payload)}))
+    entry[field] = deepcopy(publication)
+    ledger.primitive(operation + "_verify", lambda: _verify_publication(publication, payload))
+    return publication
+
+
+def _retained_entry(entry, registration, arm, ordinal, current_recipe):
+    require(type(entry) is dict and set(entry) == {"record", "publication", "GD_export_parity_request_publication"},
+            "exact durable retained entry")
+    record = entry["record"]
+    fields = {"schema_version", "kind", "arm", "seed", "recipe_sha256", "producer_policy_sha256",
+              "binding", "backend_descriptor", "posted_save_costs", "GD_export_parity_required",
+              "GD_export_parity_qualified", "sha256"}
+    require(type(record) is dict and set(record) == fields and record["schema_version"] == 1
+            and record["kind"] == RETAINED_RECORD_KIND and record["arm"] == arm and record["seed"] == 101
+            and record["recipe_sha256"] == current_recipe["sha256"]
+            and record["producer_policy_sha256"] == schedule.digest(current_recipe["retained_update_policy"])
+            and record["binding"] == retained_binding(registration, arm, ordinal)
+            and record["GD_export_parity_required"] is (ordinal in (9, 27))
+            and record["GD_export_parity_qualified"] is False
+            and record["sha256"] == schedule.digest({k: v for k, v in record.items() if k != "sha256"}),
+            "retained exact arm/source/order/dose/ordinal record")
+    _retained_descriptor(record["backend_descriptor"], record["binding"], current_recipe)
+    _retained_costs(record["posted_save_costs"], ordinal, after_save=True)
+    previous_chunks = (ordinal - 1) // 9
+    counts = {"gradient_reset": ordinal, "forward": ordinal * 20, "completion_loss": ordinal * 20,
+              "backward": ordinal * 20, "finite_gradient_clip": ordinal, "optimizer_step": ordinal,
+              "checkpoint_save": previous_chunks, "checkpoint_reload": previous_chunks,
+              "checkpoint_publish": previous_chunks, "terminal_costs_publish": previous_chunks,
+              "checkpoint_promote": previous_chunks}
+    require(all(record["posted_save_costs"]["protocol"][name] ==
+                {"attempted": n, "returned": n, "failed": 0, "pending": 0}
+                for name, n in counts.items()), "exact retained training/chunk protocol prefix")
+    require(record["posted_save_costs"]["positions"] == {
+        "input_attempted": record["binding"]["input_tokens"], "input_returned": record["binding"]["input_tokens"],
+        "supervised_attempted": record["binding"]["supervised_tokens"],
+        "supervised_returned": record["binding"]["supervised_tokens"]}, "retained exact consumed positions")
+    _verify_publication(entry["publication"], record)
+    if ordinal in (9, 27):
+        _verify_publication(entry["GD_export_parity_request_publication"], record)
+    else:
+        require(entry["GD_export_parity_request_publication"] is None, "GD request only original9/27")
+    return deepcopy(entry)
+
+
+def _cost_prefix(earlier, later):
+    for inventory in ("protocol", "primitive_operations"):
+        for name, counts in earlier[inventory].items():
+            require(name in later[inventory] and all(later[inventory][name][key] >= n
+                    for key, n in counts.items()), "retained primitive/protocol cost prefix cannot disappear")
+    require(all(later["positions"][key] >= n for key, n in earlier["positions"].items()),
+            "retained consumed positions cannot disappear")
+
+
 def _publish(ledger, preserve, operation, payload):
     def write():
         publication=ledger.primitive("chunk_"+operation+"_write",lambda:preserve({"event":operation,"payload":deepcopy(payload)}))
@@ -274,7 +389,10 @@ def _validate_resume(resume, registration, arm, chunk, current_recipe, latest):
             and resume["kind"]==KIND and resume["status"]=="SUCCESSFUL_STUDY_CHUNK_PROTOCOL_ONLY"
             and resume["sha256"]==schedule.digest({k:v for k,v in resume.items() if k!="sha256"}),"successful prior chunk descriptor only; STATE1 forbidden")
     envelope=resume["envelope"]
-    require(type(envelope) is dict and set(envelope)=={"schema_version","kind","arm","seed","chunk_ordinal","recipe","binding","backend_descriptor","posted_save_costs","native_resume_qualified","training_authorized","sha256"}
+    envelope_fields = {"schema_version","kind","arm","seed","chunk_ordinal","recipe","binding","backend_descriptor","posted_save_costs","native_resume_qualified","training_authorized","sha256"}
+    retained = "retained_update_policy" in current_recipe
+    if retained: envelope_fields.add("retained_updates")
+    require(type(envelope) is dict and set(envelope)==envelope_fields
             and envelope["kind"]==KIND and envelope["seed"]==101 and envelope["native_resume_qualified"] is False and envelope["training_authorized"] is False
             and envelope["sha256"]==schedule.digest({k:v for k,v in envelope.items() if k!="sha256"})
             and envelope["recipe"]==current_recipe and envelope["arm"]==arm and envelope["chunk_ordinal"]==chunk-1,
@@ -295,11 +413,29 @@ def _validate_resume(resume, registration, arm, chunk, current_recipe, latest):
     require(latest==resume["terminal_costs"]==_project(terminal["costs"],"checkpoint_promote"),"latest terminal costs required; rollback forbidden")
     _complete_costs(latest,envelope["binding"],chunk-1)
     _complete_costs(envelope["posted_save_costs"],envelope["binding"],chunk-1,posted=True)
+    if retained:
+        validate_producer_policy(current_recipe["retained_update_policy"])
+        completed = (chunk - 1) * 9
+        require(type(envelope["retained_updates"]) is list and len(envelope["retained_updates"]) == completed,
+                "every original retained update required before resume")
+        prior_costs = None
+        for ordinal, entry in enumerate(envelope["retained_updates"], 1):
+            _retained_entry(entry, registration, arm, ordinal, current_recipe)
+            costs = entry["record"]["posted_save_costs"]
+            if prior_costs is not None: _cost_prefix(prior_costs, costs)
+            _cost_prefix(costs, envelope["posted_save_costs"])
+            require(entry["record"]["backend_descriptor"]["metadata"]["fresh_start_attestation_sha256"] ==
+                    envelope["backend_descriptor"]["metadata"]["fresh_start_attestation_sha256"],
+                    "same retained/scientific fresh start attestation")
+            prior_costs = costs
+        _retained_costs(latest, completed)
+        _retained_costs(envelope["posted_save_costs"], completed)
     return envelope
 
 
 def run_chunk(registration, arm, chunk, backend, row_get, call, guard, preserve, *,
-              resume_descriptor=None, latest_terminal_costs=None, admission=None):
+              resume_descriptor=None, latest_terminal_costs=None, admission=None,
+              retained_update_policy=None):
     """Run exactly nine full updates; injected native factory needs fresh admission.
 
     A tagged native factory accepts call/guard/arm/seed/recipe_sha256/cohort_sha256
@@ -311,7 +447,10 @@ def run_chunk(registration, arm, chunk, backend, row_get, call, guard, preserve,
     require(arm in ("M1","M2") and type(chunk) is int and chunk in (1,2,3),"adapted arm and chunk1/2/3")
     require(all(callable(value) for value in (row_get,call,guard,preserve)),"explicit reader/journal/guard/preservation callbacks")
     scope=getattr(backend,"execution_scope",None)
-    current_recipe=recipe(frozen,arm,scope)
+    policy = None if retained_update_policy is None else validate_producer_policy(retained_update_policy)
+    required_policy = getattr(backend, "required_retained_update_policy", None)
+    require(required_policy is None or required_policy == policy, "STUDY factory requires registered all27 retention")
+    current_recipe=recipe(frozen,arm,scope,retained_update_policy=policy)
     if scope==NATIVE_SCOPE: require(callable(backend),"eager native backend forbidden; admission must precede model loading/constructor")
     start,stop=(chunk-1)*9,chunk*9
     previous=None
@@ -353,6 +492,9 @@ def run_chunk(registration, arm, chunk, backend, row_get, call, guard, preserve,
             "native_launch_authorized":False,"training_authorized":False,"native_resume_qualified":False,"automatic_resume_authorized":False}
     result["native_admission"]=deepcopy(evidence) if scope==NATIVE_SCOPE else None
     result["prevalidated_whole_occurrences"]=len(rows)
+    if policy is not None:
+        result["retained_updates"] = [] if previous is None else deepcopy(previous["retained_updates"])
+        result["retained_update_attempts"] = []
     try:
         if scope==NATIVE_SCOPE:
             guard("chunk_before_native_model_load_and_constructor")
@@ -360,6 +502,8 @@ def run_chunk(registration, arm, chunk, backend, row_get, call, guard, preserve,
         require(getattr(backend,"execution_scope",None)==scope and all(callable(getattr(backend,name,None)) for name in METHODS),"exact actual backend protocol")
         require(all(getattr(backend,name,None)==want for name,want in (("arm",arm),("seed",101),("recipe_sha256",current_recipe["sha256"]),("cohort_sha256",current_recipe["cohort_sha256"]))),"backend fresh source/arm/recipe identity")
         require(getattr(backend,"call",None) is collector and getattr(backend,"guard",None) is guard,"one shared primitive collector/resource guard; wrapper double counting forbidden")
+        if policy is not None:
+            require(callable(getattr(backend, "save_retained_update", None)), "registered retained backend method required")
         ledger.backend=backend
         attestation=backend.fresh_start_attestation
         require(type(attestation) is dict and attestation.get("qualification_STATE1_used") is False and attestation.get("optimizer_state_empty") is True
@@ -386,6 +530,46 @@ def run_chunk(registration, arm, chunk, backend, row_get, call, guard, preserve,
             ledger.invoke("optimizer_step",lambda:backend.optimizer_step(lr=update["learning_rate"],update_ordinal=ordinal))
             result["completed_updates"]=ordinal
             result["update_summaries"].append({"update_ordinal":ordinal,"learning_rate":update["learning_rate"],"mean_per_sequence_loss":sum(losses)/20,"gradient_norm":norm})
+            if policy is not None:
+                attempt = {"update_ordinal": ordinal, "path": None, "backend_descriptor": None,
+                           "record": None, "publication": None, "GD_export_parity_request_publication": None}
+                result["retained_update_attempts"].append(attempt)
+                retained_cursor = retained_binding(frozen, arm, ordinal)
+                retained_path = ledger.primitive("retained_update_path", lambda: preserve({
+                    "event": "retained_update_path", "arm": arm, "update_ordinal": ordinal,
+                    "chunk_ordinal": chunk, "recipe_sha256": current_recipe["sha256"]}))
+                attempt["path"] = retained_path
+                require(type(retained_path) is str and Path(retained_path).is_absolute()
+                        and not Path(retained_path).exists() and not Path(retained_path).is_symlink()
+                        and "state1" not in retained_path.lower(), "new retained update path")
+                retained_descriptor = ledger.primitive("retained_update_save", lambda:
+                    backend.save_retained_update(retained_path, deepcopy(retained_cursor),
+                        producer_policy_sha256=schedule.digest(policy)))
+                attempt["backend_descriptor"] = deepcopy(retained_descriptor)
+                ledger.primitive("retained_update_verify", lambda:
+                    _retained_descriptor(retained_descriptor, retained_cursor, current_recipe))
+                require(retained_descriptor["metadata"]["fresh_start_attestation_sha256"] == attestation["sha256"],
+                        "retained fresh start attestation changed")
+                retained_costs = ledger.snapshot()
+                _retained_costs(retained_costs, ordinal, after_save=True)
+                record = {"schema_version": 1, "kind": RETAINED_RECORD_KIND, "arm": arm, "seed": 101,
+                          "recipe_sha256": current_recipe["sha256"], "producer_policy_sha256": schedule.digest(policy),
+                          "binding": retained_cursor, "backend_descriptor": retained_descriptor,
+                          "posted_save_costs": retained_costs, "GD_export_parity_required": ordinal in (9, 27),
+                          "GD_export_parity_qualified": False}
+                record["sha256"] = schedule.digest(record)
+                attempt["record"] = deepcopy(record)
+                entry = {"record": record, "publication": None, "GD_export_parity_request_publication": None}
+                try:
+                    _retained_publication(ledger, preserve, "retained_update_publish", record, entry, "publication")
+                    if ordinal in (9, 27):
+                        _retained_publication(ledger, preserve, "GD_export_parity_request", record, entry,
+                                              "GD_export_parity_request_publication")
+                finally:
+                    for field in ("publication", "GD_export_parity_request_publication"):
+                        attempt[field] = deepcopy(entry[field])
+                _retained_costs(ledger.snapshot(), ordinal)
+                result["retained_updates"].append(entry)
         end=binding(frozen,arm,stop)
         path=preserve({"event":"checkpoint_path","arm":arm,"chunk_ordinal":chunk,"recipe_sha256":current_recipe["sha256"]})
         require(type(path) is str and Path(path).is_absolute() and not Path(path).exists() and not Path(path).is_symlink()
@@ -395,8 +579,10 @@ def run_chunk(registration, arm, chunk, backend, row_get, call, guard, preserve,
         require(descriptor["metadata"]["fresh_start_attestation_sha256"]==attestation["sha256"],"fresh start attestation changed")
         posted=ledger.snapshot();validate_costs(posted,successful=True)
         _complete_costs(posted,end,chunk,posted=True)
+        if policy is not None: _retained_costs(posted, stop)
         envelope={"schema_version":1,"kind":KIND,"arm":arm,"seed":101,"chunk_ordinal":chunk,"recipe":current_recipe,
                   "binding":end,"backend_descriptor":descriptor,"posted_save_costs":posted,"native_resume_qualified":False,"training_authorized":False}
+        if policy is not None: envelope["retained_updates"] = deepcopy(result["retained_updates"])
         envelope["sha256"]=schedule.digest(envelope)
         publication=_publish(ledger,preserve,"checkpoint_publish",envelope)
         terminal_costs=_project(ledger.snapshot(),"terminal_costs_publish")

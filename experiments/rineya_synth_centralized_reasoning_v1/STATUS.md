@@ -1,5 +1,16 @@
 # Status and next handoff
 
+## 2026-10-09: accepted all27 retention producer implemented offline
+
+[Retention001](STUDY_RETAINED_UPDATES_CPU_001.md) applies separate nonresumable
+update1–27 archives while preserving scientific9/18/27 resume. Required production
+policy, cumulative costs/archive/publication/prefix checks and final27 restore
+selection are integrated; closed staged terminal validates ordered retained/GD/
+scientific publications and original resource/lease/death checks. Eight core and
+seven terminal authored/Root/independent CPU controls pass with inert inputs.
+No corpus/model/framework/native training or actual export parity established.
+GPU admission and full M0/M1/M2 transfer+retention comparison remain pending.
+
 ## 2026-10-09: import009 reached actual admission; GPU floor denied
 
 [Outcome009](IMPORT_OBSERVATION_OUTCOME_009.md) records successful progression

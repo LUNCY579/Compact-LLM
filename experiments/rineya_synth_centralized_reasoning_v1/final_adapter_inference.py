@@ -73,13 +73,22 @@ class Calls:
 def verify_final_chain(registration,arm,chain,latest):
     require(arm in ('M1','M2') and type(chain) is list and len(chain)==3,'all three successful final-study chunk descriptors required')
     schedule.validate_registration(registration)
-    recipe=chunks.recipe(registration,arm,chunks.NATIVE_SCOPE)
+    declared=chain[0]['envelope']['recipe'].get('retained_update_policy')
+    if declared is not None: chunks.validate_producer_policy(declared)
+    recipe=chunks.recipe(registration,arm,chunks.NATIVE_SCOPE,retained_update_policy=declared)
     previous=None
+    previous_retained=None
     for index,cp in enumerate(chain,1):
         envelope=chunks._validate_resume(cp,registration,arm,index+1,recipe,cp['terminal_costs'])
         if previous is not None:
             for name,counts in previous['primitive_operations'].items():
                 require(name in cp['terminal_costs']['primitive_operations'] and all(cp['terminal_costs']['primitive_operations'][name][k]>=n for k,n in counts.items()),'cumulative primitive costs cannot disappear')
+        if declared is not None:
+            retained=envelope['retained_updates']
+            if previous_retained is not None:
+                require(retained[:len(previous_retained)]==previous_retained,
+                        'exact original retained publications cannot change across chunks')
+            previous_retained=retained
         previous=cp['terminal_costs']
     require(latest==chain[-1]['terminal_costs'],'authoritative final terminal costs/hash binding; no rollback')
     final=chain[-1]['envelope']
@@ -147,6 +156,8 @@ def restore_final(torch,model,reader,call,guard,*,arm,registration=None,chunk_ch
         if fixture is None:
             require(source_hashes is not None,'pinned native base tensor hashes required')
             descriptor,binding,recipe=ledger.invoke('final_study_chain_verify',lambda:verify_final_chain(registration,arm,deepcopy(chunk_chain),deepcopy(latest_terminal_costs)))
+            require(recipe.get('retained_update_policy')==chunks.producer_policy(),
+                    'production STUDY requires all27 original retained updates')
             shapes=loader._adapter_shapes();layers=28;linears=197;expected_device='cuda:0';rng_keys={'python','cpu','cuda0'}
             metadata=descriptor['metadata'];require(metadata['scope']==chunks.NATIVE_SCOPE,'real final study archive scope; no CPU fixture laundering')
         else:

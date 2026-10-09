@@ -27,6 +27,7 @@ import native_precision as precision
 
 SCOPES = ("CPU_RANDOM_TOY", "UNQUALIFIED_NATIVE_IMPLEMENTATION")
 KIND = "SYNTH_STUDY_TORCH_BOUNDARY_V1"
+RETAINED_KIND = "SYNTH_STUDY_RETAINED_UPDATE_V1"
 MAX_CHECKPOINT_BYTES = 32 * 1024 * 1024
 BINDING_FIELDS = {"completed_updates", "consumed_occurrences", "input_tokens", "supervised_tokens",
                   "consumed_order_sha256", "next_update_ordinal", "learning_rate"}
@@ -351,11 +352,16 @@ class StudyTorchBackend:
                 "native_resume_qualified": False, "qualification_STATE1_used": False}
 
     def _validate_state(self, state, metadata):
+        require(metadata.get("kind") == KIND, "resumable study state kind")
+        require(not self.require_cuda or metadata["binding"]["completed_updates"] in (9, 18, 27),
+                "native study state only at9/18/27")
+        self._validate_complete_state(state, metadata)
+
+    def _validate_complete_state(self, state, metadata):
         binding = metadata["binding"]
         completed, lr = binding["completed_updates"], binding["learning_rate"]
         require(type(completed) is int and 1 <= completed <= 27 and type(lr) is float
                 and lr == learning_rate(completed), "state update/global LR binding")
-        require(not self.require_cuda or completed in (9, 18, 27), "native study state only at9/18/27")
         require(binding["consumed_occurrences"] == completed * 20 and binding["next_update_ordinal"] == completed + 1
                 and type(binding["input_tokens"]) is int and 0 < binding["input_tokens"] <= 131072
                 and type(binding["supervised_tokens"]) is int and 0 < binding["supervised_tokens"] <= binding["input_tokens"],
@@ -408,6 +414,51 @@ class StudyTorchBackend:
                 stream.flush()
                 os.fsync(stream.fileno())
         self._invoke("checkpoint_write", write)
+        descriptor = snapshot.descriptor
+        descriptor["path"] = str(path)
+        return descriptor
+
+    def snapshot_retained_update(self, binding, *, producer_policy_sha256):
+        """Preserve a completed update; this archive can never resume training."""
+        hash64(producer_policy_sha256, "retained producer policy")
+        require(not self._failed and self._phase == "complete"
+                and type(self.completed_updates) is int and 1 <= self.completed_updates <= 27
+                and self._pending is None and self._loss is None,
+                "retained update requires completed update and empty accumulation")
+        binding = self._binding(binding)
+        self._verify_base(content=True)
+        state = self._invoke("retained_tensor_snapshot", lambda: mechanics._clone_tree(self.torch,
+            mechanics.snapshot_training_state(self.torch, self.model, self.optimizer,
+                require_cuda=self.require_cuda), cpu=True))
+        metadata = self._metadata(binding)
+        metadata.update(kind=RETAINED_KIND, producer_policy_sha256=producer_policy_sha256,
+                        resumable=False)
+        self._invoke("retained_state_validate", lambda: self._validate_complete_state(state, metadata))
+        def serialize():
+            stream = BoundedBytesIO()
+            self.torch.save({"metadata": metadata, "state": state,
+                             "occurrence_order": list(self.order)}, stream)
+            data = stream.getvalue()
+            require(0 < len(data) <= MAX_CHECKPOINT_BYTES, "bounded nonempty retained bytes")
+            return data
+        data = self._invoke("retained_serialize", serialize)
+        descriptor = {"schema_version": 1, "kind": RETAINED_KIND, "bytes": len(data),
+                      "sha256": hashlib.sha256(data).hexdigest(), "metadata": metadata,
+                      "metadata_sha256": digest(metadata)}
+        return BoundarySnapshot(data, canonical(descriptor))
+
+    def save_retained_update(self, path, binding, *, producer_policy_sha256):
+        path = Path(path)
+        require(path.is_absolute() and not path.is_symlink() and not path.exists()
+                and "state1" not in str(path).lower(), "new owned retained update path")
+        snapshot = self.snapshot_retained_update(binding,
+            producer_policy_sha256=producer_policy_sha256)
+        def write():
+            with path.open("xb") as stream:
+                require(stream.write(snapshot.data) == len(snapshot.data), "incomplete retained write")
+                stream.flush()
+                os.fsync(stream.fileno())
+        self._invoke("retained_write", write)
         descriptor = snapshot.descriptor
         descriptor["path"] = str(path)
         return descriptor
