@@ -1,5 +1,14 @@
 # Status and next handoff
 
+## 2026-10-09: complete arithmetic candidate provenance added
+
+[SourceLedger001](ARITHMETIC_SOURCE_LEDGER_CPU_001.md) retains all512 raw/canonical
+candidates:128 selected/382 eligible-unused/2 filtered with exact hashes/reasons/
+joins. Originalguard/policy/cohort/order/render inputs unchanged. Five authored/
+Root/independent controls pass complete replay and refusal mutations. Native
+consumption0/futureoccurrencespending; no solver/targetpopulation/model read.
+Disjointness/nativefit/scoring/M0/precision/dialogue/longcontext remain open.
+
 ## 2026-10-09: separate arithmetic CPU guard candidate implemented
 
 [Arithmetic001](ARITHMETIC_GUARD_CPU_001.md) applies closed fixedpolicy/compiler/
