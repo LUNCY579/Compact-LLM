@@ -4,7 +4,7 @@ from types import ModuleType
 import argparse,hashlib
 HERE=Path(__file__).resolve().parent
 CONTRACT_DESCRIPTOR={'bytes': 15490, 'sha256': 'c669ba3a2897bbfe200fd35807e299be8d75718b428c926edf42a7ffbbf387cf', 'role': 'python_source'}
-SUPERVISOR_DESCRIPTOR={'bytes': 12047, 'sha256': '00726a65bd60f85528d7133607e6af0a5400e4006fc9eee313a1e90ed718da76', 'role': 'python_source'}
+SUPERVISOR_DESCRIPTOR={'bytes': 19204, 'sha256': '11cc929a4bb09c6be7459a3fd9fdaa7172d85de5a815acbf5e40fd519452f740', 'role': 'python_source'}
 ANCHORS=('expected_config_file','expected_config_body','registration_path','expected_registration_file','expected_registration_body','runtime_path','expected_runtime_file','expected_runtime_body','expected_head')
 def _load(path,descriptor):
     path=Path(path).absolute()

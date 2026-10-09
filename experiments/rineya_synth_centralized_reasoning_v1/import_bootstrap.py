@@ -27,8 +27,10 @@ def verify_additional_preloads(value,contract,modules):
     return result
 
 class _FinitePreludeFinder(importlib.abc.MetaPathFinder):
-    def __init__(self,value,contract):self.value=value;self.contract=contract;self.extra=value['runtime']['cache_policy']['additional_preload_sources']
+    def __init__(self,value,contract):contract.require('pwd' not in sys.modules,'preloaded unselected Windows pwd refused');self.value=value;self.contract=contract;self.extra=value['runtime']['cache_policy']['additional_preload_sources']
     def find_spec(self,fullname,path=None,target=None):
+        if fullname=='pwd':
+            self.contract.require(importlib.machinery.BuiltinImporter.find_spec(fullname) is None and importlib.machinery.FrozenImporter.find_spec(fullname) is None and importlib.machinery.PathFinder.find_spec(fullname,path,target) is None,'available unselected Windows pwd refused');raise ModuleNotFoundError("No module named "+repr(fullname),name=fullname)
         if importlib.machinery.BuiltinImporter.find_spec(fullname) or importlib.machinery.FrozenImporter.find_spec(fullname):return None
         if fullname not in self.extra:
             self.contract.require(fullname in self.value['runtime']['cache_policy']['preloaded_bootstrap_modules'],'unknown additional prelude import refused');return None

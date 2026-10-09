@@ -1,5 +1,16 @@
 # Status and next handoff
 
+## 2026-10-09: supervisor entry correction reviewed and applied
+
+[Entry006](IMPORT_SUPERVISOR_ENTRY_CPU_006.md) adds selected parent dependency
+resolution and safe optional-import fallback, preserves monitor method code and
+normalizes historical descriptor rows. Thirteen authored/Root and independent
+CPU controls pass. Actual public links/default absent-grant refusal pass with
+updated supervisor descriptors in both dispatchers. Source/runtime refresh and
+a separately bound successor attempt are next under standing authorization.
+The original006 no-resume failure remains preserved; no import or model-quality
+success is inferred from CPU fixtures.
+
 ## 2026-10-09: import006 denied before worker; standing authorization active
 
 [Outcome006](IMPORT_OBSERVATION_OUTCOME_006.md) preserves the actual approved

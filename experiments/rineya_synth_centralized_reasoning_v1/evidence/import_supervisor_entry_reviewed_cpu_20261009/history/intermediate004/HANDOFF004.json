@@ -1,0 +1,46 @@
+{
+  "child_change": "Only optional Windows pwd absent-on-all-three-findersonly returnNone, present/preloaded rejects. Historical bootstrap/cache and expectedDLLbaseline unchanged.",
+  "controls": "12 PASS,0.225s; original supervise/psutil/pid_alive and monitor code, inert sources only",
+  "created_utc": "2026-10-09T16:35:24.313524+00:00",
+  "failed_predecessors": [
+    "failed_monitor_fixture001: 10 tests, 1 fixture source-map KeyError; no native execution",
+    "failed_monitor_compiler_binding002: 11 tests,1 co_code equality failure because deleting shared import alters compiler binding; corrected by retaining import AST."
+  ],
+  "files": {
+    "CPU_SUPERVISOR_ENTRY_CONTROLS004.json": {
+      "bytes": 1675,
+      "sha256": "bf687b5d2745fddc1f45a63265fe9e4b1c844af1213fc29662e8e85ab2d44243"
+    },
+    "import_bootstrap.py": {
+      "bytes": 8272,
+      "sha256": "fc88dfe73210ad8872661a450577d3fa401a9f1cfac0dab258c4f0c155ac68e6"
+    },
+    "import_observation_supervisor.py": {
+      "bytes": 18507,
+      "sha256": "9300afbf9d40c4ccfb8344c96d71fd513c183a121b9016dd12f992de11275a20"
+    },
+    "predecessor_import_bootstrap.py": {
+      "bytes": 7862,
+      "sha256": "749b093fb05fd58f37fdc3109196e60494ac70d46fc97aaf89c9e0e366b43c5b"
+    },
+    "predecessor_import_observation_supervisor.py": {
+      "bytes": 12047,
+      "sha256": "00726a65bd60f85528d7133607e6af0a5400e4006fc9eee313a1e90ed718da76"
+    },
+    "test_supervisor_entry.py": {
+      "bytes": 20171,
+      "sha256": "1eb3581216ed8b1b3d16fd10e0e6b998181c6cdb5fb0bf41c8c8cdc6b546850f"
+    }
+  },
+  "fixture_only": true,
+  "kind": "SUPERVISOR_ENTRY_STAGED_SOURCE_HANDOFF004",
+  "monitor": "Remove exact path insertion, retain original import symbol and resolve only native_supervisor through exact original module. Original method co_code/co_consts/co_names/co_filename equality passes.",
+  "native_authority_issued": false,
+  "native_framework_API_or_process_called": false,
+  "parent_optional_org": "Actual copy.py org.python.core optional import reaches absent rootorg; onlyall3finderNone permits normalModuleNotFoundError. Anyavailable orcachedorg refused. No childorg allowance.",
+  "parent_scope": "Selected PACKAGE/SITE roots and finite historical/additional/uuid/_uuid/native_process/native_nvml resolution; same path/meta containers restored; selected modules retained for terminal death verifier",
+  "predecessor_freeze": "frozen_supervisor_entry003",
+  "public_sources_changed": false,
+  "scope": "OWNED_TORCH_IMPORT_LIBRARY_EFFECT_OBSERVATION_ONLY",
+  "sha256": "4111f44e7405c10837ba8e7b0acd4b75a352177b4945e60930221c288bb8fc94"
+}

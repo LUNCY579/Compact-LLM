@@ -2,7 +2,7 @@
 from pathlib import Path
 from types import ModuleType
 from datetime import datetime,timezone
-import ast,hashlib,json,os,time
+import ast,builtins,hashlib,importlib,importlib.machinery,importlib.util,json,os,sys,time
 HERE=Path(__file__).resolve().parent
 SCOPE='OWNED_TORCH_IMPORT_LIBRARY_EFFECT_OBSERVATION_ONLY'
 ORIGINAL_SUPERVISOR_PIN='edf2de5b0917150c2c79e6a555dc0399995d12859028e62a7f7ece86b767e691'
@@ -37,18 +37,99 @@ def _preflight(context,contract,config_path):
         'authorization':{'scope':SCOPE,'production_training':False,'protected_bank_access':False,'paid_services':False},
         'resources':config['resources'],'source_commit':value['expected_head'],'profile_sha256':value['registration']['profile_sha256'],
         'source_inventory_sha256':contract.digest(config['source_files']),'runtime_inventory_sha256':contract.digest(value['runtime']['files'])}
+
+class _SupervisorFinder:
+    """Finite selected parent dependencies; never the worker import observer."""
+    def __init__(self,value,contract):
+        self.value=value;self.contract=contract
+        policy=value['runtime']['cache_policy'];files=value['runtime']['files'];self.rows={}
+        for name,row in policy['preloaded_bootstrap_modules'].items():
+            descriptor=files[row['path']];cache=None if row['cache_path'] is None else files[row['cache_path']]
+            require(descriptor['role'] in ('python_source','extension_binary') and descriptor['sha256']==row['source_sha256'] and (cache is None and row['cache_sha256'] is None or cache is not None and cache['role']=='qualified_bytecode_cache' and cache['sha256']==row['cache_sha256']),'historical parent source/cache pins join selected inventory')
+            self.rows[name]={**row,'descriptor':descriptor,'cache_descriptor':cache}
+        self.rows.update(policy['additional_preload_sources'])
+        for name in ('native_process','native_nvml'):
+            path=str(contract.PACKAGE/(name+'.py'));self.rows[name]={'path':path,'descriptor':value['config']['source_files'][path],'cache_path':None,'cache_descriptor':None}
+        base=Path(value['runtime']['stdlib_layout']['physical_base_prefix'])
+        for name,path,role in (('uuid',base/'Lib/uuid.py','python_source'),('_uuid',base/'DLLs/_uuid.pyd','extension_binary')):
+            text=str(path);d=value['runtime']['files'][text];require(d['role']==role,'selected parent UUID dependency role');self.rows[name]={'path':text,'descriptor':d,'cache_path':None,'cache_descriptor':None}
+    def find_spec(self,fullname,path=None,target=None):
+        if fullname in ('pwd','org'):
+            require(importlib.machinery.BuiltinImporter.find_spec(fullname) is None and importlib.machinery.FrozenImporter.find_spec(fullname) is None and importlib.machinery.PathFinder.find_spec(fullname,path,target) is None,'available unselected parent optional module refused');raise ModuleNotFoundError("No module named "+repr(fullname),name=fullname)
+        if importlib.machinery.BuiltinImporter.find_spec(fullname) or importlib.machinery.FrozenImporter.find_spec(fullname):return None
+        require(fullname in self.rows,'unknown parent dependency import refused')
+        row=self.rows[fullname];C=self.contract;layout=self.value['runtime']['stdlib_layout'];spec=importlib.machinery.PathFinder.find_spec(fullname,path,target)
+        require(spec is not None and spec.origin is not None and str(C.qualified_path(spec.origin,layout=layout))==row['path'],'parent dependency resolution matches selected source')
+        C.file_descriptor(row['path'],row['descriptor'],layout=layout)
+        if row['cache_path'] is not None:C.file_descriptor(row['cache_path'],row['cache_descriptor'],layout=layout)
+        if fullname in ('native_process','native_nvml','uuid'):
+            # Package helpers compile the checked source, never an unselected pyc.
+            class SelectedSource(importlib.machinery.SourceFileLoader):
+                def get_code(self,name):
+                    require(name==fullname,'exact parent helper loader name');C.file_descriptor(row['path'],row['descriptor']);return compile(C.read_bytes(row['path']),row['path'],'exec')
+            spec.loader=SelectedSource(fullname,row['path'])
+        return spec
+
+def _supervisor_dependency_scope(value,contract):
+    contract.stage_native_gate()
+    roots=[str(contract.qualified_path(contract.PACKAGE)),str(contract.qualified_path(contract.SITE))]
+    require(all(Path(p).is_dir() for p in roots),'physical selected parent PACKAGE/SITE roots')
+    path_container=sys.path;before=tuple(path_container);meta_container=sys.meta_path;meta_before=tuple(meta_container)
+    require(list(before)==value['runtime']['cache_policy']['interpreter_profile']['path'],'selected no-site parent initial roots')
+    require(all(name not in sys.modules for name in ('psutil','native_process','native_nvml','pwd','org')),'fresh parent dependency identities')
+    finder=_SupervisorFinder(value,contract);sys.path.extend(roots);after=tuple(sys.path);sys.meta_path.insert(0,finder)
+    def finish():
+        stable=sys.path is path_container and tuple(sys.path)==after and sys.meta_path is meta_container and tuple(sys.meta_path)==(finder,*meta_before)
+        sys.path=path_container;path_container[:]=before;sys.meta_path=meta_container;meta_container[:]=meta_before
+        require(stable,'owned parent search roots/finder unchanged before restore')
+    return finish
+
+def _selected_monitor(value,contract,original):
+    path=contract.PACKAGE/'short_ram_monitor.py';d=value['config']['source_files'][str(path)];raw=contract.read_bytes(path);require(len(raw)==d['bytes'] and hashlib.sha256(raw).hexdigest()==d['sha256'],'registered original full-RSS monitor source')
+    tree=ast.parse(raw,str(path));removed=[];body=[]
+    for node in tree.body:
+        if isinstance(node,ast.Expr) and isinstance(node.value,ast.Call) and ast.unparse(node.value.func)=='sys.path.insert':
+            require(ast.unparse(node.value)=='sys.path.insert(0, str(PACKAGE))','exact original monitor path insertion');removed.append('path_insert')
+        elif isinstance(node,ast.Import) and any(a.name=='native_supervisor' for a in node.names):
+            require(len(node.names)==1 and node.names[0].asname=='shared','exact original monitor shared import');removed.append('shared_import');body.append(node)
+        else:body.append(node)
+    require(removed==['path_insert','shared_import'],'only two parent monitor source adaptations');tree.body=body
+    def selected_import(name,globals=None,locals=None,fromlist=(),level=0):
+        if name=='native_supervisor':
+            require(level==0 and not fromlist,'exact original shared module import');return original
+        return builtins.__import__(name,globals,locals,fromlist,level)
+    # Retain the import symbol in compilation to preserve original method code.
+    module=ModuleType('owned_import_selected_monitor');module.__file__=str(path);module.__dict__['__builtins__']={**vars(builtins),'__import__':selected_import};exec(compile(tree,str(path),'exec'),module.__dict__)
+    require(module.shared is original and module.ShortRamMonitor.__bases__==(original._Monitor,),'exact original monitor superclass/namespace')
+    return module
+
+def _verify_parent_preloads(value,contract):
+    path=contract.PACKAGE/'import_bootstrap.py';d=value['config']['source_files'][str(path)];raw=contract.read_bytes(path);require(len(raw)==d['bytes'] and hashlib.sha256(raw).hexdigest()==d['sha256'],'selected existing preload verifier source')
+    module=ModuleType('owned_import_parent_preload_verifier');module.__file__=str(path);exec(compile(raw,str(path),'exec'),module.__dict__)
+    importlib.import_module('psutil')
+    files={**value['runtime']['files'],**value['config']['source_files']};rows=value['runtime']['cache_policy']['additional_preload_sources']
+    for name in ('psutil','psutil._common','psutil._ntuples','psutil._pswindows','psutil._psutil_windows'):
+        require(name in sys.modules and name in rows,'complete selected parent psutil family')
+    for name,row in rows.items():
+        if name in sys.modules:module.verify_current_module(name,sys.modules[name],row,contract,files,value['runtime']['stdlib_layout'])
+
 def supervise_registered(config_path,output_dir,*,contract,grant_reference=None,owner_receipt_reference=None,**anchors):
     require(contract.SCOPE==SCOPE,'exact separate import contract')
     binding={'config_path':str(Path(config_path).absolute()),'anchors':anchors};contract.enroll_native_gate(grant_reference,owner_receipt_reference,binding);contract.stage_native_gate();context=contract.validate_native_manifest(config_path,**anchors);value=contract.context_value(context)
-    source=contract.PACKAGE/'native_supervisor.py';descriptor=value['config']['source_files'][str(source)];raw=contract.read_bytes(source);require(len(raw)==descriptor['bytes'] and hashlib.sha256(raw).hexdigest()==descriptor['sha256'],'unchanged registered original lifecycle source')
-    original=ModuleType('owned_import_original_supervisor');original.__file__=str(source);exec(compile(raw,str(source),'exec'),original.__dict__)
-    worker=Path(value['config']['main_source']);require(worker.parent==contract.PACKAGE,'registered public import worker location');tree,proof=_adapt_supervise(raw,source,worker)
-    namespace=dict(original.__dict__);original_new=original._new_output
-    def new_output(request):
-        output=original_new(request);original._json_new(output/'OWNED_EXTERNAL_ANCHORS.json',{'schema_version':2,**binding,'grant_reference':grant_reference,'owner_receipt_reference':owner_receipt_reference});return output
-    namespace['_new_output']=new_output;namespace['_preflight']=lambda request:_preflight(context,contract,request)
-    monitor_path=contract.PACKAGE/'short_ram_monitor.py';monitor_descriptor=value['config']['source_files'][str(monitor_path)];monitorraw=contract.read_bytes(monitor_path);require(hashlib.sha256(monitorraw).hexdigest()==monitor_descriptor['sha256'],'registered original full-RSS monitor source');monitor=ModuleType('owned_import_selected_monitor');monitor.__file__=str(monitor_path);exec(compile(monitorraw,str(monitor_path),'exec'),monitor.__dict__);namespace['_Monitor']=monitor.ShortRamMonitor
-    exec(compile(tree,str(source),'exec'),namespace);return namespace['supervise'](config_path,output_dir)
+    finish=_supervisor_dependency_scope(value,contract)
+    try:
+        source=contract.PACKAGE/'native_supervisor.py';descriptor=value['config']['source_files'][str(source)];raw=contract.read_bytes(source);require(len(raw)==descriptor['bytes'] and hashlib.sha256(raw).hexdigest()==descriptor['sha256'],'unchanged registered original lifecycle source')
+        original=ModuleType('owned_import_original_supervisor');original.__file__=str(source);exec(compile(raw,str(source),'exec'),original.__dict__)
+        worker=Path(value['config']['main_source']);require(worker.parent==contract.PACKAGE,'registered public import worker location');tree,proof=_adapt_supervise(raw,source,worker)
+        namespace=dict(original.__dict__);original_new=original._new_output
+        def new_output(request):
+            output=original_new(request);original._json_new(output/'OWNED_EXTERNAL_ANCHORS.json',{'schema_version':2,**binding,'grant_reference':grant_reference,'owner_receipt_reference':owner_receipt_reference});return output
+        namespace['_new_output']=new_output;namespace['_preflight']=lambda request:_preflight(context,contract,request)
+        monitor=_selected_monitor(value,contract,original);namespace['_Monitor']=monitor.ShortRamMonitor
+        _verify_parent_preloads(value,contract)
+        exec(compile(tree,str(source),'exec'),namespace);return namespace['supervise'](config_path,output_dir)
+    finally:finish()
+
 def preserve_terminal(output,target,*,contract,context,death_verifier=None,_CPU_capability=None):
     """Copy exact finite raw denominator, including failed/no worker result."""
     value=contract.revalidate_context(context)
