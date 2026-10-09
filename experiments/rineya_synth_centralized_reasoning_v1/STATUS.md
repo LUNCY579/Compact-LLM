@@ -1,5 +1,15 @@
 # Status and next handoff
 
+## 2026-10-09: arithmetic CPU tokens measured; projection correction pending
+
+[TokenOutcome001](ARITHMETIC_TOKENMEASUREMENT_OUTCOME_001.md) preserves actual
+512-row measurement/nooverflow maxima225prompt/9EOScompletion/234total. Current
+1392-file identity stable; cooperative28.895s/161.8MB within original600s/512MiB.
+No model/GPU/scoring/M0/native qualification. Original projectedmetadata retained
+full-result hash despite array separation; self-seal invalid, joined full digest
+verified. Preserve original output and apply reviewed additive projection fix
+without repeating tokenizer work; independent byte audit is in progress.
+
 ## 2026-10-09: complete arithmetic candidate provenance added
 
 [SourceLedger001](ARITHMETIC_SOURCE_LEDGER_CPU_001.md) retains all512 raw/canonical
