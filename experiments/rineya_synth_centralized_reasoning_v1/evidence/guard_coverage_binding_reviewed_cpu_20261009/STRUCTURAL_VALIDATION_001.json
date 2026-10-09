@@ -1,0 +1,348 @@
+{
+  "actual_enrollment_verified": false,
+  "actual_support": null,
+  "coverage_complete": false,
+  "domains": [
+    {
+      "actual_support": null,
+      "context": "short",
+      "declared_candidate_rows": null,
+      "declared_source_correct_rows": null,
+      "domain": "arithmetic",
+      "qualified_source_correct_rows": null,
+      "scientific_coverage_status": "UNDEFINED"
+    },
+    {
+      "actual_support": null,
+      "context": "short",
+      "declared_candidate_rows": null,
+      "declared_source_correct_rows": null,
+      "domain": "retrieval",
+      "qualified_source_correct_rows": null,
+      "scientific_coverage_status": "UNDEFINED"
+    },
+    {
+      "actual_support": null,
+      "context": "short",
+      "declared_candidate_rows": null,
+      "declared_source_correct_rows": null,
+      "domain": "abstention",
+      "qualified_source_correct_rows": null,
+      "scientific_coverage_status": "UNDEFINED"
+    },
+    {
+      "actual_support": null,
+      "context": "short",
+      "declared_candidate_rows": null,
+      "declared_source_correct_rows": null,
+      "domain": "dialogue",
+      "qualified_source_correct_rows": null,
+      "scientific_coverage_status": "UNDEFINED"
+    },
+    {
+      "actual_support": null,
+      "context": "long",
+      "declared_candidate_rows": null,
+      "declared_source_correct_rows": null,
+      "domain": "long_context",
+      "qualified_source_correct_rows": null,
+      "scientific_coverage_status": "UNDEFINED"
+    }
+  ],
+  "external_requirement": "Exact independently qualified population/scorer/qualification and actual pre-candidate source-correct enrollment remain owner verification; no coverage or quality decision is supplied.",
+  "missing_bindings": [
+    "domains.arithmetic.mechanism_mapping",
+    "domains.arithmetic.population.descriptor",
+    "domains.arithmetic.scorer.descriptor",
+    "domains.arithmetic.qualification.descriptor",
+    "domains.arithmetic.enrollment.descriptor",
+    "domains.arithmetic.declared_source_correct_rows",
+    "domains.retrieval.population.descriptor",
+    "domains.retrieval.scorer.descriptor",
+    "domains.retrieval.qualification.descriptor",
+    "domains.retrieval.enrollment.descriptor",
+    "domains.retrieval.declared_source_correct_rows",
+    "domains.abstention.population.descriptor",
+    "domains.abstention.scorer.descriptor",
+    "domains.abstention.qualification.descriptor",
+    "domains.abstention.enrollment.descriptor",
+    "domains.abstention.declared_source_correct_rows",
+    "domains.dialogue.mechanism_mapping",
+    "domains.dialogue.population.descriptor",
+    "domains.dialogue.scorer.descriptor",
+    "domains.dialogue.qualification.descriptor",
+    "domains.dialogue.enrollment.descriptor",
+    "domains.dialogue.declared_source_correct_rows",
+    "domains.long_context.mechanism_mapping",
+    "domains.long_context.population.descriptor",
+    "domains.long_context.scorer.descriptor",
+    "domains.long_context.qualification.descriptor",
+    "domains.long_context.enrollment.descriptor",
+    "domains.long_context.declared_source_correct_rows",
+    "disjointness.training_vs_short_guards.source.declared_disjoint",
+    "disjointness.training_vs_short_guards.source.descriptor",
+    "disjointness.training_vs_short_guards.parent.declared_disjoint",
+    "disjointness.training_vs_short_guards.parent.descriptor",
+    "disjointness.dev_vs_short_guards.source.declared_disjoint",
+    "disjointness.dev_vs_short_guards.source.descriptor",
+    "disjointness.dev_vs_short_guards.parent.declared_disjoint",
+    "disjointness.dev_vs_short_guards.parent.descriptor",
+    "disjointness.training_vs_long_context.source.declared_disjoint",
+    "disjointness.training_vs_long_context.source.descriptor",
+    "disjointness.training_vs_long_context.parent.declared_disjoint",
+    "disjointness.training_vs_long_context.parent.descriptor",
+    "disjointness.dev_vs_long_context.source.declared_disjoint",
+    "disjointness.dev_vs_long_context.source.descriptor",
+    "disjointness.dev_vs_long_context.parent.declared_disjoint",
+    "disjointness.dev_vs_long_context.parent.descriptor",
+    "disjointness.short_guards_vs_long_context.source.declared_disjoint",
+    "disjointness.short_guards_vs_long_context.source.descriptor",
+    "disjointness.short_guards_vs_long_context.parent.declared_disjoint",
+    "disjointness.short_guards_vs_long_context.parent.descriptor"
+  ],
+  "model_quality_gain": false,
+  "native_admissible": false,
+  "parent_disjointness_verified": false,
+  "payloads_read": false,
+  "plan_sha256": "6bf59d366d63ed1bd0c06f1b93e5e9c42260c6e604897b4b669cd3ee6a651bf3",
+  "policy_contents_verified": false,
+  "preserved_plan": {
+    "claims": {
+      "coverage_complete": false,
+      "model_quality_gain": false,
+      "native_admissible": false,
+      "retention_eligible": false,
+      "retention_qualified": false,
+      "scoring_authorized": false
+    },
+    "disjointness": {
+      "dev_vs_long_context": {
+        "parent": {
+          "declared_disjoint": null,
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "source": {
+          "declared_disjoint": null,
+          "descriptor": null,
+          "status": "PENDING"
+        }
+      },
+      "dev_vs_short_guards": {
+        "parent": {
+          "declared_disjoint": null,
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "source": {
+          "declared_disjoint": null,
+          "descriptor": null,
+          "status": "PENDING"
+        }
+      },
+      "short_guards_vs_long_context": {
+        "parent": {
+          "declared_disjoint": null,
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "source": {
+          "declared_disjoint": null,
+          "descriptor": null,
+          "status": "PENDING"
+        }
+      },
+      "training_vs_long_context": {
+        "parent": {
+          "declared_disjoint": null,
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "source": {
+          "declared_disjoint": null,
+          "descriptor": null,
+          "status": "PENDING"
+        }
+      },
+      "training_vs_short_guards": {
+        "parent": {
+          "declared_disjoint": null,
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "source": {
+          "declared_disjoint": null,
+          "descriptor": null,
+          "status": "PENDING"
+        }
+      }
+    },
+    "domains": [
+      {
+        "candidate_rows": null,
+        "context": "short",
+        "declared_source_correct_rows": null,
+        "domain": "arithmetic",
+        "enrollment": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "mechanism_mapping": null,
+        "population": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "population_scope_id": null,
+        "qualification": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "scorer": {
+          "descriptor": null,
+          "status": "PENDING"
+        }
+      },
+      {
+        "candidate_rows": null,
+        "context": "short",
+        "declared_source_correct_rows": null,
+        "domain": "retrieval",
+        "enrollment": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "mechanism_mapping": {
+          "mechanism": "retrieval",
+          "policy": "task",
+          "policy_sha256": "7f50a62dc65450693df98865ae5a93821a183cc7c6a7ef934a05dc302e333bf9"
+        },
+        "population": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "population_scope_id": null,
+        "qualification": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "scorer": {
+          "descriptor": null,
+          "status": "PENDING"
+        }
+      },
+      {
+        "candidate_rows": null,
+        "context": "short",
+        "declared_source_correct_rows": null,
+        "domain": "abstention",
+        "enrollment": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "mechanism_mapping": {
+          "mechanism": "answerability_abstention",
+          "policy": "task",
+          "policy_sha256": "7f50a62dc65450693df98865ae5a93821a183cc7c6a7ef934a05dc302e333bf9"
+        },
+        "population": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "population_scope_id": null,
+        "qualification": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "scorer": {
+          "descriptor": null,
+          "status": "PENDING"
+        }
+      },
+      {
+        "candidate_rows": null,
+        "context": "short",
+        "declared_source_correct_rows": null,
+        "domain": "dialogue",
+        "enrollment": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "mechanism_mapping": null,
+        "population": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "population_scope_id": null,
+        "qualification": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "scorer": {
+          "descriptor": null,
+          "status": "PENDING"
+        }
+      },
+      {
+        "candidate_rows": null,
+        "context": "long",
+        "declared_source_correct_rows": null,
+        "domain": "long_context",
+        "enrollment": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "mechanism_mapping": null,
+        "population": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "population_scope_id": null,
+        "qualification": {
+          "descriptor": null,
+          "status": "PENDING"
+        },
+        "scorer": {
+          "descriptor": null,
+          "status": "PENDING"
+        }
+      }
+    ],
+    "experiment": "SYNTH-CRS-001",
+    "long_context_domain": "long_context",
+    "required_short_domains": [
+      "arithmetic",
+      "retrieval",
+      "abstention",
+      "dialogue"
+    ],
+    "schema": "synth_guard_coverage_plan_v1",
+    "scientific_coverage_status": "UNDEFINED",
+    "selected_policies": {
+      "engineering": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\supplemental_quality_packet_reviewed_20261005\\QUALITY_SCREEN_POLICY_001.json",
+        "policy_id": "SYNTH-QUALITY-3PP-ZERO-DAMAGE-20261005",
+        "sha256": "c4ba81c50289e8d8f8e172393c3080c5857a3149e7e6707a2a134372c2088932"
+      },
+      "statistics": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\DEV_STATISTICS_POLICY.json",
+        "policy_id": "SYNTH-DEV-STATISTICS-001",
+        "sha256": "9db137bfa6c0e0e07ec8161e4127ec0a2ec20bb2c224529face447986e876d11"
+      },
+      "task": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\TASK_RETENTION_GUARD_POLICY.json",
+        "policy_id": "SYNTH-TASK-GUARD-001",
+        "sha256": "7f50a62dc65450693df98865ae5a93821a183cc7c6a7ef934a05dc302e333bf9"
+      }
+    },
+    "status": "CLOSED_PREPARATION"
+  },
+  "receipt_contents_verified": false,
+  "retention_eligible": false,
+  "retention_qualified": false,
+  "schema": "synth_guard_coverage_validation_v1",
+  "scientific_coverage_status": "UNDEFINED",
+  "scoring_authorized": false,
+  "source_disjointness_verified": false,
+  "status": "CLOSED_PLAN_STRUCTURALLY_VALID",
+  "structural_only": true
+}

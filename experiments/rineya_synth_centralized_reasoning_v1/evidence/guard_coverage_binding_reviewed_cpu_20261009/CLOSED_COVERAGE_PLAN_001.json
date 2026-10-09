@@ -1,0 +1,230 @@
+{
+  "claims": {
+    "coverage_complete": false,
+    "model_quality_gain": false,
+    "native_admissible": false,
+    "retention_eligible": false,
+    "retention_qualified": false,
+    "scoring_authorized": false
+  },
+  "disjointness": {
+    "dev_vs_long_context": {
+      "parent": {
+        "declared_disjoint": null,
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "source": {
+        "declared_disjoint": null,
+        "descriptor": null,
+        "status": "PENDING"
+      }
+    },
+    "dev_vs_short_guards": {
+      "parent": {
+        "declared_disjoint": null,
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "source": {
+        "declared_disjoint": null,
+        "descriptor": null,
+        "status": "PENDING"
+      }
+    },
+    "short_guards_vs_long_context": {
+      "parent": {
+        "declared_disjoint": null,
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "source": {
+        "declared_disjoint": null,
+        "descriptor": null,
+        "status": "PENDING"
+      }
+    },
+    "training_vs_long_context": {
+      "parent": {
+        "declared_disjoint": null,
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "source": {
+        "declared_disjoint": null,
+        "descriptor": null,
+        "status": "PENDING"
+      }
+    },
+    "training_vs_short_guards": {
+      "parent": {
+        "declared_disjoint": null,
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "source": {
+        "declared_disjoint": null,
+        "descriptor": null,
+        "status": "PENDING"
+      }
+    }
+  },
+  "domains": [
+    {
+      "candidate_rows": null,
+      "context": "short",
+      "declared_source_correct_rows": null,
+      "domain": "arithmetic",
+      "enrollment": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "mechanism_mapping": null,
+      "population": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "population_scope_id": null,
+      "qualification": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "scorer": {
+        "descriptor": null,
+        "status": "PENDING"
+      }
+    },
+    {
+      "candidate_rows": null,
+      "context": "short",
+      "declared_source_correct_rows": null,
+      "domain": "retrieval",
+      "enrollment": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "mechanism_mapping": {
+        "mechanism": "retrieval",
+        "policy": "task",
+        "policy_sha256": "7f50a62dc65450693df98865ae5a93821a183cc7c6a7ef934a05dc302e333bf9"
+      },
+      "population": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "population_scope_id": null,
+      "qualification": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "scorer": {
+        "descriptor": null,
+        "status": "PENDING"
+      }
+    },
+    {
+      "candidate_rows": null,
+      "context": "short",
+      "declared_source_correct_rows": null,
+      "domain": "abstention",
+      "enrollment": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "mechanism_mapping": {
+        "mechanism": "answerability_abstention",
+        "policy": "task",
+        "policy_sha256": "7f50a62dc65450693df98865ae5a93821a183cc7c6a7ef934a05dc302e333bf9"
+      },
+      "population": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "population_scope_id": null,
+      "qualification": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "scorer": {
+        "descriptor": null,
+        "status": "PENDING"
+      }
+    },
+    {
+      "candidate_rows": null,
+      "context": "short",
+      "declared_source_correct_rows": null,
+      "domain": "dialogue",
+      "enrollment": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "mechanism_mapping": null,
+      "population": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "population_scope_id": null,
+      "qualification": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "scorer": {
+        "descriptor": null,
+        "status": "PENDING"
+      }
+    },
+    {
+      "candidate_rows": null,
+      "context": "long",
+      "declared_source_correct_rows": null,
+      "domain": "long_context",
+      "enrollment": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "mechanism_mapping": null,
+      "population": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "population_scope_id": null,
+      "qualification": {
+        "descriptor": null,
+        "status": "PENDING"
+      },
+      "scorer": {
+        "descriptor": null,
+        "status": "PENDING"
+      }
+    }
+  ],
+  "experiment": "SYNTH-CRS-001",
+  "long_context_domain": "long_context",
+  "required_short_domains": [
+    "arithmetic",
+    "retrieval",
+    "abstention",
+    "dialogue"
+  ],
+  "schema": "synth_guard_coverage_plan_v1",
+  "scientific_coverage_status": "UNDEFINED",
+  "selected_policies": {
+    "engineering": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\evidence\\supplemental_quality_packet_reviewed_20261005\\QUALITY_SCREEN_POLICY_001.json",
+      "policy_id": "SYNTH-QUALITY-3PP-ZERO-DAMAGE-20261005",
+      "sha256": "c4ba81c50289e8d8f8e172393c3080c5857a3149e7e6707a2a134372c2088932"
+    },
+    "statistics": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\DEV_STATISTICS_POLICY.json",
+      "policy_id": "SYNTH-DEV-STATISTICS-001",
+      "sha256": "9db137bfa6c0e0e07ec8161e4127ec0a2ec20bb2c224529face447986e876d11"
+    },
+    "task": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\TASK_RETENTION_GUARD_POLICY.json",
+      "policy_id": "SYNTH-TASK-GUARD-001",
+      "sha256": "7f50a62dc65450693df98865ae5a93821a183cc7c6a7ef934a05dc302e333bf9"
+    }
+  },
+  "status": "CLOSED_PREPARATION"
+}

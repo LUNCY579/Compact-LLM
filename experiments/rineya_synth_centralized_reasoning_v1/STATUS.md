@@ -1,5 +1,15 @@
 # Status and next handoff
 
+## 2026-10-09: closed four-source guard coverage package preserved
+
+[CoverageBinding001](GUARD_COVERAGE_BINDING_CPU_001.md) preserves verified policy-
+bound registry/code/receipts; Root43 inert controls pass. All48 actualpopulation/
+scorer/qualification/enrollment/count/disjointness bindings remain pending and
+support undefined. Only retrieval/abstention mappings exist; arithmetic/qualified
+dialogue and separate long-context stay open. Structural metadata confers no
+native/scoring/retention/quality authority. Existing public arithmetic semantics
+are being inspected for concrete authorized offline preparation.
+
 ## 2026-10-09: accepted retention-source coverage gap kept explicit
 
 [CoverageGap](RETENTION_DOMAIN_COVERAGE_GAP_20261009.md) records that accepted

@@ -1,0 +1,11 @@
+# Closed SYNTH retention-source coverage preparation
+
+This package binds the accepted four short retention sources (arithmetic, retrieval, abstention and dialogue) and separately records long-context requirements. The selected engineering, task and historical statistics policy files are pinned in POLICY_REFERENCES_001.json. It supplements the existing quality decision consumer and does not supply a scorer.
+
+The current task policy names retrieval, instruction-following and answerability/abstention. Only retrieval and abstention have mappings here. Arithmetic is unresolved; instruction-following cannot substitute for it. Dialogue requires its own population, scorer, independent references, qualified reviewer authority and enrollment. Authored language candidates and managed-agent annotations cannot provide that authority. Long-context qualification and enrollment remain separate.
+
+CLOSED_COVERAGE_PLAN_001.json was authored directly from current policy metadata, without using the test fixture factory. Its population, scorer, qualification and enrollment descriptors, population scopes, counts and disjointness evidence are all pending. The 48 missing bindings stay explicit. Known mechanism names do not establish actual source-correct coverage. A declared receipt or positive count remains unverified; zero support is undefined.
+
+validate_coverage(plan, frozen_policies, expected_plan_sha256) performs descriptor-only structural checks. Accepted output permanently retains structural_only=true, actual_support=null, scientific_coverage_status=UNDEFINED and native_admissible/scoring_authorized/retention_qualified/model_quality_gain=false. It neither opens referenced files nor verifies disjointness, native work, enrollment or model quality. The Root policy-binding step read only the three named policy files; tests use fictional in-memory descriptors.
+
+The SYNTH owner must freeze actual disjoint populations and independently qualified scorers, complete the 384-row M0 baseline and enroll source-correct membership before treatment outcomes. Genuine native numerical/resource/save-reload qualification, actual exports/GD parity and the full M1/M2 comparison remain required. The original training recipe, guard margins, source branches, protected banks and historical evidence are preserved.
