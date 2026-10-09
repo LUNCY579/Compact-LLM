@@ -1,5 +1,14 @@
 # Status and next handoff
 
+## 2026-10-09: parent future import correction applied
+
+[Future008](IMPORT_PARENT_FUTURE_CPU_008.md) adds the exact selected __future__
+source to parent resolution/checked compilation. Fourteen authored/Root and
+independent CPU controls pass, including full original supervisor source with
+inert native dependencies. Child bootstrap and original checks remain unchanged.
+The successor current byte review and exact dispatch registration are next;
+actual007 failure is retained. No native import or model gain is inferred.
+
 ## 2026-10-09: import007 pre-output parent import failure
 
 [Outcome007](IMPORT_OBSERVATION_OUTCOME_007.md) preserves dispatcherexit1:

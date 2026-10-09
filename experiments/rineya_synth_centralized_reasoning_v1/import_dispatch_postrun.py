@@ -5,7 +5,7 @@ import argparse,hashlib,json
 HERE=Path(__file__).resolve().parent;PACKAGE=next(p for p in (HERE,*HERE.parents) if p.name=='rineya_synth_centralized_reasoning_v1')
 SCOPE='OWNED_TORCH_IMPORT_LIBRARY_EFFECT_OBSERVATION_ONLY'
 CONTRACT={'bytes':15490,'sha256':'c669ba3a2897bbfe200fd35807e299be8d75718b428c926edf42a7ffbbf387cf','role':'python_source'}
-SUPERVISOR={'bytes':19204,'sha256':'11cc929a4bb09c6be7459a3fd9fdaa7172d85de5a815acbf5e40fd519452f740','role':'python_source'}
+SUPERVISOR={'bytes':19273,'sha256':'8e8a3cee62c94d2dafe98e25a9f40b2e3384410180d22aba88d222393401645d','role':'python_source'}
 ANCHORS=('expected_config_file','expected_config_body','registration_path','expected_registration_file','expected_registration_body','runtime_path','expected_runtime_file','expected_runtime_body','expected_head')
 def require(v,m):
     if not v:raise ValueError(m)

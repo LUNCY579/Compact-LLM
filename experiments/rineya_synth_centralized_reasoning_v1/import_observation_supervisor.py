@@ -51,7 +51,7 @@ class _SupervisorFinder:
         for name in ('native_process','native_nvml'):
             path=str(contract.PACKAGE/(name+'.py'));self.rows[name]={'path':path,'descriptor':value['config']['source_files'][path],'cache_path':None,'cache_descriptor':None}
         base=Path(value['runtime']['stdlib_layout']['physical_base_prefix'])
-        for name,path,role in (('uuid',base/'Lib/uuid.py','python_source'),('_uuid',base/'DLLs/_uuid.pyd','extension_binary')):
+        for name,path,role in (('__future__',base/'Lib/__future__.py','python_source'),('uuid',base/'Lib/uuid.py','python_source'),('_uuid',base/'DLLs/_uuid.pyd','extension_binary')):
             text=str(path);d=value['runtime']['files'][text];require(d['role']==role,'selected parent UUID dependency role');self.rows[name]={'path':text,'descriptor':d,'cache_path':None,'cache_descriptor':None}
     def find_spec(self,fullname,path=None,target=None):
         if fullname in ('pwd','org'):
@@ -62,7 +62,7 @@ class _SupervisorFinder:
         require(spec is not None and spec.origin is not None and str(C.qualified_path(spec.origin,layout=layout))==row['path'],'parent dependency resolution matches selected source')
         C.file_descriptor(row['path'],row['descriptor'],layout=layout)
         if row['cache_path'] is not None:C.file_descriptor(row['cache_path'],row['cache_descriptor'],layout=layout)
-        if fullname in ('native_process','native_nvml','uuid'):
+        if fullname in ('native_process','native_nvml','uuid','__future__'):
             # Package helpers compile the checked source, never an unselected pyc.
             class SelectedSource(importlib.machinery.SourceFileLoader):
                 def get_code(self,name):
