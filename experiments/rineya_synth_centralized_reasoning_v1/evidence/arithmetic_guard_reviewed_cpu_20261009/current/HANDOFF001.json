@@ -1,0 +1,78 @@
+{
+  "actual_model_quality_established": false,
+  "all_author_controls_passed": true,
+  "author_tests": 6,
+  "candidate_files": {
+    "ARITHMETIC_GUARD_POPULATION001.json": {
+      "bytes": 894811,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\arithmetic_guard_work\\frozen_arithmetic_guard001\\ARITHMETIC_GUARD_POPULATION001.json",
+      "sha256": "2992454925eecfabda4a6046d1d59ef78e718c1639d58714aa1404f90888f5c3"
+    },
+    "CPU_CONTROLS001.json": {
+      "bytes": 2045,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\arithmetic_guard_work\\frozen_arithmetic_guard001\\CPU_CONTROLS001.json",
+      "sha256": "26f6cc8b485a57b5b54139b037c4af480f071e733824acc9f0a795b027b8b31e"
+    },
+    "NEGATIVE_EXAMPLES001.json": {
+      "bytes": 79796,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\arithmetic_guard_work\\frozen_arithmetic_guard001\\NEGATIVE_EXAMPLES001.json",
+      "sha256": "6eb3f187fadc1cfc01849f32042c8945801ad8003570503c2a78b996fd54b79a"
+    },
+    "SYNTH_ARITHMETIC_GUARD_POLICY001.json": {
+      "bytes": 3470,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\arithmetic_guard_work\\frozen_arithmetic_guard001\\SYNTH_ARITHMETIC_GUARD_POLICY001.json",
+      "sha256": "42ee9c26f0fe1ab42c368618a5c25385fe09dac0f5777bab92df5c34c5fa05b7"
+    },
+    "arithmetic_guard.py": {
+      "bytes": 15420,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\arithmetic_guard_work\\frozen_arithmetic_guard001\\arithmetic_guard.py",
+      "sha256": "02025fecbddd0fa882e67501c19556aad01795b608a33821f14201757fdc25b9"
+    },
+    "test_arithmetic_guard.py": {
+      "bytes": 8615,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\arithmetic_guard_work\\frozen_arithmetic_guard001\\test_arithmetic_guard.py",
+      "sha256": "0cacb419a6f6fd0e8ba8530f9b6924d3ee0c477c3cdc2c7ea7a587a67b5d730b"
+    }
+  },
+  "central_source_pins": {
+    "bridge_data.py": {
+      "bytes": 32527,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\post_training_mimo_centralized_v1\\scripts\\bridge_data.py",
+      "sha256": "d3a10f84713ae7164775e00514c5584bc4f03525b229f3afe4ebf05f52ea57f1"
+    },
+    "dev_scorer.py": {
+      "bytes": 29839,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\post_training_mimo_centralized_v1\\scripts\\dev_scorer.py",
+      "sha256": "7e28efe5ed9a65d8d8452399d741908109e8e79f7778e8983b1349112772975f"
+    }
+  },
+  "generator_subset_limit": "Root add; multiplication only of leaf pairs; higher internal add/sub. All fixed candidates intrinsically within20,000; no target/model-output filter.",
+  "independent_parent_units": 128,
+  "kind": "STAGED_ARITHMETIC_GUARD_HANDOFF001",
+  "model_GPU_tokenizer_M0_or_central_population_performed": false,
+  "native_scoring_authorized": false,
+  "parents": 128,
+  "pending": [
+    "Independent frozen CPU review/replay",
+    "Actual TRAIN/DEV available-lineage disjointness check",
+    "Frozen all-domain roster and actual M0-eligible support/precision",
+    "Tokenizer/context and native scorer/collection qualification"
+  ],
+  "precision_established": false,
+  "preserved_central_source_pins": {
+    "bridge_data.py": {
+      "bytes": 32527,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\arithmetic_guard_work\\frozen_arithmetic_guard001\\central_source_snapshots\\bridge_data.py",
+      "sha256": "d3a10f84713ae7164775e00514c5584bc4f03525b229f3afe4ebf05f52ea57f1"
+    },
+    "dev_scorer.py": {
+      "bytes": 29839,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\rineya_synth_centralized_reasoning_v1\\artifacts\\arithmetic_guard_work\\frozen_arithmetic_guard001\\central_source_snapshots\\dev_scorer.py",
+      "sha256": "7e28efe5ed9a65d8d8452399d741908109e8e79f7778e8983b1349112772975f"
+    }
+  },
+  "rows": 512,
+  "selection_before_reference_or_verifier_solving": true,
+  "sha256": "0da1719ddaaa751a21239832130220544366df8d37bc51c59cdde404bb4a8c79",
+  "source_commit": "7a84b2cf314eadd24a897dd7c10fae5146512876"
+}

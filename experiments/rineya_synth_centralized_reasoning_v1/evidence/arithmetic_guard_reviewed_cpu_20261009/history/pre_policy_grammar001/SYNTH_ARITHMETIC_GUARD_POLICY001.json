@@ -1,0 +1,88 @@
+{
+  "M0_enrollment_performed": false,
+  "actual_model_quality_established": false,
+  "central_source_pins": {
+    "bridge_data.py": {
+      "bytes": 32527,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\post_training_mimo_centralized_v1\\scripts\\bridge_data.py",
+      "sha256": "d3a10f84713ae7164775e00514c5584bc4f03525b229f3afe4ebf05f52ea57f1"
+    },
+    "dev_scorer.py": {
+      "bytes": 29839,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-synth-centralized-reasoning-v1\\experiments\\post_training_mimo_centralized_v1\\scripts\\dev_scorer.py",
+      "sha256": "7e28efe5ed9a65d8d8452399d741908109e8e79f7778e8983b1349112772975f"
+    }
+  },
+  "conditions": [
+    "canonical_operand_order",
+    "commutative_operand_reversal"
+  ],
+  "depths": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "disjointness": {
+    "available_training_and_evaluation_lineage_references": null,
+    "expression_content_bound": true,
+    "namespace_alone_proves_disjointness": false,
+    "pretraining_disjointness_established": false
+  },
+  "domain_class": "task",
+  "domain_id": "arithmetic",
+  "kind": "SYNTH_ARITHMETIC_GUARD_POLICY001",
+  "native_launch_authorized": false,
+  "native_scoring_authorized": false,
+  "parent_count": 128,
+  "parents_per_depth": 32,
+  "precision": {
+    "eligible_parent_count": null,
+    "established": false,
+    "final_domain_ids": null,
+    "minimum_eligible_parent_support": null,
+    "rule": "alpha=0.05/(2*D), D is frozen explicit domain ID count; zero-loss support ceil(log(alpha)/log(0.95)); siblings count one parent"
+  },
+  "renderings": [
+    "expression_json",
+    "fully_parenthesized_infix"
+  ],
+  "row_count": 512,
+  "rows_per_parent": 4,
+  "schema_version": 1,
+  "seed": 202610091,
+  "selection": {
+    "before_M0": true,
+    "before_solving": true,
+    "filters": [
+      "duplicate_canonical_content",
+      "out_of_contract_structure_or_intermediate_overflow"
+    ],
+    "finite_candidates_per_depth": 128,
+    "no_output_based_filter": true,
+    "resampling_after_M0": false,
+    "selection": "first32 unique canonical expression content hashes perdepth in sorted hash order",
+    "training_augmentation": false
+  },
+  "semantics": {
+    "binary_only": true,
+    "integer_leaf_max": 50,
+    "integer_leaf_min": -50,
+    "intermediate_absolute_limit": 100000,
+    "maximum_depth": 4,
+    "operations": [
+      "add",
+      "sub",
+      "mul"
+    ],
+    "response_exact_answer_type": "int_without_bool",
+    "response_exact_keys": [
+      "answer"
+    ],
+    "response_maximum_characters": 4096
+  },
+  "sha256": "fd30c457860703f39a52af6adc0ef24e4f7c07c219a5cd9553b8ca27d633f3bd",
+  "source_id": "SYNTHARITHGUARD001",
+  "status": "CLOSED_CPU_CANDIDATE_NOT_M0_ENROLLMENT",
+  "tokenization_performed": false
+}

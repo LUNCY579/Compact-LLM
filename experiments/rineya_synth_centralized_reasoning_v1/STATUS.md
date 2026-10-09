@@ -1,5 +1,15 @@
 # Status and next handoff
 
+## 2026-10-09: separate arithmetic CPU guard candidate implemented
+
+[Arithmetic001](ARITHMETIC_GUARD_CPU_001.md) applies closed fixedpolicy/compiler/
+scorer and preserves128 canonical parents/512 grouped exposed rows,512 negatives.
+Recursive/postfix independent answers and strictJSON/overflow/lineage checks pass
+six authored/Root/independent controls; actual savedpopulation recompiles exactly.
+Root-add/leaf-multiplication subset explicit, parentallocation precedes solving.
+Native scorer/tokenfit/disjointness/M0membership/precision remain pending; D/
+support unknown, no claim512 independent units. Dialogue/long-context still open.
+
 ## 2026-10-09: closed four-source guard coverage package preserved
 
 [CoverageBinding001](GUARD_COVERAGE_BINDING_CPU_001.md) preserves verified policy-
