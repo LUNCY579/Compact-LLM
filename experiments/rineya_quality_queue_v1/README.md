@@ -154,6 +154,37 @@ canonical-only CE8 study, stopped warm path, thresholds and enrolled data stay
 unchanged. Actual public-prompt/reference, ancestry, native token/mask/EOS/fit
 and retention evidence remain separately required.
 
+## Unselected source-preservation diagnostic
+
+`source_preservation.source_preservation_tally` accepts an explicit enrollment,
+paired judgement metadata and a separately declared required-cell list. It groups
+results by retention data source, family, context bin and answerability. Model
+baseline identity, data-source ancestry and family labels are separate bindings;
+the helper does not authenticate any of them or grade response text.
+
+Strict and semantic source-correct membership is frozen in the enrollment.
+Known source-success denominators survive missing or failed candidate pairs;
+unknown membership stays unknown and cannot be filled from later outcomes.
+Complete paired baseline flags must match known frozen membership. Required
+cells are not inferred from observed responses, and empty cells or source-success
+populations remain unmeasured. Partial evidence stays caller-owned rather than
+being erased or converted into a judgement.
+
+The tally exposes kept successes, losses and repairs separately, alongside
+justified/false abstention, unsupported answers, natural termination, truncation
+and lengths by correctness. A relative retention win or pooled acquisition gain
+can coexist with source losses. The diagnostic always leaves quality advancement
+on HOLD; complete supplied pairs with no observed damage establish neither a
+confidence guarantee nor general preservation. No lane's thresholds, scorers or
+permits are transferred, and no real analysis method is selected.
+
+The 16,384-case object-shape limit accommodates a proposed PRSC raw retention
+panel but establishes no physical fit, resource price or native allowance.
+Token counts must already follow a prospectively defined EOS convention. Tests
+use synthetic judgement metadata and remain excluded from scientific datasets.
+They exercise hidden source/context losses, absolute source damage despite a
+relative win, incomplete accounting, baseline drift and invariant ordering.
+
 ## Standing research consent
 
 The programme records direct human standing consent in each card as preparation
