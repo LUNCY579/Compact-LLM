@@ -1,5 +1,14 @@
 # Status and next handoff
 
+## 2026-10-09: conditional support calculation preserved, no roster selected
+
+[SupportNote001](ARITHMETIC_CONDITIONAL_SUPPORT_NOTE_001.md) verifies nine exact
+integer conditional zero-loss minima. HypotheticalD4/D5 require99/104 eligible
+parents; D18 requires129 beyondcandidate128. No D/independence/M0support/loss/
+precision selected or measured. Existing undefined-support refusal and fixed
+cohort remain. Actual arithmetic capture/scorer/enrollment ABI is being inspected
+for a necessary closed integration, preserving the old768 guard validator.
+
 ## 2026-10-09: arithmetic CPU token fit complete with additive projection repair
 
 [TokenFit001](ARITHMETIC_TOKENMEASUREMENT_CPU_001.md) records512 actual rows,

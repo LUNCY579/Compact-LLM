@@ -1,0 +1,102 @@
+{
+  "schema": "RINEYA_CONDITIONAL_RETENTION_SUPPORT_PLANNING_1",
+  "status": "EXACT_INTEGER_CONDITIONAL_DESIGN_PROOF_NOT_MODEL_EVIDENCE",
+  "source_policy": {
+    "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-synth-centralized-reasoning-v1/experiments/rineya_synth_centralized_reasoning_v1/SYNTH_ARITHMETIC_GUARD_POLICY001.json",
+    "bytes": 3470,
+    "sha256": "42ee9c26f0fe1ab42c368618a5c25385fe09dac0f5777bab92df5c34c5fa05b7"
+  },
+  "proof": "For n>0 independent eligible parents and zero observed losses, the declared one-sided upper bound U=1-(1/(40D))^(1/n) is at most0.05 iff40D*19^n<=20^n. Integer comparisons avoid floating-log rounding. The table proves each minimal n using its immediate predecessor. It does not prove that these binomial/sampling assumptions apply to the actual candidate population.",
+  "conditional_rows": [
+    {
+      "hypothetical_frozen_domain_count": 3,
+      "minimum_eligible_independent_parents_if_zero_loss": 94,
+      "maximum_ineligible_of_128_if_zero_loss": 34,
+      "potentially_feasible_at_128_only_if_all_assumptions_hold": true,
+      "passing_integer_comparison": "120*19^94 <= 20^94",
+      "preceding_integer_comparison_fails": "120*19^93 > 20^93"
+    },
+    {
+      "hypothetical_frozen_domain_count": 4,
+      "minimum_eligible_independent_parents_if_zero_loss": 99,
+      "maximum_ineligible_of_128_if_zero_loss": 29,
+      "potentially_feasible_at_128_only_if_all_assumptions_hold": true,
+      "passing_integer_comparison": "160*19^99 <= 20^99",
+      "preceding_integer_comparison_fails": "160*19^98 > 20^98"
+    },
+    {
+      "hypothetical_frozen_domain_count": 5,
+      "minimum_eligible_independent_parents_if_zero_loss": 104,
+      "maximum_ineligible_of_128_if_zero_loss": 24,
+      "potentially_feasible_at_128_only_if_all_assumptions_hold": true,
+      "passing_integer_comparison": "200*19^104 <= 20^104",
+      "preceding_integer_comparison_fails": "200*19^103 > 20^103"
+    },
+    {
+      "hypothetical_frozen_domain_count": 6,
+      "minimum_eligible_independent_parents_if_zero_loss": 107,
+      "maximum_ineligible_of_128_if_zero_loss": 21,
+      "potentially_feasible_at_128_only_if_all_assumptions_hold": true,
+      "passing_integer_comparison": "240*19^107 <= 20^107",
+      "preceding_integer_comparison_fails": "240*19^106 > 20^106"
+    },
+    {
+      "hypothetical_frozen_domain_count": 8,
+      "minimum_eligible_independent_parents_if_zero_loss": 113,
+      "maximum_ineligible_of_128_if_zero_loss": 15,
+      "potentially_feasible_at_128_only_if_all_assumptions_hold": true,
+      "passing_integer_comparison": "320*19^113 <= 20^113",
+      "preceding_integer_comparison_fails": "320*19^112 > 20^112"
+    },
+    {
+      "hypothetical_frozen_domain_count": 12,
+      "minimum_eligible_independent_parents_if_zero_loss": 121,
+      "maximum_ineligible_of_128_if_zero_loss": 7,
+      "potentially_feasible_at_128_only_if_all_assumptions_hold": true,
+      "passing_integer_comparison": "480*19^121 <= 20^121",
+      "preceding_integer_comparison_fails": "480*19^120 > 20^120"
+    },
+    {
+      "hypothetical_frozen_domain_count": 16,
+      "minimum_eligible_independent_parents_if_zero_loss": 126,
+      "maximum_ineligible_of_128_if_zero_loss": 2,
+      "potentially_feasible_at_128_only_if_all_assumptions_hold": true,
+      "passing_integer_comparison": "640*19^126 <= 20^126",
+      "preceding_integer_comparison_fails": "640*19^125 > 20^125"
+    },
+    {
+      "hypothetical_frozen_domain_count": 17,
+      "minimum_eligible_independent_parents_if_zero_loss": 128,
+      "maximum_ineligible_of_128_if_zero_loss": 0,
+      "potentially_feasible_at_128_only_if_all_assumptions_hold": true,
+      "passing_integer_comparison": "680*19^128 <= 20^128",
+      "preceding_integer_comparison_fails": "680*19^127 > 20^127"
+    },
+    {
+      "hypothetical_frozen_domain_count": 18,
+      "minimum_eligible_independent_parents_if_zero_loss": 129,
+      "maximum_ineligible_of_128_if_zero_loss": null,
+      "potentially_feasible_at_128_only_if_all_assumptions_hold": false,
+      "passing_integer_comparison": "720*19^129 <= 20^129",
+      "preceding_integer_comparison_fails": "720*19^128 > 20^128"
+    }
+  ],
+  "maximum_hypothetical_D_at_n128_and_zero_loss": 17,
+  "actual_state": {
+    "frozen_domain_ids": null,
+    "eligible_independent_M0_correct_parents": null,
+    "actual_losses": null,
+    "actual_upper_bound": null,
+    "retention_precision": "NOT_MEASURED",
+    "model_gain": "NOT_MEASURED"
+  },
+  "interpretation": "Hypothetical D4 requires99 eligible independent parents; D5 requires104. D18 cannot meet this declared bound with at most128 eligible parents even if zero losses. These are conditional capacity facts, not selected domain counts, enrolled units, independent support or measured preservation.512 grouped views cannot replace canonical independent parents. Missing native outputs/scorer qualification/lineage/independence mean even128 is only a candidate cap.",
+  "next_action": "Existing owner freezes the actual explicit domain-ID roster and reviews scorer, parent aggregation, sampling/lineage independence and enrollment before candidate outcomes. Preserve all predetermined candidates and all M0 outcomes. Insufficient M0-correct support stays inconclusive; no post-M0 replacement, sibling inflation, merging domains, changed alpha/margin or automatic larger draw.",
+  "boundaries": "No source policy, population, domain roster, budget, margin, training dose or evaluator is changed. This source-bound calculation is an offline planning receipt only. It grants no scoring/tokenizer/native/enrollment authority or parent/RSD eligibility, and does not establish broad arithmetic coverage or Rineya gains.",
+  "native_execution_authorized": false,
+  "protected_bank_access_authorized": false,
+  "training_authorized": false,
+  "enrollment_authorized": false,
+  "quality_improvement_established": false,
+  "root_candidate_imports_or_execution": 0
+}
