@@ -1,5 +1,15 @@
 # Status and next handoff
 
+## 2026-10-09: accepted retention-source coverage gap kept explicit
+
+[CoverageGap](RETENTION_DOMAIN_COVERAGE_GAP_20261009.md) records that accepted
+arithmetic/retrieval/abstention/dialogue support is not fully supplied by the
+existing task/language class plans. Arithmetic and qualified dialogue plans/
+scorers/enrollment and separate long-context authority remain open. Retrieval/
+abstention candidates are not qualified M0-correct enrollment. Preserve missing-
+support refusal; class-level joins cannot substitute for mechanism coverage.
+No cohort/training/margin change or native/scoring result is established.
+
 ## 2026-10-09: exact54 per-update schedule bindings completed
 
 [ScheduleBinding001](RETAINED_SCHEDULE_BINDING_CPU_001.md) binds actual registered
