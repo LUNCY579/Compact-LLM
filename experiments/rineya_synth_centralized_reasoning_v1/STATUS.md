@@ -1,5 +1,15 @@
 # Status and next handoff
 
+## 2026-10-09: exact parent extension metadata observed
+
+[Observation003](PARENT_EXTENSION_METADATA_OBSERVATION_003.md) reproduces actual
+parent setup and records11 preloads;10 existing verifiers pass. The remaining
+psutil._psutil_windows module name is psutil_windows while its spec has the full
+package name. Selected native parent dependency observation stayed within
+originalRAM/RSS/disk limits and restored import containers. NoTorch/model/worker
+or GPU admission claim. Add only this exact identity correction, review/test and
+continue automatically with separate registration; earlier failures remain.
+
 ## 2026-10-09: import008 parent metadata verification failure
 
 [Outcome008](IMPORT_OBSERVATION_OUTCOME_008.md) preserves exit1 before output
