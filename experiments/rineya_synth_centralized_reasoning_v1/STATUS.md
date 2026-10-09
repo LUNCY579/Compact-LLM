@@ -1,5 +1,15 @@
 # Status and next handoff
 
+## 2026-10-09: exact54 per-update schedule bindings completed
+
+[ScheduleBinding001](RETAINED_SCHEDULE_BINDING_CPU_001.md) binds actual registered
+20-row groups/counters/LR/exposures into all54 cumulative records and matches
+producerAPI, originalchunks and final540 hashes. Five authored/Root/independent
+controls pass with metadata/source-only reads. Missing native identities remain
+None and the external validator denies admission. No arrays/labels/model/native
+work. CurrentGPUfree1761MiB remains below unchanged4GiB. Complete registered
+metadata binding is preserved; native qualification/export/transfer remain open.
+
 ## 2026-10-09: verified closed retention/export binding package preserved
 
 [BindingPackage001](RETENTION_BINDING_PACKAGE_CPU_001.md) preserves exact external
