@@ -1,5 +1,14 @@
 # Status and next handoff
 
+## 2026-10-09: import007 pre-output parent import failure
+
+[Outcome007](IMPORT_OBSERVATION_OUTCOME_007.md) preserves dispatcherexit1:
+finite parent resolution rejected the original supervisor's __future__ import
+before output creation. No supervisor receipt/admission/worker/Torch result.
+The current complete196/8725/67 byte review and independent audit are retained.
+Add that exact selected parent dependency, review/test and continue automatically
+under standing authorization. Original006 and all intermediate evidence remain.
+
 ## 2026-10-09: supervisor entry correction reviewed and applied
 
 [Entry006](IMPORT_SUPERVISOR_ENTRY_CPU_006.md) adds selected parent dependency
