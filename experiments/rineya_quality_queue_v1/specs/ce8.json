@@ -276,7 +276,9 @@
     {"id": "partial_capture_ledger_source_repair_review", "path": "C:/Users/clclc/BusinessProject/ce8-partial-capture-ledger-source-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "partial_capture_ledger_source_repair_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-partial-capture-ledger-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"},
     {"id": "complete_close_ledger_source_review", "path": "C:/Users/clclc/BusinessProject/ce8-complete-close-ledger-source-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
-    {"id": "complete_close_ledger_source_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-complete-close-ledger-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"}
+    {"id": "complete_close_ledger_source_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-complete-close-ledger-source-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "assembly_census_readiness_source_review", "path": "C:/Users/clclc/BusinessProject/ce8-assembly-census-readiness-review-20261009-01/REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "assembly_census_readiness_pin_index", "path": "C:/Users/clclc/BusinessProject/ce8-assembly-census-readiness-review-20261009-01/PIN_INDEX.json", "classification": "preparation", "role": "receipt", "format": "json"}
   ],
   "metrics": [
     {"name": "historical_warm_R_strict_success", "numerator": 6, "denominator": 1200, "unit": "count", "scope_unit": "sample", "evidence_id": "warm_competence", "json_pointer": "/summary/R/successes", "denominator_json_pointer": "/summary/R/samples", "status": "MEASURED"},
@@ -330,28 +332,33 @@
     {"id": "durable_log_and_image_scoped_source_parts", "status": "PASS", "evidence_ids": ["durable_log_image_streaming_source_review", "durable_log_image_streaming_pin_index"], "reason": "Narrow frozen-source and separately attributed synthetic control support for guarded sidecars, write-count distinctions, partial/refused retention and bounded image comparison. No complete source/physical fit, native durability, custody, adoption or quality result. Old points/controls remain preserved and overlapping suites are not independent experiments."},
     {"id": "streaming_prefix_release_and_generated_domain", "status": "BLOCKED", "evidence_ids": ["durable_log_image_streaming_source_review", "durable_log_image_streaming_pin_index", "ascii_wire_prefix_source_review", "ascii_wire_prefix_source_pin_index", "ascii_wire_whole_price_source_review", "ascii_wire_whole_price_source_pin_index"], "reason": "Historical streaming-v1 acquisition-before-finally and generic escape examples remain preserved against their old source. Current frozen ASCII/phase source closes the targeted sidecar phase/domain prefix cleanup and validates generated ASCII escape extent before iterencode. Direct ordinal copy removes the full encoded-piece allocation. This resolves those specific source gaps; universal generated graph/cardinality/preallocation, all iterator/error/native lifetimes, complete PREP/all-seven/current assembly, physical and final I/O remain unproved. The combined readiness gate therefore stays BLOCKED. A withdrawn incomplete-slice UnboundLocalError allegation is historical, not a current defect; no generic-input example is claimed as reachable current generated output."},
     {"id": "ascii_prefix_and_copy_source_support", "status": "PASS", "evidence_ids": ["ascii_wire_prefix_source_review", "ascii_wire_prefix_source_pin_index", "ascii_wire_whole_price_source_review", "ascii_wire_whole_price_source_pin_index"], "reason": "Narrow frozen-source support only: prefix predicates are inside initialized outer cleanup protection; release authenticates original ownership without adding time; generated escaped pieces are checked before iterencode and copied directly into fixed wire under original-clock 64-character group guards. Original evidence, sticky failures, no refunds and issuer refusal remain. No hard preemption, universal allocation, source adoption, current assembly or physical/native qualification is proved."},
-    {"id": "complete_occupied_lifetime_current_bindings", "status": "BLOCKED", "evidence_ids": ["ascii_wire_prefix_source_review", "ascii_wire_prefix_source_pin_index", "ascii_wire_whole_price_source_review", "ascii_wire_whole_price_source_pin_index"], "reason": "Named 31218/32768 encoder recipe with 1550 remainder is partial logical arithmetic. Normal/tail vectors remain inherited component sums with zero metadata headroom. Universal producer/graph/probe/encoder/error/native FileIO/Thread lifetimes, reachable cleanup/control, complete PREP traversal/callback/publication, actual current ENTRY/PACKET/domain assembly and final publisher/exit I/O remain missing. Original scalar/copy counts inside eight bounded exporter groups do not prove inclusive physical operation/timing costs. All G1-G11 limits, prior failed qualification and automatic eligibility-publication rejection remain binding."},
+    {"id": "complete_occupied_lifetime_current_bindings", "status": "BLOCKED", "evidence_ids": ["ascii_wire_prefix_source_review", "ascii_wire_prefix_source_pin_index", "ascii_wire_whole_price_source_review", "ascii_wire_whole_price_source_pin_index", "assembly_census_readiness_source_review", "assembly_census_readiness_pin_index"], "reason": "The earlier ASCII source point's 31218/32768 encoder recipe and inherited normal/tail sums remain preserved partial logical arithmetic. Price61's later prospective logical recipe acceptance is separately attributed under its named closed producer/source-unit contract. Current TARGET and ENTRY now exist as verified prepared metadata inputs; the earlier absence is historical, not a current blanket input defect. PACKET, NATIVE_SOURCE_FREEZE, MATERIALIZATION_ACCOUNTING, fresh current phase registration/readiness/review decision and current native output remain absent at the reviewed point. Prepared refs do not establish live runtime custody, trusted pre-owner bootstrap, physical/API timing, terminal/final-publication I/O, released handles/pins/leases, native/model/E0/parent/RSD qualification or gains. The combined gate stays BLOCKED. Preserve source histories, zero-headroom reservation limits, attempt38 failure, uncertain spending, no refunds and automatic eligibility-publication denial."},
     {"id": "original_failed_prep_subset_source_route", "status": "PASS", "evidence_ids": ["failure_closure_partial_capture_source_review", "failure_closure_partial_capture_pin_index"], "reason": "Narrow source support: original PREP failure subset is positively selected before normal work, uses the same 1800s owner clock and conserves original caps. Failed ordinary work stays refused; exact original pin closes may use selected failure resources without retrying unknown prior closes. Source route availability is not actual emergency export/closure, complete repricing, current assembly or native/model qualification."},
     {"id": "partial_capture_secondary_errors_and_prep_disposition", "status": "BLOCKED", "evidence_ids": ["failure_closure_partial_capture_source_review", "failure_closure_partial_capture_pin_index", "partial_capture_ledger_source_repair_review", "partial_capture_ledger_source_repair_pin_index", "complete_close_ledger_source_review", "complete_close_ledger_source_pin_index"], "reason": "Original missing-identity/library-close/PREP disposition and before/after cleanup guard-detail findings remain historical at their pinned predecessors. The partial/ledger source supports status/partial capture, removal of the None-identity dependency, separate library errors and same-clock failed-PREP cleanup/routing. The new complete-close R1 source additionally retains bounded first secondary detail across guard/refusal/action/afterguard paths while preserving the original primary and one-shot close. This combined gate remains BLOCKED for exact current source/domain/all-seven non-dispatch assembly, trusted bootstrap and actual physical/terminal closure. Price61 prospective logical acceptance is separately attributed and supplies no current executable/native admission. No actual native failure/bypass or post-expiry dispatch is inferred."},
     {"id": "partial_capture_library_error_and_prep_window_source_support", "status": "PASS", "evidence_ids": ["partial_capture_ledger_source_repair_review", "partial_capture_ledger_source_repair_pin_index"], "reason": "Narrow source repair support: statuses exist before output opens and retain partial getter state; close no longer depends on successful descriptor construction. Two fixed slots retain actual library close error types separately. Same-clock one-shot failed-PREP cleanup and exact authenticated metadata registration/materializer window preserve original owner/time/caps/handoff refusal. Actual terminal closure, every guard/refusal event, whole price and physical/native qualification remain held."},
     {"id": "cleanup_guard_refusal_and_full_ledger_composition", "status": "BLOCKED", "evidence_ids": ["partial_capture_ledger_source_repair_review", "partial_capture_ledger_source_repair_pin_index", "complete_close_ledger_source_review", "complete_close_ledger_source_pin_index"], "reason": "The new frozen R1 branch repair retains bounded first secondary detail for original before/admission/guard/callback/action and returned-guard failures while preserving the original primary, no-dispatch refusals, one-shot close and observed-return state. That targeted source obligation is now supported; older reader-finally detail loss remains historical. Price61 separately accepts the prospective complete logical recipe under named closed producer/source-unit domains: graph 22184 is within 22528 by 344. The focused semantic receipt defers whole-price/current all-seven composition rather than contradicting that wider attributed logical acceptance. Exact current target/ENTRY/PACKET/native source binding and permitted non-dispatch assembly, trusted pre-owner bootstrap, actual physical/terminal I/O/API/exit/Job0/handle/pin/lease/final-publisher closure remain unqualified. Preserve the old conditional 22696/168 arithmetic and all failures; no current executable/native eligibility, refund, retry, grant or substitute publication follows."},
-    {"id": "complete_close_r1_guard_refusal_action_afterguard_source_support", "status": "PASS", "evidence_ids": ["complete_close_ledger_source_review", "complete_close_ledger_source_pin_index"], "reason": "Narrow frozen-source support from the independently pinned review: the outer close_stream try includes its one-shot precheck and entire original perform operation. Before/admission/guard/callback/action and afterguard failures retain the first bounded secondary type even with an original primary present. No-dispatch refusals keep the close latch false; an action error permits one unknown close; an observed returned close remains returned despite late guard refusal; later attempts do not overwrite or retry. This is source control-flow/ledger support, not actual API success, an unbounded history, current assembly, physical closure or native/model/E0/parent/RSD authority."}
+    {"id": "complete_close_r1_guard_refusal_action_afterguard_source_support", "status": "PASS", "evidence_ids": ["complete_close_ledger_source_review", "complete_close_ledger_source_pin_index"], "reason": "Narrow frozen-source support from the independently pinned review: the outer close_stream try includes its one-shot precheck and entire original perform operation. Before/admission/guard/callback/action and afterguard failures retain the first bounded secondary type even with an original primary present. No-dispatch refusals keep the close latch false; an action error permits one unknown close; an observed returned close remains returned despite late guard refusal; later attempts do not overwrite or retry. This is source control-flow/ledger support, not actual API success, an unbounded history, current assembly, physical closure or native/model/E0/parent/RSD authority."},
+    {"id": "current_target_entry_prepared_input_support", "status": "PASS", "evidence_ids": ["assembly_census_readiness_source_review", "assembly_census_readiness_pin_index"], "reason": "Narrow source/sanitized-metadata support: current TARGET 108063-byte/b1261828 and ENTRY 952-byte/332624b3 exist and match the create-only input receipt; the ENTRY triple binds current accounting/admission/bootstrap source. Census 198 target/runtime identity claims are attributed to the original author; Root rehashed only safe source/metadata, not runtime binaries. Prepared inputs are not a producer run, current packet, live pins/custody, grant, physical/native/model qualification or capability gain."},
+    {"id": "current_metadata_assembly_producer_and_admission", "status": "BLOCKED", "evidence_ids": ["assembly_census_readiness_source_review", "assembly_census_readiness_pin_index"], "reason": "Current PACKET, NATIVE_SOURCE_FREEZE, MATERIALIZATION_ACCOUNTING, fresh phase registration/authority/readiness/review decision and current native output are absent. Producer executed 0; original owner is completed/idle and reports its goal blocked, with no restart/message or competing worker by this queue. Saved RAM 8094085120 bytes was below the unchanged 8589934592-byte floor by 495849472 at 2026-10-09T21:12:59.3414292Z. That dated 7.5382 GiB observation is not current free RAM or future admission. One exact reviewed metadata-only proposal still needs fresh applicable admission through the same owner when external state genuinely changes. Issuer false and rejected verification plus native-eligibility publication remain binding; no substitute eligibility, retry, tool switch/delegation or floor reduction follows."},
+    {"id": "current_custody_physical_parent_and_quality_qualification", "status": "BLOCKED", "evidence_ids": ["assembly_census_readiness_source_review", "assembly_census_readiness_pin_index"], "reason": "Prepared TARGET/ENTRY and attributed reusable 198 references do not prove live deny-write pins/current custody, startup/RAM/RSS/commit/API timing/own-child I/O, process exit/Job0/handle/pin/lease/final-publisher closure, completed qualified parent or model quality. Models/native attempts/optimizer work by this queue remain 0 and gains/retention remain NOT_MEASURED. Preserve strict timeout qualification failure, experiment-specific permits and E0/parent/RSD ordering; no CPU-source or metadata permit transfer, promotion or serving change."}
   ],
   "next_proposal": {
-    "phase": "OFFLINE_CURRENT_SOURCE_DOMAIN_NON_DISPATCH_ASSEMBLY_AND_PHYSICAL_PREPARATION",
-    "proposal_evidence_id": "complete_close_ledger_source_review",
+    "phase": "OFFLINE_CURRENT_METADATA_ONLY_PROPOSAL_AND_FRESH_ADMISSION_REVIEW",
+    "proposal_evidence_id": "assembly_census_readiness_source_review",
     "requires": [
       "standing_research_consent",
       "failed_attempt_preservation",
-      "partial_capture_library_error_and_prep_window_source_support",
+      "current_target_entry_prepared_input_support",
+      "current_metadata_assembly_producer_and_admission",
+      "current_custody_physical_parent_and_quality_qualification",
       "complete_close_r1_guard_refusal_action_afterguard_source_support",
       "cleanup_guard_refusal_and_full_ledger_composition",
       "complete_occupied_lifetime_current_bindings",
       "cpu_component_strict_timeout_qualification"
     ],
-    "target_requirement": "cleanup_guard_refusal_and_full_ledger_composition",
+    "target_requirement": "current_metadata_assembly_producer_and_admission",
     "review_candidate_ready_for_authorization": false,
-    "scope": "Existing CE8 owner next prepares and reviews exact current target/ENTRY/PACKET/native source and authenticated closed producer-domain bindings plus permitted create-only non-dispatch assembly. Credit the targeted R1 bounded first-secondary guard/refusal/action/afterguard source repair and preserve prior defects, failed attempts, uncertain spending and no-refund/one-shot/quarantine rules. Price61's wider prospective logical recipe acceptance is attributed separately from the focused semantic receipt's whole-price/current-all-seven deferral; no prospective 216 reference or earlier target becomes current custody. Keep trusted pre-owner interpreter/bootstrap/accounting construction and actual RAM/RSS/commit/own-child I/O/API timing/exit/Job0/handle/pin/lease/final-publisher/last-I/O qualification as separate unproved requirements. Retain issuer refusal and automatic rejection of verification plus native-eligibility publication. This proposal supplies no executable eligibility, native/API/model/tokenizer/scorer/optimizer/evaluation call, denial workaround, substitute tool/delegation/publication, cap raise, retry, grant, permit transfer, protected-bank access, promotion or serving action.",
+    "scope": "Prepare one bounded reviewed metadata-only proposal binding the exact current frozen source, prepared TARGET/ENTRY and bare Python image under the existing PREP/source-unit limits. Current packet/native freeze/materialization accounting and fresh phase registration/readiness/authority are absent; no producer or live custody is inferred from inputs. The original owner is completed/idle and reports its goal blocked. This queue does not restart/message it or launch a competing worker; progression requires genuinely changed external state and fresh applicable admission through that owner. Saved RAM 8094085120 bytes at 2026-10-09T21:12:59.3414292Z was below the unchanged 8589934592-byte floor by 495849472; it is historical observed metadata, not current free RAM. Attribute 198 reusable target/runtime hash claims and the constructor's counters, with no Root binary rehash, budget refund, imported old grant or runtime custody claim. Preserve Price61 logical-source acceptance separately from actual current assembly, trusted pre-owner startup and physical/terminal/model/E0/parent/RSD qualification. Issuer false and automatic denial of combined verification plus native-eligibility publication remain binding; this proposal is no substitute eligibility input, workaround, retry, tool/delegation route or grant. Actual calls 0: no source/runtime/model/tokenizer/scorer/optimizer/native execution, protected bank, floor/cap change, promotion or serving action.",
     "limits": {
       "native_calls": 0,
       "model_loads": 0,
@@ -375,7 +382,7 @@
       "DEV": false
     },
     "native_execution_authorized": false,
-    "requires_scope": "Advancement prerequisites remain holds; they need not pass for this offline source review. This proposal is not a dispatch, retry, native-eligibility-publication input or policy-denial workaround."
+    "requires_scope": "Advancement prerequisites remain holds; they need not pass for this offline metadata-only proposal review. Standing research consent is retained without repeated approval. This proposal neither executes its phases nor supplies dispatch, retry, native eligibility or a policy-denial workaround."
   },
   "observed_patterns": [
     {"evidence_ids": ["warm_competence"], "statement": "Historical R success was 6/1200 with natural EOS on all 1200 responses and mean generated length 19.82; insufficient R competence is not explained by response truncation on that read."},
@@ -1124,5 +1131,95 @@
     "actual_calls_by_queue": 0,
     "model_behavior_retention_E0_parent_RSD_evidence": "NOT_MEASURED",
     "next_action": "Review the exact current source/domain/non-dispatch assembly proposal and separate physical requirements through the existing owner. Preserve all historical source/proposal/failed-attempt evidence and denial boundaries; no substitute eligibility publication or retry."
+  },
+  "retained_pre_assembly_census_next_proposal": {
+    "phase": "OFFLINE_CURRENT_SOURCE_DOMAIN_NON_DISPATCH_ASSEMBLY_AND_PHYSICAL_PREPARATION",
+    "proposal_evidence_id": "complete_close_ledger_source_review",
+    "requires": [
+      "standing_research_consent",
+      "failed_attempt_preservation",
+      "partial_capture_library_error_and_prep_window_source_support",
+      "complete_close_r1_guard_refusal_action_afterguard_source_support",
+      "cleanup_guard_refusal_and_full_ledger_composition",
+      "complete_occupied_lifetime_current_bindings",
+      "cpu_component_strict_timeout_qualification"
+    ],
+    "target_requirement": "cleanup_guard_refusal_and_full_ledger_composition",
+    "review_candidate_ready_for_authorization": false,
+    "scope": "Existing CE8 owner next prepares and reviews exact current target/ENTRY/PACKET/native source and authenticated closed producer-domain bindings plus permitted create-only non-dispatch assembly. Credit the targeted R1 bounded first-secondary guard/refusal/action/afterguard source repair and preserve prior defects, failed attempts, uncertain spending and no-refund/one-shot/quarantine rules. Price61's wider prospective logical recipe acceptance is attributed separately from the focused semantic receipt's whole-price/current-all-seven deferral; no prospective 216 reference or earlier target becomes current custody. Keep trusted pre-owner interpreter/bootstrap/accounting construction and actual RAM/RSS/commit/own-child I/O/API timing/exit/Job0/handle/pin/lease/final-publisher/last-I/O qualification as separate unproved requirements. Retain issuer refusal and automatic rejection of verification plus native-eligibility publication. This proposal supplies no executable eligibility, native/API/model/tokenizer/scorer/optimizer/evaluation call, denial workaround, substitute tool/delegation/publication, cap raise, retry, grant, permit transfer, protected-bank access, promotion or serving action.",
+    "limits": {
+      "native_calls": 0,
+      "model_loads": 0,
+      "tokenizer_runs": 0,
+      "optimizer_updates": 0,
+      "automatic_retries": 0,
+      "external_future_scope_physical_deadline_seconds": 19200,
+      "external_future_scope_discarded_physical_optimizer_updates": 6,
+      "external_future_scope_data_roles": [
+        "train"
+      ],
+      "qualification_weights": "discarded",
+      "historical_core_service_mechanics_adopted": true,
+      "current_routing_source_adopted": false,
+      "separate_envelope_source_adopted": false,
+      "physical_wrapper_qualified": false,
+      "fresh_native_dispatch_in_queue": 0,
+      "CE6": false,
+      "sham": false,
+      "CE375": false,
+      "DEV": false
+    },
+    "native_execution_authorized": false,
+    "requires_scope": "Advancement prerequisites remain holds; they need not pass for this offline source review. This proposal is not a dispatch, retry, native-eligibility-publication input or policy-denial workaround."
+  },
+  "current_metadata_inputs_and_assembly_readiness": {
+    "evidence_ids": [
+      "assembly_census_readiness_source_review",
+      "assembly_census_readiness_pin_index"
+    ],
+    "status": "PREPARED_CURRENT_TARGET_ENTRY_VERIFIED_ASSEMBLY_NOT_RUN_RESOURCE_POLICY_HELD",
+    "review_pin": {
+      "bytes": 12845,
+      "sha256": "c2b2491e33d2b280fbf56e0e7badba685f55b74666b980b8384158266d1f23b7"
+    },
+    "pin_index": {
+      "bytes": 15363,
+      "sha256": "37e9214aa926d77cb436d7a59ffb431e85a1a37c793e823123da00b84b9ea287",
+      "safe_named_pins": 34,
+      "drift": []
+    },
+    "prepared_current_inputs": {
+      "TARGET_exists": true,
+      "TARGET_bytes": 108063,
+      "TARGET_sha256": "b12618283bca23a51def2b65385917ecec40b38925ef7c6e54fa188f0d157430",
+      "ENTRY_exists": true,
+      "ENTRY_bytes": 952,
+      "ENTRY_sha256": "332624b3722f24d2f04b0b31ef425702aeee110057e055b35eb77323c7cdc5ff",
+      "target_fixed_fields": 13,
+      "runtime_dependency_refs": 193,
+      "target_unique_refs_claimed": 198,
+      "meaning": "Exact prepared metadata files and source triple only; the earlier census absence remains its historical point."
+    },
+    "runtime_claim_limit": "Reusable 198 actor/runtime matching hashes and offline constructor counters are original-author claims. Root safe metadata/source verification is not a runtime/binary rehash, live pin/custody or physical result.",
+    "producer_executed": false,
+    "current_PACKET_native_freeze_materialization_accounting": false,
+    "fresh_phase_registration_authority_readiness_review_decision": false,
+    "current_executable_native_eligibility": false,
+    "live_current_runtime_custody": "NOT_ESTABLISHED",
+    "saved_resource_observation": {
+      "utc": "2026-10-09T21:12:59.3414292Z",
+      "available_ram_bytes": 8094085120,
+      "launch_floor_bytes": 8589934592,
+      "shortfall_bytes": 495849472,
+      "saved_floor_met": false,
+      "meaning": "About 7.54 GiB at the saved observation, not current free RAM or future admission; floor unchanged."
+    },
+    "original_owner_state": "Completed/idle latest turn; owner reports goal blocked. No queue restart/message, worker or owner transfer.",
+    "physical_native_terminal_parent_quality_qualification": false,
+    "model_behavior_retention_gain": "NOT_MEASURED",
+    "actual_calls_by_queue": 0,
+    "issuer_refusal_and_policy_denial_preserved": true,
+    "review_is_eligibility_or_dispatch_input": false,
+    "next_action": "Review the exact metadata-only proposal and fresh applicable admission when external state genuinely changes, through the original owner. Preserve absent producer/assembly/physical/parent/model gates and every historical proposal/failure; no substitute eligibility publication or retry."
   }
 }
