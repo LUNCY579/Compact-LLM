@@ -1,0 +1,35 @@
+{
+  "created_utc": "2026-10-03T05:34:23.128608+00:00",
+  "status": "PASS_CPU_MECHANICS_IN_CUDA_STACK_NOT_NATIVE_FIT",
+  "python_executable": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "transformers": "4.51.3",
+    "tokenizers": "0.21.4",
+    "safetensors": "0.7.0",
+    "psutil": "7.2.2",
+    "pytest": "8.4.2",
+    "accelerate": "1.15.0"
+  },
+  "code_sha256_at_receipt": "685e9006d96811067b4a8a4443761bd33d5d3d54f365145776afb4ebb8d13d55",
+  "tests_sha256": {
+    "tests\\test_comparison.py": "c589cafd6faf160278cbae4252aa28ee53cca0c43bf4977a0dd9b85bf49084dd",
+    "tests\\test_experiment.py": "f207c13c637baca062935718a891254ec887728fe27a0fded3b1ef811e498750",
+    "tests\\test_preflight.py": "05585280d24f34bd7b74ff0ebee0f981f256352613afad34c18ca3b6385c4685"
+  },
+  "full_suite_passed": 107,
+  "full_suite_skipped": 0,
+  "full_suite_reported_seconds": 5.97,
+  "official_library_random_cpu_integration_passed": true,
+  "compileall_passed": true,
+  "execution_environment": {
+    "CUDA_VISIBLE_DEVICES": "-1",
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1"
+  },
+  "model_allocation_device": "cpu",
+  "pretrained_weights_loaded": false,
+  "cuda_tensors_allocated": false,
+  "native_inference_or_training": false,
+  "native_fit_established": false
+}

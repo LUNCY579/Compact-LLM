@@ -1,0 +1,49 @@
+{
+  "checks": {
+    "local_path_correct": true,
+    "one_seed_limit_preserved": true,
+    "pairing_audit_final.json_unchanged": true,
+    "previous_scoped_review_pass": true,
+    "qualitative_not_new_semantic_metric": true,
+    "qualitative_six_of_eleven_statement": true,
+    "report_matches_frozen_hash": true,
+    "runtime_token_limitation_preserved": true,
+    "source_correct_18_of_22_denominator": true,
+    "tokenizer_20608_assertions_explicit": true,
+    "tokenizer_replay.json_unchanged": true,
+    "world_cancellation_caveat_preserved": true
+  },
+  "created_utc": "2026-10-05T19:07:52.604701+00:00",
+  "format_or_type_contract_only_repair_examples": [
+    "dev-retention-ordering-world-002",
+    "dev-retention-ordering-world-004",
+    "dev-retention-short_table-world-001",
+    "dev-retention-short_table-world-002",
+    "dev-retention-short_table-world-006",
+    "dev-retention-short_table-world-007"
+  ],
+  "issues": [],
+  "no_report_or_native_source_edits": true,
+  "notes": [
+    "Manually reread complete frozen report. Scoped DEV behavior, damage-versus-repair, missing answerability, dependent-world, distance contrast, fresh tokenizer geometry and exposure-limitation statements remain correct.",
+    "Report now includes supported qualitative6/11 wrapper/type repair observation and explicitly preserves the registered metric and source-correct denominator. Source-correct damage remains4/22 for both C/D.",
+    "Final tokenizer and pairing receipts retain original verified hashes. Broader source/resource/log/preservation claims have separate audit owners."
+  ],
+  "previous_review": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\pairing_report_review.json",
+    "reviewed_report_sha256": "2f2216587c0367e61cee42b94b11bb2a27618c94210bc1929fa816e42bea1e89",
+    "sha256": "e9fc3b09a0dbd60deb86ad5417566fe1f9dffc05c3f948e996d952ce93549ef5"
+  },
+  "receipts": {
+    "pairing_audit_final.json": "79b273a6fb5ecf95ad551d94e851cd68d5348bef3e1fd6ed8af2d4d509d3b0a6",
+    "tokenizer_replay.json": "d43ef6b28b931e6313df95428b937f81c1aab1c696fa1d06f6ecc1ba25da1506"
+  },
+  "reviewed_report": {
+    "bytes": 18270,
+    "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\AUDITED_CLOSEOUT.txt",
+    "sha256": "3bf1ea27337dafb47f044e4f53a3b555d4270da2a67aca66e0c765104da7726e"
+  },
+  "schema": "SBHM-001-pairing-closeout-report-review/v1",
+  "scope": "Manual review of assembled closeout sections on DEV scores, pairing/dependent worlds, raw prompt answerability, source-correct retention damage versus source-incorrect repairs, tokenizer exposure geometry and stated limitations. Other provenance/resource sections have separate owners.",
+  "status": "PASS"
+}

@@ -35,10 +35,12 @@ def main():
             result = compare(args.receipts)
             write_json(args.output, result)
         elif args.command == 'preflight':
+            from .data import load_corpus
             c = read_json(args.config)
             validate(c)
             failures, source = [], None
-            for check in (lambda: resources(c['device']), lambda: source_lock(c)):
+            for check in (lambda: resources(c['device']), lambda: source_lock(c),
+                          lambda: load_corpus(c.get('corpus_manifest'))):
                 try:
                     value = check()
                     if isinstance(value, str):

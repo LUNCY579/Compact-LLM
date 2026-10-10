@@ -1,0 +1,94 @@
+{
+  "started_utc": "2026-10-03T05:27:14.217155+00:00",
+  "completed_utc": "2026-10-03T05:27:25.199882+00:00",
+  "status": "PASS_OFFLINE_PINNED_MECHANICS_NATIVE_BLOCKED",
+  "python_executable": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv\\Scripts\\python.exe",
+  "python_version": "3.10.11",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "versions": {
+    "torch": "2.10.0+cpu",
+    "transformers": "4.51.3",
+    "tokenizers": "0.21.4",
+    "safetensors": "0.7.0",
+    "psutil": "7.2.2",
+    "pytest": "8.4.2",
+    "accelerate": "1.15.0"
+  },
+  "compiled_cuda": null,
+  "host_available_ram_bytes_at_receipt": 6001479680,
+  "worker_rss_bytes_at_receipt": 195579904,
+  "code_sha256_before_and_after_checks": "f869e8f6d41d4c4072854c1eb66c3b3efb4ed2961791a9b0c54de5a3e224e0fc",
+  "tests_sha256": {
+    "tests\\test_comparison.py": "7bec9d83ced08b3adbde5b2e001d7b38ac5c2c157fcaa7e6825d1b5c0cb3375b",
+    "tests\\test_experiment.py": "84466b1cab9a7900b0b51eeb4556f18840369de828333dec4b8cf4eedb7dce77",
+    "tests\\test_preflight.py": "05585280d24f34bd7b74ff0ebee0f981f256352613afad34c18ca3b6385c4685"
+  },
+  "configuration_file_sha256": "9a731453bdc167889f0400a13a823ce936a18c24494ed2db3d8fda1ec6ebe7b3",
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "tests",
+        "--disable-warnings"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv\\Scripts\\python.exe",
+        "-m",
+        "compileall",
+        "-q",
+        "sbhm",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv\\Scripts\\python.exe",
+        "-m",
+        "sbhm",
+        "preflight",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\configs\\titan_transition.proposed.json"
+      ],
+      "exit_code": 2
+    },
+    {
+      "command": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv\\Scripts\\python.exe",
+        "-m",
+        "sbhm.matrix",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\configs\\titan_transition.proposed.json",
+        "--output",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\evidence\\qualification_20261003\\PROPOSED_MATRIX_RUN_NOT_CREATED"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "full_suite_passed": 98,
+  "full_suite_skipped": 0,
+  "official_library_random_cpu_integration_executed": true,
+  "preflight_exit_code": 2,
+  "preflight_blockers": [
+    "free RAM below 7.4 GiB guard",
+    "corpus has not been marked reviewed for this experiment",
+    "dated operator grant is absent"
+  ],
+  "preflight_source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a",
+  "plan_commands": 22,
+  "plan_root_created": false,
+  "model_loaded": false,
+  "pretrained_inference": false,
+  "gpu_execution": false,
+  "native_training": false,
+  "native_training_fit_established": false,
+  "corpus_reviewed": false,
+  "operator_grant_created": false
+}

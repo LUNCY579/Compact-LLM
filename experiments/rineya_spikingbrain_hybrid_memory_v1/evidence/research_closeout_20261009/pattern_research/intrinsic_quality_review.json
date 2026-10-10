@@ -1,0 +1,623 @@
+{
+  "anchor_binding": {
+    "arm": "A",
+    "code_sha256": "26f1c07bbe354a422b1a6d4ea5988a21b063621f055c9a92155fa5e5e2a738ef",
+    "condition": "anchor",
+    "config_sha256": "56bfbe708b6046faf1bc20178b47894272b79fddc11a1dcf144f8e66bbdb1a89",
+    "corpus_sha256": "ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3",
+    "delta_manifest_sha256": null,
+    "delta_sha256": null,
+    "environment": {
+      "cuda": "12.4",
+      "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "python": "3.10.11",
+      "versions": {
+        "accelerate": "1.15.0",
+        "psutil": "7.2.2",
+        "safetensors": "0.7.0",
+        "tokenizers": "0.21.4",
+        "torch": "2.6.0+cu124",
+        "transformers": "4.51.3"
+      }
+    },
+    "ledger_sha256": "af19ce6a7a31fd07ae481e291478d89386855543b23191b6d1ffb6f1442c6678",
+    "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1",
+    "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a",
+    "study_id": "update-order-v1",
+    "tokenizer_sha256": "c8b302355b0f056818464137097cd078bda7a69c4f52ea99aee36030d6b07cdf"
+  },
+  "anchor_patterns_reviewed": {
+    "missing_absent_summary": {
+      "decoded_forms": {
+        "scalar": 32
+      },
+      "decoded_types": {
+        "int": 7,
+        "str": 25
+      },
+      "diagnostic_code_lexeme_payload_matches": 0,
+      "diagnostic_type_exact_payload_matches": 0,
+      "donor_code_match": 5,
+      "literal_null": 0,
+      "matching_queried_subject_code": 0,
+      "original_strict_correct": 0,
+      "original_typed_correct": 0,
+      "other_decoy_code_match": 2,
+      "overlapping_classification_note": "A prediction can match more than one visible record if literal values coincide; matching lists are preserved.",
+      "rows": 32,
+      "same_subject_wrong_field_weight": 25,
+      "unobserved_literal": 0,
+      "wrong_subject_code": 7
+    },
+    "missing_present_summary": {
+      "decoded_forms": {
+        "scalar": 32
+      },
+      "decoded_types": {
+        "int": 4,
+        "str": 28
+      },
+      "diagnostic_code_lexeme_payload_matches": 31,
+      "diagnostic_type_exact_payload_matches": 27,
+      "donor_code_match": 0,
+      "literal_null": 0,
+      "matching_queried_subject_code": 31,
+      "original_strict_correct": 0,
+      "original_typed_correct": 0,
+      "other_decoy_code_match": 0,
+      "overlapping_classification_note": "A prediction can match more than one visible record if literal values coincide; matching lists are preserved.",
+      "rows": 32,
+      "same_subject_wrong_field_weight": 1,
+      "unobserved_literal": 0,
+      "wrong_subject_code": 0
+    },
+    "six_order_bundle_summary": {
+      "bundles": 64,
+      "code_lexeme_all_six_greatest_code_matches": 10,
+      "code_lexeme_consistent": 10,
+      "decoded_type_sensitive_value_consistent": 10,
+      "dependent_worlds": 16,
+      "diagnostic_code_lexeme_all_six_payload_matches": 8,
+      "diagnostic_type_exact_all_six_payload_matches": 0,
+      "original_strict_all_six_correct": 0,
+      "original_typed_all_six_correct": 0,
+      "raw_prediction_consistent": 10
+    },
+    "update_by_comparison_key_conflict": {
+      "False": {
+        "decoded_forms": {
+          "scalar": 192
+        },
+        "decoded_types": {
+          "int": 192
+        },
+        "diagnostic_code_lexeme_payload_matches": 132,
+        "diagnostic_type_exact_payload_matches": 0,
+        "exclusive_selection_classes": {
+          "latest_and_greatest_code_overlap": 132,
+          "other_visible_payload": 34,
+          "visible_revision_numeral": 26
+        },
+        "matches_any_revision_numeral": 26,
+        "matches_first_payload": 30,
+        "matches_greatest_code_payload": 132,
+        "matches_greatest_revision_numeral": 19,
+        "matches_last_payload": 53,
+        "matches_middle_payload": 83,
+        "original_strict_correct": 0,
+        "original_typed_correct": 0,
+        "rows": 192
+      },
+      "True": {
+        "decoded_forms": {
+          "scalar": 192
+        },
+        "decoded_types": {
+          "int": 192
+        },
+        "diagnostic_code_lexeme_payload_matches": 66,
+        "diagnostic_type_exact_payload_matches": 0,
+        "exclusive_selection_classes": {
+          "greatest_code_only": 85,
+          "latest_only": 66,
+          "other_visible_payload": 24,
+          "visible_revision_numeral": 17
+        },
+        "matches_any_revision_numeral": 17,
+        "matches_first_payload": 17,
+        "matches_greatest_code_payload": 85,
+        "matches_greatest_revision_numeral": 14,
+        "matches_last_payload": 38,
+        "matches_middle_payload": 120,
+        "original_strict_correct": 0,
+        "original_typed_correct": 0,
+        "rows": 192
+      }
+    },
+    "update_by_role": {
+      "distant_heldout": {
+        "decoded_forms": {
+          "scalar": 192
+        },
+        "decoded_types": {
+          "int": 192
+        },
+        "diagnostic_code_lexeme_payload_matches": 78,
+        "diagnostic_type_exact_payload_matches": 0,
+        "exclusive_selection_classes": {
+          "greatest_code_only": 39,
+          "latest_and_greatest_code_overlap": 51,
+          "latest_only": 27,
+          "other_visible_payload": 34,
+          "visible_revision_numeral": 41
+        },
+        "matches_any_revision_numeral": 41,
+        "matches_first_payload": 15,
+        "matches_greatest_code_payload": 90,
+        "matches_greatest_revision_numeral": 32,
+        "matches_last_payload": 32,
+        "matches_middle_payload": 104,
+        "original_strict_correct": 0,
+        "original_typed_correct": 0,
+        "rows": 192
+      },
+      "near_control": {
+        "decoded_forms": {
+          "scalar": 192
+        },
+        "decoded_types": {
+          "int": 192
+        },
+        "diagnostic_code_lexeme_payload_matches": 120,
+        "diagnostic_type_exact_payload_matches": 0,
+        "exclusive_selection_classes": {
+          "greatest_code_only": 46,
+          "latest_and_greatest_code_overlap": 81,
+          "latest_only": 39,
+          "other_visible_payload": 24,
+          "visible_revision_numeral": 2
+        },
+        "matches_any_revision_numeral": 2,
+        "matches_first_payload": 32,
+        "matches_greatest_code_payload": 127,
+        "matches_greatest_revision_numeral": 1,
+        "matches_last_payload": 59,
+        "matches_middle_payload": 99,
+        "original_strict_correct": 0,
+        "original_typed_correct": 0,
+        "rows": 192
+      }
+    },
+    "update_counterfactual_summary": {
+      "both_extracted": 192,
+      "both_latest_lexemes_match": 78,
+      "both_latest_lexemes_wrong": 72,
+      "code_lexeme_responsive": 128,
+      "only_cf0_latest_lexeme_matches": 28,
+      "only_cf1_latest_lexeme_matches": 14,
+      "pairs": 192,
+      "raw_text_changed": 128
+    },
+    "update_summary": {
+      "decoded_forms": {
+        "scalar": 384
+      },
+      "decoded_types": {
+        "int": 384
+      },
+      "diagnostic_code_lexeme_payload_matches": 198,
+      "diagnostic_type_exact_payload_matches": 0,
+      "exclusive_selection_classes": {
+        "greatest_code_only": 85,
+        "latest_and_greatest_code_overlap": 132,
+        "latest_only": 66,
+        "other_visible_payload": 58,
+        "visible_revision_numeral": 43
+      },
+      "matches_any_revision_numeral": 43,
+      "matches_first_payload": 47,
+      "matches_greatest_code_payload": 217,
+      "matches_greatest_revision_numeral": 33,
+      "matches_last_payload": 91,
+      "matches_middle_payload": 203,
+      "original_strict_correct": 0,
+      "original_typed_correct": 0,
+      "rows": 384
+    }
+  },
+  "created_utc": "2026-10-05T20:47:59.708228+00:00",
+  "findings": [
+    "All384 anchor update outputs are JSON integers,198 expected code lexemes but0 string-type/full-contract correctness. Universal type-preserving wrapping repairs0 updates. String conversion would be a different schema intervention, not model gain.",
+    "Largest-code alignment and revision-numeral confusion remain genuine response errors: on192 latest-versus-largest-code conflict rows66 latest matches,85 greatest-code-only,24 other payloads,17 revision numerals. Rule overlap/counterexamples prevent exclusive internal-algorithm claims.",
+    "All32 missing-absent cases copy visible non-null values:25 same-subject wrong-field,7 wrong-subject code. Formatting cannot turn these into justified abstention.",
+    "Old matched original-attention B shifts toward first record59/64, with C61/64,D62/64 versus frozenA5/64. C/D follow first record32/32 distant, but have3/2 near counterexamples. OldTRAIN first-record reward24/32 versusDEV12/64 motivates orderbias; which training stage/algorithm caused it is unisolated.",
+    "Exact old/new source digest matches, but corpora/renderers/payload-versus-revision distributions differ. Cross-corpus improvement/degradation is not causally identified.",
+    "No newcompletedcontrol/candidate training receipt, delta, post-trainingqualification or comparison exists. Optimizer count, failingRAM sample and load-versus-gradient phase remain unknown."
+  ],
+  "input_files": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\corpora\\distant_evidence_v2\\dev.jsonl": {
+      "bytes": 819966,
+      "sha256": "72d85e135d2d368fd9817f36129d67373a4c7f3a4649491637e245cab1439d68"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\quality_followup\\PROTOCOL.md": {
+      "bytes": 3916,
+      "sha256": "b437e3a6a65912e668a4987c9c2ecd9ae449b0ca2a07e487af4d036a7752e3b9"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\quality_followup\\README.md": {
+      "bytes": 6564,
+      "sha256": "56b28471b6ee31aff463e79f206db92a037631082baf41aaaa7b7325f7109e7d"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\quality_followup\\metrics.py": {
+      "bytes": 11766,
+      "sha256": "4168477a947815eca1bb778a1767bb43989b3e2940be64fa5eba7c757862c3d9"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\quality_followup\\protocol.py": {
+      "bytes": 19211,
+      "sha256": "c0dd78eb0f9179e568ea998e60bf592cc27f4f2961b922128f851bcbc5a8d19d"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\quality_followup\\runner.py": {
+      "bytes": 23334,
+      "sha256": "8694901e319505352eb8afe81dff0f7834667eb67b950c1534256d86eea1ed56"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\A-evaluation\\receipt.json": {
+      "bytes": 494103,
+      "sha256": "b66809d7ab64043661ea94fc79f00149bde024ec143dc0397ea0d4e057a2b948"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\B-evaluation\\receipt.json": {
+      "bytes": 764734,
+      "sha256": "0ceda58b5586e58f4db59cae9e9a46ac8e7b285831c059697a14476b383e95f5"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\C-evaluation\\receipt.json": {
+      "bytes": 791436,
+      "sha256": "4a1dc38e91f1a653f2b249f433312350252f5d3cd2c50575b404dbafc3bc5e46"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\D-evaluation\\receipt.json": {
+      "bytes": 791662,
+      "sha256": "32f51c000b397577cd9461049709345768472be79a57f354cc03e8bacbab6d61"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\dev.jsonl": {
+      "bytes": 2143651,
+      "sha256": "e4c2572c603d6700020091581ff7d8541647e6d48f0c1b22d5ddddfd17deb761"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\manifest.json": {
+      "bytes": 4357,
+      "sha256": "ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-execution-log.txt": {
+      "bytes": 1036063,
+      "sha256": "df8b0df336b5f9598f841fe70232397c74963e8de6ca01acdefb0bd745778bfc"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-stop-receipt.json": {
+      "bytes": 39124,
+      "sha256": "23aed0fa7a160c0a022efc510093f8853d9b48a07faa32daa55e26a5e1402d29"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\receipt.json": {
+      "bytes": 999761,
+      "sha256": "5e9a1843c2f5f7229d5a073c632078ebfa0174143accac0c72d1b23975e85d37"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-train\\request.json": {
+      "bytes": 6259,
+      "sha256": "6716c3108c8dda150ec67ca614e3dd3d3ee718bcd1dba7938c2de159371ac766"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor-patterns.json": {
+      "bytes": 1421363,
+      "sha256": "395c58b607b816d282b5e33fa4d75ba21f02668f03cc36a7d041957a0636de8d"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_receipt.json": {
+      "bytes": 494836,
+      "sha256": "c703ab3047d9a55cff5939df0b9c12e357e3909b31c29c8cefa126ffcbb3e358"
+    }
+  },
+  "limitations": [
+    "One source/seed and synthetic dependentDEV worlds.",
+    "Pattern inspection is exploratory, not confidence/promotion evidence.",
+    "No intermediate oldstage behavior or completednewadaptation contrast.",
+    "Same source does not make the old/new differently rendered banks matched controls."
+  ],
+  "measurement_requirements": [
+    "Preserve strict/normalized/typed/contract metrics. Saved-output literal and wrapper diagnostics never relabel their results.",
+    "Report all-row joint contract/type/payload-lexeme/value-error counts and paired repair decomposition. Valid-JSON-only conditional accuracy can select an easier subset when contract compliance changes.",
+    "For updates keep first/middle/last, largest revision/code, revision-numeral confusion, overlaps and discriminating-row counts; preserve counterexamples.",
+    "Complete six-order correctness differs from stable wrong responses. Counterfactual output changes differ from correct target response. Worldclusters remain dependent.",
+    "For missing evidence retain present/absent, donor/wrongsubject/wrongfield/null classifications and absolute scores; no-drop-versus-control alone does not establish calibrated evidence use.",
+    "Preserve strict and typed source-correct retention sets separately. Three zero-baseline-correct skills have no observed source-correct protection. Repairs do not offset damage.",
+    "Future representation gains from trained raw outputs may be intrinsic contract gains but are not automatically better factual selection. External deterministic output wrappers are interface gains with unchanged model.",
+    "Frozen exploratoryDEV supports hypotheses only. No retroactive threshold/data adjustment, protectedbank reads or fixture capability claims.",
+    "Use exact source/code/corpus/output fingerprints. Do not infer missing failure-step/headroom telemetry."
+  ],
+  "next_intrinsic_experiment": {
+    "causal_scope": "Joint ordercoverage+positionfrequency augmentation only.",
+    "later": "Adequate fresh headroom, new exclusive output root, exact reviewed proposal and separate current authorization; no old permit reuse, guard change or automatic retry.",
+    "not_selected_now": [
+      "JSON-only recovery",
+      "revision-key/payload-number retraining",
+      "subject/field/abstention retraining",
+      "sites/context/steps/seeds expansion",
+      "recurrence campaign"
+    ],
+    "now": "Offline audit only; native retry held.",
+    "priority": "Preserve already fixed balanced order versus biased repetition as smallest untested intrinsic intervention. No formatter substitution or new interventions now.",
+    "required_evidence": "Completed native paired control/candidate delta-bound measurements, actual sharedslot hashes, prospective26/256 primary gate, separate source-correct strict/typed no-damage checks, absolute missingpresent/absent and raw output decomposition."
+  },
+  "old_update_independent_recomputation": {
+    "A": {
+      "all": {
+        "first_record_matches": 5,
+        "latest_code_lexeme_matches": 18,
+        "rows": 64,
+        "strict_correct": 14
+      },
+      "binding": {
+        "arm": "A",
+        "code_sha256": "326d805bde96047ca0553f8c33e5124a6c346fc11caaf3c28b4221277ef82140",
+        "config_sha256": "30b85a8bd3e24043bbbd2983d735eaf64df47e60626dc051792b45f3918d2400",
+        "corpus_sha256": "6f9c858b39c6c45d4fd5cd6bfa29d79b3c2f12773af7f392b44cfa171379105f",
+        "delta_manifest_sha256": null,
+        "delta_sha256": null,
+        "environment": {
+          "cuda": "12.4",
+          "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "python": "3.10.11",
+          "versions": {
+            "accelerate": "1.15.0",
+            "psutil": "7.2.2",
+            "safetensors": "0.7.0",
+            "tokenizers": "0.21.4",
+            "torch": "2.6.0+cu124",
+            "transformers": "4.51.3"
+          }
+        },
+        "schema": "SBHM-001/v1",
+        "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a"
+      },
+      "positions": {
+        "distant_heldout": {
+          "first_record_matches": 3,
+          "latest_code_lexeme_matches": 8,
+          "rows": 32,
+          "strict_correct": 6
+        },
+        "near_control": {
+          "first_record_matches": 2,
+          "latest_code_lexeme_matches": 10,
+          "rows": 32,
+          "strict_correct": 8
+        }
+      }
+    },
+    "B": {
+      "all": {
+        "first_record_matches": 59,
+        "latest_code_lexeme_matches": 13,
+        "rows": 64,
+        "strict_correct": 13
+      },
+      "binding": {
+        "arm": "B",
+        "code_sha256": "326d805bde96047ca0553f8c33e5124a6c346fc11caaf3c28b4221277ef82140",
+        "config_sha256": "30b85a8bd3e24043bbbd2983d735eaf64df47e60626dc051792b45f3918d2400",
+        "corpus_sha256": "6f9c858b39c6c45d4fd5cd6bfa29d79b3c2f12773af7f392b44cfa171379105f",
+        "delta_manifest_sha256": "c9898a3b82d2a9581573d66985a83aefd8a3f351babade777ba4be9a8d78e86f",
+        "delta_sha256": "772a8bccbc58f69fd65abe645e11fc58f064c1759f63ff287e06f85ce0672d7f",
+        "environment": {
+          "cuda": "12.4",
+          "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "python": "3.10.11",
+          "versions": {
+            "accelerate": "1.15.0",
+            "psutil": "7.2.2",
+            "safetensors": "0.7.0",
+            "tokenizers": "0.21.4",
+            "torch": "2.6.0+cu124",
+            "transformers": "4.51.3"
+          }
+        },
+        "schema": "SBHM-001/v1",
+        "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a"
+      },
+      "positions": {
+        "distant_heldout": {
+          "first_record_matches": 31,
+          "latest_code_lexeme_matches": 5,
+          "rows": 32,
+          "strict_correct": 5
+        },
+        "near_control": {
+          "first_record_matches": 28,
+          "latest_code_lexeme_matches": 8,
+          "rows": 32,
+          "strict_correct": 8
+        }
+      }
+    },
+    "C": {
+      "all": {
+        "first_record_matches": 61,
+        "latest_code_lexeme_matches": 13,
+        "rows": 64,
+        "strict_correct": 13
+      },
+      "binding": {
+        "arm": "C",
+        "code_sha256": "326d805bde96047ca0553f8c33e5124a6c346fc11caaf3c28b4221277ef82140",
+        "config_sha256": "30b85a8bd3e24043bbbd2983d735eaf64df47e60626dc051792b45f3918d2400",
+        "corpus_sha256": "6f9c858b39c6c45d4fd5cd6bfa29d79b3c2f12773af7f392b44cfa171379105f",
+        "delta_manifest_sha256": "67fab0d53787548cdfc74760558e7d0a0fc6d4ce424631c8969bf73e30511c1b",
+        "delta_sha256": "4d82bb70b17eebdd901727e4fee7c760de2f1b7076ae21a557be0fbd4c3e5505",
+        "environment": {
+          "cuda": "12.4",
+          "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "python": "3.10.11",
+          "versions": {
+            "accelerate": "1.15.0",
+            "psutil": "7.2.2",
+            "safetensors": "0.7.0",
+            "tokenizers": "0.21.4",
+            "torch": "2.6.0+cu124",
+            "transformers": "4.51.3"
+          }
+        },
+        "schema": "SBHM-001/v1",
+        "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a"
+      },
+      "positions": {
+        "distant_heldout": {
+          "first_record_matches": 32,
+          "latest_code_lexeme_matches": 6,
+          "rows": 32,
+          "strict_correct": 6
+        },
+        "near_control": {
+          "first_record_matches": 29,
+          "latest_code_lexeme_matches": 7,
+          "rows": 32,
+          "strict_correct": 7
+        }
+      }
+    },
+    "D": {
+      "all": {
+        "first_record_matches": 62,
+        "latest_code_lexeme_matches": 12,
+        "rows": 64,
+        "strict_correct": 12
+      },
+      "binding": {
+        "arm": "D",
+        "code_sha256": "326d805bde96047ca0553f8c33e5124a6c346fc11caaf3c28b4221277ef82140",
+        "config_sha256": "30b85a8bd3e24043bbbd2983d735eaf64df47e60626dc051792b45f3918d2400",
+        "corpus_sha256": "6f9c858b39c6c45d4fd5cd6bfa29d79b3c2f12773af7f392b44cfa171379105f",
+        "delta_manifest_sha256": "6f860af7d7888f34ee3b5a23a35e53bbdd7e9dde482b5828941e42ecc46176be",
+        "delta_sha256": "6f499f5a0148b520b37517e8bb67d2d12fa01582b3fb9549381117471e54219b",
+        "environment": {
+          "cuda": "12.4",
+          "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "python": "3.10.11",
+          "versions": {
+            "accelerate": "1.15.0",
+            "psutil": "7.2.2",
+            "safetensors": "0.7.0",
+            "tokenizers": "0.21.4",
+            "torch": "2.6.0+cu124",
+            "transformers": "4.51.3"
+          }
+        },
+        "schema": "SBHM-001/v1",
+        "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a"
+      },
+      "positions": {
+        "distant_heldout": {
+          "first_record_matches": 32,
+          "latest_code_lexeme_matches": 6,
+          "rows": 32,
+          "strict_correct": 6
+        },
+        "near_control": {
+          "first_record_matches": 30,
+          "latest_code_lexeme_matches": 6,
+          "rows": 32,
+          "strict_correct": 6
+        }
+      }
+    }
+  },
+  "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1/intrinsic-quality-independent-review",
+  "scope": {
+    "GPU_calls": false,
+    "bank_reads": false,
+    "frozen_source_or_corpus_changes": false,
+    "native_model_execution": false,
+    "training": false
+  },
+  "status": "PASS_OFFLINE_REVIEW_NO_INTRINSIC_GAIN_ESTABLISHED",
+  "wrapper_diagnostic": {
+    "counts": {
+      "general_evidence": {
+        "rows": 160,
+        "strict_after": 75,
+        "strict_before": 34,
+        "strict_damage": 0,
+        "strict_gains": 41,
+        "typed_after": 75,
+        "typed_before": 34
+      },
+      "missing": {
+        "rows": 64,
+        "strict_after": 27,
+        "strict_before": 0,
+        "strict_damage": 0,
+        "strict_gains": 27,
+        "typed_after": 27,
+        "typed_before": 0
+      },
+      "retention": {
+        "rows": 64,
+        "strict_after": 21,
+        "strict_before": 21,
+        "strict_damage": 0,
+        "strict_gains": 0,
+        "typed_after": 21,
+        "typed_before": 21
+      },
+      "update": {
+        "rows": 384,
+        "strict_after": 0,
+        "strict_before": 0,
+        "strict_damage": 0,
+        "strict_gains": 0,
+        "typed_after": 0,
+        "typed_before": 0
+      }
+    },
+    "examples": {
+      "general_evidence": [
+        {
+          "id": "uo1-dev-lookup-world-007-distant_heldout-cf0-slot0",
+          "original": "\"595\"",
+          "target": "{\"v\":\"595\"}",
+          "wrapped": "{\"v\":\"595\"}"
+        },
+        {
+          "id": "uo1-dev-lookup-world-006-distant_heldout-cf0-slot0",
+          "original": "\"981\"",
+          "target": "{\"v\":\"981\"}",
+          "wrapped": "{\"v\":\"981\"}"
+        },
+        {
+          "id": "uo1-dev-number-world-001-distant_heldout-cf1-slot0",
+          "original": "\"-90.03\"",
+          "target": "{\"v\":\"-90.03\"}",
+          "wrapped": "{\"v\":\"-90.03\"}"
+        }
+      ],
+      "missing": [
+        {
+          "id": "uo1-dev-missing-world-008-near_control-cf0-slot0",
+          "original": "\"734\"",
+          "target": "{\"v\":\"734\"}",
+          "wrapped": "{\"v\":\"734\"}"
+        },
+        {
+          "id": "uo1-dev-missing-world-010-near_control-cf0-slot0",
+          "original": "\"523\"",
+          "target": "{\"v\":\"523\"}",
+          "wrapped": "{\"v\":\"523\"}"
+        },
+        {
+          "id": "uo1-dev-missing-world-007-distant_heldout-cf0-slot0",
+          "original": "\"329\"",
+          "target": "{\"v\":\"329\"}",
+          "wrapped": "{\"v\":\"329\"}"
+        }
+      ]
+    },
+    "intrinsic_model_gain": false,
+    "registered_metrics_changed": false,
+    "rule": "Parse finite duplicate-free whole JSON. If and only if it is a scalar, serialize {v:scalar}; preserve type/value and all existing objects, arrays or malformed strings. The transform reads neither query nor target."
+  }
+}

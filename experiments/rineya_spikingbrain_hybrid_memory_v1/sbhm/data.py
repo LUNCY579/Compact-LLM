@@ -5,6 +5,27 @@ import random
 from .protocol import Blocked, read_json, safe_file, sha, write_json
 
 
+def validate_evaluation_groups(groups, dev_rows):
+    """Optional reviewed grouping of DEV families; labels do not prove distance."""
+    if groups is None:
+        return None
+    if not isinstance(groups, dict) or not groups:
+        raise Blocked('evaluation_groups must be a nonempty group-to-family-list map')
+    covered = set()
+    result = {}
+    for name, families in groups.items():
+        if (not isinstance(name, str) or not name.strip() or not isinstance(families, list) or
+                not families or any(not isinstance(family, str) or not family.strip() for family in families)):
+            raise Blocked('evaluation_groups require nonempty group names and family string lists')
+        if len(set(families)) != len(families) or covered.intersection(families):
+            raise Blocked('evaluation_groups contain duplicate or overlapping DEV families')
+        covered.update(families)
+        result[name] = sorted(families)
+    if covered != {row['family_id'] for row in dev_rows}:
+        raise Blocked('evaluation_groups must cover every DEV family exactly once')
+    return {name: result[name] for name in sorted(result)}
+
+
 def load_corpus(path):
     if not path:
         raise Blocked('reviewed train/dev manifest required')
@@ -13,6 +34,14 @@ def load_corpus(path):
         raise Blocked('only explicit train and dev splits are accepted; no final/check/test banks')
     if manifest.get('reviewed_for_sbhm') is not True:
         raise Blocked('corpus has not been marked reviewed for this experiment')
+    for name in ('design', 'review'):
+        if name in manifest:
+            item = manifest[name]
+            if not isinstance(item, dict) or set(item) != {'path', 'sha256'}:
+                raise Blocked(f'{name} must lock an exact path and SHA256')
+            p = safe_file(root, item['path'])
+            if p.stat().st_size > 16*1024*1024 or sha(p) != item['sha256']:
+                raise Blocked(f'{name} metadata exceeds bound or has changed')
     result = {}
     for split, item in manifest['splits'].items():
         if item.get('role') != split or item.get('protected') is not False:
@@ -33,6 +62,9 @@ def load_corpus(path):
         norm = lambda s: ' '.join(s.casefold().split())
         if {norm(r[field]) for r in result['train']} & {norm(r[field]) for r in result['dev']}:
             raise Blocked(f'train/dev overlap in {field}')
+    if 'evaluation_groups' in manifest and manifest['evaluation_groups'] is None:
+        raise Blocked('present evaluation_groups must be a nonempty map')
+    validate_evaluation_groups(manifest.get('evaluation_groups'), result['dev'])
     return result, sha(path)
 
 

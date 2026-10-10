@@ -68,6 +68,17 @@ G5: separately granted matched DEV evaluation, fresh qualification after updates
 G6: owner-reviewed decision, then independently registered larger/optimized study.
 
 Current delivery establishes G0 only. G1-G6 are not established by this commit.
+The 2026-10-03 follow-up resolves the skipped pinned-library integration and
+checks Titan-Transition's locked source/tokenizer/config and tensor headers.
+These read-only source checks do not replace G3 actual-source execution or G4
+gradient/optimizer fit. Fresh resource guards remain required at every launch.
+On 2026-10-04 the fresh memory-equivalent matrix completed G3-G5 on the exact
+Titan-Transition source and admitted synthetic corpus. All 10 qualifications,
+six matched 512-step adaptation stages and four DEV measurements completed.
+Training fit is established only for the actual 42-259-token inputs used, with
+the original thresholds preserved. H1 was not supported: D scored 171/224
+distant rows versus C 172/224, no D-only repairs. This is descriptive DEV,
+not G6 promotion, a general recurrence rejection or broad retention evidence.
 An operator grant alone is not a native measurement. No gate can be lowered by
 a fixture flag, public-source substitution, hidden data, or a skipped test.
 

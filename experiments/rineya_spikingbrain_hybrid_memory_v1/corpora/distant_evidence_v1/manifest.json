@@ -1,0 +1,40 @@
+{
+  "design": {
+    "path": "design.json",
+    "sha256": "127254b5e07c61aa3598543bd47a96e91ecf675017c7e4ccef5b8c84274a34f9"
+  },
+  "evaluation_groups": {
+    "distant_evidence": [
+      "dev-distant_evidence-identifier",
+      "dev-distant_evidence-join",
+      "dev-distant_evidence-lookup",
+      "dev-distant_evidence-missing",
+      "dev-distant_evidence-multiple_facts",
+      "dev-distant_evidence-number",
+      "dev-distant_evidence-update"
+    ],
+    "short_retention_probe": [
+      "dev-short_retention_probe-arithmetic",
+      "dev-short_retention_probe-formatting",
+      "dev-short_retention_probe-missing",
+      "dev-short_retention_probe-ordering",
+      "dev-short_retention_probe-short_lookup"
+    ]
+  },
+  "purpose": "Fresh synthetic controlled development proposal; review pending",
+  "reviewed_for_sbhm": false,
+  "splits": {
+    "dev": {
+      "path": "dev.jsonl",
+      "protected": false,
+      "role": "dev",
+      "sha256": "2d9cb37d77e77aca2d08259c8f07d77d991712d69a72adf6df414706c081aca0"
+    },
+    "train": {
+      "path": "train.jsonl",
+      "protected": false,
+      "role": "train",
+      "sha256": "bf0aa0b4d0ceeaa783416057ec53fe8e028253def37bf481ee661d77971f46f8"
+    }
+  }
+}

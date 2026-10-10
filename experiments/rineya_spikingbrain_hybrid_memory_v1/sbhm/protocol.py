@@ -12,6 +12,9 @@ import torch
 SCHEMA = 'SBHM-001/v1'
 ARMS = {'A': 'frozen', 'B': 'ordinary_recovery', 'C': 'local', 'D': 'hybrid'}
 ROOT = Path(__file__).resolve().parent.parent
+# Each native stage runs in its own process. Receipts can export these plain
+# measurements without retaining CUDA tensors or changing allocation arithmetic.
+CACHE_RELEASE_EVENTS = []
 
 
 class Blocked(RuntimeError):
@@ -68,6 +71,23 @@ def resources(device, runtime=False):
     if device != 'cuda:0' or not torch.cuda.is_available():
         raise Blocked('native pilot requires explicit cuda:0; no CPU fallback')
     free, total = torch.cuda.mem_get_info(0)
+    if runtime and free < 1*2**30:
+        reserved_before = torch.cuda.memory_reserved(0)
+        allocated_before = torch.cuda.memory_allocated(0)
+        if reserved_before > allocated_before:
+            event = {'created_utc': now(), 'device': device,
+                     'free_vram_before_bytes': free,
+                     'reserved_before_bytes': reserved_before,
+                     'allocated_before_bytes': allocated_before}
+            # Only unused allocator segments can be released. Live parameters,
+            # gradients, optimizer state and autograd activations remain intact.
+            torch.cuda.empty_cache()
+            free, total = torch.cuda.mem_get_info(0)
+            event.update(free_vram_after_bytes=free,
+                         reserved_after_bytes=torch.cuda.memory_reserved(0),
+                         allocated_after_bytes=torch.cuda.memory_allocated(0),
+                         recovered=free >= 1*2**30)
+            CACHE_RELEASE_EVENTS.append(event)
     result.update(free_vram_bytes=free, total_vram_bytes=total)
     if free < 1*2**30:
         raise Blocked('less than 1 GiB free VRAM safety reserve (not a fit certificate)')

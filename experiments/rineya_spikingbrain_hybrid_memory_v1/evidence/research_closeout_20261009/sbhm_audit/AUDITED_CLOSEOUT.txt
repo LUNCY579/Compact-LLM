@@ -1,0 +1,292 @@
+SBHM-001 audited native DEV closeout — 2026-10-05 (America/Chicago)
+
+Decision: JUSTIFIED HOLD on additional SBHM native spending.
+
+The completed one-site FP32 DEV pilot remains a negative result for added
+recurrence under this source/site/seed/recipe: local-only C scored 172/224
+distant rows and local+recurrent D scored 171/224. D had zero correct rows that
+C missed. Both damaged the same 4 of 22 source-correct synthetic retention
+cases. Higher aggregate synthetic accuracy does not establish preservation
+of the source model's capabilities. No successor native run is proposed.
+
+1. Identity, authorization and preservation
+
+Repository: C:/Users/clclc/BusinessProject/ChatBubble-rineya-spikingbrain-hybrid-memory-v1
+Branch: research/rineya-spikingbrain-hybrid-memory-v1
+HEAD: fe9183f5c8e884316f4a6446d3b5472e9d6ad18f
+Parent/merge base: b0ca54bdc1b69e2b19d7baeca2e3fdde3ff0a7b2
+Parent tree: 571ed17d70bb7a5e9ea0f664ad999ac8be704212
+
+Applicable package AGENTS.md, README.md, PROTOCOL.md, STATUS.md and SOURCES.md
+were read first. No separate package runbook exists; README's native preparation
+and individual-stage sections and sbhm/matrix.py define the execution sequence.
+Other experiments' runbooks and permits were not imported.
+
+Prior owner chat “Qualify recurrent memory recovery”
+(01a10030-c8f0-70c3-9b61-9a867962af19) was notLoaded and its latest turn completed.
+No SBHM-specific native worker was observed in process inspection. This chat
+performs offline closeout only; the independent agents perform audit subtasks.
+Historical grant timestamps are checked against historical requests and stage
+completion. They convey no permission for a new native run under this request.
+
+All new audit scripts, reports, receipts and CPU fixture scratch are under:
+C:/Users/clclc/BusinessProject/sbhm-001-audits/20261005-closeout-01a10d69
+The repository is left unedited. preservation-before.json and preservation-final.json
+verify byte preservation of the original 838 inventoried files (3,465,989,086 bytes),
+including existing source changes, corpora, historical evidence, both run roots,
+binary deltas/teacher targets and the source snapshot. Git status/diff snapshots
+retain the extensive existing local changes. Environments were reused unchanged.
+
+2. Authoritative run and receipt audit
+
+Authoritative run, relative to the experiment package:
+runs/titan_transition_v2_20261004_memory_efficient/
+
+Verified: 21 completed native-stage receipts (10 inference qualifications,
+one teacher capture, six adaptation stages, four DEV evaluations), plus
+comparison.json as command 22. The historical completion handoff reports exit 0;
+all 22 complete JSON documents in the execution log exactly match authoritative
+records in the registered matrix order. This audit inspects saved
+evidence and does not independently reobserve the historical process exit.
+The earlier runs/titan_transition_v2_20261004/ reserve-guard failure remains
+preserved and contributes no control to this comparison.
+
+The 50 copied JSON files in evidence/native_20261004/completed_receipts/
+match both their manifest and authoritative originals: 6,380,789 bytes.
+All six delta.safetensors payload hashes, headers, tensor names/shapes/counts
+and delta-manifest bindings pass. Recovered variants are bound to qualification
+and evaluation; training parent records match the earlier distillation records.
+All 256 teacher files pass hashes, safe headers, row binding and shapes, totaling
+502,904,576 bytes (479.607 MiB), within the unchanged 512 MiB cap by 33,966,336 bytes.
+
+Exact current native bindings reproduced:
+  code:   326d805bde96047ca0553f8c33e5124a6c346fc11caaf3c28b4221277ef82140
+  config: 30b85a8bd3e24043bbbd2983d735eaf64df47e60626dc051792b45f3918d2400
+  corpus: 6f9c858b39c6c45d4fd5cd6bfa29d79b3c2f12773af7f392b44cfa171379105f
+  source: c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a
+
+The exact 17-file native snapshot and published Titan-Transition
+1.0.0-devfreeze inventory agree. model.safetensors SHA256:
+a4d73353db9a91cbba7b4cd7c8fe4fe6822670d10fe523b26a6d651bb9509567
+The source has 310 FP32 tensors / 596,049,920 parameters; 28 layers, hidden
+width 1024, 16 query heads, 8 KV heads, explicit head dimension 128, source QK
+norms and tied embeddings. Head dimension is not inferred from hidden width.
+Published source metadata with CONFIRM002 names was hashed as inventory bytes
+only; no bank content was parsed or its evidence/permission imported.
+
+Qualification age and source/config/code/corpus/arm/delta/environment bindings
+pass at the subsequent historical requests. The recorded native stack is
+Torch 2.6.0+cu124 / Transformers 4.51.3 / Tokenizers 0.21.4, Python 3.10.11,
+RTX 4070 Laptop GPU. Current CUDA requalification was not run.
+
+October 3 CPU integration and RAM-blocked native admission receipts remain
+historical. Their code hash differs from the successful October 4 memory-efficient
+revision. The recovery parity receipt records 122 tests on its earlier revision;
+the combined revision separately records 136. Those dates/revisions are not
+collapsed into one qualification. The memory-efficient rerun used supervised
+answer/EOS vocabulary projection and pressure-only inactive-cache release with
+unchanged guards; all controls, teacher capture and qualifications were fresh.
+
+3. Data, pairing and exposure
+
+Independent raw-prompt parsing replays all 768 corpus targets (256 TRAIN,
+512 DEV), checks disjoint splits/templates/worlds, and verifies factual
+counterfactual and near/distant block-order contracts. There are 336 counterfactual
+and 336 position pairs across the corpus, including 224 of each within DEV.
+The 448 DEV evidence rows share 112 worlds with four dependent variants per
+world; they are not 448 independent samples. Retention supplies another 64 rows.
+
+Fresh tokenizer-only replay details are in tokenizer_replay.json: 20,608 checks
+pass across all 768 rows, without importing Torch. It checks
+the local pinned chat template, input/answer/EOS token counts and evidence spans
+against the historical geometry without loading model weights. Native training
+receipts do not retain runtime input token IDs, so equality of the original
+runtime token sequences cannot be reobserved. The exact locked row/tokenizer/
+template contract and fresh replay support the recorded exposure checks.
+
+B/C/D each completed 512 distillation and 512 recovery steps, consuming every
+TRAIN row twice in independently reproduced seed-17 order. Per-stage traces
+agree on row IDs, input lengths and supervision counts: 109,120 input positions
+per stage, 109,120 distillation positions, and 4,848 recovery answer/EOS labels.
+Loss and gradient-norm records are finite. All use rank 8, layer 14, window 128,
+FP32, learning rate 0.0001 and AdamW(.9,.95), wd=0, eps=1e-8, clip=1.
+B's zero-loss self-distillation is the expected unchanged-attention control.
+Matched exposure is not matched parameters or compute.
+
+Actual TRAIN inputs cover 42–259 tokens; TRAIN distant gaps are 140–157 tokens.
+DEV distant gaps cover 145–1058 tokens, and near required-fact-to-answer spans
+are at most 81 tokens. This modest training geometry is a limitation, not a
+newly selected explanation or permission for longer-context recovery.
+
+4. Independently recomputed native DEV behavior
+
+Arm                            Distant /224   Near /224   Retention /64
+A frozen source                51            104         22
+B original + adaptation        172           179         29
+C local + adaptation           172           172         29
+D local+recurrent + adaptation  171           171         29
+
+All 2,048 strict/normalized score flags are recomputed from raw strings and
+locked DEV targets; both metrics agree on the same cases. Compact-JSON strict
+match is the registered contract; normalized match only handles outer whitespace
+and case. Neither parses semantic JSON equivalence or measures broad capability.
+
+Primary D-minus-C distant contrast: -1/224 = -0.44643 percentage points;
+171 both correct, one C-only correct, zero D-only correct, 52 neither correct.
+Near's aggregate contrast is also -1/224, making the descriptive distance-specific
+increment zero. The discordances occur in different worlds, so aggregate
+cancellation does not establish same-world invariance or causal mediation.
+
+C-only distant row: dev-lookup-world-010-distant_heldout-cf-0
+  target/C: {"v":"914"}; D: {"v":"938"}
+C-only near row: dev-update-world-005-near_control-cf-1
+  target/C: {"v":"943"}; D: {"v":"289"}
+These are wrong values, not formatting differences between C and D.
+No D-only correct row exists in any task or distance band. Largest-gap
+1040–1058 band: both 54/70; medium 385–403: C 53/D 52 of 70; smallest 145–162:
+both 65/84. These are descriptive strata inspected on DEV, not a new criterion.
+
+Source-correct synthetic retention is separate:
+  B retained 17/22, damaged 5/22, repaired 12 of 42 source-incorrect rows.
+  C retained 18/22, damaged 4/22, repaired 11 of 42 source-incorrect rows.
+  D retained 18/22, damaged 4/22, repaired 11 of 42 source-incorrect rows.
+C/D damage the same four cases:
+  dev-retention-boolean-world-001 and -005: true -> false
+  dev-retention-temporal-world-000: blue -> green
+  dev-retention-unit_conversion-world-001: 360 -> 3600
+C/D also repair the same eleven cases. Thus 22-4+11=29/64 is aggregate synthetic
+performance, while preservation of source-correct cases is only 18/22 (81.82%).
+Some source-incorrect repairs satisfy the output contract (for example,
+bare values gain the required JSON wrapper); they are not all skill acquisition.
+Qualitative raw-output inspection finds 6 of the 11 C/D repairs already contain
+the correct value in A but fail the wrapper/type contract. This is not a new
+semantic metric or a change to the registered source-correct denominator.
+The row-level receipt preserves target and all four predictions for damage/repair.
+
+Within distant evidence, C/D each damage 10 of 51 source-correct rows and retain 41;
+they repair 131/130 source-incorrect rows respectively. Near C/D each damage 11 of 104
+and retain 93, with 79/78 repairs. These group counts also do not establish broad
+retention. A's modest competence restricts the retention denominators.
+
+Missing-evidence answerability fails for C/D: at each position, both output
+{"v":null} on all 32 missing-category rows, pass 16 absent rows and fail all 16
+answerable rows. Their 50% score reflects unconditional null behavior, not
+calibrated evidence use. In distant missing cases B answers all 16 present cases
+correctly but fails all 16 absent cases; it is not an abstention winner either.
+
+5. Cache geometry, cost and guard evidence
+
+FP32 persistent KV per full-attention layer/token = 2*8*128*4 = 8,192 bytes.
+For cached length T = prompt_tokens + generated_tokens - 1:
+  A/B: 28*T*8192
+  C:   27*T*8192 + min(T,128)*8192
+  D:   C + 8*128*128*4 = C + 524,288
+All 2,048 prediction and 20 qualification storage snapshots satisfy these formulas.
+At 2048 tokens A/B 448 MiB, C 433 MiB, D 433.5 MiB. D saves 14.5 MiB (3.24%) of total
+persistent cache versus A and costs 0.5 MiB more than C. Other 27 layers keep growing
+full-history KV; only the converted site's local/recurrent persistent state is
+bounded. This does not make total-model or training memory constant.
+
+Among 511 equal-prefix C/D pairs the added state is exactly 524,288 bytes.
+dev-retention-string_rule-world-002 is excluded from that storage contrast:
+C cached 48 tokens, D 51. Its 1,212,416-byte difference includes three extra cached
+tokens plus recurrent state. Actual distinct tensor storage is counted, not views.
+
+Instrumented distant-row cost:
+Arm  median TTFT(s) median decode(tokens/s) max allocated(GiB) max reserved(GiB) max sampled RSS(GiB)
+A    0.279439       30.37793                2.496142           2.615234      1.011150
+B    0.293992       28.88644                2.496448           2.617188      1.015308
+C    0.441738       26.71207                2.488536           2.619141      1.043064
+D    0.623527       25.10966                2.492935           2.621094      1.085346
+
+D's median distant TTFT is 41.15% greater and decode throughput 6.00% lower than C.
+These observed distributions use synchronized inference with guards/finite checks;
+loading and tokenization are excluded. Decode excludes the first token from its
+throughput numerator and is null for one-token completions. CUDA peaks include
+the loaded model and are read after the untimed cache inspection. RSS statistics
+start after prefill and sample during decode; prefill guard RSS samples are not
+accumulated into the per-row maximum. No energy measurement or optimized SBHM kernel.
+Host load/order and output lengths differ, so these are descriptive costs.
+
+B/C have 81,920 trainable parameters; D 1,131,664, adding 1,049,744. Request-to-receipt
+distillation+recovery elapsed intervals sum to B 70.653 s, C 338.080 s, D 681.852 s.
+They include model load/install, exclude admission/startup/final serialization,
+and are wall-clock-derived intervals, not GPU-only or optimizer-only timers.
+
+The 7.4 GiB admission RAM, 6 GiB runtime RAM, 4 GiB worker RSS, explicit CUDA:0,
+1 GiB free-VRAM reserve, 512 MiB teacher cap and 1 GiB disk reserve remain unchanged.
+All 21 successful stage receipts have empty allocator-release event arrays.
+Completion and guarded code support passed checked boundaries. Numeric free-RAM/
+free-VRAM traces are not saved, so continuous/transient headroom is unverified.
+Training/qualification receipts have no stored CUDA/RSS peak measurements.
+Native fit applies to the actual 42–259-token TRAIN inputs; it does not qualify
+the 512-token training cap. Qualification checks 2048-token chunked inference and
+17-token tokenwise inference. It is inference mechanics, not training/capability/
+serving qualification. Saved qualification summaries do not retain separate raw
+greedy-token/request-independence trajectories for independent replay.
+
+6. Current fixture verification and audit provenance
+
+Existing CPU suite: 136 passed, 0 skipped, returncode 0. Python 3.10.11,
+Torch 2.10.0+cpu / Transformers 4.51.3 / Tokenizers 0.21.4. CUDA hidden, HF offline,
+pytest cache disabled, bytecode disabled, scratch/cache roots external. Tiny
+official-library models are random CPU fixtures. No new pretrained inference,
+training, native qualification/evaluation, model promotion or serving change.
+This CPU rerun does not requalify the historical CUDA stack or Rineya capabilities.
+
+Audit receipts and scripts in this directory:
+  provenance_receipt_v2.json / provenance_audit_v2.py
+  provenance_log_receipt.json / provenance_log_audit.py
+  pairing_audit_final.json / pairing_audit.py
+  tokenizer_replay.json / tokenizer_replay.py
+  resources_audit_v2.json / resources_audit.py
+  fixture-verification.json / fixtures-junit.xml / fixtures-output.txt
+  preservation-before.json / preservation-final.json
+  ownership-decision.json / git-status-before.txt / local-changes-before.patch
+  closeout_receipt.json / deliverables_manifest.json
+
+First audit drafts were preserved. Auditor assumptions were corrected: B LoRA
+names directly under self_attn, multiple-fact counterfactuals changing both
+requested facts, canonical config digest versus file SHA, and a draft extra-
+parameter typo. Final passing receipts bind the corrected scripts; none of these
+corrections changes native data, results or historical receipts. The historical
+supplement's technical schema revision likewise preserves the registered metrics.
+
+Primary historical receipt locations, relative to the package:
+  runs/titan_transition_v2_20261004_memory_efficient/comparison.json
+  runs/titan_transition_v2_20261004_memory_efficient/{A,B,C,D}-evaluation/receipt.json
+  evidence/native_20261004/completed_receipts/manifest.json
+  evidence/native_20261004/final_completed_handoff.json
+  evidence/native_20261004/memory-efficient-rerun-registration.json
+  evidence/native_20261004/memory-equivalence-review.json
+  evidence/qualification_20261003/native-v2-admission.json
+  evidence/qualification_20261003/cuda_stack/middle-site-final.json
+
+7. Evidence boundary and next concrete decision
+
+H1 (added distant evidence benefit above C): unsupported in this exact pilot.
+H2 (bounded converted-site state): supported by code/geometry and saved native
+snapshots at registered shapes. It does not imply total-model memory savings
+beyond the measured small fraction. H3 (broad original capability preservation):
+unestablished; narrow source-correct synthetic retention has documented damage.
+H4 (optimized cost benefit): untested, with a slower sequential reference observed.
+
+One source/site/seed 17, synthetic closed worlds, repeated DEV inspection, exact
+string contracts and dependent world variants limit the result. Other 27 layers
+retain full attention. No state-reset causal contrast or exclusive recurrent route
+was measured. Artifact consistency cannot independently prove historical execution
+or cryptographically prove operator consent. No confidence interval, promotion
+threshold, general recurrence rejection, broad retention or energy claim is made.
+
+Close the current evidence package with its negative result intact and hold all
+additional SBHM native spending. There is no specific new mechanism plus minimal
+discriminating control supported strongly enough here to justify a successor.
+The evidence does not select among alternative explanations such as site choice,
+forgetting dynamics, limited training geometry or remaining full-attention routes.
+Do not automatically expand sites/context/recovery or launch a recurrence campaign.
+
+Reopening requires a written new mechanistic hypothesis, the smallest control
+that can discriminate it, prospectively fixed pairing/retention analysis and
+resource bounds, one exact reviewed run proposal, and separate native permission.
+The next concrete decision is to retain this justified hold; no execution command,
+new grant, promotion or external spend is prepared by this closeout.

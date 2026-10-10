@@ -1,0 +1,31 @@
+{
+  "auditor": "root independent raw-prompt oracle and exact-tokenizer replay",
+  "checks": [
+    "actual-prompt independent oracle",
+    "all six update orders",
+    "counterfactual and position pairs",
+    "joint intervention invariants",
+    "shared512slot schedule",
+    "split and historical disjointness",
+    "tokenizer inventory",
+    "runtime token/label replay"
+  ],
+  "counts": {
+    "candidate": 512,
+    "control": 512,
+    "dev": 672
+  },
+  "created_utc": "2026-10-05T19:56:42.071388+00:00",
+  "full_tokenizer_replay": true,
+  "ledger_steps": 512,
+  "limitations": [
+    "Offline engineering verification only; no model capability evidence.",
+    "Semantic review and separate native authorization remain required."
+  ],
+  "manifest_sha256": "ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3",
+  "native_model_loaded": false,
+  "reviewed": false,
+  "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1/corpus-audit",
+  "status": "PASS_OFFLINE_AUDIT",
+  "torch_imported": false
+}

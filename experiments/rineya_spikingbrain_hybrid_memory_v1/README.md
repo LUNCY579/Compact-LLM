@@ -2,14 +2,50 @@
 
 An isolated, staged experiment inspired by SpikingBrain and LoLCATs.
 
+**2026-10-09 publication:** the [audited closeout and quality research archive](evidence/research_closeout_20261009/README.md)
+preserves the negative recurrence result, the stopped update-order pilot and
+qualified offline discoveries. No new intrinsic quality gain is verified.
+The archive includes a read-only portable integrity check and final receipt index;
+native execution remains on hold. See [STATUS.md](STATUS.md) for the current state.
+
 **Question:** Can one pretrained attention site be replaced by bounded local
 attention plus compressed recurrent memory, then recovered with bounded
 training, without unacceptable capability loss?
 
-**Delivery status:** runnable pipeline and offline mechanics tests; no native
+**Original 2026-10-02 delivery status:** runnable pipeline and offline mechanics tests; no native
 Rineya weights loaded, no GPU training, no native capability or efficiency result.
 The optional pinned-Transformers integration test was skipped in the delivery
 runtime. See [STATUS.md](STATUS.md) and committed [evidence](evidence/).
+
+The 2026-10-03 follow-up resolved that skip in isolated pinned CPU and CUDA
+environments: the official-library tiny random integration now executes on CPU.
+Titan-Transition 1.0.0-devfreeze was selected from the owner's main Chat-Bubble
+published-core catalog. Its complete weight inventory, explicit tensor geometry
+and pinned tokenizer/config loading were checked without loading a pretrained
+model. Native inference and training still require the unchanged resource guards.
+See `evidence/qualification_20261003/`; earlier delivery receipts are preserved.
+
+On 2026-10-04 the FP32 native matrix completed on the exact Titan-Transition
+source after all variant qualifications, 512-step distillation/recovery stages,
+and four 512-row DEV measurements. **No recurrent addition benefit was observed:**
+D scored 171/224 distant rows against C's 172/224, with zero D-only repairs.
+C and D each retained 18/22 source-correct cases in the separate 64-row synthetic
+retention group. See STATUS and `evidence/native_20261004/` for the raw paired
+evidence, source identity, memory checks and limitations. One source/site/seed
+and remaining full-attention layers prevent a general recurrent-memory claim.
+The first matrix stopped at hybrid recovery's VRAM reserve guard.
+A fresh memory-equivalent rerun uses supervised-position vocabulary projection
+and pressure-only release of inactive PyTorch cache before the unchanged guard.
+Pinned CPU tests verify loss, all trainable gradients and an AdamW update against
+the original full-logit recovery. All controls, teacher capture and qualifications
+were rerun under new code/config bindings. Use
+`configs/titan_transition.v2.memory_efficient.json`; the successful bounded run
+exercised 42-259-token TRAIN inputs, not the entire 512-token training cap.
+Teacher targets were exactly 479.607 MiB within the 512 MiB cap. The unchanged
+RAM/RSS/VRAM guards passed at the checked boundaries, and no cache release was
+needed in its completed receipts. Numeric continuous free-RAM/free-VRAM traces
+were not saved. Native mechanics and this descriptive DEV result do not
+qualify broad quality, energy, optimized speed or model promotion.
 
 ## Scope and provenance
 
@@ -182,6 +218,21 @@ recipe. B's initial attention distillation can have exactly zero loss; it is a
 self-teacher exposure control, not evidence of learning. Parameter counts and
 actual runtime costs differ and are reported rather than called matched.
 
+The stronger proposed corpus is `corpora/distant_evidence_v2/`: 256 TRAIN and
+512 DEV rows, seven evidence task categories, eight synthetic retention skills,
+independent answer/distractor RNG streams, factual counterfactuals, and matched
+near/distant evidence-position controls. The owner requested generation and
+review with agents. Admission must transparently record the independent agent
+review rather than claiming the owner manually inspected the generated rows.
+The initial v1 proposal stays unreviewed and rejected because recent filler
+values encoded its answers. Token-distance checks alone did not detect that flaw.
+
+The v2 run proposal uses seed 17, layer 14, window 128, rank 8, FP32, and 512
+updates per stage, covering every TRAIN row twice in the same order for B/C/D.
+Full unique teacher capture is estimated below 480 MiB including safetensors
+headers, below the unchanged 512 MiB cap. These are prospective engineering
+choices, not a demonstrated sufficient learning opportunity or promotion rule.
+
 Native qualification checks exact identity-wrapper equality, A/B zero-init
 identity where applicable, full/chunk/tokenwise logit agreement and greedy-token
 agreement, request independence, finite states, and absence of full-history KV
@@ -202,6 +253,23 @@ is semantic correctness. Retain raw predictions, IDs and stop reasons for blind
 review. `compare` refuses unmatched data, row order, training exposure, missing
 recovery/distillation, or reset diagnostics. Its repair/damage counts are
 **descriptive DEV results**, not a confidence interval or promotion decision.
+
+Optional manifest `evaluation_groups` maps group names to disjoint DEV family
+lists covering all DEV families. Reports preserve that registration. The
+comparison now reports the paired D-minus-C contrast, per-family results and
+A-correct retention separately within each registered group. V2 uses
+`distant_heldout`, `near_control`, and `retention`; labels alone do not certify
+distance. Referenced `design` and `review` metadata are hash-checked before model
+allocation. Raw predictions and completed, variant-bound, nonempty training
+receipts are required for comparison.
+
+V2 has canonical compact-JSON answer contracts. Strict match is the primary
+contract measure; normalized match only strips outer whitespace and ignores case.
+Neither parses JSON meaning. Short synthetic retention is a narrow original-model
+probe. Other 27 layers still have full attention, so a D/C difference measures
+the specific trained one-site intervention, not an exclusive recurrent route.
+The default zero-initialized forget projection gives a 16-token half-life;
+insufficient distant retention or recovery must remain a possible negative result.
 
 For a fixed recurrent-state-reset diagnostic, set `reset_recurrent_at` in a new
 config to an interior prompt boundary, obtain a matching grant/qualification,

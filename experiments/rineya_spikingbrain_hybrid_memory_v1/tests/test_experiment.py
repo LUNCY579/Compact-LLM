@@ -348,9 +348,12 @@ class TinyLM(nn.Module):
         x = self.embed(input_ids)
         for layer in self.model.layers:
             x = x + layer.self_attn(hidden_states=x,position_embeddings=rope(x.shape[1]),attention_mask=None)[0]
+        if torch.is_tensor(logits_to_keep):
+            x = x[:, logits_to_keep, :]
         logits = self.head(x)
         loss = None if labels is None else F.cross_entropy(logits[:,:-1].reshape(-1,128),labels[:,1:].reshape(-1),ignore_index=-100)
-        return SimpleNamespace(logits=logits[:,-logits_to_keep:] if logits_to_keep else logits,loss=loss)
+        selected = logits if torch.is_tensor(logits_to_keep) else logits[:,-logits_to_keep:] if logits_to_keep else logits
+        return SimpleNamespace(logits=selected,loss=loss)
 
 
 @pytest.mark.parametrize('arm', ['B','C','D'])
@@ -387,20 +390,47 @@ def test_real_transformers_random_qwen3_integration():
         pytest.skip('requires pinned Transformers, no version fallback')
     from transformers import Qwen3Config,Qwen3ForCausalLM
     cfg = Qwen3Config(hidden_size=16,intermediate_size=32,num_attention_heads=4,num_key_value_heads=2,
-                     head_dim=8,num_hidden_layers=4,vocab_size=128,max_position_embeddings=128)
+                     head_dim=8,num_hidden_layers=5,vocab_size=128,max_position_embeddings=128)
+    cfg._attn_implementation = 'sdpa'  # the native loader's selected implementation
     c = {'layer':3,'window':4,'rank':2,'seed':17}
+    base = Qwen3ForCausalLM(cfg).eval().requires_grad_(False)
+    ids = torch.tensor([[9,12,7,21,32,11,5]])
+    with torch.no_grad():
+        baseline = base(ids,use_cache=False,logits_to_keep=1).logits
+    converted = {}
     for arm in 'ABCD':
-        model = Qwen3ForCausalLM(cfg).eval().requires_grad_(False)
+        model = copy.deepcopy(base)
         native.install(model,c,arm)
-        ids = torch.tensor([[9,12,7,21,32,11,5]])
+        converted[arm] = model
         with torch.no_grad():
-            expected = model(ids,use_cache=False).logits[:,-1:]
-            cache = None
-            for part in ids.split(1,dim=1):
-                output = native.model_forward(model,part,cache)
-                cache = output.past_key_values
-            torch.testing.assert_close(output.logits,expected,atol=1e-5,rtol=1e-4)
-            native.check_cache(cache,c,arm,ids.shape[1])
+            expected = model(ids,use_cache=False,logits_to_keep=1).logits
+            if arm in 'AB':
+                torch.testing.assert_close(expected,baseline,atol=0,rtol=0)
+            original = model.model.layers[c['layer']].self_attn
+            model.model.layers[c['layer']].self_attn = native.IdentityAttention(original)
+            wrapped = model(ids,use_cache=False,logits_to_keep=1).logits
+            model.model.layers[c['layer']].self_attn = original
+            torch.testing.assert_close(wrapped,expected,atol=0,rtol=0)
+            for chunk in (1,3,ids.shape[1]):
+                cache = None
+                for part in ids.split(chunk,dim=1):
+                    output = native.model_forward(model,part,cache)
+                    cache = output.past_key_values
+                torch.testing.assert_close(output.logits,expected,atol=1e-5,rtol=1e-4)
+                assert torch.equal(output.logits.argmax(-1),expected.argmax(-1))
+                native.check_cache(cache,c,arm,ids.shape[1])
+            # A fresh request may not inherit the prior request's memory.
+            fresh = native.model_forward(model,ids[:,:3])
+            reference = model(ids[:,:3],use_cache=False,logits_to_keep=1).logits
+            torch.testing.assert_close(fresh.logits,reference,atol=1e-5,rtol=1e-4)
+            native.check_cache(fresh.past_key_values,c,arm,3)
+            again = model(ids,use_cache=False,logits_to_keep=1).logits
+            torch.testing.assert_close(again,expected,atol=0,rtol=0)
+    with torch.no_grad():
+        converted['D'].model.layers[c['layer']].self_attn.mix.zero_()
+        zero_mix = converted['D'](ids,use_cache=False,logits_to_keep=1).logits
+        local = converted['C'](ids,use_cache=False,logits_to_keep=1).logits
+        torch.testing.assert_close(zero_mix,local,atol=0,rtol=0)
 
 
 def test_matrix_is_complete_and_plan_only(tmp_path):
@@ -452,9 +482,16 @@ def fake_report(arm):
     trace = {'stage':'distill','records':[{'row_id':'train1','input_tokens':6,'supervised_positions':6}]}
     recovery = {'stage':'recover','records':[{'row_id':'train1','input_tokens':6,'supervised_positions':2}], 'parent_record':trace}
     binding = {'arm':arm,'source_sha256':'s','code_sha256':'c','config_sha256':'k','environment':{},'delta_sha256':None if arm=='A' else arm}
+    for stage in (trace,recovery):
+        stage.update(status='TRAINING_COMPLETED_NOT_EFFICACY',corpus_sha256='d',binding=copy.deepcopy(binding))
+        stage['records'][0].update(step=0,loss=0.0,gradient_norm=0.0)
     return {'status':'DEV_MEASUREMENT_ONLY','binding':binding,'corpus_sha256':'d',
             'adaptation_record':None if arm=='A' else recovery,'strict_exact_match':int(arm=='D'),
-            'predictions':[{'id':'dev1','strict_exact_match':arm=='D','reset_recurrent_at':None}]}
+            'normalized_exact_match':int(arm=='D'),
+            'predictions':[{'id':'dev1','family_id':'fixture-dev','target':'fixture-answer',
+                            'prediction':'fixture-answer' if arm=='D' else 'wrong',
+                            'strict_exact_match':arm=='D','normalized_exact_match':arm=='D',
+                            'reset_recurrent_at':None}]}
 
 
 def test_compare_checks_exposure_and_does_not_promote(tmp_path):

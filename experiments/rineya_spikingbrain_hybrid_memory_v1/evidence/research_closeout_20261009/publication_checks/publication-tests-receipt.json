@@ -1,0 +1,67 @@
+{
+  "attempts": [
+    {
+      "cause": "Operator selected a scratch root outside the required update-order-v1 boundary; 8 fixtures blocked. No code or guard change.",
+      "counts": {
+        "errors": 0,
+        "failures": 8,
+        "passed": 214,
+        "skipped": 0,
+        "tests": 222
+      },
+      "junit": "publication-tests-junit.xml"
+    },
+    {
+      "cause": "Operator had not created basetemp parent; 109 fixture setup errors. Parent creation corrected without code/guard change.",
+      "counts": {
+        "errors": 109,
+        "failures": 0,
+        "passed": 113,
+        "skipped": 0,
+        "tests": 222
+      },
+      "junit": "publication-tests-final-junit.xml"
+    },
+    {
+      "cause": "Correct approved scratch root and existing parent.",
+      "counts": {
+        "errors": 0,
+        "failures": 0,
+        "passed": 222,
+        "skipped": 0,
+        "tests": 222
+      },
+      "junit": "publication-tests-pass-junit.xml"
+    }
+  ],
+  "capability_evidence": false,
+  "command": [
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "tests",
+    "quality_followup/tests",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261009-publication-01a10d69\\fixture-scratch-pass",
+    "--junitxml",
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\publication\\20261009-01a10d69\\publication-tests-pass-junit.xml"
+  ],
+  "native_execution": false,
+  "pretrained_model_loaded": false,
+  "python": "3.10.11",
+  "returncode": 0,
+  "runtime_guard_changed": false,
+  "schema": "RINEYA-RESEARCH/publication-fixtures-v1",
+  "status": "PASS",
+  "versions": {
+    "pytest": "8.4.2",
+    "tokenizers": "0.21.4",
+    "torch": "2.10.0+cpu",
+    "transformers": "4.51.3"
+  },
+  "working_directory": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1"
+}

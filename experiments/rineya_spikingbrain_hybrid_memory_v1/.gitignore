@@ -1,9 +1,21 @@
 __pycache__/
 .pytest_cache/
 .venv/
+.venv-cuda/
+.native-source/
 runs/
 local*.json
 *.safetensors
 *.pt
 *.pth
 *.bin
+
+# Redundant producer/reviewer working copies stay local; final corpora are tracked.
+corpora/distant_evidence_v2/.rebuild/
+corpora/distant_evidence_v2/.language_review/
+corpora/distant_evidence_v2/.record_order_review/
+
+# Operator acknowledgments and machine/session ownership are not publication data.
+**/native-grant.json
+**/ownership-native.json
+**/run-owner-lock.json
