@@ -24,6 +24,91 @@ PACKAGE = Path(__file__).resolve().parent
 ROOT = PACKAGE.parents[1]
 
 
+REQUIRED_TEST_IDS = frozenset(
+    f"{module}.{class_name}.{method}"
+    for module, class_name, methods in (
+        ("test_registration", "RegistrationTests", (
+            "test_complementary_non_expiring_scope",
+            "test_documents_are_present_and_local_links_resolve",
+            "test_future_native_values_remain_unset",
+            "test_identity_and_design_status",
+            "test_interaction_control_and_baseline",
+            "test_no_execution_permissions",
+            "test_no_native_or_sampler_result_claims",
+            "test_owner_controlled_disposition",
+            "test_parent_pin",
+            "test_related_sources_are_pinned_not_replaced",
+            "test_reversible_parking",
+            "test_versioned_paper",
+        )),
+        ("test_tiny_sampler", "TinySamplerExactTests", (
+            "test_all_joint_transitions_and_stationarity_after_composition",
+            "test_all_local_acceptance_ratios",
+            "test_all_suffix_scores_and_uniform_restart_support",
+            "test_canonical_complete_records_and_base_probabilities",
+            "test_default_restart_is_uniform_for_every_record_and_power",
+            "test_deliberately_broken_truncation_is_rejected_by_exact_qualification",
+            "test_eos_can_lengthen_and_shorten_only_when_prefix_is_restarted",
+            "test_every_local_transition_normalization_balance_and_stationarity",
+            "test_exchange_execution_recomputes_receiver_power_scores",
+            "test_finite_initialized_chain_is_not_automatically_stationary",
+            "test_invalid_power_and_restart_fail_closed",
+            "test_power_targets_are_exact_sequence_targets",
+            "test_random_restart_post_eos_and_seeded_replay",
+            "test_rejected_work_contributes_to_self_transition",
+            "test_sampled_step_all_proposal_boundaries_and_acceptance_branches",
+            "test_stale_replica_scores_refuse_exchange_before_any_draw",
+            "test_swap_orientation_and_detailed_balance",
+        )),
+        ("test_cpu_qualification", "QualificationGateTests", (
+            "test_complete_inventory_allows_extra_tests",
+            "test_loaded_but_unexecuted_checks_are_rejected",
+            "test_missing_mandatory_checks_reject_unrelated_replacements",
+            "test_result_records_executed_test_ids",
+            "test_skips_and_expected_failures_are_rejected",
+        )),
+    )
+    for method in methods
+)
+
+
+class QualificationResult(unittest.TextTestResult):
+    """Record actual execution, independently of discovery and total count."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.executed_test_ids: list[str] = []
+
+    def startTest(self, test):
+        self.executed_test_ids.append(test.id())
+        super().startTest(test)
+
+
+def test_ids(suite):
+    for test in suite:
+        if isinstance(test, unittest.TestSuite):
+            yield from test_ids(test)
+        else:
+            yield test.id()
+
+
+def qualification_issues(loaded_ids, result) -> list[str]:
+    issues = []
+    for phase, present in (("loaded", loaded_ids), ("executed", result.executed_test_ids)):
+        missing = REQUIRED_TEST_IDS - set(present)
+        if missing:
+            issues.append(f"mandatory tests not {phase}: " + ", ".join(sorted(missing)))
+    if not result.wasSuccessful():
+        issues.append("test failures or errors")
+    if result.skipped:
+        issues.append("skipped tests")
+    if result.expectedFailures:
+        issues.append("expected failures cannot qualify mechanics")
+    if result.testsRun != len(result.executed_test_ids):
+        issues.append("execution inventory does not match result count")
+    return issues
+
+
 def process_peaks() -> dict:
     if os.name == "nt":
         from ctypes import wintypes
@@ -80,7 +165,9 @@ def main() -> int:
     started_cpu, started_wall = time.process_time(), time.perf_counter()
     output = io.StringIO()
     suite = unittest.defaultTestLoader.discover(str(PACKAGE / "tests"), pattern="test_*.py")
-    result = unittest.TextTestRunner(stream=output, verbosity=2).run(suite)
+    loaded_ids = tuple(test_ids(suite))
+    result = unittest.TextTestRunner(stream=output, verbosity=2,
+                                    resultclass=QualificationResult).run(suite)
     cpu_seconds, wall_seconds = time.process_time() - started_cpu, time.perf_counter() - started_wall
     peaks = process_peaks()
     hashes_after = {str(path.relative_to(ROOT)).replace("\\", "/"):
@@ -88,8 +175,8 @@ def main() -> int:
     measured_memory = max(peaks["peak_working_set_bytes"], peaks["peak_private_commit_bytes"] or 0)
     target_met = cpu_seconds < 60 and measured_memory < 256 * 1024 ** 2
     source_stable = hashes_before == hashes_after
-    success = (result.wasSuccessful() and result.testsRun > 12 and not result.skipped
-               and target_met and source_stable)
+    issues = qualification_issues(loaded_ids, result)
+    success = not issues and target_met and source_stable
     receipt = {
         "schema_version": 1, "experiment_id": "PPT-001",
         "record_kind": "CPU_ONLY_TINY_ENUMERABLE_SAMPLER_QUALIFICATION",
@@ -102,7 +189,12 @@ def main() -> int:
                     "scope": "supplied toy probabilities; no checkpoint or native adapter"},
         "test_result": {"passed": result.wasSuccessful(), "count": result.testsRun,
                         "failures": len(result.failures), "errors": len(result.errors),
-                        "skipped": len(result.skipped), "output": output.getvalue()},
+                        "skipped": len(result.skipped),
+                        "expected_failures": len(result.expectedFailures),
+                        "required_test_ids": sorted(REQUIRED_TEST_IDS),
+                        "loaded_test_ids": list(loaded_ids),
+                        "executed_test_ids": result.executed_test_ids,
+                        "qualification_issues": issues, "output": output.getvalue()},
         "measurements": {"test_cpu_seconds": cpu_seconds, "test_wall_seconds": wall_seconds, **peaks},
         "proposed_engineering_target": {"cpu_seconds_strict_upper_bound": 60,
                                         "memory_bytes_strict_upper_bound": 256 * 1024 ** 2,

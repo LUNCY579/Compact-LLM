@@ -1,0 +1,32 @@
+{
+  "record_kind": "REVIEW_ONLY_DEFAULT_RESTART_MUTATION_CONTROL",
+  "created_at_utc": "2026-10-10T03:33:44.077244+00:00",
+  "historical_test_commit": "877ec7aeebbfbc5b65cde2f15c522078c60ab5d4",
+  "production_sampler_sha256": "fca3596cdc068cc6f7e99f273473a7a511ff0842bea70299b6e93462b6d21e07",
+  "mutation_source": "def biased_step(self, record, rng, restart=None):\n    if restart is not None or record[0] != \"A\":\n        return original_step(self, record, rng, restart)\n    class FirstRestartOverride:\n        def __init__(self):\n            self.calls = 0\n        def randrange(self, stop):\n            ticket = rng.randrange(stop)\n            first = self.calls == 0\n            self.calls += 1\n            return 0 if first else ticket\n    return original_step(self, record, FirstRestartOverride())\n",
+  "results": [
+    {
+      "suite": "historical_16_tests",
+      "test_source_sha256": "e216cbbf3885bf39aaafdd0c2d9a53d0791fb2d029b2ed50f899d9919fb0532f",
+      "tests": 16,
+      "successful": true,
+      "failing_subtests": 0,
+      "errors": 0,
+      "failure_examples": []
+    },
+    {
+      "suite": "reviewed_17_tests",
+      "test_source_sha256": "9761e9a326b391753357f284f60a49964c6a883df7e531ab63ca6931551d5c3d",
+      "tests": 17,
+      "successful": false,
+      "failing_subtests": 27,
+      "errors": 0,
+      "failure_examples": [
+        "Traceback (most recent call last):\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-ppt-centralized-reasoning-v1\\experiments\\rineya_ppt_centralized_reasoning_v1\\tests\\test_tiny_sampler.py\", line 377, in test_default_restart_is_uniform_for_every_record_and_power\n    event = chain.step(old, rng)\n            ^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 12, in biased_step\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-ppt-centralized-reasoning-v1\\experiments\\rineya_ppt_centralized_reasoning_v1\\tiny_sampler.py\", line 162, in step\n    proposal = _draw(self.model.suffix_distribution(record, self.power, restart), rng)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-ppt-centralized-reasoning-v1\\experiments\\rineya_ppt_centralized_reasoning_v1\\tiny_sampler.py\", line 39, in _draw\n    ticket = rng.randrange(denominator)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 8, in randrange\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-ppt-centralized-reasoning-v1\\experiments\\rineya_ppt_centralized_reasoning_v1\\tests\\test_tiny_sampler.py\", line 145, in randrange\n    raise AssertionError((\"unexpected draw denominator\", stop, expected_stop))\nAssertionError: ('unexpected draw denominator', 120, 10)\n",
+        "Traceback (most recent call last):\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-ppt-centralized-reasoning-v1\\experiments\\rineya_ppt_centralized_reasoning_v1\\tests\\test_tiny_sampler.py\", line 377, in test_default_restart_is_uniform_for_every_record_and_power\n    event = chain.step(old, rng)\n            ^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 12, in biased_step\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-ppt-centralized-reasoning-v1\\experiments\\rineya_ppt_centralized_reasoning_v1\\tiny_sampler.py\", line 162, in step\n    proposal = _draw(self.model.suffix_distribution(record, self.power, restart), rng)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-ppt-centralized-reasoning-v1\\experiments\\rineya_ppt_centralized_reasoning_v1\\tiny_sampler.py\", line 39, in _draw\n    ticket = rng.randrange(denominator)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 8, in randrange\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-ppt-centralized-reasoning-v1\\experiments\\rineya_ppt_centralized_reasoning_v1\\tests\\test_tiny_sampler.py\", line 145, in randrange\n    raise AssertionError((\"unexpected draw denominator\", stop, expected_stop))\nAssertionError: ('unexpected draw denominator', 120, 10)\n"
+      ]
+    }
+  ],
+  "native_execution": false,
+  "interpretation": "Original execution coverage missed state-dependent default restart bias; revised regression rejects it. Production step implementation remains unchanged."
+}

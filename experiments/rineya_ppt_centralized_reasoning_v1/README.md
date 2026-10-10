@@ -9,6 +9,8 @@ Parallel Power Tempering. A tiny CPU sampler now accompanies the founding design
 the native sampler and experiment remain unimplemented. No Rineya accuracy or
 efficiency result is claimed. See the dated
 [CPU amendment and next scoring gate](evidence/CPU_SAMPLER_2026-10-03.md).
+The [October 9 review](evidence/REVIEW_2026-10-09.md) records archive recovery,
+two validation fixes, the preserved original producer, and fresh qualification.
 
 ## Read in this order
 
@@ -31,8 +33,9 @@ From the repository root, using only the Python standard library:
 python -m unittest discover -s experiments/rineya_ppt_centralized_reasoning_v1/tests -p 'test_*.py' -v
 ```
 
-This command runs the original 12 registration checks plus independent exact
-sampler checks. They exercise the seven-state CPU fixture and 49-state joint
+This command runs 34 checks: the original 12 registration checks, 17 independent
+exact sampler checks, and five qualification controls. They exercise the
+seven-state CPU fixture and 49-state joint
 kernel without loading a model, accessing the network, opening a dataset, or
 exercising inherited native code. Sampler mechanics and registration checks
 remain separate evidence; this command cannot authorize a model launch.
@@ -40,6 +43,9 @@ remain separate evidence; this command cannot authorize a model launch.
 For a measured receipt, run `qualify_cpu.py` with a new package-relative receipt
 filename as documented in the [CPU amendment](evidence/CPU_SAMPLER_2026-10-03.md).
 The historical [registration.json](registration.json) remains unchanged.
+Qualification requires every named check to load and execute successfully;
+unrelated tests cannot replace missing mechanics checks. Skips and expected
+failures prevent qualification.
 
 ## Why keep it alongside other tracks?
 

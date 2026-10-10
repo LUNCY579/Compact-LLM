@@ -1,5 +1,15 @@
 # Status and next handoff
 
+## 2026-10-09 review amendment
+
+[The review record](evidence/REVIEW_2026-10-09.md) preserves the original CPU
+producer and receipt, documents recovery of the archived checkout, and records
+two validation fixes. All required checks must now load and execute; skipped
+or expected-failure checks cannot qualify the sampler. An added execution test
+rejects state-dependent bias in implicit restart selection. The suite now has
+34 checks; its fresh resource and source receipt is linked from the review.
+Native scoring and reasoning efficiency remain unqualified and unmeasured.
+
 ## 2026-10-03 implementation amendment
 
 The owner requested the smallest useful next step: an isolated, tiny enumerable

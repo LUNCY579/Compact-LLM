@@ -353,6 +353,43 @@ class TinySamplerExactTests(unittest.TestCase):
         self.assertEqual(trace(173), trace(173))
         self.assertNotEqual(trace(173), trace(174))
 
+    def test_default_restart_is_uniform_for_every_record_and_power(self):
+        # The sampled default path must use the same state-independent restart
+        # law as the qualified matrices. Explicit-restart tests cannot detect
+        # a state-dependent override between the restart draw and proposal.
+        for old, power, restart in product(STATES, (1, 2, 3), (0, 1)):
+            chain = sampler.TinySampler(self.model, power)
+            proposals = {new: suffix_probability(new, power, restart)
+                         for new in STATES if compatible(old, new, restart)}
+            denominator = lcm(*(mass.denominator for mass in proposals.values()))
+            lower = 0
+            for new, mass in proposals.items():
+                upper = lower + mass.numerator * (denominator // mass.denominator)
+                alpha = acceptance(old, new, power, restart)
+                decisions = [(alpha.numerator - 1, True)]
+                if alpha < ONE:
+                    decisions.append((alpha.numerator, False))
+                for decision_ticket, accepted in decisions:
+                    with self.subTest(old=old, power=power, restart=restart,
+                                      proposal=new, accepted=accepted):
+                        rng = ScriptedRandom(((2, restart), (denominator, lower),
+                                              (alpha.denominator, decision_ticket)))
+                        event = chain.step(old, rng)
+                        self.assertEqual(rng.calls, 3)
+                        self.assertEqual(event.before, old)
+                        self.assertEqual(event.restart, restart)
+                        self.assertEqual(event.power, power)
+                        self.assertEqual(event.proposal, new)
+                        self.assertEqual(event.forward, mass)
+                        self.assertEqual(event.reverse, suffix_probability(old, power, restart))
+                        self.assertEqual(event.acceptance, alpha)
+                        self.assertIs(event.accepted, accepted)
+                        self.assertEqual(event.after, new if accepted else old)
+                        self.assertEqual(event.token_draws,
+                                         sum(token != "PAD" for token in new[restart:]))
+                lower = upper
+            self.assertEqual(lower, denominator)
+
     def test_swap_orientation_and_detailed_balance(self):
         joint_states = tuple(product(STATES, repeat=2))
         for powers in ((1, 2), (2, 3), (3, 1)):
