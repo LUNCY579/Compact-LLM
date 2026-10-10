@@ -1,0 +1,670 @@
+{
+  "schema": "TITAN_OFFLINE_DATA_V1",
+  "status": "DRAFT_UNREVIEWED_NOT_FROZEN",
+  "seed": 17,
+  "instrument_revision": 3,
+  "input_epoch": {
+    "v2_open_root": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2-runs\\data-001",
+    "input_sha256": {
+      "train.jsonl": "6c82a98a4d66c64d15aa813dc1afa3f20898996c00f2d8590158a8eec8e1b11d",
+      "pilot.prompts.jsonl": "1ba852d8b0bb78d42c543a876e24a38987284095ff17f3ec9887bd7882d46bf8",
+      "pilot.references.jsonl": "51b3b96d8e557ddcf046efbb7a8afc81d1b49bbadd1289fb41023a7936aced2d"
+    },
+    "base_generator_source_sha256": "dd4a39762f805b4d2a99d9c7416cbf454c2d99244ca2f42e4e73faa17d4dba1b",
+    "seed17_only": true,
+    "independent_draw_generation_integration": "PENDING",
+    "preserved": "all non-G TRAIN rows and all PILOT rows, including public inputs/targets/order",
+    "transform": "G-only query-selected-authority replacement; new family and isolated base-world/seed RNG"
+  },
+  "train": {
+    "rows": 2000,
+    "parents": 1000,
+    "domain_counts": {
+      "grounding": 300,
+      "reasoning": 1000,
+      "format": 200,
+      "transition": 166,
+      "arithmetic": 166,
+      "long_context": 168
+    },
+    "role_counts": {
+      "grounding": 300,
+      "reasoning": 1000,
+      "format": 200,
+      "preservation": 500
+    },
+    "format_counts": {
+      "tag": 668,
+      "plain": 666,
+      "json": 666
+    },
+    "content_duplicate_count": 0,
+    "teacher_agreement_count": 2000
+  },
+  "pilot": {
+    "rows": 384,
+    "parents": 192,
+    "domain_counts": {
+      "long_context": 64,
+      "format": 64,
+      "transition": 64,
+      "grounding": 64,
+      "arithmetic": 64,
+      "reasoning": 64
+    },
+    "role_counts": {
+      "preservation": 192,
+      "format": 64,
+      "grounding": 64,
+      "reasoning": 64
+    },
+    "format_counts": {
+      "tag": 128,
+      "plain": 128,
+      "json": 128
+    },
+    "content_duplicate_count": 0,
+    "teacher_agreement_count": 384
+  },
+  "partition": {
+    "case_id_overlap_count": 0,
+    "parent_id_overlap_count": 0,
+    "family_id_overlap_count": 0,
+    "rendered_content_overlap_count": 0,
+    "generator_mechanisms": {
+      "train": {
+        "reasoning": "program",
+        "transition": "item_events",
+        "arithmetic": "baskets",
+        "grounding": "authority_query_source_v3",
+        "long_context": "latest_record",
+        "format": "field_transform"
+      },
+      "pilot": {
+        "reasoning": "dependencies",
+        "transition": "fsm",
+        "arithmetic": "sharing",
+        "grounding": "horn",
+        "long_context": "alias_join",
+        "format": "filtered_roster"
+      }
+    },
+    "overlap_review": "UNREVIEWED",
+    "semantic_generalization_established": false
+  },
+  "teacher": {
+    "kind": "two_algorithmically_separate_prompt_only_symbolic_solvers",
+    "source_digest": "c74285fdeddf8184d6f550dfdc0a6eadcd8a9a29a146c88bbc39b36a31773387",
+    "agreement_train": 2000,
+    "agreement_pilot": 384,
+    "model_teacher_calls": 0,
+    "independence_review": "UNREVIEWED"
+  },
+  "artifact_sha256": {
+    "train.jsonl": "9c61847f15cdb7a5e9a213a39b847e899c8dd6a21cf95ae4224d9bb223811d72",
+    "pilot.prompts.jsonl": "1ba852d8b0bb78d42c543a876e24a38987284095ff17f3ec9887bd7882d46bf8",
+    "pilot.references.jsonl": "51b3b96d8e557ddcf046efbb7a8afc81d1b49bbadd1289fb41023a7936aced2d"
+  },
+  "corpus_digest": "bce062675721afda8d022242b5656bbd3c1a5f3fd951ea63b9537ac3c8816623",
+  "floors": {
+    "train": {
+      "evidence_kind": "OFFLINE_SYNTHETIC_SHORTCUT_DIAGNOSTIC_NOT_NATIVE",
+      "status": "UNREVIEWED_NO_ACCEPTANCE_GATE",
+      "scope": "raw answers; best constant is retrospective within domain",
+      "limitation": "These three floors do not rule out other shortcuts; they are diagnostic and have no acceptance gate.",
+      "domains": {
+        "reasoning": {
+          "rows": 1000,
+          "retrospective_best_constant_correct": 15,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 500,
+          "constant_accuracy": 0.015,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.5
+        },
+        "transition": {
+          "rows": 166,
+          "retrospective_best_constant_correct": 60,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 54,
+          "constant_accuracy": 0.3614457831325301,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.3253012048192771
+        },
+        "arithmetic": {
+          "rows": 166,
+          "retrospective_best_constant_correct": 4,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 83,
+          "constant_accuracy": 0.024096385542168676,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.5
+        },
+        "grounding": {
+          "rows": 300,
+          "retrospective_best_constant_correct": 150,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 13,
+          "constant_accuracy": 0.5,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.043333333333333335
+        },
+        "long_context": {
+          "rows": 168,
+          "retrospective_best_constant_correct": 1,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 27,
+          "constant_accuracy": 0.005952380952380952,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.16071428571428573
+        },
+        "format": {
+          "rows": 200,
+          "retrospective_best_constant_correct": 1,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 3,
+          "constant_accuracy": 0.005,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.015
+        }
+      }
+    },
+    "pilot": {
+      "evidence_kind": "OFFLINE_SYNTHETIC_SHORTCUT_DIAGNOSTIC_NOT_NATIVE",
+      "status": "UNREVIEWED_NO_ACCEPTANCE_GATE",
+      "scope": "raw answers; best constant is retrospective within domain",
+      "limitation": "These three floors do not rule out other shortcuts; they are diagnostic and have no acceptance gate.",
+      "domains": {
+        "reasoning": {
+          "rows": 64,
+          "retrospective_best_constant_correct": 3,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 15,
+          "constant_accuracy": 0.046875,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.234375
+        },
+        "transition": {
+          "rows": 64,
+          "retrospective_best_constant_correct": 21,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 19,
+          "constant_accuracy": 0.328125,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.296875
+        },
+        "arithmetic": {
+          "rows": 64,
+          "retrospective_best_constant_correct": 6,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 18,
+          "constant_accuracy": 0.09375,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.28125
+        },
+        "grounding": {
+          "rows": 64,
+          "retrospective_best_constant_correct": 32,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 32,
+          "constant_accuracy": 0.5,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.5
+        },
+        "long_context": {
+          "rows": 64,
+          "retrospective_best_constant_correct": 1,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 0,
+          "constant_accuracy": 0.015625,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.0
+        },
+        "format": {
+          "rows": 64,
+          "retrospective_best_constant_correct": 14,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 3,
+          "constant_accuracy": 0.21875,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.046875
+        }
+      }
+    }
+  },
+  "counterdirection_audit": {
+    "train": {
+      "evidence_kind": "OFFLINE_INSTRUMENT_MECHANICS_NOT_NATIVE",
+      "native_model_calls": 0,
+      "acceptance_thresholds_changed": false,
+      "all_domains": {
+        "reasoning": {
+          "rows": 1000,
+          "parents": 500,
+          "certified_same_world_query_pairs": 500,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 500
+          }
+        },
+        "transition": {
+          "rows": 166,
+          "parents": 83,
+          "certified_same_world_query_pairs": 83,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 54,
+            "fixed_event13_bin": 57
+          }
+        },
+        "arithmetic": {
+          "rows": 166,
+          "parents": 83,
+          "certified_same_world_query_pairs": 83,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 83
+          }
+        },
+        "grounding": {
+          "rows": 300,
+          "parents": 150,
+          "certified_same_world_query_pairs": 150,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 13,
+            "first_fact_value_sourceblind": 9
+          }
+        },
+        "long_context": {
+          "rows": 168,
+          "parents": 84,
+          "certified_same_world_query_pairs": 84,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 34,
+            "fixed_timestamp30_first_value": 0,
+            "global_latest_value": 29
+          }
+        },
+        "format": {
+          "rows": 200,
+          "parents": 100,
+          "certified_same_world_query_pairs": 100,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 3
+          }
+        }
+      },
+      "selected_authority": {
+        "rows": 300,
+        "parents": 150,
+        "sourceblind_certified_pairs": 150,
+        "deterministic_sourceblind_pair_accuracy_upper_bound": 0.5,
+        "known_source_counts": {
+          "rumor": 75,
+          "charter": 75
+        },
+        "UNKNOWN_source_counts": {
+          "rumor": 75,
+          "charter": 75
+        },
+        "unknown_kind_parent_counts": {
+          "conflict": 75,
+          "missing": 75
+        },
+        "old_value_prefix_control_correct": 150,
+        "admission": "UNADMITTED_MECHANICS_ONLY; no model/source-aware acquisition claim"
+      },
+      "program": {
+        "rows": 1000,
+        "parents": 500,
+        "query_counts": {
+          "x": 500,
+          "y": 500
+        },
+        "unique_most_written_dst_rows": 0,
+        "same_world_different_answer_pairs": 500,
+        "query_blind_pair_accuracy_upper_bound": 0.5,
+        "shortcut_correct_counts": {
+          "most_written_lex_tie": 500,
+          "first_dst": 500,
+          "last_dst": 500,
+          "lex_first_register": 500,
+          "lex_last_register": 500
+        }
+      }
+    },
+    "pilot": {
+      "evidence_kind": "OFFLINE_INSTRUMENT_MECHANICS_NOT_NATIVE",
+      "native_model_calls": 0,
+      "acceptance_thresholds_changed": false,
+      "all_domains": {
+        "reasoning": {
+          "rows": 64,
+          "parents": 32,
+          "certified_same_world_query_pairs": 32,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 15
+          }
+        },
+        "transition": {
+          "rows": 64,
+          "parents": 32,
+          "certified_same_world_query_pairs": 32,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 19,
+            "lone_z_prefix_executor": 0,
+            "complete_input_executor": 19
+          }
+        },
+        "arithmetic": {
+          "rows": 64,
+          "parents": 32,
+          "certified_same_world_query_pairs": 32,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 18
+          }
+        },
+        "grounding": {
+          "rows": 64,
+          "parents": 32,
+          "certified_same_world_query_pairs": 32,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 32
+          }
+        },
+        "long_context": {
+          "rows": 64,
+          "parents": 32,
+          "certified_same_world_query_pairs": 32,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 0,
+            "lone_eight_character_value": 0,
+            "first_record_city": 4
+          }
+        },
+        "format": {
+          "rows": 64,
+          "parents": 32,
+          "certified_same_world_query_pairs": 32,
+          "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+          "structural_control_correct_counts": {
+            "first_valid_query_executor": 3,
+            "record7_inferred_query_asc": 4,
+            "record7_inferred_query_desc": 5
+          }
+        }
+      },
+      "horn": {
+        "rows": 64,
+        "parents": 32,
+        "fact_counts": {
+          "2": 64
+        },
+        "rule_counts": {
+          "4": 64
+        },
+        "query_atom_name_lengths": {
+          "7": 64
+        },
+        "same_world_query_pairs": 32,
+        "same_query_support_swap_pairs": 0,
+        "answer_directions": {
+          "changed_answer_query_switch:UNKNOWN->SUPPORTED": 16,
+          "changed_answer_query_switch:SUPPORTED->UNKNOWN": 16
+        },
+        "shortcut_correct_counts": {
+          "fact_count_two": 32,
+          "question_name_hash_parity": 28,
+          "support_atom_lex_before_query": 28
+        },
+        "name_control_limit": "These fixed name controls do not exhaust all lexical heuristics; new instrument review remains required."
+      }
+    }
+  },
+  "generation_audit": {
+    "train": {
+      "prospective_generation": true,
+      "eligible_only_subsetting": false,
+      "domains": {
+        "reasoning": {
+          "parents": 500,
+          "world_attempts": 500,
+          "degenerate_worlds": 0,
+          "exact_content_rejections": 0,
+          "valid_queries_min_max": [
+            2,
+            2
+          ],
+          "distinct_truths_min_max": [
+            2,
+            2
+          ]
+        },
+        "transition": {
+          "parents": 83,
+          "world_attempts": 83,
+          "degenerate_worlds": 0,
+          "exact_content_rejections": 0,
+          "valid_queries_min_max": [
+            6,
+            6
+          ],
+          "distinct_truths_min_max": [
+            3,
+            3
+          ]
+        },
+        "arithmetic": {
+          "parents": 83,
+          "world_attempts": 85,
+          "degenerate_worlds": 2,
+          "exact_content_rejections": 0,
+          "valid_queries_min_max": [
+            2,
+            2
+          ],
+          "distinct_truths_min_max": [
+            2,
+            2
+          ]
+        },
+        "grounding": {
+          "parents": 150,
+          "world_attempts": 150,
+          "degenerate_worlds": 0,
+          "exact_content_rejections": 0,
+          "valid_queries_min_max": [
+            20,
+            20
+          ],
+          "distinct_truths_min_max": [
+            20,
+            20
+          ]
+        },
+        "long_context": {
+          "parents": 84,
+          "world_attempts": 84,
+          "degenerate_worlds": 0,
+          "exact_content_rejections": 0,
+          "valid_queries_min_max": [
+            6,
+            6
+          ],
+          "distinct_truths_min_max": [
+            6,
+            6
+          ]
+        },
+        "format": {
+          "parents": 100,
+          "world_attempts": 100,
+          "degenerate_worlds": 0,
+          "exact_content_rejections": 0,
+          "valid_queries_min_max": [
+            72,
+            72
+          ],
+          "distinct_truths_min_max": [
+            72,
+            72
+          ]
+        }
+      },
+      "refusal_rule": "stop after 100 degenerate worlds or 100 exact-content retries; never return a partial corpus"
+    },
+    "pilot": {
+      "prospective_generation": true,
+      "eligible_only_subsetting": false,
+      "domains": {
+        "reasoning": {
+          "parents": 32,
+          "world_attempts": 32,
+          "degenerate_worlds": 0,
+          "exact_content_rejections": 0,
+          "valid_queries_min_max": [
+            4,
+            4
+          ],
+          "distinct_truths_min_max": [
+            3,
+            4
+          ]
+        },
+        "transition": {
+          "parents": 32,
+          "world_attempts": 32,
+          "degenerate_worlds": 0,
+          "exact_content_rejections": 0,
+          "valid_queries_min_max": [
+            13,
+            13
+          ],
+          "distinct_truths_min_max": [
+            2,
+            4
+          ]
+        },
+        "arithmetic": {
+          "parents": 32,
+          "world_attempts": 32,
+          "degenerate_worlds": 0,
+          "exact_content_rejections": 0,
+          "valid_queries_min_max": [
+            4,
+            4
+          ],
+          "distinct_truths_min_max": [
+            3,
+            4
+          ]
+        },
+        "grounding": {
+          "parents": 32,
+          "world_attempts": 32,
+          "degenerate_worlds": 0,
+          "exact_content_rejections": 0,
+          "valid_queries_min_max": [
+            7,
+            7
+          ],
+          "distinct_truths_min_max": [
+            2,
+            2
+          ]
+        },
+        "long_context": {
+          "parents": 32,
+          "world_attempts": 32,
+          "degenerate_worlds": 0,
+          "exact_content_rejections": 0,
+          "valid_queries_min_max": [
+            100,
+            224
+          ],
+          "distinct_truths_min_max": [
+            100,
+            224
+          ]
+        },
+        "format": {
+          "parents": 32,
+          "world_attempts": 32,
+          "degenerate_worlds": 0,
+          "exact_content_rejections": 0,
+          "valid_queries_min_max": [
+            48,
+            48
+          ],
+          "distinct_truths_min_max": [
+            11,
+            15
+          ]
+        }
+      },
+      "refusal_rule": "stop after 100 degenerate worlds or 100 exact-content retries; never return a partial corpus"
+    }
+  },
+  "input_projection": "pilot prompts contain case_id and messages only; IDs are not rendered inputs",
+  "targets": "concise truth targets; EOS must be appended later by the bound tokenizer",
+  "deduplication": "regenerate only exact rendered-content collisions; no teacher outcome selection",
+  "pilot_long_input_design": {
+    "domain": "long_context",
+    "record_count_levels": [
+      50,
+      84,
+      54,
+      88,
+      58,
+      92,
+      62,
+      96,
+      66,
+      100,
+      70,
+      104,
+      74,
+      108,
+      78,
+      112,
+      82,
+      52,
+      86,
+      56,
+      90,
+      60,
+      94,
+      64,
+      98,
+      68,
+      102,
+      72,
+      106,
+      76,
+      110,
+      80
+    ],
+    "padding": "complete world before query selection; equal facts/order in both variants",
+    "rough_prompt_tokens_target": [
+      1500,
+      3500
+    ],
+    "tokenizer_profile_verified": false
+  },
+  "native_model_calls": 0,
+  "native_authorized": false,
+  "training_authorized": false,
+  "confirmation_materialized": false,
+  "confirmation_authorized": false,
+  "native_token_caps_verified": false,
+  "overlap_review": "UNREVIEWED",
+  "frozen": false
+}

@@ -1,0 +1,93 @@
+{
+  "schema": "TITAN_OPEN_INSTRUMENT_SHORTCUT_AUDIT_V1",
+  "status": "VERIFIED_STRUCTURAL_SHORTCUTS_OFFLINE_ONLY",
+  "timestamp_utc": "2026-10-05T20:56:55.651508+00:00",
+  "data_epoch": "data-002",
+  "exposure_epoch": "exposure-003",
+  "files_sha256": {
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v1-runs\\data-002\\DATA_MANIFEST.json": "235ebe14ce3c726aa475dbaac383118aaea8c23137e162b06c087200af4408fd",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v1-runs\\data-002\\train.jsonl": "bd5d007b12daf10a4651bb7705fa030c91120ce93b8cee7a162eb65a083652ec",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v1-runs\\data-002\\pilot.prompts.jsonl": "14978c742d49a8795c31969851442e495142324c6c28e9694d735305a23015b4",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v1-runs\\data-002\\pilot.references.jsonl": "239c972803b5ae742a417da43b795d8298e770365095a44016754dadb68fa868",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v1-runs\\exposure-003\\EXPOSURE_PLAN.json": "0353d641b36f993be7bfa38b2f6c108e5487d123686cfe2bc8f17ddc3d294acf",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v1-runs\\exposure-003\\TOKEN_COUNT_CONTRACT.json": "5a1ad53c0ad2b0fac2feed0c3755a79633bc839bd60741c188fa628cacb5f4ca",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v1\\titan_joint_quality_v1\\data.py": "d06687e9eabebdd2852513c74345744591b5c290f13f2aef86b9289204f8d54f"
+  },
+  "data_teacher_digest_matches_current_source": true,
+  "program_most_written_queryblind_executor": {
+    "population": "all existing open TRAIN reasoning rows",
+    "rows": 1000,
+    "correct": 1000,
+    "accuracy": 1,
+    "query_inferred_uniquely_correct": 1000,
+    "recorded_first_available_floor_correct": 474,
+    "recorded_first_available_floor_accuracy": 0.474,
+    "selected_exposure_rows": 148,
+    "selected_exposure_correct": 148,
+    "dst_frequency_shapes": {
+      "1,1,5": 250,
+      "1,5": 750
+    },
+    "prediction_inputs": "rendered task instructions and initial registers; query removed before dst-based inference; no gold, IDs, variant or family metadata",
+    "procedure": "infer unique most-written instruction dst, replace public query with that dst, execute prompt-only teacher B; compare raw prediction to reference only afterwards"
+  },
+  "pilot_horn_factcount_classifier": {
+    "population": "all existing open PILOT grounding rows",
+    "rows": 64,
+    "correct": 64,
+    "accuracy": 1,
+    "recorded_first_available_floor_correct": 32,
+    "recorded_first_available_floor_accuracy": 0.5,
+    "groups_by_fact_count": {
+      "1": {
+        "rows": 32,
+        "correct": 32,
+        "answers": {
+          "UNKNOWN": 32
+        }
+      },
+      "2": {
+        "rows": 32,
+        "correct": 32,
+        "answers": {
+          "SUPPORTED": 32
+        }
+      }
+    },
+    "prediction_inputs": "number of facts in rendered task only; no query, proof, gold, IDs, variant or family metadata",
+    "procedure": "predict SUPPORTED iff fact count equals2; otherwise UNKNOWN; compare raw prediction to reference only afterwards"
+  },
+  "current_profile": {
+    "pilot_long_prompt_tokens": [
+      1652,
+      3588
+    ],
+    "selected_rows": 268,
+    "updates": 28,
+    "processed_tokens_per_arm": 54121,
+    "joint_label_tokens": 2021,
+    "reasoning_only_label_tokens": 973
+  },
+  "interpretation": "Existing teacher agreement and nominal family/content disjointness do not remove these structural cues. The recorded query-blind floors are incomplete and cannot establish independence from query selection or proof structure. This measures deterministic instrument shortcuts, not any Rineya/Titan capability.",
+  "preserved_primary": "Do not change data-002, exposure-003, existing gold, thresholds, or reviewed implementation. Prospectively reviewed additive open stress panels must remain separate.",
+  "native_model_calls": 0,
+  "model_teacher_calls": 0,
+  "optimizer_steps": 0,
+  "training_authorized": false,
+  "native_authorized": false,
+  "confirmation_materialized": false,
+  "protected_bank_reads": false,
+  "new_data_created": false,
+  "prospective_addon_interfaces": {
+    "instrument_epoch": "new additive v2 draft; preserve v1/data-002/exposure-003",
+    "truth_stress": "balanced program writes with same-world query switches; Horn support swaps retain equal fact cardinality, and same-world query switches reverse SUPPORTED/UNKNOWN",
+    "format_stress": "identical world/truth under plain/json/tag instruction switches; independently bind the visible request to reference format",
+    "minimal_interfaces": [
+      "query_blind_floor(messages, selector)->raw_answer",
+      "verify_counterdirection_pair(messages_a,messages_b,relationship)->receipt",
+      "format_request_from_messages(messages)->format",
+      "compile_stress_panel(open_epoch,seed)->separate prompts/references/manifest (not yet implemented or generated)"
+    ],
+    "metric_boundary": "separate descriptive diagnostics only; existing scientific/native thresholds unchanged"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema": "TITAN_GROUNDING_SOURCE_SENSITIVITY_REPAIR_PROPOSAL_V1",
+  "created_utc": "2026-10-05T22:52:57.981077+00:00",
+  "status": "OFFLINE_REVIEW_READY_PROPOSAL_ONLY",
+  "existing_owner_chat": "01a0dfa3-9cdf-7703-a362-32f559ec15a7",
+  "parent_sha256": "a28629c9d3454fbf2e884fd7ca442c1b406e7caf4b36d34b2c0614d0add31284",
+  "finding": "Current TRAIN authority gold is correct, but query-aware/source-blind value-prefix matching is300/300. Same-fact named-authority switch makes that control0/300. Source-sensitive acquisition is not identified by current TRAIN fit.",
+  "binding": {
+    "source_proxy_report": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\SOURCE_PROXY_AUDIT_001.json",
+    "source_proxy_report_sha256": "051bd80fc816b02bb355e81d0cd6df529f4998985a4dc85d8f4a4972f0cec1dd",
+    "current_v2_handoff_sha256": "b62d153a86d7e0cd59d457b0653c207c72e427b6c7f08dba9daab19fc74f8439"
+  },
+  "preservation": {
+    "current_v1_v2_source_and_data": "unchanged; retain all old receipts/gold and original valid query-blind certificate",
+    "confirmation": "closed; no creation/read",
+    "pilot_model_arms": "same reasoning-only versus joint pair; no added model arm",
+    "selection_and_stopping": "original5pp/2pp, zero losses, one final checkpoint, incomplete comparison ends attempt, no native retry or parameter sweep"
+  },
+  "minimal_successor_candidate": {
+    "kind": "TRAIN authority family only; explicit new version, not a patch to current data",
+    "world": "same public facts for both variants; value distributions and prefixes independent of factual source",
+    "query": "review candidate: put selected source in query.authoritative_source and state this public rule explicitly; paired entity/attribute identical, selected source differs",
+    "pair": "choose two named sources with distinct verified answers (known/UNKNOWN, or known/conflict-UNKNOWN); both variants share world and requested wrapper",
+    "counterbalance": "cross which named source is correct/UNKNOWN; preserve missing evidence for each possible source and distractor evidence. Do not make rumor synonymous with known or charter synonymous with missing.",
+    "causal_projection": "Removing the whole query yields identical worlds; removing fact-source and selected-source fields yields identical source-blind inputs. Distinct paired truths bound either deterministic stateless blind policy at50%. This requires actual implementation/projection review.",
+    "pool_geometry": "retain2000TRAIN rows, including300grounding rows/150two-row parents; preserve existing384-row PILOT; variants stay in their parent split; no confirmation materialization",
+    "other_domains": "preserve their existing public inputs/targets wherever possible; any unavoidable change must be separately enumerated and reviewed",
+    "must_not_reuse": "old teacher/data/token/exposure/native receipts as successor qualification"
+  },
+  "proposed_offline_mechanical_qualification": {
+    "execution_now": false,
+    "fixture_parents": 16,
+    "fixture_rows": 32,
+    "source_names": [
+      "charter",
+      "rumor"
+    ],
+    "coverage": "eight missing-evidence parents and eight conflict-evidence parents; each block crosses which named source supplies the known answer. No native calls or scientific-bank materialization.",
+    "checks": [
+      "Explicit public selected-source semantics and two algorithmically separate prompt-only teachers.",
+      "Distinct paired truths, identical projected blind inputs and matched requested wrappers.",
+      "Value-renaming/source-prefix permutations preserve source selection and equivariantly rename known answers.",
+      "RequiredUNKNOWN handling for both missing and conflicting authoritative evidence.",
+      "No gold/IDs/role/family metadata in evaluation prompts and no split-family/parent leakage.",
+      "Whole-row tokenizer/EOS boundaries; prospective full pool/exposure must be rebuilt and reviewed before native use."
+    ],
+    "limits": "Passing32toy rows establishes bounded mechanical source sensitivity only; it is not full data admission, human wording/rights review, model acquisition or native fit."
+  },
+  "unchanged_native_limits": {
+    "total_seconds_ceiling": 21600,
+    "finalization_reserve_seconds": 1800,
+    "processed_tokens_per_arm_cap": 54172,
+    "max_row_tokens": 1024,
+    "max_group_tokens": 2048,
+    "every_update_requires_reasoning_targets": true,
+    "mixture_shares": [
+      0.5,
+      0.25,
+      0.15,
+      0.1
+    ],
+    "mixture_absolute_tolerance": 0.05,
+    "max_eval_total_tokens": 4096,
+    "max_new_tokens": 48,
+    "dtype": "float32",
+    "qualification_counts": null,
+    "complete_measured_forecast": null,
+    "executable_native_command": null
+  },
+  "actions": {
+    "generator_modified": false,
+    "dataset_created": false,
+    "fixture_executed": false,
+    "native_model_calls": 0,
+    "native_authorized": false,
+    "owner_messages": 0,
+    "model_promotion": false
+  },
+  "next_decision": "Existing Titan owner reviews this exact source-sensitive successor design before current TRAIN admission. After acceptance, implement/version/review the offline data repair and rebuild exact exposure; native integration/qualification/cost/authority remain separate."
+}

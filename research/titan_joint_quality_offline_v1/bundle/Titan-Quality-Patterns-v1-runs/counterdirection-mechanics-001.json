@@ -1,0 +1,133 @@
+{
+  "status": "UTF8_AST_AND_IN_MEMORY_SELFVALIDATION_PASS",
+  "compiler_sha256": "e6d7bca85f37b0cc6af92649c0f0f7acaa51fb54a1f783e5ea76ab650345ab47",
+  "train_check": {
+    "rows": 2000,
+    "parents": 1000,
+    "domain_counts": {
+      "grounding": 300,
+      "reasoning": 1000,
+      "format": 200,
+      "transition": 166,
+      "arithmetic": 166,
+      "long_context": 168
+    },
+    "role_counts": {
+      "grounding": 300,
+      "reasoning": 1000,
+      "format": 200,
+      "preservation": 500
+    },
+    "format_counts": {
+      "tag": 668,
+      "plain": 666,
+      "json": 666
+    },
+    "content_duplicate_count": 0,
+    "teacher_agreement_count": 2000
+  },
+  "pilot_check": {
+    "rows": 384,
+    "parents": 192,
+    "domain_counts": {
+      "long_context": 64,
+      "format": 64,
+      "transition": 64,
+      "grounding": 64,
+      "arithmetic": 64,
+      "reasoning": 64
+    },
+    "role_counts": {
+      "preservation": 192,
+      "format": 64,
+      "grounding": 64,
+      "reasoning": 64
+    },
+    "format_counts": {
+      "tag": 128,
+      "plain": 128,
+      "json": 128
+    },
+    "content_duplicate_count": 0,
+    "teacher_agreement_count": 384
+  },
+  "partition_overlap_counts": {
+    "case_id_overlap_count": 0,
+    "parent_id_overlap_count": 0,
+    "family_id_overlap_count": 0,
+    "rendered_content_overlap_count": 0
+  },
+  "counterdirection": {
+    "train": {
+      "evidence_kind": "OFFLINE_INSTRUMENT_MECHANICS_NOT_NATIVE",
+      "native_model_calls": 0,
+      "acceptance_thresholds_changed": false,
+      "program": {
+        "rows": 1000,
+        "parents": 500,
+        "query_counts": {
+          "x": 500,
+          "y": 500
+        },
+        "unique_most_written_dst_rows": 0,
+        "same_world_different_answer_pairs": 500,
+        "query_blind_pair_accuracy_upper_bound": 0.5,
+        "shortcut_correct_counts": {
+          "most_written_lex_tie": 500,
+          "first_dst": 500,
+          "last_dst": 254,
+          "lex_first_register": 500,
+          "lex_last_register": 4
+        }
+      }
+    },
+    "pilot": {
+      "evidence_kind": "OFFLINE_INSTRUMENT_MECHANICS_NOT_NATIVE",
+      "native_model_calls": 0,
+      "acceptance_thresholds_changed": false,
+      "horn": {
+        "rows": 64,
+        "parents": 32,
+        "fact_counts": {
+          "2": 64
+        },
+        "rule_counts": {
+          "4": 64
+        },
+        "query_atom_name_lengths": {
+          "7": 64
+        },
+        "same_world_query_pairs": 16,
+        "same_query_support_swap_pairs": 16,
+        "answer_directions": {
+          "changed_answer_query_switch:SUPPORTED->UNKNOWN": 8,
+          "changed_answer_query_switch:UNKNOWN->SUPPORTED": 8,
+          "changed_answer_support_swap:UNKNOWN->SUPPORTED": 8,
+          "changed_answer_support_swap:SUPPORTED->UNKNOWN": 8
+        },
+        "shortcut_correct_counts": {
+          "fact_count_two": 32,
+          "question_name_hash_parity": 33,
+          "support_atom_lex_before_query": 31
+        },
+        "name_control_limit": "These fixed name controls do not exhaust all lexical heuristics; new instrument review remains required."
+      }
+    }
+  },
+  "old_v1_data_source_unchanged": true,
+  "v2_training_selected_binding": "NOT_BUILT; old exposure003 is not a v2 exposure binding",
+  "native_calls": 0,
+  "model_teacher_calls": 0,
+  "new_bank_artifacts": false,
+  "broad_tests_run": false,
+  "tokenizer_v2_profile": "NOT_RUN",
+  "schema": "TITAN_V2_COUNTERDIRECTION_MECHANICAL_AUDIT_V1",
+  "scope": "Prospective open-instrument revision before model outcomes; owned v2 data.py/tests only.",
+  "limits": [
+    "Native token profile, v2 exposure selection and native qualification not run.",
+    "Broad tests and independent instrument review not run by this agent.",
+    "Other domain shortcuts identified by separate read-only audit remain outside this repair.",
+    "Existing scientific thresholds, old v1 evidence and native/confirmation guards unchanged."
+  ],
+  "tests_source_sha256": "73fc927f1e9452906b6f35bf76bf1cd4c11fa461321825980e457a8bef2070ac"
+}

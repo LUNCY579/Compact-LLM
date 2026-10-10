@@ -1,0 +1,147 @@
+{
+  "experiment": "TITAN-JOINT-QUALITY-001",
+  "status": "PROSPECTIVE_OFFLINE_IMPLEMENTATION_NOT_NATIVE_QUALIFIED",
+  "owner_chat": "01a0dfa3-9cdf-7703-a362-32f559ec15a7",
+  "native_authorized": false,
+  "training_authorized": false,
+  "confirmation_authorized": false,
+  "native_command": null,
+  "parent_sha256": "a28629c9d3454fbf2e884fd7ca442c1b406e7caf4b36d34b2c0614d0add31284",
+  "arms": [
+    "reasoning_only",
+    "joint"
+  ],
+  "identical": [
+    "parent",
+    "inputs",
+    "reasoning_targets",
+    "order",
+    "groups",
+    "updates",
+    "processed_tokens",
+    "planned_target_denominators"
+  ],
+  "intervention": "joint additionally supervises preservation, grounding and format targets",
+  "loss": "sum selected causal response-plus-EOS CE / common planned response-plus-EOS target count per update",
+  "trainable_layers": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "recipe": {
+    "dtype": "float32",
+    "peak_lr": 1e-05,
+    "betas": [
+      0.9,
+      0.95
+    ],
+    "epsilon": 1e-08,
+    "weight_decay": 0,
+    "clip_norm": 1,
+    "scheduler": "pinned MQ rate_at: token-based WSD20/60/20, 1-sqrt decay to0.1peak",
+    "optimizer": "pinned MQ CpuAdamW"
+  },
+  "exposure": {
+    "processed_tokens_per_arm_max": 54172,
+    "row_tokens_max": 1024,
+    "update_tokens_max": 2048,
+    "one_exposure": true,
+    "seed": 17,
+    "role_shares": {
+      "reasoning": 0.5,
+      "preservation": 0.25,
+      "grounding": 0.15,
+      "format": 0.1
+    },
+    "absolute_share_tolerance": 0.05,
+    "reasoning_targets_each_group": true
+  },
+  "data": {
+    "train_rows": 2000,
+    "pilot_rows": 384,
+    "pilot_parents": 192,
+    "domains": 6,
+    "paired_variants": 2,
+    "confirmation_rows_future": 768,
+    "confirmation_materialized": false,
+    "teacher": "two prompt-only symbolic solvers",
+    "teacher_review": "PENDING",
+    "known_ancestry_overlap_review": "PENDING",
+    "instrument_and_shortcut_acceptance_review": "PENDING",
+    "pair_contract": "Each parent: same entire public policy input with only query removed, same requested wrapper, distinct verified truth. No metadata or row order used by policy.",
+    "deterministic_stateless_queryblind_pair_accuracy_upper_bound": 0.5,
+    "visible_wrapper_request_bound": true
+  },
+  "decoding": {
+    "greedy": true,
+    "do_sample": false,
+    "thinking": false,
+    "TF32": false,
+    "max_new_tokens": 48,
+    "max_total_tokens": 4096,
+    "generation_eos_ids": [
+      151645,
+      151643
+    ],
+    "training_supervised_eos": 151645,
+    "masked_trailing_newline": true
+  },
+  "acceptance": {
+    "reasoning_gain_vs_sparse_min": 0.05,
+    "reasoning_deficit_vs_control_max": 0.02,
+    "above_reviewed_shortcut_floor": true,
+    "new_sparse_correct_losses": 0,
+    "extra_source_correct_parent_vs_control_min": 1,
+    "source_harms_vs_control": 0,
+    "new_unsupported_false_abstention_format_harms": 0,
+    "blind_semantic_review_required_for_ambiguous_outputs": true,
+    "release_requires_full_prospective_supa_recovery": true
+  },
+  "budget": {
+    "native_seconds_max": 21600,
+    "finalization_reserve_seconds": 1800,
+    "complete_measured_forecast_required": true,
+    "failure_and_qualification_charged": true,
+    "automatic_retry": false,
+    "native_budget_granted": false
+  },
+  "stop": [
+    "source/runtime/mask/tokenizer/identity mismatch",
+    "nonfinite update",
+    "frozen parameter mutation",
+    "resource breach",
+    "incomplete exposure or evaluation",
+    "missing full checkpoint or cleared gradients",
+    "forecast fails or required review missing"
+  ],
+  "future_stages": [
+    "one prospectively frozen failure-directed comparison",
+    "three independently generated training draws 17/23/29",
+    "one separately authorized fresh-family confirmation",
+    "precision and matched-quality serving qualification",
+    "composition or learned allocation only after verified solo skill"
+  ],
+  "no_serving_changes": true,
+  "fixture_results_are_capability_evidence": false,
+  "instrument_revision": 2,
+  "repair_basis": "Measured v1 query-blind perfect predictors require a world-first causal-query successor before any model outcome.",
+  "previous_instrument": "v1 immutable; mechanical tests valid, corpus blocked for reasoning-quality admission",
+  "native_authority_change": false
+}

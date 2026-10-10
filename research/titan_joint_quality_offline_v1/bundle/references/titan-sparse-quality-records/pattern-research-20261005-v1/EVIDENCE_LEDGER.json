@@ -1,0 +1,223 @@
+{
+  "cards": [
+    {
+      "finding": "Full-update acquisition was 228–235/384 across three draws; preservation and abstention varied more.",
+      "id": "acquisition_preservation_separate",
+      "next_discriminating_test": "The locked Sparse A/B study on fresh reviewed six-domain cohorts, with the user strict gates.",
+      "not_proved": "Balanced assistant improvement or universally stable learning/retention.",
+      "quality_rule": "Select on paired domain outcomes and source-correct losses, not acquisition alone.",
+      "source_ids": [
+        "replication_report"
+      ],
+      "status": "REPORTED_REPLICATION_WITH_RETENTION_TRADEOFF"
+    },
+    {
+      "counterevidence": "One long-context null and arithmetic regressions; no acquisition-matched scalar in REP-001; preservation suites spent/report-only.",
+      "id": "conditional_pruning_repair",
+      "lane_separation": "Existing PRSC is Supa 1.7/220 historical tensors; it cannot silently authorize Sparse/q-v LoRA.",
+      "next_discriminating_test": "Compare new full update, fixed magnitude mask, acquisition-matched scalar and per-tensor energy control. Transform only the new update above Sparse.",
+      "reported_pairs": [
+        {
+          "arithmetic_delta": 1,
+          "full_acq": 235,
+          "full_longctx": 157,
+          "full_retained": 40,
+          "pruned_acq": 232,
+          "pruned_longctx": 164,
+          "pruned_retained": 41,
+          "seed": 17,
+          "strict_arithmetic_delta": -1
+        },
+        {
+          "arithmetic_delta": -5,
+          "full_acq": 229,
+          "full_longctx": 152,
+          "full_retained": 38,
+          "pruned_acq": 228,
+          "pruned_longctx": 152,
+          "pruned_retained": 39,
+          "seed": 23,
+          "strict_arithmetic_delta": -1
+        },
+        {
+          "arithmetic_delta": 3,
+          "full_acq": 228,
+          "full_longctx": 144,
+          "full_retained": 36,
+          "pruned_acq": 230,
+          "pruned_longctx": 159,
+          "pruned_retained": 40,
+          "seed": 29,
+          "strict_arithmetic_delta": 6
+        }
+      ],
+      "source_ids": [
+        "replication_report",
+        "matched_acquisition_protocol"
+      ],
+      "status": "PROMISING_NOT_CONFIRMED_OR_DETERMINISTIC_GAIN"
+    },
+    {
+      "counterevidence": "Higher precision is not a universal quality advantage. Sparse FP32 is the specified artifact, not a quality guarantee.",
+      "finding": "Dense BF16 export erased 60.61% of update coordinates and 24/220 trained tensors; long context changed 157→162 but retained answers 40→39.",
+      "id": "precision_changes_effective_intervention",
+      "quality_rule": "Freeze actual stored/evaluated bytes, precision and runtime. An upcast does not recover an erased update.",
+      "source_ids": [
+        "dense_precision_amendment",
+        "sparse_core_metadata"
+      ],
+      "status": "MECHANICAL_EFFECT_REPORTED_BEHAVIOR_NONMONOTONIC"
+    },
+    {
+      "finding": "The latest physical record reports consecutive Torch 2.6 builds e2c311e5… and a28629c9… with identical retained norm; copied prereg lacks this correction.",
+      "id": "counts_norms_do_not_identify_support",
+      "not_proved": "Root cause, actual tensor/support differences, historical commit authenticity, or that every rebuild discrepancy is harmless.",
+      "preservation": "Both report copies and the canonical artifact pin are preserved; no historical metadata overwritten.",
+      "quality_rule": "Separate full-file identity, ordered tensor-content identity and mask-support identity. Matching aggregate counts/norms cannot substitute.",
+      "source_ids": [
+        "latest_physical_sparse_prereg_record",
+        "published_sparse_prereg_copy",
+        "sparse_core_metadata"
+      ],
+      "status": "DOCUMENT_COPY_DRIFT_AND_REPORTED_REBUILD_FAILURE"
+    },
+    {
+      "finding": "Attenuation explained 235→223 of a 235→219 composition change. Same-global-norm block profiles had acquisition 184–243; matched-magnitude same-skill control did not produce the boundary donor benefit.",
+      "id": "direction_and_component_dose_matter",
+      "quality_rule": "Use component-only controls at the exact same coefficient; distinguish magnitude, support, direction and serialization.",
+      "source_ids": [
+        "attenuation_correction",
+        "direction_control_report"
+      ],
+      "status": "REPORTED_CONTROLS_REFUTE_MAGNITUDE_ONLY_RULE"
+    },
+    {
+      "finding": "FA clipped interaction passed its margin while strict canary fell 102→6. CONFIRM-002 TH25 gained boundary behavior but answerable correctness fell 37→35 despite unchanged 109 attempts.",
+      "id": "proxy_success_can_hide_generation_failure",
+      "not_proved": "That preserved likelihood, attempts, formatting-tolerant counts or one skill implies balanced assistant gain.",
+      "quality_rule": "Keep content, output validity, appropriate abstention, answer attempts and correctness separate. The user strict quality gate rejects a net-regression domain.",
+      "source_ids": [
+        "functional_additivity_corrected",
+        "composition_confirmation_report"
+      ],
+      "status": "REPORTED_FAILURE_AND_CONFIRMATORY_LIMIT"
+    },
+    {
+      "finding": "Low-margin loss prediction had AUC .77 on exposed rows, but tolerant teacher-forced margin agreement was only 168/192. Boosting the donor had a confidence interval crossing zero.",
+      "id": "decision_margin_over_weight_geometry",
+      "next_discriminating_test": "Require actual full-vocabulary vectors at identical visited prefixes; certify decision preservation and stop at first divergence. Never infer unseen continuations or use gold-prefix proxy agreement as exact greedy evidence.",
+      "source_ids": [
+        "margin_exploration",
+        "failed_margin_remedy"
+      ],
+      "status": "PROMISING_EXPLORATORY_NOT_DETERMINISTIC_PREDICTOR"
+    }
+  ],
+  "completion_audit": {
+    "clear_general_quality_gain_verified": false,
+    "fresh_Sparse_CHECK_gain_at_least_5pp": false,
+    "goal_status": "ACTIVE",
+    "independent_training_draw_and_confirmation_coverage": false,
+    "operational_reproducibility_and_native_qualification": false,
+    "strict_six_domain_retention_and_harm_gates_verified_on_native_outputs": false
+  },
+  "cpu_gate_now": {
+    "approval": null,
+    "latest_available_RAM_below_8GiB_floor": true,
+    "public_dispatch_closed": true,
+    "slot": null
+  },
+  "current_turn_progress": "Current source reports reveal reproducibility-copy drift, regressions hidden by aggregate/proxy claims, and missing causal controls; these change candidate eligibility and the next tests.",
+  "goal": "Pursuing model-quality improvement patterns until a clear reproducible gain can be established.",
+  "models_or_tokenizers_loaded": 0,
+  "native_execution_authorized": false,
+  "new_test_runs": 0,
+  "next_action": "Use the existing Titan owner to close the prepared CPU wrapper implementation gap, then obtain genuine envelope/slot/headroom before numeric checks. Keep empirical model-quality decisions separate.",
+  "numerical_workers_started": 0,
+  "previous_turn_classification": "PROGRESS: offline implementation changed authoritative source and supplied scoped fixture evidence; it did not establish model gains.",
+  "recorded_utc": "2026-10-05T21:49:12.704937+00:00",
+  "schema": "rineya_quality.pattern_evidence_ledger/1",
+  "scientific_bank_reads": 0,
+  "sources": {
+    "attenuation_correction": {
+      "bytes": 5077,
+      "evidence_scope": "current source/report bytes; not independently repeated native evidence",
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\ATTENUATION_CORRECTION_20260918.md",
+      "sha256": "aa84446212b7676e02447768f13ceab98f844d7983c4be0a8069f4407aec4aa6"
+    },
+    "composition_confirmation_report": {
+      "bytes": 7909,
+      "evidence_scope": "current source/report bytes; not independently repeated native evidence",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-titan-model-soup-mini-v1\\experiments\\composition_confirmation_v2\\RESULTS.md",
+      "sha256": "51c7a084b525fa94a349d00d9929eb89bf443268a6c8cde6b73d58e4f180c0e7"
+    },
+    "dense_precision_amendment": {
+      "bytes": 3436,
+      "evidence_scope": "current source/report bytes; not independently repeated native evidence",
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze\\AMENDMENT_001.json",
+      "sha256": "3976d0f08f937ac74eb79e953b14313106a744a4afdf0201db4b10fc6ec88fbd"
+    },
+    "direction_control_report": {
+      "bytes": 14217,
+      "evidence_scope": "current source/report bytes; not independently repeated native evidence",
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\indep005-20260921\\INDEP005_RESULT.md",
+      "sha256": "d6eb272c78b804af5043ac2d9cee094218345ec463ef76146cf14cdaadaf2c1f"
+    },
+    "failed_margin_remedy": {
+      "bytes": 3027,
+      "evidence_scope": "current source/report bytes; not independently repeated native evidence",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-titan-model-soup-mini-v1\\experiments\\interference_mechanism_v1\\RESULTS_STEP1.md",
+      "sha256": "af32778315acafdd7753765841ee609b37f40fa4e24e958285b9dd2a9b74e3a0"
+    },
+    "functional_additivity_corrected": {
+      "bytes": 6046,
+      "evidence_scope": "current source/report bytes; not independently repeated native evidence",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-titan-model-soup-mini-v1\\experiments\\functional_additivity_v1\\RESULTS.md",
+      "sha256": "c118a4af2ad6e2f8bb7da6def947e7e02ce81a6008284468aaf67e2edd617475"
+    },
+    "latest_physical_sparse_prereg_record": {
+      "bytes": 11761,
+      "evidence_scope": "current source/report bytes; not independently repeated native evidence",
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\sparse001-20260917\\SPARSE001_PREREG.md",
+      "sha256": "27aa445e9dfdf021e8c242e4754cf873ee8e724ed3fc467ad008d19ee6890ba4"
+    },
+    "margin_exploration": {
+      "bytes": 3611,
+      "evidence_scope": "current source/report bytes; not independently repeated native evidence",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-titan-model-soup-mini-v1\\experiments\\interference_mechanism_v1\\RESULTS_STEP0.md",
+      "sha256": "35c82ad70d786f9608ef3ac62a2154c9221c1f43486c73ef55458e905e5670fe"
+    },
+    "matched_acquisition_protocol": {
+      "bytes": 12228,
+      "evidence_scope": "current source/report bytes; not independently repeated native evidence",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-pruning-retention-confirm-v1\\research\\rineya_pruning_retention_confirm_v1\\PROTOCOL.md",
+      "sha256": "89c050e96c6730acf0c225389dea5104906d7ab9c26dd205f4aa63d7c09a7f31"
+    },
+    "published_sparse_prereg_copy": {
+      "bytes": 8840,
+      "evidence_scope": "current source/report bytes; not independently repeated native evidence",
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze\\evidence\\SPARSE001_PREREG.md",
+      "sha256": "1d8978e3b3b3a8a60bb9cc48261b0a3bb6245960059b1bb3627b52ed4ba0d05a"
+    },
+    "replication_report": {
+      "bytes": 6418,
+      "evidence_scope": "current source/report bytes; not independently repeated native evidence",
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\rep001-20260917\\REP001_RESULTS.md",
+      "sha256": "ea3a62de5d157430f3787a13de285e690f831438f92e27c2a1705a2c71c7448b"
+    },
+    "sparse_core_metadata": {
+      "bytes": 10555,
+      "evidence_scope": "current source/report bytes; not independently repeated native evidence",
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze\\CORE.json",
+      "sha256": "48340ec081e0ee1ccd61e2e432a62adfb7339f3d87a7a6c49e6772db70192ab7"
+    },
+    "tiny_cpu_proposal": {
+      "bytes": 2600,
+      "evidence_scope": "current source/report bytes; not independently repeated native evidence",
+      "path": "C:\\Users\\clclc\\BusinessProject\\titan-sparse-quality-offline-20261005\\records\\cpu-candidate-v1\\CODE_ADDENDUM_PROPOSAL.json",
+      "sha256": "cd8798777c1dceb1cebb8e3202226b0e119e8bf50ce171847b3d68182db49a85"
+    }
+  },
+  "status": "RESEARCH_PROGRESS_NO_VERIFIED_GENERAL_GAIN_PATTERN",
+  "training_authorized": false
+}

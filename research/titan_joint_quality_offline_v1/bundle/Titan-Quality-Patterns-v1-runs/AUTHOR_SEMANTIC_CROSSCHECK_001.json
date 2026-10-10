@@ -1,0 +1,175 @@
+{
+  "schema": "AUTHOR_SEMANTIC_CROSSCHECK_V1",
+  "status": "AUTHOR_PUBLIC_INPUT_TRUTH_CROSSCHECK_NO_ACTUAL_GOLD_DEFECT_FOUND",
+  "audit_script": {
+    "path": "C:/Users/clclc/BusinessProject/Titan-Quality-Patterns-v1-runs/semantic-admission-audit-001.py",
+    "sha256": "a44bf6f968a6773c63a97d09de682a757704f3ff879102c914f34ea1a4ae28e0",
+    "preserved_exactly": true
+  },
+  "reproduced_output": {
+    "scope": "EXISTING_OPEN_ROWS_FRESH_PUBLIC_PARSE_NO_PACKAGE_TEACHERS",
+    "coverage": {
+      "train:authority": 300,
+      "train:program": 1000,
+      "train:field_transform": 200,
+      "train:item_events": 166,
+      "train:baskets": 166,
+      "train:latest_record": 168,
+      "pilot:alias_join": 64,
+      "pilot:filtered_roster": 64,
+      "pilot:fsm": 64,
+      "pilot:horn": 64,
+      "pilot:sharing": 64,
+      "pilot:dependencies": 64
+    },
+    "truth_mismatches": [],
+    "public_wrapper_and_target_mismatches": 0,
+    "unique_system_wordings_per_kind": {
+      "authority": 1,
+      "program": 1,
+      "field_transform": 1,
+      "item_events": 1,
+      "baskets": 1,
+      "latest_record": 1,
+      "alias_join": 1,
+      "filtered_roster": 1,
+      "fsm": 1,
+      "horn": 1,
+      "sharing": 1,
+      "dependencies": 1
+    },
+    "semantic_corner_coverage": {
+      "authority_conflicting_authoritative_queries": 0,
+      "authority_missing_authoritative_queries": 150,
+      "program_initial_source_alternative_differs": 1000,
+      "item_queries_with_multiple_overwrites": 166,
+      "latest_equal_maximum_timestamp_queries": 0,
+      "alias_nonunique_record_queries": 0,
+      "roster_duplicate_selected_label_queries": 0,
+      "roster_empty_selected_queries": 14,
+      "fsm_zero_symbol_queries": 7,
+      "horn_multi_premise_rules": 0
+    },
+    "horn_copy_fact_floor": {
+      "correct": 49,
+      "false_abstention": 15,
+      "unsupported": 0
+    },
+    "horn_one_simultaneous_round_floor": {
+      "correct": 56,
+      "false_abstention": 8,
+      "unsupported": 0
+    },
+    "program_wording_example": {
+      "case_id": "train.reasoning.0159.v1",
+      "train_jsonl_line": 2,
+      "query": "x",
+      "initial": {
+        "x": 10,
+        "y": 2
+      },
+      "gold": "110",
+      "instructions": [
+        {
+          "arg": 4,
+          "dst": "x",
+          "op": "add"
+        },
+        {
+          "arg": 4,
+          "dst": "y",
+          "op": "add"
+        },
+        {
+          "arg": 2,
+          "dst": "y",
+          "op": "multiply"
+        },
+        {
+          "arg": 3,
+          "dst": "x",
+          "op": "multiply"
+        },
+        {
+          "arg": "y",
+          "dst": "x",
+          "op": "add_from"
+        },
+        {
+          "arg": "x",
+          "dst": "y",
+          "op": "add_from"
+        },
+        {
+          "arg": 2,
+          "dst": "x",
+          "op": "multiply"
+        },
+        {
+          "arg": 2,
+          "dst": "y",
+          "op": "multiply"
+        },
+        {
+          "arg": 2,
+          "dst": "x",
+          "op": "add"
+        },
+        {
+          "arg": 1,
+          "dst": "y",
+          "op": "add"
+        }
+      ]
+    },
+    "hashes": {
+      "data.py": "dd4a39762f805b4d2a99d9c7416cbf454c2d99244ca2f42e4e73faa17d4dba1b",
+      "train.jsonl": "6c82a98a4d66c64d15aa813dc1afa3f20898996c00f2d8590158a8eec8e1b11d",
+      "pilot.prompts.jsonl": "1ba852d8b0bb78d42c543a876e24a38987284095ff17f3ec9887bd7882d46bf8",
+      "pilot.references.jsonl": "51b3b96d8e557ddcf046efbb7a8afc81d1b49bbadd1289fb41023a7936aced2d"
+    },
+    "model_calls": 0,
+    "bank_generated": false,
+    "files_written": false
+  },
+  "author_independence": {
+    "compiler_author_performed_crosscheck": true,
+    "package_teachers_called": false,
+    "fresh_operational_derivations": true,
+    "independent_human_interpretation": false,
+    "blind_semantic_review": false,
+    "caveat": "The auditor authored the original compiler. Fresh parsing/affine program/FSM derivations independently cross-check calculations, not shared semantic assumptions or an independent human admission decision."
+  },
+  "teacher_review": {
+    "operational_independence": "Different forward/compositional program and FSM procedures; topological/recursive dependency evaluation; iterative/backward Horn reasoning; scans/repeated arithmetic for other tasks.",
+    "shared_limits": "Both teachers call the same parse_prompt and hardcode kind semantics. They do not interpret arbitrary system prose or prove public instruction priority. Agreement alone cannot expose a shared interpretation error.",
+    "scope": "Existing actual inputs only; no conflicting-authority, timestamp-tie, duplicate roster-label, nonunique alias-record or multi-premise Horn instances were present."
+  },
+  "wording_candidates": [
+    {
+      "kind": "program",
+      "classification": "HARDENING_GAP_NOT_ESTABLISHED_GOLD_DEFECT",
+      "finding": "Public sequential register execution normally implies current state. add_from current-source semantics can be stated explicitly in any future public codebook; the initial-source alternative changes answers but assumes a different primitive, not a demonstrated equal reading of the whole instruction.",
+      "source": "data.py:48,127,207"
+    },
+    {
+      "kind": "plain_format",
+      "classification": "STYLE_HARDENING_AND_SEPARATE_SCORING",
+      "finding": "Plain header does not explicitly say no terminal period or canonical decimal spelling. Content/format/strict scoring are separate; JSON number violates the explicitly requested string field, whereas equivalent numeric string spelling is not a truth defect.",
+      "source": "data.py:43-45;analysis.py:19-62"
+    }
+  ],
+  "original_gold_correct_under_working_interpretation": true,
+  "native_model_calls": 0,
+  "model_teacher_calls": 0,
+  "new_dataset_generated": false,
+  "source_or_data_modified": false,
+  "native_human_admission": false,
+  "instrument_freeze_performed": false,
+  "native_winner_declared": false,
+  "independent_checks": {
+    "root_and_packet_confirmed_horn_floors": true,
+    "root_and_packet_confirmed_source_proxy": true,
+    "scope": "Agreement of deterministic control results; not independent blind admission of the entire corpus."
+  }
+}

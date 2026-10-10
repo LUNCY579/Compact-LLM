@@ -1,0 +1,44 @@
+{
+  "train": {
+    "status": "PASS_QUERYBLIND_PAIR_BOUND_MECHANICS_ONLY",
+    "rows": 2000,
+    "parents": 1000,
+    "verified_parents": 1000,
+    "parents_by_domain": {
+      "grounding": 150,
+      "reasoning": 500,
+      "format": 100,
+      "transition": 83,
+      "arithmetic": 83,
+      "long_context": 84
+    },
+    "errors": [],
+    "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+    "bound_scope": "same full public input after removing only query; matched wrapper; distinct truths; complete clean-answer scoring",
+    "no_eligible_only_subset": true,
+    "native_model_calls": 0,
+    "model_quality_gain_established": false
+  },
+  "pilot": {
+    "status": "PASS_QUERYBLIND_PAIR_BOUND_MECHANICS_ONLY",
+    "rows": 384,
+    "parents": 192,
+    "verified_parents": 192,
+    "parents_by_domain": {
+      "long_context": 32,
+      "format": 32,
+      "transition": 32,
+      "grounding": 32,
+      "arithmetic": 32,
+      "reasoning": 32
+    },
+    "errors": [],
+    "deterministic_queryblind_pair_accuracy_upper_bound": 0.5,
+    "bound_scope": "same full public input after removing only query; matched wrapper; distinct truths; complete clean-answer scoring",
+    "no_eligible_only_subset": true,
+    "native_model_calls": 0,
+    "model_quality_gain_established": false
+  },
+  "native_model_calls": 0,
+  "model_quality_gain_established": false
+}
