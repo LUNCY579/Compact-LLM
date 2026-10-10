@@ -85,7 +85,7 @@ def binding(generations, gold):
 
 def historical_typed_parser():
     # This is an exact byte copy, not permission to relocate or execute a native worker.
-    path = Path("C:/Users/clclc/BusinessProject/ChatBubble-small-vocab-depth/experiments/architecture_benchmark_001/retention.py")
+    path = Path("C:/Users/clclc/BusinessProject/ChatBubble-ced-native-loader-qualification/experiments/architecture_benchmark_001/retention.py")
     assert sha(path) == "c52b6a48cb811e3c272793a66765e82152fe170e8307eea153c3b1b6c5c58322"
     spec = importlib.util.spec_from_file_location("historical_typed_recount", path)
     module = importlib.util.module_from_spec(spec)
