@@ -11,7 +11,7 @@ import re
 from .operations import canonical
 
 PACKAGE = Path(__file__).resolve().parent
-CONTRACT = PACKAGE / "contracts/READER_QUALIFICATION_V1.json"
+CONTRACT = PACKAGE / "contracts/READER_QUALIFICATION_OWNER_EXCEPTION_001_V2.json"
 SCOPE = "CRS_EXACT_PREFIX_GREEDY_SERVING_576_V1"
 EOS_IDS = (151645, 151643)
 VOCAB = 151936
@@ -38,12 +38,13 @@ def require(value, message):
 
 
 def independent_reviewer_id(value):
-    """Normalize ordinary slash/backslash aliases; this does not authenticate users."""
+    """Owner exception001's fixed non-builder leaves; this is not authentication."""
     require(type(value) is str and value.strip(), "identified independent reviewer required")
-    normalized = value.strip().replace('\\', '/').rstrip('/').casefold()
-    final_component = normalized.rsplit('/', 1)[-1]
-    require(final_component and final_component != 'runtime_audit', "reader builder cannot approve its own evidence")
-    return normalized
+    parts = [part.strip().casefold() for part in value.strip().replace('\\', '/').split('/') if part.strip()]
+    require(len(parts) == 1 or (len(parts) == 2 and parts[0] == 'root'), "unknown reviewer namespace")
+    require(parts[-1] in {'exception_science', 'exception_ops'},
+            "owner exception001 requires a registered non-builder reviewer")
+    return '/root/' + parts[-1]
 
 
 def digest(value):
@@ -255,7 +256,7 @@ def verify_qualification(reference, expected_binding):
     require(all(canonical(receipt.get(k)) == canonical(worker.get(k)) for k in
                 ('run_identity','worker_identity','runtime_worker_identity')), 'serving receipt/native worker run mismatch')
     reader_execution.validate_native_artifacts({name: read_json(dependencies[name]['path'])
-        for name in EVIDENCE_NAMES if name != 'events'}, cfg, expected_binding)
+        for name in EVIDENCE_NAMES if name != 'events'}, cfg, expected_binding, dependencies)
     verified = reader_execution.validate_qualification_result(worker,cfg,expected_binding['source_commit'],
                                 reader_execution.read_event_journal(dependencies['events']['path']))
     require(reader_execution.read_event_journal(dependencies['events']['path'])[-1]['time']

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "study_id": "CRS-SEMANTIC-GUARD-CONTRAST-001",
+  "status": "FINITE_CPU_STUDY_REGISTERED_DESIGN_ACCEPTED_PENDING_FROZEN_SOURCE_REVIEW",
+  "decided_by": "/root",
+  "human_standing_authority_sha256": "479b6c5284da978c491a6477a9064f21b585fa29e9991bf84d75960c380d18f0",
+  "not_new_human_message_or_native_launch": true,
+  "question": "Does changing guard linkage alter correct outcomes while count/position/control-observation and lexical multiset cues remain fixed?",
+  "different_from_old_quarantined_acquisition_population_claim": true,
+  "inputs": [
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\resolution_proposals\\semantic_guard_contrast_001\\PROPOSAL.md",
+      "sha256": "3d609fd452792067460108d46085e1ceb6b81321c4a38502da226c98a7fa27f3"
+    },
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\resolution_proposals\\semantic_guard_contrast_001\\PAIRS_DRAFT.json",
+      "sha256": "5b03c714a865fede8810709470de44ec4dbcbe84dfa9383dcdfcd785cb778614"
+    },
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\resolution_proposals\\semantic_guard_contrast_001\\SCOPE_CLARIFICATIONS.json",
+      "sha256": "9f72f9a67f3d1fe2710b885355e4720316ad3e7f9665078a024ea38e3bf9f909"
+    }
+  ],
+  "scope_reviews": [
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\audits\\SEMANTIC_GUARD_CONTRAST_SCI_SCOPE_001.md",
+      "sha256": "ee7460471c1c2a7c0261c5906e92464f5b15fa3a568cb34ebd35c873ea97a92e"
+    },
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\audits\\SEMANTIC_GUARD_CONTRAST_OPS_SCOPE_001.md",
+      "sha256": "35b777599d2b02dc22f2f0c0d44ee4dcff9c9dbf0e46acb7e37f7998a43f9e59"
+    }
+  ],
+  "source_required_before_dispatch": "Freeze one separate stdlib public solver/control/parser/runner/scorer-binding implementation and independent static SCI/OPS source review; register its exactSHA before anyactualprediction/scorer calls. No invocation before acceptance.",
+  "dose": {
+    "one_CPU_invocation_max": 1,
+    "CPU_wall_seconds_max": 30,
+    "working_set_MiB_max": 256,
+    "primary_cases": 8,
+    "pair_parents": 4,
+    "independent_recipe_clusters": 1,
+    "F_predictions": 8,
+    "L_predictions": 8,
+    "P_predictions": 8,
+    "total_predictions_max": 24,
+    "aggregate_scorer_entry_calls": 3,
+    "standalone_scorer_integrity_calls": 4,
+    "total_scorer_entry_calls_max": 7,
+    "nested_score_one_items": 28,
+    "no_historical_constructor_oracle_core_canonicalizer_calls": true,
+    "framework_model_tokenizer_GPU_native_calls": 0,
+    "no_extra_rename_resample_mutation_cases": true
+  },
+  "schedule": "Fourliteralpairs A/B/C/D, privatevariants a/b, exactordered8 schedule retained onpartialfailure; solverinput onlysource/query/rules",
+  "source_bounds": {
+    "source_bytes_per_case_max": 8192,
+    "records_per_case_max": 64,
+    "output_bytes_max": 1048576,
+    "no_network_subprocess_host_DB_or_protected_bank_access": true,
+    "cooperative_deadline_memory_monitor_must_not_claim_OS_isolation": true
+  },
+  "expected_outcomes_prospective": {
+    "F": "8/8exactmanualderivations,4pairdivergences",
+    "L": "REFUTED/nullall8,1/8exact",
+    "P": "REFUTED/nullall8,1/8exact",
+    "invariant_predictor_logical_bound": "<=4/8forthese8only,nopopulationclaim"
+  },
+  "exposure": "OPEN_EXPOSED_DEV;allvariantpairsandsharedskeletonclusterrelated;notunusedacq/confirmation/training/learningmaterial",
+  "unchanged_acquisition_sha256": "7742ae86bf5b4b2831ae4851ddbadd2356fd7e58dbbd6a5e75eb4ccf4da3e054",
+  "scorer_sha256": "4233a0841824191955c523a2d09d0bdb1fa9d2fc5b4ab430af39594fbf9c2f54",
+  "attempt_rule": "Create-onceOUTCOME_UNKNOWNmarker beforeprediction; existingorunknownmarker neverrerun; reconcileonly;failstopretainsrawscheduleddenominators/timings/callcosts.",
+  "independent_reviews": "One sourcefreezeSCI/OPSreview, thenoneactualevidencedisposition;no silentoutcome-drivenrepair inside this study",
+  "no_H01_or_LAI1_002_closure_native_qualification_or_learning_claim": true
+}

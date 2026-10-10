@@ -1,0 +1,56 @@
+{
+  "status": "FROZEN_BACKUP_SOURCE_CANDIDATE3_STOP_FOR_INDEPENDENT_REVIEW_NO_ACTUAL_HELPER_CALL",
+  "scope_sha256": "826946e67776b97d552b70ae23aebe97b7271267c3069696375122a68045384e",
+  "path_correction_sha256": "b124b16d75e4006104d1e2744baec842867b44d1a7a653c97d7297621a772a27",
+  "preservation_manifest_sha256": "c89419c9bcb7b36c29833614e0e9aa9a1b940b0599998814b4ce2e6541fe4ffa",
+  "files": [
+    {
+      "path": "hub_backup.py",
+      "bytes": 50505,
+      "sha256": "9dee3721431c70c16b2ba94980e6d51288380761f77c18147388663877847feb"
+    },
+    {
+      "path": "tests\\test_hub_backup.py",
+      "bytes": 24693,
+      "sha256": "2da152cd86bda276b9e31743333c8ae37dcb32e3461123143bef7dc69b018bc1"
+    },
+    {
+      "path": "contracts\\HF_PRIVATE_BACKUP_V1.json",
+      "bytes": 11169,
+      "sha256": "e4854c9b08d10ce6109fda6eb2befd064aa42544700a8b3e8dbe72cb845e03d3"
+    },
+    {
+      "path": "history\\hf_private_backup_round2\\PRESERVATION.json",
+      "bytes": 804,
+      "sha256": "c89419c9bcb7b36c29833614e0e9aa9a1b940b0599998814b4ce2e6541fe4ffa"
+    },
+    {
+      "path": "evidence\\hf_private_backup_round3\\FIXTURE_COMPLETION_STDOUT.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence\\hf_private_backup_round3\\RAW_TEST_OUTPUT.txt",
+      "bytes": 10054,
+      "sha256": "4634e0f9912c072c09802e245c00424a42fe90ada6f2f70ad6a5f31446d2d90e"
+    },
+    {
+      "path": "evidence\\hf_private_backup_round3\\run_fixture.py",
+      "bytes": 4057,
+      "sha256": "2093fcce160be11447855786c57bfb8e962fafb9453ab8eb7f788d26c8603cfd"
+    },
+    {
+      "path": "evidence\\hf_private_backup_round3\\TEST_RESULT.json",
+      "bytes": 1334,
+      "sha256": "66e0d634f8f1812579ef557f640a2c937ddce3e446bba930654f7df093a18bd7"
+    }
+  ],
+  "result_status": "FAIL_FROZEN_NO_REPAIR_OR_RERUN",
+  "fixture_invocations": 1,
+  "elapsed_through_raw_result_and_source_hashing_seconds": 15.375,
+  "candidate": 3,
+  "max_source_candidates": 3,
+  "candidate3_exhausts_source_round_budget": true,
+  "current_source_approved": false,
+  "actual_remote_or_native_actions": 0
+}

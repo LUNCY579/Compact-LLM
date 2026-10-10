@@ -1,0 +1,64 @@
+{
+  "status": "CPU_INTEGRATION_PASSED_PENDING_INDEPENDENT_SOURCE_REVIEW",
+  "passed": true,
+  "tests": 48,
+  "seconds": 60.742557600000055,
+  "modules": [
+    {
+      "module": "experiments.rineya_centralized_reasoning_system_v1.tests.test_owned_runtime_identity_probe",
+      "tests": 20,
+      "passed": true,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 2.55323079999971,
+      "stdout_ref": {
+        "path": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\outputs\\owner_exception_integration_001\\PROBE_CPU_STDOUT.txt",
+        "sha256": "b23b512e12222632ff2af2d29aeb99a73662bbf7712f95b6f54618c4de8923ef"
+      },
+      "fail_fast": true
+    },
+    {
+      "module": "experiments.rineya_centralized_reasoning_system_v1.tests.test_reader",
+      "tests": 28,
+      "passed": true,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 58.17258360000005,
+      "stdout_ref": {
+        "path": "C:\\Users\\clclc\\.codex\\worktrees\\crs-native-desktop-v2\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\outputs\\owner_exception_integration_001\\READER_CPU_STDOUT.txt",
+        "sha256": "a3294b4edec65b872c79301b93d31cef079067061fd491d8ed94b32b3e1788fd"
+      },
+      "fail_fast": true
+    }
+  ],
+  "source_freeze_sha256": "d21b7fd43cf507259d109bf87b47aed6771bdf2946791c4feb40d5d15deb2722",
+  "source_pins_unchanged": true,
+  "builder": "/root/exception_builder",
+  "independent_approval": false,
+  "cpu_environment": {
+    "executable": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+    "executable_sha256": "28d2965d061656abbe3a46100bd3342d1152185289445d489782a21a8cfe9b57",
+    "python": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+    "psutil": "7.2.2",
+    "psutil_site": "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages",
+    "psutil_module_path": "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Lib\\site-packages\\psutil\\__init__.py",
+    "psutil_module_sha256": "7b6a0675824eb1fa2ff0cb1eb36e358dc454703e51dfa4e9a0e6ccd26a159f0c",
+    "registered_native_environment": false,
+    "registered_native_interpreter_exists": false,
+    "native_environment_gates_retargeted_or_lowered": false,
+    "imported_third_party_package_scope": "psutil7.2.2 only; frameworks blocked by fatal import refusal"
+  },
+  "exact_job_cpu_fixture_adaptation": "Explicit base interpreter plus one owned stdlib sleeping child; preserves >=2-process assertion, absolute deadline and empty-tree exit; original venv fixture/outcome retained in V1/history/base",
+  "framework_import_attempts": [],
+  "framework_imports": 0,
+  "model_calls": 0,
+  "actual_probe_runs": 0,
+  "native_reader_runs": 0,
+  "native_qualification": false,
+  "canonical_host_database_access": false,
+  "CPU_temporary_SQLite_only": true,
+  "stop_at_first_material_failure": true,
+  "automatic_retry": false
+}

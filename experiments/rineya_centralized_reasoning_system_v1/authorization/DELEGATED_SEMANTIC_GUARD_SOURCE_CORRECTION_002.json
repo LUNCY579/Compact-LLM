@@ -1,0 +1,53 @@
+{
+  "study_id": "CRS-SEMANTIC-GUARD-CONTRAST-001",
+  "source_candidate_round": 2,
+  "default_source_rounds_max": 3,
+  "status": "REGISTERED_MINIMAL_PREEXECUTION_CONTROL_CORRECTION",
+  "standing_authority_sha256": "479b6c5284da978c491a6477a9064f21b585fa29e9991bf84d75960c380d18f0",
+  "preregistered_study_scope_sha256": "cabf16f5f96a19b741015b9c7286dd22a803d7f325ca01db2937be7779d7aa58",
+  "old_freeze_sha256": "e8f5b91c91c8a23e5711e19c34ffb4442d97e63b38ec5f5a1081a71d6a315f51",
+  "old_files_preserved": [
+    {
+      "path": "FREEZE.json",
+      "sha256": "e8f5b91c91c8a23e5711e19c34ffb4442d97e63b38ec5f5a1081a71d6a315f51"
+    },
+    {
+      "path": "run_once.py",
+      "sha256": "159c0d8f8cca6d7cac42ea069c654dd47abe6a037d8ba5d1f8af04009554a9d4"
+    },
+    {
+      "path": "instruments.py",
+      "sha256": "be874146481bce800038e2ef801be814db947106cfe9452e460562c2fb11d945"
+    },
+    {
+      "path": "README.md",
+      "sha256": "e574212a552c3dc3e87abed6cd235911c740d38349469b9821a59987388332d7"
+    },
+    {
+      "path": "PUBLIC_INPUTS.json",
+      "sha256": "eb5d55cad62de5e3dbfe1a632107c8a9575fd80b8960e919268e42ddd3d8f633"
+    },
+    {
+      "path": "MANUAL_EXPECTATIONS.json",
+      "sha256": "82486dce64e4a1a2e4bde1939cd49ff556d9eb3d16303b9fe934fbcbdb173471"
+    }
+  ],
+  "review_refs": [
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\audits\\SEMANTIC_GUARD_CONTRAST_SCI_SOURCE_001.md",
+      "sha256": "a3595b408980a99899d4e9d12e9f0c1e097cff729f9489d6a0fdc6f03ebae5c9"
+    },
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\audits\\SEMANTIC_GUARD_CONTRAST_OPS_SOURCE_001.md",
+      "sha256": "531111b7345472754614c16c7d98e784bb0ff37218a42d1b6c23e59b39fcb779"
+    }
+  ],
+  "finding": "SGC-SCI-001: L must return terminalonlyU/C; terminalSUPPORTED continues to k, unlike P",
+  "permitted_change": "Only instruments.watched terminal-supported condition, README/freeze source-round history and new sourcehash; run_once/public/manual/draft/prereg/scorer/limits unchanged",
+  "no_tests_or_predictions_or_scorer_calls_before_fresh_static_source_acceptance": true,
+  "additional_actual_executions": 0,
+  "same_remaining_one30s_invocation_24predictions_7scorerentrycalls": true,
+  "no_outcome_driven_case_change_no_rerun_old32_no_quarantine_reopening": true,
+  "one_freeze_and_fresh_SCI_OPS_source_review": true,
+  "material_findings_stop_this_source_round": true
+}

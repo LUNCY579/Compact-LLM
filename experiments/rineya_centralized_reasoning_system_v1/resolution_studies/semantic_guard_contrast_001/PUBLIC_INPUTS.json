@@ -1,0 +1,122 @@
+[
+  {
+    "case_id": "Aa",
+    "input": {
+      "source": "bz @0 EMPTY Nxxx\nbq @10 TRANSFER Nxxx Noaa CONFIRMED\nbr @20 TRANSFER Nxxx Nobb CONFIRMED\nbs @30 TRANSFER Nxxx Nocc CONFIRMED\nbt @40 TRANSFER Nxxx Nodd CONFIRMED\nbu @50 TRANSFER Nxxx Noee CONFIRMED\nbv @60 TRANSFER Nxxx Noff CONFIRMED\nrq @0 REQUIRE bq Ntbb\nrr @0 REQUIRE br Ntgg\nrs @0 REQUIRE bs Ntbb\nrt @0 REQUIRE bt Ntbb\nru @0 REQUIRE bu Ntbb\nrv @0 REQUIRE bv Ntbb\nxq @0 EXCEPT bq Ntbb\nxr @0 EXCEPT br Ntbb\nxs @0 EXCEPT bs Ntbb\nxt @0 EXCEPT bt Ntbb\nxu @0 EXCEPT bu Ntbb\nxv @0 EXCEPT bv Ntbb\nfg @0 FACT Ntgg SUPPORTED\nfb @0 FACT Ntbb REFUTED\nfc @39 FACT Ntcc SUPPORTED\nfd @39 FACT Ntcc REFUTED\nfu @41 FACT Ntuu SUPPORTED\nfv @41 FACT Ntuu REFUTED",
+      "query": {
+        "entity": "Nxxx",
+        "time": 70
+      },
+      "rules": {
+        "cancel_mode": "remove_event",
+        "equal_time": "contradictory",
+        "complete": true
+      }
+    }
+  },
+  {
+    "case_id": "Ab",
+    "input": {
+      "source": "bz @0 EMPTY Nxxx\nbq @10 TRANSFER Nxxx Noaa CONFIRMED\nbr @20 TRANSFER Nxxx Nobb CONFIRMED\nbs @30 TRANSFER Nxxx Nocc CONFIRMED\nbt @40 TRANSFER Nxxx Nodd CONFIRMED\nbu @50 TRANSFER Nxxx Noee CONFIRMED\nbv @60 TRANSFER Nxxx Noff CONFIRMED\nrq @0 REQUIRE bq Ntbb\nrr @0 REQUIRE br Ntbb\nrs @0 REQUIRE bs Ntbb\nrt @0 REQUIRE bt Ntgg\nru @0 REQUIRE bu Ntbb\nrv @0 REQUIRE bv Ntbb\nxq @0 EXCEPT bq Ntbb\nxr @0 EXCEPT br Ntbb\nxs @0 EXCEPT bs Ntbb\nxt @0 EXCEPT bt Ntbb\nxu @0 EXCEPT bu Ntbb\nxv @0 EXCEPT bv Ntbb\nfg @0 FACT Ntgg SUPPORTED\nfb @0 FACT Ntbb REFUTED\nfc @39 FACT Ntcc SUPPORTED\nfd @39 FACT Ntcc REFUTED\nfu @41 FACT Ntuu SUPPORTED\nfv @41 FACT Ntuu REFUTED",
+      "query": {
+        "entity": "Nxxx",
+        "time": 70
+      },
+      "rules": {
+        "cancel_mode": "remove_event",
+        "equal_time": "contradictory",
+        "complete": true
+      }
+    }
+  },
+  {
+    "case_id": "Ba",
+    "input": {
+      "source": "bz @0 EMPTY Nxxx\nbq @10 TRANSFER Nxxx Noaa CONFIRMED\nbr @20 TRANSFER Nxxx Nobb CONFIRMED\nbs @30 TRANSFER Nxxx Nocc CONFIRMED\nbt @40 TRANSFER Nxxx Nodd CONFIRMED\nbu @50 TRANSFER Nxxx Noee CONFIRMED\nbv @60 TRANSFER Nxxx Noff CONFIRMED\nrq @0 REQUIRE bq Ntbb\nrr @0 REQUIRE br Ntgg\nrs @0 REQUIRE bs Ntbb\nrt @0 REQUIRE bt Ntgg\nru @0 REQUIRE bu Ntbb\nrv @0 REQUIRE bv Ntbb\nxq @0 EXCEPT bq Ntbb\nxr @0 EXCEPT br Ntbb\nxs @0 EXCEPT bs Ntbb\nxt @0 EXCEPT bt Ntgg\nxu @0 EXCEPT bu Ntbb\nxv @0 EXCEPT bv Ntbb\nfg @0 FACT Ntgg SUPPORTED\nfb @0 FACT Ntbb REFUTED\nfc @39 FACT Ntcc SUPPORTED\nfd @39 FACT Ntcc REFUTED\nfu @41 FACT Ntuu SUPPORTED\nfv @41 FACT Ntuu REFUTED\nbp @1 TRANSFER Nxxx Nopp CONFIRMED\ncp @2 CANCEL bp",
+      "query": {
+        "entity": "Nxxx",
+        "time": 70
+      },
+      "rules": {
+        "cancel_mode": "remove_event",
+        "equal_time": "contradictory",
+        "complete": true
+      }
+    }
+  },
+  {
+    "case_id": "Bb",
+    "input": {
+      "source": "bz @0 EMPTY Nxxx\nbq @10 TRANSFER Nxxx Noaa CONFIRMED\nbr @20 TRANSFER Nxxx Nobb CONFIRMED\nbs @30 TRANSFER Nxxx Nocc CONFIRMED\nbt @40 TRANSFER Nxxx Nodd CONFIRMED\nbu @50 TRANSFER Nxxx Noee CONFIRMED\nbv @60 TRANSFER Nxxx Noff CONFIRMED\nrq @0 REQUIRE bq Ntbb\nrr @0 REQUIRE br Ntgg\nrs @0 REQUIRE bs Ntbb\nrt @0 REQUIRE bt Ntgg\nru @0 REQUIRE bu Ntbb\nrv @0 REQUIRE bv Ntbb\nxq @0 EXCEPT bq Ntbb\nxr @0 EXCEPT br Ntgg\nxs @0 EXCEPT bs Ntbb\nxt @0 EXCEPT bt Ntbb\nxu @0 EXCEPT bu Ntbb\nxv @0 EXCEPT bv Ntbb\nfg @0 FACT Ntgg SUPPORTED\nfb @0 FACT Ntbb REFUTED\nfc @39 FACT Ntcc SUPPORTED\nfd @39 FACT Ntcc REFUTED\nfu @41 FACT Ntuu SUPPORTED\nfv @41 FACT Ntuu REFUTED\nbp @1 TRANSFER Nxxx Nopp CONFIRMED\ncp @2 CANCEL bp",
+      "query": {
+        "entity": "Nxxx",
+        "time": 70
+      },
+      "rules": {
+        "cancel_mode": "remove_event",
+        "equal_time": "contradictory",
+        "complete": true
+      }
+    }
+  },
+  {
+    "case_id": "Ca",
+    "input": {
+      "source": "bz @0 EMPTY Nxxx\nbq @10 TRANSFER Nxxx Noaa CONFIRMED\nbr @20 TRANSFER Nxxx Nobb CONFIRMED\nbs @30 TRANSFER Nxxx Nocc CONFIRMED\nbt @40 TRANSFER Namm Noyy CONFIRMED\nbu @50 TRANSFER Nxxx Noee CONFIRMED\nbv @60 TRANSFER Nxxx Noff CONFIRMED\nrq @0 REQUIRE bq Ntbb\nrr @0 REQUIRE br Ntcc\nrs @0 REQUIRE bs Ntbb\nrt @0 REQUIRE bt Ntuu\nru @0 REQUIRE bu Ntbb\nrv @0 REQUIRE bv Ntbb\nxq @0 EXCEPT bq Ntbb\nxr @0 EXCEPT br Ntbb\nxs @0 EXCEPT bs Ntbb\nxt @0 EXCEPT bt Ntbb\nxu @0 EXCEPT bu Ntbb\nxv @0 EXCEPT bv Ntbb\nfg @0 FACT Ntgg SUPPORTED\nfb @0 FACT Ntbb REFUTED\nfc @39 FACT Ntcc SUPPORTED\nfd @39 FACT Ntcc REFUTED\nfu @41 FACT Ntuu SUPPORTED\nfv @41 FACT Ntuu REFUTED\naq @0 ALIAS Naxx Namm\nar @0 ALIAS Namm Nxxx\nas @0 ALIAS Noyy Nodd",
+      "query": {
+        "entity": "Naxx",
+        "time": 70
+      },
+      "rules": {
+        "cancel_mode": "remove_event",
+        "equal_time": "contradictory",
+        "complete": true
+      }
+    }
+  },
+  {
+    "case_id": "Cb",
+    "input": {
+      "source": "bz @0 EMPTY Nxxx\nbq @10 TRANSFER Nxxx Noaa CONFIRMED\nbr @20 TRANSFER Nxxx Nobb CONFIRMED\nbs @30 TRANSFER Nxxx Nocc CONFIRMED\nbt @40 TRANSFER Namm Noyy CONFIRMED\nbu @50 TRANSFER Nxxx Noee CONFIRMED\nbv @60 TRANSFER Nxxx Noff CONFIRMED\nrq @0 REQUIRE bq Ntbb\nrr @0 REQUIRE br Ntuu\nrs @0 REQUIRE bs Ntbb\nrt @0 REQUIRE bt Ntcc\nru @0 REQUIRE bu Ntbb\nrv @0 REQUIRE bv Ntbb\nxq @0 EXCEPT bq Ntbb\nxr @0 EXCEPT br Ntbb\nxs @0 EXCEPT bs Ntbb\nxt @0 EXCEPT bt Ntbb\nxu @0 EXCEPT bu Ntbb\nxv @0 EXCEPT bv Ntbb\nfg @0 FACT Ntgg SUPPORTED\nfb @0 FACT Ntbb REFUTED\nfc @39 FACT Ntcc SUPPORTED\nfd @39 FACT Ntcc REFUTED\nfu @41 FACT Ntuu SUPPORTED\nfv @41 FACT Ntuu REFUTED\naq @0 ALIAS Naxx Namm\nar @0 ALIAS Namm Nxxx\nas @0 ALIAS Noyy Nodd",
+      "query": {
+        "entity": "Naxx",
+        "time": 70
+      },
+      "rules": {
+        "cancel_mode": "remove_event",
+        "equal_time": "contradictory",
+        "complete": true
+      }
+    }
+  },
+  {
+    "case_id": "Da",
+    "input": {
+      "source": "bz @0 EMPTY Nxxx\nbq @10 TRANSFER Nxxx Noaa CONFIRMED\nbr @20 TRANSFER Nxxx Nobb CONFIRMED\nbs @30 TRANSFER Nxxx Nocc CONFIRMED\nbt @40 TRANSFER Nxxx Nodd CONFIRMED\nbu @50 TRANSFER Nxxx Noee CONFIRMED\nbv @60 TRANSFER Nxxx Noff CONFIRMED\nrq @0 REQUIRE bq Ntbb\nrr @0 REQUIRE br Ntbb\nrs @0 REQUIRE bs Ntbb\nrt @0 REQUIRE bt Ntgg\nru @0 REQUIRE bu Ntbb\nrv @0 REQUIRE bv Ntbb\nxq @0 EXCEPT bq Ntbb\nxr @0 EXCEPT br Ntbb\nxs @0 EXCEPT bs Ntbb\nxt @0 EXCEPT bt Ntgg\nxu @0 EXCEPT bu Ntbb\nxv @0 EXCEPT bv Ntbb\nfg @0 FACT Ntgg SUPPORTED\nfb @0 FACT Ntbb REFUTED\nfc @39 FACT Ntcc SUPPORTED\nfd @39 FACT Ntcc REFUTED\nfu @41 FACT Ntuu SUPPORTED\nfv @41 FACT Ntuu REFUTED\nhq @0 REQUIRE bq Ntgg\nhr @0 REQUIRE br Ntgg\nhs @0 REQUIRE bs Ntgg\nht @0 REQUIRE bt Ntcc\nhu @0 REQUIRE bu Ntgg\nhv @0 REQUIRE bv Ntgg",
+      "query": {
+        "entity": "Nxxx",
+        "time": 70
+      },
+      "rules": {
+        "cancel_mode": "remove_event",
+        "equal_time": "contradictory",
+        "complete": true
+      }
+    }
+  },
+  {
+    "case_id": "Db",
+    "input": {
+      "source": "bz @0 EMPTY Nxxx\nbq @10 TRANSFER Nxxx Noaa CONFIRMED\nbr @20 TRANSFER Nxxx Nobb CONFIRMED\nbs @30 TRANSFER Nxxx Nocc CONFIRMED\nbt @40 TRANSFER Nxxx Nodd CONFIRMED\nbu @50 TRANSFER Nxxx Noee CONFIRMED\nbv @60 TRANSFER Nxxx Noff CONFIRMED\nrq @0 REQUIRE bq Ntbb\nrr @0 REQUIRE br Ntbb\nrs @0 REQUIRE bs Ntbb\nrt @0 REQUIRE bt Ntgg\nru @0 REQUIRE bu Ntbb\nrv @0 REQUIRE bv Ntbb\nxq @0 EXCEPT bq Ntbb\nxr @0 EXCEPT br Ntbb\nxs @0 EXCEPT bs Ntbb\nxt @0 EXCEPT bt Ntcc\nxu @0 EXCEPT bu Ntbb\nxv @0 EXCEPT bv Ntbb\nfg @0 FACT Ntgg SUPPORTED\nfb @0 FACT Ntbb REFUTED\nfc @39 FACT Ntcc SUPPORTED\nfd @39 FACT Ntcc REFUTED\nfu @41 FACT Ntuu SUPPORTED\nfv @41 FACT Ntuu REFUTED\nhq @0 REQUIRE bq Ntgg\nhr @0 REQUIRE br Ntgg\nhs @0 REQUIRE bs Ntgg\nht @0 REQUIRE bt Ntgg\nhu @0 REQUIRE bu Ntgg\nhv @0 REQUIRE bv Ntgg",
+      "query": {
+        "entity": "Nxxx",
+        "time": 70
+      },
+      "rules": {
+        "cancel_mode": "remove_event",
+        "equal_time": "contradictory",
+        "complete": true
+      }
+    }
+  }
+]

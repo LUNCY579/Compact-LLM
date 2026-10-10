@@ -1,0 +1,34 @@
+{
+  "stage_id": "CRS-CPU-ONLY-RUNTIME-ARTIFACT-001",
+  "status": "FINITE_ARTIFACT_DOWNLOAD_ZIP_INSPECTION_ONLY_NO_INSTALL_IMPORT_MODEL",
+  "decided_by": "/root",
+  "client_date": "2026-10-05",
+  "standing_authority_sha256": "479b6c5284da978c491a6477a9064f21b585fa29e9991bf84d75960c380d18f0",
+  "latest_human_reinforcement_sha256": "1b18b18be25ac3cf847e76ac7afede613ef567934d03e8184bfea576f2cad21c",
+  "feasibility_audit_sha256": "bac0688324183840e71b6447794bc238af92c9d15514941d02d90144fb3fb859",
+  "intervention": "ExactofficialCPU-onlyTorch2.10.0 Windowscp311backend, samecanonicalTitan BF16 and otherselectedpackageversions; originalCUDAcompiledruntime/classifiers/historyunchanged.",
+  "official_sources": [
+    "https://pytorch.org/get-started/previous-versions/",
+    "https://download.pytorch.org/whl/cpu/torch/"
+  ],
+  "wheel_url": "https://download-r2.pytorch.org/whl/cpu/torch-2.10.0%2Bcpu-cp311-cp311-win_amd64.whl",
+  "wheel_sha256": "17a09465bab2aab8f0f273410297133d8d8fb6dd84dccbd252ca4a4f3a111847",
+  "target_path": "experiments/rineya_centralized_reasoning_system_v1/.venv/artifacts/torch-2.10.0+cpu-cp311-cp311-win_amd64.whl",
+  "dose": {
+    "one_download_attempt": true,
+    "max_download_bytes": 536870912,
+    "download_timeout_seconds": 120,
+    "one_metadata_zip_inspection": true,
+    "max_zip_entries": 30000,
+    "max_single_metadata_bytes": 2097152,
+    "max_selected_static_source_bytes": 4194304,
+    "no_archive_member_execution_or_extract": true,
+    "no_package_imports_install_model_assets_GPU_or_hostDB": true,
+    "do_not_retry_unknown_or_partial_download_without_reconcile": true
+  },
+  "runtime_environment_not_created_yet": true,
+  "wheel_path_not_venv_creation_target": "Artifacts are stagedinsidefutureexcludedruntimefolder; installationmustuseaseparatelyscopedvenvsubdirectorythere, not overwriteartifacts.",
+  "hard_limits_preserved": "No canonicalweightwrites/oldsourcecapreset/oldkeyreuse,onehostnativeworker7200epoch14400rolling,original2GiB RSS/Jobcommit hostreserve1.25/pre3.3125/disk4,allqualificationreview/livegatesbeforeframework/model.",
+  "interpretation": "CPUversiontag/installersuccessalone cannotqualifyCPU-onlybinaryroute. Laterindependentlock/DLL/runtime/source/containedbootstrapqualification required;0modelnow.",
+  "old_GPUfloor_quarantines_CPUloader3Q_importNOTREADY_and_Probe002_unchanged": true
+}

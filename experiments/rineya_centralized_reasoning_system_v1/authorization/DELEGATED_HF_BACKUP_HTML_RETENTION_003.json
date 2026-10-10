@@ -1,0 +1,23 @@
+{
+  "stage_id": "CRS-HF-PRIVATE-BACKUP-HTML-RETENTION-003",
+  "status": "FINITE_BACKUP_SOURCE_CANDIDATE3_ONLY_NO_REMOTE_UPLOAD",
+  "client_date": "2026-10-05",
+  "decided_by": "/root",
+  "standing_authority_sha256": "479b6c5284da978c491a6477a9064f21b585fa29e9991bf84d75960c380d18f0",
+  "private_backup_authority_sha256": "98cf7abb53bacf8fe40d3b4f74f59c44135ab39b5cf8bdddb18b2f1e9dc87eef",
+  "prior_accepted_source_sha256": "09efd5634209e424e2dfe711c8ff9a91d26e4cfec3926c0aa05c5d1298a368fe",
+  "same_backup_milestone_candidate": 3,
+  "max_source_candidates": 3,
+  "known_outcome": "Fresh dry-run for source007 candidate1 refuses Unexpected file type at retained WaitForSingleObjectEx.html; no prepare/upload/pending state for this new payload. Prior9494969 private snapshot remains VERIFIED.",
+  "preservation_before_edit": "Copy accepted helper/tests/contract into history/hf_private_backup_round2; hash manifest. Preserve all prior source/reviews/receipts and refused dry-run.",
+  "finite_change": "Allow only the three exact source007 Microsoft HTML relative paths with their immutable whole-byte hashes as inert UTF8 provenance. Enforce those exact pins in classify/validate content and prepared archive validation. Do not allow general .html, execution, URL/path following, extraction or other new types.",
+  "known_HTML": {
+    "evidence/cpu_only_tool_version_source_007/windows-apisets.html": "56ca145d908728c3a33d47b3112b43ff8c2306570062f6cf752203e40f2e4004",
+    "evidence/cpu_only_tool_version_source_007/dll-search-order.html": "ecf5f31efc88b3d5c1bed7e279b5227dad5711004f155963d2519c8914f23509",
+    "evidence/cpu_only_tool_version_source_007/WaitForSingleObjectEx.html": "d0e013e092ec11a829a66f70a6cf0b85be757bb68c656470875e0c61b56c4f8b"
+  },
+  "source_files": ["hub_backup.py", "tests/test_hub_backup.py", "contracts/HF_PRIVATE_BACKUP_V1.json", "history/hf_private_backup_round2/", "evidence/hf_private_backup_round3/"],
+  "one_targeted_fixture_invocation": {"seconds_max": 60, "network_remote_ops_fake_only": true, "test_cases": "Known exact HTML accepted, same path changed hash refused, unlisted HTML refused, nonUTF8/NUL/secret protections unchanged, full prepared archive pin tamper refused; appropriate existing meaningful regression checks in same single invocation"},
+  "unchanged": "Fixed PRIVATE dataset/atomic expected-parent/privacy/download hash verification/unknown reconciliation, file-count-byte caps, credentials/weights/protectedbanks/allDB/caches/runtime/binary/receipt exclusions, original NUL paper exception, source007 historical freezes. No native/GPU/model/hostDB/tests/import of framework or real HF call.",
+  "next_gate": "One frozen candidate3 and nonbuilder independent source review. If rejected, quarantine backup source at3; no fourth repair or upload workaround. Only accepted exact helper may perform later fresh inventory/prepare/concrete payload review/upload/verified receipt."
+}

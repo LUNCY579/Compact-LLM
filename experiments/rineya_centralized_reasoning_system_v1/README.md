@@ -1,5 +1,13 @@
 # CRS-001: centralized reasoning and memory for the Rineya family
 
+**Current record index, 2026-10-10 UTC:** [publication review and evidence
+index](PUBLICATION_REVIEW_2026-10-10.md) identifies the latest accepted components,
+quarantined attempts, provenance and local custody boundaries. [STATUS](STATUS.md)
+and [CONTINUATION](CONTINUATION.md) govern the current restart boundary.
+Earlier implementation guidance, founding status and the execution manifest below
+are historical snapshots. Integration013 remains rejected; no actual CPU-only tool
+query, environment installation or model run is qualified by publication.
+
 **Implementation continuation, 2026-10-01:** the owner has now authorized isolated
 CPU work and gated local experiments in [amendment 001](AUTHORIZATION_2026-10-01.md).
 The source audit, controlled-grammar runtime, independent data/scorer, durable

@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "status": "FIRST_CPU_SOURCE_CANDIDATE_FROZEN_PENDING_INDEPENDENT_SCI_OPS_REVIEW",
+  "new_exact_CPU_source_round": 1,
+  "default_source_round_limit": 3,
+  "old_GPU_round3_quarantine_preserved": true,
+  "builder": "/root/desktop_profile_builder",
+  "source_files": [
+    {
+      "path": "cpu_native_load.py",
+      "sha256": "f1a05707751e3e56705b9105357c06f753e94372717dbea086c2cad30e715ec4"
+    },
+    {
+      "path": "tests/test_cpu_native_load.py",
+      "sha256": "fa37ae75fd563efa12af3eb320173cd51d410482f0c9df11e4fbd9c3d52ff40f"
+    },
+    {
+      "path": "contracts/CPU_NATIVE_LOAD_FEASIBILITY_V1.json",
+      "sha256": "8160ba80aa52a547a96aa605ad31a0a88a3bc605da779de3aef09ca4025c97d8"
+    },
+    {
+      "path": "authorization/DELEGATED_CPU_NATIVE_LOAD_FEASIBILITY_001.json",
+      "sha256": "e66d181f01a2346617b5433623859e71b518eefe45c896e117d097c2ddeeeb86"
+    }
+  ],
+  "preserved_files": [
+    {
+      "path": "native.py",
+      "sha256": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3"
+    },
+    {
+      "path": "operations.py",
+      "sha256": "ba27ec8a31437459b956a5642e6ece4838f0584602db2c93ff7bc61437806e30"
+    },
+    {
+      "path": "owned_runtime_identity_probe.py",
+      "sha256": "845d1e6624cea3ce0686aecc2f4e79e96cd1c37f0abd890877eb1212c8a9a8ab"
+    },
+    {
+      "path": "reader.py",
+      "sha256": "0299cb37b417bf142341509efd9d728263ddcbe89f02e6cc8b49b01f4ec851ab"
+    },
+    {
+      "path": "reader_execution.py",
+      "sha256": "c66a1b6453f1bad19e0f51eb7d2cf2b763eb0e6e7a09e124eebcb613ef53f9d3"
+    },
+    {
+      "path": "contracts/NATIVE_DIAGNOSTIC_V1.json",
+      "sha256": "d79f3b6a51e939d78a99c5c287ef6f33ef5979cfa50e76ba3d930ed3724f826a"
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "evidence/cpu_native_load_source_001/BUILD_CONTRACT.py",
+      "sha256": "f394d8c873d845c8feed0a4663b328f481d55e49aaf425545b8b4bb5c12c69fd"
+    },
+    {
+      "path": "evidence/cpu_native_load_source_001/CPU_STDERR.txt",
+      "sha256": "a43bf085ed0f22ae4e4179bb8dfacbf3815b6aac33d5b27389aa191ba24c6d31"
+    },
+    {
+      "path": "evidence/cpu_native_load_source_001/CPU_STDOUT.txt",
+      "sha256": "c71bcd9312d5a0baa3db1b383f1bc6bdb5d6545a90097639254095511aeaa007"
+    },
+    {
+      "path": "evidence/cpu_native_load_source_001/FREEZE_ONCE.py",
+      "sha256": "e0e94c5651e6bb969757f341cf02decf85ff3e4eb0e3cb340770c325e58fa0de"
+    },
+    {
+      "path": "evidence/cpu_native_load_source_001/RUN_CPU_ONCE.py",
+      "sha256": "ae5385a1188de97b8361a9e05f188edc7ddd02df0a2c6254e52bf4078176ddff"
+    },
+    {
+      "path": "evidence/cpu_native_load_source_001/source/CPU_NATIVE_FEASIBILITY_SCOPE_001.md",
+      "sha256": "ee30201ab96c094c1003c31d5f4915161cabe3fbbdd2adf9a893e0b21059e300"
+    },
+    {
+      "path": "evidence/cpu_native_load_source_001/source/CPU_NATIVE_LOAD_OPS_SCOPE_001.md",
+      "sha256": "e40a62ca7c483f9a9ff68df3d93dd4e93fc2930d7b008a4eb110882370b09201"
+    },
+    {
+      "path": "evidence/cpu_native_load_source_001/source/CPU_NATIVE_LOAD_SCI_SCOPE_001.md",
+      "sha256": "53c873e6933cc525b66ed58f74c6a92e1395f07cb1be58ada9bba185d777545a"
+    },
+    {
+      "path": "evidence/cpu_native_load_source_001/source/DELEGATED_CPU_NATIVE_LOAD_FEASIBILITY_001.json",
+      "sha256": "e66d181f01a2346617b5433623859e71b518eefe45c896e117d097c2ddeeeb86"
+    },
+    {
+      "path": "evidence/cpu_native_load_source_001/TEST_RESULT.json",
+      "sha256": "abf0d1cf1b7981de168d7a31838026e2b15d6c051c77716fcbadac5f5e9dd237"
+    }
+  ],
+  "CPU_fixture_invocations": 1,
+  "CPU_fixture_groups_passed": 5,
+  "CPU_fixture_raw_seconds": 2.169,
+  "CPU_fixture_command_wall_seconds": 2.561999999998079,
+  "actual_Windows_Job_flags": 8704,
+  "actual_Job_commit_limit_bytes": 2147483648,
+  "actual_stdlib_initial_RSS_bytes": 2101248,
+  "actual_stdlib_deadline_and_empty_exit_verified": true,
+  "canonical_database_access": false,
+  "actual_checkpoint_loads": 0,
+  "actual_model_framework_tokenizer_imports": 0,
+  "actual_GPU_observations": 0,
+  "CPU_model_load_fit": "UNMEASURED",
+  "canonical_tensor_byte_verification": "NOT_EXECUTED",
+  "loaded_CPU_copy_digest_allocation_paths": "SOURCE_ONLY_NOT_FRAMEWORK_TESTED",
+  "strict_owned_executable_fixture": "ACTUAL_POSITIVE_CAPTURE; unknown identity decision relies on preserved inventory predicates",
+  "actual_CPU_forward_or_BF16_operator_support": "UNMEASURED",
+  "hidden_internal_C_activity": "UNMEASURED",
+  "actual_registered_CPU_study_attempts": 0,
+  "remaining_CPU_fit_attempts": 1,
+  "CPU_fit_seconds_max": 120,
+  "automatic_retry": false,
+  "existing_probe002_untouched": true,
+  "source_accepted_or_launch_permitted": false
+}

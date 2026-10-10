@@ -1,0 +1,49 @@
+{
+  "status": "FROZEN_UNKNOWN_STOP_FOR_INDEPENDENT_REVIEW_NO_SETUP",
+  "scope_sha256": "313cdcdff64b2063ae93da95e6aed9132e4764d694460e3b762b7ce2b5905635",
+  "frozen_utc": "2026-10-05T18:17:02Z",
+  "files": [
+    {
+      "path": "RAW_LOCAL_METADATA.json",
+      "bytes": 5656,
+      "sha256": "d4c1256d0464291444abe6ae0c994fe7dc96e3c74cb06412bc4fb9fdd78d67c7"
+    },
+    {
+      "path": "READINESS.json",
+      "bytes": 2161,
+      "sha256": "7a74dd939865d7a61d88b05f94e84d197f5ce86d1b243799b15c35db70f3e551"
+    }
+  ],
+  "result_status": "UNKNOWN_EXACT_UV_RELEASE_SOURCE_CORRESPONDENCE_STOPPED",
+  "cost": {
+    "selected_local_binary_metadata_unique_files": 1,
+    "selected_local_binary_metadata_unique_bytes": 68317696,
+    "whole_selected_UV_file_read_passes": 3,
+    "whole_selected_UV_bytes_read_across_passes": 204953088,
+    "selection_cap_interpretation": "96MiB bounds aggregate size of selected local metadata files; repeated reads of the same selected file are disclosed separately.",
+    "official_HTTP_responses": 0,
+    "official_source_bytes": 0,
+    "binary_archive_downloads": 0,
+    "reported_metadata_command_wall_seconds": [
+      4.9840239,
+      11.8157557,
+      0.3391098
+    ],
+    "sum_reported_metadata_command_wall_seconds": 17.1388894,
+    "overall_wall_start_not_recorded": true,
+    "timing_limit": "Command wall times include metadata operations only. Overall preparation/finalization wall elapsed was not captured and is not claimed verified against300s."
+  },
+  "official_HTTP_responses": 0,
+  "prohibited_actions": {
+    "UV_execution": 0,
+    "venv_or_install": 0,
+    "target_payload_execution": 0,
+    "models": 0,
+    "network": 0,
+    "process_GPU_DB_observation": 0,
+    "tests": 0,
+    "binary_transfer": 0,
+    "static005_rerun": 0
+  },
+  "all_prior_freezes_unchanged": true
+}

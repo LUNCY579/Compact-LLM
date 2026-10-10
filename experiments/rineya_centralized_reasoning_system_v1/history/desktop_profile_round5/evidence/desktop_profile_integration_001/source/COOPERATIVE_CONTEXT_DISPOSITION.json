@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "status": "ROOT_BOUNDED_COOPERATIVE_CONTEXT_DISPOSITION_PENDING_SOURCE_REVIEW",
+  "authority_receipt_sha256": "479b6c5284da978c491a6477a9064f21b585fa29e9991bf84d75960c380d18f0",
+  "scientific_advisory_sha256": "d2c9a7fdbadf6fb38b6a92caadf33d9f2a46223cc2226762b08db94e73186984",
+  "operations_advisory_sha256": "eff33fc6bc8320b3e5b5aab96cf3634eb772e1a5943b5e3ef75fdde4be53e97f",
+  "policy_kind": "COOPERATIVE_GRAPHICAL_EXCEPTION",
+  "meaning": "Measured exact permitted interactive desktop process ownership and ancestry only. No graphics-only or absence of hidden in-process compute claim. Unknown/unowned observed entries and known/declared compute refuse.",
+  "actual_noncompute_workload_proved": false,
+  "hidden_compute_measurement": "UNAVAILABLE",
+  "inspection_only_anchors": [
+    {
+      "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+      "sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+      "role": "Windows search UI",
+      "source": "unchanged original desktop registry; not new GPU or owned-worker permission"
+    },
+    {
+      "path": "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe",
+      "sha256": "53d3e7a527b7bc6ef1d0a6f9336b288cbb31b2805c8c6905ee2375061464716e",
+      "role": "Windows Widgets UI",
+      "source": "unchanged original desktop registry; not new GPU or owned-worker permission"
+    },
+    {
+      "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+      "role": "Updated Codex desktop graphical application candidate",
+      "source": "exact approved Codex update"
+    }
+  ],
+  "permitted_relations": {
+    "Codex": "exact interactive Codex app instance can anchor its own same-family process tree; retain chain to earliest live same-executable Codex parent and stop at app boundary",
+    "Swift": "complete pinned chain terminating at exact Codex app anchor; actual captured Swift->Codex relation, no node ancestor required by current evidence",
+    "WebView2": "complete pinned same-owner chain of exact approved WebView2 instances terminating at unchanged original SearchHost or WidgetBoard interactive UI anchor; unrelated browser/foreign owner refuses"
+  },
+  "justification": "Original native desktop policy already names Windows Search and Widgets UI. Captured actual WebView2->SearchHost relation identifies its existing owner, not a new GPU permission. Application root means no requirement to inspect an inaccessible system-service ancestor above that explicitly named interactive owner.",
+  "bounds": {
+    "maximum_ancestry_depth": 8,
+    "all_PID_creation_parent_executable_identity_rechecked": true,
+    "all_owners_match_current_supervisor_SID_session": true,
+    "fresh_hashes_no_live_cache_fallback": true,
+    "original_5_second_telemetry_age_unchanged": true,
+    "two_admissions_and_runtime_checks": true
+  },
+  "static_observation_ref": {
+    "path": "evidence/desktop_profile_preintegration_002/STATIC_ANCESTRY_TO_OWNER_002.json",
+    "sha256": "7a34861ae2d1cbb32a3f9fe18aab936f90c2a8bcfe2879052ab7a59751c7c805"
+  },
+  "current_launch_admission": false,
+  "source_accepted_by_this_disposition": false
+}

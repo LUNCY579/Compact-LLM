@@ -1,0 +1,21 @@
+{
+  "stage_id": "CRS-TOOL-FIXTURE-WRAPPER-CUSTODY-008",
+  "status": "ONE_EXACT_FILE_CUSTODY_ACTION_NO_BACKUP_SOURCE_CHANGE",
+  "client_date": "2026-10-05",
+  "decided_by": "/root",
+  "standing_authority_sha256": "479b6c5284da978c491a6477a9064f21b585fa29e9991bf84d75960c380d18f0",
+  "SCI_advisory_sha256": "e732c90df968d3844e7c537a0c92d3edd89acdaa0791197b81819668060ce135",
+  "OPS_advisory_sha256": "92f2371af0ce7f2e586f81a6bc064b12cf55b3801d915410c47e205f3fc533d5",
+  "known_refusal": "Accepted2 helper09efd fresh inventory refused the new .ps1 type; no prepare/upload/PENDING for candidate2 batch",
+  "source": "evidence/cpu_only_tool_version_source_008/RUN_ONE_FIXTURE_AND_FREEZE.ps1",
+  "destination": ".venv/tool_fixture_wrapper_custody_008/RUN_ONE_FIXTURE_AND_FREEZE.ps1",
+  "bytes": 9073,
+  "sha256": "4efa78cae78fdfc1ba88ae03d721cf98c7146d2102bd7f17b8ce6b5f1e2395fc",
+  "original_git_commit": "d0d05ede8e0dc672084ff7cc9c270266976e6de0",
+  "limits": {"elapsed_seconds_max": 60, "raw_files_max": 1, "raw_bytes_max": 9073, "metadata_bytes_max": 16384, "safe_derivative_bytes_max": 8192},
+  "path_safety": "Check exact resolved absolute source/destination remain in CRS package; refuse reparse/symlink/hardlink/existing destination; verify before/after whole hash; no recursive move/delete",
+  "preservation": "Full wrapper remains locally intact and in original Git history, mapped by custody receipt. Source008 freeze924c remains historical original-path receipt; future history copies retain custody references rather than reintroducing raw script.",
+  "remote_provenance_only": "Markdown summary of exact recorded Hermes synthetic interpreter/argv, wrapper/source/test/contract hashes, one32-group result and timing/NOT_READY status. No raw PowerShell copy, .ps1.txt rename or encoded/translated workaround.",
+  "no_script_execution_test_replay_helper_change_native_hostDB_model_GPU_network_or_upload": true,
+  "next_gate": "Fresh unchanged accepted2 inventory and normal prepared-payload/private-parent/download verification; any further refusal stops without moving unlisted files or changing guards/uploader."
+}

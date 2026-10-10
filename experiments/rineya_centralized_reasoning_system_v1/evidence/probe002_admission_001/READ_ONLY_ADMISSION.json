@@ -1,0 +1,179 @@
+{
+  "actual_probe_attempts": 0,
+  "admission_reasons": [
+    "competing native GPU process",
+    "unregistered GPU executable identity",
+    "gpu_free_gib below admitted floor"
+  ],
+  "binding": {
+    "contract_sha256": "d7b2e5bc7673580c59a07ed5de27e8548bf13c5829fedb6e907dc9c12345a409",
+    "native_sha256": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+    "probe_sha256": "52e15881991f617fcb41f89cead7c379cc279a9a4da9c790b25501f03cae0e35",
+    "scope": "NO_MODEL_FRAMEWORK_IMPORT_IDENTITY_OBSERVATION",
+    "source_commit": "ff481f0ec7a25131e5fd350c9a8b0a61f1112b62"
+  },
+  "framework_imports": 0,
+  "kind": "READ_ONLY_PROSPECTIVE_ADMISSION_NOT_PROBE_ATTEMPT",
+  "leases": [
+    {
+      "expires": 1790915664.1621284,
+      "fence": 1,
+      "kind": "coordinator",
+      "owner": "CPU-9f885c20-b7c7-463e-9857-a619f881dbd3",
+      "status": "RECONCILED"
+    },
+    {
+      "expires": 1790928785.0819094,
+      "fence": 5,
+      "kind": "model",
+      "owner": "CRS-IDENTITY-6e03e922ea444a57a6782e0a6e0d840b",
+      "status": "RECONCILED"
+    }
+  ],
+  "models_loaded": 0,
+  "no_budget_reservation_or_reset": true,
+  "observed_unix": 1791148815.6595738,
+  "registered002_job": [],
+  "source": {
+    "commit": "ff481f0ec7a25131e5fd350c9a8b0a61f1112b62",
+    "dirty": false,
+    "dirty_status": ""
+  },
+  "telemetry": {
+    "competing_gpu_pids": [
+      86320
+    ],
+    "disk_free_gib": 41.28769302368164,
+    "disk_observed_at": 1791148815.6595738,
+    "gpu_free_gib": 3.955078125,
+    "gpu_observed_at": 1791148815.55466,
+    "gpu_utilization_percent": 42.0,
+    "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+    "host_available_gib": 14.765697479248047,
+    "host_observed_at": 1791148815.6595738,
+    "identity_checks_completed_at": 1791148815.6561491,
+    "platform": "nt",
+    "process_inventory_available": true,
+    "processes": [
+      {
+        "executable_sha256": "00eb3d5e6092e1246bd0956ff0a341c2afa6f96bb805b93d36a7192a9c29e475",
+        "name": "C:\\Windows\\System32\\dwm.exe",
+        "pid": 2656,
+        "role": "Windows desktop compositor"
+      },
+      {
+        "executable_sha256": "75268bc04679fdddbea23e72274351641e44bd7019d8c625d61fbdc574ec0353",
+        "name": "C:\\Windows\\System32\\ShellHost.exe",
+        "pid": 12320,
+        "role": "Windows shell UI"
+      },
+      {
+        "executable_sha256": "87811a107eed62900b230c49a252170d6a7307e94a08307ce972f9b9b8155d54",
+        "name": "C:\\Windows\\explorer.exe",
+        "pid": 13236,
+        "role": "Windows desktop shell"
+      },
+      {
+        "executable_sha256": "b15e9da33402779e60c43a358c6aae5aa071a8c7723f200cda50e87ba650ff8a",
+        "name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+        "pid": 12792,
+        "role": "Windows graphical resume service"
+      },
+      {
+        "executable_sha256": "b012b84674ae63052c368227ce41be39e5586d759b5eff8e3fbf01f53bfd00f1",
+        "name": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+        "pid": 15604,
+        "role": "Windows Start menu UI"
+      },
+      {
+        "executable_sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+        "name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+        "pid": 15580,
+        "role": "Windows search UI"
+      },
+      {
+        "executable_sha256": "ae33df1ab74d1a0b52df84bbf9832d0501cef6a74fdb36d2c14dc0e5bea83abe",
+        "name": "C:\\Program Files\\WindowsApps\\Microsoft.YourPhone_1.26072.257.0_x64__8wekyb3d8bbwe\\PhoneExperienceHost.exe",
+        "pid": 17104,
+        "role": "Windows Phone Link UI"
+      },
+      {
+        "name": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+        "pid": 19536
+      },
+      {
+        "executable_sha256": "d0e70f62928d634e3866a2599fa21ae42d7f1c5b053ee4c8c6fdcac7ae9e1385",
+        "name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+        "pid": 22272,
+        "role": "Windows text input UI"
+      },
+      {
+        "executable_sha256": "9d6d7b37ba8f6db67c3c33111ab32842abb5b4a940ff61c106899b4be5ecfc00",
+        "name": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+        "pid": 21996,
+        "role": "Windows shell UI"
+      },
+      {
+        "name": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+        "pid": 22208
+      },
+      {
+        "name": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+        "pid": 23292
+      },
+      {
+        "executable_sha256": "870501007ce67af0931ab576c9b06335cdc6126a5f898dadbb3fda816113989d",
+        "name": "C:\\Program Files\\miHoYo Launcher\\1.18.0.380\\HYPHelper.exe",
+        "pid": 27872,
+        "role": "Installed miHoYo graphical launcher helper"
+      },
+      {
+        "name": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+        "pid": 29872
+      },
+      {
+        "executable_sha256": "53d3e7a527b7bc6ef1d0a6f9336b288cbb31b2805c8c6905ee2375061464716e",
+        "name": "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe",
+        "pid": 15956,
+        "role": "Windows Widgets UI"
+      },
+      {
+        "executable_sha256": "cb5b327020f3da829489bf6ba7749c12d7730267d607678c3dcd4917168016fe",
+        "name": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+        "pid": 6888,
+        "role": "Windows graphical app frame host"
+      },
+      {
+        "executable_sha256": "11382f7efac4978063f568f06fe90af38f136fbe975cce39d13667bd288b71c9",
+        "name": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+        "pid": 7680,
+        "role": "Windows settings UI"
+      },
+      {
+        "executable_sha256": "4dea94593a713f760ee417fac2af6d373e1741c3149af79ee31680cc225af9c7",
+        "name": "C:\\Program Files\\WindowsApps\\Microsoft.Edge.GameAssist_1.0.4019.0_x64__8wekyb3d8bbwe\\EdgeGameAssist.exe",
+        "pid": 62672,
+        "role": "Microsoft graphical game overlay"
+      },
+      {
+        "name": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+        "pid": 63060
+      },
+      {
+        "name": "C:\\Users\\clclc\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
+        "pid": 86320
+      }
+    ],
+    "processes_observed_at": 1791148815.6265373,
+    "sampled_at": 1791148815.55466,
+    "unclassified_gpu_pids": [
+      19536,
+      22208,
+      23292,
+      29872,
+      63060,
+      86320
+    ],
+    "unresolved_gpu_pids": []
+  }
+}

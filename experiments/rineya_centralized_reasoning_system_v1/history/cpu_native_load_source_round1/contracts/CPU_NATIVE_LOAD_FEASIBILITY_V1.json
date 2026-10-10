@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "contract_id": "CRS-CPU-NATIVE-LOAD-FEASIBILITY-V1",
+  "scope": "EXACT_BF16_CPU_LOAD_ONLY_FIT",
+  "job_key": "CRS-CPU-LOAD-FIT-001",
+  "status": "SOURCE_CANDIDATE_NOT_REVIEWED_NOT_LAUNCHED",
+  "device": "cpu",
+  "dtype": "bfloat16",
+  "authority_path": "authorization/DELEGATED_CPU_NATIVE_LOAD_FEASIBILITY_001.json",
+  "authority_sha256": "e66d181f01a2346617b5433623859e71b518eefe45c896e117d097c2ddeeeb86",
+  "source_sha256": {
+    "experiments/rineya_centralized_reasoning_system_v1/cpu_native_load.py": "f1a05707751e3e56705b9105357c06f753e94372717dbea086c2cad30e715ec4",
+    "experiments/rineya_centralized_reasoning_system_v1/tests/test_cpu_native_load.py": "fa37ae75fd563efa12af3eb320173cd51d410482f0c9df11e4fbd9c3d52ff40f",
+    "experiments/rineya_centralized_reasoning_system_v1/native.py": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+    "experiments/rineya_centralized_reasoning_system_v1/operations.py": "ba27ec8a31437459b956a5642e6ece4838f0584602db2c93ff7bc61437806e30",
+    "experiments/rineya_centralized_reasoning_system_v1/owned_runtime_identity_probe.py": "845d1e6624cea3ce0686aecc2f4e79e96cd1c37f0abd890877eb1212c8a9a8ab",
+    "experiments/opallo_native_collector_v1/supervisor.py": "d31370de4f6b09052fac2f3505fc38a40041e76bd2137435a1f3678f4346a54d",
+    "experiments/post_training_mimo_centralized_v1/scripts/stream_checkpoint.py": "434c62698c2e397048db0d88a7959e34d5b8afb93f90cdf86f2aba852922c67f"
+  },
+  "model_dir": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze",
+  "asset_sha256": {
+    "model.safetensors": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+    "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  "runtime": {
+    "executable": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "python": "3.11.15",
+    "packages": {
+      "torch": "2.10.0+cu126",
+      "transformers": "4.57.1",
+      "safetensors": "0.7.0",
+      "tokenizers": "0.22.2",
+      "psutil": "7.2.2"
+    }
+  },
+  "runtime_file_sha256": {
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe": "de13d8017f63cb63b0b5bfd2f25e69245c9196433a224856ca1abde1e24d0cb7",
+    "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe": "28d2965d061656abbe3a46100bd3342d1152185289445d489782a21a8cfe9b57",
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Lib\\site-packages\\transformers\\models\\qwen3\\modeling_qwen3.py": "4b95c371fd26d40c69083dab36ac1eafd8cf82b415a0bb827275097c5ad2305b",
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Lib\\site-packages\\transformers\\models\\qwen3\\configuration_qwen3.py": "27863e9718fdbc899f2d0e567621e4d3d36d8dc500c1d54b49dba4242d08d2bd",
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Lib\\site-packages\\transformers\\masking_utils.py": "7a963feed8173b8265298dd24350c166222ce6b4719442fce48ab414d0478a6a",
+    "C:\\Program Files\\Git\\cmd\\git.exe": "054dfe58df35f7fcfbae184ff9d6a7c0da1e3743bf0401d951e012e290217c73",
+    "C:\\Program Files\\Git\\mingw64\\bin\\git.exe": "c56b3cd094880da8693bee16072607422d9c85d0375c07e348104280920c619d"
+  },
+  "registry_sha256": "15158c7e894334c1434be492d8a9dc3e22dd620b112b078516b6adc00b190969",
+  "limits": {
+    "wall_seconds": 120,
+    "runs": 1,
+    "automatic_retry": false,
+    "tree_rss_gib": 2.0,
+    "job_commit_gib": 2.0,
+    "host_reserve_gib": 1.25,
+    "preworker_host_gib": 3.3125,
+    "disk_free_gib": 4.0,
+    "freshness_seconds": 5,
+    "threads": 2
+  },
+  "dose": {
+    "meta_constructions": 1,
+    "CPU_allocations": 1,
+    "checkpoint_loads": 1,
+    "serialized_tensors": 310,
+    "unique_parameters": 596049920,
+    "forwards": 0,
+    "tokenizers": 0,
+    "optimizer_calls": 0
+  },
+  "CPU_buffer_span_max_bytes": 2097152,
+  "CPU_nonpersistent_rotary_buffer_bytes": 256,
+  "CPU_nonpersistent_buffer_values_initialized_or_qualified": false,
+  "new_CPU_source_round": 1,
+  "new_CPU_source_round_limit": 3,
+  "old_GPU_round3_quarantine_preserved": true,
+  "source_reviewers": {
+    "science": "/root/exception_science",
+    "operations": "/root/exception_ops"
+  },
+  "owned_CPU_CUDA_API_boundary": "Pre-import fatal current/newPython-thread profiler; no CUDA calls or backend mutations",
+  "owned_GPU_participation_refused": true,
+  "hidden_internal_C_activity": "UNMEASURED",
+  "unrelated_GPU_capacity_outside_reviewed_CPU_resource_scope": true,
+  "old_GPU_free_floor_4GiB_unchanged": true,
+  "borrowed_helpers": {
+    "stream_checkpoint": "_header/_read_exact_into only; no GPU-oriented load_streamed receipt",
+    "identity_probe": "raw inventory, hash budget, append, read_jsonl, reviewer namespace, independent RSS/deadline watch only",
+    "native": "read/hash/source/assets/runtime, explicit Job query/duplicate, PID list, resume and owned drain only",
+    "WindowsJob": "subclass adds exact0x2200 Job commit ceiling before resume"
+  },
+  "qualification": {
+    "CPU_load_fit": "UNMEASURED",
+    "GPU_native": false,
+    "reader": false,
+    "training": false,
+    "efficacy": false
+  },
+  "budget": {
+    "epoch_seconds": 7200,
+    "rolling24h_seconds": 14400,
+    "historical_seconds": 47.42100000000573,
+    "same_canonical_host_state": true,
+    "unknown120s_full_hold": true
+  },
+  "scope_review_refs": [
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\audits\\CPU_NATIVE_FEASIBILITY_SCOPE_001.md",
+      "sha256": "ee30201ab96c094c1003c31d5f4915161cabe3fbbdd2adf9a893e0b21059e300"
+    },
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\audits\\CPU_NATIVE_LOAD_SCI_SCOPE_001.md",
+      "sha256": "53c873e6933cc525b66ed58f74c6a92e1395f07cb1be58ada9bba185d777545a"
+    },
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\audits\\CPU_NATIVE_LOAD_OPS_SCOPE_001.md",
+      "sha256": "e40a62ca7c483f9a9ff68df3d93dd4e93fc2930d7b008a4eb110882370b09201"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "status": "READ_ONLY_BROWSER_PARENT_RELATIONS_NOT_ADMISSION",
+  "observed_unix": 1791167586.3476222,
+  "rows": [
+    {
+      "historical_GPU_pid": 26168,
+      "chain": [
+        {
+          "pid": 26168,
+          "creation_time": 1791153397.837509,
+          "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+          "ppid": 23052
+        },
+        {
+          "pid": 23052,
+          "creation_time": 1791144000.0656729,
+          "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+          "ppid": 13236
+        }
+      ],
+      "status": "ROOT_WITH_LIVE_NONFAMILY_PARENT",
+      "context_not_workload_proof": true
+    },
+    {
+      "historical_GPU_pid": 185292,
+      "chain": [
+        {
+          "pid": 185292,
+          "creation_time": 1791158503.085874,
+          "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+          "ppid": 128132
+        },
+        {
+          "pid": 128132,
+          "creation_time": 1791150500.033815,
+          "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+          "ppid": 63460
+        }
+      ],
+      "status": "ROOT_WITH_ABSENT_OUTSIDE_PARENT",
+      "context_not_workload_proof": true
+    }
+  ],
+  "no_cmdline_env_content_or_app_control": true,
+  "GPU_samples": 0,
+  "model_framework_DB_actions": 0
+}

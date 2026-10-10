@@ -1,0 +1,231 @@
+{
+  "status": "READ_ONLY_PROSPECTIVE_ADMISSION_NO_ATTEMPT_NO_RESERVATION",
+  "source": {
+    "commit": "e47796f1e9b198f9c3213f471f0151ce517a183b",
+    "dirty": false,
+    "dirty_status": ""
+  },
+  "binding": {
+    "source_commit": "e47796f1e9b198f9c3213f471f0151ce517a183b",
+    "contract_sha256": "2f9e92dbc01af39d254aa8bc4fae123f20c19c8ec747e3e2b98df59950ae359f",
+    "probe_sha256": "845d1e6624cea3ce0686aecc2f4e79e96cd1c37f0abd890877eb1212c8a9a8ab",
+    "native_sha256": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+    "scope": "NO_MODEL_FRAMEWORK_IMPORT_IDENTITY_OBSERVATION",
+    "desktop_profile_sha256": "b433c5d1108678638a91304e71fe893fd4ae031c47ca3e325c7547463755a03d",
+    "desktop_authority_sha256": "479b6c5284da978c491a6477a9064f21b585fa29e9991bf84d75960c380d18f0"
+  },
+  "review_sha256": [
+    "8505b049f19d87602cb2c590942ab36fb224549fe21a031b0b07b0f08b8f1ac4",
+    "d55edaa7cdf259e7019e83f92059f57d0d1e193ac804468d1a88bdac4a825f78"
+  ],
+  "runtime": {
+    "executable": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "python": "3.11.15",
+    "packages": {
+      "torch": "2.10.0+cu126",
+      "transformers": "4.57.1",
+      "safetensors": "0.7.0",
+      "tokenizers": "0.22.2",
+      "psutil": "7.2.2"
+    }
+  },
+  "probe002": null,
+  "active_or_unknown_jobs": [],
+  "actual_owned_CRS_workers": [],
+  "leases": [
+    {
+      "kind": "coordinator",
+      "fence": 1,
+      "status": "RECONCILED"
+    },
+    {
+      "kind": "model",
+      "fence": 5,
+      "status": "RECONCILED"
+    }
+  ],
+  "epoch_seconds": 47.42100000000573,
+  "rolling24h_seconds": 0,
+  "began_unix": 1791160263.8593402,
+  "completed_unix": 1791160264.5857189,
+  "telemetry_collection_seconds": 0.7263786792755127,
+  "admission_reasons": [
+    "unregistered GPU executable identity",
+    "gpu_free_gib below admitted floor"
+  ],
+  "telemetry": {
+    "sampled_at": 1791160263.921327,
+    "gpu_observed_at": 1791160263.921327,
+    "processes_observed_at": 1791160263.985816,
+    "identity_checks_completed_at": 1791160264.0167189,
+    "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+    "gpu_free_gib": 1.0654296875,
+    "gpu_utilization_percent": 38.0,
+    "processes": [
+      {
+        "pid": 13236,
+        "name": "C:\\Windows\\explorer.exe",
+        "role": "Windows desktop shell",
+        "executable_sha256": "87811a107eed62900b230c49a252170d6a7307e94a08307ce972f9b9b8155d54"
+      },
+      {
+        "pid": 15956,
+        "name": "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe",
+        "role": "Windows Widgets UI",
+        "executable_sha256": "53d3e7a527b7bc6ef1d0a6f9336b288cbb31b2805c8c6905ee2375061464716e"
+      },
+      {
+        "pid": 6888,
+        "name": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+        "role": "Windows graphical app frame host",
+        "executable_sha256": "cb5b327020f3da829489bf6ba7749c12d7730267d607678c3dcd4917168016fe"
+      },
+      {
+        "pid": 22272,
+        "name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+        "role": "Windows text input UI",
+        "executable_sha256": "d0e70f62928d634e3866a2599fa21ae42d7f1c5b053ee4c8c6fdcac7ae9e1385"
+      },
+      {
+        "pid": 148948,
+        "name": "C:\\Program Files\\miHoYo Launcher\\1.18.0.380\\HYPHelper.exe",
+        "role": "Installed miHoYo graphical launcher helper",
+        "executable_sha256": "870501007ce67af0931ab576c9b06335cdc6126a5f898dadbb3fda816113989d"
+      },
+      {
+        "pid": 26168,
+        "name": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+      },
+      {
+        "pid": 5500,
+        "name": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+        "role": "Updated Codex desktop graphical application candidate",
+        "executable_sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+        "cooperative_context_verified": true
+      },
+      {
+        "pid": 28416,
+        "name": "C:\\Windows\\System32\\dwm.exe",
+        "role": "Windows desktop compositor",
+        "executable_sha256": "00eb3d5e6092e1246bd0956ff0a341c2afa6f96bb805b93d36a7192a9c29e475"
+      },
+      {
+        "pid": 21996,
+        "name": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+        "role": "Windows shell UI",
+        "executable_sha256": "9d6d7b37ba8f6db67c3c33111ab32842abb5b4a940ff61c106899b4be5ecfc00"
+      },
+      {
+        "pid": 182256,
+        "name": "C:\\Program Files\\miHoYo Launcher\\games\\Star Rail Game\\StarRail.exe"
+      },
+      {
+        "pid": 183468,
+        "name": "C:\\Windows\\System32\\svchost.exe"
+      },
+      {
+        "pid": 62672,
+        "name": "C:\\Program Files\\WindowsApps\\Microsoft.Edge.GameAssist_1.0.4019.0_x64__8wekyb3d8bbwe\\EdgeGameAssist.exe",
+        "role": "Microsoft graphical game overlay",
+        "executable_sha256": "4dea94593a713f760ee417fac2af6d373e1741c3149af79ee31680cc225af9c7"
+      },
+      {
+        "pid": 185292,
+        "name": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      },
+      {
+        "pid": 185380,
+        "name": "C:\\Program Files\\miHoYo Launcher\\games\\Star Rail Game\\StarRail_Data\\Plugins\\x86_64\\ZFGameBrowser.exe"
+      },
+      {
+        "pid": 15580,
+        "name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+        "role": "Windows search UI",
+        "executable_sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183"
+      },
+      {
+        "pid": 15604,
+        "name": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+        "role": "Windows Start menu UI",
+        "executable_sha256": "b012b84674ae63052c368227ce41be39e5586d759b5eff8e3fbf01f53bfd00f1"
+      }
+    ],
+    "unresolved_gpu_pids": [],
+    "competing_gpu_pids": [],
+    "unclassified_gpu_pids": [
+      26168,
+      182256,
+      183468,
+      185292,
+      185380
+    ],
+    "host_available_gib": 9.527660369873047,
+    "host_observed_at": 1791160264.0217485,
+    "disk_free_gib": 104.30575561523438,
+    "disk_observed_at": 1791160264.0227487,
+    "platform": "nt",
+    "process_inventory_available": true,
+    "desktop_context_witnesses": [
+      {
+        "pid": 5500,
+        "witness": {
+          "began_at": 1791160264.0227487,
+          "completed_at": 1791160264.5857189,
+          "chain": [
+            {
+              "pid": 5500,
+              "creation_time": 1791153398.1065583,
+              "executable": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+              "ppid": 2744,
+              "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+              "principal": {
+                "sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+                "session": 1
+              },
+              "stable_after_checks": true
+            },
+            {
+              "pid": 2744,
+              "creation_time": 1791143998.41303,
+              "executable": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+              "ppid": 13236,
+              "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+              "principal": {
+                "sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+                "session": 1
+              },
+              "stable_after_checks": true
+            }
+          ],
+          "owner_boundary": {
+            "attained": true,
+            "owner_pid": 2744,
+            "owner_ppid": 13236,
+            "relation_rechecked": true,
+            "external_parent": {
+              "pid": 13236,
+              "state": "LIVE",
+              "creation_time": 1791143983.9445727,
+              "executable": "C:\\Windows\\explorer.exe",
+              "stable_after_checks": true
+            },
+            "reason": "OBSERVED_NONFAMILY_PARENT"
+          },
+          "profile_sha256": "e92798c3c076f71ac9497aa6973a4839fb225edb8cbfa7fd8ec886a7ce6d3a25",
+          "authority_sha256": "479b6c5284da978c491a6477a9064f21b585fa29e9991bf84d75960c380d18f0",
+          "activity": "PERMITTED_COOPERATIVE_DESKTOP_CONTEXT",
+          "actual_noncompute_workload_proved": false,
+          "hidden_inprocess_GPU_operations": "UNMEASURED"
+        }
+      }
+    ],
+    "desktop_profile_sha256": "b433c5d1108678638a91304e71fe893fd4ae031c47ca3e325c7547463755a03d",
+    "desktop_checks_completed_at": 1791160264.5857189,
+    "actual_noncompute_workload_proved": false,
+    "hidden_inprocess_GPU_operations": "UNMEASURED"
+  },
+  "framework_or_model_imports": 0,
+  "worker_launches": 0,
+  "database_writes_or_reservations": 0,
+  "actual_noncompute_workload_proved": false
+}

@@ -1,0 +1,50 @@
+{
+  "status": "FAILED_FROZEN_BACKUP_SOURCE_CANDIDATE3_MAX3_EXHAUSTED_NOT_APPROVED",
+  "scope_sha256": "826946e67776b97d552b70ae23aebe97b7271267c3069696375122a68045384e",
+  "original_preservation_scope_sha256": "397056076f5eb96b899ce5cfacc99ad37a6f4cb0029a8aef49c95cb077276fd4",
+  "path_correction_sha256": "b124b16d75e4006104d1e2744baec842867b44d1a7a653c97d7297621a772a27",
+  "candidate": 3,
+  "max_source_candidates": 3,
+  "source_round_budget_exhausted": true,
+  "fixture": {
+    "invocations": 1,
+    "tests": 32,
+    "passed": 29,
+    "failures": 1,
+    "errors": 2,
+    "internal_whole_elapsed_through_first_source_freeze_seconds": 15.389999999999418,
+    "external_whole_invocation_through_source_freeze_and_terminal_output_write_seconds": 15.4636944,
+    "all_fake_HF": true,
+    "raw_output": "RAW_TEST_OUTPUT.txt",
+    "timing_scope": "External measured stopwatch started before the sole interpreter invocation and stopped after its fixture freeze and completion stdout-file write. Packaging this immutable failure disposition is not another fixture invocation.",
+    "no_repairs_or_reruns_after_outcome": true
+  },
+  "failure": {
+    "exact_document": "evidence/cpu_only_tool_version_source_007/windows-apisets.html",
+    "guard": "Unchanged SECRET_BYTES high-confidence credential-content refusal",
+    "affected_tests": [
+      "test_HTML_wrong_hash_same_basename_unlisted_and_case_refused",
+      "test_exact_three_HTML_source_and_prepared_archive_paths",
+      "test_prepared_HTML_pin_refuses_internally_consistent_forged_bytes"
+    ],
+    "boundary": "Exact document data are refused before the newly allowed HTML pin can accept bytes. The archive-forgery fixture did not reach its prepared-archive rejection endpoint; report it as an error, not a successful proof.",
+    "classification_limit": "The fixture does not establish that matched document content is a real credential or a false positive. No matched values were printed; no secret exception or guard weakening was attempted.",
+    "implication": "Candidate3 cannot qualify the necessary actual backup payload, including equivalent whole-byte text copies subject to the same unchanged content guard."
+  },
+  "preservation": {
+    "accepted_candidate2_source_sha256": "09efd5634209e424e2dfe711c8ff9a91d26e4cfec3926c0aa05c5d1298a368fe",
+    "accepted_candidate2_tests_sha256": "8a2cf8b39fcb8284c5d9c87831a13e24145a28da75f18f8406a533cc171f95b2",
+    "accepted_candidate2_contract_sha256": "c653170475b5fb0779ce720f4fd5683271ef05482de5675b2e62fd5e4f222b71",
+    "preservation_manifest_sha256": "c89419c9bcb7b36c29833614e0e9aa9a1b940b0599998814b4ce2e6541fe4ffa",
+    "original_preservation_manifest_unchanged": true,
+    "source007_freezes_unchanged": true,
+    "source008_not_begun": true
+  },
+  "actions": {
+    "actual_primary_helper_inventory": 0,
+    "actual_HF_network_upload": 0,
+    "framework_model_UV_hostDB_GPU_process_observation": 0,
+    "temporary_fake_fixture_operations_only": true
+  },
+  "next_gate": "Independent SCI/OPS review of this exact failed candidate3 and policy/content blocker. Keep the backup source unapproved/quarantined under the exhausted3-round scope. No fourth repair, replay, actual inventory/upload or upload workaround is authorized. Preserve prior verified private backup and all research evidence/open questions."
+}

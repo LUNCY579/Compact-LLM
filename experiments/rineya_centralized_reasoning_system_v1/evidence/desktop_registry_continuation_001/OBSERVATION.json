@@ -1,0 +1,693 @@
+{
+  "schema_version": 1,
+  "reviewer": "/root/exception_ops",
+  "kind": "ONE_READ_ONLY_DESKTOP_IDENTITY_OBSERVATION_NOT_ADMISSION",
+  "began_utc": "2026-10-04T17:03:49.2974-05:00",
+  "gpu_sample_unix": 1791151429.5756283,
+  "identity_metadata_completed_unix": 1791151431.8829732,
+  "source_refs": {
+    "primary_commit": "bf97de09382f8746ff975e8cbf686499cbc024ab",
+    "reference_WT_commit": "ff481f0ec7a25131e5fd350c9a8b0a61f1112b62",
+    "native_sha256": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+    "native_contract_sha256": "d79f3b6a51e939d78a99c5c287ef6f33ef5979cfa50e76ba3d930ed3724f826a",
+    "probe_contract_sha256": "d7b2e5bc7673580c59a07ed5de27e8548bf13c5829fedb6e907dc9c12345a409",
+    "authority_sha256": "98cf7abb53bacf8fe40d3b4f74f59c44135ab39b5cf8bdddb18b2f1e9dc87eef"
+  },
+  "read_only_tools": {
+    "psutil_version": "7.2.2",
+    "psutil_module_path": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Lib\\site-packages\\psutil\\__init__.py",
+    "psutil_module_sha256": "7b6a0675824eb1fa2ff0cb1eb36e358dc454703e51dfa4e9a0e6ccd26a159f0c",
+    "nvidia_smi_path": "C:\\Windows\\System32\\nvidia-smi.exe",
+    "nvidia_smi_sha256": "d20280bde5c23f6a3a3dd2179a0228242da58f90e85571457bebaff8b958aaf3",
+    "nvidia_queries": 1,
+    "nvidia_query_arguments": [
+      "-q",
+      "-x"
+    ],
+    "raw_XML_sha256": "772044dd0a08c8792b6162395d504180c5c0494966db06a66dcce91ab4703233",
+    "driver_version": "566.07"
+  },
+  "gpu": {
+    "uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+    "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "memory_free": "6858 MiB",
+    "gpu_utilization": "32 %",
+    "WDDM_per_process_memory_available": false
+  },
+  "host_available_gib": 15.948516845703125,
+  "processes": [
+    {
+      "pid": 2656,
+      "nvidia_name": "",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791143979.174236,
+      "psutil_name": "dwm.exe",
+      "psutil_executable": "C:\\Windows\\System32\\dwm.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Windows\\System32\\dwm.exe",
+      "executable_sha256": "00eb3d5e6092e1246bd0956ff0a341c2afa6f96bb805b93d36a7192a9c29e475",
+      "old_registry_row": {
+        "path": "C:\\Windows\\System32\\dwm.exe",
+        "sha256": "00eb3d5e6092e1246bd0956ff0a341c2afa6f96bb805b93d36a7192a9c29e475",
+        "role": "Windows desktop compositor",
+        "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+      },
+      "old_path_and_hash_match": true,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": true,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Windows\\System32\\dwm.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 6888,
+      "nvidia_name": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791144479.4994037,
+      "psutil_name": "ApplicationFrameHost.exe",
+      "psutil_executable": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+      "executable_sha256": "cb5b327020f3da829489bf6ba7749c12d7730267d607678c3dcd4917168016fe",
+      "old_registry_row": {
+        "path": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+        "sha256": "cb5b327020f3da829489bf6ba7749c12d7730267d607678c3dcd4917168016fe",
+        "role": "Windows graphical app frame host",
+        "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+      },
+      "old_path_and_hash_match": true,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": true,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 7680,
+      "nvidia_name": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791144479.4985096,
+      "psutil_name": "SystemSettings.exe",
+      "psutil_executable": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+      "executable_sha256": "11382f7efac4978063f568f06fe90af38f136fbe975cce39d13667bd288b71c9",
+      "old_registry_row": {
+        "path": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+        "sha256": "11382f7efac4978063f568f06fe90af38f136fbe975cce39d13667bd288b71c9",
+        "role": "Windows settings UI",
+        "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+      },
+      "old_path_and_hash_match": true,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": true,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 12320,
+      "nvidia_name": "C:\\Windows\\System32\\ShellHost.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791143983.9796488,
+      "psutil_name": "ShellHost.exe",
+      "psutil_executable": "C:\\Windows\\System32\\ShellHost.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Windows\\System32\\ShellHost.exe",
+      "executable_sha256": "75268bc04679fdddbea23e72274351641e44bd7019d8c625d61fbdc574ec0353",
+      "old_registry_row": {
+        "path": "C:\\Windows\\System32\\ShellHost.exe",
+        "sha256": "75268bc04679fdddbea23e72274351641e44bd7019d8c625d61fbdc574ec0353",
+        "role": "Windows shell UI",
+        "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+      },
+      "old_path_and_hash_match": true,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": true,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Windows\\System32\\ShellHost.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 12792,
+      "nvidia_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791143984.1012437,
+      "psutil_name": "CrossDeviceResume.exe",
+      "psutil_executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+      "executable_sha256": "b15e9da33402779e60c43a358c6aae5aa071a8c7723f200cda50e87ba650ff8a",
+      "old_registry_row": {
+        "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+        "sha256": "b15e9da33402779e60c43a358c6aae5aa071a8c7723f200cda50e87ba650ff8a",
+        "role": "Windows graphical resume service",
+        "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+      },
+      "old_path_and_hash_match": true,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": true,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 13236,
+      "nvidia_name": "C:\\Windows\\explorer.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791143983.9445727,
+      "psutil_name": "explorer.exe",
+      "psutil_executable": "C:\\Windows\\explorer.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Windows\\explorer.exe",
+      "executable_sha256": "87811a107eed62900b230c49a252170d6a7307e94a08307ce972f9b9b8155d54",
+      "old_registry_row": {
+        "path": "C:\\Windows\\explorer.exe",
+        "sha256": "87811a107eed62900b230c49a252170d6a7307e94a08307ce972f9b9b8155d54",
+        "role": "Windows desktop shell",
+        "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+      },
+      "old_path_and_hash_match": true,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": true,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Windows\\explorer.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 15580,
+      "nvidia_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791143985.1867833,
+      "psutil_name": "SearchHost.exe",
+      "psutil_executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+      "executable_sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+      "old_registry_row": {
+        "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+        "sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+        "role": "Windows search UI",
+        "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+      },
+      "old_path_and_hash_match": true,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": true,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 15604,
+      "nvidia_name": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791143985.1891975,
+      "psutil_name": "StartMenuExperienceHost.exe",
+      "psutil_executable": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+      "executable_sha256": "b012b84674ae63052c368227ce41be39e5586d759b5eff8e3fbf01f53bfd00f1",
+      "old_registry_row": {
+        "path": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+        "sha256": "b012b84674ae63052c368227ce41be39e5586d759b5eff8e3fbf01f53bfd00f1",
+        "role": "Windows Start menu UI",
+        "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+      },
+      "old_path_and_hash_match": true,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": true,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 15956,
+      "nvidia_name": "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791143985.3817253,
+      "psutil_name": "WidgetBoard.exe",
+      "psutil_executable": "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe",
+      "executable_sha256": "53d3e7a527b7bc6ef1d0a6f9336b288cbb31b2805c8c6905ee2375061464716e",
+      "old_registry_row": {
+        "path": "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe",
+        "sha256": "53d3e7a527b7bc6ef1d0a6f9336b288cbb31b2805c8c6905ee2375061464716e",
+        "role": "Windows Widgets UI",
+        "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+      },
+      "old_path_and_hash_match": true,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": true,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 17104,
+      "nvidia_name": "C:\\Program Files\\WindowsApps\\Microsoft.YourPhone_1.26072.257.0_x64__8wekyb3d8bbwe\\PhoneExperienceHost.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791143986.7935696,
+      "psutil_name": "PhoneExperienceHost.exe",
+      "psutil_executable": "C:\\Program Files\\WindowsApps\\Microsoft.YourPhone_1.26072.257.0_x64__8wekyb3d8bbwe\\PhoneExperienceHost.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Program Files\\WindowsApps\\Microsoft.YourPhone_1.26072.257.0_x64__8wekyb3d8bbwe\\PhoneExperienceHost.exe",
+      "executable_sha256": "ae33df1ab74d1a0b52df84bbf9832d0501cef6a74fdb36d2c14dc0e5bea83abe",
+      "old_registry_row": {
+        "path": "C:\\Program Files\\WindowsApps\\Microsoft.YourPhone_1.26072.257.0_x64__8wekyb3d8bbwe\\PhoneExperienceHost.exe",
+        "sha256": "ae33df1ab74d1a0b52df84bbf9832d0501cef6a74fdb36d2c14dc0e5bea83abe",
+        "role": "Windows Phone Link UI",
+        "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+      },
+      "old_path_and_hash_match": true,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": true,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Program Files\\WindowsApps\\Microsoft.YourPhone_1.26072.257.0_x64__8wekyb3d8bbwe\\PhoneExperienceHost.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 19536,
+      "nvidia_name": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791143988.3584707,
+      "psutil_name": "msedgewebview2.exe",
+      "psutil_executable": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+      "executable_sha256": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+      "old_registry_row": null,
+      "old_path_and_hash_match": false,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": false,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 21996,
+      "nvidia_name": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791143996.8728344,
+      "psutil_name": "ShellExperienceHost.exe",
+      "psutil_executable": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+      "executable_sha256": "9d6d7b37ba8f6db67c3c33111ab32842abb5b4a940ff61c106899b4be5ecfc00",
+      "old_registry_row": {
+        "path": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+        "sha256": "9d6d7b37ba8f6db67c3c33111ab32842abb5b4a940ff61c106899b4be5ecfc00",
+        "role": "Windows shell UI",
+        "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+      },
+      "old_path_and_hash_match": true,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": true,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 22208,
+      "nvidia_name": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791143999.6036737,
+      "psutil_name": "ChatGPT.exe",
+      "psutil_executable": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "executable_sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+      "old_registry_row": null,
+      "old_path_and_hash_match": false,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": false,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 22272,
+      "nvidia_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791143995.1163645,
+      "psutil_name": "TextInputHost.exe",
+      "psutil_executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+      "executable_sha256": "d0e70f62928d634e3866a2599fa21ae42d7f1c5b053ee4c8c6fdcac7ae9e1385",
+      "old_registry_row": {
+        "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+        "sha256": "d0e70f62928d634e3866a2599fa21ae42d7f1c5b053ee4c8c6fdcac7ae9e1385",
+        "role": "Windows text input UI",
+        "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+      },
+      "old_path_and_hash_match": true,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": true,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 23292,
+      "nvidia_name": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791144001.0390027,
+      "psutil_name": "chrome.exe",
+      "psutil_executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      "executable_sha256": "1e9412868bbc9faff92d129babd17331e7ceab0702cc07db02a34f3438ae04f2",
+      "old_registry_row": null,
+      "old_path_and_hash_match": false,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": false,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 27872,
+      "nvidia_name": "",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791144011.0409672,
+      "psutil_name": "HYPHelper.exe",
+      "psutil_executable": "C:\\Program Files\\miHoYo Launcher\\1.18.0.380\\HYPHelper.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Program Files\\miHoYo Launcher\\1.18.0.380\\HYPHelper.exe",
+      "executable_sha256": "870501007ce67af0931ab576c9b06335cdc6126a5f898dadbb3fda816113989d",
+      "old_registry_row": {
+        "path": "C:\\Program Files\\miHoYo Launcher\\1.18.0.380\\HYPHelper.exe",
+        "sha256": "870501007ce67af0931ab576c9b06335cdc6126a5f898dadbb3fda816113989d",
+        "role": "Installed miHoYo graphical launcher helper",
+        "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+      },
+      "old_path_and_hash_match": true,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": true,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Program Files\\miHoYo Launcher\\1.18.0.380\\HYPHelper.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 29872,
+      "nvidia_name": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791144013.4924436,
+      "psutil_name": "codex-computer-use-swift.exe",
+      "psutil_executable": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+      "executable_sha256": "623c2f1acf5f2fff3c57cf1a24596fd4083cb3ea2cfc07b741ba5d662235d310",
+      "old_registry_row": null,
+      "old_path_and_hash_match": false,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": false,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 62672,
+      "nvidia_name": "C:\\Program Files\\WindowsApps\\Microsoft.Edge.GameAssist_1.0.4019.0_x64__8wekyb3d8bbwe\\EdgeGameAssist.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791146899.0091567,
+      "psutil_name": "EdgeGameAssist.exe",
+      "psutil_executable": "C:\\Program Files\\WindowsApps\\Microsoft.Edge.GameAssist_1.0.4019.0_x64__8wekyb3d8bbwe\\EdgeGameAssist.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Program Files\\WindowsApps\\Microsoft.Edge.GameAssist_1.0.4019.0_x64__8wekyb3d8bbwe\\EdgeGameAssist.exe",
+      "executable_sha256": "4dea94593a713f760ee417fac2af6d373e1741c3149af79ee31680cc225af9c7",
+      "old_registry_row": {
+        "path": "C:\\Program Files\\WindowsApps\\Microsoft.Edge.GameAssist_1.0.4019.0_x64__8wekyb3d8bbwe\\EdgeGameAssist.exe",
+        "sha256": "4dea94593a713f760ee417fac2af6d373e1741c3149af79ee31680cc225af9c7",
+        "role": "Microsoft graphical game overlay",
+        "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+      },
+      "old_path_and_hash_match": true,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": true,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Program Files\\WindowsApps\\Microsoft.Edge.GameAssist_1.0.4019.0_x64__8wekyb3d8bbwe\\EdgeGameAssist.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "pid": 130304,
+      "nvidia_name": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "nvidia_type": "C+G",
+      "used_gpu_memory": "N/A",
+      "creation_time": 1791150500.1600056,
+      "psutil_name": "msedge.exe",
+      "psutil_executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "identity_complete": true,
+      "resolved_executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "executable_sha256": "39966f2799d3503e74871c945ba1c4877f38426d1c28756ab1545ad7c3de8907",
+      "old_registry_row": null,
+      "old_path_and_hash_match": false,
+      "old_dependencies_actual": {},
+      "old_registry_accepted_bytes": false,
+      "same_creation_time_after_file_hash": true,
+      "metadata": {
+        "path": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+        "metadata_error": "CommandNotFoundException"
+      }
+    }
+  ],
+  "proposed_dependency_observations": [
+    {
+      "owner_executable": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+      "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedge.dll",
+      "exists": true,
+      "sha256": "0203543127df71e7721fed2eef97447d32931a08f86b93f0f261b423b4af499a",
+      "bytes": 349895496,
+      "metadata": {
+        "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedge.dll",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "owner_executable": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\resources\\app.asar",
+      "exists": true,
+      "sha256": "af98213984ec4556778ef9276193d51460153fb9b30fded882d503637b84abba",
+      "bytes": 549383582,
+      "metadata": {
+        "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\resources\\app.asar",
+        "metadata_error": "CommandNotFoundException"
+      }
+    },
+    {
+      "owner_executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      "path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.dll",
+      "exists": false,
+      "metadata": null
+    },
+    {
+      "owner_executable": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+      "path": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\libcef.dll",
+      "exists": false,
+      "metadata": null
+    },
+    {
+      "owner_executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "path": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.dll",
+      "exists": false,
+      "metadata": null
+    }
+  ],
+  "named_compute_conflict_pids": [],
+  "limits": {
+    "single_sample_not_exhaustive": true,
+    "type_C_or_C_plus_G_does_not_prove_workload_nature": true,
+    "signatures_and_product_names_do_not_prove_no_compute": true,
+    "no_process_commandlines_or_environment_dump": true,
+    "no_model_assets_or_whole_asset_validation": true,
+    "no_canonical_database_access": true,
+    "no_allowlist_or_policy_mutation": true,
+    "no_apps_killed_or_workers_launched": true,
+    "no_launch_authority": true
+  },
+  "static_metadata_enrichment": {
+    "completed_utc": "2026-10-04T22:05:51.5951423Z",
+    "powershell_version": "7.6.5",
+    "no_additional_GPU_sample": true,
+    "metadata": [
+      {
+        "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+        "file_version": "154.0.4258.53",
+        "product_version": "154.0.4258.53",
+        "product_name": "Microsoft Edge WebView2",
+        "company_name": "Microsoft Corporation",
+        "file_description": "Microsoft Edge WebView2",
+        "signature_status": "Valid",
+        "signer_subject": "CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US",
+        "signer_thumbprint": "4028CAD637509D4744B17EC5B42AED8D7A31E6AF"
+      },
+      {
+        "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+        "file_version": "154.0.8037.98",
+        "product_version": "154.0.8037.98",
+        "product_name": "Codex",
+        "company_name": "OpenAI OpCo, LLC",
+        "file_description": "Codex",
+        "signature_status": "Valid",
+        "signer_subject": "CN=\"OpenAI OpCo, LLC\", O=\"OpenAI OpCo, LLC\", L=San Francisco, S=California, C=US",
+        "signer_thumbprint": "AAB04F57830B69182775AB3CEB6CE37981FE71C5"
+      },
+      {
+        "path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+        "file_version": "154.0.8037.93",
+        "product_version": "154.0.8037.93",
+        "product_name": "Google Chrome",
+        "company_name": "Google LLC",
+        "file_description": "Google Chrome",
+        "signature_status": "Valid",
+        "signer_subject": "CN=Google LLC, O=Google LLC, L=Mountain View, S=California, C=US, SERIALNUMBER=3582691, OID.2.5.4.15=Private Organization, OID.1.3.6.1.4.1.311.60.2.1.2=Delaware, OID.1.3.6.1.4.1.311.60.2.1.3=US",
+        "signer_thumbprint": "607A3EDAA64933E94422FC8F0C80388E0590986C"
+      },
+      {
+        "path": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+        "file_version": null,
+        "product_version": null,
+        "product_name": null,
+        "company_name": null,
+        "file_description": null,
+        "signature_status": "Valid",
+        "signer_subject": "CN=\"OpenAI OpCo, LLC\", O=\"OpenAI OpCo, LLC\", L=San Francisco, S=California, C=US",
+        "signer_thumbprint": "AAB04F57830B69182775AB3CEB6CE37981FE71C5"
+      },
+      {
+        "path": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+        "file_version": "154.0.4258.53",
+        "product_version": "154.0.4258.53",
+        "product_name": "Microsoft Edge",
+        "company_name": "Microsoft Corporation",
+        "file_description": "Microsoft Edge",
+        "signature_status": "Valid",
+        "signer_subject": "CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US",
+        "signer_thumbprint": "4028CAD637509D4744B17EC5B42AED8D7A31E6AF"
+      }
+    ],
+    "dependencies": [
+      {
+        "path": "C:\\Program Files\\Google\\Chrome\\Application\\154.0.8037.93\\chrome.dll",
+        "sha256": "3a4c451878fc9fef50a84463d06724ad09e54b6bce03d74285c3544eb1947fd3",
+        "bytes": 302709400,
+        "file_version": "154.0.8037.93",
+        "product_version": "154.0.8037.93",
+        "product_name": "Google Chrome",
+        "company_name": "Google LLC",
+        "file_description": "Google Chrome",
+        "signature_status": "Valid",
+        "signer_subject": "CN=Google LLC, O=Google LLC, L=Mountain View, S=California, C=US, SERIALNUMBER=3582691, OID.2.5.4.15=Private Organization, OID.1.3.6.1.4.1.311.60.2.1.2=Delaware, OID.1.3.6.1.4.1.311.60.2.1.3=US",
+        "signer_thumbprint": "607A3EDAA64933E94422FC8F0C80388E0590986C"
+      },
+      {
+        "path": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\154.0.4258.53\\msedge.dll",
+        "sha256": "0203543127df71e7721fed2eef97447d32931a08f86b93f0f261b423b4af499a",
+        "bytes": 349895496,
+        "file_version": "154.0.4258.53",
+        "product_version": "154.0.4258.53",
+        "product_name": "Microsoft Edge",
+        "company_name": "Microsoft Corporation",
+        "file_description": "Microsoft Edge",
+        "signature_status": "Valid",
+        "signer_subject": "CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US",
+        "signer_thumbprint": "4028CAD637509D4744B17EC5B42AED8D7A31E6AF"
+      },
+      {
+        "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedge.dll",
+        "sha256": "0203543127df71e7721fed2eef97447d32931a08f86b93f0f261b423b4af499a",
+        "bytes": 349895496,
+        "file_version": "154.0.4258.53",
+        "product_version": "154.0.4258.53",
+        "product_name": "Microsoft Edge",
+        "company_name": "Microsoft Corporation",
+        "file_description": "Microsoft Edge",
+        "signature_status": "Valid",
+        "signer_subject": "CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US",
+        "signer_thumbprint": "4028CAD637509D4744B17EC5B42AED8D7A31E6AF"
+      },
+      {
+        "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\resources\\app.asar",
+        "sha256": "af98213984ec4556778ef9276193d51460153fb9b30fded882d503637b84abba",
+        "bytes": 549383582,
+        "file_version": null,
+        "product_version": null,
+        "product_name": null,
+        "company_name": null,
+        "file_description": null,
+        "signature_status": "UnknownError",
+        "signer_subject": null,
+        "signer_thumbprint": null
+      },
+      {
+        "path": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\manifest.json",
+        "sha256": "acc7031ad2d44a5e47a754594e86ab5abdc4839c94ae9d04af14081ea5115076",
+        "bytes": 582,
+        "file_version": null,
+        "product_version": null,
+        "product_name": null,
+        "company_name": null,
+        "file_description": null,
+        "signature_status": "UnknownError",
+        "signer_subject": null,
+        "signer_thumbprint": null
+      }
+    ],
+    "prior_signature_helper_failure": "Windows PowerShell subprocess could not resolve signature command; original error rows retained"
+  }
+}

@@ -751,7 +751,7 @@ def validate_qualification_result(result, cfg, commit, events):
             'natural_eos_observed':True,'maximum_mechanical_shape':576,'bulk_capture_qualified':False,'training_qualified':False,'durable_journal_verified':True}
 
 
-def validate_native_artifacts(contents, cfg, expected):
+def validate_native_artifacts(contents, cfg, expected, artifact_refs):
     """Artifact status flags alone cannot qualify the actual loader or containment."""
     source = contents['source_launch_review']
     review_matches(source, expected)
@@ -760,6 +760,15 @@ def validate_native_artifacts(contents, cfg, expected):
     for name in ('supervisor_result','containment','tree_containment','go','runtime','model','tokenizer','job_outcome'):
         require(all(_strict_equal(contents[name].get(k),v) for k,v in context.items()), 'mixed source-identical native runs reject')
     supervisor, containment, tree, go = (contents[k] for k in ('supervisor_result','containment','tree_containment','go'))
+    supervisor_ref = artifact_refs.get('supervisor_result') if type(artifact_refs) is dict else None
+    require(type(supervisor_ref) is dict and set(supervisor_ref) == {'path','sha256'}
+            and type(supervisor_ref['sha256']) is str and re.fullmatch('[0-9a-f]{64}',supervisor_ref['sha256']),
+            'immutable actual supervisor byte reference required')
+    supervisor_path = Path(supervisor_ref['path']).resolve()
+    require(supervisor_path == (Path(run['registration_payload']['output'])/'SUPERVISOR_RESULT.json').resolve()
+            and supervisor_path.is_relative_to(PACKAGE/'results') and sha(supervisor_path) == supervisor_ref['sha256']
+            and _strict_equal(read_json(supervisor_path),supervisor),
+            'supervisor reference must bind actual immutable producer bytes for this run')
     require(type(contents['worker_result'].get('wall_seconds')) in (int,float)
             and 0 < contents['worker_result']['wall_seconds'] <= supervisor.get('wall_seconds',0),
             'worker duration cannot exceed its measured supervision envelope')
@@ -872,7 +881,7 @@ def validate_native_artifacts(contents, cfg, expected):
             and run['reserved_at'] <= proof['exit_observed_at'] <= row['finished'],
             'measured exact-worker exit/outcome proof must bind this admitted run')
     expected_proof_path = Path(run['registration_payload']['output'])/'receipts'/('native_outcome_observation-'+hashlib.sha256(run['job_key'].encode()).hexdigest()+'.json')
-    require(_strict_equal(row.get('result'),{'evidence':{'supervisor_receipt_sha256':digest(supervisor),
+    require(_strict_equal(row.get('result'),{'evidence':{'supervisor_receipt_sha256':supervisor_ref['sha256'],
                 'native_outcome_proof_ref':{'path':str(expected_proof_path.resolve()),'sha256':digest(outcome)}},
                 'outcome':'SUCCEEDED','actual_native_seconds':row['actual_seconds'],'reservation_exceeded':False}),
             'durable terminal result must bind exact supervisor and immutable outcome receipt')
@@ -1187,7 +1196,7 @@ def recover_pending_publication(args, cfg):
                 'bounded complete immutable reader artifact required')
     refs = {k:{'path':str(path.resolve()),'sha256':sha(path)} for k,path in paths.items()}
     contents = {k:read_json(path) for k,path in paths.items() if k != 'events'}
-    validate_native_artifacts(contents,cfg,expected)
+    validate_native_artifacts(contents,cfg,expected,refs)
     verified = validate_qualification_result(contents['worker_result'],cfg,expected['source_commit'],read_event_journal(paths['events']))
     require(read_event_journal(paths['events'])[-1]['time'] <= contents['job_outcome']['job']['finished'],
             'reader journal cannot extend beyond durable terminal outcome')

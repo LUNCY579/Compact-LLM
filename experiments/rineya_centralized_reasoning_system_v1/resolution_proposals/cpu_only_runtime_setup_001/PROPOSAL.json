@@ -1,0 +1,512 @@
+{
+  "proposal_id": "CRS-CPU-ONLY-RUNTIME-OFFLINE-SETUP-001",
+  "status": "PROSPECTIVE_DESIGN_ONLY_NOT_A_LAUNCH_REGISTRATION",
+  "prepared_by": "/root/cpu_artifact_lock_inspector",
+  "scope": "One future UV venv creation and one future offline wheel-only hash-locked install; no target payload import, target interpreter invocation after package installation, bootstrap, model, GPU, DB or process observation now.",
+  "authority_bindings": {
+    "scope_sha256": "eef6b84f5fd7d69e5d63160508a4aee6ec116dceecd2dc7dfb66ac674a90d498",
+    "metadata_selection_amendment_sha256": "7ddb209c5b6bba259ba4507fb20d92410828f4117726fc1f600ad29d05d142be",
+    "OPS_scope_sha256": "f667f6be70cd4f5bd582c7e05e8427831a1f3a4e0d1c8b299f92feb2ea186a4f",
+    "artifact_freeze_sha256": "b8e2c626c1112e18944ede5b066082d11288db496f5c721917700ef6f1322fe1",
+    "artifact_report_sha256": "f95186e2d56c8039063af8a5f923daad76eefeee2b06515b0af669e30ca7279c",
+    "hash_lock_sha256": "a39fae225772267d5973e88f75e949697d4894969a16080bb101b585411475c7",
+    "SCI_artifact_review_sha256": "fd5f8631675ef73d001266244379d997468ba73bf849f0aad784b36687e1db52",
+    "review_caution": "Conditional artifact acceptance does not register or dispatch setup. OPS current final review must be physically bound in any setup registration."
+  },
+  "current_read_only_proof": {
+    "inspection": "READ_ONLY_SELECTED_BINARY_DATA_NO_UV_PYTHON_TARGET_EXECUTION",
+    "ancestors": [
+      {
+        "path": "C:\\Users",
+        "reparse": false
+      },
+      {
+        "path": "C:\\Users\\clclc",
+        "reparse": false
+      },
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject",
+        "reparse": false
+      },
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1",
+        "reparse": false
+      },
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments",
+        "reparse": false
+      },
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1",
+        "reparse": false
+      },
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv",
+        "reparse": false
+      }
+    ],
+    "target_exists": false,
+    "selected_files": [
+      {
+        "PE": {
+          "optional_magic": "0x20b",
+          "machine": "0x8664",
+          "delay_imports": [],
+          "imports": [
+            "ntdll.dll",
+            "advapi32.dll",
+            "kernel32.dll",
+            "bcryptprimitives.dll",
+            "api-ms-win-core-synch-l1-2-0.dll",
+            "shell32.dll",
+            "ole32.dll",
+            "userenv.dll",
+            "oleaut32.dll",
+            "user32.dll",
+            "cfgmgr32.dll",
+            "ws2_32.dll",
+            "bcrypt.dll",
+            "crypt32.dll",
+            "KERNEL32.dll",
+            "ADVAPI32.dll"
+          ]
+        },
+        "bytes": 68317696,
+        "sha256": "5a7ec85884c2ccb1be560cb8fac3eb890df1adf49bfcc070a270ba70401bdd68",
+        "path": "C:\\Users\\clclc\\.local\\bin\\uv.exe"
+      },
+      {
+        "PE": {
+          "optional_magic": "0x20b",
+          "machine": "0x8664",
+          "delay_imports": [],
+          "imports": [
+            "python311.dll",
+            "VCRUNTIME140.dll",
+            "api-ms-win-crt-runtime-l1-1-0.dll",
+            "api-ms-win-crt-math-l1-1-0.dll",
+            "api-ms-win-crt-stdio-l1-1-0.dll",
+            "api-ms-win-crt-locale-l1-1-0.dll",
+            "api-ms-win-crt-heap-l1-1-0.dll",
+            "KERNEL32.dll"
+          ]
+        },
+        "bytes": 91648,
+        "sha256": "28d2965d061656abbe3a46100bd3342d1152185289445d489782a21a8cfe9b57",
+        "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe"
+      },
+      {
+        "PE": {
+          "optional_magic": "0x20b",
+          "machine": "0x8664",
+          "delay_imports": [],
+          "imports": []
+        },
+        "bytes": 55296,
+        "sha256": "0de2fcd912ceb27f93a2669bb8bfcd2b551413313f48bcf18af5ba2edbcf6f04",
+        "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python3.dll"
+      },
+      {
+        "PE": {
+          "optional_magic": "0x20b",
+          "machine": "0x8664",
+          "delay_imports": [],
+          "imports": [
+            "VERSION.dll",
+            "WS2_32.dll",
+            "api-ms-win-core-path-l1-1-0.dll",
+            "bcrypt.dll",
+            "ADVAPI32.dll",
+            "KERNEL32.dll",
+            "VCRUNTIME140.dll",
+            "api-ms-win-crt-stdio-l1-1-0.dll",
+            "api-ms-win-crt-environment-l1-1-0.dll",
+            "api-ms-win-crt-locale-l1-1-0.dll",
+            "api-ms-win-crt-string-l1-1-0.dll",
+            "api-ms-win-crt-runtime-l1-1-0.dll",
+            "api-ms-win-crt-convert-l1-1-0.dll",
+            "api-ms-win-crt-math-l1-1-0.dll",
+            "api-ms-win-crt-time-l1-1-0.dll",
+            "api-ms-win-crt-process-l1-1-0.dll",
+            "api-ms-win-crt-heap-l1-1-0.dll",
+            "api-ms-win-crt-conio-l1-1-0.dll",
+            "api-ms-win-crt-filesystem-l1-1-0.dll"
+          ]
+        },
+        "bytes": 5846016,
+        "sha256": "dabb2dec30c6a63ab4f669ed0d2ac6fe465d0d498b509a2e2b488ab0984600cf",
+        "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python311.dll"
+      },
+      {
+        "PE": {
+          "optional_magic": "0x20b",
+          "machine": "0x8664",
+          "delay_imports": [],
+          "imports": [
+            "api-ms-win-crt-runtime-l1-1-0.dll",
+            "api-ms-win-crt-string-l1-1-0.dll",
+            "api-ms-win-crt-heap-l1-1-0.dll",
+            "api-ms-win-crt-stdio-l1-1-0.dll",
+            "api-ms-win-crt-convert-l1-1-0.dll",
+            "KERNEL32.dll"
+          ]
+        },
+        "bytes": 124544,
+        "sha256": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066",
+        "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\vcruntime140.dll"
+      },
+      {
+        "PE": {
+          "optional_magic": "0x20b",
+          "machine": "0x8664",
+          "delay_imports": [],
+          "imports": [
+            "api-ms-win-crt-runtime-l1-1-0.dll",
+            "api-ms-win-crt-string-l1-1-0.dll",
+            "api-ms-win-crt-heap-l1-1-0.dll",
+            "VCRUNTIME140.dll",
+            "KERNEL32.dll"
+          ]
+        },
+        "bytes": 49792,
+        "sha256": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f",
+        "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\vcruntime140_1.dll"
+      }
+    ],
+    "cache_exists": false,
+    "uv_flag_strings": [
+      {
+        "token": "--no-config",
+        "literal_present": true
+      },
+      {
+        "token": "--no-python-downloads",
+        "literal_present": true
+      },
+      {
+        "token": "--offline",
+        "literal_present": true
+      },
+      {
+        "token": "--no-index",
+        "literal_present": true
+      },
+      {
+        "token": "--require-hashes",
+        "literal_present": true
+      },
+      {
+        "token": "--no-deps",
+        "literal_present": false
+      },
+      {
+        "token": "--only-binary",
+        "literal_present": true
+      },
+      {
+        "token": "--no-build",
+        "literal_present": true
+      },
+      {
+        "token": "--compile-bytecode",
+        "literal_present": false
+      },
+      {
+        "token": "--no-compile-bytecode",
+        "literal_present": false
+      },
+      {
+        "token": "--no-seed",
+        "literal_present": true
+      },
+      {
+        "token": "--python-preference",
+        "literal_present": false
+      },
+      {
+        "token": "--cache-dir",
+        "literal_present": true
+      },
+      {
+        "token": "--no-managed-python",
+        "literal_present": true
+      },
+      {
+        "token": "--link-mode",
+        "literal_present": true
+      }
+    ],
+    "total_selected_bytes": 74484992,
+    "tool": "PowerShell 7.6.5"
+  },
+  "installer_provenance": {
+    "path": "C:\\Users\\clclc\\.local\\bin\\uv.exe",
+    "sha256": "5a7ec85884c2ccb1be560cb8fac3eb890df1adf49bfcc070a270ba70401bdd68",
+    "bytes": 68317696,
+    "local_binary_selected_not_downloaded": true,
+    "manufacturer_release_signature_or_publisher_hash_verified": false,
+    "CLI_invocation_or_help_test_performed": false,
+    "flag_string_inspection_limit": "Literal flags in a binary are not semantic or syntax validation. Missing '--' tokens do not prove unsupported flags. Exact proposed argv requires independent confirmation against hash-bound tool behavior/source; no launch-time flag/version fallback."
+  },
+  "paths": {
+    "runtime_target": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\runtime",
+    "cache_root": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\setup-cache-001",
+    "work_directory": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\setup-cache-001\\work",
+    "temporary_directory": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\setup-cache-001\\temp",
+    "artifact_root_read_only": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\artifacts",
+    "lock_read_only": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\evidence\\cpu_only_runtime_lock_003\\requirements-cpu-lock.txt",
+    "controller_source_candidate": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\evidence\\cpu_only_runtime_setup_001\\setup_controller.py",
+    "controller_receipt_root": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\evidence\\cpu_only_runtime_setup_001",
+    "controller_source_currently_implemented_or_qualified": false,
+    "target_and_cache_absent_at_design_read": true,
+    "path_requirements": [
+      "Drive C: and every existing ancestor must be rechecked by canonical handle/path immediately before any write; reject reparse/junction/symlink/UNC/ADS/drive drift.",
+      "Create runtime and cache once with exclusive absence preconditions; newly created descendants remain beneath their exact canonical roots. Refuse unexpected contents, reparse points or hardlink use.",
+      "No delete, move, overwrite, replacement of any old environment, .venv itself, artifact directory, prior receipt or generated partial environment.",
+      "Use --link-mode copy. Partial runtime/cache are retained and quarantined on failure or unknown outcome; no automatic cleanup/retry."
+    ]
+  },
+  "proposed_prerequisite_static_proof": {
+    "not_performed_here": true,
+    "dose": {
+      "invocations_max": 1,
+      "elapsed_seconds_max": 60,
+      "selected_files_max": 64,
+      "selected_bytes_max": 536870912,
+      "startup_source_data_files_max": 32,
+      "startup_source_data_bytes_max": 8388608,
+      "import_API_set_disposition_rows_max": 64
+    },
+    "tool": "Read-only stdlib or PowerShell PE/file-data parser with exact source/executable identity frozen before use; no UV/Python target tests, networking or system-library execution.",
+    "expected_paths": [
+      "C:\\Users\\clclc\\.local\\bin\\uv.exe",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python3.dll",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python311.dll",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\vcruntime140.dll",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\vcruntime140_1.dll",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site.py",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\_sitebuiltins.py",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\sysconfig.py",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\platform.py",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\venv\\__init__.py",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\venv\\scripts\\nt\\python.exe",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\venv\\scripts\\nt\\pythonw.exe",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\distutils-precedence.pth",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\_distutils_hack\\__init__.py",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\sitecustomize.py",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\usercustomize.py",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python311._pth",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python._pth",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\_virtualenv.pth",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\_virtualenv.py",
+      "C:\\Windows\\System32\\ntdll.dll",
+      "C:\\Windows\\System32\\kernel32.dll",
+      "C:\\Windows\\System32\\KernelBase.dll",
+      "C:\\Windows\\System32\\advapi32.dll",
+      "C:\\Windows\\System32\\bcryptprimitives.dll",
+      "C:\\Windows\\System32\\shell32.dll",
+      "C:\\Windows\\System32\\ole32.dll",
+      "C:\\Windows\\System32\\userenv.dll",
+      "C:\\Windows\\System32\\oleaut32.dll",
+      "C:\\Windows\\System32\\user32.dll",
+      "C:\\Windows\\System32\\cfgmgr32.dll",
+      "C:\\Windows\\System32\\ws2_32.dll",
+      "C:\\Windows\\System32\\bcrypt.dll",
+      "C:\\Windows\\System32\\crypt32.dll",
+      "C:\\Windows\\System32\\version.dll",
+      "C:\\Windows\\System32\\ucrtbase.dll",
+      "C:\\Windows\\System32\\apisetschema.dll"
+    ],
+    "directory_name_inventory_only": [
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\venv\\scripts\\nt",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\artifacts"
+    ],
+    "expected_path_presence_policy": "Known base/UV files and system loader paths must exist at canonical roots; startup hooks and _pth candidates are exact presence/absence checks. Enumerate only direct startup filenames in declared base site directory. An unexpected hook or dependency outside this finite selection stops and needs new scope; no recursive system or stdlib expansion.",
+    "UV_embedded_query_selection": "Inspect hash-bound UV binary's embedded interpreter query and launcher argument/flag evidence as data to establish the exact stdlib-only interpreter query and safe-path/no-bytecode/startup behavior. If this cannot be justified statically, setup remains NOT_READY; a generic uv --help or interpreter test is not authorized by this proposal.",
+    "API_set_policy": "Map the direct UV/base PE API-set imports to their actual installed schema and selected system implementer paths. Bind direct named-system imports and canonical hashes. Stop at 64 rows or unresolved setup-relevant mapping; defer framework/helper DLL closure until pre-bootstrap proof.",
+    "system_proof_limits": "Selected setup-loader disposition, not exhaustive internal-C/OS behavior proof. No setup or GPU/model qualification follows from imported DLL names."
+  },
+  "environment_policy": {
+    "construct_from_empty_environment": true,
+    "inherit_parent_environment_or_secrets": false,
+    "audit_values_policy": "Record only the declared literal values and presence/refusal counts; never dump inherited values, credentials, tokens, URLs with secrets or machine-wide environment.",
+    "literal_environment": {
+      "SystemRoot": "C:\\Windows",
+      "WINDIR": "C:\\Windows",
+      "PATH": "C:\\Windows\\System32;C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none",
+      "TEMP": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\setup-cache-001\\temp",
+      "TMP": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\setup-cache-001\\temp",
+      "PYTHONNOUSERSITE": "1",
+      "PYTHONSAFEPATH": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "SETUPTOOLS_USE_DISTUTILS": "stdlib",
+      "UV_OFFLINE": "1",
+      "UV_PYTHON_DOWNLOADS": "never",
+      "UV_COMPILE_BYTECODE": "0",
+      "OMP_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2",
+      "OPENBLAS_NUM_THREADS": "2"
+    },
+    "excluded_inherited_name_families": [
+      "PYTHON*",
+      "UV*",
+      "PIP*",
+      "HF*",
+      "HUGGINGFACE*",
+      "TRANSFORMERS*",
+      "CUDA*",
+      "ROCM*",
+      "HIP*",
+      "XPU*",
+      "ONEAPI*",
+      "LD_*",
+      "DYLD_*",
+      "HTTP_PROXY",
+      "HTTPS_PROXY",
+      "ALL_PROXY",
+      "NO_PROXY",
+      "REQUESTS_CA_BUNDLE",
+      "CURL_CA_BUNDLE",
+      "SSL_CERT_FILE",
+      "VIRTUAL_ENV",
+      "CONDA*",
+      "PATH",
+      "PATHEXT",
+      "APPDATA",
+      "LOCALAPPDATA",
+      "USERPROFILE",
+      "HOME",
+      "token/credential/secret-bearing variables"
+    ],
+    "DLL_search_roots_for_setup": [
+      "C:\\Users\\clclc\\.local\\bin",
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none",
+      "C:\\Windows\\System32"
+    ],
+    "import_search_policy": "The Rust UV executable uses the exact base interpreter for its own interpreter query. The cwd is an empty controlled work directory, not the repository or old site. Isolated/no-user/safe-path startup and exact base Lib roots must be established by the prerequisite proof; unexpected base .pth/customization/._pth hooks refuse. SETUPTOOLS_USE_DISTUTILS=stdlib is permitted only if the inspected base .pth condition proves it prevents _distutils_hack import. No old/global/project/user site or target wheel path is supplied to the base query.",
+    "installer_cwd_and_dll_caveat": "Windows executable-directory/System32/API-set dependencies and UV internal dynamic loading still require the finite setup proof. Exact search-root binding is a prerequisite, not asserted from PATH alone.",
+    "no_network_boundary": "--offline and --no-index, no inherited proxies/index/config values, exact local files only, and --no-python-downloads. Source/controller must reject every network attempt or remote asset fallback without widening scope."
+  },
+  "commands": [
+    {
+      "sequence": 1,
+      "label": "Single empty venv creation; no seeding; no target-wheel startup",
+      "executable": "C:\\Users\\clclc\\.local\\bin\\uv.exe",
+      "argv": [
+        "--no-config",
+        "--offline",
+        "--cache-dir",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\setup-cache-001",
+        "venv",
+        "--python",
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+        "--no-python-downloads",
+        "--no-seed",
+        "--no-project",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\runtime"
+      ],
+      "cwd": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\setup-cache-001\\work",
+      "shell": false
+    },
+    {
+      "sequence": 2,
+      "label": "Single local wheel installation into the new venv's site-packages; use base interpreter query only",
+      "executable": "C:\\Users\\clclc\\.local\\bin\\uv.exe",
+      "argv": [
+        "--no-config",
+        "--offline",
+        "--cache-dir",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\setup-cache-001",
+        "pip",
+        "install",
+        "--python",
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+        "--target",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\runtime\\Lib\\site-packages",
+        "--no-python-downloads",
+        "--no-index",
+        "--find-links",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\artifacts",
+        "--require-hashes",
+        "--no-deps",
+        "--only-binary",
+        ":all:",
+        "--no-build",
+        "--no-compile-bytecode",
+        "--link-mode",
+        "copy",
+        "--requirement",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\evidence\\cpu_only_runtime_lock_003\\requirements-cpu-lock.txt"
+      ],
+      "cwd": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\setup-cache-001\\work",
+      "shell": false
+    }
+  ],
+  "command_design_rationale": [
+    "--target plus --python exact BASE avoids invoking the generated runtime interpreter or its UV-generated _virtualenv.pth at installer-query time. The site-packages remains the new venv's declared import destination. Installer-generated entry-point placement must be captured and validated; no entry point is invoked.",
+    "No seed prevents pip/setuptools downloads or seed-wheel installation. No configs/projects prevent resolver settings inherited through local/global config discovery.",
+    "Explicit --no-compile-bytecode plus UV_COMPILE_BYTECODE=0 and PYTHONDONTWRITEBYTECODE=1 prohibit compilation; absence of compilation must be verified from actual artifacts/receipt, not assumed from default.",
+    "All command flags are proposed exact arguments. If statically unconfirmed semantics remain, or UV refuses the argv, stop; no command repair/retry or pip/alternate installer fallback."
+  ],
+  "setup_dose": {
+    "venv_creations_max": 1,
+    "install_invocations_max": 1,
+    "combined_elapsed_seconds_max": 300,
+    "new_runtime_bytes_max": 2147483648,
+    "cache_and_temp_bytes_max": 536870912,
+    "whole_owned_tree_RSS_bytes_max": 2147483648,
+    "Job_committed_memory_bytes_max": 2147483648,
+    "CPU_threads_max": 2,
+    "watchdog_period_seconds": 0.1,
+    "offline_hash_locked_wheel_only": true,
+    "build_hooks_allowed": false,
+    "bytecode_compilation_allowed": false,
+    "target_payload_execution_allowed": false,
+    "deadline_coverage": "Single monotonic 300-second deadline includes directory preparation, venv creation, install, bounded verification and verified empty owned-tree exit. Verification must not be used to report late success.",
+    "unknown_or_failure": "Stop both command sequence and dependent work. Retain all partial artifacts, source/argv/environment policy hashes, terminal bytes, elapsed/bytes/tree identities and failure journal. No second environment, install, resolver attempt, fallback version, cache reuse or retry."
+  },
+  "future_source_gate": {
+    "requirements": [
+      "A concrete setup_controller.py must be written, frozen and independently reviewed before setup registration. This proposal is not that source.",
+      "Controller hashes/validates all selected runtime/installer/lock/wheels and exact argv before execution; starts suspended with Job assignment before resume; no-breakaway, kill-on-close, one owned tree, exact PID/creation identity, deadline/RSS/commit/disk accounting and verified exit.",
+      "Only exact UV executable and necessary base-interpreter stdlib queries are allowed in the installer tree. An unexpected executable/helper/network attempt/startup hook refuses. No framework, model, script entry point, generated venv Python after installation or package test is invoked.",
+      "Use appropriate narrowly bounded synthetic containment fixture/source review before a single setup registration; fixture success supplies no setup result.",
+      "Fresh separately authorized admission is needed at dispatch; this design does not inspect host/process/GPU/DB state or mutate native budgets. Preserve historical native charge and quarantines."
+    ]
+  },
+  "post_install_read_only_verification": {
+    "included_in_300_seconds_and_2GiB_environment": true,
+    "no_runtime_interpreter_or_UV_reinvocation": true,
+    "complete_inventory": "Enumerate only the canonical newly created runtime/cache roots; reject reparse/symlink and unexpected hardlinks/path escape/case collisions. Bound file count (100000), total bytes and stream hashing to the remaining combined deadline. Preserve full installed path/hash/size inventory.",
+    "RECORD": "Parse every installed distribution's METADATA/WHEEL/RECORD as data; exactly 25 locked names/versions; validate normalized paths, every nonempty hash/size for installed members and no unrecorded payload. Compare each wheel member hash/size to its canonical installed destination including .data scheme movement. RECORD itself and UV installer-generated bookkeeping/entry-point/launcher files require explicit generated-file disposition, not silent exemption.",
+    "startup": "Read pyvenv.cfg, bind include-system-site-packages=false and exact base home; hash new Scripts/python.exe/pythonw.exe launcher bytes and PE/header/base executable correspondence. Inspect all exact-root .pth/sitecustomize.py/usercustomize.py/._pth files. UV-generated _virtualenv.pth/_virtualenv.py, if created, must be quarantined as startup source and independently inspected before any later runtime invocation; refuse any other hook.",
+    "bytecode_and_entrypoints": "Refuse newly generated .pyc/__pycache__ under runtime/cache. Enumerate installed script entrypoints as inert data, bind their rewritten bytes/RECORD paths, and never invoke them.",
+    "target_install_scheme": "Verify that --target placed every wheel payload within runtime/Lib/site-packages or a declared installer-generated subpath beneath runtime. If actual entry-point/data placement is inconsistent with the reviewed scheme, stop without repair.",
+    "receipt": "Bind exact source/argv/tool/base/wheels/lock plus generated launcher, complete installation inventory and terminal evidence; record phase times, new bytes and verified exit separately from native-model accounting. Independent actual setup review is required."
+  },
+  "before_any_bootstrap": [
+    "Independent acceptance of actual setup and complete installed startup/launcher identities.",
+    "Fresh finite framework/helper/system DLL/API-set proof and exact sanitized runtime DLL/import roots; current full Torch/helper system closure remains explicitly unbound.",
+    "Separate new runtime-control source/contract/fixtures, exact clean commit, canonical accounting/admission and one registered no-model bootstrap dose. No target payload import is part of setup.",
+    "Dynamic internal-C loading/dispatch and actual loaded-native-module paths remain limitations requiring separately registered runtime checkpoints."
+  ],
+  "actions_performed_here": {
+    "binary_file_data_reads": 6,
+    "selected_binary_bytes": 74484992,
+    "PE_parses": 6,
+    "UV_execution": 0,
+    "base_interpreter_execution": 0,
+    "system_DLL_expansion": 0,
+    "network": 0,
+    "install_or_venv_creation": 0,
+    "payload_import_or_models": 0,
+    "process_GPU_DB_observation": 0,
+    "writes_only": [
+      "resolution_proposals/cpu_only_runtime_setup_001/PLAN.md",
+      "resolution_proposals/cpu_only_runtime_setup_001/PROPOSAL.json"
+    ]
+  }
+}
