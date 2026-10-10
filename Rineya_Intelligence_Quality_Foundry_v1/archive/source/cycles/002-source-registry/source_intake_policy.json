@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "policy_id": "RIQF-INTAKE-002",
+  "purpose": "Read-only source readiness investigation; no imported rows admitted by this policy",
+  "allowed_payload_roles": ["TRAIN"],
+  "forbidden_payload_roles": ["TRAIN_SELECTION", "CAL", "DEV", "TEST", "CHECK", "FINAL", "CHALLENGE", "PRESERVATION_GUARD"],
+  "exact_train_allowlists": {
+    "instruction_following_v1": ["instruction_following_v1/data/TRAIN.jsonl"],
+    "grounded_answering_bundle": ["grounded_answering_bundle/data/train.jsonl", "grounded_answering_bundle/train_ready/train.chat.jsonl"],
+    "Rineya_Retrieval_Extraction_v1": ["Rineya_Retrieval_Extraction_v1/data/train.jsonl"]
+  },
+  "manifest_training_data_files_is_authoritative": false,
+  "default_legacy_validators_allowed": false,
+  "code_execution_from_sources_allowed": false,
+  "source_text_copied_into_training": false,
+  "sample_parent_limit_per_source": 24,
+  "wholefile_streamed_byte_hashing_allowed": true,
+  "wholefile_semantic_review_claim_allowed": false,
+  "private_oracle_columns_in_actor_inputs_allowed": false,
+  "rights_gate": "Record actual evidence for local training/reuse and any distribution rights; assertion-only evidence remains unqualified",
+  "required_admission_evidence": [
+    "Verified source/revision/ancestry and permitted use",
+    "Every admitted row passes task-specific correctness and instruction review",
+    "Every derivative retains original canonical parent split",
+    "Historical exclusion scope and known/unknown semantic overlap recorded",
+    "Exact final native tokenizer/template/target/EOS/label boundaries",
+    "Appropriate separately qualified native integration"
+  ],
+  "intake_receipt_is_training_authorization": false,
+  "human_review_claim_allowed_without_evidence": false,
+  "native_model_jobs": false,
+  "paid_api_calls": false,
+  "shared_branch_writes": false
+}

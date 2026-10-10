@@ -1,0 +1,645 @@
+{
+  "inventory_source": "C:\\Users\\clclc\\BusinessProject\\Rineya-Dataset\\backup_20261010\\INVENTORY_METADATA003.json",
+  "inventory_sha256": "a034f6a694868503afc402f0d2bd925497a49c8e99c0a638395651da0e816640",
+  "recorded_status": "METADATA_ONLY_NOT_PREPARED",
+  "roles": {
+    "source_document_or_metadata": {
+      "files": 459,
+      "bytes": 205819606
+    },
+    "train_candidate_or_train_audit": {
+      "files": 46,
+      "bytes": 1149916451
+    },
+    "evidence_or_fixture_not_train": {
+      "files": 56,
+      "bytes": 152863124
+    },
+    "excluded_quality_evidence": {
+      "files": 10769,
+      "bytes": 678074766
+    },
+    "declared_training_export_pending_source_status": {
+      "files": 56,
+      "bytes": 162033754
+    }
+  },
+  "train_role_metadata_files": 102,
+  "train_role_metadata_bytes": 1311950205,
+  "train_role_files_have_hashes": false,
+  "selected_metadata_entries": [
+    {
+      "path": "CODING-CONCENTRATED-001/data/train.jsonl",
+      "bytes": 4881100,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "CODING-CONCENTRATED-001/data/train_messages.jsonl",
+      "bytes": 2574460,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_Retrieval_Extraction_v1/data/train.jsonl",
+      "bytes": 263853768,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/rl_prompts/arithmetic.jsonl",
+      "bytes": 1822749,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/rl_prompts/commands.jsonl",
+      "bytes": 1845582,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/rl_prompts/evidence.jsonl",
+      "bytes": 2563565,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/rl_prompts/evidence_state.jsonl",
+      "bytes": 2864661,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/rl_prompts/rules.jsonl",
+      "bytes": 2225354,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/rl_prompts/state_tracking.jsonl",
+      "bytes": 1950638,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/rl_prompts/table_arithmetic.jsonl",
+      "bytes": 2895645,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/rl_prompts/tables.jsonl",
+      "bytes": 2720454,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/arithmetic/answer.index.jsonl",
+      "bytes": 1499136,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/arithmetic/answer.jsonl",
+      "bytes": 2675190,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/arithmetic/prose.index.jsonl",
+      "bytes": 1490944,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/arithmetic/prose.jsonl",
+      "bytes": 3336622,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/arithmetic/state.index.jsonl",
+      "bytes": 1490944,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/arithmetic/state.jsonl",
+      "bytes": 3175678,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/commands/answer.index.jsonl",
+      "bytes": 1490944,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/commands/answer.jsonl",
+      "bytes": 2865654,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/commands/prose.index.jsonl",
+      "bytes": 1482752,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/commands/prose.jsonl",
+      "bytes": 4445306,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/commands/state.index.jsonl",
+      "bytes": 1482752,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/commands/state.jsonl",
+      "bytes": 4630260,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/evidence/answer.index.jsonl",
+      "bytes": 1490944,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/evidence/answer.jsonl",
+      "bytes": 4182764,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/evidence/prose.index.jsonl",
+      "bytes": 1482752,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/evidence/prose.jsonl",
+      "bytes": 4876714,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/evidence/state.index.jsonl",
+      "bytes": 1482752,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/evidence/state.jsonl",
+      "bytes": 4669720,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/evidence_state/answer.index.jsonl",
+      "bytes": 1515520,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/evidence_state/answer.jsonl",
+      "bytes": 4804129,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/evidence_state/prose.index.jsonl",
+      "bytes": 1507328,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/evidence_state/prose.jsonl",
+      "bytes": 6013553,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/evidence_state/state.index.jsonl",
+      "bytes": 1507328,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/evidence_state/state.jsonl",
+      "bytes": 5942633,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/rules/answer.index.jsonl",
+      "bytes": 1478656,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/rules/answer.jsonl",
+      "bytes": 3512826,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/rules/prose.index.jsonl",
+      "bytes": 1470464,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/rules/prose.jsonl",
+      "bytes": 4943494,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/rules/state.index.jsonl",
+      "bytes": 1470464,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/rules/state.jsonl",
+      "bytes": 4591198,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/state_tracking/answer.index.jsonl",
+      "bytes": 1515520,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/state_tracking/answer.jsonl",
+      "bytes": 2971839,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/state_tracking/prose.index.jsonl",
+      "bytes": 1507328,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/state_tracking/prose.jsonl",
+      "bytes": 4122763,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/state_tracking/state.index.jsonl",
+      "bytes": 1507328,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/state_tracking/state.jsonl",
+      "bytes": 4092619,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/table_arithmetic/answer.index.jsonl",
+      "bytes": 1523712,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/table_arithmetic/answer.jsonl",
+      "bytes": 4794970,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/table_arithmetic/prose.index.jsonl",
+      "bytes": 1515520,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/table_arithmetic/prose.jsonl",
+      "bytes": 6039980,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/table_arithmetic/state.index.jsonl",
+      "bytes": 1515520,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/table_arithmetic/state.jsonl",
+      "bytes": 5731292,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/tables/answer.index.jsonl",
+      "bytes": 1482752,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/tables/answer.jsonl",
+      "bytes": 4489754,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/tables/prose.index.jsonl",
+      "bytes": 1474560,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/tables/prose.jsonl",
+      "bytes": 5288186,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/tables/state.index.jsonl",
+      "bytes": 1474560,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_SkillFoundry_v1/dataset/exports/sft/tables/state.jsonl",
+      "bytes": 5087482,
+      "backup_role": "declared_training_export_pending_source_status",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_Skill_Integration_Foundry_v1/data/train/atomic_A.jsonl",
+      "bytes": 2731928,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_Skill_Integration_Foundry_v1/data/train/atomic_C.jsonl",
+      "bytes": 3176224,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_Skill_Integration_Foundry_v1/data/train/atomic_P.jsonl",
+      "bytes": 3501668,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_Skill_Integration_Foundry_v1/data/train/atomic_R.jsonl",
+      "bytes": 4815213,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_Skill_Integration_Foundry_v1/data/train/atomic_S.jsonl",
+      "bytes": 4402837,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_Skill_Integration_Foundry_v1/data/train/bridge_seen.jsonl",
+      "bytes": 18333860,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_Skill_Integration_Foundry_v1/data/train/no_joint_control.jsonl",
+      "bytes": 14898000,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "Rineya_Skill_Integration_Foundry_v1/data/train/rehearsal.jsonl",
+      "bytes": 2568244,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "controlled_writing_v1/data/train.jsonl",
+      "bytes": 11338803,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "data/canonical/replay_train.jsonl",
+      "bytes": 2368202,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "data/canonical/train.jsonl",
+      "bytes": 66156220,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "data/canonical/warmstart.jsonl",
+      "bytes": 1418268,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "data/oracles/replay_train.jsonl",
+      "bytes": 547605,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "data/oracles/train.jsonl",
+      "bytes": 8230536,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "data/oracles/warmstart.jsonl",
+      "bytes": 226815,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "data/policy/replay_train.jsonl",
+      "bytes": 1358340,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "data/policy/train.jsonl",
+      "bytes": 41807933,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "data/policy/warmstart.jsonl",
+      "bytes": 915001,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "data/sft/warmstart.lineage.jsonl",
+      "bytes": 147600,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "data/sft/warmstart.messages.jsonl",
+      "bytes": 906806,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "data/verl_jsonl/replay_train.jsonl",
+      "bytes": 2305524,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "data/verl_jsonl/train.jsonl",
+      "bytes": 66235900,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "data/verl_jsonl/warmstart.jsonl",
+      "bytes": 1398836,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "grounded_answering_bundle/data/train.jsonl",
+      "bytes": 80139435,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "grounded_answering_bundle/train_ready/train.chat.jsonl",
+      "bytes": 31282840,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "instruction_following_v1/data/TRAIN.jsonl",
+      "bytes": 26742428,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "instruction_following_v1/validation/TRAIN.rules.jsonl",
+      "bytes": 3680474,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "rineya_coconut_forge_v3/data/canonical/train.jsonl.gz",
+      "bytes": 51298299,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "rineya_coconut_forge_v3/data/curriculum/train.stage00.jsonl.gz",
+      "bytes": 604755,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "rineya_coconut_forge_v3/data/curriculum/train.stage01.jsonl.gz",
+      "bytes": 610242,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "rineya_coconut_forge_v3/data/curriculum/train.stage02.jsonl.gz",
+      "bytes": 609958,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "rineya_coconut_forge_v3/data/curriculum/train.stage03.jsonl.gz",
+      "bytes": 609767,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "rineya_coconut_forge_v3/data/curriculum/train.stage04.jsonl.gz",
+      "bytes": 609926,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "rineya_coconut_forge_v3/data/curriculum/train.stage05.jsonl.gz",
+      "bytes": 610321,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "rineya_coconut_forge_v3/data/curriculum/train.stage06.jsonl.gz",
+      "bytes": 609886,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "rineya_coconut_forge_v3/data/curriculum/train.stage07.jsonl.gz",
+      "bytes": 604782,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "rineya_coconut_forge_v3/data/direct_sft/train.jsonl.gz",
+      "bytes": 34258897,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "rineya_coconut_forge_v3/data/official_coconut/train.ids.jsonl",
+      "bytes": 5887200,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "rineya_coconut_forge_v3/data/pilot/microfit_train64.jsonl",
+      "bytes": 379901,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "rineya_coconut_forge_v3/data/prompts/train.jsonl.gz",
+      "bytes": 34714193,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "rineya_dpo_research_v2/data/train.jsonl",
+      "bytes": 37074850,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "tool_use_foundry_v1/data/train.jsonl",
+      "bytes": 104916115,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    },
+    {
+      "path": "tool_use_foundry_v1/training/train.decisions.jsonl",
+      "bytes": 203572491,
+      "backup_role": "train_candidate_or_train_audit",
+      "training_eligible": false
+    }
+  ],
+  "selection_limit": "Names, byte counts, and archive-role labels only; not canonical TRAIN or row admission proof."
+}

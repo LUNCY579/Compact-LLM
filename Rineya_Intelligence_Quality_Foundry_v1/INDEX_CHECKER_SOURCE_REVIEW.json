@@ -1,0 +1,19 @@
+{
+  "record_type": "nonauthor_index_checker_source_review",
+  "reviewer": "publication_safety_review",
+  "source_sha256": "aeaea3f19732dc452acbc0ccbea5b141607c339785887bce2adf778754eb008a",
+  "verdict": "PASS_SCOPED_REPAIRS",
+  "repairs": [
+    "Initial and final scope diffs use --no-renames",
+    "Final index digest matches captured enumeration",
+    "Final staged change list exactly matches initial list",
+    "Bounded NUL record parser"
+  ],
+  "statement": "No remaining issue in these repairs",
+  "corrected_checker_executed_by_reviewer": false,
+  "corrected_checker_whole_archive_execution": "NOT_RUN",
+  "historical_executed_checker_source": "publication_tools/history/index001/check_staged_bytes.py",
+  "actual_historical_raw_byte_receipt": "GIT_STAGED_BYTES001.json",
+  "later_actual_index_continuity": "GIT_INDEX_CONTINUITY001.json",
+  "limits": "Source-only review. Historical run and captured-index binding are separate from later additions and native/model qualification."
+}

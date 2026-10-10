@@ -1,0 +1,59 @@
+{
+  "old_descendant_plan": [
+    [
+      2,
+      0,
+      212,
+      "SCAN paths USING COVERING INDEX sqlite_autoindex_paths_2"
+    ]
+  ],
+  "old_object_join_plan": [
+    [
+      3,
+      0,
+      216,
+      "SCAN objects"
+    ],
+    [
+      6,
+      0,
+      0,
+      "CORRELATED SCALAR SUBQUERY 1"
+    ],
+    [
+      10,
+      6,
+      216,
+      "SCAN paths"
+    ]
+  ],
+  "proposed_descendant_plan": [
+    [
+      2,
+      0,
+      152,
+      "SEARCH paths USING COVERING INDEX sqlite_autoindex_paths_2 (key>? AND key<?)"
+    ]
+  ],
+  "proposed_object_join_plan": [
+    [
+      3,
+      0,
+      216,
+      "SCAN objects"
+    ],
+    [
+      6,
+      0,
+      0,
+      "CORRELATED SCALAR SUBQUERY 1"
+    ],
+    [
+      10,
+      6,
+      54,
+      "SEARCH paths USING COVERING INDEX paths_object (object=?)"
+    ]
+  ],
+  "scope": "Executed synthetic SQLite query-plan evidence; actual live phase/counters UNKNOWN; no completed full verification PASS"
+}

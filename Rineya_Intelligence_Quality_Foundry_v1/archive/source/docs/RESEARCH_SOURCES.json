@@ -1,0 +1,146 @@
+{
+  "schema_version": "rineya.research_sources.v1",
+  "status": "PRIMARY_SOURCE_DESIGN_REFERENCE_ONLY",
+  "review_date": "2026-09-30",
+  "timezone": "America/Chicago",
+  "reviewer_role": "long_context_research",
+  "evidence_scope": "Primary-paper abstracts and the official IH-Challenge research page were reviewed using web tools. This is not full-paper reproduction, released-dataset audit, source-license clearance, or evidence of a Titan effect.",
+  "benchmark_policy": "Design inspiration only. Do not import public benchmark rows, answers or close paraphrases into TRAIN. Any later import requires source/revision/rights review and contamination exclusion inventories.",
+  "sources": [
+    {
+      "id": "ruler_2024",
+      "title": "RULER: What's the Real Context Size of Your Long-Context Language Models?",
+      "url": "https://arxiv.org/abs/2404.06654",
+      "source_type": "primary_research_paper",
+      "first_submitted": "2024-04-09",
+      "reviewed_portion": "abstract and bibliographic metadata",
+      "supported_design": "Separate needle retrieval, multi-hop tracing and aggregation; vary length and task complexity.",
+      "caveat": "A synthetic evaluation taxonomy does not prove general document understanding or predict Titan's performance."
+    },
+    {
+      "id": "babilong_2024",
+      "title": "BABILong: Testing the Limits of LLMs with Long Context Reasoning-in-a-Haystack",
+      "url": "https://arxiv.org/abs/2406.10149",
+      "source_type": "primary_research_paper",
+      "first_submitted": "2024-06-14",
+      "reviewed_portion": "abstract and bibliographic metadata",
+      "supported_design": "Reason over multiple facts distributed through long text; include induction, deduction, counting and set/list operations.",
+      "caveat": "Synthetic fact insertion can differ from realistic source distributions. No reported recurrent-memory result qualifies the local dense Titan runtime."
+    },
+    {
+      "id": "nolima_2025",
+      "title": "NoLiMa: Long-Context Evaluation Beyond Literal Matching",
+      "url": "https://arxiv.org/abs/2502.05167",
+      "source_type": "primary_research_paper",
+      "first_submitted": "2025-02-07",
+      "reviewed_portion": "abstract and bibliographic metadata",
+      "supported_design": "Include questions and evidence with minimal lexical overlap; test associative reasoning separately from literal matching.",
+      "caveat": "Low overlap can introduce outside-knowledge dependence. Supply necessary definitions when testing contextual rather than pretrained knowledge."
+    },
+    {
+      "id": "longbench_v2_2024",
+      "title": "LongBench v2: Towards Deeper Understanding and Reasoning on Realistic Long-context Multitasks",
+      "url": "https://arxiv.org/abs/2412.15204",
+      "source_type": "primary_research_paper",
+      "first_submitted": "2024-12-19",
+      "reviewed_portion": "abstract and bibliographic metadata",
+      "supported_design": "Cover single/multiple documents, long contextual learning, dialogue history, code repositories and structured data.",
+      "caveat": "Its public multiple-choice questions are evaluation material. Their lengths and difficulty are not a ready-made training curriculum for a 596M model."
+    },
+    {
+      "id": "lost_in_middle_2023",
+      "title": "Lost in the Middle: How Language Models Use Long Contexts",
+      "url": "https://arxiv.org/abs/2307.03172",
+      "source_type": "primary_research_paper",
+      "first_submitted": "2023-07-06",
+      "reviewed_version": "v3, revised 2023-11-20",
+      "reviewed_portion": "abstract and bibliographic metadata",
+      "supported_design": "Counterbalance early, middle, late and distributed evidence positions; compare the same semantics at different positions.",
+      "caveat": "The studied QA and key-value tasks do not cover all long-context mechanisms. Position effects must be measured on the actual student."
+    },
+    {
+      "id": "longiclbench_2024",
+      "title": "Long-context LLMs Struggle with Long In-context Learning",
+      "url": "https://arxiv.org/abs/2404.02060",
+      "source_type": "primary_research_paper",
+      "first_submitted": "2024-04-02",
+      "reviewed_portion": "abstract and bibliographic metadata",
+      "supported_design": "Vary demonstration length, label-space complexity and demonstration position independently in contextual skill tasks.",
+      "caveat": "Extreme-label classification is one ICL setting. Do not infer general contextual learning or a Titan capacity threshold from it."
+    },
+    {
+      "id": "many_shot_icl_2024",
+      "title": "Many-Shot In-Context Learning",
+      "url": "https://arxiv.org/abs/2404.11018",
+      "source_type": "primary_research_paper",
+      "first_submitted": "2024-04-17",
+      "reviewed_version": "v3, revised 2024-10-17",
+      "reviewed_portion": "abstract and bibliographic metadata",
+      "supported_design": "Investigate learning from additional demonstrations and unfamiliar mappings; keep task performance separate from next-token loss.",
+      "caveat": "Reported benefits in studied larger models do not establish benefits for Titan. Teacher rationales require independent factual/semantic verification."
+    },
+    {
+      "id": "ifeval_2023",
+      "title": "Instruction-Following Evaluation for Large Language Models",
+      "url": "https://arxiv.org/abs/2311.07911",
+      "source_type": "primary_research_paper",
+      "first_submitted": "2023-11-14",
+      "reviewed_portion": "abstract and bibliographic metadata",
+      "supported_design": "Use independently executable output constraints and report strict instruction compliance.",
+      "caveat": "Format compliance does not prove answer correctness, grounding, hierarchy resolution or broad usefulness."
+    },
+    {
+      "id": "instruction_hierarchy_2024",
+      "title": "The Instruction Hierarchy: Training LLMs to Prioritize Privileged Instructions",
+      "url": "https://arxiv.org/abs/2404.13208",
+      "source_type": "primary_research_paper",
+      "first_submitted": "2024-04-19",
+      "reviewed_portion": "abstract and bibliographic metadata",
+      "supported_design": "Train priority-aware instruction handling and distinguish privileged instructions from untrusted embedded text.",
+      "caveat": "The actual dataset policy and native role serialization must be specified. Quoted role names are not real message roles."
+    },
+    {
+      "id": "ih_challenge_2026",
+      "title": "IH-Challenge: A Training Dataset to Improve Instruction Hierarchy on Frontier LLMs",
+      "url": "https://arxiv.org/abs/2603.10521",
+      "source_type": "primary_research_paper",
+      "first_submitted": "2026-03-11",
+      "reviewed_portion": "abstract and bibliographic metadata",
+      "supported_design": "Avoid conflating hierarchy and difficult instruction failures; use simple objectively graded tasks and controls against overrefusal shortcuts.",
+      "caveat": "Its frontier-model online training results do not authorize the local RL route, predict a Titan gain, or prove retention."
+    },
+    {
+      "id": "ih_challenge_official_2026",
+      "title": "Improving instruction hierarchy in frontier LLMs",
+      "url": "https://openai.com/index/instruction-hierarchy-challenge/",
+      "source_type": "primary_official_research_page",
+      "publication_date": "2026-03-10",
+      "reviewed_portion": "approach, grading pitfalls, task principles and stated limitations/results",
+      "supported_design": "Make hierarchy tasks instruction-following-simple, objectively gradable and resistant to trivial always-refuse solutions.",
+      "caveat": "An official research summary is not an independent replication. Its published capability table should not be treated as a universal no-regression guarantee."
+    },
+    {
+      "id": "longalign_2024",
+      "title": "LongAlign: A Recipe for Long Context Alignment of Large Language Models",
+      "url": "https://arxiv.org/abs/2401.18058",
+      "source_type": "primary_research_paper",
+      "first_submitted": "2024-01-31",
+      "reviewed_portion": "abstract and bibliographic metadata",
+      "supported_design": "Study long instruction data at lengths comparable to intended use while assessing short generic tasks.",
+      "caveat": "Its packing/sorted batching recipe is outside the currently qualified no-packing CE512 contract; native long training requires a new scope."
+    }
+  ],
+  "local_sources_reviewed": [
+    "experiments/post_training_mimo_centralized_v1/EVALUATION_PROTOCOL.md",
+    "experiments/post_training_mimo_centralized_v1/TRAIN_SCOPE_CONTRACT.md",
+    "experiments/post_training_mimo_centralized_v1/RESEARCH_PROTOCOL.md",
+    "experiments/post_training_mimo_centralized_v1/AMENDMENT_004.md",
+    "experiments/post_training_mimo_centralized_v1/README.md",
+    "experiments/post_training_mimo_centralized_v1/CENTRALIZED_EXPERIMENT_REPORT.md",
+    "../Rineya-Dataset/README.md"
+  ],
+  "protected_eval_access": false,
+  "model_or_gpu_jobs": 0,
+  "paid_teacher_or_cloud_calls": 0,
+  "inference_status": "Curriculum choices are proposals. Intelligence acquisition and preservation effects require registered student comparisons."
+}

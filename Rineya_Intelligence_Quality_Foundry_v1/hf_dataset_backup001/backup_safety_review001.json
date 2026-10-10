@@ -1,0 +1,92 @@
+{
+  "schema": "rineya-dataset-byte-backup-independent-review-v1",
+  "status": "SCOPED_SOURCE_AND_SYNTHETIC_CONTROLS_CONFIRMED_FOR_BYTE_CAPTURE",
+  "reviewer": "/root/hf_backup_safety_review",
+  "independent_review": true,
+  "independence_scope": "Separate agent source/config/control-evidence review from the author and Root execution. Agents share the model family, tools, workspace, and parent context; this is procedural independence, not statistical or external human independence.",
+  "byte_capture_prerequisites_confirmed": true,
+  "root_may_issue_exact_pin_capture_gate": true,
+  "this_receipt_is_tool_capture_gate": false,
+  "tool_sha256": "fd0a62754bf55e958ca95b24cb283d1f535b086b225677370cdb1815f601e7af",
+  "tool_bytes": 37763,
+  "test_source_sha256": "52d86b7351851b3d46c983a41acc30cfa50165260ea086a8e7bc6f76ac307aad",
+  "test_source_bytes": 43812,
+  "selection_file_sha256": "d5d879f2d196635612cb134ae8fe4b4373c7da646085e20a5f8e983476fb65ef",
+  "selection_file_bytes": 59931,
+  "inventory_sha256": "a034f6a694868503afc402f0d2bd925497a49c8e99c0a638395651da0e816640",
+  "source_root": "C:/Users/clclc/BusinessProject/Rineya-Dataset",
+  "destination": "Luncy1978/rineya-crs-001-research",
+  "destination_visibility_required": "private",
+  "namespace": "rineya-dataset-snapshots/<verified-content-sha256>",
+  "selected_files": 140,
+  "selected_recorded_bytes": 1312282190,
+  "declared_train_files": 102,
+  "declared_train_recorded_bytes": 1311950205,
+  "small_metadata_files": 38,
+  "small_metadata_recorded_bytes": 331985,
+  "prospective_identity_mismatches": 0,
+  "declared_train_metadata_tuple_mismatches": 0,
+  "synthetic_tests_passed": true,
+  "synthetic_test_result_scope": "Unittest suite succeeded with skips; skipped methods are not counted as passes.",
+  "synthetic_methods": 35,
+  "synthetic_passed_methods": 33,
+  "synthetic_skipped_methods": 2,
+  "synthetic_failed_methods": 0,
+  "synthetic_skips": [
+    {
+      "method": "test_symlink_output_ancestor_is_rejected_when_platform_supports_symlinks",
+      "reason": "WinError 1314: real Windows directory-symlink creation privilege unavailable"
+    },
+    {
+      "method": "test_symlink_payload_is_rejected_when_platform_supports_symlinks",
+      "reason": "WinError 1314: real Windows file-symlink creation privilege unavailable"
+    }
+  ],
+  "symlink_coverage_limit": "Real Windows symlink fixtures were skipped. Mocked reparse-ancestor rejection passed; source statically rejects symlinks and Windows reparse attributes. No real-symlink runtime pass is claimed.",
+  "test_evidence": {
+    "exit_file": "TEST_RUN001_EXIT.json",
+    "exit_file_sha256": "cd0c03d8d4ff5b9ef085bcf871a015b354a7cd95e28faa57b7ac953e4c3b4ae2",
+    "externally_recorded_exit_code": 0,
+    "observed_utc": "2026-10-10T20:48:52.1968327+00:00",
+    "observation_limit": "Reviewer read Root's saved external-observer exit receipt and runner logs; reviewer did not execute or independently re-run the tests.",
+    "stderr_file": "TEST_RUN001_STDERR.txt",
+    "stderr_file_sha256": "046a72e9255280caf553a79be1fd3eb4045cc53a15ec8e2f67896c328dd7ea88",
+    "stdout_file": "TEST_RUN001_STDOUT.txt",
+    "stdout_file_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "remaining_concrete_source_blockers": [],
+  "reviewed_controls": [
+    "Pure original-name/role/size gates before selected source path stat/resolve/open",
+    "Canonical source/output/config containment and symlink/reparse rejection",
+    "Prospective path/role identities and preserved false eligibility",
+    "Two independent raw hash, raw/decoded credential scans, and source descriptor checks",
+    "Malformed/truncated/CRC/expansion gzip failures without normalization or truncation",
+    "Streamed byte-preserving tar.gz and full path/size/hash readback",
+    "Extras, duplicate/traversal/nonregular members, prefetched tails, and missing tar EOF rejection",
+    "Explicit first-pass failures and fatal UNKNOWN counts, partial preservation, no upload code",
+    "Producer intended exit distinguished from UNKNOWN externally observed process exit"
+  ],
+  "action_scope": "Root may capture only this exact prospective selection read-only into the owned backup directory through the reviewed exact-pin gate. Success requires actual source scans/stability/hash checks and full archive readback. A source failure preserves partial evidence and prohibits upload.",
+  "publication_conditions": "A separate authorized publisher must freshly confirm PRIVATE destination state and append only under the verified content hash. No differing existing object, root README, or existing CRS snapshot may be overwritten. This review performed no remote read or upload.",
+  "claims": {
+    "source_payload_hashes": "UNKNOWN_NOT_READ_BY_REVIEWER",
+    "source_stability": "UNKNOWN_NOT_CAPTURED",
+    "source_owner": "UNKNOWN",
+    "canonicality": "UNKNOWN",
+    "row_admission": "UNKNOWN",
+    "native_boundary": "UNKNOWN",
+    "model_boundary": "UNKNOWN",
+    "rights_use": "UNKNOWN",
+    "training_ready": false,
+    "training_authorized": false,
+    "training_eligible": false,
+    "measured_gains": "UNMEASURED"
+  },
+  "reviewer_execution": {
+    "source_payloads_read": false,
+    "tests_executed": false,
+    "capture_executed": false,
+    "upload_attempted": false,
+    "separate_full_foundry_verify_used_as_train_capture_credit": false
+  }
+}

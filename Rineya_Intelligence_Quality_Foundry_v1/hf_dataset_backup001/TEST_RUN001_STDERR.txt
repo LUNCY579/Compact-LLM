@@ -1,0 +1,40 @@
+test_all_missing_selected_rows_have_explicit_first_pass_failures (test_backup.SyntheticBackupTests.test_all_missing_selected_rows_have_explicit_first_pass_failures) ... ok
+test_archive_is_deterministic_for_identical_source_bytes (test_backup.SyntheticBackupTests.test_archive_is_deterministic_for_identical_source_bytes) ... ok
+test_archive_verifier_checks_nonzero_prefetched_eof_padding (test_backup.SyntheticBackupTests.test_archive_verifier_checks_nonzero_prefetched_eof_padding) ... ok
+test_archive_verifier_reads_gzip_footer_and_rejects_trailing_tar_content (test_backup.SyntheticBackupTests.test_archive_verifier_reads_gzip_footer_and_rejects_trailing_tar_content) ... ok
+test_archive_verifier_rejects_extra_duplicate_traversal_and_nonregular_members (test_backup.SyntheticBackupTests.test_archive_verifier_rejects_extra_duplicate_traversal_and_nonregular_members) ... ok
+test_archive_verifier_requires_two_tar_eof_blocks_even_with_valid_gzip (test_backup.SyntheticBackupTests.test_archive_verifier_requires_two_tar_eof_blocks_even_with_valid_gzip) ... ok
+test_blocked_and_missing_rows_do_not_hide_later_failures (test_backup.SyntheticBackupTests.test_blocked_and_missing_rows_do_not_hide_later_failures) ... ok
+test_blocked_selected_path_is_rejected_before_source_stat_or_open (test_backup.SyntheticBackupTests.test_blocked_selected_path_is_rejected_before_source_stat_or_open) ... ok
+test_concatenated_gzip_scans_secret_in_later_member (test_backup.SyntheticBackupTests.test_concatenated_gzip_scans_secret_in_later_member) ... ok
+test_declared_size_change_is_a_failure (test_backup.SyntheticBackupTests.test_declared_size_change_is_a_failure) ... ok
+test_describe_cli_rejects_external_selection_before_stat_or_read (test_backup.SyntheticBackupTests.test_describe_cli_rejects_external_selection_before_stat_or_read) ... ok
+test_duplicate_selection_is_fatal_and_counts_remain_unknown (test_backup.SyntheticBackupTests.test_duplicate_selection_is_fatal_and_counts_remain_unknown) ... ok
+test_file_id_is_canonical_and_role_sensitive (test_backup.SyntheticBackupTests.test_file_id_is_canonical_and_role_sensitive) ... ok
+test_gzip_expansion_bound_is_an_explicit_failure_without_truncation (test_backup.SyntheticBackupTests.test_gzip_expansion_bound_is_an_explicit_failure_without_truncation) ... ok
+test_gzip_train_is_scanned_and_original_compressed_bytes_are_archived (test_backup.SyntheticBackupTests.test_gzip_train_is_scanned_and_original_compressed_bytes_are_archived) ... ok
+test_gzipped_text_metadata_decoded_secret_blocks_capture_and_keeps_scanning (test_backup.SyntheticBackupTests.test_gzipped_text_metadata_decoded_secret_blocks_capture_and_keeps_scanning) ... ok
+test_gzipped_text_metadata_preserves_compressed_and_decoded_bytes (test_backup.SyntheticBackupTests.test_gzipped_text_metadata_preserves_compressed_and_decoded_bytes) ... ok
+test_interruption_preserves_failure_receipt_and_unknown_counts (test_backup.SyntheticBackupTests.test_interruption_preserves_failure_receipt_and_unknown_counts) ... ok
+test_malformed_truncated_and_bad_crc_gzip_have_explicit_failures (test_backup.SyntheticBackupTests.test_malformed_truncated_and_bad_crc_gzip_have_explicit_failures) ... ok
+test_output_traversal_is_rejected_before_stat_scan_or_output_writes (test_backup.SyntheticBackupTests.test_output_traversal_is_rejected_before_stat_scan_or_output_writes) ... ok
+test_path_gate_is_pure_and_rejects_forbidden_paths_before_stat (test_backup.SyntheticBackupTests.test_path_gate_is_pure_and_rejects_forbidden_paths_before_stat) ... ok
+test_raw_newlines_crlf_and_non_ascii_bytes_are_unchanged (test_backup.SyntheticBackupTests.test_raw_newlines_crlf_and_non_ascii_bytes_are_unchanged) ... ok
+test_receipts_record_actual_pid_and_reproducible_configuration_pins (test_backup.SyntheticBackupTests.test_receipts_record_actual_pid_and_reproducible_configuration_pins) ... ok
+test_reparse_output_ancestor_is_rejected_before_scan_or_output_creation (test_backup.SyntheticBackupTests.test_reparse_output_ancestor_is_rejected_before_scan_or_output_creation) ... ok
+test_review_gate_rejects_external_configuration_before_stat_read_or_hash (test_backup.SyntheticBackupTests.test_review_gate_rejects_external_configuration_before_stat_read_or_hash) ... ok
+test_same_size_mutation_after_scan_is_detected_before_success (test_backup.SyntheticBackupTests.test_same_size_mutation_after_scan_is_detected_before_success) ... ok
+test_second_pass_gzip_scan_blocks_secret_despite_mocked_approved_descriptor (test_backup.SyntheticBackupTests.test_second_pass_gzip_scan_blocks_secret_despite_mocked_approved_descriptor) ... ok
+test_second_pass_hash_detects_mutation_despite_equal_stat_fingerprint (test_backup.SyntheticBackupTests.test_second_pass_hash_detects_mutation_despite_equal_stat_fingerprint) ... ok
+test_secret_inside_gzip_blocks_every_success_artifact (test_backup.SyntheticBackupTests.test_secret_inside_gzip_blocks_every_success_artifact) ... ok
+test_selection_preserves_all_102_declared_train_roles (test_backup.SyntheticBackupTests.test_selection_preserves_all_102_declared_train_roles) ... ok
+test_source_traversal_is_rejected_before_stat_scan_or_output_writes (test_backup.SyntheticBackupTests.test_source_traversal_is_rejected_before_stat_scan_or_output_writes) ... ok
+test_stale_prospective_gate_is_rejected_before_any_payload_scan (test_backup.SyntheticBackupTests.test_stale_prospective_gate_is_rejected_before_any_payload_scan) ... ok
+test_symlink_output_ancestor_is_rejected_when_platform_supports_symlinks (test_backup.SyntheticBackupTests.test_symlink_output_ancestor_is_rejected_when_platform_supports_symlinks) ... skipped "Synthetic directory symlink unavailable on this platform: [WinError 1314] A required privilege is not held by the client: 'C:\\\\Users\\\\clclc\\\\AppData\\\\Local\\\\Temp\\\\rineya-synthetic-test-hmvx56ox\\\\synthetic-output-target' -> 'C:\\\\Users\\\\clclc\\\\AppData\\\\Local\\\\Temp\\\\rineya-synthetic-test-hmvx56ox\\\\synthetic-output-alias'"
+test_symlink_payload_is_rejected_when_platform_supports_symlinks (test_backup.SyntheticBackupTests.test_symlink_payload_is_rejected_when_platform_supports_symlinks) ... skipped "Synthetic symlink unavailable on this platform: [WinError 1314] A required privilege is not held by the client: 'C:\\\\Users\\\\clclc\\\\AppData\\\\Local\\\\Temp\\\\rineya-synthetic-test-utu706f4\\\\synthetic-source\\\\synthetic_package\\\\data\\\\real.jsonl' -> 'C:\\\\Users\\\\clclc\\\\AppData\\\\Local\\\\Temp\\\\rineya-synthetic-test-utu706f4\\\\synthetic-source\\\\synthetic_package\\\\data\\\\train.jsonl'"
+test_synthetic_fixture_root_cannot_overlap_production_root (test_backup.SyntheticBackupTests.test_synthetic_fixture_root_cannot_overlap_production_root) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 0.801s
+
+OK (skipped=2)

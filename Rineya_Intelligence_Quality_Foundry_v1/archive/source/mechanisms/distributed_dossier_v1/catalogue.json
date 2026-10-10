@@ -1,0 +1,2415 @@
+{
+  "schema_version": "rineya.distributed_dossier_catalogue.v1",
+  "catalogue_version": "DD-CATALOGUE-001",
+  "contract_id": "RIQF-C002-DD-001",
+  "status": "REVIEW_REQUIRED",
+  "freeze_policy": "Freeze by independently reviewed external SHA256 receipt; the catalogue cannot self-release.",
+  "system_message": "Use only the supplied workshop dossier. Apply its reading guide and rules, answer its question, and obey the exact final-answer format. Do not include an explanation.",
+  "world_schema": "rineya.distributed_dossier_world.v1",
+  "world_fields": [
+    "world_schema",
+    "mechanism",
+    "entities",
+    "variables",
+    "documents",
+    "records",
+    "framework",
+    "query",
+    "format"
+  ],
+  "raw_world_fields": [
+    "world_schema",
+    "parent_id",
+    "reservation_id",
+    "mechanism",
+    "structure_id",
+    "level",
+    "entities",
+    "variables",
+    "documents",
+    "records",
+    "framework",
+    "query",
+    "format",
+    "content_family_id",
+    "source_domain_id",
+    "producer_family_id"
+  ],
+  "entity_kinds": [
+    "commitment",
+    "sponsor",
+    "signer",
+    "group",
+    "station",
+    "operator",
+    "person",
+    "room",
+    "kit",
+    "credential",
+    "plan",
+    "bundle"
+  ],
+  "mechanisms": [
+    "commitment_ledger",
+    "guarded_transition_learning",
+    "policy_feasibility"
+  ],
+  "structures": {
+    "A0": {
+      "mechanism": "commitment_ledger",
+      "structure_index": 0,
+      "required_graph": "linear commitment revisions/cancellations, flat memberships, multi-edge aliases, multi-term sum",
+      "forbidden": [
+        "ledger_transfer",
+        "ledger_split",
+        "nested group membership"
+      ]
+    },
+    "A1": {
+      "mechanism": "commitment_ledger",
+      "structure_index": 1,
+      "required_graph": "quantity revision and ownership-transfer histories plus a two-edge group-membership path",
+      "minimum_transfers": 2,
+      "forbidden": [
+        "ledger_split"
+      ]
+    },
+    "A2": {
+      "mechanism": "commitment_ledger",
+      "structure_index": 2,
+      "required_graph": "split parent into two independently quantified child histories; child revision/transfer plus independent commitment",
+      "role": "EXPOSED_DEV"
+    },
+    "B0": {
+      "mechanism": "guarded_transition_learning",
+      "structure_index": 0,
+      "required_graph": "one initialized station, serial trace",
+      "forbidden": [
+        "trace_splice",
+        "trace_fork",
+        "trace_join"
+      ]
+    },
+    "B1": {
+      "mechanism": "guarded_transition_learning",
+      "structure_index": 1,
+      "required_graph": "two initialized stations, interleaved traces, directed register splice, XOR final query",
+      "forbidden": [
+        "trace_fork",
+        "trace_join"
+      ]
+    },
+    "B2": {
+      "mechanism": "guarded_transition_learning",
+      "structure_index": 2,
+      "required_graph": "initial station fork, two local branches, XOR join, final learned operation",
+      "role": "EXPOSED_DEV"
+    },
+    "C0": {
+      "mechanism": "policy_feasibility",
+      "structure_index": 0,
+      "required_graph": "single-leg candidate plans, local conjunction plus narrow exemption",
+      "forbidden": [
+        "bundle",
+        "cross_leg policy",
+        "each_bundle policy"
+      ]
+    },
+    "C1": {
+      "mechanism": "policy_feasibility",
+      "structure_index": 1,
+      "required_graph": "two legs per candidate, local checks plus cross-leg predicate, scoped leg exemption",
+      "forbidden": [
+        "bundle",
+        "each_bundle policy"
+      ]
+    },
+    "C2": {
+      "mechanism": "policy_feasibility",
+      "structure_index": 2,
+      "required_graph": "two distinct locally checked plans per bundle, aggregated shared-kit quota",
+      "role": "EXPOSED_DEV",
+      "forbidden": [
+        "cross_leg policy"
+      ]
+    }
+  },
+  "limits": {
+    "documents": {
+      "min": 3,
+      "max": 6
+    },
+    "records_max": 40,
+    "variables_max": 2,
+    "variable_choices_max": 3,
+    "operators_by_level": {
+      "1": 2,
+      "2": 3
+    },
+    "operator_candidates_min": 3,
+    "operator_candidates_max": 4,
+    "joint_program_assignments_max": 64,
+    "test_events_max": 10,
+    "plans_or_bundles_in_query_max": 12,
+    "alias_path_max": 3,
+    "membership_path_max": 2,
+    "A_declared_commitment_entity_ids_max": 12,
+    "incidental_dossier_bytes_fraction_max": 0.15,
+    "complete_sequence_token_aim_by_level": {
+      "1": [
+        700,
+        1500
+      ],
+      "2": [
+        1400,
+        2600
+      ]
+    },
+    "paired_length_growth_fraction_max": 0.25,
+    "paired_complete_sequence_token_ceiling": 4096,
+    "length_status": "AIMS_ONLY_UNMEASURED",
+    "current_native_qualified_ceiling_unchanged": 512,
+    "truncation_allowed": false,
+    "padding_allowed": false,
+    "packing_allowed": false,
+    "new_runtime_qualification_required": true
+  },
+  "predicates": {
+    "room_available": {
+      "arguments": [
+        "room EntityId",
+        "slot integer 0..7"
+      ],
+      "result": "Bit"
+    },
+    "kit_available": {
+      "arguments": [
+        "kit EntityId",
+        "slot integer 0..7"
+      ],
+      "result": "Bit"
+    },
+    "credential": {
+      "arguments": [
+        "person EntityId",
+        "credential EntityId"
+      ],
+      "result": "Bit"
+    },
+    "member": {
+      "arguments": [
+        "person EntityId",
+        "group EntityId"
+      ],
+      "result": "Bit"
+    },
+    "capacity": {
+      "arguments": [
+        "room EntityId"
+      ],
+      "result": "SmallCount"
+    },
+    "kit_units": {
+      "arguments": [
+        "kit EntityId",
+        "slot integer 0..7"
+      ],
+      "result": "SmallCount"
+    }
+  },
+  "compatibility": {
+    "invalid_combinations": "PARSE_OR_SCHEMA_ERROR; never INCONSISTENT",
+    "policy_scope_predicates": {
+      "each_leg": [
+        "capacity_ok",
+        "room_available",
+        "kit_available",
+        "kit_units_ok",
+        "leader_credential",
+        "all_members"
+      ],
+      "cross_leg": [
+        "slots_increase",
+        "rooms_differ",
+        "groups_equal"
+      ],
+      "each_bundle": [
+        "shared_kit_quota"
+      ]
+    },
+    "cross_leg_requires": "exactly two ordered legs in every affected candidate plan",
+    "each_bundle_requires": "bundle query/candidates and valid referenced member plans",
+    "exception_scope_selector_pairs": {
+      "each_leg": [
+        "plan",
+        "leg",
+        "group"
+      ],
+      "cross_leg": [
+        "plan"
+      ],
+      "each_bundle": [
+        "bundle"
+      ]
+    },
+    "bool_fact_condition_comparisons": [
+      "eq"
+    ],
+    "count_fact_condition_comparisons": [
+      "eq",
+      "ge"
+    ],
+    "primitive_validation_before_status": "unknown kind/code/ID, wrong field type, impossible scope/predicate/selector pair, missing declared reference or nonunique public record ID is a schema error. Valid but contradictory assertions and incompatible bench observations are handled by compatible-world semantics."
+  },
+  "record_types": {
+    "alias": {
+      "fields": {
+        "entity_kind": "commitment|sponsor|signer|group",
+        "left": "Value_EntityId",
+        "right": "Value_EntityId"
+      }
+    },
+    "membership": {
+      "fields": {
+        "child": "Value_EntityId sponsor or group",
+        "parent": "Value_EntityId group",
+        "from_day": "Value_Day",
+        "through_day": "Value_Day"
+      }
+    },
+    "delegation": {
+      "fields": {
+        "signer": "Value_EntityId signer",
+        "owner": "Value_EntityId sponsor",
+        "from_day": "Value_Day",
+        "through_day": "Value_Day"
+      }
+    },
+    "ledger_start": {
+      "fields": {
+        "event_id": "ID",
+        "day": "Value_Day",
+        "commitment": "EntityId commitment",
+        "owner": "Value_EntityId sponsor",
+        "quantity": "Value_Quantity",
+        "signer": "Value_EntityId signer"
+      }
+    },
+    "ledger_amend": {
+      "fields": {
+        "event_id": "ID",
+        "day": "Value_Day",
+        "commitment": "EntityId commitment",
+        "predecessor": "ID event",
+        "quantity": "Value_Quantity",
+        "signer": "Value_EntityId signer"
+      }
+    },
+    "ledger_transfer": {
+      "fields": {
+        "event_id": "ID",
+        "day": "Value_Day",
+        "commitment": "EntityId commitment",
+        "predecessor": "ID event",
+        "owner": "Value_EntityId sponsor",
+        "signer": "Value_EntityId signer"
+      }
+    },
+    "ledger_cancel": {
+      "fields": {
+        "event_id": "ID",
+        "day": "Value_Day",
+        "commitment": "EntityId commitment",
+        "predecessor": "ID event",
+        "signer": "Value_EntityId signer"
+      }
+    },
+    "ledger_split": {
+      "fields": {
+        "event_id": "ID",
+        "day": "Value_Day",
+        "commitment": "EntityId commitment",
+        "predecessor": "ID event",
+        "children": "ChildCommitment[], exactly 2",
+        "signer": "Value_EntityId signer"
+      }
+    },
+    "ChildCommitment": {
+      "fields": {
+        "commitment": "EntityId commitment",
+        "owner": "Value_EntityId sponsor",
+        "quantity": "Value_Quantity"
+      }
+    },
+    "operator_menu": {
+      "fields": {
+        "operator": "EntityId operator",
+        "candidates": "GuardedProgram[], size 3..4, distinct truth tables"
+      }
+    },
+    "GuardedProgram": {
+      "fields": {
+        "program_id": "ID",
+        "guard": "always|m0|m1|x0|x1|y0|y1",
+        "action": "flip_m|flip_x|flip_y|swap_mx|swap_xy|copy_mx|copy_xm|copy_xy|copy_yx"
+      }
+    },
+    "State": {
+      "fields": {
+        "m": "Value_Bit",
+        "x": "Value_Bit",
+        "y": "Value_Bit"
+      }
+    },
+    "bench_example": {
+      "fields": {
+        "operator": "EntityId operator",
+        "input": "State",
+        "output": "State"
+      }
+    },
+    "station_initial": {
+      "fields": {
+        "station": "EntityId station",
+        "state": "State"
+      }
+    },
+    "trace_apply": {
+      "fields": {
+        "tick": "Value_Tick",
+        "station": "EntityId station",
+        "operator": "Value_EntityId operator"
+      }
+    },
+    "trace_splice": {
+      "fields": {
+        "tick": "Value_Tick",
+        "source": "EntityId station",
+        "source_register": "Value_Register",
+        "destination": "EntityId station",
+        "destination_register": "Value_Register"
+      }
+    },
+    "trace_fork": {
+      "fields": {
+        "tick": "Value_Tick",
+        "source": "EntityId station",
+        "destinations": "ordered EntityId[], exactly 2 distinct"
+      }
+    },
+    "trace_join": {
+      "fields": {
+        "tick": "Value_Tick",
+        "sources": "Set[EntityId station], exactly 2",
+        "destination": "EntityId station",
+        "operation": "constant xor"
+      }
+    },
+    "fact_bool": {
+      "fields": {
+        "predicate": "room_available|kit_available|credential|member",
+        "arguments": "typed ordered scalar/entity array with exact arity from predicates",
+        "value": "Value_Bit"
+      }
+    },
+    "fact_count": {
+      "fields": {
+        "predicate": "capacity|kit_units",
+        "arguments": "typed ordered scalar/entity array with exact arity from predicates",
+        "value": "Value_SmallCount"
+      }
+    },
+    "session_plan": {
+      "fields": {
+        "plan": "EntityId plan",
+        "legs": "Leg[], size 1..2"
+      }
+    },
+    "Leg": {
+      "fields": {
+        "leg_id": "ID",
+        "slot": "integer 0..7",
+        "room": "EntityId room",
+        "kit": "EntityId kit",
+        "leader": "EntityId person",
+        "people": "Set[EntityId person], size 1..4",
+        "group": "EntityId group",
+        "kit_demand": "integer 1..4"
+      }
+    },
+    "bundle": {
+      "fields": {
+        "bundle": "EntityId bundle",
+        "plans": "Set[EntityId plan], exactly 2 distinct"
+      }
+    },
+    "base_policy": {
+      "fields": {
+        "policy_id": "ID",
+        "scope": "each_leg|cross_leg|each_bundle",
+        "predicate": "PolicyPredicate"
+      }
+    },
+    "PolicyPredicate": {
+      "tag": "code",
+      "variants": {
+        "capacity_ok": {},
+        "room_available": {},
+        "kit_available": {},
+        "kit_units_ok": {},
+        "leader_credential": {
+          "credential": "EntityId credential"
+        },
+        "all_members": {},
+        "slots_increase": {},
+        "rooms_differ": {},
+        "groups_equal": {},
+        "shared_kit_quota": {}
+      }
+    },
+    "exception": {
+      "fields": {
+        "exception_id": "ID",
+        "base_policy_id": "ID",
+        "selector": "Selector",
+        "condition": "FactCondition"
+      }
+    },
+    "Selector": {
+      "tag": "kind",
+      "variants": {
+        "plan": {
+          "plan": "EntityId plan"
+        },
+        "leg": {
+          "plan": "EntityId plan",
+          "leg_id": "ID"
+        },
+        "group": {
+          "group": "EntityId group"
+        },
+        "bundle": {
+          "bundle": "EntityId bundle"
+        }
+      }
+    },
+    "FactCondition": {
+      "fields": {
+        "predicate": "room_available|kit_available|credential|member|capacity|kit_units",
+        "arguments": "typed ordered array with exact predicate arity",
+        "comparison": "eq|ge",
+        "value": "Bit|SmallCount"
+      }
+    },
+    "incidental": {
+      "fields": {
+        "subject": "EntityId",
+        "attribute": "curtain_color|slip_paper_color|meeting_refreshment",
+        "value": "string from a frozen finite vocabulary"
+      }
+    }
+  },
+  "type_notation": {
+    "dialect": "RIQF closed-record type catalog; not a claim of an executable JSON Schema validator",
+    "all_object_fields_required": true,
+    "additional_object_fields_allowed": false,
+    "nullable_fields": "Only types written T|null permit null",
+    "arrays": "T[] is ordered; Set[T] is duplicate-free and canonical sorted unless order explicitly matters",
+    "Value_T": "T or {var:VariableId}; a variable reference resolves to a declared finite typed domain",
+    "Hash": "lowercase SHA-256 hex, 64 characters",
+    "ID": "ASCII [A-Za-z][A-Za-z0-9_-]{0,31}; opaque, no answer/status/role encoding",
+    "AuthorId": "alias of short ID; public/entity/author bookkeeping only, not a registry hash identity",
+    "RegistryId": "ASCII [A-Za-z0-9][A-Za-z0-9_.:-]{0,159}; matches registry_tools.registry ID syntax; up to 160 characters",
+    "SemanticParentId": "sp- followed by 64 lowercase SHA-256 hex characters; 67 characters total",
+    "StructuralClusterId": "sc- followed by 64 lowercase SHA-256 hex characters; 67 characters total",
+    "Label": "ASCII letters/digits/hyphen/space, 1..40 characters; no control characters or quotes",
+    "Day": "integer 0..31",
+    "Tick": "integer 0..31",
+    "Register": "enum m|x|y",
+    "Bit": "integer 0 or 1; booleans do not coerce to integers",
+    "Quantity": "integer 0..12",
+    "SmallCount": "integer 0..8",
+    "ScalarAnswer": "integer 0..144; B additionally 0..7; C additionally 0..12",
+    "FieldPath": "dot/bracket path to exactly one semantic field inside a public record",
+    "EntityId": "ID referencing a declared Entity with the required field-specific kind",
+    "RecordId": "ID referencing one public Record",
+    "VariableId": "ID referencing one Variable; no collision with an entity ID or public label",
+    "Span": "{message_index:integer in [0,1], utf8_start:nonnegative integer, utf8_end:integer greater than start}; half-open final-message byte offsets"
+  },
+  "semantic_rules": {
+    "FINITE_WORLDS": "Each declared variable ranges over its finite domain. Each learned operator ranges over its candidate menu. Source assertions are conjunctions. Enumerate all combinations and retain only worlds satisfying the axioms. No inferred default for unreported facts. Identical repeated semantic assertions are redundant; incompatible values under one asserted key cannot both hold. Public record IDs are unique. Typed references must resolve and interval endpoints must satisfy from_day <= through_day in each compatible assignment.",
+    "STATUS": "W nonempty and one scalar -> DETERMINATE; W has at least two different scalars -> UNDERDETERMINED; W empty -> INCONSISTENT. A parser/schema error blocks admission and is never a status.",
+    "ENTITY_IDENTITY": "Public label declarations are unique per typed entity ID. Alias edges induce an equivalence relation within the stated entity kind. Resolve every applicable reference through that relation. No cross-kind alias edge or unknown typed reference.",
+    "A_MEMBERSHIP": "A dated child->parent edge applies iff from_day <= cutoff <= through_day. Membership closure is acyclic and uses set union. Sponsors reaching queried group are included once.",
+    "A_AUTHORITY": "Starts require a dated delegation for their stated owner. All successors, including transfers and splits, require a dated delegation for the predecessor's then-current owner. Signer and owner are alias-resolved. A delegation covers inclusive endpoints.",
+    "A_TIME": "Process effective days <= cutoff. Starts create unique commitments. Every accepted successor has day strictly greater than predecessor.day and references a current accepted head. Unauthorized events are ignored and cannot supply accepted heads. Successors of absent or already-retired heads are ignored, except same-day authorized competing successors to one current head violate SINGLE_SUCCESSOR. Future events are ignored.",
+    "A_SINGLE_SUCCESSOR": "A head is the pair (alias-resolved commitment component, predecessor event ID), including split-child heads. At one day a current head may have at most one authorized successor. Two distinct authorized successor event IDs at the same effective day for that head make the compatible world invalid. No printed-order or lexicographic tie break.",
+    "A_TRANSITIONS": "amend changes quantity only; transfer changes owner only; cancel closes; split closes parent and creates exactly two distinct previously uncreated commitments with independent quantities/owners. Split children inherit event day and use the split event as their predecessor head until first child successor. Their first successor identifies both child commitment and split event. No conservation assumption.",
+    "A_RESULT": "Sum current open commitment quantities whose current sponsor reaches query group at cutoff. Retired/cancelled commitments contribute zero. Distinct commitments deduplicate by alias component.",
+    "B_PROGRAM": "Guard always or equality of m/x/y to a bit. Evaluate guard in pre-state. False -> identity. True -> one action. flip negates its named bit. swap reads both old bits. copy_ab copies old register a into register b and leaves other bits unchanged.",
+    "B_INFER": "Each operator has one program from its menu, fixed across every bench example and test event. Bench examples are single-step observed transitions. Keep only joint program assignments matching every bench observation. Distinct candidate functions must have different complete eight-state truth tables.",
+    "B_TRACE": "Globally unique ticks determine order. apply acts on named existing station. splice reads old source bit then assigns destination bit. fork duplicates source state into two fresh stations and leaves source unchanged. join XORs two source states into a fresh destination. Stations remain addressable. Fresh means no prior station_initial/fork/join definition for that entity.",
+    "B_XOR": "Bit XOR: 0 xor 0=0; 0 xor 1=1; 1 xor 0=1; 1 xor 1=0. State XOR applies per register.",
+    "B_RESULT": "single final station or XOR of exactly two final stations, encoded 4*m+2*x+y. Determinate learning rows must also leave exactly one joint learned-program assignment after bench evidence; that admission condition does not redefine STATUS when several assignments give one answer.",
+    "C_FACTS": "Every fact needed by a plan, policy or condition is asserted or explicitly variable-valued. Duplicate identical assertions are redundant. Different asserted known values for one predicate/argument key cannot both hold; compatible W is empty. Distinct finite variable assignments are evaluated without zero/false defaults.",
+    "C_LOCAL": "capacity_ok means capacity(room)>=size(people); room_available/kit_available mean corresponding bit=1; kit_units_ok means kit_units(kit,slot)>=kit_demand; leader_credential means credential(leader,required credential)=1; all_members means each listed person has member(person,leg.group)=1. All applicable unexempted policies are conjoined per leg.",
+    "C_CROSS_LEG": "Two-leg candidates only: slots_increase means leg0.slot<leg1.slot; rooms_differ means leg0.room != leg1.room; groups_equal means leg0.group == leg1.group. The legs array has semantic order, distinct from presentation order.",
+    "C_BUNDLE": "Both member plans must pass their local policies. shared_kit_quota means, for every kit/slot used within the bundle, sum the demands of all legs in its member plans and compare <= kit_units(kit,slot). Other bundles do not consume this hypothetical bundle's resources.",
+    "C_EXEMPTION": "An exception names one existing base-policy ID and a selector compatible with that policy scope. Evaluate its one fact condition. If selector matches and condition is true, disable that policy only for that selected plan/leg/bundle. Multiple matching exceptions are idempotent. A group selector matches each_leg on leg.group; it is forbidden for cross_leg or each_bundle. A plan selector matches all its local legs or its own cross_leg policy; it cannot select a bundle rule. A leg selector applies only to each_leg. A bundle selector applies only to each_bundle. No exception resolves a source contradiction or fills an unasserted fact.",
+    "C_RESULT": "Count feasible IDs in the complete public query candidate list. Infeasibility of every candidate yields determinate zero; it is not inconsistency. Candidates outside that list can still supply plausible same-service records but do not enter the count. No explicit out-of-scope tag is rendered."
+  },
+  "lexical": {
+    "ID_regex": "[A-Za-z][A-Za-z0-9_-]{0,31}",
+    "Label_regex": "[A-Za-z0-9 -]{1,40}",
+    "canonical_integer_regex": "0|[1-9][0-9]*",
+    "quoted_string": "JSON double-quoted scalar string; only JSON standard escapes; no raw control characters. Entity references use declared labels. No object/array JSON appears in public text.",
+    "variable_reference": "{unreported {variable_id}}",
+    "list_open": "[",
+    "list_close": "]",
+    "scalar_separator": ", ",
+    "compound_separator": " / ",
+    "line_ending": "LF",
+    "blank_lines": "Exactly one empty line between major blocks; no free prose.",
+    "table_separator": " | ",
+    "table_rule": "Each record is a three-line table: exact kind-specific header, exact separator, one row. Header variant chosen independently of meaning.",
+    "terminal_newline": "Absent; user and system messages do not end with LF.",
+    "exact_block_order": [
+      "title",
+      "guide_header",
+      "reading_guide_lines",
+      "blank",
+      "task",
+      "blank",
+      "vocabulary_header",
+      "entities",
+      "blank",
+      "variable_header",
+      "variables_or_no_variables",
+      "blank",
+      "framework_header",
+      "framework_clauses",
+      "blank",
+      "documents_header",
+      "document_header/records/end_document/blank repeated",
+      "question_header",
+      "query",
+      "answer_instruction"
+    ],
+    "scalar_codecs": {
+      "EntityId": "JSON quoted declared public label",
+      "Label": "JSON quoted ASCII label",
+      "title": "JSON quoted scalar string",
+      "ID": "bare ID token",
+      "Bit": "bare 0/1 in domains, states, conditions and table cells; yes/no in prose fact values only",
+      "numeric": "canonical nonnegative decimal",
+      "Register": "bare m/x/y",
+      "enum": "bare catalogue realization",
+      "incidental_value": "bare finite vocabulary token",
+      "variable": "{unreported ID} as a complete Value_T scalar",
+      "set_list": "[item, item], canonical typed order",
+      "compound_list": "[compound / compound], semantic ordered array"
+    },
+    "set_order": "Canonical typed scalar order: numeric values ascending; Register strings lexicographic; EntityId values by declared entity ID, never by displayed label. Resolve quoted labels before checking order."
+  },
+  "envelope": {
+    "title": "Workshop dossier",
+    "guide_header": "Reading guide",
+    "task": "Task: {mechanism}; answer format: {format}.",
+    "vocabulary_header": "Vocabulary",
+    "variable_header": "Unreported values",
+    "no_variables": "No unreported values are declared.",
+    "framework_header": "Workshop rules",
+    "documents_header": "Documents",
+    "document": "Document {document_id}: {title}; dated day {dated_day}; purpose {purpose}; style {style}.",
+    "end_document": "End document {document_id}.",
+    "question_header": "Question",
+    "entity": "Label {public_label} denotes {kind} {entity_id}.",
+    "variable": "Unreported {variable_id}, a {scalar_type}, is one of {choices}.",
+    "framework": "[{rule_id}] {clause}",
+    "record": "[{record_id}] {clause}"
+  },
+  "reading_guide_lines": [
+    "Quoted labels refer to the typed vocabulary below; citation brackets identify records and do not rank their authority.",
+    "Documents and records may appear in any printed order. Effective days, ticks, predecessor links, and listed leg order determine semantic order.",
+    "An unreported value ranges only over its stated alternatives; occurrences of the same variable share one choice. There are no defaults for missing facts.",
+    "In fact clauses, yes means bit 1 and no means bit 0. The registers m, x, and y are Boolean bits. Lists use comma-separated items; ordered compound lists use a slash between complete clauses.",
+    "All source assertions are conjoined. Repeated identical assertions provide redundant support. Contradictory assertions leave no compatible world.",
+    "A compatible world chooses the declared finite values and one menu program per operator, then satisfies all workshop rules.",
+    "DETERMINATE means compatible worlds exist and all give one scalar. UNDERDETERMINED means compatible worlds give different scalars. INCONSISTENT means none exist.",
+    "Recognized color and refreshment reports are incidental facts. They do not enter the requested quantity, state code, or feasibility count.",
+    "People lists and candidate lists are complete. A plan has the legs printed in its stated order. Resource demands are hypothetical within each candidate bundle.",
+    "A supported false plan requirement makes the conjunction fail. Other unused missing reports receive no default; any unmasked needed source fact must be reported. A bundle with an infeasible member already fails its local checks."
+  ],
+  "framework_variants": {
+    "FINITE_WORLDS": [
+      "Each declared variable ranges over its finite domain. Each learned operator ranges over its candidate menu. Source assertions are conjunctions. Enumerate all combinations and retain only worlds satisfying the axioms. No inferred default for unreported facts. Identical repeated semantic assertions are redundant; incompatible values under one asserted key cannot both hold. Public record IDs are unique. Typed references must resolve and interval endpoints must satisfy from_day <= through_day in each compatible assignment.",
+      "Workshop rule: Each declared variable ranges over its finite domain. Each learned operator ranges over its candidate menu. Source assertions are conjunctions. Enumerate all combinations and retain only worlds satisfying the axioms. No inferred default for unreported facts. Identical repeated semantic assertions are redundant; incompatible values under one asserted key cannot both hold. Public record IDs are unique. Typed references must resolve and interval endpoints must satisfy from_day <= through_day in each compatible assignment."
+    ],
+    "STATUS": [
+      "Return DETERMINATE when at least one compatible choice exists and every compatible choice gives the same requested number. Return UNDERDETERMINED when compatible choices give different numbers. Return INCONSISTENT when no choice fits all reported facts and workshop rules.",
+      "If all compatible choices agree on one requested number, the status is DETERMINATE. If compatible choices disagree on that number, the status is UNDERDETERMINED. If the reported facts and rules permit no compatible choice, the status is INCONSISTENT."
+    ],
+    "ENTITY_IDENTITY": [
+      "Public label declarations are unique per typed entity ID. Alias edges induce an equivalence relation within the stated entity kind. Resolve every applicable reference through that relation. No cross-kind alias edge or unknown typed reference.",
+      "Workshop rule: Public label declarations are unique per typed entity ID. Alias edges induce an equivalence relation within the stated entity kind. Resolve every applicable reference through that relation. No cross-kind alias edge or unknown typed reference."
+    ],
+    "A_MEMBERSHIP": [
+      "A dated child->parent edge applies iff from_day <= cutoff <= through_day. Membership closure is acyclic and uses set union. Sponsors reaching queried group are included once.",
+      "Workshop rule: A dated child->parent edge applies iff from_day <= cutoff <= through_day. Membership closure is acyclic and uses set union. Sponsors reaching queried group are included once."
+    ],
+    "A_AUTHORITY": [
+      "Starts require a dated delegation for their stated owner. All successors, including transfers and splits, require a dated delegation for the predecessor's then-current owner. Signer and owner are alias-resolved. A delegation covers inclusive endpoints.",
+      "Workshop rule: Starts require a dated delegation for their stated owner. All successors, including transfers and splits, require a dated delegation for the predecessor's then-current owner. Signer and owner are alias-resolved. A delegation covers inclusive endpoints."
+    ],
+    "A_TIME": [
+      "Process effective days <= cutoff. Starts create unique commitments. Every accepted successor has day strictly greater than predecessor.day and references a current accepted head. Unauthorized events are ignored and cannot supply accepted heads. Successors of absent or already-retired heads are ignored, except same-day authorized competing successors to one current head violate SINGLE_SUCCESSOR. Future events are ignored.",
+      "Workshop rule: Process effective days <= cutoff. Starts create unique commitments. Every accepted successor has day strictly greater than predecessor.day and references a current accepted head. Unauthorized events are ignored and cannot supply accepted heads. Successors of absent or already-retired heads are ignored, except same-day authorized competing successors to one current head violate SINGLE_SUCCESSOR. Future events are ignored."
+    ],
+    "A_SINGLE_SUCCESSOR": [
+      "A head is the pair (alias-resolved commitment component, predecessor event ID), including split-child heads. At one day a current head may have at most one authorized successor. Two distinct authorized successor event IDs at the same effective day for that head make the compatible world invalid. No printed-order or lexicographic tie break.",
+      "Workshop rule: A head is the pair (alias-resolved commitment component, predecessor event ID), including split-child heads. At one day a current head may have at most one authorized successor. Two distinct authorized successor event IDs at the same effective day for that head make the compatible world invalid. No printed-order or lexicographic tie break."
+    ],
+    "A_TRANSITIONS": [
+      "amend changes quantity only; transfer changes owner only; cancel closes; split closes parent and creates exactly two distinct previously uncreated commitments with independent quantities/owners. Split children inherit event day and use the split event as their predecessor head until first child successor. Their first successor identifies both child commitment and split event. No conservation assumption.",
+      "Workshop rule: amend changes quantity only; transfer changes owner only; cancel closes; split closes parent and creates exactly two distinct previously uncreated commitments with independent quantities/owners. Split children inherit event day and use the split event as their predecessor head until first child successor. Their first successor identifies both child commitment and split event. No conservation assumption."
+    ],
+    "A_RESULT": [
+      "Sum current open commitment quantities whose current sponsor reaches query group at cutoff. Retired/cancelled commitments contribute zero. Distinct commitments deduplicate by alias component.",
+      "Workshop rule: Sum current open commitment quantities whose current sponsor reaches query group at cutoff. Retired/cancelled commitments contribute zero. Distinct commitments deduplicate by alias component."
+    ],
+    "B_PROGRAM": [
+      "Guard always or equality of m/x/y to a bit. Evaluate guard in pre-state. False -> identity. True -> one action. flip negates its named bit. swap reads both old bits. copy_ab copies old register a into register b and leaves other bits unchanged.",
+      "Workshop rule: Guard always or equality of m/x/y to a bit. Evaluate guard in pre-state. False -> identity. True -> one action. flip negates its named bit. swap reads both old bits. copy_ab copies old register a into register b and leaves other bits unchanged."
+    ],
+    "B_INFER": [
+      "Each operator has one program from its menu, fixed across every bench example and test event. Bench examples are single-step observed transitions. Keep only joint program assignments matching every bench observation. Distinct candidate functions must have different complete eight-state truth tables.",
+      "Workshop rule: Each operator has one program from its menu, fixed across every bench example and test event. Bench examples are single-step observed transitions. Keep only joint program assignments matching every bench observation. Distinct candidate functions must have different complete eight-state truth tables."
+    ],
+    "B_TRACE": [
+      "Globally unique ticks determine order. apply acts on named existing station. splice reads old source bit then assigns destination bit. fork duplicates source state into two fresh stations and leaves source unchanged. join XORs two source states into a fresh destination. Stations remain addressable. Fresh means no prior station_initial/fork/join definition for that entity.",
+      "Workshop rule: Globally unique ticks determine order. apply acts on named existing station. splice reads old source bit then assigns destination bit. fork duplicates source state into two fresh stations and leaves source unchanged. join XORs two source states into a fresh destination. Stations remain addressable. Fresh means no prior station_initial/fork/join definition for that entity."
+    ],
+    "B_XOR": [
+      "Bit XOR: 0 xor 0=0; 0 xor 1=1; 1 xor 0=1; 1 xor 1=0. State XOR applies per register.",
+      "Workshop rule: Bit XOR: 0 xor 0=0; 0 xor 1=1; 1 xor 0=1; 1 xor 1=0. State XOR applies per register."
+    ],
+    "B_RESULT": [
+      "For one requested final station, encode its bits as 4*m+2*x+y. For two requested final stations, XOR their corresponding bits first and encode the resulting bits as 4*m+2*x+y.",
+      "The requested state code is 4*m+2*x+y. Use the requested final station for a single-station question. For a two-station question, combine corresponding final bits by XOR before calculating that code."
+    ],
+    "C_FACTS": [
+      "Every fact needed by a plan, policy or condition is asserted or explicitly variable-valued. Duplicate identical assertions are redundant. Different asserted known values for one predicate/argument key cannot both hold; compatible W is empty. Distinct finite variable assignments are evaluated without zero/false defaults.",
+      "Workshop rule: Every fact needed by a plan, policy or condition is asserted or explicitly variable-valued. Duplicate identical assertions are redundant. Different asserted known values for one predicate/argument key cannot both hold; compatible W is empty. Distinct finite variable assignments are evaluated without zero/false defaults."
+    ],
+    "C_LOCAL": [
+      "capacity_ok means capacity(room)>=size(people); room_available/kit_available mean corresponding bit=1; kit_units_ok means kit_units(kit,slot)>=kit_demand; leader_credential means credential(leader,required credential)=1; all_members means each listed person has member(person,leg.group)=1. All applicable unexempted policies are conjoined per leg.",
+      "Workshop rule: capacity_ok means capacity(room)>=size(people); room_available/kit_available mean corresponding bit=1; kit_units_ok means kit_units(kit,slot)>=kit_demand; leader_credential means credential(leader,required credential)=1; all_members means each listed person has member(person,leg.group)=1. All applicable unexempted policies are conjoined per leg."
+    ],
+    "C_CROSS_LEG": [
+      "Two-leg candidates only: slots_increase means leg0.slot<leg1.slot; rooms_differ means leg0.room != leg1.room; groups_equal means leg0.group == leg1.group. The legs array has semantic order, distinct from presentation order.",
+      "Workshop rule: Two-leg candidates only: slots_increase means leg0.slot<leg1.slot; rooms_differ means leg0.room != leg1.room; groups_equal means leg0.group == leg1.group. The legs array has semantic order, distinct from presentation order."
+    ],
+    "C_BUNDLE": [
+      "Both member plans must pass their local policies. shared_kit_quota means, for every kit/slot used within the bundle, sum the demands of all legs in its member plans and compare <= kit_units(kit,slot). Other bundles do not consume this hypothetical bundle's resources.",
+      "Workshop rule: Both member plans must pass their local policies. shared_kit_quota means, for every kit/slot used within the bundle, sum the demands of all legs in its member plans and compare <= kit_units(kit,slot). Other bundles do not consume this hypothetical bundle's resources."
+    ],
+    "C_EXEMPTION": [
+      "An exception names one existing base-policy ID and a selector compatible with that policy scope. Evaluate its one fact condition. If selector matches and condition is true, disable that policy only for that selected plan/leg/bundle. Multiple matching exceptions are idempotent. A group selector matches each_leg on leg.group; it is forbidden for cross_leg or each_bundle. A plan selector matches all its local legs or its own cross_leg policy; it cannot select a bundle rule. A leg selector applies only to each_leg. A bundle selector applies only to each_bundle. No exception resolves a source contradiction or fills an unasserted fact.",
+      "Workshop rule: An exception names one existing base-policy ID and a selector compatible with that policy scope. Evaluate its one fact condition. If selector matches and condition is true, disable that policy only for that selected plan/leg/bundle. Multiple matching exceptions are idempotent. A group selector matches each_leg on leg.group; it is forbidden for cross_leg or each_bundle. A plan selector matches all its local legs or its own cross_leg policy; it cannot select a bundle rule. A leg selector applies only to each_leg. A bundle selector applies only to each_bundle. No exception resolves a source contradiction or fills an unasserted fact."
+    ],
+    "C_RESULT": [
+      "Count feasible IDs in the complete public query candidate list. Infeasibility of every candidate yields determinate zero; it is not inconsistency. Candidates outside that list can still supply plausible same-service records but do not enter the count. No explicit out-of-scope tag is rendered.",
+      "Workshop rule: Count feasible IDs in the complete public query candidate list. Infeasibility of every candidate yields determinate zero; it is not inconsistency. Candidates outside that list can still supply plausible same-service records but do not enter the count. No explicit out-of-scope tag is rendered."
+    ]
+  },
+  "framework_required": {
+    "commitment_ledger": [
+      "FINITE_WORLDS",
+      "STATUS",
+      "ENTITY_IDENTITY",
+      "A_MEMBERSHIP",
+      "A_AUTHORITY",
+      "A_TIME",
+      "A_SINGLE_SUCCESSOR",
+      "A_TRANSITIONS",
+      "A_RESULT"
+    ],
+    "guarded_transition_learning": [
+      "FINITE_WORLDS",
+      "STATUS",
+      "ENTITY_IDENTITY",
+      "B_PROGRAM",
+      "B_INFER",
+      "B_TRACE",
+      "B_XOR",
+      "B_RESULT"
+    ],
+    "policy_feasibility": [
+      "FINITE_WORLDS",
+      "STATUS",
+      "ENTITY_IDENTITY",
+      "C_FACTS",
+      "C_LOCAL",
+      "C_CROSS_LEG",
+      "C_BUNDLE",
+      "C_EXEMPTION",
+      "C_RESULT"
+    ]
+  },
+  "incidental_vocabulary": {
+    "curtain_color": [
+      "red",
+      "blue",
+      "green",
+      "cream"
+    ],
+    "slip_paper_color": [
+      "white",
+      "blue",
+      "yellow",
+      "cream"
+    ],
+    "meeting_refreshment": [
+      "tea",
+      "coffee",
+      "water",
+      "juice"
+    ]
+  },
+  "incidental_subject_kinds": {
+    "curtain_color": [
+      "commitment",
+      "sponsor",
+      "signer",
+      "group",
+      "station",
+      "operator",
+      "person",
+      "room",
+      "kit",
+      "credential",
+      "plan",
+      "bundle"
+    ],
+    "slip_paper_color": [
+      "commitment",
+      "sponsor",
+      "signer",
+      "group",
+      "station",
+      "operator",
+      "person",
+      "room",
+      "kit",
+      "credential",
+      "plan",
+      "bundle"
+    ],
+    "meeting_refreshment": [
+      "commitment",
+      "sponsor",
+      "signer",
+      "group",
+      "station",
+      "operator",
+      "person",
+      "room",
+      "kit",
+      "credential",
+      "plan",
+      "bundle"
+    ]
+  },
+  "guard_realizations": {
+    "always": "always",
+    "m0": "m=0",
+    "m1": "m=1",
+    "x0": "x=0",
+    "x1": "x=1",
+    "y0": "y=0",
+    "y1": "y=1"
+  },
+  "action_realizations": {
+    "flip_m": "flip m",
+    "flip_x": "flip x",
+    "flip_y": "flip y",
+    "swap_mx": "swap m and x",
+    "swap_xy": "swap x and y",
+    "copy_mx": "copy m into x",
+    "copy_xm": "copy x into m",
+    "copy_xy": "copy x into y",
+    "copy_yx": "copy y into x"
+  },
+  "policy_predicate_realizations": {
+    "capacity_ok": "the assigned room must hold every listed participant",
+    "room_available": "the assigned room must be available at the requested slot",
+    "kit_available": "the assigned kit must be available at the requested slot",
+    "kit_units_ok": "the requested kit demand must not exceed its available units at that slot",
+    "leader_credential": "the leader must hold credential <credential>",
+    "all_members": "every listed participant must belong to the stated group",
+    "slots_increase": "the second leg must use a strictly later slot than the first",
+    "rooms_differ": "the two legs must use different rooms",
+    "groups_equal": "the two legs must name the same group",
+    "shared_kit_quota": "for each kit and slot, summed demand within the bundle must not exceed the available units"
+  },
+  "selector_realizations": {
+    "plan": "plan <plan>",
+    "leg": "leg <leg-id> of plan <plan>",
+    "group": "legs naming group <group>",
+    "bundle": "bundle <bundle>"
+  },
+  "fact_realizations": {
+    "room_available": "Room <room> is available at slot <slot>: <yes-no-or-variable>.",
+    "kit_available": "Kit <kit> is available at slot <slot>: <yes-no-or-variable>.",
+    "credential": "Person <person> holds credential <credential>: <yes-no-or-variable>.",
+    "member": "Person <person> belongs to group <group>: <yes-no-or-variable>.",
+    "capacity": "Room <room> holds at most <count-or-variable> people.",
+    "kit_units": "Kit <kit> has <count-or-variable> units at slot <slot>."
+  },
+  "condition": "the reported value of {predicate}({arguments}) is {comparison} {value}",
+  "comparison_realizations": {
+    "eq": "equal to",
+    "ge": "at least"
+  },
+  "scope_realizations": {
+    "each_leg": "each leg",
+    "cross_leg": "each two-leg plan",
+    "each_bundle": "each bundle"
+  },
+  "query_variants": {
+    "commitment_ledger": [
+      "At cutoff day {cutoff}, how many units are currently owed by sponsors belonging to group {group_label}?",
+      "At day {cutoff}, what is the current total of units owed by sponsors in group {group_label}?"
+    ],
+    "guarded_transition_learning": [
+      "What is the final state code for stations {final_stations}, using {combine} and encoding 4*m + 2*x + y?",
+      "Using {combine} for final stations {final_stations}, what code equals 4*m + 2*x + y?"
+    ],
+    "policy_feasibility": [
+      "How many of these listed {candidate_kind} candidates are feasible: {candidate_ids}?",
+      "Count the feasible {candidate_kind} candidates in this complete list: {candidate_ids}."
+    ]
+  },
+  "combine_realizations": {
+    "single": "the single state",
+    "xor": "componentwise XOR of both states"
+  },
+  "answer_instructions": {
+    "JSON": "Return exactly one JSON object with keys status then answer: {\"status\":\"DETERMINATE\",\"answer\":N} for a determinate canonical nonnegative integer N; otherwise {\"status\":\"UNDERDETERMINED\",\"answer\":null} or {\"status\":\"INCONSISTENT\",\"answer\":null}. No whitespace, Markdown, or extra text.",
+    "LINE": "Return exactly DETERMINATE|N for a determinate canonical nonnegative integer N, UNDERDETERMINED|- for uncertainty, or INCONSISTENT|- for inconsistency. No whitespace, Markdown, or extra text.",
+    "TOKEN": "Return exactly a canonical nonnegative decimal integer for a determinate result, UNKNOWN for uncertainty, or CONFLICT for inconsistency. No whitespace, Markdown, or extra text."
+  },
+  "nested_productions": {
+    "state": "(m={m}, x={x}, y={y})",
+    "program_always": "Program {program_id}: always {action}.",
+    "program_conditional": "Program {program_id}: when {guard}, {action}; otherwise hold.",
+    "child": "{commitment} for {owner} at {quantity} units",
+    "leg": "Leg {leg_id}: slot {slot}, room {room}, kit {kit}, leader {leader}, people {people}, group {group}, demand {kit_demand}."
+  },
+  "productions": {
+    "alias": {
+      "fields": {
+        "entity_kind": "commitment|sponsor|signer|group",
+        "left": "Value_EntityId",
+        "right": "Value_EntityId"
+      },
+      "variants": [
+        "For {entity_kind}, label {left} refers to the same entity as label {right}.",
+        "Within {entity_kind}, labels {left} and {right} name the same entity."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "alias",
+          "entity_kind",
+          "left",
+          "right"
+        ],
+        [
+          "Record",
+          "alias",
+          "entity_kind",
+          "left",
+          "right"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "membership": {
+      "fields": {
+        "child": "Value_EntityId sponsor or group",
+        "parent": "Value_EntityId group",
+        "from_day": "Value_Day",
+        "through_day": "Value_Day"
+      },
+      "variants": [
+        "{child} belongs to group {parent} from day {from_day} through day {through_day}.",
+        "From day {from_day} through day {through_day}, {child} is a member of group {parent}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "membership",
+          "child",
+          "parent",
+          "from_day",
+          "through_day"
+        ],
+        [
+          "Record",
+          "membership",
+          "child",
+          "parent",
+          "from_day",
+          "through_day"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "delegation": {
+      "fields": {
+        "signer": "Value_EntityId signer",
+        "owner": "Value_EntityId sponsor",
+        "from_day": "Value_Day",
+        "through_day": "Value_Day"
+      },
+      "variants": [
+        "Signer {signer} may edit commitments owned by {owner} from day {from_day} through day {through_day}.",
+        "From day {from_day} through day {through_day}, signer {signer} may edit the commitments of {owner}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "delegation",
+          "signer",
+          "owner",
+          "from_day",
+          "through_day"
+        ],
+        [
+          "Record",
+          "delegation",
+          "signer",
+          "owner",
+          "from_day",
+          "through_day"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "ledger_start": {
+      "fields": {
+        "event_id": "ID",
+        "day": "Value_Day",
+        "commitment": "EntityId commitment",
+        "owner": "Value_EntityId sponsor",
+        "quantity": "Value_Quantity",
+        "signer": "Value_EntityId signer"
+      },
+      "variants": [
+        "Event {event_id}, effective day {day}, starts commitment {commitment} for {owner} with {quantity} units; signer {signer}.",
+        "On effective day {day}, event {event_id} creates commitment {commitment} owned by {owner}, quantity {quantity} units, signed by {signer}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "ledger_start",
+          "event_id",
+          "day",
+          "commitment",
+          "owner",
+          "quantity",
+          "signer"
+        ],
+        [
+          "Record",
+          "ledger_start",
+          "event_id",
+          "day",
+          "commitment",
+          "owner",
+          "quantity",
+          "signer"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "ledger_amend": {
+      "fields": {
+        "event_id": "ID",
+        "day": "Value_Day",
+        "commitment": "EntityId commitment",
+        "predecessor": "ID event",
+        "quantity": "Value_Quantity",
+        "signer": "Value_EntityId signer"
+      },
+      "variants": [
+        "Event {event_id}, effective day {day}, changes commitment {commitment} after {predecessor} to {quantity} units; signer {signer}.",
+        "On effective day {day}, event {event_id} amends commitment {commitment}, predecessor {predecessor}, to {quantity} units, signed by {signer}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "ledger_amend",
+          "event_id",
+          "day",
+          "commitment",
+          "predecessor",
+          "quantity",
+          "signer"
+        ],
+        [
+          "Record",
+          "ledger_amend",
+          "event_id",
+          "day",
+          "commitment",
+          "predecessor",
+          "quantity",
+          "signer"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "ledger_transfer": {
+      "fields": {
+        "event_id": "ID",
+        "day": "Value_Day",
+        "commitment": "EntityId commitment",
+        "predecessor": "ID event",
+        "owner": "Value_EntityId sponsor",
+        "signer": "Value_EntityId signer"
+      },
+      "variants": [
+        "Event {event_id}, effective day {day}, transfers commitment {commitment} after {predecessor} to {owner}; signer {signer}.",
+        "On effective day {day}, event {event_id} transfers commitment {commitment}, predecessor {predecessor}, to owner {owner}, signed by {signer}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "ledger_transfer",
+          "event_id",
+          "day",
+          "commitment",
+          "predecessor",
+          "owner",
+          "signer"
+        ],
+        [
+          "Record",
+          "ledger_transfer",
+          "event_id",
+          "day",
+          "commitment",
+          "predecessor",
+          "owner",
+          "signer"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "ledger_cancel": {
+      "fields": {
+        "event_id": "ID",
+        "day": "Value_Day",
+        "commitment": "EntityId commitment",
+        "predecessor": "ID event",
+        "signer": "Value_EntityId signer"
+      },
+      "variants": [
+        "Event {event_id}, effective day {day}, closes commitment {commitment} after {predecessor}; signer {signer}.",
+        "On effective day {day}, event {event_id} cancels commitment {commitment}, predecessor {predecessor}, signed by {signer}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "ledger_cancel",
+          "event_id",
+          "day",
+          "commitment",
+          "predecessor",
+          "signer"
+        ],
+        [
+          "Record",
+          "ledger_cancel",
+          "event_id",
+          "day",
+          "commitment",
+          "predecessor",
+          "signer"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "ledger_split": {
+      "fields": {
+        "event_id": "ID",
+        "day": "Value_Day",
+        "commitment": "EntityId commitment",
+        "predecessor": "ID event",
+        "children": "ChildCommitment[], exactly 2",
+        "signer": "Value_EntityId signer"
+      },
+      "variants": [
+        "Event {event_id}, effective day {day}, replaces commitment {commitment} after {predecessor} with children {children}; signer {signer}.",
+        "On effective day {day}, event {event_id} retires commitment {commitment}, predecessor {predecessor}, and creates children {children}, signed by {signer}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "ledger_split",
+          "event_id",
+          "day",
+          "commitment",
+          "predecessor",
+          "children",
+          "signer"
+        ],
+        [
+          "Record",
+          "ledger_split",
+          "event_id",
+          "day",
+          "commitment",
+          "predecessor",
+          "children",
+          "signer"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "operator_menu": {
+      "fields": {
+        "operator": "EntityId operator",
+        "candidates": "GuardedProgram[], size 3..4, distinct truth tables"
+      },
+      "variants": [
+        "Operator {operator} uses exactly one of these programs: {candidates}.",
+        "The program for operator {operator} is exactly one member of this menu: {candidates}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "operator_menu",
+          "operator",
+          "candidates"
+        ],
+        [
+          "Record",
+          "operator_menu",
+          "operator",
+          "candidates"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "bench_example": {
+      "fields": {
+        "operator": "EntityId operator",
+        "input": "State",
+        "output": "State"
+      },
+      "variants": [
+        "Bench observation: {operator} maps state {input} to {output}.",
+        "One bench step of operator {operator} changes state {input} into {output}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "bench_example",
+          "operator",
+          "input",
+          "output"
+        ],
+        [
+          "Record",
+          "bench_example",
+          "operator",
+          "input",
+          "output"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "station_initial": {
+      "fields": {
+        "station": "EntityId station",
+        "state": "State"
+      },
+      "variants": [
+        "Station {station} starts in state {state}.",
+        "The initial state of station {station} is {state}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "station_initial",
+          "station",
+          "state"
+        ],
+        [
+          "Record",
+          "station_initial",
+          "station",
+          "state"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "trace_apply": {
+      "fields": {
+        "tick": "Value_Tick",
+        "station": "EntityId station",
+        "operator": "Value_EntityId operator"
+      },
+      "variants": [
+        "At tick {tick}, station {station} applies {operator}.",
+        "Station {station} applies operator {operator} at tick {tick}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "trace_apply",
+          "tick",
+          "station",
+          "operator"
+        ],
+        [
+          "Record",
+          "trace_apply",
+          "tick",
+          "station",
+          "operator"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "trace_splice": {
+      "fields": {
+        "tick": "Value_Tick",
+        "source": "EntityId station",
+        "source_register": "Value_Register",
+        "destination": "EntityId station",
+        "destination_register": "Value_Register"
+      },
+      "variants": [
+        "At tick {tick}, copy register {source_register} of {source} into register {destination_register} of {destination}.",
+        "At tick {tick}, station {destination} receives in register {destination_register} the value of register {source_register} from {source}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "trace_splice",
+          "tick",
+          "source",
+          "source_register",
+          "destination",
+          "destination_register"
+        ],
+        [
+          "Record",
+          "trace_splice",
+          "tick",
+          "source",
+          "source_register",
+          "destination",
+          "destination_register"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "trace_fork": {
+      "fields": {
+        "tick": "Value_Tick",
+        "source": "EntityId station",
+        "destinations": "ordered EntityId[], exactly 2 distinct"
+      },
+      "variants": [
+        "At tick {tick}, duplicate station {source} into fresh stations {destinations}.",
+        "Station {source} is copied into fresh stations {destinations} at tick {tick}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "trace_fork",
+          "tick",
+          "source",
+          "destinations"
+        ],
+        [
+          "Record",
+          "trace_fork",
+          "tick",
+          "source",
+          "destinations"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "trace_join": {
+      "fields": {
+        "tick": "Value_Tick",
+        "sources": "Set[EntityId station], exactly 2",
+        "destination": "EntityId station",
+        "operation": "constant xor"
+      },
+      "variants": [
+        "At tick {tick}, merge stations {sources} by registerwise {operation} into fresh station {destination}.",
+        "Fresh station {destination} receives the registerwise {operation} of stations {sources} at tick {tick}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "trace_join",
+          "tick",
+          "sources",
+          "destination",
+          "operation"
+        ],
+        [
+          "Record",
+          "trace_join",
+          "tick",
+          "sources",
+          "destination",
+          "operation"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "fact_bool": {
+      "fields": {
+        "predicate": "room_available|kit_available|credential|member",
+        "arguments": "typed ordered scalar/entity array with exact arity from predicates",
+        "value": "Value_Bit"
+      },
+      "variants": [
+        "{fact_clause}",
+        "Reported fact: {fact_clause}"
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "fact_bool",
+          "predicate",
+          "arguments",
+          "value"
+        ],
+        [
+          "Record",
+          "fact_bool",
+          "predicate",
+          "arguments",
+          "value"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "fact_count": {
+      "fields": {
+        "predicate": "capacity|kit_units",
+        "arguments": "typed ordered scalar/entity array with exact arity from predicates",
+        "value": "Value_SmallCount"
+      },
+      "variants": [
+        "{fact_clause}",
+        "Reported fact: {fact_clause}"
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "fact_count",
+          "predicate",
+          "arguments",
+          "value"
+        ],
+        [
+          "Record",
+          "fact_count",
+          "predicate",
+          "arguments",
+          "value"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "session_plan": {
+      "fields": {
+        "plan": "EntityId plan",
+        "legs": "Leg[], size 1..2"
+      },
+      "variants": [
+        "Plan {plan} has ordered legs {legs}.",
+        "The ordered itinerary for plan {plan} is {legs}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "session_plan",
+          "plan",
+          "legs"
+        ],
+        [
+          "Record",
+          "session_plan",
+          "plan",
+          "legs"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "bundle": {
+      "fields": {
+        "bundle": "EntityId bundle",
+        "plans": "Set[EntityId plan], exactly 2 distinct"
+      },
+      "variants": [
+        "Bundle {bundle} contains plans {plans}.",
+        "Plans {plans} together form bundle {bundle}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "bundle",
+          "bundle",
+          "plans"
+        ],
+        [
+          "Record",
+          "bundle",
+          "bundle",
+          "plans"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "base_policy": {
+      "fields": {
+        "policy_id": "ID",
+        "scope": "each_leg|cross_leg|each_bundle",
+        "predicate": "PolicyPredicate"
+      },
+      "variants": [
+        "Policy {policy_id} applies to {scope} and requires {predicate}.",
+        "For {scope}, policy {policy_id} requires that {predicate}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "base_policy",
+          "policy_id",
+          "scope",
+          "predicate"
+        ],
+        [
+          "Record",
+          "base_policy",
+          "policy_id",
+          "scope",
+          "predicate"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "exception": {
+      "fields": {
+        "exception_id": "ID",
+        "base_policy_id": "ID",
+        "selector": "Selector",
+        "condition": "FactCondition"
+      },
+      "variants": [
+        "Exception {exception_id} exempts policy {base_policy_id} for {selector} when {condition}.",
+        "Policy {base_policy_id} is exempted by exception {exception_id} for {selector} if {condition}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "exception",
+          "exception_id",
+          "base_policy_id",
+          "selector",
+          "condition"
+        ],
+        [
+          "Record",
+          "exception",
+          "exception_id",
+          "base_policy_id",
+          "selector",
+          "condition"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    },
+    "incidental": {
+      "fields": {
+        "subject": "EntityId",
+        "attribute": "curtain_color|slip_paper_color|meeting_refreshment",
+        "value": "string from a frozen finite vocabulary"
+      },
+      "variants": [
+        "{subject} has {attribute} reported as {value}.",
+        "The reported {attribute} of {subject} is {value}."
+      ],
+      "table_headers": [
+        [
+          "Citation",
+          "incidental",
+          "subject",
+          "attribute",
+          "value"
+        ],
+        [
+          "Record",
+          "incidental",
+          "subject",
+          "attribute",
+          "value"
+        ]
+      ],
+      "table_separator": [
+        "---",
+        "---",
+        "---",
+        "---",
+        "---"
+      ]
+    }
+  },
+  "attribute_realizations": {
+    "curtain_color": "curtain color",
+    "slip_paper_color": "slip paper color",
+    "meeting_refreshment": "meeting refreshment"
+  },
+  "fact_templates": {
+    "room_available": "Room {arguments[0]} is available at slot {arguments[1]}: {value}.",
+    "kit_available": "Kit {arguments[0]} is available at slot {arguments[1]}: {value}.",
+    "credential": "Person {arguments[0]} holds credential {arguments[1]}: {value}.",
+    "member": "Person {arguments[0]} belongs to group {arguments[1]}: {value}.",
+    "capacity": "Room {arguments[0]} holds at most {value} people.",
+    "kit_units": "Kit {arguments[0]} has {value} units at slot {arguments[1]}."
+  },
+  "fact_bool_realizations": {
+    "0": "no",
+    "1": "yes"
+  },
+  "reference_rules": {
+    "entity": "Declared entity ID resolves through quoted public label with exact kind; variable domain must have required scalar type and each entity choice required kind.",
+    "event": "predecessor names declared ledger event; split event may head either named child. Event definition ID distinct from record citation ID.",
+    "policy": "exception names existing base policy; selector kind compatible with its scope. Leg selector names a leg of its specified plan.",
+    "plan": "each queried plan and each bundle member names a session_plan.",
+    "station": "all station refs declared; prior-state/freshness requirements are semantic axioms.",
+    "variable": "Variable IDs must not collide with entity IDs or public labels; at most two declarations, each with two or three canonical typed alternatives."
+  },
+  "clarifications_for_review": [
+    "Incidental finite vocabulary newly specified here; all entity kinds allowed as subjects because contract does not restrict them.",
+    "Tables expose exact contract fields with a kind column. Nested cells use finite clauses, never private JSON.",
+    "Ordinary document dates use dated day N because the contract defines Day 0..31, not a calendar year.",
+    "JSON quoting only encodes scalar strings, including document titles; it is never an embedded world archive.",
+    "The reading guide gives status semantics without any query solution. Framework variants preserve exact contract semantics.",
+    "Identity declarations entity/variable/document/record/framework are unique; repeated equivalent factual edges and repeated event/menu/policy/plan definitions under different record IDs are allowed. Incompatible resolved source definitions produce W empty, not schema failure.",
+    "Program IDs are unique within one menu; leg IDs within one plan definition; repeated identical source definitions preserve those identities.",
+    "Cross-leg compatibility applies to queried plans or member plans of queried bundles; extra unqueried plan definitions may have one leg.",
+    "Prose fact Bit values yes/no; table Bit cells 0/1. Incidental values are plain finite tokens. Join operation is uppercase XOR in all public renderings.",
+    "Independent title policy restricts ordinary metadata to Unicode alphabetic words/spaces/hyphens, first/last alphabetic, and excludes the reserved casefold vocabulary in title_codec. No numeric allocation/answer/role labels or instruction punctuation.",
+    "Repeated source definitions: identity/required leg/scope references need one individually valid assertion. Conflicting resolved definitions remain source contradictions; do not require every conflicting definition to give a matching scope/leg.",
+    "C condition source keys are mandatory. Missing actually evaluated policy premise on any source-compatible binding is SCHEMA_ERROR; exemptions may remove unused premises. Admission separately checks conditional source coverage for controls without changing query semantics.",
+    "C conjunctions use order-independent decisive false: one supported false requirement makes other missing unused premises irrelevant without assigning a default. If no supported false masks an actually needed missing premise on any source-compatible binding, the whole world is SCHEMA_ERROR; never discard that binding. A locally infeasible bundle member makes its bundle quota unused. Dataset admission preflight separately requires complete potential resource-key closure for dependency counterfactuals."
+  ],
+  "operation_realizations": {
+    "xor": "XOR"
+  },
+  "gate_receipt_schema": {
+    "catalogue_freeze_receipt.json": {
+      "exact_fields": [
+        "schema_version",
+        "status",
+        "catalogue_id",
+        "catalogue_sha256",
+        "design_sha256",
+        "contract_sha256",
+        "independent_review_sha256",
+        "code_identity",
+        "review_path"
+      ],
+      "schema_version": 1,
+      "status": "INDEPENDENTLY_REVIEWED_FROZEN",
+      "review_path": "cycles/003-dossier-implementation/catalogue_review/REVIEW.json",
+      "code_identity_files": [
+        "schema.py",
+        "renderer.py",
+        "public_parser.py",
+        "independent_solver.py"
+      ]
+    },
+    "independent_review": {
+      "schema_version": 1,
+      "status": "PASS_INDEPENDENT_CATALOGUE_AND_IMPLEMENTATION_REVIEW",
+      "required_identity_fields": [
+        "producer_identity",
+        "design_sha256",
+        "contract_sha256"
+      ],
+      "producer_identity_files": [
+        "schema.py",
+        "renderer.py",
+        "public_parser.py",
+        "independent_solver.py",
+        "catalogue.json"
+      ],
+      "unresolved_critical_or_major_findings": []
+    },
+    "reservation_wrapper": {
+      "exact_fields": [
+        "reservation",
+        "adapter_receipt",
+        "registry_path",
+        "registry_snapshot_sha256"
+      ],
+      "registry_binding": "Full generic append-only registry chain; named reserved ancestor snapshot must exist; prospective parent split/specification/source IDs match. Registered specification is {world:complete UnsolvedWorld,source_cell_metadata:closed source/cell metadata}.",
+      "timing_limit": "LOCAL_COMMIT_ORDER_ONLY_NOT_EXTERNAL_EXECUTION_ATTESTATION",
+      "registry_receipt_hash_basis": "SHA256 of canonical compact JSON core {sequence,snapshot_sha256,snapshot_path:actual resolved named path,summary:named snapshot summary}; no LF; cleanup warnings excluded. This canonical receipt identity is not a physical pretty-file byte hash."
+    },
+    "source_cell_metadata": {
+      "exact_fields": [
+        "schema_version",
+        "catalogue_id",
+        "catalogue_sha256",
+        "design_sha256",
+        "contract_sha256",
+        "allocated_cell",
+        "content_family_id",
+        "source_domain_id",
+        "producer_family_id",
+        "producer_version_sha256",
+        "ancestry"
+      ],
+      "schema_version": 1,
+      "allocated_cell_exact_fields": [
+        "mechanism",
+        "structure_id",
+        "structure_index",
+        "level",
+        "case_index",
+        "role",
+        "format"
+      ],
+      "binding": "Every cell/source/ancestry field matches complete raw world, validated Reservation and RegistryAdapterReceipt; exact catalogue/design/contract hashes. No answer/status/score fields."
+    }
+  },
+  "types": {
+    "Reservation": {
+      "fields": {
+        "reservation_id": "AuthorId",
+        "namespace": "constant parent_namespace",
+        "parent_id": "AuthorId",
+        "semantic_parent_id": "SemanticParentId",
+        "mechanism": "enum allocation.mechanisms",
+        "structure_id": "enum structures keys",
+        "structure_index": "integer 0..2",
+        "level": "integer 1..2",
+        "case_index": "integer 0..2",
+        "role": "PROSPECTIVE_TRAIN|EXPOSED_DEV",
+        "format": "JSON|LINE|TOKEN",
+        "content_family_id": "RegistryId",
+        "content_family_sha256": "Hash",
+        "source_domain_id": "AuthorId",
+        "producer_family_id": "RegistryId",
+        "producer_version_sha256": "Hash",
+        "semantic_recipe_sha256": "Hash",
+        "normalized_structure_sha256": "Hash",
+        "structure_cluster_id": "StructuralClusterId",
+        "ancestry": "DerivativeEdge[]",
+        "unsolved_recipe_sha256": "Hash",
+        "reserved_before_render_solve": "true",
+        "reservation_sequence": "nonnegative integer",
+        "registry_previous_sha256": "Hash|null",
+        "registry_receipt_sha256": "Hash",
+        "registry_adapter_receipt_sha256": "Hash"
+      }
+    },
+    "RegistryAdapterReceipt": {
+      "fields": {
+        "author_parent_id": "AuthorId",
+        "semantic_parent_id": "SemanticParentId",
+        "author_structure_id": "enum structures keys",
+        "structural_cluster_id": "StructuralClusterId",
+        "content_family_id": "RegistryId",
+        "content_source_ids": "Set[RegistryId]",
+        "producer_source_ids": "Set[RegistryId]",
+        "source_domain_id": "AuthorId",
+        "role": "PROSPECTIVE_TRAIN|EXPOSED_DEV",
+        "registry_split": "TRAIN|DEV",
+        "registration_mode": "constant PROSPECTIVE_PRE_GENERATION",
+        "registry_full_specification_sha256": "Hash",
+        "registry_mechanical_normalized_sha256": "Hash",
+        "author_alpha_semantic_sha256": "Hash",
+        "author_alpha_structure_sha256": "Hash",
+        "registry_snapshot_sequence": "positive integer",
+        "registry_snapshot_sha256": "Hash"
+      }
+    },
+    "DerivativeEdge": {
+      "fields": {
+        "ancestor_identity_type": "author_parent|registry_parent|registry_source|author_row",
+        "ancestor_id": "AuthorId|SemanticParentId|RegistryId, selected by ancestor_identity_type",
+        "relation": "source|view|repair|counterfactual|ablation|relabel|reorder",
+        "ancestor_sha256": "Hash"
+      }
+    },
+    "SourceFamily": {
+      "fields": {
+        "content_family_id": "RegistryId",
+        "family_kind": "constant SOURCE_CONTENT_FAMILY",
+        "assigned_role": "PROSPECTIVE_TRAIN|EXPOSED_DEV|EXPOSED_DESIGN_FIXTURE",
+        "source_domain_id": "AuthorId",
+        "producer_family_id": "RegistryId",
+        "origin": "ORIGINAL_AUTHOR_CREATED",
+        "setting": "COMMUNITY_WORKSHOP",
+        "owner": "string",
+        "revision": "ID",
+        "origin_recipe_sha256": "Hash",
+        "rights_declaration": "CC0-1.0 proposed authored facts/text",
+        "imported_text": "false",
+        "benchmark_rows": "false",
+        "existing_train_rows": "false",
+        "private_eval_derivation": "false",
+        "document_inventory": "Set[DocumentPurpose]",
+        "content_shared_across_roles": "false",
+        "historical_semantic_overlap": "UNRESOLVED|AUDITED_WITH_DECLARED_COVERAGE",
+        "rights_receipt_sha256": "Hash|null"
+      }
+    },
+    "ConstructionLineageReceipt": {
+      "fields": {
+        "author_parent_id": "AuthorId",
+        "allocated_cell": "ordered integer tuple [mechanism_index,structure_index,level,case_index]",
+        "fresh_origin_recipe_sha256": "Hash",
+        "input_content_source_ids": "Set[RegistryId], empty for a genuinely fresh case",
+        "input_semantic_parent_ids": "Set[SemanticParentId], empty for a genuinely fresh case",
+        "producer_sha256": "Hash",
+        "complete_unsolved_specification_sha256": "Hash",
+        "alpha_semantic_sha256": "Hash",
+        "declared_fresh": "boolean",
+        "detected_ancestry_findings": "string[]",
+        "canonical_lineage_group_id": "RegistryId",
+        "method_and_limitations": "string"
+      }
+    },
+    "CorpusLineageReport": {
+      "fields": {
+        "allocated_attempt_slots": "constant 54",
+        "registered_specifications": "nonnegative integer",
+        "repaired_revisions": "nonnegative integer",
+        "accepted_candidate_parents": "nonnegative integer",
+        "source_semantic_ancestry_components": "nonnegative integer",
+        "distinct_active_structures": "nonnegative integer",
+        "actual_status_counts": "closed map DETERMINATE/UNDERDETERMINED/INCONSISTENT to nonnegative integers",
+        "counts_are_independence_claims": "false until scope-qualified ancestry/diversity audit",
+        "method_and_limitations": "string"
+      }
+    },
+    "ProducerFamily": {
+      "fields": {
+        "producer_family_id": "RegistryId",
+        "family_kind": "constant PRODUCER_ONLY",
+        "grammar_version": "AuthorId",
+        "renderer_sha256": "Hash|null",
+        "independent_worlds_may_span_roles": "true",
+        "grants_content_role_independence": "false"
+      }
+    },
+    "UnsolvedWorld": {
+      "fields": {
+        "world_schema": "constant rineya.distributed_dossier_world.v1",
+        "parent_id": "ID",
+        "reservation_id": "ID",
+        "mechanism": "enum allocation.mechanisms",
+        "structure_id": "enum structures keys",
+        "level": "integer 1..2",
+        "entities": "Entity[]",
+        "variables": "Variable[]",
+        "documents": "Document[]",
+        "records": "Record[]",
+        "framework": "Framework",
+        "query": "Query",
+        "format": "JSON|LINE|TOKEN",
+        "content_family_id": "RegistryId",
+        "source_domain_id": "AuthorId",
+        "producer_family_id": "RegistryId"
+      },
+      "forbidden_fields": [
+        "answer",
+        "solution",
+        "expected_status",
+        "difficulty_score",
+        "necessary",
+        "active_scope",
+        "winning",
+        "distractor",
+        "authoritative"
+      ],
+      "relevance_scope_tags": "FORBIDDEN; a base_policy.scope is a legitimate semantic policy scope and is not a relevance tag"
+    },
+    "Entity": {
+      "fields": {
+        "entity_id": "ID",
+        "kind": "commitment|sponsor|signer|group|station|operator|person|room|kit|credential|plan|bundle",
+        "public_label": "Label"
+      }
+    },
+    "Variable": {
+      "fields": {
+        "variable_id": "ID",
+        "scalar_type": "Bit|Quantity|SmallCount|EntityId|Day|Tick|Register",
+        "choices": "Set[typed scalar], size 2..3"
+      }
+    },
+    "Document": {
+      "fields": {
+        "document_id": "ID",
+        "purpose": "DocumentPurpose",
+        "title": "string, 4..80 characters",
+        "dated_day": "Day",
+        "record_ids": "RecordId[], no duplicates",
+        "style": "controlled_prose|small_table"
+      }
+    },
+    "DocumentPurpose": {
+      "enum": [
+        "delegation_circular",
+        "booking_minutes",
+        "delivery_slips",
+        "alias_crosswalk",
+        "calibration_notes",
+        "maintenance_log",
+        "room_roster",
+        "policy_amendments",
+        "session_proposals"
+      ]
+    },
+    "Framework": {
+      "fields": {
+        "semantic_version": "constant RIQF-C002-DD-001",
+        "rule_clauses": "FrameworkClause[]",
+        "closed_candidate_list": "true",
+        "unknown_defaults": "NONE",
+        "source_assertions_are_conjunctive": "true"
+      }
+    },
+    "FrameworkClause": {
+      "fields": {
+        "rule_id": "ID",
+        "code": "enum semantic_rules keys",
+        "public_variant": "integer identifying a frozen grammar variant"
+      }
+    },
+    "Query": {
+      "tag": "mechanism",
+      "variants": {
+        "commitment_ledger": {
+          "mechanism": "constant commitment_ledger",
+          "cutoff": "Day",
+          "group_label": "Value_EntityId"
+        },
+        "guarded_transition_learning": {
+          "mechanism": "constant guarded_transition_learning",
+          "final_stations": "ordered EntityId[], size 1..2",
+          "combine": "single|xor",
+          "encoding": "constant 4m+2x+y"
+        },
+        "policy_feasibility": {
+          "mechanism": "constant policy_feasibility",
+          "candidate_ids": "Set[EntityId], size 3..12",
+          "candidate_kind": "plan|bundle",
+          "operation": "constant count_feasible"
+        }
+      }
+    },
+    "Record": {
+      "tag": "kind",
+      "variants": [
+        "alias",
+        "membership",
+        "delegation",
+        "ledger_start",
+        "ledger_amend",
+        "ledger_transfer",
+        "ledger_cancel",
+        "ledger_split",
+        "operator_menu",
+        "bench_example",
+        "station_initial",
+        "trace_apply",
+        "trace_splice",
+        "trace_fork",
+        "trace_join",
+        "fact_bool",
+        "fact_count",
+        "session_plan",
+        "bundle",
+        "base_policy",
+        "exception",
+        "incidental"
+      ],
+      "all_have": {
+        "record_id": "ID",
+        "document_id": "ID"
+      }
+    },
+    "PublicWorld": {
+      "fields": {
+        "world_schema": "constant rineya.distributed_dossier_world.v1",
+        "mechanism": "enum allocation.mechanisms",
+        "entities": "Entity[]",
+        "variables": "Variable[]",
+        "documents": "Document[]",
+        "records": "Record[]",
+        "framework": "Framework",
+        "query": "Query",
+        "format": "JSON|LINE|TOKEN"
+      }
+    },
+    "PublicPacket": {
+      "fields": {
+        "row_id": "ID",
+        "parent_id": "ID",
+        "view_id": "ID",
+        "revision": "positive integer",
+        "messages": "exactly [system,user] with sole role/content fields",
+        "messages_sha256": "Hash",
+        "reservation_receipt_sha256": "Hash"
+      },
+      "blind_solve_visible_fields": [
+        "row_id",
+        "messages",
+        "messages_sha256"
+      ]
+    },
+    "ParsedPublic": {
+      "fields": {
+        "world": "PublicWorld",
+        "record_spans": "RecordSpan[]",
+        "atom_spans": "AtomSpan[]",
+        "unparsed_assertions": "empty array",
+        "parser_identity_sha256": "Hash"
+      }
+    },
+    "RecordSpan": {
+      "fields": {
+        "record_id": "ID",
+        "span": "Span"
+      }
+    },
+    "AtomSpan": {
+      "fields": {
+        "atom_id": "ID",
+        "record_id": "ID",
+        "field_path": "FieldPath",
+        "span": "Span",
+        "typed_value_sha256": "Hash"
+      }
+    },
+    "Solution": {
+      "fields": {
+        "status": "DETERMINATE|UNDERDETERMINED|INCONSISTENT",
+        "possible_answers": "Set[ScalarAnswer]",
+        "compatible_world_count": "nonnegative integer",
+        "certificate": "Certificate",
+        "solver_identity_sha256": "Hash",
+        "public_messages_sha256": "Hash"
+      }
+    },
+    "Certificate": {
+      "fields": {
+        "sufficient_atom_ids": "Set[ID]",
+        "operative_rule_ids": "Set[ID]",
+        "step_values": "TypedStep[]",
+        "compatible_witnesses": "Witness[], at least one for determinate and two different-answer witnesses for underdetermined, none for inconsistent",
+        "inconsistency_core_atom_ids": "Set[ID], empty unless inconsistent",
+        "alternative_support_sets": "Set[ID][]",
+        "minimality_scope": "LOCAL_SINGLE_ATOM_ABLATIONS_NOT_ALL_GLOBAL_PROOFS"
+      }
+    },
+    "Witness": {
+      "fields": {
+        "bindings": "Binding[]",
+        "learned_programs": "LearnedProgram[]",
+        "result": "ScalarAnswer",
+        "semantic_world_sha256": "Hash"
+      }
+    },
+    "Binding": {
+      "fields": {
+        "variable_id": "ID",
+        "value": "typed scalar in declared domain"
+      }
+    },
+    "LearnedProgram": {
+      "fields": {
+        "operator_id": "EntityId",
+        "program_id": "ID"
+      }
+    },
+    "TypedStep": {
+      "fields": {
+        "step_id": "ID",
+        "operation": "alias_component|membership_path|authorize|ledger_transition|sum_term|candidate_elimination|station_transition|splice|xor_merge|predicate|exemption|candidate_decision|quota_sum|answer_set|unsat_core",
+        "inputs": "Set[atom/step/rule ID]",
+        "value": "integer|boolean|EntityId|State|Set[ScalarAnswer]|Set[ID]"
+      }
+    },
+    "CanonicalRow": {
+      "fields": {
+        "row_id": "ID",
+        "parent_id": "ID",
+        "view_id": "ID",
+        "revision": "positive integer",
+        "role": "PROSPECTIVE_TRAIN|EXPOSED_DEV",
+        "reservation_receipt_sha256": "Hash",
+        "construction_lineage_receipt_sha256": "Hash",
+        "unsolved_world": "UnsolvedWorld",
+        "public_packet": "PublicPacket",
+        "target": "string",
+        "author_solution": "Solution",
+        "independent_solution_receipt_sha256": "Hash",
+        "proof_ledger_sha256": "Hash",
+        "dependency_metrics": "DependencyMetrics",
+        "structure_feature_receipts": "FeatureDependencyReceipt[]",
+        "controls_manifest_sha256": "Hash",
+        "review_receipts": "ReviewReceipt[], exactly semantic and adversarial",
+        "token_profile_sha256": "Hash|null",
+        "disposition": "ACCEPTED_RESEARCH|QUARANTINED|REJECTED",
+        "distributed_label": "PROVEN_LOCAL_DEPENDENCIES|ANSWERABILITY_CONTROL_ONLY|FAILED",
+        "historical_overlap_status": "UNRESOLVED|AUDITED_WITH_DECLARED_COVERAGE",
+        "training_ready": "false"
+      },
+      "sft_export": "messages only: actual system/user plus exact final target; no canonical metadata"
+    },
+    "DependencyMetrics": {
+      "fields": {
+        "public_records": "nonnegative integer",
+        "public_semantic_atoms": "nonnegative integer",
+        "sufficient_records": "nonnegative integer",
+        "answer_sensitive_records": "nonnegative integer",
+        "answer_sensitive_atoms": "nonnegative integer",
+        "status_sensitive_records": "nonnegative integer",
+        "answer_set_sensitive_records": "nonnegative integer",
+        "witness_dependency_records": "nonnegative integer",
+        "operative_rules": "nonnegative integer",
+        "answer_sensitive_rules": "nonnegative integer",
+        "status_sensitive_rules": "nonnegative integer",
+        "influential_test_events": "nonnegative integer",
+        "learned_operators": "nonnegative integer",
+        "aggregate_branches_or_candidate_decisions": "nonnegative integer",
+        "necessary_documents": "nonnegative integer",
+        "occupied_quartiles": "Set[integer 0..3]",
+        "necessary_midpoint_span_fraction": "number 0..1",
+        "incidental_byte_fraction": "number 0..1",
+        "nonoperative_semantic_records": "nonnegative integer",
+        "inconsistency_core_records": "nonnegative integer",
+        "metric_basis": "UTF8_DOSSIER_OFFSETS|EXACT_TOKEN_OFFSETS",
+        "all_claimed_dependencies_tested": "boolean"
+      }
+    },
+    "ControlReceipt": {
+      "fields": {
+        "control_id": "ID",
+        "parent_id": "ID",
+        "source_row_sha256": "Hash",
+        "kind": "enum control_policy.required_kinds",
+        "changed_atom_ids": "Set[ID]",
+        "changed_rule_ids": "Set[ID]",
+        "changed_record_ids": "Set[ID]",
+        "allowed_vocabulary_mutation": "boolean",
+        "before_public_sha256": "Hash",
+        "after_public_sha256": "Hash",
+        "before_answer_set": "Set[ScalarAnswer]",
+        "after_answer_set": "Set[ScalarAnswer]",
+        "before_status": "DETERMINATE|UNDERDETERMINED|INCONSISTENT",
+        "after_status": "DETERMINATE|UNDERDETERMINED|INCONSISTENT",
+        "expected_relation": "CHANGED_SCALAR|CHANGED_STATUS|CHANGED_ANSWER_SET|INVARIANT|FORMAT_REJECT|NO_UNIQUE_PUBLIC_SOLUTION",
+        "independent_public_solution_sha256": "Hash",
+        "result": "PASS|FAIL|NOT_APPLICABLE_WITH_REASON",
+        "reason": "string",
+        "limitations": "string"
+      }
+    },
+    "FeatureDependencyReceipt": {
+      "fields": {
+        "structure_id": "enum structures keys",
+        "feature_id": "ID naming a required structure_dependency_gates feature",
+        "source_row_sha256": "Hash",
+        "control_receipt_sha256": "Hash",
+        "intervention_scope": "SINGLE_ATOM|CORRELATED_SOURCE_OR_GRAPH_CHANGE",
+        "grammar_schema_valid": "boolean",
+        "independent_before_answer": "ScalarAnswer",
+        "independent_after_answer": "ScalarAnswer",
+        "feature_influences_scalar": "boolean",
+        "limitation": "string"
+      }
+    },
+    "ReviewReceipt": {
+      "fields": {
+        "role": "semantic|adversarial",
+        "reviewer_id": "ID",
+        "row_sha256": "Hash",
+        "public_packet_sha256": "Hash",
+        "blind_solution_sha256": "Hash",
+        "blind_evidence_sha256": "Hash",
+        "method": "string",
+        "findings": "Finding[]",
+        "limitations": "string",
+        "reviewed_after_last_repair": "boolean"
+      }
+    },
+    "Finding": {
+      "fields": {
+        "finding_id": "ID",
+        "severity": "critical|major|minor",
+        "description": "string",
+        "disposition": "RESOLVED|OPEN",
+        "resolution_sha256": "Hash|null"
+      }
+    }
+  },
+  "document_purposes": [
+    "delegation_circular",
+    "booking_minutes",
+    "delivery_slips",
+    "alias_crosswalk",
+    "calibration_notes",
+    "maintenance_log",
+    "room_roster",
+    "policy_amendments",
+    "session_proposals"
+  ],
+  "record_mechanisms": {
+    "commitment_ledger": [
+      "alias",
+      "membership",
+      "delegation",
+      "ledger_start",
+      "ledger_amend",
+      "ledger_transfer",
+      "ledger_cancel",
+      "ledger_split",
+      "incidental"
+    ],
+    "guarded_transition_learning": [
+      "operator_menu",
+      "bench_example",
+      "station_initial",
+      "trace_apply",
+      "trace_splice",
+      "trace_fork",
+      "trace_join",
+      "incidental"
+    ],
+    "policy_feasibility": [
+      "fact_bool",
+      "fact_count",
+      "session_plan",
+      "bundle",
+      "base_policy",
+      "exception",
+      "incidental"
+    ]
+  },
+  "closed_records": {
+    "all_fields_required": true,
+    "additional_fields_allowed": false,
+    "nullable_fields": "Only explicit T|null; raw worlds have no nullable fields.",
+    "primitive_coercion": "No Boolean/float/string coercion to integer.",
+    "source_conflict_handling": "Valid contradictory assertions retained for compatible-world solving. Schema errors never status INCONSISTENT.",
+    "event_reference": "Predecessor must name at least one declared ledger event; current head/chronology/delegation and split-child compatibility checked per compatible assignment.",
+    "station_reference": "Declared station entity IDs are required; existing/fresh station/tick requirements checked per compatible assignment.",
+    "interval": "Each endpoint primitive Day required; from<=through is a compatible-world axiom.",
+    "operator_menu": "Candidate IDs unique within menu and complete eight-state functions distinct; repeated menu assertion identity retained.",
+    "structure_gate": "Raw mechanism/structure/level/cell types checked; answer-sensitive graph requirements are separate post-reservation admissions, never pre-query schema computations."
+  },
+  "title_codec": {
+    "min_length": 4,
+    "max_length": 80,
+    "characters": "Unicode alphabetic characters, ASCII space, ASCII hyphen only",
+    "first_last": "Unicode alphabetic",
+    "reserved_casefold_words": [
+      "answer",
+      "target",
+      "status",
+      "unknown",
+      "conflict",
+      "determinate",
+      "underdetermined",
+      "inconsistent",
+      "ignore",
+      "output",
+      "print",
+      "assistant",
+      "system",
+      "prompt",
+      "user",
+      "tool",
+      "train",
+      "dev",
+      "test",
+      "check",
+      "final",
+      "case",
+      "level",
+      "winning",
+      "authoritative",
+      "distractor",
+      "oracle"
+    ],
+    "word_separators": [
+      " ",
+      "-"
+    ],
+    "public_encoding": "JSON double-quoted scalar, but content must pass the ordinary-title lexical policy."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "record_type": "nonauthor_publication_tool_source_review",
+  "reviewer": "publication_safety_review",
+  "source_sha256": "4dd86f3d6c316f19f799a90b2ca56d5d2fd68e06b3d0ce11e472d183d67ed1dd",
+  "tests_sha256": "28545e26c3c9683fe4924761832ad9a9a47eaf435c0028a68222e939644e5672",
+  "verdict": "PASS_SCOPED_REPAIRS",
+  "actual_statement": "Scoped closure confirmed. The final delta rejects every program/programs source-root component before filesystem probes. Tests cover program roots, referenced ancestors, owned prefixes, exact refs, and unrelated subtrees. No remaining blocker in the reviewed repairs.",
+  "reviewer_access": "Tooling source and permitted repository metadata only",
+  "reviewer_original_payload_access": false,
+  "reviewer_tests_executed": 0,
+  "archive_verification_by_reviewer": false,
+  "hostile_windows_qualification": false,
+  "limits": [
+    "Source-only repair review",
+    "Same-model procedural non-author review",
+    "Archive integrity requires actual separate verification",
+    "No dataset semantic/native/admission/model qualification"
+  ]
+}

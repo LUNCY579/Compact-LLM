@@ -1,0 +1,29 @@
+# Review of the preserved research
+
+The review checked the foundry's core plans, policy, source layout, immutable delivery manifests, important saved findings, publication boundary and byte-preservation requirements. It does not substitute for a new semantic review of every historical dataset row. Archive verification covers every included file's identity and reconstruction.
+
+## Dataset pipeline and supervision
+
+The foundry separates source intake and provenance, parent/structure/role reservation, generation, independent public reconstruction, malformed/wrong/dependency/invariance controls, semantic and adversarial row review, contamination/diversity checks, exact tokenizer/target/EOS/mask profiling, research release and separately qualified learner evaluation. Failed and partial attempts remain evidence. Changed inputs expire their dependent reviews; targets are never silently truncated.
+
+The initial pilot has 72 semantic worlds across six shared structures: 48 TRAIN, 12 CAL and 12 exposed DEV. Pilot v1/v2/v3 retain the same worlds; they do not establish 216 independent examples, unseen structures, natural-source diversity or broad long-context competence. Archive storage does not change roles or turn an excluded/exposed artifact into training or confirmation material.
+
+## Important evidence and discoveries
+
+- Historical GAA, IFC and REX audits cover finite-language/source-specific mechanics. Their original source, result and resource scopes remain separate from fresh linguistic review, production grading, cross-split closure, native integration, admission and student effects. The stronger IFC public method retains 424 unsupported/control holds; a separate wider finite method's 18,000 mechanical passes do not erase them. The 213 singular-wording gaps and 211 unreconstructed original wordings remain distinct.
+- Completed developer tests and metadata checks are not trained-student retention tests. Preserve failed full suites, started-fatal UNKNOWN counts, launcher-versus-executor limitations and measured-loop-only resource evidence. A static review, syntax check or prepared test suite is not an executed semantic PASS.
+- The source API correspondence audit distinguishes semantic answer agreement from allocation/charge/receipt/observation/exception behavior. Its 4,896-versus-4,096 sample obstruction is conditional on at least 24 physical validated leg objects and exact successful original source/API observation traces. It proves neither an observed runtime failure nor impossibility of a different complete algorithm. The initial wrong module-lock/latch binding and corrected reference reviews remain preserved.
+- Earlier blocked-audit manifests recorded an API status update as pending. The actual `independent_quality_blocked_audit_003/LOCK_RELEASE_TERMINAL.json` binds the returned blocked status and owned lock release. This is historical lifecycle evidence, not a claim about the current status of every other owner's program. Filename order never supplies authority.
+- RPQ1's correct public answers do not repair its scientific `FAIL_NO_REFILL_DEPENDENCY` result, 1/4 parents qualifying. Resource changes limited to cost/end and irrelevant precedence fail the intended decision-dependence criterion. Byte hulls of complete-answer supports are neither native token horizons nor decision-only support proofs.
+- RPQ2 strengthens separate selected-decision and complete-answer support requirements. Its non-author review retains seven open gates: notation/domain clarity, actual reached-family inequivalence, total answer/tie semantics, nonempty-cell/trace/sensitivity certificates, complete work fit, exact full-output serialization/fit and essential horizon. The preserved initial cap proposal was rejected; no cap raise, generation, preregistration, reservation or admission follows from the corrected drafts.
+- The explicitly supplied continuation checkpoint 061 records a separate other-owner DDP diagnostic: four fixed parent attempts passed its prospective scoped criterion, with 20 retained views and fresh review still pending at that checkpoint. This does not replace RPQ1's failure, validate RPQ2, establish broad novelty or qualify long-context learning. Its short packets, inherited-oracle completeness and held admission/native/model status remain explicit. Only that named metadata checkpoint is included here, not the active DDP program.
+
+## Rights and qualification
+
+The user's GPT-output ownership and ChatGPT/Codex origin statement is preserved where present. Account terms, dates, separate agreements and permitted model-development use remain separate questions; no blanket clearance or ban is inferred. The author-created pilot's intended CC0 statement does not clear outside source rights or grant redistribution of raw sibling corpora.
+
+Managed-agent review is procedural and can share model errors. It is not independent human/provider validation or calibrated prose grading. Native input/target/EOS fit, context capacity, first-target/causal-shift/history masks, capture, source-correct baseline membership and acquired-skill stage-relative retention require their own evidence. More rows, token length, agreement, lower loss or archive completeness do not establish intelligence gain or absence of forgetting.
+
+## Publication integrity
+
+The snapshot tool preserves exact original bytes, every included path occurrence and deliberate exclusions, using bounded-memory SHA-256/gzip processing. Stability checks apply per file during capture; this live-tree archive is not a globally atomic snapshot. Verification checks compressed parts, decompressed objects and materialized files. Git attributes disable text normalization. The publication is made on an isolated branch; the active centralized experiment checkout, frozen 5,120-row E1 dose, unrelated untracked paths and other owners' sources/queues/locks remain untouched by this task.

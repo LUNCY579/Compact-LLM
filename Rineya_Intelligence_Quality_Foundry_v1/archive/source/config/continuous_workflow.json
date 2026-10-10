@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "workflow_id": "RIQF-CONTINUOUS-001",
+  "batch_parent_limit": 72,
+  "seed_start": 2026093001,
+  "next_action": "Finish and independently review pilot-v1 before expansion",
+  "priority_order": ["repair_confirmed_defects", "improve_verifier_negative_controls", "close_provenance_and_overlap_gaps", "expand_structural_diversity", "expand_long_context_reasoning_horizon", "increase_volume"],
+  "roles": ["planner", "generator", "blind_solver", "semantic_reviewer", "adversarial_reviewer", "retention_auditor", "release_controller"],
+  "maximum_automatic_repair_rounds_per_parent": 3,
+  "on_unresolved_disagreement": "quarantine_parent_and_all_variants",
+  "do_not_read": ["centralized CHECK payloads", "centralized FINAL payloads", "sibling reserved evaluation payloads"],
+  "allowed_writes": ["this workspace only"],
+  "native_model_jobs": false,
+  "paid_api_calls": false,
+  "notifications": "meaningful_completion_failure_or_required_action_only"
+}
