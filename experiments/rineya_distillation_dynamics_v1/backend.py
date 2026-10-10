@@ -14,7 +14,8 @@ import torch
 from torch import nn
 
 from .contracts import Plan, digest, file_hash, require, sealed, write_new
-from .data import Problem, Task
+from .data import Problem, Task, normalized
+from .manifests import FORMAT, TOKENIZER_NAMES, public_row, validate_manifest
 from .objectives import projected_ce, projected_kl, logprobs
 
 
@@ -107,6 +108,117 @@ class TorchBackend:
         self.version = 0
         self.meter = Meter()
         self.evidence_kind = evidence_kind
+        self.prompt_catalog = {}
+        self.prompt_identity = None
+        self.prompt_events = []
+        self.prompt_history = []
+        self.prompt_renderings = {}
+        self.prompt_rendered_token_ids = {}
+        self.tokenizer_content_sha256 = None
+        self.export_base = None
+
+    def bind_prompt_catalog(self, tasks, identity=None, *, tokenizer_content_sha256=None):
+        rows = {t.key: public_row(t) for t in tasks}
+        require(len(rows) == len(tasks), "consumed prompt catalog duplicate key")
+        for key in self.prompt_catalog.keys() & rows.keys():
+            require(self.prompt_catalog[key] == rows[key], "consumed prompt catalog drift")
+        if identity is not None:
+            require(self.prompt_identity in {None, identity}, "consumed prompt registration drift")
+            self.prompt_identity = identity
+        self.prompt_catalog.update(rows)
+        if tokenizer_content_sha256 is not None:
+            require(self.tokenizer_content_sha256 in {None, tokenizer_content_sha256}, "consumed tokenizer drift")
+            self.tokenizer_content_sha256 = tokenizer_content_sha256
+
+    def bind_native_export(self, registration):
+        require(self.evidence_kind == "qualified_native_hf", "native export binding requires native backend")
+        require(self.prompt_identity in {None, digest(registration)}, "native export registration drift")
+        self.prompt_identity = digest(registration)
+        self.export_base = registration["assets"]["student"]
+        self.tokenizer_content_sha256 = digest({n: h for n, h in self.export_base["files"].items()
+                                              if n in TOKENIZER_NAMES})
+
+    def record_prompt_consumption(self, problem, *, role, purpose, kind,
+                                  input_tokens=0, rendered_prompt_ids=None, forward_input_ids=None):
+        require(type(problem) is Problem and role in {"student", "teacher"}, "public consumption DTO/model")
+        require(type(purpose) is str and purpose, "consumption purpose required")
+        require(kind in {"generation", "forward", "external_forward", "teacher_bank_reuse", "rollout_consumption"},
+                "known consumption kind required")
+        row = self.prompt_catalog.get(problem.key)
+        complete = row is not None and row["prompt"] == problem.prompt and rendered_prompt_ids is not None
+        public = dict(row) if complete else {"key": problem.key, "prompt": problem.prompt,
+                                             "prompt_hash": digest(normalized(problem.prompt))}
+        event = {**public, "ordinal": len(self.prompt_events), "complete": complete,
+                 "model": role, "purpose": purpose, "kind": kind, "phase": self.meter.phase,
+                 "step": self.version, "input_tokens": input_tokens,
+                 "rendered_prompt_sha256": digest(tuple(rendered_prompt_ids)) if rendered_prompt_ids is not None else None}
+        if complete:
+            ids = list(rendered_prompt_ids)
+            cache_key = (problem.key, digest(problem.prompt))
+            if cache_key not in self.prompt_renderings:
+                rendered = self.tokenizer.apply_chat_template([{"role": "user", "content": problem.prompt}],
+                    tokenize=False, add_generation_prompt=True)
+                if type(rendered) is not str:
+                    require(self.evidence_kind == "mechanical_fixture", "native template must render actual text")
+                    rendered = self.tokenizer.decode(ids, skip_special_tokens=False)
+                self.prompt_renderings[cache_key] = rendered
+            if self.evidence_kind == "qualified_native_hf":
+                if cache_key not in self.prompt_rendered_token_ids:
+                    self.prompt_rendered_token_ids[cache_key] = list(self.tokenizer.encode(
+                        self.prompt_renderings[cache_key], add_special_tokens=False))
+                require(self.prompt_rendered_token_ids[cache_key] == ids,
+                        "actual rendered text versus consumed prompt token mismatch")
+            event.update({"input_ids": ids, "raw_rendered_prompt": self.prompt_renderings[cache_key],
+                          "consumed_prompt": self.prompt_renderings[cache_key],
+                          "prompt_token_sha256": digest(ids), "tokenizer_content_sha256": self.tokenizer_content_sha256,
+                          "rendering_history": [{"operation": "apply_chat_template", "add_generation_prompt": True,
+                                                 "public_user_only": True}],
+                          "truncation": {"policy": "none", "original_input_ids": ids, "max_tokens": None, "history": []}})
+        if forward_input_ids is not None:
+            require(kind in {"forward", "external_forward"}
+                    and type(forward_input_ids) in {tuple, list}
+                    and len(forward_input_ids) == input_tokens
+                    and all(type(t) is int and t >= 0 for t in forward_input_ids),
+                    "actual causal input IDs/count required")
+            event.update({"forward_input_ids": list(forward_input_ids),
+                          "causal_input_token_sha256": digest(list(forward_input_ids))})
+        if kind == "external_forward":
+            self.meter.add(role + "_external_forward_input_tokens", input_tokens)
+        self.prompt_events.append(event)
+        return event
+
+    def _prompt_session(self, relationship="current_run"):
+        events = [dict(e) for e in self.prompt_events]
+        return {"identity": self.prompt_identity, "relationship": relationship,
+                "event_count": len(events), "events_sha256": digest(events), "events": events,
+                "meter": self.meter.snapshot()}
+
+    def prompt_manifest(self, *, current_only=False):
+        sessions = [] if current_only else list(self.prompt_history)
+        sessions.append(self._prompt_session())
+        events = [e for s in sessions for e in s["events"]]
+        payload = {"schema": 1, "format": FORMAT, "identity": self.prompt_identity,
+                   "evidence_kind": self.evidence_kind, "sessions": sessions,
+                   "event_count": len(events), "complete": bool(events) and all(e["complete"] for e in events),
+                   "public_prompt_hashes": sorted({e["prompt_hash"] for e in events}),
+                   "contains_private_solution_text": False,
+                   "contains_response_conditioning_tokens": any("forward_input_ids" in e for e in events),
+                   "public_prompt_fields_contain_labels": False, "semantic_decontamination": False}
+        return validate_manifest(payload, complete=False)
+
+    def inherit_prompt_manifest(self, manifest, *, relationship):
+        validate_manifest(manifest)
+        require(manifest["identity"] == self.prompt_identity, "inherited manifest registration drift")
+        for session in manifest["sessions"]:
+            self.prompt_history.append({**session, "relationship": relationship})
+
+    def write_prompt_manifest(self, path, *, complete=False):
+        payload = self.prompt_manifest()
+        validate_manifest(payload, complete=complete)
+        write_new(path, sealed(payload))
+        return {"path": str(Path(path).resolve()), "sha256": file_hash(path),
+                "payload_sha256": digest(payload), "complete": payload["complete"],
+                "event_count": payload["event_count"]}
 
     def activate(self, role: str):
         require(role in {"student", "teacher"}, "model role")
@@ -134,12 +246,17 @@ class TorchBackend:
                 and all(type(x) is int and 0 <= x < self.vocab for x in ids), "response token contract")
         require(not any(x in self.eos_ids for x in ids[:-1]), "EOS before final response token")
 
-    def hidden(self, model, prefix, response, grad: bool, role: str):
+    def hidden(self, model, prefix, response, grad: bool, role: str, *, problem=None, purpose=None):
         require(bool(prefix) and bool(response), "empty causal sequence")
         full = tuple(prefix) + tuple(response[:-1])
         require(len(full) < self.plan.max_context_tokens, "context overflow")
         self.guard()
         self.meter.add(role + "_forward_input_tokens", len(full))
+        event = self.record_prompt_consumption(problem or Problem("unbound:raw-prefix", "unbound raw token prefix"),
+            role=role, purpose=purpose or ("objective_forward" if grad else "model_forward"), kind="forward",
+            input_tokens=len(full), rendered_prompt_ids=prefix, forward_input_ids=full)
+        event.update({"gradient": grad, "forward_input_ids": list(full), "causal_input_token_sha256": digest(full),
+                      "response_tokens": len(response), "response_token_sha256": digest(tuple(response))})
         if grad:
             self.meter.add("student_gradient_forward_tokens", len(full))
         device = next(model.parameters()).device
@@ -150,16 +267,21 @@ class TorchBackend:
             require(chosen.shape[0] == len(response), "causal shift/response alignment")
             return chosen
 
-    def sample(self, problem: Problem, role: str, seed: int, *, greedy=False) -> Rollout:
+    def sample(self, problem: Problem, role: str, seed: int, *, greedy=False, purpose=None) -> Rollout:
         model = self.activate(role)
         prefix = self.prompt(problem)
         self.meter.add(role + "_generation_attempts")
+        purpose = purpose or self.meter.phase + "_generation"
+        event = self.record_prompt_consumption(problem, role=role, purpose=purpose, kind="generation",
+                                              rendered_prompt_ids=prefix)
+        event.update({"seed": seed, "greedy": greedy})
         gen = torch.Generator(device=self.device).manual_seed(seed)
         response, lps = [], []
         for _ in range(self.plan.max_new_tokens):
             self.guard()
             with torch.no_grad():
-                h = self.hidden(model, prefix, tuple(response) + (0,), False, role)[-1:]
+                h = self.hidden(model, prefix, tuple(response) + (0,), False, role,
+                                problem=problem, purpose=purpose + "_prefix")[-1:]
                 lp = (model.lm_head(h).float()[0] / self.plan.sampling_temperature).log_softmax(-1)
                 require(bool(torch.isfinite(lp).all()), "nonfinite generation distribution")
                 token = int(lp.argmax()) if greedy else int(torch.multinomial(lp.exp(), 1, generator=gen))
@@ -185,14 +307,19 @@ class TorchBackend:
         visible = r.response_ids[:-1] if r.terminated else r.response_ids
         require(self.tokenizer.decode(visible, skip_special_tokens=False) == r.text, "text/token mismatch")
 
-    def distill(self, task: Task, r: Rollout, direction: str, source: str):
+    def distill(self, task: Task, r: Rollout, direction: str, source: str, *, purpose=None):
         require(task.role == "train", "no held-out gradients")
         self.check_rollout(task, r, source)
+        purpose = purpose or self.meter.phase + "_" + source + "_" + direction + "_kl"
+        self.record_prompt_consumption(task.public(), role=source, purpose=purpose + "_rollout_consumed",
+                                      kind="rollout_consumption", rendered_prompt_ids=r.prompt_ids)
         teacher = self.activate("teacher")
         with torch.no_grad():
-            th = self.hidden(teacher, r.prompt_ids, r.response_ids, False, "teacher").detach().cpu()
+            th = self.hidden(teacher, r.prompt_ids, r.response_ids, False, "teacher",
+                             problem=task.public(), purpose=purpose + "_teacher_feedback").detach().cpu()
         student = self.activate("student")
-        sh = self.hidden(student, r.prompt_ids, r.response_ids, True, "student")
+        sh = self.hidden(student, r.prompt_ids, r.response_ids, True, "student",
+                         problem=task.public(), purpose=purpose + "_student_objective")
         self.meter.add("supervised_response_tokens", len(r.response_ids))
         self.meter.add("censored_rollouts", int(not r.terminated))
         return projected_kl(sh, student.lm_head.weight, th, teacher.lm_head.weight,
@@ -206,7 +333,8 @@ class TorchBackend:
         ids += (self.eos_ids[0],)
         self.response(ids)
         model = self.activate("student")
-        h = self.hidden(model, prefix, ids, True, "student")
+        h = self.hidden(model, prefix, ids, True, "student", problem=task.public(),
+                        purpose="independent_retention_replay" if task.role == "retention_train" else "verified_solution_sft")
         self.meter.add("replay_tokens" if task.role == "retention_train" else "supervised_response_tokens", len(ids))
         return projected_ce(h, model.lm_head.weight, torch.tensor(ids, dtype=torch.long, device=h.device),
                             self.plan.chunk_tokens)
@@ -226,6 +354,9 @@ class TorchBackend:
             p.grad = None
 
     def reset(self):
+        if self.prompt_events:
+            self.prompt_history.append(self._prompt_session("prior_qualification_or_setup"))
+        self.prompt_events = []
         self.restore(self.initial)
         self.version = 0
         self.meter = Meter()
@@ -259,6 +390,12 @@ class TorchBackend:
                    "tensor_sha256": tensor_hash(state), "rank": self.plan.rank, "alpha": self.plan.alpha,
                    "evidence_kind": self.evidence_kind}
         write_new(path / "receipt.json", sealed(receipt))
+        if self.evidence_kind == "qualified_native_hf":
+            require(self.export_base is not None, "exact base binding required for original PEFT save")
+            from .integration import write_standard_peft_state
+            write_standard_peft_state(state, self.plan, path / "peft", self.export_base,
+                identity=self.prompt_identity, source_receipt=receipt,
+                artifact_role="original_training_snapshot" if self.meter.phase == "training" else "qualification_disposable")
         return receipt
 
     def load(self, directory: str | Path):

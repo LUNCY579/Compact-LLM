@@ -5,7 +5,7 @@ import re
 from dataclasses import asdict
 from pathlib import Path
 
-from .contracts import Plan, digest, file_hash, read_json, require, sealed, unseal, write_new
+from .contracts import Plan, digest, file_hash, matrix, read_json, require, sealed, unseal, write_new
 from .data import load_catalog, require_roles
 
 
@@ -59,6 +59,26 @@ def check_e0(config_path, result_path):
         require(result.get("checks", {}).get(key) is True, "missing E0 check: " + key)
 
 
+def check_completed_native_run(result_path, identity):
+    """A COMPLETE arm cannot supersede later cleanup/supervisor failure evidence."""
+    path = Path(result_path).resolve()
+    outer = path.parent.parent
+    require(not any((path.parent / name).exists() for name in ("FAILED.json", "RESTORE_FAILED.json"))
+            and not (outer / "SUPERVISOR_FAILED.json").exists(), "failed native invocation cannot be consumed")
+    supervisor = read_json(outer / "SUPERVISOR_RESULT.json")
+    native = unseal(read_json(outer / "NATIVE_RESULT.json"))
+    qualification = outer / "qualification" / "RESULT.json"
+    require(supervisor.get("status") == "WORKER_EXITED_ZERO_NOT_EFFICACY"
+            and native.get("status") == "COMPLETED_NOT_PROMOTED" and native.get("identity") == identity
+            and native.get("result_sha256") == file_hash(path)
+            and native.get("qualification_sha256") == file_hash(qualification),
+            "completed supervised native invocation and qualification binding required")
+    q = unseal(read_json(qualification))
+    require(q.get("status") == "PASS_SCOPED_MECHANICS_AND_TEACHER_SCREEN"
+            and q.get("source_restored_bitwise") is True and q.get("evidence_kind") == "qualified_native_hf",
+            "successful native qualification and source restoration required")
+
+
 def register(plan_path, binding_path, output):
     plan = Plan.load(plan_path)
     require(plan.teacher_min_accuracy > 0 and plan.teacher_min_advantage > 0
@@ -94,10 +114,16 @@ def register(plan_path, binding_path, output):
     require(provenance == "reviewed_external", "mechanical fixture cannot enroll natively")
     require_roles(tasks, plan.replay_tasks > 0)
     require(len({t.parent for t in tasks if t.role == "teacher_dev"}) >= 16, "at least 16 teacher-dev parents")
+    if plan.design == "selected":
+        require(len([t for t in tasks if t.role == "teacher_dev"]) == 16,
+                "selected qualification freezes exactly 16 teacher-dev rows")
     payload = {"schema": 1, "plan": asdict(plan), "plan_sha256": plan.fingerprint, "binding": b,
                "assets": assets, "files": {k: str(v) for k, v in files.items()}, "audit": audit,
                "source": source_identity(), "native_qualified": False,
                "review_is_operator_attestation_not_cryptographic_proof": True}
+    if plan.design == "selected":
+        payload["stage_scope"] = "selected"
+        payload["treatment_cells"] = [asdict(arm) for arm in matrix(plan)]
     write_new(output, sealed(payload))
     return payload
 
@@ -107,8 +133,20 @@ def check_registration(path):
     require(r.get("schema") == 1 and r["source"] == source_identity(), "registered source drift")
     data = dict(r["plan"])
     data["seeds"], data["learning_rates"] = tuple(data["seeds"]), tuple(data["learning_rates"])
+    if "selected_cells" in data:
+        data["selected_cells"] = tuple(data["selected_cells"])
     plan = Plan(**data)
     require(plan.fingerprint == r["plan_sha256"], "plan identity drift")
+    if plan.design == "selected":
+        require(r.get("stage_scope") == "selected"
+                and r.get("treatment_cells") == [asdict(arm) for arm in matrix(plan)],
+                "complete selected registration scope required; no full/screen widening")
+        require(r["binding"].get("learning_rates_reviewed") is True
+                and bool(r["binding"].get("reviewed_by", "").strip()),
+                "selected frozen learning rate requires explicit review")
+    else:
+        require("stage_scope" not in r and "treatment_cells" not in r,
+                "factorial registration cannot import selected scope")
     for role in ("student", "teacher"):
         require(inventory(r["assets"][role]["path"])["sha256"] == r["assets"][role]["sha256"], "asset drift")
     for key in r["files"]:

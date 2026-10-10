@@ -58,10 +58,14 @@ def worker_guard(output, started):
 
 
 def launch(registration, output, *, arm=None, selection=None, confirmation=None,
-           allow_model_load=False, allow_training=False, ack_host_available=False, allow_confirmation=False):
+           qualification_only=False, allow_model_load=False, allow_training=False,
+           ack_host_available=False, allow_confirmation=False):
     require(allow_model_load and ack_host_available, "explicit model-load and repaired/available-host acknowledgement required")
-    require((arm is not None) != (selection is not None), "one run mode required")
-    require((arm is None or allow_training), "training includes disposable qualification updates; explicit authorization required")
+    require(type(qualification_only) is bool
+            and sum((arm is not None, selection is not None, qualification_only)) == 1, "one run mode required")
+    require(not qualification_only or confirmation is None, "qualification cannot open confirmation")
+    require(not (arm is not None or qualification_only) or allow_training,
+            "training includes disposable qualification updates; explicit authorization required")
     require(selection is None or (allow_confirmation and confirmation), "explicit confirmation permission/catalog required")
     from .registry import check_registration
     r, plan, tasks = check_registration(registration)
@@ -90,13 +94,16 @@ def launch(registration, output, *, arm=None, selection=None, confirmation=None,
         token = uuid.uuid4().hex
         command = [sys.executable, "-B", "-m", "experiments.rineya_distillation_dynamics_v1.native",
                    "--registration", str(Path(registration).resolve()), "--output", str(output), "--token", token]
-        if arm is not None:
+        if qualification_only:
+            command += ["--qualification-only"]
+        elif arm is not None:
             command += ["--arm", arm]
         else:
             command += ["--selection", str(Path(selection).resolve()), "--confirmation", str(Path(confirmation).resolve())]
         env = dict(os.environ, RDD001_WORKER_TOKEN=token, HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1")
         write_new(output / "SUPERVISOR_STARTED.json", {"wall_seconds": WALL_SECONDS,
-                   "worker_tree_rss_gib": WORKER_TREE_RSS_GIB, "mode": "train" if arm else "confirm"})
+                   "worker_tree_rss_gib": WORKER_TREE_RSS_GIB,
+                   "mode": "qualification_only" if qualification_only else ("train" if arm else "confirm")})
         started = time.monotonic()
         with (output / "worker.log").open("x", encoding="utf-8") as log:
             process = subprocess.Popen(command, cwd=root, env=env, stdout=log, stderr=subprocess.STDOUT)

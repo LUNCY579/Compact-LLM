@@ -13,8 +13,10 @@ def evaluate(backend, tasks: list[Task], role: str, seed: int) -> dict:
     require(role in {"student", "teacher"}, "evaluator model role")
     rows = {}
     for task in tasks:
-        greedy = backend.sample(task.public(), role, step_seed(seed, task.key, 0, "eval-greedy"), greedy=True)
-        draws = [backend.sample(task.public(), role, step_seed(seed, task.key, i, "eval-draw"))
+        greedy = backend.sample(task.public(), role, step_seed(seed, task.key, 0, "eval-greedy"), greedy=True,
+                                purpose=backend.meter.phase + "_greedy")
+        draws = [backend.sample(task.public(), role, step_seed(seed, task.key, i, "eval-draw"),
+                                purpose=backend.meter.phase + "_sampling_draw")
                  for i in range(backend.plan.eval_samples)]
         # Deployment selector is majority of complete visible strings, never the gold answer.
         texts = [r.text.strip() for r in draws]

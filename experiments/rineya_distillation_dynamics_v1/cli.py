@@ -6,7 +6,7 @@ import json
 from dataclasses import asdict
 from pathlib import Path
 
-from .contracts import ContractError, Plan, digest, matrix, read_json
+from .contracts import ContractError, Plan, digest, matrix, read_json, resolved_stage
 
 
 def main(argv=None):
@@ -14,7 +14,7 @@ def main(argv=None):
     sub = p.add_subparsers(dest="command", required=True)
     q = sub.add_parser("plan")
     q.add_argument("--plan", required=True)
-    q.add_argument("--stage", choices=["screen", "full"], default="full")
+    q.add_argument("--stage", choices=["screen", "full", "selected"])
     q = sub.add_parser("audit")
     q.add_argument("--catalog", required=True)
     q.add_argument("--exclusions")
@@ -32,16 +32,17 @@ def main(argv=None):
     q = sub.add_parser("select")
     q.add_argument("--registration", required=True)
     q.add_argument("--results", required=True, nargs="+")
-    q.add_argument("--stage", choices=["screen", "full"], default="full")
+    q.add_argument("--stage", choices=["screen", "full", "selected"])
     q.add_argument("--output", required=True)
-    for name in ("run", "confirm"):
+    for name in ("run", "qualify", "confirm"):
         q = sub.add_parser(name)
         q.add_argument("--registration", required=True)
         q.add_argument("--output", required=True)
         q.add_argument("--allow-model-load", action="store_true")
         q.add_argument("--ack-host-available", action="store_true")
-        if name == "run":
-            q.add_argument("--arm", required=True)
+        if name in {"run", "qualify"}:
+            if name == "run":
+                q.add_argument("--arm", required=True)
             q.add_argument("--allow-training", action="store_true")
         else:
             q.add_argument("--selection", required=True)
@@ -64,8 +65,9 @@ def main(argv=None):
 def execute(a):
     if a.command == "plan":
         plan = Plan.load(a.plan)
-        return {"experiment": "RDD-001", "stage": a.stage, "plan": asdict(plan),
-                "arms": [asdict(x) for x in matrix(plan, a.stage)], "native_execution": False}
+        stage = resolved_stage(plan, a.stage)
+        return {"experiment": "RDD-001", "stage": stage, "plan": asdict(plan),
+                "arms": [asdict(x) for x in matrix(plan, stage)], "native_execution": False}
     if a.command == "audit":
         from .data import load_catalog
         _, provenance, audit = load_catalog(a.catalog, read_json(a.exclusions) if a.exclusions else None)
@@ -90,12 +92,12 @@ def execute(a):
         from .selection import select
         r, plan, _ = check_registration(a.registration)
         return select(plan, [Path(x) for x in a.results], Path(a.output), stage=a.stage, identity=digest(r))
-    if a.command in {"run", "confirm"}:
+    if a.command in {"run", "qualify", "confirm"}:
         from .host import launch
         launch(a.registration, a.output, arm=getattr(a, "arm", None), selection=getattr(a, "selection", None),
                confirmation=getattr(a, "confirmation", None), allow_model_load=a.allow_model_load,
                allow_training=getattr(a, "allow_training", False), ack_host_available=a.ack_host_available,
-               allow_confirmation=getattr(a, "allow_confirmation", False))
+               allow_confirmation=getattr(a, "allow_confirmation", False), qualification_only=a.command == "qualify")
         return {"status": "SUPERVISED_COMMAND_COMPLETED", "output": a.output, "deployment_approved": False}
     from .integration import export_peft
     export_peft(a.checkpoint, a.registration, a.output)

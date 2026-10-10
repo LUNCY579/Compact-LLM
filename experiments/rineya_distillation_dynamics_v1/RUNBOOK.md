@@ -22,6 +22,31 @@ automatic dependency installers or native CI jobs in this experiment.
 
 ## 1. Prepare reviewed data and a pilot plan
 
+The 2026-10-05 preparation uses `configs/selected-pilot.json`, not `pilot.json`.
+Inspect it offline with `plan --plan experiments/rineya_distillation_dynamics_v1/configs/selected-pilot.json --stage selected`.
+It freezes A/B/D/SFT at one seed/rate and two steps with per-step checkpoints.
+Exactly 16 teacher-dev rows with distinct parents are required. Only approved
+fresh catalogs/exclusion metadata can be enrolled; no confirmation bank is read
+to prepare them. Long-context retention is outside this 1024-token pilot's claims.
+The current preparation's inventory, proposal and validation are retained under
+`C:/Users/clclc/BusinessProject/rdd001-records/preparation-20261005/`.
+
+Before any future treatment decision, the one prospective native action is the
+supervised `qualify` subcommand. It requires the same genuine registration/E0,
+export parity, host admission/shared lock, `--allow-model-load`, `--allow-training`
+and `--ack-host-available` gates as treatment. It makes exactly two disposable
+updates and stops before `run_arm`. It is not authorized by this preparation.
+Do not chain it into treatment, retry a failed output, or enumerate full/screen
+cells from the selected plan. The proposed source is exact Titan-Experimental;
+the fixed Supa-1.7 candidate teacher is unqualified until review and screening.
+Halo's tokenizer backend differs and is rejected by the existing parity rule.
+
+The local inventory found no RDD-admissible E0 or reviewed native export receipt.
+The historical CE512 pass has a different status, stopping/masking semantics and
+resource scope. Retain it as historical evidence; do not relabel it or import
+its lower host reserve. Current memory readings and an absent lock are observations,
+not host authorization. Other owner processes have been observed on this host.
+
 The sample `configs/pilot.json` is not an execution grant. Choose pilot learning
 rates, the effect/retention margins, context limits, step/checkpoint/sample budgets,
 and seeds before examining treatment outcomes. Use a distinct plan/registration
@@ -219,3 +244,18 @@ GD-001 is not present in this parent and is not imported automatically. Its own
 snapshot, selection and confirmation gates still apply. Do not reuse RDD
 confirmation for adaptive GD selection. Composition and centralized-reasoning
 extensions likewise require fresh protocols and independent confirmation.
+
+For future selected runs, every `backend.save` also preserves an original
+standard-PEFT child snapshot. Every checkpoint and complete/failed run retains a
+consumed-prompt manifest; qualification provenance survives the source reset.
+Complete forward records require full causal input IDs and their hash, including
+generated conditioning tokens. The verifier rejects prompt-only forward records;
+preserve such historical records rather than silently upgrading their coverage.
+Parity acceptance rehashes the full base/tokenizer inventory; any changed or added
+snapshot file requires a fresh qualified receipt rather than reuse of old parity.
+The GD owner now requires `gd001_attachment_v1` with an independently approved
+prospective producer plan, two original snapshots including the final, genuine
+post-save receipts, complete raw source/filter/consume/unused JSONL and exact
+rendered text/token IDs. A complete RDD run alone does not invent that approval.
+Use the GD owner's attachment verifier only after native parity and those inputs
+are available. Its successful metadata audit is not native export qualification.

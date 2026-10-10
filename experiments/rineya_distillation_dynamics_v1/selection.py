@@ -4,18 +4,24 @@ from __future__ import annotations
 from collections import defaultdict
 from pathlib import Path
 
-from .contracts import Plan, digest, file_hash, matrix, read_json, require, sealed, unseal, write_new
+from .contracts import Plan, digest, file_hash, matrix, read_json, require, resolved_stage, sealed, unseal, write_new
 from .metrics import decision_features
 
 
-def select(plan: Plan, paths: list[Path], output: Path, *, stage="full", identity: str):
+def select(plan: Plan, paths: list[Path], output: Path, *, stage=None, identity: str):
+    stage = resolved_stage(plan, stage)
     expected = {a.name: a for a in matrix(plan, stage)}
     observed, initial, frozen, kinds = {}, {}, set(), set()
     for path in paths:
         path = Path(path).resolve()
         r = unseal(read_json(path))
+        require(not any((path.parent / name).exists() for name in ("FAILED.json", "RESTORE_FAILED.json")),
+                "failed arm cannot be selected despite a COMPLETE receipt")
         require(r.get("status") == "COMPLETE" and r["plan"] == plan.fingerprint and r["identity"] == identity,
                 "incomplete or differently registered run")
+        if r["evidence_kind"] == "qualified_native_hf":
+            from .registry import check_completed_native_run
+            check_completed_native_run(path, identity)
         name = r["arm"]["name"]
         require(name in expected and name not in observed, "unexpected/duplicate arm")
         a = expected[name]

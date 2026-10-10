@@ -22,12 +22,58 @@ experiment does not establish universal optimal learning rates or mechanisms.
 | D | Current student | KL(student || teacher) |
 | SFT | Reviewed reference solution | Response-token CE |
 
-Each treatment crosses two registered learning rates and every registered seed.
+The historical factorial design crosses two registered learning rates and every registered seed.
 `screen` includes A/B/SFT; `full` includes all five. The default seeds are
 17, 29 and 43. Native selection rejects an incomplete stage, missing seeds,
 duplicate arms, drifted checkpoints, different sources/teachers, or unpaired
 initial adapters. A one-seed engineering pilot must use its own registered plan;
 it is not sufficient for a replicated method ranking.
+
+### Selected preparation amendment — 2026-10-05
+
+`design="selected"` freezes only A/B/D/SFT, one seed (17) and one candidate
+learning rate (1e-5 in `configs/selected-pilot.json`). A versus B compares rollout
+source at FKL; B versus D compares KL direction on current-student prefixes.
+SFT supplies the verified-solution CE control. C is absent: source-by-direction
+interaction and a replicated method ranking are not estimands of this pilot.
+The candidate rate has been reviewed as an engineering choice for this bounded
+proposal, not empirically calibrated. The native asset/LR review binding remains
+false until an actual reviewer enrolls the exact pair and scope. No LR search or
+post-outcome change is permitted.
+
+The selected plan has two optimizer steps per cell, one acquisition task and one
+independent replay task per step, replay weight 0.1, response cap 32, context cap
+1024, rank 8/alpha 16, and a checkpoint after every step. Sampling has two draws
+plus greedy per DEV row. Task/update exposure and caps are matched; realized
+response token counts can differ and must be reported. No fixed-FLOP or exact
+token-matching claim follows. A capped/wrong rollout is retained. All four cells
+and both saved steps are required for selection; full/screen widening is rejected.
+The acquisition/retention margins remain unchanged and can return no candidate.
+
+Exactly 16 distinct TEACHER_DEV parents are admitted for selected qualification.
+The prospective `qualify` command performs this public-prompt competence screen,
+both disposable KL/backward updates, frozen-base checks and bitwise adapter and
+logit save/reload, restores the common source and stops before treatment. Failed
+teacher screens retain every response and cap in their receipt. Its two updates
+are qualification costs, never acquisition evidence. This preparation authorizes
+no invocation of that command, no model load, and no optimizer update.
+
+All actual model consumptions now record public/raw rendered prompts, prompt IDs,
+parent/source/role/revision, tokenizer identity, purpose, policy version and token
+volume. Qualification, teacher-bank creation/reuse, source baselines, feedback,
+SFT, replay and DEV consumption remain separate sessions in cumulative manifests.
+Every complete forward event must also retain the exact full causal input IDs and
+their hash, including generated response-prefix tokens. Public prompt IDs alone
+cannot qualify a bootstrap or HF/PEFT parity forward. Earlier incomplete records
+remain historical evidence and cannot be relabeled complete.
+Partial evidence is retained on failure and cannot qualify an export. Per-save
+standard-PEFT snapshots are original exports from that exact saved adapter;
+post-hoc format exports remain derived. Exact wrapper versus HF/PEFT full-logit
+and greedy parity is an additional native qualification, never a metadata flag.
+Acceptance rechecks the full current base-weight and tokenizer snapshot, not only
+the adapter and base config. A prior parity receipt cannot admit drifted assets.
+GD producer approval, completion and source/filter/consume/unused ledgers remain
+independent requirements. The GD owner chat owns all GD edits and admission.
 
 All arms share the exact loaded source, frozen teacher, tokenizer and template,
 LoRA target modules/rank/alpha, AdamW settings, clipping, response cap, sampling

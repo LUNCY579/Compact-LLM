@@ -68,6 +68,8 @@ def unseal(envelope: dict) -> dict:
 @dataclass(frozen=True)
 class Plan:
     schema: int = 1
+    design: str = "factorial"
+    selected_cells: tuple[str, ...] = ()
     seeds: tuple[int, ...] = (17, 29, 43)
     learning_rates: tuple[float, ...] = (1e-5, 2e-5)
     steps: int = 32
@@ -91,11 +93,24 @@ class Plan:
 
     def __post_init__(self):
         require(type(self.schema) is int and self.schema == 1, "plan schema")
+        require(type(self.design) is str and self.design in {"factorial", "selected"},
+                "plan design must be factorial or selected")
+        require(type(self.selected_cells) is tuple, "selected cells must be an immutable tuple")
+        if self.design == "selected":
+            require(self.selected_cells == ("A", "B", "D", "SFT"),
+                    "selected design freezes A/B/D/SFT; SFT control and both prespecified contrasts required")
+            require(len(self.seeds) == 1, "selected engineering comparison requires one prespecified seed")
+            require(len(self.learning_rates) == 1, "selected design freezes exactly one learning rate")
+            require(self.checkpoint_every == 1, "selected design requires per-step checkpoints")
+        else:
+            require(not self.selected_cells, "factorial design cannot carry selected cells")
         require(len(self.seeds) > 0 and len(set(self.seeds)) == len(self.seeds)
                 and all(type(s) is int and 0 <= s < 2**31 for s in self.seeds), "independent integer seeds")
-        require(len(self.learning_rates) == 2 and self.learning_rates[0] < self.learning_rates[1]
+        require((self.design == "selected" or
+                 (len(self.learning_rates) == 2 and self.learning_rates[0] < self.learning_rates[1]))
                 and all(type(lr) in (int, float) and math.isfinite(lr) and 0 < lr <= .01
-                        for lr in self.learning_rates), "exactly two increasing finite learning rates")
+                        for lr in self.learning_rates),
+                "one finite selected learning rate or exactly two increasing factorial learning rates required")
         for k in ("steps", "batch_tasks", "max_new_tokens", "max_context_tokens", "chunk_tokens",
                   "checkpoint_every", "eval_samples", "rank"):
             require(type(getattr(self, k)) is int and getattr(self, k) > 0, k + " must be positive integer")
@@ -116,7 +131,7 @@ class Plan:
     def load(cls, path):
         data = read_json(path)
         require(type(data) is dict and not (set(data) - set(cls.__dataclass_fields__)), "unknown plan fields")
-        for k in ("seeds", "learning_rates"):
+        for k in ("seeds", "learning_rates", "selected_cells"):
             if k in data:
                 require(type(data[k]) is list, k + " must be list")
                 data[k] = tuple(data[k])
@@ -136,19 +151,29 @@ class Arm:
     seed: int
 
 
-def matrix(plan: Plan, stage: str = "full") -> list[Arm]:
-    require(stage in {"screen", "full"}, "stage must be screen or full")
-    cells = [("A", "teacher", "forward"), ("B", "student", "forward")]
-    if stage == "full":
-        cells += [("C", "teacher", "reverse"), ("D", "student", "reverse")]
-    cells += [("SFT", "solution", "ce")]
+def resolved_stage(plan: Plan, stage: str | None = None) -> str:
+    stage = stage if stage is not None else ("selected" if plan.design == "selected" else "full")
+    require(stage in {"screen", "full", "selected"}, "stage must be screen, full or selected")
+    require((plan.design == "selected") == (stage == "selected"),
+            "stage cannot widen or reinterpret the frozen plan design")
+    return stage
+
+
+def matrix(plan: Plan, stage: str | None = None) -> list[Arm]:
+    stage = resolved_stage(plan, stage)
+    definitions = {"A": ("teacher", "forward"), "B": ("student", "forward"),
+                   "C": ("teacher", "reverse"), "D": ("student", "reverse"),
+                   "SFT": ("solution", "ce")}
+    codes = plan.selected_cells if stage == "selected" else (
+        ("A", "B", "SFT") if stage == "screen" else ("A", "B", "C", "D", "SFT"))
+    cells = [(code, *definitions[code]) for code in codes]
     return [Arm(f"{code}-lr{li}-s{seed}", source, loss, lr, seed)
             for seed in plan.seeds for code, source, loss in cells
             for li, lr in enumerate(plan.learning_rates)]
 
 
 def validate_arm(plan: Plan, arm: Arm):
-    require(arm in matrix(plan), "arm is not in frozen factorial")
+    require(arm in matrix(plan), "arm is not in frozen treatment cells")
 
 
 def step_seed(seed: int, key: str, step: int, purpose: str) -> int:

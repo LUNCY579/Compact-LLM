@@ -3,6 +3,21 @@
 **Implemented and CPU-tested experiment software. Native Rineya compatibility,
 teacher qualification, training, and efficacy are NOT established by this delivery.**
 
+2026-10-09: [Reviewed publication handoff](REVIEW_HANDOFF_20261009.md) preserves
+the necessary historical records, resolves causal-input and parity-asset drift
+checks, and records 179 guarded offline passes (11 update tests excluded). GPU
+and qualified measurement inputs are deferred; no native action or model-quality
+gain is established. Historical inventories and permission flags stay unchanged.
+
+2026-10-05: offline preparation adds a selected A/B/D/SFT design at one candidate
+LR/seed, two steps and per-step checkpoints; a qualification-only supervisor mode;
+complete consumed-prompt provenance; and prospective original standard-PEFT saves.
+The historical full/forward matrices remain available but are outside this scope.
+The current exact-asset and host audit is retained under
+`C:/Users/clclc/BusinessProject/rdd001-records/preparation-20261005/`.
+No model loads, optimizer updates or confirmation reads were performed during
+this preparation. Native E0, teacher competence and HF/PEFT parity remain blocked.
+
 Dedicated branch: `research/rineya-distillation-dynamics-v1`.
 Parent: `post-training-Mimo` at `03db218ceebc61a2bc04f2482cf7e094045e01c1`.
 All additions live in this directory. No existing code, branch, weights, bank,

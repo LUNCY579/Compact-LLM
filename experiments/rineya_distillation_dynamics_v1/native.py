@@ -14,10 +14,10 @@ from pathlib import Path
 from .contracts import digest, file_hash, matrix, read_json, require, sealed, unseal, write_new
 
 
-def load_backend(registration, plan, tasks, seed, guard):
+def load_backend(registration, plan, tasks, seed, guard, *, evidence_output=None):
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
-    from .backend import TorchBackend, install_lora
+    from .backend import TorchBackend, install_lora, tensor_hash
     models, tokenizers = {}, {}
     for role in ("student", "teacher"):
         guard()
@@ -53,18 +53,44 @@ def load_backend(registration, plan, tasks, seed, guard):
                                   tokenize=True, add_generation_prompt=True)
     require(len(ids) + plan.max_new_tokens <= plan.max_context_tokens, "native probe context overflow")
     student = models["student"].to("cuda:0")
+    def probe_started(ordinal):
+        if evidence_output is not None:
+            from .manifests import public_row
+            task = next(t for t in tasks if t.key == problem.key)
+            write_new(Path(evidence_output) / "bootstrap" / f"{ordinal:06d}-STARTED.json",
+                      sealed({**public_row(task), "purpose": "zero_adapter_native_logits_probe",
+                              "prompt_ids": list(ids), "model": "student", "input_tokens": len(ids),
+                              "identity": digest(registration), "complete": False,
+                              "status": "PROBE_STARTED_NOT_COMPLETE_MANIFEST"}))
+    probe_started(1)
     with torch.no_grad():
         x = torch.tensor([ids], dtype=torch.long, device="cuda:0")
         before = student.lm_head(student.model(input_ids=x, use_cache=False).last_hidden_state[:, -1:]).detach().cpu()
+    if evidence_output is not None:
+        write_new(Path(evidence_output) / "bootstrap" / "000001-COMPLETED.json",
+                  sealed({"logits_sha256": tensor_hash({"probe": before}), "input_tokens": len(ids)}))
     student.to("cpu")
     torch.cuda.empty_cache()
     install_lora(student, plan, seed)
     student.to("cuda:0")
+    probe_started(2)
     with torch.no_grad():
         after = student.lm_head(student.model(input_ids=x, use_cache=False).last_hidden_state[:, -1:]).detach().cpu()
+    if evidence_output is not None:
+        write_new(Path(evidence_output) / "bootstrap" / "000002-COMPLETED.json",
+                  sealed({"logits_sha256": tensor_hash({"probe": after}), "input_tokens": len(ids)}))
     require(torch.equal(before, after), "zero-adapter native-logit equivalence failed")
-    return TorchBackend(student, models["teacher"], tok, plan, eos_ids=eos, device="cuda:0",
-                        guard=guard, evidence_kind="qualified_native_hf")
+    backend = TorchBackend(student, models["teacher"], tok, plan, eos_ids=eos, device="cuda:0",
+                           guard=guard, evidence_kind="qualified_native_hf")
+    backend.bind_native_export(registration)
+    backend.bind_prompt_catalog(tasks, digest(registration))
+    # Include the pre-adapter export equivalence prompt in the consumed inventory.
+    for _ in range(2):
+        backend.meter.add("student_forward_input_tokens", len(ids))
+        backend.record_prompt_consumption(problem, role="student", purpose="zero_adapter_native_logits_probe",
+                                          kind="forward", input_tokens=len(ids), rendered_prompt_ids=ids,
+                                          forward_input_ids=ids)
+    return backend
 
 
 def main():
@@ -75,6 +101,7 @@ def main():
     mode = p.add_mutually_exclusive_group(required=True)
     mode.add_argument("--arm")
     mode.add_argument("--selection")
+    mode.add_argument("--qualification-only", action="store_true")
     p.add_argument("--confirmation")
     a = p.parse_args()
     require(bool(os.environ.get("RDD001_WORKER_TOKEN")) and a.token == os.environ.get("RDD001_WORKER_TOKEN"),
@@ -88,13 +115,21 @@ def main():
     require(out.is_dir() and (out / "SUPERVISOR_STARTED.json").is_file(), "missing supervised output")
     started = time.monotonic()
     guard = lambda: worker_guard(out, started)
-    if a.arm:
+    if a.qualification_only:
+        require(a.confirmation is None, "qualification cannot open confirmation")
+        from .qualification import qualify
+        backend = load_backend(r, plan, tasks, plan.seeds[0], guard, evidence_output=out)
+        qualify(backend, tasks, out / "qualification")
+        write_new(out / "NATIVE_RESULT.json", sealed({"status": "QUALIFICATION_ONLY_NO_TREATMENT",
+                  "identity": identity, "qualification_sha256": file_hash(out / "qualification" / "RESULT.json"),
+                  "treatment_updates": 0, "confirmation_reads": 0, "deployment_approved": False}))
+    elif a.arm:
         from .engine import run_arm
         from .qualification import qualify
         arms = {x.name: x for x in matrix(plan)}
         require(a.arm in arms, "arm not registered")
         arm = arms[a.arm]
-        backend = load_backend(r, plan, tasks, arm.seed, guard)
+        backend = load_backend(r, plan, tasks, arm.seed, guard, evidence_output=out)
         qualify(backend, tasks, out / "qualification")
         run_arm(backend, tasks, arm, out / "arm", identity=identity,
                 bank_path=out.parent / "teacher_banks" / identity / f"seed-{arm.seed}.json")
@@ -123,6 +158,7 @@ def main():
             picked = chosen["selected_seeds"][str(seed)]
             require(file_hash(picked["result_path"]) == picked["result_sha256"], "selected run drift")
             backend = load_backend(r, plan, tasks, seed, guard)
+            backend.bind_prompt_catalog(confirm, identity)
             backend.meter.phase = "confirmation"
             baseline = evaluate(backend, confirm, "student", seed)
             checkpoint = Path(picked["checkpoint"])
@@ -130,8 +166,10 @@ def main():
             backend.load(checkpoint)
             predictions = evaluate(backend, confirm, "student", seed)
             summary = paired(baseline, predictions)
+            consumed = backend.write_prompt_manifest(out / f"seed-{seed}-CONSUMED_PROMPTS.json", complete=True)
             results[str(seed)] = {"summary": summary, "features": decision_features(summary, prefix="confirm"),
-                                  "baseline": baseline, "predictions": predictions, "meter": backend.meter.snapshot()}
+                                  "baseline": baseline, "predictions": predictions, "meter": backend.meter.snapshot(),
+                                  "consumed_prompt_manifest": consumed}
             del backend
             gc.collect()
             import torch
