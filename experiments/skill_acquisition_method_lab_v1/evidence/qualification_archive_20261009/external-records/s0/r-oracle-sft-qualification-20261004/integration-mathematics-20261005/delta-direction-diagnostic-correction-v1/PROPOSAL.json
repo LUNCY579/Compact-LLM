@@ -1,0 +1,41 @@
+{
+  "schema": "RINEYA-DIRECTION-DIAGNOSTIC-SOURCE-CORRECTION-PROPOSAL-1",
+  "status": "PROPOSAL_ONLY_NOT_ADOPTED",
+  "original_source": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\delta_analysis.py",
+    "bytes": 8076,
+    "sha256": "b5db6232a86c8ad2215ee2f6c6af62a010b2208eb88ee5b429a17bc7469aac4f"
+  },
+  "candidate": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\delta-direction-diagnostic-correction-v1\\delta_analysis.py",
+    "bytes": 9493,
+    "sha256": "b3d1a6b1e6bf6d9a049fffe8351046aba1097c8ea1d928d07cf0671bf6c35bba"
+  },
+  "verification_source": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\delta-direction-diagnostic-correction-v1\\verify_candidate.py",
+    "bytes": 4595,
+    "sha256": "5830e23db5ff0778e6b9f43242c286a024d9af0e96df72392ed24397de02ee6c"
+  },
+  "mechanical_receipt": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\delta-direction-diagnostic-correction-v1\\MECHANICAL_CHECKS.json",
+    "bytes": 3580,
+    "sha256": "c0fe923c0765a40bcb4a439003495a1ddd398b09e3b7870f370be29c6a7d7bbd"
+  },
+  "changes": [
+    "Zero directions and zero denominators reported undefined, with null-safe report formatting",
+    "Sequential norm division avoids absolute denominator clamp and norm-product underflow/overflow",
+    "Out-of-range ratios retain raw value and report undefined geometry without arbitrary clipping tolerance",
+    "Global and per-head direction paths share one policy; schema1.1 explicitly changes null/status fields"
+  ],
+  "mechanical_checks": 20,
+  "limits": [
+    "Only scalar/result/report AST nodes executed; no torch/reader/model runtime",
+    "Upstream FP32 accumulation accuracy and tensor finiteness remain unvalidated",
+    "External report consumers need schema1.1 compatibility review before adoption",
+    "This metric diagnoses parameter geometry and proves no skill retention"
+  ],
+  "branch_sources_modified": false,
+  "scientific_rows_read": 0,
+  "models_loaded": 0,
+  "optimizer_updates": 0
+}

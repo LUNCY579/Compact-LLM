@@ -1,0 +1,142 @@
+{
+  "classification": "EXACT_MECHANICAL_MATHEMATICS_ONLY",
+  "examples": [
+    {
+      "L": 2,
+      "constraint_value": "0",
+      "g": [
+        "-1",
+        "0"
+      ],
+      "id": "BALL_PROJECTION",
+      "lambda": "1/2",
+      "objective": "1/8",
+      "orthogonal_task_vector_update_constraint": "1",
+      "projection": [
+        "1/2",
+        "1/2"
+      ],
+      "u": [
+        "1/2",
+        "1"
+      ]
+    },
+    {
+      "actual_L": 4,
+      "actual_loss_drift": "1/2",
+      "assumed_L": 2,
+      "claimed_upper": "0",
+      "id": "UNDERSTATED_CURVATURE"
+    },
+    {
+      "M": [
+        [
+          "2",
+          "1"
+        ],
+        [
+          "1",
+          "2"
+        ]
+      ],
+      "euclidean_cost_in_M": "1",
+      "euclidean_projection": [
+        "0",
+        "1"
+      ],
+      "id": "METRIC_HALFSPACE",
+      "lambda": "3/2",
+      "weighted_cost": "3/4",
+      "weighted_projection": [
+        "0",
+        "3/2"
+      ]
+    },
+    {
+      "averaging_counterexample": {
+        "group_1": "1",
+        "group_2": "-1",
+        "mean": "0"
+      },
+      "first_group_drift": "-3/16",
+      "id": "GROUPWISE_CONSTRAINTS",
+      "projection": [
+        "1/2",
+        "1/4"
+      ],
+      "second_group_drift": "1/4"
+    },
+    {
+      "L": 2,
+      "acquisition_movement": "0",
+      "epsilon": "0",
+      "g": [
+        "0",
+        "0"
+      ],
+      "id": "ZERO_TOLERANCE_AT_OLD_OPTIMUM",
+      "proof": "q(delta)=||delta||^2 <= 0 iff delta=0; finite KKT multiplier can fail for nonzero u.",
+      "unique_feasible_update": [
+        "0",
+        "0"
+      ]
+    },
+    {
+      "id": "RETENTION_PROJECTION_CAN_LOSE_ACQUISITION",
+      "projected_new_linear_loss_drift": "1/2",
+      "raw": [
+        "-1",
+        "1"
+      ],
+      "raw_new_linear_loss_drift": "-1/2",
+      "retained": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "a": [
+        "1",
+        "0"
+      ],
+      "b": [
+        "1/2",
+        "1/2"
+      ],
+      "component_constraint_values": [
+        "0",
+        "0"
+      ],
+      "cross_term": "1",
+      "id": "SEPARATE_CERTIFICATES_DO_NOT_COMPOSE",
+      "sum": [
+        "3/2",
+        "1/2"
+      ],
+      "sum_constraint_value": "1"
+    }
+  ],
+  "examples_checked": 7,
+  "execution_authority": false,
+  "framework_imports": [],
+  "models_loaded": 0,
+  "optimizer_updates": 0,
+  "real_model_bounds": "UNMEASURED",
+  "real_model_skill_gain": "UNMEASURED",
+  "references": [
+    {
+      "bytes": 9829,
+      "name": "RETENTION_PROJECTION.md",
+      "sha256": "bc387a47bda0a20a471ef3c30aa6509e1a0886f47e50df4ee7558e074a9db7a3"
+    },
+    {
+      "bytes": 6711,
+      "name": "exact_projection_checks.py",
+      "sha256": "2c07a552db750dc3325814228ee1755b18a5b6fc69d48960865ba67371b47eb2"
+    }
+  ],
+  "schema": "SKILL-RETENTION-PROJECTION-EXACT-1",
+  "scientific_banks_read": 0,
+  "status": "PASS",
+  "study_protocol_modified": false
+}

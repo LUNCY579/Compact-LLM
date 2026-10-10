@@ -1,0 +1,210 @@
+{
+  "checked_counterexamples": 8,
+  "classification": "MATHEMATICAL_COUNTEREXAMPLES_NOT_NATIVE_OR_LEARNING_EVIDENCE",
+  "execution_authority": false,
+  "findings": [
+    {
+      "euclidean_inner_product": "0",
+      "id": "ORTHOGONAL_WEIGHTS_FUNCTIONAL_INTERFERENCE",
+      "individual_effects": [
+        "1",
+        "1"
+      ],
+      "jacobian": [
+        "1",
+        "1"
+      ],
+      "merge_effect": "2",
+      "proof": "For linear f(theta)=theta1+theta2, task A target1 is matched by deltaA; adding orthogonal deltaB changes output to2. Euclidean orthogonality is not a universal retention guarantee.",
+      "updates": [
+        [
+          "1",
+          "0"
+        ],
+        [
+          "0",
+          "1"
+        ]
+      ]
+    },
+    {
+      "id": "COORDINATE_DEPENDENCE",
+      "new_inner_product": "1",
+      "new_jacobian": [
+        "1",
+        "0"
+      ],
+      "new_updates": [
+        [
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "1"
+        ]
+      ],
+      "parameter_map": [
+        [
+          "1",
+          "1"
+        ],
+        [
+          "0",
+          "1"
+        ]
+      ],
+      "proof": "Invertible reparameterization changes Euclidean update overlap while preserving both functional effects. Functional diagnostics must transform with the Jacobian/metric."
+    },
+    {
+      "covariance": [
+        [
+          "1",
+          "-1"
+        ],
+        [
+          "-1",
+          "1"
+        ]
+      ],
+      "id": "NORMALIZATION_IS_NOT_WHITENING",
+      "normalized_samples": [
+        [
+          "1",
+          "-1"
+        ],
+        [
+          "-1",
+          "1"
+        ]
+      ],
+      "proof": "Each sample already has mean0 and variance1; the dataset covariance is singular and has off-diagonal -1. Centering/scaling does not imply covariance identity. An epsilon merely rescales this example."
+    },
+    {
+      "anchor": [
+        0,
+        0
+      ],
+      "function": "f(theta)=theta1*theta2",
+      "id": "ZERO_FIRST_ORDER_EFFECT_NONZERO_INTERACTION",
+      "individual_effects": [
+        0,
+        0
+      ],
+      "merged_effect": "1/100",
+      "proof": "The anchor Jacobian is zero; the mixed Hessian contribution is nonzero. First-order compatibility alone cannot certify finite nonlinear compositions.",
+      "step": "1/10"
+    },
+    {
+      "B_after_A_minus_A_after_B": [
+        "-1/100",
+        "-1/200"
+      ],
+      "eta_squared_bracket": [
+        "-1/100",
+        "-1/200"
+      ],
+      "formula": "U_B(U_A(theta))-U_A(U_B(theta)) = eta^2*(H_B*g_A-H_A*g_B)+O(eta^3)",
+      "gradients_at_anchor": [
+        [
+          "-1",
+          "0"
+        ],
+        [
+          "0",
+          "-1"
+        ]
+      ],
+      "id": "TRAINING_PERMUTATION_COMMUTATOR",
+      "proof": "This quadratic example is exact for all eta. Orthogonal initial gradients do not make training updates commute. Adam comparisons additionally need the full optimizer state.",
+      "quadratic_A_hessian": [
+        [
+          "1",
+          "0"
+        ],
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "quadratic_B_hessian": [
+        [
+          "1",
+          "1/2"
+        ],
+        [
+          "1/2",
+          "1"
+        ]
+      ]
+    },
+    {
+      "euclidean_overlap": 0,
+      "formula": "Delta_A^T H_R Delta_B; first-order loss drift is g_R^T Delta, not Delta_A^T Delta_B",
+      "id": "CURVATURE_METRIC",
+      "loss_cross_term": "1/2",
+      "proof": "Even at a retention optimum, anisotropic curvature creates a nonzero cross-loss term between Euclidean-orthogonal updates.",
+      "retention_hessian": [
+        [
+          "1",
+          "1/2"
+        ],
+        [
+          "1/2",
+          "1"
+        ]
+      ]
+    },
+    {
+      "id": "GREEDY_MARGIN_RETENTION",
+      "logit_inf_bound": "9/100",
+      "margin": "1/5",
+      "proof": "If each logit changes by at most epsilon and the baseline correct-token margin exceeds2epsilon, that token remains the unique greedy choice. Sequence preservation follows by induction only when the bound holds at every identical baseline prefix; average similarity is insufficient.",
+      "remaining_margin": "1/50"
+    },
+    {
+      "A_then_B": 1.0,
+      "B_then_A": 0.0,
+      "base": 16777216.0,
+      "delta_A": -16777216.0,
+      "delta_B": 1.0,
+      "id": "FINITE_PRECISION_COMPOSITION_ORDER",
+      "proof": "Weight addition commutes in exact arithmetic, but nested FP32 rounding does not. A registered summation/rounding rule and exact anchor are part of the scientific intervention."
+    }
+  ],
+  "native_models_loaded": 0,
+  "native_optimizer_updates": 0,
+  "papers": [
+    {
+      "local_inference": "Record gradient alignment and finite-step curvature as assumptions requiring validation; do not treat low global cosine as acquired or preserved skill.",
+      "sections": "3.2 equations5-10",
+      "source_summary": "The merging-gap derivation uses a first-order loss approximation and substitutes a scaled task vector for the anchor task gradient. Orthogonality is sufficient within those approximations; the derivation does not establish an unconditional guarantee for Adam-trained nonlinear models.",
+      "title": "Multi-Task Model Merging via Adaptive Weight Disentanglement",
+      "url": "https://arxiv.org/html/2411.18729v2"
+    },
+    {
+      "local_inference": "The exact normalization counterexample shows why whitening must be measured or explicitly assumed; normalization alone does not establish that step.",
+      "sections": "3.3,4.1,AppendixE.2 equations38-41",
+      "source_summary": "The analysis uses NTK linearization and task-feature specialization. Its covariance-to-Euclidean-Gram step additionally assumes approximately whitened inputs.",
+      "title": "Understanding and Enforcing Weight Disentanglement in Task Arithmetic",
+      "url": "https://arxiv.org/html/2604.17078v1"
+    },
+    {
+      "local_inference": "Layer subspaces are a prospective diagnostic alternative; their efficacy on the local models remains unmeasured.",
+      "sections": "abstract",
+      "source_summary": "The authors study layer task matrices through singular vectors and propose compression and interference reduction in that representation.",
+      "title": "Task Singular Vectors: Reducing Task Interference in Model Merging",
+      "url": "https://arxiv.org/abs/2412.00081v3"
+    }
+  ],
+  "schema": "SKILL-COMPOSITION-EXACT-MATHEMATICS-1",
+  "scientific_banks_read": 0,
+  "scientific_effect_measured": false,
+  "study_implications": [
+    "Require genuine acquisition evidence before attempting combinations.",
+    "Preserve STOP_NO_SIGNAL and failed retention results; geometry cannot overturn them.",
+    "Separate weight addition, sequential training order and function composition as different interventions.",
+    "Use common exact anchor, frozen arithmetic/runtime and paired per-case retention outcomes.",
+    "Prospective function/curvature diagnostics need fresh source-bound budgets and data review; none are dispatched here."
+  ]
+}

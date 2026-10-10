@@ -1,0 +1,211 @@
+{
+  "classification": "EXACT_RATIONAL_TOY_MATHEMATICS; NO_CAPABILITY_OR_MODEL_EVIDENCE",
+  "counterexample": {
+    "H_A": [
+      [
+        "1",
+        "0"
+      ],
+      [
+        "0",
+        "2"
+      ]
+    ],
+    "H_B": [
+      [
+        "3",
+        "0"
+      ],
+      [
+        "0",
+        "4"
+      ]
+    ],
+    "Hessians_commute": true,
+    "L_A": "(theta_1+1)^2/2 + theta_2^2",
+    "L_B": "3*theta_1^2/2 + 2*(theta_2+1/4)^2",
+    "anchor_gradients": {
+      "g_A": [
+        "1",
+        "0"
+      ],
+      "g_B": [
+        "0",
+        "1"
+      ]
+    },
+    "both_losses_strictly_convex": true,
+    "interpretation": "Even commuting positive Hessians and orthogonal anchor gradients do not imply order invariance. A then B worsens objective A relative to the anchor, while the fixed anchored delta sum improves both toy objectives.",
+    "order_difference": [
+      "3/16",
+      "-1/8"
+    ],
+    "orthogonal_under": "Euclidean, H_A, H_B and H_A+H_B metrics at the anchor.",
+    "outcomes": [
+      {
+        "L_A": "1/2",
+        "L_B": "1/8",
+        "construction": "anchor",
+        "delta_L_A_from_anchor": "0",
+        "delta_L_B_from_anchor": "0",
+        "theta": [
+          "0",
+          "0"
+        ]
+      },
+      {
+        "L_A": "11/32",
+        "L_B": "3/32",
+        "construction": "fixed_delta_sum",
+        "delta_L_A_from_anchor": "-5/32",
+        "delta_L_B_from_anchor": "-1/32",
+        "theta": [
+          "-1/4",
+          "-1/4"
+        ]
+      },
+      {
+        "L_A": "257/512",
+        "L_B": "3/512",
+        "construction": "A_then_B",
+        "delta_L_A_from_anchor": "1/512",
+        "delta_L_B_from_anchor": "-61/512",
+        "theta": [
+          "-1/16",
+          "-1/4"
+        ]
+      },
+      {
+        "L_A": "19/64",
+        "L_B": "1/8",
+        "construction": "B_then_A",
+        "delta_L_A_from_anchor": "-13/64",
+        "delta_L_B_from_anchor": "0",
+        "theta": [
+          "-1/4",
+          "-1/8"
+        ]
+      }
+    ],
+    "step_sizes": "alpha=beta=1/4"
+  },
+  "exact_identity_checks": [
+    {
+      "alpha": "1/4",
+      "beta": "1/4",
+      "exact_identity": true,
+      "theta": [
+        "0",
+        "0"
+      ]
+    },
+    {
+      "alpha": "2/9",
+      "beta": "3/8",
+      "exact_identity": true,
+      "theta": [
+        "0",
+        "0"
+      ]
+    },
+    {
+      "alpha": "0",
+      "beta": "1/3",
+      "exact_identity": true,
+      "theta": [
+        "0",
+        "0"
+      ]
+    },
+    {
+      "alpha": "1/4",
+      "beta": "1/4",
+      "exact_identity": true,
+      "theta": [
+        "2/3",
+        "-5/7"
+      ]
+    },
+    {
+      "alpha": "2/9",
+      "beta": "3/8",
+      "exact_identity": true,
+      "theta": [
+        "2/3",
+        "-5/7"
+      ]
+    },
+    {
+      "alpha": "0",
+      "beta": "1/3",
+      "exact_identity": true,
+      "theta": [
+        "2/3",
+        "-5/7"
+      ]
+    },
+    {
+      "alpha": "1/4",
+      "beta": "1/4",
+      "exact_identity": true,
+      "theta": [
+        "-1",
+        "4"
+      ]
+    },
+    {
+      "alpha": "2/9",
+      "beta": "3/8",
+      "exact_identity": true,
+      "theta": [
+        "-1",
+        "4"
+      ]
+    },
+    {
+      "alpha": "0",
+      "beta": "1/3",
+      "exact_identity": true,
+      "theta": [
+        "-1",
+        "4"
+      ]
+    }
+  ],
+  "model_loads": 0,
+  "original_derivation": {
+    "definitions": "g_i=gradient L_i(theta), H_i=Hessian L_i(theta), T_i^eta(theta)=theta-eta*g_i(theta)",
+    "fixed_delta_addition": "theta0+alpha*delta_A+beta*delta_B is permutation invariant in exact arithmetic when both deltas are fixed at the same anchor. This identity makes no performance guarantee and is separate from finite-precision accumulation.",
+    "leading_difference": "AB-BA = alpha*beta*(H_B*g_A-H_A*g_B)+R",
+    "order_convention": "AB means A first, then B: T_B^beta(T_A^alpha(theta)).",
+    "proof_steps": [
+      "Subtract the two exact Euler compositions; the two anchor-gradient terms cancel.",
+      "Expand g_A(theta-beta*g_B) and g_B(theta-alpha*g_A) with the integral Hessian remainder.",
+      "A Lipschitz Hessian bounds each gradient remainder by rho*norm(update)^2/2; multiply by the outer step size and use the triangle inequality."
+    ],
+    "quadratic_exactness": "For quadratic losses rho_A=rho_B=0; the displayed difference is exact at every theta.",
+    "quadratic_global_commutation_conditions": "For nonzero alpha*beta, equality for every theta requires H_B*H_A=H_A*H_B and H_B*a=H_A*b.",
+    "remainder_assumptions": "H_A,H_B are Lipschitz with constants rho_A,rho_B along their respective straight update segments; alpha,beta are nonnegative.",
+    "remainder_bound": "norm(R) <= (alpha*beta^2*rho_A*norm(g_B)^2 + beta*alpha^2*rho_B*norm(g_A)^2)/2"
+  },
+  "physical_optimizer_updates": 0,
+  "primary_paper_context": [
+    {
+      "relevance": "Defines fixed task vectors by subtracting shared pretrained weights from fine-tuned weights; addition of fixed vectors is the composition considered here.",
+      "title": "Editing Models with Task Arithmetic",
+      "url": "https://arxiv.org/abs/2212.04089"
+    },
+    {
+      "relevance": "Studies averaging separately fine-tuned model weights; its empirical results do not prove training-order invariance.",
+      "title": "Model soups",
+      "url": "https://arxiv.org/abs/2203.05482"
+    }
+  ],
+  "schema": "EXACT-CONDITIONAL-TRAINING-ORDER-ANALYSIS-1",
+  "scientific_banks_read": 0,
+  "scope_limits": [
+    "Toy quadratic objectives only; no neural model/data/quality measurements.",
+    "One Euler update per task; no claim for Adam, clipping, momentum, many-step trajectories or stochastic data order.",
+    "No acquisition registration or experiment executed."
+  ]
+}

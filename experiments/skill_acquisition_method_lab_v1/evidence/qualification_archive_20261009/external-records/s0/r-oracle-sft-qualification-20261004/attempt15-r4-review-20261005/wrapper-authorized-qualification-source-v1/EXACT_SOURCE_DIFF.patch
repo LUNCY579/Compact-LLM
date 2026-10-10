@@ -1,0 +1,108 @@
+--- C:\Users\clclc\BusinessProject\comp-rs-001-records\s0\r-oracle-sft-qualification-20261004\attempt15-r4-review-20261005\wrapper-complete-close-ledger-source-v1\admission.py
++++ C:\Users\clclc\BusinessProject\comp-rs-001-records\s0\r-oracle-sft-qualification-20261004\attempt15-r4-review-20261005\wrapper-authorized-qualification-source-v1\admission.py
+@@ -12,9 +12,10 @@
+ FIELDS=('operation_attempts','read_bytes','write_bytes','identity_hash_attempts','identity_hash_bytes','metadata_bytes','wall_seconds')
+ BOUNDS=dict(zip(FIELDS,(150000,268435456,1048576,2048,33554432,1048576,60)))
+ TAIL=dict(zip(FIELDS,(256,65536,65536,16,65536,65536,5)))
+-AUTH={'path':r'C:\Users\clclc\BusinessProject\comp-rs-001-records\s0\r-oracle-sft-qualification-20261004\attempt14-failure-correction-20261005\VERIFIED_STANDING_AUTHORIZATION_20261005.json','bytes':1581,'sha256':'4458c60aaa4afc1e6ee1ad1d31b5e22cd1da507df2777d7e66e04d362767d994'}
++STANDING_AUTH_HISTORY={'path':r'C:\Users\clclc\BusinessProject\comp-rs-001-records\s0\r-oracle-sft-qualification-20261004\attempt14-failure-correction-20261005\VERIFIED_STANDING_AUTHORIZATION_20261005.json','bytes':1581,'sha256':'4458c60aaa4afc1e6ee1ad1d31b5e22cd1da507df2777d7e66e04d362767d994'}
++AUTH={'path': 'C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\OWNER_NATIVE_PUBLICATION_AUTHORIZATION_20261009_62.json', 'bytes': 2126, 'sha256': '0ed66ea842a5126071a751eb3ca4407b3aab76c54c8c9f75c2e32e5401fcdbd0'}
+ PROVIDER={'path':r'C:\Users\clclc\BusinessProject\comp-rs-001-records\s0\r-oracle-sft-qualification-20261004\attempt15-review-20261005\wrapper-deadline-correction-v1\owned_job_provider.py','bytes':24794,'sha256':'c1ab087e0c9cbfc0967e3f8ac21ee643728bc883ff9432a104fd74c98adcb3c4'}
+-JOB_CENSUS={'path': 'C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-complete-close-ledger-source-v1\\reusable_census.py', 'bytes': 10032, 'sha256': '198190b57f2ec3eccd604be9b46d3f46328eb1f9adf39de9208fba5e57fcac4d'}
++JOB_CENSUS={'path': 'C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-authorized-qualification-source-v1\\reusable_census.py', 'bytes': 10032, 'sha256': '198190b57f2ec3eccd604be9b46d3f46328eb1f9adf39de9208fba5e57fcac4d'}
+ OLD_CENSUS={'path':r'C:\Users\clclc\BusinessProject\comp-rs-001-records\s0\r-oracle-sft-qualification-20261004\attempt15-review-20261005\owned-mechanism-terminal-time-review1\job_census.py','bytes':4022,'sha256':'3d05bc47b9b88bb255332aa1fbf0d29b716ab1a5a80d36899b78f551d282a220'}
+ OUTPUT=ROOT/'native-one-attempt'
+ ACTOR_OUTPUT=OUTPUT/'actor-probe'
+@@ -99,6 +100,40 @@
+         value=types.ModuleType(name);value.__file__=item['path'];value.__dict__['__CE8_EXECUTED_SOURCE_SHA256']=item['sha256']
+         exec(compile(blob,item['path'],'exec'),value.__dict__);_MODULES[name]=value;return value
+     return o.run('control',{'operation_attempts':32,'metadata_bytes':4096},load)
++def validate_authorization(auth):
++    # This exact create-only human record is an authorization input. It cannot
++    # override automatic tool policy, issue a grant, or waive downstream gates.
++    require(type(auth) is dict and auth.get('schema')=='CE8-DIRECT-QUALIFICATION-PUBLICATION-AUTHORIZATION-62'
++      and auth.get('owner_thread_id')==OWNER and auth.get('direct_human_authorization') is True
++      and auth.get('provenance')=='Direct human user message in this owner chat; not delegated task text'
++      and auth.get('publication_scope')=='QUALIFICATION_ONLY'
++      and auth.get('normal_automatic_review_required') is True
++      and auth.get('normal_resource_admission_required') is True
++      and auth.get('existing_caps_and_scope_preserved') is True
++      and auth.get('native_grant_created_by_this_record') is False
++      and auth.get('execution_grant_created_by_this_record') is False
++      and auth.get('this_record_overrides_tool_policy') is False,
++      'exact direct human qualification authorization with ordinary gates preserved')
++    cpu=auth.get('CPU_prerequisite')
++    require(type(cpu) is dict and set(cpu)=={'physical_root_seconds','single_nested_tail_seconds','cases',
++      'attempts_per_fresh_reviewed_grant','models_allowed','optimizer_updates','gpu_use_allowed',
++      'launch_ram_bytes','ongoing_ram_bytes'}
++      and type(cpu['physical_root_seconds']) is int and cpu['physical_root_seconds']==60
++      and type(cpu['single_nested_tail_seconds']) is int and cpu['single_nested_tail_seconds']==5
++      and cpu['cases']==list(CASE_NAMES)
++      and type(cpu['attempts_per_fresh_reviewed_grant']) is int and cpu['attempts_per_fresh_reviewed_grant']==1
++      and type(cpu['models_allowed']) is int and cpu['models_allowed']==0
++      and type(cpu['optimizer_updates']) is int and cpu['optimizer_updates']==0
++      and cpu['gpu_use_allowed'] is False and cpu['launch_ram_bytes']==8589934592
++      and cpu['ongoing_ram_bytes']==2147483648,'exact unchanged one-attempt CPU prerequisite scope')
++    model=auth.get('registered_model_qualification_scope')
++    require(type(model) is dict and model.get('physical_optimizer_updates')==6
++      and model.get('data')=='TRAIN_ONLY' and model.get('weights')=='DISCARD'
++      and model.get('hard_physical_deadline_seconds')==19200
++      and model.get('requires_separate_registered_model_source_and_native_checks') is True,
++      'model scope remains separate from this zero-update CPU component')
++    return True
++
+ def validate_packet(p):
+     require(type(p) is dict and p['schema']=='CE8-ACTOR-QUALIFICATION-PACKET-1' and p['owner_thread_id']==OWNER
+       and p['source_head']==HEAD and p['phase']=='CE8_OWNED_NON_ML_OS_FIXTURE' and p['bounds']==BOUNDS and p['final_tail']==TAIL
+@@ -125,7 +160,7 @@
+     for name,item in p['source_refs'].items():
+         require(Path(item['path'])==ROOT/name,'exact current source path');read_ref(item,1048576)
+     read_ref(PROVIDER,1048576);read_ref(JOB_CENSUS,1048576);auth=strict(read_ref(AUTH,65536))
+-    require(auth['direct_user_message_id']=='01a10e08-beda-70b0-a2bd-c78d10eb2bf7' and auth['native_grant_created_by_this_record'] is False,'standing human provenance only')
++    validate_authorization(auth)
+     m=strict(read_ref(p['target_manifest_ref'],131072))
+     require(type(m) is dict and set(m)=={'schema','actor_source_ref','actor_source_freeze_ref','artifact_ref','runtimeconfig_ref','runtime_ref','framework_refs','runtime_dependency_refs','runtime_package_manifest_ref','runtime_namespace_roots','platform_boundary','launch_kind','case'}
+       and m['schema']=='CE8-EXACT-ACTOR-TARGET-2' and m['launch_kind']=='DOTNET_EXEC_FIXED_DLL'
+@@ -156,7 +191,13 @@
+       and review['reviewed_source_refs']==p['source_refs'] and review['target_manifest_ref']==p['target_manifest_ref']
+       and review['complete_all7_accounting_review']=='PASS_EXACT_UNCHANGED_CAPS'
+       and review['preparation_bound']==dict(zip(FIELDS,cost.PREPARATION_BOUNDS))
+-      and review['preparation_phase_status']=='PASS_PROSPECTIVE_BOUND', 'independent exact scope/cost source review; target native proof is an output')
++      and review['preparation_phase_status']=='PASS_PROSPECTIVE_BOUND'
++      and review['authorization_ref']==AUTH and review['automatic_tool_policy_overridden'] is False
++      and review['scope']=={'attempts':1,'case_names':list(CASE_NAMES),'frameworks_allowed':[],
++        'gpu_use_allowed':False,'models_allowed':0,'optimizer_updates':0,
++        'phase':'CE8_OWNED_NON_ML_OS_FIXTURE','physical_root_seconds':60,
++        'scientific_inputs_allowed':[],'single_nested_tail_seconds':5},
++      'independent exact scope/cost/source/authorization review; native proof is an output')
+     return True
+ _STATIC_SEAL=object()
+ _STATIC_CONTEXTS={}
+--- C:\Users\clclc\BusinessProject\comp-rs-001-records\s0\r-oracle-sft-qualification-20261004\attempt15-r4-review-20261005\wrapper-complete-close-ledger-source-v1\issue_grant.py
++++ C:\Users\clclc\BusinessProject\comp-rs-001-records\s0\r-oracle-sft-qualification-20261004\attempt15-r4-review-20261005\wrapper-authorized-qualification-source-v1\issue_grant.py
+@@ -1,7 +1,7 @@
+ """Bounded pre-grant preparation and one direct original owner handoff.
+ 
+-No target-native pass is an input. Current source is quarantined until complete
+-independent runtime/accounting review; the source-only gate stays closed.
++No target-native pass is an input. This release proposal requires exact direct
++human authorization, independent source review, and all original resource gates.
+ """
+ import os,sys,time
+ import admission as a
+@@ -15,9 +15,12 @@
+     return a.ref(path,blob,owner=owner)
+ 
+ def prepare_and_issue():
+-    # This reviewed source proposal is intentionally unable to dispatch. No
+-    # review file, inherited permit or external grant can open this gate.
+-    a.require(False,'GOAL43 OFFLINE ORIGINAL-OWNER REPLACEMENT; native dispatch unconditionally disabled')
++    # Fail closed before packet/review/auth reads unless this is the original
++    # authenticated entry and live PREP owner. Exact authorization is checked
++    # by validate_packet; exact review_binding precedes custody and any grant.
++    a.require(a._ENTRY_OWNER_BOUND and cost.entry_preparation_owner() is a.preparation_owner()
++      and not a.preparation_owner()._closed and not a.preparation_owner()._root_handoff
++      and not a.preparation_owner().fatal,'live exact same-entry original PREP owner required')
+     a.require(len(sys.argv)==1,'fixed direct original-owner entry')
+     a.require(a._ENTRY_OWNER_BOUND and cost.entry_preparation_owner() is a.preparation_owner()
+       and type(getattr(a,'_ENTRY_IDENTITIES',None)) is dict and type(getattr(a,'_ENTRY_IDENTITIES_REF',None)) is dict,'exact same original bootstrap preparation owner required')

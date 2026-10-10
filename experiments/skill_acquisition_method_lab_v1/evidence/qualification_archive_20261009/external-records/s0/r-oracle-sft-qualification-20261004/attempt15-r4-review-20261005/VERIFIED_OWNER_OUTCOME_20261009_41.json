@@ -1,0 +1,141 @@
+{
+  "schema": "CE8-OWNER-VERIFIED-CONTINUATION-OUTCOME-20261009-41",
+  "utc": "2026-10-09T16:31:01.0920743Z",
+  "owner_thread_id": "01a0dfa3-9cdf-7703-a362-32f559ec15a7",
+  "goal_status": "active",
+  "goal_complete": false,
+  "previous_goal_turn_classification": "progress",
+  "current_goal_turn_classification": "progress: implemented and independently reviewed offline observer state machine for synchronized single termination, immutable existing bounds, bounded waits and same-original-owner custody; full pricing/admission/native compatibility remain explicit NoAdmit",
+  "previous_outcome": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\VERIFIED_OWNER_OUTCOME_20261009_40.json",
+    "bytes": 8969,
+    "sha256": "f46562960907d5c86cd64c7e29581e4fc6f9c19fca4b1127e54a88a5514ff0e7"
+  },
+  "source_branch": "codex/comp-rs-s1-dev-20260930",
+  "source_head": "eee2e0bd31854ea207b231d65eedd4c1c94e1011",
+  "source_clean": true,
+  "core_source_modified": false,
+  "old_observer": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\observe_owned_cpu_run39.ps1",
+    "bytes": 12056,
+    "sha256": "a913048113cd1072122253286cb8f3decbbc6ce3fa8c5a7e8e6f60ecabe13645"
+  },
+  "old_source_and_review_preserved": true,
+  "source_defect_finding": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\OBSERVER_BOUNDED_EXIT_FINDING_20261009_40.json",
+    "bytes": 2673,
+    "sha256": "689819d285c162ea64b1edb8dd2ff66a80cf94452cea475a046423b168483968"
+  },
+  "source_defect_review": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\OBSERVER_BOUNDED_EXIT_REVIEW_20261009_40.json",
+    "bytes": 5988,
+    "sha256": "611326c8e924b00733d346e26c2e7e5085c3a9e426e90673f8268151e2bce9a7"
+  },
+  "new_offline_source": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\observer-owned-bound-proposal-v1\\observer_state.py",
+    "bytes": 15824,
+    "sha256": "1692d169783b497080abf3fd29367c5ecfa9c556988dd40b4a870f0d5d6ccea5"
+  },
+  "new_source_freeze": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\observer-owned-bound-proposal-v1\\SOURCE_FREEZE.json",
+    "bytes": 2591,
+    "sha256": "1a56e66b0a74a535cba6e466a1a312e10410c543348c18187a6acb5549a88ef4"
+  },
+  "custody_contract": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\observer-owned-bound-proposal-v1\\CUSTODY_CONTRACT.md",
+    "bytes": 7378,
+    "sha256": "e3a18a1f1520affb1e3504170264171fc04166b52e2e084ede3e2cbbdf3a603e"
+  },
+  "primary_custody_scope": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\JOB_CUSTODY_PRIMARY_SCOPE_20261009_41.json",
+    "bytes": 1727,
+    "sha256": "5256fb81079036d79ba08aa874686927fdf5457d2acd9761420740d6a7cdf9a0"
+  },
+  "mechanical_evidence": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\observer-owned-bound-proposal-v1\\MECHANICAL_EVIDENCE.json",
+    "bytes": 4414,
+    "sha256": "36347f39705fe3a355ceeede18842126b4630a96b65cfbb5490a3b7efd272163"
+  },
+  "independent_custody_review": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\observer-owned-bound-proposal-v1\\INDEPENDENT_REVIEW.json",
+    "bytes": 9332,
+    "sha256": "8efce1cb139050e2a9f7fa0270f6016e61d19910f7ff59c8207326c6ca5c933e"
+  },
+  "independent_price_audit": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\observer-owned-bound-price-audit-v1\\REVIEW.json",
+    "bytes": 12896,
+    "sha256": "86385b950c970f1bf01f68030afc108b0f287b3252f09e1481aef4dfd411ff15"
+  },
+  "evidence_scope": "Synthetic mechanical/source/conditional OS custody evidence only, not Native qualification.",
+  "original_mechanical_controls": 26,
+  "additional_price_audit_controls": 10,
+  "additional_custody_controls": 6,
+  "implemented_protocol": [
+    "Shared synchronized nonblocking pre-call termination latch; at most one native stop invocation, no retry after error or deadline.",
+    "Same immutable recorded bounds and identical owner clock; no caller-supplied cleanup endpoint or fresh tail.",
+    "Bounded integer-floor waits, finite observation ceiling and post-call lateness checks.",
+    "Same original backend/handles retained on unresolved state; original-host last noninherited KillOnClose Job handle supplies conditional containment, not observed closure.",
+    "Offline entry unconditionally refuses dispatch; old run_owned/BoundedLogs stop-producing paths are not silently inherited."
+  ],
+  "complete_all7_role_allocation": "UNPROVEN_NO_ADMIT",
+  "native_provider_creation_or_partial_constructor_integration": "REQUIRED_FUTURE_SOURCE_BOUND_PRICING_NOT_EXECUTED",
+  "tail_duration_and_native_grant_authentication": "REQUIRED_FUTURE_INTEGRATION",
+  "hard_API_or_scheduling_latency_proved": false,
+  "observed_exit_or_lease_release_in_new_proposal": false,
+  "native_qualification_transferred_from_provider": false,
+  "automatic_review_rejection": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\durable-failure-lifecycle-independent-review-20261009-39\\AUTOMATIC_REVIEW_REJECTION.json",
+    "bytes": 1151,
+    "sha256": "1b325fa6337bbabac06afc555817bd9a4e3b749e76a30a9586275e3d188bfe98"
+  },
+  "automatic_block_preserved": true,
+  "rejected_action_retried": false,
+  "eligibility_created": false,
+  "new_native_grants": 0,
+  "observer_invoked": false,
+  "new_native_fixture_executed": false,
+  "pending_user_scope_question_unchanged": true,
+  "prepared_native_packet": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-timeout-corrected-cpu-source-v1\\PACKET.json",
+    "bytes": 8924,
+    "sha256": "3bbdb1868bc36e531501cc1778f4772b5aaead2feb2e6eaae1ab2a0f0745adab"
+  },
+  "prepared_consumer_freeze": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-timeout-corrected-cpu-source-v1\\SOURCE_FREEZE.json",
+    "bytes": 17497,
+    "sha256": "7bc1f8119c53478ef085353004bfcc051cb961c818b7027b3101fd90005bc156"
+  },
+  "last_actual_native_failure_validation": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\durable-failure-lifecycle-independent-review-20261009-38\\NATIVE_FAILURE_VALIDATION.json",
+    "bytes": 12074,
+    "sha256": "b0aba7ceed74e03c3606979475a041d0a9283d432f1124ae07721f3021fc625f"
+  },
+  "last_actual_outcome": "Attempt38 FAIL, consumed and preserved; owned handles/Jobs/216pins/lease closure independently verified.",
+  "qualification_pass": false,
+  "CPU_qualification_pass": false,
+  "model_qualification_executed": false,
+  "models_loaded": 0,
+  "physical_optimizer_updates": 0,
+  "scientific_rows_read": 0,
+  "new_GPU_leases": 0,
+  "new_live_pins": 0,
+  "owned_processes": [],
+  "qualification_scope": {
+    "data_role": "TRAIN",
+    "physical_optimizer_updates": 6,
+    "weights": "DISCARDED",
+    "hard_physical_deadline_seconds": 19200,
+    "workers": 80,
+    "sample_attempts": 17000
+  },
+  "caps_increased": false,
+  "resource_floors_weakened": false,
+  "protected_branch": "codex/ce8-production-dev-20261002",
+  "protected_head": "bbb96fd59a192df1314d82fa461b0d5658bca8be",
+  "protected_clean": true,
+  "existing_375_update_study_preserved": true,
+  "all_failed_partial_records_preserved": true,
+  "acquisition_DEV_confirmation_production_promotion_competingworker_executed": false,
+  "next_required_decision": "Automatic approval rejection remains binding and explicit scope question unanswered. Before any adoption, select a concrete poll ceiling and fully allocate source-bound observer creation/streams/termination/cleanup/serialization/hash/publication/resource units within applicable registered caps, bind actual grant/tail/clock and partial-constructor ownership, and independently review Native integration. Offline mechanics create no runtime authority.",
+  "remaining_goal": "Full model qualification and empirical acquisition/composition/retention remain incomplete; offline protocol work does not redefine completion."
+}

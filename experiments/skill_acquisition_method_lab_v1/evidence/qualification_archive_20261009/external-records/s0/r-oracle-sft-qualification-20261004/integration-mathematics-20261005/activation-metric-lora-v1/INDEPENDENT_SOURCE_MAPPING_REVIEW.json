@@ -1,0 +1,916 @@
+{
+  "adapter_tensors_loaded": 0,
+  "all_15_role_pairs_byte_identical": true,
+  "applicable_instruction_refs": [
+    {
+      "bytes": 2482,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\AGENTS.md",
+      "sha256": "2688c8447722b791d87bcf372d72f487d56b00170b13abd8888267de5c15f4d2"
+    }
+  ],
+  "branches_changed": false,
+  "created_at_utc": "2026-10-09T16:15:28.499334+00:00",
+  "current_repositories": {
+    "mimo": {
+      "all_worktree_status_short": "?? %SystemDrive%/\n?? cycles/",
+      "branch": "research/post-training-mimo-centralized-v1",
+      "declared_identity_matches": true,
+      "head": "19551ddebc87c93161c303865ce6d0f130de0093",
+      "root": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo",
+      "selected_source_status_short": ""
+    },
+    "rineya_central": {
+      "all_worktree_status_short": "",
+      "branch": "research/rineya-centralized-reasoning-system-v1",
+      "declared_identity_matches": true,
+      "head": "04fe137574cc38c04824b65beea9374f60c9042c",
+      "root": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1",
+      "selected_source_status_short": ""
+    }
+  },
+  "declared_function_ranges_checked": 58,
+  "evidence_classification": "Static source/hash/AST and Git verification only; function-range checks are mechanical source evidence. No native or empirical qualification.",
+  "execution_permission_granted": false,
+  "existing_sources_modified": false,
+  "findings": [
+    {
+      "evidence": "Flattened FP32 delta products and norms; no module-input moment passed. The former clamps the denominator at 1e-30 while pair_metrics returns None on zero norms.",
+      "id": "parameter_geometry",
+      "limit": "No actual tensors, numerical behavior or model retention evaluated.",
+      "roles": [
+        "delta_pair_frobenius",
+        "lora_delta_pair_metrics"
+      ],
+      "verdict": "SUPPORTED_STATIC_SOURCE"
+    },
+    {
+      "evidence": "Fresh FP32 base for each reconstructed adapter delta in soup; weighted B tensors followed by sequential safe_merge in composer. Neither API consumes an activation response Gram.",
+      "id": "composition",
+      "limit": "Composer docstring is intended plain-LoRA algebra, not verified same-anchor compatibility, per-module effective scaling, variant support, installed PEFT implementation or bitwise order independence.",
+      "roles": [
+        "fp32_delta_soup",
+        "weighted_B_sequential_merge"
+      ],
+      "verdict": "SUPPORTED_STATIC_SOURCE_WITH_VARIANT_LIMIT"
+    },
+    {
+      "evidence": "Interference loader uses global alpha/r; dynamics obtains rank from A.shape[0] and numeric alpha fallback. No per-module alpha_pattern resolution, rslora, DoRA or transposition contract in these helpers.",
+      "id": "operator_configuration",
+      "limit": "Do not interpret these diagnostics as reconstructing arbitrary PEFT operator variants.",
+      "roles": [
+        "lora_delta_pair_metrics",
+        "lora_factor_spectral_dynamics"
+      ],
+      "verdict": "SUPPORTED_STATIC_SOURCE"
+    },
+    {
+      "evidence": "Last-token hidden states, centered CKA and effective rank; separate all-token selected-depth residual capture. Streaming q/k/v inputs are normed at249, o_proj input is attended.reshape at264, gate/up input normed at267, down input gate at271. Stored captures are layer residuals at275 and final normalized layer output at295.",
+      "id": "activation_infrastructure",
+      "limit": "A layer output, final-token vector or centered CKA is not the actual pre-linear input moment. The hand-written streaming source explicitly requires its own Transformers-equivalence gate; this audit did not qualify it.",
+      "roles": [
+        "representation_cka",
+        "activation_cka",
+        "token_residual_capture",
+        "streaming_residual_capture"
+      ],
+      "verdict": "SUPPORTED_STATIC_SOURCE"
+    },
+    {
+      "evidence": "Ridge computes X.T@X from supplied matrices; embedding alignment samples vocabulary rows with separate sample/heldout IDs.",
+      "id": "ridge_alignment",
+      "limit": "fit_tiny_maps lines30-42 fits and scores the same donor/target matrices; its held_out_proxy_r2 label does not establish an actual heldout evaluation. Historical translator interpretation strings are not current empirical evidence.",
+      "roles": [
+        "feature_ridge_gram",
+        "functional_translator",
+        "embedding_alignment"
+      ],
+      "verdict": "SUPPORTED_STATIC_SOURCE_WITH_METRIC_LABEL_LIMIT"
+    },
+    {
+      "evidence": "Squared gradients of each calibration-row causal NLL are accumulated and averaged over rows, with identity manifest.",
+      "id": "fisher",
+      "limit": "This is a row-averaged squared-loss-gradient parameter sensitivity proxy, not exact expected model Fisher, a per-token gradient estimate, or uncentered C=E[xx.T]. The non-sealed-path guard alone proves neither TRAIN identity nor authorization.",
+      "roles": [
+        "diagonal_empirical_fisher"
+      ],
+      "verdict": "SUPPORTED_STATIC_SOURCE_WITH_STATISTICAL_LIMIT"
+    },
+    {
+      "evidence": "Merge enforces FP32 accumulation before output dtype conversion. Correlation tools join descriptive delta and supplied behavioral intervention summaries; source says not used for coefficient choice.",
+      "id": "layerwise_and_behavior",
+      "limit": "Neither inspected merge API is bound to an activation-weighted LoRA response Gram. No interventions or supplied results executed/validated.",
+      "roles": [
+        "layerwise_weight_interpolation",
+        "parameter_behavior_correlation"
+      ],
+      "verdict": "SUPPORTED_STATIC_SOURCE"
+    },
+    {
+      "evidence": "Soup validate_weights lines43-62 checks negative values, positive total and normalization error but has no explicit finite check; composer casts arbitrary spec weights to float without finite verification.",
+      "id": "finite_coefficient_guard",
+      "limit": "No invalid coefficient was supplied or code executed. Future design must implement explicit finite checks rather than infer them from current validation names.",
+      "roles": [
+        "fp32_delta_soup",
+        "weighted_B_sequential_merge"
+      ],
+      "verdict": "ADDITIONAL_STATIC_LIMIT"
+    }
+  ],
+  "function_range_checks": [
+    {
+      "end_line": 45,
+      "function": "Accumulator.add",
+      "repository": "mimo",
+      "role": "delta_pair_frobenius",
+      "start_line": 30
+    },
+    {
+      "end_line": 75,
+      "function": "Accumulator.result",
+      "repository": "mimo",
+      "role": "delta_pair_frobenius",
+      "start_line": 47
+    },
+    {
+      "end_line": 211,
+      "function": "analyze_delta_pair",
+      "repository": "mimo",
+      "role": "delta_pair_frobenius",
+      "start_line": 96
+    },
+    {
+      "end_line": 139,
+      "function": "main",
+      "repository": "mimo",
+      "role": "fp32_delta_soup",
+      "start_line": 80
+    },
+    {
+      "end_line": 77,
+      "function": "merged_state_dict",
+      "repository": "mimo",
+      "role": "fp32_delta_soup",
+      "start_line": 65
+    },
+    {
+      "end_line": 62,
+      "function": "validate_weights",
+      "repository": "mimo",
+      "role": "fp32_delta_soup",
+      "start_line": 43
+    },
+    {
+      "end_line": 93,
+      "function": "main",
+      "repository": "mimo",
+      "role": "weighted_B_sequential_merge",
+      "start_line": 63
+    },
+    {
+      "end_line": 60,
+      "function": "scale_adapter",
+      "repository": "mimo",
+      "role": "weighted_B_sequential_merge",
+      "start_line": 37
+    },
+    {
+      "end_line": 29,
+      "function": "delta",
+      "repository": "mimo",
+      "role": "lora_delta_pair_metrics",
+      "start_line": 28
+    },
+    {
+      "end_line": 18,
+      "function": "load_adapter",
+      "repository": "mimo",
+      "role": "lora_delta_pair_metrics",
+      "start_line": 13
+    },
+    {
+      "end_line": 41,
+      "function": "pair_metrics",
+      "repository": "mimo",
+      "role": "lora_delta_pair_metrics",
+      "start_line": 31
+    },
+    {
+      "end_line": 98,
+      "function": "module_stats",
+      "repository": "mimo",
+      "role": "lora_factor_spectral_dynamics",
+      "start_line": 60
+    },
+    {
+      "end_line": 82,
+      "function": "centered_gram",
+      "repository": "mimo",
+      "role": "representation_cka",
+      "start_line": 79
+    },
+    {
+      "end_line": 106,
+      "function": "effective_rank",
+      "repository": "mimo",
+      "role": "representation_cka",
+      "start_line": 99
+    },
+    {
+      "end_line": 76,
+      "function": "encode_rows",
+      "repository": "mimo",
+      "role": "representation_cka",
+      "start_line": 59
+    },
+    {
+      "end_line": 96,
+      "function": "linear_cka",
+      "repository": "mimo",
+      "role": "representation_cka",
+      "start_line": 85
+    },
+    {
+      "end_line": 41,
+      "function": "project_weight",
+      "repository": "mimo",
+      "role": "feature_ridge_gram",
+      "start_line": 29
+    },
+    {
+      "end_line": 26,
+      "function": "ridge_linear_map",
+      "repository": "mimo",
+      "role": "feature_ridge_gram",
+      "start_line": 10
+    },
+    {
+      "end_line": 51,
+      "function": "_r2",
+      "repository": "mimo",
+      "role": "functional_translator",
+      "start_line": 46
+    },
+    {
+      "end_line": 43,
+      "function": "fit_tiny_maps",
+      "repository": "mimo",
+      "role": "functional_translator",
+      "start_line": 20
+    },
+    {
+      "end_line": 443,
+      "function": "streaming_forward",
+      "repository": "mimo",
+      "role": "streaming_residual_capture",
+      "start_line": 332
+    },
+    {
+      "end_line": 329,
+      "function": "streaming_forward_many",
+      "repository": "mimo",
+      "role": "streaming_residual_capture",
+      "start_line": 178
+    },
+    {
+      "end_line": 27,
+      "function": "linear_cka",
+      "repository": "mimo",
+      "role": "activation_cka",
+      "start_line": 13
+    },
+    {
+      "end_line": 36,
+      "function": "accumulate_squared_gradients",
+      "repository": "mimo",
+      "role": "diagonal_empirical_fisher",
+      "start_line": 23
+    },
+    {
+      "end_line": 179,
+      "function": "estimate_diagonal_fisher",
+      "repository": "mimo",
+      "role": "diagonal_empirical_fisher",
+      "start_line": 54
+    },
+    {
+      "end_line": 65,
+      "function": "_ridge_dual_solution",
+      "repository": "mimo",
+      "role": "embedding_alignment",
+      "start_line": 54
+    },
+    {
+      "end_line": 145,
+      "function": "fit_embedding_alignment",
+      "repository": "mimo",
+      "role": "embedding_alignment",
+      "start_line": 68
+    },
+    {
+      "end_line": 168,
+      "function": "main",
+      "repository": "mimo",
+      "role": "token_residual_capture",
+      "start_line": 54
+    },
+    {
+      "end_line": 205,
+      "function": "merge_checkpoints",
+      "repository": "mimo",
+      "role": "layerwise_weight_interpolation",
+      "start_line": 86
+    },
+    {
+      "end_line": 45,
+      "function": "Accumulator.add",
+      "repository": "rineya_central",
+      "role": "delta_pair_frobenius",
+      "start_line": 30
+    },
+    {
+      "end_line": 75,
+      "function": "Accumulator.result",
+      "repository": "rineya_central",
+      "role": "delta_pair_frobenius",
+      "start_line": 47
+    },
+    {
+      "end_line": 211,
+      "function": "analyze_delta_pair",
+      "repository": "rineya_central",
+      "role": "delta_pair_frobenius",
+      "start_line": 96
+    },
+    {
+      "end_line": 139,
+      "function": "main",
+      "repository": "rineya_central",
+      "role": "fp32_delta_soup",
+      "start_line": 80
+    },
+    {
+      "end_line": 77,
+      "function": "merged_state_dict",
+      "repository": "rineya_central",
+      "role": "fp32_delta_soup",
+      "start_line": 65
+    },
+    {
+      "end_line": 62,
+      "function": "validate_weights",
+      "repository": "rineya_central",
+      "role": "fp32_delta_soup",
+      "start_line": 43
+    },
+    {
+      "end_line": 93,
+      "function": "main",
+      "repository": "rineya_central",
+      "role": "weighted_B_sequential_merge",
+      "start_line": 63
+    },
+    {
+      "end_line": 60,
+      "function": "scale_adapter",
+      "repository": "rineya_central",
+      "role": "weighted_B_sequential_merge",
+      "start_line": 37
+    },
+    {
+      "end_line": 29,
+      "function": "delta",
+      "repository": "rineya_central",
+      "role": "lora_delta_pair_metrics",
+      "start_line": 28
+    },
+    {
+      "end_line": 18,
+      "function": "load_adapter",
+      "repository": "rineya_central",
+      "role": "lora_delta_pair_metrics",
+      "start_line": 13
+    },
+    {
+      "end_line": 41,
+      "function": "pair_metrics",
+      "repository": "rineya_central",
+      "role": "lora_delta_pair_metrics",
+      "start_line": 31
+    },
+    {
+      "end_line": 98,
+      "function": "module_stats",
+      "repository": "rineya_central",
+      "role": "lora_factor_spectral_dynamics",
+      "start_line": 60
+    },
+    {
+      "end_line": 82,
+      "function": "centered_gram",
+      "repository": "rineya_central",
+      "role": "representation_cka",
+      "start_line": 79
+    },
+    {
+      "end_line": 106,
+      "function": "effective_rank",
+      "repository": "rineya_central",
+      "role": "representation_cka",
+      "start_line": 99
+    },
+    {
+      "end_line": 76,
+      "function": "encode_rows",
+      "repository": "rineya_central",
+      "role": "representation_cka",
+      "start_line": 59
+    },
+    {
+      "end_line": 96,
+      "function": "linear_cka",
+      "repository": "rineya_central",
+      "role": "representation_cka",
+      "start_line": 85
+    },
+    {
+      "end_line": 41,
+      "function": "project_weight",
+      "repository": "rineya_central",
+      "role": "feature_ridge_gram",
+      "start_line": 29
+    },
+    {
+      "end_line": 26,
+      "function": "ridge_linear_map",
+      "repository": "rineya_central",
+      "role": "feature_ridge_gram",
+      "start_line": 10
+    },
+    {
+      "end_line": 51,
+      "function": "_r2",
+      "repository": "rineya_central",
+      "role": "functional_translator",
+      "start_line": 46
+    },
+    {
+      "end_line": 43,
+      "function": "fit_tiny_maps",
+      "repository": "rineya_central",
+      "role": "functional_translator",
+      "start_line": 20
+    },
+    {
+      "end_line": 443,
+      "function": "streaming_forward",
+      "repository": "rineya_central",
+      "role": "streaming_residual_capture",
+      "start_line": 332
+    },
+    {
+      "end_line": 329,
+      "function": "streaming_forward_many",
+      "repository": "rineya_central",
+      "role": "streaming_residual_capture",
+      "start_line": 178
+    },
+    {
+      "end_line": 27,
+      "function": "linear_cka",
+      "repository": "rineya_central",
+      "role": "activation_cka",
+      "start_line": 13
+    },
+    {
+      "end_line": 36,
+      "function": "accumulate_squared_gradients",
+      "repository": "rineya_central",
+      "role": "diagonal_empirical_fisher",
+      "start_line": 23
+    },
+    {
+      "end_line": 179,
+      "function": "estimate_diagonal_fisher",
+      "repository": "rineya_central",
+      "role": "diagonal_empirical_fisher",
+      "start_line": 54
+    },
+    {
+      "end_line": 65,
+      "function": "_ridge_dual_solution",
+      "repository": "rineya_central",
+      "role": "embedding_alignment",
+      "start_line": 54
+    },
+    {
+      "end_line": 145,
+      "function": "fit_embedding_alignment",
+      "repository": "rineya_central",
+      "role": "embedding_alignment",
+      "start_line": 68
+    },
+    {
+      "end_line": 168,
+      "function": "main",
+      "repository": "rineya_central",
+      "role": "token_residual_capture",
+      "start_line": 54
+    },
+    {
+      "end_line": 205,
+      "function": "merge_checkpoints",
+      "repository": "rineya_central",
+      "role": "layerwise_weight_interpolation",
+      "start_line": 86
+    }
+  ],
+  "gap_verdict": {
+    "existing_infrastructure_acknowledged": [
+      "activation capture",
+      "centered CKA",
+      "token residual capture",
+      "ridge feature Gram",
+      "embedding alignment",
+      "squared loss-gradient sensitivity",
+      "descriptive behavioral correlation",
+      "delta composers"
+    ],
+    "precise_gap": "A source-bound producer/consumer connecting the same exact anchor, named LoRA linear operator, effective s_i B_i A_i and layout/variant, token mask/normalization, and uncentered module-input/projected moments to a per-module cross-adapter response Gram, with provenance and separate functional retention observations.",
+    "search_scope": "Only the 30 exact referenced source files. Existing source bodies and API arguments inspected; no complete repository absence claim. A targeted rg search for response Gram, activation weighted, second moment, register_forward_pre_hook and input moment returned no lines in those exact files.",
+    "status": "SUPPORTED_ONLY_FOR_LISTED_FILES"
+  },
+  "instruction_application": "Only Central root AGENTS.md applies to listed research sources. Its CRS track preservation/no-new-run-permission and existing gate rules are retained; no listed source is under experiments with deeper AGENTS. No ancestor AGENTS/AGENT for the external review output was found.",
+  "limitations": [
+    "Read-only observations are not a freeze lock or future run grant.",
+    "No installed PEFT/Transformers runtime, model files, adapter factors, masks, rows or retention data inspected.",
+    "All-worktree status differs from selected-source cleanliness: Mimo currently has unrelated untracked %SystemDrive%/ and cycles/; Central is clean.",
+    "No literature novelty or empirical gain claim reviewed."
+  ],
+  "models_loaded": 0,
+  "native_calls": 0,
+  "native_eligibility_changed": false,
+  "native_eligibility_policy_block_unchanged": true,
+  "optimizer_updates": 0,
+  "prior_gauge_analysis_current_ref": {
+    "bytes": 8144,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\lora-factor-gauge-v1\\CONDITIONAL_ANALYSIS.json",
+    "sha256": "9619eb2108b8f031b44209265e5a8241d395a4ca3b88c5381341ef58701d4ee1"
+  },
+  "prospective_design": {
+    "before_any_model_or_data_access": [
+      "Existing qualification complete and independent receipt/accounting/process/lease closure validated.",
+      "Separate registration and authorization binding all model/adapter/tokenizer/TRAIN/source identities, effective scales/layout/variants, masks/weights/dtypes, sampling and resource/deadline accounting.",
+      "If either proposed q_proj or down_proj has no eligible supported module, predeclare refusal, not substitution based on observed results.",
+      "Retain calibration/audit prompt disjointness; do not call fit_tiny_maps in-sample proxy a holdout.",
+      "Qualification weights remain discarded; no merge selection/compression/promotion or functional-retention claim from Gram alone."
+    ],
+    "operator": "For exact same-anchor real linear D_i=s_i B_i A_i and a fixed common valid-token selection with nonnegative normalized weights, K_ji=E[(A_j x)(A_i x).T] yields G_ij=s_i*s_j*tr((B_i.T B_j)K_ji). This is a local uncentered response metric; no empirical values have been measured.",
+    "rows_selected": 0,
+    "scope_change_registered": false,
+    "status": "UNREGISTERED_UNEXECUTED_DESIGN_ONLY"
+  },
+  "reviewed_mapping_ref": {
+    "bytes": 31454,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\activation-metric-lora-v1\\SOURCE_MAPPING.json",
+    "sha256": "fdb52a57c4b473492028d5b1a2abf9962d8894a6cb4613cc31fb20752b0d6252"
+  },
+  "schema": "RINEYA-ACTIVATION-METRIC-LORA-INDEPENDENT-SOURCE-MAPPING-REVIEW-1",
+  "scientific_rows_read": 0,
+  "source_file_count": 30,
+  "source_imports_executed": false,
+  "sources": [
+    {
+      "current_ref": {
+        "bytes": 8076,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\delta_analysis.py",
+        "sha256": "b5db6232a86c8ad2215ee2f6c6af62a010b2208eb88ee5b429a17bc7469aac4f"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "delta_pair_frobenius"
+    },
+    {
+      "current_ref": {
+        "bytes": 5823,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\short-response-model-phase-0-1-2\\scripts\\phase_4_model_soups\\merge_delta_soup.py",
+        "sha256": "53c817d5421a8d9fad1ead00b42f06bc4cb0cc052ca5d88c005bbbdbc0d122fb"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "fp32_delta_soup"
+    },
+    {
+      "current_ref": {
+        "bytes": 4722,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\short-response-model-phase-0-1-2\\scripts\\phase_9_student_distillation\\compose_lora_adapters_v22.py",
+        "sha256": "cfbe6d6ec94b0398fc7d14e347262a35c06f549d50f736a6d2afb27526fcb7ab"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "weighted_B_sequential_merge"
+    },
+    {
+      "current_ref": {
+        "bytes": 4113,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\short-response-model-phase-0-1-2\\scripts\\phase_9_student_distillation\\analyze_adapter_interference_v23.py",
+        "sha256": "ea8e1bfd4f758868438d8e4b6468c2ecb54d153b224fa8fdd64e9b9e41b81f25"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "lora_delta_pair_metrics"
+    },
+    {
+      "current_ref": {
+        "bytes": 7545,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\short-response-model-phase-0-1-2\\scripts\\phase_9_student_distillation\\analyze_lora_dynamics_v231.py",
+        "sha256": "e48b428d8c7376806db6c6bcc9bd56bbe763b947a973379300241960c2c81989"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "lora_factor_spectral_dynamics"
+    },
+    {
+      "current_ref": {
+        "bytes": 9970,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\short-response-model-phase-0-1-2\\scripts\\phase_9_student_distillation\\analyze_representation_dynamics_v231.py",
+        "sha256": "2f8af3b9b1e51e053e7455a091883217789c83724ea8f7a0fe111ef8b7b348f3"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "representation_cka"
+    },
+    {
+      "current_ref": {
+        "bytes": 2913,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\direction_transfer.py",
+        "sha256": "457972fd01d5690717bea73a7c7c28da539c87d0d7ede53049490753c6564a95"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "feature_ridge_gram"
+    },
+    {
+      "current_ref": {
+        "bytes": 3578,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\functional_translator.py",
+        "sha256": "e0a10a826653f5bf122c1dff11fab89de06f96240f28e8f17df03da2bc3a0bd3"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "functional_translator"
+    },
+    {
+      "current_ref": {
+        "bytes": 19257,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\streaming_forward.py",
+        "sha256": "3ff342ab403ac866622fc8faa1ca63bfb2f193dfd97ec5f098bfd8d03366961e"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "streaming_residual_capture"
+    },
+    {
+      "current_ref": {
+        "bytes": 2692,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\cka.py",
+        "sha256": "7c26ac61d731de1c83d1069ccc00f5b96505271de7e23499b7a1b5f75ca69798"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "activation_cka"
+    },
+    {
+      "current_ref": {
+        "bytes": 6406,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\fisher.py",
+        "sha256": "e097ecdc41a61466e3bab98d74c6d342aa871c155f2b7fb2ff6f393c6b139997"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "diagonal_empirical_fisher"
+    },
+    {
+      "current_ref": {
+        "bytes": 22518,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\aligned_projection.py",
+        "sha256": "36c41abd48aa0e6d5327c030909fbedb7fb7ecd7da50daaa3cd1d9a043f22d59"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "embedding_alignment"
+    },
+    {
+      "current_ref": {
+        "bytes": 7602,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\scripts\\v3_e6_capture_token_states.py",
+        "sha256": "bae499815ec06ed5ae7dfc761494b06c0f2027136bb0d113a27b199858c60e89"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "token_residual_capture"
+    },
+    {
+      "current_ref": {
+        "bytes": 8477,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\Rineya_Layerwise_Soup_Lab_v1.0\\src\\rineya_soup_lab\\model\\merge.py",
+        "sha256": "b1f870da60774ac2822d233a20ea70a1bd12f15d54743b3ec5e4d74d526ff899"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "layerwise_weight_interpolation"
+    },
+    {
+      "current_ref": {
+        "bytes": 8447,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\Rineya_Layerwise_Soup_Lab_v1.0\\src\\rineya_soup_lab\\analysis\\delta_correlation.py",
+        "sha256": "ba47b768253c332b4dbd6cbe95d1116173bc565376fdc1a98e18a598dd046750"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "mimo",
+      "role": "parameter_behavior_correlation"
+    },
+    {
+      "current_ref": {
+        "bytes": 8076,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\delta_analysis.py",
+        "sha256": "b5db6232a86c8ad2215ee2f6c6af62a010b2208eb88ee5b429a17bc7469aac4f"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "delta_pair_frobenius"
+    },
+    {
+      "current_ref": {
+        "bytes": 5823,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\short-response-model-phase-0-1-2\\scripts\\phase_4_model_soups\\merge_delta_soup.py",
+        "sha256": "53c817d5421a8d9fad1ead00b42f06bc4cb0cc052ca5d88c005bbbdbc0d122fb"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "fp32_delta_soup"
+    },
+    {
+      "current_ref": {
+        "bytes": 4722,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\short-response-model-phase-0-1-2\\scripts\\phase_9_student_distillation\\compose_lora_adapters_v22.py",
+        "sha256": "cfbe6d6ec94b0398fc7d14e347262a35c06f549d50f736a6d2afb27526fcb7ab"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "weighted_B_sequential_merge"
+    },
+    {
+      "current_ref": {
+        "bytes": 4113,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\short-response-model-phase-0-1-2\\scripts\\phase_9_student_distillation\\analyze_adapter_interference_v23.py",
+        "sha256": "ea8e1bfd4f758868438d8e4b6468c2ecb54d153b224fa8fdd64e9b9e41b81f25"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "lora_delta_pair_metrics"
+    },
+    {
+      "current_ref": {
+        "bytes": 7545,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\short-response-model-phase-0-1-2\\scripts\\phase_9_student_distillation\\analyze_lora_dynamics_v231.py",
+        "sha256": "e48b428d8c7376806db6c6bcc9bd56bbe763b947a973379300241960c2c81989"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "lora_factor_spectral_dynamics"
+    },
+    {
+      "current_ref": {
+        "bytes": 9970,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\short-response-model-phase-0-1-2\\scripts\\phase_9_student_distillation\\analyze_representation_dynamics_v231.py",
+        "sha256": "2f8af3b9b1e51e053e7455a091883217789c83724ea8f7a0fe111ef8b7b348f3"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "representation_cka"
+    },
+    {
+      "current_ref": {
+        "bytes": 2913,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\direction_transfer.py",
+        "sha256": "457972fd01d5690717bea73a7c7c28da539c87d0d7ede53049490753c6564a95"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "feature_ridge_gram"
+    },
+    {
+      "current_ref": {
+        "bytes": 3578,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\functional_translator.py",
+        "sha256": "e0a10a826653f5bf122c1dff11fab89de06f96240f28e8f17df03da2bc3a0bd3"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "functional_translator"
+    },
+    {
+      "current_ref": {
+        "bytes": 19257,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\streaming_forward.py",
+        "sha256": "3ff342ab403ac866622fc8faa1ca63bfb2f193dfd97ec5f098bfd8d03366961e"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "streaming_residual_capture"
+    },
+    {
+      "current_ref": {
+        "bytes": 2692,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\cka.py",
+        "sha256": "7c26ac61d731de1c83d1069ccc00f5b96505271de7e23499b7a1b5f75ca69798"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "activation_cka"
+    },
+    {
+      "current_ref": {
+        "bytes": 6406,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\fisher.py",
+        "sha256": "e097ecdc41a61466e3bab98d74c6d342aa871c155f2b7fb2ff6f393c6b139997"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "diagonal_empirical_fisher"
+    },
+    {
+      "current_ref": {
+        "bytes": 22518,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\aligned_projection.py",
+        "sha256": "36c41abd48aa0e6d5327c030909fbedb7fb7ecd7da50daaa3cd1d9a043f22d59"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "embedding_alignment"
+    },
+    {
+      "current_ref": {
+        "bytes": 7602,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\scripts\\v3_e6_capture_token_states.py",
+        "sha256": "bae499815ec06ed5ae7dfc761494b06c0f2027136bb0d113a27b199858c60e89"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "token_residual_capture"
+    },
+    {
+      "current_ref": {
+        "bytes": 8477,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\Rineya_Layerwise_Soup_Lab_v1.0\\src\\rineya_soup_lab\\model\\merge.py",
+        "sha256": "b1f870da60774ac2822d233a20ea70a1bd12f15d54743b3ec5e4d74d526ff899"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "layerwise_weight_interpolation"
+    },
+    {
+      "current_ref": {
+        "bytes": 8447,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\Rineya_Layerwise_Soup_Lab_v1.0\\src\\rineya_soup_lab\\analysis\\delta_correlation.py",
+        "sha256": "ba47b768253c332b4dbd6cbe95d1116173bc565376fdc1a98e18a598dd046750"
+      },
+      "declared_ref_matches": true,
+      "listed_function_ranges_match": true,
+      "repository": "rineya_central",
+      "role": "parameter_behavior_correlation"
+    }
+  ],
+  "status": "PASS_SCOPED_SOURCE_MAPPING_WITH_EXPLICIT_LIMITS_NO_EXECUTION_ADMISSION",
+  "torch_imported": false,
+  "unique_role_count": 15
+}

@@ -1,0 +1,146 @@
+{
+  "affine_translation": [
+    "3",
+    "-1"
+  ],
+  "checks": [
+    {
+      "alpha": "1/4",
+      "beta": "1/4",
+      "difference": [
+        "3/16",
+        "-1/16"
+      ],
+      "identity_exact": true,
+      "theta": [
+        "0",
+        "0"
+      ]
+    },
+    {
+      "alpha": "2/9",
+      "beta": "3/8",
+      "difference": [
+        "1/4",
+        "-1/12"
+      ],
+      "identity_exact": true,
+      "theta": [
+        "0",
+        "0"
+      ]
+    },
+    {
+      "alpha": "0",
+      "beta": "1/3",
+      "difference": [
+        "0",
+        "0"
+      ],
+      "identity_exact": true,
+      "theta": [
+        "0",
+        "0"
+      ]
+    },
+    {
+      "alpha": "1/4",
+      "beta": "1/4",
+      "difference": [
+        "1/7",
+        "-5/48"
+      ],
+      "identity_exact": true,
+      "theta": [
+        "2/3",
+        "-5/7"
+      ]
+    },
+    {
+      "alpha": "2/9",
+      "beta": "3/8",
+      "difference": [
+        "4/21",
+        "-5/36"
+      ],
+      "identity_exact": true,
+      "theta": [
+        "2/3",
+        "-5/7"
+      ]
+    },
+    {
+      "alpha": "0",
+      "beta": "1/3",
+      "difference": [
+        "0",
+        "0"
+      ],
+      "identity_exact": true,
+      "theta": [
+        "2/3",
+        "-5/7"
+      ]
+    },
+    {
+      "alpha": "1/4",
+      "beta": "1/4",
+      "difference": [
+        "7/16",
+        "0"
+      ],
+      "identity_exact": true,
+      "theta": [
+        "-1",
+        "4"
+      ]
+    },
+    {
+      "alpha": "2/9",
+      "beta": "3/8",
+      "difference": [
+        "7/12",
+        "0"
+      ],
+      "identity_exact": true,
+      "theta": [
+        "-1",
+        "4"
+      ]
+    },
+    {
+      "alpha": "0",
+      "beta": "1/3",
+      "difference": [
+        "0",
+        "0"
+      ],
+      "identity_exact": true,
+      "theta": [
+        "-1",
+        "4"
+      ]
+    }
+  ],
+  "classification": "EXACT_RATIONAL_TOY_MATHEMATICS_ONLY",
+  "model_loads": 0,
+  "noncommuting_Hessian_bracket": [
+    [
+      "0",
+      "1"
+    ],
+    [
+      "-1",
+      "0"
+    ]
+  ],
+  "original_analysis_ref": {
+    "bytes": 5716,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\training-order-v1\\CONDITIONAL_ANALYSIS.json",
+    "sha256": "9a2421bd36e0c251fb67ea9ee16cc54ad4f49ffa98f6caa7b5b914b10e0e063b"
+  },
+  "physical_optimizer_updates": 0,
+  "proof": "For quadratics write T_i(theta)=(I-eta_i*H_i)theta-eta_i*a_i. Multiplying and subtracting the two affine maps yields alpha*beta*((H_B*H_A-H_A*H_B)theta+H_B*a-H_A*b). Equality for every theta at nonzero alpha*beta is equivalent to both displayed coefficients vanishing.",
+  "schema": "EXACT-GENERAL-AFFINE-COMMUTATOR-CHECK-1",
+  "scope": "Checks corroborate the algebra at finite rational points; the coefficient identity provides the general proof. No neural performance, Adam or many-step claim."
+}
