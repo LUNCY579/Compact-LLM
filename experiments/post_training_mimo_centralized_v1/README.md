@@ -3,6 +3,14 @@
 Primary: **Rineya-Titan-Experimental-1.0.0-devfreeze**, 596,049,920 parameters.
 The full verified acquisition and retention objective remains open.
 
+Execution is currently blocked by VRAM availability. The
+[10 October blocked audit](receipts/GOAL_BLOCKED_AUDIT_20261010_VRAM_V1.json)
+records the same admission failure across three consecutive goal turns:
+1,913 MiB GPU free versus the unchanged 4,096 MiB requirement. Available host
+RAM was 6.602 GiB versus the 3.3125 GiB preworker budget; no matching exact-prefix
+or backend worker was found. Resume requires a sufficient resource change or a prospectively
+qualified authorized alternative. The full objective remains incomplete.
+
 Publication review on 9 October 2026 recovered two completed native runs that
 had not been indexed in the public summaries. The owned 40-row/two-update
 adapter qualifier passed zero-adapter parity, reference gradients, nontrivial
@@ -23,9 +31,10 @@ Current best remains unchanged Titan; CHECK and FINAL remain closed.
 
 Use the [next experiment](NEXT_EXPERIMENT.md), [current laptop plan](manifests/LAPTOP_EXECUTION_PLAN_V3.json),
 [runbook](LAPTOP_RUNBOOK.md), [resource policy](RESOURCE_POLICY.md), and
-[experiment report](CENTRALIZED_EXPERIMENT_REPORT.md). The September 30 blocked audit remains historical; the app has since resumed
-the full goal. This review itself launches no experiment and does not treat
-an old RAM reading as current.
+[experiment report](CENTRALIZED_EXPERIMENT_REPORT.md). The September 30 RAM
+blocked audit remains historical; the current VRAM audit above follows the
+resumed full goal. Publication review itself launched no experiment and did
+not treat an old RAM reading as current.
 
 Evidence:
 

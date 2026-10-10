@@ -803,3 +803,28 @@ terminalno-worker status, its controller directory was archived within the owned
 artifact root to preserve records and leave the fixed path ready only after a
 verified real resource change. No original source/config/limit or other process
 was changed. The full objective and all scientific gates remain open.
+
+
+## 2026-10-10: resumed goal blocked audit, insufficient free VRAM
+
+The previous goal turn made no progress and had no live experiment. This third
+consecutive goal turn revalidated the same GPU admission blocker: the retained
+21:08:43 UTC probe found 1,913 MiB free versus the registered 4,096 MiB floor.
+Available host RAM was 6.601994 GiB, above the 3.3125 GiB preworker requirement.
+No matching exact-prefix/backend worker was found, and the fixed worker/controller
+paths were absent. Previous owned sessions were terminal; no new experiment was
+launched. The reviewed source/config hashes remain unchanged at clean source
+8ad6b846; its remote branch was verified at the same commit before this audit.
+
+Independent review found no meaningful independent FAST action remaining.
+Native exact-prefix measurements are needed next; other open prerequisites
+need native preservation results or qualified language labels/grading input.
+Further unchanged CPU tests, dormant profiles or repeated admission windows
+would not advance that decision. The audit recommends marking the goal blocked
+after this three-turn recurrence; individual resource polls were not counted
+as separate goal turns. No model/framework run, paid compute, application
+termination or guard/tolerance change occurred. Best remains unchanged Titan,
+verified capability gain is unknown, production E1 is incomplete, and CHECK/
+FINAL remain closed. Resume requires sufficient resource availability or a
+newly authorized and prospectively qualified alternative. Evidence is in
+receipts/GOAL_BLOCKED_AUDIT_20261010_VRAM_V1.json and its retained resource probe.

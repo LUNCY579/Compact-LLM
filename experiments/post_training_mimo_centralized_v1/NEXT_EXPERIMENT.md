@@ -1,5 +1,15 @@
 # Next experiment
 
+Current execution status, 10 October 2026: blocked after three consecutive goal
+turns below the exact-prefix qualification's 4 GiB GPU admission floor. The
+latest retained probe found 1,913 MiB free GPU memory and 6.602 GiB available
+host RAM; no matching exact-prefix/backend worker was found. Previous owned
+experiment sessions were terminal, and no new experiment was launched. See
+[the current blocked audit](receipts/GOAL_BLOCKED_AUDIT_20261010_VRAM_V1.json).
+Continue the sequence below after a sufficient resource change or a newly
+authorized and prospectively qualified alternative. The full objective and
+scientific gates remain unchanged.
+
 Current publication state, 9 October 2026: the owned two-update mechanics worker
 and fixed-shape causal wait diagnostic both passed on committed source 19551dde.
 Their raw records are now indexed in the native result receipts. The qualifier's
