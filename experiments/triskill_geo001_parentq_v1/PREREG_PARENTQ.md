@@ -1,7 +1,15 @@
 # TRISKILL-GEO-001 PARENTQ: parent qualification before the GEO screen
 
-**Status.** DRAFT, written 2026-10-02. Not frozen, not independently reviewed. **No native execution
-is authorized.** No model has been loaded or run by this lane.
+**Status.** REVISED, UNFROZEN, 2026-10-05. The reviewed 2026-10-02 draft below is retained as
+historical design evidence. [REVISION_PARENTQ.md](REVISION_PARENTQ.md) governs the current packet;
+[READINESS_PARENTQ.json](READINESS_PARENTQ.json) leaves all design decisions pending. **No native
+execution is authorized.** The independent review's CPU bootstrap stopped at preflight and did
+not qualify parents. Current revision verification uses synthetic, model-free fixtures only.
+
+**Historical text.** Sections 1–10 below retain the original prior, labels, table, retry assumptions
+and outcome branches so defects remain auditable against commit `3e07fd87`. Those branches cannot
+authorize a launch, rewrite the instrument, reuse exposed rows or select a new third skill.
+The revised packet corrects their interpretation and records prospective alternatives before freeze.
 
 **Authorization.** The operator instructed, in session: "Start the draft of the parent-check
 pre-screen". That covers design, implementation and CPU verification. Running it natively needs:

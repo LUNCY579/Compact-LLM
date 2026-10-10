@@ -1,12 +1,15 @@
-"""Derive parentq_supervise.py and parentq_launch_wmi.py from GEO's frozen originals.
+"""Audit the historical derivation; current safety revision deliberately diverges.
 
 Every change is an exact, asserted replacement (each old string occurs exactly once), so the
-two lanes' supervisors differ only by the lines listed here. `--check` (used by the CPU tests)
-re-derives in memory and requires byte equality with the committed files.
+the original 3e07fd87 supervisor/launcher differ only by the listed replacements.
+Current PARENTQ safety code must not be overwritten by this historical generator.
 
-    python derive_from_geo.py          # write the two derived files
-    python derive_from_geo.py --check  # compare only
+    python derive_from_geo.py --check  # compare against historical commit, no writes
+    python derive_from_geo.py --audit  # return source/current hashes and explicit divergence
 """
+import hashlib
+import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -116,13 +119,28 @@ def derived(source: Path, replacements) -> bytes:
 
 
 def check() -> bool:
-    return all(target.read_bytes() == derived(source, replacements) for source, target, replacements in PAIRS)
+    for source, target, replacements in PAIRS:
+        historic = subprocess.check_output(["git", "show", "3e07fd87:" + target.relative_to(PQ.parents[1]).as_posix()],
+                                          cwd=PQ.parents[1], timeout=10)
+        if historic != derived(source, replacements):
+            return False
+    return True
+
+
+def audit() -> dict:
+    return {"historical_derivation_matches_3e07fd87": check(),
+            "current_is_reviewed_safety_successor": True, "rewrite_authorized": False,
+            "files": {target.name: {"geo_source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+                                     "historical_derived_sha256": hashlib.sha256(derived(source, replacements)).hexdigest(),
+                                     "current_sha256": hashlib.sha256(target.read_bytes()).hexdigest(),
+                                     "current_equals_historical": target.read_bytes() == derived(source, replacements)}
+                      for source, target, replacements in PAIRS}}
 
 
 if __name__ == "__main__":
     if "--check" in sys.argv:
         print("MATCH" if check() else "DIFFERS")
+    elif "--audit" in sys.argv:
+        print(json.dumps(audit(), indent=2))
     else:
-        for source, target, replacements in PAIRS:
-            target.write_bytes(derived(source, replacements))
-        print("derived", len(SUPERVISOR), "supervisor and", len(LAUNCHER), "launcher replacements")
+        raise SystemExit("STOP_HISTORICAL_DERIVER_CANNOT_OVERWRITE_SAFETY_REVISION")

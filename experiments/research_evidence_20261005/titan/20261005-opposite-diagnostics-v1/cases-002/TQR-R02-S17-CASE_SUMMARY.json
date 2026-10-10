@@ -1,0 +1,946 @@
+{
+  "input_rows": 2000,
+  "model_outcomes_read": false,
+  "native_effects": "UNMEASURED",
+  "by_family_style": [
+    {
+      "family": "answerability",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "count": 400
+    },
+    {
+      "family": "grounded_qa",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "count": 400
+    },
+    {
+      "family": "ledger",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "count": 400
+    },
+    {
+      "family": "ledger",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 200
+    },
+    {
+      "family": "register",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "count": 400
+    },
+    {
+      "family": "register",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 200
+    }
+  ],
+  "transition_joint_cases": [
+    {
+      "branch": "false",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 47
+    },
+    {
+      "branch": "false",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 24
+    },
+    {
+      "branch": "false",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 5
+    },
+    {
+      "branch": "false",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 45
+    },
+    {
+      "branch": "false",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 24
+    },
+    {
+      "branch": "false",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "zero",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 6
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "ledger",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 1
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "ledger",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 65
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "ledger",
+      "operand_sign": "negative",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 23
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "ledger",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 68
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "ledger",
+      "operand_sign": "positive",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 15
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "ledger",
+      "operand_sign": "zero",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 6
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 9
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 91
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 33
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 18
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 82
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 59
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "zero",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 6
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "scale",
+      "family": "ledger",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 66
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "scale",
+      "family": "ledger",
+      "operand_sign": "negative",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 25
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "scale",
+      "family": "ledger",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 68
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "scale",
+      "family": "ledger",
+      "operand_sign": "positive",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 18
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "transfer",
+      "family": "ledger",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 68
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "transfer",
+      "family": "ledger",
+      "operand_sign": "negative",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 49
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "transfer",
+      "family": "ledger",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 64
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "transfer",
+      "family": "ledger",
+      "operand_sign": "positive",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 62
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "transfer",
+      "family": "ledger",
+      "operand_sign": "zero",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 2
+    },
+    {
+      "branch": "true",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 4
+    },
+    {
+      "branch": "true",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 46
+    },
+    {
+      "branch": "true",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 15
+    },
+    {
+      "branch": "true",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 7
+    },
+    {
+      "branch": "true",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 43
+    },
+    {
+      "branch": "true",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 30
+    },
+    {
+      "branch": "true",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "zero",
+      "scope": "historical_replay",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 3
+    }
+  ],
+  "conditional_margins": [
+    {
+      "branch": "false",
+      "branch_margin": -11,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -16,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -17,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -18,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 6
+    },
+    {
+      "branch": "false",
+      "branch_margin": -24,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -3,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -39,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -44,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -45,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -47,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -48,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -55,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -63,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -7,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -73,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -8,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": -9,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "branch_margin": 0,
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "count": 100
+    },
+    {
+      "branch": "true",
+      "branch_margin": 1,
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "count": 100
+    },
+    {
+      "branch": "true",
+      "branch_margin": 11,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 17,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 18,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 26,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 29,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 3,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 30,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 35,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 38,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 4,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 41,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 45,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 47,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 53,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 62,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "branch_margin": 66,
+      "scope": "historical_replay",
+      "style": "canonical",
+      "count": 3
+    }
+  ],
+  "facts_style_scenario_support": [
+    {
+      "answerable": false,
+      "family": "answerability",
+      "operand_sign": "negative",
+      "scenario": "complete_cue_conflict",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 50
+    },
+    {
+      "answerable": false,
+      "family": "answerability",
+      "operand_sign": "negative",
+      "scenario": "complete_cue_missing",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 50
+    },
+    {
+      "answerable": false,
+      "family": "answerability",
+      "operand_sign": "negative",
+      "scenario": "relevant_conflict",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 50
+    },
+    {
+      "answerable": false,
+      "family": "answerability",
+      "operand_sign": "negative",
+      "scenario": "relevant_missing",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 50
+    },
+    {
+      "answerable": false,
+      "family": "grounded_qa",
+      "operand_sign": "negative",
+      "scenario": "complete_cue_conflict",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 50
+    },
+    {
+      "answerable": false,
+      "family": "grounded_qa",
+      "operand_sign": "negative",
+      "scenario": "complete_cue_missing",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 50
+    },
+    {
+      "answerable": false,
+      "family": "grounded_qa",
+      "operand_sign": "negative",
+      "scenario": "relevant_conflict",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 50
+    },
+    {
+      "answerable": false,
+      "family": "grounded_qa",
+      "operand_sign": "negative",
+      "scenario": "relevant_missing",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 50
+    },
+    {
+      "answerable": true,
+      "family": "answerability",
+      "operand_sign": "positive",
+      "scenario": "incomplete_cue_supported",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "positive",
+      "count": 50
+    },
+    {
+      "answerable": true,
+      "family": "answerability",
+      "operand_sign": "positive",
+      "scenario": "irrelevant_conflict",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "positive",
+      "count": 50
+    },
+    {
+      "answerable": true,
+      "family": "answerability",
+      "operand_sign": "positive",
+      "scenario": "irrelevant_missing",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "positive",
+      "count": 50
+    },
+    {
+      "answerable": true,
+      "family": "answerability",
+      "operand_sign": "positive",
+      "scenario": "supported",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "positive",
+      "count": 50
+    },
+    {
+      "answerable": true,
+      "family": "grounded_qa",
+      "operand_sign": "positive",
+      "scenario": "incomplete_cue_supported",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "not_integer",
+      "count": 50
+    },
+    {
+      "answerable": true,
+      "family": "grounded_qa",
+      "operand_sign": "positive",
+      "scenario": "irrelevant_conflict",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "not_integer",
+      "count": 50
+    },
+    {
+      "answerable": true,
+      "family": "grounded_qa",
+      "operand_sign": "positive",
+      "scenario": "irrelevant_missing",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "not_integer",
+      "count": 50
+    },
+    {
+      "answerable": true,
+      "family": "grounded_qa",
+      "operand_sign": "positive",
+      "scenario": "supported",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "not_integer",
+      "count": 50
+    }
+  ],
+  "supported_numeric_gold": [
+    {
+      "answerable": false,
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 200
+    },
+    {
+      "answerable": true,
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "positive",
+      "count": 200
+    }
+  ],
+  "explicit_zero_cells": [
+    {
+      "family": "answerability",
+      "style": "canonical",
+      "dimension": "supported_numeric_gold_sign",
+      "missing": "negative"
+    }
+  ],
+  "parent_world_structure": [
+    {
+      "distinct_operative_keys": 1,
+      "distinct_styles": 1,
+      "family": "answerability",
+      "rows": 1,
+      "scope": "fresh_repair",
+      "count": 400
+    },
+    {
+      "distinct_operative_keys": 1,
+      "distinct_styles": 1,
+      "family": "grounded_qa",
+      "rows": 1,
+      "scope": "fresh_repair",
+      "count": 400
+    },
+    {
+      "distinct_operative_keys": 1,
+      "distinct_styles": 1,
+      "family": "ledger",
+      "rows": 1,
+      "scope": "fresh_repair",
+      "count": 400
+    },
+    {
+      "distinct_operative_keys": 1,
+      "distinct_styles": 1,
+      "family": "ledger",
+      "rows": 1,
+      "scope": "historical_replay",
+      "count": 56
+    },
+    {
+      "distinct_operative_keys": 1,
+      "distinct_styles": 1,
+      "family": "ledger",
+      "rows": 2,
+      "scope": "historical_replay",
+      "count": 72
+    },
+    {
+      "distinct_operative_keys": 1,
+      "distinct_styles": 1,
+      "family": "register",
+      "rows": 1,
+      "scope": "fresh_repair",
+      "count": 400
+    },
+    {
+      "distinct_operative_keys": 1,
+      "distinct_styles": 1,
+      "family": "register",
+      "rows": 2,
+      "scope": "historical_replay",
+      "count": 1
+    },
+    {
+      "distinct_operative_keys": 1,
+      "distinct_styles": 1,
+      "family": "register",
+      "rows": 3,
+      "scope": "historical_replay",
+      "count": 66
+    }
+  ],
+  "hard_pair_structure": [],
+  "metadata_sign_caveat": "Facts operand_sign is latent metadata; supported_numeric_gold_sign is the actual supplied target. Grounded-QA dock labels use abs(value).",
+  "style_caveat": "Historical replay retains original system prompts; a canonical variant label does not prove identical canonical repair wording.",
+  "observed_input_patterns": {
+    "supported_numeric_gold_sign_counts": {
+      "positive": 200
+    },
+    "regular_supported_scalar_positive_only": true,
+    "ledger_style_operand_signs": {
+      "canonical": [
+        "negative",
+        "positive"
+      ],
+      "native_a": [],
+      "native_b": [],
+      "natural": []
+    },
+    "hard_diverse_ledger_style_sign_mapping_observed": null,
+    "conditional_style_branches": {
+      "canonical": [
+        "false",
+        "true"
+      ],
+      "native_a": [],
+      "native_b": [],
+      "natural": []
+    },
+    "diverse_conditional_branch_style_mapping_observed": null,
+    "conditional_margin_counts": [
+      {
+        "margin": 0,
+        "count": 100
+      },
+      {
+        "margin": 1,
+        "count": 100
+      }
+    ],
+    "fresh_conditional_margins_exactly_zero_one": true,
+    "native_effects": "UNMEASURED",
+    "model_quality_gain": false
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "experiment": "TITAN-QUALITY-REPAIR-V1",
+  "review_version": 2,
+  "reviewer_task_id": "/root/quality_decisions",
+  "reviewed_at_utc": "2026-10-05T22:30:23.974189+00:00",
+  "scope": "STATIC_CODE_AND_CPU_MECHANICS_ONLY",
+  "status": "PASS_FOR_BOUNDED_NATIVE_QUALIFICATION_SOURCE",
+  "native_execution_authorized": false,
+  "source_manifest_sha256": "6df5786aea1bf8d707f65e0870785de77e05e7afe8f43c374a50e786171ea1b2",
+  "proposal_payload_sha256": "d65460ca2554e277a9af5ea4b6b1f24f83d89bdbc396974efb41e09db06aae8d",
+  "source_manifest": {
+    "__init__.py": "bce28390c189adaca221ce9fbe00777beb969000a534885c28c40fec8415c327",
+    "budget.py": "38ef93457f3739765cb6cf5dcb389c49ef78a905d29395acdb29ace647ffc3d2",
+    "custody.py": "0a9886c582bc65443954424b28c5c4d0b72961e8d25bfd1b31a47f243dd28790",
+    "exclusion.py": "9e5a247b3f665110aba773bc08ee306d798d5db9e456eae8b8dd051a45b42683",
+    "generator.py": "7891f412b93dc8c722ff3e443e67f5403baeb86e070372d62e53a831796b317d",
+    "input_patterns.py": "f37c6c0e1bd335eabcc260af488ace4d18cdba687515bd4d3098fe7b06cf037d",
+    "native_proposal.py": "0a74a26745b6835233af225c606043d2e5a048ae13273f9fb7979b931ab4beac",
+    "native_qualification.py": "54f95de83b83b18f02b6164be607f3a1ea751f84b040e09a7943f8d447202a8d",
+    "NATIVE_QUALIFICATION_PROPOSAL.md": "03cc47d70a6e0e980c745ccd757b6e56fdb02e7eeb096b3b283538067b1a638d",
+    "native_safety.py": "d6afb225c6c01e377fca7867c73d78b93162b5974cb77a19679030538fe37e9b",
+    "native_supervise.py": "830b1483c4ff75f05209b3f2e3d76d3e1c06d60e1b0ad54787f982238aeaa41f",
+    "offline_supervise.py": "7af7e1b043583064d8fd261222c7fc86b90aefe942b792b06713e42549101902",
+    "operating_characteristics.py": "53013e3b97af787127a4b3c0e37b3458058bf93c88c9e636f8464ca183fe35b7",
+    "opposite_analysis.py": "ef622b06c1f6d4124424dd36f9b6246e8abee3e2823e128ca9cb61c3b0b1dcff",
+    "oracles.py": "2ad37c0177a4776bccb5a97b50bdc7e49db63da9d0365b1a7f5d679c9366a02a",
+    "packet.py": "02b2b1d82ff5a71b0ff15820429c79ca463bb554091c6be7726e49a636c59576",
+    "PROTOCOL.json": "86757238f8b8e5864562c34016260267b2d97a516ac4b40ebbb07a48e9f89707",
+    "README.md": "093955af2acf48abc06081e4a7a9f1071da5695e0a113776e7dfc69884d4ff3a",
+    "registry.py": "a7952dc60603b50a541d1fa308901b3bf2846a7f7db215343545f3fee1df6380",
+    "replay.py": "f240945c6fb05299cef687848aaadc92476d527ec3869e8a37c32caa6bd8c573",
+    "RESEARCH_CONTINUATION.md": "d17175e00043fa6c35fc54ffdf0b9b9aa3b7983955edec9cd976b7f45e22bbd8",
+    "research_revision.py": "7e9099c18e68b687b2e7a25e26fec6af1ae66ff662163b2ddd391f5d835f3d00",
+    "RUNBOOK.md": "14f9716a1c72f55833959c61779df00890c00f70dc49e912a0b23e7df7803d39",
+    "schema.py": "dc93f92ab64d12a33a0490bb5310ed3cbbab2ae7309606904201391f9b63e784",
+    "scoring.py": "e08c57a3af9ce934bcc4728e3a4988eaf5e6b866182d5564a7a695578c5e8aab",
+    "selection.py": "189b19d2a605972104c4bcaf5a13653d157b4049df7cf05bbb868e04b25cc8ef",
+    "statistics.py": "81efbcec66ec3113314f81e4f8375024618bb51048a7b55dff8162ddf65cf829",
+    "test_custody.py": "5bf45c537b6af5b5774b5db22d40be96fc4e389644d616c20f8ca3f219669ab6",
+    "test_data.py": "fef28e1838a3a3189060d010d709c42277b232c8e1a05c09cc700086275df62e",
+    "test_input_patterns.py": "dccd83b8d2deb10a292f1f49cacc01679b66ae153fd7d62bc63493c52e2a5ceb",
+    "test_native_qualification.py": "de653fb75da7aef0584a1a28ac684c9bf4207ac421faf6d33228d94f29946076",
+    "test_native_supervise.py": "646382254fa0481498d2d350baabe33ad2576037001a2087bafbbf965be87ccd",
+    "test_operating_characteristics.py": "a46ff4822055c7aa97e25e3ecc74ec596ab9d968305e112c68de8dfcd9e9f94d",
+    "test_opposite_analysis.py": "f4a830243d099b829fe08bae01743c5fa453ab0986ec533593d777d33d3ab377",
+    "test_registry.py": "946842f7688fc2e8e837937e7647eed79a736c0ea07215588f7d3c54369ba6c3",
+    "test_research_revision.py": "4cde9bd5efea15cf406f090927a6807d34fa76b407438d6765ca5c07d66773f0",
+    "test_scoring.py": "91c757288e46ec503bedf9d74028e14b800d96b8fc6d4f3b7e86a5da85480290",
+    "test_selection.py": "f4fbad5f25cbff210b4a32491f0a36e6ab3e564ff36cd053fdefe8095a0cad16",
+    "test_token_audit.py": "3d4b8b5bd32e113d0bb6d0f70b07a81339f97a8ff01e71b9512e04e5ffd91770",
+    "token_audit.py": "6d97b55ca0aecad431d0bf5e185e789ae47f7190fdbc111abb0ff0d0b4ef3e35"
+  },
+  "proposal_before_attachment": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-research-v2\\spec-002\\NATIVE_QUALIFICATION_V2.json",
+    "sha256": "de36abe15dea24ab54120e66fc3b2fcbd7711746c2ea697cc86cd38ed814149a"
+  },
+  "actual_cpu_qualification_descriptor": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-research-v2\\CPU_SOURCE_QUALIFICATION.json",
+    "sha256": "c44cf558643b10622acba0e43c535811570c153fd037d84951e5cd88c7c4920a"
+  },
+  "actual_pass_receipts": [
+    {
+      "stage": "fixtures-002",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-research-v2\\fixtures-002\\OFFLINE_SUPERVISOR_RECEIPT.json",
+      "sha256": "c0fa9629a2658153e8f76ac02a6495ef095a74118394f2a79d49282000269cb8",
+      "status": "PASS",
+      "source_matches_current": true,
+      "elapsed_seconds": 9.5,
+      "peak_tree_rss_bytes": 73637888
+    },
+    {
+      "stage": "containment-001",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-research-v2\\containment-001\\OFFLINE_SUPERVISOR_RECEIPT.json",
+      "sha256": "677f5914cb1b4700dbfc117ba0ec2f62a963cd5aa29ff31e78e0a0c49d0cd1be",
+      "status": "PASS",
+      "source_matches_current": true,
+      "elapsed_seconds": 3.139999999999418,
+      "peak_tree_rss_bytes": 63094784
+    },
+    {
+      "stage": "spec-002",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-research-v2\\spec-002\\OFFLINE_SUPERVISOR_RECEIPT.json",
+      "sha256": "4f561f1f3949b72badc391070e7b68093e6850d22fa545bf3b6416b8928287b6",
+      "status": "PASS",
+      "source_matches_current": true,
+      "elapsed_seconds": 0.6090000000003783,
+      "peak_tree_rss_bytes": 39297024
+    },
+    {
+      "stage": "input-patterns-002",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-research-v2\\input-patterns-002\\OFFLINE_SUPERVISOR_RECEIPT.json",
+      "sha256": "dd9b671d6960dd567ce45669838cb0a350fd2943bc44452451f10b90bc57054b",
+      "status": "PASS",
+      "source_matches_current": true,
+      "elapsed_seconds": 19.889999999999418,
+      "peak_tree_rss_bytes": 166510592
+    }
+  ],
+  "cpu_tests": {
+    "count": 133,
+    "failures": 0,
+    "errors": 0,
+    "native_model_loads": 0,
+    "native_model_forwards": 0
+  },
+  "independent_review_scope": [
+    "Other-agent-authored native_qualification.py, native_supervise.py, native_safety.py and research_revision.py",
+    "Source/Job/process/lease/environment/custody/workload/accounting bindings and actual current-source CPU evidence",
+    "Installed Transformers/PEFT source and published tokenizer template read-only API inspection"
+  ],
+  "authorship_disclosure": "Reviewer authored separate scoring/statistics/opposite-direction/operating-characteristic components. This independent review covers the other-agent-authored native integration and its current-source CPU evidence, not a second independent authorship review of those separate components.",
+  "resolved_findings": [
+    "Manifest-pinned packet source compilation excludes stale bytecode; isolated -I -B -S startup omits user/site/path hooks",
+    "Reliable foreign GPU PID admission rejects nonowned/nonwhitelisted identities; desktop identity propagates into local resource checks",
+    "Shared leases publish fully fsynced owned records atomically with create-only hard links",
+    "Original checkpoint and sidecar read handles deny writes/deletion through use; same held checkpoint reader supplies its fresh digest",
+    "CUDA phase synchronization prevents isolated stage timing from being merely enqueue time",
+    "Source/lease/handle/accounting cleanup failures prevent success and remain charged",
+    "Actual grant must bind the final full proposal-file digest including its review and CPU descriptors",
+    "Nested output/cache/ledger symlink, junction and reparse redirection is rejected before writes"
+  ],
+  "approved_source_scope": {
+    "registered_nonrecompute_forwards_max": 562,
+    "backward_requests": 16,
+    "disposable_optimizer_updates": 2,
+    "worker_wall_seconds": 540,
+    "supervisor_hard_wall_seconds": 600,
+    "cleanup_seconds": 120,
+    "charged_attempt_seconds": 720,
+    "source_loads": 1,
+    "dense_reload_loads": 1,
+    "concurrent_model_instances": 1,
+    "data": "Exact fixed eight DEVELOPMENT readouts only; no final or historical protected bank"
+  },
+  "review_limits": [
+    "No operator authorization or issued native permit exists; this review grants none",
+    "Toy CPU Job/descendant fixtures do not qualify CUDA model, optimizer, memory, serialization, padding or reload behavior",
+    "Reviewer read no checkpoint tensors or final archive contents; full checkpoint hashing and actual source read custody remain native-attempt work",
+    "Qualification mechanics are not parent qualification, model quality evidence or authorization for training/final evaluation",
+    "Eight source readouts and two updates cannot establish full-program throughput: source-bound representative LoRA/dense timings and complete length/load/export accounting remain required before sweep admission",
+    "Opposite-direction input observations remain UNMEASURED; no deterministic or repeatable native quality-gain claim has been made",
+    "Issued JSON cannot authenticate a human by itself; owning-chat authorization must separately name this source-bound attempt and exclusive slot"
+  ],
+  "no_promotions": {
+    "quality_gain_verified": false,
+    "parent_qualification": false,
+    "training_sweep_authorized": false,
+    "final_evaluation_authorized": false,
+    "promotion_authorized": false,
+    "frozen_scientific_choices_changed": false
+  },
+  "reviewer_actions": {
+    "workers_or_tests_run": false,
+    "framework_imports": false,
+    "native_calls": 0,
+    "checkpoint_tensor_reads": 0,
+    "old_sealed_bank_reads": 0,
+    "final_archive_contents_reads": 0,
+    "source_edits": 0
+  },
+  "next_concrete_step": "Attach this actual review and the measured CPU evidence descriptors to a create-only reviewed proposal; any future native entry still requires a separate genuine human grant naming the exact final proposal-file digest, attempt and exclusive hardware slot."
+}

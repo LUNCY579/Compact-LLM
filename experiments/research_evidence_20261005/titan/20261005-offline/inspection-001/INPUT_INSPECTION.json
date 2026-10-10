@@ -1,0 +1,54 @@
+{
+  "replay": {
+    "source": "C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\rrp015-20260917\\control-prepared\\microfit-train.jsonl",
+    "sha256": "0881c027d166f7cdd0286518aff20e5966f92120f4f3877cbca6855fbee2d9e1",
+    "eligible_rows": 195,
+    "eligible_families": {
+      "ledger": 128,
+      "register": 67
+    },
+    "skipped": {
+      "prerequisite_plan": 128,
+      "swap": 38,
+      "mix": 23
+    },
+    "source_targets_recomputed": true,
+    "limitation": "Replay covers historical transition training only; broader conversation targets retain pending human review and are not substituted."
+  },
+  "source": {
+    "core_id": "rineya.core.titan-transition.v1.0.0-devfreeze.28L.supa17-rrp015-th25",
+    "core_directory": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze",
+    "weight_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\model.safetensors",
+    "declared_weight_sha256": "a4d73353db9a91cbba7b4cd7c8fe4fe6822670d10fe523b26a6d651bb9509567",
+    "declared_weight_bytes": 2384235008,
+    "observed_weight_bytes": 2384235008,
+    "fresh_weight_digest_verified": false,
+    "checkpoint_weight_reads": 0,
+    "architecture": "Qwen3ForCausalLM",
+    "storage_dtype": "float32",
+    "custom_abstention": false,
+    "sidecar_sha256": {
+      "CORE.json": "f89622c12b90c21a3b1af9afd0d00192420e21b9def1a2a9fe8b793934bcc260",
+      "config.json": "a3c57d2869c3a44c0ea88f6c5538c6db47b5092986e098f076dddac5d6524ff4",
+      "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+      "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+    },
+    "runtime_packages": {
+      "numpy": "2.4.6",
+      "tokenizers": "0.22.2",
+      "psutil": "7.2.2",
+      "torch": "2.6.0+cu124",
+      "transformers": "5.14.1",
+      "peft": "0.20.0",
+      "accelerate": "1.14.0",
+      "safetensors": "0.8.0"
+    },
+    "release_qualified": false,
+    "native_execution_authorized": false,
+    "metadata_verified": true,
+    "native_source_verification_required": true
+  }
+}

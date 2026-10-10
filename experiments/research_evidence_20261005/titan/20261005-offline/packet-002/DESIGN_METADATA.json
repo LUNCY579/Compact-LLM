@@ -1,0 +1,116 @@
+{
+  "generator": {
+    "version": "titan-quality-data-1",
+    "generator_seed": 20261005,
+    "families": [
+      "ledger",
+      "register",
+      "answerability",
+      "grounded_qa",
+      "arithmetic",
+      "instruction",
+      "concise_grounded"
+    ],
+    "styles": [
+      "canonical",
+      "native_a",
+      "native_b",
+      "natural"
+    ],
+    "ledger_operand_range": [
+      -9999,
+      9999
+    ],
+    "ledger_balance_range": [
+      -9999,
+      9999
+    ],
+    "old_ledger_amount_support": [
+      -9,
+      12
+    ],
+    "register_operand_range": [
+      -96,
+      96
+    ],
+    "old_register_value_support": [
+      -8,
+      11
+    ],
+    "register_initial_state": [
+      0,
+      96
+    ],
+    "register_threshold": [
+      0,
+      96
+    ],
+    "register_support_expansion": "operand outside documented -8..11 OR modulo wrap outside the preserved PARENTQ no-wrap prototype",
+    "partition_rule": "sha256(role-aware-operative-key) modulo 10: train 0..5; dev 6..7; final 8..9",
+    "development": {
+      "independent_worlds_per_family": 64,
+      "attached_variants_per_repair_family": 16,
+      "prompts": 512
+    },
+    "final": {
+      "independent_worlds_per_family": 512,
+      "attached_variants_per_repair_family": 128,
+      "prompts": 4096
+    },
+    "generation_exhaustion": "STOP after 10000 rejected candidate groups; never drop or replace a required stratum",
+    "old_support_interpretation": "ledger amounts and register values have documented old support; no invented old ledger balance bound",
+    "training_dose": "2000 including exactly 400 source-provenanced existing replay examples for 20% recipes"
+  },
+  "endpoint_registry": [
+    "seed17:ledger:semantic_population_damage",
+    "seed17:ledger:strict_population_damage",
+    "seed17:ledger:conditional_semantic_damage",
+    "seed17:register:semantic_population_damage",
+    "seed17:register:strict_population_damage",
+    "seed17:register:conditional_semantic_damage",
+    "seed17:answerability:semantic_population_damage",
+    "seed17:answerability:strict_population_damage",
+    "seed17:answerability:conditional_semantic_damage",
+    "seed17:grounded_qa:semantic_population_damage",
+    "seed17:grounded_qa:strict_population_damage",
+    "seed17:grounded_qa:conditional_semantic_damage",
+    "seed17:arithmetic:semantic_population_damage",
+    "seed17:arithmetic:strict_population_damage",
+    "seed17:arithmetic:conditional_semantic_damage",
+    "seed17:instruction:semantic_population_damage",
+    "seed17:instruction:strict_population_damage",
+    "seed17:instruction:conditional_semantic_damage",
+    "seed17:concise_grounded:semantic_population_damage",
+    "seed17:concise_grounded:strict_population_damage",
+    "seed17:concise_grounded:conditional_semantic_damage",
+    "seed29:ledger:semantic_population_damage",
+    "seed29:ledger:strict_population_damage",
+    "seed29:ledger:conditional_semantic_damage",
+    "seed29:register:semantic_population_damage",
+    "seed29:register:strict_population_damage",
+    "seed29:register:conditional_semantic_damage",
+    "seed29:answerability:semantic_population_damage",
+    "seed29:answerability:strict_population_damage",
+    "seed29:answerability:conditional_semantic_damage",
+    "seed29:grounded_qa:semantic_population_damage",
+    "seed29:grounded_qa:strict_population_damage",
+    "seed29:grounded_qa:conditional_semantic_damage",
+    "seed29:arithmetic:semantic_population_damage",
+    "seed29:arithmetic:strict_population_damage",
+    "seed29:arithmetic:conditional_semantic_damage",
+    "seed29:instruction:semantic_population_damage",
+    "seed29:instruction:strict_population_damage",
+    "seed29:instruction:conditional_semantic_damage",
+    "seed29:concise_grounded:semantic_population_damage",
+    "seed29:concise_grounded:strict_population_damage",
+    "seed29:concise_grounded:conditional_semantic_damage",
+    "seed17:answerability:supported_population_loss",
+    "seed17:grounded_qa:supported_population_loss",
+    "seed29:answerability:supported_population_loss",
+    "seed29:grounded_qa:supported_population_loss",
+    "seed17:repair_macro_gain_lower",
+    "seed29:repair_macro_gain_lower"
+  ],
+  "endpoint_alpha": 0.0010416666666666667,
+  "variants_are_independent_n": false
+}

@@ -81,6 +81,22 @@ class GateTableTests(unittest.TestCase):
         self.assertEqual((sum(TABLES["T"]["passed"]), sum(TABLES["H"]["passed"])), (89, 86))
         self.assertEqual(TABLES["T"]["subtypes"], d.T_SUBTYPES)
 
+    def test_both_gate_components_ignore_the_other_parent_cells(self):
+        import itertools
+        groups = benchmark.row_groups(benchmark.build_screen())
+        parents = (*groups["T"], *groups["H"])
+        for tested, other in (("T", "H"), ("H", "T")):
+            for cells in itertools.product(d.CELLS, repeat=4):
+                observed = []
+                for foreign in (d.CELLS[0], d.CELLS[1], d.CELLS[2], d.CELLS[3]):
+                    scores = {arm: {} for arm in ("BASE", "T", "H")}
+                    for group, arm in ((groups[tested], tested), (groups[other], other)):
+                        for row, (base, parent) in zip(group, cells if arm == tested else [foreign] * 4):
+                            scores["BASE"][row.row_id] = {"credited": base}
+                            scores[arm][row.row_id] = {"credited": parent}
+                    observed.append(benchmark.parent_gate(parents, scores)[tested]["passed"])
+                self.assertEqual(len(set(observed)), 1, (tested, cells))
+
     def test_predictive_is_the_exact_posterior_mean(self):
         counts = {"ledger_replay:transfer": [2, 3, 0, 1], "ledger_replay:scale": [1, 4, 0, 1],
                   "register_machine:add": [0, 4, 0, 2], "register_machine:conditional": [3, 2, 1, 0],
@@ -96,6 +112,33 @@ class GateTableTests(unittest.TestCase):
 
 
 class DecisionLadderTests(unittest.TestCase):
+    def test_exact_illustrative_values(self):
+        cases = (({}, .8748431287114583),
+                 ({"t_right": lambda r, i: i % 3 != 0, "h_on": lambda r, i: "right" if i % 3 else "answer"}, .6677575982436933),
+                 ({"t_right": lambda r, i: i % 2 != 0, "h_on": lambda r, i: "right" if i % 2 else "answer"}, .36566883174199905),
+                 ({"h_on": lambda r, i: "answer"}, .07569585079869265),
+                 ({"h_on": lambda r, i: "abstain", "base_on": lambda r, i: "right"}, .013088516015855079),
+                 ({"t_right": lambda r, i: False}, .04957826156464834))
+        for policies, expected in cases:
+            self.assertAlmostEqual(decide(outputs(**policies))["screen_parent_gate"]["predictive"], expected, places=12)
+
+    def test_every_missing_canary_and_failure_arm(self):
+        for arm in d.ARMS:
+            out = outputs()
+            del out[arm][CANARY[0]["row_id"]]
+            self.assertEqual(decide(out)["status"], f"STOPPED_BEFORE:canary:{arm}")
+            out = outputs()
+            for row in CANARY[:2]:
+                out[arm][row["row_id"]] = "fixture-wrong-source"
+            self.assertEqual(decide(out)["status"], f"STOP_ARM_CANARY:{arm}")
+
+    def test_every_q1_coverage_unit(self):
+        for arm, block in (("BASE", "T"), ("T", "T"), ("BASE", "H_ON"), ("H", "H_ON")):
+            out = outputs()
+            del out[arm][BANK[block][0].row_id]
+            verdict = decide(out)
+            self.assertEqual(verdict["status"], "INCOMPLETE_COVERAGE")
+            self.assertEqual(verdict["missing_coverage"], [f"{arm}:{block}"])
     def test_strong_parents_qualify(self):
         verdict = decide(outputs())
         self.assertEqual(verdict["status"], "PARENTS_QUALIFIED", verdict.get("screen_parent_gate"))
@@ -167,6 +210,15 @@ class ContractDiagnosticTests(unittest.TestCase):
         self.assertEqual(rates["answerable_abstained"], rates["n_answerable"])
         self.assertEqual(rates["answerable_credited"], 0)
         self.assertLess(verdict["h_gate_predictive_under_native_prompts"]["predictive_H"], 0.5)
+        self.assertIn("BLANKET_ABSTENTION_OBSERVED", verdict["h_contract"]["interpretation_flags"])
+        self.assertFalse(verdict["h_contract"]["redesign_authorized"])
+
+    def test_ceiling_and_lenient_on_answers_are_diagnostic_only(self):
+        out = outputs(base_on=lambda r, i: "right")
+        verdict = decide(out)
+        self.assertTrue(verdict["bank_base_ceiling"]["H_ON"])
+        self.assertIn("BASE_CEILING_OBSERVED", verdict["h_contract"]["interpretation_flags"])
+        self.assertEqual(verdict["on_lenient_answers"]["H"], 12)
 
 
 if __name__ == "__main__":

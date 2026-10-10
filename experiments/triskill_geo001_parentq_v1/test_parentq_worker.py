@@ -32,13 +32,13 @@ import parentq_rows
 import parentq_supervise
 import parentq_launch_wmi
 import parentq_worker
+from test_parentq_worker_mechanics import passing_receipt, fixture_grant
 
 geo = geo_frozen.load("worker")
 geometry = geo_frozen.load("geometry")
 benchmark = geo_frozen.load("benchmark")
 SUPA = geometry.SOURCES["BASE"][0].parent
 SIDECARS = ("generation_config.json", "tokenizer.json", "tokenizer_config.json", "vocab.json", "merges.txt")
-GRANT = "operator grant for the PARENTQ CPU end-to-end fixture"
 
 
 def sha(path):
@@ -74,7 +74,7 @@ class DecodeTests(unittest.TestCase):
         handle = self.model.model.layers[geometry.LAYER].register_forward_hook(geo.make_hook(self.state))
         self.addCleanup(handle.remove)
 
-    def test_tokens_equal_geo_fixed_slot_decode_for_any_eos_position(self):
+    def test_tokens_equal_geo_fixed_slot_decode_for_selected_eos_positions(self):
         rng = np.random.default_rng(3)
         for trial in range(6):
             ids = [int(x) for x in rng.integers(0, 500, int(rng.integers(20, 200)))]
@@ -126,9 +126,11 @@ class UnitTests(unittest.TestCase):
             here = Path(folder)
             for name in parentq_worker.REQUIRED_FILES:
                 (here / name).write_text(name, encoding="utf-8")
-            (here / "CPU_VALIDATION_PARENTQ.json").write_text("{}", encoding="utf-8")
+            (here / "CPU_VALIDATION_PARENTQ.json").write_text(json.dumps(passing_receipt()), encoding="utf-8")
             payload = {"files": {name: sha(here / name) for name in parentq_worker.REQUIRED_FILES},
+                       "runtime_root": str(parentq_worker.RUNTIME_ROOT.resolve()),
                        "geo_freeze": {"sha256": parentq_worker.GEO_FREEZE_SHA256},
+                       "supervisor_dependencies": json.loads((parentq_worker.GEO_DIR / parentq_worker.GEO_FREEZE_NAME).read_bytes())["supervisor_dependencies"],
                        "cpu_validation": {"file": "CPU_VALIDATION_PARENTQ.json", "passed": True,
                                           "sha256": sha(here / "CPU_VALIDATION_PARENTQ.json")}}
             def write(data):
@@ -162,7 +164,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(completed.stdout.split(), ["18", "triskill-geo001-sectionh", "14"])
 
     def test_names_agree_with_supervisor_and_launcher(self):
-        for name in ("LEASE_LABEL", "START_NAME", "WORKER_PID_NAME", "OUT_NAME", "INCOMPLETE_NAME", "FREEZE_NAME"):
+        for name in ("LEASE_LABEL", "START_NAME", "WORKER_PID_NAME", "LOAD_BEGUN_NAME", "OUT_NAME", "INCOMPLETE_NAME", "FREEZE_NAME"):
             self.assertEqual(getattr(parentq_supervise, name), getattr(parentq_worker, name), name)
         self.assertEqual(parentq_launch_wmi.START_NAME, parentq_worker.START_NAME)
         self.assertEqual(parentq_supervise.MAX_LOADED_ATTEMPTS, 3)
@@ -203,14 +205,17 @@ class Fixture:
             {"status": "PREPARED", "geometry_sha256": sha(self.geo_dir / geo.GEOMETRY_NPZ)}), encoding="utf-8")
         self.runs = 0
 
-    def run(self, *, force_canary=False, fail_load_call=None, block_second_preflight=False, supervisor_dies_after=None):
+    def run(self, *, force_canary=False, fail_load_call=None, block_second_preflight=False,
+            block_first_preflight=False, fail_initial_model_load=False, force_decision_error=False,
+            supervisor_dies_after=None):
         self.runs += 1
         w = parentq_worker._exec_pinned(HERE / "parentq_worker.py", sha(HERE / "parentq_worker.py"), f"e2e_{self.runs}")
         bank = parentq_rows.build_bank(benchmark)
         canary = json.loads((HERE / parentq_worker.CANARY_JSON).read_text(encoding="utf-8"))["rows"]
         n = sum(len(ids) for _, _, ids in parentq_worker.schedule_units(bank, canary))
         w.validate_freeze = lambda path, digest, here=HERE: {
-            "files": {name: sha(HERE / name) for name in ("parentq_worker.py", "parentq_rows.py", "parentq_decide.py")},
+            "files": {name: sha(HERE / name) for name in ("parentq_worker.py", "parentq_rows.py", "parentq_decide.py", "parentq_safety.py")},
+            "runtime_root": str(Path(self.temp.name).resolve()),
             "native_allocation": parentq_worker.allocation(n, geo.INPUT_SLOTS, geo.OUTPUT_SLOTS)}
         w.GEO_DIR = self.geo_dir
         sys.path.insert(0, str(HERE.parent / "fresh_dual_skill_instrument_v1"))
@@ -239,14 +244,20 @@ class Fixture:
         calls = []
         def preflight(geo_module, token, **kwargs):
             calls.append(token)
-            blockers = ["RAM below 5 GiB preload reserve"] if block_second_preflight and len(calls) == 2 else []
+            blockers = ["fixture provisional RAM blocker"] if ((block_second_preflight and len(calls) == 2)
+                        or (block_first_preflight and len(calls) == 1)) else []
             return {"blockers": blockers, "lease": {"pid": 4242, "token": token}}
         w.preflight = preflight
-        if force_canary:
-            real_exec = w._exec_pinned
-            def exec_pinned(path, expected, name):
-                module = real_exec(path, expected, name)
-                if name == "decide":
+        real_exec = w._exec_pinned
+        def exec_pinned(path, expected, name):
+            module = real_exec(path, expected, name)
+            if name == "safety":
+                module.RUNTIME_ROOT = Path(self.temp.name).resolve()
+                module.validate_readiness = lambda *a: {"fixture_only": True}
+                module.validate_runtime_root = lambda path: path.resolve()
+                module.check_runtime_ownership = lambda *a: None
+            if name == "decide":
+                if force_canary:
                     original = module.canary_check
                     def forced(canary_rows, outputs):
                         result = original(canary_rows, outputs)
@@ -254,8 +265,11 @@ class Fixture:
                             record["passed"] = record["complete"]
                         return result
                     module.canary_check = forced
-                return module
-            w._exec_pinned = exec_pinned
+                if force_decision_error:
+                    def fail(*a, **k): raise ValueError("fixture decision failure")
+                    module.decide = fail
+            return module
+        w._exec_pinned = exec_pinned
         import psutil
         checks, real_exists = [], psutil.pid_exists
         def pid_exists(pid):
@@ -264,12 +278,18 @@ class Fixture:
                 return supervisor_dies_after is None or len(checks) <= supervisor_dies_after
             return real_exists(pid)
         attempt = Path(tempfile.mkdtemp(dir=self.temp.name))
-        (attempt / w.START_NAME).write_text(json.dumps({"lease_token": "token", "operator_grant": GRANT}), encoding="utf-8")
+        (attempt / w.START_NAME).write_text(json.dumps({"lease_token": "token", "operator_grant": fixture_grant("x" * 64, self.runs),
+            "experiment": "TRISKILL-GEO-001-PARENTQ", "freeze_sha256": "x" * 64, "attempt_number": self.runs,
+            "supervisor_pid": 4242, "supervisor_create_time": 123.0, "runtime_root": self.temp.name}), encoding="utf-8")
         out = attempt / "native_parentq.json"
         saved = (torch.cuda.init, torch.cuda.set_per_process_memory_fraction, torch.cuda.mem_get_info,
-                 transformers.AutoModelForCausalLM.from_pretrained, psutil.pid_exists)
+                 transformers.AutoModelForCausalLM.from_pretrained, psutil.pid_exists, psutil.Process)
         original_from_pretrained = transformers.AutoModelForCausalLM.from_pretrained
+        original_process = psutil.Process
         def from_pretrained(path, **kwargs):
+            self.assert_marker_before_load = (attempt / w.LOAD_BEGUN_NAME).exists()
+            if fail_initial_model_load:
+                raise RuntimeError("fixture initial model load failure")
             kwargs["device_map"] = {"": "cpu"}
             return original_from_pretrained(str(self.sources["BASE"][0].parent), **kwargs)
         torch.cuda.init = lambda: None
@@ -277,12 +297,13 @@ class Fixture:
         torch.cuda.mem_get_info = lambda *a, **k: (8 << 30, 8 << 30)
         transformers.AutoModelForCausalLM.from_pretrained = from_pretrained
         psutil.pid_exists = pid_exists
+        psutil.Process = lambda pid=None: types.SimpleNamespace(create_time=lambda: 123.0) if pid == 4242 else original_process(pid)
         try:
             result = w._run_bound(out, attempt / "FREEZE.json", "x" * 64, "token", attempt, _started=time.monotonic(),
                                   _bind_geo=lambda: (geo_view, Bound(), fake_geometry))
         finally:
             (torch.cuda.init, torch.cuda.set_per_process_memory_fraction, torch.cuda.mem_get_info,
-             transformers.AutoModelForCausalLM.from_pretrained, psutil.pid_exists) = saved
+             transformers.AutoModelForCausalLM.from_pretrained, psutil.pid_exists, psutil.Process) = saved
         return result, out, attempt, w
 
 
@@ -310,6 +331,9 @@ class EndToEndTests(unittest.TestCase):
         self.assertLessEqual(result["budget"]["model_forwards"], result["allocation"]["forwards"])
         self.assertEqual({arm: len(texts) for arm, texts in result["outputs"].items()}, {"BASE": 96, "H": 72, "T": 32})
         events = self.progress(attempt)
+        self.assertTrue(all("utc" in e and "elapsed_seconds" in e for e in events))
+        self.assertTrue(self.fixture.assert_marker_before_load)
+        self.assertTrue((attempt / w.LOAD_BEGUN_NAME).exists())
         self.assertEqual(sum(e["event"] == "generation" for e in events), 200)
         self.assertEqual([e["arm"] for e in events if e["event"] == "weights_loaded"], ["H", "T"])
         self.assertEqual([e["arm"] for e in events if e["event"] == "canary"], ["BASE", "H", "T"])
@@ -321,6 +345,29 @@ class EndToEndTests(unittest.TestCase):
         self.assertEqual(result["verdict"]["status"], "STOP_ARM_CANARY:BASE")
         self.assertTrue(out.exists())
         self.assertEqual(result["budget"]["completed_generations"], 8)
+        self.assertTrue(all("canary_divergence" in r for r in result["records"]["BASE"].values()))
+
+    def test_first_preflight_failure_also_writes_blocked_record(self):
+        result, out, attempt, w = self.fixture.run(block_first_preflight=True)
+        self.assertTrue((attempt / w.BLOCKED_NAME).exists())
+        self.assertFalse((attempt / w.LOAD_BEGUN_NAME).exists())
+        self.assertFalse(out.exists())
+
+    def test_initial_model_load_failure_is_counted_even_without_resident_model(self):
+        result, out, attempt, w = self.fixture.run(fail_initial_model_load=True)
+        self.assertEqual(result["model_loads"], 0)
+        self.assertTrue(self.fixture.assert_marker_before_load)
+        self.assertTrue((attempt / w.LOAD_BEGUN_NAME).exists())
+        self.assertTrue((attempt / w.INCOMPLETE_NAME).exists())
+        self.assertFalse((attempt / w.BLOCKED_NAME).exists())
+        self.assertFalse(out.exists())
+
+    def test_decision_failure_is_persisted_with_original_worker_records(self):
+        result, out, attempt, w = self.fixture.run(force_decision_error=True)
+        self.assertEqual(result["status"], "STOP_DECISION_ERROR")
+        self.assertEqual(result["decision_error"]["type"], "ValueError")
+        self.assertEqual(len(result["outputs"]["BASE"]), 8)
+        self.assertTrue((attempt / w.INCOMPLETE_NAME).exists())
 
     def test_block_before_model_load_writes_only_a_blocked_record(self):
         result, out, attempt, w = self.fixture.run(block_second_preflight=True)

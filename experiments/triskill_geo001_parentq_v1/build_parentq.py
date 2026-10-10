@@ -1,11 +1,13 @@
-"""Build PARENTQ membership, CPU validation receipt and freeze (CPU only; no model).
+"""Validate the preserved PARENTQ draft and prepare a guarded future freeze.
 
-    python build_parentq.py membership   # parentq_bank.json, parentq_canary.json (create-only)
-    python build_parentq.py validate     # CPU_VALIDATION_PARENTQ.json (create-only)
-    python build_parentq.py freeze       # refuses on uncommitted code; validates; FREEZE_PARENTQ.json
+All generated outputs require --output-dir outside source under BusinessProject.
+Membership regeneration is disabled pending design decisions. --lightweight validates
+mechanical facts without Torch and cannot yield a passing full freeze receipt.
+Freeze refuses while decisions/review are pending and requires a separately supervised,
+source-bound full CPU-suite receipt plus full registration validation.
 
 Reads only exposed sources: GEO's frozen code and the T exposure scan it already uses,
-delta_H's training rows (prompt text only), HSKILL_VIEWS_V2 (the exposed selection bank)
+delta_H's training prompt and gold replies, HSKILL_VIEWS_V2 (the exposed selection bank)
 and CONFIRM-002's stored predictions on it. No protected bank is opened. Run with the
 hermes interpreter (the GEO freeze pins its runtime packages).
 """
@@ -28,6 +30,8 @@ import geo_frozen  # noqa: E402
 import parentq_decide  # noqa: E402
 import parentq_rows  # noqa: E402
 import parentq_worker  # noqa: E402
+import parentq_validation  # noqa: E402
+import parentq_safety  # noqa: E402
 
 RECORDS = Path("C:/Users/clclc/BusinessProject/rineya-dataset-retention-records")
 VIEWS = (RECORDS / "hskill-views-002/HSKILL_VIEWS_V2.jsonl",
@@ -43,7 +47,11 @@ VALIDATION_NAME = "CPU_VALIDATION_PARENTQ.json"
 FROZEN_LOCAL = ("parentq_worker.py", "parentq_rows.py", "parentq_decide.py", "parentq_supervise.py",
                 "parentq_launch_wmi.py", "geo_frozen.py", "build_parentq.py", "derive_from_geo.py", parentq_worker.BANK_JSON,
                 parentq_worker.CANARY_JSON, "PREREG_PARENTQ.md", "test_parentq_rows.py", "test_parentq_decide.py",
-                "test_parentq_worker.py", "test_parentq_supervise.py")
+                "test_parentq_worker.py", "test_parentq_supervise.py", "parentq_validation.py",
+                "test_parentq_validation.py", "parentq_safety.py", "READINESS_PARENTQ.json",
+                "REVISION_PARENTQ.md", "PROSPECTIVE_DESIGN_OPTIONS.md", "NATIVE_RUN_PROPOSAL.md",
+                "parentq_offline_supervise.py", "test_parentq_worker_mechanics.py", "test_parentq_offline_supervise.py",
+                "reproduce_calibration_offline.py")
 PACKAGES = ("numpy", "tokenizers", "psutil", "torch", "transformers", "safetensors")
 
 
@@ -99,6 +107,15 @@ def build_canary(tokenizer=None) -> dict:
                   "FP32(Supa + TT - Sparse), equal up to float rounding"}}
 
 
+def pairwise_canary_count() -> int:
+    views = [json.loads(line) for line in pinned(*VIEWS).decode("utf-8").splitlines() if line.strip()]
+    stored = {}
+    for path, pin in STORED:
+        for arm in json.loads(pinned(path, pin))["arms"]:
+            stored[arm["arm"]] = {p["id"]: p for p in arm["predictions"]}
+    return sum(len({stored[s][r["id"]]["prediction"] for s in CANARY_SOURCES}) == 3 for r in views)
+
+
 def membership() -> None:
     benchmark, bank = bank_rows()
     write_json(HERE / parentq_worker.BANK_JSON, [row.to_dict() for row in parentq_rows.all_rows(bank)])
@@ -111,8 +128,8 @@ def _geo_rows(benchmark):
             *benchmark.build_format_variants())
 
 
-def validate() -> None:
-    from transformers import AutoTokenizer
+def validate(output_dir: Path, *, lightweight: bool = False) -> dict:
+    output_dir = external_output_dir(output_dir)
     benchmark, bank = bank_rows()
     geo = geo_frozen.load("worker")
     geometry = geo_frozen.load("geometry")
@@ -132,8 +149,9 @@ def validate() -> None:
         keys = [key(row) for row in (*bank["T"], *bank["H_ON"])]
         signatures.setdefault(name, {})["unique_within_bank"] = len(set(keys)) == len(keys)
     geo_words = set(re.findall(r"[a-z]+", " ".join(f"{r.system} {r.user} {r.row_id}" for r in geo_rows).lower()))
-    training = [json.loads(line) for line in H_TRAINING.read_bytes().decode("utf-8").splitlines() if line.strip()]
-    training_sha = sha256(H_TRAINING)
+    training_bytes = H_TRAINING.read_bytes()
+    training = [json.loads(line) for line in training_bytes.decode("utf-8").splitlines() if line.strip()]
+    training_sha = hashlib.sha256(training_bytes).hexdigest()
     training_words = set(re.findall(r"[a-z]+", " ".join(m["content"] for r in training for m in r["prompt"]).lower()))
     native_counts = {label: {"rows": sum(1 for r in training if r["prompt"][0]["content"] == prompt),
                              "exact_abstention_replies": sum(1 for r in training if r["prompt"][0]["content"] == prompt
@@ -141,36 +159,57 @@ def validate() -> None:
                      for label, prompt in parentq_rows.H_NATIVE_PROMPTS.items()}
     contract_rows = [r for r in training if r["prompt"][0]["content"] == benchmark.ANSWERABILITY_SYSTEM_H]
     freeze_module = geo_frozen.load("freeze_sectionh")
+    exposed = list(parentq_validation.pinned_exposed_payloads(
+        REPO, benchmark, *freeze_module.DELTA_T_TRAINING))
     collisions = freeze_module.t_collisions(list(bank["T"]))
-    tokenizer = AutoTokenizer.from_pretrained(str(geometry.SOURCES["BASE"][0].parent), local_files_only=True)
-    sys.path.insert(0, str(REPO / "experiments/fresh_dual_skill_instrument_v1"))
+    operative = parentq_validation.operative_collisions(benchmark, bank["T"], geo_rows, exposed)
+    if lightweight:
+        from tokenizers import Tokenizer
+        tokenizer = Tokenizer.from_file(str(geometry.SOURCES["BASE"][0].parent / "tokenizer.json"))
+        tokenize = lambda text: tokenizer.encode(text, add_special_tokens=False).ids
+    else:
+        from transformers import AutoTokenizer
+        tokenizer = AutoTokenizer.from_pretrained(str(geometry.SOURCES["BASE"][0].parent), local_files_only=True)
+        tokenize = lambda text: tokenizer(text, add_special_tokens=False)["input_ids"]
     renderer_path = REPO / "experiments/fresh_dual_skill_instrument_v1/score_arms.py"
     geo_freeze = geo_frozen.geo_freeze()
     renderer_pinned = sha256(renderer_path) == geo_freeze["dependency_binding"]["roles"]["renderer"]["sha256"]
-    from score_arms import render
-    count = lambda system, user: len(tokenizer(render(system, user), add_special_tokens=False)["input_ids"])
+    renderer = parentq_worker._exec_pinned(renderer_path,
+        geo_freeze["dependency_binding"]["roles"]["renderer"]["sha256"], "validation_renderer")
+    render = renderer.render
+    count = lambda system, user: len(tokenize(render(system, user)))
     prompt_tokens = {row.row_id: count(row.system, row.user) for row in rows}
     prompt_tokens.update({row["row_id"]: count(row["system"], row["user"]) for row in canary["rows"]})
     reply_tokens = {}
     for row in rows:
         reply = row.expected if row.output_kind == "json_object" else row.metadata["strict_reply"]
         spaced = json.dumps(json.loads(reply)) if row.output_kind == "json_object" else reply
-        reply_tokens[row.row_id] = max(len(tokenizer(text, add_special_tokens=False)["input_ids"]) for text in (reply, spaced))
-    template_equal = all(
+        reply_tokens[row.row_id] = max(len(tokenize(text)) for text in (reply, spaced))
+    template_equal = None if lightweight else all(
         render(row["system"], row["user"]) == tokenizer.apply_chat_template(
             [{"role": "system", "content": row["system"]}, {"role": "user", "content": row["user"]}],
             tokenize=False, add_generation_prompt=True, enable_thinking=False)
         for row in canary["rows"])
+    readiness, design_ready = parentq_validation.readiness(HERE)
+    lease_entry = geo_freeze["supervisor_dependencies"]["gpu_lease"]
+    lease_pin_equal = sha256(REPO / lease_entry["path"]) == lease_entry["sha256"]
     units = parentq_worker.schedule_units(bank, canary["rows"])
     caps = parentq_worker.allocation(sum(len(ids) for _, _, ids in units), geo.INPUT_SLOTS, geo.OUTPUT_SLOTS)
     tables = parentq_decide.gate_tables(benchmark)
     receipt = {
         "experiment": "TRISKILL-GEO-001-PARENTQ", "model_loads": 0, "model_forwards": 0,
-        "protected_banks_opened": [], "geo_freeze_sha256": geo_frozen.GEO_FREEZE_SHA256,
+        "validation_profile": "LIGHTWEIGHT_NO_TORCH" if lightweight else "FULL_CPU_REGISTRATION",
+        "sealed_access": "NONE_BY_EXPLICIT_SOURCE_ALLOWLIST", "geo_freeze_sha256": geo_frozen.GEO_FREEZE_SHA256,
         "bank_matches_generator": frozen_bank == [row.to_dict() for row in rows],
         "canary_matches_builder": canary == build_canary(),
         "counts": {block: len(block_rows) for block, block_rows in bank.items()}, "canary_n": len(canary["rows"]),
         "canary_eligible_rows": canary["eligible"],
+        "canary_pairwise_different_before_length_filter": pairwise_canary_count(),
+        "exposed_T_bank_pins": parentq_validation.EXPOSED_T_PINS,
+        "gpu_lease_pin_equals_geo": lease_pin_equal,
+        "operative_number_collisions": operative,
+        "design_ready": design_ready and operative["collision_free"],
+        "design_readiness_status": readiness["status"],
         "signatures": signatures,
         "t_support_violations": {row.row_id: benchmark.t_support_violations(row) for row in bank["T"]},
         "t_collisions": collisions,
@@ -190,7 +229,7 @@ def validate() -> None:
         "gate_tables": {"T_subtypes": list(tables["T"]["subtypes"]), "T_passing_combinations": sum(tables["T"]["passed"]),
                         "H_kinds": list(tables["H"]["subtypes"]), "H_passing_combinations": sum(tables["H"]["passed"])},
     }
-    receipt["passed"] = bool(
+    receipt["mechanical_checks_passed"] = bool(
         receipt["bank_matches_generator"] and receipt["canary_matches_builder"]
         and receipt["counts"] == {"T": 24, "H_ON": 32, "H_OFF": 32} and receipt["canary_n"] == 8
         and all(signatures[field]["disjoint_from_geo_rows"]
@@ -198,37 +237,74 @@ def validate() -> None:
         and all(signatures[name]["unique_within_bank"] for name in ("row_id", "world_signature", "state_and_rule"))
         and not any(receipt["t_support_violations"].values()) and collisions["collision_free"]
         and receipt["worlds_absent_from_geo_rows"] and receipt["worlds_absent_from_delta_H_training_prompts"]
-        and training_sha == parentq_rows.H_TRAINING_ROWS_SHA256
+        and training_sha == parentq_rows.H_TRAINING_ROWS_SHA256 and lease_pin_equal
         and all(c["rows"] == 28 and c["exact_abstention_replies"] == 28 for c in native_counts.values())
         and receipt["delta_H_training_rows"]["screen_contract_rows_with_abstention_gold"] == 0
-        and renderer_pinned and template_equal
+        and receipt["delta_H_training_rows"]["screen_contract_rows"] == 10
+        and receipt["canary_eligible_rows"] == 56
+        and receipt["canary_pairwise_different_before_length_filter"] == 58
+        and renderer_pinned and (template_equal is True or lightweight)
         and receipt["max_prompt_tokens"] <= geo.INPUT_SLOTS and receipt["max_reply_tokens"] < geo.OUTPUT_SLOTS
         and tuple(tables["T"]["subtypes"]) == parentq_decide.T_SUBTYPES
         and sorted(set(tables["H"]["subtypes"])) == sorted(parentq_decide.H_KINDS))
-    write_json(HERE / VALIDATION_NAME, receipt)
+    receipt["passed"] = receipt["mechanical_checks_passed"] and not lightweight and template_equal is True
+    receipt["limitations"] = ["Fixture verification is not Rineya capability evidence.",
+        "Operative collisions and representativeness are disclosed, without row replacement.",
+        "Full AutoTokenizer equivalence unexecuted in lightweight profile."] if lightweight else []
+    write_json(output_dir / VALIDATION_NAME, receipt)
     print(json.dumps({key: receipt[key] for key in ("passed", "counts", "canary_n", "canary_eligible_rows",
                                                     "max_prompt_tokens", "max_reply_tokens", "allocation")}, indent=2))
+    return receipt
+
+
+def external_output_dir(path: Path) -> Path:
+    path = Path(path).resolve()
+    business = Path("C:/Users/clclc/BusinessProject").resolve()
+    if (not path.is_relative_to(business) or path.is_relative_to(REPO.resolve())
+            or ".codex" in [p.lower() for p in path.parts]
+            or any((p / ".git").exists() for p in (path, *path.parents))):
+        raise ValueError("STOP_OUTPUT_MUST_BE_EXTERNAL_BUSINESSPROJECT")
+    path.mkdir(parents=True, exist_ok=True)
+    return path
 
 
 def _git(*args) -> str:
     return subprocess.run(["git", "-C", str(REPO), *args], check=True, capture_output=True, text=True).stdout.strip()
 
 
-def freeze() -> None:
+def freeze(output_dir: Path, cpu_tests: Path | None = None) -> None:
+    _, ready = parentq_validation.readiness(HERE)
+    if not ready:
+        raise SystemExit("STOP_UNFROZEN_DESIGN_DECISIONS_PENDING")
     dirty = [line for line in _git("status", "--porcelain", "--", str(HERE)).splitlines() if not line.startswith("??")]
     if dirty:
         raise SystemExit(f"tracked PARENTQ files have uncommitted changes: {dirty}")
-    validate()
-    receipt = json.loads((HERE / VALIDATION_NAME).read_text(encoding="utf-8"))
-    if receipt.get("passed") is not True:
+    for name in FROZEN_LOCAL:
+        committed = subprocess.run(["git", "-C", str(REPO), "show",
+            "HEAD:" + (HERE / name).relative_to(REPO).as_posix()], capture_output=True, timeout=10)
+        if committed.returncode or committed.stdout != (HERE / name).read_bytes():
+            raise SystemExit(f"STOP_FREEZE_DEPENDENCY_NOT_COMMITTED:{name}")
+    output_dir = external_output_dir(output_dir)
+    if cpu_tests is None:
+        raise SystemExit("STOP_FULL_CPU_TEST_RECEIPT_REQUIRED")
+    test_receipt = json.loads(cpu_tests.read_bytes())
+    if (test_receipt.get("passed") is not True or test_receipt.get("profile") != "FULL_CPU_REGISTRATION"
+            or test_receipt.get("supervised") is not True
+            or test_receipt.get("source_sha256") != {name: sha256(HERE / name) for name in FROZEN_LOCAL}):
+        raise SystemExit("STOP_FULL_CPU_TEST_RECEIPT_NOT_SOURCE_BOUND")
+    receipt = validate(output_dir)
+    if receipt.get("passed") is not True or receipt.get("design_ready") is not True:
         raise SystemExit("CPU validation did not pass; refusing to freeze")
     geo = geo_frozen.load("worker")
     gpu_lease = REPO / "experiments/fresh_dual_skill_instrument_v1/gpu_lease.py"
     payload = {
         "experiment": "TRISKILL-GEO-001-PARENTQ", "implementation_commit": _git("rev-parse", "HEAD"),
+        "runtime_root": str(parentq_safety.RUNTIME_ROOT.resolve()),
         "geo_freeze": {"path": "experiments/triskill_geometric_pilot_v1/FREEZE_SECTIONH.json",
                        "sha256": geo_frozen.GEO_FREEZE_SHA256},
-        "cpu_validation": {"file": VALIDATION_NAME, "sha256": sha256(HERE / VALIDATION_NAME), "passed": True},
+        "cpu_validation": {"path": str(output_dir / VALIDATION_NAME),
+                           "sha256": sha256(output_dir / VALIDATION_NAME), "passed": True},
+        "cpu_tests": {"path": str(cpu_tests.resolve()), "sha256": sha256(cpu_tests), "passed": True},
         "files": {name: sha256(HERE / name) for name in FROZEN_LOCAL},
         "supervisor_dependencies": {"gpu_lease": {"path": "experiments/fresh_dual_skill_instrument_v1/gpu_lease.py",
                                                   "sha256": sha256(gpu_lease)}},
@@ -243,12 +319,21 @@ def freeze() -> None:
         "confirmation": False, "model_loads": 0, "model_forwards": 0,
         "evidence_not_self_pinned": ["FREEZE_PARENTQ.json", "CPU_TESTS_PARENTQ.log", "REPORT_PARENTQ.md"],
     }
-    write_json(HERE / parentq_worker.FREEZE_NAME, payload)
-    print(sha256(HERE / parentq_worker.FREEZE_NAME))
+    write_json(output_dir / parentq_worker.FREEZE_NAME, payload)
+    print(sha256(output_dir / parentq_worker.FREEZE_NAME))
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("step", choices=("membership", "validate", "freeze"))
+    parser.add_argument("--output-dir", type=Path, required=True,
+                        help="fresh evidence directory under BusinessProject outside source")
+    parser.add_argument("--lightweight", action="store_true", help="no Torch/AutoTokenizer import; never a freeze receipt")
+    parser.add_argument("--cpu-tests", type=Path, help="source-bound supervised full CPU-suite receipt (freeze only)")
     args = parser.parse_args()
-    {"membership": membership, "validate": validate, "freeze": freeze}[args.step]()
+    if args.step == "membership":
+        raise SystemExit("STOP_MEMBERSHIP_PRESERVED_PENDING_DESIGN_DECISION")
+    if args.step == "validate":
+        validate(args.output_dir, lightweight=args.lightweight)
+    else:
+        freeze(args.output_dir, args.cpu_tests)

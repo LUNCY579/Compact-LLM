@@ -1,0 +1,205 @@
+{
+  "experiment": "TRISKILL-GEO-001-PARENTQ",
+  "model_loads": 0,
+  "model_forwards": 0,
+  "validation_profile": "LIGHTWEIGHT_NO_TORCH",
+  "sealed_access": "NONE_BY_EXPLICIT_SOURCE_ALLOWLIST",
+  "geo_freeze_sha256": "f18d48670e8928afb72b7182756f8f7bb6c8e241fb5988ae1daa91ebc534b687",
+  "bank_matches_generator": true,
+  "canary_matches_builder": true,
+  "counts": {
+    "T": 24,
+    "H_ON": 32,
+    "H_OFF": 32
+  },
+  "canary_n": 8,
+  "canary_eligible_rows": 56,
+  "canary_pairwise_different_before_length_filter": 58,
+  "exposed_T_bank_pins": {
+    "experiments/composition_confirmation_v1/T_BANK_V3X.json": "173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c",
+    "experiments/composition_confirmation_v2/T_BANK_V4.json": "82f0a6423dd6b58b81319708e7fbda7c5880b9734742323ea11574ff354c93c0"
+  },
+  "gpu_lease_pin_equals_geo": true,
+  "operative_number_collisions": {
+    "key": "role_preserving_touched_inputs_and_outputs_v1",
+    "scanned_payloads": 1418,
+    "hits": {
+      "h-parentq-T12-register_machine": [],
+      "h-parentq-T19-register_machine": [],
+      "h-parentq-T3-register_machine": [
+        "experiments/composition_confirmation_v1/T_BANK_V3X.json"
+      ],
+      "h-parentq-T6-ledger_replay": [],
+      "h-parentq-T2-ledger_replay": [],
+      "h-parentq-T15-register_machine": [],
+      "h-parentq-T13-ledger_replay": [],
+      "h-parentq-T14-ledger_replay": [
+        "h-screen-T2-ledger_replay"
+      ],
+      "h-parentq-T8-register_machine": [],
+      "h-parentq-T21-ledger_replay": [],
+      "h-parentq-T22-ledger_replay": [],
+      "h-parentq-T23-register_machine": [],
+      "h-parentq-T9-ledger_replay": [],
+      "h-parentq-T7-register_machine": [],
+      "h-parentq-T18-ledger_replay": [],
+      "h-parentq-T4-register_machine": [],
+      "h-parentq-T17-ledger_replay": [],
+      "h-parentq-T10-ledger_replay": [],
+      "h-parentq-T16-register_machine": [],
+      "h-parentq-T5-ledger_replay": [],
+      "h-parentq-T11-register_machine": [],
+      "h-parentq-T24-register_machine": [],
+      "h-parentq-T20-register_machine": [],
+      "h-parentq-T1-ledger_replay": []
+    },
+    "within_bank": [],
+    "collision_free": false,
+    "policy": "DISCLOSED_DESIGN_BLOCKER_NO_AUTOMATIC_ROW_REPLACEMENT"
+  },
+  "design_ready": false,
+  "design_readiness_status": "UNFROZEN_DECISIONS_PENDING",
+  "signatures": {
+    "row_id": {
+      "disjoint_from_geo_rows": true,
+      "unique_within_bank": true
+    },
+    "world_signature": {
+      "disjoint_from_geo_rows": true,
+      "unique_within_bank": true
+    },
+    "state_signature": {
+      "disjoint_from_geo_rows": true
+    },
+    "rule_signature": {
+      "disjoint_from_geo_rows": true
+    },
+    "state_and_rule": {
+      "unique_within_bank": true
+    }
+  },
+  "t_support_violations": {
+    "h-parentq-T12-register_machine": [],
+    "h-parentq-T19-register_machine": [],
+    "h-parentq-T3-register_machine": [],
+    "h-parentq-T6-ledger_replay": [],
+    "h-parentq-T2-ledger_replay": [],
+    "h-parentq-T15-register_machine": [],
+    "h-parentq-T13-ledger_replay": [],
+    "h-parentq-T14-ledger_replay": [],
+    "h-parentq-T8-register_machine": [],
+    "h-parentq-T21-ledger_replay": [],
+    "h-parentq-T22-ledger_replay": [],
+    "h-parentq-T23-register_machine": [],
+    "h-parentq-T9-ledger_replay": [],
+    "h-parentq-T7-register_machine": [],
+    "h-parentq-T18-ledger_replay": [],
+    "h-parentq-T4-register_machine": [],
+    "h-parentq-T17-ledger_replay": [],
+    "h-parentq-T10-ledger_replay": [],
+    "h-parentq-T16-register_machine": [],
+    "h-parentq-T5-ledger_replay": [],
+    "h-parentq-T11-register_machine": [],
+    "h-parentq-T24-register_machine": [],
+    "h-parentq-T20-register_machine": [],
+    "h-parentq-T1-ledger_replay": []
+  },
+  "t_collisions": {
+    "scanned_payloads": 1408,
+    "skipped_other_families": {
+      "prerequisite_plan": 704
+    },
+    "hits": {
+      "h-parentq-T12-register_machine": [],
+      "h-parentq-T19-register_machine": [],
+      "h-parentq-T3-register_machine": [],
+      "h-parentq-T6-ledger_replay": [],
+      "h-parentq-T2-ledger_replay": [],
+      "h-parentq-T15-register_machine": [],
+      "h-parentq-T13-ledger_replay": [],
+      "h-parentq-T14-ledger_replay": [],
+      "h-parentq-T8-register_machine": [],
+      "h-parentq-T21-ledger_replay": [],
+      "h-parentq-T22-ledger_replay": [],
+      "h-parentq-T23-register_machine": [],
+      "h-parentq-T9-ledger_replay": [],
+      "h-parentq-T7-register_machine": [],
+      "h-parentq-T18-ledger_replay": [],
+      "h-parentq-T4-register_machine": [],
+      "h-parentq-T17-ledger_replay": [],
+      "h-parentq-T10-ledger_replay": [],
+      "h-parentq-T16-register_machine": [],
+      "h-parentq-T5-ledger_replay": [],
+      "h-parentq-T11-register_machine": [],
+      "h-parentq-T24-register_machine": [],
+      "h-parentq-T20-register_machine": [],
+      "h-parentq-T1-ledger_replay": []
+    },
+    "collision_free": true
+  },
+  "worlds_absent_from_geo_rows": true,
+  "worlds_absent_from_delta_H_training_prompts": true,
+  "delta_H_training_rows": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\compose001-20260918\\H\\H-prepared\\microfit-train.jsonl",
+    "sha256": "cb3df33343056ca51e26616d27ea18b84306f411a4491be7439de8338cdb71a8",
+    "sha256_registered": "cb3df33343056ca51e26616d27ea18b84306f411a4491be7439de8338cdb71a8",
+    "native_prompt_counts": {
+      "native_a": {
+        "rows": 28,
+        "exact_abstention_replies": 28
+      },
+      "native_b": {
+        "rows": 28,
+        "exact_abstention_replies": 28
+      }
+    },
+    "screen_contract_rows": 10,
+    "screen_contract_rows_with_abstention_gold": 0
+  },
+  "renderer_is_geo_pinned": true,
+  "renderer_equals_chat_template_thinking_disabled_on_canary": null,
+  "max_prompt_tokens": 144,
+  "max_reply_tokens": 29,
+  "slots": {
+    "input": 288,
+    "output": 32
+  },
+  "allocation": {
+    "generations": 200,
+    "forwards": 6416,
+    "token_positions": 64964,
+    "parts": {
+      "padding_parity": [
+        16,
+        1164
+      ],
+      "generation": [
+        6400,
+        63800
+      ]
+    }
+  },
+  "gate_tables": {
+    "T_subtypes": [
+      "ledger_replay:transfer",
+      "ledger_replay:scale",
+      "register_machine:add",
+      "register_machine:conditional"
+    ],
+    "T_passing_combinations": 89,
+    "H_kinds": [
+      "answerable",
+      "answerable",
+      "distractor",
+      "cue"
+    ],
+    "H_passing_combinations": 86
+  },
+  "mechanical_checks_passed": true,
+  "passed": false,
+  "limitations": [
+    "Fixture verification is not Rineya capability evidence.",
+    "Operative collisions and representativeness are disclosed, without row replacement.",
+    "Full AutoTokenizer equivalence unexecuted in lightweight profile."
+  ]
+}

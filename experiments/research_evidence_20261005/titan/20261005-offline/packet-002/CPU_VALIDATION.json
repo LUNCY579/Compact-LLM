@@ -1,0 +1,1315 @@
+{
+  "experiment": "TITAN-QUALITY-REPAIR-V1",
+  "status": "OFFLINE_VALIDATED_NATIVE_BLOCKED",
+  "offline_validation_passed": true,
+  "source_metadata_verified": true,
+  "fresh_weight_digest_verified": false,
+  "old_sealed_banks_accessed": false,
+  "registry_sha256": "ed6c6664dfeb61e23d0016d2eedf8a22720d6986027df5d10aaca219e0fcc4c7",
+  "recipes": 8,
+  "trials": 16,
+  "development": {
+    "prompts": 512,
+    "worlds": 448,
+    "token_audit": {
+      "experiment": "TITAN-QUALITY-REPAIR-V1",
+      "passed": true,
+      "rows": 512,
+      "total_prompt_tokens": 71374,
+      "total_loss_tokens": 7935,
+      "loss_token_mass_by_family": {
+        "ledger": 2505,
+        "register": 1335,
+        "answerability": 385,
+        "grounded_qa": 797,
+        "arithmetic": 438,
+        "instruction": 1392,
+        "concise_grounded": 1083
+      },
+      "loss_token_mass_by_split": {
+        "dev": 7935
+      },
+      "example_fraction_by_split": {
+        "dev": 1.0
+      },
+      "loss_token_fraction_by_split": {
+        "dev": 1.0
+      },
+      "max_prompt_tokens": 200,
+      "max_target_tokens_including_eos": 34,
+      "max_sequence_tokens": 211,
+      "audit_sha256": "ca01224580c2236a2a366ef977cd703bf9c157912855163e0e5d87bf356f1ac6",
+      "tokenizer_binding": {
+        "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "loader": "tokenizers.Tokenizer.from_str",
+        "transformers_imported": false
+      },
+      "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+      "thinking_enabled": false,
+      "truncation_used": false,
+      "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+      "native_model_loads": 0,
+      "native_model_forwards": 0,
+      "capability_evidence": false
+    },
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\DEVELOPMENT.jsonl",
+    "sha256": "eb5df1dbde5a9d54f620ca4e2d0179f1b2de67320486266e52fcff761aec1021",
+    "qualification_row_ids": [
+      "world-ca7e3b970150f95f49cee4ae-canonical",
+      "world-f693e043a540d515860e39ae-canonical",
+      "world-3be30450602f4282c4090f5b-canonical",
+      "world-d5a8ae8e20ebcb7403c7810f-canonical",
+      "world-0a13d074283a59a8577e9eb8-canonical",
+      "world-efb0d0889e267fc13d62c5a5-canonical",
+      "world-5167e6e92a02c4eb4b080ede-canonical",
+      "world-88766796e9b60c47ac4be832-canonical"
+    ],
+    "reload_readout_row_id": "world-ca7e3b970150f95f49cee4ae-canonical"
+  },
+  "final": {
+    "prompts": 4096,
+    "worlds": 3584,
+    "token_audit": {
+      "experiment": "TITAN-QUALITY-REPAIR-V1",
+      "passed": true,
+      "rows": 4096,
+      "total_prompt_tokens": 570718,
+      "total_loss_tokens": 63232,
+      "loss_token_mass_by_family": {
+        "ledger": 19883,
+        "register": 10693,
+        "answerability": 3046,
+        "grounded_qa": 6359,
+        "arithmetic": 3458,
+        "instruction": 11138,
+        "concise_grounded": 8655
+      },
+      "loss_token_mass_by_split": {
+        "final": 63232
+      },
+      "example_fraction_by_split": {
+        "final": 1.0
+      },
+      "loss_token_fraction_by_split": {
+        "final": 1.0
+      },
+      "max_prompt_tokens": 200,
+      "max_target_tokens_including_eos": 34,
+      "max_sequence_tokens": 211,
+      "audit_sha256": "952fc9c96a30b1687ffd1965572c0733c9a66e9fa9744ea78914ae09df64ae68",
+      "tokenizer_binding": {
+        "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "loader": "tokenizers.Tokenizer.from_str",
+        "transformers_imported": false
+      },
+      "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+      "thinking_enabled": false,
+      "truncation_used": false,
+      "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+      "native_model_loads": 0,
+      "native_model_forwards": 0,
+      "capability_evidence": false
+    },
+    "model_evaluations": 0,
+    "access_blocked": true
+  },
+  "training_rows_prepared": 32000,
+  "datasets": {
+    "TQR-R01-S17": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R01-S17.jsonl.gz",
+      "sha256": "3ada8ab64b4f3a40f9aff11c3bfb0986c0cf3aa3771afd2c1719b40f9880821b",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "8c76ad9f81e2acc1db539e6ca89f10ce17790e9957183c973d556e3b379a038c",
+      "payload_bytes": 3148710,
+      "artifact_bytes": 212355,
+      "recipe_id": "R01",
+      "seed": 17,
+      "examples": 2000,
+      "repair_examples": 2000,
+      "replay_examples": 0,
+      "unique_replay_source_rows": 0,
+      "replay_occurrences_beyond_unique": 0,
+      "example_replay_fraction": 0.0,
+      "replay_loss_tokens": 0,
+      "replay_loss_token_fraction": 0.0,
+      "family_example_counts": {
+        "answerability": 500,
+        "ledger": 500,
+        "grounded_qa": 500,
+        "register": 500
+      },
+      "prompt_style_counts": {
+        "canonical": 2000
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 295002,
+        "total_loss_tokens": 31059,
+        "loss_token_mass_by_family": {
+          "answerability": 2223,
+          "ledger": 15523,
+          "grounded_qa": 4970,
+          "register": 8343
+        },
+        "loss_token_mass_by_split": {
+          "train": 31059
+        },
+        "example_fraction_by_split": {
+          "train": 1.0
+        },
+        "loss_token_fraction_by_split": {
+          "train": 1.0
+        },
+        "max_prompt_tokens": 179,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 190,
+        "audit_sha256": "5ade3ebebf061432aebf852c3fe0520c135de1a2fe191ae52c54fd1279a6aed7",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R01-S29": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R01-S29.jsonl.gz",
+      "sha256": "f46dcb7525dcad9f008ee587b6e87145894d2644ce5f9874a74eb3a43c99275f",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "41db5bb117126f12b7493942e183efbfb75a1397d06b3b81554d80856d565d1a",
+      "payload_bytes": 3148710,
+      "artifact_bytes": 212241,
+      "recipe_id": "R01",
+      "seed": 29,
+      "examples": 2000,
+      "repair_examples": 2000,
+      "replay_examples": 0,
+      "unique_replay_source_rows": 0,
+      "replay_occurrences_beyond_unique": 0,
+      "example_replay_fraction": 0.0,
+      "replay_loss_tokens": 0,
+      "replay_loss_token_fraction": 0.0,
+      "family_example_counts": {
+        "ledger": 500,
+        "register": 500,
+        "answerability": 500,
+        "grounded_qa": 500
+      },
+      "prompt_style_counts": {
+        "canonical": 2000
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 295002,
+        "total_loss_tokens": 31059,
+        "loss_token_mass_by_family": {
+          "ledger": 15523,
+          "register": 8343,
+          "answerability": 2223,
+          "grounded_qa": 4970
+        },
+        "loss_token_mass_by_split": {
+          "train": 31059
+        },
+        "example_fraction_by_split": {
+          "train": 1.0
+        },
+        "loss_token_fraction_by_split": {
+          "train": 1.0
+        },
+        "max_prompt_tokens": 179,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 190,
+        "audit_sha256": "2d49b3e67fc1092d0fb36f06c6a5e3657b3be9bf603842907a7f071a52f92976",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R02-S17": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R02-S17.jsonl.gz",
+      "sha256": "e198df347b0bd5ac6b7bf0daaaf3827f65a19f03dd70aae1e31a4c263f95fc01",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "0efb28e8a54147061e259d9b0a739e068cf27b6920b6513f9ff294780a5d1679",
+      "payload_bytes": 3255024,
+      "artifact_bytes": 243277,
+      "recipe_id": "R02",
+      "seed": 17,
+      "examples": 2000,
+      "repair_examples": 1600,
+      "replay_examples": 400,
+      "unique_replay_source_rows": 195,
+      "replay_occurrences_beyond_unique": 205,
+      "example_replay_fraction": 0.2,
+      "replay_loss_tokens": 7577,
+      "replay_loss_token_fraction": 0.2335552678626472,
+      "family_example_counts": {
+        "grounded_qa": 400,
+        "ledger": 600,
+        "register": 600,
+        "answerability": 400
+      },
+      "prompt_style_counts": {
+        "canonical": 1600
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 289373,
+        "total_loss_tokens": 32442,
+        "loss_token_mass_by_family": {
+          "grounded_qa": 3979,
+          "ledger": 16685,
+          "register": 10004,
+          "answerability": 1774
+        },
+        "loss_token_mass_by_split": {
+          "train": 24865,
+          "replay": 7577
+        },
+        "example_fraction_by_split": {
+          "train": 0.8,
+          "replay": 0.2
+        },
+        "loss_token_fraction_by_split": {
+          "train": 0.7664447321373529,
+          "replay": 0.2335552678626472
+        },
+        "max_prompt_tokens": 179,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 190,
+        "audit_sha256": "c303546ae0c2bfd2515a3d02532c3b89a51b6f3db5ce978b998a87ebdd0d91fd",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R02-S29": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R02-S29.jsonl.gz",
+      "sha256": "3a86bf3957c1cf6cc866b94f3986231f954663b63178707317d8c41972545f72",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "16abc8481a52fd251aafb43bb15b440b181dedd734d026d3cc9b2cdf392432d1",
+      "payload_bytes": 3255024,
+      "artifact_bytes": 241630,
+      "recipe_id": "R02",
+      "seed": 29,
+      "examples": 2000,
+      "repair_examples": 1600,
+      "replay_examples": 400,
+      "unique_replay_source_rows": 195,
+      "replay_occurrences_beyond_unique": 205,
+      "example_replay_fraction": 0.2,
+      "replay_loss_tokens": 7577,
+      "replay_loss_token_fraction": 0.2335552678626472,
+      "family_example_counts": {
+        "ledger": 600,
+        "register": 600,
+        "answerability": 400,
+        "grounded_qa": 400
+      },
+      "prompt_style_counts": {
+        "canonical": 1600
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 289373,
+        "total_loss_tokens": 32442,
+        "loss_token_mass_by_family": {
+          "ledger": 16685,
+          "register": 10004,
+          "answerability": 1774,
+          "grounded_qa": 3979
+        },
+        "loss_token_mass_by_split": {
+          "train": 24865,
+          "replay": 7577
+        },
+        "example_fraction_by_split": {
+          "train": 0.8,
+          "replay": 0.2
+        },
+        "loss_token_fraction_by_split": {
+          "train": 0.7664447321373529,
+          "replay": 0.2335552678626472
+        },
+        "max_prompt_tokens": 179,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 190,
+        "audit_sha256": "d3caedccc3bc12f11e7e282ab69c9d9f08bfbaf7bcf0110a55ce821d7bda9686",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R03-S17": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R03-S17.jsonl.gz",
+      "sha256": "d26322b5ce40735b81e1c3515eeeebb654c102fbd565415e4b60d7431a98c983",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "ea04760ac83d83142ffc42755b25edc3811c7ad9b40e86feb39c0a0e37f91420",
+      "payload_bytes": 3219103,
+      "artifact_bytes": 264042,
+      "recipe_id": "R03",
+      "seed": 17,
+      "examples": 2000,
+      "repair_examples": 2000,
+      "replay_examples": 0,
+      "unique_replay_source_rows": 0,
+      "replay_occurrences_beyond_unique": 0,
+      "example_replay_fraction": 0.0,
+      "replay_loss_tokens": 0,
+      "replay_loss_token_fraction": 0.0,
+      "family_example_counts": {
+        "answerability": 500,
+        "ledger": 500,
+        "grounded_qa": 500,
+        "register": 500
+      },
+      "prompt_style_counts": {
+        "canonical": 2000
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 294917,
+        "total_loss_tokens": 31186,
+        "loss_token_mass_by_family": {
+          "answerability": 2334,
+          "ledger": 15540,
+          "grounded_qa": 4972,
+          "register": 8340
+        },
+        "loss_token_mass_by_split": {
+          "train": 31186
+        },
+        "example_fraction_by_split": {
+          "train": 1.0
+        },
+        "loss_token_fraction_by_split": {
+          "train": 1.0
+        },
+        "max_prompt_tokens": 195,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 206,
+        "audit_sha256": "b745e92189ba21c77eb5d2e2fc966566e973b487d71097532d5ae55c82a86989",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R03-S29": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R03-S29.jsonl.gz",
+      "sha256": "b05711bf2744b10a4086187d6a4597735cd8190ea03772befc085271e5ddbe6d",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "8b516a997ea47a4dddb2cdf719064a92e87677ef94fe033c93b6440e33cf07d0",
+      "payload_bytes": 3219103,
+      "artifact_bytes": 264764,
+      "recipe_id": "R03",
+      "seed": 29,
+      "examples": 2000,
+      "repair_examples": 2000,
+      "replay_examples": 0,
+      "unique_replay_source_rows": 0,
+      "replay_occurrences_beyond_unique": 0,
+      "example_replay_fraction": 0.0,
+      "replay_loss_tokens": 0,
+      "replay_loss_token_fraction": 0.0,
+      "family_example_counts": {
+        "ledger": 500,
+        "register": 500,
+        "answerability": 500,
+        "grounded_qa": 500
+      },
+      "prompt_style_counts": {
+        "canonical": 2000
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 294917,
+        "total_loss_tokens": 31186,
+        "loss_token_mass_by_family": {
+          "ledger": 15540,
+          "register": 8340,
+          "answerability": 2334,
+          "grounded_qa": 4972
+        },
+        "loss_token_mass_by_split": {
+          "train": 31186
+        },
+        "example_fraction_by_split": {
+          "train": 1.0
+        },
+        "loss_token_fraction_by_split": {
+          "train": 1.0
+        },
+        "max_prompt_tokens": 195,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 206,
+        "audit_sha256": "aac6eed9d1f8c960ca6cd96c560b251e2ca00c00a7392583340c8fa8cae6fc3e",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R04-S17": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R04-S17.jsonl.gz",
+      "sha256": "2446601e31823813a5d13781a32ab48ed2ecd2ef128f7f00227cd7dca6c70c94",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "0a729620a88e4d7f74b1c550c23817b3161ba27aa1e00135227fb9d39b5f2853",
+      "payload_bytes": 3312106,
+      "artifact_bytes": 286755,
+      "recipe_id": "R04",
+      "seed": 17,
+      "examples": 2000,
+      "repair_examples": 1600,
+      "replay_examples": 400,
+      "unique_replay_source_rows": 195,
+      "replay_occurrences_beyond_unique": 205,
+      "example_replay_fraction": 0.2,
+      "replay_loss_tokens": 7577,
+      "replay_loss_token_fraction": 0.23293777668470242,
+      "family_example_counts": {
+        "grounded_qa": 400,
+        "ledger": 600,
+        "register": 600,
+        "answerability": 400
+      },
+      "prompt_style_counts": {
+        "canonical": 1600
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 289358,
+        "total_loss_tokens": 32528,
+        "loss_token_mass_by_family": {
+          "grounded_qa": 3977,
+          "ledger": 16693,
+          "register": 9991,
+          "answerability": 1867
+        },
+        "loss_token_mass_by_split": {
+          "train": 24951,
+          "replay": 7577
+        },
+        "example_fraction_by_split": {
+          "train": 0.8,
+          "replay": 0.2
+        },
+        "loss_token_fraction_by_split": {
+          "train": 0.7670622233152976,
+          "replay": 0.23293777668470242
+        },
+        "max_prompt_tokens": 195,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 206,
+        "audit_sha256": "7bb3d0cc294b492f0f4a1cf8884706e301a13cf76cabc29438ae87b6bc714fef",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R04-S29": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R04-S29.jsonl.gz",
+      "sha256": "d06ae66228b793111fdb3dfe640ae1156c81c24d5cf036196a29d5a3559c4a3b",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "69c3390e390b4e9c93e5a185e0ed5e2dc1cdc65a13234a4cb479c5ae4a61ad49",
+      "payload_bytes": 3312106,
+      "artifact_bytes": 285322,
+      "recipe_id": "R04",
+      "seed": 29,
+      "examples": 2000,
+      "repair_examples": 1600,
+      "replay_examples": 400,
+      "unique_replay_source_rows": 195,
+      "replay_occurrences_beyond_unique": 205,
+      "example_replay_fraction": 0.2,
+      "replay_loss_tokens": 7577,
+      "replay_loss_token_fraction": 0.23293777668470242,
+      "family_example_counts": {
+        "ledger": 600,
+        "register": 600,
+        "answerability": 400,
+        "grounded_qa": 400
+      },
+      "prompt_style_counts": {
+        "canonical": 1600
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 289358,
+        "total_loss_tokens": 32528,
+        "loss_token_mass_by_family": {
+          "ledger": 16693,
+          "register": 9991,
+          "answerability": 1867,
+          "grounded_qa": 3977
+        },
+        "loss_token_mass_by_split": {
+          "train": 24951,
+          "replay": 7577
+        },
+        "example_fraction_by_split": {
+          "train": 0.8,
+          "replay": 0.2
+        },
+        "loss_token_fraction_by_split": {
+          "train": 0.7670622233152976,
+          "replay": 0.23293777668470242
+        },
+        "max_prompt_tokens": 195,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 206,
+        "audit_sha256": "d3f7f6bfe08064c27f7b0eb15435dacfd9f5752457b16210a9044639a5bbaad2",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R05-S17": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R05-S17.jsonl.gz",
+      "sha256": "73548f933fc038f5acea8eff797bd682e6ec35f79dba44a92c7e9aa99c2eb36a",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "e649d1dec1b319ae9d8e8ee5c27bc297a543a616ca4c7820ac262101eed0116c",
+      "payload_bytes": 3239460,
+      "artifact_bytes": 220420,
+      "recipe_id": "R05",
+      "seed": 17,
+      "examples": 2000,
+      "repair_examples": 2000,
+      "replay_examples": 0,
+      "unique_replay_source_rows": 0,
+      "replay_occurrences_beyond_unique": 0,
+      "example_replay_fraction": 0.0,
+      "replay_loss_tokens": 0,
+      "replay_loss_token_fraction": 0.0,
+      "family_example_counts": {
+        "answerability": 500,
+        "ledger": 500,
+        "grounded_qa": 500,
+        "register": 500
+      },
+      "prompt_style_counts": {
+        "native_b": 500,
+        "natural": 500,
+        "native_a": 500,
+        "canonical": 500
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 312877,
+        "total_loss_tokens": 31626,
+        "loss_token_mass_by_family": {
+          "answerability": 2790,
+          "ledger": 15523,
+          "grounded_qa": 4970,
+          "register": 8343
+        },
+        "loss_token_mass_by_split": {
+          "train": 31626
+        },
+        "example_fraction_by_split": {
+          "train": 1.0
+        },
+        "loss_token_fraction_by_split": {
+          "train": 1.0
+        },
+        "max_prompt_tokens": 200,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 211,
+        "audit_sha256": "e84fb044cb73dd8a43ce0e7a41aa7e7dda8149c51d8029ae1fad319f833dfdc9",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R05-S29": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R05-S29.jsonl.gz",
+      "sha256": "30fe6f5da840bb060323dd4176fd7962c2e1e5074d8152f91c216a7d45712daa",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "b5bf9cfa0a359cf1e1d5807be653a7c438fb23419ab8e14160d4eb3256d16938",
+      "payload_bytes": 3239460,
+      "artifact_bytes": 220930,
+      "recipe_id": "R05",
+      "seed": 29,
+      "examples": 2000,
+      "repair_examples": 2000,
+      "replay_examples": 0,
+      "unique_replay_source_rows": 0,
+      "replay_occurrences_beyond_unique": 0,
+      "example_replay_fraction": 0.0,
+      "replay_loss_tokens": 0,
+      "replay_loss_token_fraction": 0.0,
+      "family_example_counts": {
+        "ledger": 500,
+        "register": 500,
+        "answerability": 500,
+        "grounded_qa": 500
+      },
+      "prompt_style_counts": {
+        "native_b": 500,
+        "natural": 500,
+        "canonical": 500,
+        "native_a": 500
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 312877,
+        "total_loss_tokens": 31626,
+        "loss_token_mass_by_family": {
+          "ledger": 15523,
+          "register": 8343,
+          "answerability": 2790,
+          "grounded_qa": 4970
+        },
+        "loss_token_mass_by_split": {
+          "train": 31626
+        },
+        "example_fraction_by_split": {
+          "train": 1.0
+        },
+        "loss_token_fraction_by_split": {
+          "train": 1.0
+        },
+        "max_prompt_tokens": 200,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 211,
+        "audit_sha256": "fcfc481b29a5af20d96aef2452a260bd2f61d593738951580bce3e6da6c065bc",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R06-S17": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R06-S17.jsonl.gz",
+      "sha256": "b39de4d16a667a466f1f0f83b899cd36312d447805f5d9491d9962fe44637908",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "c618cc0b5c220c1c13008afaa746c2bdb551c5d66c7f6ffd762f1958bc302581",
+      "payload_bytes": 3327624,
+      "artifact_bytes": 251394,
+      "recipe_id": "R06",
+      "seed": 17,
+      "examples": 2000,
+      "repair_examples": 1600,
+      "replay_examples": 400,
+      "unique_replay_source_rows": 195,
+      "replay_occurrences_beyond_unique": 205,
+      "example_replay_fraction": 0.2,
+      "replay_loss_tokens": 7577,
+      "replay_loss_token_fraction": 0.23035996594916697,
+      "family_example_counts": {
+        "grounded_qa": 400,
+        "ledger": 600,
+        "register": 600,
+        "answerability": 400
+      },
+      "prompt_style_counts": {
+        "native_b": 400,
+        "natural": 400,
+        "canonical": 400,
+        "native_a": 400
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 303673,
+        "total_loss_tokens": 32892,
+        "loss_token_mass_by_family": {
+          "grounded_qa": 3979,
+          "ledger": 16685,
+          "register": 10004,
+          "answerability": 2224
+        },
+        "loss_token_mass_by_split": {
+          "train": 25315,
+          "replay": 7577
+        },
+        "example_fraction_by_split": {
+          "train": 0.8,
+          "replay": 0.2
+        },
+        "loss_token_fraction_by_split": {
+          "train": 0.769640034050833,
+          "replay": 0.23035996594916697
+        },
+        "max_prompt_tokens": 200,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 211,
+        "audit_sha256": "f5df93c7de461a90544f57b209ac107bbd29fb519e29059c190f39bf8c4d0122",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R06-S29": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R06-S29.jsonl.gz",
+      "sha256": "d06560902127eeda46f830360f69f13b5b27a4c9cfb93ec51993b3dd0480357a",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "f47377801e73dc8d4d4d7534caacdb5dea5b6061ef60a905d71729f017d7fb08",
+      "payload_bytes": 3327624,
+      "artifact_bytes": 250243,
+      "recipe_id": "R06",
+      "seed": 29,
+      "examples": 2000,
+      "repair_examples": 1600,
+      "replay_examples": 400,
+      "unique_replay_source_rows": 195,
+      "replay_occurrences_beyond_unique": 205,
+      "example_replay_fraction": 0.2,
+      "replay_loss_tokens": 7577,
+      "replay_loss_token_fraction": 0.23035996594916697,
+      "family_example_counts": {
+        "ledger": 600,
+        "register": 600,
+        "answerability": 400,
+        "grounded_qa": 400
+      },
+      "prompt_style_counts": {
+        "native_b": 400,
+        "natural": 400,
+        "canonical": 400,
+        "native_a": 400
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 303673,
+        "total_loss_tokens": 32892,
+        "loss_token_mass_by_family": {
+          "ledger": 16685,
+          "register": 10004,
+          "answerability": 2224,
+          "grounded_qa": 3979
+        },
+        "loss_token_mass_by_split": {
+          "train": 25315,
+          "replay": 7577
+        },
+        "example_fraction_by_split": {
+          "train": 0.8,
+          "replay": 0.2
+        },
+        "loss_token_fraction_by_split": {
+          "train": 0.769640034050833,
+          "replay": 0.23035996594916697
+        },
+        "max_prompt_tokens": 200,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 211,
+        "audit_sha256": "ce5122a0103f36f532c9882db5a0ac559bdc50e6f90af3869e1283e196234cb3",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R07-S17": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R07-S17.jsonl.gz",
+      "sha256": "75c52ae6ce0bb8171b763b73d0d5438080f1bc2d3b34a96824a6655d6b4961f7",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "f4f8f8c57493f4f8af56af5ff4bba3be8d071fc0b9fcbc9ccb858168e6757da8",
+      "payload_bytes": 3309853,
+      "artifact_bytes": 271480,
+      "recipe_id": "R07",
+      "seed": 17,
+      "examples": 2000,
+      "repair_examples": 2000,
+      "replay_examples": 0,
+      "unique_replay_source_rows": 0,
+      "replay_occurrences_beyond_unique": 0,
+      "example_replay_fraction": 0.0,
+      "replay_loss_tokens": 0,
+      "replay_loss_token_fraction": 0.0,
+      "family_example_counts": {
+        "answerability": 500,
+        "ledger": 500,
+        "grounded_qa": 500,
+        "register": 500
+      },
+      "prompt_style_counts": {
+        "native_b": 500,
+        "natural": 500,
+        "native_a": 500,
+        "canonical": 500
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 312792,
+        "total_loss_tokens": 31753,
+        "loss_token_mass_by_family": {
+          "answerability": 2901,
+          "ledger": 15540,
+          "grounded_qa": 4972,
+          "register": 8340
+        },
+        "loss_token_mass_by_split": {
+          "train": 31753
+        },
+        "example_fraction_by_split": {
+          "train": 1.0
+        },
+        "loss_token_fraction_by_split": {
+          "train": 1.0
+        },
+        "max_prompt_tokens": 205,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 216,
+        "audit_sha256": "9a5e3e922d8b9b80f7f462f41b5971cbc21f49e098f357570db0acba21d63fe1",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R07-S29": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R07-S29.jsonl.gz",
+      "sha256": "54346788605f1e0dd083d7e32eb0f8c1c3117c02d9c0d2a38879ad5fc1c5d90d",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "b7250b6e64b6d919519b7fa8a3ca42edc93510cae87ab2bf61e34d8d1e347a8f",
+      "payload_bytes": 3309853,
+      "artifact_bytes": 272231,
+      "recipe_id": "R07",
+      "seed": 29,
+      "examples": 2000,
+      "repair_examples": 2000,
+      "replay_examples": 0,
+      "unique_replay_source_rows": 0,
+      "replay_occurrences_beyond_unique": 0,
+      "example_replay_fraction": 0.0,
+      "replay_loss_tokens": 0,
+      "replay_loss_token_fraction": 0.0,
+      "family_example_counts": {
+        "ledger": 500,
+        "register": 500,
+        "answerability": 500,
+        "grounded_qa": 500
+      },
+      "prompt_style_counts": {
+        "native_b": 500,
+        "natural": 500,
+        "canonical": 500,
+        "native_a": 500
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 312792,
+        "total_loss_tokens": 31753,
+        "loss_token_mass_by_family": {
+          "ledger": 15540,
+          "register": 8340,
+          "answerability": 2901,
+          "grounded_qa": 4972
+        },
+        "loss_token_mass_by_split": {
+          "train": 31753
+        },
+        "example_fraction_by_split": {
+          "train": 1.0
+        },
+        "loss_token_fraction_by_split": {
+          "train": 1.0
+        },
+        "max_prompt_tokens": 205,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 216,
+        "audit_sha256": "0c0affdc1563c6ca5cb579b3109204b403b8ae23046357613e34981f98bdd878",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R08-S17": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R08-S17.jsonl.gz",
+      "sha256": "40d6472e9cceed9400abafb130d7638ab1edf047772dfbf0ab56cbd14901985b",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "9810f1d79641971146034daa99e5ee7104baa39415a07f6644324f4098330af7",
+      "payload_bytes": 3384706,
+      "artifact_bytes": 294337,
+      "recipe_id": "R08",
+      "seed": 17,
+      "examples": 2000,
+      "repair_examples": 1600,
+      "replay_examples": 400,
+      "unique_replay_source_rows": 195,
+      "replay_occurrences_beyond_unique": 205,
+      "example_replay_fraction": 0.2,
+      "replay_loss_tokens": 7577,
+      "replay_loss_token_fraction": 0.22975923342834617,
+      "family_example_counts": {
+        "grounded_qa": 400,
+        "ledger": 600,
+        "register": 600,
+        "answerability": 400
+      },
+      "prompt_style_counts": {
+        "native_b": 400,
+        "natural": 400,
+        "canonical": 400,
+        "native_a": 400
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 303658,
+        "total_loss_tokens": 32978,
+        "loss_token_mass_by_family": {
+          "grounded_qa": 3977,
+          "ledger": 16693,
+          "register": 9991,
+          "answerability": 2317
+        },
+        "loss_token_mass_by_split": {
+          "train": 25401,
+          "replay": 7577
+        },
+        "example_fraction_by_split": {
+          "train": 0.8,
+          "replay": 0.2
+        },
+        "loss_token_fraction_by_split": {
+          "train": 0.7702407665716539,
+          "replay": 0.22975923342834617
+        },
+        "max_prompt_tokens": 205,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 216,
+        "audit_sha256": "35de5d089602ad061f7119a0cbbb7c686c64b9c3b0a86a61632a062d0fcef775",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    },
+    "TQR-R08-S29": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-agent-prompts-20261002\\run-artifacts\\titan-quality-repair-v1\\20261005-offline\\packet-002\\training\\TQR-R08-S29.jsonl.gz",
+      "sha256": "baac5d50efb52666f6d2e26a487cbbd8519502e775a52ea60e5fe8a135c56eae",
+      "encoding": "gzip-jsonl",
+      "payload_sha256": "107c28943d6aee94f55a9d8370ab5446c2df9f6f20be0782a009922ffe0b386a",
+      "payload_bytes": 3384706,
+      "artifact_bytes": 292897,
+      "recipe_id": "R08",
+      "seed": 29,
+      "examples": 2000,
+      "repair_examples": 1600,
+      "replay_examples": 400,
+      "unique_replay_source_rows": 195,
+      "replay_occurrences_beyond_unique": 205,
+      "example_replay_fraction": 0.2,
+      "replay_loss_tokens": 7577,
+      "replay_loss_token_fraction": 0.22975923342834617,
+      "family_example_counts": {
+        "ledger": 600,
+        "register": 600,
+        "answerability": 400,
+        "grounded_qa": 400
+      },
+      "prompt_style_counts": {
+        "native_b": 400,
+        "natural": 400,
+        "canonical": 400,
+        "native_a": 400
+      },
+      "independent_oracles_agree": true,
+      "leakage_passed": true,
+      "token_audit": {
+        "experiment": "TITAN-QUALITY-REPAIR-V1",
+        "passed": true,
+        "rows": 2000,
+        "total_prompt_tokens": 303658,
+        "total_loss_tokens": 32978,
+        "loss_token_mass_by_family": {
+          "ledger": 16693,
+          "register": 9991,
+          "answerability": 2317,
+          "grounded_qa": 3977
+        },
+        "loss_token_mass_by_split": {
+          "train": 25401,
+          "replay": 7577
+        },
+        "example_fraction_by_split": {
+          "train": 0.8,
+          "replay": 0.2
+        },
+        "loss_token_fraction_by_split": {
+          "train": 0.7702407665716539,
+          "replay": 0.22975923342834617
+        },
+        "max_prompt_tokens": 205,
+        "max_target_tokens_including_eos": 34,
+        "max_sequence_tokens": 216,
+        "audit_sha256": "aa8d6d511d89091001004a497d04b49057e2595872f033d832df4544d9a17303",
+        "tokenizer_binding": {
+          "tokenizer_json": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\tokenizer.json",
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+          "loader": "tokenizers.Tokenizer.from_str",
+          "transformers_imported": false
+        },
+        "masking": "PROMPT_-100_TARGET_AND_FINAL_EOS_POSITIVE",
+        "thinking_enabled": false,
+        "truncation_used": false,
+        "full_hf_auto_tokenizer_equivalence": "NOT_RUN_SEPARATE_QUALIFIED_PROFILE_REQUIRED",
+        "native_model_loads": 0,
+        "native_model_forwards": 0,
+        "capability_evidence": false
+      }
+    }
+  },
+  "leakage": {
+    "passed": true,
+    "errors": [],
+    "counts": {
+      "dev": 512,
+      "final": 4096,
+      "replay": 195
+    },
+    "independent_worlds": {
+      "dev": 448,
+      "final": 3584,
+      "replay": 195
+    },
+    "scope": "LOCAL_EXPOSED_MEMBERSHIP_ONLY_NO_PROTECTED_HELDOUT_CLAIM"
+  },
+  "max_training_prompt_tokens": 205,
+  "max_training_target_tokens_with_eos": 34,
+  "max_training_sequence_tokens": 216,
+  "source_manifest": {
+    "__init__.py": "bce28390c189adaca221ce9fbe00777beb969000a534885c28c40fec8415c327",
+    "budget.py": "38ef93457f3739765cb6cf5dcb389c49ef78a905d29395acdb29ace647ffc3d2",
+    "custody.py": "0a9886c582bc65443954424b28c5c4d0b72961e8d25bfd1b31a47f243dd28790",
+    "exclusion.py": "9e5a247b3f665110aba773bc08ee306d798d5db9e456eae8b8dd051a45b42683",
+    "generator.py": "7891f412b93dc8c722ff3e443e67f5403baeb86e070372d62e53a831796b317d",
+    "native_proposal.py": "0a74a26745b6835233af225c606043d2e5a048ae13273f9fb7979b931ab4beac",
+    "NATIVE_QUALIFICATION_PROPOSAL.md": "03cc47d70a6e0e980c745ccd757b6e56fdb02e7eeb096b3b283538067b1a638d",
+    "offline_supervise.py": "b45dd397fe625b720839277cb4fc0dc5108d86c8eef1b5a41ece91a7a1779a50",
+    "oracles.py": "2ad37c0177a4776bccb5a97b50bdc7e49db63da9d0365b1a7f5d679c9366a02a",
+    "packet.py": "02b2b1d82ff5a71b0ff15820429c79ca463bb554091c6be7726e49a636c59576",
+    "PROTOCOL.json": "86757238f8b8e5864562c34016260267b2d97a516ac4b40ebbb07a48e9f89707",
+    "README.md": "025b52e6e1db7bd008c896c269a40c17021268218060c625738da0e442225a17",
+    "registry.py": "a7952dc60603b50a541d1fa308901b3bf2846a7f7db215343545f3fee1df6380",
+    "replay.py": "f240945c6fb05299cef687848aaadc92476d527ec3869e8a37c32caa6bd8c573",
+    "RUNBOOK.md": "14f9716a1c72f55833959c61779df00890c00f70dc49e912a0b23e7df7803d39",
+    "schema.py": "dc93f92ab64d12a33a0490bb5310ed3cbbab2ae7309606904201391f9b63e784",
+    "scoring.py": "e08c57a3af9ce934bcc4728e3a4988eaf5e6b866182d5564a7a695578c5e8aab",
+    "selection.py": "189b19d2a605972104c4bcaf5a13653d157b4049df7cf05bbb868e04b25cc8ef",
+    "statistics.py": "81efbcec66ec3113314f81e4f8375024618bb51048a7b55dff8162ddf65cf829",
+    "test_custody.py": "5bf45c537b6af5b5774b5db22d40be96fc4e389644d616c20f8ca3f219669ab6",
+    "test_data.py": "fef28e1838a3a3189060d010d709c42277b232c8e1a05c09cc700086275df62e",
+    "test_registry.py": "946842f7688fc2e8e837937e7647eed79a736c0ea07215588f7d3c54369ba6c3",
+    "test_scoring.py": "91c757288e46ec503bedf9d74028e14b800d96b8fc6d4f3b7e86a5da85480290",
+    "test_selection.py": "f4fbad5f25cbff210b4a32491f0a36e6ab3e564ff36cd053fdefe8095a0cad16",
+    "test_token_audit.py": "3d4b8b5bd32e113d0bb6d0f70b07a81339f97a8ff01e71b9512e04e5ffd91770",
+    "token_audit.py": "6d97b55ca0aecad431d0bf5e185e789ae47f7190fdbc111abb0ff0d0b4ef3e35"
+  },
+  "current_model_loads": 0,
+  "current_model_forwards": 0,
+  "current_training_updates": 0,
+  "quality_claim": false,
+  "native_execution_authorized": false,
+  "limitations": [
+    "Full HF template equivalence and fresh checkpoint digest verification require separate qualified access.",
+    "Replay uses 195 independently checked historical transition rows; broader conversation replay remains unqualified.",
+    "Ledger balance-domain support is unestablished; expanded operand cases and balance uncertainty are disclosed.",
+    "No measured native memory, throughput, optimizer or dense-export qualification.",
+    "Local/exposed exclusions cannot establish global pretraining or protected-bank disjointness."
+  ]
+}

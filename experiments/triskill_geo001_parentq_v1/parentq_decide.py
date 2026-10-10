@@ -194,9 +194,20 @@ def h_contract_diagnostic(benchmark, h_on, h_off, scores) -> dict[str, Any]:
         label = "NATIVE_PROMPT_ELICITS_ABSTENTION_NOT_SPECIFIC_TO_H"
     else:
         label = "H_ABSTENTION_NOT_SHOWN"
-    return {"label": label, "comparisons": comparisons, "rates": rates,
+    flags = []
+    if any(rates[f"H_{contract}"]["answerable_abstained"] == len(answerable) for contract in ("on", "off")):
+        flags.append("BLANKET_ABSTENTION_OBSERVED")
+    if any(rates[f"BASE_{contract}"]["answerable_credited"] == len(answerable)
+           and rates[f"BASE_{contract}"]["missing_abstention_credited"] == len(missing)
+           for contract in ("on", "off")):
+        flags.append("BASE_CEILING_OBSERVED")
+    if label == "NATIVE_PROMPT_ELICITS_ABSTENTION_NOT_SPECIFIC_TO_H" and not comparisons["missing_BASE_off_vs_on"]["significant_gain"]:
+        flags.append("NOT_SPECIFIC_LABEL_DOES_NOT_ESTABLISH_BASE_PROMPT_EFFECT")
+    return {"label": label, "legacy_label_retained_for_audit": True,
+            "interpretation_flags": flags, "redesign_authorized": False,
+            "comparisons": comparisons, "rates": rates,
             "min_detectable_one_direction_discordant": min_detectable_one_sided_gains(benchmark),
-            "note": "descriptive; labels use exact two-sided McNemar p <= 0.05 with gains > losses"}
+            "note": "legacy descriptive label; no joint answerability criterion or causal specificity inference; prospective policy pending"}
 
 
 def canary_check(canary: Sequence[Mapping[str, Any]], outputs: Mapping[str, Mapping[str, str]]) -> dict[str, Any]:
@@ -281,6 +292,11 @@ def decide(benchmark, bank: Mapping[str, Sequence[Any]], canary: Sequence[Mappin
             "note": "descriptive counterfactual: the screen does not use these prompts"}
         verdict["off_lenient_answers"] = {arm: sum(lenient_answer(benchmark, row, outputs[arm][row.row_id])
                                                    for row in bank["H_OFF"]) for arm in ("BASE", "H")}
+    verdict["on_lenient_answers"] = {arm: sum(lenient_answer(benchmark, row, outputs[arm][row.row_id])
+                                               for row in bank["H_ON"]) for arm in ("BASE", "H")}
+    verdict["bank_base_ceiling"] = {"T": all(scores["BASE"][r.row_id]["credited"] for r in bank["T"]),
+                                    "H_ON": all(scores["BASE"][r.row_id]["credited"] for r in bank["H_ON"])}
+    verdict["decision_design_status"] = "LEGACY_RULE_UNFROZEN_RECALIBRATION_PENDING"
     p = gate["predictive"]
     if p >= QUALIFIED_AT:
         return finish("PARENTS_QUALIFIED")

@@ -1,0 +1,893 @@
+{
+  "schema": 1,
+  "experiment": "TRISKILL-GEO-001-PARENTQ-OFFLINE-CALIBRATION",
+  "created_utc": "2026-10-05T19:06:18.273448+00:00",
+  "legacy_commit": "3e07fd8740e8ff4debd94f9c17ca3e06d056a0ed",
+  "purpose": "synthetic design reproduction; not parent qualification or Rineya capability evidence",
+  "source_identity": {
+    "GEO_FREEZE_SECTIONH.json": "f18d48670e8928afb72b7182756f8f7bb6c8e241fb5988ae1daa91ebc534b687",
+    "benchmark.py": "c3af153d6e48728c153ae6d5d448de210fb675a087b668a7ecc26c1d363950fb",
+    "legacy_parentq_decide.py": "71043e7170832f6f77e18fc87e9c6adc0607c3877dc20c8b7c0f375972a84f49",
+    "legacy_parentq_rows.py": "77576a41b46ea387d83a3be939c30b3d0ab235b7fc131027bbb211a930d8a237",
+    "reproduce_calibration_offline.py": "932c013dc5f2e00348d3ad017c9973c1b6acc282ef5a5e4adad6b4e589cdfd7b"
+  },
+  "scope": {
+    "constructed_screen_T_H_parents": 8,
+    "J_K_oracles_constructed": 0,
+    "native_model_loads": 0,
+    "native_forwards": 0,
+    "native_generations": 0,
+    "training_updates": 0,
+    "checkpoint_reads": 0,
+    "protected_bank_reads": 0,
+    "canary": "fabricated mechanics strings, no native canary result"
+  },
+  "gate_truth_table_pass_counts": {
+    "T": 89,
+    "H": 86
+  },
+  "legacy_illustrations": {
+    "perfect_parent_fixture": {
+      "status": "PARENTS_QUALIFIED",
+      "gate": {
+        "predictive": 0.8748431287114583,
+        "predictive_T": 0.9674224853515625,
+        "predictive_H": 0.9043030753968254,
+        "plug_in": 1.0,
+        "plug_in_T": 1.0,
+        "plug_in_H": 1.0,
+        "posterior_band_q10_q50_q90": [
+          0.7659718123294339,
+          0.8909955672508282,
+          0.9603174574064767
+        ],
+        "posterior_band_T": [
+          0.9240952597309359,
+          0.9792625905597598,
+          0.9960969853066254
+        ],
+        "posterior_band_H": [
+          0.8015387246671001,
+          0.9224011360073969,
+          0.9801929119653149
+        ],
+        "draws": 20000,
+        "seed": 20261004,
+        "prior": 0.5,
+        "cell_order": [
+          "neither",
+          "parent_only",
+          "base_only",
+          "both"
+        ]
+      },
+      "cells_T": {
+        "register_machine:conditional": [
+          0,
+          6,
+          0,
+          0
+        ],
+        "register_machine:add": [
+          0,
+          6,
+          0,
+          0
+        ],
+        "ledger_replay:scale": [
+          0,
+          6,
+          0,
+          0
+        ],
+        "ledger_replay:transfer": [
+          0,
+          6,
+          0,
+          0
+        ]
+      },
+      "cells_H_on": {
+        "cue": [
+          0,
+          10,
+          0,
+          0
+        ],
+        "answerable": [
+          0,
+          0,
+          0,
+          12
+        ],
+        "distractor": [
+          0,
+          10,
+          0,
+          0
+        ]
+      }
+    },
+    "legacy_middling_shuffled_index_mod3": {
+      "status": "PARENTS_MARGINAL",
+      "gate": {
+        "predictive": 0.6677575982436933,
+        "predictive_T": 0.8454742431640625,
+        "predictive_H": 0.7898024140211641,
+        "plug_in": 0.8688888888888889,
+        "plug_in_T": 0.9444444444444444,
+        "plug_in_H": 0.92,
+        "posterior_band_q10_q50_q90": [
+          0.5223399956823812,
+          0.6753029648445505,
+          0.8007814246987768
+        ],
+        "posterior_band_T": [
+          0.7227975136789502,
+          0.8618922222953123,
+          0.9444199069577552
+        ],
+        "posterior_band_H": [
+          0.6579081318333266,
+          0.8039609697942156,
+          0.904992013430249
+        ],
+        "draws": 20000,
+        "seed": 20261004,
+        "prior": 0.5,
+        "cell_order": [
+          "neither",
+          "parent_only",
+          "base_only",
+          "both"
+        ]
+      },
+      "cells_T": {
+        "register_machine:conditional": [
+          4,
+          2,
+          0,
+          0
+        ],
+        "register_machine:add": [
+          0,
+          6,
+          0,
+          0
+        ],
+        "ledger_replay:scale": [
+          1,
+          5,
+          0,
+          0
+        ],
+        "ledger_replay:transfer": [
+          3,
+          3,
+          0,
+          0
+        ]
+      },
+      "cells_H_on": {
+        "cue": [
+          2,
+          8,
+          0,
+          0
+        ],
+        "answerable": [
+          0,
+          0,
+          0,
+          12
+        ],
+        "distractor": [
+          4,
+          6,
+          0,
+          0
+        ]
+      }
+    },
+    "legacy_half_shuffled_index_mod2": {
+      "status": "PARENTS_NOT_QUALIFIED:H",
+      "gate": {
+        "predictive": 0.36566883174199905,
+        "predictive_T": 0.6599273681640625,
+        "predictive_H": 0.5541046626984126,
+        "plug_in": 0.4444444444444444,
+        "plug_in_T": 0.6944444444444444,
+        "plug_in_H": 0.64,
+        "posterior_band_q10_q50_q90": [
+          0.22818775353384854,
+          0.36052219624204107,
+          0.5108960807021025
+        ],
+        "posterior_band_T": [
+          0.4834088245349557,
+          0.6691894574499142,
+          0.8222394356555585
+        ],
+        "posterior_band_H": [
+          0.39176932154368643,
+          0.5577390418563075,
+          0.7111856819539895
+        ],
+        "draws": 20000,
+        "seed": 20261004,
+        "prior": 0.5,
+        "cell_order": [
+          "neither",
+          "parent_only",
+          "base_only",
+          "both"
+        ]
+      },
+      "cells_T": {
+        "register_machine:conditional": [
+          4,
+          2,
+          0,
+          0
+        ],
+        "register_machine:add": [
+          2,
+          4,
+          0,
+          0
+        ],
+        "ledger_replay:scale": [
+          3,
+          3,
+          0,
+          0
+        ],
+        "ledger_replay:transfer": [
+          3,
+          3,
+          0,
+          0
+        ]
+      },
+      "cells_H_on": {
+        "cue": [
+          6,
+          4,
+          0,
+          0
+        ],
+        "answerable": [
+          0,
+          0,
+          0,
+          12
+        ],
+        "distractor": [
+          6,
+          4,
+          0,
+          0
+        ]
+      }
+    },
+    "H_never_abstains": {
+      "status": "PARENTS_NOT_QUALIFIED:H",
+      "gate": {
+        "predictive": 0.07569585079869265,
+        "predictive_T": 0.9674224853515625,
+        "predictive_H": 0.07824487433862433,
+        "plug_in": 0.0,
+        "plug_in_T": 1.0,
+        "plug_in_H": 0.0,
+        "posterior_band_q10_q50_q90": [
+          0.011037462443642893,
+          0.0571850234575429,
+          0.1668030675360268
+        ],
+        "posterior_band_T": [
+          0.9240751299081711,
+          0.9792625905597598,
+          0.9960950859094436
+        ],
+        "posterior_band_H": [
+          0.011375443677186873,
+          0.05910979544757275,
+          0.17184566642171148
+        ],
+        "draws": 20000,
+        "seed": 20261004,
+        "prior": 0.5,
+        "cell_order": [
+          "neither",
+          "parent_only",
+          "base_only",
+          "both"
+        ]
+      },
+      "cells_T": {
+        "register_machine:conditional": [
+          0,
+          6,
+          0,
+          0
+        ],
+        "register_machine:add": [
+          0,
+          6,
+          0,
+          0
+        ],
+        "ledger_replay:scale": [
+          0,
+          6,
+          0,
+          0
+        ],
+        "ledger_replay:transfer": [
+          0,
+          6,
+          0,
+          0
+        ]
+      },
+      "cells_H_on": {
+        "cue": [
+          10,
+          0,
+          0,
+          0
+        ],
+        "answerable": [
+          0,
+          0,
+          0,
+          12
+        ],
+        "distractor": [
+          10,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "H_always_abstains_BASE_correct": {
+      "status": "PARENTS_NOT_QUALIFIED:H",
+      "gate": {
+        "predictive": 0.013088516015855079,
+        "predictive_T": 0.9674224853515625,
+        "predictive_H": 0.01352926587301586,
+        "plug_in": 0.0,
+        "plug_in_T": 1.0,
+        "plug_in_H": 0.0,
+        "posterior_band_q10_q50_q90": [
+          0.0003009250861900952,
+          0.005005347161898884,
+          0.0358370477524762
+        ],
+        "posterior_band_T": [
+          0.9240952597309359,
+          0.9792565856672284,
+          0.9960940434789624
+        ],
+        "posterior_band_H": [
+          0.00031352102275670845,
+          0.005171578975225929,
+          0.03702099706490656
+        ],
+        "draws": 20000,
+        "seed": 20261004,
+        "prior": 0.5,
+        "cell_order": [
+          "neither",
+          "parent_only",
+          "base_only",
+          "both"
+        ]
+      },
+      "cells_T": {
+        "register_machine:conditional": [
+          0,
+          6,
+          0,
+          0
+        ],
+        "register_machine:add": [
+          0,
+          6,
+          0,
+          0
+        ],
+        "ledger_replay:scale": [
+          0,
+          6,
+          0,
+          0
+        ],
+        "ledger_replay:transfer": [
+          0,
+          6,
+          0,
+          0
+        ]
+      },
+      "cells_H_on": {
+        "cue": [
+          0,
+          0,
+          0,
+          10
+        ],
+        "answerable": [
+          0,
+          0,
+          12,
+          0
+        ],
+        "distractor": [
+          0,
+          0,
+          0,
+          10
+        ]
+      }
+    },
+    "T_BASE_both_wrong": {
+      "status": "PARENTS_NOT_QUALIFIED:T",
+      "gate": {
+        "predictive": 0.04957826156464834,
+        "predictive_T": 0.0548248291015625,
+        "predictive_H": 0.9043030753968254,
+        "plug_in": 0.0,
+        "plug_in_T": 0.0,
+        "plug_in_H": 1.0,
+        "posterior_band_q10_q50_q90": [
+          0.007832190226566959,
+          0.0353759541955828,
+          0.10979934238766832
+        ],
+        "posterior_band_T": [
+          0.00866916582653017,
+          0.039317034930489256,
+          0.12107603502351211
+        ],
+        "posterior_band_H": [
+          0.8015387246671001,
+          0.9224011360073969,
+          0.9801929119653149
+        ],
+        "draws": 20000,
+        "seed": 20261004,
+        "prior": 0.5,
+        "cell_order": [
+          "neither",
+          "parent_only",
+          "base_only",
+          "both"
+        ]
+      },
+      "cells_T": {
+        "register_machine:conditional": [
+          6,
+          0,
+          0,
+          0
+        ],
+        "register_machine:add": [
+          6,
+          0,
+          0,
+          0
+        ],
+        "ledger_replay:scale": [
+          6,
+          0,
+          0,
+          0
+        ],
+        "ledger_replay:transfer": [
+          6,
+          0,
+          0,
+          0
+        ]
+      },
+      "cells_H_on": {
+        "cue": [
+          0,
+          10,
+          0,
+          0
+        ],
+        "answerable": [
+          0,
+          0,
+          0,
+          12
+        ],
+        "distractor": [
+          0,
+          10,
+          0,
+          0
+        ]
+      }
+    },
+    "BASE_ceiling_both_parents_correct": {
+      "status": "PARENTS_NOT_QUALIFIED:H",
+      "gate": {
+        "predictive": 0.024270037053123347,
+        "predictive_T": 0.1888580322265625,
+        "predictive_H": 0.12850942460317458,
+        "plug_in": 0.0,
+        "plug_in_T": 0.0,
+        "plug_in_H": 0.0,
+        "posterior_band_q10_q50_q90": [
+          0.002893532249600054,
+          0.015871626125496075,
+          0.0574613657735646
+        ],
+        "posterior_band_T": [
+          0.05676562566614775,
+          0.16755908715315754,
+          0.35112054479595123
+        ],
+        "posterior_band_H": [
+          0.02704916636560131,
+          0.10656720800174402,
+          0.26279643942293046
+        ],
+        "draws": 20000,
+        "seed": 20261004,
+        "prior": 0.5,
+        "cell_order": [
+          "neither",
+          "parent_only",
+          "base_only",
+          "both"
+        ]
+      },
+      "cells_T": {
+        "register_machine:conditional": [
+          0,
+          0,
+          0,
+          6
+        ],
+        "register_machine:add": [
+          0,
+          0,
+          0,
+          6
+        ],
+        "ledger_replay:scale": [
+          0,
+          0,
+          0,
+          6
+        ],
+        "ledger_replay:transfer": [
+          0,
+          0,
+          0,
+          6
+        ]
+      },
+      "cells_H_on": {
+        "cue": [
+          0,
+          0,
+          0,
+          10
+        ],
+        "answerable": [
+          0,
+          0,
+          0,
+          12
+        ],
+        "distractor": [
+          0,
+          0,
+          0,
+          10
+        ]
+      }
+    }
+  },
+  "null_H_toy_models": [
+    {
+      "BASE_and_H_accuracy": 0.08,
+      "H_gate_pass_probability": 0.11732930212659201
+    },
+    {
+      "BASE_and_H_accuracy": 0.15,
+      "H_gate_pass_probability": 0.180396064453125
+    },
+    {
+      "BASE_and_H_accuracy": 0.25,
+      "H_gate_pass_probability": 0.244903564453125
+    },
+    {
+      "BASE_and_H_accuracy": 0.5,
+      "H_gate_pass_probability": 0.3359375
+    },
+    {
+      "BASE_and_H_accuracy": 0.6,
+      "H_gate_pass_probability": 0.3477504
+    },
+    {
+      "BASE_and_H_accuracy": 0.75,
+      "H_gate_pass_probability": 0.335723876953125
+    },
+    {
+      "BASE_and_H_accuracy": 0.9,
+      "H_gate_pass_probability": 0.24103349999999993
+    }
+  ],
+  "calibration_toy": {
+    "description": "independent T .8; H answers 1, missing abstention .6; BASE T/missing 0, answers 1",
+    "true_gate_probability": 0.8171520000000002,
+    "simulations": 20000,
+    "seed": 20261005,
+    "qualified_fraction": 0.27495,
+    "marginal_fraction": 0.7218,
+    "not_qualified_fraction": 0.00325,
+    "predictive_quantiles_10_50_90": [
+      0.5468589126117646,
+      0.656388345029619,
+      0.7446457116692156
+    ]
+  },
+  "bank_representativeness": {
+    "conditional_rows": [
+      {
+        "row_id": "h-parentq-T12-register_machine",
+        "value": 5,
+        "true_branch": true,
+        "applied_delta": 5
+      },
+      {
+        "row_id": "h-parentq-T8-register_machine",
+        "value": 11,
+        "true_branch": true,
+        "applied_delta": 11
+      },
+      {
+        "row_id": "h-parentq-T4-register_machine",
+        "value": 3,
+        "true_branch": true,
+        "applied_delta": 3
+      },
+      {
+        "row_id": "h-parentq-T16-register_machine",
+        "value": 7,
+        "true_branch": true,
+        "applied_delta": 7
+      },
+      {
+        "row_id": "h-parentq-T24-register_machine",
+        "value": 5,
+        "true_branch": true,
+        "applied_delta": 5
+      },
+      {
+        "row_id": "h-parentq-T20-register_machine",
+        "value": 6,
+        "true_branch": false,
+        "applied_delta": -6
+      }
+    ],
+    "conditional_positive_value_count": 6,
+    "conditional_negative_value_count": 0,
+    "screen_conditional": {
+      "row_id": "h-screen-T4-register_machine",
+      "value": -6,
+      "true_branch": true
+    },
+    "operative_scale_collision": {
+      "bank_row": "h-parentq-T14-ledger_replay",
+      "screen_row": "h-screen-T2-ledger_replay",
+      "bank_key": [
+        "ledger_replay",
+        "scale",
+        19,
+        3,
+        57
+      ],
+      "screen_key": [
+        "ledger_replay",
+        "scale",
+        19,
+        3,
+        57
+      ],
+      "collides": true
+    }
+  },
+  "legacy_label_holes": {
+    "blanket_H_off_abstention": {
+      "label": "NATIVE_PROMPT_ELICITS_H_ABSTENTION",
+      "comparisons": {
+        "missing_on_H_vs_BASE": {
+          "n": 20,
+          "gains": 0,
+          "losses": 0,
+          "exact_mcnemar_p_two_sided": 1.0,
+          "significant_gain": false
+        },
+        "missing_off_H_vs_BASE": {
+          "n": 20,
+          "gains": 20,
+          "losses": 0,
+          "exact_mcnemar_p_two_sided": 1.9073486328125e-06,
+          "significant_gain": true
+        },
+        "missing_H_off_vs_on": {
+          "n": 20,
+          "gains": 20,
+          "losses": 0,
+          "exact_mcnemar_p_two_sided": 1.9073486328125e-06,
+          "significant_gain": true
+        },
+        "missing_BASE_off_vs_on": {
+          "n": 20,
+          "gains": 0,
+          "losses": 0,
+          "exact_mcnemar_p_two_sided": 1.0,
+          "significant_gain": false
+        },
+        "answerable_H_on_vs_off": {
+          "n": 12,
+          "gains": 12,
+          "losses": 0,
+          "exact_mcnemar_p_two_sided": 0.0004882812500000003,
+          "significant_gain": true
+        }
+      },
+      "rates": {
+        "BASE_on": {
+          "missing_abstention_credited": 0,
+          "answerable_credited": 12,
+          "answerable_abstained": 0,
+          "strict_correct": 12,
+          "n_missing": 20,
+          "n_answerable": 12
+        },
+        "BASE_off": {
+          "missing_abstention_credited": 0,
+          "answerable_credited": 12,
+          "answerable_abstained": 0,
+          "strict_correct": 12,
+          "n_missing": 20,
+          "n_answerable": 12
+        },
+        "H_on": {
+          "missing_abstention_credited": 0,
+          "answerable_credited": 12,
+          "answerable_abstained": 0,
+          "strict_correct": 12,
+          "n_missing": 20,
+          "n_answerable": 12
+        },
+        "H_off": {
+          "missing_abstention_credited": 20,
+          "answerable_credited": 0,
+          "answerable_abstained": 12,
+          "strict_correct": 20,
+          "n_missing": 20,
+          "n_answerable": 12
+        }
+      },
+      "min_detectable_one_direction_discordant": 6,
+      "note": "descriptive; labels use exact two-sided McNemar p <= 0.05 with gains > losses"
+    },
+    "NOT_SPECIFIC_without_BASE_off_gain": {
+      "label": "NATIVE_PROMPT_ELICITS_ABSTENTION_NOT_SPECIFIC_TO_H",
+      "comparisons": {
+        "missing_on_H_vs_BASE": {
+          "n": 20,
+          "gains": 0,
+          "losses": 20,
+          "exact_mcnemar_p_two_sided": 1.9073486328125e-06,
+          "significant_gain": false
+        },
+        "missing_off_H_vs_BASE": {
+          "n": 20,
+          "gains": 0,
+          "losses": 0,
+          "exact_mcnemar_p_two_sided": 1.0,
+          "significant_gain": false
+        },
+        "missing_H_off_vs_on": {
+          "n": 20,
+          "gains": 20,
+          "losses": 0,
+          "exact_mcnemar_p_two_sided": 1.9073486328125e-06,
+          "significant_gain": true
+        },
+        "missing_BASE_off_vs_on": {
+          "n": 20,
+          "gains": 0,
+          "losses": 0,
+          "exact_mcnemar_p_two_sided": 1.0,
+          "significant_gain": false
+        },
+        "answerable_H_on_vs_off": {
+          "n": 12,
+          "gains": 0,
+          "losses": 0,
+          "exact_mcnemar_p_two_sided": 1.0,
+          "significant_gain": false
+        }
+      },
+      "rates": {
+        "BASE_on": {
+          "missing_abstention_credited": 20,
+          "answerable_credited": 12,
+          "answerable_abstained": 0,
+          "strict_correct": 32,
+          "n_missing": 20,
+          "n_answerable": 12
+        },
+        "BASE_off": {
+          "missing_abstention_credited": 20,
+          "answerable_credited": 12,
+          "answerable_abstained": 0,
+          "strict_correct": 32,
+          "n_missing": 20,
+          "n_answerable": 12
+        },
+        "H_on": {
+          "missing_abstention_credited": 0,
+          "answerable_credited": 12,
+          "answerable_abstained": 0,
+          "strict_correct": 12,
+          "n_missing": 20,
+          "n_answerable": 12
+        },
+        "H_off": {
+          "missing_abstention_credited": 20,
+          "answerable_credited": 12,
+          "answerable_abstained": 0,
+          "strict_correct": 32,
+          "n_missing": 20,
+          "n_answerable": 12
+        }
+      },
+      "min_detectable_one_direction_discordant": 6,
+      "note": "descriptive; labels use exact two-sided McNemar p <= 0.05 with gains > losses"
+    },
+    "natural_phrases_uncredited": {
+      "The seal's code was not recorded.": {
+        "row_id": "h-parentq-H-fir",
+        "strict_valid": false,
+        "strict_correct": false,
+        "semantic_correct": false,
+        "credited": false,
+        "abstained": false,
+        "strict_value": null,
+        "semantic_value": null,
+        "expected": "UNKNOWN"
+      },
+      "The seal's code was not provided.": {
+        "row_id": "h-parentq-H-fir",
+        "strict_valid": false,
+        "strict_correct": false,
+        "semantic_correct": false,
+        "credited": false,
+        "abstained": false,
+        "strict_value": null,
+        "semantic_value": null,
+        "expected": "UNKNOWN"
+      }
+    },
+    "H_ON_lenient_available_but_not_reported_by_legacy_decide": 12
+  },
+  "limitations": [
+    "Equal independent Bernoulli nulls are illustrative, not a universal error bound.",
+    "Toy calibration assumes exchangeability that the bank metadata fails to establish.",
+    "No native determinism, padding, canary or parent capability was tested.",
+    "No design alternative, new bank, GEO amendment or freeze is selected."
+  ]
+}

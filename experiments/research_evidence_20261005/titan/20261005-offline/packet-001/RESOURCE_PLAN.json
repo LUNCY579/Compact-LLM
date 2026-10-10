@@ -1,0 +1,84 @@
+{
+  "experiment": "TITAN-QUALITY-REPAIR-V1",
+  "registry_sha256": "77a5994596955a79875303085832b0b71ffc2375e059e0fad888e260beecdfaa",
+  "evaluation_membership": {
+    "development": {
+      "canonical_worlds_per_family": 64,
+      "canonical_families": [
+        "ledger",
+        "register",
+        "answerability",
+        "grounded_qa",
+        "arithmetic",
+        "instruction",
+        "concise_grounded"
+      ],
+      "canonical_prompts": 448,
+      "attached_variants_per_repair_family": 16,
+      "attached_variant_prompts": 64,
+      "prompts_per_arm": 512
+    },
+    "final": {
+      "canonical_worlds_per_family": 512,
+      "canonical_families": [
+        "ledger",
+        "register",
+        "answerability",
+        "grounded_qa",
+        "arithmetic",
+        "instruction",
+        "concise_grounded"
+      ],
+      "canonical_prompts": 3584,
+      "attached_variants_per_repair_family": 128,
+      "attached_variant_prompts": 512,
+      "prompts_per_arm": 4096
+    },
+    "variant_membership": "generator._variant_parents fixed stratum quotas, first eligible constructor-order rows",
+    "extra_style_assignment": "one of native_a/native_b/natural by fixed family offset and selected-row index modulo 3",
+    "retention_has_no_attached_variants": true,
+    "variant_unit": "REPEATED_OBSERVATION_IN_SOURCE_WORLD_NOT_NEW_INDEPENDENT_WORLD",
+    "all_four_styles_scope": "Diverse training distributes one style per example; evaluation adds one style on fixed subsets",
+    "selection_uses_model_outcomes": false
+  },
+  "budget_seconds": {
+    "qualification": 3600,
+    "training": 28800,
+    "evaluation": 54000
+  },
+  "total_budget_seconds": 86400,
+  "training_trials": 16,
+  "trial_wall_seconds": 1800,
+  "optimizer_steps_per_trial": 250,
+  "training_microbatches_per_trial": 2000,
+  "training_microbatches_total": 32000,
+  "training_optimizer_updates_total": 4000,
+  "training_teacher_forced_forwards_lower_bound": 32000,
+  "training_backward_requests": 32000,
+  "max_teacher_forced_token_positions": 65536000,
+  "checkpoint_recompute_forwards": "UNMEASURED_MUST_ACCOUNT_NATIVE_IF_USED",
+  "call_budget": {
+    "baseline_development": 512,
+    "trial_development": 8192,
+    "final_evaluation": 12288,
+    "selected_export_development": 1024,
+    "qualification_and_parity": 256
+  },
+  "base_evaluation_prompts": 20992,
+  "evaluation_prompts_with_export_checks": 22016,
+  "total_generation_calls": 22272,
+  "generation_call_budget_excludes_training_forwards_and_backward": true,
+  "max_output_tokens": 64,
+  "max_decode_token_slots": 1425408,
+  "failed_attempt_cost_policy": "CHARGE_DECLARED_CAP_BEFORE_ATTEMPT_NO_REFUND; RECORD_OVERRUNS",
+  "exhaustion_policy": "CREATE_ONLY_SKIPPED_BUDGET_EXHAUSTED; NO_RESET_NO_ROOT_ROTATION",
+  "evaluation_contingency": "Unneeded allocated final/export calls remain unused; no extra candidate is substituted",
+  "feasibility": {
+    "status": "BLOCKED_GENUINE_MEASURED_THROUGHPUT_REQUIRED",
+    "training_load_train_and_export_cost": "UNMEASURED",
+    "evaluation_generation_and_arm_load_cost": "UNMEASURED",
+    "requires": "Source/runtime-bound measured receipt under a named exclusive slot; no fabricated estimate"
+  },
+  "native_execution_authorized": false,
+  "plan_sha256": "9bbce11eaea9176eb151bce9d22312e1344f0d5dc83e1260b28b3eec3a671a4a"
+}

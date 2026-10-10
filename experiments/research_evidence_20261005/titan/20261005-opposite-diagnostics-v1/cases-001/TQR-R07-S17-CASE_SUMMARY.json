@@ -1,0 +1,957 @@
+{
+  "input_rows": 2000,
+  "model_outcomes_read": false,
+  "native_effects": "UNMEASURED",
+  "by_family_style": [
+    {
+      "family": "answerability",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "count": 125
+    },
+    {
+      "family": "answerability",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "count": 125
+    },
+    {
+      "family": "answerability",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "count": 125
+    },
+    {
+      "family": "answerability",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "count": 125
+    },
+    {
+      "family": "grounded_qa",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "count": 125
+    },
+    {
+      "family": "grounded_qa",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "count": 125
+    },
+    {
+      "family": "grounded_qa",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "count": 125
+    },
+    {
+      "family": "grounded_qa",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "count": 125
+    },
+    {
+      "family": "ledger",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "count": 125
+    },
+    {
+      "family": "ledger",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "count": 125
+    },
+    {
+      "family": "ledger",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "count": 125
+    },
+    {
+      "family": "ledger",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "count": 125
+    },
+    {
+      "family": "register",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "count": 125
+    },
+    {
+      "family": "register",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "count": 125
+    },
+    {
+      "family": "register",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "count": 125
+    },
+    {
+      "family": "register",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "count": 125
+    }
+  ],
+  "transition_joint_cases": [
+    {
+      "branch": "false",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "support_expansion": false,
+      "count": 3
+    },
+    {
+      "branch": "false",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "support_expansion": true,
+      "count": 59
+    },
+    {
+      "branch": "false",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "support_expansion": false,
+      "count": 6
+    },
+    {
+      "branch": "false",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "support_expansion": true,
+      "count": 56
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "ledger",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "support_expansion": true,
+      "count": 42
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "ledger",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "support_expansion": true,
+      "count": 42
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "ledger",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 42
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "ledger",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "support_expansion": true,
+      "count": 42
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "support_expansion": false,
+      "count": 5
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "support_expansion": true,
+      "count": 58
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "support_expansion": false,
+      "count": 5
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "support_expansion": true,
+      "count": 58
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 7
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 56
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "support_expansion": false,
+      "count": 8
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "add",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "support_expansion": true,
+      "count": 55
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "scale",
+      "family": "ledger",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "support_expansion": true,
+      "count": 41
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "scale",
+      "family": "ledger",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "support_expansion": true,
+      "count": 42
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "scale",
+      "family": "ledger",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 41
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "scale",
+      "family": "ledger",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "support_expansion": true,
+      "count": 42
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "transfer",
+      "family": "ledger",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "support_expansion": true,
+      "count": 42
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "transfer",
+      "family": "ledger",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "support_expansion": true,
+      "count": 41
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "transfer",
+      "family": "ledger",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 42
+    },
+    {
+      "branch": "not_conditional",
+      "event_kind": "transfer",
+      "family": "ledger",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "support_expansion": true,
+      "count": 41
+    },
+    {
+      "branch": "true",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "support_expansion": false,
+      "count": 3
+    },
+    {
+      "branch": "true",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "negative",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "support_expansion": true,
+      "count": 59
+    },
+    {
+      "branch": "true",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": false,
+      "count": 7
+    },
+    {
+      "branch": "true",
+      "event_kind": "conditional",
+      "family": "register",
+      "operand_sign": "positive",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "support_expansion": true,
+      "count": 55
+    }
+  ],
+  "conditional_margins": [
+    {
+      "branch": "false",
+      "branch_margin": 0,
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "count": 62
+    },
+    {
+      "branch": "false",
+      "branch_margin": 0,
+      "scope": "fresh_repair",
+      "style": "natural",
+      "count": 62
+    },
+    {
+      "branch": "true",
+      "branch_margin": 1,
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "count": 62
+    },
+    {
+      "branch": "true",
+      "branch_margin": 1,
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "count": 62
+    }
+  ],
+  "facts_style_scenario_support": [
+    {
+      "answerable": false,
+      "family": "answerability",
+      "operand_sign": "negative",
+      "scenario": "complete_cue_missing",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 62
+    },
+    {
+      "answerable": false,
+      "family": "answerability",
+      "operand_sign": "negative",
+      "scenario": "relevant_conflict",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 63
+    },
+    {
+      "answerable": false,
+      "family": "answerability",
+      "operand_sign": "positive",
+      "scenario": "complete_cue_conflict",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 62
+    },
+    {
+      "answerable": false,
+      "family": "answerability",
+      "operand_sign": "positive",
+      "scenario": "relevant_missing",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 63
+    },
+    {
+      "answerable": false,
+      "family": "grounded_qa",
+      "operand_sign": "negative",
+      "scenario": "complete_cue_missing",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 62
+    },
+    {
+      "answerable": false,
+      "family": "grounded_qa",
+      "operand_sign": "negative",
+      "scenario": "relevant_conflict",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 63
+    },
+    {
+      "answerable": false,
+      "family": "grounded_qa",
+      "operand_sign": "positive",
+      "scenario": "complete_cue_conflict",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 62
+    },
+    {
+      "answerable": false,
+      "family": "grounded_qa",
+      "operand_sign": "positive",
+      "scenario": "relevant_missing",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 63
+    },
+    {
+      "answerable": true,
+      "family": "answerability",
+      "operand_sign": "negative",
+      "scenario": "incomplete_cue_supported",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "supported_numeric_gold_sign": "negative",
+      "count": 62
+    },
+    {
+      "answerable": true,
+      "family": "answerability",
+      "operand_sign": "negative",
+      "scenario": "irrelevant_missing",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "supported_numeric_gold_sign": "negative",
+      "count": 63
+    },
+    {
+      "answerable": true,
+      "family": "answerability",
+      "operand_sign": "positive",
+      "scenario": "irrelevant_conflict",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "supported_numeric_gold_sign": "positive",
+      "count": 62
+    },
+    {
+      "answerable": true,
+      "family": "answerability",
+      "operand_sign": "positive",
+      "scenario": "supported",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "positive",
+      "count": 63
+    },
+    {
+      "answerable": true,
+      "family": "grounded_qa",
+      "operand_sign": "negative",
+      "scenario": "incomplete_cue_supported",
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "supported_numeric_gold_sign": "not_integer",
+      "count": 62
+    },
+    {
+      "answerable": true,
+      "family": "grounded_qa",
+      "operand_sign": "negative",
+      "scenario": "irrelevant_missing",
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "supported_numeric_gold_sign": "not_integer",
+      "count": 63
+    },
+    {
+      "answerable": true,
+      "family": "grounded_qa",
+      "operand_sign": "positive",
+      "scenario": "irrelevant_conflict",
+      "scope": "fresh_repair",
+      "style": "natural",
+      "supported_numeric_gold_sign": "not_integer",
+      "count": 62
+    },
+    {
+      "answerable": true,
+      "family": "grounded_qa",
+      "operand_sign": "positive",
+      "scenario": "supported",
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "not_integer",
+      "count": 63
+    }
+  ],
+  "supported_numeric_gold": [
+    {
+      "answerable": false,
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 62
+    },
+    {
+      "answerable": false,
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 63
+    },
+    {
+      "answerable": false,
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 62
+    },
+    {
+      "answerable": false,
+      "scope": "fresh_repair",
+      "style": "natural",
+      "supported_numeric_gold_sign": "unanswerable",
+      "count": 63
+    },
+    {
+      "answerable": true,
+      "scope": "fresh_repair",
+      "style": "canonical",
+      "supported_numeric_gold_sign": "positive",
+      "count": 63
+    },
+    {
+      "answerable": true,
+      "scope": "fresh_repair",
+      "style": "native_a",
+      "supported_numeric_gold_sign": "negative",
+      "count": 62
+    },
+    {
+      "answerable": true,
+      "scope": "fresh_repair",
+      "style": "native_b",
+      "supported_numeric_gold_sign": "negative",
+      "count": 63
+    },
+    {
+      "answerable": true,
+      "scope": "fresh_repair",
+      "style": "natural",
+      "supported_numeric_gold_sign": "positive",
+      "count": 62
+    }
+  ],
+  "explicit_zero_cells": [
+    {
+      "family": "ledger",
+      "style": "canonical",
+      "dimension": "operand_sign",
+      "missing": "negative"
+    },
+    {
+      "family": "ledger",
+      "style": "native_a",
+      "dimension": "operand_sign",
+      "missing": "positive"
+    },
+    {
+      "family": "ledger",
+      "style": "native_b",
+      "dimension": "operand_sign",
+      "missing": "negative"
+    },
+    {
+      "family": "ledger",
+      "style": "natural",
+      "dimension": "operand_sign",
+      "missing": "positive"
+    },
+    {
+      "family": "register",
+      "style": "canonical",
+      "dimension": "operand_sign",
+      "missing": "negative"
+    },
+    {
+      "family": "register",
+      "style": "canonical",
+      "dimension": "conditional_branch",
+      "missing": "false"
+    },
+    {
+      "family": "register",
+      "style": "canonical",
+      "dimension": "conditional_sign_branch",
+      "missing": [
+        "positive",
+        "false"
+      ]
+    },
+    {
+      "family": "register",
+      "style": "canonical",
+      "dimension": "conditional_sign_branch",
+      "missing": [
+        "negative",
+        "true"
+      ]
+    },
+    {
+      "family": "register",
+      "style": "canonical",
+      "dimension": "conditional_sign_branch",
+      "missing": [
+        "negative",
+        "false"
+      ]
+    },
+    {
+      "family": "register",
+      "style": "native_a",
+      "dimension": "conditional_branch",
+      "missing": "true"
+    },
+    {
+      "family": "register",
+      "style": "native_a",
+      "dimension": "conditional_sign_branch",
+      "missing": [
+        "positive",
+        "true"
+      ]
+    },
+    {
+      "family": "register",
+      "style": "native_a",
+      "dimension": "conditional_sign_branch",
+      "missing": [
+        "negative",
+        "true"
+      ]
+    },
+    {
+      "family": "register",
+      "style": "native_a",
+      "dimension": "conditional_sign_branch",
+      "missing": [
+        "negative",
+        "false"
+      ]
+    },
+    {
+      "family": "register",
+      "style": "native_b",
+      "dimension": "conditional_branch",
+      "missing": "false"
+    },
+    {
+      "family": "register",
+      "style": "native_b",
+      "dimension": "conditional_sign_branch",
+      "missing": [
+        "positive",
+        "true"
+      ]
+    },
+    {
+      "family": "register",
+      "style": "native_b",
+      "dimension": "conditional_sign_branch",
+      "missing": [
+        "positive",
+        "false"
+      ]
+    },
+    {
+      "family": "register",
+      "style": "native_b",
+      "dimension": "conditional_sign_branch",
+      "missing": [
+        "negative",
+        "false"
+      ]
+    },
+    {
+      "family": "register",
+      "style": "natural",
+      "dimension": "operand_sign",
+      "missing": "positive"
+    },
+    {
+      "family": "register",
+      "style": "natural",
+      "dimension": "conditional_branch",
+      "missing": "true"
+    },
+    {
+      "family": "register",
+      "style": "natural",
+      "dimension": "conditional_sign_branch",
+      "missing": [
+        "positive",
+        "true"
+      ]
+    },
+    {
+      "family": "register",
+      "style": "natural",
+      "dimension": "conditional_sign_branch",
+      "missing": [
+        "positive",
+        "false"
+      ]
+    },
+    {
+      "family": "register",
+      "style": "natural",
+      "dimension": "conditional_sign_branch",
+      "missing": [
+        "negative",
+        "true"
+      ]
+    },
+    {
+      "family": "answerability",
+      "style": "canonical",
+      "dimension": "supported_numeric_gold_sign",
+      "missing": "negative"
+    },
+    {
+      "family": "answerability",
+      "style": "native_a",
+      "dimension": "supported_numeric_gold_sign",
+      "missing": "positive"
+    },
+    {
+      "family": "answerability",
+      "style": "native_b",
+      "dimension": "supported_numeric_gold_sign",
+      "missing": "positive"
+    },
+    {
+      "family": "answerability",
+      "style": "natural",
+      "dimension": "supported_numeric_gold_sign",
+      "missing": "negative"
+    }
+  ],
+  "parent_world_structure": [
+    {
+      "distinct_operative_keys": 2,
+      "distinct_styles": 2,
+      "family": "answerability",
+      "rows": 2,
+      "scope": "fresh_repair",
+      "count": 250
+    },
+    {
+      "distinct_operative_keys": 2,
+      "distinct_styles": 2,
+      "family": "grounded_qa",
+      "rows": 2,
+      "scope": "fresh_repair",
+      "count": 250
+    },
+    {
+      "distinct_operative_keys": 2,
+      "distinct_styles": 2,
+      "family": "ledger",
+      "rows": 2,
+      "scope": "fresh_repair",
+      "count": 250
+    },
+    {
+      "distinct_operative_keys": 2,
+      "distinct_styles": 2,
+      "family": "register",
+      "rows": 2,
+      "scope": "fresh_repair",
+      "count": 250
+    }
+  ],
+  "hard_pair_structure": [
+    {
+      "answerable_rows": 1,
+      "distinct_operative_keys": 2,
+      "distinct_styles": 2,
+      "distinct_world_ids": 1,
+      "family": "answerability",
+      "rows": 2,
+      "scope": "fresh_repair",
+      "count": 250
+    },
+    {
+      "answerable_rows": 1,
+      "distinct_operative_keys": 2,
+      "distinct_styles": 2,
+      "distinct_world_ids": 1,
+      "family": "grounded_qa",
+      "rows": 2,
+      "scope": "fresh_repair",
+      "count": 250
+    },
+    {
+      "answerable_rows": 2,
+      "distinct_operative_keys": 2,
+      "distinct_styles": 2,
+      "distinct_world_ids": 1,
+      "family": "ledger",
+      "rows": 2,
+      "scope": "fresh_repair",
+      "count": 250
+    },
+    {
+      "answerable_rows": 2,
+      "distinct_operative_keys": 2,
+      "distinct_styles": 2,
+      "distinct_world_ids": 1,
+      "family": "register",
+      "rows": 2,
+      "scope": "fresh_repair",
+      "count": 250
+    }
+  ],
+  "metadata_sign_caveat": "Facts operand_sign is latent metadata; supported_numeric_gold_sign is the actual supplied target. Grounded-QA dock labels use abs(value).",
+  "style_caveat": "Historical replay retains original system prompts; a canonical variant label does not prove identical canonical repair wording.",
+  "observed_input_patterns": {
+    "supported_numeric_gold_sign_counts": {
+      "negative": 125,
+      "positive": 125
+    },
+    "regular_supported_scalar_positive_only": null,
+    "ledger_style_operand_signs": {
+      "canonical": [
+        "positive"
+      ],
+      "native_a": [
+        "negative"
+      ],
+      "native_b": [
+        "positive"
+      ],
+      "natural": [
+        "negative"
+      ]
+    },
+    "hard_diverse_ledger_style_sign_mapping_observed": true,
+    "conditional_style_branches": {
+      "canonical": [
+        "true"
+      ],
+      "native_a": [
+        "false"
+      ],
+      "native_b": [
+        "true"
+      ],
+      "natural": [
+        "false"
+      ]
+    },
+    "diverse_conditional_branch_style_mapping_observed": true,
+    "conditional_margin_counts": [
+      {
+        "margin": 0,
+        "count": 124
+      },
+      {
+        "margin": 1,
+        "count": 124
+      }
+    ],
+    "fresh_conditional_margins_exactly_zero_one": true,
+    "native_effects": "UNMEASURED",
+    "model_quality_gain": false
+  }
+}
