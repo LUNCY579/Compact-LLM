@@ -96,6 +96,21 @@ An `init` failure does not justify switching to a stock model.
 
 ## 5. Evaluate development and freeze the choices
 
+Before a native run, register the aggregate `max_native_wall_seconds` and
+`max_native_forward_calls` runtime fields. Defaults are 1,800 seconds and 16,000 actual
+model forwards per split, shared across every checkpoint and resumed DEV attempt.
+At 24 pairs per family, the base plus two saved snapshots has 864 prompts and at most
+15,552 forwards with 16 output tokens (up to 16 generation calls plus two likelihood
+calls per prompt). An eight-pair DEV screen has 288 prompts and at most 5,184 forwards;
+a two-pair loader screen has 72 prompts and at most 1,296, but cannot satisfy the
+eight-reference-solved retention support gate. Choose the screen size before `init`.
+Small screens qualify loading and scoring; ranking tradeoffs need adequate support and
+a reproducible DEV follow-up before confirmation.
+
+Do not reset budget receipts to resume. An unclosed STARTED attempt blocks resumption.
+Wall checks cannot interrupt an in-flight operation: use an owned-worker supervisor
+for a hard process timeout, and preserve the interrupted attempt for audit.
+
 ```bash
 python -m experiments.rineya_generalization_dynamics_v1 evaluate-dev \
   --run /absolute/path/to/research-runs/gd001-native-001 --allow-native
@@ -107,6 +122,11 @@ Development can resume missing checkpoints before selection; completed, validate
 receipts are reused and never overwritten. A stale `BUSY.lock` needs manual process
 inspection, not blind deletion. After selection, development cannot reopen. Code,
 model, tokenizer, manifest or policy changes require a new run identity.
+
+A completed native sweep validates and reuses its receipts without another charged
+attempt, even when it used the full forward allowance. A registry failure after
+scoring creates a permanent split invalidation. Preserve it; restoring the files does
+not make those predictions eligible for selection or resumption.
 
 Inspect `development_report.json`: competence by family, shortcut rates, conditional
 support, R+S given R and S, reference-fixed retention damage, and adjacent transitions.

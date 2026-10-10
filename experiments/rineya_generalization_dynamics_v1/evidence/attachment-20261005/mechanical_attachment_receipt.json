@@ -1,0 +1,148 @@
+{
+  "approval_plan": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\attachment-20261005\\retained-mechanical-attachment\\1\\owner-plan.json",
+    "sha256": "39cfb03740a5d4aecb8705ed02a34e0f50b2dea7c69191d97dcae31e00916922"
+  },
+  "attachment": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\attachment-20261005\\retained-mechanical-attachment\\1\\attachment.json",
+    "sha256": "13e06135a3159036ea4ff23edfe0b0bcaef3f79a268aa83835dc9ab9e27f56a0"
+  },
+  "authorizes_confirmation": false,
+  "authorizes_native_run": false,
+  "authorizes_training": false,
+  "checkpoint_schedule": [
+    {
+      "kind": "hf",
+      "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\attachment-20261005\\retained-mechanical-attachment\\1\\step-1",
+      "step": 1
+    },
+    {
+      "kind": "hf",
+      "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\attachment-20261005\\retained-mechanical-attachment\\1\\step-2",
+      "step": 2
+    }
+  ],
+  "checkpoint_selection_efficacy_established": false,
+  "completion_receipt": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\attachment-20261005\\retained-mechanical-attachment\\1\\completion.json",
+    "sha256": "d1284b49040d58a3c6d996a8e18857b2b5144fd735f55527ec0065823b34064b"
+  },
+  "evidence_kind": "mechanical_fixture",
+  "expected_base_parameters": 596049920,
+  "export_parity_qualified": false,
+  "native_loading_qualified": false,
+  "permits_model_promotion": false,
+  "producer": {
+    "artifact_role": "original_training_trajectory",
+    "independently_approved": true,
+    "owner": "toy-fixture-owner",
+    "study_id": "toy-fixture-study"
+  },
+  "provenance": {
+    "consumed_count": 3,
+    "consumed_per_step": {
+      "1": 2,
+      "2": 1
+    },
+    "events": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\attachment-20261005\\retained-mechanical-attachment\\1\\events.jsonl",
+      "sha256": "75366ded2bd0becc85c2811ce35ddb5681aa20e9f42ca47a56bec0b7b2df9774"
+    },
+    "rejected_count": 1,
+    "source_count": 4,
+    "source_payloads": [
+      {
+        "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\attachment-20261005\\retained-mechanical-attachment\\1\\original-source.jsonl",
+        "sha256": "807714e9137b4d884df4db7e1eb83f23049b9c892e309f0a6d4c1dd4a4b31a3d"
+      }
+    ],
+    "training_manifest": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\attachment-20261005\\retained-mechanical-attachment\\1\\training-manifest.jsonl",
+      "sha256": "3f356d91a0d47394f514fd637c98f33f6a35304737067113fefd6d451051fc50"
+    },
+    "unused_accepted_count": 1
+  },
+  "registry": {
+    "base": {
+      "content_sha256": "40145a10c682e2c1fbef0de854622c5ccb750f6c481759d2f1a86ab70ed7935d",
+      "files": {
+        "config.json": "14afe91b41af908dd131b85a579b9a6171f331ce2621f5b4e79c50ba475e0fa5",
+        "model.safetensors": "787a2b8a3d465314d931cf707133e89a7fb85f856b4ca265cf1bfe0820cf72be"
+      },
+      "kind": "hf",
+      "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\attachment-20261005\\retained-mechanical-attachment\\1\\base"
+    },
+    "checkpoints": [
+      {
+        "asset": {
+          "content_sha256": "40145a10c682e2c1fbef0de854622c5ccb750f6c481759d2f1a86ab70ed7935d",
+          "files": {
+            "config.json": "14afe91b41af908dd131b85a579b9a6171f331ce2621f5b4e79c50ba475e0fa5",
+            "model.safetensors": "787a2b8a3d465314d931cf707133e89a7fb85f856b4ca265cf1bfe0820cf72be"
+          },
+          "kind": "hf",
+          "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\attachment-20261005\\retained-mechanical-attachment\\1\\base"
+        },
+        "id": "reference",
+        "kind": "base",
+        "step": 0
+      },
+      {
+        "asset": {
+          "content_sha256": "d73c6c19361f34988523e1a3556fcf2b67ec0dba64fa90971e96ebcdf5fa10db",
+          "files": {
+            "config.json": "14afe91b41af908dd131b85a579b9a6171f331ce2621f5b4e79c50ba475e0fa5",
+            "model.safetensors": "a9ac3adfdf94bac48fd0649a398a4824f97eab483d12243fc790ccf841ba21dc"
+          },
+          "kind": "hf",
+          "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\attachment-20261005\\retained-mechanical-attachment\\1\\step-1"
+        },
+        "id": "step_00000001",
+        "kind": "hf",
+        "step": 1
+      },
+      {
+        "asset": {
+          "content_sha256": "5bf22a71161f3b659c95998a5abb52e76b67fca8d5e3e35e91100f3f53b789b5",
+          "files": {
+            "config.json": "14afe91b41af908dd131b85a579b9a6171f331ce2621f5b4e79c50ba475e0fa5",
+            "model.safetensors": "a1a4fc6664fd05a2d4d87ff4942e72a592c5a58fa55d4da8dc9070384087305e"
+          },
+          "kind": "hf",
+          "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\attachment-20261005\\retained-mechanical-attachment\\1\\step-2"
+        },
+        "id": "step_00000002",
+        "kind": "hf",
+        "step": 2
+      }
+    ],
+    "expected_base_parameters": 596049920,
+    "lineage_status": "caller-declared single run; content hashes verified, training origin not independently reconstructed",
+    "tokenizer": {
+      "content_sha256": "70ad2e4b9d20355c14010cb834d4cba0a2e5c2cb94ec559fa18c7fd3887baedb",
+      "files": {
+        "tokenizer.json": "c7c130ae6e23d1d04c614dc2ae233485e47941a0627e3fe265d7bdb2ea0bd0a0",
+        "tokenizer_config.json": "e3566b3a06430868d71e9287dfd6c6c520a3da027aabea01951d407ee131dc2f"
+      },
+      "kind": "tokenizer",
+      "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\attachment-20261005\\retained-mechanical-attachment\\1\\tokenizer"
+    },
+    "training": {
+      "parent_ids": [
+        "parent-1",
+        "parent-2"
+      ],
+      "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\attachment-20261005\\retained-mechanical-attachment\\1\\training-manifest.jsonl",
+      "prompt_hashes": [
+        "39a2fa81cd08bf8589cbd9279818f23a1a2cfa7e52c7f9d3d0c3d2fb72a8a723",
+        "c2b11da5323f53533590c6f174068bd7c9aa386113e76a365c54dde0333929c0"
+      ],
+      "sha256": "3f356d91a0d47394f514fd637c98f33f6a35304737067113fefd6d451051fc50"
+    },
+    "trajectory_id": "TOY_FIXTURE_NOT_RINEYA"
+  },
+  "schema": "gd001_attachment_v1",
+  "sha256": "118103c844d3f8e4759e289a0ab089df9870a75d8ca209c56cd8a4d95c72e475",
+  "status": "ATTACHMENT_METADATA_VALIDATED",
+  "trajectory_id": "TOY_FIXTURE_NOT_RINEYA"
+}

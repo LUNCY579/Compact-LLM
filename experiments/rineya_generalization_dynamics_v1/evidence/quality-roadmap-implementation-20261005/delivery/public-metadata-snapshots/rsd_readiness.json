@@ -1,0 +1,219 @@
+{
+  "activity": {
+    "native_evaluations": 0,
+    "native_optimizer_steps": 0,
+    "paid_teacher_calls": 0,
+    "pretrained_loads": 0,
+    "promotions": 0,
+    "sealed_confirmation_bank_reads": 0
+  },
+  "base_weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+  "blocked_requirements": [
+    "exact_e0",
+    "common_sft_parent",
+    "verified_catalog",
+    "native_arm_mechanics"
+  ],
+  "checks": {
+    "common_sft_parent": {
+      "reason": "no real reviewed parent binding supplied; template false/0 is ineligible",
+      "status": "UNQUALIFIED"
+    },
+    "exact_e0": {
+      "reason": "genuine matching E0 PASS required",
+      "status": "UNQUALIFIED"
+    },
+    "native_arm_mechanics": {
+      "reason": "no per-arm native receipts acquired by this offline packet",
+      "status": "UNQUALIFIED"
+    },
+    "verified_catalog": {
+      "reason": "no source-reviewed catalog/exclusion authority binding supplied",
+      "status": "UNQUALIFIED"
+    }
+  },
+  "experiment": "RSD-001",
+  "historical_receipts": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-recursive-self-distillation-v1\\experiments\\post_training_mimo_centralized_v1\\configs\\E0_TITAN_BF16.json": {
+      "sha256": "8fcab3ce006c9a698af86975769a4076edc78cf8005f64ad823d9d47bcbe518d",
+      "status": "FROZEN_E0_ONLY"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-recursive-self-distillation-v1\\experiments\\post_training_mimo_centralized_v1\\receipts\\CONTINUATION_007_BLOCKED_AUDIT.json": {
+      "sha256": "627ed80edb64a70242108ad0214d3ee9d62cf21a22fa6546d99140cb6b463611",
+      "status": "BLOCKED_AUDIT_PASSED_AFTER_FINITE_PREPARATION"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-recursive-self-distillation-v1\\experiments\\post_training_mimo_centralized_v1\\results\\e0_titan_v2\\E0_RESULT.json": {
+      "sha256": "c6e39572abbfb5ace3bbdb89a22c92b0d4ded1e3f2c916345552fd0de9c4efa9",
+      "status": "BLOCKED_E0"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-recursive-self-distillation-v1\\experiments\\post_training_mimo_centralized_v1\\results\\e0_titan_v2\\RUNTIME_RECEIPT.json": {
+      "sha256": "35793b162a5cddf90ba76ef41dc7237f961984f492fc4325d68c796d7f8a3d8b",
+      "status": null
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-recursive-self-distillation-v1\\experiments\\post_training_mimo_centralized_v1\\results\\e0_titan_v2\\SOURCE_RECEIPT.json": {
+      "sha256": "66c2067c19f4dde69889b76b8c8f08802803cab121db146b90bd9113ceeeb756",
+      "status": null
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-recursive-self-distillation-v1\\experiments\\post_training_mimo_centralized_v1\\results\\e0_titan_v2_supervisor\\SUPERVISOR.json": {
+      "sha256": "4807cf279ea818d9217a4e56a9d65b162358ea9900a1c010ccb0a0114b6a3876",
+      "status": "BLOCKED"
+    }
+  },
+  "limitations": [
+    "CPU fixtures are software evidence only",
+    "human-review metadata does not prove truthful provenance",
+    "historical E0 failure is not a current host memory measurement",
+    "no native model fit, CUDA parity/resume, containment or capability measured here"
+  ],
+  "native_execution_authorized": false,
+  "recorded_at_utc": "2026-10-05T19:06:30.394246+00:00",
+  "schema": 1,
+  "source": {
+    "branch": "research/rineya-recursive-self-distillation-v1",
+    "head": "07703ce5cfc788f4e98f6dbe0f644c700f66f288",
+    "local_changes": "M experiments/rineya_recursive_self_distillation_v1/README.md\n M experiments/rineya_recursive_self_distillation_v1/__main__.py\n M experiments/rineya_recursive_self_distillation_v1/configs/binding.template.json\n M experiments/rineya_recursive_self_distillation_v1/native.py\n M experiments/rineya_recursive_self_distillation_v1/tests/test_rsd.py\n?? experiments/rineya_recursive_self_distillation_v1/catalog_qualification.py\n?? experiments/rineya_recursive_self_distillation_v1/configs/tiny_guidance_v1.json\n?? experiments/rineya_recursive_self_distillation_v1/e0_qualification.py\n?? experiments/rineya_recursive_self_distillation_v1/parent_qualification.py\n?? experiments/rineya_recursive_self_distillation_v1/readiness.py\n?? experiments/rineya_recursive_self_distillation_v1/tests/test_catalog_qualification.py\n?? experiments/rineya_recursive_self_distillation_v1/tests/test_parent_qualification.py\n?? experiments/rineya_recursive_self_distillation_v1/tests/test_readiness.py",
+    "native_source_digest": "8a1ec1f98cb2a66dec784a565d89c270ea8589545d75dca178ffd96fc04ebc56",
+    "native_sources": {
+      "experiments/maxrl_comp002_pretraining_v1/mechanics.py": "e643eb196341e65f926733f22a2d23f668d8c09f046ebc5ae1d6561471cb0e88",
+      "experiments/opallo_native_collector_v1/contract.py": "bec805005c3732ce6b1fa86ff71c6c5d551dfbadf64db4c54a8d9900cab930fb",
+      "experiments/opallo_native_collector_v1/supervisor.py": "d31370de4f6b09052fac2f3505fc38a40041e76bd2137435a1f3678f4346a54d",
+      "experiments/post_training_mimo_centralized_v1/scripts/qualify_native.py": "f249ff08c6ad36b6acc1958c24a2647a4f7782e2bae628d6a71de917f89cc3fc",
+      "experiments/post_training_mimo_centralized_v1/scripts/supervise_native.py": "ebf4d69f00eb0f15d97ae124a77eb61c973481025448ced18b308606364b7d06",
+      "experiments/rineya_recursive_self_distillation_v1/__init__.py": "4dda2fa4e2657331df478c9e3ca4edb8cf37e41d17365ce0643c8a310b9caa3b",
+      "experiments/rineya_recursive_self_distillation_v1/__main__.py": "d829dce7317c74d1ff32c46ff095c0dc5741d1c018268896d362a4eaa2929355",
+      "experiments/rineya_recursive_self_distillation_v1/backend.py": "50f908739706c240aaafbc2f7f53a714b521bbdd33757bd897f5e12e4b00dad7",
+      "experiments/rineya_recursive_self_distillation_v1/catalog_qualification.py": "5670e620e5b9be54b114d7861219fab7f9058a804af53a883ac0c3356165ba61",
+      "experiments/rineya_recursive_self_distillation_v1/contracts.py": "11a6d6e5fc3dc95eac4834e42014268c1e1178e19da0accdddaf641952aa4436",
+      "experiments/rineya_recursive_self_distillation_v1/data.py": "3bfdfbfb48a9ac6baa85bc7e3c32483baa8a1e75448044e4d366f9a90c22ea0c",
+      "experiments/rineya_recursive_self_distillation_v1/e0_qualification.py": "c2079b2ca80b0026615624326988a1a9d2aaae619d7a76d433b56d7b3a391d46",
+      "experiments/rineya_recursive_self_distillation_v1/engine.py": "39658ff8433a969270e4fbc2e89f18b8f65eff96943630ff4f91b0fba97eb10a",
+      "experiments/rineya_recursive_self_distillation_v1/evidence.py": "833474dbe2f3013c9f2687b0b49355c8fa3fe876747d76190b93ffe738a2c77b",
+      "experiments/rineya_recursive_self_distillation_v1/metrics.py": "01982191e4540a070b07cbb2a413cb565b5164ceac6c629cd0ce5092c92a4094",
+      "experiments/rineya_recursive_self_distillation_v1/native.py": "a510beaa79ecfb7c08586a78b50a57f64683609f050d895f3df0b8ad673ed2bb",
+      "experiments/rineya_recursive_self_distillation_v1/objectives.py": "76decf1b53134515cda546f1b8662e98162e74d6233172d38b6f4ef9f5ee21f9",
+      "experiments/rineya_recursive_self_distillation_v1/parent_qualification.py": "d2587e323f5d5a56dd66ccc2e8d3016f39c4a4cfadb36325fa13bbfda00ae248",
+      "experiments/rineya_recursive_self_distillation_v1/prompts.py": "2241cd932e8df06db414cba34594e5e59cb73502d501a1fdbb7e24bc193b6455",
+      "experiments/rineya_recursive_self_distillation_v1/readiness.py": "a56979331b06bac4bfdaf4b764f55f895ca1c969f7d6ed05bfa84856d9452693"
+    },
+    "package_files": {
+      "experiments/rineya_recursive_self_distillation_v1/INTEGRATION.md": {
+        "bytes": 3362,
+        "sha256": "e907a460bd7b54451d679a2ca5a60e12996989350c98e92cc1bdbc4b598bd0fe"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/PROTOCOL.md": {
+        "bytes": 10044,
+        "sha256": "33c82751bcfda66101c65f67a59226d62efb543a7654d53e256f749a1a300d38"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/README.md": {
+        "bytes": 21084,
+        "sha256": "2ae1166d3706c6697ba381bf65a206676772706a89ca4019da3f76692f0a4bb3"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/VALIDATION.json": {
+        "bytes": 6286,
+        "sha256": "c9060d327ad35c515e7fa38aa2e7d2db7c449a07158b5628550e4e56209512fe"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/__init__.py": {
+        "bytes": 102,
+        "sha256": "4dda2fa4e2657331df478c9e3ca4edb8cf37e41d17365ce0643c8a310b9caa3b"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/__main__.py": {
+        "bytes": 9345,
+        "sha256": "d829dce7317c74d1ff32c46ff095c0dc5741d1c018268896d362a4eaa2929355"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/backend.py": {
+        "bytes": 8251,
+        "sha256": "50f908739706c240aaafbc2f7f53a714b521bbdd33757bd897f5e12e4b00dad7"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/catalog_qualification.py": {
+        "bytes": 6223,
+        "sha256": "5670e620e5b9be54b114d7861219fab7f9058a804af53a883ac0c3356165ba61"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/configs/binding.template.json": {
+        "bytes": 681,
+        "sha256": "33e870238fc3f0dcda864370dd97d47dc16a90748e5429a671819afcf185efcd"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/configs/parent.template.json": {
+        "bytes": 476,
+        "sha256": "a4b7852dd4209b852184c24ec924011ca61a3a89b8c161cc8ef647a1acd8a302"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/configs/pilot.json": {
+        "bytes": 688,
+        "sha256": "e7a43cbe23008e6b4e2f758f837ed6809495df1e24cabe80377a87fe2f604810"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/configs/tiny_guidance_v1.json": {
+        "bytes": 684,
+        "sha256": "025b5bc00a04282fb4d977826d4f1ba47bef0be0c1f49de818fb0b9d94a3d357"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/contracts.py": {
+        "bytes": 6813,
+        "sha256": "11a6d6e5fc3dc95eac4834e42014268c1e1178e19da0accdddaf641952aa4436"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/data.py": {
+        "bytes": 5818,
+        "sha256": "3bfdfbfb48a9ac6baa85bc7e3c32483baa8a1e75448044e4d366f9a90c22ea0c"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/e0_qualification.py": {
+        "bytes": 5719,
+        "sha256": "c2079b2ca80b0026615624326988a1a9d2aaae619d7a76d433b56d7b3a391d46"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/engine.py": {
+        "bytes": 10579,
+        "sha256": "39658ff8433a969270e4fbc2e89f18b8f65eff96943630ff4f91b0fba97eb10a"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/evidence.py": {
+        "bytes": 7746,
+        "sha256": "833474dbe2f3013c9f2687b0b49355c8fa3fe876747d76190b93ffe738a2c77b"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/metrics.py": {
+        "bytes": 3353,
+        "sha256": "01982191e4540a070b07cbb2a413cb565b5164ceac6c629cd0ce5092c92a4094"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/native.py": {
+        "bytes": 26533,
+        "sha256": "a510beaa79ecfb7c08586a78b50a57f64683609f050d895f3df0b8ad673ed2bb"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/objectives.py": {
+        "bytes": 4697,
+        "sha256": "76decf1b53134515cda546f1b8662e98162e74d6233172d38b6f4ef9f5ee21f9"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/parent_qualification.py": {
+        "bytes": 9501,
+        "sha256": "d2587e323f5d5a56dd66ccc2e8d3016f39c4a4cfadb36325fa13bbfda00ae248"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/prompts.py": {
+        "bytes": 2994,
+        "sha256": "2241cd932e8df06db414cba34594e5e59cb73502d501a1fdbb7e24bc193b6455"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/readiness.py": {
+        "bytes": 11831,
+        "sha256": "a56979331b06bac4bfdaf4b764f55f895ca1c969f7d6ed05bfa84856d9452693"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/tests/test_catalog_qualification.py": {
+        "bytes": 10467,
+        "sha256": "248f817dd80c124916a8cd54150e0aaa15c71f3f957ab6349d5264ba158e8e94"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/tests/test_parent_qualification.py": {
+        "bytes": 11942,
+        "sha256": "fa201efd404b2d568c6b3fd40bfaec7d9a521c38b19c576f1781a5cf554c6be5"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/tests/test_readiness.py": {
+        "bytes": 9348,
+        "sha256": "a62dcdbcc436a2f14c3652d7f8bc31039f09a4819a5d8543bebc8b7ad44364dc"
+      },
+      "experiments/rineya_recursive_self_distillation_v1/tests/test_rsd.py": {
+        "bytes": 29936,
+        "sha256": "af3a80c6339e985c3aded299b6d89f8639de2a9b8c423fc3faa5320ab08fa290"
+      }
+    }
+  },
+  "status": "OFFLINE_READINESS_BLOCKED_NATIVE_NOT_AUTHORIZED",
+  "teacher_qualification": {
+    "evolving": "the exact current student adapter before each update; detached probabilities",
+    "frozen": "the exact common reviewed parent, unchanged across all updates",
+    "gold_free_srcl": "preserved but not selected; verified naturally terminated strictly shorter rewrites only",
+    "parent_adapter_sha256": null,
+    "placement": "identical answer-privileged solution placement and student response-token prefixes",
+    "status": "UNQUALIFIED_UNTIL_REAL_PARENT_AND_NATIVE_MECHANICS",
+    "unaided_student": "public problem only; no solution or retention/calibration gold"
+  }
+}

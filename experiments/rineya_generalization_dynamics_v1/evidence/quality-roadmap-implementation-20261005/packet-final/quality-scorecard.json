@@ -1,0 +1,433 @@
+{
+  "balanced_quality_established": false,
+  "cross_source_ranking_permitted": false,
+  "domain_coverage": {
+    "answerability_abstention": {
+      "reason": "No full native quality-card identity/endpoint custody inferred from aggregate imports",
+      "score": null,
+      "status": "UNMEASURED"
+    },
+    "arithmetic_state_tracking": {
+      "reason": "No full native quality-card identity/endpoint custody inferred from aggregate imports",
+      "score": null,
+      "status": "UNMEASURED"
+    },
+    "grounded_retrieval": {
+      "reason": "No full native quality-card identity/endpoint custody inferred from aggregate imports",
+      "score": null,
+      "status": "UNMEASURED"
+    },
+    "instruction_following": {
+      "reason": "No full native quality-card identity/endpoint custody inferred from aggregate imports",
+      "score": null,
+      "status": "UNMEASURED"
+    },
+    "language_long_context_preservation": {
+      "reason": "No full native quality-card identity/endpoint custody inferred from aggregate imports",
+      "score": null,
+      "status": "UNMEASURED"
+    },
+    "skill_composition": {
+      "reason": "No full native quality-card identity/endpoint custody inferred from aggregate imports",
+      "score": null,
+      "status": "UNMEASURED"
+    }
+  },
+  "domains": [
+    "instruction_following",
+    "grounded_retrieval",
+    "arithmetic_state_tracking",
+    "skill_composition",
+    "answerability_abstention",
+    "language_long_context_preservation"
+  ],
+  "fully_qualified_quality_cards": [],
+  "incomplete_aggregate_observations_only": true,
+  "observations": [
+    {
+      "balanced_quality_established": false,
+      "domains": [
+        "instruction_following",
+        "grounded_retrieval"
+      ],
+      "effect_type": "data_mechanics",
+      "evidence_ids": [
+        "data_mechanics",
+        "data_progress",
+        "data_contract"
+      ],
+      "evidence_level": "mechanical",
+      "facts": {
+        "canonical_rows_mechanically_audited": 73600,
+        "data_rows_admitted": 0,
+        "fixed_review_trials": 224,
+        "native_training_readiness": false
+      },
+      "limitations": [
+        "Current rows are mechanical dataset evidence; rights/split/native/production-grader gates remain independent.",
+        "Interface smoke does not establish full exposure history or complete224 trials."
+      ],
+      "owner_lane": "data",
+      "paired_counts": [],
+      "permits_model_promotion": false,
+      "quality_card_status": "BLOCKED_MISSING_FULL_IDENTITY_OR_QUALIFICATION"
+    },
+    {
+      "balanced_quality_established": false,
+      "domains": [],
+      "effect_type": "qualification",
+      "evidence_ids": [
+        "m1_failure",
+        "m1_proposal",
+        "m1_fixture"
+      ],
+      "evidence_level": "mechanical",
+      "facts": {
+        "additional_attempts_authorized": 0,
+        "native_forward_calls": 0,
+        "native_model_loads": 0,
+        "qualification_attempts": 1
+      },
+      "limitations": [
+        "Completed launcher fixture does not qualify native model loading.",
+        "Original owner must separately approve one retry after fresh runtime/source/resource review."
+      ],
+      "owner_lane": "m1",
+      "paired_counts": [],
+      "permits_model_promotion": false,
+      "quality_card_status": "BLOCKED_MISSING_FULL_IDENTITY_OR_QUALIFICATION"
+    },
+    {
+      "balanced_quality_established": false,
+      "domains": [
+        "grounded_retrieval",
+        "arithmetic_state_tracking",
+        "answerability_abstention"
+      ],
+      "effect_type": "qualification",
+      "evidence_ids": [
+        "m2_status",
+        "m2_proposal"
+      ],
+      "evidence_level": "mechanical",
+      "facts": {
+        "CAL_rows_proposed": 96,
+        "CHECK_rows_proposed": 192,
+        "live_bias": 3.75,
+        "live_bias_quality": "UNMEASURED"
+      },
+      "limitations": [
+        "Observer and source M1 qualification absent; CAL/CHECK unopened by this implementation."
+      ],
+      "owner_lane": "m2",
+      "paired_counts": [],
+      "permits_model_promotion": false,
+      "quality_card_status": "BLOCKED_MISSING_FULL_IDENTITY_OR_QUALIFICATION"
+    },
+    {
+      "balanced_quality_established": false,
+      "domains": [
+        "grounded_retrieval",
+        "arithmetic_state_tracking",
+        "answerability_abstention"
+      ],
+      "effect_type": "serving",
+      "evidence_ids": [
+        "serving_history"
+      ],
+      "evidence_level": "exploratory",
+      "facts": {
+        "bias0_reference_loss_reduction_percent": 41.23,
+        "canonical_reference_loss_reduction_percent": 17.56,
+        "live_bias3_75_quality": "UNMEASURED",
+        "state_tracking_correct_bias0": 5,
+        "state_tracking_correct_canonical": 3,
+        "state_tracking_denominator": 360
+      },
+      "limitations": [
+        "Development instrument; readout changes cannot establish compositional reasoning.",
+        "Live serving3.75 differs from checkpoint config; evaluated losses are not zero."
+      ],
+      "owner_lane": "serving_history",
+      "paired_counts": [
+        {
+          "candidate_accuracy": 0.2833333333333333,
+          "candidate_successes": 204,
+          "denominator": 720,
+          "domain": "answerability_abstention",
+          "endpoint": "bias0_answerable_FINAL_VALUE",
+          "gained": 54,
+          "lost": 43,
+          "net_gain": 11,
+          "retained": 150,
+          "retained_fraction": 0.7772020725388601,
+          "source_accuracy": 0.26805555555555555,
+          "source_membership_not_verified_by_aggregate_counts": true,
+          "source_successes": 193
+        },
+        {
+          "candidate_accuracy": 0.28055555555555556,
+          "candidate_successes": 202,
+          "denominator": 720,
+          "domain": "answerability_abstention",
+          "endpoint": "canonical_answerable_FINAL_VALUE",
+          "gained": 99,
+          "lost": 6,
+          "net_gain": 93,
+          "retained": 103,
+          "retained_fraction": 0.944954128440367,
+          "source_accuracy": 0.15138888888888888,
+          "source_membership_not_verified_by_aggregate_counts": true,
+          "source_successes": 109
+        }
+      ],
+      "permits_model_promotion": false,
+      "quality_card_status": "BLOCKED_MISSING_FULL_IDENTITY_OR_QUALIFICATION"
+    },
+    {
+      "balanced_quality_established": false,
+      "domains": [
+        "grounded_retrieval",
+        "skill_composition"
+      ],
+      "effect_type": "data_mechanics",
+      "evidence_ids": [
+        "synth_draft",
+        "synth_dose",
+        "synth_status"
+      ],
+      "evidence_level": "mechanical",
+      "facts": {
+        "sequences_per_arm": 540,
+        "source_M0_planned": 384,
+        "source_M0_scored": "UNMEASURED",
+        "source_raw_M0_completed": 256,
+        "updates_per_arm": 27
+      },
+      "limitations": [
+        "No student training or transfer/retention result; incomplete raw baseline is unscored.",
+        "Whole-run token matching does not equate per-update difficulty/order."
+      ],
+      "owner_lane": "supervised",
+      "paired_counts": [],
+      "permits_model_promotion": false,
+      "quality_card_status": "BLOCKED_MISSING_FULL_IDENTITY_OR_QUALIFICATION"
+    },
+    {
+      "balanced_quality_established": false,
+      "domains": [
+        "grounded_retrieval",
+        "skill_composition"
+      ],
+      "effect_type": "qualification",
+      "evidence_ids": [
+        "r_signal"
+      ],
+      "evidence_level": "exploratory",
+      "facts": {
+        "R_groups": 150,
+        "R_mixed_groups": 5,
+        "R_samples": 1200,
+        "R_strict_successes": 6,
+        "decision": "STOP_NO_SIGNAL",
+        "registered_mixed_signal_floor": 0.1
+      },
+      "limitations": [
+        "This is a native warm competence diagnosis, not learned acquisition or composition.",
+        "Six discarded CE8 qualification updates cannot answer a research question."
+      ],
+      "owner_lane": "supervised",
+      "paired_counts": [],
+      "permits_model_promotion": false,
+      "quality_card_status": "BLOCKED_MISSING_FULL_IDENTITY_OR_QUALIFICATION"
+    },
+    {
+      "balanced_quality_established": false,
+      "domains": [
+        "arithmetic_state_tracking",
+        "language_long_context_preservation"
+      ],
+      "effect_type": "qualification",
+      "evidence_ids": [
+        "dsd_proposal",
+        "dsd_verification"
+      ],
+      "evidence_level": "mechanical",
+      "facts": {
+        "methods": 3,
+        "seeds": [
+          17,
+          29
+        ],
+        "teacher_allowed_harms": 0,
+        "teacher_gate_rows": 8,
+        "teacher_required_correct": 7,
+        "teacher_required_wins": 2,
+        "total_update_ceiling": 72,
+        "updates_per_cell": 12
+      },
+      "limitations": [
+        "Same-base teacher/native fit unqualified; retention replay is evaluation only.",
+        "130/196 historical/current fixtures are not real model-quality results."
+      ],
+      "owner_lane": "dsd",
+      "paired_counts": [],
+      "permits_model_promotion": false,
+      "quality_card_status": "BLOCKED_MISSING_FULL_IDENTITY_OR_QUALIFICATION"
+    },
+    {
+      "balanced_quality_established": false,
+      "domains": [],
+      "effect_type": "qualification",
+      "evidence_ids": [
+        "rdd_proposal",
+        "rdd_verification"
+      ],
+      "evidence_level": "mechanical",
+      "facts": {
+        "current_native_qualified": false,
+        "proposed_cells": [
+          "A",
+          "B",
+          "D",
+          "SFT"
+        ],
+        "proposed_seed": 17,
+        "proposed_steps": 2
+      },
+      "limitations": [
+        "Exact E0/source/teacher/export parity and dual-source residency remain blocked.",
+        "Disposable qualification exports are not eligible GD trajectories."
+      ],
+      "owner_lane": "rdd",
+      "paired_counts": [],
+      "permits_model_promotion": false,
+      "quality_card_status": "BLOCKED_MISSING_FULL_IDENTITY_OR_QUALIFICATION"
+    },
+    {
+      "balanced_quality_established": false,
+      "domains": [],
+      "effect_type": "qualification",
+      "evidence_ids": [
+        "rsd_proposal",
+        "rsd_readiness"
+      ],
+      "evidence_level": "mechanical",
+      "facts": {
+        "proposed_arms": [
+          "sft",
+          "frozen",
+          "evolving"
+        ],
+        "proposed_updates_per_arm": 2,
+        "qualified_real_SFT_parent": false
+      },
+      "limitations": [
+        "E0/common SFT parent/catalog/native-arm mechanics missing; compute matching unestablished."
+      ],
+      "owner_lane": "rsd",
+      "paired_counts": [],
+      "permits_model_promotion": false,
+      "quality_card_status": "BLOCKED_MISSING_FULL_IDENTITY_OR_QUALIFICATION"
+    },
+    {
+      "balanced_quality_established": false,
+      "domains": [
+        "grounded_retrieval",
+        "arithmetic_state_tracking",
+        "answerability_abstention"
+      ],
+      "effect_type": "architecture",
+      "evidence_ids": [
+        "taps_accepted_review",
+        "taps_result",
+        "taps_math_review"
+      ],
+      "evidence_level": "exploratory",
+      "facts": {
+        "DEV_TAPS_correct": 67,
+        "DEV_cases": 192,
+        "DEV_fixed_correct": 69,
+        "finite_constant_oracle_correct": 70,
+        "raw_result_independently_accepted": true,
+        "whole_mission_final_closeout_requires_owner_reconciliation": true
+      },
+      "limitations": [
+        "Restricted negative result on shared authored generators; no fresh broad confirmation.",
+        "No controller fit/finer grid/deeper recurrence justified by this result."
+      ],
+      "owner_lane": "taps",
+      "paired_counts": [
+        {
+          "candidate_accuracy": 0.3489583333333333,
+          "candidate_successes": 67,
+          "denominator": 192,
+          "domain": "cross_domain_aggregate",
+          "endpoint": "aggregate_DEV_strict_across_six_categories",
+          "gained": 0,
+          "lost": 2,
+          "net_gain": -2,
+          "retained": 67,
+          "retained_fraction": 0.9710144927536232,
+          "source_accuracy": 0.359375,
+          "source_membership_not_verified_by_aggregate_counts": true,
+          "source_successes": 69
+        }
+      ],
+      "permits_model_promotion": false,
+      "quality_card_status": "BLOCKED_MISSING_FULL_IDENTITY_OR_QUALIFICATION"
+    },
+    {
+      "balanced_quality_established": false,
+      "domains": [
+        "grounded_retrieval",
+        "language_long_context_preservation"
+      ],
+      "effect_type": "architecture",
+      "evidence_ids": [
+        "sbhm_closeout",
+        "sbhm_receipt"
+      ],
+      "evidence_level": "exploratory",
+      "facts": {
+        "C_D_same_losses": 4,
+        "D_only_repairs": 0,
+        "decision": "HOLD",
+        "distant_rows": 224,
+        "local_C_correct": 172,
+        "recurrent_D_correct": 171,
+        "source_correct_retention": 22
+      },
+      "limitations": [
+        "One source/site/seed synthetic DEV; ordinary recovery already matches local-only distant quality.",
+        "Source-correct retention losses prohibit broad preservation claims."
+      ],
+      "owner_lane": "sbhm",
+      "paired_counts": [
+        {
+          "candidate_accuracy": 0.7633928571428571,
+          "candidate_successes": 171,
+          "denominator": 224,
+          "domain": "grounded_retrieval",
+          "endpoint": "distant_DEV_C_vs_D",
+          "gained": 0,
+          "lost": 1,
+          "net_gain": -1,
+          "retained": 171,
+          "retained_fraction": 0.9941860465116279,
+          "source_accuracy": 0.7678571428571429,
+          "source_membership_not_verified_by_aggregate_counts": true,
+          "source_successes": 172
+        }
+      ],
+      "permits_model_promotion": false,
+      "quality_card_status": "BLOCKED_MISSING_FULL_IDENTITY_OR_QUALIFICATION"
+    }
+  ],
+  "overall_winner": null,
+  "permits_model_promotion": false,
+  "schema": "gd001_public_quality_scorecard_v1",
+  "sha256": "54ecb2dc808be449c922c2b7e7d2fc6b9055db8480c550c67408ebca22654985",
+  "unmeasured_cells": "UNMEASURED, not zero",
+  "validated_quality_cards": []
+}

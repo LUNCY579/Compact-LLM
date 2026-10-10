@@ -26,6 +26,12 @@ It does not supersede their gates or imply a new architecture is necessary.
 | `native.py` | Explicit, offline, sequential HF/LoRA inference; strict loads; greedy generation and full answer-token scoring |
 | `metrics.py` | Generated correctness, shortcut rate, competence-conditioned robustness, reference-fixed retention, linked composition, paired changes and cluster uncertainty |
 | `pipeline.py` | Frozen registration -> development sweep -> immutable selection -> single-use confirmation -> report |
+| `budget.py` | Cumulative native attempt accounting, completed-sweep replay and permanent registry-failure invalidation |
+| `attachment.py`, `attachment_cli.py`, `producer_hook_example.py` | Offline original-payload/provenance attachment and a prospective post-save observer |
+| `export_parity.py` | Registered comparison of supplied producer/GD scoring traces; no native execution |
+| `quality_card.py`, `data_admission.py`, `roadmap.py`, `roadmap_cli.py` | Offline quality custody, data-admission assessment and owner handoff packets |
+| `protected_paths.py` | Protected-bank path checks before metadata, nested references and CLI reads |
+| `public_schema_repair.py`, `query_dependence_witness.py` | Public-schema presentation helper and excluded finite query-dependence fixture |
 | `cli.py` | Runnable entry points, synthetic demo, and fail-closed preflight |
 | `tests/` | CPU mechanical, state-machine, adversarial, and optional real-PyTorch tensor-contract tests |
 
@@ -50,9 +56,11 @@ python -m experiments.rineya_generalization_dynamics_v1 report --run /tmp/gd001-
 
 The demo intentionally uses gold-aware fixture predictions. Every receipt is labelled
 `mechanical_fixture`; **its scores are not Rineya results**. It does not load or train a
-model, download anything, or read any existing repository evaluation bank. Without
-PyTorch, the eight tensor-contract tests explicitly skip; the other 57 tests need only
-the standard library. The delivery environment ran all 65 without skips.
+model, download anything, or read any existing repository evaluation bank. The original
+delivery ran 65 tests without skips. Later attachment, roadmap, witness and review
+regressions extend that suite. PyTorch remains optional for tensor and budget-hook
+mechanics; those lanes explicitly skip when it is absent. The current publication
+validation is recorded in [the evidence archive](evidence/README.md).
 
 ## Native boundary
 
@@ -67,6 +75,36 @@ an unverified conversion.
 **No native checkpoint was loaded in this delivery.** The complete HF/PEFT loader and
 resource guards still require qualification on the actual host. Real PyTorch tests here
 exercise tensor arithmetic with a tiny deterministic stub, not a Rineya model.
+
+The October 3, 2026 local follow-up found no complete, loadable, admissible trajectory.
+Halo Stage-A retains standard-format steps 200/225/250, but its receipts plan 800 steps
+and lack a completion receipt and complete consumed-prompt inventory. Completed Baya
+Stage-A retains checkpoint metadata at 1150/1175/1200 but lacks their weight payloads.
+Completed single-layer Supa runs use a custom readout that this loader rejects. Titan's
+published Experimental/Sparse/Transition variants are derived models, not successive
+training snapshots. Native preflight also blocked CPU and CUDA on the unchanged memory
+guards; no checkpoint ranking or composition result was measured.
+
+Aggregate native budgets are now frozen at registration and accounted for across all
+checkpoints and resumed attempts: defaults are 1,800 seconds and 16,000 actual forwards
+per split. Interrupted accounting blocks resumption and selection. Wall checks are
+cooperative; an owned-worker supervisor is needed to interrupt a hung operation.
+The original `VALIDATION.json` remains the historical 65-test delivery receipt; this
+follow-up's audit and validation are recorded separately in
+`NATIVE_QUALIFICATION_20261003.json`.
+
+The October 9 publication review closes protected-path, excluded-fixture, captured-byte
+custody, completed-sweep replay and registry-failure gaps. A completed sweep reuses
+its validated receipts without another charged attempt. A post-scoring registry
+failure permanently invalidates the split, even if its original files are restored.
+Existing records retain their original dates and hashes in the
+[published evidence archive](evidence/README.md). Its metadata, mechanical witnesses
+and posthoc saved-output analyses do not establish a native GD-001 result or grant
+execution authority. Code changes require a fresh registration and reviewed handoff.
+
+For the later offline workflows, see [the attachment contract](ATTACHMENT_CONTRACT.md),
+[balanced-quality roadmap](QUALITY_ROADMAP.md), [presentation research](PATTERN_RESEARCH_20261005.md)
+and [query-dependence research](QUERY_DEPENDENCE_RESEARCH_20261005.md).
 
 See [RUNBOOK.md](RUNBOOK.md) for the operator sequence and training-hook example,
 [PROTOCOL.md](PROTOCOL.md) for frozen selection rules and limitations, and

@@ -225,7 +225,12 @@ class RegistryTests(unittest.TestCase):
     def test_symlinked_asset_rejected(self):
         path = self.root / "one/model.safetensors"
         path.unlink()
-        path.symlink_to(self.root / "base/model.safetensors")
+        try:
+            path.symlink_to(self.root / "base/model.safetensors")
+        except OSError as exc:
+            if getattr(exc, "winerror", None) == 1314:
+                self.skipTest("Windows host does not permit file symlink creation")
+            raise
         with self.assertRaises(Blocked):
             r.freeze_registry(self.spec)
 

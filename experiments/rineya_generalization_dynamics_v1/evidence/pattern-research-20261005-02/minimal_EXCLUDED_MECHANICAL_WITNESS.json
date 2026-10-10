@@ -1,0 +1,1096 @@
+{
+  "contexts": [
+    {
+      "context_id": "fixture_ctx_000",
+      "context_sha256": "a8abfc66a0f4b2fe8882477e1985205e9b2de37339ec971fe51b5d03dbe5abeb",
+      "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+      "queries": [
+        {
+          "entity": "S9KP",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": "F6VX"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=S9KP; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_00"
+        },
+        {
+          "entity": "S9KP",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=S9KP; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_01"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": "C3SU"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_02"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": "D4TV"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_03"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_04"
+        },
+        {
+          "entity": "S9KP",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": "K0ZA"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=S9KP; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_05"
+        },
+        {
+          "entity": "R2VA",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=R2VA; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_06"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": "L1AB"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_07"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_08"
+        },
+        {
+          "entity": "R2VA",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": "H8XZ"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=R2VA; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_09"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": "G7WY"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_10"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_11"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_12"
+        },
+        {
+          "entity": "S9KP",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=S9KP; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_13"
+        },
+        {
+          "entity": "R2VA",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=R2VA; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_14"
+        },
+        {
+          "entity": "R2VA",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": "A1QZ"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=R2VA; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_15"
+        }
+      ],
+      "records": [
+        {
+          "entity": "W0YG",
+          "field": "M6JT",
+          "value": "E5UW"
+        },
+        {
+          "entity": "S9KP",
+          "field": "N5WR",
+          "value": "K0ZA"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "L3FH",
+          "value": "L1AB"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "K8DS",
+          "value": "C3SU"
+        },
+        {
+          "entity": "W0YG",
+          "field": "L3FH",
+          "value": "J9YZ"
+        },
+        {
+          "entity": "U1BC",
+          "field": "N5WR",
+          "value": "B2RT"
+        },
+        {
+          "entity": "R2VA",
+          "field": "N5WR",
+          "value": "H8XZ"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "L3FH",
+          "value": "G7WY"
+        },
+        {
+          "entity": "U1BC",
+          "field": "K8DS",
+          "value": "M2BC"
+        },
+        {
+          "entity": "S9KP",
+          "field": "M6JT",
+          "value": "F6VX"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "K8DS",
+          "value": "D4TV"
+        },
+        {
+          "entity": "R2VA",
+          "field": "M6JT",
+          "value": "A1QZ"
+        }
+      ]
+    },
+    {
+      "context_id": "fixture_ctx_001",
+      "context_sha256": "f9f741c7ea919cd0003bef4de53cc40c5eff94a96f654db69e96356d43654a30",
+      "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+      "queries": [
+        {
+          "entity": "S9KP",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=S9KP; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_00"
+        },
+        {
+          "entity": "S9KP",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": "F6VX"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=S9KP; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_01"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_02"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_03"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": "L1AB"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_04"
+        },
+        {
+          "entity": "S9KP",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=S9KP; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_05"
+        },
+        {
+          "entity": "R2VA",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": "H8XZ"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=R2VA; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_06"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_07"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": "C3SU"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_08"
+        },
+        {
+          "entity": "R2VA",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=R2VA; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_09"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_10"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": "D4TV"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_11"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": "G7WY"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_12"
+        },
+        {
+          "entity": "S9KP",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": "K0ZA"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=S9KP; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_13"
+        },
+        {
+          "entity": "R2VA",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": "A1QZ"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=R2VA; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_14"
+        },
+        {
+          "entity": "R2VA",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=R2VA; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_15"
+        }
+      ],
+      "records": [
+        {
+          "entity": "W0YG",
+          "field": "M6JT",
+          "value": "E5UW"
+        },
+        {
+          "entity": "S9KP",
+          "field": "K8DS",
+          "value": "K0ZA"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "M6JT",
+          "value": "L1AB"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "N5WR",
+          "value": "C3SU"
+        },
+        {
+          "entity": "W0YG",
+          "field": "L3FH",
+          "value": "J9YZ"
+        },
+        {
+          "entity": "U1BC",
+          "field": "N5WR",
+          "value": "B2RT"
+        },
+        {
+          "entity": "R2VA",
+          "field": "K8DS",
+          "value": "H8XZ"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "M6JT",
+          "value": "G7WY"
+        },
+        {
+          "entity": "U1BC",
+          "field": "K8DS",
+          "value": "M2BC"
+        },
+        {
+          "entity": "S9KP",
+          "field": "L3FH",
+          "value": "F6VX"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "N5WR",
+          "value": "D4TV"
+        },
+        {
+          "entity": "R2VA",
+          "field": "L3FH",
+          "value": "A1QZ"
+        }
+      ]
+    },
+    {
+      "context_id": "fixture_ctx_002",
+      "context_sha256": "8b6bc8fa83766dd7494806da4e45d75c86708e30c15221a0fbff202e508d1e00",
+      "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+      "queries": [
+        {
+          "entity": "S9KP",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": "F6VX"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=S9KP; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_00"
+        },
+        {
+          "entity": "S9KP",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=S9KP; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_01"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": "C3SU"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_02"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": "D4TV"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_03"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": "L1AB"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_04"
+        },
+        {
+          "entity": "S9KP",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": "K0ZA"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=S9KP; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_05"
+        },
+        {
+          "entity": "R2VA",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=R2VA; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_06"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_07"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_08"
+        },
+        {
+          "entity": "R2VA",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": "H8XZ"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=R2VA; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_09"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": "G7WY"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_10"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_11"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_12"
+        },
+        {
+          "entity": "S9KP",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=S9KP; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_13"
+        },
+        {
+          "entity": "R2VA",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": "A1QZ"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=R2VA; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_14"
+        },
+        {
+          "entity": "R2VA",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=N5WR,value=K0ZA).\nRecord(entity=Q7MX,field=M6JT,value=L1AB).\nRecord(entity=Q7MX,field=K8DS,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=N5WR,value=H8XZ).\nRecord(entity=T4NZ,field=L3FH,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=M6JT,value=F6VX).\nRecord(entity=T4NZ,field=K8DS,value=D4TV).\nRecord(entity=R2VA,field=L3FH,value=A1QZ).",
+            "request": "Query entity=R2VA; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_15"
+        }
+      ],
+      "records": [
+        {
+          "entity": "W0YG",
+          "field": "M6JT",
+          "value": "E5UW"
+        },
+        {
+          "entity": "S9KP",
+          "field": "N5WR",
+          "value": "K0ZA"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "M6JT",
+          "value": "L1AB"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "K8DS",
+          "value": "C3SU"
+        },
+        {
+          "entity": "W0YG",
+          "field": "L3FH",
+          "value": "J9YZ"
+        },
+        {
+          "entity": "U1BC",
+          "field": "N5WR",
+          "value": "B2RT"
+        },
+        {
+          "entity": "R2VA",
+          "field": "N5WR",
+          "value": "H8XZ"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "L3FH",
+          "value": "G7WY"
+        },
+        {
+          "entity": "U1BC",
+          "field": "K8DS",
+          "value": "M2BC"
+        },
+        {
+          "entity": "S9KP",
+          "field": "M6JT",
+          "value": "F6VX"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "K8DS",
+          "value": "D4TV"
+        },
+        {
+          "entity": "R2VA",
+          "field": "L3FH",
+          "value": "A1QZ"
+        }
+      ]
+    },
+    {
+      "context_id": "fixture_ctx_003",
+      "context_sha256": "7aa618d24f56ef818a8fc47716267f3a67798d1f21f052a59acb89caeee57462",
+      "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+      "queries": [
+        {
+          "entity": "S9KP",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=S9KP; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_00"
+        },
+        {
+          "entity": "S9KP",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": "F6VX"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=S9KP; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_01"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_02"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_03"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_04"
+        },
+        {
+          "entity": "S9KP",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=S9KP; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_05"
+        },
+        {
+          "entity": "R2VA",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": "H8XZ"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=R2VA; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_06"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": "L1AB"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_07"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": "C3SU"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=Q7MX; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_08"
+        },
+        {
+          "entity": "R2VA",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=R2VA; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_09"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_10"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "N5WR",
+          "oracle_answer": {
+            "v": "D4TV"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=N5WR. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_11"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": "G7WY"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=T4NZ; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_12"
+        },
+        {
+          "entity": "S9KP",
+          "field": "K8DS",
+          "oracle_answer": {
+            "v": "K0ZA"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=S9KP; field=K8DS. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_13"
+        },
+        {
+          "entity": "R2VA",
+          "field": "L3FH",
+          "oracle_answer": {
+            "v": null
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=R2VA; field=L3FH. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_14"
+        },
+        {
+          "entity": "R2VA",
+          "field": "M6JT",
+          "oracle_answer": {
+            "v": "A1QZ"
+          },
+          "public_input": {
+            "context_text": "Record(entity=W0YG,field=M6JT,value=E5UW).\nRecord(entity=S9KP,field=K8DS,value=K0ZA).\nRecord(entity=Q7MX,field=L3FH,value=L1AB).\nRecord(entity=Q7MX,field=N5WR,value=C3SU).\nRecord(entity=W0YG,field=L3FH,value=J9YZ).\nRecord(entity=U1BC,field=N5WR,value=B2RT).\nRecord(entity=R2VA,field=K8DS,value=H8XZ).\nRecord(entity=T4NZ,field=M6JT,value=G7WY).\nRecord(entity=U1BC,field=K8DS,value=M2BC).\nRecord(entity=S9KP,field=L3FH,value=F6VX).\nRecord(entity=T4NZ,field=N5WR,value=D4TV).\nRecord(entity=R2VA,field=M6JT,value=A1QZ).",
+            "request": "Query entity=R2VA; field=M6JT. Use only exact matching records. Return compact JSON {\"v\":string|null}; use null exactly when no matching record exists."
+          },
+          "query_id": "fixture_q_15"
+        }
+      ],
+      "records": [
+        {
+          "entity": "W0YG",
+          "field": "M6JT",
+          "value": "E5UW"
+        },
+        {
+          "entity": "S9KP",
+          "field": "K8DS",
+          "value": "K0ZA"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "L3FH",
+          "value": "L1AB"
+        },
+        {
+          "entity": "Q7MX",
+          "field": "N5WR",
+          "value": "C3SU"
+        },
+        {
+          "entity": "W0YG",
+          "field": "L3FH",
+          "value": "J9YZ"
+        },
+        {
+          "entity": "U1BC",
+          "field": "N5WR",
+          "value": "B2RT"
+        },
+        {
+          "entity": "R2VA",
+          "field": "K8DS",
+          "value": "H8XZ"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "M6JT",
+          "value": "G7WY"
+        },
+        {
+          "entity": "U1BC",
+          "field": "K8DS",
+          "value": "M2BC"
+        },
+        {
+          "entity": "S9KP",
+          "field": "L3FH",
+          "value": "F6VX"
+        },
+        {
+          "entity": "T4NZ",
+          "field": "N5WR",
+          "value": "D4TV"
+        },
+        {
+          "entity": "R2VA",
+          "field": "M6JT",
+          "value": "A1QZ"
+        }
+      ]
+    }
+  ],
+  "entities": [
+    "Q7MX",
+    "R2VA",
+    "T4NZ",
+    "S9KP"
+  ],
+  "evidence_kind": "finite_mechanical_witness",
+  "family": "minimal",
+  "fields": [
+    "L3FH",
+    "M6JT",
+    "K8DS",
+    "N5WR"
+  ],
+  "fixture_seed": 20261005,
+  "generator_policy": {
+    "actual_dev_admission": false,
+    "actual_learning_established": false,
+    "actual_train_admission": false,
+    "authorizes_execution": false,
+    "confirmation_authorized": false,
+    "model_quality_claim": false,
+    "native_bank": false,
+    "no_model_quality_claim": true,
+    "public_null_rule": "closed_world_exact_single_relation_lookup",
+    "retention_established": false,
+    "scope": "EXCLUDED_MECHANICAL_FIXTURE"
+  },
+  "nuisance_entities": [
+    "W0YG",
+    "U1BC"
+  ],
+  "schema": "gd001_query_dependence_witness_v1",
+  "sha256": "7797a5702cc29660e094e1e7b10fccf51d80194e8e8e095662959afe49e0a810",
+  "values": [
+    "L1AB",
+    "C3SU",
+    "A1QZ",
+    "H8XZ",
+    "G7WY",
+    "D4TV",
+    "F6VX",
+    "K0ZA",
+    "J9YZ",
+    "E5UW",
+    "M2BC",
+    "B2RT"
+  ]
+}

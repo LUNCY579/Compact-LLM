@@ -137,4 +137,23 @@ source-weight modification, checkpoint averaging or production routing change oc
 Use the host's existing scheduler too: GD-001 locks coordinate only GD-001 processes;
 preflight observations cannot prevent an unrelated process starting later.
 
+Native evaluation also freezes an aggregate budget before registration: by default
+1,800 seconds and 16,000 actual model forward calls per split. Loading, scoring and
+unloading share the wall budget; all checkpoints and resumed DEV attempts share the
+forward budget. Generation and both candidate-likelihood forwards count. Immutable
+attempt receipts retain spent resources on failures; an interrupted attempt without a
+completion receipt blocks resumption because its consumption is unknown. Completed
+checkpoint receipts are reused without spending additional model forwards.
+
+A completed sweep replays its validated receipts without opening another budget
+attempt. Registry verification failures after scoring permanently invalidate that
+split; restoring the original assets cannot rehabilitate its predictions. Keep the
+invalidation receipt and use a new registration after resolving the asset change.
+
+Time checks are cooperative before loads and model forwards. One in-flight load or
+forward may finish after the deadline; a hung native operation requires a supervisor
+that terminates only its own worker. The forward limit prevents the next counted call
+from starting. Budget exhaustion is a blocked outcome, not permission to enlarge a
+registered budget or discard its receipts. Use a new registration for a changed budget.
+
 Every outcome retains `permits_model_promotion: false`.

@@ -1,0 +1,33 @@
+{
+  "status": "BLOCKED_PREREQUISITES_NOT_REVIEWED",
+  "stage": "DEV_ONLY_NATIVE_LOADING_SCORING",
+  "separate_native_authorization_required": true,
+  "confirmation_authorized": false,
+  "code_sha256": "REPLACE_AFTER_CODE_REVIEW",
+  "attachment_contract": {"path": "REPLACE_ABSOLUTE_RETAINED_CONTRACT", "sha256": "REPLACE_FILE_SHA256"},
+  "checkpoint_steps": [0, "REPLACE_REVIEWED_INTERMEDIATE_STEP", "REPLACE_VERIFIED_FINAL_STEP"],
+  "public_exposure_manifests": [],
+  "dev_seed": 17,
+  "pairs_per_family": 24,
+  "policy": {
+    "min_clean_accuracy": 0.5,
+    "max_retention_damage_fraction": 0.05,
+    "min_reference_solved": 8,
+    "min_acquisition_delta": 0.0
+  },
+  "runtime": {
+    "device": "cpu", "dtype": "float32", "cpu_threads": 2,
+    "prompt_format": "plain", "max_input_tokens": 512, "max_new_tokens": 16,
+    "min_free_ram_gib": 7.4, "min_free_vram_gib": 7.4, "min_free_disk_gib": 1.0,
+    "max_native_wall_seconds": 1800, "max_native_forward_calls": 16000
+  },
+  "parity_policy": {
+    "schema": "gd001_export_parity_policy_v1", "registered_before_outcomes": true,
+    "abs_tolerance": 0.00001, "rel_tolerance": 0.00001,
+    "max_prompt_tokens": 512, "max_candidate_tokens": 16, "max_generated_tokens": 16,
+    "max_probes": 2, "max_logit_probe_tokens": 8,
+    "logit_probe_token_ids": "REPLACE_FROM_EXACT_TOKENIZER_BEFORE_NATIVE_OUTCOMES",
+    "sha256": "REPLACE_WITH_CANONICAL_PARITY_POLICY_BODY_DIGEST"
+  },
+  "sha256": "REPLACE_WITH_CANONICAL_BODY_DIGEST_AFTER_EXACT_REVIEW"
+}

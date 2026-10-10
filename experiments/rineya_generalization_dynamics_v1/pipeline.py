@@ -12,7 +12,8 @@ DEFAULT_POLICY = {"min_clean_accuracy": .5, "max_retention_damage_fraction": .05
                   "min_reference_solved": 8, "min_acquisition_delta": 0.0}
 DEFAULT_NATIVE = {"device": "cpu", "dtype": "float32", "cpu_threads": 2,
                   "prompt_format": "plain", "max_input_tokens": 512, "max_new_tokens": 16,
-                  "min_free_ram_gib": 7.4, "min_free_vram_gib": 7.4, "min_free_disk_gib": 1.0}
+                  "min_free_ram_gib": 7.4, "min_free_vram_gib": 7.4, "min_free_disk_gib": 1.0,
+                  "max_native_wall_seconds": 1800.0, "max_native_forward_calls": 16000}
 
 
 def validate_config(policy: dict, native: dict) -> None:
@@ -29,6 +30,11 @@ def validate_config(policy: dict, native: dict) -> None:
         require(type(native[key]) is int and 0 < native[key] <= limit, "Invalid compute budget")
     for key in ("min_free_ram_gib", "min_free_vram_gib", "min_free_disk_gib"):
         require(type(native[key]) in (int, float) and math.isfinite(native[key]) and native[key] >= DEFAULT_NATIVE[key], "Resource guards may not be weakened")
+    require(type(native["max_native_wall_seconds"]) in (int, float)
+            and math.isfinite(native["max_native_wall_seconds"]) and native["max_native_wall_seconds"] > 0,
+            "Invalid aggregate native wall budget")
+    require(type(native["max_native_forward_calls"]) is int and native["max_native_forward_calls"] > 0,
+            "Invalid aggregate native forward budget")
 
 
 def initialize(run: Path, spec: dict | None = None, *, mechanical: bool = False,
@@ -110,12 +116,17 @@ def evaluate(run: Path, manifest: dict, rows: list[dict], split: str,
     require(not native or allow_native, "Native inference requires --allow-native; no implicit model loads")
     if native:
         from .native import NativeEvaluator, device_lock
-        verify_registry(manifest["registry"])
-        evaluator = NativeEvaluator(manifest["registry"], manifest["runtime"])
+        from .budget import NativeBudget
     results = []
     # The first development reference establishes the runtime contract for confirmation.
     existing = run / "dev" / (manifest["registry"]["checkpoints"][0]["id"] + ".json")
     runtime_contract = invariant_runtime(verify(read(existing))["runtime"]) if existing.exists() else None
+    def verify_scored_assets(stage):
+        try:
+            verify_registry(manifest["registry"])
+        except BaseException as exc:
+            budget.invalidate_registry(stage, exc)
+            raise
     def one(checkpoint):
         nonlocal runtime_contract
         destination = result_path(run, split, checkpoint)
@@ -127,8 +138,16 @@ def evaluate(run: Path, manifest: dict, rows: list[dict], split: str,
                     runtime = evaluator.load(checkpoint)
                     predictions = [evaluator.predict(r) for r in rows]
                     resources = evaluator.resources()
+                    budget.check_time()
+                    resources["native_budget"] = budget.snapshot()
                 finally:
                     evaluator.close()
+                # Unloading may itself cross the cooperative deadline.
+                budget.check_time()
+                # Verify before publishing scores. A later sweep-level failure
+                # also permanently bars reuse of already-published receipts.
+                verify_scored_assets("checkpoint:" + checkpoint["id"])
+                budget.check_time()
             else:
                 resources = {"measured_native_resources": False}
                 runtime = {"backend": "gold-aware-mechanical-fixture-NOT-A-MODEL"}
@@ -147,9 +166,22 @@ def evaluate(run: Path, manifest: dict, rows: list[dict], split: str,
         results.append(result)
     if native:
         with device_lock(manifest["runtime"]):
-            for checkpoint in checkpoints:
-                one(checkpoint)
-        verify_registry(manifest["registry"])
+            if all(result_path(run, split, c).exists() for c in checkpoints):
+                # A completed sweep is a read-only replay, including at an exact
+                # forward cap. It cannot replace its COMPLETE accounting receipt.
+                NativeBudget.inspect_complete(run, split, manifest)
+                budget = NativeBudget(run, split, manifest, require_remaining=False)
+                verify_scored_assets("completed-sweep-reuse")
+                for checkpoint in checkpoints:
+                    one(checkpoint)
+                return results
+            with NativeBudget(run, split, manifest) as budget:
+                verify_registry(manifest["registry"])
+                evaluator = NativeEvaluator(manifest["registry"], manifest["runtime"], budget)
+                for checkpoint in checkpoints:
+                    one(checkpoint)
+                verify_scored_assets("final-sweep")
+                budget.check_time()
     else:
         for checkpoint in checkpoints:
             one(checkpoint)
@@ -170,6 +202,10 @@ def select(run: Path) -> dict:
         require(not (run / "confirmation.STARTED.json").exists(), "Confirmation already spent")
         checkpoints = manifest["registry"]["checkpoints"]
         results = [load_result(run, manifest, rows, "dev", c) for c in checkpoints]
+        native_budget_receipt = None
+        if manifest["evidence_kind"] == "native_pilot":
+            from .budget import NativeBudget
+            native_budget_receipt = NativeBudget.inspect_complete(run, "dev", manifest)
         require(all(invariant_runtime(r["runtime"]) == invariant_runtime(results[0]["runtime"]) for r in results), "Mixed runtime evidence")
         reference = results[0]["predictions"]
         summaries = {c["id"]: summarize(rows, r["predictions"], reference) for c, r in zip(checkpoints, results)}
@@ -183,6 +219,7 @@ def select(run: Path) -> dict:
         selection = signed({"manifest_sha256": manifest["sha256"], "status": "LOCKED" if admissible else "BLOCKED_NO_ELIGIBLE_CHECKPOINT",
                             "chosen": chosen, "development_receipts": {r["checkpoint_id"]: r["sha256"] for r in results},
                             "evidence_kind": manifest["evidence_kind"], "tie_break": "earlier step, then ID",
+                            "native_budget_receipt_sha256": native_budget_receipt["sha256"] if native_budget_receipt else None,
                             "policy_sha256": digest(manifest["policy"]), "permits_model_promotion": False})
         write_new(run / "development_report.json", {"evidence_kind": manifest["evidence_kind"], "summaries": summaries,
                   "gate_failures": gates, "trajectory": trajectory(rows, [r["predictions"] for r in results])})
@@ -198,6 +235,11 @@ def confirm(run: Path, seed: int, *, allow_confirmation: bool = False, allow_nat
         selection = verify(read(run / "selection.json"))
         require(selection["manifest_sha256"] == manifest["sha256"] and selection["policy_sha256"] == digest(manifest["policy"]), "Selection is not bound to this run")
         require(selection["status"] == "LOCKED", "No admissible checkpoint; confirmation blocked")
+        if manifest["evidence_kind"] == "native_pilot":
+            from .budget import NativeBudget
+            native_budget_receipt = NativeBudget.inspect_complete(run, "dev", manifest)
+            require(native_budget_receipt["sha256"] == selection["native_budget_receipt_sha256"],
+                    "Native budget receipt changed after selection")
         require(type(seed) is int and seed >= 0 and seed != manifest["dev_seed"], "Supply a distinct independent confirmation seed")
         checkpoints = manifest["registry"]["checkpoints"]
         for c in checkpoints:

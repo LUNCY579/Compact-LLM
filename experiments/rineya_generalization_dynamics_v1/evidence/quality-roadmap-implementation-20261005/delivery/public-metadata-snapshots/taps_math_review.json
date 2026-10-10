@@ -1,0 +1,2125 @@
+{
+  "schema": "bulk-restart-execution-math-001",
+  "status": "RAW_RECOMPUTATION_MATCHES_REVIEWED_EXPLORATORY_GENERATION",
+  "errors": [],
+  "role": "Author of analyzers/scorer apparatus; separate independent raw arithmetic/normalization implementation, not independent code-author acceptance. Adversarial raw review controls final acceptance.",
+  "models_or_optimizers_by_auditor": 0,
+  "native_TEST": "CLOSED",
+  "all288cases_retained": true,
+  "population": "288/144 paired worlds; DEV192/96, exposed OPEN_VALIDATION96/48; six shared authored generators",
+  "independent_raw_regrade_disagreements": [],
+  "split_tables": {
+    "DEVELOPMENT": {
+      "cases": 192,
+      "parents": 96,
+      "correct_equivalents": {
+        "A0": 63.0,
+        "A1": 69.0,
+        "A2:0.8": 67.0,
+        "A2:0.9": 68.0,
+        "A2:1": 69.0,
+        "A2:1.1": 68.0,
+        "A2:1.14734": 67.0,
+        "A2:1.2": 66.0,
+        "A3": 67.0,
+        "A5": 67.0
+      },
+      "equal_category_parent_accuracy": {
+        "A0": 0.328125,
+        "A1": 0.359375,
+        "A2:0.8": 0.3489583333333333,
+        "A2:0.9": 0.3541666666666667,
+        "A2:1": 0.359375,
+        "A2:1.1": 0.3541666666666667,
+        "A2:1.14734": 0.3489583333333333,
+        "A2:1.2": 0.34375,
+        "A3": 0.3489583333333333,
+        "A5": 0.3489583333333333
+      },
+      "fixed_curve": {
+        "0.8": 0.3489583333333333,
+        "0.9": 0.3541666666666667,
+        "1.0": 0.359375,
+        "1.1": 0.3541666666666667,
+        "1.1473425965417514": 0.3489583333333333,
+        "1.2": 0.34375
+      },
+      "retrospective_best_global_fixed": 1.0,
+      "frozen_DEV_fixed": 1.0,
+      "finite_constant_oracle_correct": 70.0,
+      "headroom": 0.005208333333333315,
+      "capture": -2.0000000000000107,
+      "A3_contrasts": {
+        "frozen_fixed": {
+          "delta": -0.010416666666666666,
+          "wins": [],
+          "losses": [
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:3:v0",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:1:v1"
+          ],
+          "correct_retention_losses": [
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:3:v0",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:1:v1"
+          ],
+          "retained_correct": 67,
+          "comparator_correct": 69,
+          "parent_wins": 0,
+          "parent_losses": 2,
+          "parent_ties": 94,
+          "parent_deltas": {
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:3": -0.5,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:1": -0.5,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:15": 0.0
+          }
+        },
+        "matched_A5": {
+          "delta": 0.0,
+          "wins": [],
+          "losses": [],
+          "correct_retention_losses": [],
+          "retained_correct": 67,
+          "comparator_correct": 67,
+          "parent_wins": 0,
+          "parent_losses": 0,
+          "parent_ties": 96,
+          "parent_deltas": {
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:15": 0.0
+          }
+        },
+        "intact": {
+          "delta": 0.020833333333333332,
+          "wins": [
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:4:v1",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:5:v0",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:8:v0",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:9:v0",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:9:v1",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:12:v0",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:13:v0",
+            "BULK-TAPS-001:9463250d48f1:program_state:10:v0",
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:5:v0",
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:9:v0",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:4:v0",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:2:v0"
+          ],
+          "losses": [
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:10:v1",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:11:v0",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:14:v1",
+            "BULK-TAPS-001:9463250d48f1:program_state:1:v1",
+            "BULK-TAPS-001:9463250d48f1:program_state:2:v1",
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:3:v0",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7:v1",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:1:v1"
+          ],
+          "correct_retention_losses": [
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:10:v1",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:11:v0",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:14:v1",
+            "BULK-TAPS-001:9463250d48f1:program_state:1:v1",
+            "BULK-TAPS-001:9463250d48f1:program_state:2:v1",
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:3:v0",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7:v1",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:1:v1"
+          ],
+          "retained_correct": 55,
+          "comparator_correct": 63,
+          "parent_wins": 11,
+          "parent_losses": 8,
+          "parent_ties": 77,
+          "parent_deltas": {
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:4": 0.5,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:5": 0.5,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:8": 0.5,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:9": 1.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:10": -0.5,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:11": -0.5,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:12": 0.5,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:13": 0.5,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:14": -0.5,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:1": -0.5,
+            "BULK-TAPS-001:9463250d48f1:program_state:2": -0.5,
+            "BULK-TAPS-001:9463250d48f1:program_state:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:10": 0.5,
+            "BULK-TAPS-001:9463250d48f1:program_state:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:3": -0.5,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:5": 0.5,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:9": 0.5,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:4": 0.5,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7": -0.5,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:1": -0.5,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:2": 0.5,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:15": 0.0
+          }
+        },
+        "unit": {
+          "delta": -0.010416666666666666,
+          "wins": [],
+          "losses": [
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:3:v0",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:1:v1"
+          ],
+          "correct_retention_losses": [
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:3:v0",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:1:v1"
+          ],
+          "retained_correct": 67,
+          "comparator_correct": 69,
+          "parent_wins": 0,
+          "parent_losses": 2,
+          "parent_ties": 94,
+          "parent_deltas": {
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:3": -0.5,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:1": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:15": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:0": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:1": -0.5,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:2": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:3": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:4": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:5": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:6": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:7": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:8": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:9": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:10": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:11": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:12": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:13": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:14": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:15": 0.0
+          }
+        }
+      },
+      "by_category_correct_equivalents": {
+        "answerability_source_conflict": {
+          "A0": 16.0,
+          "A1": 17.0,
+          "A2:0.8": 16.0,
+          "A2:0.9": 16.0,
+          "A2:1": 17.0,
+          "A2:1.1": 17.0,
+          "A2:1.14734": 16.0,
+          "A2:1.2": 16.0,
+          "A3": 16.0,
+          "A5": 16.0
+        },
+        "deduction_composition": {
+          "A0": 13.0,
+          "A1": 17.0,
+          "A2:0.8": 16.0,
+          "A2:0.9": 16.0,
+          "A2:1": 17.0,
+          "A2:1.1": 17.0,
+          "A2:1.14734": 17.0,
+          "A2:1.2": 17.0,
+          "A3": 17.0,
+          "A5": 17.0
+        },
+        "dialogue_memory": {
+          "A0": 16.0,
+          "A1": 18.0,
+          "A2:0.8": 17.0,
+          "A2:0.9": 18.0,
+          "A2:1": 18.0,
+          "A2:1.1": 17.0,
+          "A2:1.14734": 17.0,
+          "A2:1.2": 17.0,
+          "A3": 17.0,
+          "A5": 17.0
+        },
+        "document_retrieval_reconciliation": {
+          "A0": 16.0,
+          "A1": 16.0,
+          "A2:0.8": 16.0,
+          "A2:0.9": 16.0,
+          "A2:1": 16.0,
+          "A2:1.1": 16.0,
+          "A2:1.14734": 16.0,
+          "A2:1.2": 15.0,
+          "A3": 16.0,
+          "A5": 16.0
+        },
+        "program_state": {
+          "A0": 2.0,
+          "A1": 1.0,
+          "A2:0.8": 2.0,
+          "A2:0.9": 2.0,
+          "A2:1": 1.0,
+          "A2:1.1": 1.0,
+          "A2:1.14734": 1.0,
+          "A2:1.2": 1.0,
+          "A3": 1.0,
+          "A5": 1.0
+        },
+        "signed_ledgers": {
+          "A0": 0.0,
+          "A1": 0.0,
+          "A2:0.8": 0.0,
+          "A2:0.9": 0.0,
+          "A2:1": 0.0,
+          "A2:1.1": 0.0,
+          "A2:1.14734": 0.0,
+          "A2:1.2": 0.0,
+          "A3": 0.0,
+          "A5": 0.0
+        }
+      },
+      "endpoints": {
+        "A0": {
+          "format_valid": 192.0,
+          "false_UNKNOWN": 48.0,
+          "unsupported_unanswerable": 0.0,
+          "canonical_UNKNOWN": 96.0,
+          "termination_counts": {
+            "eos": 192
+          }
+        },
+        "A1": {
+          "format_valid": 191.0,
+          "false_UNKNOWN": 42.0,
+          "unsupported_unanswerable": 1.0,
+          "canonical_UNKNOWN": 89.0,
+          "termination_counts": {
+            "eos": 191,
+            "token_cap": 1
+          }
+        },
+        "A2:0.8": {
+          "format_valid": 192.0,
+          "false_UNKNOWN": 45.0,
+          "unsupported_unanswerable": 1.0,
+          "canonical_UNKNOWN": 92.0,
+          "termination_counts": {
+            "eos": 192
+          }
+        },
+        "A2:0.9": {
+          "format_valid": 192.0,
+          "false_UNKNOWN": 44.0,
+          "unsupported_unanswerable": 1.0,
+          "canonical_UNKNOWN": 91.0,
+          "termination_counts": {
+            "eos": 192
+          }
+        },
+        "A2:1": {
+          "format_valid": 191.0,
+          "false_UNKNOWN": 42.0,
+          "unsupported_unanswerable": 1.0,
+          "canonical_UNKNOWN": 89.0,
+          "termination_counts": {
+            "eos": 191,
+            "token_cap": 1
+          }
+        },
+        "A2:1.1": {
+          "format_valid": 191.0,
+          "false_UNKNOWN": 42.0,
+          "unsupported_unanswerable": 2.0,
+          "canonical_UNKNOWN": 88.0,
+          "termination_counts": {
+            "eos": 191,
+            "token_cap": 1
+          }
+        },
+        "A2:1.14734": {
+          "format_valid": 191.0,
+          "false_UNKNOWN": 42.0,
+          "unsupported_unanswerable": 3.0,
+          "canonical_UNKNOWN": 87.0,
+          "termination_counts": {
+            "eos": 191,
+            "token_cap": 1
+          }
+        },
+        "A2:1.2": {
+          "format_valid": 191.0,
+          "false_UNKNOWN": 42.0,
+          "unsupported_unanswerable": 4.0,
+          "canonical_UNKNOWN": 86.0,
+          "termination_counts": {
+            "eos": 191,
+            "token_cap": 1
+          }
+        },
+        "A3": {
+          "format_valid": 191.0,
+          "false_UNKNOWN": 42.0,
+          "unsupported_unanswerable": 3.0,
+          "canonical_UNKNOWN": 87.0,
+          "termination_counts": {
+            "eos": 191,
+            "token_cap": 1
+          }
+        },
+        "A5": {
+          "format_valid": 191.0,
+          "false_UNKNOWN": 42.0,
+          "unsupported_unanswerable": 3.0,
+          "canonical_UNKNOWN": 87.0,
+          "termination_counts": {
+            "eos": 382,
+            "token_cap": 2
+          }
+        }
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "oracle_only_rescues": [
+        "BULK-TAPS-001:9463250d48f1:program_state:2:v1"
+      ],
+      "uncertainty": "counts/parent deltas only; CI and pvalueNULL, noninferiority NOT_ESTABLISHED",
+      "parent_shared_constant_oracle": {
+        "accuracy": 0.3645833333333333,
+        "correct_case_equivalents": 70.0,
+        "headroom_above_best_global": 0.005208333333333315,
+        "diagnostic_only": true,
+        "scope": "one retrospective grid constant shared by both variants; not continuous or token schedule"
+      },
+      "category_difficulty": {
+        "answerability_source_conflict:easy": {
+          "cases": 16,
+          "parents": 8,
+          "policy_accuracy": {
+            "A0": 0.5,
+            "A1": 0.5625,
+            "A2:0.8": 0.5,
+            "A2:0.9": 0.5,
+            "A2:1": 0.5625,
+            "A2:1.1": 0.5625,
+            "A2:1.14734": 0.5,
+            "A2:1.2": 0.5,
+            "A3": 0.5,
+            "A5": 0.5
+          }
+        },
+        "answerability_source_conflict:hard": {
+          "cases": 16,
+          "parents": 8,
+          "policy_accuracy": {
+            "A0": 0.5,
+            "A1": 0.5,
+            "A2:0.8": 0.5,
+            "A2:0.9": 0.5,
+            "A2:1": 0.5,
+            "A2:1.1": 0.5,
+            "A2:1.14734": 0.5,
+            "A2:1.2": 0.5,
+            "A3": 0.5,
+            "A5": 0.5
+          }
+        },
+        "deduction_composition:easy": {
+          "cases": 16,
+          "parents": 8,
+          "policy_accuracy": {
+            "A0": 0.5,
+            "A1": 0.5625,
+            "A2:0.8": 0.5625,
+            "A2:0.9": 0.5625,
+            "A2:1": 0.5625,
+            "A2:1.1": 0.5625,
+            "A2:1.14734": 0.5625,
+            "A2:1.2": 0.5625,
+            "A3": 0.5625,
+            "A5": 0.5625
+          }
+        },
+        "deduction_composition:hard": {
+          "cases": 16,
+          "parents": 8,
+          "policy_accuracy": {
+            "A0": 0.3125,
+            "A1": 0.5,
+            "A2:0.8": 0.4375,
+            "A2:0.9": 0.4375,
+            "A2:1": 0.5,
+            "A2:1.1": 0.5,
+            "A2:1.14734": 0.5,
+            "A2:1.2": 0.5,
+            "A3": 0.5,
+            "A5": 0.5
+          }
+        },
+        "dialogue_memory:easy": {
+          "cases": 16,
+          "parents": 8,
+          "policy_accuracy": {
+            "A0": 0.5,
+            "A1": 0.5625,
+            "A2:0.8": 0.5625,
+            "A2:0.9": 0.5625,
+            "A2:1": 0.5625,
+            "A2:1.1": 0.5,
+            "A2:1.14734": 0.5,
+            "A2:1.2": 0.5,
+            "A3": 0.5,
+            "A5": 0.5
+          }
+        },
+        "dialogue_memory:hard": {
+          "cases": 16,
+          "parents": 8,
+          "policy_accuracy": {
+            "A0": 0.5,
+            "A1": 0.5625,
+            "A2:0.8": 0.5,
+            "A2:0.9": 0.5625,
+            "A2:1": 0.5625,
+            "A2:1.1": 0.5625,
+            "A2:1.14734": 0.5625,
+            "A2:1.2": 0.5625,
+            "A3": 0.5625,
+            "A5": 0.5625
+          }
+        },
+        "document_retrieval_reconciliation:easy": {
+          "cases": 16,
+          "parents": 8,
+          "policy_accuracy": {
+            "A0": 0.5,
+            "A1": 0.5,
+            "A2:0.8": 0.5,
+            "A2:0.9": 0.5,
+            "A2:1": 0.5,
+            "A2:1.1": 0.5,
+            "A2:1.14734": 0.5,
+            "A2:1.2": 0.5,
+            "A3": 0.5,
+            "A5": 0.5
+          }
+        },
+        "document_retrieval_reconciliation:hard": {
+          "cases": 16,
+          "parents": 8,
+          "policy_accuracy": {
+            "A0": 0.5,
+            "A1": 0.5,
+            "A2:0.8": 0.5,
+            "A2:0.9": 0.5,
+            "A2:1": 0.5,
+            "A2:1.1": 0.5,
+            "A2:1.14734": 0.5,
+            "A2:1.2": 0.4375,
+            "A3": 0.5,
+            "A5": 0.5
+          }
+        },
+        "program_state:easy": {
+          "cases": 16,
+          "parents": 8,
+          "policy_accuracy": {
+            "A0": 0.125,
+            "A1": 0.0625,
+            "A2:0.8": 0.125,
+            "A2:0.9": 0.125,
+            "A2:1": 0.0625,
+            "A2:1.1": 0.0625,
+            "A2:1.14734": 0.0625,
+            "A2:1.2": 0.0625,
+            "A3": 0.0625,
+            "A5": 0.0625
+          }
+        },
+        "program_state:hard": {
+          "cases": 16,
+          "parents": 8,
+          "policy_accuracy": {
+            "A0": 0.0,
+            "A1": 0.0,
+            "A2:0.8": 0.0,
+            "A2:0.9": 0.0,
+            "A2:1": 0.0,
+            "A2:1.1": 0.0,
+            "A2:1.14734": 0.0,
+            "A2:1.2": 0.0,
+            "A3": 0.0,
+            "A5": 0.0
+          }
+        },
+        "signed_ledgers:easy": {
+          "cases": 16,
+          "parents": 8,
+          "policy_accuracy": {
+            "A0": 0.0,
+            "A1": 0.0,
+            "A2:0.8": 0.0,
+            "A2:0.9": 0.0,
+            "A2:1": 0.0,
+            "A2:1.1": 0.0,
+            "A2:1.14734": 0.0,
+            "A2:1.2": 0.0,
+            "A3": 0.0,
+            "A5": 0.0
+          }
+        },
+        "signed_ledgers:hard": {
+          "cases": 16,
+          "parents": 8,
+          "policy_accuracy": {
+            "A0": 0.0,
+            "A1": 0.0,
+            "A2:0.8": 0.0,
+            "A2:0.9": 0.0,
+            "A2:1": 0.0,
+            "A2:1.1": 0.0,
+            "A2:1.14734": 0.0,
+            "A2:1.2": 0.0,
+            "A3": 0.0,
+            "A5": 0.0
+          }
+        }
+      },
+      "A3_format_retention_vs_unit": {
+        "losses": [],
+        "gains": []
+      },
+      "parent_pair_patterns": {
+        "A0": {
+          "SAME_GOLD_PROMPT_VARIANTS|parents": 80,
+          "SAME_GOLD_PROMPT_VARIANTS|both_correct": 20,
+          "SAME_GOLD_PROMPT_VARIANTS|canonical_consistent": 53,
+          "SAME_GOLD_PROMPT_VARIANTS|invalid_variant_parent": 0,
+          "EVIDENCE_TRANSFER|parents": 16,
+          "EVIDENCE_TRANSFER|both_correct": 0,
+          "EVIDENCE_TRANSFER|appropriate_evidence_response": 0,
+          "EVIDENCE_TRANSFER|blanket_UNKNOWN": 16,
+          "EVIDENCE_TRANSFER|invalid_variant_parent": 0
+        },
+        "A1": {
+          "SAME_GOLD_PROMPT_VARIANTS|parents": 80,
+          "SAME_GOLD_PROMPT_VARIANTS|both_correct": 20,
+          "SAME_GOLD_PROMPT_VARIANTS|canonical_consistent": 45,
+          "SAME_GOLD_PROMPT_VARIANTS|invalid_variant_parent": 1,
+          "EVIDENCE_TRANSFER|parents": 16,
+          "EVIDENCE_TRANSFER|both_correct": 1,
+          "EVIDENCE_TRANSFER|appropriate_evidence_response": 1,
+          "EVIDENCE_TRANSFER|blanket_UNKNOWN": 15,
+          "EVIDENCE_TRANSFER|invalid_variant_parent": 0
+        },
+        "A3": {
+          "SAME_GOLD_PROMPT_VARIANTS|parents": 80,
+          "SAME_GOLD_PROMPT_VARIANTS|both_correct": 19,
+          "SAME_GOLD_PROMPT_VARIANTS|canonical_consistent": 44,
+          "SAME_GOLD_PROMPT_VARIANTS|invalid_variant_parent": 1,
+          "EVIDENCE_TRANSFER|parents": 16,
+          "EVIDENCE_TRANSFER|both_correct": 1,
+          "EVIDENCE_TRANSFER|appropriate_evidence_response": 1,
+          "EVIDENCE_TRANSFER|blanket_UNKNOWN": 14,
+          "EVIDENCE_TRANSFER|invalid_variant_parent": 0
+        },
+        "A5": {
+          "SAME_GOLD_PROMPT_VARIANTS|parents": 80,
+          "SAME_GOLD_PROMPT_VARIANTS|both_correct": 19,
+          "SAME_GOLD_PROMPT_VARIANTS|canonical_consistent": 44,
+          "SAME_GOLD_PROMPT_VARIANTS|invalid_variant_parent": 1,
+          "EVIDENCE_TRANSFER|parents": 16,
+          "EVIDENCE_TRANSFER|both_correct": 1,
+          "EVIDENCE_TRANSFER|appropriate_evidence_response": 1,
+          "EVIDENCE_TRANSFER|blanket_UNKNOWN": 14,
+          "EVIDENCE_TRANSFER|invalid_variant_parent": 0
+        }
+      },
+      "pair_metric_limit": "Canonical consistency can group invalidNone outputs; all-invalid pairs do not establish reasoning or semantic equivalence."
+    },
+    "OPEN_VALIDATION": {
+      "cases": 96,
+      "parents": 48,
+      "correct_equivalents": {
+        "A0": 33.0,
+        "A1": 34.0,
+        "A2:0.8": 30.0,
+        "A2:0.9": 31.0,
+        "A2:1": 34.0,
+        "A2:1.1": 34.0,
+        "A2:1.14734": 34.0,
+        "A2:1.2": 34.0,
+        "A3": 34.0,
+        "A5": 34.0
+      },
+      "equal_category_parent_accuracy": {
+        "A0": 0.34375,
+        "A1": 0.3541666666666667,
+        "A2:0.8": 0.3125,
+        "A2:0.9": 0.3229166666666667,
+        "A2:1": 0.3541666666666667,
+        "A2:1.1": 0.3541666666666667,
+        "A2:1.14734": 0.3541666666666667,
+        "A2:1.2": 0.3541666666666667,
+        "A3": 0.3541666666666667,
+        "A5": 0.3541666666666667
+      },
+      "fixed_curve": {
+        "0.8": 0.3125,
+        "0.9": 0.3229166666666667,
+        "1.0": 0.3541666666666667,
+        "1.1": 0.3541666666666667,
+        "1.1473425965417514": 0.3541666666666667,
+        "1.2": 0.3541666666666667
+      },
+      "retrospective_best_global_fixed": 1.0,
+      "frozen_DEV_fixed": 1.0,
+      "finite_constant_oracle_correct": 35.0,
+      "headroom": 0.01041666666666663,
+      "capture": 0.0,
+      "A3_contrasts": {
+        "frozen_fixed": {
+          "delta": 0.0,
+          "wins": [
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1"
+          ],
+          "losses": [
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18:v1"
+          ],
+          "correct_retention_losses": [
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18:v1"
+          ],
+          "retained_correct": 33,
+          "comparator_correct": 34,
+          "parent_wins": 1,
+          "parent_losses": 1,
+          "parent_ties": 46,
+          "parent_deltas": {
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:20": 0.5,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18": -0.5,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:23": 0.0
+          }
+        },
+        "matched_A5": {
+          "delta": 0.0,
+          "wins": [],
+          "losses": [],
+          "correct_retention_losses": [],
+          "retained_correct": 34,
+          "comparator_correct": 34,
+          "parent_wins": 0,
+          "parent_losses": 0,
+          "parent_ties": 48,
+          "parent_deltas": {
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:23": 0.0
+          }
+        },
+        "intact": {
+          "delta": 0.010416666666666666,
+          "wins": [
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:16:v0",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:21:v0",
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:16:v0",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:17:v1",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:20:v0",
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:22:v0"
+          ],
+          "losses": [
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:17:v1",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:18:v1",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:19:v0",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18:v0",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18:v1",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:22:v0"
+          ],
+          "correct_retention_losses": [
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:17:v1",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:18:v1",
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:19:v0",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18:v0",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18:v1",
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:22:v0"
+          ],
+          "retained_correct": 27,
+          "comparator_correct": 33,
+          "parent_wins": 7,
+          "parent_losses": 5,
+          "parent_ties": 36,
+          "parent_deltas": {
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:16": 0.5,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:17": -0.5,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:18": -0.5,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:19": -0.5,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:21": 0.5,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:20": 0.5,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:16": 0.5,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:17": 0.5,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18": -1.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:22": -0.5,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:20": 0.5,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:22": 0.5,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:23": 0.0
+          }
+        },
+        "unit": {
+          "delta": 0.0,
+          "wins": [
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1"
+          ],
+          "losses": [
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18:v1"
+          ],
+          "correct_retention_losses": [
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18:v1"
+          ],
+          "retained_correct": 33,
+          "comparator_correct": 34,
+          "parent_wins": 1,
+          "parent_losses": 1,
+          "parent_ties": 46,
+          "parent_deltas": {
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:signed_ledgers:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:deduction_composition:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:program_state:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:20": 0.5,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:dialogue_memory:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18": -0.5,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:23": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:16": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:17": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:18": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:19": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:20": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:21": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:22": 0.0,
+            "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:23": 0.0
+          }
+        }
+      },
+      "by_category_correct_equivalents": {
+        "answerability_source_conflict": {
+          "A0": 8.0,
+          "A1": 10.0,
+          "A2:0.8": 8.0,
+          "A2:0.9": 9.0,
+          "A2:1": 10.0,
+          "A2:1.1": 10.0,
+          "A2:1.14734": 10.0,
+          "A2:1.2": 10.0,
+          "A3": 10.0,
+          "A5": 10.0
+        },
+        "deduction_composition": {
+          "A0": 9.0,
+          "A1": 8.0,
+          "A2:0.8": 7.0,
+          "A2:0.9": 7.0,
+          "A2:1": 8.0,
+          "A2:1.1": 8.0,
+          "A2:1.14734": 8.0,
+          "A2:1.2": 8.0,
+          "A3": 8.0,
+          "A5": 8.0
+        },
+        "dialogue_memory": {
+          "A0": 8.0,
+          "A1": 8.0,
+          "A2:0.8": 8.0,
+          "A2:0.9": 8.0,
+          "A2:1": 8.0,
+          "A2:1.1": 9.0,
+          "A2:1.14734": 9.0,
+          "A2:1.2": 9.0,
+          "A3": 9.0,
+          "A5": 9.0
+        },
+        "document_retrieval_reconciliation": {
+          "A0": 8.0,
+          "A1": 8.0,
+          "A2:0.8": 7.0,
+          "A2:0.9": 7.0,
+          "A2:1": 8.0,
+          "A2:1.1": 7.0,
+          "A2:1.14734": 7.0,
+          "A2:1.2": 7.0,
+          "A3": 7.0,
+          "A5": 7.0
+        },
+        "program_state": {
+          "A0": 0.0,
+          "A1": 0.0,
+          "A2:0.8": 0.0,
+          "A2:0.9": 0.0,
+          "A2:1": 0.0,
+          "A2:1.1": 0.0,
+          "A2:1.14734": 0.0,
+          "A2:1.2": 0.0,
+          "A3": 0.0,
+          "A5": 0.0
+        },
+        "signed_ledgers": {
+          "A0": 0.0,
+          "A1": 0.0,
+          "A2:0.8": 0.0,
+          "A2:0.9": 0.0,
+          "A2:1": 0.0,
+          "A2:1.1": 0.0,
+          "A2:1.14734": 0.0,
+          "A2:1.2": 0.0,
+          "A3": 0.0,
+          "A5": 0.0
+        }
+      },
+      "endpoints": {
+        "A0": {
+          "format_valid": 95.0,
+          "false_UNKNOWN": 24.0,
+          "unsupported_unanswerable": 0.0,
+          "canonical_UNKNOWN": 48.0,
+          "termination_counts": {
+            "eos": 96
+          }
+        },
+        "A1": {
+          "format_valid": 93.0,
+          "false_UNKNOWN": 20.0,
+          "unsupported_unanswerable": 2.0,
+          "canonical_UNKNOWN": 42.0,
+          "termination_counts": {
+            "eos": 96
+          }
+        },
+        "A2:0.8": {
+          "format_valid": 93.0,
+          "false_UNKNOWN": 23.0,
+          "unsupported_unanswerable": 2.0,
+          "canonical_UNKNOWN": 45.0,
+          "termination_counts": {
+            "eos": 96
+          }
+        },
+        "A2:0.9": {
+          "format_valid": 93.0,
+          "false_UNKNOWN": 22.0,
+          "unsupported_unanswerable": 2.0,
+          "canonical_UNKNOWN": 44.0,
+          "termination_counts": {
+            "eos": 96
+          }
+        },
+        "A2:1": {
+          "format_valid": 93.0,
+          "false_UNKNOWN": 20.0,
+          "unsupported_unanswerable": 2.0,
+          "canonical_UNKNOWN": 42.0,
+          "termination_counts": {
+            "eos": 96
+          }
+        },
+        "A2:1.1": {
+          "format_valid": 91.0,
+          "false_UNKNOWN": 19.0,
+          "unsupported_unanswerable": 3.0,
+          "canonical_UNKNOWN": 40.0,
+          "termination_counts": {
+            "eos": 95,
+            "token_cap": 1
+          }
+        },
+        "A2:1.14734": {
+          "format_valid": 91.0,
+          "false_UNKNOWN": 19.0,
+          "unsupported_unanswerable": 3.0,
+          "canonical_UNKNOWN": 40.0,
+          "termination_counts": {
+            "eos": 95,
+            "token_cap": 1
+          }
+        },
+        "A2:1.2": {
+          "format_valid": 91.0,
+          "false_UNKNOWN": 19.0,
+          "unsupported_unanswerable": 3.0,
+          "canonical_UNKNOWN": 40.0,
+          "termination_counts": {
+            "eos": 96
+          }
+        },
+        "A3": {
+          "format_valid": 91.0,
+          "false_UNKNOWN": 19.0,
+          "unsupported_unanswerable": 3.0,
+          "canonical_UNKNOWN": 40.0,
+          "termination_counts": {
+            "eos": 95,
+            "token_cap": 1
+          }
+        },
+        "A5": {
+          "format_valid": 91.0,
+          "false_UNKNOWN": 19.0,
+          "unsupported_unanswerable": 3.0,
+          "canonical_UNKNOWN": 40.0,
+          "termination_counts": {
+            "eos": 190,
+            "token_cap": 2
+          }
+        }
+      },
+      "answerable_cases": 72,
+      "unanswerable_cases": 24,
+      "oracle_only_rescues": [
+        "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1"
+      ],
+      "uncertainty": "counts/parent deltas only; CI and pvalueNULL, noninferiority NOT_ESTABLISHED",
+      "parent_shared_constant_oracle": {
+        "accuracy": 0.3645833333333333,
+        "correct_case_equivalents": 35.0,
+        "headroom_above_best_global": 0.01041666666666663,
+        "diagnostic_only": true,
+        "scope": "one retrospective grid constant shared by both variants; not continuous or token schedule"
+      },
+      "category_difficulty": {
+        "answerability_source_conflict:easy": {
+          "cases": 8,
+          "parents": 4,
+          "policy_accuracy": {
+            "A0": 0.5,
+            "A1": 0.5,
+            "A2:0.8": 0.5,
+            "A2:0.9": 0.5,
+            "A2:1": 0.5,
+            "A2:1.1": 0.5,
+            "A2:1.14734": 0.5,
+            "A2:1.2": 0.5,
+            "A3": 0.5,
+            "A5": 0.5
+          }
+        },
+        "answerability_source_conflict:hard": {
+          "cases": 8,
+          "parents": 4,
+          "policy_accuracy": {
+            "A0": 0.5,
+            "A1": 0.75,
+            "A2:0.8": 0.5,
+            "A2:0.9": 0.625,
+            "A2:1": 0.75,
+            "A2:1.1": 0.75,
+            "A2:1.14734": 0.75,
+            "A2:1.2": 0.75,
+            "A3": 0.75,
+            "A5": 0.75
+          }
+        },
+        "deduction_composition:easy": {
+          "cases": 8,
+          "parents": 4,
+          "policy_accuracy": {
+            "A0": 0.625,
+            "A1": 0.375,
+            "A2:0.8": 0.25,
+            "A2:0.9": 0.25,
+            "A2:1": 0.375,
+            "A2:1.1": 0.375,
+            "A2:1.14734": 0.375,
+            "A2:1.2": 0.375,
+            "A3": 0.375,
+            "A5": 0.375
+          }
+        },
+        "deduction_composition:hard": {
+          "cases": 8,
+          "parents": 4,
+          "policy_accuracy": {
+            "A0": 0.5,
+            "A1": 0.625,
+            "A2:0.8": 0.625,
+            "A2:0.9": 0.625,
+            "A2:1": 0.625,
+            "A2:1.1": 0.625,
+            "A2:1.14734": 0.625,
+            "A2:1.2": 0.625,
+            "A3": 0.625,
+            "A5": 0.625
+          }
+        },
+        "dialogue_memory:easy": {
+          "cases": 8,
+          "parents": 4,
+          "policy_accuracy": {
+            "A0": 0.5,
+            "A1": 0.5,
+            "A2:0.8": 0.5,
+            "A2:0.9": 0.5,
+            "A2:1": 0.5,
+            "A2:1.1": 0.5,
+            "A2:1.14734": 0.5,
+            "A2:1.2": 0.5,
+            "A3": 0.5,
+            "A5": 0.5
+          }
+        },
+        "dialogue_memory:hard": {
+          "cases": 8,
+          "parents": 4,
+          "policy_accuracy": {
+            "A0": 0.5,
+            "A1": 0.5,
+            "A2:0.8": 0.5,
+            "A2:0.9": 0.5,
+            "A2:1": 0.5,
+            "A2:1.1": 0.625,
+            "A2:1.14734": 0.625,
+            "A2:1.2": 0.625,
+            "A3": 0.625,
+            "A5": 0.625
+          }
+        },
+        "document_retrieval_reconciliation:easy": {
+          "cases": 8,
+          "parents": 4,
+          "policy_accuracy": {
+            "A0": 0.5,
+            "A1": 0.625,
+            "A2:0.8": 0.5,
+            "A2:0.9": 0.5,
+            "A2:1": 0.625,
+            "A2:1.1": 0.5,
+            "A2:1.14734": 0.5,
+            "A2:1.2": 0.5,
+            "A3": 0.5,
+            "A5": 0.5
+          }
+        },
+        "document_retrieval_reconciliation:hard": {
+          "cases": 8,
+          "parents": 4,
+          "policy_accuracy": {
+            "A0": 0.5,
+            "A1": 0.375,
+            "A2:0.8": 0.375,
+            "A2:0.9": 0.375,
+            "A2:1": 0.375,
+            "A2:1.1": 0.375,
+            "A2:1.14734": 0.375,
+            "A2:1.2": 0.375,
+            "A3": 0.375,
+            "A5": 0.375
+          }
+        },
+        "program_state:easy": {
+          "cases": 8,
+          "parents": 4,
+          "policy_accuracy": {
+            "A0": 0.0,
+            "A1": 0.0,
+            "A2:0.8": 0.0,
+            "A2:0.9": 0.0,
+            "A2:1": 0.0,
+            "A2:1.1": 0.0,
+            "A2:1.14734": 0.0,
+            "A2:1.2": 0.0,
+            "A3": 0.0,
+            "A5": 0.0
+          }
+        },
+        "program_state:hard": {
+          "cases": 8,
+          "parents": 4,
+          "policy_accuracy": {
+            "A0": 0.0,
+            "A1": 0.0,
+            "A2:0.8": 0.0,
+            "A2:0.9": 0.0,
+            "A2:1": 0.0,
+            "A2:1.1": 0.0,
+            "A2:1.14734": 0.0,
+            "A2:1.2": 0.0,
+            "A3": 0.0,
+            "A5": 0.0
+          }
+        },
+        "signed_ledgers:easy": {
+          "cases": 8,
+          "parents": 4,
+          "policy_accuracy": {
+            "A0": 0.0,
+            "A1": 0.0,
+            "A2:0.8": 0.0,
+            "A2:0.9": 0.0,
+            "A2:1": 0.0,
+            "A2:1.1": 0.0,
+            "A2:1.14734": 0.0,
+            "A2:1.2": 0.0,
+            "A3": 0.0,
+            "A5": 0.0
+          }
+        },
+        "signed_ledgers:hard": {
+          "cases": 8,
+          "parents": 4,
+          "policy_accuracy": {
+            "A0": 0.0,
+            "A1": 0.0,
+            "A2:0.8": 0.0,
+            "A2:0.9": 0.0,
+            "A2:1": 0.0,
+            "A2:1.1": 0.0,
+            "A2:1.14734": 0.0,
+            "A2:1.2": 0.0,
+            "A3": 0.0,
+            "A5": 0.0
+          }
+        }
+      },
+      "A3_format_retention_vs_unit": {
+        "losses": [
+          "BULK-TAPS-001:9463250d48f1:signed_ledgers:18:v1",
+          "BULK-TAPS-001:9463250d48f1:signed_ledgers:20:v1"
+        ],
+        "gains": []
+      },
+      "parent_pair_patterns": {
+        "A0": {
+          "SAME_GOLD_PROMPT_VARIANTS|parents": 40,
+          "SAME_GOLD_PROMPT_VARIANTS|both_correct": 10,
+          "SAME_GOLD_PROMPT_VARIANTS|canonical_consistent": 25,
+          "SAME_GOLD_PROMPT_VARIANTS|invalid_variant_parent": 1,
+          "EVIDENCE_TRANSFER|parents": 8,
+          "EVIDENCE_TRANSFER|both_correct": 0,
+          "EVIDENCE_TRANSFER|appropriate_evidence_response": 0,
+          "EVIDENCE_TRANSFER|blanket_UNKNOWN": 8,
+          "EVIDENCE_TRANSFER|invalid_variant_parent": 0
+        },
+        "A1": {
+          "SAME_GOLD_PROMPT_VARIANTS|parents": 40,
+          "SAME_GOLD_PROMPT_VARIANTS|both_correct": 8,
+          "SAME_GOLD_PROMPT_VARIANTS|canonical_consistent": 20,
+          "SAME_GOLD_PROMPT_VARIANTS|invalid_variant_parent": 3,
+          "EVIDENCE_TRANSFER|parents": 8,
+          "EVIDENCE_TRANSFER|both_correct": 2,
+          "EVIDENCE_TRANSFER|appropriate_evidence_response": 2,
+          "EVIDENCE_TRANSFER|blanket_UNKNOWN": 6,
+          "EVIDENCE_TRANSFER|invalid_variant_parent": 0
+        },
+        "A3": {
+          "SAME_GOLD_PROMPT_VARIANTS|parents": 40,
+          "SAME_GOLD_PROMPT_VARIANTS|both_correct": 8,
+          "SAME_GOLD_PROMPT_VARIANTS|canonical_consistent": 18,
+          "SAME_GOLD_PROMPT_VARIANTS|invalid_variant_parent": 5,
+          "EVIDENCE_TRANSFER|parents": 8,
+          "EVIDENCE_TRANSFER|both_correct": 2,
+          "EVIDENCE_TRANSFER|appropriate_evidence_response": 2,
+          "EVIDENCE_TRANSFER|blanket_UNKNOWN": 6,
+          "EVIDENCE_TRANSFER|invalid_variant_parent": 0
+        },
+        "A5": {
+          "SAME_GOLD_PROMPT_VARIANTS|parents": 40,
+          "SAME_GOLD_PROMPT_VARIANTS|both_correct": 8,
+          "SAME_GOLD_PROMPT_VARIANTS|canonical_consistent": 18,
+          "SAME_GOLD_PROMPT_VARIANTS|invalid_variant_parent": 5,
+          "EVIDENCE_TRANSFER|parents": 8,
+          "EVIDENCE_TRANSFER|both_correct": 2,
+          "EVIDENCE_TRANSFER|appropriate_evidence_response": 2,
+          "EVIDENCE_TRANSFER|blanket_UNKNOWN": 6,
+          "EVIDENCE_TRANSFER|invalid_variant_parent": 0
+        }
+      },
+      "pair_metric_limit": "Canonical consistency can group invalidNone outputs; all-invalid pairs do not establish reasoning or semantic equivalence."
+    }
+  },
+  "own_bank_floors": {
+    "DEVELOPMENT": {
+      "constant_YES": {
+        "correct_cases": 16,
+        "accuracy": 0.08333333333333333
+      },
+      "constant_NO": {
+        "correct_cases": 16,
+        "accuracy": 0.08333333333333333
+      },
+      "constant_UNKNOWN": {
+        "correct_cases": 48,
+        "accuracy": 0.25
+      },
+      "constant_0": {
+        "correct_cases": 0,
+        "accuracy": 0.0
+      },
+      "constant_1": {
+        "correct_cases": 0,
+        "accuracy": 0.0
+      },
+      "copy_full_prompt": {
+        "correct_cases": 0,
+        "accuracy": 0.0
+      },
+      "copy_first_number": {
+        "correct_cases": 4,
+        "accuracy": 0.020833333333333332
+      },
+      "copy_last_number": {
+        "correct_cases": 11,
+        "accuracy": 0.057291666666666664
+      },
+      "copy_last_entity": {
+        "correct_cases": 0,
+        "accuracy": 0.0
+      },
+      "query_blind_first_entity_solver": {
+        "correct_cases": 60,
+        "accuracy": 0.3125
+      },
+      "query_blind_last_entity_solver": {
+        "correct_cases": 71,
+        "accuracy": 0.3697916666666667
+      },
+      "last_printed_query_number": {
+        "correct_cases": 32,
+        "accuracy": 0.16666666666666666
+      },
+      "memory_any_clear_else_max_skeleton": {
+        "correct_cases": 16,
+        "accuracy": 0.08333333333333333
+      },
+      "memory_max_query_value_ignore_state": {
+        "correct_cases": 12,
+        "accuracy": 0.0625
+      },
+      "rule_rhs_presence_skeleton": {
+        "correct_cases": 16,
+        "accuracy": 0.08333333333333333
+      }
+    },
+    "OPEN_VALIDATION": {
+      "constant_YES": {
+        "correct_cases": 8,
+        "accuracy": 0.08333333333333333
+      },
+      "constant_NO": {
+        "correct_cases": 8,
+        "accuracy": 0.08333333333333333
+      },
+      "constant_UNKNOWN": {
+        "correct_cases": 24,
+        "accuracy": 0.25
+      },
+      "constant_0": {
+        "correct_cases": 0,
+        "accuracy": 0.0
+      },
+      "constant_1": {
+        "correct_cases": 0,
+        "accuracy": 0.0
+      },
+      "copy_full_prompt": {
+        "correct_cases": 0,
+        "accuracy": 0.0
+      },
+      "copy_first_number": {
+        "correct_cases": 0,
+        "accuracy": 0.0
+      },
+      "copy_last_number": {
+        "correct_cases": 4,
+        "accuracy": 0.041666666666666664
+      },
+      "copy_last_entity": {
+        "correct_cases": 0,
+        "accuracy": 0.0
+      },
+      "query_blind_first_entity_solver": {
+        "correct_cases": 33,
+        "accuracy": 0.34375
+      },
+      "query_blind_last_entity_solver": {
+        "correct_cases": 42,
+        "accuracy": 0.4375
+      },
+      "last_printed_query_number": {
+        "correct_cases": 15,
+        "accuracy": 0.15625
+      },
+      "memory_any_clear_else_max_skeleton": {
+        "correct_cases": 8,
+        "accuracy": 0.08333333333333333
+      },
+      "memory_max_query_value_ignore_state": {
+        "correct_cases": 6,
+        "accuracy": 0.0625
+      },
+      "rule_rhs_presence_skeleton": {
+        "correct_cases": 8,
+        "accuracy": 0.08333333333333333
+      }
+    }
+  },
+  "floor_implementation": "Pinned prompt-only bulk_bank.blind_predictions, independent strict grade applied only after predictions; no solver target access.",
+  "freeze": {
+    "selected_alpha": 1.0,
+    "pool_observations": 513,
+    "pool_weighting": "generated prefixes; one deterministic A3 evaluation per case; longer responses contribute more",
+    "digest_and_actual_generation_prefix_match": true,
+    "teacher_or_validation_pool_input": false
+  },
+  "costs": {
+    "events": {
+      "FORWARD_STARTED": 9180,
+      "FORWARD_COMPLETED": 9180,
+      "MAXIMUM_FORWARD_STARTED": 18,
+      "MAXIMUM_FORWARD_COMPLETED": 17,
+      "MAXIMUM_FORWARD_FAILED": 1,
+      "CACHE_REJECTION_STARTED": 2,
+      "CACHE_REJECTED": 2
+    },
+    "API_attempts": 9200,
+    "completed_forwards": 9197,
+    "completed_prefix_positions": 1144030,
+    "generated_tokens": 9180,
+    "ordinary_calls": 9180,
+    "maximum_attempts": 18,
+    "cache_rejections": 2,
+    "native_charged_seconds": 743.3900000000012,
+    "prior_native_seconds": 2837.843,
+    "cumulative_seconds": 3581.233000000001,
+    "remaining_seconds": 18018.767,
+    "deployable_speed_claim": false,
+    "partial_positions": null,
+    "physical_component_sums": {
+      "wall_seconds": {
+        "known_records": 3296,
+        "expected_records": 3296,
+        "known_sum": 676.0997414999292,
+        "complete_value": 676.0997414999292
+      },
+      "controller_seconds": {
+        "known_records": 3280,
+        "expected_records": 3296,
+        "known_sum": 51.92146350024268,
+        "complete_value": null
+      },
+      "controller_logging_seconds": {
+        "known_records": 3280,
+        "expected_records": 3296,
+        "known_sum": 1.639879500025927,
+        "complete_value": null
+      },
+      "forward_logging_seconds": {
+        "known_records": 3296,
+        "expected_records": 3296,
+        "known_sum": 1.4024356000045373,
+        "complete_value": 1.4024356000045373
+      },
+      "full_model_calls_including_gold_nll": {
+        "known_records": 3296,
+        "expected_records": 3296,
+        "known_sum": 9180,
+        "complete_value": 9180
+      },
+      "processed_token_positions": {
+        "known_records": 3296,
+        "expected_records": 3296,
+        "known_sum": 1137961,
+        "complete_value": 1137961
+      },
+      "extra_layer_applications": {
+        "known_records": 3296,
+        "expected_records": 3296,
+        "known_sum": 16620,
+        "complete_value": 16620
+      }
+    },
+    "ledger_actual_cumulative": 3581.232999999999
+  },
+  "native_preservation_receipt": {
+    "status": "BULK_MATRIX_COMPLETE_NOT_CONFIRMATORY",
+    "state": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "source_unchanged": true,
+    "assets_unchanged": true,
+    "parameter_gradients": "NONE",
+    "three_actual_integrity_receipts_bound": true
+  },
+  "limitations": [
+    "All native results belong to this completed same-source GPU generation run; failedbulk001 evidence remains separately provisional, not pooled.",
+    "Validation is already partially exposed and authored shared-template parent holdout, not independent source confirmation.",
+    "Finite constant-selector oracle is not a continuous/per-token schedule upper bound; fixed comparison freezes on DEV only.",
+    "NullCI/pvalue/noninferiority is not proof of equivalence. Small strata and48 validation parents cannot establish broad generality.",
+    "Instrumented/sharedGPU/counterbalanced-once/A5late-phase costs are not paired repeated matched-quality deployment timing.",
+    "Literal/canonicalUNKNOWN differs from semantic abstention; format/copy failures are not reasoning improvements.",
+    "No fitting, endpoint selection, new controller or positivity/speed claim follows automatically."
+  ],
+  "bindings": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\admission.json",
+      "sha256": "a6611ea9c493d314fbe47771ec59521440178153e0779be283128c6ae59e723c"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\source_manifest.json",
+      "sha256": "cdc5a256d09c6d440bf40e69e932d0acc13d00138688e14b379b73b6a0584467"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\terminal_receipt.json",
+      "sha256": "dc4d8c7a5895e846aee3c1b1b19b9e4f4909386779b313aa5693599ec9f2ded6"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\review.json",
+      "sha256": "36f65f85fc00c0e1dbbce5f2537c0b7b2d21567542fd2ac5e0d1044c2b9d0113"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\receipt.json",
+      "sha256": "d9c34a822d9bdaaac39d33820eaacf05d083974cd9191e43559307bd2258ff19"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\registration.json",
+      "sha256": "223dee72e8e41e2cbefdffe4677616a67cb26906604d4dcbe978c49462cf5588"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\qualification.json",
+      "sha256": "f5dcc3fd73bfba345b2b81fdee82bd66d931dd9fd619636106f50d88d85e955a"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\A5_qualification.json",
+      "sha256": "564b3faa455cf9841c1f8403efeda7fead0f06e562a2d6eb305575eeb008743a"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\matrix_forecast.json",
+      "sha256": "e8b4f2b1e598c8299670d98965db6653b2de8c0027ae73931b99bf9ae0bb9621"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\frozen_development.json",
+      "sha256": "9a7269deeaf116666a45dba329e32adb2be41b0a3f67ad74e3f5ff9714250bf2"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\outcomes.jsonl",
+      "sha256": "858ba6c1b5105b460e600c93872575c78e2c3e43545538847e3d9eba30e01cd8"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\trajectories.jsonl",
+      "sha256": "0b9a1266a33320eb765e9a27a65ddf7d2a49fae45af9ae78bd81b8b86257c0c3"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\forwards.jsonl",
+      "sha256": "55e9219415b7e95d78778b7f9a9ba0bc178430fc38cd6735eb2059a687dfb9d6"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\readout_pairs.jsonl",
+      "sha256": "3018c732c22d45bab977e60aea49c3a800ba5ee6cd8e7ea4b2e37f51a63c4e75"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\integrity_journal.jsonl",
+      "sha256": "e6caa0c310ec5c7bd52477dba29e52aacda5b8156386d6f804982c64c6340d8b"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\DEV_DETERMINISTIC_INTEGRITY.json",
+      "sha256": "fb835e19fe5899365e05ff9970d055f9ec6492bc21cc5683e3f209b186f36efb"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\DEV_COMPLETE_INTEGRITY.json",
+      "sha256": "e2075fb439ca62b85630fcc7093eba331c95583273e1bc708663d43a3ef218a7"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\FINAL_INTEGRITY.json",
+      "sha256": "2e5347e577cc990a1ac7000c47a0c93d2f3e9945983e1283cf8f059d2a2ec5dc"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\bulk-restart-manifest-reviewed-001\\REPORT.json",
+      "sha256": "67c7d5d9fc128b148afc6d056cb26f9ecef4e05dde78a7405358125250cb9d21"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\bulk-restart-manifest-reviewed-001\\REPORT.md",
+      "sha256": "e845e673c86716e3bdd2bee244813ac5afa97e41f0ad38814c5bd6213d3670d4"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\bulk-restart-manifest-reviewed-001\\MANIFEST.json",
+      "sha256": "17c656890baa20656b4a1d21b05fc765d13470247b92b079c3513f8e3bf7a141"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\bulk-restart-manifest-reviewed-001\\receipt.json",
+      "sha256": "c8247cef2de3a0c9bf194828ce7829637d2d552c91425f1c6468593fd758a559"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\bulk-bank-apparatus-001\\bank.json",
+      "sha256": "862a63648caf7efb3d287c11bc5caaefc884e0ec6cb3130ce8f196526efc40cd"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\bulk-tokenizer-binding-002\\BULK_TOKENIZER_BINDING.json",
+      "sha256": "1a3723cdc918bb219119044aef5d209334f36c4b140674b8b93174f5361553bf"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\bulk_bank.py",
+      "sha256": "3242439231064fc81991e157c0da62833f4e4223ec71d60cf9ffd2851815b5eb"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\open_bank.py",
+      "sha256": "25db8ad7b8bd4166188eccab4be73c9a430f696610dea5b8c83b380883f9d42a"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\bulk_restart_analysis.py",
+      "sha256": "9c95e00731525c34537696e79f4cc776ebfb2d5f560da0888da2feaf7b62c543"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\bulk_restart_analysis_manifest_bound.py",
+      "sha256": "5bc14dc13371b1a13018943ad6b60bb83ea373f088129143084aa6c98cb34511"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\BULK_ANALYSIS_PLAN_001.md",
+      "sha256": "d3f91618fc97c390588561b9fa274e11a8b3330d5807830c826f782b23e97b61"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\BULK_RESTART_OFFLINE_HELPER_CORRECTION_001.md",
+      "sha256": "ba27547c2094417f9c2aacfea2fb9ed2fff16e1ee522ebfd9da7749f804110c0"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\HUMAN_FULL_GENERATION_RESTART_ALLOWANCE_001.json",
+      "sha256": "2f42ce379924f37fa497700cf660af57d8577c14d9a9eda072be6b4481fc817e"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\bulk_restart_manifest_reader_review_001.json",
+      "sha256": "6b76616f3a7a671a66f105b713b970c8ad502b63daa92375c287155486de2802"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\BUDGET_LEDGER.jsonl",
+      "sha256": "86456fbf9cc0f673050fde2beb3a61114038eb10620a22c798031f517404b3d0"
+    }
+  ],
+  "raw_integrity_recomputation": {
+    "stages": [
+      {
+        "file": "DEV_DETERMINISTIC_INTEGRITY.json",
+        "sha256": "fb835e19fe5899365e05ff9970d055f9ec6492bc21cc5683e3f209b186f36efb",
+        "counts": {
+          "case_count": 192,
+          "model_forward_calls_added_by_checkpoint": 0,
+          "recorded_physical_evaluations": 1848,
+          "scientific_physical_rows": 1728
+        },
+        "state": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+        "parameter_gradients": "NONE",
+        "checkpoint_wall_seconds": 4.03081259999999,
+        "commitment_errors": []
+      },
+      {
+        "file": "DEV_COMPLETE_INTEGRITY.json",
+        "sha256": "e2075fb439ca62b85630fcc7093eba331c95583273e1bc708663d43a3ef218a7",
+        "counts": {
+          "case_count": 192,
+          "model_forward_calls_added_by_checkpoint": 0,
+          "recorded_physical_evaluations": 2240,
+          "scientific_physical_rows": 2112
+        },
+        "state": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+        "parameter_gradients": "NONE",
+        "checkpoint_wall_seconds": 3.7249278999988746,
+        "commitment_errors": []
+      },
+      {
+        "file": "FINAL_INTEGRITY.json",
+        "sha256": "2e5347e577cc990a1ac7000c47a0c93d2f3e9945983e1283cf8f059d2a2ec5dc",
+        "counts": {
+          "case_count": 288,
+          "model_forward_calls_added_by_checkpoint": 0,
+          "recorded_physical_evaluations": 3296,
+          "scientific_physical_rows": 3168
+        },
+        "state": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+        "parameter_gradients": "NONE",
+        "checkpoint_wall_seconds": 4.298041699999885,
+        "commitment_errors": []
+      }
+    ],
+    "actual107current_hashes_match": true,
+    "drift": [],
+    "asset_expected_count": 10,
+    "checkpoint_wall_charged_sum": 12.05378219999875,
+    "no_added_model_forwards": true,
+    "scope": "Native source/parameter/state statements are verified receipts plus pinned source, not a new model load. Actual byte commitments/clock joins remain auditable."
+  },
+  "report_md_sha256": "bac973566576ab90dcd6fae49dfb156b91cc828a1d792d01617dd5f8c836c9a5"
+}

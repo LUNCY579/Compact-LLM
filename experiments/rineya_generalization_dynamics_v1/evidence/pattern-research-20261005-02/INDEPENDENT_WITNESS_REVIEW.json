@@ -1,0 +1,198 @@
+{
+  "actual_bank_reads": 0,
+  "all_regular_relations": 90,
+  "authorizes_native_execution": false,
+  "context_entity_count": 6,
+  "context_field_frequencies": "fixed",
+  "context_only_maximum_typed_correct_per_context": "8/16 because null repeats eight times",
+  "context_record_count": 12,
+  "created_utc": "2026-10-05T21:50:11.047411+00:00",
+  "fixed_query_present_absent": [
+    45,
+    45
+  ],
+  "independent_oracle_property_checks": {
+    "nuisance_value": 1440,
+    "record_permutation": 2880,
+    "selected_value": 5760
+  },
+  "limits": [
+    "Finite lookup population only; not revision comparison or learned binding.",
+    "Operator checks concern oracle semantics, not measured model invariance.",
+    "Fixed query order, carry-over and tokenizer-length cues require native-data controls.",
+    "Previous-generator perfect heuristic was not independently rechecked in this review."
+  ],
+  "maximum_typed_accuracy_for_reviewed_information_sets": 0.5,
+  "native_model_calls": 0,
+  "owner_messages": 0,
+  "public_metadata_ids_excluded": true,
+  "quality_gain_established": false,
+  "queries": 1440,
+  "review_result": "PASS_WITH_EXPLICIT_MODEL_EVIDENCE_LIMITS",
+  "reviewer": "/root/producer_audit",
+  "same_context_bytes_per_query": true,
+  "schema": "gd001_independent_finite_witness_review_v1",
+  "scope": "independent read-only mechanical recomputation",
+  "sha256": "cc04e8f1c382995af3c73170d0751996671d9efedf864cf6d1827be937d28143",
+  "value_multiset": "fixed",
+  "verified_payloads": [
+    {
+      "certificate_file_sha256": "ef8957f5a35afd6e46c1197dd3ae828bfc24e37438aa00c98ef969743c7c4253",
+      "conditional_chance_certificates": {
+        "context_only": {
+          "bound_scope": "this complete finite fixture population only",
+          "conditional_group_sizes": {
+            "16": 4
+          },
+          "exact_fraction": "1/2",
+          "groups": 4,
+          "information_set": "context_only",
+          "maximum_label_accuracy": 0.5,
+          "maximum_label_correct": 32,
+          "maximum_typed_accuracy": 0.5,
+          "maximum_typed_correct": 32,
+          "total_queries": 64
+        },
+        "entity_only_with_context": {
+          "bound_scope": "this complete finite fixture population only",
+          "conditional_group_sizes": {
+            "4": 16
+          },
+          "exact_fraction": "1/2",
+          "groups": 16,
+          "information_set": "entity_only_with_context",
+          "maximum_label_accuracy": 0.5,
+          "maximum_label_correct": 32,
+          "maximum_typed_accuracy": 0.5,
+          "maximum_typed_correct": 32,
+          "total_queries": 64
+        },
+        "field_only_with_context": {
+          "bound_scope": "this complete finite fixture population only",
+          "conditional_group_sizes": {
+            "4": 16
+          },
+          "exact_fraction": "1/2",
+          "groups": 16,
+          "information_set": "field_only_with_context",
+          "maximum_label_accuracy": 0.5,
+          "maximum_label_correct": 32,
+          "maximum_typed_accuracy": 0.5,
+          "maximum_typed_correct": 32,
+          "total_queries": 64
+        },
+        "old_nuisance_count_shortcut": {
+          "bound_scope": "this complete finite fixture population only",
+          "conditional_group_sizes": {
+            "64": 1
+          },
+          "exact_fraction": "1/2",
+          "groups": 1,
+          "information_set": "old_nuisance_count_shortcut",
+          "maximum_label_accuracy": 0.5,
+          "maximum_label_correct": 32,
+          "maximum_typed_accuracy": 0.5,
+          "maximum_typed_correct": 32,
+          "total_queries": 64
+        },
+        "query_only_without_context": {
+          "bound_scope": "this complete finite fixture population only",
+          "conditional_group_sizes": {
+            "4": 16
+          },
+          "exact_fraction": "1/2",
+          "groups": 16,
+          "information_set": "query_only_without_context",
+          "maximum_label_accuracy": 0.5,
+          "maximum_label_correct": 32,
+          "maximum_typed_accuracy": 0.5,
+          "maximum_typed_correct": 32,
+          "total_queries": 64
+        }
+      },
+      "contexts": 4,
+      "family": "minimal",
+      "queries": 64,
+      "witness_file_sha256": "38ad495a8c749d383e77894930ac7cd2d9454c3ecb7cda75907eaa4bb2636d5c"
+    },
+    {
+      "certificate_file_sha256": "6bae8024807859cf711fb20647631807fe3656cca29709759bb54d4016be7424",
+      "conditional_chance_certificates": {
+        "context_only": {
+          "bound_scope": "this complete finite fixture population only",
+          "conditional_group_sizes": {
+            "16": 90
+          },
+          "exact_fraction": "1/2",
+          "groups": 90,
+          "information_set": "context_only",
+          "maximum_label_accuracy": 0.5,
+          "maximum_label_correct": 720,
+          "maximum_typed_accuracy": 0.5,
+          "maximum_typed_correct": 720,
+          "total_queries": 1440
+        },
+        "entity_only_with_context": {
+          "bound_scope": "this complete finite fixture population only",
+          "conditional_group_sizes": {
+            "4": 360
+          },
+          "exact_fraction": "1/2",
+          "groups": 360,
+          "information_set": "entity_only_with_context",
+          "maximum_label_accuracy": 0.5,
+          "maximum_label_correct": 720,
+          "maximum_typed_accuracy": 0.5,
+          "maximum_typed_correct": 720,
+          "total_queries": 1440
+        },
+        "field_only_with_context": {
+          "bound_scope": "this complete finite fixture population only",
+          "conditional_group_sizes": {
+            "4": 360
+          },
+          "exact_fraction": "1/2",
+          "groups": 360,
+          "information_set": "field_only_with_context",
+          "maximum_label_accuracy": 0.5,
+          "maximum_label_correct": 720,
+          "maximum_typed_accuracy": 0.5,
+          "maximum_typed_correct": 720,
+          "total_queries": 1440
+        },
+        "old_nuisance_count_shortcut": {
+          "bound_scope": "this complete finite fixture population only",
+          "conditional_group_sizes": {
+            "1440": 1
+          },
+          "exact_fraction": "1/2",
+          "groups": 1,
+          "information_set": "old_nuisance_count_shortcut",
+          "maximum_label_accuracy": 0.5,
+          "maximum_label_correct": 720,
+          "maximum_typed_accuracy": 0.5,
+          "maximum_typed_correct": 720,
+          "total_queries": 1440
+        },
+        "query_only_without_context": {
+          "bound_scope": "this complete finite fixture population only",
+          "conditional_group_sizes": {
+            "90": 16
+          },
+          "exact_fraction": "1/2",
+          "groups": 16,
+          "information_set": "query_only_without_context",
+          "maximum_label_accuracy": 0.5,
+          "maximum_label_correct": 720,
+          "maximum_typed_accuracy": 0.5,
+          "maximum_typed_correct": 720,
+          "total_queries": 1440
+        }
+      },
+      "contexts": 90,
+      "family": "all_regular",
+      "queries": 1440,
+      "witness_file_sha256": "13cbbe43df3568b12e09ad9351f32603947b5c84b808d53f7533c5102225d405"
+    }
+  ]
+}

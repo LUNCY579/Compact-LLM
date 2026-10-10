@@ -65,13 +65,17 @@ def continuation_logp(model, prompt_ids: list[int], candidate_ids: list[int], de
 
 
 class NativeEvaluator:
-    def __init__(self, registry: dict, config: dict):
+    def __init__(self, registry: dict, config: dict, budget=None):
         self.registry, self.config = registry, config
         self.model = self.tokenizer = None
         self.runtime = None
+        self.budget = budget
+        self._forward_hook = None
 
     def load(self, checkpoint: dict) -> dict:
         require(self.model is None, "Unload the previous checkpoint first")
+        if self.budget is not None:
+            self.budget.check_time()
         flight = preflight(self.config, any(c["kind"] == "peft" for c in self.registry["checkpoints"]))
         require(flight["status"] == "PREFLIGHT_ONLY", "; ".join(flight["reasons"]))
         os.environ.setdefault("HF_HUB_OFFLINE", "1")
@@ -108,6 +112,13 @@ class NativeEvaluator:
         model.requires_grad_(False)
         self.model = model.to(self.config["device"]).eval()
         require(self.tokenizer.eos_token_id is not None, "Tokenizer has no EOS token")
+        if self.budget is not None:
+            self.budget.check_time()
+            # PEFT's generate() delegates to the underlying HF causal model.
+            # Hook that model once, so generation and likelihood each count one
+            # top-level forward, without counting internal transformer layers.
+            target = self.model.get_base_model() if checkpoint["kind"] == "peft" else self.model
+            self._forward_hook = target.register_forward_pre_hook(self.budget.before_forward)
         self.runtime = {"versions": flight["versions"], "python": flight["python"],
                         "device": self.config["device"], "dtype": self.config["dtype"],
                         "base_parameters": base_parameters, "parameters_with_adapter": sum(p.numel() for p in model.parameters()),
@@ -121,6 +132,8 @@ class NativeEvaluator:
         import torch
         from transformers import GenerationConfig
         require(self.model is not None, "No model loaded")
+        if self.budget is not None:
+            self.budget.check_time()
         cfg, tok = self.config, self.tokenizer
         if cfg["prompt_format"] == "plain":
             prompt = tok.encode(row["prompt"], add_special_tokens=False)
@@ -158,6 +171,9 @@ class NativeEvaluator:
         return resource
 
     def close(self) -> None:
+        if self._forward_hook is not None:
+            self._forward_hook.remove()
+            self._forward_hook = None
         self.model = self.tokenizer = None
         gc.collect()
         if self.config["device"] == "cuda" and importlib.util.find_spec("torch") is not None:
