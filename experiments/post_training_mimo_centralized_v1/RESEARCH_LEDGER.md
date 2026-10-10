@@ -768,3 +768,27 @@ unrun archive note: all38declared source members are missing from that localbund
 No patch was applied or runtime claim made. Local Windows cacheDBs under literal
 %SystemDrive% are ignored, not published or deleted. Full E1, capture, preservation,
 capability gain and long-context qualification remain open; CHECK/FINAL stayclosed.
+
+
+## Exact-prefix capture qualification registered after publication review
+
+The preceding goal turn made progress by publishing two completed native scopes
+and the versioned E1 journal correction. This turn registered AMENDMENT_022 with
+independent repeated-prefix teacher forcing, without rewriting the failed bulk
+comparison or its fixed tolerances. Every target uses prompt+previous generated
+IDs; raw BF16logit hashes must match bitwise and selectedmodelLP maximum/mean
+must pass the prospective1e-4 gate. EOS/argmax/rendering rules stay fixed.
+
+All16384 completedlength pairs independently satisfy maxima514forwards,
+826logicalcalls/164352positions. The frozen128fixture matches its observed hash;
+256/384/512extensions are stdlibderived and must be reconstructed by the pinned
+tokenizer before model construction. Oldsource/config/failure and D2PASS stay bound.
+
+The owned worker and focused20CPU controls passed source review. Root final tests
+passed0.065seconds/process0.437seconds with retained stdout/stderr. Review moved
+logits extraction after the recorded model return, so a later attribute failure
+cannot erase a physicalforward return. Online/replay partial costs, raw token
+witnesses and journal failures remain distinct and retained. No framework/model
+or GPU execution occurred. HostRAM was7.033GiB but GPUfree2347MiB, later2047MiB,
+below unchanged4GiB admission. Other applications were untouched. Native capture,
+DEV/preservation, sustainedE1 and all efficacy claims remain unqualified.

@@ -12,8 +12,9 @@ capture scope that resolves the original prefix/full likelihood disagreement.
 The six successful fixed-shape causal comparisons rule out an observed future-
 suffix leak in this trace, but do not establish shape invariance or identify the
 numerical mechanism. Preserve the failed bulk gate and its 0.03125/0.01 limits.
-A distinct exact-prefix teacher-forcing scope needs prospective registration,
-source controls, bounded native qualification and explicit cost accounting.
+AMENDMENT_022 now registers the distinct exact-prefix teacher-forcing scope.
+Its reviewed source and 20 CPU controls pass; bounded native qualification is
+still required under the unchanged RAM/GPU/disk/time guards.
 
 Do not rerun the completed causal or two-update scopes unchanged merely to
 produce another receipt. Any later execution still needs fresh full resource
@@ -49,3 +50,14 @@ accounting helper. The separately versioned V2 helper preserves the original
 error and pending spans. It is not wired into a worker; future consumers require
 a new reviewed registration. The observed qualifier uses nonnested E1 spans and
 a separately guarded loader journal, so this defect does not invalidate its pass.
+
+
+The new worker is scripts/qualify_capture_exact_prefix.py, using frozen
+configs/CAPTURE_EXACT_PREFIX_QUAL_V1.json. It scores each recorded target from
+exactly prompt+previous generated IDs through fresh keep1 forwards. Matching raw
+BF16 hashes and model logprob maximum/mean1e-4 establish only that new scoring
+scope; the old bulk limits/failure remain unchanged. Maximum514forwards,
+826logicalcalls/164352inputpositions. Natural EOS is required and all generated
+tokens/costs, including partial failures, are retained. Fresh GPU admission needs
+4GiB free; observed2.047-2.292GiB prevented a model launch while other applications
+were active. Do not terminate those applications or weaken the guards.
