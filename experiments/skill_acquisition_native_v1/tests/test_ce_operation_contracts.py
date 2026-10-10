@@ -10,12 +10,15 @@ from unittest.mock import patch
 from experiments.skill_acquisition_native_v1 import ce_operation_contracts as c
 from experiments.skill_acquisition_native_v1 import ce_qualification_accounting as q
 from experiments.skill_acquisition_native_v1 import ce_native_services as s
+from experiments.skill_acquisition_native_v1 import ce_contract_registration as registration
 from .test_ce_qualification_accounting import fixture
 from .test_ce_service_bootstrap_verifier import specification, Clock
 
 
 def manifest():
-    return json.loads((Path(__file__).resolve().parents[3] / 'PROSPECTIVE_CONTRACT_MANIFEST.json').read_text('utf8'))
+    # The deterministic source catalog is tracked with this package. External
+    # proposal paths are historical evidence and supply no fixture authority.
+    return registration.manifest()
 
 
 def q_context(root):

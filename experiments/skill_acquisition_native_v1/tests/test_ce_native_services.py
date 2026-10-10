@@ -192,7 +192,10 @@ class NativeServicesTests(unittest.TestCase):
                 ledger = s.BootstrapLedger(bootstrap_spec(Path(directory)), 'a' * 64, synthetic_fixture=True)
                 ledger.operation('fixture', 'started', operation_id='overrun')
                 charged = dict(ledger.counters)
-                with self.assertRaisesRegex(s.worker.WorkerEvidenceError, 'actual work exceeds'):
+                # Source contract wall validation is a pure ValueError; raw
+                # byte/hash checks retain the worker evidence exception.
+                refused = ValueError if field == 'wall_s' else s.worker.WorkerEvidenceError
+                with self.assertRaisesRegex(refused, 'actual work exceeds'):
                     ledger.operation('fixture', 'returned', operation_id='overrun', **{field: value})
                 self.assertTrue(ledger.fatal)
                 self.assertEqual(ledger.operations['overrun']['phase'], 'started')
