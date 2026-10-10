@@ -3,6 +3,13 @@
 New consumer experiment for the approved small verified-bank/SFT plan. Read
 PROTOCOL.md and AGENTS.md. Existing MQ/DSD/RRP evidence remains untouched.
 
+The [2026-10-09 publication archive](publication/2026-10-09/README.md) preserves
+selected historical analyses, mathematical demos, reviews and test/custody
+records. All153 CPU fixtures pass after an overflow fix in the ideal FP64 Adam
+helper; the native recipe is unchanged. The October 5 bank/goal observations
+below are historical, not a current assertion about another owner's pipeline.
+No native Rineya result or quality improvement is established by this work.
+
 Implemented: owner-export admission reader, all200-row/full-history tokenizer
 compiler, two masked objectives, supervised native stages, bounded CPU-moment
 AdamW, checkpoint recovery, raw predictions, fixed blinded rubric, paired quality

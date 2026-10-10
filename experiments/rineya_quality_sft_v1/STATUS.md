@@ -70,3 +70,21 @@ Current preparation/verification receipts are in
 The earlier33fd119/72-test packet remains historical. A current clean commit and
 explicit raw-versus-LF-normalized hashes must be used for the next owner handoff;
 neither an old packet nor a fixture pass authorizes a native run.
+
+## Publication review — 2026-10-09
+
+The source and selected records are reviewed for GitHub publication. All153CPU
+fixtures pass,0failures/errors/skips,1profilerwarning. The ideal FP64 first-Adam
+helper now forms its bounded ratio before multiplying LR and rejects nonfinite
+intermediates; a large-finite-input regression verifies the representable delta.
+This mathematical fixture change does not alter the native optimizer or recipe.
+
+[Portable evidence](publication/2026-10-09/README.md) includes historical aggregate
+counterexamples, final figures, gradient/order demonstrations, independent source
+reviews, custody, test records and the October5 incomplete/blocked audits.
+Original raw hashes and exported hashes are separate. No bank payload, trained
+weight, private approval/message or process inventory is published. The external
+originals remain untouched. New code/checkout identities require fresh exact
+preparation and native qualification; earlier packets provide no execution grant.
+No new native baseline, SFT outcome, retention/transfer gain or model promotion
+is claimed. The earlier owner/resource snapshots retain their original dates.

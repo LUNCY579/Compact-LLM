@@ -1,0 +1,115 @@
+{
+  "content": {
+    "behaviors": [
+      {
+        "finding": "Verified empty text requires empty_target_verifiedTrue; nonempty text with that flagTrue refuses; boolean flag and verified trimmed final required. Compiler separately rejects unverified EOS-only targets.",
+        "fixtures": [
+          "test_full_history_and_final_eos_masks_and_verified_empty",
+          "test_digit_blind_overlap_and_missing_target_cannot_pass",
+          "test_nonempty_target_cannot_claim_verified_empty"
+        ],
+        "name": "Empty-target flag converse",
+        "source": "bank.py269-273; compiler.py40-42,196-197"
+      },
+      {
+        "finding": "Normalized explicit blocked/protected/CAL/calibration/ANY READ/real FIXTURE roles refuse independently of eligible-looking status. Allowed status plus SHA required. Declarations do not prove ancestry truth.",
+        "fixtures": [
+          "test_eligible_status_cannot_launder_blocked_ancestry_role"
+        ],
+        "name": "Role/status contradictions",
+        "source": "bank.py51-69"
+      },
+      {
+        "finding": "Exact pinned bytes split only on LF; at most one terminal delimiter removed; blanks/count mismatches refuse; all records decode. CRLF, unterminated final row and Unicode string content survive without row filtering.",
+        "fixtures": [
+          "test_physical_jsonl_rows_cannot_silently_disappear",
+          "test_exact_jsonl_content_and_valid_line_endings_survive"
+        ],
+        "name": "Physical JSONL preservation",
+        "source": "bank.py329-341"
+      },
+      {
+        "finding": "Prehash, consumed-byte verification and manifest closing hash share limit+1 capped reads. Caps are1MiB for metadata and16MiB for payloads; post-stat growth and between-read changes refuse.",
+        "fixtures": [
+          "test_bytes_changed_after_hash_check_cannot_be_consumed",
+          "test_manifest_change_during_fixture_read_cannot_be_certified",
+          "test_growing_file_cannot_make_hash_read_past_cap"
+        ],
+        "name": "Bounded custody reads",
+        "source": "bank.py72-98,323-325,343-344"
+      },
+      {
+        "finding": "Request-only/wrong-owner/fixture/unadmitted bundles refuse; four independent pinned kind/subject/reviewer/attribution/check receipts precede payload reads. One consistent export author distinct from reviewers and owner thread required; copied native-plan summaries revalidate. This does not authenticate principals or review truth.",
+        "fixtures": [
+          "test_fixture_cannot_be_native_and_metadata_blocks_payload_access",
+          "test_declared_approval_without_attributable_receipt_rejected_before_payload",
+          "test_malformed_metadata_never_opens_payload",
+          "test_inconsistent_export_authors_refuse_before_payload"
+        ],
+        "name": "Receipts and exporter closure",
+        "source": "bank.py101-111,156-223; compiler.py159-172"
+      },
+      {
+        "finding": "Exact200/512 quotas, intact alternating histories/parents, two-view pairs, shared parent/family/scenario/lexicon,40grounded T/Fpairs and structural cross-split exclusions. Atomic union grouping preserves all parent/pair components. Semantic evidence pairing and global exclusion remain unproved.",
+        "fixtures": [
+          "test_admission_preserves_exact_export_and_refuses_incomplete",
+          "test_required_grounded_and_dev_evidence_pairs",
+          "test_pair_cannot_link_unrelated_world_metadata",
+          "test_pair_linked_parents_and_complete_parent_atomicity",
+          "test_cross_split_structural_overlap_rejected"
+        ],
+        "name": "Complete rows and pair groups",
+        "source": "bank.py231-314; compiler.py65-107"
+      },
+      {
+        "finding": "Full/prefix rendering matches tokenizer template IDs; final EOS/newline and context budgets checked; all rows compile; response labels final answer+EOS only. Sealed plan revalidates design/source/reviews/raw metadata, masks/EOS, audit, seeded groups and accounting. Revalidation itself does not rerun native tokenization or reread owner files; actual exposure/native custody remain separate.",
+        "fixtures": [
+          "test_all_rows_quotas_seeded_groups_no_subset",
+          "test_full_history_and_final_eos_masks_and_verified_empty",
+          "test_native_scope_rejects_false_exact_source_fields",
+          "test_no_truncation_padding_subset_or_budget_escape",
+          "test_native_tokenization_mismatch_rejected",
+          "test_plan_scope_design_and_group_tampering_rejected"
+        ],
+        "name": "Compiler parity and revalidation",
+        "source": "compiler.py17-61,110-139,142-213"
+      }
+    ],
+    "bindings": {
+      "bank.py": "8c1808f0f9612478fe2a2262178cf6cad2c731add0cfd9ce6f82211ad8206597",
+      "compiler.py": "57eedf7873ec23dd3ace38b7f7820157be7348a90c485a1fed7c6fc2e9078651",
+      "final-tests-v2.xml": "e53d6676513cb65739676234f35c2ef065b1f5a67065c6426b54ba9e326a11e3",
+      "tests/test_bank_compiler.py": "553e80979b9dd58c96a031cde61f0fea27188e1a38e8e249af1089702e89f011"
+    },
+    "experiment": "RQSFT-001",
+    "exposure_approval": false,
+    "limits": [
+      "Source implementation review for existing owner's consideration, not an owner admission receipt",
+      "Actual qualified reservations, exclusions, full passports, gold and independent scientific reviews remain missing",
+      "Actual admitted200/512 export, tokenizer fit/exposure, qualification, baseline, blinded outcomes and gains remain unmeasured"
+    ],
+    "native_authority": false,
+    "observation_source": "Direct nonauthor collaboration final response, serialized by root",
+    "owner_admission": false,
+    "quality_gain_established": false,
+    "recorded_fixture_evidence": {
+      "bank_compiler_cases": 57,
+      "errors": 0,
+      "failures": 0,
+      "path": "<BusinessProject>/rineya-quality-sft-records/admission-interface-20261005-003/final-tests-v2.xml",
+      "rerun_this_review": false,
+      "skips": 0,
+      "total_cases": 152
+    },
+    "reviewer": "/root/resume_gate_audit",
+    "schema": "RQSFT_IMPLEMENTATION_BEHAVIOR_REVIEW_V1",
+    "scope": "Full current bank/compiler source and relevant fixture source plus preserved test XML. No imports, test reruns, real payload reads, models, native execution or edits.",
+    "status": "NO_BLOCKING_IMPLEMENTATION_FINDINGS_IN_REQUESTED_BEHAVIORS"
+  },
+  "execution_authority": false,
+  "original_bytes": 5641,
+  "original_raw_sha256": "99c959e3a2efb495447b288564d584f5f26bcd254cf8dab95ef98e7e161aca7f",
+  "original_source": "<BusinessProject>/rineya-quality-sft-records/approved-continuation-20261005-004/CURRENT_SOURCE_BEHAVIOR_REVIEW.json",
+  "publication_policy": "Portable historical evidence only, not an executable packet or admission/qualification permit. Local paths, chat UUIDs and XML hostnames are removed; original raw-file hashes are retained separately from hashes of these exports. No banks, predictions, weights, checkpoints, environments or raw process inventories are exported. Originals remain unchanged outside Git.",
+  "record_type": "PORTABLE_EVIDENCE_EXPORT"
+}

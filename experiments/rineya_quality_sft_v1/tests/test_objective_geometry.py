@@ -162,6 +162,14 @@ def test_first_adam_equation_is_epsilon_aware_and_matches_independent_bias_corre
     # Near epsilon is precisely why the helper does not claim universal scale invariance.
 
 
+def test_first_adam_representable_delta_avoids_intermediate_overflow():
+    gradient = torch.tensor([1e150, -1e150, 0.], dtype=torch.float64)
+    actual = G.first_step_adam_delta(gradient, 1e200, 1e-8, clip_norm=1e200)
+    expected = torch.tensor([-1e200, 1e200, 0.], dtype=torch.float64)
+    assert torch.isfinite(actual).all()
+    torch.testing.assert_close(actual, expected, rtol=1e-15, atol=0.)
+
+
 def test_plan_cli_is_metadata_only_fixture_optin_and_create_only(tmp_path, monkeypatch):
     folder = tmp_path / "fixture"
     folder.mkdir()

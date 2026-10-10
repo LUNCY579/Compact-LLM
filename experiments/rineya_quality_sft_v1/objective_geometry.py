@@ -204,7 +204,15 @@ def first_step_adam_delta(gradient, lr, eps, clip_norm=1.):
     if not math.isfinite(norm):
         raise ValueError("Nonfinite float64 gradient norm; no numerical fallback")
     clipped = g * min(1., clip_norm / (norm + 1e-6))
-    return -lr * clipped / (clipped.abs() + eps)
+    denominator = clipped.abs() + eps
+    if not torch.isfinite(denominator).all():
+        raise ValueError("Nonfinite float64 Adam denominator; no numerical fallback")
+    # Form the bounded ratio first: lr*g can overflow even when the ideal
+    # first-step delta is representable. This remains an FP64 toy calculation.
+    delta = -lr * (clipped / denominator)
+    if not torch.isfinite(delta).all():
+        raise ValueError("Nonfinite float64 Adam delta; no numerical fallback")
+    return delta
 
 
 def main(argv=None):

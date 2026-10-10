@@ -1,0 +1,99 @@
+{
+  "content": {
+    "RQSFT_gain_established": false,
+    "cells": {
+      "A": {
+        "known_better": 256,
+        "known_worse": 0,
+        "unknown_better": 67,
+        "unknown_toward_teacher": 197,
+        "unknown_worse": 189
+      },
+      "B": {
+        "known_better": 256,
+        "known_worse": 0,
+        "unknown_better": 67,
+        "unknown_toward_teacher": 198,
+        "unknown_worse": 189
+      },
+      "C": {
+        "known_better": 256,
+        "known_worse": 0,
+        "unknown_better": 256,
+        "unknown_toward_teacher": 44,
+        "unknown_worse": 0
+      },
+      "D": {
+        "known_better": 256,
+        "known_worse": 0,
+        "unknown_better": 256,
+        "unknown_toward_teacher": 48,
+        "unknown_worse": 0
+      },
+      "E": {
+        "known_better": 256,
+        "known_worse": 0,
+        "unknown_better": 69,
+        "unknown_toward_teacher": 198,
+        "unknown_worse": 187
+      },
+      "F": {
+        "known_better": 256,
+        "known_worse": 0,
+        "unknown_better": 256,
+        "unknown_toward_teacher": 56,
+        "unknown_worse": 0
+      }
+    },
+    "depth20_to_depth18_sign_reversals_count": 189,
+    "depth20_vocabulary_sign_changes": 0,
+    "families": {
+      "counterfactual_state": {
+        "better": 0,
+        "worse": 64
+      },
+      "evidence_chain": {
+        "better": 2,
+        "worse": 62
+      },
+      "prerequisite_schedule": {
+        "better": 64,
+        "worse": 0
+      },
+      "register_machine": {
+        "better": 1,
+        "worse": 63
+      }
+    },
+    "fresh_confirmation": false,
+    "inference": "Family and depth condition the sign; pooled teacher-alignment direction is not balanced quality.",
+    "inputs": {
+      "prereg": {
+        "path": "<BusinessProject>/ChatBubble-rineya-quality-sft-v1/research/rineya_small_vocab_depth_v1/ABST001_PREREG.md",
+        "sha256": "15c612c06071803be23cface01c792dcc97042afc892997f922bef1b5af0e04e"
+      },
+      "result": {
+        "path": "<BusinessProject>/ChatBubble-rineya-quality-sft-v1/research/rineya_small_vocab_depth_v1/ABST001_RESULT.md",
+        "sha256": "46ab49723c33a3c7b9881ff5735c86d0a78afa32422f97b0f0d5ea8467eafaf6"
+      }
+    },
+    "leave_one_family_out_worsening_rates": {
+      "counterfactual_state": 0.6510416666666666,
+      "evidence_chain": 0.6614583333333334,
+      "prerequisite_schedule": 0.984375,
+      "register_machine": 0.65625
+    },
+    "native_model_calls": 0,
+    "other_three_families_worsening_rate": 0.984375,
+    "pooled_worsening_rate": 0.73828125,
+    "raw_case_data_read": false,
+    "status": "HISTORICAL_AGGREGATE_RECOMPUTATION_ONLY",
+    "teacher_generation_limit": "T4/T0 greedy outputs not measured after historical driver failure; do not infer teacher greedy competence."
+  },
+  "execution_authority": false,
+  "original_bytes": 2062,
+  "original_raw_sha256": "55422f7f967ce7f27811d730a793aa4a5ed1415497a8fecb8d60507024de62e8",
+  "original_source": "<BusinessProject>/rineya-quality-sft-records/pattern-research-20261005-001/ABST_AGGREGATE_CONTRAST.json",
+  "publication_policy": "Portable historical evidence only, not an executable packet or admission/qualification permit. Local paths, chat UUIDs and XML hostnames are removed; original raw-file hashes are retained separately from hashes of these exports. No banks, predictions, weights, checkpoints, environments or raw process inventories are exported. Originals remain unchanged outside Git.",
+  "record_type": "PORTABLE_EVIDENCE_EXPORT"
+}

@@ -6,6 +6,11 @@ The active research objective remains open until useful gains are demonstrated
 on the intended0.6B source with preservation and harder transfer. Deterministic
 execution is not a universal deterministic improvement law.
 
+The [portable publication archive](publication/2026-10-09/README.md) retains the
+aggregate reports, final figures and mathematical witnesses with original-source
+and exported hashes. Its153-test CPU verification establishes implementation
+mechanics only; the historical observations are not native confirmation.
+
 ## A counterexample changes the dose hypothesis
 
 Same ungated Supa/last20/WSD(.95)/1e-5/seed17/corpus:
