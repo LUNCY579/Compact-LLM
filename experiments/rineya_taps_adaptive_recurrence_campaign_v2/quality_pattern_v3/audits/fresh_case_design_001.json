@@ -1,0 +1,436 @@
+{
+  "bindings": [
+    {
+      "path": "AUTHORITY.txt",
+      "sha256": "18f9b5079c05138a28d783404b7c9f919d62e829c17fe0c7a7334b789dd2fa3d"
+    },
+    {
+      "path": "bulk_bank.py",
+      "sha256": "3242439231064fc81991e157c0da62833f4e4223ec71d60cf9ffd2851815b5eb"
+    },
+    {
+      "path": "quality_pattern_v3\\ACTIVE_GOAL_SCOPE_001.json",
+      "sha256": "4ea9970d9a948895861d2f182b6cffa9f7e50b1be353ced48ecce55f59c633b6"
+    },
+    {
+      "path": "quality_pattern_v3\\OPPOSED_GATE_REGISTRATION_DRAFT_001.md",
+      "sha256": "39ed6ee4160f6cafa3e54194f3c7412a37731d14dcda09cd1bd887c34cee7044"
+    },
+    {
+      "path": "quality_pattern_v3\\audits\\probe_pattern_findings_001.json",
+      "sha256": "bd6ddb4493c705b72844eff976a50a839671e2cbd7a893f61f1481849f0e3d9f"
+    },
+    {
+      "path": "quality_pattern_v3\\PASSIVE_PROBE_REGISTRATION_001.md",
+      "sha256": "e5716814632b9fd7ad145ef5a9c40aaee434fdc35b9d773aef1095ac8aa59cbe"
+    },
+    {
+      "path": "quality_pattern_v3\\FRESH_REPLICATION_FEASIBILITY_DRAFT_001.md",
+      "sha256": "715b605eed19680c38822a96b147c1c06080c4a5b808afcf68a21ee2cb3c2247"
+    }
+  ],
+  "bounded_data_and_access_paths": {
+    "analysis_root_proposed": "quality_pattern_v3/analyses/fresh-open-replication-001/",
+    "data_root_proposed": "quality_pattern_v3/data/fresh_open_replication_001/",
+    "denied": [
+      "existing protected/sealed banks",
+      "nativeTEST entrypoints/content",
+      "oldOPEN_VAL for tuning/confirmation",
+      "sibling checkout modifications/grants",
+      "global environments/model assets"
+    ],
+    "files_proposed": [
+      "GENERATOR_REGISTRATION.json",
+      "PROVENANCE.json",
+      "LICENSES.json",
+      "WORLD_MANIFEST.json",
+      "RAW_OPEN_CASES.json",
+      "REFERENCE_SOLUTIONS.json",
+      "POSITIVE_CONTROLS.json",
+      "FLOORS.json",
+      "PROMPT_ONLY_BANK.json",
+      "TOKENIZER_BINDING.json",
+      "EXPOSURE_LEDGER.json",
+      "MANIFEST.json"
+    ],
+    "metadata_kept_offline": [
+      "gold/reference solution",
+      "status/answerability/category/family",
+      "parent/source/generator/render-role/variant/split identifiers",
+      "taskdifficulty/counterfactual flags",
+      "sourceanswers/certificates"
+    ],
+    "model_packet_allowed": [
+      "raw/rendered prompt",
+      "bound input tokenIDs",
+      "logging-only opaque caseID"
+    ],
+    "native_run_root_proposed": "quality_pattern_v3/runs/native-fresh-open-replication-001/",
+    "public_source_import_root_optional": "quality_pattern_v3/data/open_source_imports/<exactsource_revision>/",
+    "source_modules_proposed": "quality_pattern_v3/fresh_cases_v1.py and independent fresh_solver_v1.py / fresh_verifier_v1.py (not created here)"
+  },
+  "budget_feasibility": {
+    "600parent1200case_superseded": "Earlierproposalwithdrawnfor currentfullcontrolscost. Nooutcomeswereconsulted; resource-only correction beforedata/modelexecution.",
+    "default300parent_conditional": "46971maxAPI; historical.2212513 reference gives15588.5934seconds before setup/proofs, leavingabout521seconds. Only acompletefreshforecastcanadmit this tier.",
+    "expanded384parent": "58563maxAPI; historicalreferenceabout19437seconds, so currentlyunsupported before setup/proofs. Requiresnewmax<=.183389s before setup tofit, notassumed.",
+    "fallback216parent": "35379maxAPI; historicalreferenceabout11741seconds before setup/proofs. Prospectivelychoose if300fullforecastfails; nevertruncate launchedmatrix.",
+    "historical_warm_max357_seconds_reference_not_admission": 0.2212513,
+    "internal_reserve_caveat": "The approximately521seconds at the historicalmax for300parents is allremaining allowance for setup, proof/logging notinsideforwardtiming AND any required internalrunreserve. If the chosen lane preserves1800internalreserve,300doesnotfit at thisreference; use216 or a prospectively measuredfaster newmax. Never loweranexistingreserve/guard to forceadmission.",
+    "native_seconds_after_global_reserve_available": 16109.752,
+    "pilot_overhead": "Fourpilotpaths addmax4calls/item; selectedrepeat addsmax1pilot/item. Nozero-overhead confidence/d1claim. Optionalfixedgrid adds40calls/item and isnot included; must notsilentlyaddit.",
+    "time_criterion": "T_setup_and_proofs + 1.5 * NEW measured_max_qualified_forward_seconds * complete_API_cap <=16109.752, while allperrunreserve/guard conditions alsohold. Nohistoricaltiming admission."
+  },
+  "cases_generated": 0,
+  "complete_arm_count_forecasts": [
+    {
+      "24_case_short_preservation_API_cap": 4128,
+      "cases": 432,
+      "complete_planning_API_cap": 35379,
+      "historical_357_timing_reference_seconds_NOT_ADMISSION": 0.2212513,
+      "max_warm_seconds_compatible_before_setup": 0.3035652411505884,
+      "minimum_net_case_gains_for_five_percentage_points": 22,
+      "parents": 216,
+      "parents_per_family": 36,
+      "parents_per_new_mechanism": 18,
+      "qualification_API_cap_planning": 1443,
+      "reference_time_factor1_5_seconds_before_setup": 11741.474614050001,
+      "scope": "Sevenphysicalpaths: selectedpolicy,opposed/samefeaturecue,headercue,A0,A1,R17,R29. Fourpilot paths<=9;threesimple<=8. Selectedpolicyrepeatonly. Actualnewdrivercompletecontract mustbe reviewed/frozen.",
+      "selected_policy_repeat_API_cap": 3888,
+      "task_API_cap": 25920
+    },
+    {
+      "24_case_short_preservation_API_cap": 4128,
+      "cases": 600,
+      "complete_planning_API_cap": 46971,
+      "historical_357_timing_reference_seconds_NOT_ADMISSION": 0.2212513,
+      "max_warm_seconds_compatible_before_setup": 0.22864820137247807,
+      "minimum_net_case_gains_for_five_percentage_points": 30,
+      "parents": 300,
+      "parents_per_family": 50,
+      "parents_per_new_mechanism": 25,
+      "qualification_API_cap_planning": 1443,
+      "reference_time_factor1_5_seconds_before_setup": 15588.59221845,
+      "scope": "Sevenphysicalpaths: selectedpolicy,opposed/samefeaturecue,headercue,A0,A1,R17,R29. Fourpilot paths<=9;threesimple<=8. Selectedpolicyrepeatonly. Actualnewdrivercompletecontract mustbe reviewed/frozen.",
+      "selected_policy_repeat_API_cap": 5400,
+      "task_API_cap": 36000
+    },
+    {
+      "24_case_short_preservation_API_cap": 4128,
+      "cases": 768,
+      "complete_planning_API_cap": 58563,
+      "historical_357_timing_reference_seconds_NOT_ADMISSION": 0.2212513,
+      "max_warm_seconds_compatible_before_setup": 0.18338942107929354,
+      "minimum_net_case_gains_for_five_percentage_points": 39,
+      "parents": 384,
+      "parents_per_family": 64,
+      "parents_per_new_mechanism": 32,
+      "qualification_API_cap_planning": 1443,
+      "reference_time_factor1_5_seconds_before_setup": 19435.70982285,
+      "scope": "Sevenphysicalpaths: selectedpolicy,opposed/samefeaturecue,headercue,A0,A1,R17,R29. Fourpilot paths<=9;threesimple<=8. Selectedpolicyrepeatonly. Actualnewdrivercompletecontract mustbe reviewed/frozen.",
+      "selected_policy_repeat_API_cap": 6912,
+      "task_API_cap": 46080
+    }
+  ],
+  "count_formula": {
+    "confidence_or_matched_pilot_arm_count": 4,
+    "fresh_short_preservation_cases": 24,
+    "full_max_API_formula": "69 * scientific_cases + 1443 + 4128",
+    "matrix": "Oneprimarypolicy selected/frozen on oldexposedDEV; its exactopposed/samefeaturecue plusheadercue,intact,unit,R17,R29. OtherDEVcandidatepolicies are not selected as freshwinners; a larger exploratoryallcandidate matrix is separatelycosted and maynotfit.",
+    "pilot_calls_max_each": 9,
+    "primary_physical_trajectories_per_case": 7,
+    "qualification_API_cap_planning": 1443,
+    "qualification_scope": "Proposed67API original-prefix mechanics +8SMOKE*7physicalpaths*24cap +32pilot extras. No actualnewqualification exists.",
+    "repeat_scope": "Repeat selectedprimary onallfreshscientificcases once; matchingbaselinemechanics/SMOKEidentity alsoqualified. Repetitionsarenotindependentcases.",
+    "selected_policy_repeat_cap_per_case": 9,
+    "short_panel_cap_per_case_allarms": 172,
+    "simple_calls_max_each": 8,
+    "simple_no_pilot_arm_count": 3,
+    "task_cap_per_case": 60
+  },
+  "created_utc": "2026-10-06T01:50:12.296896+00:00",
+  "default_population": {
+    "author_independence_claim": "Separate localauthor roles and source implementations only; no claim of independent human authors for syntheticworlds.",
+    "cases": 600,
+    "easy_hard": "25easy/25hardparents per family; allocate12/13per25parentmechanism and counterbalance acrossmechanisms",
+    "families": 6,
+    "intended_exposure": "Unobserved by any Rineya/gate-feature/outcome process until candidatefreeze and registered evaluation; openwithinproject, not a protectedbank.",
+    "new_semantic_mechanisms_per_family": 2,
+    "old_parent_descendants_used": false,
+    "parents": 300,
+    "parents_per_family": 50,
+    "parents_per_new_mechanism": 25,
+    "variants_per_parent": 2,
+    "weights": "equal1/6family; two variants averagewithinparent"
+  },
+  "family_designs": [
+    {
+      "break_old_shortcuts": "Remove fixed slot sign, magnitude, branch order and printed-last-number correlations; floor tests include credit-minus-debit skeleton and copy extremes.",
+      "contract_coverage": [
+        "mixed positive/negative and zero results",
+        "variable3-7 transactions",
+        "irrelevant accounts and interleaved entries",
+        "query-first/last/middle roles balanced"
+      ],
+      "family": "signed_ledgers",
+      "mechanism_A": "Random mixed-sign account journals with cancellations/zero/negative totals; query chosen after accounts and layout are permuted.",
+      "mechanism_B": "Transfer-event network with debit/credit conservation plus opening balance, independently implemented rather than another spelling of the same fixed entry list.",
+      "solver_pair": "Independent integer journal reducer vs transfer/conservation reconstruction from parsed visible text."
+    },
+    {
+      "break_old_shortcuts": "Randomize truth-bearing roles and query symbols; no firsttwo-branches implyYES rule; query-blind RHS-presence floor mandatory.",
+      "contract_coverage": [
+        "YES/NO balanced",
+        "depth2/4",
+        "shared paths and conjunction",
+        "irrelevant true facts/unsupported target names"
+      ],
+      "family": "deduction_composition",
+      "mechanism_A": "Random bounded Horn DAG with shared intermediates and conjunction; closed-world YES iff the requested proposition is derivable.",
+      "mechanism_B": "Relation/reachability composition with decoys and independent proof construction; explicit closed-world contract matches YES/NO scoring.",
+      "solver_pair": "Forward fixed-point closure vs independent backwards proof/reachability verifier."
+    },
+    {
+      "break_old_shortcuts": "Avoid fixed chains and fixed queried-register offsets; balance final value sign/magnitude; exclude undefined division/overflow by semantic construction, not model performance.",
+      "contract_coverage": [
+        "overwrite-after-read",
+        "true/false branch outcomes balanced",
+        "register renaming",
+        "display order independent of execution order"
+      ],
+      "family": "program_state",
+      "mechanism_A": "Small sequential register language with reassignment, mixed arithmetic and copy dependencies; numbered execution order explicit.",
+      "mechanism_B": "Stack/state-machine trace with bounded conditional branch and explicit state transitions, independent generator semantics.",
+      "solver_pair": "Parsed small-step interpreter vs independent symbolic/equational trace, exact integer arithmetic."
+    },
+    {
+      "break_old_shortcuts": "Answerability cannot follow speaker index, variantID, max printed number, or any-clear cue; query-blind lastentity and memory skeleton floors.",
+      "contract_coverage": [
+        "current declaration vs cleared/missing balanced",
+        "quotations change no ownership",
+        "redeclaration after clear",
+        "latest values independent of numeric magnitude"
+      ],
+      "family": "dialogue_memory",
+      "mechanism_A": "Speaker-owned event histories with SET/CLEAR/QUOTE and later restoration; operation order independent of printed order.",
+      "mechanism_B": "Message/acknowledgement ownership state with quoted speech/distractor speakers, independently implemented event semantics.",
+      "solver_pair": "Chronological owner-state reducer vs independent last-effective-event backward trace."
+    },
+    {
+      "break_old_shortcuts": "Do not encode status in entity order/value/length/header; guard recognizes only frozen supported syntax, logs unit fallback on new syntax without rewriting after results.",
+      "contract_coverage": [
+        "answerable50%,missing25%,conflict25%",
+        "outdated conflicts/distractor entities",
+        "same-date ties and duplicates",
+        "raw approved count balanced across query states"
+      ],
+      "family": "document_retrieval_reconciliation",
+      "mechanism_A": "Approved-record consensus with explicit current-date policy and balanced answer/missing/conflict queried entities.",
+      "mechanism_B": "Versioned authorized snapshot reconciliation with authority/date precedence stated in plain contract, independent evidence graph and renderer.",
+      "solver_pair": "Parsed authoritative grouping/consensus reducer vs independent certificate checker for selected evidence, absence or incompatible values."
+    },
+    {
+      "break_old_shortcuts": "Neither variant1 nor a fixed query role always meansUNKNOWN; status/family/parent/variant metadata never appears in model packets.",
+      "contract_coverage": [
+        "oneanswerable/oneunanswerable variant perparent",
+        "halfmissing/halfconflict unanswerable conditions",
+        "variantdirection randomized/balanced",
+        "same global authority/status counts"
+      ],
+      "family": "answerability_source_conflict",
+      "mechanism_A": "Matched evidence-bundle transfer between queried and distractor entities with complete global record counts held fixed.",
+      "mechanism_B": "Independent source-retraction or authorization-counterfactual world with query/authority relationship changed and explicit contradiction contract.",
+      "solver_pair": "Source-consistency certificate verifier vs independent reference resolution/constraint checker."
+    }
+  ],
+  "fresh_model_outcomes_inspected": 0,
+  "immediate_permitted_preparation": [
+    "Freeze chosenpolicy and exact prospective corpus/solver/floor/provenancecontract; no outcome-dependent edits.",
+    "Assign independently owned newsemantic builder, visibletextverifier and cue reviewer; implement undernewV3paths.",
+    "Prepare CPU-only primitives/grammars/dual-solver checks and exactone-shot freshworldcorpus at the resource-admitted prospective tier; create read-only tokenizerbinding/shapeaudit.",
+    "Freeze complete actualdependency/admission map including reader, plan, allsolver/generator/source/license artifacts and independent reviewer receipts.",
+    "Onlycoordinator qualifies/dispatches actualnewnative matrix after completeforecast/liveguards; thisdesignlaunchesnone."
+  ],
+  "models": 0,
+  "practical_margin_feasibility": {
+    "default300parent600case_net_improvements_needed": 30,
+    "five_point_margin": 0.05,
+    "fivepoint_vs_uncertainty": "Pointestimate>=5pp and inferential evidence abovezero/above5pp are distinct. At300parents SD.2 gives idealMDE3.24pp vszero; SD.5 gives8.09pp. NeitherSD is observed orguaranteed. Sourceblock dependencefurtherlimits inference.",
+    "negative_outcome": "If practicalmargin/headroom/preservation fails on fullregisteredcorpus, retainnegative/uncertainfinding; do not lower margin or replacehardcases.",
+    "old_exposedDEV_maxselector_gain": 0.03125,
+    "oldgain_not_forecast": "Old6/192 selectorrecoveries do not ensure5points on newcorpus; enlargingn cannotmakea3.125pointpopulationeffect exceed5points.",
+    "per_family50parent100case_fivepoint_net": 5,
+    "planning_variance_scenarios": [
+      {
+        "hypothetical_parent_delta_SD": 0.2,
+        "ideal80power_difference_vs_zero_percentage_points": 3.812523597111338,
+        "ideal95_normal_halfwidth_percentage_points": 2.667222164363905,
+        "ideal_SE_percentage_points": 1.3608276348795434,
+        "ideal_true_effect_for80power_above_fivepoint_null_percentage_points": 8.812523597111337,
+        "parents": 216,
+        "scope": "Planningonly,conditional independentparents; notactualCI/power orsourcegeneralclaim."
+      },
+      {
+        "hypothetical_parent_delta_SD": 0.25,
+        "ideal80power_difference_vs_zero_percentage_points": 4.765654496389172,
+        "ideal95_normal_halfwidth_percentage_points": 3.3340277054548815,
+        "ideal_SE_percentage_points": 1.7010345435994292,
+        "ideal_true_effect_for80power_above_fivepoint_null_percentage_points": 9.765654496389171,
+        "parents": 216,
+        "scope": "Planningonly,conditional independentparents; notactualCI/power orsourcegeneralclaim."
+      },
+      {
+        "hypothetical_parent_delta_SD": 0.5,
+        "ideal80power_difference_vs_zero_percentage_points": 9.531308992778344,
+        "ideal95_normal_halfwidth_percentage_points": 6.668055410909763,
+        "ideal_SE_percentage_points": 3.4020690871988584,
+        "ideal_true_effect_for80power_above_fivepoint_null_percentage_points": 14.531308992778344,
+        "parents": 216,
+        "scope": "Planningonly,conditional independentparents; notactualCI/power orsourcegeneralclaim."
+      },
+      {
+        "hypothetical_parent_delta_SD": 0.2,
+        "ideal80power_difference_vs_zero_percentage_points": 3.2350335467413864,
+        "ideal95_normal_halfwidth_percentage_points": 2.263213055223333,
+        "ideal_SE_percentage_points": 1.1547005383792515,
+        "ideal_true_effect_for80power_above_fivepoint_null_percentage_points": 8.235033546741386,
+        "parents": 300,
+        "scope": "Planningonly,conditional independentparents; notactualCI/power orsourcegeneralclaim."
+      },
+      {
+        "hypothetical_parent_delta_SD": 0.25,
+        "ideal80power_difference_vs_zero_percentage_points": 4.043791933426733,
+        "ideal95_normal_halfwidth_percentage_points": 2.829016319029166,
+        "ideal_SE_percentage_points": 1.443375672974064,
+        "ideal_true_effect_for80power_above_fivepoint_null_percentage_points": 9.043791933426732,
+        "parents": 300,
+        "scope": "Planningonly,conditional independentparents; notactualCI/power orsourcegeneralclaim."
+      },
+      {
+        "hypothetical_parent_delta_SD": 0.5,
+        "ideal80power_difference_vs_zero_percentage_points": 8.087583866853466,
+        "ideal95_normal_halfwidth_percentage_points": 5.658032638058332,
+        "ideal_SE_percentage_points": 2.886751345948128,
+        "ideal_true_effect_for80power_above_fivepoint_null_percentage_points": 13.087583866853466,
+        "parents": 300,
+        "scope": "Planningonly,conditional independentparents; notactualCI/power orsourcegeneralclaim."
+      },
+      {
+        "hypothetical_parent_delta_SD": 0.2,
+        "ideal80power_difference_vs_zero_percentage_points": 2.8593926978335036,
+        "ideal95_normal_halfwidth_percentage_points": 2.000416623272929,
+        "ideal_SE_percentage_points": 1.0206207261596576,
+        "ideal_true_effect_for80power_above_fivepoint_null_percentage_points": 7.859392697833504,
+        "parents": 384,
+        "scope": "Planningonly,conditional independentparents; notactualCI/power orsourcegeneralclaim."
+      },
+      {
+        "hypothetical_parent_delta_SD": 0.25,
+        "ideal80power_difference_vs_zero_percentage_points": 3.5742408722918797,
+        "ideal95_normal_halfwidth_percentage_points": 2.500520779091161,
+        "ideal_SE_percentage_points": 1.275775907699572,
+        "ideal_true_effect_for80power_above_fivepoint_null_percentage_points": 8.57424087229188,
+        "parents": 384,
+        "scope": "Planningonly,conditional independentparents; notactualCI/power orsourcegeneralclaim."
+      },
+      {
+        "hypothetical_parent_delta_SD": 0.5,
+        "ideal80power_difference_vs_zero_percentage_points": 7.148481744583759,
+        "ideal95_normal_halfwidth_percentage_points": 5.001041558182322,
+        "ideal_SE_percentage_points": 2.551551815399144,
+        "ideal_true_effect_for80power_above_fivepoint_null_percentage_points": 12.148481744583759,
+        "parents": 384,
+        "scope": "Planningonly,conditional independentparents; notactualCI/power orsourcegeneralclaim."
+      }
+    ],
+    "preservation": "Report all observed baselinecorrect losses; zeroobserved losses is not universal preservation or automatic noninferiority. Freeze required familyretention margin/test before results.",
+    "variance_scope": "Ideal independentparent planning calculation only, not a confidenceinterval/powerclaim for observeddata. Shared12semanticblocks/sixfamilies/source selectionlimit sourcegeneral inference."
+  },
+  "protocol_steps": [
+    "Freeze the three proposed policies and one primary policy selection rule using existing exposedDEV only; oldVAL remains selection-exposed and is not read or used for new tuning. Freeze gate/parser unsupported-syntax fallback, controls, weights and five-point margin before any fresh model observation.",
+    "Implement new generators/renderers and independent visible-text reference solvers in new V3 paths. Model-free preparation may proceed under existing OPEN-development authorization; no routine new userpermission is needed for in-scope preparation. Review grammar, metadata firewall, licences, semantics, floors and candidate/parser source independently.",
+    "Assign fresh world nonce once after source freeze. Generate a single complete corpus at the prospectively chosen tier; do not search seeds for model headroom. Solver/scorer/floor preparation failures stop and version the wholegenerator; retain all failures. No model-dependent removal or rescoring.",
+    "Default300parents/600cases,50parents/family and25parents/new semantic mechanism. Two variants perparent, half easy/hard. Balance query role, truth/status, integer sign/length and surface style across source/mechanism without tying any label to index/variant/length. All fresh cases are OPEN_REPLICATION, not protected/sealed/nativeTEST.",
+    "Each parent has one semantic world and two registered variants: neutral renaming/reordering for half, query/evidence counterfactual for half where semantics permit. Expected same/different response is computed by independent solvers, never by model responses. No variants, relatives or near-duplicate source items cross a tuning/replication boundary.",
+    "Freeze integer-feasible quota tables beforemodelaccess. At300parents, each25-parent mechanism uses12/13 easy/hard and counterbalances to25/25 per50-parent family. Query-role/status/variant balance mayusecounterfactualpair variants; any remaining integrality imbalance mustbe <=1 and disclosed, not encoded as an answer shortcut.",
+    "Require constructor invariant answer AND two independent visible-text solver/verifier outputs to agree on everycase/status; full-response normalizer/scorer frozen and gold-independent. Meta/context-preserving transformations roundtrip; positive controls must succeed100%. Label/solver disagreement is preparation failure, not a model failure or discarded inconvenient outcome.",
+    "Freeze query-blind/copy/skeleton floors: constantYES/NO/UNKNOWN/0/1, first/last/max/min printed number, first/lastentity solver, header/style/length-only cues, anyCLEAR/max-memory skeleton and RHS-presence; evaluate fullpacket by parent/family/difficulty. Retain original globalblind<=50% and no perfect familycue preparation standard; no seed roulette to obtain a passingfloor. Include strong actual-query/stateless solver as a separate model-free comparator.",
+    "Strict integer/YESNO/UNKNOWN contract, whitespace-only full-response normalization with canonical integer regex, no substring/last-number extraction on model outputs. Prospective tokenizer binding using read-only canonicalassets: renderedinput<=350, scientific generationcap8, maxprefix357. Reject/repair construction before any model output if gold+EOS cannot fitcap. Do not expandcontext/depth/readout or silently shorten tasks after seeing model behavior.",
+    "Prepare 24 fresh short-response preservation cases under controlled fact/instruction contracts with independent scoring, plus unchanged inherited8SMOKE qualification. Keep this panel outside six-family primary weights; cap24 and original357 maximum envelope. Natural-language semantic ambiguity requires review before inclusion; no broad preservation claim from a tiny panel.",
+    "Before native calls, elect300/216/384 tier using only fresh qualifyingmaxshape timing/resource/completecall forecast, never model correctness or feature groups. If the fullselectedtier cannot fit, predeclared smaller tier is a separate frozen design before outcomes; do not truncate a launchedmatrix. Original one-worker/FP32/eager/noKV/K0or1/unchangedassets/state/host/GPU guards and1,800s globalreserve remain.",
+    "Primary matrix physically evaluates A0,K1,one preselectedfrozen primarypolicy,itsopposed/samefeaturecue,header-only cue and two seeded matched-random repetitions on identicalcases; random outputs average withinitem. Any standalone exact solver/classifier adds no modelcall. Confidencepilots needintacthead+selected owntrajectory, cannot reuse oldoutputresponses or share physicalrows acrossarms.",
+    "Repeat selectedprimary once onallfreshcases for deterministic token-ID reproducibility; baselines alsohave nativeidentity/SMOKE qualification without increasing independent n. Qualify pilot reuse/branch trajectory/normal-exception restoration and actualmargin/FP32precision contract. All setup, failures, checks, piloting/suffix/proposal/gate/logging and repeat work charged.",
+    "Primary equal-family/equal-parent paired strict accuracy delta against frozenstrongestK1 control; fivepercentagepoint practicalmargin retained. Report comparator-correct retention/losses by parent and family, unsupportedcanonicalanswers,falseUNKNOWN,format/EOS/capstop and all floors separately. One prospective primary contrast; othercandidate/arm/source contrasts are predeclared secondary with multiplicity handling, not posthoc winningconfirmation.",
+    "Interpret local new-parent/new-generator replication as restricted evidence. Optional external-source supplement is separately stratified and predeclared; broader source/author confirmation requires its actual independentlineage. No future fresh split can tune another revision and still remain unexposed."
+  ],
+  "provenance_dimensions": [
+    {
+      "criterion": "Fresh one-time nonce/seed and semantic world digests disjoint from all existing parent worlds; exact/normalized prompt and world overlap audit against allowed oldDEV only. Keep paired variants together.",
+      "dimension": "new parent-world identity",
+      "limit": "New descendants of the same old parent, renaming, or a new rendering never become new independent worlds.",
+      "locally_achievable": true
+    },
+    {
+      "criterion": "Implement12 new semantic generator blocks/two per family, with heldout renderer grammar sources, independently source-reviewed and not wrappers around bulk_bank.make_world/render. New sourcehashes/generatorIDs and dependency graph recorded.",
+      "dimension": "new semantic-generator and renderer holdout",
+      "limit": "Code-level independence is bounded: same research program/spec/AI may share assumptions. It supports restricted mechanism/rendering replication, not arbitrary source universality.",
+      "locally_achievable": true
+    },
+    {
+      "criterion": "Separate prospective task builder, visible-text solver/verifier author and adversarial cue reviewer; no candidate-outcome tables supplied to new task builder. Roles/hashes/exposure are disclosed.",
+      "dimension": "author-role independence",
+      "limit": "Different agents in this program are not genuinely independent human authors.",
+      "locally_achievable": true
+    },
+    {
+      "criterion": "A separately frozen optional open-license primary-source supplement can add source/author provenance beyond the localbank, without paid services or protecteddata. Exactcommit/file/license/hash/access scope required.",
+      "dimension": "independent public source lineage",
+      "limit": "Cannot declare allsix families externally independent from arithmetic-only sources, or assume novel-to-Rineya/pretraining-unseen data. Sourceblock and author dependence stay explicit.",
+      "locally_achievable": true
+    },
+    {
+      "criterion": "Requires actual human contribution/consent and access/provenance review; do not claim it from synthetic subagents.",
+      "dimension": "new independently commissioned human-author corpus",
+      "limit": "Useful local OPEN replication can proceed while this stronger provenance remains unresolved.",
+      "locally_achievable": false
+    },
+    {
+      "criterion": "Needs explicit scope expansion and a concrete review packet first.",
+      "dimension": "protected/private/sealed source or paid/cloud collection",
+      "limit": "Do not open nativeTEST, residual_v23/fresh_sealed, sibling research grants or any protected dataset.",
+      "locally_achievable": false
+    }
+  ],
+  "public_metadata_access_note": "Only public repository/readme/license metadata accessed for optionalsource design, no taskfiles/modelsolutionfiles imported. Any documentation illustrationseen isexposed and excluded/marked when selecting a future unexposed supplement.",
+  "role": "Read-only design author; no corpus generation, model outcomes/candidate scoring, new code, native call or authority/state/report edits.",
+  "schema": "fresh-case-design-001",
+  "scope_basis": "Original authority sections1/10 allow local apparatus and explicitly allowedOPEN-development evidence; V3 currently admits completed passiveprobe only. Freshdriver/data must receive its own actualsource/data/shape/count/review admission before nativeevaluation; thisdesigndoesnot createit.",
+  "source_public_options_metadata_only": [
+    {
+      "license_url": "https://github.com/openai/grade-school-math/blob/master/LICENSE",
+      "limitations": "No dataset rows downloaded/selected here. README illustration was visible in documentation and must be excluded/marked exposed if sampling later. Public/model-pretraining exposure unknown; new adapter/variant remains correlated with original problem, not a new independent human problem.",
+      "metadata_verified_date": "2026-10-05",
+      "name": "GSM8K primary repository",
+      "optional_use": "Separately declared public arithmetic-source supplement from TRAIN ONLY after exact revision/license/file provenance binding; no originalTEST/model-solution/Socratic files. Do not pool into six-family primary after seeing results.",
+      "url": "https://github.com/openai/grade-school-math",
+      "verified_metadata": "Repository describes human problem writers and7.5K training/1K test arithmetic problems; repository carriesMIT license."
+    },
+    {
+      "license_url": "https://github.com/facebookarchive/bAbI-tasks/blob/master/LICENSE.md",
+      "limitations": "Software license is not automatically the license of every separately distributed dataset. Verify any actual datasetfile rights before ingesting. New generated worlds retain common external generator/source, not independent human-author task items; canonical output adaptation is not an exact original benchmark reproduction.",
+      "metadata_verified_date": "2026-10-05",
+      "name": "bAbI task generator primary repository",
+      "optional_use": "Independent-source derived deduction/yes-no/counting/state-memory mechanism or exact permitted generator snapshot, with retainedcopyright/license; no environment/global dependency changes.",
+      "url": "https://github.com/facebookarchive/bAbI-tasks",
+      "verified_metadata": "Repository documents simulated world/action/knowledge generators and natural-language rendering; softwareBSD license."
+    }
+  ],
+  "status": "PROPOSED_BOUNDED_OPEN_REPLICATION_CAN_PREPARE_LOCALLY",
+  "unresolved_before_native": [
+    "Newgenerator/solver implementationand actualpositivecontrol/floor/cross-parent audits not yet exist.",
+    "Exact216/300/384tier and complete newpipeline/qualification countforecast needfreeze; default300 isconditional oncompletefreshforecast, not model evidence.",
+    "Newsemantic sourceblocks and renderers require independent review; exact publicsource revision/rights/eligibility and contaminationhistory before any optionalimport.",
+    "Natural-language preservationpanel verifier and questionambiguity review remain to implement.",
+    "Human-author independence for locally generated tasks unavailable; useful restrictedreplication proceeds with that honestlimit.",
+    "No candidategain, future publicsourcepretrainingnovelty or sourcegeneralperformance is asserted."
+  ]
+}

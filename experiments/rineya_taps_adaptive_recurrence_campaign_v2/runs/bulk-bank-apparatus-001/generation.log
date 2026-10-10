@@ -1,0 +1,40 @@
+{
+  "status": "PASS_PREPARATION_ONLY",
+  "cases": 288,
+  "world_parents": 144,
+  "DEV_parent_units": 96,
+  "validation_parent_units": 48,
+  "split_case_counts": {
+    "DEVELOPMENT": 192,
+    "OPEN_VALIDATION": 96
+  },
+  "category_case_counts": {
+    "signed_ledgers": 48,
+    "deduction_composition": 48,
+    "program_state": 48,
+    "dialogue_memory": 48,
+    "document_retrieval_reconciliation": 48,
+    "answerability_source_conflict": 48
+  },
+  "positive_control_correct": 288,
+  "failures": [],
+  "metadata_known_variant_UNKNOWN_correct": {
+    "0": 0,
+    "1": 24
+  },
+  "metadata_floor_caution": "Evidence-transfer variant1 is allUNKNOWN; variant/IDs never enter modelprompt; styles are counterbalanced.",
+  "shared_generator_families_across_splits": [
+    "signed_ledgers",
+    "deduction_composition",
+    "program_state",
+    "dialogue_memory",
+    "document_retrieval_reconciliation",
+    "answerability_source_conflict"
+  ],
+  "named_operator_representation_variants_disjoint": true,
+  "max_ascii_prompt_bytes": 526,
+  "actual_native_token_counts": "NOT_RUN;350 planned ceiling must bind without truncation",
+  "independence": "Primary validation48 randomized parents; matched cases not independent; common authors/templates/families remain.",
+  "human_review": "NOT_REVIEWED",
+  "native_calls": 0
+}

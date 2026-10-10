@@ -1,0 +1,137 @@
+{
+  "analysis_source_sha256": "5eef366e35f4b7a4e0bbbfc84ac8c0c9d50acd05605b2b75b8b7ddcaf0b7ee41",
+  "checks": {
+    "capture_above_one_and_negative_kept": true,
+    "complete_synthetic_reference_recomputed": true,
+    "conflicting_code_refused": true,
+    "cycle_refused": true,
+    "empty_matrix_primary_is_null": true,
+    "facts_have_no_target_fallback": true,
+    "independent_intact_repeat_divergence_blocks_primary": true,
+    "query_blind_unique_marker_floor_exposed": true,
+    "scaled_ordinary_first_pass_refused": true,
+    "solver_signature_only_prompt": true,
+    "target_bearing_object_rejected": true,
+    "trajectory_provenance_refused": true,
+    "unseen_prompt_solver_0": true,
+    "unseen_prompt_solver_1": true,
+    "unseen_prompt_solver_2": true,
+    "unseen_prompt_solver_3": true,
+    "unseen_prompt_solver_4": true,
+    "unseen_prompt_solver_5": true,
+    "unseen_prompt_solver_6": true
+  },
+  "limitations": "Fixtures do not create a new task bank or native performance evidence",
+  "native_model_loads": 0,
+  "native_outcomes_read": false,
+  "solver_fixture_outputs": [
+    {
+      "expected_from_independent_fixture": "-64",
+      "prediction": "-64",
+      "prompt": "Compute (-11 \u00d7 7) + (13). Return only the integer.",
+      "witness": {
+        "operands": [
+          -11,
+          7,
+          13
+        ]
+      }
+    },
+    {
+      "expected_from_independent_fixture": "-7",
+      "prediction": "-7",
+      "prompt": "What is 16 minus 23? Give just the integer answer.",
+      "witness": {
+        "operands": [
+          16,
+          23
+        ]
+      }
+    },
+    {
+      "expected_from_independent_fixture": "YES",
+      "prediction": "YES",
+      "prompt": "In a counterfactual world, every object that is blue is also green, and every green object is red. Object Z is blue. Under those rules, is Z red? Answer YES or NO only.",
+      "witness": {
+        "edges": [
+          [
+            "blue",
+            "green"
+          ],
+          [
+            "green",
+            "red"
+          ]
+        ],
+        "initial": "blue",
+        "reached": [
+          "blue",
+          "green",
+          "red"
+        ]
+      }
+    },
+    {
+      "expected_from_independent_fixture": "Kira",
+      "prediction": "Kira",
+      "prompt": "Iris is older than Juno. Juno is older than Kira. Who is youngest? Return only the name.",
+      "witness": {
+        "relations": [
+          [
+            "Iris",
+            "Juno"
+          ],
+          [
+            "Juno",
+            "Kira"
+          ]
+        ],
+        "unique_minimum": true
+      }
+    },
+    {
+      "expected_from_independent_fixture": "Kira",
+      "prediction": "Kira",
+      "prompt": "Iris gave the key to Juno. Then Juno gave it to Kira. Who has the key now? Return only the name.",
+      "witness": {
+        "item": "key",
+        "path": [
+          "Iris",
+          "Juno",
+          "Kira"
+        ]
+      }
+    },
+    {
+      "expected_from_independent_fixture": "321",
+      "prediction": "321",
+      "prompt": "Context: The Nera unit has code 321. Question: What is the code of the Nera unit? Return only the code.",
+      "witness": {
+        "evidence": [
+          [
+            "Nera",
+            "321"
+          ]
+        ],
+        "query": "Nera"
+      }
+    },
+    {
+      "expected_from_independent_fixture": "UNKNOWN",
+      "prediction": "UNKNOWN",
+      "prompt": "Context: The Nera unit has code 321. Question: What is the code of the Vela unit? If the context does not say, answer exactly UNKNOWN.",
+      "witness": {
+        "evidence": [
+          [
+            "Nera",
+            "321"
+          ]
+        ],
+        "fallback_from_explicit_prompt_instruction": true,
+        "query": "Vela"
+      }
+    }
+  ],
+  "solver_source_sha256": "fc93dbaec6b275684f43fa5be088fb07adefe3f5e2b9b4ed448f275b41f3a48c",
+  "status": "PASS_SYNTHETIC_REVIEW_PROBES"
+}

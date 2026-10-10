@@ -1,0 +1,5 @@
+CPU H3 worker source and apparatus review passes at worker f242676e and unchanged sensitivity5d0. Eight independent CPU fixture tests passed in2.70seconds with stable source hashes.
+
+The source retains all16 bound originalDEV rows and the same seven canonical first-token targets, zero teacher continuation/pool/parameter gradients, explicit CPU FP32/eager native loading, actual suffix/custom head state adjoint, live .99/1/1.01 rollouts, fixed numerical gates and restoration/cache checks. The final observed ledger enforces47API attempts/44 completed full forwards/one partial/two precompute cache rejects/nine adjoints/4818 completed positions and serializes the actual final state hash.
+
+Fresh maximum256 CPU forward-plus-adjoint timing must admit the complete seven-row remainder before target measurement. This source/fixture receipt does not qualify native memory, timing or gradients; frozen admission and fresh readiness are still required. Closed-form two-observation features are offline FP32 proxies, with possible rounding differences from incremental v1. Results remain exposed first-token surrogate evidence and must not be pooled with GPU measurements.

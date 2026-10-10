@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "reviewer": "independent adversarial_review",
+  "reviewed_utc": "2026-10-05T02:18:18.420146+00:00",
+  "status": "FINDINGS_CURRENT_PACKET",
+  "scope": "Current report/count/budget/primaryNULL/no-fit/policy8/claim ledger and exact index byte consistency only; no model, test rerun, new design qualification or source edit",
+  "checks": {
+    "index_grouped_and_current_sources_hashes": true,
+    "five_prospective_entries_explicit_not_native_ready": true,
+    "budget_epoch_matches_native_ledger": true,
+    "completed_CPU_counts_and_state_epoch": true,
+    "mechanism_summaries_and_limits": true,
+    "larger_validation_primary_NULL_and_no_fit": true,
+    "no_native_job_or_retry_ready": true,
+    "future_replay_prospective_not_completed": true,
+    "future_metadata_only_counts_not_measured": true,
+    "policy8_ledger_exact_binding": true,
+    "C011_matches_measured_scope": true,
+    "corrected_canonical201_example": true,
+    "CPU_worker_parent_tests_grouped_in_index": false,
+    "previous_index_digest_preserved": true
+  },
+  "blocking_findings": [
+    "CPU_worker_parent_tests_grouped_in_index"
+  ],
+  "index": {
+    "epoch": "2026-10-05T02:10:37.700180+00:00",
+    "grouped_entries_verified": 221,
+    "current_sources_verified": 50,
+    "current_tests_verified": 19,
+    "total_hash_bindings_verified": 290,
+    "missing": [],
+    "hash_or_status_mismatch": [],
+    "prospective_NOT_NATIVE_READY_entries": [
+      "CPU_CAUSAL_REPLAY_FEASIBILITY_DRAFT_001.json",
+      "CPU_CAUSAL_REPLAY_FEASIBILITY_DRAFT_001.md",
+      "runs/causal-replay-DEV-export-001/DEVELOPMENT_BANK.json",
+      "runs/causal-replay-DEV-export-001/DEVELOPMENT_TOKEN_BINDING.json",
+      "runs/causal-replay-DEV-export-001/MANIFEST.json"
+    ],
+    "new_files_after_epoch": "May be prospective; not covered or qualified by this v9 snapshot. This new final review is also created after the snapshot."
+  },
+  "current_native_budget": {
+    "used_seconds": 1374.4369999999963,
+    "remaining_seconds": 20225.563000000002,
+    "active_worker": false,
+    "reserved_new_native_seconds": 0,
+    "retry_available": false
+  },
+  "annotation_correction_to_preserved_execution_review": {
+    "source": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\cpu_h3_execution_review_001.json",
+    "preserve_original_bytes": true,
+    "incorrect_previous_narrative": "wrong21/correct247",
+    "correct_annotation": "Canonical target is201; both archived21 and247 are incorrect and share initial digit2 with201. Current report wording is correct.",
+    "scope": "Only this explanatory numeric example is corrected; target convention, raw data, scores, FD/count/statistical results and source qualification are unchanged."
+  },
+  "scientific_disposition": "CPU H3 local mechanics completed, first-token semantics remain limited; larger bulk primaryNULL and global scientific goalACTIVE_UNMET; no fitted controller or deployability claim",
+  "future_replay_disposition": "METADATA_ONLY_NOT_NATIVE_READY;440answer+192EOS positions/max236/1925API635adjoints are proposed counts, not model evidence or launch authority",
+  "notes": [
+    "Historical GPU metadata remains epoch-labelled and is separate from nested completed CPUH3 epoch. Fresh runtime readiness is never established by an index or old resource snapshot.",
+    "The index current_tests list does not enumerate newer CPU tests, but both are hash-bound in grouped CPUH3 entries; verification covers the declared union.",
+    "Draft statusPRESENT_DRAFT_NOT_NATIVE_READY is intentional and not a missing/mismatched file.",
+    "No code/data/fixture tests or broad native analysis were repeated in this consistency review."
+  ],
+  "artifact_sha256": {
+    "REPRODUCIBILITY_INDEX_v9.json": "a3f8e44bb04c0a97074478874f83bb86f845a5082969e972d67006103939f08b",
+    "RESEARCH_REPORT.md": "76100be51e08dc0624d5341b6faefeaa2f491831cbf02724d92badddd4ad39fc",
+    "STATE.json": "4400c53efdbd0a36d5c8157d7234a9e46f0015b58fe5c44a9833093a883b4ecb",
+    "CONTINUE.md": "ba56679aef6388857ce8d7fcf8514dadae1c83ec6c0edf461cbdfd8466fbf778",
+    "CAMPAIGN.md": "ce3dbc9fc4ea6a996e3c9e3967803b600b2b4c8eddf9fe2dd29d96bec328fa09",
+    "MODEL_BINDING.json": "c5681cd76faa411e94753467c86d81536eec4334194b67b8705e05bf133b6283",
+    "ENVIRONMENT.json": "59ae54d5e3c04f2674616a2cd5e73db6e3c7b0526eacb289eb13e66b326380d2",
+    "RESEARCH_POLICY.jsonl": "656c57fe6f4fffb7e2d98d9ed1ba194f1018eabe25b8178925882d487200d1a7",
+    "CLAIM_LEDGER.jsonl": "d3f451db2f84928ea849d1a2aec6a1e1ff2e8091b1a7663b9ffdff6fe3ca41fb",
+    "BUDGET_LEDGER.jsonl": "dfb434d56bbbcdfa378ce4766d3b9bcf7066aeee8e84b95a54db58e37c3ec7dc",
+    "CPU_CAUSAL_REPLAY_FEASIBILITY_DRAFT_001.json": "021ea720f4b644d0e0fff0b975ab460d80e6c02cb401400fd0be58a0ba4cb359",
+    "reviews\\cpu_h3_execution_review_001.json": "a3a3f3dc2e84e02a4300b31076230b26169f2c8a1c5965daa3e9b95a50f27fd6"
+  }
+}

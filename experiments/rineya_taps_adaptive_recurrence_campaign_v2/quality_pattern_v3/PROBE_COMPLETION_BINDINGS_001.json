@@ -1,0 +1,38 @@
+{
+  "schema": "probe-terminal-coordinator-bindings-001",
+  "timestamp_utc": "2026-10-06T01:41:37.424321+00:00",
+  "actual_terminal_bindings": [
+    {
+      "path": "runs/native-prefix-probe-001/terminal_receipt.json",
+      "sha256": "ef292863a3c6050175fac115715546cc542343023c430ccaed5ed2699f493f48",
+      "status": "WORKER_TERMINAL"
+    },
+    {
+      "path": "analyses/prefix-probe-001/REPORT.json",
+      "sha256": "6bf9dd67f2f6f2b4a5bcaec0738b84058212cd28883ecda237a309532fd930c7",
+      "status": "COMPLETE_PASSIVE_DESCRIPTIVE_DEV_ONLY"
+    },
+    {
+      "path": "audits/probe_native_execution_001.json",
+      "sha256": "0fe48280f4488992bf7b8824733f004fd5b546c2ba80175109f051e39e443ad8",
+      "status": "PASS_MECHANICAL_EXECUTION_AUTHOR_AUDIT_WITH_LIMITS"
+    },
+    {
+      "path": "reviews/probe_execution_review_001.json",
+      "sha256": "fffb9d699b5f4458e73cbdae8dd192b34e4fed17e80ae7e7f705b2eab386f99e",
+      "status": "PASS_COMPLETE_PASSIVE_DESCRIPTIVE_DEV_ONLY"
+    },
+    {
+      "path": "audits/probe_pattern_findings_001.json",
+      "sha256": "bd6ddb4493c705b72844eff976a50a839671e2cbd7a893f61f1481849f0e3d9f",
+      "status": "COMPLETE_ACTUAL_DESCRIPTIVE_FINDINGS_NO_GATE_GAIN"
+    }
+  ],
+  "native_seconds_used": 3690.2476851,
+  "native_seconds_remaining": 17909.7523149,
+  "global_reserve_seconds": 1800,
+  "candidate_revisions_used": 0,
+  "native_worker_active": false,
+  "goal_complete": false,
+  "decision": "Review three opposed K0/K1 policies; no quality benefit established"
+}

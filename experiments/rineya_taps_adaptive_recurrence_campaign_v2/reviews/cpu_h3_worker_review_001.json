@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "reviewer": "independent adversarial_review",
+  "reviewed_utc": "2026-10-05T01:29:22.864991+00:00",
+  "status": "PASS_CPU_H3_WORKER_SOURCE_AND_APPARATUS_ONLY",
+  "scope": "Read-only resulting CPU native successor source/math/data-path/qualification/cost review plus eight independently executed CPU fixture tests. No canonical model loaded, native worker launched, GPU inventory queried or native gradient qualified.",
+  "source_sha256": {
+    "cpu_h3_native.py": "f242676e0ec0f019dd94ac27e5f3cb5eb8f3e311beb64cc0355102492396eaca",
+    "sensitivity.py": "5d0af45a8e91f0a00d91f83244105d06f1beba6f422cc3cd6d20c2d43d762f0d",
+    "tests/test_cpu_h3_native.py": "f0ee1b467625840af2f4c2a1ebf9bbdb3e8377447507c380ee529b791d4b72bd"
+  },
+  "CPU_tests": {
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "checks": {
+    "source_stable_tested_final": true,
+    "worker_frozen_f242": true,
+    "math_apparatus_original_5d0_unchanged": true,
+    "eight_CPU_tests_pass": true,
+    "no_GPU_import_or_test_bypass": true,
+    "explicit_CPU_guard_and_load": true,
+    "population_bound_before_weights": true,
+    "postimport_7point4_before_weights": true,
+    "fresh_forecast_before_seven_task_rows": true,
+    "complete_ledger_observed": true,
+    "final_state_hash_recorded": true,
+    "unexpected_failure_traceback": true
+  },
+  "blocking_findings": [],
+  "native_gradient_qualification": "NOT_RUN",
+  "admission_dispatch_review": "PENDING_FROZEN_ADMISSION",
+  "source_evidence": {
+    "CPU_resource_and_prefix_guards": "cpu_h3_native.py functions require_cpu_tensor/cpu_resources/resource_guard/forward_logits; CPU dtype/model tensors checked after loading",
+    "model_source_runtime_and_data_binding": "run verifies review/admission/source closure, admitted_source, exact binding/header, offline canonical tokenizer/custom class/head/runtime and loaded state; only LAB/data/evaluation/mergedev_fast.jsonl read",
+    "label_and_population_firewall": "bind_population all16 before weights; inherited canonical first token only,7eligible7missing2long; actual input IDs reencoded against bound prompt IDs; fixed_rollout creates CE target only after model logits",
+    "fixed_loss_graph": "Frozen ordinary full L12-L13 pass and one raw extra proposal; controlled state detached/cloned into leaf; real L14-L27 suffix/norm/tied/custom head differentiates loss; params requires_gradFalse/gradNone; autograd.grad only state leaf",
+    "native_mechanical_qualification": "Representative84 and nongold max256 noextra/unit/.99/1/1.01 diagnostic versus separately qualified CPU inference values; CPU masks/arange/replay objects, L0-L2 one-shot,finite losses/states/gradients, fixedFDtol, forced suffix exception/method restoration, two cache variants and before/after source/state guards",
+    "CPU_complete_forecast": "complete_forecast requires actual max256 three completed diagnostic calls, with one adjoint and two value-only calls; remaining7*(max_adjoint_full_forward+2*max_value_forward)*1.5, plus elapsed and180 internal reserve <=1800 before seven target rows",
+    "observed_complete_ledger": "18value attempts17complete1registered partial;27diagnostic calls27complete;2cache API rejects;9adjoints;16outcomes;4818 completed positions; partial prefix work NULL; exact actual final state hash serialized"
+  },
+  "population_and_call_arithmetic": {
+    "original_DEV_rows": 16,
+    "eligible": 7,
+    "target_missing": 7,
+    "long_excluded": 2,
+    "eligible_prefix_token_sum": 274,
+    "representative_prefix_tokens": 84,
+    "max_prefix_tokens": 256,
+    "completed_position_formula": "11*84+12*256+3*274",
+    "completed_prefix_positions": 4818,
+    "full_forward_attempts": 45,
+    "complete_full_forwards": 44,
+    "intentional_partial": 1,
+    "cache_API_attempts": 2,
+    "total_API_attempts": 47,
+    "state_adjoints": 9,
+    "task_only_forwards": 21,
+    "task_only_adjoints": 7,
+    "partial_prefix_positions": null
+  },
+  "numerical_and_inference_limits": [
+    "Fixed alpha chain-rule identity uses dot(G,d2) with real suffix/readout; central difference from fresh .99/1/1.01 entire rollouts approximates it.",
+    "Registered tolerance .001+.03*abs(adjoint) and neutral abs(sensitivity)<=.001 are unchanged; failed required gate stops the full experiment incomplete.",
+    "The raw-update moment energies are the frozen offline two-observation FP32 closed form, not proof of bitwise agreement with incremental v1 feature arithmetic; predictive sign/rank interpretation must state this.",
+    "Canonical first-token loss may not reflect complete-answer or semantic correctness; same-source exposed7cases/fiveprovisional scenarios do not establish out-of-family predictiveness.",
+    "CPU kernel rounding and timing are separately qualified; no GPU derivative/timing pooling, speed comparison, signed adaptive-Jacobian/global stability or controller-fit claim.",
+    "CPU fixture equivalence/FD tests do not establish native maximum gradient memory, checkpoint-state integrity, actual adjoint precision or complete1800 timing.",
+    "Mask triangle values and full hidden/logit arrays need not be serialized; triangle conditioning follows exact source while object/shape/arange and value-parity checks run natively."
+  ],
+  "required_before_native_dispatch": [
+    "New exact CPU admission and independent receipt must bind all final source/docs/data/runtime hashes; no use of oldGPU72 receipt for the changed host.",
+    "Fresh parent8.4/postimport7.4 RAM, RSS6/reserve1, campaign disk, sole-worker lock and1800 deadline/global1800 reserve; root alone starts contained worker.",
+    "Native representative/max256 state-gradient mechanics and complete measured CPU forecast must pass before seven target rows.",
+    "No retry, hidden bulk restart, automatic device fallback, training, protected TEST, pool access or changed comparator/endpoints."
+  ],
+  "cost_scope": {
+    "historical_CPU_costs": "feasibility estimates only; currentCPU max forward+adjoint costs are unmeasured until qualification",
+    "new_CPU_native_seconds_by_reviewer": 0,
+    "native_model_loads_by_reviewer": 0,
+    "GPU_calls_by_reviewer": 0,
+    "known_CPU_fixture_test_seconds": 2.7,
+    "separate_controller_logging_latency": null
+  },
+  "source_and_evidence_sha256": {
+    "cpu_h3_native.py": "f242676e0ec0f019dd94ac27e5f3cb5eb8f3e311beb64cc0355102492396eaca",
+    "sensitivity.py": "5d0af45a8e91f0a00d91f83244105d06f1beba6f422cc3cd6d20c2d43d762f0d",
+    "binding.py": "5334aefc6e179dd784f75a46c5d75111f793b973d2f4807315fba760f1c86a82",
+    "tests\\test_cpu_h3_native.py": "f0ee1b467625840af2f4c2a1ebf9bbdb3e8377447507c380ee529b791d4b72bd",
+    "tests\\test_sensitivity.py": "e11159218a0d54fced011492bd6888c53091f06a8c96a91461c4aa345dc2e724",
+    "CPU_H3_DESIGN_001.md": "f0449b0c32a439448d81298602c31eb96692c64a28c7fac40e8cf833b60f0dff",
+    "CPU_H3_NATIVE_REGISTRATION_001.md": "3a2723dc8463b3aa6866c5cba6bb20f9247135a8076ea81aeff23c541bc20251",
+    "CPU_H3_FEASIBILITY_001.json": "64cb2c16237d14d6cdc885fba92c98e1259214547f386a40c84d1eddb0f0bf53",
+    "CPU_H3_FEASIBILITY_001.md": "a6cc376459965f6828608710e1d95651807d0f125a3e591fdf72f4f7d852ab68",
+    "reviews\\cpu_h3_parent_review_001.json": "fd61b2e33fb9b687daba721f30a596471cf946af4c010abea0087888ffea2c9b",
+    "audits\\cpu_H3_authority_feasibility_review_001.json": "dfffba66bda05bd6a0da231625310082a8064ba3601c098aae90819c137ac122",
+    "runs\\binding-001\\MODEL_DATA_BINDING.json": "82590a8f76eca27e7b15694b724123477e21ae0cc38ed2b33b56641ab9e70f26",
+    "runs\\binding-001\\PROMPT_AUDIT.json": "f4b5b21638bc2d8a8da4fac707072208d3a8a1aa2f1918c7574a326cc996bf7d",
+    "reviews\\cpu_h3_worker_probe_001\\SOURCE_BEFORE.json": "ccd07494206ca1eb02d11efdab2b73b019c95065c051bcf83d92c3de1f5c84e0",
+    "reviews\\cpu_h3_worker_probe_001\\SOURCE_AFTER.json": "ccd07494206ca1eb02d11efdab2b73b019c95065c051bcf83d92c3de1f5c84e0",
+    "reviews\\cpu_h3_worker_probe_001\\COMMAND.json": "edd05be82bdefc16f1cf390ef43c2627d17799ced37da085ee664b324881687a",
+    "reviews\\cpu_h3_worker_probe_001\\pytest.log": "9160c285cfeb324e943c5a8248630c05f9f4aaf02a72b4012b40b12b9d6478fb",
+    "reviews\\cpu_h3_worker_probe_001\\junit.xml": "631dff0dd5d8fb3c359924d033e5a37da6806b650c1fcff4f4ded3c212badc1c"
+  }
+}

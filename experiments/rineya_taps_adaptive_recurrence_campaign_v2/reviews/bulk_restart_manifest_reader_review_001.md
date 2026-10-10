@@ -1,0 +1,5 @@
+The separate offline reader5bc14dc passes source review. Sixteen independent affected fixtures passed20.49s with stable source; the actual107 admission, exactCDC capture and four canonical helper/current hashes passed the production bridge predicate. Scientific aggregate and all other functions remain AST-identical to frozen9c95; only provenance validation/attachment and IO bookkeeping changed.
+
+The bridge is specific to four offline helpers and the recorded actual run, not a global or native fallback. It pins actuala661/CDC/9c95/oldnull06b and labels the four as not admitted/nativequalified. Missing, mislocated, changed or substituted evidence rejects results. All107 native/grant/state/assets/chronology/checkpoint/matrix/scorer/statistical/endpoint/resource/cost guards remain.
+
+Root may generate a new exclusive corrected analysis, followed by independent raw/result review. The old nullreport, source/raw/native bindings remain unchanged. No new model, primary override, retry, fitting or scientific claim is supplied by this source review.

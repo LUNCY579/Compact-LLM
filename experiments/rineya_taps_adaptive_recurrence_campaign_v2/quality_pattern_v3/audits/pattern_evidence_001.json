@@ -1,0 +1,1612 @@
+{
+  "DEV_causal_generation_join_descriptive": {
+    "A0_only": {
+      "canonical_teacher_useful_directions": {
+        "-1": 6
+      },
+      "cases": 6,
+      "input_only": {
+        "balance": {
+          "count": 6,
+          "max": 0.5361118912696838,
+          "mean": 0.5111701140801111,
+          "min": 0.4914437234401703
+        },
+        "fluctuation": {
+          "count": 6,
+          "max": 0.05564308166503906,
+          "mean": 0.049884905417760216,
+          "min": 0.04553991183638573
+        },
+        "progress": {
+          "count": 6,
+          "max": 0.24558542668819427,
+          "mean": 0.23101566980282465,
+          "min": 0.2215496003627777
+        }
+      }
+    },
+    "both_correct": {
+      "canonical_teacher_useful_directions": {
+        "-1": 48,
+        "0": 3,
+        "1": 6
+      },
+      "cases": 57,
+      "input_only": {
+        "balance": {
+          "count": 57,
+          "max": 0.5220721364021301,
+          "mean": 0.48154881073717487,
+          "min": 0.4373650848865509
+        },
+        "fluctuation": {
+          "count": 57,
+          "max": 0.05952179431915283,
+          "mean": 0.05445995260226099,
+          "min": 0.047749996185302734
+        },
+        "progress": {
+          "count": 57,
+          "max": 0.24867181479930878,
+          "mean": 0.23349250905346453,
+          "min": 0.21250198781490326
+        }
+      }
+    },
+    "both_wrong": {
+      "canonical_teacher_useful_directions": {
+        "-1": 42,
+        "0": 1,
+        "1": 74
+      },
+      "cases": 117,
+      "input_only": {
+        "balance": {
+          "count": 117,
+          "max": 0.5430105924606323,
+          "mean": 0.5002747644216586,
+          "min": 0.442178875207901
+        },
+        "fluctuation": {
+          "count": 117,
+          "max": 0.05919914320111275,
+          "mean": 0.051312568287054695,
+          "min": 0.0449715331196785
+        },
+        "progress": {
+          "count": 117,
+          "max": 0.2541351020336151,
+          "mean": 0.23087701354271326,
+          "min": 0.21311967074871063
+        }
+      }
+    },
+    "unit_only": {
+      "canonical_teacher_useful_directions": {
+        "-1": 1,
+        "1": 11
+      },
+      "cases": 12,
+      "input_only": {
+        "balance": {
+          "count": 12,
+          "max": 0.5385645031929016,
+          "mean": 0.5025482848286629,
+          "min": 0.45204854011535645
+        },
+        "fluctuation": {
+          "count": 12,
+          "max": 0.055281300097703934,
+          "mean": 0.05006957861284415,
+          "min": 0.04463573172688484
+        },
+        "progress": {
+          "count": 12,
+          "max": 0.24434694647789001,
+          "mean": 0.22661997626225153,
+          "min": 0.20805209875106812
+        }
+      }
+    }
+  },
+  "K0_unit": {
+    "DEVELOPMENT": {
+      "A0_both_variants_correct_parents": 20,
+      "A0_correct": 63,
+      "all_selector_numbers": "Gold-graded retrospective headroom only; no candidate or deployable selector measured.",
+      "cases": 192,
+      "discordant_preference_within_same_parent": 0,
+      "endpoint_groups": {
+        "A0_only": {
+          "cases": 6,
+          "parents": 6
+        },
+        "both_correct": {
+          "cases": 57,
+          "parents": 41
+        },
+        "both_wrong": {
+          "cases": 117,
+          "parents": 71
+        },
+        "unit_only": {
+          "cases": 12,
+          "parents": 11
+        }
+      },
+      "finite_sixconstant_oracle_correct": 70,
+      "joint_A0_unit_oracle_correct": 75,
+      "joint_both_variants_correct_parents": 25,
+      "joint_headroom_above_unit_cases": 6,
+      "joint_headroom_above_unit_parent_count": 6,
+      "joint_headroom_above_unit_percentage_points": 3.125,
+      "parent_count": 96,
+      "unit_both_variants_correct_parents": 21,
+      "unit_correct": 69,
+      "unit_gains_over_A0": {
+        "cases": 12,
+        "parents": 11
+      },
+      "unit_losses_of_A0": {
+        "cases": 6,
+        "parents": 6
+      },
+      "unit_retains_A0": 57
+    },
+    "OPEN_VALIDATION": {
+      "A0_both_variants_correct_parents": 10,
+      "A0_correct": 33,
+      "all_selector_numbers": "Gold-graded retrospective headroom only; no candidate or deployable selector measured.",
+      "cases": 96,
+      "discordant_preference_within_same_parent": 0,
+      "endpoint_groups": {
+        "A0_only": {
+          "cases": 5,
+          "parents": 5
+        },
+        "both_correct": {
+          "cases": 28,
+          "parents": 21
+        },
+        "both_wrong": {
+          "cases": 57,
+          "parents": 35
+        },
+        "unit_only": {
+          "cases": 6,
+          "parents": 6
+        }
+      },
+      "finite_sixconstant_oracle_correct": 35,
+      "joint_A0_unit_oracle_correct": 39,
+      "joint_both_variants_correct_parents": 13,
+      "joint_headroom_above_unit_cases": 5,
+      "joint_headroom_above_unit_parent_count": 5,
+      "joint_headroom_above_unit_percentage_points": 5.208333333333333,
+      "parent_count": 48,
+      "unit_both_variants_correct_parents": 10,
+      "unit_correct": 34,
+      "unit_gains_over_A0": {
+        "cases": 6,
+        "parents": 6
+      },
+      "unit_losses_of_A0": {
+        "cases": 5,
+        "parents": 5
+      },
+      "unit_retains_A0": 28
+    }
+  },
+  "K0_unit_discordant_totals": {
+    "cases": 29,
+    "limitation": "Current disjoint parent sets are descriptive exposed evidence; parent/caseIDs are forbidden online features. Local continuous-scale CPU direction is a different intervention/endpoint.",
+    "parents": 28,
+    "within_parent_K0_K1_opposite_strict_preferences": 0
+  },
+  "bindings": [
+    {
+      "path": "runs\\bulk-bank-apparatus-001\\bank.json",
+      "sha256": "862a63648caf7efb3d287c11bc5caaefc884e0ec6cb3130ce8f196526efc40cd"
+    },
+    {
+      "path": "analyses\\cpu-causal-replay-003-fp32-reviewed-001\\REPORT.json",
+      "sha256": "ae15d0c9d425938d13ea981db4406269ae2ada5a6444d778e1a8fe0f84671911"
+    },
+    {
+      "path": "analyses\\bulk-restart-manifest-reviewed-001\\REPORT.json",
+      "sha256": "67c7d5d9fc128b148afc6d056cb26f9ecef4e05dde78a7405358125250cb9d21"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\outcomes.jsonl",
+      "sha256": "858ba6c1b5105b460e600c93872575c78e2c3e43545538847e3d9eba30e01cd8"
+    },
+    {
+      "path": "runs\\native-bulk-restart-001\\result\\readout_pairs.jsonl",
+      "sha256": "3018c732c22d45bab977e60aea49c3a800ba5ee6cd8e7ea4b2e37f51a63c4e75"
+    },
+    {
+      "path": "runs\\native-cpu-causal-replay-003\\result\\features.jsonl",
+      "sha256": "df81f0d15136c69cf65db373e2a508f235d695b195993eb0666f07ceb7e939ce"
+    },
+    {
+      "path": "reviews\\bulk_restart_final_raw_audit_001.json",
+      "sha256": "2e4c8c011d45fe8e99a0b2b215b2c4299e358877ed22c587204b16ecf0862ec3"
+    },
+    {
+      "path": "reviews\\bulk_restart_execution_review_001.json",
+      "sha256": "74a4aaa46a537bfbe798ea76c97b52c11f4c5d1b1ced55a8cae61ad19e465ad0"
+    },
+    {
+      "path": "reviews\\cpu_causal_replay_execution_review_003.json",
+      "sha256": "94071d3a9fc1576786119564e78745dcea3382be1bad4889d5d13c6d686c66fe"
+    }
+  ],
+  "causal_family_directions": {
+    "answerability_source_conflict": {
+      "cases": 32,
+      "neutral": 0,
+      "opposite_variant_direction_parents": 15,
+      "parents": 16,
+      "reliable_decrease": 17,
+      "reliable_increase": 15
+    },
+    "deduction_composition": {
+      "cases": 32,
+      "neutral": 0,
+      "opposite_variant_direction_parents": 5,
+      "parents": 16,
+      "reliable_decrease": 17,
+      "reliable_increase": 15
+    },
+    "dialogue_memory": {
+      "cases": 32,
+      "neutral": 2,
+      "opposite_variant_direction_parents": 1,
+      "parents": 16,
+      "reliable_decrease": 15,
+      "reliable_increase": 15
+    },
+    "document_retrieval_reconciliation": {
+      "cases": 32,
+      "neutral": 1,
+      "opposite_variant_direction_parents": 0,
+      "parents": 16,
+      "reliable_decrease": 15,
+      "reliable_increase": 16
+    },
+    "program_state": {
+      "cases": 32,
+      "neutral": 0,
+      "opposite_variant_direction_parents": 7,
+      "parents": 16,
+      "reliable_decrease": 19,
+      "reliable_increase": 13
+    },
+    "signed_ledgers": {
+      "cases": 32,
+      "neutral": 1,
+      "opposite_variant_direction_parents": 6,
+      "parents": 16,
+      "reliable_decrease": 14,
+      "reliable_increase": 17
+    }
+  },
+  "causal_global": {
+    "all_input_only_balances_positive": true,
+    "any_variant_loss_increase_parent_counts": {
+      "minus": 63,
+      "plus": 67
+    },
+    "input_balance_range": {
+      "count": 192,
+      "max": 0.5430105924606323,
+      "mean": 0.49519807162384194,
+      "min": 0.4373650848865509
+    },
+    "local_scope": "CPU alpha.99/1/1.01 canonical teacher-prefix loss; not GPU generation, addingK1 vsK0, token schedule or online predictor. EOS precision ordering UNVERIFIED.",
+    "opposite_parent_count": 34,
+    "parents": 96,
+    "population": 192,
+    "reliable_direction_counts": {
+      "cases": 192,
+      "coherence_agreements": 91,
+      "constant_decrease_agreements": 97,
+      "constant_increase_agreements": 91,
+      "neutral_cases": 4,
+      "nonneutral_cases": 188,
+      "numerically_uncertain_nonneutral_cases": 0,
+      "reliable_sign_denominator": 188,
+      "spearman_all_cases_balance_negative_derivative": -0.09544292379893118
+    }
+  },
+  "causal_status_directions": {
+    "ANSWER": {
+      "cases": 144,
+      "minus_loss_decreases": 52,
+      "neutral": 1,
+      "parents": 80,
+      "plus_loss_increases": 52,
+      "reliable_decrease": 52,
+      "reliable_increase": 91
+    },
+    "CONFLICT": {
+      "cases": 16,
+      "minus_loss_decreases": 16,
+      "neutral": 0,
+      "parents": 12,
+      "plus_loss_increases": 16,
+      "reliable_decrease": 16,
+      "reliable_increase": 0
+    },
+    "MISSING": {
+      "cases": 32,
+      "minus_loss_decreases": 32,
+      "neutral": 3,
+      "parents": 20,
+      "plus_loss_increases": 32,
+      "reliable_decrease": 29,
+      "reliable_increase": 0
+    }
+  },
+  "created_utc": "2026-10-05T20:14:12.671567+00:00",
+  "discordant_cases": [
+    {
+      "A0_response": "NO",
+      "A0_score": 1,
+      "answerability": "answerable",
+      "canonical_target_count": 1,
+      "canonical_teacher_useful_direction": -1,
+      "category": "deduction_composition",
+      "endpoint_class": "A0_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.10347849875688553,
+        "margin_change": 0.009447097778320312,
+        "max_abs_logit_delta": 1.7270174026489258,
+        "top1_agreement": 0
+      },
+      "gold": "NO",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:10:v1",
+      "input_only_balance": 0.5361118912696838,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:10",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "YES",
+      "unit_score": 0
+    },
+    {
+      "A0_response": "NO",
+      "A0_score": 1,
+      "answerability": "answerable",
+      "canonical_target_count": 1,
+      "canonical_teacher_useful_direction": -1,
+      "category": "deduction_composition",
+      "endpoint_class": "A0_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.0825611799955368,
+        "margin_change": 0.2457141876220703,
+        "max_abs_logit_delta": 1.6772878170013428,
+        "top1_agreement": 0
+      },
+      "gold": "NO",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:11:v0",
+      "input_only_balance": 0.5231287479400635,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:11",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "YES",
+      "unit_score": 0
+    },
+    {
+      "A0_response": "NO",
+      "A0_score": 1,
+      "answerability": "answerable",
+      "canonical_target_count": 1,
+      "canonical_teacher_useful_direction": -1,
+      "category": "deduction_composition",
+      "endpoint_class": "A0_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.1837434470653534,
+        "margin_change": 0.009946823120117188,
+        "max_abs_logit_delta": 1.810319423675537,
+        "top1_agreement": 0
+      },
+      "gold": "NO",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:14:v1",
+      "input_only_balance": 0.5038885474205017,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:14",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "YES",
+      "unit_score": 0
+    },
+    {
+      "A0_response": "113",
+      "A0_score": 1,
+      "answerability": "answerable",
+      "canonical_target_count": 3,
+      "canonical_teacher_useful_direction": -1,
+      "category": "program_state",
+      "endpoint_class": "A0_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.10913203656673431,
+        "margin_change": 0.7051410675048828,
+        "max_abs_logit_delta": 2.4849488735198975,
+        "top1_agreement": 1
+      },
+      "gold": "113",
+      "id": "BULK-TAPS-001:9463250d48f1:program_state:1:v1",
+      "input_only_balance": 0.4914437234401703,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:program_state:1",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "112",
+      "unit_score": 0
+    },
+    {
+      "A0_response": "153",
+      "A0_score": 1,
+      "answerability": "answerable",
+      "canonical_target_count": 3,
+      "canonical_teacher_useful_direction": -1,
+      "category": "program_state",
+      "endpoint_class": "A0_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.007731456775218248,
+        "margin_change": -0.04869270324707031,
+        "max_abs_logit_delta": 1.299896240234375,
+        "top1_agreement": 1
+      },
+      "gold": "153",
+      "id": "BULK-TAPS-001:9463250d48f1:program_state:2:v1",
+      "input_only_balance": 0.5197543501853943,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:program_state:2",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "149",
+      "unit_score": 0
+    },
+    {
+      "A0_response": "UNKNOWN",
+      "A0_score": 1,
+      "answerability": "unanswerable",
+      "canonical_target_count": 1,
+      "canonical_teacher_useful_direction": -1,
+      "category": "document_retrieval_reconciliation",
+      "endpoint_class": "A0_only",
+      "firstlogit": {
+        "kl_base_to_arm": 1.8062852621078491,
+        "margin_change": -1.358713150024414,
+        "max_abs_logit_delta": 3.6630401611328125,
+        "top1_agreement": 0
+      },
+      "gold": "UNKNOWN",
+      "id": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7:v1",
+      "input_only_balance": 0.4926934242248535,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7",
+      "source_status": "CONFLICT",
+      "split": "DEVELOPMENT",
+      "unit_response": "308",
+      "unit_score": 0
+    },
+    {
+      "A0_response": "NO",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "canonical_target_count": 1,
+      "canonical_teacher_useful_direction": 1,
+      "category": "deduction_composition",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.3007534146308899,
+        "margin_change": 0.5993862152099609,
+        "max_abs_logit_delta": 2.2176966667175293,
+        "top1_agreement": 0
+      },
+      "gold": "YES",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:4:v1",
+      "input_only_balance": 0.48761460185050964,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:4",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "YES",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "NO",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "canonical_target_count": 1,
+      "canonical_teacher_useful_direction": 1,
+      "category": "deduction_composition",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.04885857179760933,
+        "margin_change": -0.103057861328125,
+        "max_abs_logit_delta": 2.1200318336486816,
+        "top1_agreement": 0
+      },
+      "gold": "YES",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:5:v0",
+      "input_only_balance": 0.5014935731887817,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:5",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "YES",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "NO",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "canonical_target_count": 1,
+      "canonical_teacher_useful_direction": 1,
+      "category": "deduction_composition",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.01525135152041912,
+        "margin_change": 0.3220195770263672,
+        "max_abs_logit_delta": 1.8876266479492188,
+        "top1_agreement": 0
+      },
+      "gold": "YES",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:8:v0",
+      "input_only_balance": 0.5206524729728699,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:8",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "YES",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "NO",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "canonical_target_count": 1,
+      "canonical_teacher_useful_direction": 1,
+      "category": "deduction_composition",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.2712838053703308,
+        "margin_change": -0.27513694763183594,
+        "max_abs_logit_delta": 1.7148702144622803,
+        "top1_agreement": 0
+      },
+      "gold": "YES",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:9:v0",
+      "input_only_balance": 0.5385645031929016,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:9",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "YES",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "NO",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "canonical_target_count": 1,
+      "canonical_teacher_useful_direction": 1,
+      "category": "deduction_composition",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.040124133229255676,
+        "margin_change": -0.22726821899414062,
+        "max_abs_logit_delta": 1.6082191467285156,
+        "top1_agreement": 0
+      },
+      "gold": "YES",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:9:v1",
+      "input_only_balance": 0.5312103629112244,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:9",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "YES",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "NO",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "canonical_target_count": 1,
+      "canonical_teacher_useful_direction": 1,
+      "category": "deduction_composition",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.017898065969347954,
+        "margin_change": -0.31088829040527344,
+        "max_abs_logit_delta": 1.7359809875488281,
+        "top1_agreement": 0
+      },
+      "gold": "YES",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:12:v0",
+      "input_only_balance": 0.5130748152732849,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:12",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "YES",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "NO",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "canonical_target_count": 1,
+      "canonical_teacher_useful_direction": 1,
+      "category": "deduction_composition",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.021404311060905457,
+        "margin_change": 0.08704185485839844,
+        "max_abs_logit_delta": 1.8656005859375,
+        "top1_agreement": 0
+      },
+      "gold": "YES",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:13:v0",
+      "input_only_balance": 0.5168566703796387,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:13",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "YES",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "154",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "canonical_target_count": 3,
+      "canonical_teacher_useful_direction": -1,
+      "category": "program_state",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.04606832563877106,
+        "margin_change": 0.2969379425048828,
+        "max_abs_logit_delta": 2.5556235313415527,
+        "top1_agreement": 1
+      },
+      "gold": "153",
+      "id": "BULK-TAPS-001:9463250d48f1:program_state:10:v0",
+      "input_only_balance": 0.5073704123497009,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:program_state:10",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "153",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "UNKNOWN",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "canonical_target_count": 4,
+      "canonical_teacher_useful_direction": 1,
+      "category": "dialogue_memory",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 1.6275277137756348,
+        "margin_change": -3.5621395111083984,
+        "max_abs_logit_delta": 4.342757701873779,
+        "top1_agreement": 0
+      },
+      "gold": "3471",
+      "id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:5:v0",
+      "input_only_balance": 0.45204854011535645,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:5",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "3471",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "UNKNOWN",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "canonical_target_count": 3,
+      "canonical_teacher_useful_direction": 1,
+      "category": "dialogue_memory",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.888267457485199,
+        "margin_change": -2.4855518341064453,
+        "max_abs_logit_delta": 2.7677178382873535,
+        "top1_agreement": 0
+      },
+      "gold": "471",
+      "id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:9:v0",
+      "input_only_balance": 0.48731565475463867,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:9",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "471",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "UNKNOWN",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "canonical_target_count": 3,
+      "canonical_teacher_useful_direction": 1,
+      "category": "document_retrieval_reconciliation",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 1.2202814817428589,
+        "margin_change": -1.2794609069824219,
+        "max_abs_logit_delta": 4.076433181762695,
+        "top1_agreement": 0
+      },
+      "gold": "142",
+      "id": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:4:v0",
+      "input_only_balance": 0.481128990650177,
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:4",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "142",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "UNKNOWN",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "canonical_target_count": 3,
+      "canonical_teacher_useful_direction": 1,
+      "category": "answerability_source_conflict",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.627983033657074,
+        "margin_change": -2.602405548095703,
+        "max_abs_logit_delta": 2.6015419960021973,
+        "top1_agreement": 0
+      },
+      "gold": "131",
+      "id": "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:2:v0",
+      "input_only_balance": 0.4932488203048706,
+      "labels_online_allowed": false,
+      "pair_kind": "EVIDENCE_TRANSFER",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:2",
+      "source_status": "ANSWER",
+      "split": "DEVELOPMENT",
+      "unit_response": "131",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "YES",
+      "A0_score": 1,
+      "answerability": "answerable",
+      "category": "deduction_composition",
+      "endpoint_class": "A0_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.027150103822350502,
+        "margin_change": 0.4159870147705078,
+        "max_abs_logit_delta": 1.8158800601959229,
+        "top1_agreement": 0
+      },
+      "gold": "YES",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:17:v1",
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:17",
+      "source_status": "ANSWER",
+      "split": "OPEN_VALIDATION",
+      "unit_response": "NO",
+      "unit_score": 0
+    },
+    {
+      "A0_response": "NO",
+      "A0_score": 1,
+      "answerability": "answerable",
+      "category": "deduction_composition",
+      "endpoint_class": "A0_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.21990880370140076,
+        "margin_change": 0.9764747619628906,
+        "max_abs_logit_delta": 1.995163917541504,
+        "top1_agreement": 0
+      },
+      "gold": "NO",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:18:v1",
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:18",
+      "source_status": "ANSWER",
+      "split": "OPEN_VALIDATION",
+      "unit_response": "YES",
+      "unit_score": 0
+    },
+    {
+      "A0_response": "NO",
+      "A0_score": 1,
+      "answerability": "answerable",
+      "category": "deduction_composition",
+      "endpoint_class": "A0_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.27900242805480957,
+        "margin_change": 1.2207145690917969,
+        "max_abs_logit_delta": 1.8995957374572754,
+        "top1_agreement": 0
+      },
+      "gold": "NO",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:19:v0",
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:19",
+      "source_status": "ANSWER",
+      "split": "OPEN_VALIDATION",
+      "unit_response": "YES",
+      "unit_score": 0
+    },
+    {
+      "A0_response": "UNKNOWN",
+      "A0_score": 1,
+      "answerability": "unanswerable",
+      "category": "document_retrieval_reconciliation",
+      "endpoint_class": "A0_only",
+      "firstlogit": {
+        "kl_base_to_arm": 1.4195032119750977,
+        "margin_change": -2.4494075775146484,
+        "max_abs_logit_delta": 3.6089158058166504,
+        "top1_agreement": 0
+      },
+      "gold": "UNKNOWN",
+      "id": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18:v0",
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:18",
+      "source_status": "CONFLICT",
+      "split": "OPEN_VALIDATION",
+      "unit_response": "143",
+      "unit_score": 0
+    },
+    {
+      "A0_response": "UNKNOWN",
+      "A0_score": 1,
+      "answerability": "unanswerable",
+      "category": "document_retrieval_reconciliation",
+      "endpoint_class": "A0_only",
+      "firstlogit": {
+        "kl_base_to_arm": 1.9440282583236694,
+        "margin_change": -0.9971218109130859,
+        "max_abs_logit_delta": 3.5033318996429443,
+        "top1_agreement": 0
+      },
+      "gold": "UNKNOWN",
+      "id": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:22:v0",
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:22",
+      "source_status": "MISSING",
+      "split": "OPEN_VALIDATION",
+      "unit_response": "626",
+      "unit_score": 0
+    },
+    {
+      "A0_response": "NO",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "category": "deduction_composition",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.01100744679570198,
+        "margin_change": -0.2783222198486328,
+        "max_abs_logit_delta": 1.5502102375030518,
+        "top1_agreement": 0
+      },
+      "gold": "YES",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:16:v0",
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:16",
+      "source_status": "ANSWER",
+      "split": "OPEN_VALIDATION",
+      "unit_response": "YES",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "NO",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "category": "deduction_composition",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.22116485238075256,
+        "margin_change": 1.3232841491699219,
+        "max_abs_logit_delta": 1.7394304275512695,
+        "top1_agreement": 0
+      },
+      "gold": "YES",
+      "id": "BULK-TAPS-001:9463250d48f1:deduction_composition:21:v0",
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:deduction_composition:21",
+      "source_status": "ANSWER",
+      "split": "OPEN_VALIDATION",
+      "unit_response": "YES",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "UNKNOWN",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "category": "document_retrieval_reconciliation",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 3.4141597747802734,
+        "margin_change": 3.9311485290527344,
+        "max_abs_logit_delta": 4.792732238769531,
+        "top1_agreement": 0
+      },
+      "gold": "568",
+      "id": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:16:v0",
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:16",
+      "source_status": "ANSWER",
+      "split": "OPEN_VALIDATION",
+      "unit_response": "568",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "UNKNOWN",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "category": "document_retrieval_reconciliation",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 1.1935900449752808,
+        "margin_change": -5.402637481689453,
+        "max_abs_logit_delta": 5.728551387786865,
+        "top1_agreement": 0
+      },
+      "gold": "201",
+      "id": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:17:v1",
+      "labels_online_allowed": false,
+      "pair_kind": "SAME_GOLD_PROMPT_VARIANTS",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:17",
+      "source_status": "ANSWER",
+      "split": "OPEN_VALIDATION",
+      "unit_response": "201",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "UNKNOWN",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "category": "answerability_source_conflict",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 1.1780240535736084,
+        "margin_change": -3.213184356689453,
+        "max_abs_logit_delta": 3.142366886138916,
+        "top1_agreement": 0
+      },
+      "gold": "677",
+      "id": "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:20:v0",
+      "labels_online_allowed": false,
+      "pair_kind": "EVIDENCE_TRANSFER",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:20",
+      "source_status": "ANSWER",
+      "split": "OPEN_VALIDATION",
+      "unit_response": "677",
+      "unit_score": 1
+    },
+    {
+      "A0_response": "UNKNOWN",
+      "A0_score": 0,
+      "answerability": "answerable",
+      "category": "answerability_source_conflict",
+      "endpoint_class": "unit_only",
+      "firstlogit": {
+        "kl_base_to_arm": 0.9050642848014832,
+        "margin_change": -4.108774185180664,
+        "max_abs_logit_delta": 3.448732376098633,
+        "top1_agreement": 0
+      },
+      "gold": "862",
+      "id": "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:22:v0",
+      "labels_online_allowed": false,
+      "pair_kind": "EVIDENCE_TRANSFER",
+      "parent_id": "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:22",
+      "source_status": "ANSWER",
+      "split": "OPEN_VALIDATION",
+      "unit_response": "862",
+      "unit_score": 1
+    }
+  ],
+  "errors": [],
+  "exposure": "All288 generation cases and all192 DEV causal cases exposed;96 VAL cases share six authored generators and prior exposure. No genuine unexposed validation in this receipt.",
+  "family_descriptive_only_not_online": {
+    "DEVELOPMENT": {
+      "answerability_source_conflict": {
+        "A0_correct": 16,
+        "cases": 32,
+        "joint_oracle": 17,
+        "parents": 16,
+        "unit_correct": 17,
+        "unit_gains": 1,
+        "unit_losses": 0
+      },
+      "deduction_composition": {
+        "A0_correct": 13,
+        "cases": 32,
+        "joint_oracle": 20,
+        "parents": 16,
+        "unit_correct": 17,
+        "unit_gains": 7,
+        "unit_losses": 3
+      },
+      "dialogue_memory": {
+        "A0_correct": 16,
+        "cases": 32,
+        "joint_oracle": 18,
+        "parents": 16,
+        "unit_correct": 18,
+        "unit_gains": 2,
+        "unit_losses": 0
+      },
+      "document_retrieval_reconciliation": {
+        "A0_correct": 16,
+        "cases": 32,
+        "joint_oracle": 17,
+        "parents": 16,
+        "unit_correct": 16,
+        "unit_gains": 1,
+        "unit_losses": 1
+      },
+      "program_state": {
+        "A0_correct": 2,
+        "cases": 32,
+        "joint_oracle": 3,
+        "parents": 16,
+        "unit_correct": 1,
+        "unit_gains": 1,
+        "unit_losses": 2
+      },
+      "signed_ledgers": {
+        "A0_correct": 0,
+        "cases": 32,
+        "joint_oracle": 0,
+        "parents": 16,
+        "unit_correct": 0,
+        "unit_gains": 0,
+        "unit_losses": 0
+      }
+    },
+    "OPEN_VALIDATION": {
+      "answerability_source_conflict": {
+        "A0_correct": 8,
+        "cases": 16,
+        "joint_oracle": 10,
+        "parents": 8,
+        "unit_correct": 10,
+        "unit_gains": 2,
+        "unit_losses": 0
+      },
+      "deduction_composition": {
+        "A0_correct": 9,
+        "cases": 16,
+        "joint_oracle": 11,
+        "parents": 8,
+        "unit_correct": 8,
+        "unit_gains": 2,
+        "unit_losses": 3
+      },
+      "dialogue_memory": {
+        "A0_correct": 8,
+        "cases": 16,
+        "joint_oracle": 8,
+        "parents": 8,
+        "unit_correct": 8,
+        "unit_gains": 0,
+        "unit_losses": 0
+      },
+      "document_retrieval_reconciliation": {
+        "A0_correct": 8,
+        "cases": 16,
+        "joint_oracle": 10,
+        "parents": 8,
+        "unit_correct": 8,
+        "unit_gains": 2,
+        "unit_losses": 2
+      },
+      "program_state": {
+        "A0_correct": 0,
+        "cases": 16,
+        "joint_oracle": 0,
+        "parents": 8,
+        "unit_correct": 0,
+        "unit_gains": 0,
+        "unit_losses": 0
+      },
+      "signed_ledgers": {
+        "A0_correct": 0,
+        "cases": 16,
+        "joint_oracle": 0,
+        "parents": 8,
+        "unit_correct": 0,
+        "unit_gains": 0,
+        "unit_losses": 0
+      }
+    }
+  },
+  "fixed_global_vs_unit": {
+    "DEVELOPMENT": {
+      "0.8": {
+        "correct": 67,
+        "gain_parents": 1,
+        "gains_vs_unit": 1,
+        "loss_parents": 3,
+        "losses_vs_unit": 3
+      },
+      "0.9": {
+        "correct": 68,
+        "gain_parents": 1,
+        "gains_vs_unit": 1,
+        "loss_parents": 2,
+        "losses_vs_unit": 2
+      },
+      "1.1": {
+        "correct": 68,
+        "gain_parents": 0,
+        "gains_vs_unit": 0,
+        "loss_parents": 1,
+        "losses_vs_unit": 1
+      },
+      "1.1473425965417514": {
+        "correct": 67,
+        "gain_parents": 0,
+        "gains_vs_unit": 0,
+        "loss_parents": 2,
+        "losses_vs_unit": 2
+      },
+      "1.2": {
+        "correct": 66,
+        "gain_parents": 0,
+        "gains_vs_unit": 0,
+        "loss_parents": 3,
+        "losses_vs_unit": 3
+      }
+    },
+    "OPEN_VALIDATION": {
+      "0.8": {
+        "correct": 30,
+        "gain_parents": 0,
+        "gains_vs_unit": 0,
+        "loss_parents": 4,
+        "losses_vs_unit": 4
+      },
+      "0.9": {
+        "correct": 31,
+        "gain_parents": 0,
+        "gains_vs_unit": 0,
+        "loss_parents": 3,
+        "losses_vs_unit": 3
+      },
+      "1.1": {
+        "correct": 34,
+        "gain_parents": 1,
+        "gains_vs_unit": 1,
+        "loss_parents": 1,
+        "losses_vs_unit": 1
+      },
+      "1.1473425965417514": {
+        "correct": 34,
+        "gain_parents": 1,
+        "gains_vs_unit": 1,
+        "loss_parents": 1,
+        "losses_vs_unit": 1
+      },
+      "1.2": {
+        "correct": 34,
+        "gain_parents": 1,
+        "gains_vs_unit": 1,
+        "loss_parents": 1,
+        "losses_vs_unit": 1
+      }
+    }
+  },
+  "inference_limits": [
+    "No fitted rule/threshold/candidate was derived or graded. Grouping by correctness/source_status/category is descriptive evidence stratification only.",
+    "Six DEV K0-only cases all favor local decrease;11/12 unit-only favor increase. That association uses gold-conditioned canonical-target derivatives and cannot be used online. It is not a new causal generation intervention.",
+    "No single global magnitude/sign dominates both endpoints or preserves all intact successes. Zero-loss quality improvement is not established by these observations.",
+    "The case ceilings are gold-labelled diagnostic choices; correlated parent counts do not provide independent authored sources or confirmatory inference.",
+    "Recorded nongold firstlogit diagnostics compare full first suffix outputs; correctness/UNKNOWN semantics may depend on later generated tokens. First-token agreement is not complete-output correctness.",
+    "Input evidence parsing may be label-free in implementation yet exploit template/position shortcuts; independence from gold annotations is necessary but not sufficient for reasoning/generalization."
+  ],
+  "main_finding": "K0/K1 endpoint complementarity gives retrospective75/192DEV and39/96VAL ceilings, exceeding unit by6 and5 cases. This does not identify a deployable input-only guard; finite constant-grid tiny headroom does not bound K0/K1 selection.",
+  "model_calls": 0,
+  "next_measurement_and_generalization_conditions": [
+    "Before any model call, freeze one deterministic policy and complete cost/qualification/abstention/format/retention gates; do not tune thresholds or choose rules against exposed outcome labels.",
+    "Measure actual own-trajectory K0/K1 and proposed policy generation, matched seeds/caps/runtime/readout, intact and unit controls, ordinary stateless evidence/query/execution comparator, full precision and source/state receipts. Charge guard/pass/suffix/controller overhead; a first-logit guard requiring both branches is not free.",
+    "Retain paired correctness gains/losses against both intact and unit. On held-out source groups require the stated preservation screen; isolated no-regression on this exposed bank is not proof of universal preservation.",
+    "Create genuinely unexposed author/source/generator holdouts with parent variants kept together, source-query roles and lexical forms changed, positive controls, gold-independent scoring and strong query-blind floors. Current96 VAL cases/48parents are previously exposed and share generators, so any post-hoc rule is descriptive.",
+    "Test source conflict/absence versus answerable valid evidence, deduction positive/negative facts and program/arithmetic execution; input feature extraction must precede target/scoring access. If deriving semantic evidence checks, compare the standalone checker to the gated model.",
+    "Freeze deterministic numerical behavior and abstention/format/EOS endpoints separately. The CPU teacher-prefix local derivative, GPU generated correctness and token-schedule choices cannot be substituted or pooled.",
+    "Follow existing zero-training/protected scope: no fitting/training, protected/native TEST access, new alpha rollouts, parameter/readout/operator edits or model execution occurred here. Any new measurement must use prospectively authorized scope/resources."
+  ],
+  "nongold_firstlogit_group_diagnostics": {
+    "DEVELOPMENT": {
+      "A0_only": {
+        "cases": 6,
+        "nongold": {
+          "kl_base_to_arm": {
+            "count": 6,
+            "max": 1.8062852621078491,
+            "mean": 0.38215531354459625,
+            "min": 0.007731456775218248
+          },
+          "logit_cosine": {
+            "count": 6,
+            "max": 0.9915415644645691,
+            "mean": 0.9858132302761078,
+            "min": 0.9717687368392944
+          },
+          "margin_change": {
+            "count": 6,
+            "max": 0.7051410675048828,
+            "mean": -0.0728594462076823,
+            "min": -1.358713150024414
+          },
+          "max_abs_logit_delta": {
+            "count": 6,
+            "max": 3.6630401611328125,
+            "mean": 2.1104183197021484,
+            "min": 1.299896240234375
+          }
+        },
+        "top1_changed": 4,
+        "top1_same": 2
+      },
+      "both_correct": {
+        "cases": 57,
+        "nongold": {
+          "kl_base_to_arm": {
+            "count": 57,
+            "max": 0.601763129234314,
+            "mean": 0.0725274683623355,
+            "min": 3.462453969405033e-05
+          },
+          "logit_cosine": {
+            "count": 57,
+            "max": 0.9933823943138123,
+            "mean": 0.9830547247016639,
+            "min": 0.9556377530097961
+          },
+          "margin_change": {
+            "count": 57,
+            "max": 1.4819221496582031,
+            "mean": -1.8735194289893435,
+            "min": -5.120149612426758
+          },
+          "max_abs_logit_delta": {
+            "count": 57,
+            "max": 4.798391342163086,
+            "mean": 2.5865437566188345,
+            "min": 1.503309726715088
+          }
+        },
+        "top1_changed": 0,
+        "top1_same": 57
+      },
+      "both_wrong": {
+        "cases": 117,
+        "nongold": {
+          "kl_base_to_arm": {
+            "count": 117,
+            "max": 1.1560380458831787,
+            "mean": 0.06802016294521962,
+            "min": 7.264678060892038e-06
+          },
+          "logit_cosine": {
+            "count": 117,
+            "max": 0.9941767454147339,
+            "mean": 0.9851041038831075,
+            "min": 0.9480377435684204
+          },
+          "margin_change": {
+            "count": 117,
+            "max": 1.855255126953125,
+            "mean": -0.8096512688530816,
+            "min": -5.355169296264648
+          },
+          "max_abs_logit_delta": {
+            "count": 117,
+            "max": 6.786262512207031,
+            "mean": 2.2611987030404244,
+            "min": 1.323808193206787
+          }
+        },
+        "top1_changed": 10,
+        "top1_same": 107
+      },
+      "unit_only": {
+        "cases": 12,
+        "nongold": {
+          "kl_base_to_arm": {
+            "count": 12,
+            "max": 1.6275277137756348,
+            "mean": 0.427141805489858,
+            "min": 0.01525135152041912
+          },
+          "logit_cosine": {
+            "count": 12,
+            "max": 0.9937889575958252,
+            "mean": 0.9769674489895502,
+            "min": 0.9265584945678711
+          },
+          "margin_change": {
+            "count": 12,
+            "max": 0.5993862152099609,
+            "mean": -0.7950436274210612,
+            "min": -3.5621395111083984
+          },
+          "max_abs_logit_delta": {
+            "count": 12,
+            "max": 4.342757701873779,
+            "mean": 2.457841694355011,
+            "min": 1.6082191467285156
+          }
+        },
+        "top1_changed": 11,
+        "top1_same": 1
+      }
+    },
+    "OPEN_VALIDATION": {
+      "A0_only": {
+        "cases": 5,
+        "nongold": {
+          "kl_base_to_arm": {
+            "count": 5,
+            "max": 1.9440282583236694,
+            "mean": 0.7779185611754655,
+            "min": 0.027150103822350502
+          },
+          "logit_cosine": {
+            "count": 5,
+            "max": 0.9908050298690796,
+            "mean": 0.9736273884773254,
+            "min": 0.9411122798919678
+          },
+          "margin_change": {
+            "count": 5,
+            "max": 1.2207145690917969,
+            "mean": -0.1666706085205078,
+            "min": -2.4494075775146484
+          },
+          "max_abs_logit_delta": {
+            "count": 5,
+            "max": 3.6089158058166504,
+            "mean": 2.5645774841308593,
+            "min": 1.8158800601959229
+          }
+        },
+        "top1_changed": 5,
+        "top1_same": 0
+      },
+      "both_correct": {
+        "cases": 28,
+        "nongold": {
+          "kl_base_to_arm": {
+            "count": 28,
+            "max": 0.5605224370956421,
+            "mean": 0.06822321318135696,
+            "min": 9.655176108935848e-05
+          },
+          "logit_cosine": {
+            "count": 28,
+            "max": 0.9937573671340942,
+            "mean": 0.984160595706531,
+            "min": 0.9388260841369629
+          },
+          "margin_change": {
+            "count": 28,
+            "max": 1.4618892669677734,
+            "mean": -1.285486834389823,
+            "min": -5.639778137207031
+          },
+          "max_abs_logit_delta": {
+            "count": 28,
+            "max": 4.098535060882568,
+            "mean": 2.3997800733361925,
+            "min": 1.6039206981658936
+          }
+        },
+        "top1_changed": 0,
+        "top1_same": 28
+      },
+      "both_wrong": {
+        "cases": 57,
+        "nongold": {
+          "kl_base_to_arm": {
+            "count": 57,
+            "max": 0.48747768998146057,
+            "mean": 0.05027582649633762,
+            "min": 0.00031773585942573845
+          },
+          "logit_cosine": {
+            "count": 57,
+            "max": 0.993066668510437,
+            "mean": 0.9827036031505518,
+            "min": 0.9187583327293396
+          },
+          "margin_change": {
+            "count": 57,
+            "max": 1.2239360809326172,
+            "mean": -0.7612943481980708,
+            "min": -5.193397521972656
+          },
+          "max_abs_logit_delta": {
+            "count": 57,
+            "max": 4.488898754119873,
+            "mean": 2.4124509493509927,
+            "min": 1.5558395385742188
+          }
+        },
+        "top1_changed": 7,
+        "top1_same": 50
+      },
+      "unit_only": {
+        "cases": 6,
+        "nongold": {
+          "kl_base_to_arm": {
+            "count": 6,
+            "max": 3.4141597747802734,
+            "mean": 1.15383507621785,
+            "min": 0.01100744679570198
+          },
+          "logit_cosine": {
+            "count": 6,
+            "max": 0.9929943084716797,
+            "mean": 0.965079536040624,
+            "min": 0.9226956367492676
+          },
+          "margin_change": {
+            "count": 6,
+            "max": 3.9311485290527344,
+            "mean": -1.2914142608642578,
+            "min": -5.402637481689453
+          },
+          "max_abs_logit_delta": {
+            "count": 6,
+            "max": 5.728551387786865,
+            "mean": 3.400337258974711,
+            "min": 1.5502102375030518
+          }
+        },
+        "top1_changed": 6,
+        "top1_same": 0
+      }
+    }
+  },
+  "role": "Independent CPU-only existing-evidence analysis. No model/data/source/state edits, tests, alpha rollouts or candidate fitting.",
+  "schema": "quality-pattern-v3-evidence-001",
+  "source_status_descriptive_only_not_online": {
+    "DEVELOPMENT": {
+      "ANSWER": {
+        "A0_UNKNOWN": 48,
+        "A0_correct": 15,
+        "cases": 144,
+        "parents": 80,
+        "unit_UNKNOWN": 42,
+        "unit_correct": 22,
+        "unit_gains": 12,
+        "unit_losses": 5
+      },
+      "CONFLICT": {
+        "A0_UNKNOWN": 16,
+        "A0_correct": 16,
+        "cases": 16,
+        "parents": 12,
+        "unit_UNKNOWN": 15,
+        "unit_correct": 15,
+        "unit_gains": 0,
+        "unit_losses": 1
+      },
+      "MISSING": {
+        "A0_UNKNOWN": 32,
+        "A0_correct": 32,
+        "cases": 32,
+        "parents": 20,
+        "unit_UNKNOWN": 32,
+        "unit_correct": 32,
+        "unit_gains": 0,
+        "unit_losses": 0
+      }
+    },
+    "OPEN_VALIDATION": {
+      "ANSWER": {
+        "A0_UNKNOWN": 24,
+        "A0_correct": 9,
+        "cases": 72,
+        "parents": 40,
+        "unit_UNKNOWN": 20,
+        "unit_correct": 12,
+        "unit_gains": 6,
+        "unit_losses": 3
+      },
+      "CONFLICT": {
+        "A0_UNKNOWN": 8,
+        "A0_correct": 8,
+        "cases": 8,
+        "parents": 6,
+        "unit_UNKNOWN": 7,
+        "unit_correct": 7,
+        "unit_gains": 0,
+        "unit_losses": 1
+      },
+      "MISSING": {
+        "A0_UNKNOWN": 16,
+        "A0_correct": 16,
+        "cases": 16,
+        "parents": 10,
+        "unit_UNKNOWN": 15,
+        "unit_correct": 15,
+        "unit_gains": 0,
+        "unit_losses": 1
+      }
+    }
+  },
+  "status": "COMPLETE_DESCRIPTIVE_PATTERNS_NO_POLICY_MEASUREMENT",
+  "training_steps": 0,
+  "unmeasured_proposals": [
+    {
+      "assessment": "Complementary K0/K1 endpoints leave11 known recoveries across11 parents, but no observed label-free feature is shown to certify their choice. Feature ranges overlap. First-token disagreement detects many transitions but does not determine which arm is correct; wrong-wrong cases also disagree. No threshold/rule was selected or scored.",
+      "name": "Deterministic K0/1 choice with input-only observables",
+      "prohibited_online_inputs": [
+        "gold/correctness",
+        "source_status/answerability annotation",
+        "category/family/split/case/parent IDs",
+        "canonical teacher tokens",
+        "target loss/FD/gradient/useful_direction",
+        "oracle decisions or previous scored lookup tables"
+      ],
+      "status": "PROPOSAL_NOT_MEASURED",
+      "usable_inputs": [
+        "Raw prompt/tokenization and ordinary model input-forward quantities",
+        "Nongold first-logit differences between intact and unit, if both full-suffix diagnostic passes are actually available and charged",
+        "Frozen input-only balance/progress/fluctuation"
+      ]
+    },
+    {
+      "assessment": "A checker that derives approved-evidence existence/contradiction from the actual prompt could address UNKNOWN regressions without reading logged source_status. On this authored bank, template-specific parsing is a symbolic/stateless task solver and can exploit existing shortcuts. It must be evaluated as a standalone comparator and in renamed/reworded/reordered/cross-source problems before claiming recurrence-specific improvement. It does not address deduction or numeric program losses automatically.",
+      "name": "Explicit input-evidence consistency checker",
+      "status": "PROPOSAL_NOT_MEASURED"
+    },
+    {
+      "assessment": "All192 input-only coherence signs are positive. Globally choosing decrease agrees97/188 local canonical-target directions versus91 increase, but harms63/96 parents somewhere and does not establish generation accuracy or retention. Existing fixed .8/.9 generated scores are below unit in both splits. .99 local likelihood was measured; .99 generation/K0/1 rule was not.",
+      "name": "Global oppose/invert coherence direction",
+      "status": "NOT_SUPPORTED_AS_GENERATED_QUALITY_SOLUTION"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "v3_passive_probe_dispatch_review_v1",
+  "created_utc": "2026-10-05T21:21:44.463625+00:00",
+  "status": "BLOCKED_PASSIVE_PROBE_READER_SOURCE_CORRECTIONS",
+  "admission_sha256": "6611ca39426a4ea3aa5d9f87b0a6ee9f0fe1c788f9fdae480ca2c8431a0ae3f3",
+  "dispatch_authorized": false,
+  "models_or_native_calls_by_reviewer": 0,
+  "source_edits": false,
+  "errors": [
+    "Reader running-host gate contradicts the registered/native one-GiB running reserve.",
+    "Cross-kernel FP32 probability/logsumexp assumption rejects valid exact observer scalar outputs."
+  ],
+  "findings": [
+    {
+      "id": "D01",
+      "severity": "REQUIRED_BEFORE_DISPATCH",
+      "file": "probe_analysis.py",
+      "line": 412,
+      "evidence": "Completed-forward resource samples require host_available_bytes>=6GiB. Unchanged gpu_native.resource_guard lines58-60 checks host_available>=1GiB while6GiB is the before-weight worker floor; PASSIVE_PROBE_REGISTRATION_001.md explicitly says running host reserve1GiB.",
+      "recommendation": "Align completed/runtime sample check with the registered1GiB reserve; separately preserve exact6GiB pre-load and7GiB parent admission gates. Add accepted2GiB running and rejected<1GiB regressions. Preserve frozen v1 and refreeze corrected reader/tests/plan before outcomes.",
+      "gate_or_limit": "Invalid additional offline gate, not a reason to lower native floors."
+    },
+    {
+      "id": "D02",
+      "severity": "REQUIRED_BEFORE_DISPATCH",
+      "file": "probe_analysis.py",
+      "line": 215,
+      "evidence": "Hard |recorded top1_probability-exp(top1 raw logit-recorded logsumexp)|<=2e-6 compares independent FP32 kernels. Exact observer.readout_stats on valid151936-row finite CPU tensor fails without any shift.",
+      "synthetic_reproduction": {
+        "device": "CPU only; no Rineya or native model",
+        "tensor": "float32 vector151936; all entries -10; first two entries3; UNKNOWN51378 unchanged",
+        "recorded_top1_probability": 0.42670437693595886,
+        "reconstructed_from_recorded_LSE": 0.4267267604674441,
+        "absolute_gap": 2.23835314852594e-05,
+        "actual_case_or_driver_cause_inferred": false
+      },
+      "recommendation": "Keep finite/raw probability/LSE values and any cross-kernel discrepancy descriptive with finite-precision-unverified status, or implement a same-kernel source-bound proof. Do not enlarge the empirical threshold. Preserve native/endpoint/count/finite/margin gates and old source, and add a realistic-vocabulary regression before refreeze.",
+      "gate_or_limit": "No native outcome has been seen; this is prospective correction of an invalid arithmetic gate."
+    }
+  ],
+  "additional_required_reader_check": {
+    "topic": "Topk/argmax tie semantics",
+    "source_lines": [
+      206,
+      210,
+      211
+    ],
+    "reason": "The worker uses separate argmax, topk and nonUNKNOWN argmax; equal logits need not imply a unique shared ID/order. Specify and test valid tied-max/top2/rival handling, retaining raw values and deterministic actual argmax ID. No actual Rineya tie or efficacy claim inferred."
+  },
+  "passed_exact_packet_checks": {
+    "admission_sha256": "6611ca39426a4ea3aa5d9f87b0a6ee9f0fe1c788f9fdae480ca2c8431a0ae3f3",
+    "actual_dispatch_files_checked": 95,
+    "canonical_assets_checked": 10,
+    "all_current_hash_mismatches": [],
+    "actual_worker_source_predicate_files_checked": 95,
+    "predicate_method": "Compiled the exact source_closure AST function with its literal metadata set and stdlib SHA globals; executed every real frozen path without importing Torch.",
+    "actual_reader_and_plan_membership": true,
+    "exact_new_scope_and_study_unused": true,
+    "old_grants_not_reused": true,
+    "native_run_and_lock_absent_at_check": true,
+    "DEV_prompt_only_rows": 192,
+    "related_parent_units": 96,
+    "input_positions": 24608,
+    "max_input_tokens": 232,
+    "API_attempt_cap": 451,
+    "full_attempt_cap": 449,
+    "full_completed_target": 448,
+    "completed_positions_target": 54137,
+    "state_adjoints": 0,
+    "generation": false,
+    "deadline_seconds": 900,
+    "body_seconds": 780,
+    "internal_reserve": 120,
+    "global_reserve": 1800
+  },
+  "independent_reader_tests": {
+    "command": [
+      "C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe",
+      "-B",
+      "-m",
+      "unittest",
+      "experiments.rineya_taps_adaptive_recurrence_campaign_v2.quality_pattern_v3.tests.test_probe_analysis",
+      "-q"
+    ],
+    "tests": 13,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 1.168,
+    "exit_code": 0,
+    "limits": "Existing fixtures pass but do not cover the two discovered native-contract/arithmetic assumptions. Synthetic Torch CPU scalar counterexample ran separately; reader/test process remained stdlib only."
+  },
+  "existing_source_reviews": {
+    "parent": "reviews/parent_source_review_002.json",
+    "parent_sha256": "4e2ae56bd16ca41057239bead3cdbe8b225db22e7aa080f09335d1f49666af27",
+    "worker": "reviews/worker_source_review_001.json",
+    "worker_sha256": "20e874750302ccf4b92d71897dc693ff25fb497aa566568610078cbc15ccd3bb",
+    "remaining_parent_or_worker_issue": false
+  },
+  "analysis_scope_review": "All192 exposed DEV inputs and retrospective historical generated-correctness joins, no threshold fit/gate quality/CI/confirmation, distinct before-extra and already-spent unit/readout timing; old VAL excluded from association. This scope is appropriate once reader gates align.",
+  "next_required_action": "Owner corrects only the prospective new reader/test/plan, preserves v1 exact bytes and admission, and freezes a successor actual admission. Independently review changed fixtures and exact bindings; do not launch with this receipt or reuse old grants. Fresh readiness, native mechanics and conservative complete forecast remain required before task forwards.",
+  "bindings": {
+    "probe_admission_v1.json": "6611ca39426a4ea3aa5d9f87b0a6ee9f0fe1c788f9fdae480ca2c8431a0ae3f3",
+    "probe_analysis.py": "8583312865914c3a417966b8c6bf1e6288d0edfd5daaa8331c1887be0887e363",
+    "tests/test_probe_analysis.py": "4855e3f91a85225e9daac1559139294b2c3f75993d31ca8eb62877e422b1bb0b",
+    "PROBE_ANALYSIS_PLAN_001.md": "4f44df4a45152d49766373bcb0a164680be5edd03013fbda1b022bb5d70e8536",
+    "probe_native.py": "c7a433c26c9d7b5d83f54e971fe5d656d8f6edbf047e5442c092b310dd6be914",
+    "observer.py": "da6a75376d6984a54396dc91499fa8e797ad3a66d8ff66512b29123b449bdae0",
+    "probe_supervisor.py": "9396b1afd4b61eb5ac87951764ba6a4ed7ee89089656a37e2182468a3c898b60",
+    "authority.py": "a5a007c2fea3a6c63a2f2b722c91948c8675c6a8d4b50b02a2cb51d39a52b516",
+    "ACTIVE_GOAL_SCOPE_001.json": "4ea9970d9a948895861d2f182b6cffa9f7e50b1be353ced48ecce55f59c633b6",
+    "ACTIVE_GOAL_SNAPSHOT_001.json": "a69c692c237a579ec92061d07cb1012d0f05be84bf3c39c13941e2a8d492297c",
+    "PASSIVE_PROBE_REGISTRATION_001.md": "e5716814632b9fd7ad145ef5a9c40aaee434fdc35b9d773aef1095ac8aa59cbe"
+  },
+  "review_md_sha256": "3fa25f5dba00a3bc2024588884006d5734993c13458154b4c0866334b14c8802"
+}

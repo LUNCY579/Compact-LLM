@@ -1,0 +1,243 @@
+{
+  "status": "PASS",
+  "start_utc": "20260905T132743_802018Z",
+  "git_commit": "af7c49d432a652c55cbafc5155c378d87497cf24",
+  "git_branch": "research/supa-a1.1-anchor-routed-middle-recurrence-v1",
+  "git_status": "",
+  "model_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+  "config": {
+    "protocol_version": "1.0",
+    "seed": 17,
+    "threads": 4,
+    "dtype": "float32",
+    "device": "cpu",
+    "use_cache": false,
+    "anchor_layers": [
+      0,
+      1,
+      2
+    ],
+    "baseline_skip_layers": [
+      0,
+      1,
+      2,
+      8,
+      19
+    ],
+    "candidate_layers": [
+      4,
+      5,
+      8,
+      12,
+      13,
+      14,
+      16,
+      17,
+      18,
+      19,
+      25,
+      27
+    ],
+    "applications": [
+      2,
+      3
+    ],
+    "max_new_tokens": 24,
+    "max_prompt_seconds": 900,
+    "max_rss_gib": 8,
+    "top_k": 10,
+    "hidden_rms_ratio_bounds": [
+      0.25,
+      4.0
+    ],
+    "emergency_rms_ratio_bounds": [
+      0.05,
+      10.0
+    ],
+    "minimum_mean_logit_cosine": 0.9,
+    "maximum_mean_kl": 0.5,
+    "maximum_score_drop": 0.0,
+    "maximum_invalid_increase": 0.0,
+    "baseline_cosine_tolerance": 0.02,
+    "smoke_file": "supa_layer_ablation_smoke.jsonl",
+    "development_file": "mergedev_fast.jsonl",
+    "checkpoint_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026"
+  },
+  "dataset": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\data\\evaluation\\mergedev_fast.jsonl",
+  "dataset_sha256": "b75df9368e27cfc7de58e55370090e55bd5bcb4d1bd86aeb079b486555925da0",
+  "source_sha256": {
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\evaluation.py": "e262761b45105d6586221c2c99b6f56ecc7d3aba2fe276b392e9b1e13cd80bfa",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\hooks.py": "a73baf73515ca905c39a631feb576caad232bec60bb05f0150204e952e0d36a3",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\metrics.py": "c2653a5129f4cf03b3c7081d0c99f6540fcefd0d17a717c7132b8c1ccf50ed67",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\preregistration.py": "baf03fd503db38270afb8d63d7080007b1a973c6f5faf0c00d55161581e80dad",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\provenance.py": "3f84bc41851a4709ff123217b0f781e6d1ec93e3f40dc7c911a95f44c1ee9018",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\recurrence.py": "88ab4c791b1871dc3765a85f89dbd857023bcf5e4dfa55b6c24142aaee0edea9",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\reporting.py": "99ca41eed1da02d7ef5a3d3a7a43c004c60f18cccaa328267ba41b980cfd2021",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\__init__.py": "45bf40eb692379c12c31d90c5e6fe4a78358f28b23783f24a0bf658893ba5065",
+    "experiments\\anchor_routed_middle_recurrence_v1\\scripts\\audit_completed_screen.py": "ccfae3d90cf60b357a00f07f2faebe2bcd635b1fa72f9f762dd005c64a24d3be",
+    "experiments\\anchor_routed_middle_recurrence_v1\\scripts\\audit_fixed_results.py": "e26e3475241793ee34a98c71bee1d11e237e41a00c584b866432ea3f217a2c10",
+    "experiments\\anchor_routed_middle_recurrence_v1\\scripts\\diagnose_late_failure.py": "9d375e0bf9fef2e2b1913b27bb1ed58a92918aef57cce433d6a559946384d484",
+    "experiments\\anchor_routed_middle_recurrence_v1\\scripts\\run_experiment.py": "170e5b0a9e49a9867ae847c2ddbc26f306013f7c44402fdfbc65fd28d73a3c98",
+    "experiments\\anchor_routed_middle_recurrence_v1\\scripts\\run_fixed_recurrence.py": "7cd1feb2926cd916f1f11a07050994cae39ee756ebb924cc3060444918f4912a",
+    "experiments\\anchor_routed_middle_recurrence_v1\\scripts\\summarize_results.py": "b4208d3d85efbc1879de8fa335c782263d47cd40108b2dd8a8cf226dd5087642",
+    "experiments\\anchor_routed_middle_recurrence_v1\\README.md": "cdcf84fd258525e81ce897f3d2cd5815b6468d3747277868c54177888efa6263",
+    "experiments\\anchor_routed_middle_recurrence_v1\\configs\\reapplication_screen.json": "207cf9744b7a3c288b6a0dd1f9bd1373f580e7514333bb3ef2b59c82112d373c"
+  },
+  "qwen_implementation_sha256": "fbdcfeeb1b54135ca67ba7df924da92f4b264e1252b517eea2de989289ebaeab",
+  "torch": "2.12.1+cu126",
+  "transformers": "5.14.1",
+  "python": "3.11.15",
+  "os": "Windows-10-10.0.26200-SP0",
+  "cpu": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+  "logical_cpus": 32,
+  "physical_memory_bytes": 16340398080,
+  "device": "cpu",
+  "dtype": "float32",
+  "kv_strategy": "full_prefix_recompute_no_kv",
+  "kv_cache_bytes": 0,
+  "gpu_memory_bytes": null,
+  "model_loads": 1,
+  "training": false,
+  "atlas_receipt": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\anchor_routed_middle_recurrence_v1\\evidence\\01c_completed_candidate_atlas\\20260905T042420_466033Z",
+  "atlas_receipt_sha256": "3aa07ea9ecd128cfe1724692a5c7a76c4a5e994d42b51a307d3115e56f5c61e8",
+  "selected_configuration": {
+    "A1_layer": 12,
+    "A2_licensed": false,
+    "A3_block": [
+      12,
+      13
+    ],
+    "selection": "frozen mean-cosine ranking among passing middle arms; adjacent-pair constituent mean"
+  },
+  "preregistration": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\anchor_routed_middle_recurrence_v1\\preregistrations\\fixed_cpu_budget_v2.json",
+  "preregistration_sha256": "7089d1c047eee70bda93b020bd1e291314ae53c2d2beebc9f0daeeff00a0d838",
+  "prior_run": "evidence/02_fixed_recurrence/20260905T042932_800954Z",
+  "sole_configuration_change": {
+    "max_prompt_seconds": {
+      "before": 90,
+      "after": 900
+    }
+  },
+  "checkpoint_files_before": {
+    "model.safetensors": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "config.json": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "generation_config.json": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+    "modeling_supa_a11.py": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "CORE.json": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+    "FILES.json": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e"
+  },
+  "state_hash_before": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+  "decision": {
+    "status": "PASS",
+    "mechanical_qualification": "PASS",
+    "A1_smoke_reproduced": true,
+    "restored_logits_bit_identical": true,
+    "A2_run": false,
+    "A3_smoke_pass": true,
+    "adaptive_routing": true,
+    "peft_recovery": false,
+    "sealed_evaluation": false,
+    "development_results": {
+      "A1_dev": {
+        "items": 16,
+        "comparison_valid": true,
+        "correct": 12.0,
+        "baseline_correct": 12.0,
+        "wins": [],
+        "losses": [],
+        "family_score_deltas": {
+          "common_sense": 0.0,
+          "counterfactual_reasoning": 0.0,
+          "general_reasoning": 0.0,
+          "grounded_qa_rag": 0.0,
+          "instruction_following": 0.0,
+          "long_context_retrieval": 0.0,
+          "lost_in_the_middle": 0.0,
+          "mathematics": 0.0,
+          "multi_hop_binding": 0.0,
+          "normal_conversation": 0.0,
+          "paraphrase_robustness": 0.0,
+          "science": 0.0,
+          "short_response": 0.0,
+          "unanswerable_abstention": 0.0
+        },
+        "checks": {
+          "baseline_completed_without_safety_stop": true,
+          "overall_no_loss": true,
+          "no_family_loss_over_0_10": true,
+          "no_invalid_increase": true,
+          "no_safety_stops": true,
+          "complete": true
+        },
+        "preservation_pass": true,
+        "router_scaffold_licensed": false,
+        "mean_logit_cosine": 0.9891330078244209,
+        "mean_kl": 0.037464934186914434,
+        "invalid_rate": 0.0,
+        "wall_seconds": 420.7615635000111
+      },
+      "A3_dev": {
+        "items": 16,
+        "comparison_valid": true,
+        "correct": 13.0,
+        "baseline_correct": 12.0,
+        "wins": [
+          "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5"
+        ],
+        "losses": [],
+        "family_score_deltas": {
+          "common_sense": 0.0,
+          "counterfactual_reasoning": 1.0,
+          "general_reasoning": 0.0,
+          "grounded_qa_rag": 0.0,
+          "instruction_following": 0.0,
+          "long_context_retrieval": 0.0,
+          "lost_in_the_middle": 0.0,
+          "mathematics": 0.0,
+          "multi_hop_binding": 0.0,
+          "normal_conversation": 0.0,
+          "paraphrase_robustness": 0.0,
+          "science": 0.0,
+          "short_response": 0.0,
+          "unanswerable_abstention": 0.0
+        },
+        "checks": {
+          "baseline_completed_without_safety_stop": true,
+          "overall_no_loss": true,
+          "no_family_loss_over_0_10": true,
+          "no_invalid_increase": true,
+          "no_safety_stops": true,
+          "complete": true
+        },
+        "preservation_pass": true,
+        "router_scaffold_licensed": true,
+        "mean_logit_cosine": 0.9837603941559792,
+        "mean_kl": 0.054217147470666305,
+        "invalid_rate": 0.0,
+        "wall_seconds": 458.91588130001037
+      }
+    }
+  },
+  "state_hash_after": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+  "checkpoint_files_after": {
+    "model.safetensors": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "config.json": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "generation_config.json": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+    "modeling_supa_a11.py": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "CORE.json": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+    "FILES.json": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e"
+  },
+  "canonical_unchanged": true,
+  "trainable_parameter_count": 0,
+  "parameters_with_gradients": 0,
+  "wall_seconds": 1406.4925958000022,
+  "peak_rss_bytes": 4663623680
+}

@@ -1,0 +1,381 @@
+{
+  "schema_version": 1,
+  "reviewer": "independent adversarial_review",
+  "status": "PASS_BOUNDED_EXECUTION_REVIEW",
+  "result_classification": "NONREPRODUCED_UNLOCALIZED",
+  "created_utc": "2026-10-05T00:21:04.355527+00:00",
+  "scope": "Read-only terminal diagnostic and preserved Windows event correlation; no model execution or existing-file edits by reviewer",
+  "admission_sha256": "0abe8ffd869531e98460f4c416e943dbe289b4da42d20e1d6627f29c1c691d94",
+  "worker_sha256": "1e1fe306e44fdd6b68e15d39eefee3de78094d7761c90192ffb9861c257d9299",
+  "checks": {
+    "admission_hash": true,
+    "copied_admission_exact": true,
+    "registration_admission_hash": true,
+    "95_source_closure": true,
+    "worker_hash": true,
+    "terminal_success": true,
+    "seconds_under_cap": true,
+    "count_caps": true,
+    "forward_journal_counts": true,
+    "outcomes_split": true,
+    "outcomes_physical": true,
+    "generation_row_forward_sum": true,
+    "operation_pairing": true,
+    "only_expected_operation_failures": true,
+    "no_unexpected_cuda_fault": true,
+    "state_restored": true,
+    "preservation_receipts": true,
+    "qualified_representative": true,
+    "preimport_environment": true,
+    "forecast_arithmetic": true,
+    "recorded_resource_peaks": true,
+    "exact_actual_human_grant": true,
+    "direct_human_approval_record": true,
+    "seven_XML_records_bound": true,
+    "four_explicit_TDR_reset_records": true,
+    "eight_archived_output_matches_four_fresh": true
+  },
+  "blocking_findings": [],
+  "source_closure_files": 95,
+  "changed_source_files": [],
+  "actual_counts": {
+    "physical_evaluations": 32,
+    "SMOKE": 20,
+    "exposed_debug_evaluations": 12,
+    "greedy_API_attempts": 87,
+    "maximum_shape_attempts": 10,
+    "maximum_shape_completed": 9,
+    "intentional_partial": 1,
+    "cache_rejections": 2,
+    "total_API_attempts": 99,
+    "completed_full_model_forwards": 96,
+    "operation_pairs": 11146,
+    "expected_operation_failures": 3,
+    "unexpected_operation_failures": 0
+  },
+  "wall_cost": {
+    "native_worker_seconds": 42.45399999999972,
+    "supervisor_wall_seconds": 43.40699999999924,
+    "native_budget_used_seconds_after_run": 1330.375,
+    "native_budget_remaining_seconds_after_run": 20269.625,
+    "global_budget_values_source": "coordinator cumulative ledger; worker diagnostic cost independently recomputed from terminal receipt"
+  },
+  "qualification": {
+    "after_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "before_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "cache_rejections": 2,
+    "forced_restoration": true,
+    "maximum_attempts": 10,
+    "maximum_prefix_tokens": 357,
+    "noextra_unit_originalA3_value_and_greedy_parity": true,
+    "representative_SMOKE_only": true,
+    "source_unchanged": true,
+    "status": "PASS_RUNTIME_DEBUG_REPRESENTATIVE_NOT_EFFICACY"
+  },
+  "state": {
+    "loaded": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "qualification_before": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "qualification_after": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "final": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "resident_state_after_fault": null,
+    "fault_occurred": false
+  },
+  "resources": {
+    "parent_peak_rss_bytes": 2299191296,
+    "after_load": {
+      "gpu_allocated_bytes": 2384724992,
+      "gpu_free_bytes": 4993318912,
+      "gpu_peak_allocated_bytes": 2384724992,
+      "gpu_peak_reserved_bytes": 2386558976,
+      "gpu_reserved_bytes": 2386558976,
+      "gpu_total_bytes": 8585216000,
+      "host_available_bytes": 13308841984,
+      "rss_bytes": 1002926080
+    },
+    "final": {
+      "gpu_allocated_bytes": 2424357376,
+      "gpu_free_bytes": 4840226816,
+      "gpu_peak_allocated_bytes": 2463999488,
+      "gpu_peak_reserved_bytes": 2503999488,
+      "gpu_reserved_bytes": 2503999488,
+      "gpu_total_bytes": 8585216000,
+      "host_available_bytes": 12523671552,
+      "rss_bytes": 1642868736
+    },
+    "scope": "Recorded snapshots and guards; transient unsampled usage cannot be ruled out"
+  },
+  "archived_comparisons": [
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:21:v0",
+      "arm": "A0",
+      "archived_completed_rows": 0,
+      "exact_tokens_and_response": null
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:21:v0",
+      "arm": "A1",
+      "archived_completed_rows": 0,
+      "exact_tokens_and_response": null
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:21:v0",
+      "arm": "A2",
+      "archived_completed_rows": 0,
+      "exact_tokens_and_response": null
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:21:v0",
+      "arm": "A3",
+      "archived_completed_rows": 0,
+      "exact_tokens_and_response": null
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1",
+      "arm": "A0",
+      "archived_completed_rows": 1,
+      "exact_tokens_and_response": true
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1",
+      "arm": "A1",
+      "archived_completed_rows": 1,
+      "exact_tokens_and_response": true
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1",
+      "arm": "A2",
+      "archived_completed_rows": 1,
+      "exact_tokens_and_response": true
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1",
+      "arm": "A3",
+      "archived_completed_rows": 1,
+      "exact_tokens_and_response": true
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:13:v1",
+      "arm": "A0",
+      "archived_completed_rows": 1,
+      "exact_tokens_and_response": true
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:13:v1",
+      "arm": "A1",
+      "archived_completed_rows": 1,
+      "exact_tokens_and_response": true
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:13:v1",
+      "arm": "A2",
+      "archived_completed_rows": 1,
+      "exact_tokens_and_response": true
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:13:v1",
+      "arm": "A3",
+      "archived_completed_rows": 1,
+      "exact_tokens_and_response": true
+    }
+  ],
+  "permission": {
+    "direct_user_message": "Authorize one diagnostic",
+    "actual_grant_sha256": "b96a8a0c950c241b4fa3fc3bb53ebdb82e6457fbcb46a36cfed55acc3be0457c",
+    "actual_grant_scope": {
+      "attempts": 1,
+      "full_matrix_retry": false,
+      "lane": "GPU_FP32_RUNTIME_DEBUG",
+      "max_native_worker_seconds": 300,
+      "parent_run": "native-bulk-001",
+      "status": "EXPLICIT_ADDITIONAL_ATTEMPT_AUTHORIZED",
+      "training": false,
+      "worker_sha256": "1e1fe306e44fdd6b68e15d39eefee3de78094d7761c90192ffb9861c257d9299"
+    },
+    "consumed": true,
+    "ledger_debug_records": [
+      {
+        "event": "native_started",
+        "lane": "GPU_FP32_RUNTIME_DEBUG",
+        "reserved_seconds": 300,
+        "run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001",
+        "timestamp_utc": "2026-10-04T23:52:45.484638+00:00",
+        "worker_pid": 177968
+      },
+      {
+        "command": [
+          "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+          "-B",
+          "-m",
+          "experiments.rineya_taps_adaptive_recurrence_campaign_v2.runtime_debug_entry",
+          "--release",
+          "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\release.json",
+          "--source",
+          "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+          "--out",
+          "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result",
+          "--admission",
+          "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runtime_debug_admission_v2.json"
+        ],
+        "ended_utc": "2026-10-04T23:53:27.857944+00:00",
+        "event": "native_completed",
+        "exit_code": 0,
+        "gpu_initial_inventory": {
+          "driver_version": "566.07",
+          "free_bytes": 7449083904,
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+          "total_bytes": 8585740288,
+          "utilization_percent": 29,
+          "uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9"
+        },
+        "lane": "GPU_FP32_RUNTIME_DEBUG",
+        "native_worker_seconds": 42.45399999999972,
+        "peak_rss_bytes": 2299191296,
+        "run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001",
+        "started_utc": "2026-10-04T23:52:44.441331+00:00",
+        "status": "WORKER_TERMINAL",
+        "supervisor_wall_seconds": 43.40699999999924,
+        "worker_pid": 177968
+      }
+    ],
+    "another_attempt_authorized": false,
+    "full_matrix_restart_authorized": false
+  },
+  "driver_event_correlation": {
+    "classification": "CORRELATED_DRIVER_TDR_RESET_OBSERVED",
+    "original_parent_terminal_utc": "2026-10-04T22:36:38.847958+00:00",
+    "window_start_utc": "2026-10-04T22:33:38Z",
+    "window_end_utc": "2026-10-04T22:38:38Z",
+    "records": [
+      {
+        "utc": "2026-10-04T22:36:35.8878766Z",
+        "id": 153,
+        "record_id": 263219,
+        "device": "\\Device\\000000f2",
+        "property": "Restarting TDR occurred on GPUID:100",
+        "explicit_TDR_text": true,
+        "seconds_before_original_parent_terminal": 2.960082,
+        "provider_execution_process_id": "4",
+        "XML_field_match": true
+      },
+      {
+        "utc": "2026-10-04T22:36:35.8777498Z",
+        "id": 153,
+        "record_id": 263218,
+        "device": "\\Device\\000000f2",
+        "property": "Reset TDR occurred on GPUID:100",
+        "explicit_TDR_text": true,
+        "seconds_before_original_parent_terminal": 2.970209,
+        "provider_execution_process_id": "4",
+        "XML_field_match": true
+      },
+      {
+        "utc": "2026-10-04T22:36:35.6995495Z",
+        "id": 153,
+        "record_id": 263217,
+        "device": "\\Device\\000000f2",
+        "property": "Error occurred on GPUID: 100",
+        "explicit_TDR_text": false,
+        "seconds_before_original_parent_terminal": 3.148409,
+        "provider_execution_process_id": "4",
+        "XML_field_match": true
+      },
+      {
+        "utc": "2026-10-04T22:36:35.6995495Z",
+        "id": 153,
+        "record_id": 263216,
+        "device": "\\Device\\000000f2",
+        "property": "Error occurred on GPUID: 100",
+        "explicit_TDR_text": false,
+        "seconds_before_original_parent_terminal": 3.148409,
+        "provider_execution_process_id": "4",
+        "XML_field_match": true
+      },
+      {
+        "utc": "2026-10-04T22:36:34.8466547Z",
+        "id": 153,
+        "record_id": 263215,
+        "device": "\\Device\\000000f2",
+        "property": "Resetting TDR occurred on GPUID:100",
+        "explicit_TDR_text": true,
+        "seconds_before_original_parent_terminal": 4.001304,
+        "provider_execution_process_id": "4",
+        "XML_field_match": true
+      },
+      {
+        "utc": "2026-10-04T22:36:34.5250238Z",
+        "id": 153,
+        "record_id": 263214,
+        "device": "\\Device\\000000f2",
+        "property": "UCodeReset TDR occurred on GPUID:100",
+        "explicit_TDR_text": true,
+        "seconds_before_original_parent_terminal": 4.322935,
+        "provider_execution_process_id": "4",
+        "XML_field_match": true
+      },
+      {
+        "utc": "2026-10-04T22:36:34.5250238Z",
+        "id": 14,
+        "record_id": 263213,
+        "device": "\\Device\\000000f2",
+        "property": "32164851 00011ca0 00000000 2028226c 20283f9a 20280e1a 202870d4 2028744e",
+        "explicit_TDR_text": false,
+        "seconds_before_original_parent_terminal": 4.322935,
+        "provider_execution_process_id": "4",
+        "XML_field_match": true
+      }
+    ],
+    "explicit_TDR_records": 4,
+    "other_GPU_error_records": 2,
+    "hexadecimal_ID14_record": 1,
+    "trigger": "UNDETERMINED",
+    "process": "UNDETERMINED",
+    "kernel": "UNDETERMINED",
+    "application_attribution": "UNDETERMINED",
+    "formatted_message_available": false,
+    "interpretation": "System GPU driver reset/error events precede the original failed-run parent terminal by about 3-4 seconds. Four XML properties explicitly report TDR reset/restart; event-provider PID4 does not attribute the originating application. Context invalidity is consistent with a reset, but causation and initiating workload are not established.",
+    "primary_definition_source": "https://learn.microsoft.com/en-us/windows-hardware/drivers/display/timeout-detection-and-recovery"
+  },
+  "earlier_completed_readonly_checks": {
+    "input_id_bounds_and_dtype_device": "PASS: observed CUDA int64 IDs within model header rows151936; layer FP32 CUDA metadata",
+    "actual_prefix_and_argmax_decode_chain": "PASS: independently joined generated IDs, prefix concatenation and decoded responses",
+    "32_task_format_scores": "PASS: prior bounded independent pure CPU regrade",
+    "canonical_assets_and_loaded_custom_copy": "PASS: earlier bounded CPU hash verification of ten canonical assets and loaded custom code; not repeated here",
+    "method_hook_restoration": "PASS receipt/source plus recorded wrapper restoration and state equality; full hook objects are not serialized",
+    "no_CUDA_reentry_after_fault": "NOT_EXERCISED_NATIVE because unexpected fault did not occur; source and earlier CPU exception tests support branch only"
+  },
+  "inference_limits": [
+    "Clean short synchronous probe does not resolve the original CUDA cause or establish long-run stability.",
+    "Original bulk matrix remains incomplete; primary validation comparisons remain NULL.",
+    "Debug outputs are separate recomputations and are not merged into the original matrix.",
+    "No efficacy, production speed, allocation efficiency, or broad intelligence claim.",
+    "Full logits, mask values and live hook objects are not serialized; equality/restoration claims rely on pinned executed checks and source, not raw-array reconstruction.",
+    "Existing 17 worker and 7 parent CPU tests were previously independently executed; no repeated tests in finalization."
+  ],
+  "evidence_sha256": {
+    "runtime_debug_admission_v2.json": "0abe8ffd869531e98460f4c416e943dbe289b4da42d20e1d6627f29c1c691d94",
+    "runtime_debug.py": "1e1fe306e44fdd6b68e15d39eefee3de78094d7761c90192ffb9861c257d9299",
+    "runtime_debug_supervisor.py": "43c4aa8f41573454814f1845156c7915faeb8c3a9ed8c2977d74e19b4c1d3cdc",
+    "runtime_debug_entry.py": "5ee7ce118a9d1f2bfd3d1bd4bbd260ea58b3993ce952d9c9c33f107b9b0a5fa2",
+    "RUNTIME_DEBUG_COMMAND_002.md": "106edfc0551672f9314d5b8830e66bd791f6241c8855d00f33651307e87fed07",
+    "reviews\\runtime_debug_dispatch_receipt.json": "c9e17594778243d4d1e7f9c6088c05893941845ecda075c0925c498a3170504b",
+    "HUMAN_RUNTIME_DEBUG_ALLOWANCE_001.json": "b96a8a0c950c241b4fa3fc3bb53ebdb82e6457fbcb46a36cfed55acc3be0457c",
+    "HUMAN_RUNTIME_DEBUG_APPROVAL_RECORD_001.json": "81e8ba14082dceca2ff5906cb745e016add662ed30270f6a068f91140631530e",
+    "runs\\native-runtime-debug-001\\admission.json": "0abe8ffd869531e98460f4c416e943dbe289b4da42d20e1d6627f29c1c691d94",
+    "runs\\native-runtime-debug-001\\review.json": "c9e17594778243d4d1e7f9c6088c05893941845ecda075c0925c498a3170504b",
+    "runs\\native-runtime-debug-001\\source_manifest.json": "27d361321aa18c6b786924c58a852371f342a746da1be7692ee1f6b8d3e0b041",
+    "runs\\native-runtime-debug-001\\terminal_receipt.json": "bba9a2d46f585c8e36f526c3e0b1e3e9ddbefd9921bc9a8870644e76e5de7a2e",
+    "runs\\native-runtime-debug-001\\resources.jsonl": "d4b3047b57a682ba8c1076ee4a2e086a4eb1ac56bc60cc5e51e7c072409385d9",
+    "runs\\native-runtime-debug-001\\result\\receipt.json": "9a203cbebd1551b733ea2b9f990a24822e94566b68bdd990f7a1c7209a6b207c",
+    "runs\\native-runtime-debug-001\\result\\registration.json": "a41863256e9391c186ece867df3999eb2c16d533dff59a20cade1190986a2696",
+    "runs\\native-runtime-debug-001\\result\\qualification.json": "4a31fd0aa3bd28f6566f5ccc81fb55cf497dc6b6828aeb4b1145874f4f7e1cab",
+    "runs\\native-runtime-debug-001\\result\\matrix_forecast.json": "a013d817393e9376709003e3ec9789567630fe6886ad7a8f1dd836f38994fb76",
+    "runs\\native-runtime-debug-001\\result\\forwards.jsonl": "150c49fa04311a23f4551ceaa4089bee513cfd48d3975e0f7ea93c46a7fd0e43",
+    "runs\\native-runtime-debug-001\\result\\operations.jsonl": "a1334656de68c8dccfd562b6b4d5527e21b271c737fe03127dffda89ca94d0f5",
+    "runs\\native-runtime-debug-001\\result\\outcomes.jsonl": "016417ff6cc2864acddd28e8345e48d6d02a01d6b6c120025e938552f9df9f5a",
+    "runs\\native-runtime-debug-001\\result\\trajectories.jsonl": "6197a18d79c0d7be03f8221ade27a2278addbb16d229f33addbec816203d90dd",
+    "audits\\cuda_system_event_window_001.json": "4b2c9896bcc4ec8bd79d2dd4bd2bd5366cf7b6d79e612fe74c0c09c6b1ca0d3c",
+    "audits\\cuda_system_event_xml_001.json": "783043cfefb4bc8b72d77434e21a77fa2268f65b0dbf7fc9129b9d9627aff17e",
+    "runs\\native-bulk-001\\terminal_receipt.json": "56d5618530b52cc0029f87a10138ccdeed33b8696fa5da6df0442e89afaf37ca"
+  }
+}

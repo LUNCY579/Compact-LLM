@@ -1,0 +1,45 @@
+{
+  "status": "FROZEN_EXPOSED_DEV_REPLAY_SOURCE",
+  "timestamp_utc": "2026-10-06T02:00:34.848735+00:00",
+  "study_id": "V3-OPPOSED-REPLAY-001",
+  "input_pins": {
+    "quality_pattern_v3/data/dev_prefix_probe_001/DEVELOPMENT_BANK.json": "681a3e77e3d797e2faebcff3971dbb365a4479ebdac017bf3dcfcb48081ba03f",
+    "quality_pattern_v3/data/dev_prefix_probe_001/DEVELOPMENT_TOKEN_BINDING.json": "c34948026ebaf332111ce635a473b1489ef0d2f3932100f9e0d3cdd6a08ce6d2",
+    "quality_pattern_v3/runs/native-prefix-probe-001/result/readouts.jsonl": "b61150bb60b4721c97fa2750b29d1b4d023ec7d0edd5531a4d70d596efbec652",
+    "quality_pattern_v3/runs/native-prefix-probe-001/terminal_receipt.json": "ef292863a3c6050175fac115715546cc542343023c430ccaed5ed2699f493f48",
+    "quality_pattern_v3/runs/native-prefix-probe-001/result/receipt.json": "b0d2dede48274ca7f4e7a4e5969aa4ab6bc3f230648f27b3c0c79695a1b78817",
+    "quality_pattern_v3/runs/native-prefix-probe-001/result/qualification.json": "a4282d8bd76d018323c2b1701e07b705bd2e1245a82dd3fc02733eb06c1f62b8",
+    "quality_pattern_v3/reviews/probe_execution_review_001.json": "fffb9d699b5f4458e73cbdae8dd192b34e4fed17e80ae7e7f705b2eab386f99e",
+    "quality_pattern_v3/analyses/prefix-probe-001/REPORT.json": "6bf9dd67f2f6f2b4a5bcaec0738b84058212cd28883ecda237a309532fd930c7",
+    "runs/bulk-bank-apparatus-001/bank.json": "862a63648caf7efb3d287c11bc5caaefc884e0ec6cb3130ce8f196526efc40cd",
+    "runs/native-bulk-restart-001/result/outcomes.jsonl": "858ba6c1b5105b460e600c93872575c78e2c3e43545538847e3d9eba30e01cd8",
+    "runs/native-bulk-restart-001/terminal_receipt.json": "dc4d8c7a5895e846aee3c1b1b19b9e4f4909386779b313aa5693599ec9f2ded6",
+    "runs/native-bulk-restart-001/result/receipt.json": "d9c34a822d9bdaaac39d33820eaacf05d083974cd9191e43559307bd2258ff19",
+    "bulk_bank.py": "3242439231064fc81991e157c0da62833f4e4223ec71d60cf9ffd2851815b5eb",
+    "open_bank.py": "25db8ad7b8bd4166188eccab4be73c9a430f696610dea5b8c83b380883f9d42a",
+    "quality_pattern_v3/probe_analysis.py": "2d6c8e598df0a0caab29875ff95cecfb6b7eef1e8eff595efabb3322ebf70a27",
+    "quality_pattern_v3/OPPOSED_GATE_CONTRACT_DRAFT_002.md": "067426a54cc2836b558401ee528dfd2f63008297d91ae41bb95f3e8491e734cd",
+    "quality_pattern_v3/reviews/opposed_gate_design_review_001.json": "e613a48955a639bc1e873ccd8fb1f19e1f7293da88664f1b918f12aa589f5d26",
+    "quality_pattern_v3/reviews/opposed_replay_input_review_001.json": "7c356efb50e56b2047e43645ce914472adb4dc7cda934cd4581b247523ce661b"
+  },
+  "source_hashes": {
+    "opposed_gate_policy.py": "0d57ad3284d51cbf959c8c8fd96489f00374fc52be35b4dbcc68850dcb06cd6e",
+    "opposed_gate_replay.py": "af8f4c138fea66948bf6959dfd20ff0dd77fead7085ff290956060c5f30d22e0",
+    "tests/test_opposed_gate_policy.py": "9be1044467f77d2fc517f74b6b1238b6b745b1d474271f66b8cb59303a07e07f",
+    "tests/test_opposed_gate_replay.py": "8d9d845ba04dbf7c8ec4cfdfb8dc3617a40ee4cf16c83c183bedaa601ad1c8fc",
+    "OPPOSED_REPLAY_ANALYSIS_PLAN_001.md": "7fb36c0ed09ec949f9447fa310b8a24870e43168f4780370c385d5a077a81ad1"
+  },
+  "candidate_revisions_used": 3,
+  "candidate_revisions_maximum": 6,
+  "policies": [
+    "CONFIDENT_RECURRENCE",
+    "UNCERTAIN_RECURRENCE",
+    "EVIDENCE_CONSISTENCY_GUARD"
+  ],
+  "review_receipt": "reviews/opposed_replay_source_review_001.json",
+  "native_model_calls": 0,
+  "training": false,
+  "validation_access": false,
+  "exposure": "EXPOSED_DEV_SELECTION_ONLY",
+  "tests": "62 analytic CPU checks PASS before freeze; no candidate scores"
+}

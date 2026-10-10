@@ -1,0 +1,108 @@
+{
+  "FP32_unit_branch_evidence": {
+    "apply_update": "experiments/rineya_taps_adaptive_recurrence_v1/scheduler.py:192",
+    "finding": "Unit/fixed scalars are ones_like/full_like FP32 progress; random draws use existing alpha dtype. Exact-unit branch is tested on alpha Tensor after casting, so effective FP32 equality preserves branch identity.",
+    "random_control": "control.py:74",
+    "scheduler": "experiments/rineya_taps_adaptive_recurrence_v1/scheduler.py:152"
+  },
+  "created_utc": "2026-10-04T22:26:31.749200+00:00",
+  "independent_CPU_tests": {
+    "counts": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 23
+    },
+    "junit_sha256": "1644db56f1bcbf38d981154044ac372f49f0d875dea20c729c4f771038ab2a33",
+    "pytest_seconds": 21.82
+  },
+  "independent_bounded_probes": {
+    "checks": [
+      "DEV_frozen_primary_distinct_from_validation_envelope",
+      "parent_average_cannot_mask_evidence_variant_harm",
+      "absent_metrics_NULL_known_worker_cost_retained",
+      "same_input_and_alpha_cannot_produce_A5_seed_token_divergence"
+    ],
+    "passed": 4,
+    "receipt_sha256": "f0a0f9af9a7e5cf616761f5fe77a4f6a41bdab5e2f052fcea055b47b8ab8a64f"
+  },
+  "limitations": [
+    "This freezes analysis source before scientific measurement; real terminal/raw replay remains future independent work",
+    "Synthetic qualification/review/worker statuses are CPU fixtures, not native qualification",
+    "Shared authored generator families and48 held-out world parents permit conditional exploratory interpretation only; no broad confirmation/equivalence",
+    "Metadata-known evidence variants never become model inputs; semantic natural-language abstention beyond canonicalUNKNOWN remains unassessed",
+    "Controller revision/model training and empirical allocation-efficiency improvement remain unclaimed",
+    "Pinned deterministic no-state-carry contract underlies same-prefix/alpha consistency; any breach suppresses primary claims rather than relabeling it stochastic",
+    "Late A5 phase/instrumented shared-device timing do not estimate production speed or deterministic timing-repeat variance"
+  ],
+  "native_calls": 0,
+  "native_model_loads": 0,
+  "new_native_outcomes_read": false,
+  "resolved_source_review_issues": [
+    {
+      "disposition": "Real sources() coverage checked; all84 admitted file hashes still verified locally. Real-schema empty CLI regression passes.",
+      "id": "BA01",
+      "required_gate": "actual parent source-manifest schema"
+    },
+    {
+      "disposition": "Exact True/no-object and False/object start/terminal coverage now required.",
+      "id": "BA02",
+      "required_gate": "two distinct cache-rejection contracts"
+    },
+    {
+      "disposition": "Registered practical_margin.05 and per-contrast meets_margin explicit; preservation/uncertainty separate.",
+      "id": "BA03",
+      "required_gate": "fixed scientific decision threshold"
+    },
+    {
+      "disposition": "Separate3168-record finite nongold/zero-extra-forward journal read/hash/audit; otherwise explicitly NOT_ANALYZED; standalone latencyNULL.",
+      "id": "BA04",
+      "required_gate": "deferred paired readout accounting"
+    },
+    {
+      "disposition": "Same case/shared prior token prefix/effective FP32 scale cannot produce differing next token; identical tokenIDs require equal decoding/stopping. Distinct draws remain allowed.",
+      "id": "BA05",
+      "required_gate": "causal stochastic-control consistency"
+    }
+  ],
+  "reviewed_contract": {
+    "A5_repetitions": 2,
+    "aggregation": "A5 seeds within cases, both variants within parent, equal six-category weights",
+    "constant_grid": [
+      0.8,
+      0.9,
+      1.0,
+      1.1,
+      1.1473425965417514,
+      1.2
+    ],
+    "costs": "Physical rows only; oracle/alias copies excluded; absent totalsNULL, observed worker cost retained; partial computeNULL; deferred readout adds0model calls, standalone latencyNULL",
+    "deterministic_repetitions": 1,
+    "frozen_validation_aliases": 96,
+    "headroom_capture": "unclipped;NULL for nonpositive/incomplete finite-grid headroom",
+    "oracle_nonphysical_rows": 288,
+    "parent_stage_lane": "BULK_GPU_FP32_SCREEN",
+    "physical_rows": 3296,
+    "preservation": "Each case/variant loss remains visible even when parent means cancel; canonical format/UNKNOWN source-status endpoints independently regraded",
+    "primary_incomplete_values": null,
+    "primary_validation_comparator": "DEV-frozen global six-constant winner; validation envelope/oracle diagnostic",
+    "primary_validation_parent_units": 48,
+    "scientific_rows": 3168,
+    "worker_stage_lane": "BULK_GPU_FP32_INTERVENTION"
+  },
+  "reviewer": "/root/adversarial_review",
+  "schema_version": "1.0",
+  "source_sha256": {
+    "analysis.py": "378a5e12b467a4fec0807e372d93d7869f44e8e557cf762177beda6975cfc026",
+    "bulk_analysis.py": "3defe511cd8a189f75e0e0529a56b782b965f40095c139d3a0c603b2bbf0d3db",
+    "bulk_bank.py": "3242439231064fc81991e157c0da62833f4e4223ec71d60cf9ffd2851815b5eb",
+    "gpu_analysis.py": "30d12cff4ac343b98c492e5edfe1d9554fb87fc50d86e3029abd3236765def13",
+    "open_analysis.py": "c072790ea7d5ee4864fbeef762509fb24c0b9f9c99f7481b47eee37c28695576",
+    "open_bank.py": "25db8ad7b8bd4166188eccab4be73c9a430f696610dea5b8c83b380883f9d42a",
+    "reviews/bulk_analysis_probes_001.py": "6784f3ca7046ffece1b2e3361cfbb040a9366b4c3c38968666324d6428f9755e",
+    "reviews/bulk_analysis_review_writer_001.py": "9e1b5578b0f509c9547ad4a2888b770415f33cfceed0bc24ba4634d6aecaddbe",
+    "tests/test_bulk_analysis.py": "e8a5d8ed32f46372671f88b3bdc5599535dd4e1ec60a63f09b86843b2598ccb8"
+  },
+  "status": "PASS_BULK_ANALYZER_SOURCE_ONLY",
+  "unresolved_analyzer_blockers": []
+}

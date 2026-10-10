@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "reviewer": "independent adversarial_review",
+  "reviewed_utc": "2026-10-05T03:01:17.764280+00:00",
+  "status": "PASS_CPU_CAUSAL_REPLAY_WORKER_SOURCE_APPARATUS_ONLY",
+  "scope": "Resulting worker/source/causal-loss/feature/qualification/forecast/count review and12 smallCPU apparatus probes. No canonical model/weights, tokenizer calls, GPU/native workers, validation outcomes or source edits by reviewer.",
+  "checks": {
+    "exact_tested_worker_and_helpers": true,
+    "10core_plus2_independent_math_probes_pass": true,
+    "strict_design002_and_metadata": true,
+    "no_GPU_test_or_native_escape": true,
+    "DEV_packet_before_weights": true,
+    "feature_before_loss_and_gradient": true,
+    "fresh_complete_forecast_before_allcases": true,
+    "actual_final_state_and_ledger_serialized": true,
+    "native_clock_and_progress_match_parent": true,
+    "vector_scalar_and_parity_proofs_archived": true
+  },
+  "blocking_findings": [],
+  "source_sha256": {
+    "cpu_causal_replay_native.py": "61e74ebfd006cda12c38a67686d7329814fdd2dcd49ede09fd8f23ae9d80b9c4",
+    "tests/test_cpu_causal_replay_native.py": "095a7864191f221b31ecc7be74ba17445113b58a22408e7275115df730e5bfcf",
+    "cpu_h3_native.py": "f242676e0ec0f019dd94ac27e5f3cb5eb8f3e311beb64cc0355102492396eaca",
+    "sensitivity.py": "5d0af45a8e91f0a00d91f83244105d06f1beba6f422cc3cd6d20c2d43d762f0d",
+    "tests/test_sensitivity.py": "e11159218a0d54fced011492bd6888c53091f06a8c96a91461c4aa345dc2e724"
+  },
+  "CPU_test_counts": {
+    "core": {
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "independent_additional_math": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "total": 12
+  },
+  "verified_contract": {
+    "population": "all192DEV/96parents,440answer+192EOS positions; source-bound packet andDEV-only exported readers",
+    "causal_input": "x+answer[:j] only, target after last-position logits; EOS after fullcanonical answer; no fullgold model labels/earlier-logit slicing",
+    "operator": "frozen CPU FP32/eager exact normal wholeL12-L13+oneextra rawproposal; actualL14-L27/norm/tied custom UNKNOWN head",
+    "autograd": "detach controlled state to sole leaf; frozen parameter requires_gradFalse/gradNone, nooptimizer; fresh3 whole rollouts1/1.01/.99; dotGd2",
+    "objective": "meananswer-token CE/derivative primary; acceptedEOS151643/151645 logsumexp mass secondary, canonicalEOTCE descriptive; no endpoint composite",
+    "predictor": "first input-only nominal rawprogress/fluctuation/balance sink beforeloss/adjoint; frozen SHA includes input IDs and case context; laterteacher features remain diagnostic-only",
+    "numeric": "alltarget and meanFD .001+.03abs(adjoint), neutral\u2264.001; mean-sign conflict flag includes zeroFD; analysis reliable denominator must additionally require nonneutral",
+    "proofs": "actual nativequalification scalar FDtriples, exact parity logit hashes and3 bounded NPZG/d2 pairs; checkpoint/class/state/runtime andsource before/after",
+    "wholematrix": "1925API,1923forwardattempts1922complete1partial2cache635adjoints252696completedpositions; exactledger refuses omissions",
+    "forecast": "fresh max256 scalarCE andEOS6 timing rows\u2192632*(slowestadjointforward+2*slowestvalueforward)*1.5; elapsed+remaining+180\u22643600 beforecase loop",
+    "safety": "exact immutable f242 CPUhelpers/5d0math; parent8.4 postimport7.4 RSS6 runningreserve1/disk; hiddenGPU/ownJob/solelock; guard max3420 leaves180internal/1800global; no retry/devicefallback"
+  },
+  "independent_probes": [
+    "Mean adjoint.00101 with zero or opposite tiny meanFD passes mechanical tolerance but is explicitly uncertain/nonneutral; large discrepancy still rejects.",
+    "Accepted-EOS-mass gradient matches softmax(all)-conditionalsoftmax(accepted), sums tozero and is invariant to a uniform logit shift; singleEOT loss differs."
+  ],
+  "review_notes": [
+    "Parent receipt textual CPU_VISIBLE_DEVICES label is a typo: actual source is CUDA_VISIBLE_DEVICES=\"\" before child import.",
+    "Additional math probe emitted a scalar-conversion warning on a small requires-grad tensor after derivative extraction; no test failure or native/model operation.",
+    "The raw mean-sign flag can include neutral sign noise; analyzer must apply declared nonneutral-and-not-uncertain reliable denominator and report allcases."
+  ],
+  "limits": [
+    "Source/CPU fixtures do not qualify real CPU EOS gradient memory/precision/timing or guaranteecomplete3600fit.",
+    "Canonical-prefix likelihood and scorer-equivalent response/teacher-history limits remain; no semantic efficacy, preservation, H5confirmation, GPUstability or deployable speed claim.",
+    "No covariance/uncertainty inference treats632targets,192relatedcases orsharedgenerator families as independent authored tasks.",
+    "Resulting offline analyzer, final docs/exact admission closure, fresh readiness andnativequal+completeforecast remain required."
+  ],
+  "native_qualification": "NOT_RUN",
+  "dispatch_approval": "PENDING_FINAL_ADMISSION",
+  "model_fit_or_new_job_authorized_by_receipt": false,
+  "evidence_sha256": {
+    "cpu_causal_replay_native.py": "61e74ebfd006cda12c38a67686d7329814fdd2dcd49ede09fd8f23ae9d80b9c4",
+    "tests\\test_cpu_causal_replay_native.py": "095a7864191f221b31ecc7be74ba17445113b58a22408e7275115df730e5bfcf",
+    "cpu_h3_native.py": "f242676e0ec0f019dd94ac27e5f3cb5eb8f3e311beb64cc0355102492396eaca",
+    "sensitivity.py": "5d0af45a8e91f0a00d91f83244105d06f1beba6f422cc3cd6d20c2d43d762f0d",
+    "tests\\test_sensitivity.py": "e11159218a0d54fced011492bd6888c53091f06a8c96a91461c4aa345dc2e724",
+    "CPU_CAUSAL_REPLAY_DESIGN_DRAFT_002.md": "f8b962447f403105a564ec071bbfa89fd3e40843fcfef6800b7ec72a22412492",
+    "CPU_CAUSAL_REPLAY_NATIVE_REGISTRATION_001.md": "eb331f809d6ddd5fa44cb743933eae82fc0015ac84f4741abbd56c886b529c04",
+    "CPU_CAUSAL_REPLAY_FEASIBILITY_DRAFT_001.json": "021ea720f4b644d0e0fff0b975ab460d80e6c02cb401400fd0be58a0ba4cb359",
+    "reviews\\cpu_causal_replay_design_review_001.json": "d4733c0d2fb52ff53bc7f7bd5d484c27667e002150d7b396e0264e82a8051567",
+    "reviews\\cpu_causal_replay_parent_review_001.json": "c6bce787e6fe0caf04966ec5d1093942af58d9e9af57c436ca4a038436c67a4b",
+    "reviews\\cpu_causal_replay_worker_probe_001\\SOURCE_BEFORE.json": "6bc96e7ece58cb66c51e50c2d5b0a032679c554032ee0acf8c6eafc0ecb44f7b",
+    "reviews\\cpu_causal_replay_worker_probe_001\\SOURCE_AFTER.json": "6bc96e7ece58cb66c51e50c2d5b0a032679c554032ee0acf8c6eafc0ecb44f7b",
+    "reviews\\cpu_causal_replay_worker_probe_001\\COMMAND.json": "7cdb67ac44e59df33adf0051fb778615b3a839e113e2ce9d603ccd639b5bd058",
+    "reviews\\cpu_causal_replay_worker_probe_001\\pytest.log": "aa2b79754ab5de1f3fdf3fb5139d7c667706bf3e19880e0b9f4896d2ee54174a",
+    "reviews\\cpu_causal_replay_worker_probe_001\\junit.xml": "a6daa0fa5a0b6031860c537cef157dbd88ceb74f868953c5368d173c3f0571bf",
+    "reviews\\cpu_causal_replay_worker_negative_probe_001\\COMMAND.json": "98117f77b94526119a2d90e1d53a0311b0c4a40342a75e246a5f25fb2ff1d922",
+    "reviews\\cpu_causal_replay_worker_negative_probe_001\\pytest.log": "94ac5dc32d21d818bc5320149fb83f89905ca2fe5abbb27b296bdae18eb7eef4",
+    "reviews\\cpu_causal_replay_worker_negative_probe_001\\junit.xml": "ddd9f8767733e0a611a0c76089fa39ed71f99fa14640d3011f79c00b9b55dcfd",
+    "reviews\\cpu_causal_replay_worker_negative_tests_001.py": "cc685eb295863631e7fba5a6fa409de367eba74b770de831eb4c2f37de6b4e7b"
+  }
+}

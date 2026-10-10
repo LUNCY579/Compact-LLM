@@ -1,0 +1,9 @@
+# Research policy 10 independent review
+
+ACCEPTED as a scoped source-bound numerical-consistency procedure. I did not author this policy or the new analyzer. I authored the native worker, so this is not independent worker source review; no new tests/model calls were performed here.
+
+Policy 10 matches corrected analyzer 5a624, tests 6b33 and math receipt 7eb188. Static comparison finds only `_triplet`, `analyze_bundle` and output `main` changed. Protected constants and the proof/FD/vector/chronology/statistical helpers remain identical. Existing independent evidence records ten changed fixtures passing with unchanged source, negative FD/EOS-ID/nonfinite/missing-EOT/source/count refusal, endpoint equality where the original checker accepted, and the representable-shift counterexample. The old bfe6 checker/tests/plan, failed primary-NULL report and raw native run remain byte-identical.
+
+All 192 EOS rows retain actual losses and mass-minus-EOT gaps with UNVERIFIED_FINITE_PRECISION. The three original 1e-5 exceedance flags remain descriptive. Missing logits/LSE operands prevent a justified native-case ordering envelope or rounding attribution. The counterexample challenges the old universal absolute tolerance; it does not establish the actual case's cause. No threshold was enlarged, scalar repaired, case dropped or endpoint switched.
+
+Accepting this procedural correction cannot waive registered native/FD/finite/source/EOS-ID/count/chronology/selection/cap/resource gates. Any future instrument or registered-gate change needs its own prospective review and applicable direct authority; old qualification and this acceptance grant no model call or retry. No controller fit, training, task-efficacy, exact EOS accuracy, research-allocation efficiency, agent/model self-improvement or scientific goal completion follows. Raw costs remain charged.

@@ -1,0 +1,32 @@
+{
+  "status": "FAIL_BEFORE_WORKER",
+  "study_id": "V3-PASSIVE-PROBE-001",
+  "lane": "GPU_FP32_PASSIVE_INPUT_FEATURE_PROBE",
+  "run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\runs\\ps004\\t\\test_missing_resource_samples_1\\campaign\\v3\\run",
+  "admission_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+  "native_worker_seconds": 7.100000220816582e-05,
+  "started_utc": "2026-10-05T20:49:51.311487+00:00",
+  "peak_rss_bytes": null,
+  "gpu_initial_inventory": {
+    "uuid": "u",
+    "free_bytes": 8589934592
+  },
+  "command": [
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "experiments.rineya_taps_adaptive_recurrence_campaign_v2.quality_pattern_v3.probe_entry",
+    "--release",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\runs\\ps004\\t\\test_missing_resource_samples_1\\campaign\\v3\\run\\release.json",
+    "--source",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\runs\\ps004\\t\\test_missing_resource_samples_1\\source",
+    "--out",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\runs\\ps004\\t\\test_missing_resource_samples_1\\campaign\\v3\\run\\result",
+    "--admission",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\runs\\ps004\\t\\test_missing_resource_samples_1\\campaign\\v3\\admission.json"
+  ],
+  "worker_pid": 987654,
+  "error": "RuntimeError: expected assignment refusal",
+  "supervisor_wall_seconds": 0.0029388000002654735,
+  "ended_utc": "2026-10-05T20:49:51.314486+00:00"
+}

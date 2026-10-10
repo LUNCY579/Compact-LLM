@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "reviewer": "/root/adversarial_review",
+  "created_utc": "2026-10-02T04:32:52.8723329Z",
+  "status": "PASS_REFERENCE_ANALYZER_AND_PROMPT_ONLY_SOLVER_SOURCE",
+  "source_sha256": {
+    "tests/test_analysis.py": "544605f723653be6230e0ab49ffec617c0b12b699c92dde50cf198fcf8b03094",
+    "analysis.py": "5eef366e35f4b7a4e0bbbfc84ac8c0c9d50acd05605b2b75b8b7ddcaf0b7ee41",
+    "solver_audit.py": "fc93dbaec6b275684f43fa5be088fb07adefe3f5e2b9b4ed448f275b41f3a48c"
+  },
+  "native_model_loads": 0,
+  "native_outcome_journals_read_before_review": false,
+  "protected_or_test_reads": false,
+  "independent_test_result": {
+    "junit_sha256": "a59024eac8fadb19d8de4cf6349b9a060d033bcb08f2018c01cc3133ba329874",
+    "pytest_seconds": 1.33,
+    "exit_code": 0,
+    "skipped": 0,
+    "passed": 10,
+    "failed": 0
+  },
+  "adversarial_probe_receipt": {
+    "sha256": "2805bf115a307896f3e9a3f3923483930a6fdf25dfd0f9bed4c35425e40b0bbb",
+    "checks": 19,
+    "failures": 0,
+    "path": "reviews/analysis_review_probes.json"
+  },
+  "checks": {
+    "predefined_blind_controls_not_per_item_oracle": true,
+    "pure_solver_string_only_no_target_fallback": true,
+    "incomplete_primary_comparisons_headroom_capture_null": true,
+    "trajectory_coverage_warmup_bounds_provenance": true,
+    "no_efficacy_confirmation_speed_claim": true,
+    "frozen_fixed_separate_from_diagnostic_envelope": true,
+    "deterministic_token_divergence_rejects_comparison": true,
+    "positive_solver_recognized_cases_only": true,
+    "pinned_scorer_recomputes_stored_scores_offline": true,
+    "disabled_full_gold_guard": true,
+    "oracle_nonphysical_copied_cost_excluded": true,
+    "complete_expected_cell_cardinality_and_duplicates": true,
+    "unbounded_negative_and_above_one_capture": true,
+    "item_repeat_average_then_provisional_scenario_join": true,
+    "run_admission_review_source_metadata_runtime_config_grid_data_trace_pool_bindings": true
+  },
+  "disposition_of_findings": {
+    "solver_scope": "Retrospective audit of exposed bank, recognized structural subset; no all-bank answerability or independent reasoning benchmark claim",
+    "deterministic_repeat_bug": "FIXED_AND_CPU_TESTED",
+    "stored_score_only_analysis": "FIXED_OFFLINE_PINNED_SCORER_RECOMPUTATION",
+    "missing_run_lineage_and_pool": "FIXED_AND_CPU_TESTED",
+    "missing_empty_trace_coverage": "FIXED_AND_CPU_TESTED",
+    "malformed_cell_robustness": "Nonblocking residual: malformed unknown/A2 physical records can fail analyzer terminal rather than emit full partial report; no primary comparison produced"
+  },
+  "approved_use": "Frozen original CPU-FP32 reference terminal journal analysis only, exclusive campaign-local output; successor/GPUs need own analyzer binding",
+  "remaining_limits": [
+    "Semantic correctness/unsupported-answer judgments remain NOT_ASSESSED",
+    "Generator independence unverified; at most13 provisional clusters",
+    "Legacy A5 prefix-RNG contrast remains incomplete",
+    "A scorer success or solver applicability is not native efficacy",
+    "Run with -B to avoid inherited bytecode-cache mutation"
+  ]
+}

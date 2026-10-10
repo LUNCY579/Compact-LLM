@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "reviewer": "/root/adversarial_review",
+  "status": "BLOCK_ANALYZER_USE_PENDING_CONTRACT_FIXES",
+  "native_model_loads": 0,
+  "source_sha256": "a6c648fd58fd3ce6b38db8c3a0bc68e45ef53b00f8c578e6049cf9b9ec90494f",
+  "tests_sha256": "b98ed2cb0d9792a51f2bb7a1246870470df6b20eb3f8ed1ec6c11ee83006cfb7",
+  "independent_author_tests": {"passed": 6, "failed": 0, "skipped": 0, "seconds": 0.72, "junit": "reviews/open_analysis_cpu_junit.xml"},
+  "independent_adversarial_probes": "reviews/open_analysis_review_probes_initial.json",
+  "issues": [
+    {"id": "OA01", "severity": "P1", "required_gate": "exact fixed-control identity", "source_evidence": "open_analysis.py:73; analysis.py:55: f'A2:{float(row[fixed_alpha]):g}'", "observed": "sixth1.1473425965417514 accepted as1.14734", "disposition": "require exact GRID membership before policy grouping"},
+    {"id": "OA02", "severity": "P1", "required_gate": "unit recurrence control", "source_evidence": "open_analysis.py:91 uses shared trace validator; analysis.py:195 checks only firstpass/A2 scales", "observed": "A1 extra trace alpha1.1 accepted", "disposition": "require extra unit-control alpha1, including qualified unit identity arms"},
+    {"id": "OA03", "severity": "P1", "required_gate": "recorded resource preservation", "source_evidence": "open_analysis.py:174-177 screens GPU resources only", "observed": "parent RSS7GiB or native host reserve0 accepted", "disposition": "reject recorded RSS>6GiB and host_available<1GiB across relevant snapshots"},
+    {"id": "OA04", "severity": "P2", "required_gate": "actual initial block cost accounting", "source_evidence": "open_analysis.py:132 checks other counters but omits initial_block_applications", "observed": "initial_block_applications99 accepted on one-call row", "disposition": "require initial block applications equal completed generation calls"},
+    {"id": "OA05", "severity": "P2", "required_gate": "complete SMOKE schema", "source_evidence": "open_analysis.py:79 regrades only IDs in OPEN bank", "observed": "SMOKE score2 accepted", "disposition": "require binary task/format values; bind/regrade inherited pure scorer"},
+    {"id": "OA06", "severity": "P1", "required_gate": "registered intervention generation caps", "source_evidence": "open_analysis.py:121 counts tokens without cap screen", "observed": "consistent nine-token OPEN packet accepted", "disposition": "require OPEN1..8 and SMOKE1..24 generation calls, plus registered prefix bounds"}
+  ],
+  "exploratory_limitations": ["Source-visible validation is not independent confirmation", "Four generator clusters per split cannot support broad efficacy", "Semantic natural-language abstention remains NOT_ASSESSED"],
+  "unchanged_native_dispatch_receipts": ["reviews/open_dispatch_receipt.json", "reviews/diagnostic_dispatch_receipt.json"]
+}

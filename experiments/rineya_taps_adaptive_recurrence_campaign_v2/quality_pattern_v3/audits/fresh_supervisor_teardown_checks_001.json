@@ -1,0 +1,49 @@
+{
+  "actualprocesses_models_weights_tokenizers_GPU_queries_newadmissions": 0,
+  "bindings": {
+    "fresh_supervisor.py": "3e81f147c69ec5d4abe424c143be44e9891ba811622fc93eed4d185801615c4a",
+    "tests/test_fresh_supervisor_teardown.py": "80bcbd0ac51060a0e0954f42563e95a4a63b5c3556901a70cb5b05ce34215ddf"
+  },
+  "created_utc": "2026-10-06T03:23:19.069999+00:00",
+  "findings": {
+    "job_close_before_journal_gap": "resolved by guardedclose before tests; no remainingsourcefixfound inthese mocks",
+    "missing_finally_charge": "resolved byRoot before tests",
+    "unknown_later_work": "chargedknownelapsed isretained; accounting_completeFalse/lockretained preventsclaiming unknownremainingworkfree"
+  },
+  "independence": "Parent source written byRoot; this agent wrote only independentmocktests. Agent authoredworker/reader elsewhere; no independence claimed there.",
+  "limits": [
+    "No realWindowsJobtree/driver/GPUorRineya qualification; testsvalidatecontrolflow/accounting only.",
+    "Syntheticwaittimeoutwithterminalpoll isdeliberateexception-pathfixture, not an actualprocessrace observation.",
+    "Terminal/ledgerfilesystemI/O failures remain external failures; no claimofuniversal crashproofwriting.",
+    "Native/model/source/science/candidate/data/readerlimits andalloriginalcaps/floors unchanged."
+  ],
+  "parent_source_edits": false,
+  "schema": "v3_fresh_supervisor_teardown_mock_checks_v1",
+  "status": "PASS_MOCKED_FAILURE_ACCOUNTING_AND_LOCK_TEARDOWN_WITH_LIMITS",
+  "tests": {
+    "command": [
+      "C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe",
+      "-B",
+      "-m",
+      "pytest",
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/tests/test_fresh_supervisor_teardown.py",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "--basetemp",
+      "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\fresh_supervisor_teardown_fixture_001"
+    ],
+    "fixtures": "MockWindowsJob/subprocessPopen/Childwait-poll/psutil/sourcechecks/time;onlysyntheticC-localfilesandledger",
+    "passed": 7,
+    "scenarios": [
+      "waitTimeoutExpiredtwice:positivefinallycharge+terminal/ledgerwithRSSnull",
+      "jobterminateerror/alivepoll:positivecharge+unverifiedaccounting+retainedlock",
+      "jobcloseerror evenpollterminal:descendantsterminationunverified+positivecharge+retainedlock",
+      "PopenrefusalchildNone:0charge/RSSnull/noStartedrow/removesownlock",
+      "Popenrefusal+emptyjobcloseerror:0charge/terminationverified/removesownlock",
+      "normalclosedchild:positivecharge/completeaccounting/removesownlock",
+      "foreignlocktokenafterclose:closedchilddoesnotremoveforeignlock"
+    ],
+    "seconds": 0.85
+  }
+}

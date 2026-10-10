@@ -1,0 +1,207 @@
+{
+  "count_forecast": {
+    "cache_rejection_attempts": 2,
+    "completed_expected": 44,
+    "completed_prefix_positions": 4818,
+    "expected_forced_partial": 1,
+    "full_forward_attempts": 45,
+    "model_API_attempts": 47,
+    "partial_positions": null,
+    "qualification_state_adjoints": 2,
+    "state_adjoints": 9,
+    "task_state_adjoints": 7
+  },
+  "cpu_threads": 4,
+  "eligible_count": 7,
+  "eligible_prefix_sum": 274,
+  "exact_preflight": {
+    "cuda_lane_qualified": false,
+    "historical_receipt_sha256": "daa5bc8e947602a4ed3d7fb19076ec6000e27f7afcc2a1426e544491bff95dfe",
+    "native_runs": 0,
+    "note": "CPU FP32 lane; CUDA absence is reported, not the only blocker.",
+    "reasons": [],
+    "resources": {
+      "cuda_available": true,
+      "cuda_free_bytes": 7398752256,
+      "free_ram_bytes": 10133139456,
+      "python": "3.11.15",
+      "rss_bytes": 625504256,
+      "torch": "2.12.1+cu126",
+      "transformers_installed": true
+    },
+    "status": "METADATA_READY_NOT_QUALIFIED",
+    "training_attempted": false
+  },
+  "exact_preflight_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\preflight-cpu-002\\preflight.json",
+  "excluded_count": 2,
+  "finalization_reserve_seconds": 1800,
+  "historical_runtime": {
+    "python": "3.11.15",
+    "torch": "2.12.1+cu126",
+    "transformers": "5.14.1"
+  },
+  "implementation_required": {
+    "math": "unchanged sensitivity.DiagnosticBlock/fixed_rollout device=cpu; no target in forward; full suffix+customhead; fixed scales0.99,1,1.01",
+    "native_CPU_helper": "explicit CPU batch1/long/FP32\u2264256/fullprefix/mask/cache/logits function; never gpu_native.forward_logits/enforce_deviceFalse",
+    "registration_draft": "CPU_H3_NATIVE_REGISTRATION_DRAFT_001.md",
+    "scope": "distinct CPU qualification/runtime; not historical full original matrix, not GPU fallback, no narrowed population",
+    "tests": "tests/test_cpu_h3_native.py",
+    "worker": "cpu_h3_native.py"
+  },
+  "input_sha256": {
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\anchor_routed_middle_recurrence_v1\\evidence\\02c_fixed_cpu_budget_v2\\20260905T132743_802018Z\\raw_results.jsonl": "2e5b2c2451cb30f90469eeb02ee2f063328828175e5ba1f0edcfb35f41b9d5fd",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\anchor_routed_middle_recurrence_v1\\evidence\\02c_fixed_cpu_budget_v2\\20260905T132743_802018Z\\run_manifest.json": "daa5bc8e947602a4ed3d7fb19076ec6000e27f7afcc2a1426e544491bff95dfe",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\diagnostic_native.py": "7b94f88308e7afbf4836065e73d28608bdae2c6e753226aee4a428a2941cbea6",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\binding-001\\MODEL_DATA_BINDING.json": "82590a8f76eca27e7b15694b724123477e21ae0cc38ed2b33b56641ab9e70f26",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\binding-001\\PROMPT_AUDIT.json": "f4b5b21638bc2d8a8da4fac707072208d3a8a1aa2f1918c7574a326cc996bf7d",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\preflight-cpu-002\\preflight.json": "556b2934249ccc5014fe784dc6d2c5f2a580dc2cf59d8c6817e21ddfc30485f1",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\sensitivity.py": "5d0af45a8e91f0a00d91f83244105d06f1beba6f422cc3cd6d20c2d43d762f0d",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_v1\\native.py": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_v1\\safety.py": "80bd40abfe83f5f98a95de204dafc6761df6c52e0fc2cad428986ec6f226a1aa"
+  },
+  "memory_forecast": {
+    "FP32_weight_bytes": 2384199680,
+    "fit": "plausible under6GiB, must mechanically measure and stop if exceeded",
+    "historical_CPU_peak_RSS_bytes": 4663623680,
+    "native_maximum_tape_peak": "NOT_MEASURED",
+    "proxy_terms": "14 suffix layers \u00d74bytes\u00d7[T(12D+4M+Q+2KV)+3HT\u00b2]; deliberately rough algebra, excludes backend workspace/allocator/thread/runtime/loading/hash buffers; not admission proof",
+    "stored_parameters": 596049920,
+    "suffix_tape_tensor_envelope_proxy_bytes": 587202560
+  },
+  "native_model_loads": 0,
+  "native_worker_created": false,
+  "not_applicable_count": 7,
+  "parent_host_floor_GiB": 8.4,
+  "population": [
+    {
+      "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "input_tokens": 84,
+      "scorer_type": "numeric",
+      "status": "ELIGIBLE",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+      "input_tokens": 37,
+      "scorer_type": "json_exact",
+      "status": "ELIGIBLE",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+      "input_tokens": 30,
+      "scorer_type": "numeric",
+      "status": "ELIGIBLE",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "input_tokens": 34,
+      "scorer_type": "numeric",
+      "status": "ELIGIBLE",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "input_tokens": 30,
+      "scorer_type": "numeric",
+      "status": "ELIGIBLE",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "input_tokens": 27,
+      "scorer_type": "numeric",
+      "status": "ELIGIBLE",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_short_response_30785feeb5a8abdf",
+      "input_tokens": 32,
+      "scorer_type": "exact",
+      "status": "ELIGIBLE",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_common_sense_025ea65887df6a1b",
+      "input_tokens": 34,
+      "scorer_type": "keywords",
+      "status": "NOT_APPLICABLE_INHERITED_TARGET",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "input_tokens": 56,
+      "scorer_type": "choice",
+      "status": "NOT_APPLICABLE_INHERITED_TARGET",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_general_reasoning_078451b6adf65710",
+      "input_tokens": 45,
+      "scorer_type": "keywords",
+      "status": "NOT_APPLICABLE_INHERITED_TARGET",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "input_tokens": 2237,
+      "scorer_type": "numeric",
+      "status": "EXCLUDED_SHAPE",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "input_tokens": 2237,
+      "scorer_type": "numeric",
+      "status": "EXCLUDED_SHAPE",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "input_tokens": 48,
+      "scorer_type": "keywords",
+      "status": "NOT_APPLICABLE_INHERITED_TARGET",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_normal_conversation_4a73375fc950bab7",
+      "input_tokens": 33,
+      "scorer_type": "constraints",
+      "status": "NOT_APPLICABLE_INHERITED_TARGET",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_science_0ac5af678b239ec5",
+      "input_tokens": 24,
+      "scorer_type": "keywords",
+      "status": "NOT_APPLICABLE_INHERITED_TARGET",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    },
+    {
+      "case_id": "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+      "input_tokens": 61,
+      "scorer_type": "keywords",
+      "status": "NOT_APPLICABLE_INHERITED_TARGET",
+      "target_token_id": "TO_BIND_OFFLINE_BEFORE_WEIGHTS"
+    }
+  ],
+  "proposed_parent_deadline_seconds": 1800,
+  "qualified_max_proposed": 256,
+  "remaining_campaign_native_seconds": 20269.625,
+  "running_host_reserve_GiB": 1,
+  "status": "CPU_H3_CONDITIONALLY_FEASIBLE_NOT_NATIVE_QUALIFIED",
+  "timing_forecast": {
+    "complete_time_admission": "fresh CPU max256 +state-adjoint costs and setup elapsed before7 rows; historical short inference is not gradient qualification",
+    "deadline_feasibility": "1800s+1800s evidence reserve <20269.625s; fresh whole-matrix forecast required",
+    "historical_prefill_max_seconds": 0.5946114999969723,
+    "historical_prefill_mean_seconds": 0.36366865606087784,
+    "historical_short_input_max": 84,
+    "historical_short_input_min": 24,
+    "historical_short_prefill_rows": 66,
+    "native_256_gradient_timing": "NOT_MEASURED"
+  },
+  "training": false,
+  "worker_RSS_ceiling_GiB": 6,
+  "worker_after_import_before_weights_floor_GiB": 7.4
+}

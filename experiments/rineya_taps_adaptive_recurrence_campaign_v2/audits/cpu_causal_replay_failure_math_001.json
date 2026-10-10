@@ -1,0 +1,133 @@
+{
+  "status": "VERIFIED_PREMODEL_PERMISSIBILITY_FAILURE_NO_PRIMARY_EVIDENCE",
+  "audited_utc": "2026-10-05T03:40:02.292851+00:00",
+  "run": "native-cpu-causal-replay-001",
+  "failure": {
+    "worker_status": "FAIL",
+    "parent_status": "WORKER_NONZERO",
+    "exit_code": 2,
+    "error": "RuntimeError: source closure differs:Rineya_Cross_Scale_Capability_Transfer_Lab_v1/data/evaluation/mergedev_fast.jsonl",
+    "rejected_dependency": "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/data/evaluation/mergedev_fast.jsonl",
+    "actual_dependency_sha256": "b75df9368e27cfc7de58e55370090e55bd5bcb4d1bd86aeb079b486555925da0",
+    "admitted_dependency_sha256": "b75df9368e27cfc7de58e55370090e55bd5bcb4d1bd86aeb079b486555925da0",
+    "cause": "Worker path-permissibility predicate excludes the exact original allowlisted DEV rawdependency. The compound error text does not mean checksum mismatch. The first OR branch rejects before comparing this hash.",
+    "at_failure_source_identity": "All90 prelaunch archive entries exactly match copiedadmission; worker61e74 also matches source_manifest. Currentworker/test successor edits are distinct and not at-failure bytes."
+  },
+  "observed": {
+    "model_load_attempts": 0,
+    "native_model_loads": 0,
+    "API_attempts": 0,
+    "target_rows": 0,
+    "case_outcome_rows": 0,
+    "state_adjoints": 0,
+    "completed_prefix_positions": 0,
+    "scope": "Receipt and frozen source failure ordering before tokenizer/model/qualification/journal setup establish no model computation, beyond merely absent output rows."
+  },
+  "missing_raw_files": [
+    "population.json",
+    "registration.json",
+    "preflight.json",
+    "qualification.json",
+    "matrix_forecast.json",
+    "compute_ledger.json",
+    "attempts.jsonl",
+    "targets.jsonl",
+    "outcomes.jsonl",
+    "features.jsonl"
+  ],
+  "matrix_status": "INCOMPLETE;planned192cases/632targets/1925APIs unexecuted",
+  "primary": null,
+  "EOS_secondary": null,
+  "semantic_efficacy": null,
+  "bulk_validation_primary": null,
+  "loaded_state_verification": null,
+  "source_assets_loaded_model_preservation": null,
+  "frozen_analyzer": {
+    "sha256": "8e6c156b8da639feec2732a177df0da04d19bd9af1590e533f875bacb702359e",
+    "status": "INCOMPLETE_NO_PRIMARY_MECHANISM_COMPARISON",
+    "raised_exception": false,
+    "primary": null,
+    "EOS": null,
+    "counts": {
+      "events": {},
+      "API_attempts": 0,
+      "completed_forwards": 0,
+      "state_adjoints": 0,
+      "completed_prefix_positions": 0,
+      "partial_positions": null
+    },
+    "error_count": 84,
+    "interpretation": "Frozenreader safely reports absence/nonmissingproof failure without creating files, inventing records or promoting a survivor comparison."
+  },
+  "cost": {
+    "charged_native_worker_seconds": 7.96900000000096,
+    "supervisor_wall_seconds": 14.46900000000096,
+    "worker_recorded_wall_seconds": 7.312228200000391,
+    "parent_sampled_peak_RSS_bytes": 503013376,
+    "worker_recorded_peak_RSS_bytes": 524136448,
+    "cumulative_used_after_run_seconds": 1382.4060000000009,
+    "cumulative_remaining_after_run_seconds": 20217.593999999997,
+    "timing_scope": "Chargeincludes bootstrap/import/failure work. Worker UTCbodytimestamps are not fullchargedwall; no inference speed comparison."
+  },
+  "no_model_quality_inference": true,
+  "no_good_loaded_state_claim": true,
+  "safe_next_requirements": [
+    "Preserve exactfailed worker/test/admission/terminal receipts and original90-byte archive.",
+    "Prospective successor permits only this exact authorized originalDEV dependency, with negative tests retaining protected/TEST rejection; no broad data wildcard.",
+    "Exercise actual parent-to-worker source/data premodel path in CPU fixtures so checksum matching alone cannot masquerade as admissible closure.",
+    "Version/review corrected source/config/admission and unchangedscientificmatrix; never modify frozen endpoint/tests/oldrawresults to obtain success.",
+    "Coordinator prepares concrete additional-attempt grant/template and anti-replay guards; actualdirecthumanapproval required before a retry because initialinfrastructure retry is consumed.",
+    "Fresh source/resource/lock/fullforecast/nativequal gates remain required; no worker restart by this auditor."
+  ],
+  "native_model_calls_by_auditor": 0,
+  "optimizer_calls_by_auditor": 0,
+  "frozen_code_or_endpoint_edits": 0,
+  "sources": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001\\admission.json",
+      "sha256": "b98fcb66c1b1b00eabf2ac1e210c56aabf752b3f9ed82878c128f362c6d790f6",
+      "bytes": 18747
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001\\review.json",
+      "sha256": "77238613a87ceb0ca40c94934ed419c56a73ba63c7afdde9aca3b2c33b9f5bc4",
+      "bytes": 20905
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001\\source_manifest.json",
+      "sha256": "e9886de68a9aa584de4ecc24165b370a10e064ee13d2526399ac4835a9b62437",
+      "bytes": 278478
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001\\terminal_receipt.json",
+      "sha256": "fe48534f36f72319f8e45f9891f7c5164f1108e282cae9ff9fd82a33a1745e14",
+      "bytes": 1510
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001\\resources.jsonl",
+      "sha256": "866f7fc635144292ad79c3964851533a6578ece099e1a078f520a966783cc28c",
+      "bytes": 1721
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-causal-replay-001\\result\\receipt.json",
+      "sha256": "1991eb56b44e3b6608db1065036e04d9179b5ccc360f5521d3be1f5d96e60438",
+      "bytes": 1678
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\cpu_causal_replay_v2_final\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\cpu_causal_replay_native.py",
+      "sha256": "61e74ebfd006cda12c38a67686d7329814fdd2dcd49ede09fd8f23ae9d80b9c4",
+      "bytes": 32601
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\cpu_causal_replay_v2_final\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\tests\\test_cpu_causal_replay_native.py",
+      "sha256": "095a7864191f221b31ecc7be74ba17445113b58a22408e7275115df730e5bfcf",
+      "bytes": 8022
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\cpu_causal_replay_analysis.py",
+      "sha256": "8e6c156b8da639feec2732a177df0da04d19bd9af1590e533f875bacb702359e",
+      "bytes": 44563
+    }
+  ],
+  "report_md_sha256": "67088d36926e09ae9c547474b64ed57a7af0029a26d09994dc56d7b10623858a"
+}

@@ -1,0 +1,182 @@
+{
+  "schema": "v3_passive_probe_dispatch_review_v3",
+  "created_utc": "2026-10-05T21:40:16.128922+00:00",
+  "status": "PASS_PASSIVE_PROBE_FP32_DISPATCH",
+  "admission_sha256": "b0b08bb354ce7bc48c760f59a87a7e7d8b8ba432aedddee3e05b55a0f0221131",
+  "study_id": "V3-PASSIVE-PROBE-001",
+  "lane": "GPU_FP32_PASSIVE_INPUT_FEATURE_PROBE",
+  "errors": [],
+  "review_scope": "Exact source/actual admission/dependency/data/numeric-regression review for distinct passive frozen DEV study. Source PASS permits coordinator admission subject to fresh resource and native qualification/complete-forecast gates; no efficacy or human-only authority is manufactured.",
+  "native_calls_by_reviewer": 0,
+  "model_loads_by_reviewer": 0,
+  "GPU_inventory_by_reviewer": 0,
+  "Torch_imported_in_final_gate_process": false,
+  "source_edits_by_reviewer": false,
+  "actual_binding_checks": {
+    "dispatch_files": 96,
+    "all_current_hashes_match": true,
+    "canonical_assets": 10,
+    "all_asset_hashes_match": true,
+    "actual_worker_path_guard_PASS_count": 96,
+    "path_guard_method": "Executed the exact source_closure AST function over the real frozen96 map using only stdlib globals and its exact literal allowlist; no worker/Torch import or model load.",
+    "reader_plan_test_and_numeric_provenance_actual_membership": true,
+    "future_parent_manifest_required": "Exact96 map equality and copied independent review bytes/hash; no fallback allowed.",
+    "exact_scope_and_active_goal_snapshot_match": true,
+    "study_unused_at_review": true,
+    "run_and_shared_lock_absent_at_review": true,
+    "historical_consumed_grants_not_reused": true
+  },
+  "source_review_lineage": {
+    "parent_source_review": "reviews/parent_source_review_002.json",
+    "parent_source_review_sha256": "4e2ae56bd16ca41057239bead3cdbe8b225db22e7aa080f09335d1f49666af27",
+    "worker_source_review": "reviews/worker_source_review_001.json",
+    "worker_source_review_sha256": "20e874750302ccf4b92d71897dc693ff25fb497aa566568610078cbc15ccd3bb",
+    "native_worker_sha256": "c7a433c26c9d7b5d83f54e971fe5d656d8f6edbf047e5442c092b310dd6be914",
+    "observer_sha256": "da6a75376d6984a54396dc91499fa8e797ad3a66d8ff66512b29123b449bdae0",
+    "parent_sha256": "9396b1afd4b61eb5ac87951764ba6a4ed7ee89089656a37e2182468a3c898b60"
+  },
+  "resolved_findings": [
+    {
+      "id": "D01",
+      "disposition": "RESOLVED_BEFORE_NATIVE",
+      "evidence": "Reader completed/parent running host reserve is1GiB, matching unchanged native guard; separate recorded initial host/GPU resources must each be>=6GiB. Regression accepts2GiB running, rejects<1GiB running and rejects2GiB initial."
+    },
+    {
+      "id": "D02",
+      "disposition": "RESOLVED_BEFORE_NATIVE",
+      "evidence": "All raw probability/LSE operands and reconstructed discrepancies retained. Cross-kernel status always UNVERIFIED_CROSS_FP32_KERNEL_COMPARISON with no bound/tolerance/quality gate, no enlarged allowance/clip/drop/repair. Tests replay exact source-bound151936CPU scalar records at offsets0/100/1000."
+    },
+    {
+      "id": "TIE_IDENTITY",
+      "disposition": "RESOLVED_BEFORE_NATIVE",
+      "evidence": "Readout validates legal IDs, raw maximum/margin values and unique-maximum identity only when strict top2 gap proves uniqueness. Arbitrary tied topk/rival ID permutations remain value-consistent, including unique UNKNOWN maximum with unproven rival uniqueness. Exact numeric provenance distinguishes real kernel records from analytic tie-order fixture."
+    }
+  ],
+  "reader_AST_change_review": {
+    "modified_existing_functions": [
+      "validate_readout",
+      "validate_packet",
+      "load_bundle",
+      "analyze"
+    ],
+    "added_function": "readout_numeric_diagnostics",
+    "removed_functions": [],
+    "unchanged": "Export projection, raw-statistics relations, forward/task/qualification/source/state/gradient/count/cache/failure/chronology/ledger gates and descriptive group/parent/family summarize function unchanged.",
+    "explicit_new_binding": "Reader loads only exactv3 admission and requires review003 exact path/copied bytes; scientific worker/observer/parent unchanged.",
+    "raw_numeric_provenance_sha256": "981f012a0e985a5d8987ff49f19fe3c0ff50cc5505e0619c7010d2046db3f85e"
+  },
+  "independent_reader_tests": {
+    "command": [
+      "C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe",
+      "-B",
+      "-m",
+      "unittest",
+      "experiments.rineya_taps_adaptive_recurrence_campaign_v2.quality_pattern_v3.tests.test_probe_analysis",
+      "-q"
+    ],
+    "passed": 16,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 1.306,
+    "exit_code": 0,
+    "stdout": "Ran16 tests in1.306s; OK",
+    "model_Torch_tokenizer_imports": 0,
+    "key_checks": [
+      "Actual v3 reader/plan/export membership, no fallback, incomplete/malformed=>null primary.",
+      "Label/metadata/teacher contamination, stage order/common ordinary identity, zero/null/nonfinite ratios.",
+      "Raw margins/ID range/unique maxima and valid tie cases.",
+      "Exact preserved FP32 synthetic records/descriptive cross-kernel status.",
+      "Running1GiB versus initial6GiB resources.",
+      "State/parity/cache/forced partial/full forecast/ledger negatives."
+    ]
+  },
+  "count_contract": {
+    "cases": 192,
+    "parents": 96,
+    "task_full_forwards": 384,
+    "qualification_smoke_full_attempts": 56,
+    "qualification_max_full_attempts": 9,
+    "qualification_full_attempts": 65,
+    "qualification_completed_forwards": 64,
+    "qualification_API_attempts": 67,
+    "cache_rejections": 2,
+    "expected_partial": 1,
+    "model_API_attempts": 451,
+    "full_forward_attempts": 449,
+    "completed_forwards": 448,
+    "state_adjoints": 0,
+    "task_readouts": 384,
+    "task_feature_events": 576,
+    "maximum_prefix_tokens": 357,
+    "qualification_completed_prefix_positions": 4921,
+    "task_completed_prefix_positions": 49216,
+    "completed_prefix_positions": 54137
+  },
+  "data_scope": {
+    "DEV_cases": 192,
+    "related_parents": 96,
+    "input_positions_per_arm": 24608,
+    "maximum_input_tokens": 232,
+    "prompt_only_exact_schema": true,
+    "online_target_status_metadata": false,
+    "historical_correctness_parent_family_join": "Offline after terminal native gates only; explicitly pinned historical artifacts are not native-qualified new task inputs.",
+    "exposed_selection_surface": true,
+    "old_validation_used_as_confirmation": false,
+    "generated_quality_or_fitted_gate_claim": false
+  },
+  "resource_budget": {
+    "parent_seconds": 900,
+    "body_seconds": 780,
+    "internal_reserve_seconds": 120,
+    "global_finalization_reserve_seconds": 1800,
+    "native_seconds_used_at_review": 3581.232999999999,
+    "native_seconds_remaining": 18018.767,
+    "budget_full900_plus_global1800_fits": true,
+    "parent_host_floor_bytes": 7516192768,
+    "worker_preload_host_floor_bytes": 6442450944,
+    "worker_RSS_ceiling_bytes": 6442450944,
+    "GPU_initial_free_floor_bytes": 6442450944,
+    "GPU_allocated_ceiling_bytes": 5368709120,
+    "GPU_global_free_reserve_bytes": 1073741824,
+    "running_host_reserve_bytes": 1073741824,
+    "retry_available": false
+  },
+  "required_native_gates_not_claimed_pass": [
+    "Fresh coordinator readiness including current host/GPU UUID/driver/floors/disk/budget/lock; one sole supervised foreground Job.",
+    "Native exact intact/unobserved/observed K0 and inherited/unobserved/observed unit/restored parity at all8 SMOKE andmax357.",
+    "Forced exception/hook/method restoration, both precompute cache rejections, L0-L2 anchors and original CUDA masks/positions/replay conditioning.",
+    "Exact local custom class/head/FP32 assets/residentstateb23, frozen/eval/gradNONE and source hashes before/after qualification and final.",
+    "Fresh complete384-task-forward forecast from actual warm qualification times at1.5factor, elapsed startup charged, plus120 reserve inside900 before first task row.",
+    "All451API/449fullattempt/448complete/54137positions/384readouts/576features complete and terminal/ledger/resource/source/state joins before any offline primary association."
+  ],
+  "limitations": [
+    "Source/fixture PASS does not establish native mechanics, quality gains, an online guard, semantic answerability, prediction causality, preservation or speed.",
+    "Ordinary movement is pre-extra; unit proposal is already spent; readout confidence needs actual suffix/head compute and is not a free pre-extra feature.",
+    "Probability/LSE cross-expression error bounds and tied rival uniqueness remain explicitly unverified where raw evidence cannot establish them.",
+    "All192 DEV and historical VAL are exposed; no independent source confirmation or fitted threshold occurs.",
+    "No automatic retry, older single-attempt allowance reuse, training, protected data, dtype/cache/depth/operator/readout expansion or model mutation is authorized by this receipt."
+  ],
+  "bindings": {
+    "probe_admission_v3.json": "b0b08bb354ce7bc48c760f59a87a7e7d8b8ba432aedddee3e05b55a0f0221131",
+    "probe_analysis.py": "2d6c8e598df0a0caab29875ff95cecfb6b7eef1e8eff595efabb3322ebf70a27",
+    "tests/test_probe_analysis.py": "3dc5cf3e2b2a5904cb3625c7f1a7159edd1d8853460bfce870ffd66191b16dc2",
+    "PROBE_ANALYSIS_PLAN_001.md": "b98df0ca083cdb182f7b807c665450b261fb080267d13d826472a7f0e9742dd8",
+    "probe_native.py": "c7a433c26c9d7b5d83f54e971fe5d656d8f6edbf047e5442c092b310dd6be914",
+    "observer.py": "da6a75376d6984a54396dc91499fa8e797ad3a66d8ff66512b29123b449bdae0",
+    "probe_supervisor.py": "9396b1afd4b61eb5ac87951764ba6a4ed7ee89089656a37e2182468a3c898b60",
+    "probe_entry.py": "4d1c66344af58b2bab296f8693f3a30a8a721beca57061e216c26dc2fafdb9fc",
+    "authority.py": "a5a007c2fea3a6c63a2f2b722c91948c8675c6a8d4b50b02a2cb51d39a52b516",
+    "ACTIVE_GOAL_SCOPE_001.json": "4ea9970d9a948895861d2f182b6cffa9f7e50b1be353ced48ecce55f59c633b6",
+    "ACTIVE_GOAL_SNAPSHOT_001.json": "a69c692c237a579ec92061d07cb1012d0f05be84bf3c39c13941e2a8d492297c",
+    "PASSIVE_PROBE_REGISTRATION_001.md": "e5716814632b9fd7ad145ef5a9c40aaee434fdc35b9d773aef1095ac8aa59cbe",
+    "reviews/reader_numeric_probe_001.json": "981f012a0e985a5d8987ff49f19fe3c0ff50cc5505e0619c7010d2046db3f85e",
+    "reviews/parent_source_review_002.json": "4e2ae56bd16ca41057239bead3cdbe8b225db22e7aa080f09335d1f49666af27",
+    "reviews/worker_source_review_001.json": "20e874750302ccf4b92d71897dc693ff25fb497aa566568610078cbc15ccd3bb",
+    "reviews/probe_dispatch_receipt_001.json": "8a037b58bf5717049743b9daea2c5fe78b48c235e892074f761e3aab4cf7690a",
+    "data/dev_prefix_probe_001/MANIFEST.json": "f35dc01c54154c51fa6284807245767f01282128c23a09307a2485483951530b",
+    "data/dev_prefix_probe_001/DEVELOPMENT_BANK.json": "681a3e77e3d797e2faebcff3971dbb365a4479ebdac017bf3dcfcb48081ba03f",
+    "data/dev_prefix_probe_001/DEVELOPMENT_TOKEN_BINDING.json": "c34948026ebaf332111ce635a473b1489ef0d2f3932100f9e0d3cdd6a08ce6d2"
+  },
+  "review_md_sha256": "13bbc08f1a0926ea10fb18c4af561d35dca074e55c06197a81698d25fa669e27"
+}

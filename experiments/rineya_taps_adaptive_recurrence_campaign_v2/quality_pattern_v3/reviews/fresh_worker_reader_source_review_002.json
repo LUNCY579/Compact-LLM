@@ -1,0 +1,116 @@
+{
+  "V2_interfaces": {
+    "builder_output": "fresh_admission_v2.json",
+    "builder_review_receipt": "reviews/fresh_dispatch_review_002.json",
+    "builder_source_review": "reviews/fresh_worker_reader_source_review_002.json",
+    "copied_packet": "Exact V2 admission SHA and copied review SHA/PASS/admissionSHA checks remain; prior001/generic/outside review names are refused by reader helper.",
+    "new_admission_created_by_reviewer": false,
+    "producer_errors": [],
+    "reader_admission": "fresh_admission_v2.json",
+    "reader_exact_review": "reviews/fresh_dispatch_review_002.json",
+    "scope_and_readiness": "exactV2 admission only; identical syntheticV1 packet rejected by exact path guard",
+    "source_review_producer_enum": "PASS_FRESH_WORKER_READER_SOURCE_ONLY_NOT_NATIVE_PERMISSION"
+  },
+  "author_role_exclusion": "Reviewer authored bank/verifier/release gate; their independence remains excluded and peer550 source acceptance is inherited only through unchanged prior review. No actual fresh labels/outcomes inspected or scored.",
+  "candidate_source_edits_by_reviewer": false,
+  "created_utc": "2026-10-06T03:37:32.125788+00:00",
+  "errors": [],
+  "independent_targeted_checks": {
+    "author_affected_fixtures": 9,
+    "command": "borrowed exact Python -B -m pytest -q -p no:cacheprovider; explicitnewV3-local temp_forecast003/JUnit; -k forecast/review_path/full_raw_matrix/consumer/builder/scope_exact",
+    "deselected_unaffected": 8,
+    "errors": 0,
+    "failures": 0,
+    "proof_hashes": {
+      "reviews/fresh_worker_reader_check_001/forecast_v2_regressions_003.xml": "403a237c8aacde657d3375c1801d461ae2c6aa315b10515524f8f54cf580482c",
+      "reviews/fresh_worker_reader_check_001/reader_d07_to_a986_002.diff": "fc3eddd983a8cb573bd24a2e39da9f058993fb98ef9df926268e72a26e8f8d05",
+      "reviews/fresh_worker_reader_check_001/test_forecast_v2_regression_003.py": "61ae7a7f73e2ef737acd2c23a45650dee3dde8f76c5b5312b6c359a35de4c980"
+    },
+    "reviewer_added": 8,
+    "scope": "Synthetic rawfixture, mocked source/review/runtime and path guards only; no real readiness/GPU/Job/model/tokenizer/admission/corpus access.",
+    "seconds": 6.6,
+    "skips": 0,
+    "tests": 17
+  },
+  "models_GPU_actual_tokenizers_candidate_scores_protected_data_calls": 0,
+  "native_permission": false,
+  "new_source_hashes": {
+    "fresh_analysis.py": "a986b3affad1e9f1084b45c63fe2ce4c0927fc3f2fa52ab070fe07c2ae1988aa",
+    "fresh_readiness.py": "b9966132fec1fd1ca3d3bcc1a835a52174c02a55d9d87aa0dddca338e12e9182",
+    "fresh_scope.py": "22e08e1c342fcd068544d642952d7448c0b7d9de9fe659c8d3231e3eb47e634e",
+    "prepare_fresh_admission.py": "8a9f6a16f34171f77e49ff7acd429c8f1b05908c524edc76d7e1975cb8ba58ff",
+    "tests/test_fresh_analysis.py": "6b593e6a5cfd98537fc1179067e3bfcba7540a7555721d5409e8aee6000fa9e2"
+  },
+  "preserved_inputs": {
+    "V1_admission": "fresh_admission_v1.json",
+    "V1_sha256": "cca385584023b45211a2a482885306e3505c59bd0b59b22b5f246282a6fe3b90",
+    "prior_reader_sha256": "d07a99c3a8de65a09b5a405f6bc253f4859574c231f13a057a96790eaf9b45de",
+    "prior_reader_snapshot": "reviews/fresh_worker_reader_check_001/source_snapshot_final_001/fresh_analysis.py",
+    "prior_test_sha256": "18698dd0068e393b80960367474c5b49332b6d3188af07110482b939e4c26eaf",
+    "prior_test_snapshot": "reviews/fresh_worker_reader_check_001/source_snapshot_final_001/tests/test_fresh_analysis.py"
+  },
+  "prior_source_review": {
+    "path": "reviews/fresh_worker_reader_source_review_001.json",
+    "sha256": "9b2a8c351e666ea0239d05bfbcecee32a4853bcd27bf9a05018ac736a90588fa",
+    "source_epoch": "d07/1869 +V1; historical, not current reader qualification"
+  },
+  "relied_on_checks": [
+    {
+      "attribution": "Native engineer independently tested ROOT parent source with CPU mocks; author of reader is not independent for reader, but is independent of ROOT parent. Reused scoped7checks, not rerun here; current source/test hashes verified. Actual Job/CUDA containment still pending.",
+      "path": "audits/fresh_supervisor_teardown_checks_001.json",
+      "sha256": "ff3a3c871983e400431bfb71520c4e75e03f3bad5f51376d8ffa8931d2059632",
+      "source_sha256": "3e81f147c69ec5d4abe424c143be44e9891ba811622fc93eed4d185801615c4a",
+      "status": "PASS_MOCKED_FAILURE_ACCOUNTING_AND_LOCK_TEARDOWN_WITH_LIMITS",
+      "tests": 7
+    },
+    {
+      "attribution": "Earlier49CPU checks and source inspection reused only for unchanged reader scientific/statistical branches and worker/adapter/helper/plan; superseded forecast/V1 parts explicitly replaced.",
+      "path": "reviews/fresh_worker_reader_source_review_001.json",
+      "sha256": "9b2a8c351e666ea0239d05bfbcecee32a4853bcd27bf9a05018ac736a90588fa"
+    }
+  ],
+  "remaining_required_gates": [
+    "Freeze exact currentV2 admission and independent full-packet PASS_FRESH_K01_FP32_DISPATCH bound to it; oldV1 freeze/review cannot authorize current reader.",
+    "Coordinator actual contained CUDAFP32 qualification/full current-source/data/runtime/assets/state/resource/complete forecast, then sole complete raw matrix.",
+    "Independent terminal/raw/cost/quality recomputation before any efficacy/preservation/source/speed conclusion."
+  ],
+  "resolved_findings": [
+    {
+      "fix": "All six forecast quantities finite/nonnegative; observed warm forward strictlypositive;33744*1.5*M forward,4104*per-row nonforward and total sums reconciled; fixedcaps/factor/reserve/deadline remain exact.",
+      "id": "WR03",
+      "identified_by": "Independent full-packet peer before any model attempt",
+      "numeric_scope": "math.isclose rel1e-12/abs1e-9 only reconciles ordinary FP64 arithmetic/JSON formula ordering; no FP32 kernel identity tolerance or threshold/scientific adjustment.",
+      "prior_bug": "d07 raw_gate required forecast durations finite but allowed negative remaining_forward/nonforward, which could discount a declared full-run forecast.",
+      "validation": "17 targeted CPU checks including combined negative-forward/nonforward witness, individual negative durations, formula/sum/factor/reserve failures, valid complete synthetic456x9raw proof and exactV2 consumer paths."
+    }
+  ],
+  "schema": "v3_independent_fresh_worker_reader_source_review_addendum_v2",
+  "scientific_contract": {
+    "bootstrap": "20k Random730217/indices499,19499 conditional authored-parent resampling; unchanged",
+    "comparator": "UNIT_PRIOR_FROZEN_ALPHA1",
+    "items": 456,
+    "model_API_cap": 34596,
+    "no_policy_count_margin_threshold_or_fitted_candidate_changes": true,
+    "practical_margin": 0.05,
+    "preservation": "all observed K0/unit correct-case and new endpoint harms zero; family/copy-panel restrictions unchanged",
+    "primary": "EVIDENCE_CONSISTENCY_GUARD",
+    "qualification_API_cap": 852,
+    "task_API_cap": 33744,
+    "task_rows": 4104
+  },
+  "scope": "Bounded other-author reader forecast-duration/formula fix and V2 producer-consumer paths only. Reuses prior source001 review for unchanged worker/adapter/scientific/statistical behavior; no broader raw-history/corpus/model analysis.",
+  "status": "PASS_FRESH_WORKER_READER_SOURCE_ONLY_NOT_NATIVE_PERMISSION",
+  "unchanged_source_hashes_rechecked": {
+    "FRESH_ANALYSIS_PLAN_DRAFT_001.md": "811dcfdd8d257e295382bfa90e92b39fd097f15c3b43e44cd34d2e04e270e1b2",
+    "FRESH_NATIVE_DESIGN_DRAFT_002.md": "417283148f5843a0ef7be99627b45f75465cbba9f5b00c74bffbcf48684641e3",
+    "fresh_entry.py": "62f92f9aaa46d066b45b3e36b397fb60d6af15ad2335b005d4309e695d7bde73",
+    "fresh_native.py": "52262b1ab7639ac0e564746af3bd0d4065b3c7cdcf57b7549569f308884428de",
+    "observer.py": "da6a75376d6984a54396dc91499fa8e797ad3a66d8ff66512b29123b449bdae0",
+    "opposed_gate_generation.py": "b0ac061de15808a551fccbda3a3b3b1c8ed539de33ca47dbc865598857e660f1",
+    "opposed_gate_policy.py": "0d57ad3284d51cbf959c8c8fd96489f00374fc52be35b4dbcc68850dcb06cd6e",
+    "probe_native.py": "c7a433c26c9d7b5d83f54e971fe5d656d8f6edbf047e5442c092b310dd6be914",
+    "tests/test_fresh_native.py": "12cb34f55e85d9df68df140afee8c432ac637afdc67814e023e14e0d43fb29e0",
+    "tests/test_opposed_gate_generation.py": "4eafef960c30dbe8aba2882e3df7609a67186a9ff2df16e9f45ae092c73813ce"
+  },
+  "unresolved_source_findings": []
+}

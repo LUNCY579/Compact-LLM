@@ -1,0 +1,11 @@
+# Passive-probe exact v3 dispatch review
+
+PASS_PASSIVE_PROBE_FP32_DISPATCH for admission b0b08bb354ce7bc48c760f59a87a7e7d8b8ba432aedddee3e05b55a0f0221131. All96 actual frozen files, ten canonical assets and the exact worker path predicate pass. Reader/plan/tests/numeric fixture are actual map members; no synthetic membership or fallback substitutes for them. The new active-goal scope is bound, the distinct study is unused, and the native run/lock are absent at this check.
+
+Both reader findings are resolved prospectively. Running host reserve is the unchanged1GiB; a separate initial6GiB host/GPU proof remains required. Cross-kernel probability/LSE comparisons retain raw values and all descriptive gaps under UNVERIFIED status, with no enlarged tolerance, clipping or repaired/dropped row. Tie checks retain legal IDs/raw maxima; only genuinely unique maxima imply unique ID equality. The exact CPU numeric artifact distinguishes actual scalar records from its labelled analytic tie-order variant.
+
+Independent standard-library suite passes16 tests in1.306seconds, zero failures/errors/skips and no Torch/model/tokenizer import. AST comparison shows only validate_readout, validate_packet, load_bundle and analyze changed, plus one descriptive numeric-diagnostics function; the native worker/observer/parent and scientific summarize/count/source/state/cache/gradient/chronology/forecast gates remain unchanged. Old blocked receipt and unlaunched freezes stay preserved.
+
+The unchanged study requires192DEV/96related parents,384task forwards/readouts,576features and total451API/449attempt/448complete/54,137positions. No generation, adjoints, threshold fit, routing or quality gain is tested.900parent/780body/120internal plus1,800global reserve fits the remaining18,018.767seconds; no retry remains.
+
+This is a source dispatch review, not native qualification or new human authority. Root must freshly check resources and then qualify every SMOKE/max357 identity, passive output invariance, masks/positions/cache/one-shot/restoration, original head/assets/FP32/frozenstate/gradNONE and complete conservative forecast before any task measurements. The reader keeps an incomplete primary null. Later historical DEV joins are exposed descriptive associations, not confirmation, efficacy or a deployable gate.

@@ -1,0 +1,43 @@
+{
+  "command": [
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\tests\\test_cpu_causal_replay_analysis_fp32.py::test_unchanged_numerical_definitions_are_ast_identical_to_frozen_checker",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\tests\\test_cpu_causal_replay_analysis_fp32.py::test_f32_logsumexp_subtraction_can_reverse_real_ordering_without_probability_change",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\tests\\test_cpu_causal_replay_analysis_fp32.py::test_ordering_discrepancy_is_general_unverified_metadata_without_scalar_repair",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\tests\\test_cpu_causal_replay_analysis_fp32.py::test_precision_caveat_never_excuses_missing_or_invalid_registered_proof",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\tests\\test_cpu_causal_replay_analysis_fp32.py::test_registered_primary_and_EOS_endpoints_equal_frozen_checker_when_ordering_not_rejected",
+    "--basetemp",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\fp32-correction-tests-001\\t",
+    "--junitxml",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\fp32-correction-tests-001\\junit.xml"
+  ],
+  "exit_code": 0,
+  "elapsed_wall_seconds": 3.0672566000002917,
+  "source_before": {
+    "cpu_causal_replay_analysis.py": "bfe6a0405d0acb4a9217438da04ece00db8a53604c2a6e8573fbc46c29d43253",
+    "tests/test_cpu_causal_replay_analysis.py": "ae15b60e3550fa2b36e5d45e3f3491ed13aeac70185033ee9faf9d8b7dc38a10",
+    "CPU_CAUSAL_REPLAY_ANALYSIS_PLAN_001.md": "6282ac717afc6575587d6c5615518441038d7c8db2f54fca7eb562f980cb6a11",
+    "cpu_causal_replay_analysis_fp32.py": "5a62452a6991b60fbf1562d9554b1cb780432e194bd95c14c7191872384e74a1",
+    "tests/test_cpu_causal_replay_analysis_fp32.py": "6b33b5e9be529fc2ca94653c2cb6150b163f5aae8a5eb76a4797274200f9f023",
+    "CPU_CAUSAL_REPLAY_ANALYZER_FP32_CORRECTION_001.md": "dea6d23530c08ac826a8f4c6e456e43b0b673e617360e4160ddc32130237df71"
+  },
+  "source_after": {
+    "cpu_causal_replay_analysis.py": "bfe6a0405d0acb4a9217438da04ece00db8a53604c2a6e8573fbc46c29d43253",
+    "tests/test_cpu_causal_replay_analysis.py": "ae15b60e3550fa2b36e5d45e3f3491ed13aeac70185033ee9faf9d8b7dc38a10",
+    "CPU_CAUSAL_REPLAY_ANALYSIS_PLAN_001.md": "6282ac717afc6575587d6c5615518441038d7c8db2f54fca7eb562f980cb6a11",
+    "cpu_causal_replay_analysis_fp32.py": "5a62452a6991b60fbf1562d9554b1cb780432e194bd95c14c7191872384e74a1",
+    "tests/test_cpu_causal_replay_analysis_fp32.py": "6b33b5e9be529fc2ca94653c2cb6150b163f5aae8a5eb76a4797274200f9f023",
+    "CPU_CAUSAL_REPLAY_ANALYZER_FP32_CORRECTION_001.md": "dea6d23530c08ac826a8f4c6e456e43b0b673e617360e4160ddc32130237df71"
+  },
+  "source_stable": true,
+  "native_frozen97_current_source_mismatches": [],
+  "native_model_calls": 0,
+  "only_stdlib_synthetic_fixture_tests": true,
+  "new_test_source_written": false
+}

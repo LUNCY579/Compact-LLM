@@ -1,0 +1,75 @@
+{
+  "status": "PROMPT_ONLY_PARTIAL_POSITIVE_CONTROL_AUDIT",
+  "native_model_loads": 0,
+  "native_model_worker_seconds": 0,
+  "new_task_bank": false,
+  "human_review": "NOT_REVIEWED",
+  "scorer_sha256": "5a22e1c1ff7b0a56623931c0782f81dd2b3a9df83ccfe77ce3724d37cf320086",
+  "input_audit_sha256": "f4b5b21638bc2d8a8da4fac707072208d3a8a1aa2f1918c7574a326cc996bf7d",
+  "binding_sha256": "82590a8f76eca27e7b15694b724123477e21ae0cc38ed2b33b56641ab9e70f26",
+  "solver_source_sha256": "fc93dbaec6b275684f43fa5be088fb07adefe3f5e2b9b4ed448f275b41f3a48c",
+  "runtime": {
+    "interpreter": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+    "python": "3.11.15"
+  },
+  "self_checks": {
+    "passed": 7,
+    "kind": "CPU_APPARATUS_FIXTURES_NOT_NEW_TASK_BANK"
+  },
+  "counts": {
+    "DEV": {
+      "items": 16,
+      "applicable": 13,
+      "solver_correct": 13
+    },
+    "SMOKE": {
+      "items": 8,
+      "applicable": 5,
+      "solver_correct": 5
+    }
+  },
+  "blind_floors": {
+    "DEV": {
+      "denominator": 16,
+      "correct_counts": {
+        "copy_full_prompt": 3.0,
+        "context_first_number": 1.0,
+        "context_last_number": 0.0,
+        "context_last_capitalized_name": 2.0,
+        "context_unique_marked_target": 2.0,
+        "context_first_code": 1.0,
+        "copy_last_answer_literal": 1.0,
+        "constant_''": 0.0,
+        "constant_'YES'": 1.0,
+        "constant_'NO'": 0.0,
+        "constant_'UNKNOWN'": 1.0,
+        "constant_'0'": 0.0,
+        "constant_'1'": 0.0
+      },
+      "best_predefined_single_baseline": 3.0,
+      "selection": "retrospective diagnostic floor only; no per-item oracle mixing"
+    },
+    "SMOKE": {
+      "denominator": 8,
+      "correct_counts": {
+        "copy_full_prompt": 2.0,
+        "context_first_number": 0.0,
+        "context_last_number": 0.0,
+        "context_last_capitalized_name": 1.0,
+        "context_unique_marked_target": 0.0,
+        "context_first_code": 0.0,
+        "copy_last_answer_literal": 1.0,
+        "constant_''": 0.0,
+        "constant_'YES'": 0.0,
+        "constant_'NO'": 0.0,
+        "constant_'UNKNOWN'": 1.0,
+        "constant_'0'": 0.0,
+        "constant_'1'": 0.0
+      },
+      "best_predefined_single_baseline": 2.0,
+      "selection": "retrospective diagnostic floor only; no per-item oracle mixing"
+    }
+  },
+  "answerability_claim": "Only recognized solver cases; factual/language NOT_APPLICABLE; no all-bank claim",
+  "cluster_caution": "three subtraction paraphrases share operands; two archival cases share target/value; not independent evidence"
+}

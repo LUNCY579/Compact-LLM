@@ -1,0 +1,15 @@
+# Fresh worker and reader independent source review
+
+PASS_FRESH_WORKER_READER_SOURCE_ONLY_NOT_NATIVE_PERMISSION. No unresolved source findings remain. The held worker52262b1a, adapterb0ac061d and revised terminal readerd07a99c3 satisfy the prospective scientific/source/count contracts; their exact source/test snapshots and hashes are in the JSON receipt.
+
+49 CPU checks passed:29 worker/adapter tests on analytic Torch CPU hosts and20 synthetic stdlib reader checks, including11 added independent regressions. No actual model, CUDA, tokenizer, scientific fresh-case/outcome or protected-data access occurred. No candidate source was edited by this reviewer.
+
+Two reader gaps were reproduced on old7d303e8c with synthetic full raw records: missing admitted prompt/token joins and invalid clock/resource values. The owner preserved old7d/eacc source/test bytes, then fixed both without changing the primary or analysis plan. The revised reader rejoins the exact five frozen prompt/token files and ordered456-item runtime projection before labels, rejects nonfinite/negative/disordered proof clocks and costs, and leaves primary NULL on failed proof. Original defect witnesses remain preserved, separate from current passing regressions.
+
+The conservative physical budget is852 qualification plus33744 task calls=34596,456items*9paths=4104rows. Fresh first67 mechanics calls do not reuse a consumed passive grant. Every live confidence pilot, chosen original-prefix forward and own continuation is counted. Native residentstate/assets/head/anchors/cache/fullparity/resource/forecast assertions remain future execution gates.
+
+The fixed guard needs at least5pp over frozenunit and a positive lower conditional95% endpoint from20k stratified parent draws. All observed A0/unit correct-case and new format/unsupported/falseUNKNOWN harms must be zero; family counts and copy-panel retention must also pass. Secondary policies cannot replace primary. Conditional authored-world uncertainty, visible-copy/full-solver floors and instrumented timing do not establish independent human/source transfer, neural reasoning or production speed.
+
+Scope attribution: earlier ROOT preparation review002/0af0f199 and39CPU checks qualify their historical source epoch; ten other bindings remain unchanged. ROOT changed supervisor68680 to3e81 for teardown accounting after that review. Its source delta was inspected, but current supervisor independent mock and full-packet acceptance remain required and are excluded from this worker/reader PASS. Builder4b758 now consumes this receipt's exact producer enum/errors[]. Peer bank source review55013d23 is reused with its current3hashes rechecked. This reviewer authored the bank/verifier/release gate, so those sources and actual corpus validity are excluded from this receipt's independent claim.
+
+This source review is not native permission. Actual corpus execution acceptance, immutable admission plus independent full-packet dispatch review, actual contained CUDA qualification/full forecast and complete terminal/raw independent recomputation remain required.

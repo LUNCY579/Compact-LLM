@@ -1,0 +1,9 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+_ FreshOpenBankTests.test_no_old_constructor_import_model_or_tokenizer_dependencies _
+experiments\rineya_taps_adaptive_recurrence_campaign_v2\quality_pattern_v3\tests\test_fresh_open_bank.py:209: in test_no_old_constructor_import_model_or_tokenizer_dependencies
+    self.assertFalse((bank.STUDY / "data/fresh_open_replication_001").exists())
+E   AssertionError: True is not false
+=========================== short test summary info ===========================
+FAILED experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/tests/test_fresh_open_bank.py::FreshOpenBankTests::test_no_old_constructor_import_model_or_tokenizer_dependencies
+1 failed in 1.17s
