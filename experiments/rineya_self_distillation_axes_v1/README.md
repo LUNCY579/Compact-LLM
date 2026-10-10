@@ -18,6 +18,16 @@ workspace code is changed here.
 Read [PROTOCOL.md](PROTOCOL.md), [SOURCE_MAP.md](SOURCE_MAP.md), and
 [VERIFICATION.md](VERIFICATION.md) before interpreting results.
 
+## Reviewed publication — 2026-10-09
+
+The additive preparation and its selected evidence are archived in the
+[publication record](publication/2026-10-09/README.md). All **196 CPU fixtures**
+pass on the publication checkout. The 130-test build and controlled results above
+remain historical implementation evidence. Native qualification, teacher
+competence, training benefit and memory fit remain unestablished by this work.
+Published metadata is portable and non-executable; old packet identities require
+a fresh exact proposal and review before any future native phase.
+
 ## What is implemented
 
 | Component | Implemented behavior |
