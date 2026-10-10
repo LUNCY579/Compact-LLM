@@ -1,39 +1,42 @@
 # Centralized Titan 0.6B program
 
 Primary: **Rineya-Titan-Experimental-1.0.0-devfreeze**, 596,049,920 parameters.
-The original verified capability and retention objective remains open.
+The full verified acquisition and retention objective remains open.
 
-The user's laptop RAM revision now has measured support. Exact BF16 loading uses
-a fixed 2 MiB CPU buffer and keeps the model on GPU. Complete unpadded CE512
-mechanics passed eight checks, four disposable adapter updates, bitwise resume
-and unchanged-base verification, with 1.748646 GiB peak process-tree RAM.
-All 5120 prepared TRAIN rows passed actual source/array joins; maximum length
-398 fits this envelope with no target truncation.
+Publication review on 9 October 2026 recovered two completed native runs that
+had not been indexed in the public summaries. The owned 40-row/two-update
+adapter qualifier passed zero-adapter parity, reference gradients, nontrivial
+state/RNG restoration and copied-gradient Adam continuation, with **1.672089 GiB**
+peak process-tree RAM. The fixed-shape four-forward causal diagnostic passed
+all six protected hidden/logit comparisons, with **1.350418 GiB** peak RAM.
+These are bounded mechanics and diagnostic results, not capability gains.
 
-The next capture pilot passed memory checks but failed the fixed raw-model
-likelihood comparison. A bounded diagnostic reproduced the failure and localized
-the difference upstream of the output head; changing that head to FP32 alone
-still fails. This is a numerical blocker, not a finding that Titan needs 7.4 GiB
-free RAM. No DEV collection, capability gain, retention result or E1 production
-training has been claimed. Current best remains unchanged Titan.
+The earlier CE512 trial passed eight checks and four disposable updates at
+1.748646 GiB peak RAM. All 5120 TRAIN rows passed source/array binding; maximum
+length 398 fits the 512-token envelope without truncation. The model loads
+through a fixed 2 MiB CPU buffer and stays on GPU with FP32 rank-8 q/v adapters.
 
-Use the [laptop plan V3](manifests/LAPTOP_EXECUTION_PLAN_V3.json),
-[next experiment](NEXT_EXPERIMENT.md), [runbook](LAPTOP_RUNBOOK.md) and
-[resource policy](RESOURCE_POLICY.md). The plan prioritizes one GPU worker,
-streamed inputs, microbatch 1 and sequential evaluation. It distinguishes the
-measured short CE mechanics from sustained training, which still needs its own
-registered input/accumulation/RSS measurement.
+The original prefix-versus-bulk likelihood comparison still failed. Passing
+fixed-shape causal controls does not prove shape-invariant numerics or qualify
+capture. No DEV baseline, preservation result or production E1 epoch is claimed.
+Current best remains unchanged Titan; CHECK and FINAL remain closed.
 
-Evidence: [CE512 native result](receipts/LAPTOP_NATIVE_STAGE_005_RESULTS.json),
-[TRAIN joins](receipts/train_scope_v1/TRAIN_SCOPE_RECEIPT.json),
-[capture failure](receipts/CAPTURE_SHORT_V1_NATIVE_FAILURE.json), and
-[geometry diagnostic](receipts/CAPTURE_GEOMETRY_D1_NATIVE_RESULT.json).
-The [research ledger](RESEARCH_LEDGER.md) and CSV ledgers retain earlier attempts
-and append actual work. Original 7.4/6 GiB configurations, full-padding failure,
-1024 VRAM failure and prior blocked audits remain historical evidence. Named
-laptop successors change the operational route without rewriting those records.
+Use the [next experiment](NEXT_EXPERIMENT.md), [current laptop plan](manifests/LAPTOP_EXECUTION_PLAN_V3.json),
+[runbook](LAPTOP_RUNBOOK.md), [resource policy](RESOURCE_POLICY.md), and
+[experiment report](CENTRALIZED_EXPERIMENT_REPORT.md). The September 30 blocked audit remains historical; the app has since resumed
+the full goal. This review itself launches no experiment and does not treat
+an old RAM reading as current.
 
-Language grading, native long-context preservation and the current E1 executor
-remain prerequisites. Existing language packets are unassigned diagnostics;
-independent labels, calibrated grader identity, blinding and call/cost budgets are
-required. CHECK/FINAL remain closed. No paid grading or cloud rental is authorized.
+Evidence:
+
+- [Owned native mechanics](receipts/NATIVE_BACKEND_QUAL_V1_NATIVE_RESULT_20261001.json)
+- [Fixed-shape causal diagnostic](receipts/CAPTURE_CAUSAL_WAIT_V2_NATIVE_RESULT_20260930.json)
+- [Earlier CE512 mechanics](receipts/LAPTOP_NATIVE_STAGE_005_RESULTS.json)
+- [TRAIN joins](receipts/train_scope_v1/TRAIN_SCOPE_RECEIPT.json)
+- [Original likelihood failure](receipts/CAPTURE_SHORT_V1_NATIVE_FAILURE.json)
+- [Historical blocked audit](receipts/GOAL_BLOCKED_AUDIT_20260930_V1.json)
+
+Language labels/calibrated grading, native long-context preservation, sustained
+training and current E1 launch binding remain prerequisites. No paid grading or
+cloud rental is authorized. Local checkpoint binaries remain outside Git;
+byte-exact metadata/log copies and their hashes are published.

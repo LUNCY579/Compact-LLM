@@ -31,7 +31,8 @@ the unchanged failed qualifier or treat its memory pass as a capture pass.
 AMENDMENT_016 now has a reviewed four-forward causal diagnostic and fourteen
 passing CPU controls. Its admission window ended with no native invocation as
 available RAM fell below the 3.3125 GiB budget. The controller is terminal;
-run only after real headroom changes. No native causal result exists yet.
+the earlier admission failure is historical. The later causal wait diagnostic
+completed; its indexed native result supersedes that missing-result state.
 
 The shell controller does not need the chat UI to remain open. Closing a desktop
 app is optional and does not guarantee any particular amount of reclaimable RAM;
@@ -71,7 +72,9 @@ The prior admitted worker failed before any model call; the successor's first
 preworker window remained below3.3125 GiB. It is not native-qualified or E1-authorized.
 
 AMENDMENT_021 separately registers the native backend's two-update mechanics
-qualification. Its worker is source only until the physical result passes. Use
+qualification. Its bounded physical result now passed; this does not qualify sustained E1.
+The following historical command is retained for reproducibility, not an
+instruction to rerun the completed scope. Use
 the pinned Python executable and exact registration from a clean committed tree:
 
 ```powershell
@@ -85,3 +88,10 @@ the source tree unchanged during a live run. No native retry is implied by a
 timeout, and no full experiment or evaluation-bank access follows from this
 small mechanics test. Its reference passes and restore reset are counted
 separately from the 40-row native training cursor.
+
+
+Publication review, 9 October 2026: both the owned two-update qualifier and fixed-
+shape causal wait diagnostic passed. See their current result receipts and
+NEXT_EXPERIMENT.md. Preserve the original likelihood failure, closed banks and
+full scientific prerequisites. Do not treat the old blocked audit's RAM reading
+as a current measurement or rerun a completed scope unchanged.

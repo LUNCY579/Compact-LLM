@@ -1,0 +1,497 @@
+{
+  "schema_version": 1,
+  "status": "PASS_REVIEW_PRESERVED_NATIVE_BACKEND_TWO_UPDATE_MECHANICS_ONLY",
+  "reviewed_at_utc": "2026-10-10T03:34:20.970282+00:00",
+  "reviewer": "/root/review_evidence",
+  "producer_commit": "19551ddebc87c93161c303865ce6d0f130de0093",
+  "registration": "configs/NATIVE_BACKEND_QUALIFICATION_V1.json",
+  "registration_pin": {
+    "sha256": "5c48a50b32cb8824d0c01a164b69375c1244a53ea60838abe466b45d882735ae",
+    "bytes": 36949
+  },
+  "raw_config_semantically_equal_to_registration": true,
+  "raw_config_pin": {
+    "sha256": "08e34cf101e74652dddea67fbef751f9f4b4b372f4f1ba07199236d29c9c32d3",
+    "bytes": 31439
+  },
+  "config_serialization_note": "Raw CONFIG.json preserves canonical worker serialization; its byte hash differs from the pretty-printed registered config, while parsed JSON is equal.",
+  "run_time_evidence": {
+    "nominal_source_directory": "native_backend_qual_v1_20260930",
+    "source_supervisor_launch_file_modified_at_utc": "2026-10-01T15:42:46.816267+00:00",
+    "source_result_file_modified_at_utc": "2026-10-01T15:43:18.462487+00:00",
+    "source_supervisor_result_file_modified_at_utc": "2026-10-01T15:43:19.049062+00:00",
+    "limitation": "Actual October 1 observation is inferred from retained source file modification timestamps; the worker result has relative elapsed seconds and no absolute run timestamp. Nominal September 30 directory naming is not asserted as the execution date."
+  },
+  "files": [
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930/adapter_000.envelope.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed/adapter_000.envelope.json",
+      "sha256": "90b0c3e6945a42623e67217308b0af8c3f40e2a17f4becf29d2c8fed673bf1d5",
+      "bytes": 26149,
+      "source_modified_at_utc": "2026-10-01T15:43:02.190684+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930/adapter_001.envelope.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed/adapter_001.envelope.json",
+      "sha256": "f50146dee22aa2552f7bc2e9bbd69246a2b6bdd7c2c250fd465e7afcf0d6efee",
+      "bytes": 70222,
+      "source_modified_at_utc": "2026-10-01T15:43:07.603934+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930/CONFIG.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed/CONFIG.json",
+      "sha256": "08e34cf101e74652dddea67fbef751f9f4b4b372f4f1ba07199236d29c9c32d3",
+      "bytes": 31439,
+      "source_modified_at_utc": "2026-10-01T15:42:47.935041+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930/EVENTS.jsonl",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed/EVENTS.jsonl",
+      "sha256": "0602233859bb52a7931ff92ab36dafb6a6440447dc587e7e7ca62e076dfa748c",
+      "bytes": 345146,
+      "source_modified_at_utc": "2026-10-01T15:43:18.456827+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930/MODEL_RECEIPT.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed/MODEL_RECEIPT.json",
+      "sha256": "ab5a7073d4a4378d24f36c81e9899effb4c8779bde7a5a910be96e1e82e3cb1b",
+      "bytes": 33949,
+      "source_modified_at_utc": "2026-10-01T15:42:58.862456+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930/PARITY_RECEIPT.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed/PARITY_RECEIPT.json",
+      "sha256": "ea9baef4b375727bea32d88a10f0fb775dcaa94c2fb70f400f39ef776180e898",
+      "bytes": 241,
+      "source_modified_at_utc": "2026-10-01T15:43:01.179570+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930/POST_IMPORT_ADMISSION.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed/POST_IMPORT_ADMISSION.json",
+      "sha256": "0961190653876fd8f463b9faa2cbac18fa17a3f59c76f5741e8a0960c7877bdc",
+      "bytes": 435,
+      "source_modified_at_utc": "2026-10-01T15:42:54.615602+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930/QUALIFICATION_RESULT.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed/QUALIFICATION_RESULT.json",
+      "sha256": "405791654eb74a6ea1c61fb51d7918888cf73903bc3005a433a87e4496e29b23",
+      "bytes": 107311,
+      "source_modified_at_utc": "2026-10-01T15:43:18.462487+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930/RUNTIME_RECEIPT.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed/RUNTIME_RECEIPT.json",
+      "sha256": "9665fbbe97e22b28412f4dc7d1418949c7059fe90b124c58c9f9ae861885ce81",
+      "bytes": 963,
+      "source_modified_at_utc": "2026-10-01T15:42:52.413758+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930/SOURCE_RECEIPT.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed/SOURCE_RECEIPT.json",
+      "sha256": "bc659aab9641fce532d6769d4fb2e61e7f073e7fb0d34f7f3e89b3a5802c5b9e",
+      "bytes": 5082,
+      "source_modified_at_utc": "2026-10-01T15:42:47.935041+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930_controller/ADMISSION_RESULT.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed_controller/ADMISSION_RESULT.json",
+      "sha256": "40957a9feefcd21965a9dff2b0bce7d148ad3ca36f69e6a90dfb86fb5a51066f",
+      "bytes": 101,
+      "source_modified_at_utc": "2026-10-01T15:42:46.753688+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930_controller/ADMISSION_SAMPLES.jsonl",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed_controller/ADMISSION_SAMPLES.jsonl",
+      "sha256": "291ab1d7d556e169a53181236b4c30f9c7101ad97e8529b7b800c2fdf6c74faf",
+      "bytes": 187,
+      "source_modified_at_utc": "2026-10-01T15:42:46.753000+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930_supervisor/GO.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed_supervisor/GO.json",
+      "sha256": "e86c0e239c9bbe1bed494cd9ff862f0ce3c1e8f33d96079b37748e187ecc0665",
+      "bytes": 90,
+      "source_modified_at_utc": "2026-10-01T15:42:46.880347+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930_supervisor/LAUNCH.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed_supervisor/LAUNCH.json",
+      "sha256": "58b2d66bb377974faca2719022874f1072494c2492cb41a907fd700fb45825be",
+      "bytes": 5953,
+      "source_modified_at_utc": "2026-10-01T15:42:46.816267+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930_supervisor/stderr.log",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed_supervisor/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "source_modified_at_utc": "2026-10-01T15:42:46.867273+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930_supervisor/stdout.log",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed_supervisor/stdout.log",
+      "sha256": "98de5ccd5c85e475c95a34b317934740091ed12731e613054ee224251e13b9ad",
+      "bytes": 157,
+      "source_modified_at_utc": "2026-10-01T15:43:18.462487+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930_supervisor/SUPERVISOR.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/native_backend_qual_v1_20261001_observed_supervisor/SUPERVISOR.json",
+      "sha256": "12b28b1da4f9d1f195a5b17c1253ed5f288b9eb41913679425d03b8b597ea3d6",
+      "bytes": 252,
+      "source_modified_at_utc": "2026-10-01T15:43:19.049062+00:00",
+      "byte_exact": true
+    }
+  ],
+  "all_copies_byte_exact": true,
+  "local_binary_artifacts": [
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930/adapter_000.pt",
+      "sha256": "ce38b7d50d91a9358ce6956fc5d01932bbb8a84d2c0281a0f45f5ada3c75e580",
+      "bytes": 4636187,
+      "copied_to_tracked_results": false,
+      "local_ignored_binary": true,
+      "metadata_envelope_source": "artifacts/mimo_central/native_backend_qual_v1_20260930/adapter_000.envelope.json"
+    },
+    {
+      "source": "artifacts/mimo_central/native_backend_qual_v1_20260930/adapter_001.pt",
+      "sha256": "4ffea7e794bec61ed857285ee9e36a0e531ce0cdb061dbd047097f95467e4bf4",
+      "bytes": 13902011,
+      "copied_to_tracked_results": false,
+      "local_ignored_binary": true,
+      "metadata_envelope_source": "artifacts/mimo_central/native_backend_qual_v1_20260930/adapter_001.envelope.json"
+    }
+  ],
+  "source_pin_checks": [
+    {
+      "path": "artifacts/mimo_central/e1_plan_seed101_v2/DATA_BINDING.json",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": false,
+      "bytes": 3769403,
+      "sha256": "362a61202f31a1b0002deba2ce01772a37c895cf74bbfe05ae84eb31d95d3b4a"
+    },
+    {
+      "path": "artifacts/mimo_central/e1_plan_seed101_v2/PLAN.json",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": false,
+      "bytes": 1983167,
+      "sha256": "ef67572c7aa4929766b04a2fc1126a7aa97f04ccc3c8a56ea5f2c68370675652"
+    },
+    {
+      "path": "experiments/__init__.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 56,
+      "sha256": "ae8a3a547ecde07f2906643f19574b3596903767b9afa85ac8560d288a3d0bb8"
+    },
+    {
+      "path": "experiments/opallo_native_collector_v1/__init__.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 82,
+      "sha256": "47dd4ddb5f9bd6c60425ec3d8aa24e51e03f9ffc717c13f431abc78f8bb5f15d"
+    },
+    {
+      "path": "experiments/opallo_native_collector_v1/contract.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 14131,
+      "sha256": "bec805005c3732ce6b1fa86ff71c6c5d551dfbadf64db4c54a8d9900cab930fb"
+    },
+    {
+      "path": "experiments/opallo_native_collector_v1/supervisor.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 7791,
+      "sha256": "d31370de4f6b09052fac2f3505fc38a40041e76bd2137435a1f3678f4346a54d"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/AMENDMENT_021.md",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 5181,
+      "sha256": "29df6cbcf0b847701b1fd5739ee6acd36193e9527a02244950c1f9aca852e0bc"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/configs/CAPTURE_GREEDY_SHORT_QUAL_V1.json",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 6986,
+      "sha256": "cab513b8006a8f4212be2e3f8fe1d9862abca96a53ab58ab033165e395a82b27"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/configs/E1_TRAINING_COMPONENTS_V1.json",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 4484,
+      "sha256": "d40669540100f0208e67f856fc70ffbe5e08fbf0d782194a84399a6a8f797f20"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/configs/NATIVE_BACKEND_QUALIFICATION_V1.json",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 36949,
+      "sha256": "5c48a50b32cb8824d0c01a164b69375c1244a53ea60838abe466b45d882735ae"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/manifests/E1_CE512_TRAIN_SCOPE_V1.json",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 9585,
+      "sha256": "951f8278bfe107bad23c927c87db64c75d9b47a83eab0ba3252cad758add3e70"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/receipts/PRIMARY_STUDENT_RECEIPT.json",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 5612,
+      "sha256": "b6cac2bc479cce98be73a08c4264bbf44e60ca689e6231e40952d8b9e5bc6ba1"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/receipts/train_scope_v1/TRAIN_SCOPE_RECEIPT.json",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 8402,
+      "sha256": "03a2331eec0114f81d4631cd5d930082806e200af83774f0463160864512d45f"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/results/e1_train_reader_v1_20260930/SCHEDULED_ROWS.jsonl",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 2765748,
+      "sha256": "8483ddbd19f9cfec8c573cc45d2663b2221d0c2e162cef13a90269e2e0fc8269"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/e1_data.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 10752,
+      "sha256": "c91f170bf1f3230b62adfd496c7d6a6172de966b9bf21becc7bec16c90d2aeb7"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/e1_schedule.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 16412,
+      "sha256": "44051045d5738c9fb5da28c96afba0242b306506e60da9f8a936b8f78a5044eb"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/e1_train_reader.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 30225,
+      "sha256": "dd118645057c0819c49b297f9a00f7148d1e82c6c67d6ec5abc88d82f4fa931c"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/e1_training_accounting.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 9174,
+      "sha256": "da0b9515ec594cf44fe2a1f08de4c1a929b50444f4c330e8fef9a9d7190e0dec"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/laptop_profile.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 6880,
+      "sha256": "2e8c9236aba1d48e222373c7484c353eec717ae176ce9bc108968b74d1b7e196"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/native_backend_contract.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 20250,
+      "sha256": "d92126974c1d442624e20082ad8c9c2c15d16275e932b8ee83fab5147e7edbcc"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/native_training_backend.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 34450,
+      "sha256": "587696b67614bb674efe3e382be5446708c5402d489273c2e04605012f4030f7"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/post_import_admission.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 4379,
+      "sha256": "e471e4b2adb006c9ffc032d3432c62f40e16431f3ff11df24c7389ba4bc287a9"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/qualify_native.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 50315,
+      "sha256": "a0fbbbb67dcb7136270dd01efed16cccffc62b09342863f05d03d845805bf941"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/qualify_native_backend.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 41487,
+      "sha256": "f775b9df35a498886fc37b5a6d84076f82eea61f92b758afc6421dcd6b41809a"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/stream_checkpoint.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 6313,
+      "sha256": "434c62698c2e397048db0d88a7959e34d5b8afb93f90cdf86f2aba852922c67f"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/train_scope.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 33290,
+      "sha256": "7d24b694571a65855021ad5e68ff6c1c66a4e8c278077dc9f8d5241653fbc3ef"
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/tests/test_qualify_native_backend.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "bytes": 12172,
+      "sha256": "7fe8f421e1d183907b06c831e510f970369258da5a3902f67955207c6790051a"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Lib\\site-packages\\transformers\\masking_utils.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": false,
+      "bytes": 60515,
+      "sha256": "7a963feed8173b8265298dd24350c166222ce6b4719442fce48ab414d0478a6a"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Lib\\site-packages\\transformers\\models\\qwen3\\modeling_qwen3.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": false,
+      "bytes": 23067,
+      "sha256": "4b95c371fd26d40c69083dab36ac1eafd8cf82b415a0bb827275097c5ad2305b"
+    }
+  ],
+  "current_frozen_model_asset_hash_checks": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze\\config.json",
+      "sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+      "bytes": 726,
+      "matches_frozen_registration": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze\\tokenizer.json",
+      "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "bytes": 11422654,
+      "matches_frozen_registration": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze\\tokenizer_config.json",
+      "sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "bytes": 9732,
+      "matches_frozen_registration": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze\\generation_config.json",
+      "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+      "bytes": 239,
+      "matches_frozen_registration": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze\\merges.txt",
+      "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "bytes": 1671853,
+      "matches_frozen_registration": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze\\vocab.json",
+      "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+      "bytes": 2776833,
+      "matches_frozen_registration": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Experimental-1.0.0-devfreeze\\model.safetensors",
+      "sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+      "bytes": 1192135064,
+      "matches_frozen_registration": true
+    }
+  ],
+  "native_observations": {
+    "status": "PASS_NATIVE_BACKEND_TWO_UPDATE_MECHANICS_ONLY",
+    "completed_native_rows": 40,
+    "completed_native_updates": 2,
+    "actual_forward_counts": {
+      "forwards": 62,
+      "input_positions": 8326,
+      "supervised_positions": 736
+    },
+    "native_backward_calls": 40,
+    "native_gradient_reset_primitives": 3,
+    "outer_training_gradient_reset_calls": 2,
+    "reference_autograd_calls": 20,
+    "reference_gradient_comparisons": 112,
+    "all_reference_gradients_finite_and_passed": true,
+    "maximum_reference_gradient_absolute_difference": 0.0,
+    "zero_adapter_parity_bitwise": true,
+    "restored_state1_bitwise": true,
+    "copied_gradient_optimizer_continuation_bitwise": true,
+    "state1_checkpoint_cursor": {
+      "rows": 20,
+      "inputs": 2372,
+      "supervised": 212
+    },
+    "mechanical_checkpoint_boundaries": [
+      0,
+      1
+    ],
+    "source_recorded_all_attempts_returned_no_failed_or_pending": true
+  },
+  "resources": {
+    "internal_samples": 313,
+    "maximum_sampled_worker_rss_GiB": 1.6662864685058594,
+    "external_peak_process_tree_rss_bytes": 1795391488,
+    "external_peak_process_tree_rss_GiB": 1.672088623046875,
+    "minimum_sampled_host_available_GiB": 3.859111785888672,
+    "minimum_sampled_gpu_free_GiB": 3.837890625,
+    "peak_gpu_allocated_GiB": 2.5318331718444824,
+    "minimum_sampled_disk_free_GiB": 69.19442367553711,
+    "worker_wall_seconds": 31.438000000000102,
+    "supervisor_wall_seconds": 32.1880000000001,
+    "supervisor_exit_code": 0,
+    "all_registered_recorded_resource_limits_passed": true,
+    "preworker_available_RAM_GiB": [
+      5.506011962890625,
+      5.514278411865234
+    ]
+  },
+  "base_and_assets_validation_scope": "Passing source-bound worker includes backend._verify_base(), full reader/source rechecks, and final frozen model/asset hashes. Review independently rehashes asset files and source pins, but does not deserialize checkpoints or replay native tensor operations.",
+  "scope_limit": "Disposable first 40 actual TRAIN rows, two 20-sequence updates, same-process state-1 restoration and copied-gradient Adam continuation only. No cross-process resume, sustained E1 envelope, capture qualification, acquisition or retention result.",
+  "raw_qualification_flags": {
+    "native_math_qualified": false,
+    "native_resume_qualified": false,
+    "E1_authorized": false,
+    "CHECK_FINAL_access": false
+  },
+  "goal_complete": false,
+  "new_framework_imports": 0,
+  "new_model_calls": 0,
+  "new_optimizer_steps": 0,
+  "historical_receipts_preserved": [
+    "receipts/NATIVE_BACKEND_QUAL_V1_PREWORKER_ADMISSION.json",
+    "receipts/NATIVE_BACKEND_QUAL_V1_ADMISSION_ARCHIVE.json",
+    "receipts/GOAL_BLOCKED_AUDIT_20260930_V1.json"
+  ],
+  "historical_source_path_note": "The nominal controller path was reused after its zero-model timeout archive. September 30 timeout hashes resolve to native_backend_qual_v1_20260930_preworker_window001_archive; this new receipt pins the later admitted controller bytes."
+}

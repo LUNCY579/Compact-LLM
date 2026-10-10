@@ -1,0 +1,24 @@
+............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................F...F..........................................
+======================================================================
+FAIL: test_import_and_helper_calls_preserve_environment_and_never_load_frameworks (experiments.post_training_mimo_centralized_v1.tests.test_train_scope.TrainScopeTests.test_import_and_helper_calls_preserve_environment_and_never_load_frameworks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-post-training-Mimo\experiments\post_training_mimo_centralized_v1\tests\test_train_scope.py", line 297, in test_import_and_helper_calls_preserve_environment_and_never_load_frameworks
+    self.assertFalse(any(name == "torch" or name.startswith("torch.") or ".tokenize_" in name for name in sys.modules))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_manifest_identity_fails_before_any_helper_import (experiments.post_training_mimo_centralized_v1.tests.test_train_scope.TrainScopeTests.test_manifest_identity_fails_before_any_helper_import)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-post-training-Mimo\experiments\post_training_mimo_centralized_v1\tests\test_train_scope.py", line 87, in test_manifest_identity_fails_before_any_helper_import
+    self.assertEqual(report["reasons"][0]["code"], "MANIFEST_IDENTITY")
+AssertionError: 'CPU_RSS_LIMIT' != 'MANIFEST_IDENTITY'
+- CPU_RSS_LIMIT
++ MANIFEST_IDENTITY
+
+
+----------------------------------------------------------------------
+Ran 667 tests in 59.241s
+
+FAILED (failures=2)

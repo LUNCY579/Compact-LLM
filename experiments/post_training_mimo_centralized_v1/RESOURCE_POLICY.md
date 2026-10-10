@@ -44,6 +44,20 @@ change or an independently registered successor, with durable new receipts.
 
 ## Historical policy
 
+Publication review on 9 October 2026 recovered two later native results under
+the unchanged 2 GiB worker cap, 1.25 GiB system reserve and 3.3125 GiB pre-worker
+budget. The owned 40-row/two-update backend qualifier peaked at 1.672089 GiB
+process-tree RAM and 2.531833 GiB CUDA allocation; the four-forward causal wait
+diagnostic peaked at 1.350418 GiB RAM and 1.400038 GiB CUDA allocation. Both used
+the registered 600-second ceiling and passed external containment/resource checks.
+These observations qualify their bounded scopes only; sustained training and
+long-context preservation remain unmeasured. GPU time was not independently
+measured, so wall time is not relabeled as GPU training time.
+
+The lower-RAM review's 1.5 GiB bare-D2 cap and 2.8125 GiB admission budget remain
+a historical proposal, not a registered or physically qualified profile. Its
+smaller cap must not silently replace the existing 2 GiB worker limits.
+
 Original configs retain PRLC minima: available host RAM 7.4 GiB before load,
 6 GiB throughout, GPU 4/0.5 GiB, disk 4 GiB. They and old receipts remain unchanged.
 Named laptop profiles in Amendments 009-016 supersede them only for their explicit

@@ -729,3 +729,42 @@ prospective full budget would be 2.8125 GiB, still above current memory. Record
 this as proposed evidence, not qualified fit; no new source scaffolding is built
 until the smaller scope could actually be admitted. Current reserve, numerical
 tolerances, adapter training profile, closed banks and full goal remain unchanged.
+
+
+## 2026-10-09: publication review recovered two completed native runs
+
+Review found previously unindexed native outputs on source19551dde. The owned
+40-row/two-update qualifier passed112reference-gradient comparisons and bitwise
+parity, repaired state1/RNG and copied-gradient Adam continuation. It consumed
+62forwards/8326input/736supervised forward positions, with2native and1reference
+optimizer updates separately counted. Worker/supervisor wall31.438/32.188seconds,
+externalRSS1.672089GiB and CUDAallocation2.531833GiB. Its Oct1 observation is an
+inference from retained source file mtimes; nominal folder remainsSep30.
+
+The causal wait diagnostic completedSep30 four131-token forwards/524positions;
+all6protected hidden/logit comparisons were bitwise equal. Base/assets remained
+unchanged; two post-import observations admitted the run. Worker/supervisor wall
+33.719/34.579seconds, externalRSS1.350418GiB and CUDApeak1.400038GiB. These controls
+do not prove prefix/full shape invariance or resolve the original likelihood gap.
+
+Two new receipts index35byte-exact metadata/log copies and47verified source/runtime
+pins; local adapter binaries are represented by hash/size only. No further terminal
+native evidence was found after19551dde. Historical timeout/blocked receipts remain
+unchanged, including the original zero-model controller archive. Current overview,
+queue/registry/plan and report now reflect observed scoped passes. The app goal's
+blocked control state is separate; this review does not resume experiments.
+
+Source review found V1 nested-attempt journal failure masking. A separate V2 helper
+retains the original error/pending spans and4newCPU controls pass. Old byte-pinned
+source/config/worker remain unchanged; the observed qualifier's E1 spans are
+nonnested and its loader uses a different guarded journal. No new worker uses V2
+without a fresh registration. Broad review validated688distinctCPU controls:
+combined667had2process-contamination/RSS failures, both resolved in an isolated
+18-control scope run; another21tiny numerical/loaderCPUcontrols passed withCUDA
+hidden. Initial failures and final streams are all retained.
+
+Four untracked dossier-v10 records are preserved with an explicit incomplete,
+unrun archive note: all38declared source members are missing from that localbundle.
+No patch was applied or runtime claim made. Local Windows cacheDBs under literal
+%SystemDrive% are ignored, not published or deleted. Full E1, capture, preservation,
+capability gain and long-context qualification remain open; CHECK/FINAL stayclosed.

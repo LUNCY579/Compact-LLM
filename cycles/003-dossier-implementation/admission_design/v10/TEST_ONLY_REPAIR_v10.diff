@@ -1,0 +1,30 @@
+--- v9/test_effective_metadata_v8.py
++++ v10/test_effective_metadata_v8.py
+@@ -145,7 +145,7 @@
+                     m.concrete_edges(self.changed(fixture, owner, edit))
+         with self.subTest(case='V7-M04'), self.assertRaises((ValueError, exceptions.ValidationError)):
+             m.concrete_edges(self.changed(fixture, core, lambda node: node.update(payload={'fixture_subject': 'RAW_LABEL'})))
++        with self.subTest(case='V7-M05'), self.assertRaises((ValueError, exceptions.ValidationError)):
+-        with self.subTest(case='V7-M05'), self.assertRaises(ValueError):
+             m.concrete_edges(self.changed(fixture, core, lambda node: node['import_evidence']['source_file'].update(kind=CORE, sha256=core['sha256'])))
+ 
+     def test_closed_shapes_and_exact_primitives(self):
+@@ -175,14 +175,16 @@
+ 
+     def test_provenance_parent_and_snapshot(self):
+         fixture, core, adapter, owner = self.tiny(True)
++        traversal_mutation = lambda node: node['import_evidence']['source_file'].update(path='../escape.json')
+         cases = [('V7-M12', adapter, lambda node: node['import_evidence'].update(physical_line_number=2)),
++                 ('V7-M12', adapter, traversal_mutation),
+-                 ('V7-M12', adapter, lambda node: node['import_evidence']['source_file'].update(path='../escape.json')),
+                  ('V7-M12', adapter, lambda node: node['import_evidence'].update(json_pointer='/wrong/adapter')),
+                  ('V7-M13', owner, lambda node: node['payload'].update(author_parent_id='OtherParent')),
+                  ('V7-M14', core, lambda node: node['import_evidence']['snapshot_support'].update(sha256=fixture.backing['receipt']['sha256'])),
+                  ('V7-M20', core, lambda node: node['import_evidence']['source_file'].update(sha256=fixture.backing['contract']['sha256']))]
+         for case, target, edit in cases:
++            expected_exception = (ValueError, exceptions.ValidationError) if case == 'V7-M12' and edit is traversal_mutation else ValueError
++            with self.subTest(case=case), self.assertRaises(expected_exception):
+-            with self.subTest(case=case), self.assertRaises(ValueError):
+                 m.concrete_edges(self.changed(fixture, target, edit))
+ 
+     def test_namespace_aliases_and_complete_inventory(self):

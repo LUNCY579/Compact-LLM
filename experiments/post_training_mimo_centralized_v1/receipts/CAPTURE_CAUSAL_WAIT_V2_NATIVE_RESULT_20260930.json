@@ -1,0 +1,438 @@
+{
+  "schema_version": 1,
+  "status": "PASS_REVIEW_PRESERVED_FIXED_SHAPE_CAUSAL_DIAGNOSTIC_ONLY",
+  "reviewed_at_utc": "2026-10-10T03:35:17.106635+00:00",
+  "reviewer": "/root/review_evidence",
+  "producer_commit": "19551ddebc87c93161c303865ce6d0f130de0093",
+  "registration": "configs/CAPTURE_CAUSAL_DIAGNOSTIC_WAIT_V2.json",
+  "registration_pin": {
+    "sha256": "b254ec5b880e9911d4ca8ba7edc27665c63ca09cbfe66ffafde76cf025fb4c65",
+    "bytes": 8373
+  },
+  "raw_config_semantically_equal_to_registration": true,
+  "raw_config_pin": {
+    "sha256": "fe76986a79db41e9a099f8cf9aaa974d3c161fb1d2f615eab73db1a710f14313",
+    "bytes": 5954
+  },
+  "config_serialization_note": "Raw CONFIG.json preserves worker serialization; parsed JSON equals the frozen registration despite different byte layout.",
+  "run_time_evidence": {
+    "controller_started_at_utc": "2026-09-30T23:13:20.7742586Z",
+    "controller_finished_at_utc": "2026-09-30T23:13:59.4986578Z",
+    "source_result_file_modified_at_utc": "2026-09-30T23:13:58.796264+00:00"
+  },
+  "files": [
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777/CONFIG.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777/CONFIG.json",
+      "sha256": "fe76986a79db41e9a099f8cf9aaa974d3c161fb1d2f615eab73db1a710f14313",
+      "bytes": 5954,
+      "source_modified_at_utc": "2026-09-30T23:13:25.722725+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777/COST_LEDGER.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777/COST_LEDGER.json",
+      "sha256": "456c7aadb72dd8e8a761f9eb0a9c9d7d703dc5b5fea7fb4f350d08ab55ea1e6a",
+      "bytes": 980,
+      "source_modified_at_utc": "2026-09-30T23:13:58.796264+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777/DIAGNOSTIC_RESULT.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777/DIAGNOSTIC_RESULT.json",
+      "sha256": "15ce70d69f9f5d8f24cf7ca84869efbe94f27fd7cbc432352a50da917b925ac8",
+      "bytes": 19563,
+      "source_modified_at_utc": "2026-09-30T23:13:58.796264+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777/EVENTS.jsonl",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777/EVENTS.jsonl",
+      "sha256": "34a4cec18fa6685e6d42a6fe50205397e318bb8c0a3b20a14ccaf7a893c12a18",
+      "bytes": 159016,
+      "source_modified_at_utc": "2026-09-30T23:13:58.794123+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777/MODEL_RECEIPT.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777/MODEL_RECEIPT.json",
+      "sha256": "5ff9dc8e87ac6c464cc051320d67daf0e8b6f6374409f623bfbafda8541eef03",
+      "bytes": 36339,
+      "source_modified_at_utc": "2026-09-30T23:13:56.190287+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777/POST_IMPORT_ADMISSION.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777/POST_IMPORT_ADMISSION.json",
+      "sha256": "9873e2f7e0210d4d518143166d73ac053858388104e14865fcac980dfa4bcbcc",
+      "bytes": 435,
+      "source_modified_at_utc": "2026-09-30T23:13:52.879131+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777/RUNTIME_RECEIPT.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777/RUNTIME_RECEIPT.json",
+      "sha256": "16a502b9fccbd63d4ad83b65dd785178c6f2176722a25ac17e8db98762c65135",
+      "bytes": 858,
+      "source_modified_at_utc": "2026-09-30T23:13:50.676639+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777/SOURCE_RECEIPT.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777/SOURCE_RECEIPT.json",
+      "sha256": "6ec259c68ab8e57508aae349b8431a3c5ae15f6450cdff1f25eb70d45e974acd",
+      "bytes": 2852,
+      "source_modified_at_utc": "2026-09-30T23:13:25.722725+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777_dispatch/ADMISSION.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777_dispatch/ADMISSION.json",
+      "sha256": "85069ed5a3454f62bfdffc3badf191cdd1fb6ff40980fbe7c8d9c7eb56b7ca29",
+      "bytes": 865,
+      "source_modified_at_utc": "2026-09-30T23:13:23.950199+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777_dispatch/COMPLETION.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777_dispatch/COMPLETION.json",
+      "sha256": "27c9c3a039987c5a190f59d0b2892aebbd424b52dd9841b53bae47b004f238db",
+      "bytes": 468,
+      "source_modified_at_utc": "2026-09-30T23:13:59.499568+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777_dispatch/PLAN.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777_dispatch/PLAN.json",
+      "sha256": "2e19678339bdb634db5a44dd86b2408cef6031ff6517dd4ee6e258f387456237",
+      "bytes": 1725,
+      "source_modified_at_utc": "2026-09-30T23:13:20.794384+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777_dispatch/REVIEW_RECEIPT.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777_dispatch/REVIEW_RECEIPT.json",
+      "sha256": "f710ea3d33f6c27e1ce2089ca59939b13fff589dc6a93fedb84d8df518b274c7",
+      "bytes": 14357,
+      "source_modified_at_utc": "2026-09-30T23:18:47.102461+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777_dispatch/REVIEW_RECEIPT_V2.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777_dispatch/REVIEW_RECEIPT_V2.json",
+      "sha256": "a764c146cadefdf3e021f4f1333800c8a83cafe994aaadf80527b4036af12be1",
+      "bytes": 14788,
+      "source_modified_at_utc": "2026-09-30T23:20:24.474808+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777_supervisor/GO.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777_supervisor/GO.json",
+      "sha256": "e9ef9fa100b74dbafc64bb8330e40785991d06a1da132f4115b9380a3ec237cc",
+      "bytes": 90,
+      "source_modified_at_utc": "2026-09-30T23:13:24.928710+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777_supervisor/LAUNCH.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777_supervisor/LAUNCH.json",
+      "sha256": "e75557e1df295a1b120b33dfb3f967125768afcf491bd46a41bb692adc4a10c2",
+      "bytes": 2532,
+      "source_modified_at_utc": "2026-09-30T23:13:24.865892+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777_supervisor/stderr.log",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777_supervisor/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "source_modified_at_utc": "2026-09-30T23:13:24.905206+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777_supervisor/stdout.log",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777_supervisor/stdout.log",
+      "sha256": "682ae76d7fb326d79988821e95be8d2e2d67b79808c8198b206efdb84816820b",
+      "bytes": 362,
+      "source_modified_at_utc": "2026-09-30T23:13:58.796264+00:00",
+      "byte_exact": true
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777_supervisor/SUPERVISOR.json",
+      "copy": "experiments/post_training_mimo_centralized_v1/results/capture_causal_wait_v2_20260930_231320_6973a777_supervisor/SUPERVISOR.json",
+      "sha256": "1ccc1fb42ab2955f0dfb8aa2b90c474390bbf40aac7a6c0a7217eba9608b7214",
+      "bytes": 253,
+      "source_modified_at_utc": "2026-09-30T23:13:59.472259+00:00",
+      "byte_exact": true
+    }
+  ],
+  "all_copies_byte_exact": true,
+  "source_pin_checks": [
+    {
+      "path": "experiments/__init__.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "ae8a3a547ecde07f2906643f19574b3596903767b9afa85ac8560d288a3d0bb8",
+      "bytes": 56
+    },
+    {
+      "path": "experiments/opallo_native_collector_v1/__init__.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "47dd4ddb5f9bd6c60425ec3d8aa24e51e03f9ffc717c13f431abc78f8bb5f15d",
+      "bytes": 82
+    },
+    {
+      "path": "experiments/opallo_native_collector_v1/contract.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "bec805005c3732ce6b1fa86ff71c6c5d551dfbadf64db4c54a8d9900cab930fb",
+      "bytes": 14131
+    },
+    {
+      "path": "experiments/opallo_native_collector_v1/supervisor.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "d31370de4f6b09052fac2f3505fc38a40041e76bd2137435a1f3678f4346a54d",
+      "bytes": 7791
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/configs/CAPTURE_CAUSAL_DIAGNOSTIC_WAIT_V2.json",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "b254ec5b880e9911d4ca8ba7edc27665c63ca09cbfe66ffafde76cf025fb4c65",
+      "bytes": 8373
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/configs/CAPTURE_GREEDY_SHORT_QUAL_V1.json",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "cab513b8006a8f4212be2e3f8fe1d9862abca96a53ab58ab033165e395a82b27",
+      "bytes": 6986
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/results/capture_geometry_d1_20260930/DIAGNOSTIC_RESULT.json",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "b827f11c29e9a568f4baa37f618b05b9ee96956bd8a9b2cc87b6468634ee0808",
+      "bytes": 28053
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/results/headless_capture_qual_v1_20260930_1140/CAPTURE_RESULT.json",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "e669a6945520b7c91bb5d00382ceab2ac4ab5cdc8f09d9273ebd4915ae8017a2",
+      "bytes": 8356
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/diagnose_capture_causality.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "05f8b403c0924d8cf129904a5824872eb73827a604e86c3134f56579935f82a9",
+      "bytes": 26026
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/diagnose_capture_causality_wait.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "edf9f27d40610c6370d7730ed063e17f9719a7d1491ad053687c3bfe04db0dd8",
+      "bytes": 27540
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/laptop_profile.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "2e8c9236aba1d48e222373c7484c353eec717ae176ce9bc108968b74d1b7e196",
+      "bytes": 6880
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/post_import_admission.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "e471e4b2adb006c9ffc032d3432c62f40e16431f3ff11df24c7389ba4bc287a9",
+      "bytes": 4379
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/qualify_native.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "a0fbbbb67dcb7136270dd01efed16cccffc62b09342863f05d03d845805bf941",
+      "bytes": 50315
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/scripts/stream_checkpoint.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "434c62698c2e397048db0d88a7959e34d5b8afb93f90cdf86f2aba852922c67f",
+      "bytes": 6313
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/tests/test_diagnose_capture_causality_wait.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "94625728cc1d492f4dfac591a80b85796bca3bf427d4ee9b78c5c70d539203c9",
+      "bytes": 4490
+    },
+    {
+      "path": "experiments/post_training_mimo_centralized_v1/tests/test_post_import_admission.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": true,
+      "sha256": "63fa87f75912fbb699c379fe233d421640e8994f28fe32d3f2cff46eafd012cb",
+      "bytes": 5299
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Lib\\site-packages\\transformers\\masking_utils.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": false,
+      "sha256": "7a963feed8173b8265298dd24350c166222ce6b4719442fce48ab414d0478a6a",
+      "bytes": 60515
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Lib\\site-packages\\transformers\\models\\qwen3\\modeling_qwen3.py",
+      "current_pin_matches": true,
+      "producer_commit_bytes_verified": false,
+      "sha256": "4b95c371fd26d40c69083dab36ac1eafd8cf82b415a0bb827275097c5ad2305b",
+      "bytes": 23067
+    }
+  ],
+  "retained_source_review_receipts": [
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777_dispatch/REVIEW_RECEIPT.json",
+      "sha256": "f710ea3d33f6c27e1ce2089ca59939b13fff589dc6a93fedb84d8df518b274c7",
+      "bytes": 14357,
+      "status": "PASS_FIXED_SHAPE_CAUSAL_DIAGNOSTIC_ONLY",
+      "scope": "Retained historical source review receipt, not new independent tensor replay; scalar pin-count correction retained in V2."
+    },
+    {
+      "source": "artifacts/mimo_central/capture_causal_wait_v2_20260930_231320_6973a777_dispatch/REVIEW_RECEIPT_V2.json",
+      "sha256": "a764c146cadefdf3e021f4f1333800c8a83cafe994aaadf80527b4036af12be1",
+      "bytes": 14788,
+      "status": "PASS_FIXED_SHAPE_CAUSAL_DIAGNOSTIC_ONLY",
+      "scope": "Retained historical source review receipt, not new independent tensor replay; scalar pin-count correction retained in V2."
+    }
+  ],
+  "native_observations": {
+    "status": "COMPLETE_CAPTURE_CAUSAL_POSTIMPORT_WAIT_DIAGNOSTIC_ONLY",
+    "actual_counts": {
+      "direct_head_projection_calls": 0,
+      "forward_input_positions": 524,
+      "implicit_LM_head_calls": 4,
+      "logical_model_calls": 316,
+      "model_or_base_forwards": 4,
+      "new_generated_tokens": 0,
+      "optimizer_steps": 0,
+      "teacher_calls": 0
+    },
+    "protected_comparisons": 6,
+    "all_protected_hidden_and_logits_bitwise_equal": true,
+    "all_comparisons_max_abs": 0.0,
+    "fixed_shape_causal_controls_passed": true,
+    "base_unchanged": true,
+    "source_assets_unchanged": true,
+    "attempted_returned_counts": {
+      "accounting_version": 2,
+      "forward_input_positions_attempted": 524,
+      "forward_input_positions_returned": 524,
+      "last_call_id": 316,
+      "max_optimizer_calls": 0,
+      "operations": {
+        "backward": {
+          "attempted": 0,
+          "failed": 0,
+          "pending": 0,
+          "returned": 0
+        },
+        "checkpoint_load": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "checkpoint_reload": {
+          "attempted": 0,
+          "failed": 0,
+          "pending": 0,
+          "returned": 0
+        },
+        "checkpoint_save": {
+          "attempted": 0,
+          "failed": 0,
+          "pending": 0,
+          "returned": 0
+        },
+        "forward": {
+          "attempted": 4,
+          "failed": 0,
+          "pending": 0,
+          "returned": 4
+        },
+        "model_construct": {
+          "attempted": 1,
+          "failed": 0,
+          "pending": 0,
+          "returned": 1
+        },
+        "optimizer_step": {
+          "attempted": 0,
+          "failed": 0,
+          "pending": 0,
+          "returned": 0
+        },
+        "tensor_copy": {
+          "attempted": 310,
+          "failed": 0,
+          "pending": 0,
+          "returned": 310
+        }
+      },
+      "pending_calls": [],
+      "training_forward_input_positions_attempted": 0,
+      "training_forward_input_positions_returned": 0
+    },
+    "post_import_wait_exercised_natively": true,
+    "post_import_wait_observations": 2
+  },
+  "resources": {
+    "internal_samples": 9,
+    "maximum_sampled_worker_rss_GiB": 1.3447418212890625,
+    "external_peak_process_tree_rss_bytes": 1450000384,
+    "external_peak_process_tree_rss_GiB": 1.3504180908203125,
+    "minimum_sampled_host_available_GiB": 4.680194854736328,
+    "minimum_sampled_gpu_free_GiB": 5.404296875,
+    "peak_gpu_allocated_GiB": 1.400038242340088,
+    "minimum_sampled_disk_free_GiB": 81.8458480834961,
+    "worker_wall_seconds": 33.71900000000005,
+    "supervisor_wall_seconds": 34.57900000000018,
+    "supervisor_exit_code": 0,
+    "all_registered_recorded_resource_limits_passed": true
+  },
+  "scope_limit": "Fixed-shape future suffix mutations test protected earlier hidden states and full-vocabulary logits for this exact trace. Passing controls do not prove prefix/full shape invariance or identify the upstream numerical mechanism.",
+  "concurrent_CPU_process_observation_limitation": {
+    "command": "-m unittest discover -s tests -q",
+    "creation_times_not_captured": true,
+    "observed_process_ids": [
+      78280,
+      30044
+    ],
+    "no_additional_execution_by_this_task": true,
+    "overlap_with_native_attempt_unknown": true,
+    "subsequent_snapshot_processes_absent": true,
+    "post_run_observation_utc": "2026-09-30T23:15:24.9222631Z"
+  },
+  "closed_grants": {
+    "E1_authorized": false,
+    "CHECK_FINAL_access": false,
+    "DEV_collection_authorized": false,
+    "qualification_authorized": false,
+    "language_grading_authorized": false
+  },
+  "goal_complete": false,
+  "new_framework_imports": 0,
+  "new_model_calls": 0,
+  "new_optimizer_steps": 0,
+  "historical_receipts_preserved": [
+    "receipts/POST_IMPORT_WAIT_V2_PREWORKER_ADMISSION.json",
+    "receipts/CAPTURE_CAUSAL_D2_NATIVE_PRELOAD_FAILURE.json",
+    "receipts/GOAL_BLOCKED_AUDIT_20260930_V1.json"
+  ]
+}

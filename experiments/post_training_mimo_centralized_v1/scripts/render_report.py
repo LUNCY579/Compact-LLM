@@ -58,7 +58,7 @@ def render(source, output):
         canvas.line(48,32,564,32)
         canvas.setFont("Helvetica",7)
         canvas.setFillColor(colors.HexColor("#52646a"))
-        canvas.drawString(48,21,"RINEYA RESEARCH  |  30 SEPTEMBER 2026  |  NO EFFICACY CLAIM")
+        canvas.drawString(48,21,"RINEYA RESEARCH  |  SCOPED EVIDENCE  |  NO EFFICACY CLAIM")
         canvas.drawRightString(564,21,str(doc.page))
         canvas.restoreState()
     # A trailing table spacer can create an otherwise empty final page.

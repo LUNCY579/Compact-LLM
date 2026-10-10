@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "status": "PASS_OWNED_QUALIFIER_SOURCE_CPU_PREFIX_EVIDENCE_ADMISSION_BLOCKED_NO_NATIVE",
+  "report": {
+    "path": "CENTRALIZED_EXPERIMENT_REPORT.pdf",
+    "sha256": "b6ed0993ce5c55d8313949a9e79d0472df0c3337bc638529526e36c439c3f63d",
+    "bytes": 31542,
+    "pages": 8,
+    "visual_QA": "Changed pages7/8 inspected; pages1-6 pixel-identical to previously inspected report; initial orphan final row fixed"
+  },
+  "amendment": "AMENDMENT_021.md",
+  "worker_source_review": {
+    "scripts/qualify_native_backend.py": {
+      "sha256": "f775b9df35a498886fc37b5a6d84076f82eea61f92b758afc6421dcd6b41809a",
+      "bytes": 41487
+    },
+    "tests/test_qualify_native_backend.py": {
+      "sha256": "7fe8f421e1d183907b06c831e510f970369258da5a3902f67955207c6790051a",
+      "bytes": 12172
+    },
+    "configs/NATIVE_BACKEND_QUALIFICATION_V1.json": {
+      "sha256": "5c48a50b32cb8824d0c01a164b69375c1244a53ea60838abe466b45d882735ae",
+      "bytes": 36949
+    }
+  },
+  "CPU_validation": "receipts/NATIVE_BACKEND_QUAL_V1_CPU_VALIDATION.json",
+  "actual_prefix_audit": "receipts/NATIVE_BACKEND_QUAL_V1_PREFIX_AUDIT.json",
+  "physics_result": null,
+  "native_math_qualified": false,
+  "native_resume_qualified": false,
+  "E1_authorized": false,
+  "CHECK_FINAL_access": false,
+  "goal_complete": false,
+  "source_producer_commit": "5cb79fe7dbbc244d3efb109e86dd029b49e312bb",
+  "preworker_admission": "receipts/NATIVE_BACKEND_QUAL_V1_PREWORKER_ADMISSION.json",
+  "preworker_archive": "receipts/NATIVE_BACKEND_QUAL_V1_ADMISSION_ARCHIVE.json"
+}

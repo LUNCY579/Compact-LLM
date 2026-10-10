@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "status": "PASS_ALL_688_DISTINCT_CONTROLS_WITH_REQUIRED_PROCESS_ISOLATION",
+  "combined_framework_free": {
+    "scope": "CENTRAL_PACKAGE_FRAMEWORK_FREE_UNIT_CONTROLS",
+    "modules": 45,
+    "tests": 667,
+    "failures": 2,
+    "errors": 0,
+    "skipped": 0,
+    "excluded_modules": [
+      "test_qualify_native",
+      "test_stream_checkpoint"
+    ],
+    "frameworks_loaded": [],
+    "exit_code": 1,
+    "process_seconds": 59.93751879999945
+  },
+  "isolation_resolution": {
+    "module": "test_train_scope",
+    "result": {
+      "name": "train_scope_isolated",
+      "command": [
+        "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "experiments.post_training_mimo_centralized_v1.tests.test_train_scope"
+      ],
+      "exit_code": 0,
+      "tests": 18,
+      "reported_seconds": 0.409,
+      "process_seconds": 0.8435093000007328,
+      "GPU_devices_hidden": false,
+      "scope": "Fresh-process stdlib TRAIN scope fixtures"
+    },
+    "reason": "Combined process loaded tokenize_* helper modules and exceeded the scoped128MiB high-water guard; fresh process passed all18 controls without changing production source or limits",
+    "aggregate_failure_logs_preserved": true
+  },
+  "CPU_numerical_loader": {
+    "name": "CPU_numerical_and_loader",
+    "command": [
+      "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+      "-B",
+      "-m",
+      "unittest",
+      "-v",
+      "experiments.post_training_mimo_centralized_v1.tests.test_qualify_native",
+      "experiments.post_training_mimo_centralized_v1.tests.test_stream_checkpoint"
+    ],
+    "exit_code": 0,
+    "tests": 21,
+    "reported_seconds": 3.185,
+    "process_seconds": 11.431984400000147,
+    "GPU_devices_hidden": true,
+    "scope": "Tiny CPU helper/loader fixtures; no checkpoint or CUDA access"
+  },
+  "distinct_test_count": 688,
+  "new_E1_V2_controls_included": 4,
+  "no_real_model_or_checkpoint_loaded": true,
+  "no_GPU_execution": true,
+  "full_scientific_qualification": false,
+  "files": {
+    "CPU_numerical_and_loader.result.json": {
+      "sha256": "5b516a6718b66988176d9246e5b9fca3a1282849d7c6c013e3ffbc78640919aa",
+      "bytes": 551
+    },
+    "CPU_numerical_and_loader.stderr.log": {
+      "sha256": "ce31a34405007fa91c66a7cdc56b3317b373898a6d47e5b2100ad80d33f97f37",
+      "bytes": 4694
+    },
+    "CPU_numerical_and_loader.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "stdlib.stderr.log": {
+      "sha256": "5985c050816e67532f0add42a7ff3e13612ce94361e0b57afaea55bf6369fb55",
+      "bytes": 2370
+    },
+    "stdlib.stdout.log": {
+      "sha256": "dab3daccf5994b6e0075f891e1a6b33005994a8815b66335b624c8fd8b9ff2eb",
+      "bytes": 226
+    },
+    "stdlib_result.json": {
+      "sha256": "f231c3ffadab85856a2d0735328cad1821d222eed5f16052fdfa6ab253d722f1",
+      "bytes": 313
+    },
+    "train_scope_isolated.result.json": {
+      "sha256": "d9641c66ce8cc0a623a7ffb05deba97bc1cd4514b337b96a8a22e2581860fc06",
+      "bytes": 443
+    },
+    "train_scope_isolated.stderr.log": {
+      "sha256": "b63ea93bf284d124cb8ddb39fbbf1481c33ef1b458e1316bf131ccc3ed5d98e3",
+      "bytes": 4166
+    },
+    "train_scope_isolated.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  }
+}
