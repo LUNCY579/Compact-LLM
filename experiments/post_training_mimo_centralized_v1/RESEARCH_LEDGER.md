@@ -792,3 +792,14 @@ witnesses and journal failures remain distinct and retained. No framework/model
 or GPU execution occurred. HostRAM was7.033GiB but GPUfree2347MiB, later2047MiB,
 below unchanged4GiB admission. Other applications were untouched. Native capture,
 DEV/preservation, sustainedE1 and all efficacy claims remain unqualified.
+
+
+The owned exact-prefix admission controller on source33103ce003 completed its
+30-second window with15observations. Hostavailable5.993263-6.224819GiB and disk
+minimum37.506GiB passed; GPUfree1.999023GiB failed the4GiB floor in every sample.
+Last observation was29.828seconds. No supervisor, framework or model worker
+started. The two raw files are copied byteexact and hash-indexed. After confirmed
+terminalno-worker status, its controller directory was archived within the owned
+artifact root to preserve records and leave the fixed path ready only after a
+verified real resource change. No original source/config/limit or other process
+was changed. The full objective and all scientific gates remain open.

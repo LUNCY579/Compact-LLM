@@ -477,6 +477,24 @@ free controls: two shared-process contamination/RSS failures passed in a fresh
 18-test scope run. Another 21 tiny numerical/loader CPU tests passed with CUDA
 hidden. These test results do not establish any new full-model qualification.
 
+## Exact-prefix successor: source ready, GPU admission blocked
+
+AMENDMENT_022 prospectively registers a distinct teacher-forcing method. Every
+recorded target is scored by a fresh forward of exactly prompt+previous generated
+IDs, including terminal EOS. Require full-vocabulary finite BF16 logits with
+bitwise online/replay hashes and selected model-logprob maximum/mean error1e-4.
+The original bulk failure and its0.03125/0.01 limits remain unchanged. Natural EOS,
+raw argmax/tie-breaking, rendering, model/assets and resource guards are preserved.
+
+The worker and20focused CPU controls passed independent source review. All16384
+completed length pairs satisfy ceilings514forwards/826calls/164352inputpositions.
+Partial online/replay counts and raw witnesses are retained separately. No native
+scoring result exists: the first controller recorded15samples, with sufficient
+RAM5.993-6.225GiB but GPUfree1.999GiB below4. It started no framework/model worker.
+Records were copied byteexact and the terminal no-worker directory archived for
+later resource-changed admission. Full qualification, baseline/preservation and
+sustained E1 remain open. No other applications or limits were changed.
+
 ## Prepared science and milestone audit
 
 Preparation remains available: 4096 acquisition TRAIN parents, 768 deterministic
@@ -508,5 +526,5 @@ retained in their existing receipts and ledgers. CHECK/FINAL remain closed.
 | Failure modes | Padding, 1024 VRAM, capture NLL, stale failure counter | Recorded | Correct final accounting and diagnosis |
 | Interpretation | Old reserve overstated this route; capture gap is upstream | Measured scope | Sustained fit and numerical mechanism still open |
 | Ruled out | Admission failures alone prove Titan needs 7.4 GiB free | Invalid inference | No efficacy conclusion |
-| Next experiment | Distinct scoring/capture qualification | Registration required | Preservation and sustained E1 remain open |
+| Next experiment | Exact-prefix capture worker;20CPU controls pass | GPU admission blocked; physical result absent | Preservation and sustained E1 remain open |
 | Heavy compute justified | Bounded qualification | Conditional | E1 waits for scientific gates |
