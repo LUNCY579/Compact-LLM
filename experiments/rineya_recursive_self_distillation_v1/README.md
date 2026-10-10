@@ -43,6 +43,12 @@ the mask and watchdog-contract dependencies at its recorded commit, must match;
 its historical Git HEAD need not equal RSD HEAD. Parent review/enrollment now
 parses a completed schema2 RSD ordinary-SFT training receipt and checks the
 exported adapter, base, input/source hashes, runtime, steps and terminal evaluation.
+The recorded parent commit must exist in this module's fixed local repository,
+and every source hash must match a regular `.py` Git blob at that exact commit;
+older committed source may differ from current HEAD. Missing or mismatching
+history fails closed, without fetching or executing historical source. Git reads
+have a 10-second process timeout and limits of 128 source files, 1,024 UTF-8 path
+bytes, 2 MiB per blob and 16 MiB total source bytes.
 Fixtures and unfinished/non-SFT receipts stay ineligible even with review flags.
 Unknown external SFT receipt formats require a separately reviewed provenance
 adapter contract; template flags or a newly written attestation cannot substitute

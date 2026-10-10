@@ -7,12 +7,15 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
+from experiments.rineya_recursive_self_distillation_v1 import parent_qualification
 from experiments.rineya_recursive_self_distillation_v1.contracts import BASE_SHA256, digest, file_hash
 from experiments.rineya_recursive_self_distillation_v1.parent_qualification import (
     CORE_SOURCES, INPUT_NAMES, PACKAGES, validate_parent,
@@ -24,11 +27,27 @@ class ParentQualificationTests(unittest.TestCase):
         self.temporary = tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[4])
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name)
+        self.repository = self.root / "synthetic-source-repository"
+        self.repository.mkdir()
+        self.disabled_hooks = self.repository / "disabled-hooks"
+        self.disabled_hooks.mkdir()
+        self.git("init", "--quiet", "--object-format=sha1")
+        sources = {}
+        for name in sorted(CORE_SOURCES):
+            source = self.repository / name
+            source.parent.mkdir(parents=True, exist_ok=True)
+            source.write_bytes(("# synthetic provenance fixture: " + name + "\n").encode("utf-8"))
+            sources[name] = file_hash(source)
+        self.git("add", "--", *sorted(sources))
+        self.git("commit", "--quiet", "-m", "Synthetic source metadata fixture")
+        self.source_commit = self.git("rev-parse", "HEAD").decode("ascii").strip()
+        self.repository_patch = patch.object(parent_qualification, "REPOSITORY_ROOT", self.repository)
+        self.repository_patch.start()
+        self.addCleanup(self.repository_patch.stop)
         self.adapter = self.root / "adapter.safetensors"
         self.adapter.write_bytes(b"opaque non-model fixture bytes; metadata checks only")
         self.receipt_path = self.root / "receipt.json"
         self.manifest_path = self.root / "parent.json"
-        sources = {name: "1" * 64 for name in sorted(CORE_SOURCES)}
         self.receipt = {
             "schema": 2, "experiment": "RSD-001", "mode": "parent", "arm": "sft",
             "status": "COMPLETED_SFT_CANDIDATE_REVIEW_REQUIRED",
@@ -38,7 +57,7 @@ class ParentQualificationTests(unittest.TestCase):
                          "plan": "2" * 64, "catalog": "3" * 64,
                          "files": {name: "4" * 64 for name in sorted(INPUT_NAMES)},
                          "sources": sources, "source": digest(sources)},
-            "source_commit": "5" * 40,
+            "source_commit": self.source_commit,
             "runtime": {"python": "3.11.15 (synthetic metadata test)", "packages": dict(PACKAGES),
                         "platform": "Windows-synthetic-metadata", "cuda": "12.6",
                         "gpu": "synthetic metadata GPU", "base_dtype": "bfloat16",
@@ -55,6 +74,17 @@ class ParentQualificationTests(unittest.TestCase):
                          "source_run_receipt": {"path": "receipt.json", "sha256": "0" * 64}}
         self.write()
 
+    def git(self, *arguments):
+        environment = {key: value for key, value in os.environ.items()
+                       if not key.upper().startswith("GIT_")}
+        return subprocess.check_output([
+            "git", "--no-replace-objects", "-c", "core.autocrlf=false",
+            "-c", "init.templateDir=", "-c", "core.attributesFile=",
+            "-c", "core.hooksPath=" + str(self.disabled_hooks), "-c", "commit.gpgsign=false",
+            "-c", "user.name=Synthetic metadata fixture", "-c", "user.email=fixture@example.invalid",
+            *arguments,
+        ], cwd=self.repository, stderr=subprocess.PIPE, env=environment, timeout=10)
+
     def write(self):
         self.receipt_path.write_text(json.dumps(self.receipt), encoding="utf-8")
         self.manifest["source_run_receipt"]["sha256"] = file_hash(self.receipt_path)
@@ -70,6 +100,9 @@ class ParentQualificationTests(unittest.TestCase):
         self.assertEqual(adapter, self.adapter.resolve())
         self.assertEqual(receipt, self.receipt_path.resolve())
         self.assertEqual(evidence["optimizer_steps"], 2)
+        self.assertEqual(evidence["historical_source"]["files"], len(CORE_SOURCES))
+        self.assertEqual(evidence["historical_source"]["verification"],
+                         "exact_commit_regular_source_blobs_sha256")
         self.assertFalse(evidence["quality_certified"])
         self.assertFalse(evidence["native_execution_authorized"])
         self.assertFalse(evidence["native_efficacy_claim"])
@@ -154,17 +187,70 @@ class ParentQualificationTests(unittest.TestCase):
         self.rejected("incomplete parent source")
 
     def test_historical_source_is_not_required_to_match_current_checkout(self):
-        self.receipt["identity"]["sources"] = {name: "a" * 64 for name in CORE_SOURCES}
-        self.receipt["identity"]["source"] = digest(self.receipt["identity"]["sources"])
-        self.receipt["source_commit"] = "b" * 40
+        source = self.repository / sorted(CORE_SOURCES)[0]
+        source.write_bytes(b"# later synthetic source revision\n")
+        self.git("add", "--", sorted(CORE_SOURCES)[0])
+        self.git("commit", "--quiet", "-m", "Later synthetic source revision")
+        self.assertNotEqual(self.git("rev-parse", "HEAD").decode("ascii").strip(), self.source_commit)
         self.write()
         _, _, evidence = validate_parent(self.manifest_path)
-        self.assertEqual(evidence["source_commit"], "b" * 40)
+        self.assertEqual(evidence["source_commit"], self.source_commit)
+
+    def test_nonexistent_or_noncommit_source_object_is_rejected(self):
+        self.receipt["source_commit"] = "f" * 40
+        self.rejected("historical source Git check failed: commit")
+        source = sorted(CORE_SOURCES)[0]
+        self.receipt["source_commit"] = self.git("rev-parse", self.source_commit + ":" + source).decode("ascii").strip()
+        self.rejected("historical source Git check failed: commit")
+
+    def test_historical_source_hash_mismatch_is_rejected(self):
+        self.receipt["identity"]["sources"][sorted(CORE_SOURCES)[0]] = "a" * 64
+        self.receipt["identity"]["source"] = digest(self.receipt["identity"]["sources"])
+        self.rejected("historical source SHA256 mismatch")
+
+    def test_missing_historical_source_path_is_rejected(self):
+        self.receipt["identity"]["sources"]["experiments/untracked_source.py"] = "a" * 64
+        self.receipt["identity"]["source"] = digest(self.receipt["identity"]["sources"])
+        self.rejected("missing parent historical source path")
+
+    def test_historical_source_symlink_is_rejected_without_following_it(self):
+        source = sorted(CORE_SOURCES)[0]
+        object_id = self.git("rev-parse", self.source_commit + ":" + source).decode("ascii").strip()
+        name = "experiments/source_alias.py"
+        self.git("update-index", "--add", "--cacheinfo", "120000," + object_id + "," + name)
+        self.git("commit", "--quiet", "-m", "Synthetic source symlink metadata")
+        self.receipt["source_commit"] = self.git("rev-parse", "HEAD").decode("ascii").strip()
+        self.receipt["identity"]["sources"][name] = self.receipt["identity"]["sources"][source]
+        self.receipt["identity"]["source"] = digest(self.receipt["identity"]["sources"])
+        self.rejected("regular Git blob")
+
+    def test_source_count_blob_and_total_byte_limits_fail_closed(self):
+        with patch.object(parent_qualification, "MAX_SOURCE_FILES", len(CORE_SOURCES) - 1):
+            self.rejected("source file-count limit")
+        with patch.object(parent_qualification, "MAX_SOURCE_BLOB_BYTES", 8):
+            self.rejected("source blob byte limit")
+        with patch.object(parent_qualification, "MAX_SOURCE_TOTAL_BYTES", 8):
+            self.rejected("source total byte limit")
+
+    def test_git_timeout_fails_closed(self):
+        with patch.object(parent_qualification.subprocess, "run",
+                          side_effect=subprocess.TimeoutExpired("git", 10)):
+            self.rejected("historical source Git unavailable/timed out")
+
+    def test_git_environment_cannot_redirect_the_fixed_repository(self):
+        with patch.dict(os.environ, {"GIT_DIR": str(self.root / "missing-repository"),
+                                     "GIT_WORK_TREE": str(self.root / "other-worktree"),
+                                     "GIT_OBJECT_DIRECTORY": str(self.root / "other-objects")}):
+            _, _, evidence = validate_parent(self.manifest_path)
+        self.assertEqual(evidence["source_commit"], self.source_commit)
 
     def test_invalid_source_paths_hashes_commits_and_input_bindings_rejected(self):
         pristine = copy.deepcopy(self.receipt)
         cases = [("commit", "not-a-commit"), ("input", None), ("hash", "placeholder"),
-                 ("path", "../outside.py"), ("path", "C:/outside.py")]
+                 ("path", "../outside.py"), ("path", "C:/outside.py"),
+                 *(("path", "experiments/control" + character + ".py")
+                   for character in ("\x00", "\n", "\r", "\t", "\x7f")),
+                 ("path", "experiments/" + "x" * 1024 + ".py")]
         for kind, value in cases:
             with self.subTest(kind=kind, value=value):
                 self.receipt = copy.deepcopy(pristine)
