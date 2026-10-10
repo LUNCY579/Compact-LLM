@@ -1,5 +1,22 @@
 # Status and next handoff
 
+## 2026-10-03 implementation amendment
+
+The owner requested the smallest useful next step: an isolated, tiny enumerable
+CPU sampler with independent exact checks and a deliberately broken negative
+control. [The dated amendment](evidence/CPU_SAMPLER_2026-10-03.md) describes the
+implementation, resource receipt, scope limits, and next exact-Rineya scoring
+contract. All 28 checks passed (12 registration, 16 sampler) in 0.671875 test CPU
+seconds, with a 23.24609375-MiB maximum of measured lifetime Python working-set
+and private-commit peaks. The proposed CPU/256-MiB target was met for this fixture.
+This supplies CPU mechanics only;
+no native checkpoint, native scorer, model run, reasoning benefit, or hardware
+admission is established. The founding registration and its closed gates remain
+historical and unchanged. Exchanges must beat identical uncoupled replicas and
+strong independent sampling at matched total work before promotion.
+
+## Historical founding status (retained)
+
 **As of:** 2026-10-02  
 **Experiment:** PPT-001  
 **State:** `DESIGN_RECORDED_NATIVE_NOT_IMPLEMENTED`

@@ -2,11 +2,13 @@
 
 **Dedicated branch:** `research/rineya-ppt-centralized-reasoning-v1`  
 **Initial target:** frozen Rineya 0.6B; no checkpoint has been selected or loaded.  
-**Current state:** `DESIGN_RECORDED_NATIVE_NOT_IMPLEMENTED`
+**Current state:** CPU enumerable sampler qualified; native scoring unqualified.
 
 This package records an enduring, complementary research direction inspired by
-Parallel Power Tempering. It is not a completed sampler or a runnable native
-experiment. No Rineya accuracy or efficiency result is claimed.
+Parallel Power Tempering. A tiny CPU sampler now accompanies the founding design;
+the native sampler and experiment remain unimplemented. No Rineya accuracy or
+efficiency result is claimed. See the dated
+[CPU amendment and next scoring gate](evidence/CPU_SAMPLER_2026-10-03.md).
 
 ## Read in this order
 
@@ -29,10 +31,15 @@ From the repository root, using only the Python standard library:
 python -m unittest discover -s experiments/rineya_ppt_centralized_reasoning_v1/tests -p 'test_*.py' -v
 ```
 
-The checks read only this package and its root charter. They do not load a model,
-access the network, run a sampler, open a dataset, or exercise inherited native
-code. An implementation successor must supply separate mathematical and native
-qualification tests; this command cannot authorize a model launch.
+This command runs the original 12 registration checks plus independent exact
+sampler checks. They exercise the seven-state CPU fixture and 49-state joint
+kernel without loading a model, accessing the network, opening a dataset, or
+exercising inherited native code. Sampler mechanics and registration checks
+remain separate evidence; this command cannot authorize a model launch.
+
+For a measured receipt, run `qualify_cpu.py` with a new package-relative receipt
+filename as documented in the [CPU amendment](evidence/CPU_SAMPLER_2026-10-03.md).
+The historical [registration.json](registration.json) remains unchanged.
 
 ## Why keep it alongside other tracks?
 
