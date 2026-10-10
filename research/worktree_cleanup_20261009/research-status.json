@@ -1,0 +1,853 @@
+{
+  "audit_date": "2026-10-09",
+  "ref_evidence": "Local cached refs only; parent agent will refresh globally",
+  "worktrees": [
+    {
+      "name": "ChatBubble-rineya-bf16-attention-gproj-v1",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-bf16-attention-gproj-v1",
+      "head": "e4e30cbff2b8e6d14f20fb2a4ee61e39361110d9",
+      "branch": "research/rineya-bf16-attention-gproj-v1",
+      "dirty": [],
+      "ignored_files": [],
+      "remote_exact": [
+        "origin/research/rineya-bf16-attention-gproj-v1"
+      ],
+      "remote_containing": [
+        "origin/research/rineya-bf16-attention-gproj-v1"
+      ],
+      "tags_containing": [],
+      "log": [
+        "e4e30cbf 2026-10-04 12:19:11 -0500 feat(research): add BAG-001 BF16 attention-gradient audit and gated GProj pilot",
+        "03db218c 2026-09-27 23:28:11 -0500 Merge pull request #27 from LUNCY579/research/opallo-native-collector-v1",
+        "e2b642d7 2026-09-27 23:28:07 -0500 Merge pull request #26 from LUNCY579/research/cross-scale-orthogonal-composable-skills-v1",
+        "df739d51 2026-09-27 23:28:04 -0500 Merge pull request #25 from LUNCY579/research/scp-boundary-dedup-review-v1",
+        "51b2b079 2026-09-27 23:28:00 -0500 Merge pull request #24 from LUNCY579/research/scp-native-qualification-boundary-v1"
+      ],
+      "analysis": {
+        "experiment": "BAG-001",
+        "scientific_state": "OFFLINE_IMPLEMENTED_NATIVE_UNQUALIFIED",
+        "checkout_disposition": "CANDIDATE_FOR_DORMANT_CHECKOUT_REMOVAL_AFTER_REMOTE_VERIFICATION",
+        "track_retirement": "No evidence of completion or supersession of native research; preserve branch and all evidence.",
+        "reason": "Clean, exact cached origin tip, no ignored payloads. 96 CPU tests and tiny-fixture four-arm mechanics; exact checkpoint, CUDA, efficacy not executed.",
+        "source_documents": [
+          "experiments/rineya_bf16_attention_gproj_v1/AGENTS.md",
+          "experiments/rineya_bf16_attention_gproj_v1/README.md",
+          "experiments/rineya_bf16_attention_gproj_v1/VERIFICATION.md"
+        ],
+        "external_dependencies": [],
+        "release_type": "Source archive tag if branch is retired; not a successful model release.",
+        "named_path_dependency_review": {
+          "exact_name_hits": [],
+          "interpretation": "Completed fixed-name search of relevant ChatBubble/Rineya/CE8/record roots including hidden and ignored text. Only dated static agent starter paths found. README states no chats or execution were launched by setup. No executable consumer or current receipt binds this checkout path. Parent confirms no incomplete local goals.",
+          "removal_recommendation": "Checkout removal can proceed after archive tag/live remote verification while retaining research branch and dependencies. Historical starter must re-create checkout from preserved ref before reuse.",
+          "scope": "Source, scripts, Markdown, text, JSON config/receipts, TOML/YAML/INI/CFG. Excluded unrelated app/game roots, runtime/vendor caches, old before/baseline snapshot trees, tokenizer/vocabulary payloads and protected .jsonl/data banks. No negative conclusion about excluded historical material."
+        }
+      },
+      "ignored_classification": "Only Python bytecode/pytest caches present; no weights, datasets, receipts or environments among ignored files",
+      "ignored_bytes": 0,
+      "source_document_hashes": [
+        {
+          "path": "experiments/rineya_bf16_attention_gproj_v1/AGENTS.md",
+          "sha256": "eca3456fee8f876671b402c437489a6b5e9cb655d033c30a20acd1ba3116465d"
+        },
+        {
+          "path": "experiments/rineya_bf16_attention_gproj_v1/README.md",
+          "sha256": "52629962ac16a21e5c2b339f6524e41c85290e515b5c456b765015de82168a20"
+        },
+        {
+          "path": "experiments/rineya_bf16_attention_gproj_v1/VERIFICATION.md",
+          "sha256": "f417b64459e623327c591d94e609b817cdc9054d4f01d87b5f2d5a3b0fef0539"
+        }
+      ]
+    },
+    {
+      "name": "ChatBubble-rineya-reasoning-corpus-v1",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-reasoning-corpus-v1",
+      "head": "1f91ddcf124beb9b56f43767141d01cf59ccf9e7",
+      "branch": "research/rineya-reasoning-corpus-v1",
+      "dirty": [],
+      "ignored_files": [],
+      "remote_exact": [
+        "origin/research/rineya-reasoning-corpus-v1"
+      ],
+      "remote_containing": [
+        "origin/research/rineya-reasoning-corpus-v1"
+      ],
+      "tags_containing": [],
+      "log": [
+        "1f91ddcf 2026-09-17 14:27:55 -0500 research(rtg-1): label and hash-verify the 19 preserved trained candidates",
+        "1633087a 2026-09-17 09:53:42 -0500 chore(rtg-1): reclaim 77.75 GiB, preserving the trained candidates",
+        "0287f5be 2026-09-17 09:38:34 -0500 feat(rtg-1): P0 dataset acceptance -- PASS on all 19 binding requirements",
+        "89ff925b 2026-09-17 09:35:33 -0500 feat(rtg-1): generate a scout-aligned reasoning corpus, 24000 rows",
+        "48b0c58e 2026-09-17 00:51:13 -0500 docs(mrs-2): results, posttrain contract and implementation report"
+      ],
+      "analysis": {
+        "experiment": "RTG-1",
+        "scientific_state": "COMPLETED_DATASET_DELIVERY",
+        "checkout_disposition": "CANDIDATE_FOR_COMPLETED_CHECKOUT_REMOVAL_AFTER_REMOTE_VERIFICATION",
+        "track_retirement": "Retain corpus and evidence on remote. No basis to delete training datasets or referenced candidates.",
+        "reason": "Clean exact cached origin tip. RTG-1.0.0 deterministic 24000-row training/open-development corpus, P0 all 19 requirements passed. Candidate-label delivery completed 2026-09-17.",
+        "source_documents": [
+          "research/rineya_reasoning_corpus_v1/CORPUS_DESIGN.md",
+          "research/rineya_reasoning_corpus_v1/evidence/DATASET_ACCEPTANCE.json",
+          "research/rineya_reasoning_corpus_v1/evidence/TRAINED_CANDIDATE_LABELS.json",
+          "research/rineya_reasoning_corpus_v1/evidence/DISK_RECLAMATION.json"
+        ],
+        "external_dependencies": [
+          "C:/Users/clclc/BusinessProject/ChatBubble-ced-native-loader-qualification/Supa",
+          "C:/Users/clclc/BusinessProject/ChatBubble-ced-native-loader-qualification/experiments/architecture_benchmark_001/outputs/arm-checkpoints"
+        ],
+        "dependency_note": "Historical record identifies 19 exploratory trainable-tensor candidates totaling 21.453 GiB. Reconstruction requires exact base weights. All licenses_release=false. Audit did not rehash tensors or read banks.",
+        "release_type": "Dataset/source archive tag; not a trained-model release.",
+        "named_path_dependency_review": {
+          "exact_name_hits": [
+            "ChatBubble-agent-prompts-20261002/README.txt",
+            "ChatBubble-agent-prompts-20261002/01-reasoning-corpus.txt"
+          ],
+          "interpretation": "Completed fixed-name search of relevant ChatBubble/Rineya/CE8/record roots including hidden and ignored text. Only dated static agent starter paths found. README states no chats or execution were launched by setup. No executable consumer or current receipt binds this checkout path. Parent confirms no incomplete local goals.",
+          "removal_recommendation": "Checkout removal can proceed after archive tag/live remote verification while retaining research branch and dependencies. Historical starter must re-create checkout from preserved ref before reuse.",
+          "scope": "Source, scripts, Markdown, text, JSON config/receipts, TOML/YAML/INI/CFG. Excluded unrelated app/game roots, runtime/vendor caches, old before/baseline snapshot trees, tokenizer/vocabulary payloads and protected .jsonl/data banks. No negative conclusion about excluded historical material."
+        }
+      },
+      "ignored_classification": "Only Python bytecode/pytest caches present; no weights, datasets, receipts or environments among ignored files",
+      "ignored_bytes": 0,
+      "source_document_hashes": [
+        {
+          "path": "research/rineya_reasoning_corpus_v1/CORPUS_DESIGN.md",
+          "sha256": "e0b41ef4e3fb33433fc729ac2f64f4a2b359541068b61c44695cf40a9339cd26"
+        },
+        {
+          "path": "research/rineya_reasoning_corpus_v1/evidence/DATASET_ACCEPTANCE.json",
+          "sha256": "0a1976e8f8e8f03d6f46f6f2d60fc9aa6c24ae95ca3922f0629477123c29ec3a"
+        },
+        {
+          "path": "research/rineya_reasoning_corpus_v1/evidence/TRAINED_CANDIDATE_LABELS.json",
+          "sha256": "0658542528b62e5c81447cf7a94aa5b146b10c672125d496b503ffc0526559e3"
+        },
+        {
+          "path": "research/rineya_reasoning_corpus_v1/evidence/DISK_RECLAMATION.json",
+          "sha256": "f3f85f0d813597a59978b68a5473a79fe01472d1a66ef4fe526232677753bb60"
+        }
+      ]
+    },
+    {
+      "name": "ChatBubble-rineya-ppt-centralized-reasoning-v1",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-ppt-centralized-reasoning-v1",
+      "head": "ff7bdac1fc8eed5c3b00de5edca2082f44df15bd",
+      "branch": "research/rineya-ppt-centralized-reasoning-v1",
+      "dirty": [
+        " M experiments/rineya_ppt_centralized_reasoning_v1/README.md",
+        " M experiments/rineya_ppt_centralized_reasoning_v1/STATUS.md",
+        "?? experiments/rineya_ppt_centralized_reasoning_v1/evidence/CPU_SAMPLER_2026-10-03.md",
+        "?? experiments/rineya_ppt_centralized_reasoning_v1/evidence/cpu_sampler_2026-10-03.json",
+        "?? experiments/rineya_ppt_centralized_reasoning_v1/qualify_cpu.py",
+        "?? experiments/rineya_ppt_centralized_reasoning_v1/tests/test_tiny_sampler.py",
+        "?? experiments/rineya_ppt_centralized_reasoning_v1/tiny_sampler.py"
+      ],
+      "ignored_files": [
+        {
+          "path": "experiments/rineya_ppt_centralized_reasoning_v1/__pycache__/tiny_sampler.cpython-311.pyc",
+          "size_bytes": 21796,
+          "mtime": "2026-10-03T00:22:27.6846012-05:00"
+        },
+        {
+          "path": "experiments/rineya_ppt_centralized_reasoning_v1/tests/__pycache__/test_tiny_sampler.cpython-311.pyc",
+          "size_bytes": 46272,
+          "mtime": "2026-10-03T00:22:41.4616557-05:00"
+        }
+      ],
+      "remote_exact": [
+        "origin/research/rineya-ppt-centralized-reasoning-v1"
+      ],
+      "remote_containing": [
+        "origin/research/rineya-ppt-centralized-reasoning-v1"
+      ],
+      "tags_containing": [],
+      "log": [
+        "ff7bdac1 2026-10-02 17:07:53 -0500 docs(ppt): establish enduring complementary centralized reasoning experiment",
+        "7459b614 2026-10-01 18:28:46 -0500 docs(crs): establish complementary Rineya centralized reasoning research track",
+        "19551dde 2026-09-30 16:56:06 -0500 docs(mimo): record blocked goal audit",
+        "7d4ae3ea 2026-09-30 16:48:10 -0500 docs(mimo): assess lower RAM routes",
+        "d1f6f848 2026-09-30 16:39:24 -0500 docs(mimo): retain qualifier admission result"
+      ],
+      "analysis": {
+        "experiment": "PPT-001",
+        "scientific_state": "ACTIVE_COMPLEMENTARY_CPU_SAMPLER_NATIVE_UNQUALIFIED",
+        "checkout_disposition": "KEEP_AND_PRESERVE_LOCAL_SOURCE",
+        "track_retirement": "Enduring owner-directed track with no automatic sunset. Cleanup is not evidence of scientific retirement.",
+        "reason": "Seven dirty/untracked paths contain actual CPU sampler, tests, amendment and receipt missing from remote HEAD. 28 CPU checks passed; exact-Rineya scorer/native run absent. Package says newer research, resource constraints or one negative pilot do not obsolete it.",
+        "source_documents": [
+          "AGENTS.md",
+          "RINEYA_PPT_CENTRALIZED_REASONING.md",
+          "experiments/rineya_ppt_centralized_reasoning_v1/AGENTS.md",
+          "experiments/rineya_ppt_centralized_reasoning_v1/README.md",
+          "experiments/rineya_ppt_centralized_reasoning_v1/STATUS.md"
+        ],
+        "external_dependencies": [],
+        "release_type": "Remote tag at existing HEAD alone would NOT preserve local implementation; snapshot source/amendment first."
+      },
+      "ignored_classification": "Only Python bytecode/pytest caches present; no weights, datasets, receipts or environments among ignored files",
+      "ignored_bytes": 68068.0,
+      "source_document_hashes": [
+        {
+          "path": "AGENTS.md",
+          "sha256": "2688c8447722b791d87bcf372d72f487d56b00170b13abd8888267de5c15f4d2"
+        },
+        {
+          "path": "RINEYA_PPT_CENTRALIZED_REASONING.md",
+          "sha256": "6e3cbcd4b01c214094abe2bb155872ea34dedc1580b93a2e871c1b7129226872"
+        },
+        {
+          "path": "experiments/rineya_ppt_centralized_reasoning_v1/AGENTS.md",
+          "sha256": "7062afe13cfafef23c938d6379abdeca742cbf51b821957cea1e2500d3cd03f8"
+        },
+        {
+          "path": "experiments/rineya_ppt_centralized_reasoning_v1/README.md",
+          "sha256": "329bd82dfc65da1aad1772e4f61d0a97aa51cf82fd165707156d746d7301fe49"
+        },
+        {
+          "path": "experiments/rineya_ppt_centralized_reasoning_v1/STATUS.md",
+          "sha256": "0e7cc760b8c4a427cf23716f74b79228de447cba963bea5355d55961c6090f4f"
+        }
+      ]
+    },
+    {
+      "name": "ChatBubble-rineya-self-distillation-axes-v1",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-self-distillation-axes-v1",
+      "head": "e1737660cd0feacd6efd4177ea1d1579bf0cd865",
+      "branch": "research/rineya-self-distillation-axes-v1",
+      "dirty": [
+        "?? experiments/rineya_self_distillation_axes_v1/RUNBOOK.md",
+        "?? experiments/rineya_self_distillation_axes_v1/STATUS.md",
+        "?? experiments/rineya_self_distillation_axes_v1/comparison.py",
+        "?? experiments/rineya_self_distillation_axes_v1/mechanical_qualification.py",
+        "?? experiments/rineya_self_distillation_axes_v1/proposal.py",
+        "?? experiments/rineya_self_distillation_axes_v1/proposal_data.py",
+        "?? experiments/rineya_self_distillation_axes_v1/reviewed_qualification.py",
+        "?? experiments/rineya_self_distillation_axes_v1/tests/test_mechanical_qualification.py",
+        "?? experiments/rineya_self_distillation_axes_v1/tests/test_proposal.py",
+        "?? experiments/rineya_self_distillation_axes_v1/tests/test_proposal_data.py",
+        "?? experiments/rineya_self_distillation_axes_v1/tests/test_reviewed_qualification.py"
+      ],
+      "ignored_files": [],
+      "remote_exact": [
+        "origin/research/rineya-self-distillation-axes-v1"
+      ],
+      "remote_containing": [
+        "origin/research/rineya-self-distillation-axes-v1"
+      ],
+      "tags_containing": [],
+      "log": [
+        "e1737660 2026-10-04 21:58:16 -0500 feat(research): add DSD-001 independent self-distillation axes experiment",
+        "03db218c 2026-09-27 23:28:11 -0500 Merge pull request #27 from LUNCY579/research/opallo-native-collector-v1",
+        "e2b642d7 2026-09-27 23:28:07 -0500 Merge pull request #26 from LUNCY579/research/cross-scale-orthogonal-composable-skills-v1",
+        "df739d51 2026-09-27 23:28:04 -0500 Merge pull request #25 from LUNCY579/research/scp-boundary-dedup-review-v1",
+        "51b2b079 2026-09-27 23:28:00 -0500 Merge pull request #24 from LUNCY579/research/scp-native-qualification-boundary-v1"
+      ],
+      "analysis": {
+        "experiment": "DSD-001",
+        "scientific_state": "ACTIVE_PREPARED_NATIVE_QUALIFICATION_PENDING",
+        "checkout_disposition": "KEEP_AND_PRESERVE_LOCAL_SOURCE",
+        "track_retirement": "No completed native comparison or supersession shown.",
+        "reason": "11 untracked substantive proposal/qualification/comparison/test/runbook files after e1737660. Status 2026-10-05 records 196 CPU fixtures, exact source header custody and bounded prospective 72-update comparison; no approved permit and no native run.",
+        "source_documents": [
+          "experiments/rineya_self_distillation_axes_v1/AGENTS.md",
+          "experiments/rineya_self_distillation_axes_v1/README.md",
+          "experiments/rineya_self_distillation_axes_v1/STATUS.md",
+          "experiments/rineya_self_distillation_axes_v1/RUNBOOK.md"
+        ],
+        "external_dependencies": [
+          "C:/Users/clclc/BusinessProject/dsd001-preparation-20261005"
+        ],
+        "release_type": "Existing remote HEAD contains founding source only. Preserve new local source and external preparation separately."
+      },
+      "ignored_classification": "Only Python bytecode/pytest caches present; no weights, datasets, receipts or environments among ignored files",
+      "ignored_bytes": 0,
+      "source_document_hashes": [
+        {
+          "path": "experiments/rineya_self_distillation_axes_v1/AGENTS.md",
+          "sha256": "10e4d79409e530dbd123f2be472cf9fece012a38e7cfc0bd5b8b6497f5389d58"
+        },
+        {
+          "path": "experiments/rineya_self_distillation_axes_v1/README.md",
+          "sha256": "63b217b43532d3b9dd0dbc602c01e1fde67176f440ca00478d518b4e5c59ba56"
+        },
+        {
+          "path": "experiments/rineya_self_distillation_axes_v1/STATUS.md",
+          "sha256": "e5315216f06b89dd5b2a2cd89b28cfa61b19f61967cf5cda410d72b8eca3b944"
+        },
+        {
+          "path": "experiments/rineya_self_distillation_axes_v1/RUNBOOK.md",
+          "sha256": "3f298801e557a35ea394c73def6e4fe61a2f2c52115b2c76476db5008ad2ef12"
+        }
+      ]
+    },
+    {
+      "name": "ChatBubble-rineya-generalization-dynamics-v1",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-generalization-dynamics-v1",
+      "head": "9044d41f019fd93daad116c5ded1fda7469d5fa5",
+      "branch": "research/rineya-generalization-dynamics-v1",
+      "dirty": [
+        " M experiments/rineya_generalization_dynamics_v1/PROTOCOL.md",
+        " M experiments/rineya_generalization_dynamics_v1/README.md",
+        " M experiments/rineya_generalization_dynamics_v1/RUNBOOK.md",
+        " M experiments/rineya_generalization_dynamics_v1/configs/native.example.json",
+        " M experiments/rineya_generalization_dynamics_v1/native.py",
+        " M experiments/rineya_generalization_dynamics_v1/pipeline.py",
+        " M experiments/rineya_generalization_dynamics_v1/tests/test_gd001.py",
+        "?? experiments/rineya_generalization_dynamics_v1/ATTACHMENT_CONTRACT.md",
+        "?? experiments/rineya_generalization_dynamics_v1/NATIVE_QUALIFICATION_20261003.json",
+        "?? experiments/rineya_generalization_dynamics_v1/PATTERN_RESEARCH_20261005.md",
+        "?? experiments/rineya_generalization_dynamics_v1/QUALITY_ROADMAP.md",
+        "?? experiments/rineya_generalization_dynamics_v1/QUALITY_ROADMAP_STATUS_20261005.md",
+        "?? experiments/rineya_generalization_dynamics_v1/QUERY_DEPENDENCE_RESEARCH_20261005.md",
+        "?? experiments/rineya_generalization_dynamics_v1/STATUS_20261005.md",
+        "?? experiments/rineya_generalization_dynamics_v1/attachment.py",
+        "?? experiments/rineya_generalization_dynamics_v1/attachment_cli.py",
+        "?? experiments/rineya_generalization_dynamics_v1/budget.py",
+        "?? experiments/rineya_generalization_dynamics_v1/configs/dev.proposal.example.json",
+        "?? experiments/rineya_generalization_dynamics_v1/data_admission.py",
+        "?? experiments/rineya_generalization_dynamics_v1/export_parity.py",
+        "?? experiments/rineya_generalization_dynamics_v1/producer_hook_example.py",
+        "?? experiments/rineya_generalization_dynamics_v1/public_schema_repair.py",
+        "?? experiments/rineya_generalization_dynamics_v1/quality_card.py",
+        "?? experiments/rineya_generalization_dynamics_v1/query_dependence_witness.py",
+        "?? experiments/rineya_generalization_dynamics_v1/roadmap.py",
+        "?? experiments/rineya_generalization_dynamics_v1/roadmap_cli.py",
+        "?? experiments/rineya_generalization_dynamics_v1/tests/test_attachment.py",
+        "?? experiments/rineya_generalization_dynamics_v1/tests/test_attachment_cli.py",
+        "?? experiments/rineya_generalization_dynamics_v1/tests/test_budget.py",
+        "?? experiments/rineya_generalization_dynamics_v1/tests/test_data_admission.py",
+        "?? experiments/rineya_generalization_dynamics_v1/tests/test_export_parity.py",
+        "?? experiments/rineya_generalization_dynamics_v1/tests/test_producer_hook.py",
+        "?? experiments/rineya_generalization_dynamics_v1/tests/test_public_schema_repair.py",
+        "?? experiments/rineya_generalization_dynamics_v1/tests/test_quality_card.py",
+        "?? experiments/rineya_generalization_dynamics_v1/tests/test_query_dependence_witness.py",
+        "?? experiments/rineya_generalization_dynamics_v1/tests/test_roadmap.py"
+      ],
+      "ignored_files": [
+        {
+          "path": "experiments/__pycache__/__init__.cpython-311.pyc",
+          "size_bytes": 271,
+          "mtime": "2026-10-03T00:17:47.4837656-05:00"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/__pycache__/__init__.cpython-311.pyc",
+          "size_bytes": 351,
+          "mtime": "2026-10-03T00:17:47.4917756-05:00"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/__pycache__/__main__.cpython-311.pyc",
+          "size_bytes": 329,
+          "mtime": "2026-10-03T00:25:19.8204882-05:00"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/__pycache__/budget.cpython-311.pyc",
+          "size_bytes": 10853,
+          "mtime": "2026-10-03T00:24:26.1007464-05:00"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/__pycache__/cli.cpython-311.pyc",
+          "size_bytes": 6304,
+          "mtime": "2026-10-03T00:21:01.6258797-05:00"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/__pycache__/common.cpython-311.pyc",
+          "size_bytes": 7396,
+          "mtime": "2026-10-03T00:17:47.6068935-05:00"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/__pycache__/diagnostics.cpython-311.pyc",
+          "size_bytes": 11861,
+          "mtime": "2026-10-03T00:17:47.6207882-05:00"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/__pycache__/integration.cpython-311.pyc",
+          "size_bytes": 1832,
+          "mtime": "2026-10-03T00:21:01.6278799-05:00"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/__pycache__/metrics.cpython-311.pyc",
+          "size_bytes": 24064,
+          "mtime": "2026-10-03T00:17:47.6299564-05:00"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/__pycache__/native.cpython-311.pyc",
+          "size_bytes": 20628,
+          "mtime": "2026-10-03T00:21:01.6328796-05:00"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/__pycache__/pipeline.cpython-311.pyc",
+          "size_bytes": 27276,
+          "mtime": "2026-10-03T00:24:26.1207466-05:00"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/__pycache__/registry.cpython-311.pyc",
+          "size_bytes": 15070,
+          "mtime": "2026-10-03T00:17:47.6320835-05:00"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/__pycache__/test_budget.cpython-311.pyc",
+          "size_bytes": 38623,
+          "mtime": "2026-10-03T00:24:25.9836989-05:00"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/__pycache__/test_gd001.cpython-311.pyc",
+          "size_bytes": 53638,
+          "mtime": "2026-10-03T00:25:19.834754-05:00"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/__pycache__/test_native_contract.cpython-311.pyc",
+          "size_bytes": 12022,
+          "mtime": "2026-10-03T00:21:01.6298797-05:00"
+        }
+      ],
+      "remote_exact": [
+        "origin/research/rineya-generalization-dynamics-v1"
+      ],
+      "remote_containing": [
+        "origin/research/rineya-generalization-dynamics-v1"
+      ],
+      "tags_containing": [],
+      "log": [
+        "9044d41f 2026-10-02 15:37:55 -0500 research(gd001): add isolated checkpoint generalization experiment",
+        "03db218c 2026-09-27 23:28:11 -0500 Merge pull request #27 from LUNCY579/research/opallo-native-collector-v1",
+        "e2b642d7 2026-09-27 23:28:07 -0500 Merge pull request #26 from LUNCY579/research/cross-scale-orthogonal-composable-skills-v1",
+        "df739d51 2026-09-27 23:28:04 -0500 Merge pull request #25 from LUNCY579/research/scp-boundary-dedup-review-v1",
+        "51b2b079 2026-09-27 23:28:00 -0500 Merge pull request #24 from LUNCY579/research/scp-native-qualification-boundary-v1"
+      ],
+      "analysis": {
+        "experiment": "GD-001",
+        "scientific_state": "ACTIVE_ATTACHMENT_AND_QUALITY_ROADMAP_NATIVE_BLOCKED",
+        "checkout_disposition": "KEEP_AND_PRESERVE_LOCAL_SOURCE",
+        "track_retirement": "Complementary read-only experiment; missing completed eligible trajectory is a blocker, not retirement.",
+        "reason": "36 dirty/untracked paths include budget/native qualification, producer attachment, quality card/data admission/roadmap and query dependence mechanics. Latest 2026-10-05 statuses describe 171 attachment checks and 253 roadmap checks with one Windows skip; no eligible completed producer trajectory, qualified native scoring or confirmation.",
+        "source_documents": [
+          "experiments/rineya_generalization_dynamics_v1/AGENTS.md",
+          "experiments/rineya_generalization_dynamics_v1/README.md",
+          "experiments/rineya_generalization_dynamics_v1/STATUS_20261005.md",
+          "experiments/rineya_generalization_dynamics_v1/QUALITY_ROADMAP_STATUS_20261005.md",
+          "experiments/rineya_generalization_dynamics_v1/NATIVE_QUALIFICATION_20261003.json"
+        ],
+        "external_dependencies": [
+          "C:/Users/clclc/BusinessProject/gd001-records",
+          "C:/Users/clclc/BusinessProject/gd001-fixture-checks"
+        ],
+        "release_type": "Existing tag alone insufficient. Preserve full working-state source and preparation/receipt records before consolidation."
+      },
+      "ignored_classification": "Only Python bytecode/pytest caches present; no weights, datasets, receipts or environments among ignored files",
+      "ignored_bytes": 230518.0,
+      "source_document_hashes": [
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/AGENTS.md",
+          "sha256": "3256d0aeadbb1750d4ce9c2030992d84a0691c72dabd4703a92003d7e50faeef"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/README.md",
+          "sha256": "189b52eb5473af74fd6f4a3a1c3bee4d07dcba54ddd4c59eb8cc043b90590759"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/STATUS_20261005.md",
+          "sha256": "9fd13ff8002900746d8bbf2c2edee8b089bafc48d143dee2ed6e71e98fa91d29"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/QUALITY_ROADMAP_STATUS_20261005.md",
+          "sha256": "d25d73a3cc3d5e02955b1adeb865c82c5736ad415b342abf3c8615dad3cbd78d"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/NATIVE_QUALIFICATION_20261003.json",
+          "sha256": "f47db3b85c7808995563dd0dfece1043dedb672f54093f3064f21a26b16678ef"
+        }
+      ]
+    },
+    {
+      "name": "ChatBubble-rineya-compute-depth-elasticity-v1",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-compute-depth-elasticity-v1",
+      "head": "7a7f7b60e38c18dbeda7e182daf037e993ca8afd",
+      "branch": "research/rineya-compute-depth-elasticity-v1",
+      "dirty": [],
+      "ignored_files": [],
+      "remote_exact": [
+        "origin/research/rineya-compute-depth-elasticity-v1"
+      ],
+      "remote_containing": [
+        "origin/research/rineya-compute-depth-elasticity-v1"
+      ],
+      "tags_containing": [],
+      "log": [
+        "7a7f7b60 2026-09-29 17:09:29 -0500 research(cde001): add TRM4CO/FlexLoop compute-depth elasticity study",
+        "03db218c 2026-09-27 23:28:11 -0500 Merge pull request #27 from LUNCY579/research/opallo-native-collector-v1",
+        "e2b642d7 2026-09-27 23:28:07 -0500 Merge pull request #26 from LUNCY579/research/cross-scale-orthogonal-composable-skills-v1",
+        "df739d51 2026-09-27 23:28:04 -0500 Merge pull request #25 from LUNCY579/research/scp-boundary-dedup-review-v1",
+        "51b2b079 2026-09-27 23:28:00 -0500 Merge pull request #24 from LUNCY579/research/scp-native-qualification-boundary-v1"
+      ],
+      "analysis": {
+        "experiment": "CDE-001",
+        "scientific_state": "OFFLINE_METHODS_DELIVERED_NATIVE_BLOCKED",
+        "checkout_disposition": "CANDIDATE_FOR_DORMANT_CHECKOUT_REMOVAL_AFTER_REMOTE_VERIFICATION",
+        "track_retirement": "Research question remains unvalidated. No native efficacy or replacement shown.",
+        "reason": "Clean exact cached origin tip, no ignored payloads. Scripted trace fixtures, allocation policy and detached objectives are delivered; CLI native-preflight is deliberately always blocked. No native collector, optimizer loop or deployment.",
+        "source_documents": [
+          "experiments/rineya_compute_depth_elasticity_v1/README.md",
+          "experiments/rineya_compute_depth_elasticity_v1/PROTOCOL.md",
+          "experiments/rineya_compute_depth_elasticity_v1/VALIDATION.md"
+        ],
+        "external_dependencies": [],
+        "release_type": "Source archive tag if branch is retired; not a trained-model release.",
+        "named_path_dependency_review": {
+          "exact_name_hits": [
+            "ChatBubble-agent-prompts-20261002/README.txt",
+            "ChatBubble-agent-prompts-20261002/06-depth-elasticity.txt"
+          ],
+          "interpretation": "Completed fixed-name search of relevant ChatBubble/Rineya/CE8/record roots including hidden and ignored text. Only dated static agent starter paths found. README states no chats or execution were launched by setup. No executable consumer or current receipt binds this checkout path. Parent confirms no incomplete local goals.",
+          "removal_recommendation": "Checkout removal can proceed after archive tag/live remote verification while retaining research branch and dependencies. Historical starter must re-create checkout from preserved ref before reuse.",
+          "scope": "Source, scripts, Markdown, text, JSON config/receipts, TOML/YAML/INI/CFG. Excluded unrelated app/game roots, runtime/vendor caches, old before/baseline snapshot trees, tokenizer/vocabulary payloads and protected .jsonl/data banks. No negative conclusion about excluded historical material."
+        }
+      },
+      "ignored_classification": "Only Python bytecode/pytest caches present; no weights, datasets, receipts or environments among ignored files",
+      "ignored_bytes": 0,
+      "source_document_hashes": [
+        {
+          "path": "experiments/rineya_compute_depth_elasticity_v1/README.md",
+          "sha256": "ddf75d8773431a5d25cac6db2fbbd2444b1ecc6b114923520a0a3dae34185d4e"
+        },
+        {
+          "path": "experiments/rineya_compute_depth_elasticity_v1/PROTOCOL.md",
+          "sha256": "838c3b1fab1b32af1243abe9a89ed25bc358bd7005637383b040c56b74b27353"
+        },
+        {
+          "path": "experiments/rineya_compute_depth_elasticity_v1/VALIDATION.md",
+          "sha256": "653cdfb98306fc30fa9aad8797b296458d08adde615233754482a82fbaffc5c4"
+        }
+      ]
+    },
+    {
+      "name": "ChatBubble-small-vocab-depth",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-small-vocab-depth",
+      "head": "52430ac6c5b74f1bad5f06e9227af9959595ff0f",
+      "branch": "research/rineya-small-vocab-depth-distill-v1",
+      "dirty": [
+        "?? research/rineya_small_vocab_depth_v1/LCACC001_PREREG.md",
+        "?? research/rineya_small_vocab_depth_v1/build_lcacc_panel.py",
+        "?? research/rineya_small_vocab_depth_v1/design/LCACC_CONSTANTS.json",
+        "?? research/rineya_small_vocab_depth_v1/design/LCACC_NULL_SIM.json",
+        "?? research/rineya_small_vocab_depth_v1/design/freeze_lcacc_constants.py",
+        "?? research/rineya_small_vocab_depth_v1/design/lcacc_harness.py",
+        "?? research/rineya_small_vocab_depth_v1/design/lcacc_null_sim.py",
+        "?? research/rineya_small_vocab_depth_v1/launch/finalize_lcacc_gate.py",
+        "?? research/rineya_small_vocab_depth_v1/launch/launch_lcacc.ps1",
+        "?? research/rineya_small_vocab_depth_v1/launch/lcacc_run.sh",
+        "?? research/rineya_small_vocab_depth_v1/launch/prove_lcacc_gate.py",
+        "?? research/rineya_small_vocab_depth_v1/lcacc_describe.py",
+        "?? research/rineya_small_vocab_depth_v1/lcacc_verdict.py",
+        "?? research/rineya_small_vocab_depth_v1/run_lcacc.py",
+        "?? research/rineya_small_vocab_depth_v1/score_lcacc_raw.py",
+        "?? research/rineya_small_vocab_depth_v1/tests/test_lcacc_describe.py",
+        "?? research/rineya_small_vocab_depth_v1/tests/test_lcacc_verdict.py"
+      ],
+      "ignored_files": [
+        {
+          "path": "experiments/rab001_exploration/__pycache__/hostbudget.cpython-311.pyc",
+          "size_bytes": 6910,
+          "mtime": "2026-09-25T09:56:06.2449447-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/.pytest_cache/.gitignore",
+          "size_bytes": 37,
+          "mtime": "2026-09-25T10:26:09.5771157-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/.pytest_cache/CACHEDIR.TAG",
+          "size_bytes": 191,
+          "mtime": "2026-09-25T10:26:09.5771157-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/.pytest_cache/README.md",
+          "size_bytes": 302,
+          "mtime": "2026-09-25T10:26:09.5771157-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/.pytest_cache/v/cache/nodeids",
+          "size_bytes": 2053,
+          "mtime": "2026-09-26T00:12:31.8839936-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/__pycache__/build_calibration.cpython-311.pyc",
+          "size_bytes": 44441,
+          "mtime": "2026-09-25T09:56:06.2232217-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/__pycache__/hlcc_verdict.cpython-311.pyc",
+          "size_bytes": 11580,
+          "mtime": "2026-09-25T10:26:01.523613-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/__pycache__/layer_select.cpython-311.pyc",
+          "size_bytes": 7893,
+          "mtime": "2026-09-24T15:52:44.4849578-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/__pycache__/lc_verdict.cpython-311.pyc",
+          "size_bytes": 7748,
+          "mtime": "2026-09-24T17:13:26.965701-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/__pycache__/synthetic_text.cpython-311.pyc",
+          "size_bytes": 15423,
+          "mtime": "2026-09-25T09:56:06.2580374-05:00"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/tests/__pycache__/test_hlcc_verdict.cpython-311-pytest-9.1.1.pyc",
+          "size_bytes": 54435,
+          "mtime": "2026-09-25T10:26:01.523613-05:00"
+        }
+      ],
+      "remote_exact": [
+        "origin/research/rineya-small-vocab-depth-distill-v1"
+      ],
+      "remote_containing": [
+        "origin/codex/archive-20261004/codex-cheap-quality-abstention-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-complementarity-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-retrieval-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-shortcuts-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-stability-20260929",
+        "origin/codex/archive-20261004/codex-cheap-quality-token-fit-20260929",
+        "origin/codex/archive-20261004/codex-confirm002-paired-correctness-audit-20260930",
+        "origin/codex/archive-20261004/codex-data-admission-001-20260930",
+        "origin/codex/archive-20261004/codex-mimo-artifact-stream-budget-20260930",
+        "origin/codex/archive-20261004/codex-mimo-capture-failure-accounting-20261001",
+        "origin/codex/archive-20261004/codex-mimo-capture-fixed-input-audit-20260930",
+        "origin/codex/archive-20261004/codex-mimo-exact-prefix-capture-20261001",
+        "origin/codex/archive-20261004/codex-mimo-job-containment-20261001",
+        "origin/codex/archive-20261004/codex-mimo-job-handle-fix-20261001",
+        "origin/codex/archive-20261004/codex-mimo-supervisor-death-cpu-20261001",
+        "origin/codex/archive-20261004/codex-mimo-suspended-job-launch-20261001",
+        "origin/codex/cheap-quality-abstention-20260929",
+        "origin/codex/cheap-quality-complementarity-20260929",
+        "origin/codex/cheap-quality-retrieval-20260929",
+        "origin/codex/cheap-quality-shortcuts-20260929",
+        "origin/codex/cheap-quality-stability-20260929",
+        "origin/codex/cheap-quality-token-fit-20260929",
+        "origin/codex/confirm002-paired-correctness-audit-20260930",
+        "origin/codex/data-admission-001-20260930",
+        "origin/codex/efe-func001-fresh-validation",
+        "origin/codex/mimo-artifact-stream-budget-20260930",
+        "origin/codex/mimo-capture-failure-accounting-20261001",
+        "origin/codex/mimo-capture-fixed-input-audit-20260930",
+        "origin/codex/mimo-exact-prefix-capture-20261001",
+        "origin/codex/mimo-job-containment-20261001",
+        "origin/codex/mimo-job-handle-fix-20261001",
+        "origin/codex/mimo-supervisor-death-cpu-20261001",
+        "origin/codex/mimo-supervisor-death-review-fix-20261002",
+        "origin/codex/mimo-suspended-job-launch-20261001",
+        "origin/codex/rineya-taps-adaptation-loop",
+        "origin/codex/rvs001-inference-pilot-20260929",
+        "origin/codex/worktree-save-20261002/detached-crs-native-desktop-v2",
+        "origin/post-training-Mimo",
+        "origin/research/post-training-mimo-centralized-v1",
+        "origin/research/rineya-bf16-attention-gproj-v1",
+        "origin/research/rineya-centralized-reasoning-system-v1",
+        "origin/research/rineya-compute-depth-elasticity-v1",
+        "origin/research/rineya-distillation-dynamics-v1",
+        "origin/research/rineya-evidence-function-equilibrium-v1",
+        "origin/research/rineya-generalization-dynamics-v1",
+        "origin/research/rineya-ppt-centralized-reasoning-v1",
+        "origin/research/rineya-recursive-self-distillation-v1",
+        "origin/research/rineya-self-distillation-axes-v1",
+        "origin/research/rineya-small-vocab-depth-distill-v1",
+        "origin/research/rineya-synth-centralized-reasoning-v1",
+        "origin/research/rineya-taps-adaptive-recurrence-v1",
+        "origin/research/rineya-useful-fixed-point-recurrence-v1",
+        "origin/research/rineya-verified-resampling-v1"
+      ],
+      "tags_containing": [
+        "archive/2026-10-04/codex-cheap-quality-abstention-20260929",
+        "archive/2026-10-04/codex-cheap-quality-complementarity-20260929",
+        "archive/2026-10-04/codex-cheap-quality-retrieval-20260929",
+        "archive/2026-10-04/codex-cheap-quality-shortcuts-20260929",
+        "archive/2026-10-04/codex-cheap-quality-stability-20260929",
+        "archive/2026-10-04/codex-cheap-quality-token-fit-20260929",
+        "archive/2026-10-04/codex-confirm002-paired-correctness-audit-20260930",
+        "archive/2026-10-04/codex-data-admission-001-20260930",
+        "archive/2026-10-04/codex-mimo-artifact-stream-budget-20260930",
+        "archive/2026-10-04/codex-mimo-capture-failure-accounting-20261001",
+        "archive/2026-10-04/codex-mimo-capture-fixed-input-audit-20260930",
+        "archive/2026-10-04/codex-mimo-exact-prefix-capture-20261001",
+        "archive/2026-10-04/codex-mimo-job-containment-20261001",
+        "archive/2026-10-04/codex-mimo-job-handle-fix-20261001",
+        "archive/2026-10-04/codex-mimo-supervisor-death-cpu-20261001",
+        "archive/2026-10-04/codex-mimo-suspended-job-launch-20261001"
+      ],
+      "log": [
+        "52430ac6 2026-09-26 04:47:25 -0500 result(abst001): the T4-generation crash was a driver TDR (nvlddmkm 14/153 at 07:03:12.98Z) -- evidence added, no reclassification, no number change",
+        "8d49deed 2026-09-26 04:45:52 -0500 result(abst001): apply the cold read's wording flags; cite the independent cold read -- no number changes",
+        "8be274da 2026-09-26 04:44:05 -0500 result(abst001): LC_LOWERS_UNKNOWN (189/256) + TEACHER_CONSISTENT_DIRECTION + SIGN_FOLLOWS_DEPTH -- generated from the artifacts; the caveat stays, reinforced",
+        "8486d817 2026-09-26 01:34:45 -0500 finalize(abst001): the launch hash chain, checked against the 31/31 harness pass log; the gate proven to pass and to fail",
+        "1d2f5552 2026-09-26 01:34:03 -0500 fix(abst001): harness-forced -- code_hashes() skips RELATIVE __file__ (torch.ops/classes); harness pass log 31/31 on the fixed code"
+      ],
+      "analysis": {
+        "experiment": "SMALLVD-001 / HLCC-001 / ABST-001 / LCACC-001",
+        "scientific_state": "HISTORICAL_RESULTS_WITH_ACTIVE_UNPUBLISHED_FOLLOWUP",
+        "checkout_disposition": "KEEP_AND_PRESERVE_LOCAL_SOURCE",
+        "track_retirement": "Older registered studies have results; new LCACC follow-up remains prepared and unpreserved.",
+        "reason": "17 untracked LCACC preregistration/constants/panel/runner/launch/test files. HLCC primary direction confirmed without size threshold; ABST shows LC lowers UNKNOWN likelihood, hold/no release. LCACC accuracy follow-up is designed and registered locally; no committed result found.",
+        "source_documents": [
+          "research/rineya_small_vocab_depth_v1/HLCC001_RESULT.md",
+          "research/rineya_small_vocab_depth_v1/ABST001_RESULT.md",
+          "research/rineya_small_vocab_depth_v1/LCACC001_PREREG.md"
+        ],
+        "external_dependencies": [
+          "C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/lcacc001-20260926",
+          "C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/abst001-20260925",
+          "C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/hlcc001-20260925"
+        ],
+        "dependency_note": "Historical launchers/hash receipts embed absolute checkout paths; moving/removing requires explicit handoff/reconstruction plan.",
+        "release_type": "Existing origin HEAD preserves historical results but does not preserve 17 new LCACC source paths."
+      },
+      "ignored_classification": "Only Python bytecode/pytest caches present; no weights, datasets, receipts or environments among ignored files",
+      "ignored_bytes": 151013.0,
+      "source_document_hashes": [
+        {
+          "path": "research/rineya_small_vocab_depth_v1/HLCC001_RESULT.md",
+          "sha256": "40de33d40d6695c4e5a23735ad1a33a96f6f50684849b4e5f7afd05be656c872"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/ABST001_RESULT.md",
+          "sha256": "46ab49723c33a3c7b9881ff5735c86d0a78afa32422f97b0f0d5ea8467eafaf6"
+        },
+        {
+          "path": "research/rineya_small_vocab_depth_v1/LCACC001_PREREG.md",
+          "sha256": "55be9990c18d025e91c4c20df8d099c65f7dd6443651125f6ac38a5b4fcc49f2"
+        }
+      ]
+    },
+    {
+      "name": "ChatBubble-rineya-quality-sft-v1",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-quality-sft-v1",
+      "head": "b96683586956cfd5b6f7ff690c4f9fffcce4cedb",
+      "branch": "codex/rineya-quality-sft-v1",
+      "dirty": [],
+      "ignored_files": [],
+      "remote_exact": [],
+      "remote_containing": [],
+      "tags_containing": [],
+      "log": [
+        "b9668358 2026-10-05 18:07:48 -0500 fix(rqsft): bind admitted bytes and pair custody",
+        "2210a009 2026-10-05 16:56:06 -0500 feat(research): verify gradient and order mechanisms",
+        "5df9fd4c 2026-10-05 16:29:59 -0500 feat(research): audit opposing quality patterns",
+        "33fd119c 2026-10-05 15:58:49 -0500 feat(research): add balanced quality SFT runner",
+        "e1737660 2026-10-04 21:58:16 -0500 feat(research): add DSD-001 independent self-distillation axes experiment"
+      ],
+      "analysis": {
+        "experiment": "RQSFT-001",
+        "scientific_state": "ACTIVE_CONSUMER_NATIVE_DATA_ADMISSION_PENDING",
+        "checkout_disposition": "KEEP_REMOTE_PRESERVATION_REQUIRED",
+        "track_retirement": "Research goal explicitly active; no broad quality improvement established.",
+        "reason": "Clean local b9668358 tip has no cached remote ref or tag containing it. 152 CPU fixture checks reported; actual admitted fresh bank, baseline, blinded judgments, native qualification and two SFT outcomes pending. Branch descends DSD founding implementation but is not a substitute for DSD.",
+        "source_documents": [
+          "experiments/rineya_quality_sft_v1/AGENTS.md",
+          "experiments/rineya_quality_sft_v1/README.md",
+          "experiments/rineya_quality_sft_v1/STATUS.md",
+          "experiments/rineya_quality_sft_v1/RUNBOOK.md"
+        ],
+        "external_dependencies": [
+          "C:/Users/clclc/BusinessProject/rineya-quality-sft-records/rqsft001-preparation-20261005"
+        ],
+        "release_type": "Publish source archive branch/tag before any checkout cleanup. Not a model release."
+      },
+      "ignored_classification": "Only Python bytecode/pytest caches present; no weights, datasets, receipts or environments among ignored files",
+      "ignored_bytes": 0,
+      "source_document_hashes": [
+        {
+          "path": "experiments/rineya_quality_sft_v1/AGENTS.md",
+          "sha256": "708aca11e10befa49ea76e04af8fd0b349cfb1d32460513fcdff10ce0f2a916e"
+        },
+        {
+          "path": "experiments/rineya_quality_sft_v1/README.md",
+          "sha256": "29e7e5507c191eeb102620a6cf10201af4338ecca66e03b1d7272651d17065e2"
+        },
+        {
+          "path": "experiments/rineya_quality_sft_v1/STATUS.md",
+          "sha256": "d907b813ac81af9e1002dd91b09edb650dd9bef0626ba2491702014fd42c45e0"
+        },
+        {
+          "path": "experiments/rineya_quality_sft_v1/RUNBOOK.md",
+          "sha256": "69ab5f6d720101efcd4514b35e478d8f8838b6113ca682f5fe83c1d256351f54"
+        }
+      ]
+    },
+    {
+      "name": "ChatBubble-rineya-reasoning-posttraining-v1",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-reasoning-posttraining-v1",
+      "head": "11da2c23927764b47148fd7c9300b1a60ac8ae57",
+      "branch": "research/rineya-reasoning-posttraining-v1",
+      "dirty": [],
+      "ignored_files": [],
+      "remote_exact": [
+        "origin/research/rineya-reasoning-posttraining-v1"
+      ],
+      "remote_containing": [
+        "origin/research/rineya-reasoning-posttraining-v1"
+      ],
+      "tags_containing": [],
+      "log": [
+        "11da2c23 2026-09-26 15:26:02 -0500 feat(triskill-001): register the rules-skill lane in BOTH registries",
+        "d6cf6532 2026-09-25 01:42:39 -0500 feat(clockfix-001): register the clock-repair lane in BOTH registries",
+        "e1dc6bae 2026-09-21 20:25:13 -0500 fix(gen2-001): register the plan id too -- there are TWO registries",
+        "96a734c3 2026-09-21 20:22:58 -0500 fix(gen2-001): actually import the lane module so it registers",
+        "910bcb70 2026-09-21 20:22:37 -0500 feat(gen2-001): register the second-GENERATOR lane"
+      ],
+      "analysis": {
+        "experiment": "RRP-001 / RRP-002 / registered successor lanes",
+        "scientific_state": "EARLIER_MICROFIT_COMPLETE_RESEARCH_GOAL_ACTIVE",
+        "checkout_disposition": "KEEP_AS_DEPENDENCY_OR_CONSOLIDATE_WITH_EXPLICIT_HANDOFF",
+        "track_retirement": "Status says ACTIVE_NOT_COMPLETE. Latest tip adds TRISKILL/CLOCKFIX/GEN2 lane registrations; no documented retirement.",
+        "reason": "Clean exact cached origin tip. RRP001 engineering microfit and bit-identical resume complete, not quality candidate. RRP002 all baselines measured and paired statistics implemented; broader reasoning/preservation goal remains incomplete. Internal CONTINUE/RESULTS lag STATUS on statistics completion, so do not infer branch obsolete from older summary.",
+        "source_documents": [
+          "experiments/reasoning_posttraining_v1/AGENTS.md",
+          "research/reasoning_posttraining_v1/STATUS.json",
+          "research/reasoning_posttraining_v1/CONTINUE.md",
+          "research/reasoning_posttraining_v1/RESULTS.md"
+        ],
+        "external_dependencies": [
+          "C:/Users/clclc/BusinessProject/rineya-reasoning-posttraining-records/rrp001-journal",
+          "C:/Users/clclc/BusinessProject/.venv-mq001"
+        ],
+        "dependency_note": "Native microfit checkpoint tensors live outside checkout (~11.3 GiB historical), not ignored worktree files. Keep source dependencies and exact run identity available to registered successor lanes.",
+        "release_type": "Source/evidence archive possible, no quality-model release authorized by microfit."
+      },
+      "ignored_classification": "Only Python bytecode/pytest caches present; no weights, datasets, receipts or environments among ignored files",
+      "ignored_bytes": 0,
+      "source_document_hashes": [
+        {
+          "path": "experiments/reasoning_posttraining_v1/AGENTS.md",
+          "sha256": "9372fabf62958538dafabc8656de3ef2abca9aa7f2dfe90ac5ffc0d7677f9e52"
+        },
+        {
+          "path": "research/reasoning_posttraining_v1/STATUS.json",
+          "sha256": "d19cadaf4b8d48c623e0aa999b75d6414321446528ca50442dde19134940f769"
+        },
+        {
+          "path": "research/reasoning_posttraining_v1/CONTINUE.md",
+          "sha256": "a9b6c3683d9409ca12cc61d0c9d2f6beefdbffd1d3262e5dcd7cf99c05e8122d"
+        },
+        {
+          "path": "research/reasoning_posttraining_v1/RESULTS.md",
+          "sha256": "02d1284de2c325a66a06f33df597fd928b30b0eef5e049c9a0b047687590a020"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "clean_dormant_or_completed_checkout_candidates": [
+      "ChatBubble-rineya-bf16-attention-gproj-v1",
+      "ChatBubble-rineya-reasoning-corpus-v1",
+      "ChatBubble-rineya-compute-depth-elasticity-v1"
+    ],
+    "dirty_substantive_source_worktrees": 4,
+    "dirty_total_paths": 71,
+    "local_only_clean_tip": "ChatBubble-rineya-quality-sft-v1",
+    "scientifically_superseded_tracks": [],
+    "warning": "Checkout removal can preserve research remotely. No audited track is proved scientifically obsolete merely by age or a blocked gate. Cached remote refs require parent live verification."
+  }
+}

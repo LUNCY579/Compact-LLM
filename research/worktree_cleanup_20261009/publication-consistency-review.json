@@ -1,0 +1,199 @@
+{
+  "schema": "RINEYA_CLEANUP_PUBLICATION_CONSISTENCY_REVIEW_V1",
+  "review_utc": "2026-10-10T03:32:43.5795958Z",
+  "review_scope": "Read-only, hardware-aware metadata and bounded hashing. No Git mutation, publication, model execution, broad disk scan or source edit.",
+  "status": "REMOTE_PRESERVATION_PASS_PUBLICATION_CORRECTIONS_REQUIRED",
+  "preserved_cleanup": {
+    "phase1_removals": 7,
+    "phase2_removals": 7,
+    "total_removal_events": 14,
+    "historical_cleanup_endpoint_populated_worktrees": 29,
+    "initial_local_branch_names_checked": 165,
+    "missing_original_branch_names": 0,
+    "live_remote_annotated_tags_checked": 19,
+    "failed_tag_object_or_peeled_commit_matches": 0,
+    "private_release_records_checked": 8,
+    "release_asset_sizes_and_sha256_checked": 36,
+    "live_release_asset_digest_or_local_hash_failures": 0,
+    "gross_logical_checkout_bytes_removed": 30052209270,
+    "scientific_archive_download_verification_receipts_present": true
+  },
+  "parser_handoff": {
+    "current_consumer_sha_matches_migration_receipt": true,
+    "new_parser_sha_matches_original_byte_guard": true,
+    "original_archived_script_sha256": "5e07d30e47e5af8387ec17bdc87d57db12eb0e17201a145476ddb7c52f633228",
+    "changed_script_sha256": "807b1f87a322ccd8c2521f5cc94721e24a91ac75c3772678b6ef7aa545dc3c28",
+    "parser_sha256": "c52b6a48cb811e3c272793a66765e82152fe170e8307eea153c3b1b6c5c58322",
+    "earlier_independent_byte_comparison": "Exactly one original path literal replaced; new parser equals original tagged Small parser; syntax-only compile passed without execution.",
+    "historical_receipts_current_hashes_match_archived_originals": [
+      "behavior_recount.json",
+      "behavior_claims.json"
+    ],
+    "migration_receipt_in_verified_small_private_release": true,
+    "source_dependency_note": "Changed consumer uses standard-library imports and dynamically imports the retained exact-hash parser; publishing this standalone consumer requires preserving its local-data/absolute-path contract, not unrelated untracked research source."
+  },
+  "blocked_cache_action": {
+    "status": "AUTO_APPROVAL_REVIEW_REJECTED",
+    "action": "Remove 17 source-backed bytecode cache files and empty cache directories",
+    "reason": "blocked by policy; no further reason supplied",
+    "standalone_cache_files_deleted": 0,
+    "standalone_cache_bytes_deleted": 0,
+    "original_17_candidate_files_still_exist": true,
+    "wording": "Zero files were deleted by the separately proposed standalone cache cleanup. Cache files inside successfully removed checkouts are part of the checkout removal events."
+  },
+  "current_state_since_cleanup": {
+    "registered_populated_worktrees_at_review": 34,
+    "previously_removed_paths_now_restored": [
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-ppt-centralized-reasoning-v1",
+      "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-quality-sft-v1"
+    ],
+    "restored_source_heads": [
+      "ff7bdac1fc8eed5c3b00de5edca2082f44df15bd",
+      "b96683586956cfd5b6f7ff690c4f9fffcce4cedb"
+    ],
+    "new_paths_absent_from_cleanup_report": [
+      "C:\\Users\\clclc\\.codex\\worktrees\\rineya-dataset-publication\\ChatBubble-post-training-Mimo",
+      "C:\\Users\\clclc\\BusinessProject\\WorldModel\\rineya-complementary-worktree",
+      "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-WorldModel-rineya-complementary-research-2026-10-09\\3669d0b6-f9a8-4068-a5c7-094164c55025\\scratchpad\\dataset_ro"
+    ],
+    "interpretation": "Later restorations/new owner work, not a cleanup preservation failure. Original deletion journals remain historical records; current live inventory differs."
+  },
+  "publication_corrections": [
+    {
+      "priority": "required",
+      "file": "audit-report.json and audit-report.html",
+      "claim": "Generic phase1 clean-target reason says remote source tag and scientific archive verified",
+      "correction": "For BF16, corpus, CDE, EFE, tangent and detached Claude: exact clean/cache-only committed source is preserved by verified remote tag; no separate scientific artifact archive was required or created."
+    },
+    {
+      "priority": "required",
+      "file": "audit-report.html and final-cleanup-verification.json presentation",
+      "claim": "29 remaining; all removed paths absent; permanently removed",
+      "correction": "Label as cleanup-completion snapshot/removal events. Add current-review note: 34 populated registered trees, two original paths restored and three new independent owner trees."
+    },
+    {
+      "priority": "required if published",
+      "file": "concurrent-owner-ref-advances.json",
+      "claim": "after/final_remote_uncovered fields describe phase1 observations",
+      "correction": "Label as phase1 observation or omit; final report has later captured owner advance snapshots, and active RSD/SYNTH continue advancing."
+    },
+    {
+      "priority": "required if publishing compact package",
+      "file": "audit-report.html",
+      "claim": "Evidence links include inventory.json, auxiliary-audit.json, supa-audit.json and other local-only raw scans",
+      "correction": "Keep only published relative evidence links, or explicitly label local-only material. Avoid broken remote report links."
+    },
+    {
+      "priority": "wording",
+      "file": "publication summary",
+      "claim": "Freed bytes or all research remote preservation may read as live net/all-active coverage",
+      "correction": "Use gross logical removal total and timestamped cleanup outcome; later restorations affect current disk usage. All removed committed histories are remotely preserved; unrelated active local-only heads remain intentionally outside publication scope."
+    }
+  ],
+  "useful_publication_files": [
+    {
+      "file": "audit-report.json",
+      "bytes": 213783,
+      "sha256": "cbc9f8952ae6d674bdf8fb50c09314d9eece1b2f2a02e49aabae39a0fa9e9843"
+    },
+    {
+      "file": "audit-report.html",
+      "bytes": 101094,
+      "sha256": "c4516cbc29c7ac3f8b22b6f8d65c6192063bad358cb677de1f6aa2d65cb46625"
+    },
+    {
+      "file": "cleanup-receipt.json",
+      "bytes": 3672,
+      "sha256": "1a5599f1ac8e941dcd611b140594466f29e782b4dc3c15da0224afbb5e8c626c"
+    },
+    {
+      "file": "phase2-cleanup-receipt.json",
+      "bytes": 5117,
+      "sha256": "100f55bbdc1826e61d1c850242604b20d7dd5f402ebbaa87ba9e666275fd3dcd"
+    },
+    {
+      "file": "remote-preservation.json",
+      "bytes": 3738,
+      "sha256": "cef7ce790d4539b0899c8254a19fd8af7756f1b3f7e988a8031ff6df84292b1e"
+    },
+    {
+      "file": "phase2-verified-tags.json",
+      "bytes": 2682,
+      "sha256": "4159fc39d7a3585ae719a621db66330c6fbfcfcf4b06e42092532ce15d3355b0"
+    },
+    {
+      "file": "supa-hybrid-remote-verification.json",
+      "bytes": 1262,
+      "sha256": "8e89f184b26ab097e430e37dc2762d342d2923734f7ae29f4c9974d3578ac609"
+    },
+    {
+      "file": "phase2-remote-release-verification.json",
+      "bytes": 11088,
+      "sha256": "c2e0ae88ea058dbd9ab53d21a9c17c47fdcd8c3d0145184860f0f0a6e172590c"
+    },
+    {
+      "file": "supa-hybrid-ignored-scientific-manifest.json",
+      "bytes": 35824,
+      "sha256": "72e69ed5687459cb87090c97f47525e36d58685e893564d0fe82fa8876f09642"
+    },
+    {
+      "file": "supa-hybrid-archive-verification.json",
+      "bytes": 1488,
+      "sha256": "b4e808203a8474dd09d6a86ccef40dfe29f70323486b78de37ca11421bbd2f09"
+    },
+    {
+      "file": "pruned-stale-registrations.json",
+      "bytes": 520,
+      "sha256": "858438f4cb54053738b6116e91d13bb406716e4de1e74212df1005ade68c0ab3"
+    },
+    {
+      "file": "phase2-parser-migration-receipt.json",
+      "bytes": 1437,
+      "sha256": "f81eb9c02553e1d2f87ce16f88547ed8e1c16087a1445c3a97bbd706c288fd60"
+    },
+    {
+      "file": "phase2-small-vocab-consumer-migration-plan.json",
+      "bytes": 2256,
+      "sha256": "4ccf68ec7c1278e3835710dacf3145f8698f9b37f8dfd7c2d4b75054508c984e"
+    },
+    {
+      "file": "phase2-cache-cleanup-receipt.json",
+      "bytes": 351,
+      "sha256": "eee216bf0c38bc6154db3d9cd729a19dc1eaef8d3b64d8515ec5e4a0afc42ba9"
+    },
+    {
+      "file": "final-cleanup-verification.json",
+      "bytes": 403,
+      "sha256": "f59ff3260ec5caf1a1e8bfa98428403d98286e40cda9ad6feae6b6446ed33802"
+    }
+  ],
+  "useful_additional_file_patterns": [
+    "phase2-*-manifest.json",
+    "phase2-*-verification.json",
+    "phase2-*-SHA256SUMS.txt",
+    "phase2-*-release-notes.txt",
+    "supa-hybrid-release-notes.txt",
+    "phase2-research-retirement.json",
+    "phase2-auxiliary-retirement.json",
+    "research-status.json",
+    "remote-research-status.json"
+  ],
+  "necessary_changed_source": "ChatBubble-rineya-pruning-retention-confirm-v1/research/rineya_quality_patterns_v1/recompute_behavior.py (single literal path relocation, original source/historical receipts already privately archived)",
+  "exclude_from_git_publication": [
+    "local-chat-goals.json",
+    "phase2-owner-goals.json",
+    "thread-snapshot.json",
+    "rollout/session/chat payloads",
+    "raw large per-repository inventories and process dumps",
+    "unrelated active-owner source changes",
+    "shared model weights/tokenizers/checkpoints and runtime environments",
+    "archive .tar.gz assets already held by verified private releases",
+    "quarantined invalid internal Codex ref binaries",
+    "hard-coded destructive cleanup/publish executors unless separately documented as frozen historical tools"
+  ],
+  "limitations": [
+    "This review verifies preserved release metadata and hashes against live remote digests and saved independent-download receipts; no redundant downloads were made.",
+    "Current branch/source activity is concurrent; capture time must remain explicit.",
+    "Cleanup journals are immutable historical evidence. A publication supplement should describe subsequent restorations without rewriting historical facts."
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "status": "VERIFIED_SINGLE_LITERAL_PATH_MIGRATION_AND_UNCHANGED_HISTORICAL_RECEIPTS",
+  "reviewed_utc": "2026-10-10T03:29:55.725760+00:00",
+  "read_only_review": true,
+  "active_owner_git_head_index_mutated": false,
+  "model_imports": 0,
+  "model_or_native_tests": 0,
+  "source_comparison": "Exact binary comparison: current script equals archived original after exactly one old-path-to-new-path replacement. No other consumer script edits.",
+  "changed_line": 88,
+  "changed_bytes": 14,
+  "old_parser": "C:/Users/clclc/BusinessProject/ChatBubble-small-vocab-depth/experiments/architecture_benchmark_001/retention.py",
+  "new_parser": "C:/Users/clclc/BusinessProject/ChatBubble-ced-native-loader-qualification/experiments/architecture_benchmark_001/retention.py",
+  "parser_sha256": "c52b6a48cb811e3c272793a66765e82152fe170e8307eea153c3b1b6c5c58322",
+  "parser_bytes": 33056,
+  "guard": "Exact original SHA assertion remains unchanged before loading the parser.",
+  "archived_originals_and_current_files": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-pruning-retention-confirm-v1\\research\\rineya_quality_patterns_v1\\recompute_behavior.py",
+      "archive_member": "original_pruning_consumer/recompute_behavior.py",
+      "original_bytes": 18213,
+      "current_bytes": 18227,
+      "original_sha256": "5e07d30e47e5af8387ec17bdc87d57db12eb0e17201a145476ddb7c52f633228",
+      "current_sha256": "807b1f87a322ccd8c2521f5cc94721e24a91ac75c3772678b6ef7aa545dc3c28",
+      "unchanged": false
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-pruning-retention-confirm-v1\\research\\rineya_quality_patterns_v1\\behavior_recount.json",
+      "archive_member": "original_pruning_consumer/behavior_recount.json",
+      "original_bytes": 28669,
+      "current_bytes": 28669,
+      "original_sha256": "5f4565ca21fdcc7efb37cb1292e75e024b2514d6b1f15c31a06c8f3834e6134f",
+      "current_sha256": "5f4565ca21fdcc7efb37cb1292e75e024b2514d6b1f15c31a06c8f3834e6134f",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-pruning-retention-confirm-v1\\research\\rineya_quality_patterns_v1\\behavior_claims.json",
+      "archive_member": "original_pruning_consumer/behavior_claims.json",
+      "original_bytes": 35624,
+      "current_bytes": 35624,
+      "original_sha256": "2ac4c7d74af165180b8251b3a3d7767e8c75e9f0e5c1104e5e569d928ccb3ace",
+      "current_sha256": "2ac4c7d74af165180b8251b3a3d7767e8c75e9f0e5c1104e5e569d928ccb3ace",
+      "unchanged": true
+    }
+  ],
+  "migration_plan_matches": true,
+  "migration_receipt_matches": true,
+  "original_private_release": "https://github.com/LUNCY579/ChatBubble/releases/tag/archive/2026-10-09/worktrees/rineya-small-vocab-depth-v1",
+  "original_archive_sha256": "5f2c6908e8e00a8018ee068d9d16444e05e84508704d4daecb7543b3542d99db",
+  "release_asset_verified_against_local_archive": true,
+  "context": {
+    "source_lookup": "Local parser-file location; content identity is the invariant SHA, not checkout name.",
+    "scientific_state": "Retrospective standard-library recount of already exposed historical data; no new model result or authorization.",
+    "records": "Existing behavior_recount.json and behavior_claims.json are byte-identical to originals in verified remote archive. No historical receipt is rewritten or re-signed.",
+    "future_identity": "New recounts will capture changed script hash and parser path in PINS. Old source/path provenance remains historical.",
+    "adjacent_source": "Neighboring annotation recount already uses CED parser at the same required SHA.",
+    "remaining_dependencies": "External historical record files under rineya-dataset-retention-records and pure historical scorer modules are retained. CED parser checkout remains owned/retained.",
+    "frozen_protocols": "Inspected pruning/pilot source-freeze and prereg files contain no required old recount-script hash/location binding; frozen pilot parameters/results stay unchanged."
+  },
+  "publication_recommendation": {
+    "repository": "LUNCY579/ChatBubble",
+    "isolated_branch": "codex/rineya-cleanup-publication-20261009",
+    "exact_parent": "954a0c2637e691b493c5ac3d488653a8c1adf675",
+    "parent_reason": "Matches the active pruning owner checkout's existing pinned ancestry; do not move its branch or index, do not reparent onto another study.",
+    "script_is_untracked_at_parent": true,
+    "preferred_reviewable_history": "Use a separate temporary index outside active checkouts. First an archival baseline commit adds only exact original recount script; second a migration commit makes the one-line location change and adds migration evidence. Existing untracked research is left alone.",
+    "minimal_baseline_files": [
+      "research/rineya_quality_patterns_v1/recompute_behavior.py (archived original, SHA5e07d30e...)"
+    ],
+    "minimal_migration_files": [
+      "research/rineya_quality_patterns_v1/recompute_behavior.py (current verified bytes)",
+      "docs/research_cleanup/20261009/phase2-small-vocab-consumer-migration-plan.json",
+      "docs/research_cleanup/20261009/phase2-parser-migration-receipt.json",
+      "docs/research_cleanup/20261009/publication-parser-review.json"
+    ],
+    "supporting_note": "A concise cleanup publication index should link the original private release/archive and state external-data requirements. Full historical receipt bodies already live in verified release; their unchanged hashes are in this review.",
+    "avoid_staging": [
+      "Entire existing untracked research/rineya_quality_patterns_v1 directory",
+      "Other active/pruning/pilot packages",
+      "Historical datasets, checkpoints, native grants and model weights",
+      "Disposable caches and raw chat/owner DB snapshots"
+    ],
+    "one_commit_alternative": "If root prefers one evidence commit, add the current script plus migration plan/receipt/review with explicit original-release link. It will appear as a new tracked file rather than a one-line diff because the original was never committed."
+  }
+}

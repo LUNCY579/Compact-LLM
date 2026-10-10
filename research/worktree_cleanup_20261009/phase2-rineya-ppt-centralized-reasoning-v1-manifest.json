@@ -1,0 +1,70 @@
+{
+  "schema": "rineya.retired-checkout-preservation/2",
+  "source_root": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-ppt-centralized-reasoning-v1",
+  "branch": "research/rineya-ppt-centralized-reasoning-v1",
+  "source_head": "ff7bdac1fc8eed5c3b00de5edca2082f44df15bd",
+  "remote_source_tag": "archive/2026-10-09/worktrees/rineya-ppt-centralized-reasoning-v1",
+  "archived_utc": "2026-10-09T17:35:03.067486+00:00",
+  "retirement": "Remove dormant checkout after exact remote source tag and downloaded artifact verification; retain study, open questions, original branch and negative evidence.",
+  "restoration": "Add source worktree at original path from source_head/tag. Extract archive at checkout root; material files restore exact bytes. Apply recorded deleted_tracked_files only if restoring deleted working-tree paths. HEAD.patch records complete tracked difference.",
+  "status_porcelain": "M experiments/rineya_ppt_centralized_reasoning_v1/README.md\n M experiments/rineya_ppt_centralized_reasoning_v1/STATUS.md\n?? experiments/rineya_ppt_centralized_reasoning_v1/evidence/CPU_SAMPLER_2026-10-03.md\n?? experiments/rineya_ppt_centralized_reasoning_v1/evidence/cpu_sampler_2026-10-03.json\n?? experiments/rineya_ppt_centralized_reasoning_v1/qualify_cpu.py\n?? experiments/rineya_ppt_centralized_reasoning_v1/tests/test_tiny_sampler.py\n?? experiments/rineya_ppt_centralized_reasoning_v1/tiny_sampler.py",
+  "diff_name_status": "M\texperiments/rineya_ppt_centralized_reasoning_v1/README.md\nM\texperiments/rineya_ppt_centralized_reasoning_v1/STATUS.md",
+  "deleted_tracked_files": [],
+  "files": [
+    {
+      "path": "experiments/rineya_ppt_centralized_reasoning_v1/README.md",
+      "bytes": 2459,
+      "sha256": "329bd82dfc65da1aad1772e4f61d0a97aa51cf82fd165707156d746d7301fe49",
+      "category": "modified tracked file"
+    },
+    {
+      "path": "experiments/rineya_ppt_centralized_reasoning_v1/STATUS.md",
+      "bytes": 3420,
+      "sha256": "0e7cc760b8c4a427cf23716f74b79228de447cba963bea5355d55961c6090f4f",
+      "category": "modified tracked file"
+    },
+    {
+      "path": "experiments/rineya_ppt_centralized_reasoning_v1/evidence/CPU_SAMPLER_2026-10-03.md",
+      "bytes": 8405,
+      "sha256": "a25d36dada457d2ff70f8c828dd6f7877f0c26a90601399d65e71f8660b53eb4",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/rineya_ppt_centralized_reasoning_v1/evidence/cpu_sampler_2026-10-03.json",
+      "bytes": 6350,
+      "sha256": "a0e2416fe644de1e0b5dd6d294efa5b430afd9ba22a4777f905609f7b177bc60",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/rineya_ppt_centralized_reasoning_v1/qualify_cpu.py",
+      "bytes": 7009,
+      "sha256": "5b5642c669740f31b16a0b9e375b2d4e9b825c47f3d4935dcb5e5eef0af3dba3",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/rineya_ppt_centralized_reasoning_v1/tests/test_tiny_sampler.py",
+      "bytes": 21522,
+      "sha256": "e216cbbf3885bf39aaafdd0c2d9a53d0791fb2d029b2ed50f899d9919fb0532f",
+      "category": "untracked source/evidence"
+    },
+    {
+      "path": "experiments/rineya_ppt_centralized_reasoning_v1/tiny_sampler.py",
+      "bytes": 10308,
+      "sha256": "fca3596cdc068cc6f7e99f273473a7a511ff0842bea70299b6e93462b6d21e07",
+      "category": "untracked source/evidence"
+    }
+  ],
+  "material_bytes": 59473,
+  "excluded_disposable_cache_files": [
+    "experiments/rineya_ppt_centralized_reasoning_v1/__pycache__/tiny_sampler.cpython-311.pyc",
+    "experiments/rineya_ppt_centralized_reasoning_v1/tests/__pycache__/test_tiny_sampler.cpython-311.pyc"
+  ],
+  "patch_sha256": "7b0208240b0999925929caffc45d112b6ad1e97a2568855c684098732ce3f9f4",
+  "hardware_policy": {
+    "priority": "BelowNormal",
+    "compression_level": 1,
+    "workers": 1,
+    "stream_buffer_bytes": 1048576,
+    "model_or_gpu_imports": false
+  }
+}
