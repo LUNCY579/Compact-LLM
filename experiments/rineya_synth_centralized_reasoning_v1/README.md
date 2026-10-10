@@ -9,6 +9,15 @@
 Current continuation: [matched corpus and limits](CPU_DATA_MILESTONE.md),
 [status](STATUS.md), and [native qualification proposal](NATIVE_QUALIFICATION_PROPOSAL.json).
 
+The owner has granted [standing authorization](OWNER_AUTHORIZATION_20261009.md).
+Each launch still requires its own reviewed source/run registration and genuine
+qualification and resource evidence. Historical preparation notes below retain
+their original pending-permission state; they are not current approval requests.
+
+[Preserved INFQ source compatibility and paired successor](INFQ_SOURCE_COMPATIBILITY_PRESERVATION_001.md)
+contain the latest external source work, reviews and explicit remaining holds.
+The copied candidates remain staged and unqualified.
+
 Latest CPU continuation: [closed arithmetic capture adapter and actual plan](ARITHMETIC_CAPTURE_CPU_001.md).
 Its source and actual512 token-plan joins pass scoped CPU audits; native grading,
 all-domain enrollment and the full training comparison remain pending.

@@ -1,5 +1,24 @@
 # Status and next handoff
 
+## 2026-10-09: source compatibility and paired successor preserved for GitHub
+
+[CompatibilityPreservation001](INFQ_SOURCE_COMPATIBILITY_PRESERVATION_001.md)
+adds the reviewed external metadata adapter and staged paired-consumer successor
+to package evidence without promoting executable sources. The original legacy
+INFQ nested accounting is recognized internally before genuine lineage checks;
+metadata remains unqualified and incomplete per-call/global/family/chronology
+evidence still refuses admission. Three metadata-adapter and four paired-interface
+controls pass in authored, Root and independent replays. All 52 original source,
+review, failure and handoff files were copied byte-for-byte; historical paths,
+source hashes, permissions and qualification limits remain distinct.
+
+Publication review retains the existing qualification adapter/optimizer/RNG
+snapshots as evidence in the owner's private repository. It does not release or
+promote a model, authorize a warmstart, or establish M1/M2 transfer. Other GPU jobs
+remain prioritized; no native retry or resource change is part of this GitHub
+publication. Complete/scored M0, genuine grading, lineage, chronology and current
+native qualification remain unresolved.
+
 ## 2026-10-09: actual original-INFQ input projection audited
 
 [INFQProjection001](INFQ_EXPOSURE_PROJECTION_CPU_001.md) closes all84 historical
@@ -38,8 +57,10 @@ full-response scoring seam and grouped enrollment. Independent direct audit
 joins all512 actual prompt/message/token/source rows and verifies upper dose
 16400 forwards/2295832 positions; 13 selected input/source pins stay unchanged.
 Original384/768 contracts and native resource/numerical checks remain intact.
-Source remains staged. Native scorer/enrollment registrations and compatible
-raw audit are still unfinished; fixtures confer no native authority. Current
+Source remains staged. Native scorer/enrollment qualification is unfinished;
+the later conditional raw auditor and source-replay preparation are preserved
+separately and have no genuine arithmetic capture to audit. Fixtures confer no
+native authority. Current
 GPU admission, model/runtime qualification, complete guards and full M0/M1/M2
 transfer+retention results remain pending under standing owner authorization.
 
