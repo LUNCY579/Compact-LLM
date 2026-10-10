@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "status": "EXACT_FINDING_TRIGGERED_FINAL_CUMULATIVE_ROUND6_CORRECTION_ONLY",
+  "authority_sha256": "c36a00c7f1fba55c9e1dc1b8952c29546d9eabe13dfc6b6f93bb34374b3994c9",
+  "scope_sha256": "ae989733969059a8188add0e692c732647f71f31c0e26fab7a51720b1fad0525",
+  "adoption_sha256": "2cae7194de2d54645d913953728f6e602a2b23fbfbff1de2ddd02cd896031f15",
+  "source5_disposition_sha256": "ea5f08a28356e6ef78b8088b4201bfa16c5ea3fa122372d1c9f01e184fe83ea7",
+  "source5_preservation_sha256": "7aaf81a4d7dbb15e763d200a9fae29cf56941cd8693e82bc53247a40bd1fb6b0",
+  "SCI_sha256": "f311ca04051a8744bbf33e9a15b71216bc1f29f03891134ee52a8b7b6f60d23a",
+  "OPS_sha256": "a8289f7a6c3e0ba9a0f0fb4570aba3f46b96e76b5a3fc608c58c32a5b8d195a3",
+  "allowed_corrections": [
+    "Production role route bypasses actual grant/admission",
+    "Failed CLI drops reachable custody and exits K while outcomes unresolved",
+    "Observer timer is scheduled from constructor rather than absolute TC+2",
+    "Required tracked Git blob coverage is not enforced",
+    "Queued C reply can complete after its renewed phase/lease evidence is stale",
+    "Failure return omits measured phase/role CPU and explicit partial/unknown cost evidence"
+  ],
+  "allowed_paths": [
+    "caller_observer_integration.py",
+    "test_caller_observer_integration.py",
+    "contracts/CALLER_OBSERVER_INTEGRATION_V1.json",
+    "evidence/caller_observer_integration_round6_014"
+  ],
+  "source_cumulative_round": 6,
+  "remaining_source_candidates_after_this": 0,
+  "fixture_invocations_max_after_independent_source_acceptance": 1,
+  "fixture_external_wall_seconds_max": 60,
+  "scope_prior_fixture_invocations": 0,
+  "source_review_rejection_consumes6_without_fixture": true,
+  "no_round7_repair_retest_newmilestone_or_caps_reset": true,
+  "fixed20inputs_and_all_prior_evidence_immutable": true,
+  "actual_UV_children_hostDB_keys_model_installer_network_actions": 0,
+  "Root_preservation_verified_before_correction": true
+}

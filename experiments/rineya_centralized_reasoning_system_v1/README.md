@@ -1,5 +1,11 @@
 # CRS-001: centralized reasoning and memory for the Rineya family
 
+**2026-10-10 resumption014:** the new finite caller/observer integration window
+is exhausted at cumulative source5/6. Executable integration progress is retained,
+but final source6 is rejected before its fixture for an actual-return phase binding
+gap. [Final disposition](evidence/caller_observer_integration_round6_014/FINAL_DISPOSITION.json)
+and current STATUS/CONTINUATION govern; no source7, fixture or runtime action follows.
+
 **Current record index, 2026-10-10 UTC:** [publication review and evidence
 index](PUBLICATION_REVIEW_2026-10-10.md) identifies the latest accepted components,
 quarantined attempts, provenance and local custody boundaries. [STATUS](STATUS.md)

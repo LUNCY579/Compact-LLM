@@ -1,5 +1,44 @@
 # CRS-001 status and continuation
 
+Current final disposition014: cumulative source6 is rejected BEFORE its fixture;
+scope014 is exhausted at2/2 candidates (prior library3/3 and0131/1 preserved).
+Final disposition5547fb0b/readinesscb80f30d bind source7bfe16f5/tests98abe3c6/
+contractd88cf647/freeze82f7398f at source commit25752e85. Original SCI6 fixture
+eligibility59681821 is retained unchanged; OPS8ce0cca6 rejects the actual-return
+phase gap and focused SCI addendum346bb1ad withdraws eligibility. Validation may
+cross the phase deadline after its pre-read time sample without a final resample.
+Independent child containment does not satisfy that every-return assertion.
+The executable caller/observer/transport/ownership/publication progress and closed
+ordinary findings remain useful supplied source evidence, not full acceptance.
+45 methods are only AST-discovered plans; source5 and6 fixtures both remain0.
+Source6 construction513.1702279s monotonic/CPUunknown, source5 timingunknown and
+all earlier costs remain recorded. Actual OS/UV/hostDB/key/setup/model actions0;
+actual grant registry empty. No round7, retest, reset or automated source follows.
+Necessary work is read-only reconciliation/preservation until a genuinely concrete
+resolving scope is explicitly justified and independently reviewed. Permission is
+delegated; qualification is not. Full neural mission and all questions stay open.
+Earlier active/resumption paragraphs below are preserved historical chronology.
+
+Current scope014 checkpoint: cumulative source5 is rejected before its fixture
+by SCI f311ca04 / OPS a8289f7a. Its34 AST-discovered methods are not passes;
+invocations remain0. Exact source5/history/reviews are preserved at7aaf81a4.
+Root triggera86331ff authorizes ONLY final cumulative source6 correction for
+the six recorded admission/custody/timer/Git/reply/failure-cost findings.
+Source6 must pass independent source review before its ONE<=60s fixture.
+No cumulative7, rerun, actual launch or runtime/model qualification follows.
+Earlier resumption and source013 paragraphs below remain historical chronology.
+
+Current resumption, 2026-10-10: the human explicitly requested resolution of the
+missing caller/observer integration. Scope014 is independently accepted for
+source construction only (SCI f9111dbc / OPS fd98cd3b), with fixed input freeze
+04f03f33. It allows cumulative integration round5 and one finding-justified
+round6 correction, one<=60s synthetic invocation each after independent source
+review, maximum120s total. Library3/3 and integration0131/1 remain consumed.
+Actual OS children/UV/hostDB/native keys/setup/model/learning gates stay closed.
+See resolution_proposals/caller_observer_integration_014/SCOPE.md and
+evidence/caller_observer_integration_014/SCOPE_ADOPTION.json. Older authoritative
+state and action paragraphs below are preserved historical chronology.
+
 Current authoritative state: integration013 is quarantined at its sole
 supplemental candidate, cumulative round4. Its source is incomplete and actual
 dispatch refuses. No successor source scope or actual query is registered.

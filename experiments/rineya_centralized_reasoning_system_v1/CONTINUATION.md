@@ -1,5 +1,44 @@
 # Executable CRS continuation
 
+Current stop: final source6 rejected BEFORE fixture; scope014 consumed2/2.
+Read evidence/caller_observer_integration_round6_014/FINAL_DISPOSITION.json
+(5547fb0b), READINESScb80f30d, original SCI6 plus binding addendum346bb1ad and
+OPS8ce0cca6. sourcefreeze82f7398f/source7bfe16f5/test98abe3c6/contractd88cf647
+remain exact at25752e85; source5/history/20fixedinputs/allpriorreceipts preserved.
+The residual actual-return phase check uses a pre-validation clock and is not
+resampled after potentially blocking reads/identity work. No source eligibility,
+fixture or actual launch follows;45plannedmethods are not passes, invocation0.
+No round7/repair/retest/newmilestone/reset/alternatequery is granted by014. Keep
+the concrete caller/observer implementation progress and negative evidence; do
+not reduce full integration to component fields or an accepted signature. Only
+necessary read-only reconciliation and preservation remain under this exhausted
+scope. Any later resolving scope requires exact evidence-specific registration
+and independent review; the existing human authority is not a missing approval.
+No actual grant, UV/key/hostDB/setup/model/learning action; all runtime gates closed.
+The earlier source6 action and other active paragraphs below are historical.
+
+Current bounded action: source5 is consumed/rejected BEFORE its fixture,0runs.
+Read SOURCE5_DISPOSITIONea5f08a2 and exact history5 PRESERVATION7aaf81a4.
+Only finding-triggered cumulative6 correctiona86331ff remains; do not edit or
+retest5 or repeat013. Preserve20fixedinputs and all budgets/keys. Freeze complete
+source6, obtain fresh independent SCI/OPS full-source review, then at most its
+ONE<=60s stdlib fixture if source-eligible. Rejection consumes6 without a run;
+there is no cumulative7. Source5 original-path freeze is historical after
+source6 correction; history5 provides the exact retained source/test/contract.
+All actual launch/query/setup/model gates remain NOT_READY.
+
+Human resumption, 2026-10-10: independently reviewed scope014 permits source
+construction for the exact missing caller/observer integration, cumulative
+round5 then conditional round6 only. Preserve accepted library3/V3/operations,
+historical contract012 and rejected013 bytes and counters. A frozen source
+must pass independent SCI/OPS review before its ONE<=60s stdlib synthetic
+invocation; total maximum120s, no round7/retest/reset. Complete normal and
+failure caller/RPC/ownership/TC-OE/publication/resource/binding paths are the
+objective. Missing code is not a live-host gate. No actual OS child, UV, hostDB,
+native registration, setup or model action belongs to this scope. Read exact
+SCOPE.md and SCOPE_ADOPTION.json under caller_observer_integration_014 first.
+The earlier restart boundary and consumed actions below remain historical.
+
 Current restart boundary:013 is rejected/quarantined at supplemental1/1 and
 no fifth repair, retest, renamed route or actual query is granted. The complete
 caller/kernel-RPC, loss-safe ownership, independent TC/OE/stop and combined

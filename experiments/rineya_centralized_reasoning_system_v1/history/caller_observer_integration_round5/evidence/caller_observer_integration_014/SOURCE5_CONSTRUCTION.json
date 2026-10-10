@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "status": "SOURCE_BUILT_PENDING_INDEPENDENT_FROZEN_SOURCE_REVIEW",
+  "builder": "/root/caller_observer_builder014",
+  "cumulative_source_round": 5,
+  "scope_sha256": "ae989733969059a8188add0e692c732647f71f31c0e26fab7a51720b1fad0525",
+  "input_freeze_sha256": "04f03f33fc9085345cfe427fb995cbc373a350c275cb89dbbdf02516979a7784",
+  "scope_SCI_sha256": "f9111dbc5bab9c39f5e9d7c3b693881bc46bbf9e4585656e877093674902fbe2",
+  "scope_OPS_sha256": "fd98cd3b9c076635faab0592f4042a529835ff83ba9603e3c37f1ab4c7491f08",
+  "observed_UTC": "2026-10-10T20:54:22.5388342Z",
+  "first_source_file_creation_UTC": "2026-10-10T20:39:03.8102461Z",
+  "construction_monotonic_start": null,
+  "construction_monotonic_end": null,
+  "construction_total_wall_seconds": null,
+  "clock_limitation": "First source creation timestamp is filesystem context, not original instruction/construction clock. Full construction monotonic interval was not captured; unknown, not zero.",
+  "static_parse_checks": [
+    {
+      "number": 1,
+      "exit_code": 0,
+      "command_wall_seconds": 0.1398106,
+      "exec_tool_envelope_seconds": 0.3869813,
+      "source_imports": 0
+    },
+    {
+      "number": 2,
+      "exit_code": 0,
+      "command_wall_seconds": 0.1329857,
+      "exec_tool_envelope_seconds": 0.3987127,
+      "source_imports": 0
+    }
+  ],
+  "static_test_groups": 34,
+  "synthetic_fixture_invocations": 0,
+  "dynamic_source_test_imports": 0,
+  "actual_O_C_U_child_UV_hostDB_keys_network_installer_model_actions": 0,
+  "fixed_input_rows_verified": 20,
+  "fixed_input_mismatches": [],
+  "rows": [
+    {
+      "path": "caller_observer_integration.py",
+      "bytes": 88515,
+      "sha256": "733a1d528f99b1e8fe55e9fabb144ee30f739cabd79b5a073d07d62dc78351aa"
+    },
+    {
+      "path": "test_caller_observer_integration.py",
+      "bytes": 21850,
+      "sha256": "6f9e8eb5dd6408c60dbf16dde15a9bd0be9f8697e4fb32d90e13cb543fe6eef0"
+    },
+    {
+      "path": "contracts/CALLER_OBSERVER_INTEGRATION_V1.json",
+      "bytes": 9371,
+      "sha256": "148d0a2f8ecc841e3a170d400b93e545d4c2951f69535526adeecf95ddc031fe"
+    }
+  ],
+  "actual_runtime_qualification": "NOT_READY",
+  "actual_grant_registry_empty": true,
+  "source_acceptance_claimed": false,
+  "known_source_construction_issues": "Independent full objective review pending; no fixture outcomes known. No after-freeze repair allowed absent Root finding-triggered round6."
+}
