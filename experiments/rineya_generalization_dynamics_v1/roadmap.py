@@ -24,6 +24,8 @@ HEX = re.compile(r"[0-9a-f]{64}")
 
 def _fixture_marked(value) -> bool:
     if isinstance(value, dict):
+        if value.get("fixture") is True:
+            return True
         for key, item in value.items():
             if key in {"scope", "evidence_kind", "evidence_level", "classification", "status"} and isinstance(item, str):
                 marker = item.lower()

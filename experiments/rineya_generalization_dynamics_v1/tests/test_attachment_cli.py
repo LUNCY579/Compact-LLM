@@ -6,10 +6,11 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from experiments.rineya_generalization_dynamics_v1.attachment import validate_attachment
+from experiments.rineya_generalization_dynamics_v1.attachment import native_spec_from_attachment, validate_attachment
 from experiments.rineya_generalization_dynamics_v1.attachment_cli import audit_producer_prompt_overlap, main, prepare_dev
 from experiments.rineya_generalization_dynamics_v1.common import Blocked, code_hash, digest, file_hash, read, signed, verify, write_new
 from experiments.rineya_generalization_dynamics_v1.pipeline import DEFAULT_NATIVE, DEFAULT_POLICY
+from experiments.rineya_generalization_dynamics_v1.registry import freeze_registry
 from experiments.rineya_generalization_dynamics_v1.tests.test_attachment import build_fixture
 
 
@@ -79,6 +80,66 @@ class PreparationTests(unittest.TestCase):
             self.invoke()
         self.assertFalse((self.root / "prepared").exists())
 
+    def test_contract_replaced_between_validations_is_not_reviewed(self):
+        def replace_contract(path, runtime):
+            with self.contract.open("a", encoding="utf-8") as stream:
+                stream.write("\n")  # Valid unchanged JSON; a new unreviewed file identity.
+            return native_spec_from_attachment(path, runtime)
+        with patch("experiments.rineya_generalization_dynamics_v1.attachment_cli.native_spec_from_attachment",
+                   side_effect=replace_contract), self.assertRaisesRegex(Blocked, "specification changed"):
+            self.invoke()
+        self.assertFalse((self.root / "prepared").exists())
+
+    def test_contract_changed_after_specification_blocks_publication(self):
+        def change_after_specification(path, runtime):
+            spec = native_spec_from_attachment(path, runtime)
+            with self.contract.open("a", encoding="utf-8") as stream:
+                stream.write("\n")
+            return spec
+        with patch("experiments.rineya_generalization_dynamics_v1.attachment_cli.native_spec_from_attachment",
+                   side_effect=change_after_specification), self.assertRaisesRegex(Blocked, "contract changed"):
+            self.invoke()
+        self.assertFalse((self.root / "prepared").exists())
+
+    def test_proposal_changed_after_capture_blocks_publication(self):
+        def change_proposal(path):
+            attachment = validate_attachment(path)
+            with self.proposal_path.open("a", encoding="utf-8") as stream:
+                stream.write("\n")
+            return attachment
+        with patch("experiments.rineya_generalization_dynamics_v1.attachment_cli.validate_attachment",
+                   side_effect=change_proposal), self.assertRaisesRegex(Blocked, "proposal changed"):
+            self.invoke()
+        self.assertFalse((self.root / "prepared").exists())
+
+    def test_asset_changed_before_freeze_cannot_replace_validated_registry(self):
+        def replace_before_freeze(spec):
+            with (Path(spec["base_model"]) / "model.safetensors").open("ab") as stream:
+                stream.write(b"EXCLUDED_FIXTURE_MUTATION")
+            return freeze_registry(spec)
+        with patch("experiments.rineya_generalization_dynamics_v1.attachment_cli.freeze_registry",
+                   side_effect=replace_before_freeze), self.assertRaisesRegex(Blocked, "registry differs"):
+            self.invoke()
+        self.assertFalse((self.root / "prepared").exists())
+
+    def test_asset_changed_after_freeze_blocks_publication(self):
+        def replace_after_freeze(spec):
+            registry = freeze_registry(spec)
+            with (Path(spec["base_model"]) / "model.safetensors").open("ab") as stream:
+                stream.write(b"EXCLUDED_FIXTURE_MUTATION")
+            return registry
+        with patch("experiments.rineya_generalization_dynamics_v1.attachment_cli.freeze_registry",
+                   side_effect=replace_after_freeze), self.assertRaisesRegex(Blocked, "changed"):
+            self.invoke()
+        self.assertFalse((self.root / "prepared").exists())
+
+    def test_code_identity_changed_during_preparation_blocks_publication(self):
+        with patch("experiments.rineya_generalization_dynamics_v1.attachment_cli.code_hash",
+                   side_effect=[self.proposal["code_sha256"], "0" * 64]), \
+             self.assertRaisesRegex(Blocked, "GD code changed"):
+            self.invoke()
+        self.assertFalse((self.root / "prepared").exists())
+
     def test_guard_and_review_identity_changes_block(self):
         for field, value in (("code_sha256", "0" * 64), ("checkpoint_steps", [0, 1, 3]),
                              ("confirmation_authorized", True)):
@@ -118,7 +179,7 @@ class PreparationTests(unittest.TestCase):
         hidden = str(self.root / "sealed_eval" / "metadata.json")
         for contract, proposal in ((hidden, str(self.proposal_path)), (str(self.contract), hidden)):
             with self.subTest(contract=contract, proposal=proposal), \
-                 patch("experiments.rineya_generalization_dynamics_v1.attachment_cli.read") as reader:
+                 patch.object(Path, "read_bytes") as reader:
                 with self.assertRaisesRegex(Blocked, "Protected banks"):
                     prepare_dev(contract, proposal, str(self.root / "prepared"))
                 reader.assert_not_called()

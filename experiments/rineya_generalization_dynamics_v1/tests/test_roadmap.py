@@ -2,6 +2,7 @@
 import contextlib
 import copy
 import io
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -98,6 +99,39 @@ class RoadmapTests(unittest.TestCase):
         self.spec["lanes"][0]["status"] = "NATIVE_READY"
         with self.assertRaises(Blocked):
             self.invoke()
+
+    def test_boolean_fixture_facts_cannot_become_learned_exploratory_evidence(self):
+        source = Path(self.ref["path"])
+        source.write_text('{"scope":"public_aggregate"}', encoding="utf-8")
+        self.ref["sha256"] = file_hash(source)
+        observation = self.spec["observations"][0]
+        observation.update(evidence_level="exploratory", effect_type="learned")
+        for facts in ({"fixture": True}, {"nested": [{"fixture": True}]}):
+            observation["facts"] = facts
+            with self.subTest(facts=facts), self.assertRaisesRegex(Blocked, "fixture facts"):
+                self.invoke()
+            self.assertFalse((self.root / "packet").exists())
+
+    def test_bound_boolean_fixture_receipts_cannot_become_exploratory_evidence(self):
+        observation = self.spec["observations"][0]
+        observation.update(evidence_level="exploratory", effect_type="learned")
+        source = Path(self.ref["path"])
+        for payload in ({"fixture": True}, {"nested": [{"fixture": True}]}):
+            source.write_text(json.dumps(payload), encoding="utf-8")
+            self.ref["sha256"] = file_hash(source)
+            with self.subTest(payload=payload), self.assertRaisesRegex(Blocked, "Bound fixture receipts"):
+                self.invoke()
+            self.assertFalse((self.root / "packet").exists())
+
+    def test_explicit_false_fixture_flag_does_not_create_a_fixture_claim(self):
+        source = Path(self.ref["path"])
+        source.write_text('{"fixture":false}', encoding="utf-8")
+        self.ref["sha256"] = file_hash(source)
+        self.spec["observations"][0].update(evidence_level="exploratory",
+                                           facts={"fixture": False})
+        result = self.invoke()
+        self.assertEqual(result["data_rows_admitted"], 0)
+        self.assertFalse(read(self.root / "packet" / "quality-scorecard.json")["balanced_quality_established"])
 
     def test_protected_paths_refuse_before_any_content_hash_or_read(self):
         bad = {**self.ref, "path": str(self.root / "ConfirMATion" / "CHECK.json")}

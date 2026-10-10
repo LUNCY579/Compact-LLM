@@ -7,16 +7,17 @@ module deliberately has no evaluate, select or confirmation command.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
 from .attachment import native_spec_from_attachment, validate_attachment
-from .common import Blocked, code_hash, digest, file_hash, normalized_prompt_hash, read, require, signed, verify, write_new
+from .common import Blocked, code_hash, digest, file_hash, normalized_prompt_hash, require, signed, verify, write_new
 from .diagnostics import build_suite, suite_hash
 from .export_parity import validate_parity_policy
 from .pipeline import validate_config
 from .protected_paths import reject_protected_path
-from .registry import audit_training_overlap, freeze_registry
+from .registry import audit_training_overlap, freeze_registry, verify_registry
 
 
 def audit_producer_prompt_overlap(rows: list[dict], attachment: dict,
@@ -87,7 +88,10 @@ def prepare_dev(contract_path: str, proposal_path: str, output_directory: str) -
     """
     contract_file = reject_protected_path(contract_path, "Attachment contract")
     proposal_file = reject_protected_path(proposal_path, "Reviewed DEV proposal")
-    proposal = verify(read(proposal_file))
+    proposal_bytes = proposal_file.read_bytes()
+    proposal_hash = hashlib.sha256(proposal_bytes).hexdigest()
+    proposal = verify(json.loads(proposal_bytes.decode("utf-8"),
+        parse_constant=lambda value: require(False, f"Non-finite JSON number: {value}")))
     require(proposal["status"] == "REVIEWED_PROPOSAL_NOT_EXECUTION_AUTHORIZATION",
             "An exact reviewed proposal is required before materialization")
     require(proposal["stage"] == "DEV_ONLY_NATIVE_LOADING_SCORING"
@@ -95,11 +99,16 @@ def prepare_dev(contract_path: str, proposal_path: str, output_directory: str) -
             and proposal["confirmation_authorized"] is False,
             "Only preparation of separately authorized DEV work is supported")
     require(proposal["code_sha256"] == code_hash(), "Review must bind the current GD code")
-    require(proposal["attachment_contract"] == {
+    reviewed_contract = dict(proposal["attachment_contract"])
+    require(reviewed_contract == {
         "path": str(contract_file), "sha256": file_hash(contract_file)},
         "Reviewed proposal does not bind the retained attachment contract")
     attachment = validate_attachment(str(contract_file))
+    require(attachment["attachment"] == reviewed_contract,
+            "Attachment validation changed the reviewed contract identity")
     spec = native_spec_from_attachment(str(contract_file), proposal["runtime"])
+    require(spec["attachment"] == reviewed_contract,
+            "Native specification changed the reviewed contract identity")
     validate_config(proposal["policy"], proposal["runtime"])
     steps = proposal["checkpoint_steps"]
     require(len(steps) == 3 and steps[0] == 0
@@ -113,6 +122,10 @@ def prepare_dev(contract_path: str, proposal_path: str, output_directory: str) -
             "This first milestone proposal uses DEV seed 17 and 24 pairs per family")
     rows = build_suite("dev", proposal["dev_seed"], proposal["pairs_per_family"])
     registry = freeze_registry(spec)
+    reviewed_registry = {**attachment["registry"], "checkpoints": [
+        entry for entry in attachment["registry"]["checkpoints"] if entry["step"] in steps]}
+    require(digest(registry) == digest(reviewed_registry),
+            "Prepared registry differs from the validated original assets")
     audit_training_overlap(rows, registry)
     overlap = audit_producer_prompt_overlap(rows, attachment, proposal["public_exposure_manifests"])
     parity_policy = validate_parity_policy(proposal["parity_policy"])
@@ -135,10 +148,17 @@ def prepare_dev(contract_path: str, proposal_path: str, output_directory: str) -
             and all(part.lower() != ".codex" for part in output.parts),
             "New preparations must stay in external BusinessProject/gd001-records")
     require(not output.exists(), "Keep all earlier preparations; choose a fresh output directory")
+    verify_registry(registry)
+    require(file_hash(contract_file) == reviewed_contract["sha256"],
+            "Reviewed attachment contract changed during preparation")
+    require(file_hash(proposal_file) == proposal_hash,
+            "Reviewed DEV proposal changed during preparation")
+    require(code_hash() == proposal["code_sha256"],
+            "Reviewed GD code changed during preparation")
     receipt = signed({"experiment": "GD-001", "evidence_level": "OFFLINE_ATTACHMENT_PREPARATION",
-        "status": "PREPARED_NOT_EXECUTION_AUTHORIZATION", "code_sha256": code_hash(),
-        "reviewed_proposal": {"path": str(proposal_file), "sha256": file_hash(proposal_file)},
-        "attachment_contract": {"path": str(contract_file), "sha256": file_hash(contract_file)},
+        "status": "PREPARED_NOT_EXECUTION_AUTHORIZATION", "code_sha256": proposal["code_sha256"],
+        "reviewed_proposal": {"path": str(proposal_file), "sha256": proposal_hash},
+        "attachment_contract": reviewed_contract,
         "attachment_validation": attachment, "producer_overlap_audit": overlap,
         "native_spec_sha256": digest(spec),
         "registry_sha256": digest(registry), "dev_suite_sha256": suite_hash(rows),
