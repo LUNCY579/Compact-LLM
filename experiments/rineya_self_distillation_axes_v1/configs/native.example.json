@@ -1,0 +1,17 @@
+{
+  "checkpoint": "/absolute/path/to/exact-rineya-0.6b",
+  "checkpoint_sha256": "REPLACE_WITH_CHECKPOINT_MANIFEST_SHA256",
+  "dataset": "/absolute/path/to/reviewed-admitted-data.jsonl",
+  "dataset_sha256": "REPLACE_WITH_JSONL_BYTES_SHA256",
+  "task": "spatial_ordinary",
+  "seed": 17,
+  "steps": 16,
+  "learning_rate": 0.00001,
+  "trainable_names": ["model.layers.12.self_attn.q_proj.weight"],
+  "max_trainable_parameters": 4000000,
+  "max_new_tokens": 64,
+  "max_sequence_tokens": 512,
+  "device": "cuda",
+  "min_free_cuda_before_gib": 4.0,
+  "min_free_cuda_during_gib": 0.25
+}

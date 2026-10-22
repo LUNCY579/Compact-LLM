@@ -1,0 +1,293 @@
+{
+  "CPU_fixture_verification": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "errors": 0,
+    "failures": 0,
+    "interpretation": "CPU synthetic implementation fixtures only, not native capability",
+    "pytest_runtime": "9.1.1",
+    "python_runtime": "3.11.15",
+    "skipped": 0,
+    "tests": 196,
+    "torch_runtime": "2.10.0+cu126",
+    "warnings": 1
+  },
+  "date": "2026-10-09",
+  "discoveries_and_limits": [
+    "Full-vocabulary teacher-detached KL, shifted common response prefixes, independent rollout/KL/EMA axes and swap restoration are fixture-verified.",
+    "Static source inspection identifies ungated Supa1.7,596049920 BF16 serialized parameters; weight SHA962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b.",
+    "The prospective tiny contrast isolates student versus teacher rollout with forwardKL/EMA0 plus verified-solutionSFT; two seeds,12updates/cell,6cells/72updates maximum.",
+    "Candidate rows and teacher competence/native load/parity/resource checks remain unadmitted or unexecuted. Comparison execution integration is unfinished.",
+    "The historical controlled144-cell slice and CPU fixtures are not native Rineya efficacy or memory-fit evidence."
+  ],
+  "earlier_packets": "Historical identities only. Publication changes checkout/code identity; future native execution requires fresh exact packet/admission/exposure/qualification. No old permit is inherited.",
+  "excluded": [
+    "All JSONL or bank payloads",
+    "Full data-custody canonical inputs",
+    "Weights/checkpoints/environments/caches",
+    "Raw GPU/process inventories",
+    "Human message/approval/request content and owner chat identifiers",
+    "Duplicated/superseded figures and duplicate reports",
+    "Original paper PDFs/full text"
+  ],
+  "experiment": "DSD-001",
+  "exported_text_line_endings": "LF; original local evidence bytes remain unchanged",
+  "native_gain_established": false,
+  "native_model_loads": 0,
+  "native_updates": 0,
+  "publication_files": [
+    {
+      "bytes": 2374,
+      "kind": "Publication documentation and independent review summary, generated for this release",
+      "path": "README.md",
+      "sha256": "2b1f79782235586bb4a8574f310edfb139a89df6125d0aeaf6d9720f29f05d31"
+    },
+    {
+      "bytes": 1430,
+      "kind": "Publication documentation and independent review summary, generated for this release",
+      "path": "review.json",
+      "sha256": "05fe2d31913a5ef5fe1aecfdb9904ddf9dfdcfd4acc37ce88d2528ea5ba9b0a5"
+    }
+  ],
+  "publication_policy": "Portable historical evidence only, not an executable packet or admission/qualification permit. Local paths, chat UUIDs and XML hostnames are removed; original raw-file hashes are retained separately from hashes of these exports. No banks, predictions, weights, checkpoints, environments or raw process inventories are exported. Originals remain unchanged outside Git.",
+  "records": [
+    {
+      "original_bytes": 4195,
+      "original_raw_sha256": "6da71442263ae0e0afdba78754bce8212991e5b5abf5d8fc9b9f45effac9a7fb",
+      "original_source": "<BusinessProject>/dsd001-preparation-20261005/verification-receipt.json",
+      "published_bytes": 4903,
+      "published_path": "records/20261005-verification.json",
+      "published_sha256": "35325a9ad87bfa5ae4e1ce0dae713281b35f297494f012e65b64314b88622bd1",
+      "transformation": "JSON wrapper plus portable metadata; never byte-equivalent to original"
+    },
+    {
+      "original_bytes": 5943,
+      "original_raw_sha256": "ea9d7d3ab87f1b9acaf18846a1bbeb9df203e62a355fd6c8f980bda407e6a1c3",
+      "original_source": "<BusinessProject>/dsd001-preparation-20261005/source-inspection.json",
+      "published_bytes": 6797,
+      "published_path": "records/20261005-source-inspection.json",
+      "published_sha256": "702e1a23a2cb9ce50beffbd421c62c42af713c85f977e0a80fab2df2f4e07844",
+      "transformation": "JSON wrapper plus portable metadata; never byte-equivalent to original"
+    },
+    {
+      "original_bytes": 2732,
+      "original_raw_sha256": "34b450892dc591eb8791c641b283b0fa1605f292f815e49d102eb8bdc1cd74fc",
+      "original_source": "<BusinessProject>/dsd001-preparation-20261005/source-custody-final.json",
+      "published_bytes": 3497,
+      "published_path": "records/20261005-source-custody.json",
+      "published_sha256": "aa7103eb58999503c345bcb00f9e21e27afcb5c91a3c7198ff45927f71cae7ca",
+      "transformation": "JSON wrapper plus portable metadata; never byte-equivalent to original"
+    },
+    {
+      "original_bytes": 36216,
+      "original_raw_sha256": "18ea848a375c6482d19f878b64ae4bb2f2495fb0bc64f0ec3fdd7168b31bd724",
+      "original_source": "<BusinessProject>/dsd001-preparation-20261005/packet/proposal.json",
+      "published_bytes": 37417,
+      "published_path": "records/20261005-proposal.json",
+      "published_sha256": "9c9235e167e75151ba2e3868b5551000019c67dc35b21940df9997f8a68f5c3a",
+      "transformation": "JSON wrapper plus portable metadata; never byte-equivalent to original"
+    },
+    {
+      "original_bytes": 1382,
+      "original_raw_sha256": "3ee06198a06af9b9fd0f4e3aef583dd842b8d28f98a54f03e258df7328b30b32",
+      "original_source": "<BusinessProject>/dsd001-preparation-20261005/packet/packet-receipt.json",
+      "published_bytes": 2019,
+      "published_path": "records/20261005-packet-receipt.json",
+      "published_sha256": "2d608abe924cf9fbec7d2656eed085b5518f5f890261ca05687899ce626c6ae7",
+      "transformation": "JSON wrapper plus portable metadata; never byte-equivalent to original"
+    },
+    {
+      "original_bytes": 760,
+      "original_raw_sha256": "19958f02b8f42b9430b5834be5f31fd8e52ee10980b686a90546c6a5c9818b3d",
+      "original_source": "<BusinessProject>/dsd001-preparation-20261005/packet/native-seed17.json",
+      "published_bytes": 1442,
+      "published_path": "records/20261005-native-seed17.json",
+      "published_sha256": "f755a588ddfad2a46e5ca189ceaaec1251a5fb19c8e127643023ba9e99799782",
+      "transformation": "JSON wrapper plus portable metadata; never byte-equivalent to original"
+    },
+    {
+      "original_bytes": 760,
+      "original_raw_sha256": "afc1b87ae5c4e379066626b6f3787734f694fb3c162d34c336318b97c6226b84",
+      "original_source": "<BusinessProject>/dsd001-preparation-20261005/packet/native-seed29.json",
+      "published_bytes": 1442,
+      "published_path": "records/20261005-native-seed29.json",
+      "published_sha256": "a15e0b4a8b8633e35f4db09026dbeb4fa84e1abb4ed57f06a63c0b532d290c88",
+      "transformation": "JSON wrapper plus portable metadata; never byte-equivalent to original"
+    },
+    {
+      "original_bytes": 577,
+      "original_raw_sha256": "9c566747a45c9f2b9573b9e73f7531bb72cc4619a7893b39e858792edb3d56f1",
+      "original_source": "<BusinessProject>/dsd001-preparation-20261005/operator-qualification-review.example.json",
+      "published_bytes": 1314,
+      "published_path": "records/20261005-pending-review-example.json",
+      "published_sha256": "00d2464f3048788403856049d23bd1884cace443e460ed83133665cb83d58b2b",
+      "transformation": "JSON wrapper plus portable metadata; never byte-equivalent to original"
+    },
+    {
+      "original_bytes": 24137,
+      "original_raw_sha256": "1c7752197e4c2c00bc038da173abe9bfdc891a1be7a61be12999d8a7c5f4e0bb",
+      "original_source": "<BusinessProject>/dsd001-preparation-20261005/verified-tests.xml",
+      "published_bytes": 24117,
+      "published_path": "records/20261005-tests.xml",
+      "published_sha256": "3b76e9b2b3259291d778f76d7cb8173f342ea990a36f4a6c61ad73e40a169b25",
+      "transformation": "XML hostname removal and portable text/attributes"
+    },
+    {
+      "original_bytes": 833,
+      "original_raw_sha256": "121a87363991fc7e1047327ed00596cd3386a8d520d04c608a05ad7d9823f97d",
+      "original_source": "<BusinessProject>/dsd001-preparation-20261005/verified-tests.log",
+      "published_bytes": 809,
+      "published_path": "records/20261005-tests.log",
+      "published_sha256": "0bc826f4f618774d62310ed71a765d16da65677bf3ae0345d5e6f4a302766d6f",
+      "transformation": "Portable text paths/identities; exported CRLF converted to LF"
+    },
+    {
+      "original_bytes": 24138,
+      "original_raw_sha256": "c910023fc4b0e568e15f1ecf8ae60ea106276f308e927363aea4a6182fec7899",
+      "original_source": "<BusinessProject>/rineya-publication-20261009/dsd-tests.xml",
+      "published_bytes": 24118,
+      "published_path": "records/2026-10-09-tests.xml",
+      "published_sha256": "8d27270f31c4e050d4e25e7faca91bd0bddb76b41133e19146c11352dd6167b0",
+      "transformation": "XML hostname removal and portable text/attributes"
+    },
+    {
+      "original_bytes": 800,
+      "original_raw_sha256": "f8f26a2ce53f2075b822354a00c025601f68eb527b3859ab5bb9bdedf111b22c",
+      "original_source": "<BusinessProject>/rineya-publication-20261009/dsd-tests.log",
+      "published_bytes": 777,
+      "published_path": "records/2026-10-09-tests.log",
+      "published_sha256": "3738cd626c24fbf3bb8e24c8bb51f16a2c78fadf3a2463786a4d90788e8f3867",
+      "transformation": "Portable text paths/identities; exported CRLF converted to LF"
+    },
+    {
+      "original_bytes": 1640,
+      "original_raw_sha256": "774b8e13032ae4cee0b69a29279ef4effd6dbef16a4ca0e5c357f84a6be1cba9",
+      "original_source": "<BusinessProject>/rineya-publication-20261009/primary-reference-checks.json",
+      "published_bytes": 2532,
+      "published_path": "records/2026-10-09-primary-references.json",
+      "published_sha256": "5e13fd446913a52f04673bebd37e2af3c1962dc4b727b6f54d1d888729ecfbae",
+      "transformation": "JSON wrapper plus portable metadata; never byte-equivalent to original"
+    }
+  ],
+  "review_base": {
+    "branch": "research/rineya-self-distillation-axes-v1",
+    "head": "e1737660cd0feacd6efd4177ea1d1579bf0cd865"
+  },
+  "reviewed_python_sources": {
+    "experiments/rineya_self_distillation_axes_v1/__init__.py": {
+      "LF_normalized_sha256": "c1fabf957548a345c10171ee216c66b5e213349d76d4c23b760e694ef429272a",
+      "bytes": 205,
+      "raw_sha256": "c1fabf957548a345c10171ee216c66b5e213349d76d4c23b760e694ef429272a"
+    },
+    "experiments/rineya_self_distillation_axes_v1/__main__.py": {
+      "LF_normalized_sha256": "8a6c8ddd98a1b879e509e5a61006f5ce6f25524d2928377392df451b6f5f8b76",
+      "bytes": 4432,
+      "raw_sha256": "8a6c8ddd98a1b879e509e5a61006f5ce6f25524d2928377392df451b6f5f8b76"
+    },
+    "experiments/rineya_self_distillation_axes_v1/analysis.py": {
+      "LF_normalized_sha256": "117ae8bf67569defa60d2a8a9c630fc17d22843c3c6b13ef53481a302a71eb50",
+      "bytes": 5596,
+      "raw_sha256": "117ae8bf67569defa60d2a8a9c630fc17d22843c3c6b13ef53481a302a71eb50"
+    },
+    "experiments/rineya_self_distillation_axes_v1/comparison.py": {
+      "LF_normalized_sha256": "4813252ef1e76afc601666a7b70ce842a7f03d02a5750af8c4d53394e22bf63a",
+      "bytes": 8463,
+      "raw_sha256": "4813252ef1e76afc601666a7b70ce842a7f03d02a5750af8c4d53394e22bf63a"
+    },
+    "experiments/rineya_self_distillation_axes_v1/controlled.py": {
+      "LF_normalized_sha256": "8efcf9ba2bc6d77c0cec7b43d518a13bfe75941c58ba937f8418b1155e2b07e0",
+      "bytes": 8490,
+      "raw_sha256": "8efcf9ba2bc6d77c0cec7b43d518a13bfe75941c58ba937f8418b1155e2b07e0"
+    },
+    "experiments/rineya_self_distillation_axes_v1/data.py": {
+      "LF_normalized_sha256": "26e26a025a351a05ddf076e5d7158c72558bd3bec01f44067b6573306fc1c860",
+      "bytes": 8001,
+      "raw_sha256": "26e26a025a351a05ddf076e5d7158c72558bd3bec01f44067b6573306fc1c860"
+    },
+    "experiments/rineya_self_distillation_axes_v1/engine.py": {
+      "LF_normalized_sha256": "5232d6fc541561fb498c62709194eec20ff7a6ef18811fee229b762b32f1e329",
+      "bytes": 11479,
+      "raw_sha256": "5232d6fc541561fb498c62709194eec20ff7a6ef18811fee229b762b32f1e329"
+    },
+    "experiments/rineya_self_distillation_axes_v1/mechanical_qualification.py": {
+      "LF_normalized_sha256": "dc944c3ca539a266208ff7edb56dd404da0b1d52589368c0dad4100b29505f81",
+      "bytes": 22908,
+      "raw_sha256": "dc944c3ca539a266208ff7edb56dd404da0b1d52589368c0dad4100b29505f81"
+    },
+    "experiments/rineya_self_distillation_axes_v1/native.py": {
+      "LF_normalized_sha256": "02af62e5fe06c25d09e303db279282f956c3cc17dddfb2e300f0fe9334ce1db8",
+      "bytes": 9149,
+      "raw_sha256": "02af62e5fe06c25d09e303db279282f956c3cc17dddfb2e300f0fe9334ce1db8"
+    },
+    "experiments/rineya_self_distillation_axes_v1/objectives.py": {
+      "LF_normalized_sha256": "6dc8f75afc258a5209a9139b4b7ff2eb251f128949c96ac5bcb62534b219238e",
+      "bytes": 5277,
+      "raw_sha256": "6dc8f75afc258a5209a9139b4b7ff2eb251f128949c96ac5bcb62534b219238e"
+    },
+    "experiments/rineya_self_distillation_axes_v1/plan.py": {
+      "LF_normalized_sha256": "bfcc2756822d33d1ba927de4a590ace868ed0e6299fb60a9f4353a23226c8e27",
+      "bytes": 5849,
+      "raw_sha256": "bfcc2756822d33d1ba927de4a590ace868ed0e6299fb60a9f4353a23226c8e27"
+    },
+    "experiments/rineya_self_distillation_axes_v1/proposal.py": {
+      "LF_normalized_sha256": "74d8781788253b1e3757ee486c30129b9d063c0f59b5a771124f5d3aea4076cd",
+      "bytes": 16700,
+      "raw_sha256": "74d8781788253b1e3757ee486c30129b9d063c0f59b5a771124f5d3aea4076cd"
+    },
+    "experiments/rineya_self_distillation_axes_v1/proposal_data.py": {
+      "LF_normalized_sha256": "277672c44c4437a0e4dbe946a260608ee27e931e8df2abd395c79d2993eff712",
+      "bytes": 14513,
+      "raw_sha256": "277672c44c4437a0e4dbe946a260608ee27e931e8df2abd395c79d2993eff712"
+    },
+    "experiments/rineya_self_distillation_axes_v1/reviewed_qualification.py": {
+      "LF_normalized_sha256": "5ff2cc3f8fef12bad8180733bd4760dc48f2277d6f45ad39743b6d49752d39d1",
+      "bytes": 37703,
+      "raw_sha256": "5ff2cc3f8fef12bad8180733bd4760dc48f2277d6f45ad39743b6d49752d39d1"
+    },
+    "experiments/rineya_self_distillation_axes_v1/teacher.py": {
+      "LF_normalized_sha256": "8f1cfb1c6f528995aae658ca3db537adebb8d49bad31fcd820f5c45d599579df",
+      "bytes": 3483,
+      "raw_sha256": "8f1cfb1c6f528995aae658ca3db537adebb8d49bad31fcd820f5c45d599579df"
+    },
+    "experiments/rineya_self_distillation_axes_v1/tests/test_controlled.py": {
+      "LF_normalized_sha256": "aca90994015b490b12a6b76f96e9d82f9c7d4a06f1a8c6b66f7be18ab54c7f50",
+      "bytes": 3588,
+      "raw_sha256": "aca90994015b490b12a6b76f96e9d82f9c7d4a06f1a8c6b66f7be18ab54c7f50"
+    },
+    "experiments/rineya_self_distillation_axes_v1/tests/test_data_analysis.py": {
+      "LF_normalized_sha256": "fb1c7106a460b9e8b3b864c12410a447de2ae22e0ee6b31ae1dd5098eee09e30",
+      "bytes": 6167,
+      "raw_sha256": "fb1c7106a460b9e8b3b864c12410a447de2ae22e0ee6b31ae1dd5098eee09e30"
+    },
+    "experiments/rineya_self_distillation_axes_v1/tests/test_engine.py": {
+      "LF_normalized_sha256": "5107a6e4dcc4f7f529c5aa9300d35db193e4d3f8890687014245d6f848734b62",
+      "bytes": 10053,
+      "raw_sha256": "5107a6e4dcc4f7f529c5aa9300d35db193e4d3f8890687014245d6f848734b62"
+    },
+    "experiments/rineya_self_distillation_axes_v1/tests/test_mechanical_qualification.py": {
+      "LF_normalized_sha256": "e2cd5ae4a1a22a7705645af6a7a20c97464fff03dc6e77e5ccc52bad17eed3a0",
+      "bytes": 14699,
+      "raw_sha256": "e2cd5ae4a1a22a7705645af6a7a20c97464fff03dc6e77e5ccc52bad17eed3a0"
+    },
+    "experiments/rineya_self_distillation_axes_v1/tests/test_objectives.py": {
+      "LF_normalized_sha256": "960f9a21bacd9cc3da3a0f16428b7306672533eb16374994dc071ade67984a5d",
+      "bytes": 5532,
+      "raw_sha256": "960f9a21bacd9cc3da3a0f16428b7306672533eb16374994dc071ade67984a5d"
+    },
+    "experiments/rineya_self_distillation_axes_v1/tests/test_proposal.py": {
+      "LF_normalized_sha256": "2faa1b96ad50a7878f6a22b303fdbd04bc605b1b125850f3a49f5b5cfbf696c7",
+      "bytes": 8080,
+      "raw_sha256": "2faa1b96ad50a7878f6a22b303fdbd04bc605b1b125850f3a49f5b5cfbf696c7"
+    },
+    "experiments/rineya_self_distillation_axes_v1/tests/test_proposal_data.py": {
+      "LF_normalized_sha256": "9abf78e7fb0da993cea96d541ede66ec0a9581960107b718e100e69d2584c559",
+      "bytes": 5588,
+      "raw_sha256": "9abf78e7fb0da993cea96d541ede66ec0a9581960107b718e100e69d2584c559"
+    },
+    "experiments/rineya_self_distillation_axes_v1/tests/test_reviewed_qualification.py": {
+      "LF_normalized_sha256": "9d33439b3f3df8688f8952da7e3ae174063a1a88c0ac24c9dc7f42ed00acb17a",
+      "bytes": 18069,
+      "raw_sha256": "9d33439b3f3df8688f8952da7e3ae174063a1a88c0ac24c9dc7f42ed00acb17a"
+    }
+  },
+  "schema": "RINEYA_RESEARCH_PUBLICATION_V1"
+}
