@@ -1,0 +1,43 @@
+{
+  "config": {
+    "study": "CQD-001",
+    "seed": 20260929,
+    "role_counts": {
+      "TRAIN": 0,
+      "TRAIN_SELECTION": 256,
+      "DEV": 256,
+      "CHECK": 0,
+      "FINAL": 0
+    },
+    "predictors": [
+      "zero",
+      "one",
+      "minus_one",
+      "empty",
+      "first_number",
+      "last_number",
+      "min_number",
+      "max_number",
+      "initial_state",
+      "first_set",
+      "all_numbers",
+      "selection_mode"
+    ],
+    "cpu": {
+      "rss_mib": 512,
+      "seconds": 900,
+      "output_mib": 50
+    },
+    "model_calls": 0,
+    "claim": "Fresh open synthetic data/verifier diagnostic; no Rineya efficacy claim"
+  },
+  "git_head": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+  "python": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+  "source_hashes": {
+    "experiments\\post_training_mimo_centralized_v1\\scripts\\bridge_data.py": "d3a10f84713ae7164775e00514c5584bc4f03525b229f3afe4ebf05f52ea57f1",
+    "experiments\\cheap_quality_shortcuts_v1\\study.py": "516ecc6ea6fbf96cdc18b0e4dcf45e0653d1f9bfadc6ca539ee384f9adfc508a",
+    "experiments\\cheap_quality_shortcuts_v1\\config.json": "4a9568b12f9594369ffaa2e2292daf41a85ba6bc92edf67ba347036a6efdfa49"
+  },
+  "native_model_loads": 0,
+  "protected_payloads_opened": 0
+}

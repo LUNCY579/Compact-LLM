@@ -1,0 +1,47 @@
+{
+  "status": "PASS_CPU_PROCESS",
+  "reason": null,
+  "exit_code": 0,
+  "worker_started": true,
+  "elapsed_seconds": 0.7660000000005311,
+  "peak_observed_tree_rss_bytes": 29868032,
+  "minimum_observed_host_available_bytes": 5278887936,
+  "peak_observed_cpu_seconds": 0.453125,
+  "worker_output_bytes": 1144679,
+  "limits": {
+    "cpu_host_admission_gib": 2.0,
+    "cpu_host_ongoing_gib": 1.5,
+    "worker_tree_rss_mib": 512,
+    "wall_seconds": 900,
+    "disk_free_gib": 4.0,
+    "worker_output_bytes": 52428800,
+    "stdout_stderr_bytes": 8388608,
+    "poll_seconds": 0.1,
+    "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+  },
+  "before": {
+    "utc": "2026-09-30T04:20:31.970506+00:00",
+    "host_available_bytes": 5299654656,
+    "disk_free_bytes": 108699803648,
+    "gpu": {
+      "returncode": 0,
+      "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7101, 848, 38",
+      "error": ""
+    }
+  },
+  "after": {
+    "utc": "2026-09-30T04:20:32.731093+00:00",
+    "host_available_bytes": 5294567424,
+    "disk_free_bytes": 108698619904,
+    "gpu": {
+      "returncode": 0,
+      "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7101, 848, 37",
+      "error": ""
+    }
+  },
+  "native_model_loads": 0,
+  "gpu_worker_launches": 0,
+  "paid_calls": 0,
+  "no_automatic_retry": true,
+  "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+}
