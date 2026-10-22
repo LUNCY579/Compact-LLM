@@ -1,0 +1,7 @@
+# Reference runtime: install the appropriate CPU/CUDA torch wheel separately.
+torch>=2.6,<2.11
+numpy>=1.26,<3
+pytest>=8,<10
+# Native integration is pinned; do not silently substitute a newer version.
+transformers==4.57.1
+safetensors>=0.4.3,<1
