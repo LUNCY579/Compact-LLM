@@ -1,0 +1,3 @@
+Policy11 is accepted for actual binding-artifact audit: verify the real admission and explicitly named provenance for every reader requirement, rather than assume synthetic fixture membership. The specific four-helper CDC bridge passed independent source/AST/actual107 checks and16 negative/metric-invariance fixtures. No general/native fallback or relabeling of unadmitted sources is permitted.
+
+This changes no model, resource limit, attempt authority, scorer, endpoint or scientific comparison. Raw recomputation after a new exclusive corrected report remains required before result acceptance. Research efficiency, driver repair and agent/model improvement are unmeasured; old nullreport/source/raw are preserved.

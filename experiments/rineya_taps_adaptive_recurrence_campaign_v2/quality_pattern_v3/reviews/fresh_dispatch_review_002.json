@@ -1,0 +1,164 @@
+{
+  "schema": "independent_fresh_dispatch_review_v2",
+  "status": "PASS_FRESH_K01_FP32_DISPATCH",
+  "admission_sha256": "e0de045b5d2544acb09b860fdbcae59cbbae0c98fb0e0f6fe504114f4d12878a",
+  "admission_path": "quality_pattern_v3/fresh_admission_v2.json",
+  "errors": [],
+  "unresolved_source_findings": [],
+  "disposition": "Conditional source/packet PASS for the distinct authorized fresh frozen K0/K1 study; this review is not native qualification or evidence of efficacy.",
+  "source_hashes": {
+    "fresh_native.py": "52262b1ab7639ac0e564746af3bd0d4065b3c7cdcf57b7549569f308884428de",
+    "opposed_gate_generation.py": "b0ac061de15808a551fccbda3a3b3b1c8ed539de33ca47dbc865598857e660f1",
+    "fresh_analysis.py": "a986b3affad1e9f1084b45c63fe2ce4c0927fc3f2fa52ab070fe07c2ae1988aa",
+    "tests/test_fresh_analysis.py": "6b593e6a5cfd98537fc1179067e3bfcba7540a7555721d5409e8aee6000fa9e2",
+    "fresh_supervisor.py": "3e81f147c69ec5d4abe424c143be44e9891ba811622fc93eed4d185801615c4a",
+    "tests/test_fresh_supervisor_teardown.py": "80bcbd0ac51060a0e0954f42563e95a4a63b5c3556901a70cb5b05ce34215ddf",
+    "fresh_scope.py": "22e08e1c342fcd068544d642952d7448c0b7d9de9fe659c8d3231e3eb47e634e",
+    "fresh_entry.py": "62f92f9aaa46d066b45b3e36b397fb60d6af15ad2335b005d4309e695d7bde73",
+    "prepare_fresh_admission.py": "8a9f6a16f34171f77e49ff7acd429c8f1b05908c524edc76d7e1975cb8ba58ff",
+    "fresh_readiness.py": "b9966132fec1fd1ca3d3bcc1a835a52174c02a55d9d87aa0dddca338e12e9182",
+    "FRESH_ANALYSIS_PLAN_DRAFT_001.md": "811dcfdd8d257e295382bfa90e92b39fd097f15c3b43e44cd34d2e04e270e1b2",
+    "opposed_gate_policy.py": "0d57ad3284d51cbf959c8c8fd96489f00374fc52be35b4dbcc68850dcb06cd6e"
+  },
+  "actual_binding_checks": {
+    "dispatch_files": 133,
+    "dispatch_mismatches": [],
+    "canonical_assets": 10,
+    "asset_mismatches": [],
+    "all_actual_source_paths_accepted": true,
+    "reader_plan_and_tests_present_in_actual_map": true,
+    "source_review002_present_in_actual_map": true,
+    "exact_v2_and_review002_producer_consumer_paths_match": true,
+    "model_exports_and_offline_labels_separate": true,
+    "five_admission_pinned_model_exports_rejoined_before_offline_labels": true,
+    "scope_and_selected_policy_pedigree": "PASS",
+    "source_allowlist": "Only campaign files, inherited approved .py roots, three exact historical metadata files and the inherited SMOKE input; no protected/native TEST paths."
+  },
+  "repaired_findings": [
+    {
+      "id": "FRESH-R06",
+      "failed_v1_review_sha256": "7de25860a9ad4505f2d2826e179cdd84e63f3d3348aba5552739357e76d7d9d3",
+      "failed_v1_admission_sha256": "cca385584023b45211a2a482885306e3505c59bd0b59b22b5f246282a6fe3b90",
+      "original_reader_preserved_sha256": "d07a99c3a8de65a09b5a405f6bc253f4859574c231f13a057a96790eaf9b45de",
+      "resolution": "Six forecast duration fields finite/nonnegative; warm-forward cost positive; exact forward/nonforward/sum formulas and unchanged registered reserve required.",
+      "all_six_negative_witnesses_rejected": true,
+      "AST_changed_functions": [
+        "load_native",
+        "raw_gate",
+        "review_receipt_path"
+      ],
+      "registered_scoring_statistics_and_primary_AST_unchanged": true
+    },
+    {
+      "id": "PARENT-ELAPSED-TEARDOWN",
+      "resolution": "Current parent finally charges elapsed whenever a child was created even if wait/termination fails; no-child stays zero, unverified teardown retains lock and incomplete accounting.",
+      "current_parent_sha256": "3e81f147c69ec5d4abe424c143be44e9891ba811622fc93eed4d185801615c4a",
+      "mock_audit_sha256": "ff3a3c871983e400431bfb71520c4e75e03f3bad5f51376d8ffa8931d2059632",
+      "old_preparation002_scope": "Old 0af0 preparation receipt is retained as its 68680-source epoch; it does not certify the corrected parent."
+    }
+  ],
+  "independent_tests": {
+    "worker_driver_tests_passed": 29,
+    "worker_driver_pytest_seconds": 6.0,
+    "successor_reader_and_parent_teardown_tests_passed": 24,
+    "successor_pytest_seconds": 10.34,
+    "successor_result_sha256": "570a3c69075377ba62d745686dc91602a34ed26be266e03a04be025a1d216c91",
+    "successor_command_sha256": "969693d939a4a5a35084b265dce9a2a90aa1faac9f402179bbb68ee87310e25e",
+    "successor_junit_sha256": "fb4b17c84e71056a0047cebc766f0d33093d950ce666b93f73a7bb8a57a0941a",
+    "source_check_sha256": "670d39e07d79d1004280a194789a6401bf6f4a3cf9c4853b3c00da45a85927e1",
+    "closure_check_sha256": "5c22dbe20eccfa2c18f8dc030a5eed690b3227f194dda036efcd80c1a341e6e2",
+    "scope_budget_check_sha256": "b07a8332bdc18929cfee6de9bee2950940ccc16290280c53af33f7a74368def0",
+    "method": "Canonical interpreter -B; no pytest cache; exclusive campaign-local temp. Fake CPU hosts/stdlib fixtures only."
+  },
+  "attributed_peer_checks": {
+    "source_review002_sha256": "b884892977019f63e1dd7b2da35ab6106200b7e9cd09b3ac1854e299d8e9a46d",
+    "affected_peer_tests_passed": 17,
+    "initial_worker_reader_peer_tests_passed": 49,
+    "limitations": "Peer work is attributed; no native/model qualification inferred from fixtures."
+  },
+  "scientific_contract": {
+    "scientific_cases": 432,
+    "parent_units": 216,
+    "preservation_panel_cases": 24,
+    "paths": [
+      "K0",
+      "UNIT",
+      "CONFIDENT_RECURRENCE",
+      "UNCERTAIN_RECURRENCE",
+      "EVIDENCE_CONSISTENCY_GUARD",
+      "HEADER_CUE",
+      "RANDOM17",
+      "RANDOM29",
+      "PRIMARY_REPEAT"
+    ],
+    "task_physical_rows": 4104,
+    "qualification_API_upper_bound": 852,
+    "task_API_upper_bound": 33744,
+    "total_API_cap": 34596,
+    "state_adjoints": 0,
+    "maximum_input_tokens": 350,
+    "maximum_forward_prefix_tokens": 357,
+    "actual_export_maximum_input_tokens": 249,
+    "output_caps": {
+      "task": 8,
+      "SMOKE": 24
+    },
+    "primary": "EVIDENCE_CONSISTENCY_GUARD",
+    "practical_margin": 0.05,
+    "conditional_bootstrap": {
+      "parent_resampling": "within 12 mechanisms, 18 parents each; two variants averaged within parent",
+      "draws": 20000,
+      "seed": 730217,
+      "order_statistic_indices": [
+        499,
+        19499
+      ]
+    },
+    "preservation": "Zero case-level new correctness, format, unsupported-answer and false-UNKNOWN harms versus both intact and unit, with family/panel checks; no aggregate offset or secondary promotion.",
+    "candidate_revisions_used": 3,
+    "candidate_revisions_maximum": 6,
+    "fresh_data_review_sha256": "6e6dece999832956473de9903b9e42e7cd553f219ae40ab829f1d159310bac42",
+    "source_limitations": "Authored nonce worlds and verifier share author/specification/primitives; old validation is exposed and unused for tuning; this fresh experiment cannot establish broad source or human-independent confirmation."
+  },
+  "resource_contract": {
+    "hard_deadline_seconds": 15600,
+    "internal_reserve_seconds": 1800,
+    "global_finalization_reserve_seconds": 1800,
+    "parent_host_available_floor_bytes": 7516192768,
+    "worker_host_available_floor_bytes": 6442450944,
+    "worker_rss_ceiling_bytes": 6442450944,
+    "running_host_reserve_bytes": 1073741824,
+    "gpu_initial_free_floor_bytes": 6442450944,
+    "gpu_allocated_ceiling_bytes": 5368709120,
+    "gpu_global_free_reserve_bytes": 1073741824,
+    "campaign_disk_ceiling_bytes": 2147483648,
+    "campaign_disk_reserve_bytes": 536870912,
+    "host_disk_free_reserve_bytes": 16106127360
+  },
+  "budget_and_authority": {
+    "native_spent_seconds": 3690.2476850999988,
+    "remaining_seconds": 17909.7523149,
+    "parent_plus_global_reserve_seconds": 17400,
+    "remaining_after_reservation_seconds": 509.7523149000008,
+    "fresh_study_launch_events": 0,
+    "run_and_campaign_lock_absent": true,
+    "no_retry": true,
+    "scope": "Distinct original-scope zero-training frozen K0/K1 study under the active new quality research directive; consumed earlier additional-attempt grants are not reused."
+  },
+  "dispatch_requirements_remaining": [
+    "Coordinator fresh live resource/identity/disk/process/lock/budget readiness.",
+    "Suspended Windows Job assignment and validated bootstrap before model import; sole owned model job.",
+    "Fresh actual native legacy/new K0/unit parity, full-prefix mask/position/L0-L2/cache/forced-restoration/max357/state/asset/resource qualification.",
+    "Fresh complete all-control forecast with measured forward and nonforward costs before any task rows; refusal must retain incomplete/null primaries."
+  ],
+  "limitations": {
+    "reviewer_model_calls": 0,
+    "reviewer_GPU_calls": 0,
+    "fresh_model_outcomes_read": false,
+    "native_qualification_claimed": false,
+    "efficacy_or_speed_claim": false,
+    "new_training_or_operator_scope": false,
+    "future_stability_guarantee": false
+  },
+  "evidence_scope": "Independent source inspection, exact-byte binding and synthetic regression acceptance only. Full raw quality/control/statistical/result review is deferred until a terminal native attempt."
+}

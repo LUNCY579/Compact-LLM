@@ -1,0 +1,23 @@
+{
+  "ended_utc": "2026-10-05T03:31:15.713156+00:00",
+  "error": "RuntimeError: source closure differs:Rineya_Cross_Scale_Capability_Transfer_Lab_v1/data/evaluation/mergedev_fast.jsonl",
+  "final_resources_on_stop": {
+    "GPU_memory": null,
+    "device": "cpu",
+    "host_available_bytes": 10842906624,
+    "peak_rss_bytes": 524136448,
+    "rss_bytes": 523059200
+  },
+  "generation": false,
+  "generation_pool_access": false,
+  "lane": "CPU_CAUSAL_REPLAY_FP32",
+  "model_load_attempts": 0,
+  "native_model_loads": 0,
+  "native_test": false,
+  "optimizer_steps": 0,
+  "started_utc": "2026-10-05T03:31:15.710644+00:00",
+  "status": "FAIL",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\cpu_causal_replay_native.py\", line 234, in run\n    if not (PACKAGE in path.parents or relative.startswith(('experiments/rineya_taps_adaptive_recurrence_v1/','experiments/anchor_routed_middle_recurrence_v1/','Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/'))) or sha(path)!=value:raise RuntimeError('source closure differs:'+relative)\n                                                                                                                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: source closure differs:Rineya_Cross_Scale_Capability_Transfer_Lab_v1/data/evaluation/mergedev_fast.jsonl\n",
+  "training": false,
+  "wall_seconds": 7.312228200000391
+}

@@ -1,0 +1,148 @@
+{
+  "controlling_evidence_sha256": {
+    "CONTINUE.md": "bde9132936fe0e06e1d0e3e26c513f8fc5e28547be4f74252c80caaea6614f08",
+    "CPU_CAUSAL_REPLAY_RESULT_003.md": "92b141b716a683e945cd4efefaa19b71dcddd8d75765edb8d9d0c9395fc9090e",
+    "FULL_GENERATION_RESTART_ALLOWANCE_TEMPLATE_001.json": "2f42ce379924f37fa497700cf660af57d8577c14d9a9eda072be6b4481fc817e",
+    "FULL_GENERATION_RESTART_READINESS_001.json": "4b240ba7c545f430172b836e9d72e667570b777da21e17e8980959eda45dca3e",
+    "RESEARCH_REPORT.md": "5105a7df6d0dee9c7440691216600b10ca8643c0aef476893d5df7105b4a5dc7",
+    "STATE.json": "b5961caded4faf33801e9589beab7e6dc549037db5ee40087a0fe618312d7570",
+    "analyses/cpu-causal-replay-003-fp32-reviewed-001/REPORT.json": "ae15d0c9d425938d13ea981db4406269ae2ada5a6444d778e1a8fe0f84671911",
+    "audits/cpu_causal_replay_execution_math_003.json": "7eb188ce6062df7eac7327bb4960f3f9deca4539ceff61059a489881884fb254",
+    "audits/cpu_causal_replay_native_execution_003.json": "f62fcd44ccc9401ee3f0526870d69d4975e89ff758c561e282a1e77be034dc5f",
+    "full_generation_restart_admission_v1.json": "a6611ea9c493d314fbe47771ec59521440178153e0779be283128c6ae59e723c",
+    "reviews/bulk_restart_dispatch_receipt_001.json": "36f65f85fc00c0e1dbbce5f2537c0b7b2d21567542fd2ac5e0d1044c2b9d0113",
+    "reviews/cpu_causal_replay_execution_review_003.json": "94071d3a9fc1576786119564e78745dcea3382be1bad4889d5d13c6d686c66fe"
+  },
+  "cost_authority_request": {
+    "003_charged_seconds": 1389.328,
+    "API_cap": 28436,
+    "actual_new_full_restart_grant_exists": false,
+    "actual_new_full_restart_run_exists": false,
+    "asset_bindings_count10_already_reviewed": 10,
+    "da328_consumed_once": true,
+    "direct_approval_question_unanswered": true,
+    "dispatch_review_sha256": "36f65f85fc00c0e1dbbce5f2537c0b7b2d21567542fd2ac5e0d1044c2b9d0113",
+    "future_command_uses_new_supervisor_source_exactadmission_exclusive_run": true,
+    "future_parser_sha256": "9c95e00731525c34537696e79f4cc776ebfb2d5f560da0888da2feaf7b62c543",
+    "future_worker_sha256": "899d88cf37fe2399cab445400934a12dff1eb997e9085352c82ec32ad663dd4f",
+    "global_reserve_seconds": 1800,
+    "internal_reserve_seconds": 1800,
+    "native_lock_exists": false,
+    "native_seconds_remaining": 18762.157,
+    "native_seconds_used": 2837.843,
+    "parent_seconds": 16000,
+    "physical_evaluations": 3296,
+    "readiness001_is_saved_conditional_resource_pass_missinggrant_only_not_live_authority": true,
+    "request_admission_sha256": "a6611ea9c493d314fbe47771ec59521440178153e0779be283128c6ae59e723c",
+    "reservation_total17800_fits_remaining": true,
+    "scientific_SMOKE_caps": [
+      8,
+      24
+    ],
+    "source_bindings_count107_already_independently_reviewed_not_rehashed_here": 107,
+    "state_adjoints": 0
+  },
+  "created_utc": "2026-10-05T17:49:52.568655+00:00",
+  "independence": "Auditor authored the native workers, so this is targeted reporting consistency, not independent native-source/result review; independent94071/math7eb and dispatch36f65 are controlling evidence.",
+  "index_and_handoff": {
+    "corrected_index_v18_sha256": "9c3badd232120b07f96c94d6314389fb641aaaa97e0c3bf5a91b1295b94a59e3",
+    "live_CONTINUE_sha256": "bde9132936fe0e06e1d0e3e26c513f8fc5e28547be4f74252c80caaea6614f08",
+    "live_STATE_sha256": "b5961caded4faf33801e9589beab7e6dc549037db5ee40087a0fe618312d7570",
+    "selected_link_count_verified": 14,
+    "selected_links": {
+      "BULK_RESTART_ANALYSIS_PLAN_001.md": {
+        "actual": "96840cead3005b322d0cbf888bbf75206c0852df8772f98ef103261b3ed44ec2",
+        "expected": "96840cead3005b322d0cbf888bbf75206c0852df8772f98ef103261b3ed44ec2"
+      },
+      "CPU_CAUSAL_REPLAY_RESULT_003.md": {
+        "actual": "92b141b716a683e945cd4efefaa19b71dcddd8d75765edb8d9d0c9395fc9090e",
+        "expected": "92b141b716a683e945cd4efefaa19b71dcddd8d75765edb8d9d0c9395fc9090e"
+      },
+      "FULL_GENERATION_RESTART_READINESS_001.json": {
+        "actual": "4b240ba7c545f430172b836e9d72e667570b777da21e17e8980959eda45dca3e",
+        "expected": "4b240ba7c545f430172b836e9d72e667570b777da21e17e8980959eda45dca3e"
+      },
+      "RESEARCH_REPORT.md": {
+        "actual": "5105a7df6d0dee9c7440691216600b10ca8643c0aef476893d5df7105b4a5dc7",
+        "expected": "5105a7df6d0dee9c7440691216600b10ca8643c0aef476893d5df7105b4a5dc7"
+      },
+      "audits/cpu_causal_replay_execution_math_003.json": {
+        "actual": "7eb188ce6062df7eac7327bb4960f3f9deca4539ceff61059a489881884fb254",
+        "expected": "7eb188ce6062df7eac7327bb4960f3f9deca4539ceff61059a489881884fb254"
+      },
+      "audits/cpu_causal_replay_native_execution_003.json": {
+        "actual": "f62fcd44ccc9401ee3f0526870d69d4975e89ff758c561e282a1e77be034dc5f",
+        "expected": "f62fcd44ccc9401ee3f0526870d69d4975e89ff758c561e282a1e77be034dc5f"
+      },
+      "bulk_restart_analysis.py": {
+        "actual": "9c95e00731525c34537696e79f4cc776ebfb2d5f560da0888da2feaf7b62c543",
+        "expected": "9c95e00731525c34537696e79f4cc776ebfb2d5f560da0888da2feaf7b62c543"
+      },
+      "bulk_restart_native.py": {
+        "actual": "899d88cf37fe2399cab445400934a12dff1eb997e9085352c82ec32ad663dd4f",
+        "expected": "899d88cf37fe2399cab445400934a12dff1eb997e9085352c82ec32ad663dd4f"
+      },
+      "full_generation_restart_admission_v1.json": {
+        "actual": "a6611ea9c493d314fbe47771ec59521440178153e0779be283128c6ae59e723c",
+        "expected": "a6611ea9c493d314fbe47771ec59521440178153e0779be283128c6ae59e723c"
+      },
+      "reviews/bulk_restart_dispatch_receipt_001.json": {
+        "actual": "36f65f85fc00c0e1dbbce5f2537c0b7b2d21567542fd2ac5e0d1044c2b9d0113",
+        "expected": "36f65f85fc00c0e1dbbce5f2537c0b7b2d21567542fd2ac5e0d1044c2b9d0113"
+      },
+      "reviews/cpu_causal_replay_execution_review_003.json": {
+        "actual": "94071d3a9fc1576786119564e78745dcea3382be1bad4889d5d13c6d686c66fe",
+        "expected": "94071d3a9fc1576786119564e78745dcea3382be1bad4889d5d13c6d686c66fe"
+      },
+      "tests/test_bulk_restart_analysis.py": {
+        "actual": "dbf0374cde7aec6f81f9462934670790bc58cfda84c95520dd95c62ec7b0bfb2",
+        "expected": "dbf0374cde7aec6f81f9462934670790bc58cfda84c95520dd95c62ec7b0bfb2"
+      },
+      "versions/current_handoff_before_index_v18/CONTINUE.md": {
+        "actual": "bde9132936fe0e06e1d0e3e26c513f8fc5e28547be4f74252c80caaea6614f08",
+        "expected": "bde9132936fe0e06e1d0e3e26c513f8fc5e28547be4f74252c80caaea6614f08"
+      },
+      "versions/current_handoff_before_index_v18/STATE.json": {
+        "actual": "b5961caded4faf33801e9589beab7e6dc549037db5ee40087a0fe618312d7570",
+        "expected": "b5961caded4faf33801e9589beab7e6dc549037db5ee40087a0fe618312d7570"
+      }
+    },
+    "snapshot_state_core_scope_budget_facts_match_live": true,
+    "unrelated1156_files_not_rehashed": true,
+    "v16_v17_bytes_preserved": true
+  },
+  "initial_v16_findings_and_resolution": [
+    {
+      "finding": "latest_causal_attempt incorrectly retained002/0cases",
+      "original_index_sha256": "3dca904ac9bbfda2061d97f1f8c23e9b70c6683244339b9113de376afb110ef0",
+      "resolution": "v17/v18 latest now003 with192/632/1925/635/1389.328;002 retained under historical_causal_attempt_002."
+    },
+    {
+      "finding": "Live STATE/CONTINUE index links had old unmatched digests",
+      "resolution": "v18 explicitly binds immutable versions/current_handoff_before_index_v18 snapshots; livefiles point to v18. No circular index/state hashing and no old index replacement."
+    }
+  ],
+  "material_discrepancies_remaining": [],
+  "model_calls": 0,
+  "new_tests": 0,
+  "scientific_reporting": {
+    "EOS_ordering": "UNVERIFIED_FINITE_PRECISION, all192rows/rawgaps/oldmarkers retained; no exact cause/bound claimed.",
+    "TDR_cause_unresolved_no_stability_repair_claim": true,
+    "all192_coherence_positive": true,
+    "all48_canonical_UNKNOWN_plus_loss_harms": 48,
+    "causal_teacher_prefix_and_canonical_alias_limits_explicit": true,
+    "coherence_agreement": 91,
+    "constant_decrease_agreement": 97,
+    "constant_increase_agreement": 91,
+    "harm_scope": "Recorded canonical likelihood delta, not generated abstention flips/semantic preservation.",
+    "neutral_cases": 4,
+    "numerically_uncertain_nonneutral": 0,
+    "old_generation_validation_primary_remains_null": true,
+    "population_cases": 192,
+    "reliable_sign_denominator": 188,
+    "scientific_goal": "ACTIVE_UNMET"
+  },
+  "scope": "Current report/result/state/continuation/index/request links only; no whole-campaign or native-gate revalidation.",
+  "source_state_report_grant_edits_by_auditor": false,
+  "status": "PASS_TARGETED_REPORTING_CONSISTENCY_AFTER_INDEX_CORRECTION"
+}

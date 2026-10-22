@@ -1,0 +1,99 @@
+{
+  "schema": "independent_fresh_dispatch_review_v1",
+  "status": "FAIL_FRESH_K01_FP32_DISPATCH_NOT_NATIVE_READY",
+  "admission_sha256": "cca385584023b45211a2a482885306e3505c59bd0b59b22b5f246282a6fe3b90",
+  "admission_path": "quality_pattern_v3/fresh_admission_v1.json",
+  "errors": [
+    "Frozen terminal reader accepts negative finite remaining_forward_seconds and remaining_nonforward_seconds as complete all-control forecast proof."
+  ],
+  "findings": [
+    {
+      "id": "FRESH-R06",
+      "severity": "BLOCKING",
+      "gate": "Complete fresh all-control forecast must consist of finite nonnegative measured/planned elapsed costs before scientific rows.",
+      "source": "quality_pattern_v3/fresh_analysis.py:129-134",
+      "source_sha256": "d07a99c3a8de65a09b5a405f6bc253f4859574c231f13a057a96790eaf9b45de",
+      "witness_sha256": "a23178c834e80e3f6bea1e765f53a2616f69b1e67d53c4377c8825f2bb91c60e",
+      "witness": "quality_pattern_v3/reviews/fresh_dispatch_check_001/negative_forecast_witness_001.json",
+      "observed": "Each negative -1.0 component independently passes raw_gate with errors=[] on the existing otherwise valid synthetic fixture.",
+      "required_disposition": "Preserve frozen v1, repair nonnegative forecast checks with negative regressions, source-review and freeze a successor before dispatch."
+    }
+  ],
+  "checked_contract": {
+    "scientific_cases": 432,
+    "parent_units": 216,
+    "preservation_cases": 24,
+    "task_physical_rows": 4104,
+    "model_API_cap": 34596,
+    "qualification_API_upper_bound": 852,
+    "task_API_upper_bound": 33744,
+    "maximum_prefix_tokens": 357,
+    "hard_deadline_seconds": 15600,
+    "body_deadline_seconds": 13800,
+    "internal_reserve_seconds": 1800,
+    "global_finalization_reserve_seconds": 1800,
+    "retry_available": false,
+    "primary_policy": "GUARD",
+    "practical_margin": 0.05,
+    "candidate_revisions_used": 3,
+    "candidate_revisions_maximum": 6
+  },
+  "independent_checks": {
+    "canonical_assets_hashed": 10,
+    "asset_mismatches": [],
+    "dispatch_files_examined": 133,
+    "closure_check": {
+      "admission_sha256": "cca385584023b45211a2a482885306e3505c59bd0b59b22b5f246282a6fe3b90",
+      "dispatch_count": 133,
+      "dispatch_mismatches": [
+        {
+          "path": "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/fresh_readiness.py",
+          "expected": "3739a9b0415423a54dd95148933fca851b1ccc23be675b8ee3d03788743485c0",
+          "observed": "b9966132fec1fd1ca3d3bcc1a835a52174c02a55d9d87aa0dddca338e12e9182"
+        },
+        {
+          "path": "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/fresh_scope.py",
+          "expected": "f6f44b4a2f2770546933b1a3bbdfa0aea35ee3f9b0229ceabfb55978615c0823",
+          "observed": "22e08e1c342fcd068544d642952d7448c0b7d9de9fe659c8d3231e3eb47e634e"
+        },
+        {
+          "path": "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/prepare_fresh_admission.py",
+          "expected": "4b758f8b6c01409279f278d5e7e45167023f05e09f1f642e57e5d6f0bb8519f4",
+          "observed": "8a9f6a16f34171f77e49ff7acd429c8f1b05908c524edc76d7e1975cb8ba58ff"
+        }
+      ],
+      "asset_count": 10,
+      "asset_mismatches": [],
+      "reader": "d07a99c3a8de65a09b5a405f6bc253f4859574c231f13a057a96790eaf9b45de",
+      "parent": "3e81f147c69ec5d4abe424c143be44e9891ba811622fc93eed4d185801615c4a",
+      "parent_test": "80bcbd0ac51060a0e0954f42563e95a4a63b5c3556901a70cb5b05ce34215ddf",
+      "teardown_audit": "ff3a3c871983e400431bfb71520c4e75e03f3bad5f51376d8ffa8931d2059632"
+    },
+    "closure_note": "Three root scope/readiness/builder files had already been prospectively changed to v2 after root accepted the blocker. This is disclosed current-byte drift, not a claim that frozen v1 still matches current source.",
+    "source_review": "Worker, driver, policy, scope, bootstrap, parent, admission builder and reader were inspected; no native qualification is claimed.",
+    "CPU_fixture_tests": {
+      "worker_and_driver_passed": 29,
+      "pytest_seconds": 6.0,
+      "result": "quality_pattern_v3/reviews/fresh_dispatch_check_001/RESULT.json"
+    },
+    "new_synthetic_counterexamples": 2,
+    "root_parent_teardown_fix": "Current 3e81 parent finally charges elapsed whenever a child exists; no-child remains zero; uncertain teardown preserves incomplete accounting/lock.",
+    "data_review_sha256": "6e6dece999832956473de9903b9e42e7cd553f219ae40ab829f1d159310bac42"
+  },
+  "source_bound_peer_evidence": {
+    "worker_reader_review_sha256": "9b2a8c351e666ea0239d05bfbcecee32a4853bcd27bf9a05018ac736a90588fa",
+    "peer_CPU_tests": 49,
+    "new_parent_mock_audit_sha256": "ff3a3c871983e400431bfb71520c4e75e03f3bad5f51376d8ffa8931d2059632",
+    "new_parent_mock_tests": 7,
+    "limits": "Peer/source-owner evidence is attributed; it is not independently rerun native/model qualification."
+  },
+  "safety_scope": {
+    "reviewer_model_calls": 0,
+    "reviewer_GPU_calls": 0,
+    "fresh_scientific_outcomes_read": false,
+    "source_changes_by_reviewer": false,
+    "launch_authority": false,
+    "efficacy_claim": false
+  },
+  "prospective_successor": "fresh_admission_v2.json and fresh_dispatch_review_002 remain pending; this failed receipt is immutable."
+}

@@ -1,0 +1,41 @@
+{
+  "controller": {
+    "enabled": true,
+    "beta": 0.8,
+    "gamma": 1.5,
+    "rho": 0.275,
+    "alpha_min": 0.8,
+    "alpha_max": 1.2,
+    "alpha_init": 1.0,
+    "eps": 1e-12,
+    "refresh_interval": 1,
+    "warmup_loops": 1,
+    "normalization_mode": "mean",
+    "scheduler_mode": "taps",
+    "fixed_alpha": 1.0,
+    "seed": 17,
+    "random_pool": []
+  },
+  "grid": [
+    0.8,
+    0.9,
+    1,
+    1.1,
+    1.2
+  ],
+  "fixture_extra_loops": [
+    0,
+    1,
+    2,
+    4
+  ],
+  "native_extra_loops": [
+    0,
+    1
+  ],
+  "seeds": [
+    17,
+    29
+  ],
+  "note": "Snapshot of source-frozen settings; CLI does not silently accept arbitrary overrides."
+}

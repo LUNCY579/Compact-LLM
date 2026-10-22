@@ -1,0 +1,60 @@
+{
+  "schema": "bounded_forecast_successor_source_check",
+  "source_sha256": "a986b3affad1e9f1084b45c63fe2ce4c0927fc3f2fa52ab070fe07c2ae1988aa",
+  "archived_source_sha256": "d07a99c3a8de65a09b5a405f6bc253f4859574c231f13a057a96790eaf9b45de",
+  "test_sha256": "6b593e6a5cfd98537fc1179067e3bfcba7540a7555721d5409e8aee6000fa9e2",
+  "AST_changed_functions": [
+    "load_native",
+    "raw_gate",
+    "review_receipt_path"
+  ],
+  "registered_statistical_and_scoring_functions_unchanged": true,
+  "negative_witnesses": [
+    {
+      "field": "remaining_forward_seconds",
+      "errors": [
+        "complete all-control forecast proof missing"
+      ],
+      "required_error_present": true
+    },
+    {
+      "field": "remaining_nonforward_seconds",
+      "errors": [
+        "complete all-control forecast proof missing"
+      ],
+      "required_error_present": true
+    },
+    {
+      "field": "remaining_forecast_seconds",
+      "errors": [
+        "complete all-control forecast proof missing"
+      ],
+      "required_error_present": true
+    },
+    {
+      "field": "elapsed_seconds",
+      "errors": [
+        "complete all-control forecast proof missing",
+        "qualification/forecast must precede all task calls"
+      ],
+      "required_error_present": true
+    },
+    {
+      "field": "nonforward_per_row_bound_seconds",
+      "errors": [
+        "complete all-control forecast proof missing"
+      ],
+      "required_error_present": true
+    },
+    {
+      "field": "max_observed_warm_forward_seconds",
+      "errors": [
+        "complete all-control forecast proof missing"
+      ],
+      "required_error_present": true
+    }
+  ],
+  "models": 0,
+  "GPU": 0,
+  "actual_fresh_model_outcomes": false
+}

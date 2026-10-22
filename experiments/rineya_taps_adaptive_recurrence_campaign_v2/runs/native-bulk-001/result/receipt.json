@@ -1,0 +1,27 @@
+{
+  "after_load_resources": {
+    "gpu_allocated_bytes": 2384724992,
+    "gpu_free_bytes": 4993318912,
+    "gpu_peak_allocated_bytes": 2384724992,
+    "gpu_peak_reserved_bytes": 2386558976,
+    "gpu_reserved_bytes": 2386558976,
+    "gpu_total_bytes": 8585216000,
+    "host_available_bytes": 14606675968,
+    "rss_bytes": 1002106880
+  },
+  "controller_candidate_revision": 0,
+  "ended_utc": "2026-10-04T22:36:34.537650+00:00",
+  "error": "AcceleratorError: CUDA error: an illegal memory access was encountered\nSearch for `cudaErrorIllegalAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\nCompile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.\n",
+  "final_resources_on_stop": null,
+  "lane": "BULK_GPU_FP32_INTERVENTION",
+  "loaded_custom_code_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\hf_cache\\modules\\transformers_modules\\Rineya_hyphen_Supa_hyphen_A1_dot_1_hyphen_1_dot_1_dot_0_hyphen_devfreeze\\8f4297a203b4732e\\modeling_supa_a11.py",
+  "loaded_custom_code_sha256": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+  "loaded_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+  "model_load_attempts": 1,
+  "native_model_loads": 1,
+  "native_test": false,
+  "started_utc": "2026-10-04T22:27:27.388378+00:00",
+  "status": "FAIL",
+  "training": false,
+  "wall_seconds": 547.1517707000003
+}

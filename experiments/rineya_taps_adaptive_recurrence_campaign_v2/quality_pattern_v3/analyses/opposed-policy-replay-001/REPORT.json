@@ -1,0 +1,1076 @@
+{
+  "status": "COMPLETE_EXPOSED_DEV_POLICY_REPLAY",
+  "errors": [],
+  "native_model_calls": 0,
+  "baselines": {
+    "intact": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 63.0,
+      "format_valid": 192.0,
+      "literal_UNKNOWN": 96.0,
+      "false_UNKNOWN": 48.0,
+      "unsupported_canonical_answer": 0.0,
+      "eos_emitted": 192.0,
+      "truncated": 0.0,
+      "equal_family_parent_accuracy": 0.328125,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.40625,
+        "program_state": 0.0625,
+        "dialogue_memory": 0.5,
+        "document_retrieval_reconciliation": 0.5,
+        "answerability_source_conflict": 0.5
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48
+    },
+    "unit": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 69.0,
+      "format_valid": 191.0,
+      "literal_UNKNOWN": 89.0,
+      "false_UNKNOWN": 42.0,
+      "unsupported_canonical_answer": 1.0,
+      "eos_emitted": 191.0,
+      "truncated": 1.0,
+      "equal_family_parent_accuracy": 0.359375,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.53125,
+        "program_state": 0.03125,
+        "dialogue_memory": 0.5625,
+        "document_retrieval_reconciliation": 0.5,
+        "answerability_source_conflict": 0.53125
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48
+    }
+  },
+  "header_cue": {
+    "cases": 192,
+    "parent_units": 96,
+    "correct": 68.0,
+    "format_valid": 191.0,
+    "literal_UNKNOWN": 92.0,
+    "false_UNKNOWN": 44.0,
+    "unsupported_canonical_answer": 0.0,
+    "eos_emitted": 191.0,
+    "truncated": 1.0,
+    "equal_family_parent_accuracy": 0.3541666666666667,
+    "family_accuracy": {
+      "signed_ledgers": 0.0,
+      "deduction_composition": 0.53125,
+      "program_state": 0.03125,
+      "dialogue_memory": 0.5625,
+      "document_retrieval_reconciliation": 0.5,
+      "answerability_source_conflict": 0.5
+    },
+    "answerable_cases": 144,
+    "unanswerable_cases": 48
+  },
+  "policies": {
+    "CONFIDENT_RECURRENCE": {
+      "summary": {
+        "cases": 192,
+        "parent_units": 96,
+        "correct": 69.0,
+        "format_valid": 192.0,
+        "literal_UNKNOWN": 89.0,
+        "false_UNKNOWN": 42.0,
+        "unsupported_canonical_answer": 1.0,
+        "eos_emitted": 192.0,
+        "truncated": 0.0,
+        "equal_family_parent_accuracy": 0.359375,
+        "family_accuracy": {
+          "signed_ledgers": 0.0,
+          "deduction_composition": 0.5,
+          "program_state": 0.0625,
+          "dialogue_memory": 0.5625,
+          "document_retrieval_reconciliation": 0.5,
+          "answerability_source_conflict": 0.53125
+        },
+        "answerable_cases": 144,
+        "unanswerable_cases": 48
+      },
+      "vs_unit": {
+        "gains": [
+          "BULK-TAPS-001:9463250d48f1:program_state:1:v1",
+          "BULK-TAPS-001:9463250d48f1:program_state:2:v1"
+        ],
+        "losses": [
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:8:v0",
+          "BULK-TAPS-001:9463250d48f1:program_state:10:v0"
+        ],
+        "gain_parents": [
+          "BULK-TAPS-001:9463250d48f1:program_state:1",
+          "BULK-TAPS-001:9463250d48f1:program_state:2"
+        ],
+        "loss_parents": [
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:8",
+          "BULK-TAPS-001:9463250d48f1:program_state:10"
+        ],
+        "retained_baseline_correct": 67.0,
+        "baseline_correct": 69.0,
+        "delta": 0.0,
+        "family_delta": {
+          "signed_ledgers": 0.0,
+          "deduction_composition": -0.03125,
+          "program_state": 0.03125,
+          "dialogue_memory": 0.0,
+          "document_retrieval_reconciliation": 0.0,
+          "answerability_source_conflict": 0.0
+        },
+        "format_delta": 1.0,
+        "unsupported_delta": 0.0,
+        "false_UNKNOWN_delta": 0.0
+      },
+      "vs_intact": {
+        "gains": [
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:4:v1",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:5:v0",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:9:v0",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:9:v1",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:12:v0",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:13:v0",
+          "BULK-TAPS-001:9463250d48f1:dialogue_memory:5:v0",
+          "BULK-TAPS-001:9463250d48f1:dialogue_memory:9:v0",
+          "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:4:v0",
+          "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:2:v0"
+        ],
+        "losses": [
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:10:v1",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:11:v0",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:14:v1",
+          "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7:v1"
+        ],
+        "gain_parents": [
+          "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:2",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:12",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:13",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:4",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:5",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:9",
+          "BULK-TAPS-001:9463250d48f1:dialogue_memory:5",
+          "BULK-TAPS-001:9463250d48f1:dialogue_memory:9",
+          "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:4"
+        ],
+        "loss_parents": [
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:10",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:11",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:14",
+          "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7"
+        ],
+        "retained_baseline_correct": 59.0,
+        "baseline_correct": 63.0,
+        "delta": 0.03125,
+        "family_delta": {
+          "signed_ledgers": 0.0,
+          "deduction_composition": 0.09375,
+          "program_state": 0.0,
+          "dialogue_memory": 0.0625,
+          "document_retrieval_reconciliation": 0.0,
+          "answerability_source_conflict": 0.03125
+        },
+        "format_delta": 0.0,
+        "unsupported_delta": 1.0,
+        "false_UNKNOWN_delta": -6.0
+      },
+      "K1_rate": 0.7239583333333334,
+      "K1_count": 139,
+      "random_seed_summaries": {
+        "17": {
+          "cases": 192,
+          "parent_units": 96,
+          "correct": 69.0,
+          "format_valid": 191.0,
+          "literal_UNKNOWN": 90.0,
+          "false_UNKNOWN": 43.0,
+          "unsupported_canonical_answer": 1.0,
+          "eos_emitted": 191.0,
+          "truncated": 1.0,
+          "equal_family_parent_accuracy": 0.359375,
+          "family_accuracy": {
+            "signed_ledgers": 0.0,
+            "deduction_composition": 0.53125,
+            "program_state": 0.0625,
+            "dialogue_memory": 0.5625,
+            "document_retrieval_reconciliation": 0.5,
+            "answerability_source_conflict": 0.5
+          },
+          "answerable_cases": 144,
+          "unanswerable_cases": 48
+        },
+        "29": {
+          "cases": 192,
+          "parent_units": 96,
+          "correct": 71.0,
+          "format_valid": 192.0,
+          "literal_UNKNOWN": 91.0,
+          "false_UNKNOWN": 44.0,
+          "unsupported_canonical_answer": 1.0,
+          "eos_emitted": 192.0,
+          "truncated": 0.0,
+          "equal_family_parent_accuracy": 0.3697916666666667,
+          "family_accuracy": {
+            "signed_ledgers": 0.0,
+            "deduction_composition": 0.5625,
+            "program_state": 0.09375,
+            "dialogue_memory": 0.5625,
+            "document_retrieval_reconciliation": 0.5,
+            "answerability_source_conflict": 0.5
+          },
+          "answerable_cases": 144,
+          "unanswerable_cases": 48
+        }
+      },
+      "random_K1_counts": {
+        "17": 131,
+        "29": 136
+      },
+      "random_mean": {
+        "cases": 192,
+        "parent_units": 96,
+        "correct": 70.0,
+        "format_valid": 191.5,
+        "literal_UNKNOWN": 90.5,
+        "false_UNKNOWN": 43.5,
+        "unsupported_canonical_answer": 1.0,
+        "eos_emitted": 191.5,
+        "truncated": 0.5,
+        "equal_family_parent_accuracy": 0.3645833333333333,
+        "family_accuracy": {
+          "signed_ledgers": 0.0,
+          "deduction_composition": 0.546875,
+          "program_state": 0.078125,
+          "dialogue_memory": 0.5625,
+          "document_retrieval_reconciliation": 0.5,
+          "answerability_source_conflict": 0.5
+        },
+        "answerable_cases": 144,
+        "unanswerable_cases": 48
+      },
+      "useful_five_point_DEV_gain": false,
+      "mechanical_nomination_checks": {
+        "strictly_better_than_unit": false,
+        "zero_unit_correct_losses": false,
+        "no_family_decline": false,
+        "no_format_decline": true,
+        "no_unsupported_increase": true,
+        "no_false_UNKNOWN_increase": true,
+        "strictly_better_than_random": false,
+        "guard_beats_header": true
+      },
+      "mechanical_nomination_eligible": false
+    },
+    "UNCERTAIN_RECURRENCE": {
+      "summary": {
+        "cases": 192,
+        "parent_units": 96,
+        "correct": 63.0,
+        "format_valid": 191.0,
+        "literal_UNKNOWN": 96.0,
+        "false_UNKNOWN": 48.0,
+        "unsupported_canonical_answer": 0.0,
+        "eos_emitted": 191.0,
+        "truncated": 1.0,
+        "equal_family_parent_accuracy": 0.328125,
+        "family_accuracy": {
+          "signed_ledgers": 0.0,
+          "deduction_composition": 0.4375,
+          "program_state": 0.03125,
+          "dialogue_memory": 0.5,
+          "document_retrieval_reconciliation": 0.5,
+          "answerability_source_conflict": 0.5
+        },
+        "answerable_cases": 144,
+        "unanswerable_cases": 48
+      },
+      "vs_unit": {
+        "gains": [
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:10:v1",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:11:v0",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:14:v1",
+          "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7:v1"
+        ],
+        "losses": [
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:4:v1",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:5:v0",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:9:v0",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:9:v1",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:12:v0",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:13:v0",
+          "BULK-TAPS-001:9463250d48f1:dialogue_memory:5:v0",
+          "BULK-TAPS-001:9463250d48f1:dialogue_memory:9:v0",
+          "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:4:v0",
+          "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:2:v0"
+        ],
+        "gain_parents": [
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:10",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:11",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:14",
+          "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7"
+        ],
+        "loss_parents": [
+          "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:2",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:12",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:13",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:4",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:5",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:9",
+          "BULK-TAPS-001:9463250d48f1:dialogue_memory:5",
+          "BULK-TAPS-001:9463250d48f1:dialogue_memory:9",
+          "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:4"
+        ],
+        "retained_baseline_correct": 59.0,
+        "baseline_correct": 69.0,
+        "delta": -0.03125,
+        "family_delta": {
+          "signed_ledgers": 0.0,
+          "deduction_composition": -0.09375,
+          "program_state": 0.0,
+          "dialogue_memory": -0.0625,
+          "document_retrieval_reconciliation": 0.0,
+          "answerability_source_conflict": -0.03125
+        },
+        "format_delta": 0.0,
+        "unsupported_delta": -1.0,
+        "false_UNKNOWN_delta": 6.0
+      },
+      "vs_intact": {
+        "gains": [
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:8:v0",
+          "BULK-TAPS-001:9463250d48f1:program_state:10:v0"
+        ],
+        "losses": [
+          "BULK-TAPS-001:9463250d48f1:program_state:1:v1",
+          "BULK-TAPS-001:9463250d48f1:program_state:2:v1"
+        ],
+        "gain_parents": [
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:8",
+          "BULK-TAPS-001:9463250d48f1:program_state:10"
+        ],
+        "loss_parents": [
+          "BULK-TAPS-001:9463250d48f1:program_state:1",
+          "BULK-TAPS-001:9463250d48f1:program_state:2"
+        ],
+        "retained_baseline_correct": 61.0,
+        "baseline_correct": 63.0,
+        "delta": 0.0,
+        "family_delta": {
+          "signed_ledgers": 0.0,
+          "deduction_composition": 0.03125,
+          "program_state": -0.03125,
+          "dialogue_memory": 0.0,
+          "document_retrieval_reconciliation": 0.0,
+          "answerability_source_conflict": 0.0
+        },
+        "format_delta": -1.0,
+        "unsupported_delta": 0.0,
+        "false_UNKNOWN_delta": 0.0
+      },
+      "K1_rate": 0.2760416666666667,
+      "K1_count": 53,
+      "random_seed_summaries": {
+        "17": {
+          "cases": 192,
+          "parent_units": 96,
+          "correct": 63.0,
+          "format_valid": 192.0,
+          "literal_UNKNOWN": 95.0,
+          "false_UNKNOWN": 47.0,
+          "unsupported_canonical_answer": 0.0,
+          "eos_emitted": 192.0,
+          "truncated": 0.0,
+          "equal_family_parent_accuracy": 0.328125,
+          "family_accuracy": {
+            "signed_ledgers": 0.0,
+            "deduction_composition": 0.40625,
+            "program_state": 0.0625,
+            "dialogue_memory": 0.5,
+            "document_retrieval_reconciliation": 0.5,
+            "answerability_source_conflict": 0.5
+          },
+          "answerable_cases": 144,
+          "unanswerable_cases": 48
+        },
+        "29": {
+          "cases": 192,
+          "parent_units": 96,
+          "correct": 67.0,
+          "format_valid": 192.0,
+          "literal_UNKNOWN": 95.0,
+          "false_UNKNOWN": 47.0,
+          "unsupported_canonical_answer": 0.0,
+          "eos_emitted": 192.0,
+          "truncated": 0.0,
+          "equal_family_parent_accuracy": 0.3489583333333333,
+          "family_accuracy": {
+            "signed_ledgers": 0.0,
+            "deduction_composition": 0.46875,
+            "program_state": 0.09375,
+            "dialogue_memory": 0.53125,
+            "document_retrieval_reconciliation": 0.5,
+            "answerability_source_conflict": 0.5
+          },
+          "answerable_cases": 144,
+          "unanswerable_cases": 48
+        }
+      },
+      "random_K1_counts": {
+        "17": 48,
+        "29": 51
+      },
+      "random_mean": {
+        "cases": 192,
+        "parent_units": 96,
+        "correct": 65.0,
+        "format_valid": 192.0,
+        "literal_UNKNOWN": 95.0,
+        "false_UNKNOWN": 47.0,
+        "unsupported_canonical_answer": 0.0,
+        "eos_emitted": 192.0,
+        "truncated": 0.0,
+        "equal_family_parent_accuracy": 0.3385416666666667,
+        "family_accuracy": {
+          "signed_ledgers": 0.0,
+          "deduction_composition": 0.4375,
+          "program_state": 0.078125,
+          "dialogue_memory": 0.515625,
+          "document_retrieval_reconciliation": 0.5,
+          "answerability_source_conflict": 0.5
+        },
+        "answerable_cases": 144,
+        "unanswerable_cases": 48
+      },
+      "useful_five_point_DEV_gain": false,
+      "mechanical_nomination_checks": {
+        "strictly_better_than_unit": false,
+        "zero_unit_correct_losses": false,
+        "no_family_decline": false,
+        "no_format_decline": true,
+        "no_unsupported_increase": true,
+        "no_false_UNKNOWN_increase": false,
+        "strictly_better_than_random": false,
+        "guard_beats_header": true
+      },
+      "mechanical_nomination_eligible": false
+    },
+    "EVIDENCE_CONSISTENCY_GUARD": {
+      "summary": {
+        "cases": 192,
+        "parent_units": 96,
+        "correct": 70.0,
+        "format_valid": 191.0,
+        "literal_UNKNOWN": 90.0,
+        "false_UNKNOWN": 42.0,
+        "unsupported_canonical_answer": 0.0,
+        "eos_emitted": 191.0,
+        "truncated": 1.0,
+        "equal_family_parent_accuracy": 0.3645833333333333,
+        "family_accuracy": {
+          "signed_ledgers": 0.0,
+          "deduction_composition": 0.53125,
+          "program_state": 0.03125,
+          "dialogue_memory": 0.5625,
+          "document_retrieval_reconciliation": 0.53125,
+          "answerability_source_conflict": 0.53125
+        },
+        "answerable_cases": 144,
+        "unanswerable_cases": 48
+      },
+      "vs_unit": {
+        "gains": [
+          "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7:v1"
+        ],
+        "losses": [],
+        "gain_parents": [
+          "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:7"
+        ],
+        "loss_parents": [],
+        "retained_baseline_correct": 69.0,
+        "baseline_correct": 69.0,
+        "delta": 0.005208333333333315,
+        "family_delta": {
+          "signed_ledgers": 0.0,
+          "deduction_composition": 0.0,
+          "program_state": 0.0,
+          "dialogue_memory": 0.0,
+          "document_retrieval_reconciliation": 0.03125,
+          "answerability_source_conflict": 0.0
+        },
+        "format_delta": 0.0,
+        "unsupported_delta": -1.0,
+        "false_UNKNOWN_delta": 0.0
+      },
+      "vs_intact": {
+        "gains": [
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:4:v1",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:5:v0",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:8:v0",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:9:v0",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:9:v1",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:12:v0",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:13:v0",
+          "BULK-TAPS-001:9463250d48f1:program_state:10:v0",
+          "BULK-TAPS-001:9463250d48f1:dialogue_memory:5:v0",
+          "BULK-TAPS-001:9463250d48f1:dialogue_memory:9:v0",
+          "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:4:v0",
+          "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:2:v0"
+        ],
+        "losses": [
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:10:v1",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:11:v0",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:14:v1",
+          "BULK-TAPS-001:9463250d48f1:program_state:1:v1",
+          "BULK-TAPS-001:9463250d48f1:program_state:2:v1"
+        ],
+        "gain_parents": [
+          "BULK-TAPS-001:9463250d48f1:answerability_source_conflict:2",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:12",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:13",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:4",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:5",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:8",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:9",
+          "BULK-TAPS-001:9463250d48f1:dialogue_memory:5",
+          "BULK-TAPS-001:9463250d48f1:dialogue_memory:9",
+          "BULK-TAPS-001:9463250d48f1:document_retrieval_reconciliation:4",
+          "BULK-TAPS-001:9463250d48f1:program_state:10"
+        ],
+        "loss_parents": [
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:10",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:11",
+          "BULK-TAPS-001:9463250d48f1:deduction_composition:14",
+          "BULK-TAPS-001:9463250d48f1:program_state:1",
+          "BULK-TAPS-001:9463250d48f1:program_state:2"
+        ],
+        "retained_baseline_correct": 58.0,
+        "baseline_correct": 63.0,
+        "delta": 0.036458333333333315,
+        "family_delta": {
+          "signed_ledgers": 0.0,
+          "deduction_composition": 0.125,
+          "program_state": -0.03125,
+          "dialogue_memory": 0.0625,
+          "document_retrieval_reconciliation": 0.03125,
+          "answerability_source_conflict": 0.03125
+        },
+        "format_delta": -1.0,
+        "unsupported_delta": 0.0,
+        "false_UNKNOWN_delta": -6.0
+      },
+      "K1_rate": 0.8333333333333334,
+      "K1_count": 160,
+      "random_seed_summaries": {
+        "17": {
+          "cases": 192,
+          "parent_units": 96,
+          "correct": 68.0,
+          "format_valid": 191.0,
+          "literal_UNKNOWN": 90.0,
+          "false_UNKNOWN": 43.0,
+          "unsupported_canonical_answer": 1.0,
+          "eos_emitted": 191.0,
+          "truncated": 1.0,
+          "equal_family_parent_accuracy": 0.3541666666666667,
+          "family_accuracy": {
+            "signed_ledgers": 0.0,
+            "deduction_composition": 0.53125,
+            "program_state": 0.03125,
+            "dialogue_memory": 0.5625,
+            "document_retrieval_reconciliation": 0.5,
+            "answerability_source_conflict": 0.5
+          },
+          "answerable_cases": 144,
+          "unanswerable_cases": 48
+        },
+        "29": {
+          "cases": 192,
+          "parent_units": 96,
+          "correct": 71.0,
+          "format_valid": 191.0,
+          "literal_UNKNOWN": 90.0,
+          "false_UNKNOWN": 43.0,
+          "unsupported_canonical_answer": 1.0,
+          "eos_emitted": 191.0,
+          "truncated": 1.0,
+          "equal_family_parent_accuracy": 0.3697916666666667,
+          "family_accuracy": {
+            "signed_ledgers": 0.0,
+            "deduction_composition": 0.5625,
+            "program_state": 0.0625,
+            "dialogue_memory": 0.5625,
+            "document_retrieval_reconciliation": 0.5,
+            "answerability_source_conflict": 0.53125
+          },
+          "answerable_cases": 144,
+          "unanswerable_cases": 48
+        }
+      },
+      "random_K1_counts": {
+        "17": 159,
+        "29": 160
+      },
+      "random_mean": {
+        "cases": 192,
+        "parent_units": 96,
+        "correct": 69.5,
+        "format_valid": 191.0,
+        "literal_UNKNOWN": 90.0,
+        "false_UNKNOWN": 43.0,
+        "unsupported_canonical_answer": 1.0,
+        "eos_emitted": 191.0,
+        "truncated": 1.0,
+        "equal_family_parent_accuracy": 0.3619791666666667,
+        "family_accuracy": {
+          "signed_ledgers": 0.0,
+          "deduction_composition": 0.546875,
+          "program_state": 0.046875,
+          "dialogue_memory": 0.5625,
+          "document_retrieval_reconciliation": 0.5,
+          "answerability_source_conflict": 0.515625
+        },
+        "answerable_cases": 144,
+        "unanswerable_cases": 48
+      },
+      "useful_five_point_DEV_gain": false,
+      "mechanical_nomination_checks": {
+        "strictly_better_than_unit": true,
+        "zero_unit_correct_losses": true,
+        "no_family_decline": true,
+        "no_format_decline": true,
+        "no_unsupported_increase": true,
+        "no_false_UNKNOWN_increase": true,
+        "strictly_better_than_random": true,
+        "guard_beats_header": true
+      },
+      "mechanical_nomination_eligible": true
+    }
+  },
+  "mechanical_nominee": "EVIDENCE_CONSISTENCY_GUARD",
+  "nomination_is_efficacy": false,
+  "guard_certificate_classifier": {
+    "recognized": 64,
+    "unrecognized": 128,
+    "coverage": 0.3333333333333333,
+    "confusion": {
+      "ABSENT->ABSENT": 16,
+      "CONFLICT->CONFLICT": 16,
+      "CONSISTENT->CONSISTENT": 32
+    },
+    "false_certificates": 0,
+    "reference": "Independently implemented historical bulk_bank.parse_prompt(raw prompt)"
+  },
+  "ordinary_control_scores": {
+    "positive_prompt_solver": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 192.0,
+      "format_valid": 192.0,
+      "literal_UNKNOWN": 48.0,
+      "false_UNKNOWN": 0.0,
+      "unsupported_canonical_answer": 0.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 1.0,
+      "family_accuracy": {
+        "signed_ledgers": 1.0,
+        "deduction_composition": 1.0,
+        "program_state": 1.0,
+        "dialogue_memory": 1.0,
+        "document_retrieval_reconciliation": 1.0,
+        "answerability_source_conflict": 1.0
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "constant_YES": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 16.0,
+      "format_valid": 32.0,
+      "literal_UNKNOWN": 0.0,
+      "false_UNKNOWN": 0.0,
+      "unsupported_canonical_answer": 0.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.08333333333333333,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.5,
+        "program_state": 0.0,
+        "dialogue_memory": 0.0,
+        "document_retrieval_reconciliation": 0.0,
+        "answerability_source_conflict": 0.0
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "constant_NO": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 16.0,
+      "format_valid": 32.0,
+      "literal_UNKNOWN": 0.0,
+      "false_UNKNOWN": 0.0,
+      "unsupported_canonical_answer": 0.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.08333333333333333,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.5,
+        "program_state": 0.0,
+        "dialogue_memory": 0.0,
+        "document_retrieval_reconciliation": 0.0,
+        "answerability_source_conflict": 0.0
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "constant_UNKNOWN": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 48.0,
+      "format_valid": 96.0,
+      "literal_UNKNOWN": 192.0,
+      "false_UNKNOWN": 144.0,
+      "unsupported_canonical_answer": 0.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.25,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.0,
+        "program_state": 0.0,
+        "dialogue_memory": 0.5,
+        "document_retrieval_reconciliation": 0.5,
+        "answerability_source_conflict": 0.5
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "constant_0": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 0.0,
+      "format_valid": 160.0,
+      "literal_UNKNOWN": 0.0,
+      "false_UNKNOWN": 0.0,
+      "unsupported_canonical_answer": 48.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.0,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.0,
+        "program_state": 0.0,
+        "dialogue_memory": 0.0,
+        "document_retrieval_reconciliation": 0.0,
+        "answerability_source_conflict": 0.0
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "constant_1": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 0.0,
+      "format_valid": 160.0,
+      "literal_UNKNOWN": 0.0,
+      "false_UNKNOWN": 0.0,
+      "unsupported_canonical_answer": 48.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.0,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.0,
+        "program_state": 0.0,
+        "dialogue_memory": 0.0,
+        "document_retrieval_reconciliation": 0.0,
+        "answerability_source_conflict": 0.0
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "copy_full_prompt": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 0.0,
+      "format_valid": 0.0,
+      "literal_UNKNOWN": 0.0,
+      "false_UNKNOWN": 0.0,
+      "unsupported_canonical_answer": 0.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.0,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.0,
+        "program_state": 0.0,
+        "dialogue_memory": 0.0,
+        "document_retrieval_reconciliation": 0.0,
+        "answerability_source_conflict": 0.0
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "copy_first_number": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 4.0,
+      "format_valid": 160.0,
+      "literal_UNKNOWN": 0.0,
+      "false_UNKNOWN": 0.0,
+      "unsupported_canonical_answer": 48.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.020833333333333332,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.0,
+        "program_state": 0.0,
+        "dialogue_memory": 0.0,
+        "document_retrieval_reconciliation": 0.0,
+        "answerability_source_conflict": 0.125
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "copy_last_number": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 11.0,
+      "format_valid": 119.0,
+      "literal_UNKNOWN": 0.0,
+      "false_UNKNOWN": 0.0,
+      "unsupported_canonical_answer": 48.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.057291666666666664,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.0,
+        "program_state": 0.0,
+        "dialogue_memory": 0.03125,
+        "document_retrieval_reconciliation": 0.15625,
+        "answerability_source_conflict": 0.15625
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "copy_last_entity": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 0.0,
+      "format_valid": 0.0,
+      "literal_UNKNOWN": 0.0,
+      "false_UNKNOWN": 0.0,
+      "unsupported_canonical_answer": 0.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.0,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.0,
+        "program_state": 0.0,
+        "dialogue_memory": 0.0,
+        "document_retrieval_reconciliation": 0.0,
+        "answerability_source_conflict": 0.0
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "query_blind_first_entity_solver": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 60.0,
+      "format_valid": 192.0,
+      "literal_UNKNOWN": 51.0,
+      "false_UNKNOWN": 29.0,
+      "unsupported_canonical_answer": 26.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.3125,
+      "family_accuracy": {
+        "signed_ledgers": 0.25,
+        "deduction_composition": 0.53125,
+        "program_state": 0.1875,
+        "dialogue_memory": 0.28125,
+        "document_retrieval_reconciliation": 0.25,
+        "answerability_source_conflict": 0.375
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "query_blind_last_entity_solver": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 71.0,
+      "format_valid": 192.0,
+      "literal_UNKNOWN": 48.0,
+      "false_UNKNOWN": 23.0,
+      "unsupported_canonical_answer": 23.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.3697916666666667,
+      "family_accuracy": {
+        "signed_ledgers": 0.34375,
+        "deduction_composition": 0.5,
+        "program_state": 0.1875,
+        "dialogue_memory": 0.375,
+        "document_retrieval_reconciliation": 0.4375,
+        "answerability_source_conflict": 0.375
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "last_printed_query_number": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 32.0,
+      "format_valid": 122.0,
+      "literal_UNKNOWN": 0.0,
+      "false_UNKNOWN": 0.0,
+      "unsupported_canonical_answer": 48.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.16666666666666666,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.0,
+        "program_state": 0.0,
+        "dialogue_memory": 0.15625,
+        "document_retrieval_reconciliation": 0.40625,
+        "answerability_source_conflict": 0.4375
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "memory_any_clear_else_max_skeleton": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 16.0,
+      "format_valid": 32.0,
+      "literal_UNKNOWN": 32.0,
+      "false_UNKNOWN": 16.0,
+      "unsupported_canonical_answer": 0.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.08333333333333333,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.0,
+        "program_state": 0.0,
+        "dialogue_memory": 0.5,
+        "document_retrieval_reconciliation": 0.0,
+        "answerability_source_conflict": 0.0
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "memory_max_query_value_ignore_state": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 12.0,
+      "format_valid": 32.0,
+      "literal_UNKNOWN": 0.0,
+      "false_UNKNOWN": 0.0,
+      "unsupported_canonical_answer": 16.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.0625,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.0,
+        "program_state": 0.0,
+        "dialogue_memory": 0.375,
+        "document_retrieval_reconciliation": 0.0,
+        "answerability_source_conflict": 0.0
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    },
+    "rule_rhs_presence_skeleton": {
+      "cases": 192,
+      "parent_units": 96,
+      "correct": 16.0,
+      "format_valid": 32.0,
+      "literal_UNKNOWN": 0.0,
+      "false_UNKNOWN": 0.0,
+      "unsupported_canonical_answer": 0.0,
+      "eos_emitted": null,
+      "truncated": null,
+      "equal_family_parent_accuracy": 0.08333333333333333,
+      "family_accuracy": {
+        "signed_ledgers": 0.0,
+        "deduction_composition": 0.5,
+        "program_state": 0.0,
+        "dialogue_memory": 0.0,
+        "document_retrieval_reconciliation": 0.0,
+        "answerability_source_conflict": 0.0
+      },
+      "answerable_cases": 144,
+      "unanswerable_cases": 48,
+      "generation_status": "NOT_APPLICABLE_SYMBOLIC_CONTROL"
+    }
+  },
+  "binary_replay_oracle_correct": 75,
+  "practical_margin": 0.05,
+  "useful_DEV_superiority_possible": false,
+  "quality_gain_established": false,
+  "limitations": [
+    "Exposed DEV response selection; no new generation or latency measured.",
+    "Useful five-point replay benefit is impossible under the finite binary oracle.",
+    "Mechanical nomination does not establish A0/source retention or independent source benefit.",
+    "Symbolic classifier/solver scores are separate from neural reasoning."
+  ],
+  "admission_sha256": "5b6054cf9536ab668d214f041c09af179780127fffd149fb6e80317802b73df8",
+  "source_hashes": {
+    "opposed_gate_policy.py": "0d57ad3284d51cbf959c8c8fd96489f00374fc52be35b4dbcc68850dcb06cd6e",
+    "opposed_gate_replay.py": "af8f4c138fea66948bf6959dfd20ff0dd77fead7085ff290956060c5f30d22e0",
+    "tests/test_opposed_gate_policy.py": "9be1044467f77d2fc517f74b6b1238b6b745b1d474271f66b8cb59303a07e07f",
+    "tests/test_opposed_gate_replay.py": "8d9d845ba04dbf7c8ec4cfdfb8dc3617a40ee4cf16c83c183bedaa601ad1c8fc",
+    "OPPOSED_REPLAY_ANALYSIS_PLAN_001.md": "7fb36c0ed09ec949f9447fa310b8a24870e43168f4780370c385d5a077a81ad1"
+  },
+  "input_pins": {
+    "quality_pattern_v3/data/dev_prefix_probe_001/DEVELOPMENT_BANK.json": "681a3e77e3d797e2faebcff3971dbb365a4479ebdac017bf3dcfcb48081ba03f",
+    "quality_pattern_v3/data/dev_prefix_probe_001/DEVELOPMENT_TOKEN_BINDING.json": "c34948026ebaf332111ce635a473b1489ef0d2f3932100f9e0d3cdd6a08ce6d2",
+    "quality_pattern_v3/runs/native-prefix-probe-001/result/readouts.jsonl": "b61150bb60b4721c97fa2750b29d1b4d023ec7d0edd5531a4d70d596efbec652",
+    "quality_pattern_v3/runs/native-prefix-probe-001/terminal_receipt.json": "ef292863a3c6050175fac115715546cc542343023c430ccaed5ed2699f493f48",
+    "quality_pattern_v3/runs/native-prefix-probe-001/result/receipt.json": "b0d2dede48274ca7f4e7a4e5969aa4ab6bc3f230648f27b3c0c79695a1b78817",
+    "quality_pattern_v3/runs/native-prefix-probe-001/result/qualification.json": "a4282d8bd76d018323c2b1701e07b705bd2e1245a82dd3fc02733eb06c1f62b8",
+    "quality_pattern_v3/reviews/probe_execution_review_001.json": "fffb9d699b5f4458e73cbdae8dd192b34e4fed17e80ae7e7f705b2eab386f99e",
+    "quality_pattern_v3/analyses/prefix-probe-001/REPORT.json": "6bf9dd67f2f6f2b4a5bcaec0738b84058212cd28883ecda237a309532fd930c7",
+    "runs/bulk-bank-apparatus-001/bank.json": "862a63648caf7efb3d287c11bc5caaefc884e0ec6cb3130ce8f196526efc40cd",
+    "runs/native-bulk-restart-001/result/outcomes.jsonl": "858ba6c1b5105b460e600c93872575c78e2c3e43545538847e3d9eba30e01cd8",
+    "runs/native-bulk-restart-001/terminal_receipt.json": "dc4d8c7a5895e846aee3c1b1b19b9e4f4909386779b313aa5693599ec9f2ded6",
+    "runs/native-bulk-restart-001/result/receipt.json": "d9c34a822d9bdaaac39d33820eaacf05d083974cd9191e43559307bd2258ff19",
+    "bulk_bank.py": "3242439231064fc81991e157c0da62833f4e4223ec71d60cf9ffd2851815b5eb",
+    "open_bank.py": "25db8ad7b8bd4166188eccab4be73c9a430f696610dea5b8c83b380883f9d42a",
+    "quality_pattern_v3/probe_analysis.py": "2d6c8e598df0a0caab29875ff95cecfb6b7eef1e8eff595efabb3322ebf70a27",
+    "quality_pattern_v3/OPPOSED_GATE_CONTRACT_DRAFT_002.md": "067426a54cc2836b558401ee528dfd2f63008297d91ae41bb95f3e8491e734cd",
+    "quality_pattern_v3/reviews/opposed_gate_design_review_001.json": "e613a48955a639bc1e873ccd8fb1f19e1f7293da88664f1b918f12aa589f5d26",
+    "quality_pattern_v3/reviews/opposed_replay_input_review_001.json": "7c356efb50e56b2047e43645ce914472adb4dc7cda934cd4581b247523ce661b"
+  },
+  "decisions_sha256": "214eb264e44a50a932996e5eb8fae863ca9d31d8ba722a59f49a30ac9921d7d5",
+  "timestamp_utc": "2026-10-06T02:09:44.647091+00:00"
+}

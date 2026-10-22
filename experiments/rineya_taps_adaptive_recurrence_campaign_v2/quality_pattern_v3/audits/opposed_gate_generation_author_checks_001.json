@@ -1,0 +1,78 @@
+{
+  "API": {
+    "constructor": "GenerationSession(model, tokenizer, *, run_id, source_sha256, resident_state_sha256, tokenizer_sha256, api_cap, guard, synchronize=None, event_sink=None, trajectory_sink=None, enforce_device=True, maximum_prefix_tokens=357, output_flags_fn=None)",
+    "generation": "generate(input_ids, *, k, pilot=None, max_new_tokens=8, qualification=False, max_prompt_seconds=900., started_perf_counter=None) -> (raw row, selected first logits)",
+    "pilot": "make_pilot(input_ids, *, started_perf_counter=None) -> opaque PilotHandle"
+  },
+  "GPU_inventory_queries": 0,
+  "author_role": "Authored adapter; these CPU fixture checks are not independent review.",
+  "bindings": {
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\control.py": "298d0a7064ff562c498ecc50d13c2f23cd9bdf1df6b1d616d7204bac24a49ed3",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\gpu_native.py": "4c1a05c6511ff267d790654475f2a22cb5a3b8fa02857b295aa1ab3ae6c20e6f",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\OPPOSED_GATE_CONTRACT_DRAFT_002.md": "067426a54cc2836b558401ee528dfd2f63008297d91ae41bb95f3e8491e734cd",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\audits\\opposed_gate_native_architecture_001.json": "42f905011c763f3590bf67ed296916731f38b5432f2eeb2d5b35b60c19f05165",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\opposed_gate_generation.py": "b0ac061de15808a551fccbda3a3b3b1c8ed539de33ca47dbc865598857e660f1",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\opposed_gate_design_review_001.json": "e613a48955a639bc1e873ccd8fb1f19e1f7293da88664f1b918f12aa589f5d26",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\tests\\test_opposed_gate_generation.py": "4eafef960c30dbe8aba2882e3df7609a67186a9ff2df16e9f45ae092c73813ce"
+  },
+  "candidate_scoring_or_policy_implementation": false,
+  "created_utc": "2026-10-06T02:12:11.562303+00:00",
+  "future_worker_obligations": [
+    "actual canonical source/assets/runtime/head/FP32 residentstate qualification beforeSession creation",
+    "native alwaysenforce_deviceTrue; CPUflag rejects named canonicalmodel",
+    "physical pilot eachconfidence policy; caseK fixed; policyview raw_prompt+p only",
+    "independent source/fixture/hash review before workers or scoring",
+    "all qualification/reference/control calls bound into a global ledger and complete cap/forecast",
+    "native current-shape firstlogit/probability/token/flags/parity/cache/anchors/mask/restore/state/resource gates",
+    "raw worker without labels/scorer; terminal-only independent reader",
+    "standalone completecase wall start beforeencode/parser/pilot supplied bycaller; component costs notdouble-summed"
+  ],
+  "limitations": [
+    "No actual native corpus/source qualification, Rineya GPU execution, correctness or efficacy result.",
+    "Resident/source hashes are constructor bindings supplied only afterworker verifiesactualmodel; this adapter doesnotloadorhashcheckpointassets.",
+    "Model tensor version/config/instance guards and before/afterworkerstate hashes are scoped proof, not security against malicious mutation of privatePythoninternals.",
+    "No source-policy threshold/parser/randomcontrol/nomination is implemented inadapter.",
+    "FreshNativeDesign002 and final allarm population/caps/deadline require separate review/worker integration."
+  ],
+  "native_model_loads": 0,
+  "native_workers": 0,
+  "schema": "v3_opposed_gate_generation_author_checks_v1",
+  "source_scope": [
+    "opposed_gate_generation.py",
+    "tests/test_opposed_gate_generation.py"
+  ],
+  "status": "HELD_FOR_INDEPENDENT_SOURCE_REVIEW_NOT_NATIVE_QUALIFIED",
+  "tests": {
+    "command": [
+      "C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe",
+      "-B",
+      "-m",
+      "pytest",
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/tests/test_opposed_gate_generation.py",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "--basetemp",
+      "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\generation_adapter_author_fixture_001"
+    ],
+    "fixture_host": "analytic CPU28-layer affine block/head; no Rineya checkpoint or tokenizer load",
+    "passed": 18,
+    "seconds": 2.84,
+    "tmp_path_fixtures_used": false
+  },
+  "verified": [
+    "unchanged inherited greedy token/string/EOS/cap/flags parity forK0/unit, direct andpilot modes",
+    "K0 original-pilot first reuse andK1 untouched-original fresh first/own generated prefixes",
+    "independent pilots equal without shared physical first logits",
+    "firstEOS includesT1; discarded pilotEOS cannot truncateK1",
+    "no unused next forward at cap; repetition stop preserved",
+    "exact observer FP32 minimal probability including.5 and realistic vocabulary",
+    "nonfinite/cache-return/nativeCPU refusal",
+    "forged/copied/other-session/reused/wrong-prefix/mutated pilot rejection",
+    "frozen eval/weight-version/config/tokenizer-identity checks",
+    "normal and forced layer/trajectory hook/owner restoration",
+    "physical API/positions/extra layers and split28pilot/30unit/head dense estimates",
+    "hard API cap before invocation and retained complete compute afterresource refusal",
+    "rich metadata/scorer/invalidK/inputheadrange/shape/cap rejection"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "admission_sha256": "a303cd65c353a6d12e6544503bbf210c054ae919f795577d8b01e96224464aca",
+  "cached_actual_custom_code_sha256": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+  "created_utc": "2026-10-04T22:55:24.394985+00:00",
+  "forecast_sha256": "46ebf50d86fc75b5df67dee8a09ebc73cc92311568872747c5d152d0585d39ef",
+  "fresh_forecast": {
+    "admitted": true,
+    "cold_first_forward_seconds": 0.5600326999992831,
+    "elapsed_seconds": 68.12621790000048,
+    "finalization_reserve_seconds": 1800,
+    "forecast_factor": 1.5,
+    "max_observed_warm_forward_seconds": 0.07277049999902374,
+    "parent_deadline_seconds": 18000,
+    "remaining_calls_cap": 25537,
+    "remaining_forecast_seconds": 2787.510387712604,
+    "timing_shape_status": "fresh max357 and all executed mechanical/SMOKE calls; cold/setup charged in elapsed"
+  },
+  "initial_parent_GPU_free_bytes": 7202668544,
+  "initial_parent_host_bytes": 16208351232,
+  "live_lock_snapshot_observed_before_terminal": {
+    "base_worker_pid": 143712,
+    "contained": true,
+    "parent_pid": 146224,
+    "release_token": "1e1c33c016d5409f8b21e0fca986b1f8",
+    "scope": "Lock was observed matching native-bulk-001 during running audit; disappeared at normal finally/Job close before final read",
+    "worker_redirector_pid": 144288
+  },
+  "loaded_state_before_and_after_qualification": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+  "mechanics": {
+    "L0_L2": "ALL_COMPLETED_FORWARDS",
+    "cache_variants_rejected": 2,
+    "completed": 16,
+    "exception_restoration": true,
+    "forced_partial": 1,
+    "mask_position_scope": "CUDA arange, FP32 full-prefix mask shape and same replay object checks executed by source4c1; causal triangle/full-logit equality supported by executed pinned source/PASS, raw arrays not serialized",
+    "max357_attempts_beforeDEV": 17,
+    "value_identity": true
+  },
+  "native_calls_by_reviewer": 0,
+  "qualification_is_not_complete_science": true,
+  "qualification_sha256": "8e8609504174412523d7379ec0a49c241367ecc98590eba402d7c48b6cbd5f84",
+  "registration_sha256": "a59a64aac71c9f993bd1c36d3d46b7f9d5392d5bdc3d3d224f4f60655da84e88",
+  "required_total_seconds": 4655.636605612604,
+  "reviewer": "/root/adversarial_review",
+  "run": "runs/native-bulk-001",
+  "schema_version": "1.0",
+  "status": "PASS_PRE_SCIENCE_MECHANICS_WITH_LATER_MATRIX_FAILURE",
+  "terminal": {
+    "exit_code": 2,
+    "lock_removed": true,
+    "native_worker_seconds": 555.75,
+    "post_GPU_state_verification": "UNAVAILABLE_AFTER_ILLEGAL_ADDRESS",
+    "status": "WORKER_NONZERO",
+    "worker_redirector_not_alive": true
+  },
+  "unresolved_pre_science_mechanical_issues": [],
+  "verified_canonical_assets": 10,
+  "verified_dispatch_files": 84
+}

@@ -1,0 +1,23 @@
+{
+  "ended_utc": "2026-10-05T03:52:00.598012+00:00",
+  "error": "PermissionError: EXPLICIT_ADDITIONAL_ATTEMPT_REQUIRED: actual human allowance absent; no worker/model launch",
+  "final_resources_on_stop": {
+    "GPU_memory": null,
+    "device": "cpu",
+    "host_available_bytes": 11627819008,
+    "peak_rss_bytes": 578990080,
+    "rss_bytes": 573026304
+  },
+  "generation": false,
+  "generation_pool_access": false,
+  "lane": "CPU_CAUSAL_REPLAY_FP32",
+  "model_load_attempts": 0,
+  "native_model_loads": 0,
+  "native_test": false,
+  "optimizer_steps": 0,
+  "started_utc": "2026-10-05T03:52:00.590944+00:00",
+  "status": "FAIL",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\cpu_causal_replay_native.py\", line 246, in run\n    validate_human_scope(a)\n  File \"C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\tests\\test_cpu_causal_replay_native.py\", line 172, in checked_scope\n    def checked_scope(value):order.append('grant');return authority.validate_human_scope(value)\n                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\causal_replay_authority.py\", line 11, in validate_human_scope\n    raise PermissionError(\"EXPLICIT_ADDITIONAL_ATTEMPT_REQUIRED: actual human allowance absent; no worker/model launch\")\nPermissionError: EXPLICIT_ADDITIONAL_ATTEMPT_REQUIRED: actual human allowance absent; no worker/model launch\n",
+  "training": false,
+  "wall_seconds": 0.015665599999920232
+}

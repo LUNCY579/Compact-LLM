@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "reviewer": "independent adversarial_review",
+  "reviewed_utc": "2026-10-05T02:50:37.751609+00:00",
+  "status": "PASS_CPU_CAUSAL_REPLAY_PARENT_SOURCE_APPARATUS_ONLY",
+  "CPU_tests": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "test_origin": {
+    "author_tests_independently_executed": 4,
+    "reviewer_correct_new_module_negative_tests": 2
+  },
+  "scope": "Explicit newCPU bootstrap/parent source and stdlib waiting-tree fixtures only; no model,GPU or native measurement",
+  "source_hashes": {
+    "cpu_causal_replay_entry.py": "61d57f439611aafe95eba8846b3bde796d0ab7d1f46c11e8f178490df118a1b6",
+    "cpu_causal_replay_supervisor.py": "4bef22d26bf43dbc0ab9044372f97418973d03aeeff846d4c11ccadbde2585dc",
+    "tests/test_cpu_causal_replay_supervision.py": "651030c3ade9296ad468b8cd9768be487eaa1b0b118f1ff360f6581429f8b5cd",
+    "tests/test_supervision.py": "146acab920cfd3e9eaa0033a4c12a4f8bbe64efe22e55e530496430bccde3199",
+    "supervision.py": "894e7ffec1d7863d686cb82d410309a3a100d4fdb392892a4b534b989d4a4fcc",
+    "reviews/cpu_causal_replay_parent_negative_tests_001.py": "249ab76851452b5b9eb9994906c0ed1fd268786ae2d3fad2c0cee7025d5f71c0"
+  },
+  "sources_stable": true,
+  "source_checks": [
+    "Distinct module/status/lane/parentclock; CPU_VISIBLE_DEVICES empty before child imports",
+    "8.4parent/6RSS/1reserve/disk/global1800 and cumulative21600 guards preserved",
+    "Suspended launch\u2192assign Job\u2192resume\u2192contained release; owned tree termination only",
+    "Attempt/qualification/population progress independent of generation journals",
+    "Preexisting output refusal and created_out-only terminal preserve old evidence",
+    "Exact admission/review/source hash gates and future3600 bound taken from reviewed admission"
+  ],
+  "CPU_fixture_checks": [
+    "Containment refusal/release with runpy mocked",
+    "Real production parent2s fixture deadline stopped owned waiting tree, preserved unrelated sentinel and removed lock",
+    "Correct newparent module below8.4GiB refusal before Popen/lock/output",
+    "Correct newparent existing output and sibling bytes preserved without launch"
+  ],
+  "limitations": [
+    "Fabricated fixture review statuses are not human/native permission",
+    "Tested2s fixture deadline is not3600 native feasibility",
+    "Worker journal filenames/progress and parentclock must match final source",
+    "Actual new EOS/teacher replay gradient precision/resource/timing are unqualified"
+  ],
+  "probe_sha256": {
+    "reviews\\cpu_causal_replay_parent_probe_001\\SOURCE_BEFORE.json": "680e2b6d7af9e4abede312f0289a218d89f0547909ccbb48caa544db96e2f525",
+    "reviews\\cpu_causal_replay_parent_probe_001\\SOURCE_AFTER.json": "680e2b6d7af9e4abede312f0289a218d89f0547909ccbb48caa544db96e2f525",
+    "reviews\\cpu_causal_replay_parent_probe_001\\COMMAND.json": "12b76714ac115f4e33d6e422edaecc51edd9edc5ec1f0f1d71189bfd18d3a332",
+    "reviews\\cpu_causal_replay_parent_probe_001\\pytest.log": "8675656db254f19054f9aed7e6cdd1fa29732c15d5798dc5caef82f366244b14",
+    "reviews\\cpu_causal_replay_parent_probe_001\\junit.xml": "081583dff49f52d53ebf7b163a6b3d23e59246a1a686745acd93f3104118a55b"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "command": [
+    "C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\tests\\test_fresh_open_bank.py",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\tests\\test_short_response_panel.py",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\tests\\test_prepare_fresh_data.py",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\fresh_bank_check_001\\t",
+    "--junitxml",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\fresh_bank_check_001\\junit.xml"
+  ],
+  "fixture_nonce": "CPU-FIXTURE-ONLY-NOT-REPLICATION",
+  "scientific_nonce_generated": false,
+  "model_tokenizer_calls": 0,
+  "source_hashes": {
+    "fresh_open_bank.py": "0a2e6021514755ccd6bf32cc8c84f746f4f1e6b4e172ce043e90585a9952e3ba",
+    "fresh_open_verifier.py": "34aadc934bd74e82e1db725f1a80a1836ed39c375061fb4fc0b333f0d5fea472",
+    "tests/test_fresh_open_bank.py": "b6ca51f2fc23434b78341329749a2eef821c69a8b78d951c20cecdf8804a6852"
+  },
+  "timeout_seconds": 180
+}

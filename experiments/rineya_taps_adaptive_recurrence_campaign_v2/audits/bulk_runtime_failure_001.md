@@ -1,0 +1,31 @@
+# Terminal bulk CUDA failure audit
+
+The failed run is `runs/native-bulk-001`. Its parent charged 555.750 native-worker seconds and exited 2 with `WORKER_NONZERO`; the inner worker recorded `AcceleratorError: CUDA error: an illegal memory access was encountered`. This audit loads no model and changes no frozen worker, analyzer, admission, environment or canonical asset. The machine-readable companion binds all inspected inputs by SHA256.
+
+## What the journals establish
+
+There are 2,762 completed physical evaluations: 128 SMOKE, 2,112 DEVELOPMENT (the complete 192-case scientific DEV matrix), and 522 OPEN_VALIDATION (58 cases with all nine deterministic policies). Validation A5 has not run. The 2,820 outcome rows also contain 58 nonphysical frozen-policy aliases; the final oracle loop was never reached. This is an incomplete matrix with no primary validation efficacy comparison.
+
+All 7,882 ordinary `FORWARD_STARTED` events have matching `FORWARD_COMPLETED` events. There is no ordinary `FORWARD_FAILED`. SMOKE contributed 817 completed forwards: 765 in the initial qualification/control phase and 52 for the later frozen-pool A5 smoke. There are 18 maximum 357 attempts, 17 completed and one intentional restoration exception, plus both cache rejections. The initial qualifier reports 17 attempts before the later A5 maximum; this matches the journal.
+
+The last completed case was `dialogue_memory:20:v1`, fixed alpha 1.1473425965417514, response `6455`. The interrupted evaluation was `BULK-TAPS-001:9463250d48f1:dialogue_memory:21:v0`, OPEN_VALIDATION/A2/seed 17, with that same configured alpha and effective FP32 alpha 1.147342562675476. Its exact initial 226-token prompt is preserved in the token binding and audit JSON. It completed forward 1 at 226 tokens and forward 2 at 227 tokens, with both normal and extra trajectory records, but produced no outcome. Neither its first nor second generated token was journaled. The 227-token prefix and any hypothetical 228-token next prefix therefore cannot be reconstructed. No third `FORWARD_STARTED` exists.
+
+Frozen `gpu_native.forward_logits` synchronizes the model call, clones and checks finite logits, and `evaluate_case.forward` samples resources before appending `FORWARD_COMPLETED`. After that boundary, the greedy loop can call CUDA `argmax().item()`, CPU tokenizer decode/flags, resource-guard CUDA APIs, and CUDA token construction/`torch.cat`, before the next forward-start record. End-of-decode synchronization and cleanup are additional possible reporting sites. The absence of a Python traceback prevents selecting among these. The CUDA error explicitly warns about asynchronous reporting; the completed, synchronized boundary narrows the observed reporting interval but does not identify the offending kernel or its cause.
+
+## Checks performed without a model load
+
+All 288 bound prompts have integer token IDs within the 151,936-row embedding table; the highest is 151,668. Every generated ID in a completed outcome is within that table (maximum 151,645). Tokenizer length 151,669 is distinct from embedding row count and does not make the observed IDs invalid. The safetensors header has `model.embed_tokens.weight` shape `[151936,1024]`; tied embeddings and the custom UNKNOWN 51378 readout are consistent with the bound configuration. The missing generated IDs from the interrupted evaluation remain unverified.
+
+Actual bank maxima are 232 input/239 forward tokens; the configured positional limit is 40,960 and mechanical 357 completed. All 14,819 recorded scalar events have finite top-level numeric values, no reported safety violation, RMS ratios 0.9996233â€“1.0012846, and bounded effective alpha 0.8000000119â€“1.2000000477. These observations do not establish safety for the unjournaled failure operation.
+
+The final completed sample had GPU free 4,643,094,528 bytes, allocated 2,585,022,464 bytes, peak allocated 2,608,939,520 bytes, host available 14,434,557,952 bytes, and worker RSS 1,646,886,912 bytes. Across available samples, no registered 5 GiB GPU ceiling, 1 GiB global/host reserve or 6 GiB worker RSS breach is recorded. Parent peak RSS was 2,533,875,712 bytes. Its 53 independent GPU inventories reached a lower global-free minimum 1,745,879,040 bytes, with unchanged UUID/driver; these are sampled at different times from Torch's between-forward samples. Sampling cannot exclude a transient event between samples. The observed error is not an OOM receipt.
+
+CPU hashing after process termination verifies all ten canonical assets and all 84 admitted source entries unchanged. The loaded FP32 state was bound before measurement and at qualification. Postfailure loaded-state identity and final CUDA resource sample are unavailable because the context faulted and the worker exited; on-disk hashes are not a substitute for a postfailure resident-state check.
+
+## Finding and next boundary
+
+The supported classification is **unlocalized CUDA runtime fault**. There is no demonstrated invalid-ID, overlength, numerical, controller or resource-guard violation in the available evidence, and no demonstrated driver, hardware or tensor-lifetime cause. Source inspection found no concrete ownership/restoration or cross-prefix-state defect explaining this failure. The failing policy was fixed-scale A2, so this is not evidence specifically implicating stochastic A5. Qualification and 7,882 completed forwards cannot rule out a later allocator/lifetime/runtime defect.
+
+NVIDIA describes error 700 as an invalid-address device access that leaves the process inconsistent; the terminated context must not be reused. This is an error definition, not a diagnosis of this run. [CUDA 12.6.3 runtime reference](https://docs.nvidia.com/cuda/archive/12.6.3/cuda-runtime-api/group__CUDART__TYPES.html)
+
+The sole initial infrastructure retry is already consumed. No automatic retry or matrix continuation is authorized. The campaign has used 1,287.921/21,600 native seconds, leaving 20,312.079; optimizer steps and controller candidate revisions remain 0. A reviewed, separately authorized bounded diagnostic is proposed in `NONNATIVEdebugproposal_001.md`. A clean isolated case would not establish stability after thousands of calls, and any later matrix retry needs a separate allowance, safety disposition and prospective exposure treatment.

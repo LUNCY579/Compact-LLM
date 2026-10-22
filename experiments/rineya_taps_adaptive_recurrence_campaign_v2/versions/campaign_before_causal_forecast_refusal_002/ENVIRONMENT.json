@@ -1,0 +1,123 @@
+{
+  "evidence": "runs/native-gpu-reference-002; original host/preflight snapshots preserved",
+  "exact_preflight_snapshot": {
+    "cuda_lane_qualified": false,
+    "historical_receipt_sha256": "daa5bc8e947602a4ed3d7fb19076ec6000e27f7afcc2a1426e544491bff95dfe",
+    "native_runs": 0,
+    "note": "CPU FP32 lane; CUDA absence is reported, not the only blocker.",
+    "reasons": [],
+    "resources": {
+      "cuda_available": true,
+      "cuda_free_bytes": 7398752256,
+      "free_ram_bytes": 8797720576,
+      "python": "3.11.15",
+      "rss_bytes": 625217536,
+      "torch": "2.12.1+cu126",
+      "transformers_installed": true
+    },
+    "status": "METADATA_READY_NOT_QUALIFIED",
+    "training_attempted": false
+  },
+  "gpu_inventory": {
+    "driver_version": "566.07",
+    "free_bytes": 7401897984,
+    "index": 0,
+    "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "total_bytes": 8585740288,
+    "utilization_percent": 9,
+    "uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9"
+  },
+  "initial_host_snapshot": {
+    "captured_utc": "2026-10-02T04:07:39.116658Z",
+    "cpu": {
+      "Name": "AMD Ryzen 9 7940HX with Radeon Graphics        ",
+      "NumberOfCores": 16,
+      "NumberOfLogicalProcessors": 32
+    },
+    "cuda": "Thu Oct  1 23:07:43 2026       \r\n+-----------------------------------------------------------------------------------------+\r\n| NVIDIA-SMI 566.07                 Driver Version: 566.07         CUDA Version: 12.7     |\r\n|-----------------------------------------+------------------------+----------------------+\r\n| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |\r\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\r\n|                                         |                        |               MIG M. |\r\n|=========================================+========================+======================|\r\n|   0  NVIDIA GeForce RTX 4070 ...  WDDM  |   00000000:01:00.0  On |                  N/A |\r\n| N/A   66C    P4             14W /  105W |    1630MiB /   8188MiB |     34%      Default |\r\n|                                         |                        |                  N/A |\r\n+-----------------------------------------+------------------------+----------------------+\r\n                                                                                         \r\n+-----------------------------------------------------------------------------------------+\r\n| Processes:                                                                              |\r\n|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |\r\n|        ID   ID                                                               Usage      |\r\n|=========================================================================================|\r\n|    0   N/A  N/A      7148    C+G   C:\\Windows\\explorer.exe                     N/A      |\r\n|    0   N/A  N/A      8784    C+G   ...on\\154.0.4258.48\\msedgewebview2.exe      N/A      |\r\n|    0   N/A  N/A     12440    C+G   ...cw5n1h2txyewy\\CrossDeviceResume.exe      N/A      |\r\n|    0   N/A  N/A     13472    C+G   ...siveControlPanel\\SystemSettings.exe      N/A      |\r\n|    0   N/A  N/A     15920    C+G   ...nt.CBS_cw5n1h2txyewy\\SearchHost.exe      N/A      |\r\n|    0   N/A  N/A     15944    C+G   ...2txyewy\\StartMenuExperienceHost.exe      N/A      |\r\n|    0   N/A  N/A     16268    C+G   ..._x64__cw5n1h2txyewy\\WidgetBoard.exe      N/A      |\r\n|    0   N/A  N/A     17048    C+G   ...t.LockApp_cw5n1h2txyewy\\LockApp.exe      N/A      |\r\n|    0   N/A  N/A     18304    C+G   ...ekyb3d8bbwe\\PhoneExperienceHost.exe      N/A      |\r\n|    0   N/A  N/A     19048    C+G   ...s\\System32\\ApplicationFrameHost.exe      N/A      |\r\n|    0   N/A  N/A     21560    C+G   ...CBS_cw5n1h2txyewy\\TextInputHost.exe      N/A      |\r\n|    0   N/A  N/A     22092    C+G   ...5n1h2txyewy\\ShellExperienceHost.exe      N/A      |\r\n|    0   N/A  N/A     24376    C+G   ..._x64__2p2nqsd0c76g0\\app\\ChatGPT.exe      N/A      |\r\n|    0   N/A  N/A     26488    C+G   ...oogle\\Chrome\\Application\\chrome.exe      N/A      |\r\n|    0   N/A  N/A     29776    C+G   ...ft\\x64\\codex-computer-use-swift.exe      N/A      |\r\n|    0   N/A  N/A     33140    C+G   ...oogle\\Chrome\\Application\\chrome.exe      N/A      |\r\n|    0   N/A  N/A     44384    C+G   ...4__8wekyb3d8bbwe\\EdgeGameAssist.exe      N/A      |\r\n|    0   N/A  N/A    358476    C+G   ...\\bin\\windows\\codex-computer-use.exe      N/A      |\r\n|    0   N/A  N/A    545048    C+G   C:\\Windows\\System32\\ShellHost.exe           N/A      |\r\n|    0   N/A  N/A    556388    C+G   ...\\Editor\\6000.6.2f1\\Editor\\Unity.exe      N/A      |\r\n|    0   N/A  N/A    556516    C+G   ...\\Editor\\6000.6.2f1\\Editor\\Unity.exe      N/A      |\r\n+-----------------------------------------------------------------------------------------+\r\n",
+    "disk": {
+      "DeviceID": "C:",
+      "FreeSpace": 64707522560,
+      "Size": 994613465088
+    },
+    "gpu": "name, driver_version, memory.total [MiB], memory.used [MiB], memory.free [MiB], utilization.gpu [%]\r\nNVIDIA GeForce RTX 4070 Laptop GPU, 566.07, 8188 MiB, 1625 MiB, 6324 MiB, 35 %\r\n",
+    "interpreters": [
+      {
+        "Name": "python.exe",
+        "Source": "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe"
+      },
+      {
+        "Name": "py.exe",
+        "Source": "C:\\Users\\clclc\\AppData\\Local\\Programs\\Python\\Launcher\\py.exe"
+      },
+      {
+        "Name": "uv.exe",
+        "Source": "C:\\Users\\clclc\\.local\\bin\\uv.exe"
+      }
+    ],
+    "os": {
+      "BuildNumber": "26200",
+      "Caption": "Microsoft Windows 11 Home",
+      "FreePhysicalMemory": 3837868,
+      "TotalVisibleMemorySize": 32734636,
+      "Version": "10.0.26200"
+    },
+    "workloads": [
+      {
+        "CommandLine": "Existing local HTTP server, no model inference",
+        "Name": "python.exe",
+        "ParentProcessId": 523724,
+        "ProcessId": 524468
+      },
+      {
+        "CommandLine": "REDACTED: independent Unity workload, project Flip Hero",
+        "Name": "Unity.exe",
+        "ParentProcessId": 555176,
+        "ProcessId": 556388
+      },
+      {
+        "CommandLine": "REDACTED: independent Unity workload, project Flip Hero",
+        "Name": "Unity.exe",
+        "ParentProcessId": 556388,
+        "ProcessId": 556516
+      }
+    ]
+  },
+  "measured_native_peak_allocated_bytes": 3271689728,
+  "measured_native_peak_reserved_bytes": 3600809984,
+  "measured_native_worker_tree_peak_rss_bytes": 2257219584,
+  "native_qualified": true,
+  "native_runtime": {
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "cuda": "12.6",
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "python": "3.11.15",
+    "tf32": false,
+    "torch": "2.12.1+cu126",
+    "transformers": "5.14.1"
+  },
+  "qualified_lane": "separate_GPU_FP32_successor",
+  "inventory_epoch": "historical reference/preflight snapshots;availableRAM/GPUfree valuesnotlive",
+  "latest_resource_snapshot": "H3_READINESS_POST_DEBUG_001.json;read-onlygateGPU1231MiB<6144;no H3worker",
+  "CPU_H3_native_epoch_001": {
+    "status": "CPU_H3_COMPLETE_NOT_SEMANTIC_EFFICACY",
+    "device": "cpu",
+    "dtype": "float32",
+    "attention": "eager",
+    "CPU_threads": 4,
+    "maximum_prefix_tokens": 256,
+    "checkpoint_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "worker_source_sha256": "f242676e0ec0f019dd94ac27e5f3cb5eb8f3e311beb64cc0355102492396eaca",
+    "source_assets_unchanged": true,
+    "model_API_attempts": 47,
+    "complete_forwards": 44,
+    "state_adjoints": 9,
+    "completed_prefix_positions": 4818,
+    "parent_charged_native_seconds": 44.062,
+    "worker_peak_RSS_bytes": 4451840000,
+    "cpu_generation_qualification": "NOT_RUN",
+    "GPU_pooling": false,
+    "scientific_endpoint": "offline canonical-first-token CE surrogate",
+    "evidence": "runs/native-cpu-h3-001;audits/cpu_H3_native_execution_audit_001.json"
+  }
+}

@@ -1,0 +1,13 @@
+# Independent successor-control and apparatus review
+
+Reviewed `control.py`, `tests/test_control.py`, `run_apparatus.py`, `CAMPAIGN.md`, and `OWNERSHIP.json` independently from source. The exact hashes, interpreter, independent test receipt, and remaining gates are in `control_review_receipt.json`.
+
+The successor random controller correctly separates prefix moment resets from the RNG stream. It binds randomness to the frozen config seed, arm ID, and example ID, preserves stream position when prefix shape changes, consumes no draw for the normal unit warmup, checks identity, and restarts a replicate on context reentry. A3/unit/fixed moment and update semantics remain inherited. The ordinary first pass, cache refusal, maximum allowed depth, overlap ownership, positions/masks, and cleanup remain inherited. No model loader is present.
+
+An independent CPU rerun with the read-only verified interpreter `C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe` and `-B -p no:cacheprovider` passed all **13** control tests in 3.27 pytest seconds. The fake-host tests exercise live prefix resets, seed/arm/example distinctions, rejected observations without RNG consumption, batch isolation, reference numeric parity, zero-budget identity, positions/masks, exception cleanup, and reentry. This is apparatus validation, not native qualification. `control_review_junit.xml` preserves the test record.
+
+The native successor caller must still apply the actual replicate to `TAPSConfig.seed` (for example `replace(cfg, seed=seed)`) before creating a fresh per-example wrapper. Setting `torch.manual_seed` alone is insufficient. Bind the frozen pool/hash and stream policy in the registration. Fresh native scale/random smoke and native old/new identity are still required before successor task measurements.
+
+The no-model apparatus wrapper admits only test, fixture, and native-preflight verbs, sets offline/no-bytecode flags, confines output to the campaign, captures exclusive source manifests and stdout/stderr, bounds apparatus wall time, and reports nonzero exits. It does not provide native supervision. Its manifest does not itself establish model identity, runtime qualification, maximum shape, native worker budget admission, or parent process-tree termination. The campaign documentation correctly preserves those pending gates and sole coordinator ownership.
+
+Disposition recommendation: **PASS for reviewed successor RNG apparatus and no-model command routing; NATIVE NOT QUALIFIED**. The initial required native admission/qualification issues remain open until the coordinator records their dispositions and the separately reviewed supervisor/registration/source packet.

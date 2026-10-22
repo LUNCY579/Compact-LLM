@@ -1,0 +1,92 @@
+{
+  "actual_grant_sha256": "da328e1942923cffe9bd84b31c70ded9335b25b7d3d785d4a2ea7593971341c0",
+  "admission_sha256": "d1051861c9309012ea95df49317ec5b4faafeaa1843d798ca557e32ad3da3d87",
+  "approved_scope": {
+    "attempts": 1,
+    "cases": 192,
+    "full_bulk_matrix_retry": false,
+    "id": "CAUSAL-REPLAY-EXTENDED-001",
+    "lane": "CPU_CAUSAL_REPLAY_FP32",
+    "max_native_worker_seconds": 4500,
+    "maximum_prefix_tokens": 256,
+    "model_API_attempts": 1925,
+    "parent_run": "native-cpu-causal-replay-002",
+    "state_adjoints": 635,
+    "status": "EXPLICIT_ADDITIONAL_CAUSAL_REPLAY_ATTEMPT_AUTHORIZED",
+    "training": false,
+    "worker_sha256": "d2208d45d3feb60b36ff49886c0b0212831134b7f796677e3c3c1dd2d28ffdcc"
+  },
+  "bindings": {
+    "BUDGET_LEDGER.jsonl": "172b8c4463ef4a52da5628fa7a6499b62aba09cddb47e0b546925d1e1aad53db",
+    "CPU_CAUSAL_REPLAY_EXTENDED_READINESS_004.json": "48aa5833713e808b8f75ad4569804b1bd9b3aa26f1f2b5965e7ef68cf2c73cef",
+    "HUMAN_CAUSAL_REPLAY_EXTENDED_ALLOWANCE_001.json": "da328e1942923cffe9bd84b31c70ded9335b25b7d3d785d4a2ea7593971341c0",
+    "HUMAN_CAUSAL_REPLAY_EXTENDED_APPROVAL_RECORD_001.json": "c38a76d86fdf13fc1d1223bc3935442a1c9eac234f14936e970fe2ddd6ade1d8",
+    "causal_replay_extended_authority.py": "b22770997876b421f3aba6a1e851dae9a01b292defa439721474439bda85d336",
+    "cpu_causal_replay_admission_v4.json": "d1051861c9309012ea95df49317ec5b4faafeaa1843d798ca557e32ad3da3d87",
+    "cpu_causal_replay_native.py": "d2208d45d3feb60b36ff49886c0b0212831134b7f796677e3c3c1dd2d28ffdcc",
+    "cpu_causal_replay_supervisor.py": "fdaa49f617e3b3ce70431f6ed3a8d2b4ccd0fbddfa625e2513f31b6c0e5c8e5f",
+    "reviews/cpu_causal_replay_extended_dispatch_receipt.json": "927c23998cc430ee6e58caf3709b0019510a795817e5831a93ef28f668488704"
+  },
+  "checks": {
+    "actual_grant_exact_template_bytes": true,
+    "actual_source_predicate_all97_paths_passed": true,
+    "all97_current_frozen_hashes_match": true,
+    "consumed_old5397_not_reused": true,
+    "full_count_contract_unchanged": true,
+    "new_grant_unused": true,
+    "no_lock_or_run003": true,
+    "production_child_scope_and_parent_unused_ledger_PASS": true
+  },
+  "count_contract": {
+    "EOS_targets": 192,
+    "answer_targets": 440,
+    "cache_rejections": 2,
+    "cases": 192,
+    "completed_forwards": 1922,
+    "completed_prefix_positions": 252696,
+    "expected_partial": 1,
+    "full_forward_attempts": 1923,
+    "model_API_attempts": 1925,
+    "parents": 96,
+    "qualification_API_attempts": 29,
+    "qualification_adjoints": 3,
+    "state_adjoints": 635,
+    "task_targets": 632
+  },
+  "created_utc": "2026-10-05T14:24:54.288498+00:00",
+  "disposition": "Actual direct-human grant and exact source/unused-parent gate pass for one supervised4500-second full192 study. Root may launch run003 if current parent guards still pass. A started or launched failed attempt consumes this grant; no automatic retry is included.",
+  "findings": [],
+  "human_reply": "I will approve of the plan. Continue",
+  "limits": [
+    "Approval covers only reviewed CPU full192/1925API/635adjoint/max256 study, with unchanged weights and no wider intervention, fitting, training or bulk/debug retry.",
+    "Source/scope/readiness gate is not native numerical qualification or efficacy. Prior incomplete task/EOS/validation results remain NULL.",
+    "Asset10 matches are from root readiness004; reviewer verified97source closure but did not repeat asset hashing here. Resource snapshot is dated and parent must enforce fresh limits.",
+    "No model, worker, new fixture test, source/state/ledger/grant mutation or goal transition was performed by reviewer. Root created actual grant after direct approval."
+  ],
+  "native_calls_by_reviewer": 0,
+  "new_tests_run": 0,
+  "no_further_retry_authorized": true,
+  "readiness004": {
+    "admission_sha256": "d1051861c9309012ea95df49317ec5b4faafeaa1843d798ca557e32ad3da3d87",
+    "asset_mismatches": [],
+    "available_host_ram_bytes": 20188688384,
+    "campaign_bytes": 132918027,
+    "disk_free_bytes": 91354275840,
+    "model_loads": 0,
+    "native_seconds_remaining": 20151.485,
+    "native_seconds_used": 1448.5149999999976,
+    "native_worker_created": false,
+    "reasons": [],
+    "required_parent_ram_bytes": 9019431322,
+    "source_mismatches": [],
+    "status": "READY_CPU_CAUSAL_REPLAY_PARENT_GATES_NOT_NATIVE_QUALIFIED",
+    "timestamp_utc": "2026-10-05T14:20:28.253891+00:00"
+  },
+  "required_before_tasks": [
+    "Fresh unchanged CPUFP32/eager scalar/EOS adjoint-FD/parity/suffix/custom-head/conditioning/cache/restoration/state/assets qualification.",
+    "Fresh complete632-target factor1.5 forecast with180internal reserve must fit4500; no case dropping, deadline extension or weaker gate."
+  ],
+  "reviewer": "adversarial_review",
+  "root_sole_launch_allowed_if_fresh_parent_gates_still_pass": true,
+  "status": "PASS_ACTUAL_EXTENDED_HUMAN_SCOPE_AND_UNUSED_DISPATCH_GATE"
+}

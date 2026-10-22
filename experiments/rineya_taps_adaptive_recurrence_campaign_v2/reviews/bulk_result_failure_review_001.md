@@ -1,0 +1,11 @@
+# Independent bulk failure and result audit
+
+The native attempt is incomplete:2762/3296 physical rows, with534 missing. Independent strict regrade and ByteLevel output-ID decoding match every saved physical row. DEVELOPMENT has all2112 planned rows over192 cases; validation has58 cases×9 deterministic rows and noA5. Primary validation comparisons, complete accuracies, oracle/capture and efficacy claims remain null. No successful subset replaces the registered matrix.
+
+All38 chronological-order errors are empty orders for the38 missing validation cases. Completed cases follow the exact registered order; this is missing-data diagnostics, not a systematic analyzer bug. The DEV winner1.0 and generation-only pool are independently reproduced and freeze before validation. A5 streams and conditional same-prefix/scale determinism match on the complete DEV block.
+
+Failure occurs after the last logged completed forward on dialogue_memory21v0/A2, second prefix227. The exact failing CUDA API/kernel is unlocalized; no traceback proves cause. Two completed forwards belong to this unfinished evaluation and must remain charged despite its missing outcome. The worker used555.750s; cumulative native use is1,287.921s, remaining20,312.079s. Raw journals record7,899 completed forwards/944,334 prefix positions, including17 completed max357 probes and the two orphan calls; one intentional partial and two cache rejects are separate. Additional unlocalized work is unknown, not zero.
+
+Recorded resource peaks remain within limits (GPUallocated2,608,939,520bytes; parent RSS2,533,875,712bytes). Final GPU resource/state verification is unavailable after illegal address; loaded/qualification state had matched b23dec7e… and CPU disk/custom-code hashes remain unchanged. The fully complete DEV block can be described only as provisional calibration from a failed run; it cannot support validation or broad efficacy. Its per-policy scores and gain/loss counts are in the machine receipt.
+
+Preserve run/report/source unchanged. No automatic retry remains. Future native diagnosis or replication needs its own explicit scope, budget/resource gates and review; already exposed validation cannot be relabelled untouched. No source edits, models or native calls by reviewer.

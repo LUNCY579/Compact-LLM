@@ -1,0 +1,464 @@
+{
+  "L0_L2_one_shot": true,
+  "after_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+  "before_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+  "cache_rejections": 2,
+  "checkpoint_files_after": {
+    "CORE.json": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+    "FILES.json": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e",
+    "config.json": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "generation_config.json": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "model.safetensors": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "modeling_supa_a11.py": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  "checkpoint_files_before": {
+    "CORE.json": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+    "FILES.json": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e",
+    "config.json": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "generation_config.json": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "model.safetensors": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "modeling_supa_a11.py": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  "checkpoint_files_unchanged": true,
+  "counts": {
+    "cache_rejections": 2,
+    "completed_forwards": 64,
+    "completed_prefix_positions": 4921,
+    "expected_partial": 1,
+    "full_forward_attempts": 65,
+    "model_API_attempts": 67,
+    "state_adjoints": 0
+  },
+  "dispatch_hashes": {
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/data/evaluation/supa_layer_ablation_smoke.jsonl": "404c866f64f36422e5e9e5d52170a358d6c2dd28d276492a38f348ce18f2050f",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/__init__.py": "e3ed1f5eebc49d142de7f909ab08b4141678290bd538568a65cf83940a75e444",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/advanced.py": "e07a97bda1862544578cc3347a663816262e6a40c5063dd90147c946d98efb7c",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/aligned_projection.py": "36c41abd48aa0e6d5327c030909fbedb7fb7ecd7da50daaa3cd1d9a043f22d59",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/architecture.py": "ff94015b9b11417dfa7208e7ce90fd4448a734757f69b4e46276c0b4cf6f2d50",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/checkpoint.py": "408edf877c6459ccf9072a6d92be145762a6535cd76bc168b30e33930b3e44ad",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/cka.py": "7c26ac61d731de1c83d1069ccc00f5b96505271de7e23499b7a1b5f75ca69798",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/comparison.py": "6806172940354da8583a3a119207377171bf4620b2c9178ce317bc4b4844e0ca",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/consensus_target_basis.py": "90de43e21ffbe4684634bbe95391bcc9791af9d4eb052963ef71e90460ee151a",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/delta_analysis.py": "b5db6232a86c8ad2215ee2f6c6af62a010b2208eb88ee5b429a17bc7469aac4f",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/diagnostics.py": "cd91c30c7d794878312026858b3108313e8771d4cd4533ed61371234cffca0f2",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/direction_transfer.py": "457972fd01d5690717bea73a7c7c28da539c87d0d7ede53049490753c6564a95",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/__init__.py": "b5e59b71df7529a9dc842358f6852a4ae6e983bfb98a9efca39f0c320498f012",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/banks.py": "d13b3699b49c15aaccdb26837bddc4541d59dc08bddc2290dd5edd4759e8fc1c",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/runner.py": "a3b475dfea308f02ee745ba2794f4e43059b62250554117af62f21b4703f2a26",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/scoring.py": "5a22e1c1ff7b0a56623931c0782f81dd2b3a9df83ccfe77ce3724d37cf320086",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evidence.py": "fdf528727bd269b89ab431ceb9e301dc3ad14d827c18be21944c56c99e820c6b",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/fisher.py": "e097ecdc41a61466e3bab98d74c6d342aa871c155f2b7fb2ff6f393c6b139997",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/functional_atlas.py": "3e60791f8b55b30c74c801ddfba6145576828dd01c62083247eeb842aa516df8",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/functional_localization.py": "5f4049dc25d0446c356c9556e0390a58b32241f2ed557c4be6dfcecd13b059f7",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/functional_translator.py": "e0a10a826653f5bf122c1dff11fab89de06f96240f28e8f17df03da2bc3a0bd3",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/hashing.py": "68116088fbfbc68e3775bfe5be89b95ecb6a3742098a51bed1f7fec048dc87a0",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/interventions.py": "0cd82c5ba6d9c7a6badea8f05c6ebc98717ae7e266a0811b3ded6332101b0c17",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/layer_ablation.py": "a003d6bfe0ff980715a589fa85206e96a48710b112defc8d6c55a85673658fd7",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/leakage.py": "a4e18801cd6f1cf9f1dde2ef040de63b9e845bd04d285b88f43929c7e462c215",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/operations.py": "c27ccef6ad5e16eb1c9f4517e900cdcd6011f048930eef1e18a1b4723ec0d112",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/projection.py": "5814db9766715507bcbfe70e5e17a15f15b448154ae3976ec553ef1abeecfa2e",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/promotion.py": "c19b0f66f13c18c19860bb7f6211c429344f6e5b8c045e224929d5f9a110846f",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/registry.py": "e52791d8d2f0ca4c158ecb863323f60054c5a272b4f358d2df9a98b177260d50",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/resource_trace.py": "9ee4af7b2dad19991349f3887b103aac568c16abba7b43ee44bd062dadd4665a",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/sequential_runner.py": "9d10265a107893df76ccadb51d05a85934b3c8c9bc193f60a4427f6fc60f025b",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/spectral_projection.py": "0379c0f3c14e05824f3c12efa340bff95aa328cd8b8a7cb33f4315eccd95ad22",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/streaming_forward.py": "3ff342ab403ac866622fc8faa1ca63bfb2f193dfd97ec5f098bfd8d03366961e",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/transport_sanity.py": "3f3089ced6cdb091bf071335add28d1da0c5852bb84afef093b4ab1c1a9d6e31",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/v2.py": "4d6f942e3dc5fbbc9570538d22027df3614183450461d796ff1b6a880bb155ed",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/v3_transport.py": "cadf2ccb3723e16f3919fc5401ed25c9f9c83c87573fc0c82074ca56f1f94555",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/validation.py": "c3b43df9a0e3c3a21f8b47cc66dd85316ee8e20500eb808e67d9478bb6d245c6",
+    "experiments/anchor_routed_middle_recurrence_v1/configs/reapplication_screen.json": "207cf9744b7a3c288b6a0dd1f9bd1373f580e7514333bb3ef2b59c82112d373c",
+    "experiments/anchor_routed_middle_recurrence_v1/evidence/00_baseline_requalification/20260905T040646_352570Z/run_manifest.json": "aaed6e1023df7955610eb1502b6fbe70ea00c9bca457f7ad77388b24727ac7e3",
+    "experiments/anchor_routed_middle_recurrence_v1/evidence/02c_fixed_cpu_budget_v2/20260905T132743_802018Z/run_manifest.json": "daa5bc8e947602a4ed3d7fb19076ec6000e27f7afcc2a1426e544491bff95dfe",
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/audit_budget_replication.py": "5a14a179a27ced447624339b4979448d8b79ee767f4bad1afbc6bd713086008f",
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/audit_completed_screen.py": "ccfae3d90cf60b357a00f07f2faebe2bcd635b1fa72f9f762dd005c64a24d3be",
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/audit_fixed_results.py": "e26e3475241793ee34a98c71bee1d11e237e41a00c584b866432ea3f217a2c10",
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/diagnose_late_failure.py": "9d375e0bf9fef2e2b1913b27bb1ed58a92918aef57cce433d6a559946384d484",
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/run_experiment.py": "170e5b0a9e49a9867ae847c2ddbc26f306013f7c44402fdfbc65fd28d73a3c98",
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/run_fixed_recurrence.py": "7cd1feb2926cd916f1f11a07050994cae39ee756ebb924cc3060444918f4912a",
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/summarize_results.py": "b4208d3d85efbc1879de8fa335c782263d47cd40108b2dd8a8cf226dd5087642",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/__init__.py": "45bf40eb692379c12c31d90c5e6fe4a78358f28b23783f24a0bf658893ba5065",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/evaluation.py": "e262761b45105d6586221c2c99b6f56ecc7d3aba2fe276b392e9b1e13cd80bfa",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/hooks.py": "a73baf73515ca905c39a631feb576caad232bec60bb05f0150204e952e0d36a3",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/metrics.py": "c2653a5129f4cf03b3c7081d0c99f6540fcefd0d17a717c7132b8c1ccf50ed67",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/preregistration.py": "baf03fd503db38270afb8d63d7080007b1a973c6f5faf0c00d55161581e80dad",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/provenance.py": "3f84bc41851a4709ff123217b0f781e6d1ec93e3f40dc7c911a95f44c1ee9018",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/recurrence.py": "88ab4c791b1871dc3765a85f89dbd857023bcf5e4dfa55b6c24142aaee0edea9",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/reporting.py": "99ca41eed1da02d7ef5a3d3a7a43c004c60f18cccaa328267ba41b980cfd2021",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/binding.py": "5334aefc6e179dd784f75a46c5d75111f793b973d2f4807315fba760f1c86a82",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/bulk_restart_supervisor.py": "80c2f250d7d9f941da22ed5f87601fbe67d659d4c5f55f37524e758025e8e86c",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/control.py": "298d0a7064ff562c498ecc50d13c2f23cd9bdf1df6b1d616d7204bac24a49ed3",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/full_generation_restart_authority.py": "30084b180857b8e0a13f4a4ef73745db80fa164a279fedbf64a07ae1747be303",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/gpu_native.py": "4c1a05c6511ff267d790654475f2a22cb5a3b8fa02857b295aa1ab3ae6c20e6f",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/native_entry.py": "ab5b60f0ad72f719367490737d1c71173e5384db3a31246ca2ed751557c6725c",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/native_supervisor.py": "860495d4fa7a8c69c82c392a1ce14d28374fc8fe01f2a84078d780efc4787575",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/ACTIVE_GOAL_SCOPE_001.json": "4ea9970d9a948895861d2f182b6cffa9f7e50b1be353ced48ecce55f59c633b6",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/ACTIVE_GOAL_SNAPSHOT_001.json": "a69c692c237a579ec92061d07cb1012d0f05be84bf3c39c13941e2a8d492297c",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/PASSIVE_PROBE_REGISTRATION_001.md": "e5716814632b9fd7ad145ef5a9c40aaee434fdc35b9d773aef1095ac8aa59cbe",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/PROBE_ANALYSIS_PLAN_001.md": "b98df0ca083cdb182f7b807c665450b261fb080267d13d826472a7f0e9742dd8",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/PROBE_NATIVE_DRAFT_001.md": "2bbc002f715a816b81591b7362cefa2b1cf54e3cfce15c6c91ee58997e9d3b5f",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/__init__.py": "caf1630dc91f6137858da93b3a3e304e4be3996f356584b3ae784bef4d8c2016",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/authority.py": "a5a007c2fea3a6c63a2f2b722c91948c8675c6a8d4b50b02a2cb51d39a52b516",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/data/dev_prefix_probe_001/DEVELOPMENT_BANK.json": "681a3e77e3d797e2faebcff3971dbb365a4479ebdac017bf3dcfcb48081ba03f",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/data/dev_prefix_probe_001/DEVELOPMENT_TOKEN_BINDING.json": "c34948026ebaf332111ce635a473b1489ef0d2f3932100f9e0d3cdd6a08ce6d2",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/data/dev_prefix_probe_001/MANIFEST.json": "f35dc01c54154c51fa6284807245767f01282128c23a09307a2485483951530b",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/observer.py": "da6a75376d6984a54396dc91499fa8e797ad3a66d8ff66512b29123b449bdae0",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/prepare_admission.py": "f9346bfc4c275e0178b3bff7af9d0970dfe210f397b20fa47092e7b9adf5db51",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/probe_analysis.py": "2d6c8e598df0a0caab29875ff95cecfb6b7eef1e8eff595efabb3322ebf70a27",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/probe_entry.py": "4d1c66344af58b2bab296f8693f3a30a8a721beca57061e216c26dc2fafdb9fc",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/probe_native.py": "c7a433c26c9d7b5d83f54e971fe5d656d8f6edbf047e5442c092b310dd6be914",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/probe_supervisor.py": "9396b1afd4b61eb5ac87951764ba6a4ed7ee89089656a37e2182468a3c898b60",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/readiness.py": "0c4bf0caf4c66a69b8de5f02f5234197e726547bd0b342b1b035e1cadd17d4a5",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/reviews/reader_numeric_probe_001.json": "981f012a0e985a5d8987ff49f19fe3c0ff50cc5505e0619c7010d2046db3f85e",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/tests/test_observer.py": "78354d7594a6db3b6caf9f056226ed4d98f44d47facf6ac461f8e82cde43a3c9",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/tests/test_parent_authority.py": "9094843cafad8a6b72dc6d54622ba67fe5a680cdb323620d71d43cac7f10defa",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/tests/test_probe_analysis.py": "3dc5cf3e2b2a5904cb3625c7f1a7159edd1d8853460bfce870ffd66191b16dc2",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/quality_pattern_v3/tests/test_supervisor.py": "33f07d6977f2dde20b129663422fc34e4cd96735121c0185c32800d6afab66ed",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/run_apparatus.py": "fafbcea5d238560e8ebdf728528860a681c40ff0633bede100c3de21db37446b",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/binding-001/MODEL_DATA_BINDING.json": "82590a8f76eca27e7b15694b724123477e21ae0cc38ed2b33b56641ab9e70f26",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/binding-001/PROMPT_AUDIT.json": "f4b5b21638bc2d8a8da4fac707072208d3a8a1aa2f1918c7574a326cc996bf7d",
+    "experiments/rineya_taps_adaptive_recurrence_campaign_v2/supervision.py": "894e7ffec1d7863d686cb82d410309a3a100d4fdb392892a4b534b989d4a4fcc",
+    "experiments/rineya_taps_adaptive_recurrence_v1/__init__.py": "c718048ae6399e64733bdf4a755eca9c9b9f1ee5c264bc48b63a0e3ca455807b",
+    "experiments/rineya_taps_adaptive_recurrence_v1/__main__.py": "11352c668a19be86c5bd643a1761452f5ebf5267c2e02dca6bcdf74fa63192db",
+    "experiments/rineya_taps_adaptive_recurrence_v1/diagnostics.py": "a697b1ed0c27788a0920d7416ab3821f2dc599cb4af2762fdc9d538e7481ff6b",
+    "experiments/rineya_taps_adaptive_recurrence_v1/experiment.py": "ce189da75251af9d16e96d1192664206cecea7ecc961bd136ceb61bb08812a81",
+    "experiments/rineya_taps_adaptive_recurrence_v1/integration.py": "57445e67903309c903655f1de9537658ccf6f8fe83fbc451d2f5062ce61d4b4a",
+    "experiments/rineya_taps_adaptive_recurrence_v1/native.py": "2a0f47512e3f67b6be8d8c5956acd6bbebfab5979fb92c273e7483cf538892e3",
+    "experiments/rineya_taps_adaptive_recurrence_v1/safety.py": "80bd40abfe83f5f98a95de204dafc6761df6c52e0fc2cad428986ec6f226a1aa",
+    "experiments/rineya_taps_adaptive_recurrence_v1/scheduler.py": "eaaa5cd8cab8b390dc932f850f7002dcfc81177c07bef50bcc368bf64ac9d546"
+  },
+  "forced_exception_restoration": true,
+  "head_and_operator_unchanged": true,
+  "mask_positions": "frozen GPU helper CUDA arange/same replay conditioning",
+  "maximum_prefix_tokens": 357,
+  "observer_output_identity": true,
+  "parameter_gradients": "NONE",
+  "parity_proofs": [
+    {
+      "context": {
+        "case_id": "calibration_common_sense_ac2b34a1ecce0a8d",
+        "phase": "QUALIFICATION",
+        "split": "SMOKE"
+      },
+      "logits_sha256": [
+        "e8af8daa4c72fe76ad89c7fdae190fe5b19f17b5ce0434c829ee7db6d0ba1618",
+        "e8af8daa4c72fe76ad89c7fdae190fe5b19f17b5ce0434c829ee7db6d0ba1618",
+        "e8af8daa4c72fe76ad89c7fdae190fe5b19f17b5ce0434c829ee7db6d0ba1618",
+        "adaa9c8b7f2a3e2734f824910e67fad018ce86eba433b8229b9e23e9ab9b2167",
+        "adaa9c8b7f2a3e2734f824910e67fad018ce86eba433b8229b9e23e9ab9b2167",
+        "adaa9c8b7f2a3e2734f824910e67fad018ce86eba433b8229b9e23e9ab9b2167",
+        "e8af8daa4c72fe76ad89c7fdae190fe5b19f17b5ce0434c829ee7db6d0ba1618"
+      ],
+      "modes": [
+        "INTACT",
+        "UNOBSERVED_K0",
+        "OBSERVED_K0",
+        "LEGACY_UNIT",
+        "UNOBSERVED_UNIT",
+        "OBSERVED_UNIT",
+        "RESTORED_INTACT"
+      ],
+      "observer_seconds": [
+        0.0,
+        0.0,
+        0.0016996999993352802,
+        0.0,
+        0.0,
+        0.0039458000001104665,
+        0.0
+      ]
+    },
+    {
+      "context": {
+        "case_id": "calibration_mathematics_429ca310e753b947",
+        "phase": "QUALIFICATION",
+        "split": "SMOKE"
+      },
+      "logits_sha256": [
+        "e9ad31af656d3aaecb05cdc7380331298a3fb86a01dd84ad4b63b11e804a19f4",
+        "e9ad31af656d3aaecb05cdc7380331298a3fb86a01dd84ad4b63b11e804a19f4",
+        "e9ad31af656d3aaecb05cdc7380331298a3fb86a01dd84ad4b63b11e804a19f4",
+        "b5e9c6ed34653a7b7fb378a562cde28e4b11aa916e8019e90aeecc0fb4cba9ca",
+        "b5e9c6ed34653a7b7fb378a562cde28e4b11aa916e8019e90aeecc0fb4cba9ca",
+        "b5e9c6ed34653a7b7fb378a562cde28e4b11aa916e8019e90aeecc0fb4cba9ca",
+        "e9ad31af656d3aaecb05cdc7380331298a3fb86a01dd84ad4b63b11e804a19f4"
+      ],
+      "modes": [
+        "INTACT",
+        "UNOBSERVED_K0",
+        "OBSERVED_K0",
+        "LEGACY_UNIT",
+        "UNOBSERVED_UNIT",
+        "OBSERVED_UNIT",
+        "RESTORED_INTACT"
+      ],
+      "observer_seconds": [
+        0.0,
+        0.0,
+        0.0017291000003751833,
+        0.0,
+        0.0,
+        0.0038470000008601346,
+        0.0
+      ]
+    },
+    {
+      "context": {
+        "case_id": "calibration_instruction_following_1d15f77eca5d17f0",
+        "phase": "QUALIFICATION",
+        "split": "SMOKE"
+      },
+      "logits_sha256": [
+        "484de45c7ffeed2bad75043197fb84f48c9c02d9624da9a247cc300b2839effe",
+        "484de45c7ffeed2bad75043197fb84f48c9c02d9624da9a247cc300b2839effe",
+        "484de45c7ffeed2bad75043197fb84f48c9c02d9624da9a247cc300b2839effe",
+        "7e9b70f533fbbebd46b5a85b01b69da23ced30a010ad0cd3e10a1c220824958b",
+        "7e9b70f533fbbebd46b5a85b01b69da23ced30a010ad0cd3e10a1c220824958b",
+        "7e9b70f533fbbebd46b5a85b01b69da23ced30a010ad0cd3e10a1c220824958b",
+        "484de45c7ffeed2bad75043197fb84f48c9c02d9624da9a247cc300b2839effe"
+      ],
+      "modes": [
+        "INTACT",
+        "UNOBSERVED_K0",
+        "OBSERVED_K0",
+        "LEGACY_UNIT",
+        "UNOBSERVED_UNIT",
+        "OBSERVED_UNIT",
+        "RESTORED_INTACT"
+      ],
+      "observer_seconds": [
+        0.0,
+        0.0,
+        0.001420499999767344,
+        0.0,
+        0.0,
+        0.0036278999996284256,
+        0.0
+      ]
+    },
+    {
+      "context": {
+        "case_id": "calibration_science_9cf33d8dbb5fd050",
+        "phase": "QUALIFICATION",
+        "split": "SMOKE"
+      },
+      "logits_sha256": [
+        "60ad601ce8f7a680ef2daf0f5232a4ec5e6397701d6145f98114f64d8dd81aa2",
+        "60ad601ce8f7a680ef2daf0f5232a4ec5e6397701d6145f98114f64d8dd81aa2",
+        "60ad601ce8f7a680ef2daf0f5232a4ec5e6397701d6145f98114f64d8dd81aa2",
+        "281672a1000316326f1b441bab1e54e93f33e77a9b81e118efc0ff0c7e61866c",
+        "281672a1000316326f1b441bab1e54e93f33e77a9b81e118efc0ff0c7e61866c",
+        "281672a1000316326f1b441bab1e54e93f33e77a9b81e118efc0ff0c7e61866c",
+        "60ad601ce8f7a680ef2daf0f5232a4ec5e6397701d6145f98114f64d8dd81aa2"
+      ],
+      "modes": [
+        "INTACT",
+        "UNOBSERVED_K0",
+        "OBSERVED_K0",
+        "LEGACY_UNIT",
+        "UNOBSERVED_UNIT",
+        "OBSERVED_UNIT",
+        "RESTORED_INTACT"
+      ],
+      "observer_seconds": [
+        0.0,
+        0.0,
+        0.0024743000003581983,
+        0.0,
+        0.0,
+        0.0037883999993937323,
+        0.0
+      ]
+    },
+    {
+      "context": {
+        "case_id": "calibration_multi_hop_binding_caa1eea53ea0585a",
+        "phase": "QUALIFICATION",
+        "split": "SMOKE"
+      },
+      "logits_sha256": [
+        "9dcf99d64673c3eb2d2b25722d9e682304a5ef804d33f5105307e24b2e4946fe",
+        "9dcf99d64673c3eb2d2b25722d9e682304a5ef804d33f5105307e24b2e4946fe",
+        "9dcf99d64673c3eb2d2b25722d9e682304a5ef804d33f5105307e24b2e4946fe",
+        "cd16fc1f3d7054eb50b75df7149858fb87b9b233b3c5ba2ce0fda453de2e5b2a",
+        "cd16fc1f3d7054eb50b75df7149858fb87b9b233b3c5ba2ce0fda453de2e5b2a",
+        "cd16fc1f3d7054eb50b75df7149858fb87b9b233b3c5ba2ce0fda453de2e5b2a",
+        "9dcf99d64673c3eb2d2b25722d9e682304a5ef804d33f5105307e24b2e4946fe"
+      ],
+      "modes": [
+        "INTACT",
+        "UNOBSERVED_K0",
+        "OBSERVED_K0",
+        "LEGACY_UNIT",
+        "UNOBSERVED_UNIT",
+        "OBSERVED_UNIT",
+        "RESTORED_INTACT"
+      ],
+      "observer_seconds": [
+        0.0,
+        0.0,
+        0.0015229999999064603,
+        0.0,
+        0.0,
+        0.0032032999997682055,
+        0.0
+      ]
+    },
+    {
+      "context": {
+        "case_id": "calibration_short_response_15273c49b438f1a9",
+        "phase": "QUALIFICATION",
+        "split": "SMOKE"
+      },
+      "logits_sha256": [
+        "8a998678b70647cd60242d2537ac6b01a07278102098c455c766bc71c9c522fe",
+        "8a998678b70647cd60242d2537ac6b01a07278102098c455c766bc71c9c522fe",
+        "8a998678b70647cd60242d2537ac6b01a07278102098c455c766bc71c9c522fe",
+        "ff14a1ba03de9b38d0d793e3bbf77beca4a2c054fc39d01f95de3fba321fe518",
+        "ff14a1ba03de9b38d0d793e3bbf77beca4a2c054fc39d01f95de3fba321fe518",
+        "ff14a1ba03de9b38d0d793e3bbf77beca4a2c054fc39d01f95de3fba321fe518",
+        "8a998678b70647cd60242d2537ac6b01a07278102098c455c766bc71c9c522fe"
+      ],
+      "modes": [
+        "INTACT",
+        "UNOBSERVED_K0",
+        "OBSERVED_K0",
+        "LEGACY_UNIT",
+        "UNOBSERVED_UNIT",
+        "OBSERVED_UNIT",
+        "RESTORED_INTACT"
+      ],
+      "observer_seconds": [
+        0.0,
+        0.0,
+        0.0021808000001328764,
+        0.0,
+        0.0,
+        0.004124799999772222,
+        0.0
+      ]
+    },
+    {
+      "context": {
+        "case_id": "calibration_normal_conversation_029382dc0a778c44",
+        "phase": "QUALIFICATION",
+        "split": "SMOKE"
+      },
+      "logits_sha256": [
+        "f82738dd9b488e2ce92072c5eab78920d7898ce45105031fd8c2746a64cccc87",
+        "f82738dd9b488e2ce92072c5eab78920d7898ce45105031fd8c2746a64cccc87",
+        "f82738dd9b488e2ce92072c5eab78920d7898ce45105031fd8c2746a64cccc87",
+        "85d4d835447011705d9db1da66141f408e5fb8c579722836909a6a5675207666",
+        "85d4d835447011705d9db1da66141f408e5fb8c579722836909a6a5675207666",
+        "85d4d835447011705d9db1da66141f408e5fb8c579722836909a6a5675207666",
+        "f82738dd9b488e2ce92072c5eab78920d7898ce45105031fd8c2746a64cccc87"
+      ],
+      "modes": [
+        "INTACT",
+        "UNOBSERVED_K0",
+        "OBSERVED_K0",
+        "LEGACY_UNIT",
+        "UNOBSERVED_UNIT",
+        "OBSERVED_UNIT",
+        "RESTORED_INTACT"
+      ],
+      "observer_seconds": [
+        0.0,
+        0.0,
+        0.003536500000336673,
+        0.0,
+        0.0,
+        0.0036046000004716916,
+        0.0
+      ]
+    },
+    {
+      "context": {
+        "case_id": "calibration_unanswerable_abstention_3006ee0f901c7173",
+        "phase": "QUALIFICATION",
+        "split": "SMOKE"
+      },
+      "logits_sha256": [
+        "2fe223e0a269b7a149c8a7a3eca44b3ba487f5200b546e262a22e685dda731ec",
+        "2fe223e0a269b7a149c8a7a3eca44b3ba487f5200b546e262a22e685dda731ec",
+        "2fe223e0a269b7a149c8a7a3eca44b3ba487f5200b546e262a22e685dda731ec",
+        "90298881aa3597bdbacb118e0cbbcd70029af0a071fcb7738f38de207ebaca30",
+        "90298881aa3597bdbacb118e0cbbcd70029af0a071fcb7738f38de207ebaca30",
+        "90298881aa3597bdbacb118e0cbbcd70029af0a071fcb7738f38de207ebaca30",
+        "2fe223e0a269b7a149c8a7a3eca44b3ba487f5200b546e262a22e685dda731ec"
+      ],
+      "modes": [
+        "INTACT",
+        "UNOBSERVED_K0",
+        "OBSERVED_K0",
+        "LEGACY_UNIT",
+        "UNOBSERVED_UNIT",
+        "OBSERVED_UNIT",
+        "RESTORED_INTACT"
+      ],
+      "observer_seconds": [
+        0.0,
+        0.0,
+        0.0020539000006465358,
+        0.0,
+        0.0,
+        0.003607699999520264,
+        0.0
+      ]
+    },
+    {
+      "context": {
+        "case_id": "SYNTHETIC_MAX357_NO_TARGET",
+        "phase": "QUALIFICATION",
+        "split": "MECHANICAL"
+      },
+      "logits_sha256": [
+        "5df5860f8b703161c6bf2437695b0e751b045687e19815afa8cc552ec69e380f",
+        "5df5860f8b703161c6bf2437695b0e751b045687e19815afa8cc552ec69e380f",
+        "5df5860f8b703161c6bf2437695b0e751b045687e19815afa8cc552ec69e380f",
+        "a15c8f6ea35f3bd487b50c6909f51a45a1e16b1b312ab2ebf8b06553f6bed8e9",
+        "a15c8f6ea35f3bd487b50c6909f51a45a1e16b1b312ab2ebf8b06553f6bed8e9",
+        "a15c8f6ea35f3bd487b50c6909f51a45a1e16b1b312ab2ebf8b06553f6bed8e9",
+        "5df5860f8b703161c6bf2437695b0e751b045687e19815afa8cc552ec69e380f"
+      ],
+      "modes": [
+        "INTACT",
+        "UNOBSERVED_K0",
+        "OBSERVED_K0",
+        "LEGACY_UNIT",
+        "UNOBSERVED_UNIT",
+        "OBSERVED_UNIT",
+        "RESTORED_INTACT"
+      ],
+      "observer_seconds": [
+        0.0,
+        0.0,
+        0.0012011999997412204,
+        0.0,
+        0.0,
+        0.002559500000643311,
+        0.0
+      ]
+    }
+  ],
+  "resources": {
+    "gpu_allocated_bytes": 2418890752,
+    "gpu_free_bytes": 4852809728,
+    "gpu_peak_allocated_bytes": 2462788608,
+    "gpu_peak_reserved_bytes": 2491416576,
+    "gpu_reserved_bytes": 2491416576,
+    "gpu_total_bytes": 8585216000,
+    "host_available_bytes": 12992860160,
+    "rss_bytes": 1572044800
+  },
+  "source_unchanged": true,
+  "status": "PASS_PASSIVE_INPUT_FEATURE_MECHANICS"
+}

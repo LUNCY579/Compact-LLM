@@ -1,0 +1,194 @@
+{
+  "chronological_error_disposition": {
+    "empty_missing_validation_case_orders": 38,
+    "genuine_wrong_completed_policy_orders": 0,
+    "meaning": "Expected missing-data errors, not a systematic ordering/analyzer bug; current report remains immutable",
+    "reported_errors": 38
+  },
+  "costs": {
+    "cache_rejections": 2,
+    "completed_forward_calls_including_max_and_unfinished_eval": 7899,
+    "completed_max357_forwards": 17,
+    "completed_outcome_row_calls": 7880,
+    "completed_outcome_row_positions": 937812,
+    "completed_prefix_positions": 944334,
+    "controller_and_controller_logging_complete_totals": null,
+    "controller_missing_legacy_rows": 16,
+    "cumulative_native_seconds": 1287.9209999999948,
+    "intentional_partial_max_forward": 1,
+    "nonphysical_extra_model_calls": 0,
+    "partial_compute_positions": null,
+    "peak_parent_sampled_worker_tree_RSS": 2533875712,
+    "peak_recorded_GPU_allocated_bytes": 2608939520,
+    "remaining_native_seconds": 20312.079000000005,
+    "supervisor_wall_seconds": 556.3600000000006,
+    "terminal_GPU_resource_snapshot": null,
+    "unlocalized_failure_compute_positions": null,
+    "worker_seconds": 555.75
+  },
+  "created_utc": "2026-10-04T22:55:24.394985+00:00",
+  "disposition": "Retain original run/report/source; no automatic retry. No analyzer/order source correction justified by empty missing cases. Any future diagnostic native run needs separate explicit prospective scope, source review and budget/resource admission; exposed validation cannot be silently reused as fresh confirmation.",
+  "failure_boundary": {
+    "additional_unlocalized_compute": null,
+    "failing_API_exact_identity": null,
+    "last_recorded_completed_forward": {
+      "arm": "A2",
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:21:v0",
+      "completed": true,
+      "event": "FORWARD_COMPLETED",
+      "extra_loops": 1,
+      "forward_seconds": 0.1273481999996875,
+      "full_model_call": 2,
+      "prefix_tokens": 227,
+      "resources": {
+        "gpu_allocated_bytes": 2585022464,
+        "gpu_free_bytes": 4643094528,
+        "gpu_peak_allocated_bytes": 2608939520,
+        "gpu_peak_reserved_bytes": 2701131776,
+        "gpu_reserved_bytes": 2701131776,
+        "gpu_total_bytes": 8585216000,
+        "host_available_bytes": 14434557952,
+        "rss_bytes": 1646886912
+      },
+      "seed": 17,
+      "split": "OPEN_VALIDATION"
+    },
+    "orphan_completed_forwards_without_outcome": 2,
+    "orphan_completed_prefix_positions": 453,
+    "unfinished_case_outcome_present": false
+  },
+  "failure_localization": "After last recorded completed forward; failing CUDA API/kernel unlocalized, no traceback. Error text asynchronous warning is diagnostic data, not an instruction to retry.",
+  "full_matrix": {
+    "capture": null,
+    "complete_DEV_cases": 192,
+    "complete_DEV_rows": 2112,
+    "completed_validation_cases": 58,
+    "expected_physical": 3296,
+    "missing_physical": 534,
+    "missing_validationA5": 192,
+    "missing_validation_deterministic": 342,
+    "no_survivor_selected_success": true,
+    "observed_physical": 2762,
+    "primary_validation_accuracies": null,
+    "primary_validation_comparisons": null
+  },
+  "independent_regrade": {
+    "A5_RNG_streams_reconstructed": 392,
+    "DEV_conditional_determinism": {
+      "checked_pairs": 3264,
+      "scope": "A5 seeds and unit/fixed/adaptive controls; exact same case, shared prior token IDs and serialized FP32 alpha; no cross-prefix state",
+      "status": "CHECKED",
+      "violations": []
+    },
+    "DEV_pool_matches_raw_once_only_generation": true,
+    "DEV_pool_observations": 513,
+    "frozen_fixed_alpha": 1.0,
+    "malformed_or_partial_JSONL_lines": 0,
+    "nonphysical_aliases_excluded": 58,
+    "oracle_rows": 0,
+    "physical_by_split": {
+      "DEVELOPMENT": 2112,
+      "OPEN_VALIDATION": 522,
+      "SMOKE": 128
+    },
+    "physical_rows_regraded": 2762,
+    "raw_output_IDs_independently_decoded": 2762,
+    "scorer_mismatches": 0,
+    "token_response_mismatches": 0
+  },
+  "input_sha256": {
+    "DEV_freeze": "679186f699bae9a66a8e016cf3bf0555c2a7d364966776a700fcdb7c48989e97",
+    "admission": "a303cd65c353a6d12e6544503bbf210c054ae919f795577d8b01e96224464aca",
+    "analyzer": "3defe511cd8a189f75e0e0529a56b782b965f40095c139d3a0c603b2bbf0d3db",
+    "forwards": "d607920f13d8ed1d55e598f4339e4b8c6d6a33bfb9966cdb38c60bb485194f81",
+    "outcomes": "b9bc357ec54f4e413d236e8f52ad9c53bfc48a4768a37fed3113522f97107e3a",
+    "parent_receipt": "56d5618530b52cc0029f87a10138ccdeed33b8696fa5da6df0442e89afaf37ca",
+    "readouts": "34c955c694b43e77f2d16a010af56ed9c0ed2d4fbe9c95b50961f31ce59ec116",
+    "resources": "36b3514776680ad323c5be22a48107022afddce5e2fe837f44cf708d28a3a7b1",
+    "reviewed_report": "52ba49b4c082bf5bfde0f224e91ce008cce78b00138a18cd5db592e091383636",
+    "trajectories": "b7ef89acc460702d09db780c0914fd00c818bdfa14bc5d46acdb419d56bbacec",
+    "worker_receipt": "bb41317d634ac9ff8e3492bb9d5645aeb5967633c8ba26b5f28de4017894cdc5"
+  },
+  "model_preservation": {
+    "actual_custom_code_unchanged": true,
+    "loaded_state_before": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "on_disk_assets_all10_CPU_hash_unchanged": true,
+    "post_failure_GPU_state": "UNVERIFIED",
+    "state_after_qualification": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551"
+  },
+  "models_loaded_by_reviewer": 0,
+  "native_model_calls_by_reviewer": 0,
+  "protected_TEST_read": false,
+  "provisional_full_DEV_calibration_only": {
+    "A3_vs_controls": {
+      "A0": {
+        "case_losses": 8,
+        "case_wins": 12,
+        "correct_case_losses": 8,
+        "delta": 0.020833333333333332
+      },
+      "A1": {
+        "case_losses": 2,
+        "case_wins": 0,
+        "correct_case_losses": 2,
+        "delta": -0.010416666666666666
+      },
+      "A2:1": {
+        "case_losses": 2,
+        "case_wins": 0,
+        "correct_case_losses": 2,
+        "delta": -0.010416666666666666
+      },
+      "A5": {
+        "case_losses": 0,
+        "case_wins": 0,
+        "correct_case_losses": 0,
+        "delta": 0
+      }
+    },
+    "case_count": 192,
+    "finite_grid_headroom": 0.005208333333333315,
+    "fixed_curve": {
+      "0.8": 0.3489583333333333,
+      "0.9": 0.3541666666666667,
+      "1.0": 0.359375,
+      "1.1": 0.3541666666666667,
+      "1.1473425965417514": 0.3489583333333333,
+      "1.2": 0.34375
+    },
+    "parent_units": 96,
+    "policy_accuracy": {
+      "A0": 0.328125,
+      "A1": 0.359375,
+      "A2:0.8": 0.3489583333333333,
+      "A2:0.9": 0.3541666666666667,
+      "A2:1": 0.359375,
+      "A2:1.1": 0.3541666666666667,
+      "A2:1.14734": 0.3489583333333333,
+      "A2:1.2": 0.34375,
+      "A3": 0.3489583333333333,
+      "A5": 0.3489583333333333
+    },
+    "retrospective_constant_oracle_from_complete_DEV_fixed_rows": 0.3645833333333333,
+    "status": "DESCRIPTIVE_FAILED_RUN_OUTPUTS_NOT_EFFICACY_OR_VALIDATION",
+    "warning": "Complete predeclared DEV block is not survivor selection, but hardware failure and missing post-run GPU state verification prevent strong efficacy/preservation conclusions; validation was exposed only partially."
+  },
+  "qualification": "Passed before science, including actual later DEV-poolA5 max18; does not establish final matrix or post-error model-state integrity",
+  "report_error_counts": {
+    "bulk A5 causal audit trajectory coverage differs": 1,
+    "bulk chronological policy order differs": 38,
+    "bulk forward evaluation coverage differs": 1,
+    "bulk frozen validation alias coverage differs": 1,
+    "bulk once-only oracle reuse differs": 1,
+    "bulk paired readout coverage/provenance differs": 1,
+    "bulk terminal/mechanical/frozen-pool qualification absent": 1,
+    "trajectory evaluation coverage differs from physical new-wrapper rows": 1
+  },
+  "reruns_by_reviewer": 0,
+  "reviewer": "/root/adversarial_review",
+  "run": "runs/native-bulk-001",
+  "schema_version": "1.0",
+  "source_changes_by_reviewer": false,
+  "status": "VERIFIED_INCOMPLETE_NATIVE_FAILURE_NO_PRIMARY_VALIDATION_COMPARISON",
+  "worker_error": "AcceleratorError: CUDA error: an illegal memory access was encountered\nSearch for `cudaErrorIllegalAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\nCompile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.\n"
+}

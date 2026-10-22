@@ -1,0 +1,70 @@
+{
+  "bindings": {
+    "BUDGET_LEDGER.jsonl": "172b8c4463ef4a52da5628fa7a6499b62aba09cddb47e0b546925d1e1aad53db",
+    "CONTINUE.md": "fd2156a03c420f948bb6cd3a23c41a8ff6f1cfc68290fc94269c50cc970407d9",
+    "CPU_CAUSAL_REPLAY_EXTENDED_READINESS_003.json": "3814f8a4aa65dbee38b94f4a84cb78369cf809a72ec641a2d252dbc752348bc2",
+    "GOAL_CONTINUATION_AUDIT_002.json": "83c121fd03cc5e73c13efd2f0e4c74606b6451b9bb32567e0209954f372883a4",
+    "HUMAN_CAUSAL_REPLAY_ALLOWANCE_001.json": "5397a0b51cdc62891c00c0f6a2147f5e53fafe5e277759b71d28ce3b93948063",
+    "HUMAN_CAUSAL_REPLAY_APPROVAL_RECORD_001.json": "946c7e9d55b5dfa9ff56136397b5d19b63c8f39ad0de7c12a572a9eb867cc646",
+    "STATE.json": "1738d585c8ede5118297270cc32fdcb465bc73666413b408cb97609f720e631a",
+    "audits/completion_audit_v3.json": "3dead974ed07f6e890ecd08865dde520c3599a612e9eae4ec2025625493446ab",
+    "audits/next_decision_after_causal_refusal_001.json": "3af88f484778d4f4c7645536449cabf23175662cdeb4f89ef5c0dfb1558e4000",
+    "cpu_causal_replay_admission_v4.json": "d1051861c9309012ea95df49317ec5b4faafeaa1843d798ca557e32ad3da3d87",
+    "reviews/continuation_gate_review_003.json": "84aade284cd4e5a1ad0880b45e734ae392917b9ff9ee546695888bfd4880de07",
+    "reviews/cpu_causal_replay_extended_dispatch_receipt.json": "927c23998cc430ee6e58caf3709b0019510a795817e5831a93ef28f668488704"
+  },
+  "blocked_threshold_satisfied": true,
+  "budget": {
+    "budget_exhausted": false,
+    "budget_room_is_not_permission": true,
+    "declared4500_plus1800_reserve_fits": true,
+    "native_remaining_seconds": 20151.485,
+    "native_used_seconds": 1448.515
+  },
+  "created_utc": "2026-10-05T06:15:55.670241+00:00",
+  "current_gates": {
+    "actual_new_extended_approval_record_exists": false,
+    "actual_new_extended_grant_exists": false,
+    "asset_mismatches": [],
+    "available_host_RAM_bytes": 8412569600,
+    "coordinator_reported_filtered_live_native_process_count": 0,
+    "lock_exists": false,
+    "model_loads": 0,
+    "native_worker_created": false,
+    "readiness003": "NO_DISPATCH",
+    "required_parent_RAM_bytes": 9019431322,
+    "run003_exists": false,
+    "source_mismatches": []
+  },
+  "disposition": "The threshold of three consecutive turns with the same missing approval condition and a present impasse is satisfied. Root should set the persistent goal to blocked, report that returned status, and stop goal work. This is neither completion nor an inferred pause. Do not duplicate the pending permission question or launch under an internal continuation.",
+  "goal_transition_performed_by_reviewer": false,
+  "limits": [
+    "The current third-turn identity and absence of a new conversational approval are reported by the coordinator in the trusted task context; prior turn2 and pending-question facts are independently artifact-bound. Reviewer did not independently query the goal tool or whole-system process inventory.",
+    "RAM and process observations are dated. The approval gate independently blocks even if RAM improves. Future resumption must preserve exact human scope, floors, source bindings and full-matrix gates.",
+    "This audit changes no source, state, goal, human grant or model. No old761-entry packet rehash or new tests were performed."
+  ],
+  "native_authority_created": false,
+  "native_calls": 0,
+  "recommended_goal_status": "blocked",
+  "recurrence_assessment": {
+    "current_consecutive_goal_turn": 3,
+    "previous_progress_does_not_remove_current_impasse": true,
+    "prior_audited_consecutive_goal_turn": 2,
+    "same_condition": "Separate direct-human permission for another attempt of the same full192 causal study is missing. The earlier3600 one-attempt grant was consumed and forbids another retry.",
+    "turn1": "After corrected002 forecast refusal, root prepared4500 request; new approval question pending.",
+    "turn2": "Same approval missing; remaining safe completion/next-decision/metadata/index work was performed.",
+    "turn3": "Same approval still missing; required safe preparation and independent reviews are finished. Root confirms no new approving user reply in current trusted conversation."
+  },
+  "remaining_required_work_assessment": {
+    "blocked_measurement": "Full192/632-target native causal study still requires new direct approval, fresh RAM/resources/source/lock checks and fresh qualification/complete forecast.",
+    "completion_refresh": "18-section/14-gate completionv3 complete and independently accepted; scientific mission remains unmet.",
+    "docs_or_repeated_tests_to_avoid_blocked": "Not justified. No meaningful necessary safe work in the current registered continuation remains.",
+    "next_decision_review": "Complete and independently accepted; no selected ordinary intervention/controller fit or justified repeated scale search.",
+    "safe_preparation_pending": false,
+    "source_and_packet": "Exact v4 conditional source review and continuation/index13 review complete; no source correction or fixture rerun remains required."
+  },
+  "reviewer": "adversarial_review",
+  "scientific_objective_complete": false,
+  "status": "PASS_BLOCKED_THRESHOLD3_IMPASSE_ASSESSMENT",
+  "tests_run": 0
+}

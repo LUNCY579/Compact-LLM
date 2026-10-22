@@ -1,0 +1,13 @@
+# Passive observer and worker source review
+
+PASS for held observerda6a7537 and workerc7a433c2. Independent canonical Python -B CPU apparatus suite passes18 tests in2.74seconds, with zero model/GPU/tokenizer/native calls and no source edits.
+
+PassiveBlock overrides only _record and runs inherited recording/safety first; forward/update/hooks/restoration remain inherited. Ordinary raw normal-minus-old statistics occur before recurrence. Proposal-minus-normal statistics occur after the unit pair and cannot establish that it was skipped. Scalars detach current last-token state, retain raw norms/dots/denominators, use null on zero denominator, and do not mutate states/logits/custom head. The same-forward delta clears on proposal and normal/exception cleanup.
+
+The exact192 DEV prompt-only packet has no task labels/status/category/parent fields; original/raw/rendered token hashes are bound and rerendered before weights. Case IDs are logs/joins. The native source guard now admits only the actual ARMR scripts/src, inherited sources and three exact receipt/config metadata paths needed by the unchanged source loader. Tests cover actual packet/closure and added labels, wrong hashes, unlisted metadata/data, missing population and malformed timing/caps. Qualification-only SMOKE audit metadata is not task conditioning.
+
+Counts independently reconcile: seven calls on8 SMOKE inputs plus seven max357 calls, one intentional partial and one restored max call give65attempts/64completions; two precompute cache refusals give67 qualification APIs.384 task full calls yield451API/449attempts/448complete,384readouts,576features and54,137 completed prefix positions. Partial positions remain unknown. No generation or adjoints occurs.
+
+Source requires fresh exact native K0/unit/legacy/passive vector identity at every SMOKE and max357, mask/position/cache/one-shot anchors, forced exception restoration, original head/runtime/assets/residentstate/gradNONE checks, then a full fresh timed forecast.900 parent/780 body/120 internal reserve and1,800 global reserve remain; all startup/failure costs are charged. Completed calls survive post-forward resource refusals in cost evidence, while comparison status becomes incomplete.
+
+Native qualification remains unperformed by this reviewer. Readout features arrive after suffix/head; unit proposal features arrive after extra compute. This passive study establishes neither gains nor a deployable gate. Final actual admission/import closure, live resources, qualification and full forecast still precede task dispatch. Old source and completed campaign are preserved, and no automatic retry or old-grant reuse is supplied.

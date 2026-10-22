@@ -1,0 +1,114 @@
+{
+  "schema": "v3_opposed_replay_independent_source_review_v1",
+  "created_utc": "2026-10-06T02:09:05.000759+00:00",
+  "status": "PASS_OPPOSED_EXPOSED_DEV_REPLAY_SOURCE",
+  "admission_sha256": "5b6054cf9536ab668d214f041c09af179780127fffd149fb6e80317802b73df8",
+  "errors": [],
+  "native_or_model_calls_by_reviewer": 0,
+  "Torch_imported_in_final_check": false,
+  "candidate_campaign_decisions_or_scores_by_reviewer": false,
+  "CLI_campaign_replay_run_by_reviewer": false,
+  "source_or_plan_or_old_evidence_edits": false,
+  "review_scope": "Exact frozen pure policy/replay code, meaningful analytic fixtures and actual5new/18historical source/input memberships. Source PASS permits coordinator to execute the one exposed offline replay only; not native dispatch or efficacy.",
+  "actual_admission": {
+    "explicit_new_source_plan_test_files": 5,
+    "historical_pins": 18,
+    "all_current_hashes_match": true,
+    "policies": [
+      "CONFIDENT_RECURRENCE",
+      "UNCERTAIN_RECURRENCE",
+      "EVIDENCE_CONSISTENCY_GUARD"
+    ],
+    "candidate_revisions_used": 3,
+    "maximum": 6,
+    "training": false,
+    "native_model_calls": 0,
+    "validation_access": false,
+    "review_path": "reviews/opposed_replay_source_review_001.json"
+  },
+  "independent_CPU_tests": {
+    "passed": 62,
+    "failed": 0,
+    "errors": 0,
+    "skips": 0,
+    "pytest_seconds": 0.63,
+    "subprocess_wall_seconds": 2.2711071000012453,
+    "exit_code": 0,
+    "artifacts": "reviews/opposed_replay_check_001/",
+    "scope": "Synthetic prompts/probabilities/histories/weights/nomination fixtures only; no campaign source cases scored."
+  },
+  "policy_source_checks": [
+    "CONFIDENT K1 iff exact float p>=.5; UNCERTAIN iff p<.5, equality complementary. Reject nonfloat/bool/NaN/inf/out-of-range p and unregistered policy/rich metadata/extra kwargs.",
+    "GUARD takes raw user-content only and no probability; exact whole3line DOCUMENTS syntax, canonical ASCII value/date strings, exact queriedA records, latest relevantA date only. Date ordering is exact length/lexicographic for arbitrary positive canonical decimals.",
+    "Malformed/ambiguous/mixed-date/trailing/whitespace/unsupported syntax falls backUNRECOGNIZED/K1; query/name/permutation and irrelevantD/global entity tests pass. Certificate-only K/recognized/status output has no solved-value or answer rewrite.",
+    "Header cue is fixed first-line DOCUMENTS detection with no semantic parsing. Random seeds17/29 draw exactly once per fixed-order item at each candidate outcome-blind DEV marginal, no redraw or target inputs."
+  ],
+  "phase_and_input_checks": [
+    "Replay admission exactpath/status/5member hashes and all18hardpins are checked; terminal/states from complete probe+bulk histories bound before use.",
+    "Phase1 validates exact192prompt-only export and original-input readout schema/hash/two-mode membership. OnlyK0 top1_probability and rawprompt string reach policy; IDs are joins outside API.",
+    "Source order computes all three policy/header decisions, marginals and random streams and writes decisions_before_labels.json before parsing bank/outcomes. Hashing source/input bytes earlier is integrity verification, not label-conditioned decisions.",
+    "Phase2 filters onlyDEV, requires complete physical A0/A1/fixed1 seed17, safety-failure/alias/duplicate/missing refusal, EOS-inclusive1..8T and exact eos/token_cap semantics, endEOS IDs and capT8.",
+    "Unit/fixed1 response/token/score/stopping identity and historical/passive first-token equality are required; whole stored response is selected without a new rollout or rescaled states.",
+    "Independent frozen scorer regrades old responses. Cases must be192,96two-variant parents and six families of16parents/32cases; no oldVAL is graded or selected."
+  ],
+  "analysis_and_nomination_checks": [
+    "Variant then parent then equal-family accuracy; fractional random endpoints averaged across17/29 withinitem before aggregation. Cases/seeds/token prefixes are not new independent examples.",
+    "Paired gains/losses and baseline-correct retention versus bothintact/unit; family/format/falseUNKNOWN/unsupported/literalUNKNOWN/EOS/cap separate.",
+    "Standalone same-grammar certificate confusion/coverage uses separately implemented historical parse_prompt on recognized prompts only; any false certificate invalidates apparatus.",
+    "Full prompt solver/own-bank blind floors are separate ordinary controls; symbolic generation/EOS/cap are null/NOT_APPLICABLE in finalreport, not neural successes.",
+    "Five-point practical margin remains; finitebinary response oracle75versusunit69 caps3.125points. UsefulDEVgain is explicitly false irrespective policy rank.",
+    "Atmostone allocation-only nominee: strictly>unit/random, zero unit-correctlosses, no negative family/format/unsupported/falseUNKNOWN movement; guard strictly>header. Highestaccuracy withfixed CONFIDENT,UNCERTAIN,GUARD ties; otherwiseNone. AllA0/source losses remainreported; nomination is not capability preservation or efficacy."
+  ],
+  "tests_reviewed": [
+    "Exact equality/opposite branches and probability/metadata failures.",
+    "Whole parser: relevantquery vs other/D/date entries, duplicates/conflict/missing, alternatequery/renaming/permutation, hugecanonicaldate, unsupported/ambiguous grammar andfallback.",
+    "ExactRandom order/seed/rate draws and invalid params.",
+    "Malformed decision fields/teacher/duplicate/missing/hash/split contamination; analyticphase boundary.",
+    "EOS-inclusiveT/endtoken/cap/physicalalias/duplicate/stopped/baselineidentity negatives.",
+    "Parent/family weights with fractional seed averaging; nomination tie/retention/header andendpoint harms."
+  ],
+  "limitations": [
+    "No actual policy K decisions, candidate scores, coverage or nominee was computed by this review; those are the upcoming exact exposed replay.",
+    "These hypotheses/cutoff were chosen after exposed evidence. No thresholdsearch in this round makes them prospectively unseen or confirmed.",
+    "No new generated trajectory, live confidence pilot, latency, speed, causal proof, CI,p-value, fresh validation or positive quality gain follows from stored-response selection.",
+    "No nominal mechanical winner satisfies the gain goal: source/A0 preservation may still fail and alloldDEV/VALremainexposed. Freshfrozenpolicy/sourceholdout/nativeproof would be a separately reviewed nextstage.",
+    "A symbolic certificate/solver is an ordinary component; do not describe its success as NN reasoning or recurrence gain.",
+    "This receipt authorizes no model/weight/readout/operator/cache/dtype/depth change or retry and cannot reuse consumed native grants."
+  ],
+  "bindings": {
+    "opposed_replay_admission_v1.json": "5b6054cf9536ab668d214f041c09af179780127fffd149fb6e80317802b73df8",
+    "opposed_gate_policy.py": "0d57ad3284d51cbf959c8c8fd96489f00374fc52be35b4dbcc68850dcb06cd6e",
+    "opposed_gate_replay.py": "af8f4c138fea66948bf6959dfd20ff0dd77fead7085ff290956060c5f30d22e0",
+    "OPPOSED_REPLAY_ANALYSIS_PLAN_001.md": "7fb36c0ed09ec949f9447fa310b8a24870e43168f4780370c385d5a077a81ad1",
+    "tests/test_opposed_gate_policy.py": "9be1044467f77d2fc517f74b6b1238b6b745b1d474271f66b8cb59303a07e07f",
+    "tests/test_opposed_gate_replay.py": "8d9d845ba04dbf7c8ec4cfdfb8dc3617a40ee4cf16c83c183bedaa601ad1c8fc",
+    "OPPOSED_GATE_CONTRACT_DRAFT_002.md": "067426a54cc2836b558401ee528dfd2f63008297d91ae41bb95f3e8491e734cd",
+    "reviews/opposed_replay_input_review_001.json": "7c356efb50e56b2047e43645ce914472adb4dc7cda934cd4581b247523ce661b",
+    "reviews/opposed_gate_design_review_001.json": "e613a48955a639bc1e873ccd8fb1f19e1f7293da88664f1b918f12aa589f5d26",
+    "reviews/opposed_replay_check_001/COMMAND.json": "46607fbce8b69e0ab4457470094281b26d9fe84a2632ed17e5003292605065c2",
+    "reviews/opposed_replay_check_001/RESULT.json": "4460d0c728ed15c647f4ed6f2f030b8914de0c162de08e4898fce37fc4b2e5fa",
+    "reviews/opposed_replay_check_001/junit.xml": "95de9dde1eaeb99edae2abf0863fdd6ee18cde6d830217eb5c9e55b1731ef524",
+    "reviews/opposed_replay_check_001/pytest.log": "1d111e9394c887947393c7fdc129cd6892657fbda52f054eb45e5f6243a749c2"
+  },
+  "historical_input_pins": {
+    "quality_pattern_v3/data/dev_prefix_probe_001/DEVELOPMENT_BANK.json": "681a3e77e3d797e2faebcff3971dbb365a4479ebdac017bf3dcfcb48081ba03f",
+    "quality_pattern_v3/data/dev_prefix_probe_001/DEVELOPMENT_TOKEN_BINDING.json": "c34948026ebaf332111ce635a473b1489ef0d2f3932100f9e0d3cdd6a08ce6d2",
+    "quality_pattern_v3/runs/native-prefix-probe-001/result/readouts.jsonl": "b61150bb60b4721c97fa2750b29d1b4d023ec7d0edd5531a4d70d596efbec652",
+    "quality_pattern_v3/runs/native-prefix-probe-001/terminal_receipt.json": "ef292863a3c6050175fac115715546cc542343023c430ccaed5ed2699f493f48",
+    "quality_pattern_v3/runs/native-prefix-probe-001/result/receipt.json": "b0d2dede48274ca7f4e7a4e5969aa4ab6bc3f230648f27b3c0c79695a1b78817",
+    "quality_pattern_v3/runs/native-prefix-probe-001/result/qualification.json": "a4282d8bd76d018323c2b1701e07b705bd2e1245a82dd3fc02733eb06c1f62b8",
+    "quality_pattern_v3/reviews/probe_execution_review_001.json": "fffb9d699b5f4458e73cbdae8dd192b34e4fed17e80ae7e7f705b2eab386f99e",
+    "quality_pattern_v3/analyses/prefix-probe-001/REPORT.json": "6bf9dd67f2f6f2b4a5bcaec0738b84058212cd28883ecda237a309532fd930c7",
+    "runs/bulk-bank-apparatus-001/bank.json": "862a63648caf7efb3d287c11bc5caaefc884e0ec6cb3130ce8f196526efc40cd",
+    "runs/native-bulk-restart-001/result/outcomes.jsonl": "858ba6c1b5105b460e600c93872575c78e2c3e43545538847e3d9eba30e01cd8",
+    "runs/native-bulk-restart-001/terminal_receipt.json": "dc4d8c7a5895e846aee3c1b1b19b9e4f4909386779b313aa5693599ec9f2ded6",
+    "runs/native-bulk-restart-001/result/receipt.json": "d9c34a822d9bdaaac39d33820eaacf05d083974cd9191e43559307bd2258ff19",
+    "bulk_bank.py": "3242439231064fc81991e157c0da62833f4e4223ec71d60cf9ffd2851815b5eb",
+    "open_bank.py": "25db8ad7b8bd4166188eccab4be73c9a430f696610dea5b8c83b380883f9d42a",
+    "quality_pattern_v3/probe_analysis.py": "2d6c8e598df0a0caab29875ff95cecfb6b7eef1e8eff595efabb3322ebf70a27",
+    "quality_pattern_v3/OPPOSED_GATE_CONTRACT_DRAFT_002.md": "067426a54cc2836b558401ee528dfd2f63008297d91ae41bb95f3e8491e734cd",
+    "quality_pattern_v3/reviews/opposed_gate_design_review_001.json": "e613a48955a639bc1e873ccd8fb1f19e1f7293da88664f1b918f12aa589f5d26",
+    "quality_pattern_v3/reviews/opposed_replay_input_review_001.json": "7c356efb50e56b2047e43645ce914472adb4dc7cda934cd4581b247523ce661b"
+  },
+  "review_md_sha256": "a809326415a30643b5235003bf78e2520ad4a06b310bab0a252d3437ccf91fa9"
+}

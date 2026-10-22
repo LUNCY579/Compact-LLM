@@ -1,0 +1,11 @@
+# Independent ROOT preparation source review002: PASS, no native permission
+
+Only ROOT-owned scope/bootstrap/parent/panel/export/protocol are independentlyreviewed. Reviewer-authored bank/verifier/release code isexcluded.39ROOT CPUfixtures independentlypassed with-B/cacheoff/newV3basetemp; logs andexactsource snapshots retained. No reviewer scientificnonce generation,canonicaltokenizer,model,GPUinventory,Job/worker launch orfreshcandidate scoring.
+
+R01–R04 resolvedinresultingROOT source: exactsource/output/release/ownedtoken processbindings beforeworkerimport; oldacceptedprimary/currentGUARD/newfreshfreeze provenancejoins; tokenizer asset/borrowedruntime/spec/Qwen before/after equality; rawprompthash recomputation beforetokenization. Review001/oldsources preservedunchanged.
+
+R05 foundduringre-review: actualborrowedvenv redirects tobasePython, so directos.getppid equality wouldrejectlegitimatechild. Read-onlyCPUownancestry evidence7948861e recordedthatpattern. Correctedparent records supervisor/runtime andsuspendedlauncher PID/creation/exe thenatomiclockreplacement beforeresume. Bootstrapacceptsonly actualdirectownedlauncher oritsoneexactvenvchild, binds supervisor+launcher identities andtoken, and rejectsforeign/reusedPID/time/exe. Source andmockpositive/negative tests pass; thisisnot actualWindowsJob/nativequalification.
+
+34596APIcap/4104taskrows,15600parent/13800body/1800internal+global1800,finitebudget anti-retry,ownedJob kill/close/lock cleanup and OUT-localtemp/cache arecoherent. No source/resource guardrelaxation. Raw3/token7projection,350/357/8bounds,immutablefrozenpromptscoring,panel100%copyfloor andpreimportidentity remain. PrimaryGUARD>=5pp plus conditional20kbootstrap lowerbound>0 andzeroALLobservedA0/unitcase/family/format/abstention/panellosses isexplicit; nosecondarypromotion,source-general/equivalence/speedclaim.
+
+ThispreparationPASS isboundtoJSON sourcehashes,notfutureeditedfiles. Rootdata/workerfilepresence ismetadataonly; reviewer didnot inspectcases orinvokeproduction. Actualbank/corpus/tokenizer/admission/source-count/statreader membership,another-authorbank acceptance andworker/nativequalification/fullforecast/independentrawanalysis stillrequired. No dispatchpermission conferred.

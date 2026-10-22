@@ -1,0 +1,132 @@
+{
+  "bindings": [
+    {
+      "path": "fresh_scope.py",
+      "sha256": "f6f44b4a2f2770546933b1a3bbdfa0aea35ee3f9b0229ceabfb55978615c0823",
+      "snapshot_path": "reviews\\fresh_parent_check_001\\source_snapshot_001\\fresh_scope.py"
+    },
+    {
+      "path": "fresh_entry.py",
+      "sha256": "5e53906c00d24f5e00175d68f529cdee018ed9f4664c8b827d82528220300e24",
+      "snapshot_path": "reviews\\fresh_parent_check_001\\source_snapshot_001\\fresh_entry.py"
+    },
+    {
+      "path": "fresh_supervisor.py",
+      "sha256": "e40a2912d2ce15c6ece7c8380ce1e2b022cc1268846d473e38b6abc9757cd9b2",
+      "snapshot_path": "reviews\\fresh_parent_check_001\\source_snapshot_001\\fresh_supervisor.py"
+    },
+    {
+      "path": "tests/test_fresh_scope.py",
+      "sha256": "a692c7f57454f6ff9d66a33bfa391449b0829c5ce7183d0492b30b53512e6699",
+      "snapshot_path": "reviews\\fresh_parent_check_001\\source_snapshot_001\\tests\\test_fresh_scope.py"
+    },
+    {
+      "path": "short_response_panel.py",
+      "sha256": "67aa3da13bad6c07b6eb5792022439f1d53a53b74cb1436c949e40e5343cc649",
+      "snapshot_path": "reviews\\fresh_parent_check_001\\source_snapshot_001\\short_response_panel.py"
+    },
+    {
+      "path": "tests/test_short_response_panel.py",
+      "sha256": "bf9facf3e91d1b9180473a93e8881d33c255af08e5dbab1f396ffb93585eb87e",
+      "snapshot_path": "reviews\\fresh_parent_check_001\\source_snapshot_001\\tests\\test_short_response_panel.py"
+    },
+    {
+      "path": "prepare_fresh_data.py",
+      "sha256": "c6017387b1b29cce7dfaf0d9782540149b4b36b75b0a1f1110037f052d5ee111",
+      "snapshot_path": "reviews\\fresh_parent_check_001\\source_snapshot_001\\prepare_fresh_data.py"
+    },
+    {
+      "path": "tests/test_prepare_fresh_data.py",
+      "sha256": "903e34c664a52d52579ed1a442d4cd3138e627e3fd5def4f424e99270bdc71ac",
+      "snapshot_path": "reviews\\fresh_parent_check_001\\source_snapshot_001\\tests\\test_prepare_fresh_data.py"
+    },
+    {
+      "path": "FRESH_ANALYSIS_PLAN_DRAFT_001.md",
+      "sha256": "9217dc759122f25290044bbba4492e4eca643dd0a70dd2ee6a0e3f9265caf7b3",
+      "snapshot_path": "reviews\\fresh_parent_check_001\\source_snapshot_001\\FRESH_ANALYSIS_PLAN_DRAFT_001.md"
+    },
+    {
+      "path": "FRESH_NATIVE_DESIGN_DRAFT_002.md",
+      "sha256": "417283148f5843a0ef7be99627b45f75465cbba9f5b00c74bffbcf48684641e3",
+      "snapshot_path": "reviews\\fresh_parent_check_001\\source_snapshot_001\\FRESH_NATIVE_DESIGN_DRAFT_002.md"
+    }
+  ],
+  "candidate_or_fresh_scores": false,
+  "created_utc": "2026-10-06T02:42:06.123714+00:00",
+  "findings": [
+    {
+      "file": "fresh_entry.py",
+      "id": "R01",
+      "problem": "Before worker import, source/out/release paths and release token/parent ownership are not bound to the current campaign lock. A contained=true marker with study/admission values alone passes current bootstrap logic.",
+      "required_fix": "Validate exactcanonicalsource, exclusive intendedrun/result/release path and release.token/currentlocktoken+out/parentPID binding before importing fresh_native; add source-path/foreign-release/foreign-token negatives. No actualmodel invocation required.",
+      "severity": "BLOCKING_BEFORE_DISPATCH",
+      "status": "OPEN_ROOT_FIX_PLANNED"
+    },
+    {
+      "file": "fresh_scope.py",
+      "id": "R02",
+      "problem": "PRIMARY_POLICY_FREEZE bytes are hashed, but selectedpolicy/status/source/nonce/replay acceptance contents are not joined to the admission. Current bank producer also initially allowed any ofthree selectedpolicies; a CONFIDENT datafreeze could coexist with a GUARD admission.",
+      "required_fix": "Consume oldexactacceptedGUARD mechanical nomination/replay source+execution proofs and newFRESH_POLICY_SOURCE_FREEZE fields/actualhashes consistently before corpusconstruction and worker import. Author-ownedbank release correction is separate, not independently accepted by this reviewer.",
+      "severity": "BLOCKING_BEFORE_CORPUS_AND_DISPATCH",
+      "status": "OPEN_ROOT_AND_BANK_OWNER_FIX_PLANNED"
+    },
+    {
+      "file": "prepare_fresh_data.py",
+      "id": "R03",
+      "problem": "Token binding checks borrowed runtime/spec/Qwen before import and assets after, but doesnot recheck borrowed dependency/module/Qwen identity after tokenizer construction and export.",
+      "required_fix": "Recompute and compare exactafteridentity withbeforeidentity (and fixed tokenizers version if partof qualifiedcontract) before finalexportmanifest; noactualtokenizer callby reviewer.",
+      "severity": "BLOCKING_BEFORE_MODEL_EXPORT",
+      "status": "OPEN_ROOT_FIX_REQUESTED"
+    },
+    {
+      "file": "prepare_fresh_data.py",
+      "id": "R04",
+      "problem": "token_projection accepts a stale raw_prompt_sha256 field; schema3keys alone doesnot bind declared rawhash to actualvisibleprompt.",
+      "required_fix": "Recompute rawUTF8 hash and reject inconsistenthash before tokenizer invocation, with negative fixture.",
+      "severity": "BLOCKING_BEFORE_MODEL_EXPORT",
+      "status": "OPEN_ROOT_FIX_REQUESTED"
+    }
+  ],
+  "independent_CPU_execution": {
+    "command": "python -B -m pytest -q -p no:cacheprovider --basetemp V3/reviews/fresh_parent_check_001/temp001 --junitxml V3/reviews/fresh_parent_check_001/root_fixtures_001.xml <root3fixturefiles>",
+    "errors": 0,
+    "failures": 0,
+    "limits": "Purecontract/panel/FakeTokenizer fixtures; noactualsource/admission dispatch,OSjob/process/GPUinventory/asset hashprobe/tokenizer/model execution performed. Parent/entry branch gaps notcovered bythese21fixtures.",
+    "log_path": "reviews/fresh_parent_check_001/root_fixtures_001.xml",
+    "log_sha256": "b72524009ec50f1970af7f9a1e8290d3f2b4dbf1faa136e9500a5e08803b386c",
+    "skips": 0,
+    "tests": 21
+  },
+  "independent_role": "Independent review of root-owned scope/entry/supervisor/panel/export/protocol only. Reviewer authored freshbank/verifier and their tests; those are expressly excluded from independent acceptance.",
+  "model_calls": 0,
+  "passed_source_checks": [
+    "Fixed contract34596APIcap,4104physicaltaskrows=(432+24)*9,216parents/432scientific+24panel,15600parent/13800body/1800internal+1800global reserve and originalfrozenK0/K1/FP32/noKV/noretry guards are coherent with draft uppercount74*(432+24)+852.",
+    "Study-specific native_started or completed-withPID preventsretry; malformed negative/nonfinite/null/bool ledger costs refuse; fullreservation+globalreserve checked beforelock orPopen.",
+    "Parent launches onlyits ownsuspendedPopen, assigns/resumes its WindowsJob, charges/records start beforerelease; safetybranches terminate itsownJob, assignmentfailure kills onlyitsstill-suspendedchild, finallyclosesownedJob andremovesonlymatchingtokenlock. No workloadenumeration/globaltermination.",
+    "ExclusiveV3out and sharedlock checked beforelaunch; scratch TEMP/TMP lives OUT/temp, cachepaths pointunderOUT, resultdirectory isnot precreated byparent beforeworker mkdir. Nullno-sample peakRSS isretained.",
+    "Bootstrap validates exactsource/admission dispatchreview and finite nonfutureparentclock before fresh_native import; 30s releasewait isbounded. Additionalownership/path binding missing asR01.",
+    "Scope requires originalimmutable authoritySHA, newfreshscope/activegoal hashes, independentreplay/banksource statuses, allowedactualdispatchmap/currentbytes and newreview/admissionSHA; selectioncontent join missing asR02.",
+    "Export projects label-bearing rows to exactraw3fields and token7fields, greedyrender flags fixed, no truncation,350input/357maxprefix and offlinegold+EOS<=8 audit; tokenizerspec canonicalborrowedPython/modulepath andactualQwenfbd hashchecked beforeimport. Streaming10asset hashes avoid modelweight loading. R03/R04 remain.",
+    "Shortpanel24 exactcopy/instruction targets, separate immutable strip-only exactscorer, positives24/24 and100% trivialcopyfloor explicitly notgeneral-language/reasoning evidence.",
+    "Primary protocolGUARD>=5pp versusunit and conditional95% lowerbound>0; zeroALLobservedA0/unitcorrectcase losses plus nofamily/format/abstention/panel harm. Secondarycontrasts cannotreplacefailedprimary.20k stratumbootstrap within12mechanisms18parents each,seed730217,zero-based endpoints499/19499; repeatedprimary andrandomreplicates do notaddindependentn.",
+    "Conditionalworld-bootstrap inference limitedtoauthored sourceblocks; no source-general/human-confirmation/secondarypvalue/equivalence/speed claim. OldfixedgridNOT_RUN isexplicit."
+  ],
+  "remaining_before_dispatch": [
+    "R01-R04 sourcefixes andexactresultingfixture/source re-review.",
+    "Independentbank/verifier authorcode review byanotheragent; selectedGUARD ancestry gate correction separateauthorwork.",
+    "Actualfresh policy/source freeze, scientificcorpus export and read-onlycanonicaltokenizer shapes/source membership not yetexecuted.",
+    "Fresh_native worker stillunderengineerconstruction and excluded; exact actualadmission/reader-plan/bootstrap-index membership/source reviews andnativequalification/fullforecast remain.",
+    "RealWindowsJob containment, maxshape/decoder/pilot/reuse/cache/restore/head/state/source/assets/resource/complete physicalcounts mustbe qualified bycoordinator; thispreparationreceipt grantsnone."
+  ],
+  "root_identity_evidence_attributed": {
+    "path": "reviews/tokenizer_identity_probe_001.json",
+    "role": "Rootexecuted asset/runtimemetadata probe, not independent tokenizer/native replay bythisreviewer.",
+    "sha256": "f89b7bcd2ff828c8820bb5df8f3c2bcb6a8c9b74ad3dd4fa89a241b730fb9af9",
+    "status": "PASS_ASSET_RUNTIME_IDENTITY_ONLY_NOT_TOKENIZATION_OR_NATIVE"
+  },
+  "schema": "fresh-parent-preparation-review-001",
+  "scientific_nonce_generation": false,
+  "source_edits": false,
+  "status": "PREPARATION_REVIEW_WITH_BLOCKING_SOURCE_ITEMS_NOT_NATIVE_PERMISSION",
+  "tokenizer_loads": 0
+}

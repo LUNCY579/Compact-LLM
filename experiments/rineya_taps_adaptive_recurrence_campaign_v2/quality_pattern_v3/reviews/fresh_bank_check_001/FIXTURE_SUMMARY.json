@@ -1,0 +1,258 @@
+{
+  "status": "CPU_FIXTURE_ONLY_NOT_SCIENTIFIC_CORPUS",
+  "nonce": "CPU-FIXTURE-ONLY-NOT-REPLICATION",
+  "cases": 432,
+  "parents": 216,
+  "mechanisms": {
+    "mixed_sign_journal": 36,
+    "transfer_conservation": 36,
+    "horn_dag": 36,
+    "directed_reachability": 36,
+    "register_reassignment_branch": 36,
+    "stack_expression_trace": 36,
+    "declaration_clear_quote": 36,
+    "offer_ack_revoke": 36,
+    "approved_consensus": 36,
+    "named_current_snapshot": 36,
+    "approved_bundle_exchange": 36,
+    "issuer_revocation": 36
+  },
+  "difficulty": {
+    "easy": 216,
+    "hard": 216
+  },
+  "query_role_counts": {
+    "signed_ledgers": {
+      "0": 18,
+      "1": 18,
+      "3": 18,
+      "2": 18
+    },
+    "deduction_composition": {
+      "0": 18,
+      "1": 18,
+      "3": 18,
+      "2": 18
+    },
+    "program_state": {
+      "0": 18,
+      "1": 18,
+      "3": 18,
+      "2": 18
+    },
+    "dialogue_memory": {
+      "0": 18,
+      "1": 18,
+      "3": 18,
+      "2": 18
+    },
+    "document_retrieval_reconciliation": {
+      "0": 18,
+      "1": 18,
+      "3": 18,
+      "2": 18
+    },
+    "answerability_source_conflict": {
+      "0": 18,
+      "1": 18,
+      "2": 18,
+      "3": 18
+    }
+  },
+  "status_by_family": {
+    "signed_ledgers": {
+      "ANSWER": 72
+    },
+    "deduction_composition": {
+      "ANSWER": 72
+    },
+    "program_state": {
+      "ANSWER": 72
+    },
+    "dialogue_memory": {
+      "ANSWER": 36,
+      "MISSING": 36
+    },
+    "document_retrieval_reconciliation": {
+      "ANSWER": 36,
+      "CONFLICT": 18,
+      "MISSING": 18
+    },
+    "answerability_source_conflict": {
+      "ANSWER": 36,
+      "MISSING": 18,
+      "CONFLICT": 18
+    }
+  },
+  "gold_sign_by_numeric_family": {
+    "signed_ledgers": {
+      "negative": 24,
+      "zero": 24,
+      "positive": 24
+    },
+    "program_state": {
+      "negative": 24,
+      "zero": 24,
+      "positive": 24
+    }
+  },
+  "positive_controls_agree": 432,
+  "certificate_counts": {
+    "UNRECOGNIZED": 360,
+    "CONSISTENT": 37,
+    "CONFLICT": 18,
+    "ABSENT": 17
+  },
+  "possible_primary_unit_different_cases": 35,
+  "primary_binary_gain_structural_upper": 0.08101851851851852,
+  "net_corrections_needed_for_five_points": 22,
+  "eligible_case_fraction_needed": 0.6285714285714286,
+  "floors": {
+    "overall": {
+      "constant_YES": 36,
+      "constant_NO": 36,
+      "constant_UNKNOWN": 108,
+      "constant_0": 48,
+      "constant_1": 0,
+      "copy_full_prompt": 0,
+      "copy_first_number": 8,
+      "copy_last_number": 17,
+      "copy_max_number": 5,
+      "copy_min_number": 2,
+      "copy_first_entity": 0,
+      "copy_last_entity": 0,
+      "query_blind_first_entity_solver": 164,
+      "query_blind_last_entity_solver": 152,
+      "document_header_UNKNOWN_else_NO": 71,
+      "any_CLEAR_or_REVOKE_UNKNOWN_else_last_number": 49,
+      "rule_RHS_presence": 19,
+      "memory_max_value_ignore_state": 13
+    },
+    "signed_ledgers": {
+      "constant_YES": 0,
+      "constant_NO": 0,
+      "constant_UNKNOWN": 0,
+      "constant_0": 24,
+      "constant_1": 0,
+      "copy_full_prompt": 0,
+      "copy_first_number": 0,
+      "copy_last_number": 0,
+      "copy_max_number": 0,
+      "copy_min_number": 1,
+      "copy_first_entity": 0,
+      "copy_last_entity": 0,
+      "query_blind_first_entity_solver": 17,
+      "query_blind_last_entity_solver": 20,
+      "document_header_UNKNOWN_else_NO": 0,
+      "any_CLEAR_or_REVOKE_UNKNOWN_else_last_number": 0,
+      "rule_RHS_presence": 0,
+      "memory_max_value_ignore_state": 0
+    },
+    "deduction_composition": {
+      "constant_YES": 36,
+      "constant_NO": 36,
+      "constant_UNKNOWN": 0,
+      "constant_0": 0,
+      "constant_1": 0,
+      "copy_full_prompt": 0,
+      "copy_first_number": 0,
+      "copy_last_number": 0,
+      "copy_max_number": 0,
+      "copy_min_number": 0,
+      "copy_first_entity": 0,
+      "copy_last_entity": 0,
+      "query_blind_first_entity_solver": 39,
+      "query_blind_last_entity_solver": 26,
+      "document_header_UNKNOWN_else_NO": 36,
+      "any_CLEAR_or_REVOKE_UNKNOWN_else_last_number": 0,
+      "rule_RHS_presence": 19,
+      "memory_max_value_ignore_state": 0
+    },
+    "program_state": {
+      "constant_YES": 0,
+      "constant_NO": 0,
+      "constant_UNKNOWN": 0,
+      "constant_0": 24,
+      "constant_1": 0,
+      "copy_full_prompt": 0,
+      "copy_first_number": 0,
+      "copy_last_number": 0,
+      "copy_max_number": 0,
+      "copy_min_number": 0,
+      "copy_first_entity": 0,
+      "copy_last_entity": 0,
+      "query_blind_first_entity_solver": 19,
+      "query_blind_last_entity_solver": 22,
+      "document_header_UNKNOWN_else_NO": 0,
+      "any_CLEAR_or_REVOKE_UNKNOWN_else_last_number": 0,
+      "rule_RHS_presence": 0,
+      "memory_max_value_ignore_state": 0
+    },
+    "dialogue_memory": {
+      "constant_YES": 0,
+      "constant_NO": 0,
+      "constant_UNKNOWN": 36,
+      "constant_0": 0,
+      "constant_1": 0,
+      "copy_full_prompt": 0,
+      "copy_first_number": 0,
+      "copy_last_number": 4,
+      "copy_max_number": 1,
+      "copy_min_number": 0,
+      "copy_first_entity": 0,
+      "copy_last_entity": 0,
+      "query_blind_first_entity_solver": 24,
+      "query_blind_last_entity_solver": 22,
+      "document_header_UNKNOWN_else_NO": 0,
+      "any_CLEAR_or_REVOKE_UNKNOWN_else_last_number": 36,
+      "rule_RHS_presence": 0,
+      "memory_max_value_ignore_state": 13
+    },
+    "document_retrieval_reconciliation": {
+      "constant_YES": 0,
+      "constant_NO": 0,
+      "constant_UNKNOWN": 36,
+      "constant_0": 0,
+      "constant_1": 0,
+      "copy_full_prompt": 0,
+      "copy_first_number": 4,
+      "copy_last_number": 7,
+      "copy_max_number": 2,
+      "copy_min_number": 1,
+      "copy_first_entity": 0,
+      "copy_last_entity": 0,
+      "query_blind_first_entity_solver": 32,
+      "query_blind_last_entity_solver": 31,
+      "document_header_UNKNOWN_else_NO": 17,
+      "any_CLEAR_or_REVOKE_UNKNOWN_else_last_number": 7,
+      "rule_RHS_presence": 0,
+      "memory_max_value_ignore_state": 0
+    },
+    "answerability_source_conflict": {
+      "constant_YES": 0,
+      "constant_NO": 0,
+      "constant_UNKNOWN": 36,
+      "constant_0": 0,
+      "constant_1": 0,
+      "copy_full_prompt": 0,
+      "copy_first_number": 4,
+      "copy_last_number": 6,
+      "copy_max_number": 2,
+      "copy_min_number": 0,
+      "copy_first_entity": 0,
+      "copy_last_entity": 0,
+      "query_blind_first_entity_solver": 33,
+      "query_blind_last_entity_solver": 31,
+      "document_header_UNKNOWN_else_NO": 18,
+      "any_CLEAR_or_REVOKE_UNKNOWN_else_last_number": 6,
+      "rule_RHS_presence": 0,
+      "memory_max_value_ignore_state": 0
+    }
+  },
+  "max_ASCII_prompt_bytes": 497,
+  "min_detectable_effect_n216_sigma_point2": 0.03810317377662721,
+  "min_detectable_effect_n216_sigma_point5": 0.09525793444156803,
+  "actual_nonce_built": false,
+  "model_calls": 0,
+  "actual_tokenizer_calls": 0
+}

@@ -1,0 +1,2507 @@
+{
+  "A5_repeats": "stochastic draws; averaged within case",
+  "complete": true,
+  "constant_oracle": {
+    "accuracy": 0.8125,
+    "capture": null,
+    "headroom": 0.0,
+    "physical_run": false,
+    "scope": "finite per-example constant grid",
+    "status": "NO_POSITIVE_CONSTANT_GRID_HEADROOM"
+  },
+  "corrected_A5_qualification_valid": true,
+  "costs": {
+    "cumulative_native_worker_seconds": 732.1709999999948,
+    "forward_attempt_journal": {
+      "all_measured_attempt_seconds": {
+        "complete_value": 349.98136929987595,
+        "known_subtotal": 349.98136929987595,
+        "measured_rows": 2336,
+        "missing_rows": 0,
+        "rows": 2336
+      },
+      "cache_rejected_before_compute": 2,
+      "completed_forward_seconds": {
+        "complete_value": 349.6676619998725,
+        "known_subtotal": 349.6676619998725,
+        "measured_rows": 2333,
+        "missing_rows": 0,
+        "rows": 2333
+      },
+      "completed_full_model_calls_including_maximum_checks": 2333,
+      "completed_prefix_positions_including_maximum_checks": {
+        "complete_value": 684869,
+        "known_subtotal": 684869,
+        "measured_rows": 2333,
+        "missing_rows": 0,
+        "rows": 2333
+      },
+      "maximum_attempts": 17,
+      "maximum_completed": 16,
+      "maximum_expected_partial_failures": 1,
+      "ordinary_attempts": 2317,
+      "ordinary_completed": 2317,
+      "ordinary_failed": 0,
+      "partial_compute_note": "partial forward cost unknown; elapsed and worker costs include it",
+      "partial_failure_compute_positions": null
+    },
+    "minimum_recorded_global_gpu_free_bytes": 3743416320,
+    "oracle_additional_generation_cost": 0,
+    "oracle_cost_note": "copied timing/counters excluded; A2 already charged",
+    "peak_gpu_allocated_bytes": 3271689728,
+    "peak_gpu_reserved_bytes": 3600809984,
+    "peak_worker_rss_bytes": 2257219584,
+    "physical_row_measurements": {
+      "controller_logging_seconds": {
+        "complete_value": null,
+        "known_subtotal": 0.29332560009424924,
+        "measured_rows": 392,
+        "missing_rows": 16,
+        "rows": 408
+      },
+      "controller_seconds": {
+        "complete_value": null,
+        "known_subtotal": 10.920898500105977,
+        "measured_rows": 392,
+        "missing_rows": 16,
+        "rows": 408
+      },
+      "extra_layer_applications": {
+        "complete_value": 4032,
+        "known_subtotal": 4032,
+        "measured_rows": 408,
+        "missing_rows": 0,
+        "rows": 408
+      },
+      "forward_logging_seconds": {
+        "complete_value": 0.3196689997530484,
+        "known_subtotal": 0.3196689997530484,
+        "measured_rows": 408,
+        "missing_rows": 0,
+        "rows": 408
+      },
+      "full_model_calls_including_gold_nll": {
+        "complete_value": 2317,
+        "known_subtotal": 2317,
+        "measured_rows": 408,
+        "missing_rows": 0,
+        "rows": 408
+      },
+      "processed_token_positions": {
+        "complete_value": 648901,
+        "known_subtotal": 648901,
+        "measured_rows": 408,
+        "missing_rows": 0,
+        "rows": 408
+      },
+      "synchronized_forward_seconds": {
+        "complete_value": 337.1507698998721,
+        "known_subtotal": 337.1507698998721,
+        "measured_rows": 408,
+        "missing_rows": 0,
+        "rows": 408
+      },
+      "wall_seconds": {
+        "complete_value": 502.52144830000907,
+        "known_subtotal": 502.52144830000907,
+        "measured_rows": 408,
+        "missing_rows": 0,
+        "rows": 408
+      }
+    },
+    "remaining_native_seconds": 20867.829000000005,
+    "supervisor_wall_seconds": 570.3279999999977,
+    "timing_scope": "GPU synchronized instrumented core/controller/fullforward; includes sync/logging overhead; no production or matched-quality speed claim",
+    "worker_wall_seconds": 568.0939999999973
+  },
+  "deterministic_repeat_divergence": [],
+  "dev_items": 16,
+  "diagnostic_global_fixed_envelope": {
+    "accuracy": 0.8125,
+    "alpha": 0.8,
+    "diagnostic_only": true
+  },
+  "duplicate_cells": [],
+  "efficacy_claim_supported": false,
+  "errors": [],
+  "expected_physical_rows": 408,
+  "extra_cells": [],
+  "features": {
+    "lower_saturation_fraction": 0,
+    "per_item_mean_alpha": {
+      "mergedev_common_sense_025ea65887df6a1b": 1.1626872089174058,
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5": 1.151157796382904,
+      "mergedev_general_reasoning_078451b6adf65710": 1.1394257545471191,
+      "mergedev_grounded_qa_rag_10414013c88bdaac": 1.1251116514205932,
+      "mergedev_instruction_following_7c4b4480b4835c0f": 1.1566095702788408,
+      "mergedev_long_context_retrieval_20550a305b3b2af6": 1.114911981991359,
+      "mergedev_lost_in_the_middle_e4e7cc76239741de": 1.1140275853020805,
+      "mergedev_mathematics_12cd1363c6e3df98": 1.1488250494003296,
+      "mergedev_multi_hop_binding_492bf31e1ae5deff": 1.1432952483495076,
+      "mergedev_normal_conversation_4a73375fc950bab7": 1.150436560312907,
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7": 1.1501145362854004,
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2": 1.1477380593617756,
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3": 1.1588972806930542,
+      "mergedev_science_0ac5af678b239ec5": 1.1654947797457378,
+      "mergedev_short_response_30785feeb5a8abdf": 1.1546899676322937,
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8": 1.1487503051757812
+    },
+    "pool_weighting": "generated DEV prefixes across two deterministic A3 repeats",
+    "predictive_validation": "NOT_RUN",
+    "prefix_weighted": {
+      "alpha": {
+        "max": 1.169747233390808,
+        "mean": 1.1473425965417514,
+        "median": 1.1513607501983643,
+        "min": 1.1140036582946777,
+        "n": 176
+      },
+      "balance": {
+        "max": 0.6172627806663513,
+        "mean": 0.5357912480831146,
+        "median": 0.5504027009010315,
+        "min": 0.41455891728401184,
+        "n": 176
+      },
+      "delta_cosine": {
+        "max": 0.7289946675300598,
+        "mean": 0.671673212539066,
+        "median": 0.6796439290046692,
+        "min": 0.589739978313446,
+        "n": 176
+      },
+      "delta_norm": {
+        "max": 630.3177490234375,
+        "mean": 188.40750434181908,
+        "median": 102.8384895324707,
+        "min": 80.18801879882812,
+        "n": 176
+      },
+      "fluctuation": {
+        "max": 0.07145664095878601,
+        "mean": 0.04705355197868564,
+        "median": 0.04682081192731857,
+        "min": 0.03781720995903015,
+        "n": 176
+      },
+      "movement": {
+        "max": 702.7371826171875,
+        "mean": 213.3124905499545,
+        "median": 119.19052124023438,
+        "min": 93.2150650024414,
+        "n": 176
+      },
+      "normalized_controlled_movement": {
+        "max": 0.08284390559792776,
+        "mean": 0.02557588388363489,
+        "median": 0.014554487708701304,
+        "min": 0.011385442642145933,
+        "n": 176
+      },
+      "normalized_raw_update": {
+        "max": 0.07430656209526551,
+        "mean": 0.022583202281254613,
+        "median": 0.012557722735701151,
+        "min": 0.009794449488034823,
+        "n": 176
+      },
+      "previous_ema_cosine": {
+        "max": 0.7289946675300598,
+        "mean": 0.6716732132163915,
+        "median": 0.6796439290046692,
+        "min": 0.589739978313446,
+        "n": 176
+      },
+      "progress": {
+        "max": 0.32976052165031433,
+        "mean": 0.23585070855915546,
+        "median": 0.23734579980373383,
+        "min": 0.17131008207798004,
+        "n": 176
+      },
+      "state_norm": {
+        "max": 8482.666015625,
+        "mean": 8236.447604092684,
+        "median": 8189.85107421875,
+        "min": 8187.087890625,
+        "n": 176
+      }
+    },
+    "upper_saturation_fraction": 0
+  },
+  "fixed_alpha_curve": [
+    {
+      "accuracy": 0.8125,
+      "alpha": 0.8,
+      "observed_partial_accuracy": 0.8125
+    },
+    {
+      "accuracy": 0.8125,
+      "alpha": 0.9,
+      "observed_partial_accuracy": 0.8125
+    },
+    {
+      "accuracy": 0.8125,
+      "alpha": 1.0,
+      "observed_partial_accuracy": 0.8125
+    },
+    {
+      "accuracy": 0.8125,
+      "alpha": 1.1,
+      "observed_partial_accuracy": 0.8125
+    },
+    {
+      "accuracy": 0.8125,
+      "alpha": 1.2,
+      "observed_partial_accuracy": 0.8125
+    }
+  ],
+  "frozen_fixed_comparator": {
+    "accuracy": 0.8125,
+    "alpha": 0.8,
+    "selection_surface": "same exposed DEV, not independent validation"
+  },
+  "independent_replication": "NOT_RUN",
+  "lane": "GPU_FP32_SUCCESSOR",
+  "missing_cells": [],
+  "native_TEST": "CLOSED",
+  "native_qualification_valid": true,
+  "own_bank_floors": {
+    "DEV": {
+      "constant_accuracy": {
+        "": 0.0,
+        "0": 0.0,
+        "1": 0.0,
+        "NO": 0.0,
+        "UNKNOWN": 0.0625,
+        "YES": 0.0625
+      },
+      "items": 16,
+      "positive_solver": "NOT_VERIFIED",
+      "predictor_inputs": "prompt only or fixed literal; target only for scoring",
+      "prompt_copy_accuracy": 0.1875
+    },
+    "SMOKE": {
+      "constant_accuracy": {
+        "": 0.0,
+        "0": 0.0,
+        "1": 0.0,
+        "NO": 0.0,
+        "UNKNOWN": 0.125,
+        "YES": 0.0
+      },
+      "items": 8,
+      "positive_solver": "NOT_VERIFIED",
+      "predictor_inputs": "prompt only or fixed literal; target only for scoring",
+      "prompt_copy_accuracy": 0.25
+    }
+  },
+  "pairs": {
+    "H1_fixed_vs_unit": {
+      "comparator": "A1",
+      "complete_semantic_preservation": "NOT_ASSESSED",
+      "confidence_interval": null,
+      "confirmatory_p_value": null,
+      "families": {
+        "common_sense": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "counterfactual_reasoning": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "general_reasoning": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "grounded_qa_rag": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "instruction_following": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "long_context_retrieval": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "lost_in_the_middle": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "mathematics": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "multi_hop_binding": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "normal_conversation": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "paraphrase_robustness": {
+          "delta": 0.0,
+          "items": 3,
+          "losses": 0,
+          "wins": 0
+        },
+        "science": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "short_response": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "unanswerable_abstention": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        }
+      },
+      "losses": [],
+      "meets_registered_exploratory_margin": false,
+      "observed_score_format_invalid_preservation": true,
+      "per_case": [
+        {
+          "case_id": "mergedev_common_sense_025ea65887df6a1b",
+          "cluster": "mergedev_common_sense_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "common_sense",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+          "cluster": "mergedev_counter_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "counterfactual_reasoning",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_general_reasoning_078451b6adf65710",
+          "cluster": "mergedev_reason_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "general_reasoning",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+          "cluster": "mergedev_rag_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "grounded_qa_rag",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+          "cluster": "mergedev_instruction_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "instruction_following",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_long_context_retrieval_20550a305b3b2af6",
+          "cluster": "mergedev_long_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "long_context_retrieval",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_lost_in_the_middle_e4e7cc76239741de",
+          "cluster": "mergedev_long_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "lost_in_the_middle",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+          "cluster": "mergedev_math_0002",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "mathematics",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_multi_hop_binding_492bf31e1ae5deff",
+          "cluster": "mergedev_binding_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "multi_hop_binding",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_normal_conversation_4a73375fc950bab7",
+          "cluster": "mergedev_chat_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "normal_conversation",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_science_0ac5af678b239ec5",
+          "cluster": "mergedev_science_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "science",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_short_response_30785feeb5a8abdf",
+          "cluster": "mergedev_short_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "short_response",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+          "cluster": "mergedev_unknown_0003",
+          "comparator_literal_UNKNOWN_rate": 1,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "unanswerable_abstention",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 1,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        }
+      ],
+      "provisional_cluster_deltas": {
+        "mergedev_binding_0000": 0.0,
+        "mergedev_chat_0003": 0.0,
+        "mergedev_common_sense_0001": 0.0,
+        "mergedev_counter_0001": 0.0,
+        "mergedev_instruction_0003": 0.0,
+        "mergedev_long_0000": 0.0,
+        "mergedev_math_0002": 0.0,
+        "mergedev_para_0003": 0.0,
+        "mergedev_rag_0001": 0.0,
+        "mergedev_reason_0001": 0.0,
+        "mergedev_science_0000": 0.0,
+        "mergedev_short_0001": 0.0,
+        "mergedev_unknown_0003": 0.0
+      },
+      "score_delta": 0.0,
+      "source_correct_cases": 13,
+      "source_correct_retained": 13,
+      "treatment": "A2:0.8",
+      "uncertainty": "small exposed provisional clusters; repeated seeds averaged within item; independence not established",
+      "wins": []
+    },
+    "corrected_A5": {
+      "comparator": "A5",
+      "complete_semantic_preservation": "NOT_ASSESSED",
+      "confidence_interval": null,
+      "confirmatory_p_value": null,
+      "families": {
+        "common_sense": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "counterfactual_reasoning": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "general_reasoning": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "grounded_qa_rag": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "instruction_following": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "long_context_retrieval": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "lost_in_the_middle": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "mathematics": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "multi_hop_binding": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "normal_conversation": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "paraphrase_robustness": {
+          "delta": 0.0,
+          "items": 3,
+          "losses": 0,
+          "wins": 0
+        },
+        "science": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "short_response": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "unanswerable_abstention": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        }
+      },
+      "losses": [],
+      "meets_registered_exploratory_margin": false,
+      "observed_score_format_invalid_preservation": true,
+      "per_case": [
+        {
+          "case_id": "mergedev_common_sense_025ea65887df6a1b",
+          "cluster": "mergedev_common_sense_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "common_sense",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+          "cluster": "mergedev_counter_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "counterfactual_reasoning",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_general_reasoning_078451b6adf65710",
+          "cluster": "mergedev_reason_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "general_reasoning",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+          "cluster": "mergedev_rag_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "grounded_qa_rag",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+          "cluster": "mergedev_instruction_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "instruction_following",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_long_context_retrieval_20550a305b3b2af6",
+          "cluster": "mergedev_long_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "long_context_retrieval",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_lost_in_the_middle_e4e7cc76239741de",
+          "cluster": "mergedev_long_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "lost_in_the_middle",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+          "cluster": "mergedev_math_0002",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "mathematics",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_multi_hop_binding_492bf31e1ae5deff",
+          "cluster": "mergedev_binding_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "multi_hop_binding",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_normal_conversation_4a73375fc950bab7",
+          "cluster": "mergedev_chat_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "normal_conversation",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_science_0ac5af678b239ec5",
+          "cluster": "mergedev_science_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "science",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_short_response_30785feeb5a8abdf",
+          "cluster": "mergedev_short_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "short_response",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+          "cluster": "mergedev_unknown_0003",
+          "comparator_literal_UNKNOWN_rate": 1,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "unanswerable_abstention",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 1,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        }
+      ],
+      "provisional_cluster_deltas": {
+        "mergedev_binding_0000": 0.0,
+        "mergedev_chat_0003": 0.0,
+        "mergedev_common_sense_0001": 0.0,
+        "mergedev_counter_0001": 0.0,
+        "mergedev_instruction_0003": 0.0,
+        "mergedev_long_0000": 0.0,
+        "mergedev_math_0002": 0.0,
+        "mergedev_para_0003": 0.0,
+        "mergedev_rag_0001": 0.0,
+        "mergedev_reason_0001": 0.0,
+        "mergedev_science_0000": 0.0,
+        "mergedev_short_0001": 0.0,
+        "mergedev_unknown_0003": 0.0
+      },
+      "score_delta": 0.0,
+      "source_correct_cases": 13,
+      "source_correct_retained": 13,
+      "treatment": "A3",
+      "uncertainty": "small exposed provisional clusters; repeated seeds averaged within item; independence not established",
+      "wins": []
+    },
+    "fixed_1.2": {
+      "comparator": "A2:1.2",
+      "complete_semantic_preservation": "NOT_ASSESSED",
+      "confidence_interval": null,
+      "confirmatory_p_value": null,
+      "families": {
+        "common_sense": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "counterfactual_reasoning": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "general_reasoning": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "grounded_qa_rag": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "instruction_following": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "long_context_retrieval": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "lost_in_the_middle": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "mathematics": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "multi_hop_binding": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "normal_conversation": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "paraphrase_robustness": {
+          "delta": 0.0,
+          "items": 3,
+          "losses": 0,
+          "wins": 0
+        },
+        "science": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "short_response": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "unanswerable_abstention": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        }
+      },
+      "losses": [],
+      "meets_registered_exploratory_margin": false,
+      "observed_score_format_invalid_preservation": true,
+      "per_case": [
+        {
+          "case_id": "mergedev_common_sense_025ea65887df6a1b",
+          "cluster": "mergedev_common_sense_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "common_sense",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+          "cluster": "mergedev_counter_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "counterfactual_reasoning",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_general_reasoning_078451b6adf65710",
+          "cluster": "mergedev_reason_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "general_reasoning",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+          "cluster": "mergedev_rag_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "grounded_qa_rag",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+          "cluster": "mergedev_instruction_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "instruction_following",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_long_context_retrieval_20550a305b3b2af6",
+          "cluster": "mergedev_long_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "long_context_retrieval",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_lost_in_the_middle_e4e7cc76239741de",
+          "cluster": "mergedev_long_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "lost_in_the_middle",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+          "cluster": "mergedev_math_0002",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "mathematics",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_multi_hop_binding_492bf31e1ae5deff",
+          "cluster": "mergedev_binding_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "multi_hop_binding",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_normal_conversation_4a73375fc950bab7",
+          "cluster": "mergedev_chat_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "normal_conversation",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_science_0ac5af678b239ec5",
+          "cluster": "mergedev_science_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "science",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_short_response_30785feeb5a8abdf",
+          "cluster": "mergedev_short_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "short_response",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+          "cluster": "mergedev_unknown_0003",
+          "comparator_literal_UNKNOWN_rate": 1,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "unanswerable_abstention",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 1,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        }
+      ],
+      "provisional_cluster_deltas": {
+        "mergedev_binding_0000": 0.0,
+        "mergedev_chat_0003": 0.0,
+        "mergedev_common_sense_0001": 0.0,
+        "mergedev_counter_0001": 0.0,
+        "mergedev_instruction_0003": 0.0,
+        "mergedev_long_0000": 0.0,
+        "mergedev_math_0002": 0.0,
+        "mergedev_para_0003": 0.0,
+        "mergedev_rag_0001": 0.0,
+        "mergedev_reason_0001": 0.0,
+        "mergedev_science_0000": 0.0,
+        "mergedev_short_0001": 0.0,
+        "mergedev_unknown_0003": 0.0
+      },
+      "score_delta": 0.0,
+      "source_correct_cases": 13,
+      "source_correct_retained": 13,
+      "treatment": "A3",
+      "uncertainty": "small exposed provisional clusters; repeated seeds averaged within item; independence not established",
+      "wins": []
+    },
+    "frozen_fixed": {
+      "comparator": "A2:0.8",
+      "complete_semantic_preservation": "NOT_ASSESSED",
+      "confidence_interval": null,
+      "confirmatory_p_value": null,
+      "families": {
+        "common_sense": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "counterfactual_reasoning": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "general_reasoning": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "grounded_qa_rag": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "instruction_following": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "long_context_retrieval": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "lost_in_the_middle": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "mathematics": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "multi_hop_binding": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "normal_conversation": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "paraphrase_robustness": {
+          "delta": 0.0,
+          "items": 3,
+          "losses": 0,
+          "wins": 0
+        },
+        "science": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "short_response": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "unanswerable_abstention": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        }
+      },
+      "losses": [],
+      "meets_registered_exploratory_margin": false,
+      "observed_score_format_invalid_preservation": true,
+      "per_case": [
+        {
+          "case_id": "mergedev_common_sense_025ea65887df6a1b",
+          "cluster": "mergedev_common_sense_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "common_sense",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+          "cluster": "mergedev_counter_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "counterfactual_reasoning",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_general_reasoning_078451b6adf65710",
+          "cluster": "mergedev_reason_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "general_reasoning",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+          "cluster": "mergedev_rag_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "grounded_qa_rag",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+          "cluster": "mergedev_instruction_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "instruction_following",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_long_context_retrieval_20550a305b3b2af6",
+          "cluster": "mergedev_long_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "long_context_retrieval",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_lost_in_the_middle_e4e7cc76239741de",
+          "cluster": "mergedev_long_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "lost_in_the_middle",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+          "cluster": "mergedev_math_0002",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "mathematics",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_multi_hop_binding_492bf31e1ae5deff",
+          "cluster": "mergedev_binding_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "multi_hop_binding",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_normal_conversation_4a73375fc950bab7",
+          "cluster": "mergedev_chat_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "normal_conversation",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_science_0ac5af678b239ec5",
+          "cluster": "mergedev_science_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "science",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_short_response_30785feeb5a8abdf",
+          "cluster": "mergedev_short_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "short_response",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+          "cluster": "mergedev_unknown_0003",
+          "comparator_literal_UNKNOWN_rate": 1,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "unanswerable_abstention",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 1,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        }
+      ],
+      "provisional_cluster_deltas": {
+        "mergedev_binding_0000": 0.0,
+        "mergedev_chat_0003": 0.0,
+        "mergedev_common_sense_0001": 0.0,
+        "mergedev_counter_0001": 0.0,
+        "mergedev_instruction_0003": 0.0,
+        "mergedev_long_0000": 0.0,
+        "mergedev_math_0002": 0.0,
+        "mergedev_para_0003": 0.0,
+        "mergedev_rag_0001": 0.0,
+        "mergedev_reason_0001": 0.0,
+        "mergedev_science_0000": 0.0,
+        "mergedev_short_0001": 0.0,
+        "mergedev_unknown_0003": 0.0
+      },
+      "score_delta": 0.0,
+      "source_correct_cases": 13,
+      "source_correct_retained": 13,
+      "treatment": "A3",
+      "uncertainty": "small exposed provisional clusters; repeated seeds averaged within item; independence not established",
+      "wins": []
+    },
+    "intact": {
+      "comparator": "A0",
+      "complete_semantic_preservation": "NOT_ASSESSED",
+      "confidence_interval": null,
+      "confirmatory_p_value": null,
+      "families": {
+        "common_sense": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "counterfactual_reasoning": {
+          "delta": 1.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 1
+        },
+        "general_reasoning": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "grounded_qa_rag": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "instruction_following": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "long_context_retrieval": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "lost_in_the_middle": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "mathematics": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "multi_hop_binding": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "normal_conversation": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "paraphrase_robustness": {
+          "delta": 0.0,
+          "items": 3,
+          "losses": 0,
+          "wins": 0
+        },
+        "science": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "short_response": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "unanswerable_abstention": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        }
+      },
+      "losses": [],
+      "meets_registered_exploratory_margin": true,
+      "observed_score_format_invalid_preservation": true,
+      "per_case": [
+        {
+          "case_id": "mergedev_common_sense_025ea65887df6a1b",
+          "cluster": "mergedev_common_sense_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "common_sense",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+          "cluster": "mergedev_counter_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 1.0,
+          "family": "counterfactual_reasoning",
+          "format_delta": 1.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_general_reasoning_078451b6adf65710",
+          "cluster": "mergedev_reason_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "general_reasoning",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+          "cluster": "mergedev_rag_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "grounded_qa_rag",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+          "cluster": "mergedev_instruction_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "instruction_following",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_long_context_retrieval_20550a305b3b2af6",
+          "cluster": "mergedev_long_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "long_context_retrieval",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_lost_in_the_middle_e4e7cc76239741de",
+          "cluster": "mergedev_long_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "lost_in_the_middle",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+          "cluster": "mergedev_math_0002",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "mathematics",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_multi_hop_binding_492bf31e1ae5deff",
+          "cluster": "mergedev_binding_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "multi_hop_binding",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_normal_conversation_4a73375fc950bab7",
+          "cluster": "mergedev_chat_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "normal_conversation",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_science_0ac5af678b239ec5",
+          "cluster": "mergedev_science_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "science",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_short_response_30785feeb5a8abdf",
+          "cluster": "mergedev_short_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "short_response",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+          "cluster": "mergedev_unknown_0003",
+          "comparator_literal_UNKNOWN_rate": 1,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "unanswerable_abstention",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 1,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        }
+      ],
+      "provisional_cluster_deltas": {
+        "mergedev_binding_0000": 0.0,
+        "mergedev_chat_0003": 0.0,
+        "mergedev_common_sense_0001": 0.0,
+        "mergedev_counter_0001": 1.0,
+        "mergedev_instruction_0003": 0.0,
+        "mergedev_long_0000": 0.0,
+        "mergedev_math_0002": 0.0,
+        "mergedev_para_0003": 0.0,
+        "mergedev_rag_0001": 0.0,
+        "mergedev_reason_0001": 0.0,
+        "mergedev_science_0000": 0.0,
+        "mergedev_short_0001": 0.0,
+        "mergedev_unknown_0003": 0.0
+      },
+      "score_delta": 0.0625,
+      "source_correct_cases": 12,
+      "source_correct_retained": 12,
+      "treatment": "A3",
+      "uncertainty": "small exposed provisional clusters; repeated seeds averaged within item; independence not established",
+      "wins": [
+        "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5"
+      ]
+    },
+    "unit": {
+      "comparator": "A1",
+      "complete_semantic_preservation": "NOT_ASSESSED",
+      "confidence_interval": null,
+      "confirmatory_p_value": null,
+      "families": {
+        "common_sense": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "counterfactual_reasoning": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "general_reasoning": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "grounded_qa_rag": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "instruction_following": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "long_context_retrieval": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "lost_in_the_middle": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "mathematics": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "multi_hop_binding": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "normal_conversation": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "paraphrase_robustness": {
+          "delta": 0.0,
+          "items": 3,
+          "losses": 0,
+          "wins": 0
+        },
+        "science": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "short_response": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        },
+        "unanswerable_abstention": {
+          "delta": 0.0,
+          "items": 1,
+          "losses": 0,
+          "wins": 0
+        }
+      },
+      "losses": [],
+      "meets_registered_exploratory_margin": false,
+      "observed_score_format_invalid_preservation": true,
+      "per_case": [
+        {
+          "case_id": "mergedev_common_sense_025ea65887df6a1b",
+          "cluster": "mergedev_common_sense_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "common_sense",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+          "cluster": "mergedev_counter_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "counterfactual_reasoning",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_general_reasoning_078451b6adf65710",
+          "cluster": "mergedev_reason_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "general_reasoning",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+          "cluster": "mergedev_rag_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "grounded_qa_rag",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+          "cluster": "mergedev_instruction_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "instruction_following",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_long_context_retrieval_20550a305b3b2af6",
+          "cluster": "mergedev_long_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "long_context_retrieval",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_lost_in_the_middle_e4e7cc76239741de",
+          "cluster": "mergedev_long_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "lost_in_the_middle",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+          "cluster": "mergedev_math_0002",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "mathematics",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_multi_hop_binding_492bf31e1ae5deff",
+          "cluster": "mergedev_binding_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "multi_hop_binding",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_normal_conversation_4a73375fc950bab7",
+          "cluster": "mergedev_chat_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 0.0,
+          "delta": 0.0,
+          "family": "normal_conversation",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 0.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+          "cluster": "mergedev_para_0003",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "paraphrase_robustness",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_science_0ac5af678b239ec5",
+          "cluster": "mergedev_science_0000",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "science",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_short_response_30785feeb5a8abdf",
+          "cluster": "mergedev_short_0001",
+          "comparator_literal_UNKNOWN_rate": 0,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "short_response",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 0,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        },
+        {
+          "case_id": "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+          "cluster": "mergedev_unknown_0003",
+          "comparator_literal_UNKNOWN_rate": 1,
+          "comparator_score": 1.0,
+          "delta": 0.0,
+          "family": "unanswerable_abstention",
+          "format_delta": 0.0,
+          "invalid_delta": 0,
+          "semantic_abstention": "NOT_ASSESSED",
+          "treatment_literal_UNKNOWN_rate": 1,
+          "treatment_score": 1.0,
+          "unsupported_answers": "NOT_ASSESSED"
+        }
+      ],
+      "provisional_cluster_deltas": {
+        "mergedev_binding_0000": 0.0,
+        "mergedev_chat_0003": 0.0,
+        "mergedev_common_sense_0001": 0.0,
+        "mergedev_counter_0001": 0.0,
+        "mergedev_instruction_0003": 0.0,
+        "mergedev_long_0000": 0.0,
+        "mergedev_math_0002": 0.0,
+        "mergedev_para_0003": 0.0,
+        "mergedev_rag_0001": 0.0,
+        "mergedev_reason_0001": 0.0,
+        "mergedev_science_0000": 0.0,
+        "mergedev_short_0001": 0.0,
+        "mergedev_unknown_0003": 0.0
+      },
+      "score_delta": 0.0,
+      "source_correct_cases": 13,
+      "source_correct_retained": 13,
+      "treatment": "A3",
+      "uncertainty": "small exposed provisional clusters; repeated seeds averaged within item; independence not established",
+      "wins": []
+    }
+  },
+  "physical_rows": 408,
+  "practical_margin": 0.05,
+  "prefix_schedule_oracle": "NOT_ENUMERATED",
+  "primary_endpoint": "inherited binary task score, equal item weights after repeat averaging",
+  "provisional_clusters": {
+    "mergedev_binding_0000": 1,
+    "mergedev_chat_0003": 1,
+    "mergedev_common_sense_0001": 1,
+    "mergedev_counter_0001": 1,
+    "mergedev_instruction_0003": 1,
+    "mergedev_long_0000": 2,
+    "mergedev_math_0002": 1,
+    "mergedev_para_0003": 3,
+    "mergedev_rag_0001": 1,
+    "mergedev_reason_0001": 1,
+    "mergedev_science_0000": 1,
+    "mergedev_short_0001": 1,
+    "mergedev_unknown_0003": 1
+  },
+  "reused_oracle_rows": 32,
+  "semantic_abstention": "NOT_ASSESSED",
+  "semantic_correctness": "NOT_ASSESSED",
+  "status": "COMPLETE_EXPLORATORY_GPU_DEV",
+  "tables": [
+    {
+      "accuracy": 0.75,
+      "case_count": 16,
+      "format_score": 0.875,
+      "literal_UNKNOWN_definition": "response.strip() == 'UNKNOWN'",
+      "literal_UNKNOWN_rate": 0.0625,
+      "observed_partial_accuracy": 0.75,
+      "policy": "A0",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "COMPLETE_EXPOSED_GPU_DEV",
+      "termination_counts": {
+        "eos": 32
+      }
+    },
+    {
+      "accuracy": 0.8125,
+      "case_count": 16,
+      "format_score": 0.9375,
+      "literal_UNKNOWN_definition": "response.strip() == 'UNKNOWN'",
+      "literal_UNKNOWN_rate": 0.0625,
+      "observed_partial_accuracy": 0.8125,
+      "policy": "A1",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "COMPLETE_EXPOSED_GPU_DEV",
+      "termination_counts": {
+        "eos": 32
+      }
+    },
+    {
+      "accuracy": 0.8125,
+      "case_count": 16,
+      "format_score": 0.9375,
+      "literal_UNKNOWN_definition": "response.strip() == 'UNKNOWN'",
+      "literal_UNKNOWN_rate": 0.0625,
+      "observed_partial_accuracy": 0.8125,
+      "policy": "A3",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "COMPLETE_EXPOSED_GPU_DEV",
+      "termination_counts": {
+        "eos": 32
+      }
+    },
+    {
+      "accuracy": 0.8125,
+      "case_count": 16,
+      "format_score": 0.9375,
+      "literal_UNKNOWN_definition": "response.strip() == 'UNKNOWN'",
+      "literal_UNKNOWN_rate": 0.0625,
+      "observed_partial_accuracy": 0.8125,
+      "policy": "A5",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "COMPLETE_EXPOSED_GPU_DEV",
+      "termination_counts": {
+        "eos": 32
+      }
+    },
+    {
+      "accuracy": 0.8125,
+      "case_count": 16,
+      "format_score": 0.9375,
+      "literal_UNKNOWN_definition": "response.strip() == 'UNKNOWN'",
+      "literal_UNKNOWN_rate": 0.0625,
+      "observed_partial_accuracy": 0.8125,
+      "policy": "A2:0.8",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "COMPLETE_EXPOSED_GPU_DEV",
+      "termination_counts": {
+        "eos": 32
+      }
+    },
+    {
+      "accuracy": 0.8125,
+      "case_count": 16,
+      "format_score": 0.9375,
+      "literal_UNKNOWN_definition": "response.strip() == 'UNKNOWN'",
+      "literal_UNKNOWN_rate": 0.0625,
+      "observed_partial_accuracy": 0.8125,
+      "policy": "A2:0.9",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "COMPLETE_EXPOSED_GPU_DEV",
+      "termination_counts": {
+        "eos": 32
+      }
+    },
+    {
+      "accuracy": 0.8125,
+      "case_count": 16,
+      "format_score": 0.9375,
+      "literal_UNKNOWN_definition": "response.strip() == 'UNKNOWN'",
+      "literal_UNKNOWN_rate": 0.0625,
+      "observed_partial_accuracy": 0.8125,
+      "policy": "A2:1",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "COMPLETE_EXPOSED_GPU_DEV",
+      "termination_counts": {
+        "eos": 32
+      }
+    },
+    {
+      "accuracy": 0.8125,
+      "case_count": 16,
+      "format_score": 0.9375,
+      "literal_UNKNOWN_definition": "response.strip() == 'UNKNOWN'",
+      "literal_UNKNOWN_rate": 0.0625,
+      "observed_partial_accuracy": 0.8125,
+      "policy": "A2:1.1",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "COMPLETE_EXPOSED_GPU_DEV",
+      "termination_counts": {
+        "eos": 32
+      }
+    },
+    {
+      "accuracy": 0.8125,
+      "case_count": 16,
+      "format_score": 0.9375,
+      "literal_UNKNOWN_definition": "response.strip() == 'UNKNOWN'",
+      "literal_UNKNOWN_rate": 0.0625,
+      "observed_partial_accuracy": 0.8125,
+      "policy": "A2:1.2",
+      "semantic_abstention": "NOT_ASSESSED",
+      "status": "COMPLETE_EXPOSED_GPU_DEV",
+      "termination_counts": {
+        "eos": 32
+      }
+    }
+  ],
+  "unsupported_answers": "NOT_ASSESSED"
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "reviewer": "/root/adversarial_review",
+  "created_utc": "2026-10-02T05:25:16.6526709Z",
+  "status": "PASS_GPU_REFERENCE_ANALYZER_SOURCE_AND_CPU",
+  "source_sha256": {
+    "shared_helper": "378a5e12b467a4fec0807e372d93d7869f44e8e557cf762177beda6975cfc026",
+    "gpu_analysis": "30d12cff4ac343b98c492e5edfe1d9554fb87fc50d86e3029abd3236765def13",
+    "tests": "cb01cd6729ad600d2d9bddf80cc9348e576a94f65b39859d1adb60b59de0a1ea"
+  },
+  "independent_test_result": {
+    "failed": 0,
+    "pytest_seconds": 0.74,
+    "passed": 7,
+    "junit_sha256": "bf7ec4a93dfd3bcd96c85b4fb98674f67d27a6d80d5805e4e87adaa5db13f7b8",
+    "exit_code": 0,
+    "skipped": 0
+  },
+  "checks": {
+    "max17_starts16_completions1_expected_partial2_cache_variants": true,
+    "stochastic_A5_variance_allowed_within_item_average": true,
+    "offline_pinned_scorer_recomputation": true,
+    "primary_NULL_when_incomplete": true,
+    "capture_negative_above_one_preserved": true,
+    "gpu408_cell_cardinality_original_successor_A3_smoke": true,
+    "resource_violation_suppresses_precomputed_comparisons": true,
+    "actual_loaded_local_customcode_path_hash": true,
+    "missing_measurements_NULL_measured_count0": true,
+    "deterministic_other_policy_divergence_suppresses_primary": true,
+    "copied_oracle_cost_not_double_counted": true,
+    "no_confirmatory_efficacy_or_speed_claim": true,
+    "ordinary_bound_prompt_call_index_prefix_position_and_block_counters": true,
+    "exact_frozen_pool_prefix_RNG_float32_reconstruction": true,
+    "loading_stop_qualification_forward_memory_snapshots_included": true,
+    "source_admission_review_runtime_config_data_scorer_protocol_bindings": true,
+    "actual_qualification_before_after_state_assets_native_masks_maxshape": true
+  },
+  "native_model_loads_by_reviewer": 0,
+  "real_gpu_inventory_calls_by_reviewer": 0,
+  "protected_or_test_reads": false,
+  "source_review_limits": [
+    "Pure aggregate tests are synthetic. CLI binding/scorer checks reviewed from source; actual terminal replay follows only after this freeze",
+    "Native complete logit arrays are unlogged; exact bit parity uses pinned executed checks and qualification receipt",
+    "Sixteen exposed cases/provisionalclusters prevent broad inference; A5seeds are stochastic repeats, not independent examples",
+    "Malformed source journal schemas may fail closed instead of producing partial diagnostic report"
+  ],
+  "withdrawn_stale_draft_concern": "Actual frozenworker4c1 qualifies before/after state and source fields; exact source reread confirmed analyzer schema matches",
+  "approved_use": "Source-bound terminal GPU-FP32 successor runs only, in exclusive campaign output, with current frozen primary endpoint and independent scorer"
+}

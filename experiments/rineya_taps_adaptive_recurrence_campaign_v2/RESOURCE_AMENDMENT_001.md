@@ -1,0 +1,11 @@
+# Prospective GPU allocation amendment and sole retry
+
+No native DEV outcome exists at this amendment. Native GPU run001 passed its registered pre-DEV identity, device/dtype/buffer, mask/position, anchor, numerical/RMS, exception/cache, maximum-shape and unchanged-source/state qualification. Its terminal FAIL is a complete-matrix resource-admission refusal, with A5's actual-pool qualification appropriately pending.
+
+Measured max synchronized diagnostic forward .876529seconds yields4045 remaining capped calls times1.5 =5318.3397075seconds. Add141.1016373 elapsed and1800 reserve:7259.4413448seconds, exceeding7200 by59.4413448. Keep the refusal, raw smoke/probe rows, source freeze and costs; no survivors are promoted and no efficacy endpoint is computed.
+
+Native worker charges:18.734 CPU no-load refusal +145.343 GPU qualification/refusal =164.077 seconds. Remaining original grant21435.923 seconds. New run002 parent deadline10800 plus1800 reserve fits. The scientific matrix, checkpoint, runtime/device/determinism, operator, first pass, depths, scales, controller, seeds, task data, scorer, EOS/generation caps, primary endpoint, margins and stopping treatment remain unchanged. Only the per-job time allocation increases; no guard is weakened, reserve/factor is not reduced, and no task subset is selected.
+
+Treat run002 conservatively as the sole infrastructure/admission retry, with new exclusive directory, prospective freeze and independent source-bound review. It rechecks the fresh loaded identity/mechanics before DEV. Any further infrastructure refusal is retained without another unchanged retry. Numerical/model/required-arm failures do not authorize retry. Native costs remain cumulative; no other research grant, cloud job or training is used.
+
+Research-policy proposal4: set per-job allocation using completed shape/count forecast plus measured cold qualification costs and reserves, within the immutable cumulative allowance; preserve earlier forecasts and test that the complete matrix fits before measurement. Acceptance: reviewer independently reproduces164.077 used and7259.4413448 forecast; confirms same scientific hash/settings and10800+1800<=21435.923. No claim that research allocation efficiency has improved empirically.

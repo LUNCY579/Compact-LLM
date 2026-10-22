@@ -1,0 +1,65 @@
+{
+  "schema": "publication_CPU_failure_independent_disposition_v1",
+  "review_date_client": "2026-10-09",
+  "reviewer": "/root/publication_source_review",
+  "status": "FOUR_OBSERVED_FAILURES_CLASSIFIED_SCOPED_CHECKS_REQUIRED",
+  "review_scope": "Actual combined publication JUnit failures, exact held test source and corresponding production guard source. No held files or ledger altered; no test run, models, GPU, actual tokenizer or protected data calls by this reviewer.",
+  "combined_run": {
+    "directory": "reviews/publication_check_20261009_001",
+    "tests": 651,
+    "passed": 647,
+    "failures": 4,
+    "errors": 0,
+    "skips": 0,
+    "JUnit_seconds": 194.544,
+    "pytest_reported_seconds": 196.12,
+    "exit_code": 1,
+    "proof_sha256": {
+      "junit.xml": "1fb0559ba353ebcc8252c382171ff56878284a2b37b8156af6fbae5c8d5c8ad4",
+      "pytest.log": "2bfe777b062c3470c572a05f53b76e73fad4e8d11c90fb7f86973cea0a3ebc24",
+      "exit_code.txt": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+    },
+    "retain_as_failed": true,
+    "no_full_suite_PASS_claim": true
+  },
+  "findings": [
+    {
+      "id": "PUB-VAL-01",
+      "test": "quality_pattern_v3/tests/test_fresh_entry.py::test_exact_parent_paths_and_owner",
+      "observed": "PermissionError: canonical source/output/release/parent lock binding required",
+      "classification": "TEST_BASETEMP_OUTSIDE_REGISTERED_V3_ANCESTRY",
+      "evidence": "Production validate_parent_binding requires V3 in the resolved run root's parents. The positive fixture creates its run under pytest tmp_path. The combined basetemp was campaign/reviews/publication_check_20261009_001/tmp, outside V3. The guard refused the fixture before the intended positive assertion; this does not demonstrate a production guard defect.",
+      "recommended_check": "Run this exact node alone with a new basetemp under quality_pattern_v3/reviews/publication_validation_entry_20261009_001/tmp and preserve its JUnit/log. Do not change the production ancestry guard or held test."
+    },
+    {
+      "id": "PUB-VAL-02",
+      "test": "quality_pattern_v3/tests/test_probe_analysis.py::ProbeAnalysisTests::test_module_and_tests_import_no_torch",
+      "observed": "AssertionError: torch unexpectedly found in sys.modules",
+      "classification": "PROCESS_GLOBAL_IMPORT_ASSERTION_IN_MIXED_TORCH_TEST_COLLECTION",
+      "evidence": "The test asserts Torch is absent from the entire interpreter, rather than tracking imports caused by this stdlib reader. Combined collection imports other analytic Torch CPU test modules before execution. It cannot establish this reader imported Torch.",
+      "recommended_check": "Run this exact no-Torch node in a separate fresh Python pytest process, without other test collection. Retain the mixed-process original failure."
+    },
+    {
+      "id": "PUB-VAL-03",
+      "test": "quality_pattern_v3/tests/test_fresh_open_bank.py::FreshOpenBankTests::test_no_old_constructor_import_model_or_tokenizer_dependencies",
+      "observed": "AssertionError: torch unexpectedly found in sys.modules",
+      "classification": "MIXED_IMPORT_CONTEXT_AND_OBSOLETE_PRE_EXPORT_FILESYSTEM_ASSUMPTION",
+      "evidence": "Combined collection contaminates sys.modules as above. The same held test subsequently asserts the registered fresh corpus directory does not exist. That directory now legitimately exists after reviewed corpus generation. Isolation alone would reveal this additional stale pre-export assertion; deleting the corpus or pretending the complete old node passed is inappropriate.",
+      "recommended_check": "Use a separate clean model-free import witness for fresh_open_bank, fresh_open_verifier and probe_analysis; assert Torch/Transformers remain absent, inspect constructor imports/calls as in the old test and compare the existing fresh corpus manifest hash before/after import. Record this as a new scoped check, not a passing rerun of the obsolete complete test."
+    },
+    {
+      "id": "PUB-VAL-04",
+      "test": "quality_pattern_v3/tests/test_parent_authority.py::test_actual_new_scope_and_unused_study",
+      "observed": "PermissionError: distinct passive study already attempted; no retry",
+      "classification": "OBSOLETE_PRELAUNCH_UNUSED_ASSERTION_AFTER_COMPLETED_STUDY",
+      "evidence": "The positive held test reads the actual campaign ledger and requires passive study V3-PASSIVE-PROBE-001 to be unused. That study has completed. Production validate_probe_unused correctly refuses actual native_started/native_completed events for that study. The source guard is functioning; its prelaunch positive assertion cannot pass in this postexecution state.",
+      "recommended_check": "Run a standalone model-free postexecution witness: validate_probe_scope accepts the unchanged scope, while validate_probe_unused raises the exact consumed-study PermissionError from the actual ledger. Do not erase or mock away the historical real ledger to claim the original positive test passed."
+    }
+  ],
+  "production_source_defect_established_by_failures": false,
+  "test_or_context_limitations_established": true,
+  "disposition": "Publish the original 647 PASS / 4 FAIL combined result with these explanations and exact separately recorded follow-up checks. Do not relabel it all green. Follow-up outcomes remain pending in this review artifact; coordinator owns execution and final integration.",
+  "held_source_or_tests_changes_needed_for_publication": false,
+  "fresh_native_run_or_retry_authorized_by_tests": false,
+  "quality_gain_claimed": false
+}

@@ -1,0 +1,175 @@
+{
+  "schema": "bulk-restart-reader-binding-failure-001",
+  "status": "CONFIRMED_OFFLINE_READER_CLOSURE_MEMBERSHIP_MISMATCH_NO_HASH_DRIFT",
+  "model_calls": 0,
+  "source_report_native_bytes_modified": false,
+  "outcome_payload_read": false,
+  "first_null_report_preserved": true,
+  "first_report_status": "INCOMPLETE_NO_PRIMARY_COMPARISON",
+  "first_report_complete": false,
+  "first_report_errors": [
+    "restart required reader/helper/plan binding missing/different:bulk_analysis.py",
+    "restart required reader/helper/plan binding missing/different:analysis.py",
+    "restart required reader/helper/plan binding missing/different:gpu_analysis.py",
+    "restart required reader/helper/plan binding missing/different:open_analysis.py",
+    "restart integrity: original scientific analyzer lineage missing/different"
+  ],
+  "coverage_metadata": {
+    "physical_rows": 3296,
+    "expected_physical_rows": 3296,
+    "missing_cells": 0,
+    "extra_cells": 0,
+    "duplicate_cells": 0
+  },
+  "admission_sha256": "a6611ea9c493d314fbe47771ec59521440178153e0779be283128c6ae59e723c",
+  "admitted_native_source_entries": 107,
+  "parent_snapshot_entries": 2009,
+  "actual_parent_manifest_sha256": "cdc5a256d09c6d440bf40e69e932d0acc13d00138688e14b379b73b6a0584467",
+  "actual_first_null_report_sha256": "06b2ae44e56ee894ab4743883798fdb7550b64700178dd931ad2b1635f305357",
+  "frozen_reader_sha256": "9c95e00731525c34537696e79f4cc776ebfb2d5f560da0888da2feaf7b62c543",
+  "four_helpers": [
+    {
+      "path": "experiments/rineya_taps_adaptive_recurrence_campaign_v2/bulk_analysis.py",
+      "role": "ancestry/scientific-body reference",
+      "admission107_membership": false,
+      "parent_snapshot_sha256": "3defe511cd8a189f75e0e0529a56b782b965f40095c139d3a0c603b2bbf0d3db",
+      "current_sha256": "3defe511cd8a189f75e0e0529a56b782b965f40095c139d3a0c603b2bbf0d3db",
+      "first_analysis_manifest_input_sha256": "3defe511cd8a189f75e0e0529a56b782b965f40095c139d3a0c603b2bbf0d3db",
+      "classification": "ABSENT_FROM_NATIVE_DISPATCH_MAP_BUT_PRESENT_UNCHANGED_IN_ACTUAL_PRELAUNCH_PARENT_SNAPSHOT"
+    },
+    {
+      "path": "experiments/rineya_taps_adaptive_recurrence_campaign_v2/analysis.py",
+      "role": "direct offline reader import",
+      "admission107_membership": false,
+      "parent_snapshot_sha256": "378a5e12b467a4fec0807e372d93d7869f44e8e557cf762177beda6975cfc026",
+      "current_sha256": "378a5e12b467a4fec0807e372d93d7869f44e8e557cf762177beda6975cfc026",
+      "first_analysis_manifest_input_sha256": "378a5e12b467a4fec0807e372d93d7869f44e8e557cf762177beda6975cfc026",
+      "classification": "ABSENT_FROM_NATIVE_DISPATCH_MAP_BUT_PRESENT_UNCHANGED_IN_ACTUAL_PRELAUNCH_PARENT_SNAPSHOT"
+    },
+    {
+      "path": "experiments/rineya_taps_adaptive_recurrence_campaign_v2/gpu_analysis.py",
+      "role": "direct offline reader import",
+      "admission107_membership": false,
+      "parent_snapshot_sha256": "30d12cff4ac343b98c492e5edfe1d9554fb87fc50d86e3029abd3236765def13",
+      "current_sha256": "30d12cff4ac343b98c492e5edfe1d9554fb87fc50d86e3029abd3236765def13",
+      "first_analysis_manifest_input_sha256": "30d12cff4ac343b98c492e5edfe1d9554fb87fc50d86e3029abd3236765def13",
+      "classification": "ABSENT_FROM_NATIVE_DISPATCH_MAP_BUT_PRESENT_UNCHANGED_IN_ACTUAL_PRELAUNCH_PARENT_SNAPSHOT"
+    },
+    {
+      "path": "experiments/rineya_taps_adaptive_recurrence_campaign_v2/open_analysis.py",
+      "role": "direct offline reader import",
+      "admission107_membership": false,
+      "parent_snapshot_sha256": "c072790ea7d5ee4864fbeef762509fb24c0b9f9c99f7481b47eee37c28695576",
+      "current_sha256": "c072790ea7d5ee4864fbeef762509fb24c0b9f9c99f7481b47eee37c28695576",
+      "first_analysis_manifest_input_sha256": "c072790ea7d5ee4864fbeef762509fb24c0b9f9c99f7481b47eee37c28695576",
+      "classification": "ABSENT_FROM_NATIVE_DISPATCH_MAP_BUT_PRESENT_UNCHANGED_IN_ACTUAL_PRELAUNCH_PARENT_SNAPSHOT"
+    }
+  ],
+  "predispatch_proof": {
+    "actual_parent_source_manifest_captures_all_four": true,
+    "parent_code": "bulk_restart_supervisor.py writes source_manifest.json before subprocess.Popen, suspended assignment/resume and release. This is source-attributed chronology backed by frozen parent bytes, not a newly fabricated snapshot.",
+    "not_in_native_dispatch_107": true,
+    "not_retroactively_admitted": true,
+    "model_qualification_claim_by_this_audit": false
+  },
+  "diagnosis": "Frozen reader9c95 required four offline files to be members of the native107 dispatch map. They are absent there, but identical expected/current/first-analysis bytes are captured in the actual prelaunch parent snapshot. Three imported offline helpers are relevant analysis dependencies; oldbulk_analysis is lineage. The failure is a source-proof routing/closure mismatch, not evidence that native model/science changed.",
+  "scope_limits": [
+    "All other joins only reported as passed by the frozen reader; this audit does not replace independent raw native execution review.",
+    "No primary result inferred while first report remains incomplete; no scores/endpoints chosen to repair failure.",
+    "Analysis-only dependencies are not retrospectively native-qualified or described as admitted in107."
+  ],
+  "reviewable_offline_successor_condition": {
+    "requires_new_postterminal_registration_review": true,
+    "bind_exact_actual_parent_manifest_and_first_null_report": true,
+    "whitelist_only_four_expected_helpers": {
+      "bulk_analysis.py": "3defe511cd8a189f75e0e0529a56b782b965f40095c139d3a0c603b2bbf0d3db",
+      "analysis.py": "378a5e12b467a4fec0807e372d93d7869f44e8e557cf762177beda6975cfc026",
+      "gpu_analysis.py": "30d12cff4ac343b98c492e5edfe1d9554fb87fc50d86e3029abd3236765def13",
+      "open_analysis.py": "c072790ea7d5ee4864fbeef762509fb24c0b9f9c99f7481b47eee37c28695576"
+    },
+    "helper_gate": "Each expected immutable helper hash must equal actual parent snapshot entry AND current bytes AND recorded offline-analysis input; originalbulk ancestry hash stays3def. Missing/different snapshot or current bytes fail closed.",
+    "native_gate": "Keep all107 admitted native/source hashes, registered reader9c95 lineage, actual2f42 grant/terminal join, model/assets/state/parameter/cache/shape/row/clock/selector/scorer/endpoints/statistics/cost gates unchanged. No universal absent-dispatch fallback.",
+    "reported_dynamic_proof_source": "Actual parent prelaunch snapshot for the four offline helpers; native107 remains separate.",
+    "no_original_artifact_rewrite": true,
+    "no_model_retry_or_retrospective_future_qualification": true
+  },
+  "bindings": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\admission.json",
+      "sha256": "a6611ea9c493d314fbe47771ec59521440178153e0779be283128c6ae59e723c"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\review.json",
+      "sha256": "36f65f85fc00c0e1dbbce5f2537c0b7b2d21567542fd2ac5e0d1044c2b9d0113"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\source_manifest.json",
+      "sha256": "cdc5a256d09c6d440bf40e69e932d0acc13d00138688e14b379b73b6a0584467"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\terminal_receipt.json",
+      "sha256": "dc4d8c7a5895e846aee3c1b1b19b9e4f4909386779b313aa5693599ec9f2ded6"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\registration.json",
+      "sha256": "223dee72e8e41e2cbefdffe4677616a67cb26906604d4dcbe978c49462cf5588"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result\\receipt.json",
+      "sha256": "d9c34a822d9bdaaac39d33820eaacf05d083974cd9191e43559307bd2258ff19"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\bulk-restart-001\\REPORT.json",
+      "sha256": "06b2ae44e56ee894ab4743883798fdb7550b64700178dd931ad2b1635f305357"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\bulk-restart-001\\REPORT.md",
+      "sha256": "ce8bc5c13ead95dfc563057f27cf306a81b6c68002c0d0a72dfc611c1ce7f6b4"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\bulk-restart-001\\MANIFEST.json",
+      "sha256": "24328ee637445d0c2a81fd0675595a238eabd0671b5dc7c9e1d1bf39352e6f1c"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\bulk-restart-001\\receipt.json",
+      "sha256": "f3c4aab821a31579af67972716af340907acc32007e221b3f39ec81048e8e5c0"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\bulk_restart_analysis.py",
+      "sha256": "9c95e00731525c34537696e79f4cc776ebfb2d5f560da0888da2feaf7b62c543"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\BULK_RESTART_ANALYSIS_PLAN_001.md",
+      "sha256": "96840cead3005b322d0cbf888bbf75206c0852df8772f98ef103261b3ed44ec2"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\bulk_restart_supervisor.py",
+      "sha256": "80c2f250d7d9f941da22ed5f87601fbe67d659d4c5f55f37524e758025e8e86c"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\HUMAN_FULL_GENERATION_RESTART_ALLOWANCE_001.json",
+      "sha256": "2f42ce379924f37fa497700cf660af57d8577c14d9a9eda072be6b4481fc817e"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\versions\\bulk_restart_analysis_parent_001\\bulk_analysis.py",
+      "sha256": "3defe511cd8a189f75e0e0529a56b782b965f40095c139d3a0c603b2bbf0d3db"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\bulk_analysis.py",
+      "sha256": "3defe511cd8a189f75e0e0529a56b782b965f40095c139d3a0c603b2bbf0d3db"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analysis.py",
+      "sha256": "378a5e12b467a4fec0807e372d93d7869f44e8e557cf762177beda6975cfc026"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\gpu_analysis.py",
+      "sha256": "30d12cff4ac343b98c492e5edfe1d9554fb87fc50d86e3029abd3236765def13"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\open_analysis.py",
+      "sha256": "c072790ea7d5ee4864fbeef762509fb24c0b9f9c99f7481b47eee37c28695576"
+    }
+  ],
+  "report_md_sha256": "f0d8cde9f4135db2891be201652d46803dcaca4a5aee0ad30efb0abf7b580bb2"
+}

@@ -1,0 +1,36 @@
+{
+  "status": "WORKER_TERMINAL",
+  "lane": "GPU_FP32_FULL_GENERATION_RESTART",
+  "native_worker_seconds": 743.3900000000012,
+  "started_utc": "2026-10-05T18:23:38.140145+00:00",
+  "peak_rss_bytes": 2898788352,
+  "run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001",
+  "gpu_initial_inventory": {
+    "index": 0,
+    "uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+    "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "total_bytes": 8585740288,
+    "free_bytes": 7137656832,
+    "utilization_percent": 8,
+    "driver_version": "566.07"
+  },
+  "human_extension_sha256": "2f42ce379924f37fa497700cf660af57d8577c14d9a9eda072be6b4481fc817e",
+  "command": [
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "experiments.rineya_taps_adaptive_recurrence_campaign_v2.bulk_restart_entry",
+    "--release",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\release.json",
+    "--source",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "--out",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-restart-001\\result",
+    "--admission",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\full_generation_restart_admission_v1.json"
+  ],
+  "worker_pid": 129880,
+  "exit_code": 0,
+  "supervisor_wall_seconds": 748.8119999999999,
+  "ended_utc": "2026-10-05T18:36:06.952064+00:00"
+}

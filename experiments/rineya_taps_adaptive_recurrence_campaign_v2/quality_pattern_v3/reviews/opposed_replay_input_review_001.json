@@ -1,0 +1,127 @@
+{
+  "schema": "v3_opposed_replay_input_admissibility_v1",
+  "created_utc": "2026-10-06T01:56:04.968816+00:00",
+  "status": "PASS_EXPOSED_DEV_INPUTS_ONLY",
+  "models_native_calls": 0,
+  "candidate_decisions_or_candidate_scores_computed": false,
+  "source_or_history_edits": false,
+  "admissible_population": {
+    "cases": 192,
+    "parents": 96,
+    "variants_per_parent": 2,
+    "families": {
+      "signed_ledgers": 32,
+      "deduction_composition": 32,
+      "program_state": 32,
+      "dialogue_memory": 32,
+      "document_retrieval_reconciliation": 32,
+      "answerability_source_conflict": 32
+    },
+    "max_input_tokens": 232,
+    "input_positions": 24608,
+    "order": "Exact192-row prompt export order; RNG streams consume that order once.",
+    "old_VAL_selected_or_tuned": false
+  },
+  "policy_input_projection": {
+    "confidence": [
+      "registered policy name",
+      "raw_prompt exact original user-content str",
+      "OBSERVED_K0 original-prefix top1_probability float from FP32 log_softmax/exp archive"
+    ],
+    "guard": [
+      "registered policy name",
+      "raw_prompt exact original user-content str"
+    ],
+    "excluded_online_fields": [
+      "case_id",
+      "parent_id",
+      "category",
+      "split",
+      "gold",
+      "score",
+      "source_status",
+      "answerability",
+      "old_response",
+      "teacher_prefix",
+      "loss",
+      "derivative"
+    ],
+    "IDs": "Journal/join only; no rich row/metadata dictionary passed to policy."
+  },
+  "direct_checks": [
+    "Exact192raw prompts/source SHA agree among sanitized export, token packet and filtered old DEVbank; all related-parent/family membership is complete.",
+    "All192intact-head probability records are finite [0,1], original-input/target-independent, prefix/prompt hash bound and not LSE reconstructed.",
+    "Exactly192complete physical A0,192unitA1 and192fixedA2alpha1 records at actual/configured seed17, excluding aliases/oracles/random/VAL.",
+    "All192unit/fixed1 tokenIDs,response,termination,EOS,taskscore andformat are identical.",
+    "All576T counts equal tokenID list lengths,1..8 inclusive; exact term enums eos/token_cap; no safety-stopped source rows.",
+    "Both source runs have exit0/complete receipts and stateb23before/after/source/assets/gradNONE proofs; all192probe intact argmax IDs match historic intact firsttoken.",
+    "Current frozen gold-independent normalizer/scorer bytes read and hash verified; no candidate invoked or scored."
+  ],
+  "scorer_contract": {
+    "source": "open_bank.py",
+    "sha256": "25db8ad7b8bd4166188eccab4be73c9a430f696610dea5b8c83b380883f9d42a",
+    "normalizer_line": 216,
+    "scorer_line": 226,
+    "whole_response": "strip; canonical integer regex0|-?[1-9]\\d* or uppercase-normalized YES/NO/UNKNOWN. No substring/lasttoken selection.",
+    "task_kinds": [
+      "choice",
+      "integer",
+      "integer_or_unknown"
+    ],
+    "labels": "Gold/answer_kind used only after all decision inputs/outputs freeze, in separate grading phase.",
+    "literal_UNKNOWN": "Raw stripped uppercase UNKNOWN separate from normalized UNKNOWN.",
+    "termination": "Preserve eos/token_cap and rawEOS/truncated/invalid flags; format/EOS/correctness are separate endpoints.",
+    "candidate_scoring_this_review": false
+  },
+  "historical_baseline_termination_counts": {
+    "eos": 574,
+    "token_cap": 2
+  },
+  "replay_cost_scope": {
+    "new_native_calls": 0,
+    "new_native_policy_latency": null,
+    "native_T": "1<=T<=8 including EOS; liveK0reuse yieldsTcalls,K1T+1; pair17N only if actual independent livepilots agree and choices complement.",
+    "old_timing_equals_new_policy_timing": false,
+    "stored_response_selection_is_native_execution": false
+  },
+  "coverage_verifier_requirements": [
+    "Strict grammar/certificate implementation plus independent bulk_bank.parse_prompt/solver source must freeze before scoring.",
+    "Report recognized/unrecognized coverage and ABSENT/CONFLICT/CONSISTENT reference confusion, false certificates; map verifier MISSING=>ABSENT,CONFLICT=>CONFLICT,ANSWER=>CONSISTENT on recognized coverage only.",
+    "Whole prompt parser uses actual queried entity and authorized records/date semantics; unsupported syntax falls backUNIT, with no solved-value output or answer rewrite.",
+    "Test irrelevant entities/D records, latest authorized dates, duplicate/conflicting values, mixed/malformed dates, trailing text/whitespace and ambiguous query.",
+    "No actual guard coverage or gain is asserted here; semantic changes after scores require a new registered revision."
+  ],
+  "remaining_before_scoring": [
+    "Exact input/history/scorer/verifier/code/spec SHA bindings and projected schemas in replay source; no discovery glob or selected subset.",
+    "Compute all192prompt/prob-only decisions and marginalrates before reading/joining labels/outcomes; fixed17/29streams and export order.",
+    "Independent policy/replay source review before scoring. Future live driver needs separate native qualification, counts/forecast and admission; no logged logits/scalars replace actual pilots."
+  ],
+  "limits": [
+    "This accepts exposed replay inputs only, not a policy gain, native rollout, calibrated correctness probability or useful-margin superiority.",
+    "Binary selector oracle75vsunit69 permits only3.125points; original five-point useful DEV criterion cannot pass on this input population.",
+    "Old bank bytes include already exposed VAL; it is filtered out of this review and must stay outside candidate selection/confirmation.",
+    "CaseID alignment and firsttoken agreement do not independently prove every historical logit/probability or fresh driver behavior."
+  ],
+  "bindings": {
+    "quality_pattern_v3/data/dev_prefix_probe_001/DEVELOPMENT_BANK.json": "681a3e77e3d797e2faebcff3971dbb365a4479ebdac017bf3dcfcb48081ba03f",
+    "quality_pattern_v3/data/dev_prefix_probe_001/DEVELOPMENT_TOKEN_BINDING.json": "c34948026ebaf332111ce635a473b1489ef0d2f3932100f9e0d3cdd6a08ce6d2",
+    "quality_pattern_v3/data/dev_prefix_probe_001/MANIFEST.json": "f35dc01c54154c51fa6284807245767f01282128c23a09307a2485483951530b",
+    "quality_pattern_v3/runs/native-prefix-probe-001/admission.json": "b0b08bb354ce7bc48c760f59a87a7e7d8b8ba432aedddee3e05b55a0f0221131",
+    "quality_pattern_v3/runs/native-prefix-probe-001/terminal_receipt.json": "ef292863a3c6050175fac115715546cc542343023c430ccaed5ed2699f493f48",
+    "quality_pattern_v3/runs/native-prefix-probe-001/result/receipt.json": "b0d2dede48274ca7f4e7a4e5969aa4ab6bc3f230648f27b3c0c79695a1b78817",
+    "quality_pattern_v3/runs/native-prefix-probe-001/result/qualification.json": "a4282d8bd76d018323c2b1701e07b705bd2e1245a82dd3fc02733eb06c1f62b8",
+    "quality_pattern_v3/runs/native-prefix-probe-001/result/population.json": "88c4d2c3ce74a1a02cf45a7c64e5476ac5d0d49518209471a177b0359a51f7fd",
+    "quality_pattern_v3/runs/native-prefix-probe-001/result/readouts.jsonl": "b61150bb60b4721c97fa2750b29d1b4d023ec7d0edd5531a4d70d596efbec652",
+    "quality_pattern_v3/analyses/prefix-probe-001/REPORT.json": "6bf9dd67f2f6f2b4a5bcaec0738b84058212cd28883ecda237a309532fd930c7",
+    "runs/native-bulk-restart-001/admission.json": "a6611ea9c493d314fbe47771ec59521440178153e0779be283128c6ae59e723c",
+    "runs/native-bulk-restart-001/terminal_receipt.json": "dc4d8c7a5895e846aee3c1b1b19b9e4f4909386779b313aa5693599ec9f2ded6",
+    "runs/native-bulk-restart-001/result/receipt.json": "d9c34a822d9bdaaac39d33820eaacf05d083974cd9191e43559307bd2258ff19",
+    "runs/native-bulk-restart-001/result/FINAL_INTEGRITY.json": "2e5347e577cc990a1ac7000c47a0c93d2f3e9945983e1283cf8f059d2a2ec5dc",
+    "runs/native-bulk-restart-001/result/outcomes.jsonl": "858ba6c1b5105b460e600c93872575c78e2c3e43545538847e3d9eba30e01cd8",
+    "runs/bulk-bank-apparatus-001/bank.json": "862a63648caf7efb3d287c11bc5caaefc884e0ec6cb3130ce8f196526efc40cd",
+    "runs/bulk-tokenizer-binding-002/BULK_TOKENIZER_BINDING.json": "1a3723cdc918bb219119044aef5d209334f36c4b140674b8b93174f5361553bf",
+    "open_bank.py": "25db8ad7b8bd4166188eccab4be73c9a430f696610dea5b8c83b380883f9d42a",
+    "bulk_bank.py": "3242439231064fc81991e157c0da62833f4e4223ec71d60cf9ffd2851815b5eb",
+    "quality_pattern_v3/OPPOSED_GATE_CONTRACT_DRAFT_002.md": "067426a54cc2836b558401ee528dfd2f63008297d91ae41bb95f3e8491e734cd"
+  }
+}

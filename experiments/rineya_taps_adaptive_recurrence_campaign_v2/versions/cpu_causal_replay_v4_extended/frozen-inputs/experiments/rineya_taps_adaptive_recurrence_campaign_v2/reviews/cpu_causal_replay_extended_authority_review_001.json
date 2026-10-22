@@ -1,0 +1,59 @@
+{
+  "actual_extended_human_allowance_absent": true,
+  "authority_interpretation": "Six-hour budget room is not additional-attempt authority. The user-authorized corrected 3600 attempt has been consumed and explicitly allowed no further retry. A 4500 successor of the same study is another attempt requiring direct human approval; it cannot be relabeled a distinct experiment.",
+  "bindings": {
+    "CAUSAL_REPLAY_EXTENDED_ALLOWANCE_TEMPLATE_001.json": "da328e1942923cffe9bd84b31c70ded9335b25b7d3d785d4a2ea7593971341c0",
+    "CPU_CAUSAL_REPLAY_EXTENDED_REQUEST_001.md": "37ebbee558327435db68b058345b3764c1fd21486798e5d2e2b795a3f28c5529",
+    "causal_replay_extended_authority.py": "b22770997876b421f3aba6a1e851dae9a01b292defa439721474439bda85d336",
+    "cpu_causal_replay_entry.py": "61d57f439611aafe95eba8846b3bde796d0ab7d1f46c11e8f178490df118a1b6",
+    "cpu_causal_replay_native.py": "d2208d45d3feb60b36ff49886c0b0212831134b7f796677e3c3c1dd2d28ffdcc",
+    "cpu_causal_replay_supervisor.py": "fdaa49f617e3b3ce70431f6ed3a8d2b4ccd0fbddfa625e2513f31b6c0e5c8e5f",
+    "reviews/cpu_causal_replay_extended_authority_tests_001.py": "6c6b8e28e67f2c708decf24e881e67906a0f6d1f996920fb9db414b14e66ca12",
+    "reviews/cpu_causal_replay_extended_parent_probe_001.py": "e1e4cde633f89ea324f56f99e1bba3648e421f1cadac7999a3f0fba8b1f1a814",
+    "reviews/crext01/COMMAND.json": "bf6430074ace0df4f99c6b5ac9feadac914cb50475abaf29a2ace55a72acb168",
+    "reviews/crext01/junit.xml": "3749393d5b8b38c15548d0a50eec293b8ece541a73429ca5e6a63fca5622c1ba",
+    "reviews/crext02/COMMAND.json": "63381436080d4e3f4155b0c0aca66786e37dd2395185b22f946208c31af30deb",
+    "reviews/crext02/junit.xml": "a8a6c99bcbf4c417aa2be52cd67f3e86c580453609fa8a33b26da1746b3506cc",
+    "tests/test_causal_replay_extended_authority.py": "6c928c32e5e03cefa58eb119fc65af26dbdc5228b4caf07b294024d1c686bb13"
+  },
+  "checks": [
+    "Parent requires actual exact path, SHA and scope before lock/output creation or Popen. Template path and absent actual grant refuse.",
+    "Grant binds one attempt, 4500 seconds, current d220 worker, 1925 API, 635 adjoints, 192 cases, maximum256, parent-run002, no training and no full-bulk retry.",
+    "Parent repeats source/admission/review/runtime/floor/budget checks before launch; Windows suspended Job containment and CUDA_VISIBLE_DEVICES empty remain unchanged. All parent function ASTs match archived e8c8; only authority import changed.",
+    "Parent-only ledger anti-replay rejects native_started or native_completed with PID and the same grant SHA, including launched failures. Child checks exact scope without rejecting its own consumed parent-start ledger event.",
+    "Seven new-helper synthetic scope/anti-replay probes passed; five affected worker probes passed; actual production parent with missing new grant was independently verified not to call Popen, create output/lock or mutate fixture ledger.",
+    "All tests used fabricated temporary packets/grants; no real grant was written by the reviewer."
+  ],
+  "created_utc": "2026-10-05T05:27:48.237648+00:00",
+  "disposition": "PASS for implemented source gates and concrete request preparation, not permission to launch. No actual grant, model process or new measurement is authorized by this receipt.",
+  "findings": [],
+  "launch_gates_remaining": [
+    "Root freezes current dispatch closure including these new reviews, current request/template and other-author analyzer budget review.",
+    "Independent final receipt binds exact new admission and states REQUIRES_USER_ADDITIONAL_ATTEMPT.",
+    "Direct user approval separately recorded; root copies exact proposed bytes to actual required path only afterwards.",
+    "Fresh source/assets/resources/disk/budget/sole-worker checks; contained native qualification and complete632 forecast before cases."
+  ],
+  "native_calls": 0,
+  "native_dispatch_authorized": false,
+  "proposed_payload": {
+    "attempts": 1,
+    "cases": 192,
+    "full_bulk_matrix_retry": false,
+    "id": "CAUSAL-REPLAY-EXTENDED-001",
+    "lane": "CPU_CAUSAL_REPLAY_FP32",
+    "max_native_worker_seconds": 4500,
+    "maximum_prefix_tokens": 256,
+    "model_API_attempts": 1925,
+    "parent_run": "native-cpu-causal-replay-002",
+    "state_adjoints": 635,
+    "status": "EXPLICIT_ADDITIONAL_CAUSAL_REPLAY_ATTEMPT_AUTHORIZED",
+    "training": false,
+    "worker_sha256": "d2208d45d3feb60b36ff49886c0b0212831134b7f796677e3c3c1dd2d28ffdcc"
+  },
+  "proposed_payload_sha256": "da328e1942923cffe9bd84b31c70ded9335b25b7d3d785d4a2ea7593971341c0",
+  "required_actual_grant_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\HUMAN_CAUSAL_REPLAY_EXTENDED_ALLOWANCE_001.json",
+  "requires_user_additional_attempt": true,
+  "reviewer": "adversarial_review",
+  "source_only": true,
+  "status": "PASS_CPU_CAUSAL_REPLAY_EXTENDED_AUTHORITY_SOURCE_GATES"
+}

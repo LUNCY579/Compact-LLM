@@ -1,0 +1,27 @@
+{
+  "command": [
+    "C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\tests\\test_opposed_gate_generation.py",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\tests\\test_fresh_native.py",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\fresh_dispatch_check_001\\t",
+    "--junitxml",
+    "experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\quality_pattern_v3\\reviews\\fresh_dispatch_check_001\\worker_driver.xml"
+  ],
+  "models": 0,
+  "GPU_queries": 0,
+  "actual_fresh_outcomes": false,
+  "source_sha256": {
+    "fresh_native.py": "52262b1ab7639ac0e564746af3bd0d4065b3c7cdcf57b7549569f308884428de",
+    "opposed_gate_generation.py": "b0ac061de15808a551fccbda3a3b3b1c8ed539de33ca47dbc865598857e660f1",
+    "tests/test_fresh_native.py": "12cb34f55e85d9df68df140afee8c432ac637afdc67814e023e14e0d43fb29e0",
+    "tests/test_opposed_gate_generation.py": "4eafef960c30dbe8aba2882e3df7609a67186a9ff2df16e9f45ae092c73813ce"
+  },
+  "timeout_seconds": 180
+}

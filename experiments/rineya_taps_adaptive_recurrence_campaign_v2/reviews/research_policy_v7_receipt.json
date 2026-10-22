@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "reviewer": "independent adversarial_review",
+  "reviewed_utc": "2026-10-05T00:37:06.730561+00:00",
+  "version": 7,
+  "parent_version": 6,
+  "status": "ACCEPTED_FOR_SCOPED_PROCEDURE",
+  "scope": "Read-only policy acceptance review; no model calls, native inventory, raw operation replay or CPU test rerun",
+  "proposal": {
+    "version": 7,
+    "parent_version": 6,
+    "status": "PROPOSED_PENDING_INDEPENDENT_REVIEW",
+    "procedure_failure": "missing interstitial operation IDs and traceback infailedbulk",
+    "change": "source-bound failure-localization operation/ID/errorjournals with explicitinstrumentation/allocatorlimits",
+    "acceptance_document": "RESEARCH_POLICY_V7.md",
+    "evidence": [
+      "runs/native-runtime-debug-001/result/operations.jsonl",
+      "reviews/runtime_debug_execution_review_001.json",
+      "audits/runtime_debug_execution_math_001.json"
+    ],
+    "actual_cuda_fault_branch": "NOT_EXERCISED_REAL;CPUfixtureonly",
+    "new_native_authority": false,
+    "empirical_research_allocation_improvement": "NOT_MEASURED",
+    "model_self_improvement_claim": false,
+    "timestamp_utc": "2026-10-05T00:33:47.8498681Z"
+  },
+  "proposal_binding": {
+    "ledger_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\RESEARCH_POLICY.jsonl",
+    "nonempty_line_index_1based": 12,
+    "exact_line_sha256": "5dc9bbbc72a09d73d1fcfd469b94dc246c411eab60a290eeca9467c5bfeb2569",
+    "canonical_proposal_sha256": "06756867c3da4333f15a6a9de7311d8ce5f801b17bcff7f25cb04890a1802b0e",
+    "ledger_snapshot_sha256": "f24da4ffc814a4b82b707c848344fc0d13583469cc386dc2e7ff54f0fd9140b5"
+  },
+  "acceptance_checks": {
+    "version7_parent6": true,
+    "document_bound": true,
+    "no_new_authority": true,
+    "no_allocation_or_self_improvement_claim": true,
+    "real_CUDA_fault_branch_disclosed": true,
+    "unchanged_scientific_contract": true,
+    "instrumentation_perturbation": true,
+    "clean_probe_not_stability": true,
+    "future_lane_requires_review": true,
+    "no_silent_H3_instrumentation_change": true,
+    "95_source_files_match": true,
+    "worker_unchanged": true,
+    "25_independent_CPU_checks": true,
+    "independent_execution_review_pass": true,
+    "independent_arithmetic_review_pass": true,
+    "actual_32_99_42seconds": true,
+    "operation_schema_and_expected_failure": true,
+    "state_assets_restored": true,
+    "one_permit_consumed_no_restart": true
+  },
+  "blocking_findings": [],
+  "changed_dispatch_files": [],
+  "accepted_change": "Preserve known CPU prompt/generated IDs, started/completed/failed operation stages, last stage, traceback and restoration journals in separately registered failure-localization lanes. Existing evidence supports observability on the executed nonfaulting and expected-Python-exception paths.",
+  "actual_evidence": {
+    "physical_evaluations": 32,
+    "model_API_attempts": 99,
+    "completed_full_model_forwards": 96,
+    "native_worker_seconds": 42.45399999999972,
+    "operation_pairs": 11146,
+    "expected_operation_failures": 3,
+    "unexpected_CUDA_faults": 0,
+    "independent_CPU_checks": 25,
+    "CPU_breakdown": {
+      "worker": 17,
+      "parent": 7,
+      "full_parent_missing_human_gate": 1
+    },
+    "operation_journal_bytes": 24914900,
+    "operation_journal_hash_from_execution_review": "a1334656de68c8dccfd562b6b4d5527e21b271c737fe03127dffda89ca94d0f5",
+    "restored_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "original_bulk_primary_validation_comparisons": null
+  },
+  "claim_limits": {
+    "real_CUDA_fault_branch": "NOT_EXERCISED_REAL",
+    "poisoned_context_no_reentry": "CPU_FIXTURE_AND_SOURCE_ONLY",
+    "original_failure_trigger_process_kernel": "UNDETERMINED",
+    "long_run_GPU_stability": "NOT_ESTABLISHED",
+    "empirical_research_allocation_improvement": "NOT_MEASURED",
+    "controller_improvement": "NOT_ESTABLISHED",
+    "signed_task_predictiveness": "NOT_ESTABLISHED",
+    "production_speed_improvement": "NOT_MEASURED",
+    "model_self_improvement_claim": false,
+    "separate_controller_and_logging_latency_seconds": null,
+    "cost_scope": "Measured worker wall includes diagnostic instrumentation; journal bytes are known. Separate logging/controller latency and matched production-speed improvement remain unmeasured."
+  },
+  "authority": {
+    "new_native_jobs": false,
+    "new_model_budget": false,
+    "another_runtime_debug_attempt": false,
+    "full_matrix_restart": false,
+    "H3": "Separately initially authorized subject to fresh resource/gradient/safety gates; policy7 does not dispatch or modify its frozen lane."
+  },
+  "preservation": [
+    "No changed controls, alpha/operator/scorer/data boundaries or endpoint/margin",
+    "No relaxed qualification, runtime/source/resource/numerical/restoration gates",
+    "No training, optimizer, protected/native TEST, global setting or asset changes",
+    "No debug outcomes merged into incomplete bulk matrix",
+    "Expected Python restoration exception does not validate real poisoned-CUDA behavior",
+    "Any new instrumentation lane/source needs prospective registration and independent review"
+  ],
+  "evidence_sha256": {
+    "RESEARCH_POLICY_V7.md": "99918e5769ef46ed67dadfc7e285c61680a98462d60b9143bff7589e6c22b6a5",
+    "runtime_debug_admission_v2.json": "0abe8ffd869531e98460f4c416e943dbe289b4da42d20e1d6627f29c1c691d94",
+    "runtime_debug.py": "1e1fe306e44fdd6b68e15d39eefee3de78094d7761c90192ffb9861c257d9299",
+    "tests\\test_runtime_debug.py": "818e8dd936105ccba5fa41cc81e373e2a18ba6c22ca84dcfd8c84023af85d77c",
+    "tests\\test_runtime_debug_supervision.py": "f75455c792a6ef5f23b42cd69794fb059f4ce86b703d40c64dbc66292dc50dd7",
+    "reviews\\runtime_debug_dispatch_receipt.json": "c9e17594778243d4d1e7f9c6088c05893941845ecda075c0925c498a3170504b",
+    "reviews\\runtime_debug_execution_review_001.json": "630ae52931dca870398fde62a277bd898ba2f9d87af1aabdc73952a55c2b4c5f",
+    "audits\\runtime_debug_execution_math_001.json": "30974c0fb94b85668706c0b46a4cc51233229be07f7cd83a0d01f7351bfe1335",
+    "audits\\post_debug_authority_audit_001.json": "5d2f6f1b66598033bef7be6b67434ceadce7c425c4753b63100874a9e1114782",
+    "runs\\native-runtime-debug-001\\terminal_receipt.json": "bba9a2d46f585c8e36f526c3e0b1e3e9ddbefd9921bc9a8870644e76e5de7a2e",
+    "runs\\native-runtime-debug-001\\result\\receipt.json": "9a203cbebd1551b733ea2b9f990a24822e94566b68bdd990f7a1c7209a6b207c",
+    "reviews\\research_policy_v6_receipt.json": "fb53df2eb50a88c4101823095d4253dc643c1f9bb4f7ac18378ed3c51dd4528f"
+  },
+  "source_review_is_not_native_or_human_authorization": true
+}

@@ -1,0 +1,47 @@
+--- held_d07
++++ held_a986
+@@ -20,7 +20,7 @@
+ ROOT = CAMPAIGN.parents[1]
+ RUN = V3 / "runs/native-fresh-open-replication-001"
+ DATA = V3 / "data/fresh_open_replication_001"
+-ADMISSION = V3 / "fresh_admission_v1.json"
++ADMISSION = V3 / "fresh_admission_v2.json"
+ PLAN = V3 / "FRESH_ANALYSIS_PLAN_DRAFT_001.md"
+ STATE = "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551"
+ CODE = "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d"
+@@ -53,6 +53,12 @@
+     except (TypeError, ValueError): return None
+ def check(condition, message, errors):
+     if not condition: errors.append(message)
++
++
++def review_receipt_path(admission):
++    if admission.get("review_receipt") != "reviews/fresh_dispatch_review_002.json":
++        raise PermissionError("exact V2 independent dispatch review path required")
++    return (V3 / admission["review_receipt"]).resolve(strict=True)
+ 
+ 
+ def raw_gate(population, outcomes, forwards, receipt, qualification, forecast, routes):
+@@ -129,7 +135,12 @@
+     check(forecast.get("admitted") is True and forecast.get("task_API_cap") == 33744 and forecast.get("task_rows") == 4104 and
+           forecast.get("forward_factor") == 1.5 and forecast.get("internal_reserve_seconds") == 1800 and
+           forecast.get("parent_deadline_seconds") == 15600 and
+-          all(finite(forecast.get(k)) for k in ("remaining_forward_seconds", "remaining_nonforward_seconds", "elapsed_seconds")) and
++          all(nonnegative(forecast.get(k)) for k in ("remaining_forward_seconds", "remaining_nonforward_seconds", "remaining_forecast_seconds",
++              "elapsed_seconds", "nonforward_per_row_bound_seconds", "max_observed_warm_forward_seconds")) and
++          forecast.get("max_observed_warm_forward_seconds", 0) > 0 and
++          math.isclose(forecast["remaining_forward_seconds"], 33744 * 1.5 * forecast["max_observed_warm_forward_seconds"], rel_tol=1e-12, abs_tol=1e-9) and
++          math.isclose(forecast["remaining_nonforward_seconds"], 4104 * forecast["nonforward_per_row_bound_seconds"], rel_tol=1e-12, abs_tol=1e-9) and
++          math.isclose(forecast["remaining_forecast_seconds"], forecast["remaining_forward_seconds"] + forecast["remaining_nonforward_seconds"], rel_tol=1e-12, abs_tol=1e-9) and
+           sum(forecast.get(k, math.inf) for k in ("remaining_forward_seconds", "remaining_nonforward_seconds", "elapsed_seconds")) + 1800 <= 15600,
+           "complete all-control forecast proof missing", errors)
+     if task:
+@@ -366,7 +377,7 @@
+     for relative, expected in dispatch.items():
+         path = (ROOT / relative).resolve(strict=True)
+         if ROOT not in path.parents or sha(path) != expected: raise RuntimeError("current frozen dispatch bytes differ:" + relative)
+-    review_path = (V3 / admission["review_receipt"]).resolve(strict=True)
++    review_path = review_receipt_path(admission)
+     review = read(run_root / "review.json")
+     if V3 not in review_path.parents or sha(review_path) != sha(run_root / "review.json") or review.get("status") != "PASS_FRESH_K01_FP32_DISPATCH" or review.get("admission_sha256") != sha(ADMISSION):
+         raise RuntimeError("exact independent dispatch review absent")

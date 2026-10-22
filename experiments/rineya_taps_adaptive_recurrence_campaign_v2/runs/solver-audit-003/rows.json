@@ -1,0 +1,2254 @@
+[
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "If you do not water a houseplant for a long time, what may happen? Answer concisely.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_common_sense_025ea65887df6a1b",
+    "family": "common_sense",
+    "format_score": null,
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 34,
+    "max_forward_prefix_tokens": 49,
+    "prediction": null,
+    "prompt_sha256": "f77f892f79db17e92a0b1ab3f0a832e577ed1384cf20051e9c44bdfe845ea0f0",
+    "score": null,
+    "scorer_attacks": {},
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": null,
+    "split": "DEV",
+    "status": "NOT_APPLICABLE",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "a6a33bd45a5877491469245c456efed2b9420eefe430adbfe3c053a2810b1e82",
+    "truncation": false,
+    "witness": {
+      "reason": "unrecognized/factual/language task; no target fallback"
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 1.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "Object",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "In a counterfactual world, every object that is yellow is also coral, and every coral object is ochre. Object N is yellow. Under those rules, is N ochre? Answer YES or NO only.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "NO",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+    "family": "counterfactual_reasoning",
+    "format_score": {
+      "correct": true,
+      "normalized_answers": [
+        "yes"
+      ],
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 56,
+    "max_forward_prefix_tokens": 63,
+    "prediction": "YES",
+    "prompt_sha256": "c0b7531dcf15b3330fa3b88759bb46da6dd4b61a78a6b864fa57ae60acd48709",
+    "score": {
+      "actual": "yes",
+      "allowed": [
+        "yes",
+        "no"
+      ],
+      "correct": true,
+      "expected": "yes",
+      "score": 1.0
+    },
+    "scorer_attacks": {
+      "contradictory_choice": {
+        "format_score": 0.0,
+        "prediction": "NO YES",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "transitive_color",
+    "split": "DEV",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "b5689acf952fbfca937dfc056aee35b56dab9067716b61a9f52048a2db6d5c78",
+    "truncation": false,
+    "witness": {
+      "edges": [
+        [
+          "yellow",
+          "coral"
+        ],
+        [
+          "coral",
+          "ochre"
+        ]
+      ],
+      "initial": "yellow",
+      "reached": [
+        "coral",
+        "ochre",
+        "yellow"
+      ]
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "Dina",
+        "score": 1.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Ari is older than Enzo. Enzo is older than Cato. Cato is older than Dina. Who is youngest? Return only the name.",
+        "score": 1.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_general_reasoning_078451b6adf65710",
+    "family": "general_reasoning",
+    "format_score": {
+      "correct": true,
+      "normalized_answers": [
+        "dina"
+      ],
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 45,
+    "max_forward_prefix_tokens": 56,
+    "prediction": "Dina",
+    "prompt_sha256": "d3ce4f8e932c30cf3483a0c8ea3601e690b8b89250559adfb6896f071d1386d2",
+    "score": {
+      "correct": true,
+      "expected_keywords": [
+        "dina"
+      ],
+      "matched_keywords": [
+        "dina"
+      ],
+      "score": 1.0
+    },
+    "scorer_attacks": {
+      "negated_solver_answer": {
+        "format_score": 0.0,
+        "prediction": "The answer is not Dina.",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "age_order",
+    "split": "DEV",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "1783aebf78b221376998aa8d6c2113076372a2b8fd8abc19d6031fe02a4d7c4d",
+    "truncation": false,
+    "witness": {
+      "relations": [
+        [
+          "Ari",
+          "Enzo"
+        ],
+        [
+          "Enzo",
+          "Cato"
+        ],
+        [
+          "Cato",
+          "Dina"
+        ]
+      ],
+      "unique_minimum": true
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "4673",
+        "score": 1.0
+      },
+      "context_first_number": {
+        "prediction": "4673",
+        "score": 1.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "Ralo",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "7491",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Context: The Merek unit has access code 4673. The Keris unit has access code 8962. The Pavo unit has access code 4642. The Ralo unit has access code 7491.\nQuestion: What is the access code of the Merek unit? Return only the code.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+    "family": "grounded_qa_rag",
+    "format_score": {
+      "correct": true,
+      "pattern": "\\d+",
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 84,
+    "max_forward_prefix_tokens": 95,
+    "prediction": "4673",
+    "prompt_sha256": "d4869f55f37ba24d6dbd0a8b84eea38ce9bec94d052ea63395265c547104c1a3",
+    "score": {
+      "actual": 4673.0,
+      "correct": true,
+      "expected": 4673.0,
+      "score": 1.0,
+      "tolerance": 0.0
+    },
+    "scorer_attacks": {
+      "negated_final_number": {
+        "format_score": 0.0,
+        "prediction": "The answer is not 4673.",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "code_lookup",
+    "split": "DEV",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "db68c9ce61fbda394df5e6ab294384c231e6fc55c3455f38be5b8483a1b947a2",
+    "truncation": false,
+    "witness": {
+      "evidence": [
+        [
+          "Merek",
+          "4673"
+        ],
+        [
+          "Keris",
+          "8962"
+        ],
+        [
+          "Pavo",
+          "4642"
+        ],
+        [
+          "Ralo",
+          "7491"
+        ]
+      ],
+      "query": "Merek"
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Return exactly this JSON object and nothing else: {\"label\":\"tag-967958\",\"ok\":true}",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+    "family": "instruction_following",
+    "format_score": {
+      "actual": {
+        "label": "tag-967958",
+        "ok": true
+      },
+      "correct": true,
+      "expected": {
+        "label": "tag-967958",
+        "ok": true
+      },
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 37,
+    "max_forward_prefix_tokens": 60,
+    "prediction": "{\"label\":\"tag-967958\",\"ok\":true}",
+    "prompt_sha256": "b157c2fd4edb644a07243ab85e130c69d5e8ab2023d41a4e7df60c3ecedf65b9",
+    "score": {
+      "actual": {
+        "label": "tag-967958",
+        "ok": true
+      },
+      "correct": true,
+      "expected": {
+        "label": "tag-967958",
+        "ok": true
+      },
+      "score": 1.0
+    },
+    "scorer_attacks": {
+      "boolean_to_integer": {
+        "format_score": 1.0,
+        "prediction": "{\"label\": \"tag-967958\", \"ok\": 1}",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "json_echo",
+    "split": "DEV",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "08de5e8f78436aff23e227c4dded36929d8a3d01f7bc63fd3f5772ca6428f6e3",
+    "truncation": false,
+    "witness": {
+      "copied_prompt_payload": true
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "000",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "Record",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "305799",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "128448",
+        "score": 1.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Use only the records below.\nRecord 000: unit U618 has archival value 163654.\nRecord 001: unit U811 has archival value 969858.\nRecord 002: unit U489 has archival value 112874.\nRecord 003: unit U174 has archival value 409088.\nRecord 004: unit U246 has archival value 603423.\nRecord 005: unit U315 has archival value 359544.\nRecord 006: unit U271 has archival value 937818.\nRecord 007: unit U156 has archival value 769930.\nRecord 008: unit U749 has archival value 633168.\nRecord 009: unit U996 has archival value 978192.\nRecord 010: unit U307 has archival value 288823.\nRecord 011: unit U868 has archival value 812398.\nRecord 012: unit U816 has archival value 145720.\nRecord 013: unit U395 has archival value 168654.\nRecord 014: unit U278 has archival value 713344.\nRecord 015: unit U163 has archival value 884385.\nRecord 016: unit U695 has archival value 923627.\nRecord 017: unit U855 has archival value 567625.\nRecord 018: unit U116 has archival value 181617.\nRecord 019: unit U415 has archival value 731533.\nRecord 020: unit U359 has archival value 343709.\nRecord 021: unit U981 has archival value 505416.\nRecord 022: unit U827 has archival value 835536.\nRecord 023: unit U278 has archival value 125817.\nRecord 024: unit U609 has archival value 776839.\nRecord 025: unit U978 has archival value 900074.\nRecord 026: unit U130 has archival value 901137.\nRecord 027: unit U333 has archival value 660255.\nRecord 028: unit U785 has archival value 817736.\nRecord 029: unit U178 has archival value 468215.\nRecord 030: unit U807 has archival value 992176.\nRecord 031: unit U124 has archival value 790072.\nRecord 032: unit U264 has archival value 565240.\nRecord 033: unit U217 has archival value 902182.\nRecord 034: unit U805 has archival value 833108.\nRecord 035: unit U514 has archival value 579353.\nRecord 036: unit U382 has archival value 866317.\nRecord 037: unit U198 has archival value 405989.\nRecord 038: unit U134 has archival value 250061.\nRecord 039: unit U288 has archival value 962699.\nRecord 040: unit U838 has archival value 579442.\nRecord 041: unit U960 has archival value 396319.\nRecord 042: unit U394 has archival value 195710.\nRecord 043: unit U177 has archival value 670804.\nRecord 044: unit U378 has archival value 230656.\nRecord 045: unit U333 has archival value 652411.\nRecord 046: unit U431 has archival value 388947.\nRecord 047: unit U123 has archival value 618411.\nRecord 048: unit U707 has archival value 440047.\nRecord 049: unit U548 has archival value 659005.\nRecord 050: unit U533 has archival value 670711.\nRecord 051: unit U457 has archival value 131700.\nRecord 052: unit U642 has archival value 904967.\nRecord 053: unit U647 has archival value 646159.\nRecord 054: unit U352 has archival value 126784.\nRecord 055: unit U276 has archival value 714684.\nRecord 056: unit U727 has archival value 937448.\nRecord 057: unit U216 has archival value 411780.\nRecord 058: unit U646 has archival value 650308.\nRecord 059: unit U998 has archival value 137774.\nRecord 060: unit U614 has archival value 832816.\nRecord 061: unit U647 has archival value 551280.\nRecord 062: unit U280 has archival value 740167.\nRecord 063: unit U283 has archival value 984611.\nRecord 064: unit U629 has archival value 921534.\nRecord 065: unit U509 has archival value 138623.\nRecord 066: unit U568 has archival value 497171.\nRecord 067: unit U207 has archival value 991413.\nRecord 068: unit U705 has archival value 653443.\nRecord 069: unit U978 has archival value 138950.\nRecord 070: unit U877 has archival value 654538.\nRecord 071: unit U147 has archival value 799136.\nRecord 072: unit U489 has archival value 397982.\nRecord 073: unit U510 has archival value 237356.\nRecord 074: unit U989 has archival value 745943.\nRecord 075: unit U814 has archival value 824786.\nRecord 076: unit U313 has archival value 923600.\nRecord 077: unit U540 has archival value 404146.\nRecord 078: unit U368 has archival value 647274.\nRecord 079: unit U857 has archival value 585702.\nRecord 080: unit U137 has archival value 509448.\nRecord 081: unit U889 has archival value 821980.\nRecord 082: unit U770 has archival value 413388.\nRecord 083: unit U473 has archival value 240209.\nRecord 084: unit U925 has archival value 946326.\nRecord 085: unit U261 has archival value 833269.\nRecord 086: unit U663 has archival value 877122.\nRecord 087: unit U371 has archival value 910119.\nRecord 088: unit U664 has archival value 878959.\nRecord 089: unit U649 has archival value 852357.\nRecord 090: unit U338 has archival value 761928.\nRecord 091: unit U669 has archival value 700764.\nRecord 092: unit U604 has archival value 565725.\nRecord 093: unit U329 has archival value 749380.\nRecord 094: unit U652 has archival value 948080.\nRecord 095: the Zorin target has archival value 128448.\nRecord 096: unit U489 has archival value 184186.\nRecord 097: unit U139 has archival value 703199.\nRecord 098: unit U857 has archival value 687831.\nRecord 099: unit U218 has archival value 305799.\nQuestion: What is the archival value of the Zorin target? Return only the integer.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_long_context_retrieval_20550a305b3b2af6",
+    "family": "long_context_retrieval",
+    "format_score": {
+      "correct": true,
+      "pattern": "\\d+",
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 2237,
+    "max_forward_prefix_tokens": 2248,
+    "prediction": "128448",
+    "prompt_sha256": "d4dff01bd7a3456cf8df1914b8fec7dbd5a733578a0045074e2d2d7a0a6933cc",
+    "score": {
+      "actual": 128448.0,
+      "correct": true,
+      "expected": 128448.0,
+      "score": 1.0,
+      "tolerance": 0.0
+    },
+    "scorer_attacks": {
+      "negated_final_number": {
+        "format_score": 0.0,
+        "prediction": "The answer is not 128448.",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "archival_lookup",
+    "split": "DEV",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "dc8680a262c88eed75fd87e12dfa57dae3c7fc2ba4fa0048b06a7c6d34ca6e01",
+    "truncation": false,
+    "witness": {
+      "query": "Zorin",
+      "records": 100,
+      "source_record": 95
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "000",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "Record",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "721756",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "128448",
+        "score": 1.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Use only the records below.\nRecord 000: unit U434 has archival value 537593.\nRecord 001: unit U102 has archival value 395850.\nRecord 002: unit U321 has archival value 665376.\nRecord 003: unit U142 has archival value 395011.\nRecord 004: unit U999 has archival value 773339.\nRecord 005: unit U750 has archival value 376707.\nRecord 006: unit U169 has archival value 641728.\nRecord 007: unit U316 has archival value 787550.\nRecord 008: unit U261 has archival value 226806.\nRecord 009: unit U507 has archival value 519103.\nRecord 010: unit U357 has archival value 550471.\nRecord 011: unit U159 has archival value 187112.\nRecord 012: unit U816 has archival value 561072.\nRecord 013: unit U292 has archival value 159704.\nRecord 014: unit U758 has archival value 876962.\nRecord 015: unit U649 has archival value 774370.\nRecord 016: unit U401 has archival value 268017.\nRecord 017: unit U506 has archival value 858181.\nRecord 018: unit U988 has archival value 443166.\nRecord 019: unit U708 has archival value 122874.\nRecord 020: unit U559 has archival value 987790.\nRecord 021: unit U351 has archival value 319515.\nRecord 022: unit U391 has archival value 950017.\nRecord 023: unit U396 has archival value 413256.\nRecord 024: unit U130 has archival value 578925.\nRecord 025: unit U692 has archival value 207665.\nRecord 026: unit U542 has archival value 581023.\nRecord 027: unit U960 has archival value 528413.\nRecord 028: unit U667 has archival value 907160.\nRecord 029: unit U512 has archival value 591081.\nRecord 030: unit U757 has archival value 539003.\nRecord 031: unit U193 has archival value 458040.\nRecord 032: unit U634 has archival value 736190.\nRecord 033: unit U112 has archival value 964895.\nRecord 034: unit U118 has archival value 608087.\nRecord 035: unit U747 has archival value 957463.\nRecord 036: unit U193 has archival value 907328.\nRecord 037: unit U290 has archival value 359766.\nRecord 038: unit U878 has archival value 566295.\nRecord 039: unit U958 has archival value 742291.\nRecord 040: unit U130 has archival value 492079.\nRecord 041: unit U672 has archival value 168074.\nRecord 042: unit U318 has archival value 155232.\nRecord 043: unit U439 has archival value 971371.\nRecord 044: unit U536 has archival value 740291.\nRecord 045: unit U334 has archival value 233035.\nRecord 046: unit U212 has archival value 967810.\nRecord 047: unit U287 has archival value 565848.\nRecord 048: unit U374 has archival value 267976.\nRecord 049: unit U601 has archival value 940858.\nRecord 050: the Zorin target has archival value 128448.\nRecord 051: unit U438 has archival value 560296.\nRecord 052: unit U413 has archival value 126192.\nRecord 053: unit U442 has archival value 708995.\nRecord 054: unit U344 has archival value 569547.\nRecord 055: unit U166 has archival value 965022.\nRecord 056: unit U803 has archival value 324841.\nRecord 057: unit U543 has archival value 957364.\nRecord 058: unit U540 has archival value 128126.\nRecord 059: unit U596 has archival value 340990.\nRecord 060: unit U715 has archival value 129641.\nRecord 061: unit U841 has archival value 534718.\nRecord 062: unit U499 has archival value 568015.\nRecord 063: unit U404 has archival value 214227.\nRecord 064: unit U748 has archival value 524944.\nRecord 065: unit U931 has archival value 983380.\nRecord 066: unit U212 has archival value 768377.\nRecord 067: unit U651 has archival value 937140.\nRecord 068: unit U840 has archival value 405892.\nRecord 069: unit U139 has archival value 661975.\nRecord 070: unit U448 has archival value 438114.\nRecord 071: unit U473 has archival value 293934.\nRecord 072: unit U902 has archival value 785313.\nRecord 073: unit U816 has archival value 970028.\nRecord 074: unit U145 has archival value 221574.\nRecord 075: unit U658 has archival value 106663.\nRecord 076: unit U406 has archival value 972108.\nRecord 077: unit U614 has archival value 907778.\nRecord 078: unit U213 has archival value 226458.\nRecord 079: unit U768 has archival value 728545.\nRecord 080: unit U657 has archival value 966510.\nRecord 081: unit U222 has archival value 130891.\nRecord 082: unit U684 has archival value 423514.\nRecord 083: unit U332 has archival value 123303.\nRecord 084: unit U715 has archival value 633766.\nRecord 085: unit U285 has archival value 819973.\nRecord 086: unit U648 has archival value 678509.\nRecord 087: unit U273 has archival value 747140.\nRecord 088: unit U443 has archival value 429565.\nRecord 089: unit U603 has archival value 314754.\nRecord 090: unit U129 has archival value 371727.\nRecord 091: unit U416 has archival value 452345.\nRecord 092: unit U623 has archival value 707706.\nRecord 093: unit U119 has archival value 964345.\nRecord 094: unit U482 has archival value 124133.\nRecord 095: unit U669 has archival value 110481.\nRecord 096: unit U953 has archival value 478707.\nRecord 097: unit U620 has archival value 214335.\nRecord 098: unit U422 has archival value 335434.\nRecord 099: unit U807 has archival value 721756.\nQuestion: What is the archival value of the Zorin target? Return only the integer.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_lost_in_the_middle_e4e7cc76239741de",
+    "family": "lost_in_the_middle",
+    "format_score": {
+      "correct": true,
+      "pattern": "\\d+",
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 2237,
+    "max_forward_prefix_tokens": 2248,
+    "prediction": "128448",
+    "prompt_sha256": "0be89a33b425e5187542d3459b550ecf6481e785920864dc9766d1b4e8f7f87b",
+    "score": {
+      "actual": 128448.0,
+      "correct": true,
+      "expected": 128448.0,
+      "score": 1.0,
+      "tolerance": 0.0
+    },
+    "scorer_attacks": {
+      "negated_final_number": {
+        "format_score": 0.0,
+        "prediction": "The answer is not 128448.",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "archival_lookup",
+    "split": "DEV",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "d0def97104692b46943ca709a9f80566d7d9841584f117bd6e52f35d0030d13b",
+    "truncation": false,
+    "witness": {
+      "query": "Zorin",
+      "records": 100,
+      "source_record": 50
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Compute (30 × 8) + (-39). Return only the integer.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+    "family": "mathematics",
+    "format_score": {
+      "correct": true,
+      "pattern": "[-+]?\\d+",
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 30,
+    "max_forward_prefix_tokens": 41,
+    "prediction": "201",
+    "prompt_sha256": "966f8dd0435725ed1c598477db18f21116ca3b8f216d20563aab89f67b92c544",
+    "score": {
+      "actual": 201.0,
+      "correct": true,
+      "expected": 201.0,
+      "score": 1.0,
+      "tolerance": 0.0
+    },
+    "scorer_attacks": {
+      "negated_final_number": {
+        "format_score": 0.0,
+        "prediction": "The answer is not 201.",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "signed_product_plus",
+    "split": "DEV",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "9688a162c4d67442ff7e7965bbffae1ce76fdcb55aa105643d92af3b63ecd99a",
+    "truncation": false,
+    "witness": {
+      "operands": [
+        30,
+        8,
+        -39
+      ]
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "Bex",
+        "score": 1.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Enzo gave the token to Ari. Then Ari gave it to Dina. Finally Dina gave it to Bex. Who has the token now? Return only the name.",
+        "score": 1.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_multi_hop_binding_492bf31e1ae5deff",
+    "family": "multi_hop_binding",
+    "format_score": {
+      "correct": true,
+      "normalized_answers": [
+        "bex"
+      ],
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 48,
+    "max_forward_prefix_tokens": 59,
+    "prediction": "Bex",
+    "prompt_sha256": "b0e96ea6114bc7dac5c94ed4464fa459435e6ad7898aaa496b36ce85e209d180",
+    "score": {
+      "correct": true,
+      "expected_keywords": [
+        "bex"
+      ],
+      "matched_keywords": [
+        "bex"
+      ],
+      "score": 1.0
+    },
+    "scorer_attacks": {
+      "negated_solver_answer": {
+        "format_score": 0.0,
+        "prediction": "The answer is not Bex.",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "handoff",
+    "split": "DEV",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "6ec6cae6e6ee7b437ed1016bb93f0cfc20d5cd47c9cbef27acff39bc800ff7d8",
+    "truncation": false,
+    "witness": {
+      "item": "token",
+      "path": [
+        "Enzo",
+        "Ari",
+        "Dina",
+        "Bex"
+      ]
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Greet Hcqaku warmly in between three and seven words. Do not use an exclamation mark.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_normal_conversation_4a73375fc950bab7",
+    "family": "normal_conversation",
+    "format_score": null,
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 33,
+    "max_forward_prefix_tokens": 52,
+    "prediction": null,
+    "prompt_sha256": "8d913c4c736e68bdc3fd2539b7cef8b24988b67ac7ddfcac228fa19fcf841ba7",
+    "score": null,
+    "scorer_attacks": {},
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": null,
+    "split": "DEV",
+    "status": "NOT_APPLICABLE",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "efc315de75c15fe187b107f01f2c80591a20635e18691ea6244a3894e8d90438",
+    "truncation": false,
+    "witness": {
+      "reason": "unrecognized/factual/language task; no target fallback"
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "84",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "7",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "A box held 84 tokens. 7 were removed. How many remain? Return only the integer.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+    "family": "paraphrase_robustness",
+    "format_score": {
+      "correct": true,
+      "pattern": "[-+]?\\d+",
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 34,
+    "max_forward_prefix_tokens": 45,
+    "prediction": "77",
+    "prompt_sha256": "1ad3c5632b067730747c2006d03203cceb3ec0b0749dc17f7cc03f681bc3e202",
+    "score": {
+      "actual": 77.0,
+      "correct": true,
+      "expected": 77.0,
+      "score": 1.0,
+      "tolerance": 0.0
+    },
+    "scorer_attacks": {
+      "negated_final_number": {
+        "format_score": 0.0,
+        "prediction": "The answer is not 77.",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "subtraction",
+    "split": "DEV",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "4c0d09dade3fbea0c16ea696a7b11454b40e3344cf8b5870a305b6b144381852",
+    "truncation": false,
+    "witness": {
+      "operands": [
+        84,
+        7
+      ]
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Starting with 84 tokens, take away 7. State only the number left.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+    "family": "paraphrase_robustness",
+    "format_score": {
+      "correct": true,
+      "pattern": "[-+]?\\d+",
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 30,
+    "max_forward_prefix_tokens": 41,
+    "prediction": "77",
+    "prompt_sha256": "b61b1407cf2135699b4c4ab4284ce543e8a56cbc6320755682cc6d9b6e599472",
+    "score": {
+      "actual": 77.0,
+      "correct": true,
+      "expected": 77.0,
+      "score": 1.0,
+      "tolerance": 0.0
+    },
+    "scorer_attacks": {
+      "negated_final_number": {
+        "format_score": 0.0,
+        "prediction": "The answer is not 77.",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "subtraction",
+    "split": "DEV",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "0371e9361d9289e6cbb17cc4fc6df11f320716ed4286a3f5c6df820583748dd2",
+    "truncation": false,
+    "witness": {
+      "operands": [
+        84,
+        7
+      ]
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "What is 84 minus 7? Give just the integer answer.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+    "family": "paraphrase_robustness",
+    "format_score": {
+      "correct": true,
+      "pattern": "[-+]?\\d+",
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 27,
+    "max_forward_prefix_tokens": 38,
+    "prediction": "77",
+    "prompt_sha256": "0ea21fe21abba6b04fa1f805320352bc9de2ffb1982278e5251e607ab72c685d",
+    "score": {
+      "actual": 77.0,
+      "correct": true,
+      "expected": 77.0,
+      "score": 1.0,
+      "tolerance": 0.0
+    },
+    "scorer_attacks": {
+      "negated_final_number": {
+        "format_score": 0.0,
+        "prediction": "The answer is not 77.",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "subtraction",
+    "split": "DEV",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "eee4bed8aea4a5ea167ff7413c25f6526deb2931433cca21623c7ed7246f5ab1",
+    "truncation": false,
+    "witness": {
+      "operands": [
+        84,
+        7
+      ]
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Which blood cells primarily carry oxygen? Answer concisely.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_science_0ac5af678b239ec5",
+    "family": "science",
+    "format_score": null,
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 24,
+    "max_forward_prefix_tokens": 39,
+    "prediction": null,
+    "prompt_sha256": "e589b85ee69a7bc1001c51e85bacc8de0a21d1b0c9d77762d39bba09dac6a45a",
+    "score": null,
+    "scorer_attacks": {},
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": null,
+    "split": "DEV",
+    "status": "NOT_APPLICABLE",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "0d89e11796d48e4d759f89e54fbe09516db27adfc69ce8d9974e3dff78bd39e1",
+    "truncation": false,
+    "witness": {
+      "reason": "unrecognized/factual/language task; no target fallback"
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "What is the first letter of the string KTBTGVG? Answer in one or two words.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "mergedev_short_response_30785feeb5a8abdf",
+    "family": "short_response",
+    "format_score": {
+      "correct": true,
+      "normalized_answers": [
+        "k"
+      ],
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 32,
+    "max_forward_prefix_tokens": 41,
+    "prediction": "K",
+    "prompt_sha256": "abe6c7139367a384abac197f983a2bd89986c1829b713d477a4a797f56e1b8ec",
+    "score": {
+      "correct": true,
+      "normalized_answers": [
+        "k"
+      ],
+      "score": 1.0
+    },
+    "scorer_attacks": {},
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "first_letter",
+    "split": "DEV",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "17490af76a60f6f6ea0fef3f513458988d987cc034c5f2895a575284a977b85e",
+    "truncation": false,
+    "witness": {
+      "input_string": "KTBTGVG"
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 1.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "5093",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "5093",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "Tivan",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "11",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Context: The Ralo unit has code 5093. The Tivan unit is stored in cabinet 11. Question: What is the code of the Merek unit? If the context does not say, answer exactly UNKNOWN.",
+        "score": 1.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "UNKNOWN",
+        "score": 1.0
+      }
+    },
+    "case_id": "mergedev_unanswerable_abstention_22f9fcfd9ce716c8",
+    "family": "unanswerable_abstention",
+    "format_score": {
+      "correct": true,
+      "normalized_answers": [
+        "unknown"
+      ],
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 61,
+    "max_forward_prefix_tokens": 72,
+    "prediction": "UNKNOWN",
+    "prompt_sha256": "3ede202f86f3bca4c7e5b934b903e6dddfe1bbfa65da2afad759e3b2ed45ee78",
+    "score": {
+      "correct": true,
+      "expected_keywords": [
+        "unknown"
+      ],
+      "matched_keywords": [
+        "unknown"
+      ],
+      "score": 1.0
+    },
+    "scorer_attacks": {
+      "negated_solver_answer": {
+        "format_score": 0.0,
+        "prediction": "The answer is not UNKNOWN.",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "closed_context_missing_code",
+    "split": "DEV",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "df81cd4e8f1a75c593be2fecf1271d0b5d197550ee19907dff41e9fdc21a03bf",
+    "truncation": false,
+    "witness": {
+      "evidence": [
+        [
+          "Ralo",
+          "5093"
+        ]
+      ],
+      "fallback_from_explicit_prompt_instruction": true,
+      "query": "Merek"
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "If ice is placed in a warm room, what happens? Answer concisely.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "calibration_common_sense_ac2b34a1ecce0a8d",
+    "family": "common_sense",
+    "format_score": null,
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 29,
+    "max_forward_prefix_tokens": 52,
+    "prediction": null,
+    "prompt_sha256": "83897b8e78abf5e6a3f428f49ce0424648f2093fb3f20cbfee4f111e35fffee1",
+    "score": null,
+    "scorer_attacks": {},
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": null,
+    "split": "SMOKE",
+    "status": "NOT_APPLICABLE",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "897578d6f69a76f7a4596aced37ae2244efd69f3108562a06805c9f92c30d35b",
+    "truncation": false,
+    "witness": {
+      "reason": "unrecognized/factual/language task; no target fallback"
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Compute (87 × 9) + (20). Return only the integer.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "calibration_mathematics_429ca310e753b947",
+    "family": "mathematics",
+    "format_score": {
+      "correct": true,
+      "pattern": "[-+]?\\d+",
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 30,
+    "max_forward_prefix_tokens": 53,
+    "prediction": "803",
+    "prompt_sha256": "234ed2029753adc399deae2ab7851a7db1cc3bf3e14e271947b53e4cab35ba02",
+    "score": {
+      "actual": 803.0,
+      "correct": true,
+      "expected": 803.0,
+      "score": 1.0,
+      "tolerance": 0.0
+    },
+    "scorer_attacks": {
+      "negated_final_number": {
+        "format_score": 0.0,
+        "prediction": "The answer is not 803.",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "signed_product_plus",
+    "split": "SMOKE",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "efce24b95b0e97c0975d179868eeac5eaeba6d4ada09224745e23595a2557f0d",
+    "truncation": false,
+    "witness": {
+      "operands": [
+        87,
+        9,
+        20
+      ]
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Return exactly this JSON object and nothing else: {\"label\":\"tag-813637\",\"ok\":true}",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "calibration_instruction_following_1d15f77eca5d17f0",
+    "family": "instruction_following",
+    "format_score": {
+      "actual": {
+        "label": "tag-813637",
+        "ok": true
+      },
+      "correct": true,
+      "expected": {
+        "label": "tag-813637",
+        "ok": true
+      },
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 37,
+    "max_forward_prefix_tokens": 60,
+    "prediction": "{\"label\":\"tag-813637\",\"ok\":true}",
+    "prompt_sha256": "17b85e54eb9ad6b8d0884983380e1e28078d1517cf3936fdc929b6977929773d",
+    "score": {
+      "actual": {
+        "label": "tag-813637",
+        "ok": true
+      },
+      "correct": true,
+      "expected": {
+        "label": "tag-813637",
+        "ok": true
+      },
+      "score": 1.0
+    },
+    "scorer_attacks": {
+      "boolean_to_integer": {
+        "format_score": 1.0,
+        "prediction": "{\"label\": \"tag-813637\", \"ok\": 1}",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "json_echo",
+    "split": "SMOKE",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "ad40dae3ddbdc2eac9a358880fa66e36867013a12b1960ef76cc16d05edc5630",
+    "truncation": false,
+    "witness": {
+      "copied_prompt_payload": true
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "What is the SI unit of electric current? Answer concisely.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "calibration_science_9cf33d8dbb5fd050",
+    "family": "science",
+    "format_score": null,
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 26,
+    "max_forward_prefix_tokens": 49,
+    "prediction": null,
+    "prompt_sha256": "4d469362f66b0504f42d72f2b0361bbdafb9fd541409a28af1e8a3067f19918b",
+    "score": null,
+    "scorer_attacks": {},
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": null,
+    "split": "SMOKE",
+    "status": "NOT_APPLICABLE",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "52e64fdfcabb728ff0cba364945f92d1ff94e03ac010ac6c29202e24665a32be",
+    "truncation": false,
+    "witness": {
+      "reason": "unrecognized/factual/language task; no target fallback"
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "Faye",
+        "score": 1.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Enzo gave the map to Dina. Then Dina gave it to Ari. Finally Ari gave it to Faye. Who has the map now? Return only the name.",
+        "score": 1.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "calibration_multi_hop_binding_caa1eea53ea0585a",
+    "family": "multi_hop_binding",
+    "format_score": {
+      "correct": true,
+      "normalized_answers": [
+        "faye"
+      ],
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 48,
+    "max_forward_prefix_tokens": 71,
+    "prediction": "Faye",
+    "prompt_sha256": "358ebb1b12fa29e660060613d8d77a50b8a6e5f1311210fe1789bd8f31b83207",
+    "score": {
+      "correct": true,
+      "expected_keywords": [
+        "faye"
+      ],
+      "matched_keywords": [
+        "faye"
+      ],
+      "score": 1.0
+    },
+    "scorer_attacks": {
+      "negated_solver_answer": {
+        "format_score": 0.0,
+        "prediction": "The answer is not Faye.",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "handoff",
+    "split": "SMOKE",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "8f55ccb4d172e2edc57de69f3f4b948fc6dc929f578da809a9723456ba7c1cc7",
+    "truncation": false,
+    "witness": {
+      "item": "map",
+      "path": [
+        "Enzo",
+        "Dina",
+        "Ari",
+        "Faye"
+      ]
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "What is the first letter of the string FSURPNF? Answer in one or two words.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "calibration_short_response_15273c49b438f1a9",
+    "family": "short_response",
+    "format_score": {
+      "correct": true,
+      "normalized_answers": [
+        "f"
+      ],
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 32,
+    "max_forward_prefix_tokens": 55,
+    "prediction": "F",
+    "prompt_sha256": "751aa306c3d75a081f64aa439e34caa1ad6afcf5ad5b6f95289cec235de1ceb1",
+    "score": {
+      "correct": true,
+      "normalized_answers": [
+        "f"
+      ],
+      "score": 1.0
+    },
+    "scorer_attacks": {},
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "first_letter",
+    "split": "SMOKE",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "c595e0ab506ac3933ef962672aa89a8324f3c91627c0883320d0becb6d9a6d42",
+    "truncation": false,
+    "witness": {
+      "input_string": "FSURPNF"
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 0.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Greet Eatgrn warmly in between three and seven words. Do not use an exclamation mark.",
+        "score": 0.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "",
+        "score": 0.0
+      }
+    },
+    "case_id": "calibration_normal_conversation_029382dc0a778c44",
+    "family": "normal_conversation",
+    "format_score": null,
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 33,
+    "max_forward_prefix_tokens": 56,
+    "prediction": null,
+    "prompt_sha256": "e2577d5fad31c3df3ffc63509a87bb2b8ac3aad0c28f1f06c72318d0beffba75",
+    "score": null,
+    "scorer_attacks": {},
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": null,
+    "split": "SMOKE",
+    "status": "NOT_APPLICABLE",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "5ffacf2f569ef8e6c5d8da1553129cd985aea8c35bd01019da2b8f4b661a078d",
+    "truncation": false,
+    "witness": {
+      "reason": "unrecognized/factual/language task; no target fallback"
+    }
+  },
+  {
+    "blind_scores": {
+      "constant_''": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "constant_'0'": {
+        "prediction": "0",
+        "score": 0.0
+      },
+      "constant_'1'": {
+        "prediction": "1",
+        "score": 0.0
+      },
+      "constant_'NO'": {
+        "prediction": "NO",
+        "score": 0.0
+      },
+      "constant_'UNKNOWN'": {
+        "prediction": "UNKNOWN",
+        "score": 1.0
+      },
+      "constant_'YES'": {
+        "prediction": "YES",
+        "score": 0.0
+      },
+      "context_first_code": {
+        "prediction": "6569",
+        "score": 0.0
+      },
+      "context_first_number": {
+        "prediction": "6569",
+        "score": 0.0
+      },
+      "context_last_capitalized_name": {
+        "prediction": "Tivan",
+        "score": 0.0
+      },
+      "context_last_number": {
+        "prediction": "9",
+        "score": 0.0
+      },
+      "context_unique_marked_target": {
+        "prediction": "",
+        "score": 0.0
+      },
+      "copy_full_prompt": {
+        "prediction": "Context: The Ralo unit has code 6569. The Tivan unit is stored in cabinet 9. Question: What is the code of the Merek unit? If the context does not say, answer exactly UNKNOWN.",
+        "score": 1.0
+      },
+      "copy_last_answer_literal": {
+        "prediction": "UNKNOWN",
+        "score": 1.0
+      }
+    },
+    "case_id": "calibration_unanswerable_abstention_3006ee0f901c7173",
+    "family": "unanswerable_abstention",
+    "format_score": {
+      "correct": true,
+      "normalized_answers": [
+        "unknown"
+      ],
+      "score": 1.0
+    },
+    "human_review": "NOT_REVIEWED",
+    "input_tokens": 60,
+    "max_forward_prefix_tokens": 83,
+    "prediction": "UNKNOWN",
+    "prompt_sha256": "eac1abcc398cbc92b7d5b043a55ccf96ed4439be8f11b258ec8c3f503fc6a807",
+    "score": {
+      "correct": true,
+      "expected_keywords": [
+        "unknown"
+      ],
+      "matched_keywords": [
+        "unknown"
+      ],
+      "score": 1.0
+    },
+    "scorer_attacks": {
+      "negated_solver_answer": {
+        "format_score": 0.0,
+        "prediction": "The answer is not UNKNOWN.",
+        "score": 1.0
+      }
+    },
+    "semantic_review": "AGENT_REVIEW_OF_EXPOSED_DEV_NOT_INDEPENDENT",
+    "solver": "closed_context_missing_code",
+    "split": "SMOKE",
+    "status": "PROMPT_ONLY_SOLVED",
+    "token_audit": "PRIOR_EXACT_TOKENIZER_BINDING_REUSED_NOT_RETOKENIZED",
+    "token_ids_sha256": "e0b9d69fc2de99230cc381fee70d240946ccfe71ffbf8ff5b59df60f288c01ce",
+    "truncation": false,
+    "witness": {
+      "evidence": [
+        [
+          "Ralo",
+          "6569"
+        ]
+      ],
+      "fallback_from_explicit_prompt_instruction": true,
+      "query": "Merek"
+    }
+  }
+]
