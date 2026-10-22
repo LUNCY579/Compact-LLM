@@ -1,0 +1,44 @@
+{
+  "captured_at_utc": "2026-08-27T03:39:55.627678Z",
+  "cuda": {
+    "available": true,
+    "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "free_bytes": 7014526976,
+    "free_gib": 6.532787322998047,
+    "total_bytes": 8585216000,
+    "total_gib": 7.99560546875
+  },
+  "cuda_minimum_free_gib": 6.0,
+  "environment": {
+    "captured_at_utc": "2026-08-27T03:39:55.646230Z",
+    "cuda_available": true,
+    "cuda_device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "cuda_version": "12.6",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+    "torch": "2.12.1+cu126"
+  },
+  "platform": "Windows-10-10.0.26200-SP0",
+  "policy": "device selected from available memory before model execution; no quality outcome used",
+  "preflight_sha256": "a8d0f682af965ca6919ee83807f607eb297ae693b0109c655e9a774bf0591c13",
+  "schema_version": "1.0",
+  "selected_device": "cuda",
+  "system_memory": {
+    "available_bytes": 2144485376,
+    "available_gib": 1.9972076416015625,
+    "total_bytes": 16340398080,
+    "total_gib": 15.218181610107422
+  },
+  "target_matrix": {
+    "bf16_weight_bytes": 6291456,
+    "bool_mask_bytes": 3145728,
+    "fp32_score_bytes": 12582912,
+    "fp32_stabilizer_bytes": 12582912,
+    "note": "Dense backward GEMMs remain dense; no sparse-compute claim.",
+    "numel": 3145728,
+    "shape": [
+      1024,
+      3072
+    ]
+  }
+}

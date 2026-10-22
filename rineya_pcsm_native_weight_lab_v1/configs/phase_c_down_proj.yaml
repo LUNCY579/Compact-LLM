@@ -1,0 +1,62 @@
+schema_version: "1.0"
+experiment: pcsm_phase_c_down_proj
+base_model_env: PCSM_BASE_MODEL
+corpus_root_env: PCSM_CORPUS_ROOT
+target_role: mlp.down_proj
+target_layers: all
+peer_role: mlp.down_proj
+seeds: [11, 17, 23, 29, 31]
+budget_fractions: [0.0001, 0.0005, 0.001, 0.005, 0.01]
+descriptor_dimension: 24
+generator:
+  calibration_steps: 20
+  calibration_learning_rate: 0.01
+  bootstrap_steps: 0
+  stabilizer_bounds: [0.25, 1.0]
+  topk_ste_temperature: 1.0
+  structural_regularizer_primary: 0.0
+  structural_regularizer_ablation: 0.05
+  structural_proxy_learning_rate: 0.0001
+native_optimizer:
+  kind: ExactSupportAdamW
+  learning_rate_grid: [0.00005, 0.0001, 0.0002]
+  selection_split: META_TRAIN_only
+  betas: [0.9, 0.999]
+  epsilon: 1.0e-8
+  weight_decay: 0.01
+context_pilot_lengths: [512, 1024, 2048]
+split:
+  meta_train_component_count: 20
+  mask_cal_component_count: 5
+  one_step_dev_source: validation
+  one_step_dev_component_count: 1
+  qualification_example_count: 4
+  qualification_context_note: three ~2.8k examples plus one 6.1k stress example
+  sealed_source: test
+  forbid_sealed_read_during_selection: true
+advancement_gate:
+  paired_seed_wins_required: 4
+  paired_seed_count: 5
+  bootstrap_confidence: 0.95
+  require_ci_excludes_zero: true
+  require_layer_permutation_significance: true
+required_arms:
+  - no_update_frozen
+  - random_sparse_native
+  - gradient_topk_sparse_native
+  - target_only_sparse_native
+  - coordinate_shuffled_peer_pcsm
+  - layer_shuffled_peer_pcsm
+  - real_peer_pcsm_bootstrap
+  - real_peer_pcsm_calibrated
+required_causal_ablations:
+  - coordinate_shuffle
+  - layer_shuffle
+  - module_role_shuffle
+  - uniform_peer_attention
+  - nearest_layer_only
+  - target_only
+  - gradient_feature_only
+  - no_step_scale_head
+  - random_generator
+  - structural_regularizer_off_on

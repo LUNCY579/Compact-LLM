@@ -1,0 +1,17 @@
+schema_version: "1.0"
+seed: 17
+descriptor_dimension: 24
+topk:
+  fraction: 0.01
+  tie_break: stable_flat_index
+stabilizer:
+  lower: 0.25
+  upper: 1.00
+  dtype: float32
+optimizer:
+  learning_rate: 0.0001
+  beta1: 0.9
+  beta2: 0.999
+  epsilon: 1.0e-8
+  weight_decay: 0.01
+

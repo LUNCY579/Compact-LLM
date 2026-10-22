@@ -1,0 +1,66 @@
+{
+  "base_weight_sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c",
+  "budget_manifest_sha256": "bc31ae08fcf8a1235d83887afb25aaaead409d56329b92d690a4ee8e8d2b6dc7",
+  "cache": {
+    "mask_cal": {
+      "manifest_sha256": "ed543398ad67f05547bd7fab94e61c26765738d16db5447e696bee50d92f1439",
+      "report": {
+        "elapsed_seconds": 19.622757099999944,
+        "examples": [
+          {
+            "gradient_l2": 25.903955459594727,
+            "loss": 2.6310513019561768,
+            "row_id": "rineya_v3_sft__linked_fact__train_014__01301",
+            "supervised_tokens": 4,
+            "tokens": 2686
+          }
+        ],
+        "mean_gradient_l2": 25.903955459594727,
+        "target": "model.layers.14.mlp.down_proj.weight"
+      },
+      "tensor_sha256": "7f6e502f5d20fa641c98976e5e479ad0bd60813a76942c8483eedb6eaf4dd686"
+    },
+    "meta_train": {
+      "manifest_sha256": "46813781f5e85262ab7eb8037952768e807c4dd04d8bfcb2c8f93564769b4cfd",
+      "report": {
+        "elapsed_seconds": 25.33717850000005,
+        "examples": [
+          {
+            "gradient_l2": 13.649961471557617,
+            "loss": 0.463367223739624,
+            "row_id": "rineya_v3_sft__resolved_fact__train_021__00115",
+            "supervised_tokens": 6,
+            "tokens": 2743
+          }
+        ],
+        "mean_gradient_l2": 13.649961471557617,
+        "target": "model.layers.14.mlp.down_proj.weight"
+      },
+      "tensor_sha256": "9758a7f131713b2cbb5cd080eb46f6c2c7c4a962780aff4fdda12eb8befa0e06"
+    }
+  },
+  "completed_at_utc": "2026-08-27T04:09:03.780936Z",
+  "computed_sections": [
+    "mask_cal"
+  ],
+  "device": "cpu",
+  "environment": {
+    "captured_at_utc": "2026-08-27T04:08:39.551235Z",
+    "cuda_available": true,
+    "cuda_device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "cuda_version": "12.6",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+    "torch": "2.12.1+cu126"
+  },
+  "native_weight_delta": "bitwise_zero",
+  "resumed_sections": [
+    "meta_train"
+  ],
+  "schema_version": "1.0",
+  "sealed_test_read": false,
+  "started_at_utc": "2026-08-27T04:08:39.544211Z",
+  "status": "complete",
+  "summary_sha256": "38ed0abbb045fffd06f52c09976db044989f5dcf02cd2c289300788f32584d28",
+  "target": "model.layers.14.mlp.down_proj.weight"
+}
