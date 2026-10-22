@@ -1,0 +1,13 @@
+# Independent source publication review, October 9, 2026
+
+Current fresh V2 source is intact: all 133 dispatch file SHA256 values match, and the production `verify_dispatch` consumer accepts the exact packet. All 106 admitted Python files parse successfully. The 70 campaign sources and 35 tests pinned by index v21 match, as do all 96 completed passive-probe source bindings, 16 V3 reproducibility bindings and five probe completion bindings. Selected worker, observer, adapter, reader and supervisor control paths disclose no new actionable executable-source issue in this bounded review.
+
+Preserved reader revisions retain their actual old bytes and tests. The current reader binds the independently reviewed finite, nonnegative full-run forecast correction. Source acceptance remains separate from native qualification and quality evidence: the fresh 432-case matrix has not run, and this review establishes no model improvement.
+
+Two historical full-directory manifests each include seven administrative files subsequently updated. Five changed bulk-restart files and six changed causal-replay files have exact archived copies. Three original administrative byte identities were not found: bulk-restart `OWNERSHIP.json` (SHA256 `1f7a989c…`), bulk-restart `STATE.json` (`4c6f59b1…`) and causal-replay `STATE.json` (`84ef822e…`). Their hashes are still recorded. Publication must disclose these gaps and avoid claiming every historical directory manifest is completely reproducible. No executable-source drift was found in those manifests, and the review did not reconstruct missing bytes.
+
+Committing advances HEAD; it must preserve frozen file bytes and historical receipt HEAD values. The unused fresh admission records its precommit source HEAD while runtime acceptance checks its exact 133-file map. Compare staged blobs against actual SHA256 bytes and explain the publication successor in an addendum. A publication commit does not become evidence of a new native run.
+
+One explicit current campaign-plus-V3 CPU test run with the canonical interpreter, `-B`, pytest caching disabled and a new campaign-local basetemp is appropriate. Exclude historical versions and temporary review fixture trees from collection. These tests use analytic CPU hosts and mocked native sources; supervision checks may create only their own bounded CPU process trees. This reviewer performed identity, source and AST checks only; the coordinator owns the publication test run. No model, GPU or actual tokenizer calls were made.
+
+The complete scope, SHA256 values, findings and limitations are in `publication_review_20261009_source.json`.

@@ -1,0 +1,113 @@
+{
+  "actual_extended_human_allowance_absent": true,
+  "bindings": {
+    "CAUSAL_REPLAY_EXTENDED_ALLOWANCE_TEMPLATE_001.json": "da328e1942923cffe9bd84b31c70ded9335b25b7d3d785d4a2ea7593971341c0",
+    "CPU_CAUSAL_REPLAY_DESIGN_DRAFT_003.md": "d586b68c0e43f8cbccaee0593be9356072a3987b66793ccea6f25abd736c6657",
+    "CPU_CAUSAL_REPLAY_EXTENDED_REQUEST_001.md": "37ebbee558327435db68b058345b3764c1fd21486798e5d2e2b795a3f28c5529",
+    "CPU_CAUSAL_REPLAY_FEASIBILITY_DRAFT_001.json": "021ea720f4b644d0e0fff0b975ab460d80e6c02cb401400fd0be58a0ba4cb359",
+    "CPU_CAUSAL_REPLAY_NATIVE_DRAFT_001.md": "10dcf3e847a8ece9ffbdfe17ed63bd3f7d070e45d9b232ee250fbffdf0e1f676",
+    "cpu_causal_replay_analysis.py": "bfe6a0405d0acb4a9217438da04ece00db8a53604c2a6e8573fbc46c29d43253",
+    "cpu_causal_replay_native.py": "d2208d45d3feb60b36ff49886c0b0212831134b7f796677e3c3c1dd2d28ffdcc",
+    "reviews/cpu_causal_replay_analysis_budget_review_002.json": "1e9a3c728c4f6740e0ea611b04b0fc549ff18558f02361fd95e2a6ce52a8877d",
+    "reviews/crext01/COMMAND.json": "bf6430074ace0df4f99c6b5ac9feadac914cb50475abaf29a2ace55a72acb168",
+    "reviews/crext01/junit.xml": "3749393d5b8b38c15548d0a50eec293b8ece541a73429ca5e6a63fca5622c1ba",
+    "reviews/crext02/AST_COMPARISON.json": "96b446d394751ea5e0f252bdbd4a981dc4eec26cc661b538c7de4cf9e2f59b3f",
+    "reviews/crext02/COMMAND.json": "63381436080d4e3f4155b0c0aca66786e37dd2395185b22f946208c31af30deb",
+    "reviews/crext02/junit.xml": "a8a6c99bcbf4c417aa2be52cd67f3e86c580453609fa8a33b26da1746b3506cc",
+    "tests/test_cpu_causal_replay_analysis.py": "ae15b60e3550fa2b36e5d45e3f3491ed13aeac70185033ee9faf9d8b7dc38a10",
+    "tests/test_cpu_causal_replay_native.py": "aee4bc2c7e2921fe90c626024f3c53879098510dd54ae6e4caba3489e4aeea1f"
+  },
+  "created_utc": "2026-10-05T05:27:48.237648+00:00",
+  "disposition": "Suitable to include in a concrete request-only deadline expansion packet. Existing 3600 authorization is consumed; exact source-bound admission and independent dispatch receipt plus another direct human allowance remain required.",
+  "findings": [],
+  "independent_checks": {
+    "actual_old90_path_closure_and_new_parent_missing_grant_tests": {
+      "evidence": "reviews/crext02",
+      "failed": 0,
+      "passed": 2,
+      "pytest_seconds": 3.42
+    },
+    "affected_worker_and_new_scope_tests": {
+      "evidence": "reviews/crext01",
+      "failed": 0,
+      "passed": 12,
+      "pytest_seconds": 3.11
+    },
+    "changes": "4500 parent / 4320 body / 180 internal reserve, strict design003 binding and distinct extended allowance import. No scientific, numerical, prefix, target, feature, recorder, objective or ledger function change.",
+    "only_changed_function_definitions": [
+      "forecast",
+      "run"
+    ],
+    "science_AST_identical_to_9325": [
+      "digest",
+      "tensor_digest",
+      "disk_guard",
+      "verify_source_closure",
+      "count_contract",
+      "causal_prefix",
+      "verify_packet",
+      "objective",
+      "rollout",
+      "Recorder",
+      "aggregate_case",
+      "ledger"
+    ],
+    "stable_source_before_after": true
+  },
+  "limits": [
+    "No new model, tokenizer, GPU inventory, weight or native operation was invoked. CPU fixtures and AST identity do not establish fresh native numerical qualification or live performance.",
+    "Fresh full-matrix admission may still refuse; no deadline extension, case dropping, surrogate semantic efficacy, efficacy claim or further retry follows this source review.",
+    "All prior task/primary/EOS results remain NULL because attempt002 stopped before cases."
+  ],
+  "native_calls": 0,
+  "native_dispatch_authorized": false,
+  "old_3600_worker_sha256": "9325c156695063a7167ba6009460a8a45d7aae1c2ffff28596b330596318abec",
+  "other_author_analyzer_review": "Native engineer independently reviewed mathematics-agent analyzer; exact receipt 1e9a3c... binds bfe6a040... and 28 tests plus IO/bundle probes. That source/synthetic review is attributed, not a claim I reran its full suite.",
+  "requires_user_additional_attempt": true,
+  "resource_assessment": {
+    "body_seconds": 4320,
+    "deadline_seconds": 4500,
+    "declared_ceiling_plus_global_reserve_seconds": 6300,
+    "fresh_maximum_scalar_and_EOS_qualification_and_full632_forecast_before_any_task_required": true,
+    "global_evidence_reserve_seconds": 1800,
+    "internal_reserve_seconds": 180,
+    "margin_over_prior_forecast_seconds": 721.7022086955185,
+    "native_remaining_seconds": 20151.485,
+    "native_used_seconds": 1448.515,
+    "prior_measured_forecast_seconds": 3778.2977913044815
+  },
+  "reviewer": "adversarial_review",
+  "source_only": true,
+  "status": "PASS_CPU_CAUSAL_REPLAY_EXTENDED_WORKER_SOURCE_REVIEW",
+  "unchanged_contract": {
+    "CPU_FP32_eager_threads": 4,
+    "EOS_targets": 192,
+    "answer_targets": 440,
+    "cache_rejections": 2,
+    "cases": 192,
+    "completed_full_forwards": 1922,
+    "completed_prefix_positions": 252696,
+    "expected_partial": 1,
+    "fd_absolute_tolerance": 0.001,
+    "fd_relative_tolerance": 0.03,
+    "fd_step": 0.01,
+    "forecast_factor": 1.5,
+    "maximum_prefix_tokens": 256,
+    "model_API_attempts": 1925,
+    "neutral_tolerance": 0.001,
+    "parents": 96,
+    "primary": "mean canonical answer-token CE and derivative; prefix-likelihood surrogate",
+    "prohibited": [
+      "validation/TEST outcomes",
+      "A5 pool",
+      "controller fitting",
+      "parameter gradients",
+      "training",
+      "bulk rerun",
+      "runtime-debug rerun"
+    ],
+    "secondary": "accepted EOS probability-mass loss; separate endpoint",
+    "state_adjoints": 635,
+    "targets": 632
+  }
+}

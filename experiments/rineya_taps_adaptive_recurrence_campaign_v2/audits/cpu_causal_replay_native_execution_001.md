@@ -1,0 +1,11 @@
+# CPU causal replay failed-attempt audit
+
+The sole `native-cpu-causal-replay-001` attempt ended `WORKER_NONZERO` (exit 2) before weights, model APIs or state adjoints. The worker omitted the exact admitted DEV dependency `Rineya_Cross_Scale_Capability_Transfer_Lab_v1/data/evaluation/mergedev_fast.jsonl` from its source path allowlist. Its current SHA256 matches the admission (`b75df936...`); the failure was path classification, not a detected data-hash change.
+
+The preserved original worker (`61e74ebf...`) places this refusal before metadata parsing, `admitted_source`, tokenizer and model loading. The receipt records model-load attempts 0 and successful loads 0. Zero model APIs and adjoints follow from that control-flow boundary; no measurement journal exists. Qualification, fresh maximum-256 costs, 192-case/632-target loss results, gradients, predictor features and resident-state hashes are NULL/NOT_RUN. The planned 1925 API attempts, 635 adjoints and 252696 completed prefix positions were not performed.
+
+The parent charged 7.969 seconds; the worker parent-clock interval was 7.3122282 seconds and supervisor wall interval 14.469 seconds. Parent sampled job peak RSS was 503013376 bytes. The worker stop snapshot reports RSS 523059200, peak RSS 524136448 and available host memory 10842906624 bytes. No recorded RSS or running-host-reserve violation appears. The preweight memory gate and model maximum-tape resource qualification were not reached; these samples cannot qualify them.
+
+All 90 archived dispatch entries match the failed admission. CPU streaming hashes independently match all ten canonical on-disk assets, including unchanged frozen CPU H3/sensitivity source lineage; no weight loader was used. The resident-state hash is unavailable because no model existed. Parent process membership reflects the venv redirector and real Python child, with zero model loads.
+
+The JSON receipt binds every available raw artifact, exact archive/data/helper/asset hashes, missing raw files and observed costs. The failed run remains untouched. A narrowly corrected successor has separate source/review lineage and requires an actual additional human attempt allowance before any new worker launch. This audit supplies no native qualification, causal diagnostic result or efficacy claim.

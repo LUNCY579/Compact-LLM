@@ -1,0 +1,7 @@
+The corrected restart reader passes source review. Original3def scientific aggregate and helpers remain AST-identical; added epoch, integrity and authority checks feed the unchanged complete/null gate. No scorer, grid, margin, seed/pool, parent weighting, preservation rule or endpoint changed.
+
+A required omission in baseline28ca was corrected before dispatch: actual new grant scope/path/SHA and parent terminal binding are now mandatory and manifest-bound. The child-safe helper permits a legitimate consumed completed run without calling parent-only anti-replay; missing/wrong/old grant and missing/wrong terminal hash reject primary. Baseline15 fixtures passed25.77s; corrected16 targeted probes passed15.68s, and complete-matrix/AST checks passed3.88s. No model/GPU query or new test source was involved.
+
+Three exact state/source/assets/gradNONE boundaries, committed journal prefixes, callback/freeze ordering and prevalidation clocks remain mandatory. Missing, failed or late proofs preserve null primary rather than promote partial data.
+
+This is request-only acceptance. Actual full-restart allowance is absent; final exact admission review and new direct human approval are required. Fresh native qualification/full forecast, complete3296/28436 matrix and post-terminal result review remain unexecuted. TDR cause is unresolved and exposed validation is not independent confirmation.

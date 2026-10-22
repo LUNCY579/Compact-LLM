@@ -1,0 +1,259 @@
+{
+  "A5_order": "after DEV pool freeze; actual seed17 then29; phase limitation retained",
+  "A5_seeds": [
+    17,
+    29
+  ],
+  "admission_sha256": "a303cd65c353a6d12e6544503bbf210c054ae919f795577d8b01e96224464aca",
+  "bank_sha256": "862a63648caf7efb3d287c11bc5caaefc884e0ec6cb3130ce8f196526efc40cd",
+  "config": {
+    "anchor_layers": [
+      0,
+      1,
+      2
+    ],
+    "applications": [
+      2,
+      3
+    ],
+    "baseline_cosine_tolerance": 0.02,
+    "baseline_skip_layers": [
+      0,
+      1,
+      2,
+      8,
+      19
+    ],
+    "candidate_layers": [
+      4,
+      5,
+      8,
+      12,
+      13,
+      14,
+      16,
+      17,
+      18,
+      19,
+      25,
+      27
+    ],
+    "checkpoint_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "development_file": "mergedev_fast.jsonl",
+    "device": "cuda:0",
+    "dtype": "float32",
+    "emergency_rms_ratio_bounds": [
+      0.05,
+      10.0
+    ],
+    "hidden_rms_ratio_bounds": [
+      0.25,
+      4.0
+    ],
+    "max_new_tokens": 8,
+    "max_prompt_seconds": 900,
+    "max_rss_gib": 6,
+    "maximum_invalid_increase": 0.0,
+    "maximum_mean_kl": 0.5,
+    "maximum_score_drop": 0.0,
+    "minimum_mean_logit_cosine": 0.9,
+    "protocol_version": "1.0",
+    "seed": 17,
+    "smoke_file": "supa_layer_ablation_smoke.jsonl",
+    "threads": 4,
+    "top_k": 10,
+    "use_cache": false
+  },
+  "controller_candidate_revision": 0,
+  "count_forecast": {
+    "A5_evaluations_per_case": 2,
+    "SMOKE_physical_evaluations": 128,
+    "bulk_cases": 288,
+    "bulk_physical_evaluations": 3168,
+    "cache_rejection_attempts": 2,
+    "deterministic_evaluations_per_case": 9,
+    "deterministic_policies": 9,
+    "generation_call_cap": 28416,
+    "maximum_shape_forward_attempts": 18,
+    "model_API_attempt_cap": 28436,
+    "oracle_nonphysical_rows": 288,
+    "parents": 144,
+    "physical_evaluations": 3296,
+    "validation_frozen_alias_nonphysical_rows": 96
+  },
+  "deterministic_order": "nine-policy rotation/reversal by sorted parent and variant index, independent of outputs",
+  "deterministic_seeds": [
+    17
+  ],
+  "dynamics_derived_static_alpha": 1.1473425965417514,
+  "extra_loops": [
+    0,
+    1
+  ],
+  "gold_nll_status": "NOT_COLLECTED_CAUSAL_GUARD",
+  "grid": [
+    0.8,
+    0.9,
+    1.0,
+    1.1,
+    1.1473425965417514,
+    1.2
+  ],
+  "interventions": [
+    "bulkdata288/144parents",
+    "strictfullresponse scorer",
+    "generationcap8",
+    "deterministic policies once"
+  ],
+  "lane": "BULK_GPU_FP32_INTERVENTION",
+  "mask_positions": "batch1; no padding; full prefix; automatic arange; no KV",
+  "native_layers": [
+    12,
+    13
+  ],
+  "native_test": false,
+  "old_smoke_config": {
+    "anchor_layers": [
+      0,
+      1,
+      2
+    ],
+    "applications": [
+      2,
+      3
+    ],
+    "baseline_cosine_tolerance": 0.02,
+    "baseline_skip_layers": [
+      0,
+      1,
+      2,
+      8,
+      19
+    ],
+    "candidate_layers": [
+      4,
+      5,
+      8,
+      12,
+      13,
+      14,
+      16,
+      17,
+      18,
+      19,
+      25,
+      27
+    ],
+    "checkpoint_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "development_file": "mergedev_fast.jsonl",
+    "device": "cuda:0",
+    "dtype": "float32",
+    "emergency_rms_ratio_bounds": [
+      0.05,
+      10.0
+    ],
+    "hidden_rms_ratio_bounds": [
+      0.25,
+      4.0
+    ],
+    "max_new_tokens": 24,
+    "max_prompt_seconds": 900,
+    "max_rss_gib": 6,
+    "maximum_invalid_increase": 0.0,
+    "maximum_mean_kl": 0.5,
+    "maximum_score_drop": 0.0,
+    "minimum_mean_logit_cosine": 0.9,
+    "protocol_version": "1.0",
+    "seed": 17,
+    "smoke_file": "supa_layer_ablation_smoke.jsonl",
+    "threads": 4,
+    "top_k": 10,
+    "use_cache": false
+  },
+  "runtime": {
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "cuda": "12.6",
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "python": "3.11.15",
+    "tf32": false,
+    "torch": "2.12.1+cu126",
+    "transformers": "5.14.1"
+  },
+  "scorer_sha256": "3242439231064fc81991e157c0da62833f4e4223ec71d60cf9ffd2851815b5eb",
+  "source_hashes": {
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/__init__.py": "e3ed1f5eebc49d142de7f909ab08b4141678290bd538568a65cf83940a75e444",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/advanced.py": "e07a97bda1862544578cc3347a663816262e6a40c5063dd90147c946d98efb7c",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/aligned_projection.py": "36c41abd48aa0e6d5327c030909fbedb7fb7ecd7da50daaa3cd1d9a043f22d59",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/architecture.py": "ff94015b9b11417dfa7208e7ce90fd4448a734757f69b4e46276c0b4cf6f2d50",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/checkpoint.py": "408edf877c6459ccf9072a6d92be145762a6535cd76bc168b30e33930b3e44ad",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/cka.py": "7c26ac61d731de1c83d1069ccc00f5b96505271de7e23499b7a1b5f75ca69798",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/comparison.py": "6806172940354da8583a3a119207377171bf4620b2c9178ce317bc4b4844e0ca",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/consensus_target_basis.py": "90de43e21ffbe4684634bbe95391bcc9791af9d4eb052963ef71e90460ee151a",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/delta_analysis.py": "b5db6232a86c8ad2215ee2f6c6af62a010b2208eb88ee5b429a17bc7469aac4f",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/diagnostics.py": "cd91c30c7d794878312026858b3108313e8771d4cd4533ed61371234cffca0f2",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/direction_transfer.py": "457972fd01d5690717bea73a7c7c28da539c87d0d7ede53049490753c6564a95",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/__init__.py": "b5e59b71df7529a9dc842358f6852a4ae6e983bfb98a9efca39f0c320498f012",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/banks.py": "d13b3699b49c15aaccdb26837bddc4541d59dc08bddc2290dd5edd4759e8fc1c",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/runner.py": "a3b475dfea308f02ee745ba2794f4e43059b62250554117af62f21b4703f2a26",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evaluation/scoring.py": "5a22e1c1ff7b0a56623931c0782f81dd2b3a9df83ccfe77ce3724d37cf320086",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/evidence.py": "fdf528727bd269b89ab431ceb9e301dc3ad14d827c18be21944c56c99e820c6b",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/fisher.py": "e097ecdc41a61466e3bab98d74c6d342aa871c155f2b7fb2ff6f393c6b139997",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/functional_atlas.py": "3e60791f8b55b30c74c801ddfba6145576828dd01c62083247eeb842aa516df8",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/functional_localization.py": "5f4049dc25d0446c356c9556e0390a58b32241f2ed557c4be6dfcecd13b059f7",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/functional_translator.py": "e0a10a826653f5bf122c1dff11fab89de06f96240f28e8f17df03da2bc3a0bd3",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/hashing.py": "68116088fbfbc68e3775bfe5be89b95ecb6a3742098a51bed1f7fec048dc87a0",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/interventions.py": "0cd82c5ba6d9c7a6badea8f05c6ebc98717ae7e266a0811b3ded6332101b0c17",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/layer_ablation.py": "a003d6bfe0ff980715a589fa85206e96a48710b112defc8d6c55a85673658fd7",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/leakage.py": "a4e18801cd6f1cf9f1dde2ef040de63b9e845bd04d285b88f43929c7e462c215",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/operations.py": "c27ccef6ad5e16eb1c9f4517e900cdcd6011f048930eef1e18a1b4723ec0d112",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/projection.py": "5814db9766715507bcbfe70e5e17a15f15b448154ae3976ec553ef1abeecfa2e",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/promotion.py": "c19b0f66f13c18c19860bb7f6211c429344f6e5b8c045e224929d5f9a110846f",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/registry.py": "e52791d8d2f0ca4c158ecb863323f60054c5a272b4f358d2df9a98b177260d50",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/resource_trace.py": "9ee4af7b2dad19991349f3887b103aac568c16abba7b43ee44bd062dadd4665a",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/sequential_runner.py": "9d10265a107893df76ccadb51d05a85934b3c8c9bc193f60a4427f6fc60f025b",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/spectral_projection.py": "0379c0f3c14e05824f3c12efa340bff95aa328cd8b8a7cb33f4315eccd95ad22",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/streaming_forward.py": "3ff342ab403ac866622fc8faa1ca63bfb2f193dfd97ec5f098bfd8d03366961e",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/transport_sanity.py": "3f3089ced6cdb091bf071335add28d1da0c5852bb84afef093b4ab1c1a9d6e31",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/v2.py": "4d6f942e3dc5fbbc9570538d22027df3614183450461d796ff1b6a880bb155ed",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/v3_transport.py": "cadf2ccb3723e16f3919fc5401ed25c9f9c83c87573fc0c82074ca56f1f94555",
+    "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/src/rineya_cross_scale/validation.py": "c3b43df9a0e3c3a21f8b47cc66dd85316ee8e20500eb808e67d9478bb6d245c6",
+    "experiments/anchor_routed_middle_recurrence_v1/configs/reapplication_screen.json": "207cf9744b7a3c288b6a0dd1f9bd1373f580e7514333bb3ef2b59c82112d373c",
+    "experiments/anchor_routed_middle_recurrence_v1/evidence/00_baseline_requalification/20260905T040646_352570Z/run_manifest.json": "aaed6e1023df7955610eb1502b6fbe70ea00c9bca457f7ad77388b24727ac7e3",
+    "experiments/anchor_routed_middle_recurrence_v1/evidence/02c_fixed_cpu_budget_v2/20260905T132743_802018Z/run_manifest.json": "daa5bc8e947602a4ed3d7fb19076ec6000e27f7afcc2a1426e544491bff95dfe",
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/audit_budget_replication.py": "5a14a179a27ced447624339b4979448d8b79ee767f4bad1afbc6bd713086008f",
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/audit_completed_screen.py": "ccfae3d90cf60b357a00f07f2faebe2bcd635b1fa72f9f762dd005c64a24d3be",
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/audit_fixed_results.py": "e26e3475241793ee34a98c71bee1d11e237e41a00c584b866432ea3f217a2c10",
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/diagnose_late_failure.py": "9d375e0bf9fef2e2b1913b27bb1ed58a92918aef57cce433d6a559946384d484",
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/run_experiment.py": "170e5b0a9e49a9867ae847c2ddbc26f306013f7c44402fdfbc65fd28d73a3c98",
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/run_fixed_recurrence.py": "7cd1feb2926cd916f1f11a07050994cae39ee756ebb924cc3060444918f4912a",
+    "experiments/anchor_routed_middle_recurrence_v1/scripts/summarize_results.py": "b4208d3d85efbc1879de8fa335c782263d47cd40108b2dd8a8cf226dd5087642",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/__init__.py": "45bf40eb692379c12c31d90c5e6fe4a78358f28b23783f24a0bf658893ba5065",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/evaluation.py": "e262761b45105d6586221c2c99b6f56ecc7d3aba2fe276b392e9b1e13cd80bfa",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/hooks.py": "a73baf73515ca905c39a631feb576caad232bec60bb05f0150204e952e0d36a3",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/metrics.py": "c2653a5129f4cf03b3c7081d0c99f6540fcefd0d17a717c7132b8c1ccf50ed67",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/preregistration.py": "baf03fd503db38270afb8d63d7080007b1a973c6f5faf0c00d55161581e80dad",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/provenance.py": "3f84bc41851a4709ff123217b0f781e6d1ec93e3f40dc7c911a95f44c1ee9018",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/recurrence.py": "88ab4c791b1871dc3765a85f89dbd857023bcf5e4dfa55b6c24142aaee0edea9",
+    "experiments/anchor_routed_middle_recurrence_v1/src/armr/reporting.py": "99ca41eed1da02d7ef5a3d3a7a43c004c60f18cccaa328267ba41b980cfd2021"
+  },
+  "static_alpha_source": "completed original A3 prefix mean; analyses/gpu-reference-002/REPORT.json; frozen prospectively",
+  "taps": {
+    "alpha_init": 1.0,
+    "alpha_max": 1.2,
+    "alpha_min": 0.8,
+    "beta": 0.8,
+    "enabled": true,
+    "eps": 1e-12,
+    "fixed_alpha": 1.0,
+    "gamma": 1.5,
+    "normalization_mode": "mean",
+    "random_pool": [],
+    "refresh_interval": 1,
+    "rho": 0.275,
+    "scheduler_mode": "taps",
+    "seed": 17,
+    "warmup_loops": 1
+  },
+  "token_binding_sha256": "1a3723cdc918bb219119044aef5d209334f36c4b140674b8b93174f5361553bf",
+  "training": false
+}

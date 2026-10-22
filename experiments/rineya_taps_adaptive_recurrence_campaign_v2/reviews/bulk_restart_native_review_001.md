@@ -1,0 +1,5 @@
+The request-only same-science native worker source review passes. Independent35 CPU fixture cases passed6.43s with no failures/skips and stable source; no model or GPU inventory was invoked.
+
+Nine scientific helpers are AST-identical to original1ed52. The288/3296/28436 matrix,8scientific/24SMOKE caps,357shape, zero adjoints, grid/data/scorer/RNG are unchanged. New proof boundaries cover1728 deterministicDEV before freeze and2112 completeDEV before validation, plus actual final state. Checkpoint failures stop the next phase without recovery or extra forward; unfavorable scores do not trigger selection. Controllingaddendum002 preserves original GPU qualification, not CPU H3 shorthand.
+
+This receipt supplies no native qualification or authority. Actual full-generation grant is absent; new direct approval, held parser/final exact admission review and all fresh native/resource/complete-forecast gates remain required. Prior CUDA/TDR cause is unresolved; fresh containment/checkpoints do not establish a repaired driver or long-run stability. Old science and evidence remain preserved.

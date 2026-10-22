@@ -1,0 +1,280 @@
+{
+  "FD_verification": [
+    {
+      "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "pass": true,
+      "recomputed_absolute_error": 7.162452675402164e-07,
+      "registered_tolerance": 0.0010116349634481593
+    },
+    {
+      "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+      "pass": true,
+      "recomputed_absolute_error": 9.501585736870766e-06,
+      "registered_tolerance": 0.0010694419094361366
+    },
+    {
+      "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+      "pass": true,
+      "recomputed_absolute_error": 5.1409006118774414e-05,
+      "registered_tolerance": 0.008493309676647187
+    },
+    {
+      "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "pass": true,
+      "recomputed_absolute_error": 4.6193599700927734e-05,
+      "registered_tolerance": 0.025743154644966126
+    },
+    {
+      "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "pass": true,
+      "recomputed_absolute_error": 1.3383105397224426e-06,
+      "registered_tolerance": 0.0011223293505609035
+    },
+    {
+      "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "pass": true,
+      "recomputed_absolute_error": 1.0571442544460297e-05,
+      "registered_tolerance": 0.001038611264899373
+    },
+    {
+      "case_id": "mergedev_short_response_30785feeb5a8abdf",
+      "pass": true,
+      "recomputed_absolute_error": 7.677078247070312e-05,
+      "registered_tolerance": 0.06444834804534912
+    }
+  ],
+  "audit_stage": "terminal_only",
+  "author": "native_engineer",
+  "checks": {
+    "CPU_lane_runtime": true,
+    "actual_parent_manifest_covered_entries": true,
+    "all10_canonical_asset_bytes_unchanged": true,
+    "all7_exact_eligible_rows": true,
+    "all7_raw_FD_recomputed_with_registered_tolerance": true,
+    "all_admitted_source_bytes_unchanged": true,
+    "all_recorded_CPU_memory_guards": true,
+    "both_cache_variants_before_compute": true,
+    "complete_fresh_CPU_forecast_recomputed": true,
+    "exact_raw_attempt_event_counts": true,
+    "expected_forced_partial_only": true,
+    "fresh_qualification_before_all_task_rows": true,
+    "input_and_target_firewall": true,
+    "ledger_recomputed47_44_9_4818": true,
+    "loaded_custom_head_source": true,
+    "loaded_qualification_final_actual_state": true,
+    "max_shape_and_actual_RMS": true,
+    "native_CPU_qualification": true,
+    "one_launched_CPU_model_worker_job": true,
+    "population_complete7_7_2": true,
+    "registered_source_and_helper_hashes": true,
+    "review_actual_admission": true,
+    "terminal_success": true,
+    "worker_parent_clock_deadline": true,
+    "zero_training_or_parameter_gradients": true
+  },
+  "costs": {
+    "campaign_remaining_seconds": 20225.563,
+    "campaign_used_seconds": 1374.437,
+    "parent_charged_worker_seconds": 44.06200000000172,
+    "parent_supervisor_seconds": 47.90600000000268,
+    "partial_compute_positions": null,
+    "worker_reported_seconds": 42.77092849999826
+  },
+  "declared_population_rows": 16,
+  "evidence_limits": [
+    "Raw qualifier per-pair logit comparison/FD discrepancy values are not archived by the frozen worker; their exact gates are enforced by admitted unchanged source and final qualification receipt. Seven measured FD discrepancies are independently recomputed here.",
+    "Parent initial host floor is enforced by bound parent source; child before-weights floor and running samples are recorded directly.",
+    "This audit establishes the stated CPU mechanics/count/preservation completion; it does not interpret surrogate efficacy, broad reasoning, GPU fault cause, CPU/GPU equality or deployment speed.",
+    "Process command lines for four transient small descendants are unavailable; the source-bound parent launch, one heavy model process and one model-load receipt establish the bounded one-job claim, not exact helper identity."
+  ],
+  "failures": [],
+  "forecast_recomputed": {
+    "maximum256_value_forward_seconds": 0.9060052999993786,
+    "maximum256_whole_forward_with_adjoint_seconds": 1.3799382999968657,
+    "remaining_seconds": 33.51546344995404
+  },
+  "initial_audit_predicate_correction": {
+    "corrected_reason": "One native worker is one model job; bound Windows containment intentionally includes redirector/helper descendants. An OS PID count of one is not the registered contract.",
+    "prior_json_exact_UTF8": "{\r\n  \"FD_verification\": [\r\n    {\r\n      \"case_id\": \"mergedev_grounded_qa_rag_10414013c88bdaac\",\r\n      \"pass\": true,\r\n      \"recomputed_absolute_error\": 7.162452675402164e-07,\r\n      \"registered_tolerance\": 0.0010116349634481593\r\n    },\r\n    {\r\n      \"case_id\": \"mergedev_instruction_following_7c4b4480b4835c0f\",\r\n      \"pass\": true,\r\n      \"recomputed_absolute_error\": 9.501585736870766e-06,\r\n      \"registered_tolerance\": 0.0010694419094361366\r\n    },\r\n    {\r\n      \"case_id\": \"mergedev_mathematics_12cd1363c6e3df98\",\r\n      \"pass\": true,\r\n      \"recomputed_absolute_error\": 5.1409006118774414e-05,\r\n      \"registered_tolerance\": 0.008493309676647187\r\n    },\r\n    {\r\n      \"case_id\": \"mergedev_paraphrase_robustness_0cfbf1026bf11fe7\",\r\n      \"pass\": true,\r\n      \"recomputed_absolute_error\": 4.6193599700927734e-05,\r\n      \"registered_tolerance\": 0.025743154644966126\r\n    },\r\n    {\r\n      \"case_id\": \"mergedev_paraphrase_robustness_44e3777f1aad20a2\",\r\n      \"pass\": true,\r\n      \"recomputed_absolute_error\": 1.3383105397224426e-06,\r\n      \"registered_tolerance\": 0.0011223293505609035\r\n    },\r\n    {\r\n      \"case_id\": \"mergedev_paraphrase_robustness_c26fef498d2d9fd3\",\r\n      \"pass\": true,\r\n      \"recomputed_absolute_error\": 1.0571442544460297e-05,\r\n      \"registered_tolerance\": 0.001038611264899373\r\n    },\r\n    {\r\n      \"case_id\": \"mergedev_short_response_30785feeb5a8abdf\",\r\n      \"pass\": true,\r\n      \"recomputed_absolute_error\": 7.677078247070312e-05,\r\n      \"registered_tolerance\": 0.06444834804534912\r\n    }\r\n  ],\r\n  \"audit_stage\": \"terminal_only\",\r\n  \"author\": \"native_engineer\",\r\n  \"checks\": {\r\n    \"CPU_lane_runtime\": true,\r\n    \"actual_parent_manifest_covered_entries\": true,\r\n    \"all10_canonical_asset_bytes_unchanged\": true,\r\n    \"all7_exact_eligible_rows\": true,\r\n    \"all7_raw_FD_recomputed_with_registered_tolerance\": true,\r\n    \"all_admitted_source_bytes_unchanged\": true,\r\n    \"all_recorded_CPU_memory_guards\": true,\r\n    \"both_cache_variants_before_compute\": true,\r\n    \"complete_fresh_CPU_forecast_recomputed\": true,\r\n    \"exact_raw_attempt_event_counts\": true,\r\n    \"expected_forced_partial_only\": true,\r\n    \"fresh_qualification_before_all_task_rows\": true,\r\n    \"input_and_target_firewall\": true,\r\n    \"ledger_recomputed47_44_9_4818\": true,\r\n    \"loaded_custom_head_source\": true,\r\n    \"loaded_qualification_final_actual_state\": true,\r\n    \"max_shape_and_actual_RMS\": true,\r\n    \"native_CPU_qualification\": true,\r\n    \"one_contained_worker_process_observed\": false,\r\n    \"population_complete7_7_2\": true,\r\n    \"registered_source_and_helper_hashes\": true,\r\n    \"review_actual_admission\": true,\r\n    \"terminal_success\": true,\r\n    \"worker_parent_clock_deadline\": true,\r\n    \"zero_training_or_parameter_gradients\": true\r\n  },\r\n  \"costs\": {\r\n    \"campaign_remaining_seconds\": 20225.563,\r\n    \"campaign_used_seconds\": 1374.437,\r\n    \"parent_charged_worker_seconds\": 44.06200000000172,\r\n    \"parent_supervisor_seconds\": 47.90600000000268,\r\n    \"partial_compute_positions\": null,\r\n    \"worker_reported_seconds\": 42.77092849999826\r\n  },\r\n  \"declared_population_rows\": 16,\r\n  \"evidence_limits\": [\r\n    \"Raw qualifier per-pair logit comparison/FD discrepancy values are not archived by the frozen worker; their exact gates are enforced by admitted unchanged source and final qualification receipt. Seven measured FD discrepancies are independently recomputed here.\",\r\n    \"Parent initial host floor is enforced by bound parent source; child before-weights floor and running samples are recorded directly.\",\r\n    \"This audit establishes the stated CPU mechanics/count/preservation completion; it does not interpret surrogate efficacy, broad reasoning, GPU fault cause, CPU/GPU equality or deployment speed.\"\r\n  ],\r\n  \"failures\": [\r\n    \"one_contained_worker_process_observed\"\r\n  ],\r\n  \"forecast_recomputed\": {\r\n    \"maximum256_value_forward_seconds\": 0.9060052999993786,\r\n    \"maximum256_whole_forward_with_adjoint_seconds\": 1.3799382999968657,\r\n    \"remaining_seconds\": 33.51546344995404\r\n  },\r\n  \"input_sha256\": {\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\cpu_h3_native.py\": \"f242676e0ec0f019dd94ac27e5f3cb5eb8f3e311beb64cc0355102492396eaca\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\admission.json\": \"8e8c6245b1c7bea7aeb0af995f988acc750bfa6d74a61912d3f1d1a232590e70\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\resources.jsonl\": \"431c53a344de119639a18c9954fff9f41762dfe6d6729c4dcb33426dac551b69\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\result\\\\attempts.jsonl\": \"f42c071808093664d6669a76852ec058011e9f86c86fef899b5dc82137550e77\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\result\\\\compute_ledger.json\": \"81d03fb96f7f7dfd9e04bfff91a90e0b8e22f9aec8d4acde86fe2be963af6717\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\result\\\\hf_cache\\\\modules\\\\transformers_modules\\\\Rineya_hyphen_Supa_hyphen_A1_dot_1_hyphen_1_dot_1_dot_0_hyphen_devfreeze\\\\8f4297a203b4732e\\\\modeling_supa_a11.py\": \"b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\result\\\\matrix_forecast.json\": \"1b9141e2ad4b6b4e730e5213f420265f4e4ad712ebd06155fb359169f56a5970\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\result\\\\outcomes.jsonl\": \"c689263c9864cc11a4a5234fd28d4e715635e1071006e375fbe8f234f8dbd21d\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\result\\\\population.json\": \"881f1277a63fd84b59563d1a1598ab3d16fc55282b517e681af7b99dfbe024f4\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\result\\\\preflight.json\": \"7fc6cf717617b67c4b6f65d11b980da4b72b6369c33f88ca6e8ed761b8d58f6e\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\result\\\\qualification.json\": \"7b7dc68f4e195e6e83522c70db8e86b4be968319a1d95141cfc1115c10984550\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\result\\\\receipt.json\": \"3facad3d4b294c63b8ec44614db3592920a4155fcc3d5f6c3caf92afce3bac97\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\result\\\\registration.json\": \"31f54c86f0db31b321c8fe2f54a79ee2ba65d0d0fe22b5c29b10a44bdc30daea\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\review.json\": \"20bc5aa2dc76da924b4eb68e93750ffa765ad1bce7b86c473653a8c17eb5c81a\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\source_manifest.json\": \"08b5ceb186fe9060613cb76f2513a3deb1d0259b08e1edecc81389ee3916587a\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\stderr.log\": \"f51602408c7ff484de11d673516e3f497cac15184db558ea460ccbd67fa5d21b\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\stdout.log\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\\\\terminal_receipt.json\": \"b5e03c67d0f3f2713ad0e44059d82fc3fa7e57299161283d630c0cae27b00257\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\sensitivity.py\": \"5d0af45a8e91f0a00d91f83244105d06f1beba6f422cc3cd6d20c2d43d762f0d\",\r\n    \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\tests\\\\test_cpu_h3_native.py\": \"f0ee1b467625840af2f4c2a1ebf9bbdb3e8377447507c380ee529b791d4b72bd\"\r\n  },\r\n  \"native_model_loads_by_auditor\": 0,\r\n  \"physical_measured_rows\": 7,\r\n  \"qualification\": {\r\n    \"after_state_sha256\": \"b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551\",\r\n    \"before_state_sha256\": \"b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551\",\r\n    \"device\": \"cpu\",\r\n    \"exception_cache_restoration\": true,\r\n    \"full_suffix_state_adjoint_FD\": true,\r\n    \"lane\": \"CPU_H3_STATE_SENSITIVITY_FP32\",\r\n    \"maximum_prefix_tokens\": 256,\r\n    \"noextra_unit_and_099_101_value_identity\": true,\r\n    \"parameter_gradients\": \"NONE\",\r\n    \"resources\": {\r\n      \"GPU_memory\": null,\r\n      \"device\": \"cpu\",\r\n      \"host_available_bytes\": 11335806976,\r\n      \"peak_rss_bytes\": 4451840000,\r\n      \"rss_bytes\": 3668520960\r\n    },\r\n    \"source_unchanged\": true,\r\n    \"status\": \"PASS_CPU_H3_NATIVE_MECHANICS\",\r\n    \"target_convention\": \"first inherited canonical token; not semantic correctness\"\r\n  },\r\n  \"raw_compute_ledger\": {\r\n    \"CPU_only\": true,\r\n    \"cache_rejected_before_compute\": 2,\r\n    \"completed_model_forwards\": 44,\r\n    \"completed_prefix_positions\": 4818,\r\n    \"expected_partial\": 1,\r\n    \"full_forward_attempts\": 45,\r\n    \"model_API_attempts\": 47,\r\n    \"partial_prefix_compute_positions\": null,\r\n    \"state_adjoints\": 9\r\n  },\r\n  \"raw_event_counts\": {\r\n    \"CACHE_REJECTED\": 2,\r\n    \"CACHE_REJECTION_STARTED\": 2,\r\n    \"DIAGNOSTIC_FORWARD_COMPLETED\": 27,\r\n    \"DIAGNOSTIC_FORWARD_STARTED\": 27,\r\n    \"VALUE_FORWARD_COMPLETED\": 17,\r\n    \"VALUE_FORWARD_FAILED\": 1,\r\n    \"VALUE_FORWARD_STARTED\": 18\r\n  },\r\n  \"recorded_resources\": {\r\n    \"CPU_running_RSS_samples\": 83,\r\n    \"GPU_evidence_scope\": \"CPU-only tensor/source guards and CPU registration; GPU_memory null denotes unmeasured/inapplicable, not zero\",\r\n    \"GPU_forward_observed\": false,\r\n    \"maximum_observed_RSS_bytes_including_worker_peak\": 4451840000,\r\n    \"minimum_observed_host_available_bytes\": 10655567872,\r\n    \"observed_job_member_PIDs\": [\r\n      183388,\r\n      212124,\r\n      213104,\r\n      214328,\r\n      215688,\r\n      215716\r\n    ],\r\n    \"parent_sampled_peak_RSS_bytes\": 4342915072,\r\n    \"parent_samples\": 34,\r\n    \"worker_before_weights_host_available_bytes\": 14365843456\r\n  },\r\n  \"run\": \"C:\\\\Users\\\\clclc\\\\BusinessProject\\\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\\\experiments\\\\rineya_taps_adaptive_recurrence_campaign_v2\\\\runs\\\\native-cpu-h3-001\",\r\n  \"source_identity\": {\r\n    \"all_dispatch_files_match\": true,\r\n    \"canonical_assets\": {\r\n      \"CORE.json\": {\r\n        \"actual\": \"bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914\",\r\n        \"expected\": \"bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914\"\r\n      },\r\n      \"FILES.json\": {\r\n        \"actual\": \"4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e\",\r\n        \"expected\": \"4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e\"\r\n      },\r\n      \"config.json\": {\r\n        \"actual\": \"89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705\",\r\n        \"expected\": \"89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705\"\r\n      },\r\n      \"generation_config.json\": {\r\n        \"actual\": \"0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc\",\r\n        \"expected\": \"0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc\"\r\n      },\r\n      \"merges.txt\": {\r\n        \"actual\": \"8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5\",\r\n        \"expected\": \"8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5\"\r\n      },\r\n      \"model.safetensors\": {\r\n        \"actual\": \"a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026\",\r\n        \"expected\": \"a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026\"\r\n      },\r\n      \"modeling_supa_a11.py\": {\r\n        \"actual\": \"b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d\",\r\n        \"expected\": \"b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d\"\r\n      },\r\n      \"tokenizer.json\": {\r\n        \"actual\": \"aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4\",\r\n        \"expected\": \"aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4\"\r\n      },\r\n      \"tokenizer_config.json\": {\r\n        \"actual\": \"d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101\",\r\n        \"expected\": \"d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101\"\r\n      },\r\n      \"vocab.json\": {\r\n        \"actual\": \"ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910\",\r\n        \"expected\": \"ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910\"\r\n      }\r\n    },\r\n    \"covered_manifest_files\": 78,\r\n    \"dispatch_files\": 83,\r\n    \"loaded_custom_code_sha256\": \"b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d\"\r\n  },\r\n  \"state_identity\": {\r\n    \"before\": \"b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551\",\r\n    \"final_actual\": \"b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551\",\r\n    \"loaded\": \"b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551\",\r\n    \"qualification_after\": \"b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551\"\r\n  },\r\n  \"status\": \"FAIL_EXECUTION_AUDIT\"\r\n}\r\n",
+    "prior_json_sha256": "283c15559e89d2c0f78748105f987b163e9a0b8bfc27d9f807d7b137835682f9",
+    "prior_single_OS_PID_check": false
+  },
+  "input_sha256": {
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\cpu_h3_native.py": "f242676e0ec0f019dd94ac27e5f3cb5eb8f3e311beb64cc0355102492396eaca",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\admission.json": "8e8c6245b1c7bea7aeb0af995f988acc750bfa6d74a61912d3f1d1a232590e70",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\resources.jsonl": "431c53a344de119639a18c9954fff9f41762dfe6d6729c4dcb33426dac551b69",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\attempts.jsonl": "f42c071808093664d6669a76852ec058011e9f86c86fef899b5dc82137550e77",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\compute_ledger.json": "81d03fb96f7f7dfd9e04bfff91a90e0b8e22f9aec8d4acde86fe2be963af6717",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\hf_cache\\modules\\transformers_modules\\Rineya_hyphen_Supa_hyphen_A1_dot_1_hyphen_1_dot_1_dot_0_hyphen_devfreeze\\8f4297a203b4732e\\modeling_supa_a11.py": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\matrix_forecast.json": "1b9141e2ad4b6b4e730e5213f420265f4e4ad712ebd06155fb359169f56a5970",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\outcomes.jsonl": "c689263c9864cc11a4a5234fd28d4e715635e1071006e375fbe8f234f8dbd21d",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\population.json": "881f1277a63fd84b59563d1a1598ab3d16fc55282b517e681af7b99dfbe024f4",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\preflight.json": "7fc6cf717617b67c4b6f65d11b980da4b72b6369c33f88ca6e8ed761b8d58f6e",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\qualification.json": "7b7dc68f4e195e6e83522c70db8e86b4be968319a1d95141cfc1115c10984550",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\receipt.json": "3facad3d4b294c63b8ec44614db3592920a4155fcc3d5f6c3caf92afce3bac97",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\registration.json": "31f54c86f0db31b321c8fe2f54a79ee2ba65d0d0fe22b5c29b10a44bdc30daea",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\review.json": "20bc5aa2dc76da924b4eb68e93750ffa765ad1bce7b86c473653a8c17eb5c81a",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\source_manifest.json": "08b5ceb186fe9060613cb76f2513a3deb1d0259b08e1edecc81389ee3916587a",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\stderr.log": "f51602408c7ff484de11d673516e3f497cac15184db558ea460ccbd67fa5d21b",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\terminal_receipt.json": "b5e03c67d0f3f2713ad0e44059d82fc3fa7e57299161283d630c0cae27b00257",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\sensitivity.py": "5d0af45a8e91f0a00d91f83244105d06f1beba6f422cc3cd6d20c2d43d762f0d",
+    "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\tests\\test_cpu_h3_native.py": "f0ee1b467625840af2f4c2a1ebf9bbdb3e8377447507c380ee529b791d4b72bd"
+  },
+  "native_model_loads_by_auditor": 0,
+  "physical_measured_rows": 7,
+  "qualification": {
+    "after_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "before_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "device": "cpu",
+    "exception_cache_restoration": true,
+    "full_suffix_state_adjoint_FD": true,
+    "lane": "CPU_H3_STATE_SENSITIVITY_FP32",
+    "maximum_prefix_tokens": 256,
+    "noextra_unit_and_099_101_value_identity": true,
+    "parameter_gradients": "NONE",
+    "resources": {
+      "GPU_memory": null,
+      "device": "cpu",
+      "host_available_bytes": 11335806976,
+      "peak_rss_bytes": 4451840000,
+      "rss_bytes": 3668520960
+    },
+    "source_unchanged": true,
+    "status": "PASS_CPU_H3_NATIVE_MECHANICS",
+    "target_convention": "first inherited canonical token; not semantic correctness"
+  },
+  "raw_compute_ledger": {
+    "CPU_only": true,
+    "cache_rejected_before_compute": 2,
+    "completed_model_forwards": 44,
+    "completed_prefix_positions": 4818,
+    "expected_partial": 1,
+    "full_forward_attempts": 45,
+    "model_API_attempts": 47,
+    "partial_prefix_compute_positions": null,
+    "state_adjoints": 9
+  },
+  "raw_event_counts": {
+    "CACHE_REJECTED": 2,
+    "CACHE_REJECTION_STARTED": 2,
+    "DIAGNOSTIC_FORWARD_COMPLETED": 27,
+    "DIAGNOSTIC_FORWARD_STARTED": 27,
+    "VALUE_FORWARD_COMPLETED": 17,
+    "VALUE_FORWARD_FAILED": 1,
+    "VALUE_FORWARD_STARTED": 18
+  },
+  "recorded_resources": {
+    "CPU_running_RSS_samples": 83,
+    "GPU_evidence_scope": "CPU-only tensor/source guards and CPU registration; GPU_memory null denotes unmeasured/inapplicable, not zero",
+    "GPU_forward_observed": false,
+    "maximum_observed_RSS_bytes_including_worker_peak": 4451840000,
+    "minimum_observed_host_available_bytes": 10655567872,
+    "observed_job_member_PIDs": [
+      183388,
+      212124,
+      213104,
+      214328,
+      215688,
+      215716
+    ],
+    "observed_process_tree": {
+      "183388": {
+        "created": 1791164286.1280773,
+        "first_sample_worker_seconds": 2.639999999999418,
+        "last_sample_worker_seconds": 2.639999999999418,
+        "maximum_sampled_RSS_bytes": 5677056
+      },
+      "212124": {
+        "created": 1791164283.5872788,
+        "first_sample_worker_seconds": 0.0930000000007567,
+        "last_sample_worker_seconds": 42.79599999999846,
+        "maximum_sampled_RSS_bytes": 4338593792
+      },
+      "213104": {
+        "created": 1791164286.112154,
+        "first_sample_worker_seconds": 2.639999999999418,
+        "last_sample_worker_seconds": 2.639999999999418,
+        "maximum_sampled_RSS_bytes": 6692864
+      },
+      "214328": {
+        "created": 1791164283.4706247,
+        "first_sample_worker_seconds": 0.0930000000007567,
+        "last_sample_worker_seconds": 42.79599999999846,
+        "maximum_sampled_RSS_bytes": 4345856
+      },
+      "215688": {
+        "created": 1791164287.3955648,
+        "first_sample_worker_seconds": 3.9059999999990396,
+        "last_sample_worker_seconds": 3.9059999999990396,
+        "maximum_sampled_RSS_bytes": 3203072
+      },
+      "215716": {
+        "created": 1791164287.3797586,
+        "first_sample_worker_seconds": 3.9059999999990396,
+        "last_sample_worker_seconds": 3.9059999999990396,
+        "maximum_sampled_RSS_bytes": 6692864
+      }
+    },
+    "parent_sampled_peak_RSS_bytes": 4342915072,
+    "parent_samples": 34,
+    "process_tree_interpretation": "One parent-launched CPU_H3 entry/job and one model load. The low-RSS root is a Windows venv redirector; one descendant carries the model. Four small transient descendants occur before model loading, consistent with source-verification/import helpers; their exact command lines were not recorded.",
+    "worker_before_weights_host_available_bytes": 14365843456
+  },
+  "run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001",
+  "source_identity": {
+    "all_dispatch_files_match": true,
+    "canonical_assets": {
+      "CORE.json": {
+        "actual": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+        "expected": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914"
+      },
+      "FILES.json": {
+        "actual": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e",
+        "expected": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e"
+      },
+      "config.json": {
+        "actual": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+        "expected": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705"
+      },
+      "generation_config.json": {
+        "actual": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+        "expected": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc"
+      },
+      "merges.txt": {
+        "actual": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "expected": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      "model.safetensors": {
+        "actual": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+        "expected": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026"
+      },
+      "modeling_supa_a11.py": {
+        "actual": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+        "expected": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d"
+      },
+      "tokenizer.json": {
+        "actual": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "expected": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      "tokenizer_config.json": {
+        "actual": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+        "expected": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+      },
+      "vocab.json": {
+        "actual": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+        "expected": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    },
+    "covered_manifest_files": 78,
+    "dispatch_files": 83,
+    "loaded_custom_code_sha256": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d"
+  },
+  "state_identity": {
+    "before": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "final_actual": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "loaded": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "qualification_after": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551"
+  },
+  "status": "PASS_CPU_NATIVE_EXECUTION_AUDIT_NOT_SEMANTIC_EFFICACY"
+}

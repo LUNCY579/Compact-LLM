@@ -1,0 +1,436 @@
+{
+  "status": "PASS_BOUNDED_RECEIPT_ARITHMETIC_NOT_EFFICACY",
+  "audited_utc": "2026-10-05T00:19:38.728835+00:00",
+  "auditor": "evidence_math; independent receipt arithmetic extraction",
+  "native_model_calls_by_auditor": 0,
+  "training_or_optimizer_calls_by_auditor": 0,
+  "source_execution_by_auditor": 0,
+  "protected_reads": 0,
+  "native_run": "native-runtime-debug-001",
+  "checks": {
+    "outcome_rows": 32,
+    "unique_physical_cells_including_extra_loops": 32,
+    "smoke_physical_rows": 20,
+    "debug_physical_rows": 12,
+    "forward_journal_rows": 198,
+    "unique_contiguous_API_attempts": 99,
+    "generation_attempts": 87,
+    "maximum_attempts": 10,
+    "cache_attempts": 2,
+    "completed_forwards": 96,
+    "generation_completed": 87,
+    "maximum_completed": 9,
+    "expected_partial": {
+      "event": "FORWARD_FAILED",
+      "model_API_attempt": 66,
+      "phase": "maximum",
+      "prefix_tokens": 357,
+      "error": "RuntimeError: EXPECTED_DEBUG_RESTORATION_EXCEPTION",
+      "partial_compute": "UNKNOWN"
+    },
+    "unexpected_forward_failures": 0,
+    "cache_compute_started": false,
+    "generated_token_count_equals_per_outcome_forward_calls": true,
+    "maximum_prefix_tokens": 357,
+    "terminal_exit_code": 0,
+    "native_worker_seconds": 42.45399999999972,
+    "native_cap_seconds": 300,
+    "actual_API_attempts": 99,
+    "API_attempt_cap": 588,
+    "cap_arithmetic": "20 SMOKE rows*24 + 12 debug rows*8 = 576 generation calls; +10 max +2 cache =588",
+    "completed_arithmetic": "87 generation +9 maximum=96; 1 expected failed maximum +2 precompute cache rejections yield99 API attempts",
+    "forecast_seconds_recomputed": 35.72282880014973,
+    "forecast_seconds_receipt": 35.72282880014973,
+    "qualification_greedy_pairs": [
+      {
+        "case_id": "calibration_mathematics_429ca310e753b947",
+        "extra_loops": 0,
+        "response_tokens_EOS_equal": true
+      },
+      {
+        "case_id": "calibration_mathematics_429ca310e753b947",
+        "extra_loops": 1,
+        "response_tokens_EOS_equal": true
+      },
+      {
+        "case_id": "calibration_mathematics_429ca310e753b947",
+        "operator": "A3 reference/successor",
+        "response_tokens_EOS_equal": true
+      },
+      {
+        "case_id": "calibration_unanswerable_abstention_3006ee0f901c7173",
+        "extra_loops": 0,
+        "response_tokens_EOS_equal": true
+      },
+      {
+        "case_id": "calibration_unanswerable_abstention_3006ee0f901c7173",
+        "extra_loops": 1,
+        "response_tokens_EOS_equal": true
+      },
+      {
+        "case_id": "calibration_unanswerable_abstention_3006ee0f901c7173",
+        "operator": "A3 reference/successor",
+        "response_tokens_EOS_equal": true
+      }
+    ],
+    "offline_target_guard_all_outcomes": true
+  },
+  "identity_and_restoration": {
+    "before_after_loaded_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "loaded_custom_head_code_sha256": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "custom_head_matches_admitted_asset": true,
+    "checkpoint_asset_hash_map_matches_review": true,
+    "checkpoint_files_unchanged": true,
+    "source_unchanged": true,
+    "frozen_parameter_and_training_receipt": {
+      "trainable_parameters": 0,
+      "training": false,
+      "controller_candidate_revision": 0
+    },
+    "forced_restoration_qualification": true,
+    "source_manifest_matching_present_dispatch_entries": 86,
+    "source_manifest_unlisted_data_and_text_entries": [
+      "Rineya_Cross_Scale_Capability_Transfer_Lab_v1/data/evaluation/supa_layer_ablation_smoke.jsonl",
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/AUTHORITY.txt",
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/binding-001/MODEL_DATA_BINDING.json",
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/binding-001/PROMPT_AUDIT.json",
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/bulk-bank-apparatus-001/audit.json",
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/bulk-bank-apparatus-001/bank.json",
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/bulk-bank-apparatus-001/manifest.json",
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/bulk-bank-apparatus-001/positive_controls.json",
+      "experiments/rineya_taps_adaptive_recurrence_campaign_v2/runs/bulk-tokenizer-binding-002/BULK_TOKENIZER_BINDING.json"
+    ],
+    "identity_scope": "state/assets/source equality from source-bound native receipts plus metadata consistency; auditor did not reopen weights, recompute tensors or replay class restoration",
+    "model_class_restoration_detail": "forced-restoration and value-parity qualification attested; separate original/restored Python class names not present in small core receipts"
+  },
+  "authorization": {
+    "direct_human_record": "Authorize one diagnostic",
+    "grant_admission_proof_hashes_match": true,
+    "worker_grant_sha256": "1e1fe306e44fdd6b68e15d39eefee3de78094d7761c90192ffb9861c257d9299",
+    "grant_attempts": 1,
+    "single_observed_worker_PID": 177968,
+    "grant_consumed": true,
+    "permit_scope": "one 300-second diagnostic; not full-matrix retry or fresh efficacy experiment",
+    "frozen_admission_pending_fields": "human_authorization_status and freeze-resource flags remain prospective snapshot values; later actual grant/proof and successful parent terminal are the execution evidence",
+    "additional_attempt_authorized_after_this_run": false
+  },
+  "runtime_failure_boundary": {
+    "current_receipt_cuda_faulted": false,
+    "first_unexpected_failure": null,
+    "final_resources_recorded": true,
+    "conclusion": "original CUDA fault not reproduced in short synchronous diagnostic; no long-run stability or causal attribution",
+    "original_postfault_state_recovered": false,
+    "full_matrix_completed": false,
+    "primary_validation_comparisons": null,
+    "efficacy_inference": false
+  },
+  "system_event_correlation": {
+    "raw_XML_count": 7,
+    "XML_system_fields_match_metadata": true,
+    "unique_record_ids": 7,
+    "events": [
+      {
+        "utc": "2026-10-04T22:36:35.8878766Z",
+        "event_id": 153,
+        "record_id": 263219,
+        "system_execution_process_id": "4",
+        "properties": [
+          "\\Device\\000000f2",
+          "Restarting TDR occurred on GPUID:100"
+        ]
+      },
+      {
+        "utc": "2026-10-04T22:36:35.8777498Z",
+        "event_id": 153,
+        "record_id": 263218,
+        "system_execution_process_id": "4",
+        "properties": [
+          "\\Device\\000000f2",
+          "Reset TDR occurred on GPUID:100"
+        ]
+      },
+      {
+        "utc": "2026-10-04T22:36:35.6995495Z",
+        "event_id": 153,
+        "record_id": 263217,
+        "system_execution_process_id": "4",
+        "properties": [
+          "\\Device\\000000f2",
+          "Error occurred on GPUID: 100"
+        ]
+      },
+      {
+        "utc": "2026-10-04T22:36:35.6995495Z",
+        "event_id": 153,
+        "record_id": 263216,
+        "system_execution_process_id": "4",
+        "properties": [
+          "\\Device\\000000f2",
+          "Error occurred on GPUID: 100"
+        ]
+      },
+      {
+        "utc": "2026-10-04T22:36:34.8466547Z",
+        "event_id": 153,
+        "record_id": 263215,
+        "system_execution_process_id": "4",
+        "properties": [
+          "\\Device\\000000f2",
+          "Resetting TDR occurred on GPUID:100"
+        ]
+      },
+      {
+        "utc": "2026-10-04T22:36:34.5250238Z",
+        "event_id": 153,
+        "record_id": 263214,
+        "system_execution_process_id": "4",
+        "properties": [
+          "\\Device\\000000f2",
+          "UCodeReset TDR occurred on GPUID:100"
+        ]
+      },
+      {
+        "utc": "2026-10-04T22:36:34.5250238Z",
+        "event_id": 14,
+        "record_id": 263213,
+        "system_execution_process_id": "4",
+        "properties": [
+          "\\Device\\000000f2",
+          "32164851 00011ca0 00000000 2028226c 20283f9a 20280e1a 202870d4 2028744e"
+        ]
+      }
+    ],
+    "UTC_interval": [
+      "2026-10-04T22:36:34.5250238Z",
+      "2026-10-04T22:36:35.8878766Z"
+    ],
+    "TDR_text_observed": [
+      "UCodeReset",
+      "Resetting",
+      "Reset",
+      "Restarting"
+    ],
+    "application_attribution": "UNDETERMINED; System execution ProcessID4 is not a triggering-application identity",
+    "causation": "UNDETERMINED; correlated original-run driver reset episode only",
+    "message_rendering": "null; raw XML and properties used, no invented rendered messages"
+  },
+  "fresh_debug_token_outcomes": [
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:21:v0",
+      "arm": "A0",
+      "response": "UNKNOWN",
+      "token_ids": [
+        51378,
+        151645
+      ],
+      "termination": "eos"
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:21:v0",
+      "arm": "A1",
+      "response": "UNKNOWN",
+      "token_ids": [
+        51378,
+        151645
+      ],
+      "termination": "eos"
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:21:v0",
+      "arm": "A2",
+      "response": "UNKNOWN",
+      "token_ids": [
+        51378,
+        151645
+      ],
+      "termination": "eos"
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:21:v0",
+      "arm": "A3",
+      "response": "UNKNOWN",
+      "token_ids": [
+        51378,
+        151645
+      ],
+      "termination": "eos"
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1",
+      "arm": "A0",
+      "response": "UNKNOWN",
+      "token_ids": [
+        51378,
+        151645
+      ],
+      "termination": "eos"
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1",
+      "arm": "A1",
+      "response": "UNKNOWN",
+      "token_ids": [
+        51378,
+        151645
+      ],
+      "termination": "eos"
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1",
+      "arm": "A2",
+      "response": "6455",
+      "token_ids": [
+        21,
+        19,
+        20,
+        20,
+        151645
+      ],
+      "termination": "eos"
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:20:v1",
+      "arm": "A3",
+      "response": "6455",
+      "token_ids": [
+        21,
+        19,
+        20,
+        20,
+        151645
+      ],
+      "termination": "eos"
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:13:v1",
+      "arm": "A0",
+      "response": "UNKNOWN",
+      "token_ids": [
+        51378,
+        151645
+      ],
+      "termination": "eos"
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:13:v1",
+      "arm": "A1",
+      "response": "UNKNOWN",
+      "token_ids": [
+        51378,
+        151645
+      ],
+      "termination": "eos"
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:13:v1",
+      "arm": "A2",
+      "response": "UNKNOWN",
+      "token_ids": [
+        51378,
+        151645
+      ],
+      "termination": "eos"
+    },
+    {
+      "case_id": "BULK-TAPS-001:9463250d48f1:dialogue_memory:13:v1",
+      "arm": "A3",
+      "response": "UNKNOWN",
+      "token_ids": [
+        51378,
+        151645
+      ],
+      "termination": "eos"
+    }
+  ],
+  "unchecked_limits": [
+    "24.9 MB operations journal not read; no per-operation causal analysis",
+    "trajectories/resource telemetry not surveyed; no production-speed or memory-cause attribution",
+    "archived old-case token comparison omitted to keep small-core audit bounded",
+    "no fresh tensor/logit equality recomputation; value-parity status is source-bound qualification attestation",
+    "no independent canonical-weight/asset rehash; matching saved metadata and worker unchanged flags only",
+    "no long-run rerun, no recovery of original postfault resident state, no matrix completion or controller selection"
+  ],
+  "sources": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\admission.json",
+      "bytes": 21038,
+      "sha256": "0abe8ffd869531e98460f4c416e943dbe289b4da42d20e1d6627f29c1c691d94"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\review.json",
+      "bytes": 22314,
+      "sha256": "c9e17594778243d4d1e7f9c6088c05893941845ecda075c0925c498a3170504b"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\release.json",
+      "bytes": 64,
+      "sha256": "5e6d2fbf7853c407e431f719057bf79b7b5956383f67fb8a464cc22a8abd5156"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\source_manifest.json",
+      "bytes": 188680,
+      "sha256": "27d361321aa18c6b786924c58a852371f342a746da1be7692ee1f6b8d3e0b041"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\stderr.log",
+      "bytes": 192,
+      "sha256": "ef6ab98d7421408b8928975f778ce1ec128932ff9ea1b69be35ff8396e8a05af"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\terminal_receipt.json",
+      "bytes": 1781,
+      "sha256": "bba9a2d46f585c8e36f526c3e0b1e3e9ddbefd9921bc9a8870644e76e5de7a2e"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result\\receipt.json",
+      "bytes": 2784,
+      "sha256": "9a203cbebd1551b733ea2b9f990a24822e94566b68bdd990f7a1c7209a6b207c"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result\\qualification.json",
+      "bytes": 499,
+      "sha256": "4a31fd0aa3bd28f6566f5ccc81fb55cf497dc6b6828aeb4b1145874f4f7e1cab"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result\\registration.json",
+      "bytes": 12939,
+      "sha256": "a41863256e9391c186ece867df3999eb2c16d533dff59a20cade1190986a2696"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result\\matrix_forecast.json",
+      "bytes": 308,
+      "sha256": "a013d817393e9376709003e3ec9789567630fe6886ad7a8f1dd836f38994fb76"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result\\forwards.jsonl",
+      "bytes": 255384,
+      "sha256": "150c49fa04311a23f4551ceaa4089bee513cfd48d3975e0f7ea93c46a7fd0e43"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-runtime-debug-001\\result\\outcomes.jsonl",
+      "bytes": 84767,
+      "sha256": "016417ff6cc2864acddd28e8345e48d6d02a01d6b6c120025e938552f9df9f5a"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\HUMAN_RUNTIME_DEBUG_ALLOWANCE_001.json",
+      "bytes": 319,
+      "sha256": "b96a8a0c950c241b4fa3fc3bb53ebdb82e6457fbcb46a36cfed55acc3be0457c"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\HUMAN_RUNTIME_DEBUG_APPROVAL_RECORD_001.json",
+      "bytes": 663,
+      "sha256": "81e8ba14082dceca2ff5906cb745e016add662ed30270f6a068f91140631530e"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\cuda_system_event_xml_001.json",
+      "bytes": 11916,
+      "sha256": "783043cfefb4bc8b72d77434e21a77fa2268f65b0dbf7fc9129b9d9627aff17e"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\cuda_system_event_window_001.json",
+      "bytes": 1626,
+      "sha256": "4b2c9896bcc4ec8bd79d2dd4bd2bd5366cf7b6d79e612fe74c0c09c6b1ca0d3c"
+    }
+  ],
+  "report_md_sha256": "f54eb987176f2c7c41c0e726226983f0467b8aa4232223ba25c88adf31c8a637"
+}

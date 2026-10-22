@@ -1,0 +1,23 @@
+{
+  "ended_utc": "2026-10-05T04:59:09.160061+00:00",
+  "error": "RuntimeError: causal replay admission contract differs",
+  "final_resources_on_stop": {
+    "GPU_memory": null,
+    "device": "cpu",
+    "host_available_bytes": 6152249344,
+    "peak_rss_bytes": 547110912,
+    "rss_bytes": 546033664
+  },
+  "generation": false,
+  "generation_pool_access": false,
+  "lane": "CPU_CAUSAL_REPLAY_FP32",
+  "model_load_attempts": 0,
+  "native_model_loads": 0,
+  "native_test": false,
+  "optimizer_steps": 0,
+  "started_utc": "2026-10-05T04:59:09.154055+00:00",
+  "status": "FAIL",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\cpu_causal_replay_native.py\", line 243, in run\n    if any(a.get(key)!=value for key,value in expected.items()) or a.get('source')!=str(source):raise RuntimeError('causal replay admission contract differs')\n                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: causal replay admission contract differs\n",
+  "training": false,
+  "wall_seconds": 0.007622600001923274
+}

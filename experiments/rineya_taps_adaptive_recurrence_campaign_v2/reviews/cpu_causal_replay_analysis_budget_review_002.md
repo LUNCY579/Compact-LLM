@@ -1,0 +1,9 @@
+# CPU causal replay budget analyzer review 002
+
+PASS for the budget-only analyzer source bfe6a040... and tests ae15b60.... Independent review of the other author's analyzer passed 28 CPU tests in 4.65 s, 14 direct allowance-reading IO probes and five additional fail-closed bundle probes. Prior review001 and the old 3600 source/tests/plan archive remain byte-identical.
+
+Only `_proofs` and `read_run` changed; all other 20 function definitions, including the 15 named scientific/numeric/prefix/statistical helpers, are AST-identical. Synthetic complete 3600/design002 and 4500/design003 reports have exactly equal primary and separate EOS summaries. Counts, target/meanFD tolerances, cancellation, uncertainty denominator, teacher-prefix feature exclusion, parent/category aggregation and missing-primary refusal remain fixed.
+
+The new branch requires exact 4500/4320/180 budget fields, unchanged 1800 global reserve, factor 1.5 and six fresh maximum timing rows. It verifies the distinct actual EXTENDED allowance path/hash/payload against admission, registered worker and terminal. Virtual IO probes independently reject absent grants, templates, consumed 5397, wrong worker/terminal/hash/status/count/parent/deadline/shape/training scope. Arbitrary deadlines and reduced reserves also refuse primary.
+
+No grant file was physically created: allowance IO was virtualized under a clearly fabricated review namespace, and the actual EXTENDED path remained absent. This review authorizes no model attempt. Single-attempt consumption is the separately reviewed parent helper's responsibility; this analyzer does not independently count budget-ledger consumption events. Root still needs frozen dispatch review, resource/forecast gates and an actual direct-human additional allowance. No model, GPU, tokenizer, native worker or new study outcome was used by the reviewer.

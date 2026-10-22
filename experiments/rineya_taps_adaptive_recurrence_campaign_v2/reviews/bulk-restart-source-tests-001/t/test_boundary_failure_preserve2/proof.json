@@ -1,0 +1,32 @@
+{
+  "after_state_sha256": "original",
+  "before_state_sha256": "original",
+  "checkpoint_files": {
+    "model.safetensors": "changed",
+    "modeling_supa_a11.py": "code"
+  },
+  "checkpoint_index": 1,
+  "counts": {
+    "scientific_physical_rows": 1728
+  },
+  "elapsed_seconds": 0.0002736999995249789,
+  "ended_utc": "2026-10-05T16:50:47.803944+00:00",
+  "error": "RuntimeError: restart model/assets/customcode/source/frozen-parameter integrity differs",
+  "eval_mode": true,
+  "loaded_custom_code_sha256": "code",
+  "model_forward_calls_added": 0,
+  "parameter_gradients": "NONE",
+  "parameter_gradients_none": true,
+  "parent_elapsed_seconds": 0.00036980000004405156,
+  "phase": "SYNTHETIC_BOUNDARY",
+  "requires_grad_false": true,
+  "resources": null,
+  "source_sha256": {
+    "synthetic_source.py": "source"
+  },
+  "start_event_sequence": 1,
+  "status": "FAIL_MODEL_ASSETS_SOURCE_INTEGRITY",
+  "terminal_event_sequence": 2,
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\bulk_restart_native.py\", line 129, in integrity_checkpoint\n    raise RuntimeError(\"restart model/assets/customcode/source/frozen-parameter integrity differs\")\nRuntimeError: restart model/assets/customcode/source/frozen-parameter integrity differs\n",
+  "trainable_parameters": 0
+}

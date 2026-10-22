@@ -1,0 +1,49 @@
+{
+  "schema": "campaign-resource-blocked-v1",
+  "timestamp_utc": "2026-10-02T06:56:53.6836462Z",
+  "type": "READINESS_CHECK_ONLY_NOT_MODEL_WORKER_ATTEMPT",
+  "available_host_ram_bytes": 4997062656,
+  "required_parent_host_ram_bytes": 7516192768,
+  "host_ram_gate_pass": false,
+  "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+  "gpu_free_bytes": 7458521088,
+  "required_gpu_free_bytes": 6442450944,
+  "gpu_gate_pass": true,
+  "gpu_utilization_percent": "33",
+  "disk_free_bytes": 66716622848,
+  "disk_free_floor_bytes": 16106127360,
+  "campaign_bytes": 17077895.0,
+  "campaign_disk_ceiling_bytes": 2147483648,
+  "disk_finalization_reserve_bytes": 536870912,
+  "native_worker_lock_exists": false,
+  "open_native_directory_exists": false,
+  "H3_native_directory_exists": false,
+  "dispatch_contracts": [
+    {
+      "path": "open_admission_v2.json",
+      "sha256": "65e3e424d0d2b3c91905e99ec2dcb477e7d55ce4e9e56df623323c4b212b9c60",
+      "bound_files": 78,
+      "mismatches": []
+    },
+    {
+      "path": "diagnostic_admission_v3.json",
+      "sha256": "69c4f0367a733ea525c46a1955ce01ddadb1f71280737c91cd38929d9426edbe",
+      "bound_files": 72,
+      "mismatches": []
+    }
+  ],
+  "native_worker_seconds_this_check": 0,
+  "native_worker_seconds_used": 732.171,
+  "native_seconds_remaining": 20867.829,
+  "controller_revisions": 0,
+  "infrastructure_retries_used": 1,
+  "retry_available": false,
+  "optimizer_steps": 0,
+  "cloud_spend": 0,
+  "consecutive_goal_turns_affected": 3,
+  "turn_count_basis": "Coordinator continuation history: same registered host-RAM blocker at two previous handoffs and current third goal turn",
+  "status": "NO_CHILD_CREATED_GUARD_UNCHANGED",
+  "scientific_goal": "UNMET",
+  "unlock": "Fresh available host RAM>=7GiB and GPUfree>=6GiB; unchanged reviewed source hashes; no worker lock; exclusive run directories; disk and complete-budget gates pass; resume goal explicitly",
+  "other_workloads_changed": false
+}

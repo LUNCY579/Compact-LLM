@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "reviewer": "/root/adversarial_review",
+  "created_utc": "2026-10-02T04:43:16.2793686Z",
+  "status": "PASS_REFERENCE_ANALYZER_MISSING_MEASUREMENT_CORRECTION",
+  "supersedes_for_future_use": "reviews/analysis_review_receipt.json",
+  "preserves_historical_analysis": "reviews/analysis_review_attempt001",
+  "source_sha256": {
+    "tests": "8649ed19ccf7ce4df8fe7f0edb14167c608affac22de3c5604ae4a516f3c4eeb",
+    "analysis": "378a5e12b467a4fec0807e372d93d7869f44e8e557cf762177beda6975cfc026"
+  },
+  "independent_test_result": {
+    "failed": 0,
+    "skipped": 0,
+    "junit_sha256": "13c1786a5dbaf9f7242406a9dce3716c3378f84c8fc8dcdb44a85d2face9ed71",
+    "pytest_seconds": 0.62,
+    "passed": 11,
+    "exit_code": 0
+  },
+  "changed_contract": "Empty measurement rows now have complete_value=null, known_subtotal=null and measured_rows=0. Nonempty measured zero remains known zero. Whole-worker elapsed costs remain separately measured.",
+  "previous_scientific_guard_checks": "Retained; source diff inspected and full11-test suite rerun",
+  "native_model_loads": 0,
+  "approved_use": "Original CPU-FP32 reference terminal analysis only; GPU successor requires separate analysis binding"
+}

@@ -1,0 +1,11 @@
+# Final causal-refusal reporting consistency audit
+
+PASS with no material discrepancy found. Frozen index v12 (6dd5c43d...) has 747 matching group bindings, 58 matching current-source entries and 28 matching current-test entries. All 97 v4 dispatch dependencies match; ten canonical asset pins agree with the fresh readiness and independently verified terminal002 audit evidence.
+
+Result002, RESEARCH_REPORT, STATE, CONTINUE and CAMPAIGN agree: qualification made 29 API attempts, 27 full attempts, 26 completed forwards, three adjoints, 4764 completed prefix positions, three vector pairs, one expected partial and two cache refusals. No study cases, targets or predictor rows ran. Primary/EOS task results stay NULL. The 3778.297791-second forecast exceeded the authorized 3600-second ceiling and stopped the attempt without narrowing, deadline extension or retry.
+
+The qualification-bound b23 before/after hash is preserved. Reports correctly leave the missing post-forecast resident-state/parameter verification unavailable. Charged native use is 1448.515 seconds, leaving 20151.485. Grant 5397 has exactly one start/completion and is consumed. Provisional larger DEV evidence does not become validation efficacy or a successful full mechanism result; the scientific goal remains ACTIVE_UNMET.
+
+Exact v4 d105... is request-only: 4500 parent/4320 body/180 internal reserve, unchanged factor/science/floors and 1800 global reserve. The actual EXTENDED allowance, run003 and native lock are absent; a read-only campaign entry/supervisor inventory found zero matching processes. Fresh readiness is NO_DISPATCH: saved available RAM 7202721792 is below the required 9019431322 bytes, and a new direct-human allowance is missing. The saved RAM value is not a new live qualification. The template's da328... bytes match the proposed future payload, but its proposal path supplies no authority.
+
+STATE deliberately retains this audit's future/pending pointer; no state/report/index/source was edited by this auditor. Historical index group names are explicitly marked historical. No model, grant, environment change, native attempt or broad test rerun occurred. Root retains sole launch authority and must satisfy both direct-human authorization and fresh readiness before any future attempt.

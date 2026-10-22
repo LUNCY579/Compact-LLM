@@ -1,0 +1,56 @@
+{
+  "captured_utc": "2026-10-02T04:07:39.116658Z",
+  "os": {
+    "Caption": "Microsoft Windows 11 Home",
+    "Version": "10.0.26200",
+    "BuildNumber": "26200",
+    "TotalVisibleMemorySize": 32734636,
+    "FreePhysicalMemory": 3837868
+  },
+  "cpu": {
+    "Name": "AMD Ryzen 9 7940HX with Radeon Graphics        ",
+    "NumberOfCores": 16,
+    "NumberOfLogicalProcessors": 32
+  },
+  "disk": {
+    "DeviceID": "C:",
+    "Size": 994613465088,
+    "FreeSpace": 64707522560
+  },
+  "workloads": [
+    {
+      "ProcessId": 524468,
+      "ParentProcessId": 523724,
+      "Name": "python.exe",
+      "CommandLine": "Existing local HTTP server, no model inference"
+    },
+    {
+      "ProcessId": 556388,
+      "ParentProcessId": 555176,
+      "Name": "Unity.exe",
+      "CommandLine": "REDACTED: independent Unity workload, project Flip Hero"
+    },
+    {
+      "ProcessId": 556516,
+      "ParentProcessId": 556388,
+      "Name": "Unity.exe",
+      "CommandLine": "REDACTED: independent Unity workload, project Flip Hero"
+    }
+  ],
+  "interpreters": [
+    {
+      "Name": "python.exe",
+      "Source": "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe"
+    },
+    {
+      "Name": "py.exe",
+      "Source": "C:\\Users\\clclc\\AppData\\Local\\Programs\\Python\\Launcher\\py.exe"
+    },
+    {
+      "Name": "uv.exe",
+      "Source": "C:\\Users\\clclc\\.local\\bin\\uv.exe"
+    }
+  ],
+  "gpu": "name, driver_version, memory.total [MiB], memory.used [MiB], memory.free [MiB], utilization.gpu [%]\r\nNVIDIA GeForce RTX 4070 Laptop GPU, 566.07, 8188 MiB, 1625 MiB, 6324 MiB, 35 %\r\n",
+  "cuda": "Thu Oct  1 23:07:43 2026       \r\n+-----------------------------------------------------------------------------------------+\r\n| NVIDIA-SMI 566.07                 Driver Version: 566.07         CUDA Version: 12.7     |\r\n|-----------------------------------------+------------------------+----------------------+\r\n| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |\r\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\r\n|                                         |                        |               MIG M. |\r\n|=========================================+========================+======================|\r\n|   0  NVIDIA GeForce RTX 4070 ...  WDDM  |   00000000:01:00.0  On |                  N/A |\r\n| N/A   66C    P4             14W /  105W |    1630MiB /   8188MiB |     34%      Default |\r\n|                                         |                        |                  N/A |\r\n+-----------------------------------------+------------------------+----------------------+\r\n                                                                                         \r\n+-----------------------------------------------------------------------------------------+\r\n| Processes:                                                                              |\r\n|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |\r\n|        ID   ID                                                               Usage      |\r\n|=========================================================================================|\r\n|    0   N/A  N/A      7148    C+G   C:\\Windows\\explorer.exe                     N/A      |\r\n|    0   N/A  N/A      8784    C+G   ...on\\154.0.4258.48\\msedgewebview2.exe      N/A      |\r\n|    0   N/A  N/A     12440    C+G   ...cw5n1h2txyewy\\CrossDeviceResume.exe      N/A      |\r\n|    0   N/A  N/A     13472    C+G   ...siveControlPanel\\SystemSettings.exe      N/A      |\r\n|    0   N/A  N/A     15920    C+G   ...nt.CBS_cw5n1h2txyewy\\SearchHost.exe      N/A      |\r\n|    0   N/A  N/A     15944    C+G   ...2txyewy\\StartMenuExperienceHost.exe      N/A      |\r\n|    0   N/A  N/A     16268    C+G   ..._x64__cw5n1h2txyewy\\WidgetBoard.exe      N/A      |\r\n|    0   N/A  N/A     17048    C+G   ...t.LockApp_cw5n1h2txyewy\\LockApp.exe      N/A      |\r\n|    0   N/A  N/A     18304    C+G   ...ekyb3d8bbwe\\PhoneExperienceHost.exe      N/A      |\r\n|    0   N/A  N/A     19048    C+G   ...s\\System32\\ApplicationFrameHost.exe      N/A      |\r\n|    0   N/A  N/A     21560    C+G   ...CBS_cw5n1h2txyewy\\TextInputHost.exe      N/A      |\r\n|    0   N/A  N/A     22092    C+G   ...5n1h2txyewy\\ShellExperienceHost.exe      N/A      |\r\n|    0   N/A  N/A     24376    C+G   ..._x64__2p2nqsd0c76g0\\app\\ChatGPT.exe      N/A      |\r\n|    0   N/A  N/A     26488    C+G   ...oogle\\Chrome\\Application\\chrome.exe      N/A      |\r\n|    0   N/A  N/A     29776    C+G   ...ft\\x64\\codex-computer-use-swift.exe      N/A      |\r\n|    0   N/A  N/A     33140    C+G   ...oogle\\Chrome\\Application\\chrome.exe      N/A      |\r\n|    0   N/A  N/A     44384    C+G   ...4__8wekyb3d8bbwe\\EdgeGameAssist.exe      N/A      |\r\n|    0   N/A  N/A    358476    C+G   ...\\bin\\windows\\codex-computer-use.exe      N/A      |\r\n|    0   N/A  N/A    545048    C+G   C:\\Windows\\System32\\ShellHost.exe           N/A      |\r\n|    0   N/A  N/A    556388    C+G   ...\\Editor\\6000.6.2f1\\Editor\\Unity.exe      N/A      |\r\n|    0   N/A  N/A    556516    C+G   ...\\Editor\\6000.6.2f1\\Editor\\Unity.exe      N/A      |\r\n+-----------------------------------------------------------------------------------------+\r\n"
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "v3_passive_probe_parent_source_review_v2",
+  "created_utc": "2026-10-05T21:03:21.793013+00:00",
+  "status": "PASS_PARENT_AUTHORITY_BOOTSTRAP_SOURCE",
+  "scope": "Independent exact current parent/authority/entry and test-source review. Source PASS only; actual frozen admission, worker/reader and native qualification remain separate gates.",
+  "dispatch_authorized": false,
+  "model_calls_by_reviewer": 0,
+  "Torch_import_by_reviewer": false,
+  "source_edits_by_reviewer": false,
+  "findings": [],
+  "prior_receipt_preserved": {
+    "path": "reviews/parent_source_review_001.json",
+    "sha256": "d2bc201340375e6b15f5f4db5c3ee34d344227f361ca9cb5e15e1b0ebb41cee2"
+  },
+  "resolved_issue": {
+    "id": "P01",
+    "status": "RESOLVED",
+    "source_fix": "peak_rss_bytes initializes None and measured samples use null-safe max. No-sample launch/assignment/fast-exit is unknown, whereas known zero worker time on no child is retained.",
+    "exact_delta_verified": true,
+    "other_parent_source_changes": false,
+    "preserved_original_sha256": "bde00d675d51c8a8dca49806f8e5bd9a40cc2bfb8ab3e0f52a46920c3c7cb5a8"
+  },
+  "independent_checks": {
+    "prior_in_memory_scope_bootstrap_cases_passed": 20,
+    "authority_entry_capsule_bytes_unchanged_since_those_checks": true,
+    "changed_source_check": "Compared preserved source and current AST/text; only the two required RSS-accounting replacements differ, with every cap/guard/process/clock/ledger branch unchanged.",
+    "new_test_source_inspected": [
+      "Missing RSS remains null for Popen failure, assignment refusal before resume and fast exit.",
+      "Actual new parent.run hard-deadline branch terminates only its injected owned Job and records measured RSS/time.",
+      "Actual check_parent rejects source/review hash drift, GPU/host floor shortfall, existing output and insufficient budget before lock or Popen.",
+      "Actual scope/bootstrap negatives and consumed-study refusal remain covered."
+    ],
+    "new_test_execution_by_reviewer": "Not rerun: the two-line accounting correction is source-verified and the source-bound author fixtures below are corroborating evidence. No independent actual native or new real-OS-process qualification is claimed."
+  },
+  "author_CPU_evidence": {
+    "path": "runs/ps005/junit.xml",
+    "sha256": "cbd82f3748828a84d70fb91031e12020ee8a57d3fedf1776a9cbeea51437ca80",
+    "tests": 30,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "junit_seconds": 0.461,
+    "Job_and_Popen": "Mocked; no model or GPU inventory in fixtures. The separate inherited WindowsJob qualification remains historical evidence, not an actual new model PASS.",
+    "fabricated_review_and_hash_cases": "CPU fixtures only; not independent dispatch authority."
+  },
+  "source_checks": [
+    "Exact new active-goal scope/initial immutable authority SHA and fixed V3 study identifier; consumed old grants are not substituted.",
+    "Parent anti-replay checks started/completed-with-PID study events before creation; exclusive shared lock and before-release native_started ledger entry consume the new attempt.",
+    "Canonical interpreter/source, actual dispatch/asset hashes, V3-local independent exact-admission review, original budget/final reserve, live host/GPU UUID/driver/free floors and disk checks precede Popen.",
+    "Suspended creation->own WindowsJob assignment->resume->release; assignment failure kills only the still-suspended child; normal/failure finally closes Job and only owned lock.",
+    "Finite parent-owned clock and exact active scope are checked by stdlib bootstrap before worker-module import; invalid/missing release cannot reach worker.",
+    "900-second hard deadline,180-second progress deadline and unchanged running RSS/host/GPU/disk guards; progress is tied to actual probe artifacts.",
+    "192 unique prompt-only DEV bank/token rows, no gold/status/family/parent/category fields, raw prompt hashes and max232 input token length checked. Logging case IDs must remain unused by feature/gate code."
+  ],
+  "limits": [
+    "This source review is not a native observer identity/mask/head/cache/restoration/resource qualification or an efficacy finding.",
+    "All source imports and exact allowed metadata/data files must be included in the real admission closure; synthetic fixture membership cannot substitute for actual source guarding.",
+    "The probe is passive384 first-prefix task forwards with0 generation/adjoints/fitting; no gain or gate policy is tested. Historical outcomes may be joined only offline after terminal.",
+    "Source PASS cannot confer independent confirmation from exposed DEV/VAL, authorize retries or reuse consumed historical allowances."
+  ],
+  "remaining_gates": [
+    "Independent resulting worker/observer/reader review and exact real admission/dependency closure review.",
+    "Fresh coordinator-owned readiness and observer/no-extra/unit/max357/cache/restoration/frozen-state native qualification.",
+    "Fresh complete451API/449attempt/448complete/54137positions forecast inside900deadline with120internal and1800global reserve before192 task cases."
+  ],
+  "bindings": {
+    "authority.py": "a5a007c2fea3a6c63a2f2b722c91948c8675c6a8d4b50b02a2cb51d39a52b516",
+    "probe_supervisor.py": "9396b1afd4b61eb5ac87951764ba6a4ed7ee89089656a37e2182468a3c898b60",
+    "probe_entry.py": "4d1c66344af58b2bab296f8693f3a30a8a721beca57061e216c26dc2fafdb9fc",
+    "ACTIVE_GOAL_SCOPE_001.json": "4ea9970d9a948895861d2f182b6cffa9f7e50b1be353ced48ecce55f59c633b6",
+    "ACTIVE_GOAL_SNAPSHOT_001.json": "a69c692c237a579ec92061d07cb1012d0f05be84bf3c39c13941e2a8d492297c",
+    "PASSIVE_PROBE_REGISTRATION_001.md": "e5716814632b9fd7ad145ef5a9c40aaee434fdc35b9d773aef1095ac8aa59cbe",
+    "tests/test_parent_authority.py": "9094843cafad8a6b72dc6d54622ba67fe5a680cdb323620d71d43cac7f10defa",
+    "tests/test_supervisor.py": "33f07d6977f2dde20b129663422fc34e4cd96735121c0185c32800d6afab66ed",
+    "runs/ps005/junit.xml": "cbd82f3748828a84d70fb91031e12020ee8a57d3fedf1776a9cbeea51437ca80",
+    "data/dev_prefix_probe_001/MANIFEST.json": "f35dc01c54154c51fa6284807245767f01282128c23a09307a2485483951530b",
+    "data/dev_prefix_probe_001/DEVELOPMENT_BANK.json": "681a3e77e3d797e2faebcff3971dbb365a4479ebdac017bf3dcfcb48081ba03f",
+    "data/dev_prefix_probe_001/DEVELOPMENT_TOKEN_BINDING.json": "c34948026ebaf332111ce635a473b1489ef0d2f3932100f9e0d3cdd6a08ce6d2",
+    "reviews/parent_source_review_001.json": "d2bc201340375e6b15f5f4db5c3ee34d344227f361ca9cb5e15e1b0ebb41cee2"
+  },
+  "review_md_sha256": "32fb8c8e1b79dda5fbacb31a4592acfef363bff6c9918aeb3fa8ed38d9d264f7"
+}

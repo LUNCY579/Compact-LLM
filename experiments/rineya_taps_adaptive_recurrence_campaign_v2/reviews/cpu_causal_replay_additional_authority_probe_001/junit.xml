@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="13" time="0.772" timestamp="2026-10-04T22:46:31.039275-05:00" hostname="TheFakeGod"><testcase classname="experiments.rineya_taps_adaptive_recurrence_campaign_v2.tests.test_causal_replay_authority" name="test_missing_actual_grant_and_template_cannot_authorize" time="0.010" /><testcase classname="experiments.rineya_taps_adaptive_recurrence_campaign_v2.tests.test_causal_replay_authority" name="test_wrong_scope_refuses_even_when_hash_matches[attempts-2]" time="0.011" /><testcase classname="experiments.rineya_taps_adaptive_recurrence_campaign_v2.tests.test_causal_replay_authority" name="test_wrong_scope_refuses_even_when_hash_matches[model_API_attempts-1926]" time="0.010" /><testcase classname="experiments.rineya_taps_adaptive_recurrence_campaign_v2.tests.test_causal_replay_authority" name="test_wrong_scope_refuses_even_when_hash_matches[full_bulk_matrix_retry-True]" time="0.010" /><testcase classname="experiments.rineya_taps_adaptive_recurrence_campaign_v2.tests.test_causal_replay_authority" name="test_wrong_scope_refuses_even_when_hash_matches[worker_sha256-wrong]" time="0.010" /><testcase classname="experiments.rineya_taps_adaptive_recurrence_campaign_v2.tests.test_causal_replay_authority" name="test_started_or_launched_failure_consumes_single_attempt[event0]" time="0.015" /><testcase classname="experiments.rineya_taps_adaptive_recurrence_campaign_v2.tests.test_causal_replay_authority" name="test_started_or_launched_failure_consumes_single_attempt[event1]" time="0.013" /><testcase classname="experiments.rineya_taps_adaptive_recurrence_campaign_v2.tests.test_cpu_causal_replay_supervision" name="test_state_adjoint_attempt_journal_updates_progress_without_generation_rows" time="0.005" /><testcase classname="experiments.rineya_taps_adaptive_recurrence_campaign_v2.tests.test_cpu_causal_replay_supervision" name="test_open_bootstrap_requires_containment_and_preserves_explicit_reader[False]" time="0.007" /><testcase classname="experiments.rineya_taps_adaptive_recurrence_campaign_v2.tests.test_cpu_causal_replay_supervision" name="test_open_bootstrap_requires_containment_and_preserves_explicit_reader[True]" time="0.007" /><testcase classname="experiments.rineya_taps_adaptive_recurrence_campaign_v2.tests.test_cpu_causal_replay_supervision" name="test_open_actual_parent_hard_deadline_kills_only_cpu_tree" time="0.244"><failure message="FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\cpu_causal_replay_additional_authority_probe_001\\pytest_temp\\test_open_actual_parent_hard_d0\\CPU_H3_FIXTURE_NOT_NATIVE\\members.json'">tmp_path = WindowsPath('C:/Users/clclc/BusinessProject/Chat-Bubble-rineya-taps-adaptive-recurrence-v1/experiments/rineya_taps_ada...ence_campaign_v2/reviews/cpu_causal_replay_additional_authority_probe_001/pytest_temp/test_open_actual_parent_hard_d0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001B61FE65C10&gt;
+
+    @pytest.mark.skipif(os.name != "nt", reason="registered Windows job lane")
+    def test_open_actual_parent_hard_deadline_kills_only_cpu_tree(tmp_path, monkeypatch):
+        package = tmp_path / "CPU_H3_FIXTURE_NOT_NATIVE"
+        package.mkdir()
+        source, out, path = package / "no_weights", package / "run", package / "admission.json"
+        admission = {"status": "READY_FOR_CPU_CAUSAL_REPLAY_DISPATCH", "source": str(source.resolve()),
+                     "interpreter": sys.executable, "dispatch_hashes": {}, "review_receipt": "fixture_review.json",
+                     "gpu_uuid": "CPU_FAKE", "gpu_driver_version": "CPU_FAKE", "hard_deadline_seconds": 2,
+                     "human_extension_sha256": "AUTHOR_FIXTURE_NOT_APPROVAL"}
+        path.write_text(json.dumps(admission))
+        (package / "fixture_review.json").write_text(json.dumps({"status": "PASS_CPU_CAUSAL_REPLAY_DISPATCH",
+            "admission_sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "fixture_not_real_review": True}))
+        (package / "BUDGET_LEDGER.jsonl").write_text("")
+        monkeypatch.setattr(cpu_causal_replay_supervisor, "ROOT", package)
+        monkeypatch.setattr(cpu_causal_replay_supervisor, "PACKAGE", package)
+        monkeypatch.setattr(cpu_causal_replay_supervisor, "sources", lambda: {})
+        monkeypatch.setattr(cpu_causal_replay_supervisor, "git", lambda *a: "CPU_FIXTURE")
+        monkeypatch.setattr(cpu_causal_replay_supervisor, "validate_human_extension", lambda _a: {"fixture_not_authority": True})
+        monkeypatch.setattr(cpu_causal_replay_supervisor.psutil, "virtual_memory", lambda: SimpleNamespace(available=9 * 1024**3))
+        monkeypatch.setattr(cpu_causal_replay_supervisor.shutil, "disk_usage", lambda _: SimpleNamespace(free=100 * 1024**3))
+        real_popen, owned, reached = subprocess.Popen, [], package / "members.json"
+        def launch(command, **kwargs):
+            assert command[command.index("-m") + 1].endswith(".cpu_causal_replay_entry") and "--stage" not in command
+            assert kwargs["creationflags"] &amp; SUSPENDED
+            release = command[command.index("--release") + 1]
+            child = real_popen([sys.executable, "-B", "-c", FILE_BARRIER_TREE_WORKER, release, str(reached), WORKER],
+                              **{**kwargs, "creationflags": kwargs["creationflags"] | NO_WINDOW})
+            owned.append(child)
+            return child
+        unrelated = sentinel(package / "unrelated.pid")
+        monkeypatch.setattr(cpu_causal_replay_supervisor.subprocess, "Popen", launch)
+        try:
+            assert cpu_causal_replay_supervisor.run(source, out, path) == 2
+&gt;           members = json.loads(reached.read_text())
+                                 ^^^^^^^^^^^^^^^^^^^
+
+experiments\rineya_taps_adaptive_recurrence_campaign_v2\tests\test_cpu_causal_replay_supervision.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/clclc/BusinessProject/Chat-Bubble-rineya-taps-adaptive-recurrence-v1/experiments/rineya_taps_ada...lay_additional_authority_probe_001/pytest_temp/test_open_actual_parent_hard_d0/CPU_H3_FIXTURE_NOT_NATIVE/members.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\cpu_causal_replay_additional_authority_probe_001\\pytest_temp\\test_open_actual_parent_hard_d0\\CPU_H3_FIXTURE_NOT_NATIVE\\members.json'
+
+..\..\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\pathlib.py:1044: FileNotFoundError</failure></testcase><testcase classname="experiments.rineya_taps_adaptive_recurrence_campaign_v2.tests.test_cpu_causal_replay_parent_refusal" name="test_existing_output_preserves_historical_receipt" time="0.017" /><testcase classname="experiments.rineya_taps_adaptive_recurrence_campaign_v2.tests.test_cpu_causal_replay_parent_refusal" name="test_parent_ram_below_unchanged_floor_never_launches" time="0.020" /></testsuite></testsuites>

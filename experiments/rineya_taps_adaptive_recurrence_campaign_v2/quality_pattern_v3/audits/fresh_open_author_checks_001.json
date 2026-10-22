@@ -1,0 +1,408 @@
+{
+  "actual_fresh_corpus_generated": false,
+  "actual_fresh_data_directory_exists": false,
+  "algorithm_architecture": [
+    {
+      "constructor": "desired-balance closure term",
+      "forward_text_solver": "signed sequential sum",
+      "mechanism": "mixed_sign_journal",
+      "verifier": "positive/negative totals"
+    },
+    {
+      "constructor": "openings from incoming/outgoing totals",
+      "forward_text_solver": "apply directed transfers",
+      "mechanism": "transfer_conservation",
+      "verifier": "incidence-row dot product"
+    },
+    {
+      "constructor": "witness chain and ungrounded decoy",
+      "forward_text_solver": "forward closure",
+      "mechanism": "horn_dag",
+      "verifier": "backward recursive proof"
+    },
+    {
+      "constructor": "connected chain vs disconnected decoy",
+      "forward_text_solver": "frontier closure",
+      "mechanism": "directed_reachability",
+      "verifier": "transitive relation matrix"
+    },
+    {
+      "constructor": "closed target arithmetic and branch witness",
+      "forward_text_solver": "numeric register interpreter",
+      "mechanism": "register_reassignment_branch",
+      "verifier": "immutable expression trees with state snapshots"
+    },
+    {
+      "constructor": "closed arithmetic expression and cancellation",
+      "forward_text_solver": "numeric stack interpreter",
+      "mechanism": "stack_expression_trace",
+      "verifier": "postfix expression-tree evaluator"
+    },
+    {
+      "constructor": "fixed effective-state histories",
+      "forward_text_solver": "forward active-owner reducer",
+      "mechanism": "declaration_clear_quote",
+      "verifier": "backward last-effective-event"
+    },
+    {
+      "constructor": "matching vs revoked histories",
+      "forward_text_solver": "active/pending owner reducer",
+      "mechanism": "offer_ack_revoke",
+      "verifier": "backward valid-ack witness after last revoke"
+    },
+    {
+      "constructor": "typed bundles with current/outdated flags",
+      "forward_text_solver": "maximum approved date + unique values",
+      "mechanism": "approved_consensus",
+      "verifier": "pairwise higher-date witness elimination"
+    },
+    {
+      "constructor": "named-current pointer bundles",
+      "forward_text_solver": "current pointer filtering",
+      "mechanism": "named_current_snapshot",
+      "verifier": "visible current/row relational join"
+    },
+    {
+      "constructor": "whole-bundle exchange with unchanged global counts",
+      "forward_text_solver": "approved consensus",
+      "mechanism": "approved_bundle_exchange",
+      "verifier": "pairwise approved-record witness elimination"
+    },
+    {
+      "constructor": "revocation relation intervention with3live authorized records onbothsides,randomreceiptIDs",
+      "forward_text_solver": "authorized/unrevoked receipt filtering",
+      "mechanism": "issuer_revocation",
+      "verifier": "visible authority/revocation constraint intersection and min/max consensus"
+    }
+  ],
+  "candidate_implementations_or_scores": 0,
+  "created_utc": "2026-10-06T02:22:26.995487+00:00",
+  "documented_invariants": [
+    "Exactly216 distinct semanticworld commitments and432 uniquecase/prompthashes; opaque loggingIDs containno family/gold/status.",
+    "Sixequalfamilies72cases,12mechanisms36cases,216easy216hard; queryroles18eachperfamily.",
+    "DeductionYES36/NO36; dialogue36ANSWER36MISSING; documents/evidence36ANSWER18MISSING18CONFLICT; ledger/program24negative24zero24positive.",
+    "Pairedneutralvariants preservegold; counterqueries/evidence change declared responses; evidencepairs containoneanswerable/oneunanswerable. Variant/style do not encode answerability.",
+    "Constructiondoesnotimport/calloldmake_world/generate, readoldbanks, loadmodel/tokenizer or mutatecanonical/sibling/environment files.",
+    "CurrentDOCUMENTS contract recognizedonlywhereexplicitlyshared; snapshots/attestationsandothernewgrammarsstrictlyunrecognizedbyfrozenKguard. No policyoutcomes measured.",
+    "Complete response scorer parity exercised against pinned oldpure scorer on45edgeprobes; no lastnumber/substr/formatrepair. Cap8is unchanged; tokenqualificationpending.",
+    "Allpositivecontrols requireconstructor==forwardtextsolver==separatevisibletextverifier onfixturepopulation; header/body/querytype andnumberedsteps are checked.",
+    "Copy/queryblind/header/skeleton floors predeclared; global<=50%,noperfectfamilycue,allfailuresretain; no nonce roulette for headroom.",
+    "Attestationreceipt IDs randomized andliveauthorizedrecord counts equal across missing/conflict interventions.",
+    "Realdata generation release requires actualV3local PASS_FRESH_OPEN_CPU_SOURCE exact3hashmap plus FROZEN_SELECTED_POLICY_FOR_FRESH_OPEN receipt boundto samehashes/nonce17/source-reviewSHA/currentselectedpolicySHA. NoCLIexportprovided."
+  ],
+  "errors": [],
+  "fixture_audit": {
+    "cases": 432,
+    "difficulty_counts": {
+      "easy": 216,
+      "hard": 216
+    },
+    "errors": [],
+    "family_counts": {
+      "answerability_source_conflict": 72,
+      "deduction_composition": 72,
+      "dialogue_memory": 72,
+      "document_retrieval_reconciliation": 72,
+      "program_state": 72,
+      "signed_ledgers": 72
+    },
+    "floor_correct_counts": {
+      "answerability_source_conflict": {
+        "any_CLEAR_or_REVOKE_UNKNOWN_else_last_number": 6,
+        "constant_0": 0,
+        "constant_1": 0,
+        "constant_NO": 0,
+        "constant_UNKNOWN": 36,
+        "constant_YES": 0,
+        "copy_first_entity": 0,
+        "copy_first_number": 4,
+        "copy_full_prompt": 0,
+        "copy_last_entity": 0,
+        "copy_last_number": 6,
+        "copy_max_number": 2,
+        "copy_min_number": 0,
+        "document_header_UNKNOWN_else_NO": 18,
+        "memory_max_value_ignore_state": 0,
+        "query_blind_first_entity_solver": 33,
+        "query_blind_last_entity_solver": 31,
+        "rule_RHS_presence": 0
+      },
+      "deduction_composition": {
+        "any_CLEAR_or_REVOKE_UNKNOWN_else_last_number": 0,
+        "constant_0": 0,
+        "constant_1": 0,
+        "constant_NO": 36,
+        "constant_UNKNOWN": 0,
+        "constant_YES": 36,
+        "copy_first_entity": 0,
+        "copy_first_number": 0,
+        "copy_full_prompt": 0,
+        "copy_last_entity": 0,
+        "copy_last_number": 0,
+        "copy_max_number": 0,
+        "copy_min_number": 0,
+        "document_header_UNKNOWN_else_NO": 36,
+        "memory_max_value_ignore_state": 0,
+        "query_blind_first_entity_solver": 39,
+        "query_blind_last_entity_solver": 26,
+        "rule_RHS_presence": 19
+      },
+      "dialogue_memory": {
+        "any_CLEAR_or_REVOKE_UNKNOWN_else_last_number": 36,
+        "constant_0": 0,
+        "constant_1": 0,
+        "constant_NO": 0,
+        "constant_UNKNOWN": 36,
+        "constant_YES": 0,
+        "copy_first_entity": 0,
+        "copy_first_number": 0,
+        "copy_full_prompt": 0,
+        "copy_last_entity": 0,
+        "copy_last_number": 4,
+        "copy_max_number": 1,
+        "copy_min_number": 0,
+        "document_header_UNKNOWN_else_NO": 0,
+        "memory_max_value_ignore_state": 13,
+        "query_blind_first_entity_solver": 24,
+        "query_blind_last_entity_solver": 22,
+        "rule_RHS_presence": 0
+      },
+      "document_retrieval_reconciliation": {
+        "any_CLEAR_or_REVOKE_UNKNOWN_else_last_number": 7,
+        "constant_0": 0,
+        "constant_1": 0,
+        "constant_NO": 0,
+        "constant_UNKNOWN": 36,
+        "constant_YES": 0,
+        "copy_first_entity": 0,
+        "copy_first_number": 4,
+        "copy_full_prompt": 0,
+        "copy_last_entity": 0,
+        "copy_last_number": 7,
+        "copy_max_number": 2,
+        "copy_min_number": 1,
+        "document_header_UNKNOWN_else_NO": 17,
+        "memory_max_value_ignore_state": 0,
+        "query_blind_first_entity_solver": 32,
+        "query_blind_last_entity_solver": 31,
+        "rule_RHS_presence": 0
+      },
+      "overall": {
+        "any_CLEAR_or_REVOKE_UNKNOWN_else_last_number": 49,
+        "constant_0": 48,
+        "constant_1": 0,
+        "constant_NO": 36,
+        "constant_UNKNOWN": 108,
+        "constant_YES": 36,
+        "copy_first_entity": 0,
+        "copy_first_number": 8,
+        "copy_full_prompt": 0,
+        "copy_last_entity": 0,
+        "copy_last_number": 17,
+        "copy_max_number": 5,
+        "copy_min_number": 2,
+        "document_header_UNKNOWN_else_NO": 71,
+        "memory_max_value_ignore_state": 13,
+        "query_blind_first_entity_solver": 164,
+        "query_blind_last_entity_solver": 152,
+        "rule_RHS_presence": 19
+      },
+      "program_state": {
+        "any_CLEAR_or_REVOKE_UNKNOWN_else_last_number": 0,
+        "constant_0": 24,
+        "constant_1": 0,
+        "constant_NO": 0,
+        "constant_UNKNOWN": 0,
+        "constant_YES": 0,
+        "copy_first_entity": 0,
+        "copy_first_number": 0,
+        "copy_full_prompt": 0,
+        "copy_last_entity": 0,
+        "copy_last_number": 0,
+        "copy_max_number": 0,
+        "copy_min_number": 0,
+        "document_header_UNKNOWN_else_NO": 0,
+        "memory_max_value_ignore_state": 0,
+        "query_blind_first_entity_solver": 19,
+        "query_blind_last_entity_solver": 22,
+        "rule_RHS_presence": 0
+      },
+      "signed_ledgers": {
+        "any_CLEAR_or_REVOKE_UNKNOWN_else_last_number": 0,
+        "constant_0": 24,
+        "constant_1": 0,
+        "constant_NO": 0,
+        "constant_UNKNOWN": 0,
+        "constant_YES": 0,
+        "copy_first_entity": 0,
+        "copy_first_number": 0,
+        "copy_full_prompt": 0,
+        "copy_last_entity": 0,
+        "copy_last_number": 0,
+        "copy_max_number": 0,
+        "copy_min_number": 1,
+        "document_header_UNKNOWN_else_NO": 0,
+        "memory_max_value_ignore_state": 0,
+        "query_blind_first_entity_solver": 17,
+        "query_blind_last_entity_solver": 20,
+        "rule_RHS_presence": 0
+      }
+    },
+    "gold_sign_counts_by_numeric_family": {
+      "program_state": {
+        "negative": 24,
+        "positive": 24,
+        "zero": 24
+      },
+      "signed_ledgers": {
+        "negative": 24,
+        "positive": 24,
+        "zero": 24
+      }
+    },
+    "grammar_limits": "Only fresh documents/approved evidence mechanism0 shares frozen DOCUMENTS consensus grammar/primitives. Others are strict unrecognized grammar/mechanism holdouts; not independent human authors.",
+    "mechanism_counts": {
+      "approved_bundle_exchange": 36,
+      "approved_consensus": 36,
+      "declaration_clear_quote": 36,
+      "directed_reachability": 36,
+      "horn_dag": 36,
+      "issuer_revocation": 36,
+      "mixed_sign_journal": 36,
+      "named_current_snapshot": 36,
+      "offer_ack_revoke": 36,
+      "register_reassignment_branch": 36,
+      "stack_expression_trace": 36,
+      "transfer_conservation": 36
+    },
+    "models": 0,
+    "parents": 216,
+    "query_role_counts_by_family": {
+      "answerability_source_conflict": {
+        "0": 18,
+        "1": 18,
+        "2": 18,
+        "3": 18
+      },
+      "deduction_composition": {
+        "0": 18,
+        "1": 18,
+        "2": 18,
+        "3": 18
+      },
+      "dialogue_memory": {
+        "0": 18,
+        "1": 18,
+        "2": 18,
+        "3": 18
+      },
+      "document_retrieval_reconciliation": {
+        "0": 18,
+        "1": 18,
+        "2": 18,
+        "3": 18
+      },
+      "program_state": {
+        "0": 18,
+        "1": 18,
+        "2": 18,
+        "3": 18
+      },
+      "signed_ledgers": {
+        "0": 18,
+        "1": 18,
+        "2": 18,
+        "3": 18
+      }
+    },
+    "source_status_counts_by_family": {
+      "answerability_source_conflict": {
+        "ANSWER": 36,
+        "CONFLICT": 18,
+        "MISSING": 18
+      },
+      "deduction_composition": {
+        "ANSWER": 72
+      },
+      "dialogue_memory": {
+        "ANSWER": 36,
+        "MISSING": 36
+      },
+      "document_retrieval_reconciliation": {
+        "ANSWER": 36,
+        "CONFLICT": 18,
+        "MISSING": 18
+      },
+      "program_state": {
+        "ANSWER": 72
+      },
+      "signed_ledgers": {
+        "ANSWER": 72
+      }
+    },
+    "status": "CPU_APPARATUS_PASS_NOT_NATIVE_OR_SOURCE_REVIEW",
+    "tokenizer_shapes": "NOT_BOUND_ROOT_GATE_REQUIRED"
+  },
+  "fixture_only": {
+    "allrows_exposure": "CPU_FIXTURE_ONLY",
+    "errors": 0,
+    "failures": 0,
+    "fullpositivecontrols_passed": 432,
+    "max_global_floor_correct": 164,
+    "max_global_floor_fraction": 0.37962962962962965,
+    "maximum_gold_chars": 7,
+    "maximum_prompt_chars_not_tokenproof": 497,
+    "minimum_gold_chars": 1,
+    "nonce": "CPU-FIXTURE-ONLY-NOT-REPLICATION",
+    "rows_written": false,
+    "shared_DOCUMENTS_cases": 72,
+    "skips": 0,
+    "strict_unrecognized_grammar_cases": 360,
+    "tests": 14,
+    "unittest_command": "python -B -m unittest experiments.rineya_taps_adaptive_recurrence_campaign_v2.quality_pattern_v3.tests.test_fresh_open_bank -v"
+  },
+  "frozen_guard_grammar_reference": {
+    "path": "opposed_gate_policy.py",
+    "role": "testonlygrammar/certificatecoverage,notcandidate scoring",
+    "sha256": "0d57ad3284d51cbf959c8c8fd96489f00374fc52be35b4dbcc68850dcb06cd6e"
+  },
+  "inherited_readonly_scorer_reference": {
+    "path": "../bulk_bank.py",
+    "role": "testonlyscorer parity; no inheritedworld/generator use",
+    "sha256": "3242439231064fc81991e157c0da62833f4e4223ec71d60cf9ffd2851815b5eb"
+  },
+  "models": 0,
+  "pending_or_limits": [
+    "Constructor, forward text reference and verifier algorithms are separated; the same author wrote both modules. This is not independent author/source acceptance.",
+    "Mixed-sign sums, Horn semantics, owner-state and consensus primitives are shared abstract ideas with prior work. Exact DOCUMENTS grammar remains shared for72 fixture cases; new randomworlds alone do not prove source independence.",
+    "Ten other mechanisms/grammars are genuinely new local source implementations/representations; their abstract primitives/research author/spec remain related. No external/human authored corpus was imported.",
+    "OnlyCPUfixture nonce was used. Scientific fixednonce f0216a9d60b74c8e/seed17 is assignedonce but notgenerated; no source-selection/reseeding loop.",
+    "Root-owned tokenizer/rendering binding, exactinput<=350/gold+EOS<=8,oldworld overlap/provenance audit and fullnativequalification remain pending. Characterlength is not tokenqualification.",
+    "Independent source review and frozen selectedpolicy receipts are required by generate_registered_bank before actualfixednonce generation. Publicdirect privatehelper use is not an authority bypass. Root ownsactualdata/files/export andnative admission.",
+    "No fresh short-responsepanel file was created;24-case preservationpanel remains separatelyowned/proposed.",
+    "CPUsolvers/positivecontrols/floors are bank-integrity checks, not Rineya outcomes, candidate gains or neural reasoning."
+  ],
+  "permissions": "Onlyassignedfreshsource/verifier/test andauditpairwritten; actualdata/native/metadata unchanged.",
+  "role": "Source/test author of both fresh generator and separate text-verifier modules. Algorithm-separation claims only; no manufactured independent review.",
+  "schema": "fresh-open-author-checks-001",
+  "scientific_generator_version": "FRESH-OPEN-216-V1",
+  "scientific_nonce_assigned_once": "f0216a9d60b74c8e",
+  "scientific_seed": 17,
+  "scientific_size": {
+    "families": 6,
+    "generation_cap": 8,
+    "parents": 216,
+    "parents_per_family": 36,
+    "parents_per_mechanism": 18,
+    "prompts": 432,
+    "semantic_mechanisms": 12,
+    "variants_per_parent": 2
+  },
+  "source_hashes": {
+    "fresh_open_bank.py": "7b7286528d07633467bf720b3cab8a76cc948090deaccc0993e72be73440f7ed",
+    "fresh_open_verifier.py": "34aadc934bd74e82e1db725f1a80a1836ed39c375061fb4fc0b333f0d5fea472",
+    "tests/test_fresh_open_bank.py": "8465312045ca337d4a41343f837c7654cb605e590f73f7109f8eb390244352ee"
+  },
+  "status": "AUTHOR_CPU_APPARATUS_READY_PENDING_INDEPENDENT_SOURCE_REVIEW",
+  "tokenizer_calls": 0
+}

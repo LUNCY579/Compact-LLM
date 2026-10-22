@@ -1,0 +1,9 @@
+# Prospective runtime-debug review
+
+The proposal is acceptable for implementation, with no native execution authorized. Its exact population gives 32 greedy evaluations, 576 generation calls, ten maximum357 attempts and two cache rejections: 588 model-API attempts. The three known prefixes are226/225/232 tokens. Selection is the interrupted case, its archived predecessor and the metadata maximum, rather than favorable scores.
+
+The diagnostic can narrow a reporting operation with CPU-held input IDs, flushed stage journals and a full traceback. NVIDIA documents that error700 leaves a process inconsistent; it must not be treated as recoverable CUDA state ([CUDA12.6.3 error reference](https://docs.nvidia.com/cuda/archive/12.6.3/cuda-runtime-api/group__CUDART__TYPES.html)). PyTorch documents the synchronous behavior of CUDA_LAUNCH_BLOCKING1 ([PyTorch2.12](https://docs.pytorch.org/docs/2.12/cuda_environment_variables.html)). Blocking and additional logging perturb timing and allocation, so a clean isolated run cannot clear the cause or prove long-run stability.
+
+Required gates include a separate human allowance before any child creation, unchanged source/runtime/model/operator/resources,300s total with25s evidence reserve, complete-plan refusal rather than case deletion, and no CUDA re-entry after an illegal address. CPU IDs must be validated against151936 embedding/output rows; tokenizer length151669 is a separate decode-domain fact. Unknown generated IDs from the failed evaluation must never be invented or teacher-forced. No full-matrix retry, controller fitting or efficacy claim is included.
+
+Implementation, CPU tests, registered command/source/admission and the missing-human-allowance machinegate must be concrete and independently reviewed before the coordinator asks for that additional allowance. No model, GPU forward, protected data or environment modification by reviewer.

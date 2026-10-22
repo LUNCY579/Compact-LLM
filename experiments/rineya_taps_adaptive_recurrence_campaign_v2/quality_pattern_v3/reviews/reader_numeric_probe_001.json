@@ -1,0 +1,234 @@
+{
+  "schema": "v3_reader_synthetic_numeric_probe_v1",
+  "created_utc": "2026-10-05T21:23:47.713423+00:00",
+  "scope": "Exact observer scalar function on synthetic CPU tensors only; no model, Rineya weights, native forward, GPU inventory or device calls. No study outcomes were used.",
+  "observer_sha256": "da6a75376d6984a54396dc91499fa8e797ad3a66d8ff66512b29123b449bdae0",
+  "reader_sha256_at_discovery": "8583312865914c3a417966b8c6bf1e6288d0edfd5daaa8331c1887be0887e363",
+  "observer_function": "readout_stats",
+  "torch_version": "2.12.1+cu126",
+  "CPU_threads": 16,
+  "dtype": "float32",
+  "device": "cpu",
+  "grad_enabled_for_inputs": false,
+  "model_loads": 0,
+  "native_calls": 0,
+  "CUDA_calls": 0,
+  "tensor_construction": {
+    "vocabulary_rows": 151936,
+    "fill": -10.0,
+    "exceptions": {
+      "0": 3.0,
+      "1": 2.0
+    },
+    "UNKNOWN_token_id": 51378,
+    "offsets": [
+      0.0,
+      100.0,
+      1000.0
+    ]
+  },
+  "kernel_operations": "Exact source: detach.float, log_softmax, exp, topk(2), separate argmax/rival argmax and logsumexp; probabilities and all raw statistics below are verbatim outputs.",
+  "offset_records": [
+    {
+      "offset": 0.0,
+      "raw_readout_stats": {
+        "schema": "PASSIVE_INPUT_FEATURES_V1",
+        "vocabulary_rows": 151936,
+        "UNKNOWN_token_id": 51378,
+        "UNKNOWN_logit": -10.0,
+        "rival_logit": 3.0,
+        "rival_token_id": 0,
+        "UNKNOWN_minus_rival_margin": -13.0,
+        "rival_set": "ALL_HEAD_ROWS_EXCEPT_UNKNOWN_INCLUDING_EOS_AND_SPECIAL_UNFILTERED",
+        "top1_token_id": 0,
+        "top1_probability": 0.5843099355697632,
+        "top2_token_ids": [
+          0,
+          1
+        ],
+        "top2_logits": [
+          3.0,
+          2.0
+        ],
+        "top2_margin": 1.0,
+        "entropy_nats": 3.3608760833740234,
+        "logsumexp": 3.5372533798217773,
+        "logits_changed": false,
+        "target_independent": true,
+        "finite": true
+      },
+      "reconstructed_probability_from_recorded_LSE": 0.5843510406004171,
+      "absolute_cross_kernel_gap": 4.110503065390958e-05,
+      "legacy_2e_minus6_check_pass": false,
+      "actual_observer_output": true
+    },
+    {
+      "offset": 100.0,
+      "raw_readout_stats": {
+        "schema": "PASSIVE_INPUT_FEATURES_V1",
+        "vocabulary_rows": 151936,
+        "UNKNOWN_token_id": 51378,
+        "UNKNOWN_logit": 90.0,
+        "rival_logit": 103.0,
+        "rival_token_id": 0,
+        "UNKNOWN_minus_rival_margin": -13.0,
+        "rival_set": "ALL_HEAD_ROWS_EXCEPT_UNKNOWN_INCLUDING_EOS_AND_SPECIAL_UNFILTERED",
+        "top1_token_id": 0,
+        "top1_probability": 0.5843099355697632,
+        "top2_token_ids": [
+          0,
+          1
+        ],
+        "top2_logits": [
+          103.0,
+          102.0
+        ],
+        "top2_margin": 1.0,
+        "entropy_nats": 3.3608760833740234,
+        "logsumexp": 103.5372543334961,
+        "logits_changed": false,
+        "target_independent": true,
+        "finite": true
+      },
+      "reconstructed_probability_from_recorded_LSE": 0.5843504833201036,
+      "absolute_cross_kernel_gap": 4.054775034045832e-05,
+      "legacy_2e_minus6_check_pass": false,
+      "actual_observer_output": true
+    },
+    {
+      "offset": 1000.0,
+      "raw_readout_stats": {
+        "schema": "PASSIVE_INPUT_FEATURES_V1",
+        "vocabulary_rows": 151936,
+        "UNKNOWN_token_id": 51378,
+        "UNKNOWN_logit": 990.0,
+        "rival_logit": 1003.0,
+        "rival_token_id": 0,
+        "UNKNOWN_minus_rival_margin": -13.0,
+        "rival_set": "ALL_HEAD_ROWS_EXCEPT_UNKNOWN_INCLUDING_EOS_AND_SPECIAL_UNFILTERED",
+        "top1_token_id": 0,
+        "top1_probability": 0.5843099355697632,
+        "top2_token_ids": [
+          0,
+          1
+        ],
+        "top2_logits": [
+          1003.0,
+          1002.0
+        ],
+        "top2_margin": 1.0,
+        "entropy_nats": 3.3608760833740234,
+        "logsumexp": 1003.5372314453125,
+        "logits_changed": false,
+        "target_independent": true,
+        "finite": true
+      },
+      "reconstructed_probability_from_recorded_LSE": 0.5843638581943117,
+      "absolute_cross_kernel_gap": 5.392262454850805e-05,
+      "legacy_2e_minus6_check_pass": false,
+      "actual_observer_output": true
+    }
+  ],
+  "tie_records": [
+    {
+      "construction": "torch.zeros(4,dtype=float32),unknown_id=3",
+      "raw_readout_stats": {
+        "schema": "PASSIVE_INPUT_FEATURES_V1",
+        "vocabulary_rows": 4,
+        "UNKNOWN_token_id": 3,
+        "UNKNOWN_logit": 0.0,
+        "rival_logit": 0.0,
+        "rival_token_id": 0,
+        "UNKNOWN_minus_rival_margin": 0.0,
+        "rival_set": "ALL_HEAD_ROWS_EXCEPT_UNKNOWN_INCLUDING_EOS_AND_SPECIAL_UNFILTERED",
+        "top1_token_id": 0,
+        "top1_probability": 0.25,
+        "top2_token_ids": [
+          0,
+          1
+        ],
+        "top2_logits": [
+          0.0,
+          0.0
+        ],
+        "top2_margin": 0.0,
+        "entropy_nats": 1.3862943649291992,
+        "logsumexp": 1.3862943649291992,
+        "logits_changed": false,
+        "target_independent": true,
+        "finite": true
+      },
+      "actual_observer_output": true,
+      "source_function_counterexample": "Tiny analytic vocabulary; demonstrates real independent argmax/topk/rival selection on equal max values. This is not native151936 qualification."
+    },
+    {
+      "construction": "torch.zeros(151936,dtype=float32),UNKNOWN51378",
+      "raw_readout_stats": {
+        "schema": "PASSIVE_INPUT_FEATURES_V1",
+        "vocabulary_rows": 151936,
+        "UNKNOWN_token_id": 51378,
+        "UNKNOWN_logit": 0.0,
+        "rival_logit": 0.0,
+        "rival_token_id": 0,
+        "UNKNOWN_minus_rival_margin": 0.0,
+        "rival_set": "ALL_HEAD_ROWS_EXCEPT_UNKNOWN_INCLUDING_EOS_AND_SPECIAL_UNFILTERED",
+        "top1_token_id": 0,
+        "top1_probability": 6.581720754184062e-06,
+        "top2_token_ids": [
+          0,
+          1
+        ],
+        "top2_logits": [
+          0.0,
+          0.0
+        ],
+        "top2_margin": 0.0,
+        "entropy_nats": 11.931217193603516,
+        "logsumexp": 11.931214332580566,
+        "logits_changed": false,
+        "target_independent": true,
+        "finite": true
+      },
+      "actual_observer_output": true,
+      "scope": "Actual full native-width synthetic scalar output; all logits equal, not Rineya."
+    },
+    {
+      "construction": "Same full-width all-zero tensor; an equally valid topk tie-order representation [2,3] while retaining actual argmax/rival IDs and all actual numeric values",
+      "raw_readout_stats": {
+        "schema": "PASSIVE_INPUT_FEATURES_V1",
+        "vocabulary_rows": 151936,
+        "UNKNOWN_token_id": 51378,
+        "UNKNOWN_logit": 0.0,
+        "rival_logit": 0.0,
+        "rival_token_id": 0,
+        "UNKNOWN_minus_rival_margin": 0.0,
+        "rival_set": "ALL_HEAD_ROWS_EXCEPT_UNKNOWN_INCLUDING_EOS_AND_SPECIAL_UNFILTERED",
+        "top1_token_id": 0,
+        "top1_probability": 6.581720754184062e-06,
+        "top2_token_ids": [
+          2,
+          3
+        ],
+        "top2_logits": [
+          0.0,
+          0.0
+        ],
+        "top2_margin": 0.0,
+        "entropy_nats": 11.931217193603516,
+        "logsumexp": 11.931214332580566,
+        "logits_changed": false,
+        "target_independent": true,
+        "finite": true
+      },
+      "actual_observer_output": false,
+      "analytic_permitted_tie_order_variant": true,
+      "numeric_values_invented": false,
+      "scope": "Explicit tie-order fixture, not an executed kernel result. All scalars are copied from the exact full-width observer output; only tied topk IDs are permuted to illustrate that maximum value does not imply a unique ID."
+    }
+  ],
+  "conclusions": [
+    "The old2e-6 cross-kernel assumption can reject exact finite scalar outputs; this artifact supplies realistic-vocabulary records for a prospective descriptive-precision regression, not a larger acceptance envelope.",
+    "Argmax and topk can choose different equal maxima; preserve raw IDs/values and specify tie-aware consistency rather than assuming a unique shared ID.",
+    "No claim about actual Rineya logits, gains, CUDA fault cause or native quality follows."
+  ]
+}

@@ -1,0 +1,299 @@
+{
+  "schema": "full-generation-restart-feasibility-001",
+  "status": "REQUEST_ONLY_ORIGINAL_COUNTS_AND_HISTORICAL_GPU_COST_FEASIBLE_FRESH_GATES_REQUIRED",
+  "model_calls_by_auditor": 0,
+  "state_adjoints_by_auditor": 0,
+  "validation_outcome_payload_read": false,
+  "protected_data_read": false,
+  "native_restart_authorized": false,
+  "controller_revision": 0,
+  "fit_or_optimizer": false,
+  "delegation_shape_correction": "Root initially specified cap64; audit found original scientific8/inheritedSMOKE24. Root corrected delegation before any code, native execution or scientific-contract change. No64 alternative is proposed.",
+  "preserved_contract": {
+    "bank_cases": 288,
+    "world_parents": 144,
+    "DEVELOPMENT_cases": 192,
+    "DEVELOPMENT_parents": 96,
+    "OPEN_VALIDATION_cases": 96,
+    "OPEN_VALIDATION_parents": 48,
+    "parent_disjoint": true,
+    "shared_generators": 6,
+    "nonce_seed": "Same original bank, no redraw, new nonce or seed search",
+    "bank_sha256": "862a63648caf7efb3d287c11bc5caaefc884e0ec6cb3130ce8f196526efc40cd",
+    "token_binding_sha256": "1a3723cdc918bb219119044aef5d209334f36c4b140674b8b93174f5361553bf",
+    "generator_scorer_sha256": "3242439231064fc81991e157c0da62833f4e4223ec71d60cf9ffd2851815b5eb",
+    "normalizer_sha256": "25db8ad7b8bd4166188eccab4be73c9a430f696610dea5b8c83b380883f9d42a",
+    "deterministic_controls": [
+      "A0",
+      "A1",
+      "A2:.8",
+      "A2:.9",
+      "A2:1",
+      "A2:1.1",
+      "A2:1.1473425965417514",
+      "A2:1.2",
+      "A3"
+    ],
+    "deterministic_seed": 17,
+    "A5_seeds": [
+      17,
+      29
+    ],
+    "fixed_selector": "Complete DEV six-grid strict equal-category/parent accuracy, lower-alpha tie; freeze before this-run validation",
+    "A5_pool": "Fresh this-run A3 DEVELOPMENT generation-prefix-weighted marginal only; no teacher/gradient/loss/historical-pool input",
+    "controller_spec": "Original unchanged TAPS beta.8 gamma1.5 rho.275 bounds.8/1.2 warmup1 raw wholeL12-L13/per-prefix reset",
+    "operator": "Ordinary first pass unchanged, budgets0/1 extra wholeL12-L13; own live rollout per arm",
+    "readout": "Same canonical a99/b23 custom abstention headb77; no response/label repair",
+    "scoring": "Same strict full-response frozen bulk scorer/normalizer after prediction; same safety/truncation/endpoints",
+    "native_runtime": {
+      "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+      "cuda": "12.6",
+      "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "python": "3.11.15",
+      "tf32": false,
+      "torch": "2.12.1+cu126",
+      "transformers": "5.14.1"
+    },
+    "device": "cuda:0",
+    "dtype": "float32",
+    "TF32": false,
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "batch": 1,
+    "padding": false,
+    "cache": false,
+    "scientific_max_new_tokens": 8,
+    "inherited_SMOKE_max_new_tokens": 24,
+    "scientific_input_envelope": 350,
+    "actual_bank_max_input": 232,
+    "actual_bank_max_forward": 239,
+    "actual_SMOKE_max_input": 60,
+    "actual_SMOKE_max_forward": 83,
+    "mechanical_maximum_shape": 357,
+    "state_adjoints": 0,
+    "training": false,
+    "gold_NLL": "NOT_COLLECTED_CAUSAL_GUARD"
+  },
+  "complete_count_forecast": {
+    "DEVELOPMENT_deterministic_physical": 1728,
+    "DEVELOPMENT_A5_physical": 384,
+    "OPEN_VALIDATION_deterministic_physical": 864,
+    "OPEN_VALIDATION_A5_physical": 192,
+    "scientific_physical": 3168,
+    "SMOKE_pre_forecast_physical": 120,
+    "SMOKE_A5_post_freeze_physical": 8,
+    "SMOKE_total_physical": 128,
+    "all_physical": 3296,
+    "scientific_generation_call_cap": 25344,
+    "SMOKE_generation_call_cap": 3072,
+    "all_generation_call_cap": 28416,
+    "maximum_shape_attempts": 18,
+    "maximum_shape_complete_cap": 17,
+    "expected_partial_maximum_attempts": 1,
+    "cache_rejections_precompute": 2,
+    "model_API_attempt_cap": 28436,
+    "full_model_forward_attempt_cap": 28434,
+    "full_model_completed_forward_cap": 28433,
+    "scientific_generation_prefix_position_cap": 3460952,
+    "SMOKE_generation_prefix_position_cap": 148608,
+    "generation_prefix_position_cap": 3609560,
+    "maximum_shape_attempted_positions": 6426,
+    "maximum_shape_completed_position_cap": 6069,
+    "completed_full_forward_position_cap": 3615629,
+    "actual_partial_positions": null,
+    "nonphysical_oracle_rows": 288,
+    "nonphysical_frozen_validation_alias_rows": 96,
+    "first_preDEV_complete_remaining_API_cap": 25537,
+    "post_deterministic_DEV_remaining_API_cap": 11713,
+    "post_complete_DEV_preVAL_remaining_API_cap": 8448
+  },
+  "GPU_historical_forecast_only": {
+    "source": "Nativebulk001 qualification-only forwards; reading stopped at first DEVELOPMENT event. No validation outcome or timing used.",
+    "qualification_completed_timing_rows": 781,
+    "maximum_shape_events": {
+      "MAXIMUM_FORWARD_STARTED": 17,
+      "MAXIMUM_FORWARD_COMPLETED": 16,
+      "MAXIMUM_FORWARD_FAILED": 1
+    },
+    "observed_first_cold_seconds": 0.5600326999992831,
+    "maximum_subsequent_synchronized_whole_forward_seconds": 0.07277049999902374,
+    "factor": 1.5,
+    "remaining_calls_cap": 25537,
+    "remaining_seconds_recomputed": 2787.510387712604,
+    "setup_cold_elapsed_seconds": 68.12621790000048,
+    "internal_finalization_reserve_seconds": 1800,
+    "complete_seconds_recomputed": 4655.636605612604,
+    "proposed16000_slack_seconds": 11344.363394387396,
+    "fresh_warm_threshold_if_old_elapsed_were_repeated": 0.36892544888070905,
+    "threshold_is_guarantee": false,
+    "CPU_gradient_timings_used": false,
+    "limits": "Old successful qualification was followed by a CUDA fault; timing history is only a feasibility prior, not fresh safety/performance proof. No outcome-derived average replaces full cap."
+  },
+  "proposed_budget": {
+    "current_native_used": 2837.843,
+    "current_native_remaining": 18762.157,
+    "parent_hard_deadline_seconds": 16000,
+    "global_finalization_reserve_seconds": 1800,
+    "total_prospective_reservation_seconds": 17800,
+    "remaining_unreserved_margin_seconds": 962.1569999999992,
+    "internal_native_finalization_reserve_seconds": 1800,
+    "internal_reserve_is_within_parent": true,
+    "new_state_asset_source_check_wall_time": "Charged to worker elapsed and reserved internal1800; no added model-forward/adjoint calls. Unknown component time is null, not0.",
+    "old18000_deadline_plus_global_reserve_fits_current_budget": false,
+    "same_science_retry_already_available": false,
+    "new_direct_human_single_attempt_grant_required": true,
+    "none_of_original_debug_corrected3600_or4500_grants_covers_restart": true
+  },
+  "fresh_required_gates": [
+    "New exact source/registration/admission/review and direct human one-attempt authority plus anti-replay before bootstrap release/model load.",
+    "Parent hostRAM>=7GiB, GPUfree>=6GiB on UUID GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9/driver566.07; worker initialhost>=6GiB, RSS<=6GiB, runninghost>=1GiB/GPUallocated<=5GiB/GPUglobalfree>=1GiB; exact runtime assets/head/positions/cache/dtype.",
+    "Campaign disk<=2GiB with512MiB finalization reserve and hostfree>=15GiB; suspended WindowsJob assignment before resume/release, parent16000/no-progress950 and sole model worker.",
+    "Fresh original noextra/unit/A3/6constants SMOKE identity/restoration/RMS/finite/mask/L0-L2/cache/max357 qualification; later fresh DEV-poolA5 SMOKE+max357 before validation.",
+    "PreDEV remaining25537cap forecast from fresh subsequent whole-forward GPU maximum including357 times1.5 +actual elapsed+internal1800 <=16000; firstcold/setup charged once, no CPU/GPU speed pooling.",
+    "After each new integrity boundary account actual hash/sync/log/resource walltime and recheck complete remainingcap forecast; no case, arm, token cap, margin or grid reduction to force admission.",
+    "GPUfault poison-safe failure receipt must avoid secondary CUDA calls after device error, retain partial costs/null state, terminate contained campaign tree and refuse promotion/retry."
+  ],
+  "integrity_boundaries": [
+    {
+      "name": "POST_DETERMINISTIC_DEV_PRE_FREEZE",
+      "where": "Immediately after all192x9 deterministic DEV physical outcomes and before freeze_development/fixed/pool selection/write/A5 use",
+      "DEV_physical_rows": 1728,
+      "remaining_API_cap": 11713,
+      "requires": [
+        "Synchronize CUDA successfully before hash/check; finite prior forward records and complete exact deterministic grid/A3 IDs.",
+        "Loaded model state including buffers equals before/qualifiedb23; eval/frozen/no parameter grads, original L0-L2 and wrapper/hook restoration invariants; same loaded custom codeb77 and runtime UUID/device.",
+        "All canonical ten assets and source/dispatch/config/bank/token/scorer bindings unchanged; resource/disk guards pass.",
+        "Write stage receipt with actual timestamps/elapsed/resource samples/counters/source-state-assets hashes and raw DEV outcomes/trajectories digests; freeze payload binds this PASS receipt before selection or generation-pool admission."
+      ],
+      "failure": "No fixed/pool freeze, no A5/VAL and no primary promotion; preserve all attempted rows/costs."
+    },
+    {
+      "name": "POST_COMPLETE_DEV_PRE_VALIDATION",
+      "where": "After fresh A5 SMOKE/max357 and both192-case A5 seed streams; before first validation model forward",
+      "DEV_physical_rows": 2112,
+      "remaining_API_cap": 8448,
+      "requires": [
+        "Same CUDA synchronization/stateb23/assets/custom code/source/parameter/restoration/resource checks plus complete DEV/A5 counts and pool/fixed freeze provenance.",
+        "Write second PASS receipt and verify freeze/current-run noVAL-forward chronology; bind into validation admission before all96x11 validation cells.",
+        "Fresh full remaining8448cap forecast and elapsed/internal reserve must fit16000."
+      ],
+      "failure": "No validation entry, all primary generation comparison NULL; no survivors or hidden restart."
+    }
+  ],
+  "exposure": {
+    "authored_exploratory": true,
+    "generation_DEV_previously_exposed_cases": 192,
+    "CPU_canonical_replay_DEV_exposed_cases": 192,
+    "prior_validation_attempted_case_ids_count": 59,
+    "prior_validation_completed_deterministic_cases": 58,
+    "partial_validation_scores_used_for_new_selection": false,
+    "validation_label_scope": "Original parent-world partition only; already partially model-exposed, all authored/source-visible, shared generators, not independent confirmation.",
+    "new_freeze_exposure_flag": "False only for THIS-RUN validation-forward-before-freeze; must not claim historically unexposed validation.",
+    "no_redraw_subset_or_relabel_as_fresh": true
+  },
+  "scope_of_new_changes": "Budget/authority and observability integrity boundaries only; new source independently reviewed/qualified, scientific controls/populations/scorer/caps unchanged. Full success can still be negative or inconclusive.",
+  "proof_limit": "Boundary PASS documents state/source cleanliness there; it does not diagnose prior TDR root cause or prove every past activation correct. Final required state/complete matrix/quality checks remain mandatory.",
+  "readiness": "REQUEST_ONLY: no new grant/native/source qualifier/cost or fresh host/disk/lock proof supplied by this audit. Root reported GPU inventory alone is not dispatch authority.",
+  "bindings": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\AUTHORITY.txt",
+      "sha256": "18f9b5079c05138a28d783404b7c9f919d62e829c17fe0c7a7334b789dd2fa3d"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\BULK_NATIVE_REGISTRATION_001.md",
+      "sha256": "1ce533aa4f34000a7b4faea73d7cee6089d6e979ec74ce9cde1d9346e83e8302"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\BULK_ANALYSIS_PLAN_001.md",
+      "sha256": "d3f91618fc97c390588561b9fa274e11a8b3330d5807830c826f782b23e97b61"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\LARGE_BANK_DESIGN_001.md",
+      "sha256": "d822f1bfc9211ad45844c424427982659726c02d7e6b82ca269c54007c530c4e"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\bulk_native.py",
+      "sha256": "1ed52ccbb546d826caec2bb48b3c7fa76dd5a136f1a1d7e3fae421b4871c46aa"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\gpu_native.py",
+      "sha256": "4c1a05c6511ff267d790654475f2a22cb5a3b8fa02857b295aa1ab3ae6c20e6f"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\bulk_bank.py",
+      "sha256": "3242439231064fc81991e157c0da62833f4e4223ec71d60cf9ffd2851815b5eb"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\open_bank.py",
+      "sha256": "25db8ad7b8bd4166188eccab4be73c9a430f696610dea5b8c83b380883f9d42a"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\admission.json",
+      "sha256": "a303cd65c353a6d12e6544503bbf210c054ae919f795577d8b01e96224464aca"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\review.json",
+      "sha256": "5b2b45ad30e0a8d56c41bc9dafb169146a01a07328cc87c4c6c288d11f95cdd6"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\registration.json",
+      "sha256": "a59a64aac71c9f993bd1c36d3d46b7f9d5392d5bdc3d3d224f4f60655da84e88"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\qualification.json",
+      "sha256": "8e8609504174412523d7379ec0a49c241367ecc98590eba402d7c48b6cbd5f84"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\matrix_forecast.json",
+      "sha256": "46ebf50d86fc75b5df67dee8a09ebc73cc92311568872747c5d152d0585d39ef"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\result\\forwards.jsonl",
+      "sha256": "d607920f13d8ed1d55e598f4339e4b8c6d6a33bfb9966cdb38c60bb485194f81"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-bulk-001\\terminal_receipt.json",
+      "sha256": "56d5618530b52cc0029f87a10138ccdeed33b8696fa5da6df0442e89afaf37ca"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\bulk-tokenizer-binding-002\\BULK_TOKENIZER_BINDING.json",
+      "sha256": "1a3723cdc918bb219119044aef5d209334f36c4b140674b8b93174f5361553bf"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\binding-001\\MODEL_DATA_BINDING.json",
+      "sha256": "82590a8f76eca27e7b15694b724123477e21ae0cc38ed2b33b56641ab9e70f26"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\binding-001\\PROMPT_AUDIT.json",
+      "sha256": "f4b5b21638bc2d8a8da4fac707072208d3a8a1aa2f1918c7574a326cc996bf7d"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\bulk-bank-apparatus-001\\manifest.json",
+      "sha256": "64e459d8e5f800d63c2652fba5d04e8e4d709c6de45efd447d6450aa80f71e80"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\bulk-bank-apparatus-001\\audit.json",
+      "sha256": "dc77beb71105a7a8d460bcfa9da64b758caaba19580e65e736149b212cd6f82a"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\bulk-bank-apparatus-001\\positive_controls.json",
+      "sha256": "7ea64f738100c8deba42e88a3bbbc3b3717d59dff7583a2022d845d4b06ac9b5"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\bulk-001\\DEV_DIAGNOSTIC.json",
+      "sha256": "3ac840fda044cc3f82042d116f48658d82b2d741c630acf35240350150927774"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\bulk_result_failure_review_001.json",
+      "sha256": "78f86efec7c713bb135549ae280eda969645001d1127db44bf66264435e0431b"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\audits\\cpu_causal_replay_execution_math_003.json",
+      "sha256": "7eb188ce6062df7eac7327bb4960f3f9deca4539ceff61059a489881884fb254"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\reviews\\cpu_causal_replay_execution_review_003.json",
+      "sha256": "94071d3a9fc1576786119564e78745dcea3382be1bad4889d5d13c6d686c66fe"
+    }
+  ],
+  "report_md_sha256": "94aa8f51ad69ab0aaf407cf2fe3853d7fc794652070de0dcf921db3daa006259"
+}

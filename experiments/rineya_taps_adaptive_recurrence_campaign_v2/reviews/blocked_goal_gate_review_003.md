@@ -1,0 +1,5 @@
+The third-turn blocked threshold passes. The same missing additional-attempt approval persisted through the corrected002 terminal/request turn, the second continuation turn and this third turn. Prior turn2/pending question are artifact-bound; root confirms no new approving reply in the current conversation. The old3600 grant was consumed and allowed no further retry.
+
+Necessary safe preparation is complete: exact v4 source review, completionv3, next-decision audit, reconciled metadata and index13 have independent receipts. Another document or repeated test is not a meaningful required next step. The full192 native study remains blocked on new approval and fresh gates. Readiness003 also refuses RAM8412569600<9019431322; no new grant/record, lock or run003 exists. Root reports zero live native campaign processes.
+
+Root should mark the persistent goal blocked and report the returned status, then stop goal work. The scientific mission remains unmet and20151.485 native seconds remain; budget room grants no attempt authority. This review performs no goal transition, model call, test or source/state edit, and grants no permission.

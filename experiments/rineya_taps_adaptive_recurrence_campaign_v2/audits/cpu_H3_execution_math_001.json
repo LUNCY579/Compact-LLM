@@ -1,0 +1,628 @@
+{
+  "status": "PASS_COMPLETE_CPU_NATIVE_SURROGATE_MATH_NOT_SEMANTIC_EFFICACY",
+  "audited_utc": "2026-10-05T01:53:45.668404+00:00",
+  "primary_semantic_efficacy": null,
+  "bulk_validation_primary": null,
+  "native_model_calls_by_auditor": 0,
+  "optimizer_calls_by_auditor": 0,
+  "frozen_source_edits": 0,
+  "event_counts": {
+    "VALUE_FORWARD_STARTED": 18,
+    "VALUE_FORWARD_COMPLETED": 17,
+    "DIAGNOSTIC_FORWARD_STARTED": 27,
+    "DIAGNOSTIC_FORWARD_COMPLETED": 27,
+    "VALUE_FORWARD_FAILED": 1,
+    "CACHE_REJECTION_STARTED": 2,
+    "CACHE_REJECTED": 2
+  },
+  "counts": {
+    "eligible": 7,
+    "missing_target": 7,
+    "shape_excluded": 2,
+    "API": 47,
+    "full_attempts": 45,
+    "full_complete": 44,
+    "expected_partial": 1,
+    "cache_before_compute": 2,
+    "state_adjoints": 9,
+    "completed_positions": 4818,
+    "partial_positions": null
+  },
+  "mechanical_complete": true,
+  "state_asset_source_preservation": {
+    "before_after_loaded_state": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "custom_code_sha256": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "admission_review_registration_digest_match": true,
+    "dispatch_closure_files": 83,
+    "dispatch_mismatches": [],
+    "parameter_gradients": "NONE",
+    "training": false,
+    "cache_and_restoration_qualification": true,
+    "scope": "Source-executed native assertions/receipt identity; auditor did not reopen weights or regenerate full tensors."
+  },
+  "rows": [
+    {
+      "case_id": "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "scenario_id": "mergedev_rag_0001",
+      "input_tokens": 84,
+      "canonical_answer": "4673",
+      "target_token_id": 19,
+      "canonical_target_token_ids": [
+        19,
+        21,
+        22,
+        18
+      ],
+      "loss_minus": 0.0008126770262606442,
+      "loss_unit": 0.0008164886385202408,
+      "loss_plus": 0.0008204193436540663,
+      "adjoint": 0.00038783211493864655,
+      "finite_difference_recomputed": 0.00038711586967110634,
+      "absolute_error": 7.162452675402164e-07,
+      "registered_tolerance": 0.0010116349634481593,
+      "balance": 0.45650336146354675,
+      "progress": 0.22699421644210815,
+      "fluctuation": 0.056468844413757324,
+      "balance_formula_discrepancy": 3.3466617255228925e-09,
+      "closed_form_implied_alpha": 1.1255384244024753,
+      "locally_useful_direction": 0,
+      "coherence_direction": 1,
+      "gradient_norm": 0.0006872655940242112,
+      "raw_update_norm": 141.37911987304688,
+      "Cauchy_bound": 0.09716500480216972,
+      "RMS": [
+        {
+          "controlled_rms": 27.949708938598633,
+          "normal_rms": 27.947669982910156,
+          "rms_ratio_to_normal": 1.0000729561959807
+        }
+      ]
+    },
+    {
+      "case_id": "mergedev_instruction_following_7c4b4480b4835c0f",
+      "scenario_id": "mergedev_instruction_0003",
+      "input_tokens": 37,
+      "canonical_answer": "{\"label\":\"tag-967958\",\"ok\":true}",
+      "target_token_id": 4913,
+      "canonical_target_token_ids": [
+        4913,
+        1502,
+        3252,
+        4578,
+        12,
+        24,
+        21,
+        22,
+        24,
+        20,
+        23,
+        2198,
+        562,
+        788,
+        1866,
+        92
+      ],
+      "loss_minus": 0.0027359218802303076,
+      "loss_unit": 0.002712501445785165,
+      "loss_plus": 0.0026894372422248125,
+      "adjoint": -0.002314730314537883,
+      "finite_difference_recomputed": -0.0023242319002747536,
+      "absolute_error": 9.501585736870766e-06,
+      "registered_tolerance": 0.0010694419094361366,
+      "balance": 0.5775293111801147,
+      "progress": 0.24367667734622955,
+      "fluctuation": 0.04350527003407478,
+      "balance_formula_discrepancy": 1.3844721702405138e-08,
+      "closed_form_implied_alpha": 1.1588205605745316,
+      "locally_useful_direction": 1,
+      "coherence_direction": 1,
+      "gradient_norm": 0.00396497268229723,
+      "raw_update_norm": 99.23333740234375,
+      "Cauchy_bound": 0.3934574719734769,
+      "RMS": [
+        {
+          "controlled_rms": 42.060386657714844,
+          "normal_rms": 42.06998062133789,
+          "rms_ratio_to_normal": 0.9997719522690205
+        }
+      ]
+    },
+    {
+      "case_id": "mergedev_mathematics_12cd1363c6e3df98",
+      "scenario_id": "mergedev_math_0002",
+      "input_tokens": 30,
+      "canonical_answer": "201",
+      "target_token_id": 17,
+      "canonical_target_token_ids": [
+        17,
+        15,
+        16
+      ],
+      "loss_minus": 0.3694594204425812,
+      "loss_unit": 0.3669242262840271,
+      "loss_plus": 0.3644649088382721,
+      "adjoint": -0.24977698922157288,
+      "finite_difference_recomputed": -0.2497255802154541,
+      "absolute_error": 5.1409006118774414e-05,
+      "registered_tolerance": 0.008493309676647187,
+      "balance": 0.54351407289505,
+      "progress": 0.23514969646930695,
+      "fluctuation": 0.04636283591389656,
+      "balance_formula_discrepancy": 2.4082983607343067e-08,
+      "closed_form_implied_alpha": 1.1494663700461387,
+      "locally_useful_direction": 1,
+      "coherence_direction": 1,
+      "gradient_norm": 0.4097328782081604,
+      "raw_update_norm": 86.49451446533203,
+      "Cauchy_bound": 35.43964636109786,
+      "RMS": [
+        {
+          "controlled_rms": 46.7000846862793,
+          "normal_rms": 46.71383285522461,
+          "rms_ratio_to_normal": 0.9997056938361722
+        }
+      ]
+    },
+    {
+      "case_id": "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "scenario_id": "mergedev_para_0003",
+      "input_tokens": 34,
+      "canonical_answer": "77",
+      "target_token_id": 22,
+      "canonical_target_token_ids": [
+        22,
+        22
+      ],
+      "loss_minus": 0.358323335647583,
+      "loss_unit": 0.3664536476135254,
+      "loss_plus": 0.37481969594955444,
+      "adjoint": 0.8247718214988708,
+      "finite_difference_recomputed": 0.8248180150985718,
+      "absolute_error": 4.6193599700927734e-05,
+      "registered_tolerance": 0.025743154644966126,
+      "balance": 0.55070561170578,
+      "progress": 0.25017818808555603,
+      "fluctuation": 0.04832366108894348,
+      "balance_formula_discrepancy": 8.254055217093992e-09,
+      "closed_form_implied_alpha": 1.1514440432190896,
+      "locally_useful_direction": -1,
+      "coherence_direction": 1,
+      "gradient_norm": 0.9050412774085999,
+      "raw_update_norm": 98.54772186279297,
+      "Cauchy_bound": 89.18975608040955,
+      "RMS": [
+        {
+          "controlled_rms": 43.873443603515625,
+          "normal_rms": 43.88409423828125,
+          "rms_ratio_to_normal": 0.9997573007954136
+        }
+      ]
+    },
+    {
+      "case_id": "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "scenario_id": "mergedev_para_0003",
+      "input_tokens": 30,
+      "canonical_answer": "77",
+      "target_token_id": 22,
+      "canonical_target_token_ids": [
+        22,
+        22
+      ],
+      "loss_minus": 0.00238277530297637,
+      "loss_unit": 0.002422971185296774,
+      "loss_plus": 0.0024643549695611,
+      "adjoint": 0.004077645018696785,
+      "finite_difference_recomputed": 0.004078983329236507,
+      "absolute_error": 1.3383105397224426e-06,
+      "registered_tolerance": 0.0011223293505609035,
+      "balance": 0.5382438898086548,
+      "progress": 0.24178728461265564,
+      "fluctuation": 0.04838710278272629,
+      "balance_formula_discrepancy": 2.619326022745838e-08,
+      "closed_form_implied_alpha": 1.1480170696973802,
+      "locally_useful_direction": -1,
+      "coherence_direction": 1,
+      "gradient_norm": 0.0035315267741680145,
+      "raw_update_norm": 88.19237518310547,
+      "Cauchy_bound": 0.3114537342366077,
+      "RMS": [
+        {
+          "controlled_rms": 46.6997184753418,
+          "normal_rms": 46.71369552612305,
+          "rms_ratio_to_normal": 0.9997007932979005
+        }
+      ]
+    },
+    {
+      "case_id": "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "scenario_id": "mergedev_para_0003",
+      "input_tokens": 27,
+      "canonical_answer": "77",
+      "target_token_id": 22,
+      "canonical_target_token_ids": [
+        22,
+        22
+      ],
+      "loss_minus": 0.003913127351552248,
+      "loss_unit": 0.003925714176148176,
+      "loss_plus": 0.0039386567659676075,
+      "adjoint": 0.0012870421633124352,
+      "finite_difference_recomputed": 0.0012764707207679749,
+      "absolute_error": 1.0571442544460297e-05,
+      "registered_tolerance": 0.001038611264899373,
+      "balance": 0.5870006680488586,
+      "progress": 0.2179759293794632,
+      "fluctuation": 0.03781721368432045,
+      "balance_formula_discrepancy": 6.758544501828112e-09,
+      "closed_form_implied_alpha": 1.1614251837134362,
+      "locally_useful_direction": -1,
+      "coherence_direction": 1,
+      "gradient_norm": 0.0040506827645003796,
+      "raw_update_norm": 80.25920104980469,
+      "Cauchy_bound": 0.3251045623850146,
+      "RMS": [
+        {
+          "controlled_rms": 49.22268295288086,
+          "normal_rms": 49.238441467285156,
+          "rms_ratio_to_normal": 0.9996799550527048
+        }
+      ]
+    },
+    {
+      "case_id": "mergedev_short_response_30785feeb5a8abdf",
+      "scenario_id": "mergedev_short_0001",
+      "input_tokens": 32,
+      "canonical_answer": "k",
+      "target_token_id": 74,
+      "canonical_target_token_ids": [
+        74
+      ],
+      "loss_minus": 9.953845024108887,
+      "loss_unit": 9.932680130004883,
+      "loss_plus": 9.911547660827637,
+      "adjoint": -2.1149449348449707,
+      "finite_difference_recomputed": -2.1148681640625,
+      "absolute_error": 7.677078247070312e-05,
+      "registered_tolerance": 0.06444834804534912,
+      "balance": 0.5640197992324829,
+      "progress": 0.2170126587152481,
+      "fluctuation": 0.04032908007502556,
+      "balance_formula_discrepancy": 1.0565325725409025e-08,
+      "closed_form_implied_alpha": 1.1551054447889328,
+      "locally_useful_direction": 1,
+      "coherence_direction": 1,
+      "gradient_norm": 1.9701812267303467,
+      "raw_update_norm": 87.910400390625,
+      "Cauchy_bound": 173.1994204839575,
+      "RMS": [
+        {
+          "controlled_rms": 45.220916748046875,
+          "normal_rms": 45.23386764526367,
+          "rms_ratio_to_normal": 0.9997136902526584
+        }
+      ]
+    }
+  ],
+  "prefix_summary": {
+    "all_balances_positive": true,
+    "balance_min": 0.45650336146354675,
+    "balance_max": 0.5870006680488586,
+    "nonneutral": 6,
+    "neutral": 1,
+    "coherence_agreement": 3,
+    "constant_increase_agreement": 3,
+    "constant_decrease_agreement": 3,
+    "Spearman_balance_negative_derivative": 0.14285714285714285,
+    "max_FD_error": 7.677078247070312e-05,
+    "max_balance_formula_discrepancy": 2.619326022745838e-08,
+    "feature_scope": "Offline closed-form two-observation FP32; symbolic alpha, not incremental-v1 rounding parity or teacher fitted controller"
+  },
+  "scenario_clusters": [
+    {
+      "scenario_id": "mergedev_rag_0001",
+      "prefix_count": 1,
+      "case_ids": [
+        "mergedev_grounded_qa_rag_10414013c88bdaac"
+      ],
+      "mean_derivative": 0.00038783211493864655,
+      "mean_balance": 0.45650336146354675,
+      "locally_useful_direction": 0,
+      "coherence_direction": 1
+    },
+    {
+      "scenario_id": "mergedev_instruction_0003",
+      "prefix_count": 1,
+      "case_ids": [
+        "mergedev_instruction_following_7c4b4480b4835c0f"
+      ],
+      "mean_derivative": -0.002314730314537883,
+      "mean_balance": 0.5775293111801147,
+      "locally_useful_direction": 1,
+      "coherence_direction": 1
+    },
+    {
+      "scenario_id": "mergedev_math_0002",
+      "prefix_count": 1,
+      "case_ids": [
+        "mergedev_mathematics_12cd1363c6e3df98"
+      ],
+      "mean_derivative": -0.24977698922157288,
+      "mean_balance": 0.54351407289505,
+      "locally_useful_direction": 1,
+      "coherence_direction": 1
+    },
+    {
+      "scenario_id": "mergedev_para_0003",
+      "prefix_count": 3,
+      "case_ids": [
+        "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+        "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+        "mergedev_paraphrase_robustness_c26fef498d2d9fd3"
+      ],
+      "mean_derivative": 0.2767121695602934,
+      "mean_balance": 0.5586500565210978,
+      "locally_useful_direction": -1,
+      "coherence_direction": 1
+    },
+    {
+      "scenario_id": "mergedev_short_0001",
+      "prefix_count": 1,
+      "case_ids": [
+        "mergedev_short_response_30785feeb5a8abdf"
+      ],
+      "mean_derivative": -2.1149449348449707,
+      "mean_balance": 0.5640197992324829,
+      "locally_useful_direction": 1,
+      "coherence_direction": 1
+    }
+  ],
+  "cluster_summary": {
+    "clusters": 5,
+    "nonneutral": 4,
+    "neutral": 1,
+    "coherence_mean_sign_agreement": 3,
+    "constant_increase_mean_sign_agreement": 3,
+    "constant_decrease_mean_sign_agreement": 1,
+    "scope": "Descriptive mean-derivative threshold within existing scenario labels; not independent task sources or fitted family rule"
+  },
+  "cost": {
+    "charged_native_seconds": 44.06200000000172,
+    "supervisor_wall_seconds": 47.90600000000268,
+    "worker_lifetime_peak_RSS_bytes": 4451840000,
+    "parent_sampled_tree_peak_RSS_bytes": 4342915072,
+    "fresh_CPU_forecast_recomputed_seconds": 33.51546344995404,
+    "elapsed_plus_forecast_plus_internal_reserve": 247.57509454995488,
+    "parent_deadline_seconds": 1800,
+    "CPU_GPU_speed_comparison": null
+  },
+  "surrogate_counterexamples": {
+    "case_equivalence": {
+      "canonical": "k",
+      "canonical_token_id": 74,
+      "current_CPU_loss": 9.932680130004883,
+      "current_CPU_adjoint": -2.1149449348449707,
+      "archived_GPU_outputs": [
+        {
+          "arm": "A0",
+          "seed": 17,
+          "response": "K",
+          "token_ids": [
+            42,
+            151645
+          ],
+          "score": 1.0
+        },
+        {
+          "arm": "A1",
+          "seed": 17,
+          "response": "K",
+          "token_ids": [
+            42,
+            151645
+          ],
+          "score": 1.0
+        },
+        {
+          "arm": "A3",
+          "seed": 17,
+          "response": "K",
+          "token_ids": [
+            42,
+            151645
+          ],
+          "score": 1.0
+        },
+        {
+          "arm": "A0",
+          "seed": 29,
+          "response": "K",
+          "token_ids": [
+            42,
+            151645
+          ],
+          "score": 1.0
+        },
+        {
+          "arm": "A3",
+          "seed": 29,
+          "response": "K",
+          "token_ids": [
+            42,
+            151645
+          ],
+          "score": 1.0
+        },
+        {
+          "arm": "A1",
+          "seed": 29,
+          "response": "K",
+          "token_ids": [
+            42,
+            151645
+          ],
+          "score": 1.0
+        }
+      ],
+      "pinned_scorer": "NFKC/strip/lower/punctuation normalization accepts uppercaseK; scalarCE lowercasetarget is not representation-invariant",
+      "CPU_greedy_response": "NOT_COLLECTED;no cross-device output pooling"
+    },
+    "first_digit": {
+      "canonical": "201",
+      "target_first_digit": "2",
+      "token_ids": [
+        17,
+        15,
+        16
+      ],
+      "archived_wrong_answers": [
+        "21",
+        "247"
+      ],
+      "scope": "Full answer correctness not distinguished by first-digit CE; archived GPU comparator only"
+    },
+    "JSON": "First token is opening syntax; CE does not establish full fields/values"
+  },
+  "next_hypothesis_ranking": [
+    {
+      "rank": 1,
+      "question": "Does a prospectively frozen answer-equivalence-aware complete-target causal diagnostic distinguish task losses rather than canonical first-token artifacts?",
+      "action": "Offline target/prefix/scorer audit and explicit new diagnostic design; preserve current7 and closed original fullgold guard; no fitting or launch."
+    },
+    {
+      "rank": 2,
+      "question": "Can a complete source-bound task matrix establish preservation/scale contrasts without original failed GPU-state uncertainty?",
+      "action": "Separate reviewed safety/additional-attempt authority and full-cost/new-host qualification; no disguised retry or partial-validation selection."
+    },
+    {
+      "rank": 3,
+      "question": "Would independent replication or matched-quality latency matter after a meaningful preserved benefit?",
+      "action": "Conditional; no current promoted benefit or controller justifies confirmation/timing/depth search."
+    }
+  ],
+  "no_controller_revision_justified": true,
+  "mission_remaining_uncertainty": [
+    "Current local coherence supplies no direction information beyondconstantincrease; semantic direction/outoffamily predictivevalue unmeasured.",
+    "Provisional largerDEV advantage absent/headroom1/192/preservationfails; full validation remainsNULL and originalGPUpostfaultstateUNVERIFIED.",
+    "Native CPU gradient/FDmechanics now measured; not a global convergence/adaptive stability claim.",
+    "Independentconfirmation and useful matched-quality time remain conditional/unmeasured."
+  ],
+  "unchecked_limits": [
+    "G/d2 vectors and raw logits not archived; independent audit recomputesFD from saved losses and checks scalar/source assertions.",
+    "No generation/semantic scoring performed on currentCPU H3 rows.",
+    "ArchivedGPU accepted/wrong-answer examples establish surrogate mismatch without claiming identicalCPUoutputs.",
+    "Ranks/signs from exposed relatedsmallpopulation; no significance/equivalence or fittedrule."
+  ],
+  "sources": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\admission.json",
+      "sha256": "8e8c6245b1c7bea7aeb0af995f988acc750bfa6d74a61912d3f1d1a232590e70",
+      "bytes": 16407
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\review.json",
+      "sha256": "20bc5aa2dc76da924b4eb68e93750ffa765ad1bce7b86c473653a8c17eb5c81a",
+      "bytes": 22154
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\source_manifest.json",
+      "sha256": "08b5ceb186fe9060613cb76f2513a3deb1d0259b08e1edecc81389ee3916587a",
+      "bytes": 221278
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\terminal_receipt.json",
+      "sha256": "b5e03c67d0f3f2713ad0e44059d82fc3fa7e57299161283d630c0cae27b00257",
+      "bytes": 1465
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\resources.jsonl",
+      "sha256": "431c53a344de119639a18c9954fff9f41762dfe6d6729c4dcb33426dac551b69",
+      "bytes": 10046
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\receipt.json",
+      "sha256": "3facad3d4b294c63b8ec44614db3592920a4155fcc3d5f6c3caf92afce3bac97",
+      "bytes": 2225
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\registration.json",
+      "sha256": "31f54c86f0db31b321c8fe2f54a79ee2ba65d0d0fe22b5c29b10a44bdc30daea",
+      "bytes": 10393
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\population.json",
+      "sha256": "881f1277a63fd84b59563d1a1598ab3d16fc55282b517e681af7b99dfbe024f4",
+      "bytes": 71887
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\attempts.jsonl",
+      "sha256": "f42c071808093664d6669a76852ec058011e9f86c86fef899b5dc82137550e77",
+      "bytes": 41868
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\outcomes.jsonl",
+      "sha256": "c689263c9864cc11a4a5234fd28d4e715635e1071006e375fbe8f234f8dbd21d",
+      "bytes": 50560
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\qualification.json",
+      "sha256": "7b7dc68f4e195e6e83522c70db8e86b4be968319a1d95141cfc1115c10984550",
+      "bytes": 792
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\matrix_forecast.json",
+      "sha256": "1b9141e2ad4b6b4e730e5213f420265f4e4ad712ebd06155fb359169f56a5970",
+      "bytes": 416
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\compute_ledger.json",
+      "sha256": "81d03fb96f7f7dfd9e04bfff91a90e0b8e22f9aec8d4acde86fe2be963af6717",
+      "bytes": 295
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-cpu-h3-001\\result\\preflight.json",
+      "sha256": "7fc6cf717617b67c4b6f65d11b980da4b72b6369c33f88ca6e8ed761b8d58f6e",
+      "bytes": 414
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\cpu_h3_native.py",
+      "sha256": "f242676e0ec0f019dd94ac27e5f3cb5eb8f3e311beb64cc0355102492396eaca",
+      "bytes": 35049
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\sensitivity.py",
+      "sha256": "5d0af45a8e91f0a00d91f83244105d06f1beba6f422cc3cd6d20c2d43d762f0d",
+      "bytes": 13690
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\cpu_h3_analysis.py",
+      "sha256": "603cb056d90725ced9d70f71c2eb64742c371da03ec128d26dc6543c59d540ff",
+      "bytes": 10294
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\analyses\\cpu-h3-001\\REPORT.json",
+      "sha256": "60863fe196de8c4b23160ae1569f6aa2085227123d8953c66d57b71687ebe1d3",
+      "bytes": 7033
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\binding-001\\PROMPT_AUDIT.json",
+      "sha256": "f4b5b21638bc2d8a8da4fac707072208d3a8a1aa2f1918c7574a326cc996bf7d",
+      "bytes": 124617
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\rineya_taps_adaptive_recurrence_campaign_v2\\runs\\native-gpu-reference-002\\result\\outcomes.jsonl",
+      "sha256": "05827563ce0633a96d3831749b70f8cc8b74002ba7b692ed2d264f49ffac0a0c",
+      "bytes": 1525157
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\src\\rineya_cross_scale\\evaluation\\scoring.py",
+      "sha256": "5a22e1c1ff7b0a56623931c0782f81dd2b3a9df83ccfe77ce3724d37cf320086",
+      "bytes": 7594
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-rineya-taps-adaptive-recurrence-v1\\experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\metrics.py",
+      "sha256": "c2653a5129f4cf03b3c7081d0c99f6540fcefd0d17a717c7132b8c1ccf50ed67",
+      "bytes": 4219
+    }
+  ],
+  "report_md_sha256": "111fb227bb8086824d5a5c379eda8a4904d513091ece8a2d841bd42bbae707c5"
+}

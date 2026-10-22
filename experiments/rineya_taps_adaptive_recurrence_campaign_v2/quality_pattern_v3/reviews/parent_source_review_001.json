@@ -1,0 +1,62 @@
+{
+  "schema": "v3_passive_probe_parent_source_review_v1",
+  "created_utc": "2026-10-05T20:50:11.138223+00:00",
+  "status": "REQUIRES_PARENT_ACCOUNTING_CORRECTION",
+  "scope": "Read-only independent parent/authority/bootstrap/prompt-export review; no native worker, GPU inventory or model imports.",
+  "dispatch_authorized": false,
+  "model_calls": 0,
+  "source_edits": false,
+  "independent_CPU_checks": {
+    "passed": 20,
+    "method": "Inline canonical Python -B stdlib unittest.mock probes, no files mutated: actual scope/unused study;12 cap/floor/old-grant negative cases; started/completed consumption;four nonfinite/future clocks;invalid release.",
+    "Torch_imported": false,
+    "worker_module_invocations": 0,
+    "test_file_created": false
+  },
+  "findings": [
+    {
+      "id": "P01",
+      "severity": "REQUIRED_BEFORE_DISPATCH",
+      "file": "probe_supervisor.py",
+      "line": 57,
+      "evidence": "Receipt initializes peak_rss_bytes to 0; max update at line85 requires a first sample. A child that fails assignment or exits before resource sampling has an unmeasured peak.",
+      "authority": "Original authority section15: Missing measurements are null, not zero.",
+      "recommended_fix": "Initialize peak_rss_bytes=None; update max(receipt[peak_rss_bytes] or 0,sample[rss_bytes]); test launched/no-sample failure. Zero native seconds remains correct when no worker was created.",
+      "disposition": "OPEN_OWNER_CORRECTION_REQUIRED"
+    }
+  ],
+  "source_checks_passed": [
+    "Exact new-goal objective/status capsule and original authority SHA are bound; old consumed human allowances are not accepted as this new study scope.",
+    "Exact study_id,192cases/384taskforwards/451API449attempt448complete/0adjoints/no-generation/900deadline/120reserve/max357/K0or1 and unchanged resource floors are checked in child-safe scope.",
+    "Parent unused-study check rejects started and completed-with-PID records; shared lock is acquired exclusively and study native_started is written before release.",
+    "Parent checks exclusive V3 output, canonical interpreter/source/current dispatch and ten-asset hashes, exact admission-review status/hash, budget+global reserve, GPU UUID/driver/free floor, host floor, disk reserve and lock before Popen.",
+    "Suspended Popen->Job assignment->resume->contained release preserves own process-tree containment; assignment refusal kills suspended child, and created_out flag preserves existing output.",
+    "Parent monotonic clock is passed before Popen; stdlib-only entry validates scope/finite elapsed before worker-module import and requires contained release.",
+    "Parent observes actual registration/qualification/forward/feature/readout/receipt files and enforces900hard/180no-progress/RSS6GiB/host1GiB/GPU1GiB/disk guards.",
+    "Prompt-only export has exactly192 unique DEV cases, raw hashes matching prompts and token lengths max232; bank schema contains only case_id/split/raw_prompt/hash and token schema contains only inputs/rendered/raw hashes/IDs/length. No gold/status/parent/category fields."
+  ],
+  "test_evidence_limits": {
+    "parent-tests-001": "One collection ImportError preserved; not PASS.",
+    "parent-tests-002": "19collected,14passed,5 basetemp setup errors; not bootstrap PASS. Independent20 in-memory scope/bootstrap checks cover those contracts without temporary-directory setup.",
+    "new_parent_supervisor_run_fixtures": "Not yet supplied/executed at review snapshot; targeted prelaunch/assignment/deadline/output-preservation fixtures should be bound before final dispatch. Unchanged WindowsJob implementation has historical independent CPU qualification, which is not a new model qualification."
+  },
+  "remaining_final_packet_gates": [
+    "Owner correction P01 and resulting exact source/test review.",
+    "Bind actual resulting dependency closure, not a synthetic fixture hash map, including imported parent/runtime/worker/reader sources and prompt-only packet.",
+    "Final exact admission review and fresh live resource gates; native observer no-extra/unit/max357/restoration/cache/mask/head/state qualification and complete fresh timing forecast before task readouts.",
+    "Only retrospective offline join of historical DEV outcomes after terminal; no thresholds/fitting/efficacy/gain or confirmation from this passive no-generation study."
+  ],
+  "bindings": {
+    "authority.py": "a5a007c2fea3a6c63a2f2b722c91948c8675c6a8d4b50b02a2cb51d39a52b516",
+    "probe_supervisor.py": "9396b1afd4b61eb5ac87951764ba6a4ed7ee89089656a37e2182468a3c898b60",
+    "probe_entry.py": "4d1c66344af58b2bab296f8693f3a30a8a721beca57061e216c26dc2fafdb9fc",
+    "ACTIVE_GOAL_SCOPE_001.json": "4ea9970d9a948895861d2f182b6cffa9f7e50b1be353ced48ecce55f59c633b6",
+    "ACTIVE_GOAL_SNAPSHOT_001.json": "a69c692c237a579ec92061d07cb1012d0f05be84bf3c39c13941e2a8d492297c",
+    "PASSIVE_PROBE_REGISTRATION_001.md": "e5716814632b9fd7ad145ef5a9c40aaee434fdc35b9d773aef1095ac8aa59cbe",
+    "tests/test_parent_authority.py": "9094843cafad8a6b72dc6d54622ba67fe5a680cdb323620d71d43cac7f10defa",
+    "data/dev_prefix_probe_001/MANIFEST.json": "f35dc01c54154c51fa6284807245767f01282128c23a09307a2485483951530b",
+    "data/dev_prefix_probe_001/DEVELOPMENT_BANK.json": "681a3e77e3d797e2faebcff3971dbb365a4479ebdac017bf3dcfcb48081ba03f",
+    "data/dev_prefix_probe_001/DEVELOPMENT_TOKEN_BINDING.json": "c34948026ebaf332111ce635a473b1489ef0d2f3932100f9e0d3cdd6a08ce6d2"
+  },
+  "review_md_sha256": "02b6184438919bbfe062b67823822ca95cd846ceca9d3e399a328a2e51da4375"
+}

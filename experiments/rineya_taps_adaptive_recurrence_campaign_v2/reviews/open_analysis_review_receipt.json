@@ -1,0 +1,82 @@
+{
+  "CPU_tests": {
+    "open_analysis_endpoint_junit.xml": {
+      "counts": {
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 2
+      },
+      "sha256": "9d4b372c174cfb87f0d49ef378579a759e111724578b43ee984570e6d19bdc12"
+    },
+    "open_analysis_final_cpu_junit.xml": {
+      "counts": {
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 8
+      },
+      "sha256": "521aeeddc57862f098b0d0af6e9d2f560ec822fc9b0863ddd9a63e6cebd74067"
+    }
+  },
+  "additional_lineage_corrections": [
+    "Original model/runtime and SMOKE metadata checked against admitted hashes before use",
+    "Imported analyzer/helper/scorer sources hashed in emitted manifest"
+  ],
+  "created_utc": "2026-10-02T06:32:05.722808+00:00",
+  "endpoint_and_cost_contract": {
+    "A5_repeats": "within-parent averages, not independent units",
+    "DEVELOPMENT_parents": 16,
+    "OPEN_VALIDATION_parents": 8,
+    "aliases_oracle_extra_generation": 0,
+    "constant_grid_points": 6,
+    "empty_measurement_subtotals": null,
+    "frozen_comparator_aliases": 16,
+    "generator_clusters_per_split": 4,
+    "headroom_capture": "unclipped; null with nonpositive/incomplete finite-grid headroom",
+    "non_A5_repeat_divergence": "suppresses complete/primary comparisons",
+    "oracle_reused_rows": 48,
+    "partial_matrix_primary_values": null,
+    "physical_rows": 608,
+    "validation_fixed_envelope_and_oracle": "retrospective diagnostics only",
+    "validation_primary_fixed_comparator": "frozen DEVELOPMENT alpha"
+  },
+  "independent_adversarial_probes": {
+    "count": 12,
+    "passed": 12,
+    "receipt_sha256": "e38092da6aeedcd3eb6cd191216c8d698104135341c9388d970c597d69a758cf"
+  },
+  "native_model_loads": 0,
+  "native_outcome_read": false,
+  "resolved_required_issues": [
+    "OA01",
+    "OA02",
+    "OA03",
+    "OA04",
+    "OA05",
+    "OA06"
+  ],
+  "reviewer": "/root/adversarial_review",
+  "schema_version": "1.0",
+  "source_review_limitations": [
+    "Approval applies only to these analyzer/helper/scorer source hashes; final raw replay remains independent work",
+    "Synthetic qualification statuses are fixtures; no native OPEN qualification or efficacy is established here",
+    "Canonical strict scalar/UNKNOWN endpoints; semantic natural-language abstention and reasoning beyond answer contract remain NOT_ASSESSED",
+    "SMOKE score schema is checked; primary new-bank scorer is independently regraded, while inherited SMOKE scoring retains source-bound worker provenance",
+    "Source-visible eight validation parents/four variants share four code categories with development; no independent confirmation or broad intelligence claim",
+    "Timing is synchronized and instrumented; no production speed claim"
+  ],
+  "source_sha256": {
+    "analysis.py": "378a5e12b467a4fec0807e372d93d7869f44e8e557cf762177beda6975cfc026",
+    "gpu_analysis.py": "30d12cff4ac343b98c492e5edfe1d9554fb87fc50d86e3029abd3236765def13",
+    "open_analysis.py": "c072790ea7d5ee4864fbeef762509fb24c0b9f9c99f7481b47eee37c28695576",
+    "open_bank.py": "25db8ad7b8bd4166188eccab4be73c9a430f696610dea5b8c83b380883f9d42a",
+    "reviews/open_analysis_review_packet.py": "906c8fba7bda03f117f55eddbd95313086acc022a8dea32f25c6b123ed696495",
+    "reviews/open_analysis_review_probes.py": "88802b79b31b6272fa872630c040e2c03c15ed6c3678d6bcdd95fe486d23a29d",
+    "reviews/test_open_analysis_independent.py": "2fb4a2aa07bb96d6b19f22a91dcea44c1e1ae61f693dc2c84f9ed985cfcd3b9e",
+    "tests/test_open_analysis.py": "b9e5368f0926eda02f49e3460e943e747e6fe746e5f512c8bb50333abaa409e0"
+  },
+  "status": "PASS_OPEN_ANALYZER_SOURCE_ONLY",
+  "supersedes_for_analyzer_use": "reviews/open_analysis_initial_review_receipt.json",
+  "unresolved_analyzer_blockers": []
+}

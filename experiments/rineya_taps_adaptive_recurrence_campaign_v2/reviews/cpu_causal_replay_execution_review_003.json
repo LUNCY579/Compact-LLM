@@ -1,0 +1,253 @@
+{
+  "EOS_secondary": {
+    "all_rows_retained": 192,
+    "gaps_nominal_plus_minus": [
+      2.3126602172851562e-05,
+      2.4080276489257812e-05,
+      2.4199485778808594e-05
+    ],
+    "legacy1e_minus5_exceedance_evaluations": 3,
+    "maximum_gap": 2.4199485778808594e-05,
+    "mean_raw_mass_loss": {
+      "minus": 0.014006823301315308,
+      "nominal": 0.014180690050125122,
+      "plus": 0.014357954263687134
+    },
+    "no_operand_bound_or_actual_cause_proof": true,
+    "not_combined_into_primary": true,
+    "old_error_views": 6,
+    "ordering_status": "UNVERIFIED_FINITE_PRECISION",
+    "positive_gap_evaluations": 335,
+    "unique_affected_target": "program_state:8:v1 EOS answer_position2"
+  },
+  "author_audit_attribution": {
+    "math_7eb188": "Analyzer author separate raw stdlib regrade, explicitly attributed. My own regrade and source/test review supply independent acceptance.",
+    "math_reader90_vs97_note": "90 source-manifest entries matched;7 data/authority/binding metadata not in snapshot. Actual97 admitted source files checked separately. Unheld reader error corrected without native/raw changes.",
+    "native_f62f": "Worker author audit; not independent source acceptance. Mechanical quantities independently reconciled here."
+  },
+  "authority": {
+    "direct_human_one4500_grant_used": true,
+    "exactly_one_start_one_completion_for_da328": true,
+    "no_restart_or_additional_model_authority_created": true,
+    "production_parent_anti_replay_now_rejects_consumed_grant": true
+  },
+  "bindings": {
+    "BUDGET_LEDGER.jsonl": "2e0a382a61710114fe0558bd2b8c2cc6210a21cf4ebf69ae16899de64fd202fc",
+    "CPU_CAUSAL_REPLAY_ANALYSIS_PLAN_001.md": "6282ac717afc6575587d6c5615518441038d7c8db2f54fca7eb562f980cb6a11",
+    "CPU_CAUSAL_REPLAY_ANALYZER_FP32_CORRECTION_001.md": "dea6d23530c08ac826a8f4c6e456e43b0b673e617360e4160ddc32130237df71",
+    "HUMAN_CAUSAL_REPLAY_EXTENDED_ALLOWANCE_001.json": "da328e1942923cffe9bd84b31c70ded9335b25b7d3d785d4a2ea7593971341c0",
+    "HUMAN_CAUSAL_REPLAY_EXTENDED_APPROVAL_RECORD_001.json": "c38a76d86fdf13fc1d1223bc3935442a1c9eac234f14936e970fe2ddd6ade1d8",
+    "analyses/cpu-causal-replay-003-figures-002/MANIFEST.json": "8396a063499c6ed71b6733aa4b9975acdca1fec03ba833c46be17132325368e3",
+    "analyses/cpu-causal-replay-003-figures-002/answerability_direction.png": "cf0deb4ad4c4a3f3e64d9788e947da64dc0000dbdc740d110e83bce56e4f5582",
+    "analyses/cpu-causal-replay-003-figures-002/answerability_direction.svg": "be86a351599e76401434be094110a377317de1dc623d6fbc060026a4ea46894f",
+    "analyses/cpu-causal-replay-003-fp32-reviewed-001/REPORT.json": "ae15d0c9d425938d13ea981db4406269ae2ada5a6444d778e1a8fe0f84671911",
+    "analyses/cpu-causal-replay-003-fp32-reviewed-001/REPORT.md": "866d3944494694578c60468a7dd4a3f4f2eb02f77b49be07fcbeafedea855b65",
+    "analyses/cpu-causal-replay-003/REPORT.json": "9c4eb72f81359d7f2f5f33af41d1c55e216aacef6f36411ce84c282533fb5437",
+    "audits/cpu_causal_replay_execution_math_003.json": "7eb188ce6062df7eac7327bb4960f3f9deca4539ceff61059a489881884fb254",
+    "audits/cpu_causal_replay_native_execution_003.json": "f62fcd44ccc9401ee3f0526870d69d4975e89ff758c561e282a1e77be034dc5f",
+    "cpu_causal_replay_admission_v4.json": "d1051861c9309012ea95df49317ec5b4faafeaa1843d798ca557e32ad3da3d87",
+    "cpu_causal_replay_analysis.py": "bfe6a0405d0acb4a9217438da04ece00db8a53604c2a6e8573fbc46c29d43253",
+    "cpu_causal_replay_analysis_fp32.py": "5a62452a6991b60fbf1562d9554b1cb780432e194bd95c14c7191872384e74a1",
+    "cpu_causal_replay_native.py": "d2208d45d3feb60b36ff49886c0b0212831134b7f796677e3c3c1dd2d28ffdcc",
+    "reviews/fp32-correction-tests-001/COMMAND.json": "4bdfc856574911a2a399f83243588c20aad7045e610d65ae1ca836a9722ca595",
+    "reviews/fp32-correction-tests-001/junit.xml": "30bb6640c7b5ad8d374fbec81a9089806e7ca7d589096b8667af1d1fa2ade08d",
+    "tests/test_cpu_causal_replay_analysis_fp32.py": "6b33b5e9be529fc2ca94653c2cb6150b163f5aae8a5eb76a4797274200f9f023"
+  },
+  "cost_resources": {
+    "RSS_ceiling": 6442450944,
+    "cache_timings": null,
+    "completed_forward_elapsed_sum_seconds": 1338.9536622999944,
+    "cumulative_native_used_seconds": 2837.843,
+    "expected_partial_elapsed_seconds": 0.5251731999999265,
+    "forecast_including_internal_reserve": 4297.499253100054,
+    "host_reserve": 1073741824,
+    "minimum_recorded_host_available_bytes": 14571302912,
+    "native_remaining_seconds": 18762.157,
+    "no_matched_quality_deployable_speed_claim": true,
+    "observed_resource_guard_violations": [],
+    "parent_charged_native_seconds": 1389.328,
+    "parent_deadline": 4500,
+    "parent_sampled_peak_RSS_bytes": 4348514304,
+    "partial_compute_positions": null,
+    "peak_worker_OS_RSS_bytes": 4457250816,
+    "separate_controller_logging_costs": null,
+    "supervisor_wall_seconds": 1395.765,
+    "worker_parent_clock_seconds": 1386.6926846000001
+  },
+  "counts": {
+    "API_attempts": 1925,
+    "completed_forwards": 1922,
+    "completed_prefix_positions": 252696,
+    "events": {
+      "CACHE_REJECTED": 2,
+      "CACHE_REJECTION_STARTED": 2,
+      "REPLAY_FORWARD_COMPLETED": 1905,
+      "REPLAY_FORWARD_STARTED": 1905,
+      "VALUE_FORWARD_COMPLETED": 17,
+      "VALUE_FORWARD_FAILED": 1,
+      "VALUE_FORWARD_STARTED": 18
+    },
+    "partial_positions": null,
+    "state_adjoints": 635
+  },
+  "created_utc": "2026-10-05T15:33:29.144711+00:00",
+  "disposition": "Accept complete source-bound native mechanics, unchanged full matrix, independent corrected raw surrogate reconstruction and documented precision-checker correction. Preserve original failed analyzer report and all EOS uncertainty; no task gain, semantic preservation, new fit, validation confirmation, GPU stability or speed is inferred.",
+  "findings": [],
+  "independent_authored_fixture_tests_run": 10,
+  "independent_raw_checks": {
+    "all1896_task_forward_scalar_event_matches": true,
+    "all1925_start_terminal_pairs_chronological": true,
+    "all192_cases_and96_two_variant_parents": true,
+    "all192_input_features_prefix_hash_and_freeze_digests_match": true,
+    "all632_prefix_positions_and_hashes_causal": true,
+    "all632_targets": {
+      "EOS": 192,
+      "answer": 440
+    },
+    "current_future_target_positions_never_in_prefix": true,
+    "every_target_and_all192_case_mean_FD_pass_fixed_tolerances": true,
+    "feature_source_order": "Native rollout invokes input-only feature sink before objective and autograd; callback only answer_position0/unit. Raw phase/digests match actual first unit result. No standalone feature timestamps were archived.",
+    "full_corrected_report_inmemory_replay_matches_exactly_except_exported_selfhash": true,
+    "maximum_mean_FD_absolute_error": 0.0009635686874389648,
+    "maximum_target_FD_absolute_error": 0.001352071762084961,
+    "own_case_means_flags_and_rank_recomputation_matches": true
+  },
+  "limits": [
+    "All192 exposed cases share six authored generators; paired variants and632 targets are not independent task/source replications.",
+    "Canonical answer PREFIX loss may favor a wrong longer continuation; teacher histories, accepted aliases and generated behavior remain different.",
+    "Cross-expression EOS numerical ordering and actual precision/cause remain unverified without logits/LSE operands, on all rows; source-bound mathematical identity is not a numeric error bound.",
+    "Qualified FP32 local adjoint/FD agreement is not global adaptive stability. Raw tiny loss-increase counts are descriptive, not semantic regressions or precision-bounded EOS harms.",
+    "The original failed larger generation validation remains NULL and postfault GPU integrity/trigger unresolved. This CPU diagnostic cannot repair those gaps."
+  ],
+  "native_model_calls_by_reviewer": 0,
+  "new_test_source_written": false,
+  "qualification": {
+    "FP64_reduction_not_claimed_bit_identical_to_FP32": true,
+    "FP64_sum_vs_native_FP32_dot_differences": [
+      4.1367510003435803e-11,
+      1.7285296460833877e-07,
+      5.279539028180125e-10
+    ],
+    "actual_EOS_max": 236,
+    "actual_answer_max": 235,
+    "cache_rejections": 2,
+    "equal_hashes_and_exact_equality_recorded": true,
+    "forced_exception_restoration": true,
+    "max_prefix": 256,
+    "parity_pairs": 8,
+    "state_adjoints": 3,
+    "vector_file_data_shape_hashes_independently_checked": true,
+    "vector_pairs": 3
+  },
+  "raw_bindings": {
+    "admission.json": "d1051861c9309012ea95df49317ec5b4faafeaa1843d798ca557e32ad3da3d87",
+    "resources.jsonl": "fbf567d5069681495123f0cd80c831992a3d13082258ea384cf4be876bd2a648",
+    "result/attempts.jsonl": "ecfe8735d98725628f9a68e8ab0d096f8416f83a2f80fd1d250b77868399b5db",
+    "result/compute_ledger.json": "6f0fa6d34043dfa3d3c959fd7f4bdc75e58b128db127601b27afcf35359c8f8c",
+    "result/features.jsonl": "df81f0d15136c69cf65db373e2a508f235d695b195993eb0666f07ceb7e939ce",
+    "result/matrix_forecast.json": "79de80804b899df25c400037221ce114cdc9ead08c3814f8db9f872c9fad890f",
+    "result/outcomes.jsonl": "40eb819f887f39d7e947261dc515a75a68fda9d477c880f57508a1f932911ce9",
+    "result/population.json": "c3fb4ff38cc112c96bbd1e56e196156374cd6ba597509acd3fdd331410f9c531",
+    "result/qualification.json": "f995351e84bcb55a550f620d7ad9e2655ac3baa33a93a605fa4cf8be4a0c0cf2",
+    "result/receipt.json": "c1895668f33597cf6f0f240795e664088ae6afae3a153b23ce6c480d67151747",
+    "result/registration.json": "f17c71f15e093ac1f06c2d9c70734f67e791f2620a085074ff0dab7fd06b65fa",
+    "result/targets.jsonl": "3752d52641a118beb3508a52dcfc809769938ce1526bfb7b9f8943bee9e8c9e6",
+    "review.json": "927c23998cc430ee6e58caf3709b0019510a795817e5831a93ef28f668488704",
+    "source_manifest.json": "9e5967fbcff0690b008ac6c6ae6265de7864b8c372effda19bc28b1ba6da8e5c",
+    "terminal_receipt.json": "fd85e7e4a9dd82447c49e76ff567d5759adfcb9a990d09fb07eaa7f0fecb089a"
+  },
+  "results": {
+    "all_balances_positive": 192,
+    "balance_range": [
+      0.4373650848865509,
+      0.5430105924606323
+    ],
+    "direction": {
+      "cases": 192,
+      "coherence_agreements": 91,
+      "constant_decrease_agreements": 97,
+      "constant_increase_agreements": 91,
+      "neutral_cases": 4,
+      "nonneutral_cases": 188,
+      "numerically_uncertain_nonneutral_cases": 0,
+      "reliable_sign_denominator": 188,
+      "spearman_all_cases_balance_negative_derivative": -0.09544292379893118
+    },
+    "equal_category_parent_mean_answer_loss": {
+      "minus": 1.2065944572308165,
+      "nominal": 1.2062422250116545,
+      "plus": 1.2059134133825815
+    },
+    "figure_count_caption_scope_review": "Counts/source-report digest and local-answer-loss/192exposed/96paired/sixshared-generator captions checked from source+manifest; root visual QA attributed, not independently rendered here.",
+    "figure_direction_counts": {
+      "answerable": [
+        91,
+        52,
+        1
+      ],
+      "unanswerable": [
+        0,
+        45,
+        3
+      ]
+    },
+    "interpretation": "Registered balance sign rule equals constant increase across this exposed canonical-prefix proxy; it adds no signed-direction discrimination here. Weak negative descriptive rank does not justify fitting or controller advancement.",
+    "opposite_reliable_variant_directions": 34,
+    "parent_any_variant_raw_loss_increase": {
+      "minus": 63,
+      "plus": 67
+    },
+    "unanswerable_raw_mean_answer_loss_increase_at_plus": 48,
+    "unknown_effect_limit": "Raw canonical UNKNOWN likelihood, not newly measured generated abstention or semantic harm."
+  },
+  "reviewer": "adversarial_review",
+  "run": "runs/native-cpu-causal-replay-003",
+  "scientific_scope": {
+    "bulk_validation_primary": null,
+    "complete_campaign_goal_claimed": false,
+    "new_controller_or_fit": false,
+    "original_GPU_fault_or_stability_resolved": false,
+    "semantic_efficacy": null,
+    "source_independent_confirmation": false,
+    "supported": "Restricted negative for the frozen balance sign rule on the canonical teacher-prefix local-loss proxy."
+  },
+  "source_correction_review": {
+    "changed_AST_functions": [
+      "_triplet",
+      "analyze_bundle",
+      "main"
+    ],
+    "independent_changed_fixture_tests": {
+      "evidence": "reviews/fp32-correction-tests-001",
+      "failed": 0,
+      "passed": 10,
+      "pytest_seconds": 1.57,
+      "source_stable": true
+    },
+    "negative_FD_EOS_ID_missing_EOT_NaN_source_count_gates_still_refuse": true,
+    "new_analyzer_sha256": "5a62452a6991b60fbf1562d9554b1cb780432e194bd95c14c7191872384e74a1",
+    "no_enlarged_ordering_tolerance_or_clipping_or_case_filter_or_endpoint_switch": true,
+    "old_analyzer_and_plan_additionally_pinned": true,
+    "old_analyzer_bfe6_preserved": true,
+    "old_duplicate_view_errors": 6,
+    "old_null_report_preserved": true,
+    "registered_proof_numerical_vector_chronology_rank_functions_AST_unchanged": true,
+    "scope": "Unsupported post-terminal cross-kernel1e-5 ordering assumption replaced by general explicit precision uncertainty; original1e-5 marker and all raw gaps retained. Registered native/FD/endpoints unchanged. No actual-case cause or error bound proven."
+  },
+  "state_runtime_source": {
+    "canonical10_asset_hash_mismatches": [],
+    "current97_dispatch_hash_mismatches": [],
+    "generation": false,
+    "generation_pool_access": false,
+    "loaded_cache_code_hash_checked": true,
+    "loaded_custom_code_sha256": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "loaded_qualified_before_final_after_state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+    "native_TEST": false,
+    "optimizer_steps": 0,
+    "parameter_gradients": "NONE",
+    "runtime": "CPU FP32/eager,4threads; Python3.11.15/Torch2.12.1+cu126/Transformers5.14.1; exact pinned Qwen implementation",
+    "state_identity_equal": true,
+    "trainable_parameters": 0
+  },
+  "status": "PASS_COMPLETE_NATIVE_CAUSAL_PROXY_WITH_EOS_ORDERING_UNVERIFIED"
+}

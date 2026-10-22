@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "reviewer": "/root/adversarial_review",
+  "created_utc": "2026-10-02T04:17:19.4824793Z",
+  "status": "PASS_NO_MODEL_BINDING_AND_CPU_APPARATUS",
+  "source_sha256": {
+    "native_supervisor.py": "2f3e1c05b1c755fb08e2de531fcb4e7e728d3bfa451b626d4e2a3b7e4b7ccc0c",
+    "native_entry.py": "ab5b60f0ad72f719367490737d1c71173e5384db3a31246ca2ed751557c6725c",
+    "binding.py": "3b1b72ff366d733bd2f318ae0f2d904e25fe4d52e6e89d710c213ac2522caf11",
+    "supervision.py": "268c18b3b462179bddccd11f08f2a36b9d311a1878c8bca5449dad6a1ce963bf",
+    "tests/test_control.py": "c498db1b06716264e8338d8d7c6cfc31e6153fed427f7e3c9983934196234d6b",
+    "PREREGISTRATION.md": "3b944d5dc89309795c0c784fb69709ca42023d970a70c8656bfa2f299c1e251b",
+    "control.py": "298d0a7064ff562c498ecc50d13c2f23cd9bdf1df6b1d616d7204bac24a49ed3"
+  },
+  "native_model_loads": 0,
+  "native_inference_runs": 0,
+  "protected_or_test_reads": false,
+  "independent_test_result": {
+    "pytest_seconds": 7.68,
+    "junit_sha256": "49ceeb2ee5ea069fdc5d097b799961d7bb61b2a6228861684406aff13763ce2b",
+    "exit_code": 0,
+    "failed": 0,
+    "junit_path": "reviews/control_binding_review_junit.xml",
+    "passed": 15
+  },
+  "safe_binding_checks": {
+    "model_loader_absent": true,
+    "canonical_path_and_asset_hash_before_tokenizer": true,
+    "safetensors_header_only": true,
+    "explicit_dev_smoke_paths_only": true,
+    "both_bank_hashes_before_content_read": true,
+    "model_forward_absent": true,
+    "loaded_state_identity_explicit_null": true,
+    "campaign_local_offline_cache": true,
+    "tokenizer_local_only_trust_remote_false": true
+  },
+  "scoped_initial_issue_disposition": {
+    "R04": {
+      "recommendation": "ACCEPT_REFERENCE_LIMITATION_KEEP_SUCCESSOR_GATE",
+      "basis": "Authority section10 explicitly directs exact original native-dev after preflight/admission with built-in identity/smoke. Fuller maximum-shape/exception checklist applies to newly qualified successor.",
+      "forced_native_exception": "NOT_RUN",
+      "fresh_native_maxshape": "NOT_RUN"
+    }
+  },
+  "preliminary_supervisor_review": {
+    "assignment_failure_owned_child_kill_corrected": true,
+    "poll_sample_exit_race_corrected": true,
+    "final_admission_review": "PENDING",
+    "native_dispatch_status": "NOT_ADMITTED_BY_THIS_RECEIPT",
+    "windows_job_structure_matches_official_layout": true,
+    "process_containment_probe": "PENDING_COORDINATOR_RECEIPT"
+  }
+}
