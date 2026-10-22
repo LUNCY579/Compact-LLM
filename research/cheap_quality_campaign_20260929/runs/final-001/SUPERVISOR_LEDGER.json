@@ -1,0 +1,912 @@
+[
+  {
+    "study": "CQS-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-stability\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQS-001-analysis\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 0.5,
+    "peak_observed_tree_rss_bytes": 34226176,
+    "minimum_observed_host_available_bytes": 3757166592,
+    "peak_observed_cpu_seconds": 0.21875,
+    "worker_output_bytes": 1044282,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 900,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-29T23:27:18.263090+00:00",
+      "host_available_bytes": 3786993664,
+      "disk_free_bytes": 119437737984,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7038, 911, 6",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-29T23:27:18.774185+00:00",
+      "host_available_bytes": 3769229312,
+      "disk_free_bytes": 119436664832,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7041, 908, 8",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQS-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-stability\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQS-001-tests\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 0.40599999999994907,
+    "peak_observed_tree_rss_bytes": 25612288,
+    "minimum_observed_host_available_bytes": 3777187840,
+    "peak_observed_cpu_seconds": 0.15625,
+    "worker_output_bytes": 0,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 60,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-29T23:26:53.742028+00:00",
+      "host_available_bytes": 3786326016,
+      "disk_free_bytes": 119437840384,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7037, 912, 8",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-29T23:26:54.136407+00:00",
+      "host_available_bytes": 3783311360,
+      "disk_free_bytes": 119437828096,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7037, 912, 6",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQC-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-complementarity\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQC-001-analysis\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 0.5,
+    "peak_observed_tree_rss_bytes": 29839360,
+    "minimum_observed_host_available_bytes": 3468525568,
+    "peak_observed_cpu_seconds": 0.1875,
+    "worker_output_bytes": 1224537,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 900,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-29T23:31:59.475788+00:00",
+      "host_available_bytes": 3493920768,
+      "disk_free_bytes": 116630355968,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7036, 913, 7",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-29T23:31:59.980484+00:00",
+      "host_available_bytes": 3490316288,
+      "disk_free_bytes": 116629098496,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7041, 908, 6",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQC-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-complementarity\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQC-001-tests\\SUPERVISOR.json",
+    "status": "BLOCKED",
+    "reason": "WORKER_NONZERO_EXIT",
+    "exit_code": 1,
+    "worker_started": true,
+    "elapsed_seconds": 0.35900000000037835,
+    "peak_observed_tree_rss_bytes": 27029504,
+    "minimum_observed_host_available_bytes": 3729977344,
+    "peak_observed_cpu_seconds": 0.203125,
+    "worker_output_bytes": 0,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 60,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-29T23:30:32.316470+00:00",
+      "host_available_bytes": 3746574336,
+      "disk_free_bytes": 116868157440,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7039, 910, 11",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-29T23:30:32.691770+00:00",
+      "host_available_bytes": 3746725888,
+      "disk_free_bytes": 116868145152,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7049, 900, 6",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQC-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-complementarity\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQC-001-tests-repair1\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 0.3599999999996726,
+    "peak_observed_tree_rss_bytes": 26300416,
+    "minimum_observed_host_available_bytes": 3570741248,
+    "peak_observed_cpu_seconds": 0.140625,
+    "worker_output_bytes": 0,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 60,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-29T23:31:37.705652+00:00",
+      "host_available_bytes": 3599589376,
+      "disk_free_bytes": 116633042944,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7036, 913, 14",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-29T23:31:38.079029+00:00",
+      "host_available_bytes": 3582988288,
+      "disk_free_bytes": 116633030656,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7036, 913, 12",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQA-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-abstention\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQA-001-evaluate-resume1\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 2.6090000000003783,
+    "peak_observed_tree_rss_bytes": 31236096,
+    "minimum_observed_host_available_bytes": 5331255296,
+    "peak_observed_cpu_seconds": 2.46875,
+    "worker_output_bytes": 1162064,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 900,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-30T04:19:41.477776+00:00",
+      "host_available_bytes": 5331255296,
+      "disk_free_bytes": 108702851072,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7116, 833, 34",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-30T04:19:44.075090+00:00",
+      "host_available_bytes": 5396451328,
+      "disk_free_bytes": 108701573120,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7116, 833, 41",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQA-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-abstention\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQA-001-packet-equivalence\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 0.48399999999946886,
+    "peak_observed_tree_rss_bytes": 21024768,
+    "minimum_observed_host_available_bytes": 5457539072,
+    "peak_observed_cpu_seconds": 0.125,
+    "worker_output_bytes": 719249,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 60,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-30T04:18:59.950782+00:00",
+      "host_available_bytes": 5462220800,
+      "disk_free_bytes": 108707897344,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7111, 838, 37",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-30T04:19:00.488287+00:00",
+      "host_available_bytes": 5468741632,
+      "disk_free_bytes": 108707745792,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7111, 838, 40",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQA-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-abstention\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQA-001-prepare\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 0.7650000000003274,
+    "peak_observed_tree_rss_bytes": 44511232,
+    "minimum_observed_host_available_bytes": 3265945600,
+    "peak_observed_cpu_seconds": 0.375,
+    "worker_output_bytes": 711530,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 900,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-29T23:40:00.697279+00:00",
+      "host_available_bytes": 3306192896,
+      "disk_free_bytes": 116613734400,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7049, 900, 5",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-29T23:40:01.467542+00:00",
+      "host_available_bytes": 3291176960,
+      "disk_free_bytes": 116612919296,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7049, 900, 14",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQA-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-abstention\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQA-001-prepare-resume1\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 0.9219999999995707,
+    "peak_observed_tree_rss_bytes": 40329216,
+    "minimum_observed_host_available_bytes": 5310103552,
+    "peak_observed_cpu_seconds": 0.5,
+    "worker_output_bytes": 711530,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 900,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-30T04:18:42.623105+00:00",
+      "host_available_bytes": 5451116544,
+      "disk_free_bytes": 108710633472,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7113, 836, 38",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-30T04:18:43.539185+00:00",
+      "host_available_bytes": 5396275200,
+      "disk_free_bytes": 108708270080,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7110, 839, 38",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQA-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-abstention\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQA-001-tests\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 1.344000000000051,
+    "peak_observed_tree_rss_bytes": 30076928,
+    "minimum_observed_host_available_bytes": 3201949696,
+    "peak_observed_cpu_seconds": 0.96875,
+    "worker_output_bytes": 0,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 60,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-29T23:39:36.758782+00:00",
+      "host_available_bytes": 3235377152,
+      "disk_free_bytes": 116613754880,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7049, 900, 6",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-29T23:39:38.089521+00:00",
+      "host_available_bytes": 3224145920,
+      "disk_free_bytes": 116613738496,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7049, 900, 8",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQA-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-abstention\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQA-001-tests-resume1\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 1.655999999999949,
+    "peak_observed_tree_rss_bytes": 29298688,
+    "minimum_observed_host_available_bytes": 5466677248,
+    "peak_observed_cpu_seconds": 1.15625,
+    "worker_output_bytes": 0,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 60,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-30T04:17:11.177713+00:00",
+      "host_available_bytes": 5501190144,
+      "disk_free_bytes": 108712677376,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7103, 846, 40",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-30T04:17:12.836960+00:00",
+      "host_available_bytes": 5508296704,
+      "disk_free_bytes": 108712128512,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7103, 846, 41",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQD-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-shortcuts\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQD-001-analysis\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 0.7660000000005311,
+    "peak_observed_tree_rss_bytes": 29868032,
+    "minimum_observed_host_available_bytes": 5278887936,
+    "peak_observed_cpu_seconds": 0.453125,
+    "worker_output_bytes": 1144679,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 900,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-30T04:20:31.970506+00:00",
+      "host_available_bytes": 5299654656,
+      "disk_free_bytes": 108699803648,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7101, 848, 38",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-30T04:20:32.731093+00:00",
+      "host_available_bytes": 5294567424,
+      "disk_free_bytes": 108698619904,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7101, 848, 37",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQD-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-shortcuts\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQD-001-tests\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 0.375,
+    "peak_observed_tree_rss_bytes": 26206208,
+    "minimum_observed_host_available_bytes": 3192274944,
+    "peak_observed_cpu_seconds": 0.140625,
+    "worker_output_bytes": 0,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 60,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-29T23:43:51.280185+00:00",
+      "host_available_bytes": 3210878976,
+      "disk_free_bytes": 116611043328,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7048, 901, 6",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-29T23:43:51.669588+00:00",
+      "host_available_bytes": 3194576896,
+      "disk_free_bytes": 116611031040,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7048, 901, 5",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQT-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-token-fit\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQT-001-analysis\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 15.765999999999622,
+    "peak_observed_tree_rss_bytes": 152576000,
+    "minimum_observed_host_available_bytes": 5080330240,
+    "peak_observed_cpu_seconds": 4.71875,
+    "worker_output_bytes": 17808082,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 900,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-30T04:21:12.178347+00:00",
+      "host_available_bytes": 5297491968,
+      "disk_free_bytes": 108697120768,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7102, 847, 38",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-30T04:21:27.940695+00:00",
+      "host_available_bytes": 5236375552,
+      "disk_free_bytes": 108679258112,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7102, 847, 40",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQT-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-token-fit\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQT-001-tests\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 0.375,
+    "peak_observed_tree_rss_bytes": 25870336,
+    "minimum_observed_host_available_bytes": 3294380032,
+    "peak_observed_cpu_seconds": 0.140625,
+    "worker_output_bytes": 0,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 60,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-29T23:46:28.258519+00:00",
+      "host_available_bytes": 3310837760,
+      "disk_free_bytes": 116613820416,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7050, 899, 6",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-29T23:46:28.638710+00:00",
+      "host_available_bytes": 3307438080,
+      "disk_free_bytes": 116613808128,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7050, 899, 11",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQR-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-retrieval\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQR-001-analysis\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 15.188000000000102,
+    "peak_observed_tree_rss_bytes": 94580736,
+    "minimum_observed_host_available_bytes": 4808986624,
+    "peak_observed_cpu_seconds": 14.8125,
+    "worker_output_bytes": 13465999,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 900,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-30T04:25:23.132564+00:00",
+      "host_available_bytes": 4890812416,
+      "disk_free_bytes": 107993673728,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7116, 833, 39",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-30T04:25:38.315623+00:00",
+      "host_available_bytes": 4988133376,
+      "disk_free_bytes": 107980144640,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7115, 834, 40",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQR-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-retrieval\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQR-001-tests\\SUPERVISOR.json",
+    "status": "BLOCKED",
+    "reason": "WORKER_NONZERO_EXIT",
+    "exit_code": 1,
+    "worker_started": true,
+    "elapsed_seconds": 1.7039999999997235,
+    "peak_observed_tree_rss_bytes": 107196416,
+    "minimum_observed_host_available_bytes": 3216465920,
+    "peak_observed_cpu_seconds": 1.453125,
+    "worker_output_bytes": 0,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 90,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-29T23:46:29.326158+00:00",
+      "host_available_bytes": 3305005056,
+      "disk_free_bytes": 116613804032,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7050, 899, 6",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-29T23:46:31.053729+00:00",
+      "host_available_bytes": 3295965184,
+      "disk_free_bytes": 116613787648,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7050, 899, 6",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  },
+  {
+    "study": "CQR-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-retrieval\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQR-001-tests-repair1\\SUPERVISOR.json",
+    "status": "BLOCKED_CPU_ADMISSION",
+    "before": {
+      "utc": "2026-09-29T23:49:52.436620+00:00",
+      "host_available_bytes": 1082867712,
+      "disk_free_bytes": 116036358144,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7036, 913, 0",
+        "error": ""
+      }
+    },
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 90,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "worker_started": false,
+    "no_automatic_retry": true
+  },
+  {
+    "study": "CQR-001",
+    "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-quality-retrieval\\ChatBubble-rvs001\\research\\cheap_quality_campaign_20260929\\runs\\CQR-001-tests-resume1\\SUPERVISOR.json",
+    "status": "PASS_CPU_PROCESS",
+    "reason": null,
+    "exit_code": 0,
+    "worker_started": true,
+    "elapsed_seconds": 1.875,
+    "peak_observed_tree_rss_bytes": 122949632,
+    "minimum_observed_host_available_bytes": 4853661696,
+    "peak_observed_cpu_seconds": 1.609375,
+    "worker_output_bytes": 0,
+    "limits": {
+      "cpu_host_admission_gib": 2.0,
+      "cpu_host_ongoing_gib": 1.5,
+      "worker_tree_rss_mib": 512,
+      "wall_seconds": 90,
+      "disk_free_gib": 4.0,
+      "worker_output_bytes": 52428800,
+      "stdout_stderr_bytes": 8388608,
+      "poll_seconds": 0.1,
+      "native_guards": "UNCHANGED; no pretrained/native model worker in this study"
+    },
+    "before": {
+      "utc": "2026-09-30T04:24:41.502524+00:00",
+      "host_available_bytes": 4959256576,
+      "disk_free_bytes": 107993686016,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7114, 835, 41",
+        "error": ""
+      }
+    },
+    "after": {
+      "utc": "2026-09-30T04:24:43.381408+00:00",
+      "host_available_bytes": 4958171136,
+      "disk_free_bytes": 107993669632,
+      "gpu": {
+        "returncode": 0,
+        "raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 7114, 835, 30",
+        "error": ""
+      }
+    },
+    "native_model_loads": 0,
+    "gpu_worker_launches": 0,
+    "paid_calls": 0,
+    "no_automatic_retry": true,
+    "measurement_note": "0.1-second observed peaks are sampled, not instantaneous OS hard RSS guarantees"
+  }
+]
