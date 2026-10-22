@@ -1,0 +1,35 @@
+{
+  "control": {
+    "bias_limit": 0.1,
+    "kd": 0.02,
+    "ki": 0.01,
+    "method": "id",
+    "min_expected": 4.0
+  },
+  "experts": [
+    {
+      "artifact_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "name": "core",
+      "operation": "ledger_transition",
+      "prior": 0.5,
+      "qualified": false,
+      "strength": 1.0
+    },
+    {
+      "artifact_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "name": "ledger_v1",
+      "operation": "ledger_transition",
+      "prior": 0.5,
+      "qualified": false,
+      "strength": 1.0
+    }
+  ],
+  "max_new_tokens": 128,
+  "routing": {
+    "cost_weight": 0.0,
+    "quality_slack": 0.05,
+    "target_policy": "prior"
+  },
+  "schema": 1,
+  "window_size": 32
+}
