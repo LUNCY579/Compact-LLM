@@ -1,0 +1,101 @@
+{
+  "analytic_outcomes": {
+    "contractive_to_target": {
+      "last_stationary_fraction": 1.0,
+      "last_suppressed_update_fraction": 0.0,
+      "synthetic_target_reached": true,
+      "target_distance": 0.006176323629915714
+    },
+    "contractive_to_wrong": {
+      "last_stationary_fraction": 1.0,
+      "last_suppressed_update_fraction": 0.0,
+      "synthetic_target_reached": false,
+      "target_distance": 1.4114621877670288
+    },
+    "identity_wrong": {
+      "last_stationary_fraction": 1.0,
+      "last_suppressed_update_fraction": 0.0,
+      "synthetic_target_reached": false,
+      "target_distance": 1.5811388492584229
+    },
+    "oscillation": {
+      "last_stationary_fraction": 0.0,
+      "last_suppressed_update_fraction": 0.0,
+      "synthetic_target_reached": false,
+      "target_distance": 1.5811388492584229
+    },
+    "zero_scaled": {
+      "last_stationary_fraction": 1.0,
+      "last_suppressed_update_fraction": 1.0,
+      "synthetic_target_reached": false,
+      "target_distance": 1.5811388492584229
+    }
+  },
+  "compileall": "PASS",
+  "counter_scope": "Fixture optimizer counters exclude optimizer calls inside unit tests; no native optimizer calls occurred anywhere.",
+  "date": "2026-10-03",
+  "default_preflight": "BLOCKED (expected), exit 2",
+  "environment": {
+    "device": "cpu",
+    "psutil": "7.2.2",
+    "pytest": "9.0.2",
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu"
+  },
+  "experiment_id": "FP-RINEYA-001",
+  "fixture_suite_executions": 2,
+  "gpu_jobs": 0,
+  "matched_fixture_training": [
+    {
+      "loss_after": 0.05813014507293701,
+      "loss_before": 0.06367703527212143,
+      "mode": "additive",
+      "optimizer_steps": 12,
+      "parameter_count": 49,
+      "seed": 17
+    },
+    {
+      "loss_after": 0.0591326504945755,
+      "loss_before": 0.06367703527212143,
+      "mode": "orthogonal",
+      "optimizer_steps": 12,
+      "parameter_count": 49,
+      "seed": 17
+    },
+    {
+      "loss_after": 0.05968265235424042,
+      "loss_before": 0.06533467024564743,
+      "mode": "additive",
+      "optimizer_steps": 12,
+      "parameter_count": 49,
+      "seed": 29
+    },
+    {
+      "loss_after": 0.056792810559272766,
+      "loss_before": 0.06533467024564743,
+      "mode": "orthogonal",
+      "optimizer_steps": 12,
+      "parameter_count": 49,
+      "seed": 29
+    }
+  ],
+  "native_checkpoint_loads": 0,
+  "native_optimizer_steps": 0,
+  "nonclaims": [
+    "No Rineya efficacy or trained adapter",
+    "No native memory, latency or gradient equivalence measurement",
+    "No complete paper reproduction",
+    "No full inherited repository test run"
+  ],
+  "pytest": {
+    "failed": 0,
+    "junit_sha256": "9b1224902f10f04e4c4f034966293e95d5b25e1cf7ed288f1809c406dcbe9b3b",
+    "passed": 57,
+    "skipped": 0
+  },
+  "remote_ci": "NOT_RUN",
+  "repeat_fixture_equal_excluding_wall_time": true,
+  "status": "CPU_FIXTURES_PASS_NATIVE_NOT_RUN",
+  "synthetic_optimizer_steps_across_two_suites": 96,
+  "synthetic_optimizer_steps_per_suite": 48
+}
