@@ -1,0 +1,719 @@
+{
+  "schema_version": 1,
+  "wave2": {
+    "schema_version": 1,
+    "reviewed_at": "2026-10-22T18:10:24.824736+00:00",
+    "repository": "LUNCY579/ChatBubble",
+    "verdict": "NO_CONCRETE_SOURCE_OR_EVIDENCE_BLOCKER",
+    "concrete_blockers": [],
+    "recommendation": "Proceed with the source-preserving wave2 merge under the existing repository controls.",
+    "scope": {
+      "source_branches": 14,
+      "added_source_files": 842,
+      "unique_added_paths": 842,
+      "insertion_entries": 17,
+      "matching_reconstructed_insertion_objects": 17,
+      "deletions": 0,
+      "source_modifications": 0,
+      "overlapping_insertion_paths": 0
+    },
+    "normalized_counts": {
+      "test_cases": 1864,
+      "passed_test_cases": 1859,
+      "skipped_test_cases": 5,
+      "failures": 0,
+      "errors": 0,
+      "passed_subtests": 479
+    },
+    "recommended_count_wording": "1,859 test cases passed; 5 test cases skipped; 479 additional subtests passed; no final-run failures or errors.",
+    "count_corrections": [
+      "Group C1206 pass events comprise727 collected test cases plus479 subtests.",
+      "RSD suite128 test cases plus56 subtests; quality queue143 test cases plus423 subtests.",
+      "Do not describe2338 combined pass events as2338 collected tests.",
+      "Superseded dependency/temp-layout attempts remain retained and are excluded from final counts."
+    ],
+    "normalized_suites": [
+      {
+        "group": "A",
+        "branch": "research/rineya-layered-post-training-v1",
+        "junit": "/workspace/scratch/629d700cf463/wave2a_layered_junit.xml",
+        "test_cases": 89,
+        "passed_test_cases": 89,
+        "skipped_test_cases": 0,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 0,
+        "exit_code": 0
+      },
+      {
+        "group": "A",
+        "branch": "research/rineya-tropical-verified-composition-v1",
+        "junit": "/workspace/scratch/629d700cf463/wave2a_tropical_junit.xml",
+        "test_cases": 129,
+        "passed_test_cases": 129,
+        "skipped_test_cases": 0,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 0,
+        "exit_code": 0
+      },
+      {
+        "group": "A",
+        "branch": "research/rineya-bf16-attention-gproj-v1",
+        "junit": "/workspace/scratch/629d700cf463/wave2a_bf16_junit.xml",
+        "test_cases": 96,
+        "passed_test_cases": 96,
+        "skipped_test_cases": 0,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 0,
+        "exit_code": 0
+      },
+      {
+        "group": "A",
+        "branch": "research/rineya-compute-depth-elasticity-v1",
+        "junit": "/workspace/scratch/629d700cf463/wave2a_compute_junit.xml",
+        "test_cases": 64,
+        "passed_test_cases": 64,
+        "skipped_test_cases": 0,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 0,
+        "exit_code": 0
+      },
+      {
+        "group": "A",
+        "branch": "research/rineya-length-generalization-regularization-v1",
+        "junit": "/workspace/scratch/629d700cf463/wave2a_length_junit.xml",
+        "test_cases": 98,
+        "passed_test_cases": 98,
+        "skipped_test_cases": 0,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 0,
+        "exit_code": 0
+      },
+      {
+        "group": "B",
+        "branch": "research/rineya-distillation-dynamics-v1",
+        "junit": "/workspace/scratch/629d700cf463/wave2_group_b_logs/rineya_distillation_dynamics_v1.xml",
+        "test_cases": 190,
+        "passed_test_cases": 189,
+        "skipped_test_cases": 1,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 0,
+        "exit_code": 0
+      },
+      {
+        "group": "B",
+        "branch": "research/rineya-self-distillation-axes-v1",
+        "junit": "/workspace/scratch/629d700cf463/wave2_group_b_logs/rineya_self_distillation_axes_v1_external_temp_rerun.xml",
+        "test_cases": 196,
+        "passed_test_cases": 196,
+        "skipped_test_cases": 0,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 0,
+        "exit_code": 0
+      },
+      {
+        "group": "B",
+        "branch": "research/rineya-triadic-working-memory-v1",
+        "junit": "/workspace/scratch/629d700cf463/wave2_group_b_logs/rineya_triadic_working_memory_v1.xml",
+        "test_cases": 74,
+        "passed_test_cases": 70,
+        "skipped_test_cases": 4,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 0,
+        "exit_code": 0
+      },
+      {
+        "group": "B",
+        "branch": "research/rineya-useful-fixed-point-recurrence-v1",
+        "junit": "/workspace/scratch/629d700cf463/wave2_group_b_logs/rineya_useful_fixed_point_recurrence_v1.xml",
+        "test_cases": 57,
+        "passed_test_cases": 57,
+        "skipped_test_cases": 0,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 0,
+        "exit_code": 0
+      },
+      {
+        "group": "C",
+        "branch": "research/rineya-hebbian-fact-memory-v1",
+        "junit": "/workspace/scratch/629d700cf463/wave2c_hebbian_junit.xml",
+        "test_cases": 76,
+        "passed_test_cases": 76,
+        "skipped_test_cases": 0,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 0,
+        "exit_code": 0
+      },
+      {
+        "group": "C",
+        "branch": "research/rineya-id-balancing-skill-routing-v1",
+        "junit": "/workspace/scratch/629d700cf463/wave2c_routing_junit.xml",
+        "test_cases": 158,
+        "passed_test_cases": 158,
+        "skipped_test_cases": 0,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 0,
+        "exit_code": 0
+      },
+      {
+        "group": "C",
+        "branch": "research/rineya-recursive-self-distillation-v1",
+        "junit": "/workspace/scratch/629d700cf463/wave2c_rsd_portable_junit.xml",
+        "test_cases": 128,
+        "passed_test_cases": 128,
+        "skipped_test_cases": 0,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 56,
+        "exit_code": 0
+      },
+      {
+        "group": "C",
+        "branch": "research/rineya-recursive-self-distillation-v1",
+        "junit": "/workspace/scratch/629d700cf463/wave2c_queue_portable_junit.xml",
+        "test_cases": 143,
+        "passed_test_cases": 143,
+        "skipped_test_cases": 0,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 423,
+        "exit_code": 0
+      },
+      {
+        "group": "C",
+        "branch": "research/rineya-spikingbrain-hybrid-memory-v1",
+        "junit": "/workspace/scratch/629d700cf463/wave2c_spiking_pinned_junit.xml",
+        "test_cases": 222,
+        "passed_test_cases": 222,
+        "skipped_test_cases": 0,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 0,
+        "exit_code": 0
+      },
+      {
+        "group": "CROSS_SCALE",
+        "branch": "research/cross-scale-stitch-graft-framework-v1",
+        "qualification": "/tmp/chatbubble-xsg-20261022-consolidation/QUALIFICATION.json",
+        "test_cases": 144,
+        "passed_test_cases": 144,
+        "skipped_test_cases": 0,
+        "failures": 0,
+        "errors": 0,
+        "passed_subtests": 0,
+        "exit_code": 0
+      }
+    ],
+    "skip_records": [
+      {
+        "test": "experiments.rineya_distillation_dynamics_v1.tests.test_manifests_exports::test_optional_read_only_gd_owner_provenance_contract",
+        "reason": "GD owner's optional sibling worktree contract unavailable"
+      },
+      {
+        "test": "experiments.rineya_triadic_working_memory_v1.tests.test_qwen3_optional::test_native_qwen3_zero_gate_identity",
+        "reason": "transformers==4.57.1 is unavailable; native Qwen3 test NOT executed"
+      },
+      {
+        "test": "experiments.rineya_triadic_working_memory_v1.tests.test_qwen3_optional::test_native_qwen3_active_prefill_decode_equivalence",
+        "reason": "transformers==4.57.1 is unavailable; native Qwen3 test NOT executed"
+      },
+      {
+        "test": "experiments.rineya_triadic_working_memory_v1.tests.test_qwen3_optional::test_native_qwen3_greedy_equality",
+        "reason": "transformers==4.57.1 is unavailable; native Qwen3 test NOT executed"
+      },
+      {
+        "test": "experiments.rineya_triadic_working_memory_v1.tests.test_qwen3_optional::test_native_qwen3_frozen_backward",
+        "reason": "transformers==4.57.1 is unavailable; native Qwen3 test NOT executed"
+      }
+    ],
+    "source_preservation": {
+      "method": "Reconstructed Git tree object hashes from complete changed-file path/mode/blob maps, with each file covered by exactly one insertion entry.",
+      "checks": [
+        {
+          "branch": "research/rineya-layered-post-training-v1",
+          "path": "experiments/rineya_layered_post_training_v1",
+          "type": "tree",
+          "file_count": 30,
+          "declared_sha": "0f1d844a3e095096cce8b4544b54e656d3114d0e",
+          "reconstructed_sha": "0f1d844a3e095096cce8b4544b54e656d3114d0e",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-tropical-verified-composition-v1",
+          "path": "experiments/rineya_tropical_verified_composition_v1",
+          "type": "tree",
+          "file_count": 24,
+          "declared_sha": "3bfccb7b1aa157ca7e55383c95358f471d7ba411",
+          "reconstructed_sha": "3bfccb7b1aa157ca7e55383c95358f471d7ba411",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-bf16-attention-gproj-v1",
+          "path": "experiments/rineya_bf16_attention_gproj_v1",
+          "type": "tree",
+          "file_count": 19,
+          "declared_sha": "03ca6cef4cd6c59e0d2a53fb2b5a1af17ad5279f",
+          "reconstructed_sha": "03ca6cef4cd6c59e0d2a53fb2b5a1af17ad5279f",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-compute-depth-elasticity-v1",
+          "path": "experiments/rineya_compute_depth_elasticity_v1",
+          "type": "tree",
+          "file_count": 12,
+          "declared_sha": "76cb3ba5e13b2b8f4df439c18cd4d216e7f823cc",
+          "reconstructed_sha": "76cb3ba5e13b2b8f4df439c18cd4d216e7f823cc",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-compute-depth-elasticity-v1",
+          "path": ".github/workflows/rineya-compute-depth-elasticity-v1.yml",
+          "type": "blob",
+          "file_count": 1,
+          "declared_sha": "58fec688b12716b5000eed25bd7c17f7644873f6",
+          "reconstructed_sha": "58fec688b12716b5000eed25bd7c17f7644873f6",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-length-generalization-regularization-v1",
+          "path": "experiments/rineya_length_generalization_regularization_v1",
+          "type": "tree",
+          "file_count": 33,
+          "declared_sha": "d533c28b37fd7a04bd100490cf8df109777d5ec8",
+          "reconstructed_sha": "d533c28b37fd7a04bd100490cf8df109777d5ec8",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-distillation-dynamics-v1",
+          "path": "experiments/rineya_distillation_dynamics_v1",
+          "type": "tree",
+          "file_count": 83,
+          "declared_sha": "71ccabd74a81c2dfc5cd245cb13a9cb83153d93c",
+          "reconstructed_sha": "71ccabd74a81c2dfc5cd245cb13a9cb83153d93c",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-self-distillation-axes-v1",
+          "path": "experiments/rineya_self_distillation_axes_v1",
+          "type": "tree",
+          "file_count": 51,
+          "declared_sha": "f08d09886574f4b99bd57fc2e827f1196e6e125b",
+          "reconstructed_sha": "f08d09886574f4b99bd57fc2e827f1196e6e125b",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-triadic-working-memory-v1",
+          "path": "experiments/rineya_triadic_working_memory_v1",
+          "type": "tree",
+          "file_count": 25,
+          "declared_sha": "e7774379462b0f17ab320cf781d72c2201686005",
+          "reconstructed_sha": "e7774379462b0f17ab320cf781d72c2201686005",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-useful-fixed-point-recurrence-v1",
+          "path": "experiments/rineya_useful_fixed_point_recurrence_v1",
+          "type": "tree",
+          "file_count": 19,
+          "declared_sha": "423b3ae4eea0238f87388d477e42b540b42f9a34",
+          "reconstructed_sha": "423b3ae4eea0238f87388d477e42b540b42f9a34",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-hebbian-fact-memory-v1",
+          "path": "experiments/rineya_hebbian_fact_memory_v1",
+          "type": "tree",
+          "file_count": 25,
+          "declared_sha": "1e557f940db6dec97beec85d398803c605e74667",
+          "reconstructed_sha": "1e557f940db6dec97beec85d398803c605e74667",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-id-balancing-skill-routing-v1",
+          "path": "experiments/rineya_id_balancing_skill_routing_v1",
+          "type": "tree",
+          "file_count": 35,
+          "declared_sha": "ede129a1f345f6f5aed566a8f955f6de1298ca71",
+          "reconstructed_sha": "ede129a1f345f6f5aed566a8f955f6de1298ca71",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-recursive-self-distillation-v1",
+          "path": "experiments/rineya_quality_queue_v1",
+          "type": "tree",
+          "file_count": 57,
+          "declared_sha": "eaa93cb1beb90c4ca988125dece5d8d6d07e38aa",
+          "reconstructed_sha": "eaa93cb1beb90c4ca988125dece5d8d6d07e38aa",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-recursive-self-distillation-v1",
+          "path": "experiments/rineya_recursive_self_distillation_v1",
+          "type": "tree",
+          "file_count": 28,
+          "declared_sha": "f2e307c893d9ed6fd06dcd8406a3de08c1fe6bda",
+          "reconstructed_sha": "f2e307c893d9ed6fd06dcd8406a3de08c1fe6bda",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-recursive-self-distillation-v1",
+          "path": ".github/workflows/rsd001-cpu.yml",
+          "type": "blob",
+          "file_count": 1,
+          "declared_sha": "d33276a629fffbd6e4d8d5b700bb23a266656ed7",
+          "reconstructed_sha": "d33276a629fffbd6e4d8d5b700bb23a266656ed7",
+          "match": true
+        },
+        {
+          "branch": "research/rineya-spikingbrain-hybrid-memory-v1",
+          "path": "experiments/rineya_spikingbrain_hybrid_memory_v1",
+          "type": "tree",
+          "file_count": 369,
+          "declared_sha": "d6c2bf9233256e2abe31ddd5da04662928cdfae4",
+          "reconstructed_sha": "d6c2bf9233256e2abe31ddd5da04662928cdfae4",
+          "match": true
+        },
+        {
+          "branch": "research/cross-scale-stitch-graft-framework-v1",
+          "path": "experiments/cross_scale_stitch_graft_v1",
+          "type": "tree",
+          "file_count": 30,
+          "declared_sha": "b987c2f493cc2a6520e2bbaa52dd5d633c575757",
+          "reconstructed_sha": "b987c2f493cc2a6520e2bbaa52dd5d633c575757",
+          "match": true,
+          "source_sha_confirmation": "Root confirmed source subtree SHA after independent local reconstruction."
+        }
+      ],
+      "complete_spikingbrain_file_map": 369,
+      "quality_queue_file_map": 57,
+      "root_extras": [
+        ".github/workflows/rineya-compute-depth-elasticity-v1.yml",
+        ".github/workflows/rsd001-cpu.yml"
+      ],
+      "all_incoming_modes": "100644; tree modes040000",
+      "source_files_unmodified_during_review": true
+    },
+    "workflow_review": [
+      {
+        "path": ".github/workflows/rineya-compute-depth-elasticity-v1.yml",
+        "sha": "58fec688b12716b5000eed25bd7c17f7644873f6",
+        "trigger_scope": "Push only original CDE research branch with CDE package/workflow paths; PR limited to those paths.",
+        "execution": "Ubuntu CPU torch2.10.0 and scoped pytest plus scripted smoke; no native/model entrypoint.",
+        "timeout_minutes": 15,
+        "permissions": "contents:read"
+      },
+      {
+        "path": ".github/workflows/rsd001-cpu.yml",
+        "sha": "d33276a629fffbd6e4d8d5b700bb23a266656ed7",
+        "trigger_scope": "Push only original RSD branch with RSD package/workflow paths; PR limited to those paths; existing manual dispatch retained.",
+        "execution": "Pinned checkout/setup actions, Python3.11.15, CPU torch2.10.0, safetensors0.7.0, offline model flags; existing RSD unittest suite only.",
+        "coverage_limit": "Workflow does not run the quality-queue suite or trigger on queue-only changes; the complete queue suite is covered by local validation.",
+        "timeout_minutes": 15,
+        "permissions": "contents:read"
+      }
+    ],
+    "cross_scale_receipt_validation": {
+      "manifest_file_count": 26,
+      "all_manifest_source_sha256_match": true,
+      "all_source_digests_equal": true,
+      "test_ids_equal": true,
+      "test_ids_unique": true,
+      "worker_sha256_match": true,
+      "tests": 144,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "native_qualification": false,
+      "pretrained_model_calls": 0,
+      "manifest_digest_recomputed": true,
+      "worker_receipt_and144_test_ids_verified": true
+    },
+    "root_reported_remote_verification": {
+      "review_basis": "Parent report; not independently re-queried during local review.",
+      "pr": 31,
+      "staging_head": "01f9098071578d6260f792ddd588c7b36f6eec01",
+      "inherited_files_unchanged": 9967,
+      "incoming_files_exact": 842,
+      "merge_parent_pairs_exact": 14,
+      "hosted_cde_rsd_jobs": "Failed before allocation; runner_id0 and steps[]. No code-test failure established by those job records."
+    },
+    "limits": [
+      "CPU fixture/mechanics evidence only; no native-model efficacy or GPU qualification.",
+      "Four triadic Qwen3 checks require Transformers4.57.1; installed4.51.3 in the separate later fixture context does not satisfy that pin.",
+      "Optional GD sibling-worktree contract remains unavailable and intentionally skipped.",
+      "RSD Git-dependent checks use isolated synthetic Git history with exact source bytes; this is not native launch qualification.",
+      "Historical artifacts and negative outcomes are preserved through exact subtree insertion, not replayed."
+    ],
+    "inputs": [
+      {
+        "path": "/workspace/scratch/629d700cf463/wave2_group_a.json",
+        "sha256": "4db1e754ff109dd109b1fbe5a6b2e7f138753ff559b796fce8d4b8ff8e46dd08"
+      },
+      {
+        "path": "/workspace/scratch/629d700cf463/wave2_group_b.json",
+        "sha256": "f1934ff86df34524525d451f954545fe9d66e68018e0f3235f40128f56f67664"
+      },
+      {
+        "path": "/workspace/scratch/629d700cf463/wave2_group_c.json",
+        "sha256": "6495ae9e37a67c713ff4922d1378ae4555d8dbe468a30454e8618195b812cac8"
+      }
+    ],
+    "review_actions": {
+      "test_reruns": 0,
+      "source_edits": 0,
+      "remote_writes": 0,
+      "branch_deletions": 0
+    }
+  },
+  "wave3": {
+    "schema_version": 1,
+    "reviewed_at_utc": "2026-10-22T18:13:56.271370+00:00",
+    "reviewer": "/root/research_merge_audit",
+    "repository": "LUNCY579/ChatBubble",
+    "verdict": "NO_CONCRETE_BLOCKER_FOR_SEVEN_READY_SOURCES",
+    "concrete_blockers_for_ready_set": [],
+    "scope": "Independent read-only review of existing source maps, byte copies, tests receipts, instructions, and three-way retention; no tests rerun or source/remote mutations.",
+    "audited_baseline_sha": "7a9316343615fde3c478c6955c8504ee93feaa57",
+    "requires_latest_central_baseline": "Root must use the PR31-merged central tree and preserve all inherited files except the one reviewed EFE README replacement.",
+    "branches": [
+      {
+        "branch": "codex/cheap-quality-complementarity-20260929",
+        "source_sha": "63ff0f6d5cef6c4779ac173a95f9e8c703b2b949",
+        "source_map_entries": 32,
+        "effective_entries": 32,
+        "retained_ancestor_paths": 0
+      },
+      {
+        "branch": "codex/cheap-quality-shortcuts-20260929",
+        "source_sha": "97081cb9cb9af1f7d1be5ced74c788b8b5f89326",
+        "source_map_entries": 26,
+        "effective_entries": 26,
+        "retained_ancestor_paths": 0
+      },
+      {
+        "branch": "codex/cheap-quality-stability-20260929",
+        "source_sha": "996cf0ebc946ceccc9a36e0e38a5303ad8326c40",
+        "source_map_entries": 73,
+        "effective_entries": 73,
+        "retained_ancestor_paths": 0
+      },
+      {
+        "branch": "codex/cheap-quality-token-fit-20260929",
+        "source_sha": "1861a4859fbd3f4ced8215ece711c3d65186ea10",
+        "source_map_entries": 31,
+        "effective_entries": 31,
+        "retained_ancestor_paths": 0
+      },
+      {
+        "branch": "codex/data-admission-001-20260930",
+        "source_sha": "00b1ee366207a039f344724bf0acb4b2e6e35281",
+        "source_map_entries": 25,
+        "effective_entries": 25,
+        "retained_ancestor_paths": 0
+      },
+      {
+        "branch": "codex/efe-func001-fresh-validation",
+        "source_sha": "71cfb145be65e09ea6cbe8014c511e49170078c8",
+        "source_map_entries": 18,
+        "effective_entries": 18,
+        "retained_ancestor_paths": 0
+      },
+      {
+        "branch": "codex/rineya-quality-sft-v1",
+        "source_sha": "3c099798253f03f8a92ea4ba96152da67b9eee3a",
+        "source_map_entries": 79,
+        "effective_entries": 55,
+        "retained_ancestor_paths": 24
+      }
+    ],
+    "merge_map_verification": {
+      "per_branch_entries": 260,
+      "distinct_entries": 254,
+      "additions": 253,
+      "modifications": 1,
+      "deletions": 0,
+      "mode": "100644",
+      "type": "blob",
+      "all_effective_entries_equal_source_after_objects": true,
+      "exact_union_matches_report": true,
+      "identical_shared_paths": [
+        "research/cheap_quality_campaign_20260929/.gitignore",
+        "research/cheap_quality_campaign_20260929/supervise_cpu.py"
+      ],
+      "duplicate_entry_occurrences": 6,
+      "shared_campaign_rule": "Insert per-file entries into the existing tree; replacing a sibling campaign subtree would discard sibling histories.",
+      "incoming_workflow_paths": [],
+      "held_branch_entries_excluded": true
+    },
+    "quality_sft_retention": {
+      "source_sha": "3c099798253f03f8a92ea4ba96152da67b9eee3a",
+      "shared_ancestor_sha": "e1737660cd0feacd6efd4177ea1d1579bf0cd865",
+      "source_sda_tree": "47fd222b73606e856a36883c76b08e10183e6812",
+      "source_sda_files": 24,
+      "shared_ancestor_sda_tree": "47fd222b73606e856a36883c76b08e10183e6812",
+      "newer_central_sda_source_sha": "bdc43afa26f00e84781307ea989a2dead5e33446",
+      "newer_central_sda_tree": "f08d09886574f4b99bd57fc2e827f1196e6e125b",
+      "newer_central_sda_files": 51,
+      "newer_sda_added_paths": 27,
+      "older_sda_paths_with_newer_blob_retained": [
+        "experiments/rineya_self_distillation_axes_v1/README.md"
+      ],
+      "source_sda_tree_unchanged_since_shared_ancestor": true,
+      "no_sda_insertion_entries": true,
+      "quality_sft_additions": 55,
+      "all_quality_sft_entries_scoped": true,
+      "dependency_import_review": "Quality SFT imports unchanged model_quality_gpu_v1 helpers; it does not import SDA. Retaining newer SDA therefore creates no stale-SDA fixture substitution."
+    },
+    "efe_readme": {
+      "path": "experiments/rineya_evidence_function_equilibrium_v1/README.md",
+      "old_blob": "4ca44f6ee62656f8c23e7809ef2a9a39b10face9",
+      "new_blob": "da843a9c8e3d574b6a25a1e29ea9d7b07d44d86d",
+      "audited_central_equals_merge_base": true,
+      "both_local_versions_match_declared_blobs": true,
+      "diff": "Adds only a three-line Read first link to fresh-validation preparation; explicitly says exact trained endpoints are missing and no fresh native experiment ran.",
+      "native_boundary": "Fresh-validation RESULT remains HOLD; missing exact endpoints/bank/native parity/resource qualification unresolved; CPU fixture passes are mechanics only."
+    },
+    "validation": {
+      "passed_test_cases": 244,
+      "passed_subtests": 31,
+      "skipped_test_cases": 0,
+      "failures": 0,
+      "errors": 0,
+      "static_only_branches": 1,
+      "syntax_checked_files_not_counted_as_tests": 2,
+      "suites": [
+        {
+          "branch": "codex/cheap-quality-complementarity-20260929",
+          "passed_test_cases": 7,
+          "passed_subtests": 0,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "evidence": "/workspace/scratch/629d700cf463/wave3_systems_logs/cheap_complementarity.log",
+          "static_only": false
+        },
+        {
+          "branch": "codex/cheap-quality-shortcuts-20260929",
+          "passed_test_cases": 6,
+          "passed_subtests": 0,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "evidence": "/workspace/scratch/629d700cf463/wave3_systems_logs/cheap_shortcuts.log",
+          "static_only": false
+        },
+        {
+          "branch": "codex/cheap-quality-stability-20260929",
+          "passed_test_cases": 8,
+          "passed_subtests": 0,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "evidence": "/workspace/scratch/629d700cf463/wave3_systems_logs/cheap_stability.log",
+          "static_only": false
+        },
+        {
+          "branch": "codex/cheap-quality-token-fit-20260929",
+          "passed_test_cases": 8,
+          "passed_subtests": 0,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "evidence": "/workspace/scratch/629d700cf463/wave3_systems_logs/cheap_token_fit.log",
+          "static_only": false
+        },
+        {
+          "branch": "codex/data-admission-001-20260930",
+          "passed_test_cases": 0,
+          "passed_subtests": 0,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "evidence": "/workspace/scratch/629d700cf463/wave3_systems_logs/data_admission_static.json",
+          "static_only": true
+        },
+        {
+          "branch": "codex/efe-func001-fresh-validation",
+          "passed_test_cases": 62,
+          "passed_subtests": 31,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "evidence": "/workspace/scratch/629d700cf463/wave3_systems_logs/efe_fresh_complete_rerun.xml",
+          "static_only": false
+        },
+        {
+          "branch": "codex/rineya-quality-sft-v1",
+          "passed_test_cases": 153,
+          "passed_subtests": 0,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "evidence": "/workspace/scratch/629d700cf463/wave3_systems_logs/quality_sft_external_rerun.xml",
+          "static_only": false
+        }
+      ],
+      "counting_rule": "EFE XML lists 93 suite events but contains 62 test cases plus31 subtests. Quality SFT has153 cases. Four unittest suites total29 cases. Do not call275 collected tests.",
+      "historical_reruns_excluded": "Missing EFE plan fixture and quality-SFT temporary-path custody attempts are retained provenance but superseded; final unchanged suites passed."
+    },
+    "materialized_byte_verification": {
+      "files": 120,
+      "hash_mismatches": [],
+      "all_files_are_source_or_dependency_bytes": true,
+      "full_historical_scope": "Large original run/publication artifacts are preserved by exact Git metadata; they were not all materialized or replayed."
+    },
+    "governance_review": {
+      "read": [
+        "experiments/rineya_quality_sft_v1/AGENTS.md",
+        "experiments/rineya_quality_sft_v1/README.md",
+        "experiments/rineya_quality_sft_v1/PROTOCOL.md",
+        "experiments/model_quality_gpu_v1/AGENTS.md",
+        "experiments/rineya_evidence_function_equilibrium_v1/fresh_validation/RESULT.md"
+      ],
+      "consolidation": "Current user authorizes source/history consolidation. Native gates, source/assets/banks/custody/qualification restrictions remain unchanged. No competing bank, native model, provider call, training campaign or historical replay was run."
+    },
+    "holds_retained": [
+      {
+        "branch": "codex/cheap-quality-abstention-20260929",
+        "head_sha": "351e93120c814d719b340bc4e2ddb5bb506e8b20",
+        "status": "HOLD_DAMAGED_INHERITED_JSON_BLOBS",
+        "reason": "Whole-branch integration would replace inherited valid JSON/JSONL with two confirmed damaged byte sequences. Sixteen local package tests passing does not validate those unrelated inherited data modifications."
+      },
+      {
+        "branch": "codex/cheap-quality-retrieval-20260929",
+        "head_sha": "bdc71a6d58c8c0f6353b1d3ea5291aedba55617e",
+        "status": "HOLD_MANDATORY_EXACT_TOKENIZER_FIXTURE",
+        "reason": "Ten existing tests pass, but test_native_tokenizer_exact_consumed_budgets errors because the mandatory exact tokenizer is unavailable. The test explicitly forbids a skip or approximate substitute."
+      }
+    ],
+    "limitations": [
+      "Data admission is an isolated source/history merge with two syntax checks and no standalone runtime suite.",
+      "Historical quality/efficacy/native qualification is not established or upgraded by consolidation.",
+      "Read-only review did not re-query remote branch tips or postmerge trees; root performs fresh head, parent and fulltree verification.",
+      "No incoming workflow changes; inherited workflows and their controls remain unchanged."
+    ],
+    "input_sha256": {
+      "wave3_systems.json": "e3dcfc8a9f04fd6d01c40a187167b2a70232537dbf3e0ce208d52c27a18afc7e",
+      "wave3_systems_preliminary_trees.json": "b56eb12df85230ddfdef0432444301352bdb8bbb0b452596df4c2a27d92fbf9f",
+      "wave3_systems_logs/materialized_hash_recheck.json": "1fca8b8c59a5d6004274ced60a126baf2e9fcbdcb731f4de6ad0cb3abf9aa8ad",
+      "wave2_group_b.json": "f1934ff86df34524525d451f954545fe9d66e68018e0f3235f40128f56f67664"
+    },
+    "actions": {
+      "tests_rerun": 0,
+      "project_modules_imported": 0,
+      "source_edits": 0,
+      "remote_writes": 0,
+      "branches_deleted": 0
+    }
+  }
+}

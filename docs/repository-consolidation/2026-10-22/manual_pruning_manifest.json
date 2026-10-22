@@ -1,0 +1,2371 @@
+{
+  "schema_version": 1,
+  "repository": "LUNCY579/ChatBubble",
+  "prepared_at_utc": "2026-10-22T18:19:05.545Z",
+  "status": "67_PINNED_MANUAL_CANDIDATES_PLUS_STAGING_AFTER_FINAL_DOCS_MERGE",
+  "remote_snapshot_rechecked_by_this_document": true,
+  "latest_gate_owner": "Execution receipt and manual_pruning_preflight.json",
+  "scope": "38 original preserved aliases plus 29 actually merged source names. No assistant deletions. Fifteen conditional ancestors are excluded.",
+  "source_sha256": {
+    "cleanup_manifest.json": "624f2b5ea197d1d98035e856b10aff205876737a19621ab2ddf8b28ee25a53e4",
+    "branch_registry.json": "7bcd51534294a507bea7ee91c8dd9620077849cd235341ad31071b012b218c44"
+  },
+  "baseline_count": 38,
+  "baseline_candidates": [
+    {
+      "order": 1,
+      "branch": "codex/archive-20261004/codex-cheap-quality-abstention-20260929",
+      "expected_sha": "351e93120c814d719b340bc4e2ddb5bb506e8b20",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-cheap-quality-abstention-20260929",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-cheap-quality-abstention-20260929",
+        "kind": "annotated_tag",
+        "ref_object_sha": "cc03896e385eec77bed490522ab0d45aa0ec119b",
+        "peeled_commit_sha": "351e93120c814d719b340bc4e2ddb5bb506e8b20",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-cheap-quality-abstention-20260929",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-cheap-quality-abstention-20260929: https://github.com/LUNCY579/ChatBubble.git 351e93120c814d719b340bc4e2ddb5bb506e8b20:refs/heads/codex/archive-20261004/codex-cheap-quality-abstention-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/cheap-quality-abstention-20260929"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 2,
+      "branch": "codex/archive-20261004/codex-cheap-quality-complementarity-20260929",
+      "expected_sha": "63ff0f6d5cef6c4779ac173a95f9e8c703b2b949",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-cheap-quality-complementarity-20260929",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-cheap-quality-complementarity-20260929",
+        "kind": "annotated_tag",
+        "ref_object_sha": "bcad0a72f7c1a16b738b403608a390ef2c556fc9",
+        "peeled_commit_sha": "63ff0f6d5cef6c4779ac173a95f9e8c703b2b949",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-cheap-quality-complementarity-20260929",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-cheap-quality-complementarity-20260929: https://github.com/LUNCY579/ChatBubble.git 63ff0f6d5cef6c4779ac173a95f9e8c703b2b949:refs/heads/codex/archive-20261004/codex-cheap-quality-complementarity-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/cheap-quality-complementarity-20260929"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 3,
+      "branch": "codex/archive-20261004/codex-cheap-quality-retrieval-20260929",
+      "expected_sha": "bdc71a6d58c8c0f6353b1d3ea5291aedba55617e",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-cheap-quality-retrieval-20260929",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-cheap-quality-retrieval-20260929",
+        "kind": "annotated_tag",
+        "ref_object_sha": "3374ea828fe1976478dd5c50becc2339b8223c71",
+        "peeled_commit_sha": "bdc71a6d58c8c0f6353b1d3ea5291aedba55617e",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-cheap-quality-retrieval-20260929",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-cheap-quality-retrieval-20260929: https://github.com/LUNCY579/ChatBubble.git bdc71a6d58c8c0f6353b1d3ea5291aedba55617e:refs/heads/codex/archive-20261004/codex-cheap-quality-retrieval-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/cheap-quality-retrieval-20260929"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 4,
+      "branch": "codex/archive-20261004/codex-cheap-quality-shortcuts-20260929",
+      "expected_sha": "97081cb9cb9af1f7d1be5ced74c788b8b5f89326",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-cheap-quality-shortcuts-20260929",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-cheap-quality-shortcuts-20260929",
+        "kind": "annotated_tag",
+        "ref_object_sha": "95b3bcf20a92465f45f669b3157f70737bafac7b",
+        "peeled_commit_sha": "97081cb9cb9af1f7d1be5ced74c788b8b5f89326",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-cheap-quality-shortcuts-20260929",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-cheap-quality-shortcuts-20260929: https://github.com/LUNCY579/ChatBubble.git 97081cb9cb9af1f7d1be5ced74c788b8b5f89326:refs/heads/codex/archive-20261004/codex-cheap-quality-shortcuts-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/cheap-quality-shortcuts-20260929"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 5,
+      "branch": "codex/archive-20261004/codex-cheap-quality-stability-20260929",
+      "expected_sha": "996cf0ebc946ceccc9a36e0e38a5303ad8326c40",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-cheap-quality-stability-20260929",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-cheap-quality-stability-20260929",
+        "kind": "annotated_tag",
+        "ref_object_sha": "438f6c0fdbf98ffc3ba52a892beae318ee50be0e",
+        "peeled_commit_sha": "996cf0ebc946ceccc9a36e0e38a5303ad8326c40",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-cheap-quality-stability-20260929",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-cheap-quality-stability-20260929: https://github.com/LUNCY579/ChatBubble.git 996cf0ebc946ceccc9a36e0e38a5303ad8326c40:refs/heads/codex/archive-20261004/codex-cheap-quality-stability-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/cheap-quality-stability-20260929"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 6,
+      "branch": "codex/archive-20261004/codex-cheap-quality-token-fit-20260929",
+      "expected_sha": "1861a4859fbd3f4ced8215ece711c3d65186ea10",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-cheap-quality-token-fit-20260929",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-cheap-quality-token-fit-20260929",
+        "kind": "annotated_tag",
+        "ref_object_sha": "734053de013f41920c1fd8ea487a2b77d6043082",
+        "peeled_commit_sha": "1861a4859fbd3f4ced8215ece711c3d65186ea10",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-cheap-quality-token-fit-20260929",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-cheap-quality-token-fit-20260929: https://github.com/LUNCY579/ChatBubble.git 1861a4859fbd3f4ced8215ece711c3d65186ea10:refs/heads/codex/archive-20261004/codex-cheap-quality-token-fit-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/cheap-quality-token-fit-20260929"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 7,
+      "branch": "codex/archive-20261004/codex-clare-phase4-scope-fail-closed-20260930",
+      "expected_sha": "c006715d82fbebfccf4e19a97ff4b149befb0b48",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-clare-phase4-scope-fail-closed-20260930",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-clare-phase4-scope-fail-closed-20260930",
+        "kind": "annotated_tag",
+        "ref_object_sha": "053683ede813692a515a6f835fe8c8594c271231",
+        "peeled_commit_sha": "c006715d82fbebfccf4e19a97ff4b149befb0b48",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-clare-phase4-scope-fail-closed-20260930",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-clare-phase4-scope-fail-closed-20260930: https://github.com/LUNCY579/ChatBubble.git c006715d82fbebfccf4e19a97ff4b149befb0b48:refs/heads/codex/archive-20261004/codex-clare-phase4-scope-fail-closed-20260930",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/clare-phase4-scope-fail-closed-20260930"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 8,
+      "branch": "codex/archive-20261004/codex-confirm002-paired-correctness-audit-20260930",
+      "expected_sha": "224233406c42d90ab30b6599303323a10c54fb0f",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-confirm002-paired-correctness-audit-20260930",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-confirm002-paired-correctness-audit-20260930",
+        "kind": "annotated_tag",
+        "ref_object_sha": "f225d71522092ea045a7d3e67394b644856ce113",
+        "peeled_commit_sha": "224233406c42d90ab30b6599303323a10c54fb0f",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-confirm002-paired-correctness-audit-20260930",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-confirm002-paired-correctness-audit-20260930: https://github.com/LUNCY579/ChatBubble.git 224233406c42d90ab30b6599303323a10c54fb0f:refs/heads/codex/archive-20261004/codex-confirm002-paired-correctness-audit-20260930",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/confirm002-paired-correctness-audit-20260930"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 9,
+      "branch": "codex/archive-20261004/codex-data-admission-001-20260930",
+      "expected_sha": "00b1ee366207a039f344724bf0acb4b2e6e35281",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-data-admission-001-20260930",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-data-admission-001-20260930",
+        "kind": "annotated_tag",
+        "ref_object_sha": "7a58b7d2afbbfbcd9ac718b95b4b3bdc57601f37",
+        "peeled_commit_sha": "00b1ee366207a039f344724bf0acb4b2e6e35281",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-data-admission-001-20260930",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-data-admission-001-20260930: https://github.com/LUNCY579/ChatBubble.git 00b1ee366207a039f344724bf0acb4b2e6e35281:refs/heads/codex/archive-20261004/codex-data-admission-001-20260930",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/data-admission-001-20260930"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 10,
+      "branch": "codex/archive-20261004/codex-mimo-artifact-stream-budget-20260930",
+      "expected_sha": "9d882d38d307c5a6a2cecb8075e9ae314ae879b3",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-artifact-stream-budget-20260930",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-artifact-stream-budget-20260930",
+        "kind": "annotated_tag",
+        "ref_object_sha": "05264a052ea2223f08f727a486cf774251d68dc6",
+        "peeled_commit_sha": "9d882d38d307c5a6a2cecb8075e9ae314ae879b3",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-mimo-artifact-stream-budget-20260930",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-mimo-artifact-stream-budget-20260930: https://github.com/LUNCY579/ChatBubble.git 9d882d38d307c5a6a2cecb8075e9ae314ae879b3:refs/heads/codex/archive-20261004/codex-mimo-artifact-stream-budget-20260930",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/mimo-artifact-stream-budget-20260930"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 11,
+      "branch": "codex/archive-20261004/codex-mimo-capture-failure-accounting-20261001",
+      "expected_sha": "07b65f3e3651788a80bcb042d0d369954fc7cd0c",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-capture-failure-accounting-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-capture-failure-accounting-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "3ee7469b523296b11af505068829e70a460f6ae5",
+        "peeled_commit_sha": "07b65f3e3651788a80bcb042d0d369954fc7cd0c",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-mimo-capture-failure-accounting-20261001",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-mimo-capture-failure-accounting-20261001: https://github.com/LUNCY579/ChatBubble.git 07b65f3e3651788a80bcb042d0d369954fc7cd0c:refs/heads/codex/archive-20261004/codex-mimo-capture-failure-accounting-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/mimo-capture-failure-accounting-20261001"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 12,
+      "branch": "codex/archive-20261004/codex-mimo-capture-fixed-input-audit-20260930",
+      "expected_sha": "bbe2343a5817e9512a408270f9215df0116625d0",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-capture-fixed-input-audit-20260930",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-capture-fixed-input-audit-20260930",
+        "kind": "annotated_tag",
+        "ref_object_sha": "307e4b4d97d7203a1af660723cf3321fea3554d0",
+        "peeled_commit_sha": "bbe2343a5817e9512a408270f9215df0116625d0",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-mimo-capture-fixed-input-audit-20260930",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-mimo-capture-fixed-input-audit-20260930: https://github.com/LUNCY579/ChatBubble.git bbe2343a5817e9512a408270f9215df0116625d0:refs/heads/codex/archive-20261004/codex-mimo-capture-fixed-input-audit-20260930",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/mimo-capture-fixed-input-audit-20260930"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 13,
+      "branch": "codex/archive-20261004/codex-mimo-exact-prefix-capture-20261001",
+      "expected_sha": "b379f727b06e075b7eaeef3e029583f146e7fe81",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-exact-prefix-capture-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-exact-prefix-capture-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "3a2bece843ce80160f39f2e4e5aa6b5cdaf7ccbd",
+        "peeled_commit_sha": "b379f727b06e075b7eaeef3e029583f146e7fe81",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-mimo-exact-prefix-capture-20261001",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-mimo-exact-prefix-capture-20261001: https://github.com/LUNCY579/ChatBubble.git b379f727b06e075b7eaeef3e029583f146e7fe81:refs/heads/codex/archive-20261004/codex-mimo-exact-prefix-capture-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/mimo-exact-prefix-capture-20261001"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 14,
+      "branch": "codex/archive-20261004/codex-mimo-job-containment-20261001",
+      "expected_sha": "f4622874de970441e9d255297a72b0b671c8bdb2",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-job-containment-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-job-containment-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "a827b7df8b5211c146b8914b41c9e91d20b9e33b",
+        "peeled_commit_sha": "f4622874de970441e9d255297a72b0b671c8bdb2",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-mimo-job-containment-20261001",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-mimo-job-containment-20261001: https://github.com/LUNCY579/ChatBubble.git f4622874de970441e9d255297a72b0b671c8bdb2:refs/heads/codex/archive-20261004/codex-mimo-job-containment-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/mimo-job-containment-20261001"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 15,
+      "branch": "codex/archive-20261004/codex-mimo-job-handle-fix-20261001",
+      "expected_sha": "863476aaf1e394a0796f4c59dcf96f0cc3793d4a",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-job-handle-fix-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-job-handle-fix-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "5d6a84bdc1627636fe52f61674be03c2be184676",
+        "peeled_commit_sha": "863476aaf1e394a0796f4c59dcf96f0cc3793d4a",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-mimo-job-handle-fix-20261001",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-mimo-job-handle-fix-20261001: https://github.com/LUNCY579/ChatBubble.git 863476aaf1e394a0796f4c59dcf96f0cc3793d4a:refs/heads/codex/archive-20261004/codex-mimo-job-handle-fix-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/mimo-job-handle-fix-20261001"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 16,
+      "branch": "codex/archive-20261004/codex-mimo-supervisor-death-cpu-20261001",
+      "expected_sha": "c42d494e751543b5fb896bbccecd16436003354d",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-supervisor-death-cpu-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-supervisor-death-cpu-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "9555444e4766baf9f7f3968697250cc7bbe7115e",
+        "peeled_commit_sha": "c42d494e751543b5fb896bbccecd16436003354d",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-mimo-supervisor-death-cpu-20261001",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-mimo-supervisor-death-cpu-20261001: https://github.com/LUNCY579/ChatBubble.git c42d494e751543b5fb896bbccecd16436003354d:refs/heads/codex/archive-20261004/codex-mimo-supervisor-death-cpu-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/mimo-supervisor-death-cpu-20261001"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 17,
+      "branch": "codex/archive-20261004/codex-mimo-suspended-job-launch-20261001",
+      "expected_sha": "44cbce50dfe85fb79a35eefee4918b2a0bffef9a",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-suspended-job-launch-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-suspended-job-launch-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "e9301a97d79b41ba4150424fac52b2b21998d689",
+        "peeled_commit_sha": "44cbce50dfe85fb79a35eefee4918b2a0bffef9a",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-mimo-suspended-job-launch-20261001",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-mimo-suspended-job-launch-20261001: https://github.com/LUNCY579/ChatBubble.git 44cbce50dfe85fb79a35eefee4918b2a0bffef9a:refs/heads/codex/archive-20261004/codex-mimo-suspended-job-launch-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/mimo-suspended-job-launch-20261001"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 18,
+      "branch": "codex/archive-20261004/codex-triskill-geometric-gapfix-20261001",
+      "expected_sha": "332b7f9beffe0c25361258c937fa481df0c68f58",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-triskill-geometric-gapfix-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-triskill-geometric-gapfix-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "29cf13529b64b6a8cc365a7c8c5f593363df0786",
+        "peeled_commit_sha": "332b7f9beffe0c25361258c937fa481df0c68f58",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-triskill-geometric-gapfix-20261001",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-triskill-geometric-gapfix-20261001: https://github.com/LUNCY579/ChatBubble.git 332b7f9beffe0c25361258c937fa481df0c68f58:refs/heads/codex/archive-20261004/codex-triskill-geometric-gapfix-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/triskill-geometric-gapfix-20261001"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 19,
+      "branch": "codex/archive-20261004/codex-triskill-geometric-pilot-20261001",
+      "expected_sha": "09a0514e1cdf8e7b1dc7960fc4a8aa2aea94cbbe",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-triskill-geometric-pilot-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-triskill-geometric-pilot-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "ea2911c57fc4aa5d1f210fbd6f4362bca415a98c",
+        "peeled_commit_sha": "09a0514e1cdf8e7b1dc7960fc4a8aa2aea94cbbe",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-triskill-geometric-pilot-20261001",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-triskill-geometric-pilot-20261001: https://github.com/LUNCY579/ChatBubble.git 09a0514e1cdf8e7b1dc7960fc4a8aa2aea94cbbe:refs/heads/codex/archive-20261004/codex-triskill-geometric-pilot-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/triskill-geometric-pilot-20261001"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 20,
+      "branch": "codex/archive-20261004/codex-triskill-stage-a",
+      "expected_sha": "ef4b4d208dfa1a603a5f5bde88a98a06c5ca81bf",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-triskill-stage-a",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-triskill-stage-a",
+        "kind": "annotated_tag",
+        "ref_object_sha": "3a031ecaef566bf2bfe35c574d20c9c44bcc7992",
+        "peeled_commit_sha": "ef4b4d208dfa1a603a5f5bde88a98a06c5ca81bf",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/codex-triskill-stage-a",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/codex-triskill-stage-a: https://github.com/LUNCY579/ChatBubble.git ef4b4d208dfa1a603a5f5bde88a98a06c5ca81bf:refs/heads/codex/archive-20261004/codex-triskill-stage-a",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "codex/triskill-stage-a"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 21,
+      "branch": "codex/archive-20261004/fma-finalize",
+      "expected_sha": "5ea07037b15471d6930347f65ead399e7b40b045",
+      "delete_ref": "refs/heads/codex/archive-20261004/fma-finalize",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/fma-finalize",
+        "kind": "annotated_tag",
+        "ref_object_sha": "bf1dccc23c76181d703895221de8be7754533d64",
+        "peeled_commit_sha": "5ea07037b15471d6930347f65ead399e7b40b045",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/fma-finalize",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/fma-finalize: https://github.com/LUNCY579/ChatBubble.git 5ea07037b15471d6930347f65ead399e7b40b045:refs/heads/codex/archive-20261004/fma-finalize",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 22,
+      "branch": "codex/archive-20261004/historical-main-snapshots-22",
+      "expected_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+      "delete_ref": "refs/heads/codex/archive-20261004/historical-main-snapshots-22",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/historical-main-snapshots",
+        "kind": "annotated_tag",
+        "ref_object_sha": "f3299697d43a9971ce15d47cf1f01130331dc0cf",
+        "peeled_commit_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/historical-main-snapshots",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/historical-main-snapshots-22: https://github.com/LUNCY579/ChatBubble.git 7d9b4fd450bc56405f6cec41459a7e83df7958ae:refs/heads/codex/archive-20261004/historical-main-snapshots-22",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 23,
+      "branch": "codex/archive-20261004/historical-main-snapshots-retained-refs-heads-fma-finalize",
+      "expected_sha": "5ea07037b15471d6930347f65ead399e7b40b045",
+      "delete_ref": "refs/heads/codex/archive-20261004/historical-main-snapshots-retained-refs-heads-fma-finalize",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/fma-finalize",
+        "kind": "annotated_tag",
+        "ref_object_sha": "bf1dccc23c76181d703895221de8be7754533d64",
+        "peeled_commit_sha": "5ea07037b15471d6930347f65ead399e7b40b045",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/fma-finalize",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/historical-main-snapshots-retained-refs-heads-fma-finalize: https://github.com/LUNCY579/ChatBubble.git 5ea07037b15471d6930347f65ead399e7b40b045:refs/heads/codex/archive-20261004/historical-main-snapshots-retained-refs-heads-fma-finalize",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 24,
+      "branch": "codex/archive-20261004/historical-main-snapshots-retained-refs-heads-research-factorized-memory-attention-v1",
+      "expected_sha": "1cce3aaa7d5975c97a21d0534e9652bf993a61f2",
+      "delete_ref": "refs/heads/codex/archive-20261004/historical-main-snapshots-retained-refs-heads-research-factorized-memory-attention-v1",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/research-factorized-memory-attention-v1",
+        "kind": "annotated_tag",
+        "ref_object_sha": "a073afdba783f95d21bf4a6b9656558d081bb495",
+        "peeled_commit_sha": "1cce3aaa7d5975c97a21d0534e9652bf993a61f2",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/research-factorized-memory-attention-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/historical-main-snapshots-retained-refs-heads-research-factorized-memory-attention-v1: https://github.com/LUNCY579/ChatBubble.git 1cce3aaa7d5975c97a21d0534e9652bf993a61f2:refs/heads/codex/archive-20261004/historical-main-snapshots-retained-refs-heads-research-factorized-memory-attention-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "research/factorized-memory-attention-v1"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 25,
+      "branch": "codex/archive-20261004/research-factorized-memory-attention-v1",
+      "expected_sha": "1cce3aaa7d5975c97a21d0534e9652bf993a61f2",
+      "delete_ref": "refs/heads/codex/archive-20261004/research-factorized-memory-attention-v1",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/research-factorized-memory-attention-v1",
+        "kind": "annotated_tag",
+        "ref_object_sha": "a073afdba783f95d21bf4a6b9656558d081bb495",
+        "peeled_commit_sha": "1cce3aaa7d5975c97a21d0534e9652bf993a61f2",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/research-factorized-memory-attention-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/research-factorized-memory-attention-v1: https://github.com/LUNCY579/ChatBubble.git 1cce3aaa7d5975c97a21d0534e9652bf993a61f2:refs/heads/codex/archive-20261004/research-factorized-memory-attention-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "research/factorized-memory-attention-v1"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 26,
+      "branch": "codex/archive-20261004/research-fwanda-delta-retention-v1-retained-refs-heads-research-fwanda-delta-retention-v1",
+      "expected_sha": "058e0a8a61c603cb175710e63003ce4a31812e34",
+      "delete_ref": "refs/heads/codex/archive-20261004/research-fwanda-delta-retention-v1-retained-refs-heads-research-fwanda-delta-retention-v1",
+      "reason": "Exact head is ancestor of tagged FWANDA tip 80fe326; compare behind_by=0 and merge_base equals candidate.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/research-fwanda-delta-retention-v1",
+        "kind": "annotated_tag",
+        "ref_object_sha": "9c5ac1714fd3ad4c5478b4571594d56d5c54593d",
+        "peeled_commit_sha": "80fe326f6620d3d084165929637230c6b3620239",
+        "proof": "ancestor_commit",
+        "ancestry": {
+          "base_sha": "058e0a8a61c603cb175710e63003ce4a31812e34",
+          "head_sha": "80fe326f6620d3d084165929637230c6b3620239",
+          "status": "ahead",
+          "head_ahead_by": 1,
+          "head_behind_by": 0,
+          "merge_base_sha": "058e0a8a61c603cb175710e63003ce4a31812e34",
+          "source_url": "https://github.com/LUNCY579/ChatBubble/compare/058e0a8a61c603cb175710e63003ce4a31812e34...80fe326f6620d3d084165929637230c6b3620239"
+        },
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/research-fwanda-delta-retention-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/research-fwanda-delta-retention-v1-retained-refs-heads-research-fwanda-delta-retention-v1: https://github.com/LUNCY579/ChatBubble.git 058e0a8a61c603cb175710e63003ce4a31812e34:refs/heads/codex/archive-20261004/research-fwanda-delta-retention-v1-retained-refs-heads-research-fwanda-delta-retention-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 27,
+      "branch": "codex/archive-20261004/research-fwanda-delta-retention-v1",
+      "expected_sha": "80fe326f6620d3d084165929637230c6b3620239",
+      "delete_ref": "refs/heads/codex/archive-20261004/research-fwanda-delta-retention-v1",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/research-fwanda-delta-retention-v1",
+        "kind": "annotated_tag",
+        "ref_object_sha": "9c5ac1714fd3ad4c5478b4571594d56d5c54593d",
+        "peeled_commit_sha": "80fe326f6620d3d084165929637230c6b3620239",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/research-fwanda-delta-retention-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/research-fwanda-delta-retention-v1: https://github.com/LUNCY579/ChatBubble.git 80fe326f6620d3d084165929637230c6b3620239:refs/heads/codex/archive-20261004/research-fwanda-delta-retention-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "research/fwanda-delta-retention-v1"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 28,
+      "branch": "codex/archive-20261004/research-jumplora-rineya-skill-isolation-v1-retained-refs-heads-research-jumplora-rineya-skill-isolation-v1",
+      "expected_sha": "2f7c0e138e27f1fc4bc0fc13dfc814fb86144921",
+      "delete_ref": "refs/heads/codex/archive-20261004/research-jumplora-rineya-skill-isolation-v1-retained-refs-heads-research-jumplora-rineya-skill-isolation-v1",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/research-jumplora-rineya-skill-isolation-v1",
+        "kind": "annotated_tag",
+        "ref_object_sha": "8a55794aac8a2d2cb1485b2f6e8c1744666dfe3d",
+        "peeled_commit_sha": "2f7c0e138e27f1fc4bc0fc13dfc814fb86144921",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/research-jumplora-rineya-skill-isolation-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/research-jumplora-rineya-skill-isolation-v1-retained-refs-heads-research-jumplora-rineya-skill-isolation-v1: https://github.com/LUNCY579/ChatBubble.git 2f7c0e138e27f1fc4bc0fc13dfc814fb86144921:refs/heads/codex/archive-20261004/research-jumplora-rineya-skill-isolation-v1-retained-refs-heads-research-jumplora-rineya-skill-isolation-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "research/jumplora-rineya-skill-isolation-v1"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 29,
+      "branch": "codex/archive-20261004/research-jumplora-rineya-skill-isolation-v1",
+      "expected_sha": "2f7c0e138e27f1fc4bc0fc13dfc814fb86144921",
+      "delete_ref": "refs/heads/codex/archive-20261004/research-jumplora-rineya-skill-isolation-v1",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/research-jumplora-rineya-skill-isolation-v1",
+        "kind": "annotated_tag",
+        "ref_object_sha": "8a55794aac8a2d2cb1485b2f6e8c1744666dfe3d",
+        "peeled_commit_sha": "2f7c0e138e27f1fc4bc0fc13dfc814fb86144921",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/research-jumplora-rineya-skill-isolation-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/research-jumplora-rineya-skill-isolation-v1: https://github.com/LUNCY579/ChatBubble.git 2f7c0e138e27f1fc4bc0fc13dfc814fb86144921:refs/heads/codex/archive-20261004/research-jumplora-rineya-skill-isolation-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "research/jumplora-rineya-skill-isolation-v1"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 30,
+      "branch": "codex/archive-20261004/retained-refs-heads-main-7d9b4fd4",
+      "expected_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+      "delete_ref": "refs/heads/codex/archive-20261004/retained-refs-heads-main-7d9b4fd4",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/historical-main-snapshots",
+        "kind": "annotated_tag",
+        "ref_object_sha": "f3299697d43a9971ce15d47cf1f01130331dc0cf",
+        "peeled_commit_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/historical-main-snapshots",
+        "git_command": "git push --force-with-lease=refs/heads/codex/archive-20261004/retained-refs-heads-main-7d9b4fd4: https://github.com/LUNCY579/ChatBubble.git 7d9b4fd450bc56405f6cec41459a7e83df7958ae:refs/heads/codex/archive-20261004/retained-refs-heads-main-7d9b4fd4",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 31,
+      "branch": "codex/rvs001-inference-pilot-20260929",
+      "expected_sha": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "delete_ref": "refs/heads/codex/rvs001-inference-pilot-20260929",
+      "reason": "Identical full commit SHA is retained by canonical keeper.",
+      "category": "PRUNE_EXACT_DUPLICATE_ALIAS",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-09/worktrees/rvs001-frozen-pilot",
+        "kind": "annotated_tag",
+        "ref_object_sha": "602305569f5ad50dfb7fd1900deca7348d1e979b",
+        "peeled_commit_sha": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-09/worktrees/rvs001-frozen-pilot",
+        "git_command": "git push --force-with-lease=refs/heads/codex/rvs001-inference-pilot-20260929: https://github.com/LUNCY579/ChatBubble.git ac9b79ac07ad650d8815c76eb4194a180f23e8d4:refs/heads/codex/rvs001-inference-pilot-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "research/rineya-verified-resampling-v1"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 32,
+      "branch": "codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "expected_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+      "delete_ref": "refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "reason": "All four aliases are direct parent of retained full worktree snapshot; preserving that snapshot preserves exact commit and all prior history.",
+      "category": "PRUNE_PARENT_SNAPSHOT_REF",
+      "preservation": {
+        "ref": "refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "kind": "branch",
+        "ref_object_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "peeled_commit_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "proof": "ancestor_commit",
+        "ancestry": {
+          "base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "head_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+          "status": "ahead",
+          "head_ahead_by": 1,
+          "head_behind_by": 0,
+          "merge_base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "source_url": "https://github.com/LUNCY579/ChatBubble/compare/5b4c22dae78f587c41575269f419087b0c7997f6...8e9e4ba9420ab3dc650d247bba36d47329b12ccd"
+        },
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "git_command": "git push --force-with-lease=refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920-ref-refs-heads-codex-dataset-retention-audit-v1: https://github.com/LUNCY579/ChatBubble.git 5b4c22dae78f587c41575269f419087b0c7997f6:refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 33,
+      "branch": "codex/worktree-save-20261002/chatbubble-binding-mixture-pilot-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "expected_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+      "delete_ref": "refs/heads/codex/worktree-save-20261002/chatbubble-binding-mixture-pilot-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "reason": "All four aliases are direct parent of retained full worktree snapshot; preserving that snapshot preserves exact commit and all prior history.",
+      "category": "PRUNE_PARENT_SNAPSHOT_REF",
+      "preservation": {
+        "ref": "refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "kind": "branch",
+        "ref_object_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "peeled_commit_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "proof": "ancestor_commit",
+        "ancestry": {
+          "base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "head_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+          "status": "ahead",
+          "head_ahead_by": 1,
+          "head_behind_by": 0,
+          "merge_base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "source_url": "https://github.com/LUNCY579/ChatBubble/compare/5b4c22dae78f587c41575269f419087b0c7997f6...8e9e4ba9420ab3dc650d247bba36d47329b12ccd"
+        },
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "git_command": "git push --force-with-lease=refs/heads/codex/worktree-save-20261002/chatbubble-binding-mixture-pilot-20260920-ref-refs-heads-codex-dataset-retention-audit-v1: https://github.com/LUNCY579/ChatBubble.git 5b4c22dae78f587c41575269f419087b0c7997f6:refs/heads/codex/worktree-save-20261002/chatbubble-binding-mixture-pilot-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 34,
+      "branch": "codex/worktree-save-20261002/chatbubble-compose-lane-20260918-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "expected_sha": "8afe9f6bc902dcb270e8121a36a2bd24e982bf87",
+      "delete_ref": "refs/heads/codex/worktree-save-20261002/chatbubble-compose-lane-20260918-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "reason": "Direct parent is preserved by retained full compose-lane worktree snapshot.",
+      "category": "PRUNE_PARENT_SNAPSHOT_REF",
+      "preservation": {
+        "ref": "refs/heads/codex/worktree-save-20261002/chatbubble-compose-lane-20260918",
+        "kind": "branch",
+        "ref_object_sha": "dc511f919ce0b57dc8b20b254ce11ae0150e5316",
+        "peeled_commit_sha": "dc511f919ce0b57dc8b20b254ce11ae0150e5316",
+        "proof": "ancestor_commit",
+        "ancestry": {
+          "base_sha": "8afe9f6bc902dcb270e8121a36a2bd24e982bf87",
+          "head_sha": "dc511f919ce0b57dc8b20b254ce11ae0150e5316",
+          "status": "ahead",
+          "head_ahead_by": 1,
+          "head_behind_by": 0,
+          "merge_base_sha": "8afe9f6bc902dcb270e8121a36a2bd24e982bf87",
+          "source_url": "https://github.com/LUNCY579/ChatBubble/compare/8afe9f6bc902dcb270e8121a36a2bd24e982bf87...dc511f919ce0b57dc8b20b254ce11ae0150e5316"
+        },
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/codex/worktree-save-20261002/chatbubble-compose-lane-20260918",
+        "git_command": "git push --force-with-lease=refs/heads/codex/worktree-save-20261002/chatbubble-compose-lane-20260918-ref-refs-heads-codex-dataset-retention-audit-v1: https://github.com/LUNCY579/ChatBubble.git 8afe9f6bc902dcb270e8121a36a2bd24e982bf87:refs/heads/codex/worktree-save-20261002/chatbubble-compose-lane-20260918-ref-refs-heads-codex-dataset-retention-audit-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 35,
+      "branch": "codex/worktree-save-20261002/chatbubble-retention-doselora-resume-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "expected_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+      "delete_ref": "refs/heads/codex/worktree-save-20261002/chatbubble-retention-doselora-resume-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "reason": "All four aliases are direct parent of retained full worktree snapshot; preserving that snapshot preserves exact commit and all prior history.",
+      "category": "PRUNE_PARENT_SNAPSHOT_REF",
+      "preservation": {
+        "ref": "refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "kind": "branch",
+        "ref_object_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "peeled_commit_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "proof": "ancestor_commit",
+        "ancestry": {
+          "base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "head_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+          "status": "ahead",
+          "head_ahead_by": 1,
+          "head_behind_by": 0,
+          "merge_base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "source_url": "https://github.com/LUNCY579/ChatBubble/compare/5b4c22dae78f587c41575269f419087b0c7997f6...8e9e4ba9420ab3dc650d247bba36d47329b12ccd"
+        },
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "git_command": "git push --force-with-lease=refs/heads/codex/worktree-save-20261002/chatbubble-retention-doselora-resume-20260920-ref-refs-heads-codex-dataset-retention-audit-v1: https://github.com/LUNCY579/ChatBubble.git 5b4c22dae78f587c41575269f419087b0c7997f6:refs/heads/codex/worktree-save-20261002/chatbubble-retention-doselora-resume-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 36,
+      "branch": "codex/worktree-save-20261002/chatbubble-retention-pilot-20260917-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "expected_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+      "delete_ref": "refs/heads/codex/worktree-save-20261002/chatbubble-retention-pilot-20260917-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "reason": "All four aliases are direct parent of retained full worktree snapshot; preserving that snapshot preserves exact commit and all prior history.",
+      "category": "PRUNE_PARENT_SNAPSHOT_REF",
+      "preservation": {
+        "ref": "refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "kind": "branch",
+        "ref_object_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "peeled_commit_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "proof": "ancestor_commit",
+        "ancestry": {
+          "base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "head_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+          "status": "ahead",
+          "head_ahead_by": 1,
+          "head_behind_by": 0,
+          "merge_base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "source_url": "https://github.com/LUNCY579/ChatBubble/compare/5b4c22dae78f587c41575269f419087b0c7997f6...8e9e4ba9420ab3dc650d247bba36d47329b12ccd"
+        },
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "git_command": "git push --force-with-lease=refs/heads/codex/worktree-save-20261002/chatbubble-retention-pilot-20260917-ref-refs-heads-codex-dataset-retention-audit-v1: https://github.com/LUNCY579/ChatBubble.git 5b4c22dae78f587c41575269f419087b0c7997f6:refs/heads/codex/worktree-save-20261002/chatbubble-retention-pilot-20260917-ref-refs-heads-codex-dataset-retention-audit-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 37,
+      "branch": "fma-finalize",
+      "expected_sha": "5ea07037b15471d6930347f65ead399e7b40b045",
+      "delete_ref": "refs/heads/fma-finalize",
+      "reason": "Exact tag preserved, and candidate is ancestor of current central (behind_by=0; merge_base exact).",
+      "category": "PRUNE_ALREADY_CONTAINED_TAGGED_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/fma-finalize",
+        "kind": "annotated_tag",
+        "ref_object_sha": "bf1dccc23c76181d703895221de8be7754533d64",
+        "peeled_commit_sha": "5ea07037b15471d6930347f65ead399e7b40b045",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/2026-10-04/fma-finalize",
+        "git_command": "git push --force-with-lease=refs/heads/fma-finalize: https://github.com/LUNCY579/ChatBubble.git 5ea07037b15471d6930347f65ead399e7b40b045:refs/heads/fma-finalize",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    },
+    {
+      "order": 38,
+      "branch": "multi-reasoning-slft",
+      "expected_sha": "954a0c2637e691b493c5ac3d488653a8c1adf675",
+      "delete_ref": "refs/heads/multi-reasoning-slft",
+      "reason": "Identical full commit SHA is retained by canonical keeper.",
+      "category": "PRUNE_EXACT_DUPLICATE_ALIAS",
+      "preservation": {
+        "ref": "refs/tags/archive/Titan-Sparse/single-layer-fine-tuning",
+        "kind": "lightweight_tag",
+        "ref_object_sha": "954a0c2637e691b493c5ac3d488653a8c1adf675",
+        "peeled_commit_sha": "954a0c2637e691b493c5ac3d488653a8c1adf675",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/tags/archive/Titan-Sparse/single-layer-fine-tuning",
+        "git_command": "git push --force-with-lease=refs/heads/multi-reasoning-slft: https://github.com/LUNCY579/ChatBubble.git 954a0c2637e691b493c5ac3d488653a8c1adf675:refs/heads/multi-reasoning-slft",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      },
+      "named_equivalents_retained_in_this_baseline": [
+        "single-layer-fine-tuning"
+      ],
+      "manual_scope": "Delete only this exact branch name after matching the current head and independent preservation reference."
+    }
+  ],
+  "conditional_count": 15,
+  "conditional_candidates": [
+    {
+      "branch": "codex/comp-rs-methods-warmstart-20260930",
+      "expected_sha": "ecb6f00f58dfdf5c00df9fb901bd1a23b0bfe287",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/codex/ce8-reviewed-evidence-20261009",
+      "proven_keeper_checkpoint_sha": "16f57f9dc387933f3b40f4c3ea596c5e530ec9c3",
+      "proof": {
+        "source_branch": "codex/comp-rs-methods-warmstart-20260930",
+        "target_branch": "codex/ce8-reviewed-evidence-20261009",
+        "source_sha": "ecb6f00f58dfdf5c00df9fb901bd1a23b0bfe287",
+        "target_sha": "16f57f9dc387933f3b40f4c3ea596c5e530ec9c3",
+        "status": "ahead",
+        "ahead_by": 45,
+        "behind_by": 0,
+        "merge_base_sha": "ecb6f00f58dfdf5c00df9fb901bd1a23b0bfe287",
+        "file_count": 300,
+        "files_capped": true
+      },
+      "existing_exact_tag_from_original_audit": null,
+      "tag_requirement": "No exact-tip tag is pinned by this baseline; verify an existing tag or create one before retirement.",
+      "consumer_handoff": "Record the COMP-RS/CE8 native-host and method/amendment handoff to codex/ce8-reviewed-evidence-20261009; update branch-based warmstart, S1/native-Q1 and qualification references while preserving their original SHA-bound evidence.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/ecb6f00f58dfdf5c00df9fb901bd1a23b0bfe287",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...ecb6f00f58dfdf5c00df9fb901bd1a23b0bfe287",
+        "https://github.com/LUNCY579/ChatBubble/compare/ecb6f00f58dfdf5c00df9fb901bd1a23b0bfe287...16f57f9dc387933f3b40f4c3ea596c5e530ec9c3"
+      ]
+    },
+    {
+      "branch": "codex/comp-rs-native-q1",
+      "expected_sha": "8f6afcf5ad8a06f6267b3c86c2039d0d54acf679",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/codex/ce8-reviewed-evidence-20261009",
+      "proven_keeper_checkpoint_sha": "16f57f9dc387933f3b40f4c3ea596c5e530ec9c3",
+      "proof": {
+        "source_branch": "codex/comp-rs-native-q1",
+        "target_branch": "codex/ce8-reviewed-evidence-20261009",
+        "source_sha": "8f6afcf5ad8a06f6267b3c86c2039d0d54acf679",
+        "target_sha": "16f57f9dc387933f3b40f4c3ea596c5e530ec9c3",
+        "status": "ahead",
+        "ahead_by": 58,
+        "behind_by": 0,
+        "merge_base_sha": "8f6afcf5ad8a06f6267b3c86c2039d0d54acf679",
+        "file_count": 300,
+        "files_capped": true
+      },
+      "existing_exact_tag_from_original_audit": null,
+      "tag_requirement": "No exact-tip tag is pinned by this baseline; verify an existing tag or create one before retirement.",
+      "consumer_handoff": "Record the COMP-RS/CE8 native-host and method/amendment handoff to codex/ce8-reviewed-evidence-20261009; update branch-based warmstart, S1/native-Q1 and qualification references while preserving their original SHA-bound evidence.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/8f6afcf5ad8a06f6267b3c86c2039d0d54acf679",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...8f6afcf5ad8a06f6267b3c86c2039d0d54acf679",
+        "https://github.com/LUNCY579/ChatBubble/compare/8f6afcf5ad8a06f6267b3c86c2039d0d54acf679...16f57f9dc387933f3b40f4c3ea596c5e530ec9c3"
+      ]
+    },
+    {
+      "branch": "codex/comp-rs-s1-dev-20260930",
+      "expected_sha": "eee2e0bd31854ea207b231d65eedd4c1c94e1011",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/codex/ce8-reviewed-evidence-20261009",
+      "proven_keeper_checkpoint_sha": "16f57f9dc387933f3b40f4c3ea596c5e530ec9c3",
+      "proof": {
+        "source_branch": "codex/comp-rs-s1-dev-20260930",
+        "target_branch": "codex/ce8-reviewed-evidence-20261009",
+        "source_sha": "eee2e0bd31854ea207b231d65eedd4c1c94e1011",
+        "target_sha": "16f57f9dc387933f3b40f4c3ea596c5e530ec9c3",
+        "status": "ahead",
+        "ahead_by": 3,
+        "behind_by": 0,
+        "merge_base_sha": "eee2e0bd31854ea207b231d65eedd4c1c94e1011",
+        "file_count": 300,
+        "files_capped": true
+      },
+      "existing_exact_tag_from_original_audit": null,
+      "tag_requirement": "No exact-tip tag is pinned by this baseline; verify an existing tag or create one before retirement.",
+      "consumer_handoff": "Record the COMP-RS/CE8 native-host and method/amendment handoff to codex/ce8-reviewed-evidence-20261009; update branch-based warmstart, S1/native-Q1 and qualification references while preserving their original SHA-bound evidence.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/eee2e0bd31854ea207b231d65eedd4c1c94e1011",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...eee2e0bd31854ea207b231d65eedd4c1c94e1011",
+        "https://github.com/LUNCY579/ChatBubble/compare/eee2e0bd31854ea207b231d65eedd4c1c94e1011...16f57f9dc387933f3b40f4c3ea596c5e530ec9c3"
+      ]
+    },
+    {
+      "branch": "codex/dataset-retention-audit-v1",
+      "expected_sha": "07e53b0e7d8ed1dd3243493b3a25b97b3988f4fd",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/research/post-training-mimo-centralized-v1",
+      "proven_keeper_checkpoint_sha": "bf2567da46a310aa39f590cc6c73c99961d2ae90",
+      "proof": {
+        "status": "behind",
+        "ahead_by": 0,
+        "behind_by": 345,
+        "merge_base_sha": "07e53b0e7d8ed1dd3243493b3a25b97b3988f4fd",
+        "returned_file_count": 0,
+        "files_may_be_truncated": false,
+        "status_counts_returned": {},
+        "orientation": "base=central, head=candidate branch"
+      },
+      "existing_exact_tag_from_original_audit": null,
+      "tag_requirement": "No exact-tip tag is pinned by this baseline; verify an existing tag or create one before retirement.",
+      "consumer_handoff": "Update CONTINUATION.md instructions that name this branch to the retained central ref or pinned archive tag. Hand off retention/CED checkout and launcher consumers; keep the full worktree snapshots and their additional evidence.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/07e53b0e7d8ed1dd3243493b3a25b97b3988f4fd",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...07e53b0e7d8ed1dd3243493b3a25b97b3988f4fd"
+      ]
+    },
+    {
+      "branch": "codex/mimo-job-handle-fix-20261001",
+      "expected_sha": "863476aaf1e394a0796f4c59dcf96f0cc3793d4a",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/codex/mimo-supervisor-death-review-fix-20261002",
+      "proven_keeper_checkpoint_sha": "8424bfc46398113757157f763fa6e8a9821d11fc",
+      "proof": {
+        "source_branch": "codex/mimo-job-handle-fix-20261001",
+        "target_branch": "codex/mimo-supervisor-death-review-fix-20261002",
+        "source_sha": "863476aaf1e394a0796f4c59dcf96f0cc3793d4a",
+        "target_sha": "8424bfc46398113757157f763fa6e8a9821d11fc",
+        "status": "ahead",
+        "ahead_by": 6,
+        "behind_by": 0,
+        "merge_base_sha": "863476aaf1e394a0796f4c59dcf96f0cc3793d4a",
+        "file_count": 20,
+        "files_capped": false
+      },
+      "existing_exact_tag_from_original_audit": "refs/tags/archive/2026-10-04/codex-mimo-job-handle-fix-20261001",
+      "tag_requirement": "Freshly verify this exact tag and peeled source commit.",
+      "consumer_handoff": "Hand off Windows job-handle/supervisor launchers, checkout instructions and any running native supervisor to the retained review-fix branch. Keep original containment/failure receipts and the existing exact tag.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/863476aaf1e394a0796f4c59dcf96f0cc3793d4a",
+        "https://api.github.com/repos/LUNCY579/ChatBubble/branches?per_page=100&page=1",
+        "https://api.github.com/repos/LUNCY579/ChatBubble/git/tags/5d6a84bdc1627636fe52f61674be03c2be184676",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...863476aaf1e394a0796f4c59dcf96f0cc3793d4a",
+        "https://github.com/LUNCY579/ChatBubble/compare/863476aaf1e394a0796f4c59dcf96f0cc3793d4a...8424bfc46398113757157f763fa6e8a9821d11fc"
+      ]
+    },
+    {
+      "branch": "codex/mrs-phase2-dataset-selection-v1",
+      "expected_sha": "a4a250338e85442b3762e9c5f0a620ee803c9969",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/research/rineya-reasoning-corpus-v1",
+      "proven_keeper_checkpoint_sha": "1f91ddcf124beb9b56f43767141d01cf59ccf9e7",
+      "proof": {
+        "source_branch": "codex/mrs-phase2-dataset-selection-v1",
+        "target_branch": "research/rineya-reasoning-corpus-v1",
+        "source_sha": "a4a250338e85442b3762e9c5f0a620ee803c9969",
+        "target_sha": "1f91ddcf124beb9b56f43767141d01cf59ccf9e7",
+        "status": "ahead",
+        "ahead_by": 14,
+        "behind_by": 0,
+        "merge_base_sha": "a4a250338e85442b3762e9c5f0a620ee803c9969",
+        "file_count": 300,
+        "files_capped": true
+      },
+      "existing_exact_tag_from_original_audit": null,
+      "tag_requirement": "No exact-tip tag is pinned by this baseline; verify an existing tag or create one before retirement.",
+      "consumer_handoff": "Hand off dataset-selection, format-probe and corpus-index consumers to research/rineya-reasoning-corpus-v1; preserve exact dataset/source revisions and split-custody receipts.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/a4a250338e85442b3762e9c5f0a620ee803c9969",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...a4a250338e85442b3762e9c5f0a620ee803c9969",
+        "https://github.com/LUNCY579/ChatBubble/compare/a4a250338e85442b3762e9c5f0a620ee803c9969...1f91ddcf124beb9b56f43767141d01cf59ccf9e7"
+      ]
+    },
+    {
+      "branch": "codex/triskill-geometric-gapfix-20261001",
+      "expected_sha": "332b7f9beffe0c25361258c937fa481df0c68f58",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/research/triskill-geo001-parentq",
+      "proven_keeper_checkpoint_sha": "ae026104a0ba42ec44f9c2aa4db8920d161212f1",
+      "proof": {
+        "source_branch": "codex/triskill-geometric-gapfix-20261001",
+        "target_branch": "research/triskill-geo001-parentq",
+        "source_sha": "332b7f9beffe0c25361258c937fa481df0c68f58",
+        "target_sha": "ae026104a0ba42ec44f9c2aa4db8920d161212f1",
+        "status": "ahead",
+        "ahead_by": 5,
+        "behind_by": 0,
+        "merge_base_sha": "332b7f9beffe0c25361258c937fa481df0c68f58",
+        "file_count": 300,
+        "files_capped": true
+      },
+      "existing_exact_tag_from_original_audit": "refs/tags/archive/2026-10-04/codex-triskill-geometric-gapfix-20261001",
+      "tag_requirement": "Freshly verify this exact tag and peeled source commit.",
+      "consumer_handoff": "Hand off geometric pilot/gapfix parent-selection and qualification consumers to research/triskill-geo001-parentq; preserve the original controls, parent identities and native-host evidence.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/332b7f9beffe0c25361258c937fa481df0c68f58",
+        "https://api.github.com/repos/LUNCY579/ChatBubble/branches?per_page=100&page=1",
+        "https://api.github.com/repos/LUNCY579/ChatBubble/git/tags/29cf13529b64b6a8cc365a7c8c5f593363df0786",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...332b7f9beffe0c25361258c937fa481df0c68f58",
+        "https://github.com/LUNCY579/ChatBubble/compare/332b7f9beffe0c25361258c937fa481df0c68f58...ae026104a0ba42ec44f9c2aa4db8920d161212f1"
+      ]
+    },
+    {
+      "branch": "codex/triskill-geometric-pilot-20261001",
+      "expected_sha": "09a0514e1cdf8e7b1dc7960fc4a8aa2aea94cbbe",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/research/triskill-geo001-parentq",
+      "proven_keeper_checkpoint_sha": "ae026104a0ba42ec44f9c2aa4db8920d161212f1",
+      "proof": {
+        "source_branch": "codex/triskill-geometric-pilot-20261001",
+        "target_branch": "research/triskill-geo001-parentq",
+        "source_sha": "09a0514e1cdf8e7b1dc7960fc4a8aa2aea94cbbe",
+        "target_sha": "ae026104a0ba42ec44f9c2aa4db8920d161212f1",
+        "status": "ahead",
+        "ahead_by": 8,
+        "behind_by": 0,
+        "merge_base_sha": "09a0514e1cdf8e7b1dc7960fc4a8aa2aea94cbbe",
+        "file_count": 300,
+        "files_capped": true
+      },
+      "existing_exact_tag_from_original_audit": "refs/tags/archive/2026-10-04/codex-triskill-geometric-pilot-20261001",
+      "tag_requirement": "Freshly verify this exact tag and peeled source commit.",
+      "consumer_handoff": "Hand off geometric pilot/gapfix parent-selection and qualification consumers to research/triskill-geo001-parentq; preserve the original controls, parent identities and native-host evidence.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/09a0514e1cdf8e7b1dc7960fc4a8aa2aea94cbbe",
+        "https://api.github.com/repos/LUNCY579/ChatBubble/branches?per_page=100&page=1",
+        "https://api.github.com/repos/LUNCY579/ChatBubble/git/tags/ea2911c57fc4aa5d1f210fbd6f4362bca415a98c",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...09a0514e1cdf8e7b1dc7960fc4a8aa2aea94cbbe",
+        "https://github.com/LUNCY579/ChatBubble/compare/09a0514e1cdf8e7b1dc7960fc4a8aa2aea94cbbe...ae026104a0ba42ec44f9c2aa4db8920d161212f1"
+      ]
+    },
+    {
+      "branch": "research/comp-rs-001-amendment-1",
+      "expected_sha": "48efd7d147ef472fc9efffa6b9f8c873fa0ed51d",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/codex/ce8-reviewed-evidence-20261009",
+      "proven_keeper_checkpoint_sha": "16f57f9dc387933f3b40f4c3ea596c5e530ec9c3",
+      "proof": {
+        "source_branch": "research/comp-rs-001-amendment-1",
+        "target_branch": "codex/ce8-reviewed-evidence-20261009",
+        "source_sha": "48efd7d147ef472fc9efffa6b9f8c873fa0ed51d",
+        "target_sha": "16f57f9dc387933f3b40f4c3ea596c5e530ec9c3",
+        "status": "ahead",
+        "ahead_by": 49,
+        "behind_by": 0,
+        "merge_base_sha": "48efd7d147ef472fc9efffa6b9f8c873fa0ed51d",
+        "file_count": 300,
+        "files_capped": true
+      },
+      "existing_exact_tag_from_original_audit": null,
+      "tag_requirement": "No exact-tip tag is pinned by this baseline; verify an existing tag or create one before retirement.",
+      "consumer_handoff": "Record the COMP-RS/CE8 native-host and method/amendment handoff to codex/ce8-reviewed-evidence-20261009; update branch-based warmstart, S1/native-Q1 and qualification references while preserving their original SHA-bound evidence.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/48efd7d147ef472fc9efffa6b9f8c873fa0ed51d",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...48efd7d147ef472fc9efffa6b9f8c873fa0ed51d",
+        "https://github.com/LUNCY579/ChatBubble/compare/48efd7d147ef472fc9efffa6b9f8c873fa0ed51d...16f57f9dc387933f3b40f4c3ea596c5e530ec9c3"
+      ]
+    },
+    {
+      "branch": "research/jumplora-rineya-skill-isolation-v1",
+      "expected_sha": "2f7c0e138e27f1fc4bc0fc13dfc814fb86144921",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/research/post-training-mimo-centralized-v1",
+      "proven_keeper_checkpoint_sha": "bf2567da46a310aa39f590cc6c73c99961d2ae90",
+      "proof": {
+        "status": "behind",
+        "ahead_by": 0,
+        "behind_by": 582,
+        "merge_base_sha": "2f7c0e138e27f1fc4bc0fc13dfc814fb86144921",
+        "returned_file_count": 0,
+        "files_may_be_truncated": false,
+        "status_counts_returned": {},
+        "orientation": "base=central, head=candidate branch"
+      },
+      "existing_exact_tag_from_original_audit": "refs/tags/archive/2026-10-04/research-jumplora-rineya-skill-isolation-v1",
+      "tag_requirement": "Freshly verify this exact tag and peeled source commit.",
+      "consumer_handoff": "Move any JumpLoRA adapter-registry, skill-isolation launcher and qualification-manifest branch lookups to central or the exact archive tag; retain historical adapter/source bindings.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/2f7c0e138e27f1fc4bc0fc13dfc814fb86144921",
+        "https://api.github.com/repos/LUNCY579/ChatBubble/branches?per_page=100&page=2",
+        "https://api.github.com/repos/LUNCY579/ChatBubble/git/tags/8a55794aac8a2d2cb1485b2f6e8c1744666dfe3d",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...2f7c0e138e27f1fc4bc0fc13dfc814fb86144921"
+      ]
+    },
+    {
+      "branch": "research/maxrl-comp002-pretraining-qualification-v1",
+      "expected_sha": "21532b765269b19e6aabf8d596e7409be51b37ea",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/research/post-training-mimo-centralized-v1",
+      "proven_keeper_checkpoint_sha": "bf2567da46a310aa39f590cc6c73c99961d2ae90",
+      "proof": {
+        "status": "behind",
+        "ahead_by": 0,
+        "behind_by": 579,
+        "merge_base_sha": "21532b765269b19e6aabf8d596e7409be51b37ea",
+        "returned_file_count": 0,
+        "files_may_be_truncated": false,
+        "status_counts_returned": {},
+        "orientation": "base=central, head=candidate branch"
+      },
+      "existing_exact_tag_from_original_audit": null,
+      "tag_requirement": "No exact-tip tag is pinned by this baseline; verify an existing tag or create one before retirement.",
+      "consumer_handoff": "Hand off COMP-002 qualification and CE8/COMP-RS baseline consumers to central or the exact archive tag; preserve original baseline identity, controls and qualification receipts.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/21532b765269b19e6aabf8d596e7409be51b37ea",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...21532b765269b19e6aabf8d596e7409be51b37ea"
+      ]
+    },
+    {
+      "branch": "research/mrs-format-probe-v1",
+      "expected_sha": "6f66caba3d38f0b779311f6bfd3ebe1704a8f071",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/research/rineya-reasoning-corpus-v1",
+      "proven_keeper_checkpoint_sha": "1f91ddcf124beb9b56f43767141d01cf59ccf9e7",
+      "proof": {
+        "source_branch": "research/mrs-format-probe-v1",
+        "target_branch": "research/rineya-reasoning-corpus-v1",
+        "source_sha": "6f66caba3d38f0b779311f6bfd3ebe1704a8f071",
+        "target_sha": "1f91ddcf124beb9b56f43767141d01cf59ccf9e7",
+        "status": "ahead",
+        "ahead_by": 9,
+        "behind_by": 0,
+        "merge_base_sha": "6f66caba3d38f0b779311f6bfd3ebe1704a8f071",
+        "file_count": 300,
+        "files_capped": true
+      },
+      "existing_exact_tag_from_original_audit": null,
+      "tag_requirement": "No exact-tip tag is pinned by this baseline; verify an existing tag or create one before retirement.",
+      "consumer_handoff": "Hand off dataset-selection, format-probe and corpus-index consumers to research/rineya-reasoning-corpus-v1; preserve exact dataset/source revisions and split-custody receipts.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/6f66caba3d38f0b779311f6bfd3ebe1704a8f071",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...6f66caba3d38f0b779311f6bfd3ebe1704a8f071",
+        "https://github.com/LUNCY579/ChatBubble/compare/6f66caba3d38f0b779311f6bfd3ebe1704a8f071...1f91ddcf124beb9b56f43767141d01cf59ccf9e7"
+      ]
+    },
+    {
+      "branch": "research/titan-clare-sparse-composable-skills-v1-claude",
+      "expected_sha": "d5fd2c2a4b196a87fc43e076c984e19b13fdcb6f",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/codex/clare-phase4-scope-fail-closed-20260930",
+      "proven_keeper_checkpoint_sha": "c006715d82fbebfccf4e19a97ff4b149befb0b48",
+      "proof": {
+        "source_branch": "research/titan-clare-sparse-composable-skills-v1-claude",
+        "target_branch": "codex/clare-phase4-scope-fail-closed-20260930",
+        "source_sha": "d5fd2c2a4b196a87fc43e076c984e19b13fdcb6f",
+        "target_sha": "c006715d82fbebfccf4e19a97ff4b149befb0b48",
+        "status": "ahead",
+        "ahead_by": 2,
+        "behind_by": 0,
+        "merge_base_sha": "d5fd2c2a4b196a87fc43e076c984e19b13fdcb6f",
+        "file_count": 300,
+        "files_capped": true
+      },
+      "existing_exact_tag_from_original_audit": null,
+      "tag_requirement": "No exact-tip tag is pinned by this baseline; verify an existing tag or create one before retirement.",
+      "consumer_handoff": "Hand off CLARE phase/qualification entry points to the retained fail-closed successor or exact tag. The successor is scope-stripped: this retirement does not approve a wholesale merge into central.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/d5fd2c2a4b196a87fc43e076c984e19b13fdcb6f",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...d5fd2c2a4b196a87fc43e076c984e19b13fdcb6f",
+        "https://github.com/LUNCY579/ChatBubble/compare/d5fd2c2a4b196a87fc43e076c984e19b13fdcb6f...c006715d82fbebfccf4e19a97ff4b149befb0b48"
+      ]
+    },
+    {
+      "branch": "research/titan-opallo-exact-endpoint-v3",
+      "expected_sha": "016da519cc685c0aae31782b9460a24b6328605a",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/research/post-training-mimo-centralized-v1",
+      "proven_keeper_checkpoint_sha": "bf2567da46a310aa39f590cc6c73c99961d2ae90",
+      "proof": {
+        "status": "behind",
+        "ahead_by": 0,
+        "behind_by": 566,
+        "merge_base_sha": "016da519cc685c0aae31782b9460a24b6328605a",
+        "returned_file_count": 0,
+        "files_may_be_truncated": false,
+        "status_counts_returned": {},
+        "orientation": "base=central, head=candidate branch"
+      },
+      "existing_exact_tag_from_original_audit": null,
+      "tag_requirement": "No exact-tip tag is pinned by this baseline; verify an existing tag or create one before retirement.",
+      "consumer_handoff": "Hand off Opallo collector, supervisor and exact-endpoint qualification consumers to central or the exact archive tag; preserve endpoint/source identity and native-host receipts.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/016da519cc685c0aae31782b9460a24b6328605a",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...016da519cc685c0aae31782b9460a24b6328605a"
+      ]
+    },
+    {
+      "branch": "research/rineya-small-vocab-depth-distill-v1",
+      "expected_sha": "52430ac6c5b74f1bad5f06e9227af9959595ff0f",
+      "status": "CONDITIONAL_NOT_READY_FOR_DELETION",
+      "keeper_ref": "refs/heads/research/post-training-mimo-centralized-v1",
+      "proven_keeper_checkpoint_sha": "bf2567da46a310aa39f590cc6c73c99961d2ae90",
+      "proof": {
+        "orientation": "base=central, head=candidate branch",
+        "status": "behind",
+        "ahead_by": 0,
+        "behind_by": 305,
+        "merge_base_sha": "52430ac6c5b74f1bad5f06e9227af9959595ff0f"
+      },
+      "existing_exact_tag_from_original_audit": null,
+      "tag_requirement": "No exact-tip tag is pinned by this baseline; verify an existing tag or create one before retirement.",
+      "consumer_handoff": "Verify an exact-tip archive tag, then update small-vocabulary/depth-distillation launchers and model-qualification references to central or that tag; preserve the historical checkpoint bindings.",
+      "required_gates": [
+        "Keep the named successor and verify the source remains its ancestor at execution time.",
+        "Verify or establish an exact-tip archive tag and a missing-ref-only restoration command for this source SHA.",
+        "Resolve branch-name references in launchers, CI, worktree instructions and checkpoint/qualification manifests; record any native-host or running-process handoff.",
+        "Verify no open PR uses the old branch as head or base, no protection/default restriction applies, and the branch head still matches; record a separate retirement receipt."
+      ],
+      "proof_links": [
+        "https://github.com/LUNCY579/ChatBubble/commit/52430ac6c5b74f1bad5f06e9227af9959595ff0f",
+        "https://github.com/LUNCY579/ChatBubble/tree/52430ac6c5b74f1bad5f06e9227af9959595ff0f",
+        "https://github.com/LUNCY579/ChatBubble/compare/bf2567da46a310aa39f590cc6c73c99961d2ae90...52430ac6c5b74f1bad5f06e9227af9959595ff0f"
+      ]
+    }
+  ],
+  "keep": {
+    "durable_named_branches": [
+      "main",
+      "post-training-Mimo",
+      "research/post-training-mimo-centralized-v1",
+      "research/rineya-centralized-reasoning-system-v1"
+    ],
+    "untagged_historical_snapshots": [
+      {
+        "branch": "codex/archive-20261004/historical-main-snapshots-24",
+        "expected_sha": "6b539d9abf3a71e0c60c7b8342a3c79871205f0a",
+        "reason": "Unique archive merge commit is two commits beyond historical main and diverges from both current main and central; historical-main archive tag points to its ancestor, not this tip."
+      },
+      {
+        "branch": "codex/archive-20261004/historical-main-snapshots-27",
+        "expected_sha": "4f273e4efc443d422ed5c151bb00938d7fa65ccb",
+        "reason": "Unique archive merge commit is two commits beyond historical main and diverges from both current main and central; historical-main archive tag points to its ancestor, not this tip."
+      }
+    ],
+    "full_worktree_snapshots": [
+      {
+        "branch": "codex/worktree-save-20261002/chat-bubble-rineya-retrofit",
+        "expected_sha": "6647eabf3bac9c3f08fce9dfa4998cc07bac3d16",
+        "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+      },
+      {
+        "branch": "codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "expected_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+      },
+      {
+        "branch": "codex/worktree-save-20261002/chatbubble-binding-mixture-pilot-20260920",
+        "expected_sha": "f0a32c916a935852017d62846b46b080deed5c59",
+        "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+      },
+      {
+        "branch": "codex/worktree-save-20261002/chatbubble-ced-native-loader-qualification",
+        "expected_sha": "840714fa269db8d5d3382b00b0aaf302b3bf1bf4",
+        "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+      },
+      {
+        "branch": "codex/worktree-save-20261002/chatbubble-compose-lane-20260918",
+        "expected_sha": "dc511f919ce0b57dc8b20b254ce11ae0150e5316",
+        "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+      },
+      {
+        "branch": "codex/worktree-save-20261002/chatbubble-cross-scale",
+        "expected_sha": "174ee4fecd7a69b3746d8c2e6107220685047dc9",
+        "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+      },
+      {
+        "branch": "codex/worktree-save-20261002/chatbubble-dmrf",
+        "expected_sha": "1e67cef6f3b9a900ed6acfbc0df185d9599c1a4c",
+        "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+      },
+      {
+        "branch": "codex/worktree-save-20261002/chatbubble-dose-param",
+        "expected_sha": "40bfac02c8bdf547bcfd7fdec3684c4918613dd7",
+        "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+      },
+      {
+        "branch": "codex/worktree-save-20261002/chatbubble-mrs-phase2-dataset-selection-v1",
+        "expected_sha": "9cbc48031dd52789f3e136b464a5cd9adb60e2b8",
+        "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+      },
+      {
+        "branch": "codex/worktree-save-20261002/chatbubble-retention-doselora-resume-20260920",
+        "expected_sha": "621d09ccccd82f7f16d2c13eb4c5b70643e5c961",
+        "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+      },
+      {
+        "branch": "codex/worktree-save-20261002/chatbubble-retention-pilot-20260917",
+        "expected_sha": "fae9f3fed9a1387400e35b721c708b87cda27262",
+        "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+      },
+      {
+        "branch": "codex/worktree-save-20261002/chatbubble-slft",
+        "expected_sha": "7f34ce84ae1ccf1b6ab7b9b5512ffe99468791ca",
+        "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+      },
+      {
+        "branch": "codex/worktree-save-20261002/detached-crs-native-desktop-v2",
+        "expected_sha": "f9e5e11997bc7e23bdb0378574fe447dc3c3ee8b",
+        "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+      },
+      {
+        "branch": "codex/worktree-save-20261002/rineyabeta-supa-fwa-v1",
+        "expected_sha": "96c3931eb51c1b272951d4ddbc60b8c863c17257",
+        "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+      }
+    ],
+    "conditional_successor_branches": [
+      {
+        "branch": "codex/ce8-reviewed-evidence-20261009",
+        "audited_sha": "16f57f9dc387933f3b40f4c3ea596c5e530ec9c3"
+      },
+      {
+        "branch": "codex/clare-phase4-scope-fail-closed-20260930",
+        "audited_sha": "c006715d82fbebfccf4e19a97ff4b149befb0b48"
+      },
+      {
+        "branch": "codex/mimo-supervisor-death-review-fix-20261002",
+        "audited_sha": "8424bfc46398113757157f763fa6e8a9821d11fc"
+      },
+      {
+        "branch": "research/rineya-reasoning-corpus-v1",
+        "audited_sha": "1f91ddcf124beb9b56f43767141d01cf59ccf9e7"
+      },
+      {
+        "branch": "research/triskill-geo001-parentq",
+        "audited_sha": "ae026104a0ba42ec44f9c2aa4db8920d161212f1"
+      }
+    ],
+    "other_named_holds": [
+      {
+        "branch": "research/rineya-taps-adaptive-recurrence-v1",
+        "audited_sha": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+        "reason": "Ancestry in adaptation-loop proven, but successor introduces a large native campaign. Keep baseline named until native workflow/dependency handoff and campaign review are complete."
+      },
+      {
+        "branch": "codex/rineya-taps-adaptation-loop",
+        "audited_sha": "b36c2dabf0edea4b0edee21b77df6a593738652c",
+        "reason": "Diverged history with unique work. Preserve head; inspect complete tree and overlapping files before integration."
+      },
+      {
+        "branch": "research/tgsa-programme-ledger",
+        "audited_sha": "9427c6d57e0c142ca5844b738f4cf8dd17f7d48f",
+        "reason": "GitHub reports no common ancestor with both main and central. Link/retain the TGSA programme ledger separately; do not allow unrelated-history merge for branch-count reduction."
+      },
+      {
+        "branch": "single-layer-fine-tuning",
+        "audited_sha": "954a0c2637e691b493c5ac3d488653a8c1adf675",
+        "reason": "Retain readable original while duplicate archive aliases are removed; source/research retirement must use family-specific evidence, not age."
+      }
+    ]
+  },
+  "not_included": {
+    "conditional_ancestors": 15,
+    "held_draft_sources": [
+      "codex/cheap-quality-abstention-20260929",
+      "codex/cheap-quality-retrieval-20260929"
+    ],
+    "unresolved_source_tracks": "Keep the original registry's selective-integration, native-host, distinct-history and unique-evidence dispositions.",
+    "note": "The 38-ref cleanup_manifest.json and its executor remain immutable. The expanded manual list is not an expansion of that executor's allowlist."
+  },
+  "absorbed_count": 29,
+  "absorbed_sources": [
+    {
+      "branch": "research/deferred-diffusion-context-hci-notes-v1",
+      "expected_sha": "451ef168ce9521a538b4e31c8ab46d0009b6f5f5",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 29,
+      "merge_commit": "70a3e9185b3105ea05bd0a629373ca006c578159",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/29",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/deferred-diffusion-context-hci-notes-v1: https://github.com/LUNCY579/ChatBubble.git 451ef168ce9521a538b4e31c8ab46d0009b6f5f5:refs/heads/research/deferred-diffusion-context-hci-notes-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "codex/confirm002-paired-correctness-audit-20260930",
+      "expected_sha": "224233406c42d90ab30b6599303323a10c54fb0f",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 29,
+      "merge_commit": "7fada7dc22db5438ecbc742a741f31249e51fba6",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/29",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/confirm002-paired-correctness-audit-20260930: https://github.com/LUNCY579/ChatBubble.git 224233406c42d90ab30b6599303323a10c54fb0f:refs/heads/codex/confirm002-paired-correctness-audit-20260930",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-evidence-function-equilibrium-v1",
+      "expected_sha": "c934589026f7456352d62a83bb102c453e15519a",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 29,
+      "merge_commit": "22f62afd99771705b8977ecb8298c87b6da4b9f8",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/29",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-evidence-function-equilibrium-v1: https://github.com/LUNCY579/ChatBubble.git c934589026f7456352d62a83bb102c453e15519a:refs/heads/research/rineya-evidence-function-equilibrium-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-verified-resampling-v1",
+      "expected_sha": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 29,
+      "merge_commit": "0658a67ae42f5bffe1a3e0cd0b4b402eea825215",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/29",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-verified-resampling-v1: https://github.com/LUNCY579/ChatBubble.git ac9b79ac07ad650d8815c76eb4194a180f23e8d4:refs/heads/research/rineya-verified-resampling-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-recursive-self-rewrite-v1",
+      "expected_sha": "8d3ee140accb054273580adb4291384e0dd88e0f",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 29,
+      "merge_commit": "cd8d6c6de57f592f11fb5f3f7819930b733dc4eb",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/29",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-recursive-self-rewrite-v1: https://github.com/LUNCY579/ChatBubble.git 8d3ee140accb054273580adb4291384e0dd88e0f:refs/heads/research/rineya-recursive-self-rewrite-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-generalization-dynamics-v1",
+      "expected_sha": "7ae47a21581e15aa83e0859b880a84eb2d7dcb1d",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 29,
+      "merge_commit": "7992da4507724c9d6a549af0d56a436ec18a2671",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/29",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-generalization-dynamics-v1: https://github.com/LUNCY579/ChatBubble.git 7ae47a21581e15aa83e0859b880a84eb2d7dcb1d:refs/heads/research/rineya-generalization-dynamics-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-relative-generalization-invariance-v1",
+      "expected_sha": "53b2155b2c54137891ea98a24f9e79892e658527",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 29,
+      "merge_commit": "600b7957e43743dd0374cfc4ec4e66a89b5f5adf",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/29",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-relative-generalization-invariance-v1: https://github.com/LUNCY579/ChatBubble.git 53b2155b2c54137891ea98a24f9e79892e658527:refs/heads/research/rineya-relative-generalization-invariance-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/cross-scale-stitch-graft-framework-v1",
+      "expected_sha": "3059e576555afbeb735d79e129435c12caaf4359",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 31,
+      "merge_commit": "516d27b29afba204e9cfdd359cb52dbe85b0b692",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/31",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/cross-scale-stitch-graft-framework-v1: https://github.com/LUNCY579/ChatBubble.git 3059e576555afbeb735d79e129435c12caaf4359:refs/heads/research/cross-scale-stitch-graft-framework-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-layered-post-training-v1",
+      "expected_sha": "54f82501c14f3968a3bfdf4af0a657cbfd0b2421",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 31,
+      "merge_commit": "1659d22c9de415bacfe636803d1d7e47439f7141",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/31",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-layered-post-training-v1: https://github.com/LUNCY579/ChatBubble.git 54f82501c14f3968a3bfdf4af0a657cbfd0b2421:refs/heads/research/rineya-layered-post-training-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-tropical-verified-composition-v1",
+      "expected_sha": "3fb76cb8f7027b643293752fc08c5c288ca8b01f",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 31,
+      "merge_commit": "e4b2e1af0b1ed3366f166c23c2512a4626a9b813",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/31",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-tropical-verified-composition-v1: https://github.com/LUNCY579/ChatBubble.git 3fb76cb8f7027b643293752fc08c5c288ca8b01f:refs/heads/research/rineya-tropical-verified-composition-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-bf16-attention-gproj-v1",
+      "expected_sha": "e4e30cbff2b8e6d14f20fb2a4ee61e39361110d9",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 31,
+      "merge_commit": "665486728d60cb034f1752ffa87a5a42c142c730",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/31",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-bf16-attention-gproj-v1: https://github.com/LUNCY579/ChatBubble.git e4e30cbff2b8e6d14f20fb2a4ee61e39361110d9:refs/heads/research/rineya-bf16-attention-gproj-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-compute-depth-elasticity-v1",
+      "expected_sha": "7a7f7b60e38c18dbeda7e182daf037e993ca8afd",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 31,
+      "merge_commit": "ff222e4947cf1c17772752d96bc460a53069a25e",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/31",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-compute-depth-elasticity-v1: https://github.com/LUNCY579/ChatBubble.git 7a7f7b60e38c18dbeda7e182daf037e993ca8afd:refs/heads/research/rineya-compute-depth-elasticity-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-length-generalization-regularization-v1",
+      "expected_sha": "8b78e49fc976b86c12a4ac4e54c98cdf74aea97b",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 31,
+      "merge_commit": "02fc2783e181c83e51ee9cbeefd9b18e5294e7f1",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/31",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-length-generalization-regularization-v1: https://github.com/LUNCY579/ChatBubble.git 8b78e49fc976b86c12a4ac4e54c98cdf74aea97b:refs/heads/research/rineya-length-generalization-regularization-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-self-distillation-axes-v1",
+      "expected_sha": "bdc43afa26f00e84781307ea989a2dead5e33446",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 31,
+      "merge_commit": "df81c9bc519144a22904455159891729d1a0065b",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/31",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-self-distillation-axes-v1: https://github.com/LUNCY579/ChatBubble.git bdc43afa26f00e84781307ea989a2dead5e33446:refs/heads/research/rineya-self-distillation-axes-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-distillation-dynamics-v1",
+      "expected_sha": "98badfd919bc18866571e5d40e1cf10dd5834cff",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 31,
+      "merge_commit": "33438fc184d439afa1fc795f3dcb9c7670f0fd5d",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/31",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-distillation-dynamics-v1: https://github.com/LUNCY579/ChatBubble.git 98badfd919bc18866571e5d40e1cf10dd5834cff:refs/heads/research/rineya-distillation-dynamics-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-triadic-working-memory-v1",
+      "expected_sha": "879006c14173e987012499eb8e7a1a8df8456b14",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 31,
+      "merge_commit": "848f41cf343c0cf6b5ee9100143b3aa71e351d22",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/31",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-triadic-working-memory-v1: https://github.com/LUNCY579/ChatBubble.git 879006c14173e987012499eb8e7a1a8df8456b14:refs/heads/research/rineya-triadic-working-memory-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-useful-fixed-point-recurrence-v1",
+      "expected_sha": "f1861c85c6ba1f64b9aa72dc000bea7da1d9b8c1",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 31,
+      "merge_commit": "62be637d78212d33e600587e435d7e0add91d864",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/31",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-useful-fixed-point-recurrence-v1: https://github.com/LUNCY579/ChatBubble.git f1861c85c6ba1f64b9aa72dc000bea7da1d9b8c1:refs/heads/research/rineya-useful-fixed-point-recurrence-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-hebbian-fact-memory-v1",
+      "expected_sha": "a4f38244cb875e5f8691ce19563eb9517d5c24a8",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 31,
+      "merge_commit": "433f75022e69e6df7aad8124c71b7457a70edeb1",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/31",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-hebbian-fact-memory-v1: https://github.com/LUNCY579/ChatBubble.git a4f38244cb875e5f8691ce19563eb9517d5c24a8:refs/heads/research/rineya-hebbian-fact-memory-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-id-balancing-skill-routing-v1",
+      "expected_sha": "181e6f07a5d4c78797bfbfeea4d0abbc0a9f8e35",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 31,
+      "merge_commit": "9e1917d5f6af2ab3d3a4032a6a7ad498cdd6c79c",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/31",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-id-balancing-skill-routing-v1: https://github.com/LUNCY579/ChatBubble.git 181e6f07a5d4c78797bfbfeea4d0abbc0a9f8e35:refs/heads/research/rineya-id-balancing-skill-routing-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-recursive-self-distillation-v1",
+      "expected_sha": "54b37b17a279700ff77dec36463c5ee9625ceba5",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 31,
+      "merge_commit": "72db6b5f60af6f1257dc836fd070a04c692f6e91",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/31",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-recursive-self-distillation-v1: https://github.com/LUNCY579/ChatBubble.git 54b37b17a279700ff77dec36463c5ee9625ceba5:refs/heads/research/rineya-recursive-self-distillation-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "research/rineya-spikingbrain-hybrid-memory-v1",
+      "expected_sha": "743f62584ca1b7e4da254f5940326893fd31e8a2",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 31,
+      "merge_commit": "01f9098071578d6260f792ddd588c7b36f6eec01",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/31",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/research/rineya-spikingbrain-hybrid-memory-v1: https://github.com/LUNCY579/ChatBubble.git 743f62584ca1b7e4da254f5940326893fd31e8a2:refs/heads/research/rineya-spikingbrain-hybrid-memory-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "codex/cheap-quality-complementarity-20260929",
+      "expected_sha": "63ff0f6d5cef6c4779ac173a95f9e8c703b2b949",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 32,
+      "merge_commit": "02aa557ba1038ea74beefd7e18afcbc5d15e0cef",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/32",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/cheap-quality-complementarity-20260929: https://github.com/LUNCY579/ChatBubble.git 63ff0f6d5cef6c4779ac173a95f9e8c703b2b949:refs/heads/codex/cheap-quality-complementarity-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "codex/cheap-quality-shortcuts-20260929",
+      "expected_sha": "97081cb9cb9af1f7d1be5ced74c788b8b5f89326",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 32,
+      "merge_commit": "aa730a27bb83196df3b1f6b04a37a3067a868568",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/32",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/cheap-quality-shortcuts-20260929: https://github.com/LUNCY579/ChatBubble.git 97081cb9cb9af1f7d1be5ced74c788b8b5f89326:refs/heads/codex/cheap-quality-shortcuts-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "codex/cheap-quality-stability-20260929",
+      "expected_sha": "996cf0ebc946ceccc9a36e0e38a5303ad8326c40",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 32,
+      "merge_commit": "2c31e1fcd81f00042f9ff313a3d6333b5c534667",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/32",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/cheap-quality-stability-20260929: https://github.com/LUNCY579/ChatBubble.git 996cf0ebc946ceccc9a36e0e38a5303ad8326c40:refs/heads/codex/cheap-quality-stability-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "codex/cheap-quality-token-fit-20260929",
+      "expected_sha": "1861a4859fbd3f4ced8215ece711c3d65186ea10",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 32,
+      "merge_commit": "786bc9d931cd274c53e1e28ea43249dbe7ed38ac",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/32",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/cheap-quality-token-fit-20260929: https://github.com/LUNCY579/ChatBubble.git 1861a4859fbd3f4ced8215ece711c3d65186ea10:refs/heads/codex/cheap-quality-token-fit-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "codex/data-admission-001-20260930",
+      "expected_sha": "00b1ee366207a039f344724bf0acb4b2e6e35281",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 32,
+      "merge_commit": "8e45dbfb322131af38e47b26fe7f75b3c4cd413b",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/32",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/data-admission-001-20260930: https://github.com/LUNCY579/ChatBubble.git 00b1ee366207a039f344724bf0acb4b2e6e35281:refs/heads/codex/data-admission-001-20260930",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "codex/efe-func001-fresh-validation",
+      "expected_sha": "71cfb145be65e09ea6cbe8014c511e49170078c8",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 32,
+      "merge_commit": "5cda8f6521030c2d24e8d1b11fc87d6e4d2e67a8",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/32",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/efe-func001-fresh-validation: https://github.com/LUNCY579/ChatBubble.git 71cfb145be65e09ea6cbe8014c511e49170078c8:refs/heads/codex/efe-func001-fresh-validation",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "codex/rineya-quality-sft-v1",
+      "expected_sha": "3c099798253f03f8a92ea4ba96152da67b9eee3a",
+      "destination": "research/post-training-mimo-centralized-v1",
+      "pr": 32,
+      "merge_commit": "444a94212f4c77a042d9d8314d095ac09d392fb6",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/32",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/post-training-mimo-centralized-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/rineya-quality-sft-v1: https://github.com/LUNCY579/ChatBubble.git 3c099798253f03f8a92ea4ba96152da67b9eee3a:refs/heads/codex/rineya-quality-sft-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    },
+    {
+      "branch": "codex/crs-reviewed-publication-20261010",
+      "expected_sha": "dad11145cec7f6292a90bcc2788c5886a3b16143",
+      "destination": "research/rineya-centralized-reasoning-system-v1",
+      "pr": 30,
+      "merge_commit": "1f5e72df4d609b3af70f60b3677d09c32a36455a",
+      "status": "MANUAL_RETIREMENT_CANDIDATE_MERGED",
+      "preserved_in_commit": "1f5e72df4d609b3af70f60b3677d09c32a36455a",
+      "pr_url": "https://github.com/LUNCY579/ChatBubble/pull/30",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags https://github.com/LUNCY579/ChatBubble.git refs/heads/research/rineya-centralized-reasoning-system-v1",
+        "git_command": "git push --force-with-lease=refs/heads/codex/crs-reviewed-publication-20261010: https://github.com/LUNCY579/ChatBubble.git dad11145cec7f6292a90bcc2788c5886a3b16143:refs/heads/codex/crs-reviewed-publication-20261010",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false,
+        "lease_expected_absence": true,
+        "note": "The empty expected lease permits branch creation only while that exact remote name is absent; it prevents updating an existing branch."
+      }
+    }
+  ],
+  "total_pinned_candidates": 67,
+  "temporary_staging": {
+    "branch": "research/rineya-consolidation-20261022",
+    "status": "RETIRE_ONLY_AFTER_CONCLUDING_DOCUMENTATION_PR_MERGES",
+    "expected_head_source": "Use the concluding documentation PR head SHA; its merge into central must be verified. This file cannot contain its own future commit hash.",
+    "keep_until_then": true
+  },
+  "live_observation": "2026-10-22T18:15:28.676Z",
+  "live_count": 150,
+  "projected_count_after_all_68": 82,
+  "blocked_sources": [
+    {
+      "branch": "codex/cheap-quality-abstention-20260929",
+      "head": "351e93120c814d719b340bc4e2ddb5bb506e8b20",
+      "pr": 33,
+      "url": "https://github.com/LUNCY579/ChatBubble/pull/33",
+      "status": "DRAFT_BLOCKED",
+      "reason": "Whole-branch integration would replace inherited valid JSON/JSONL with two confirmed damaged byte sequences. Sixteen local package tests passing does not validate those unrelated inherited data modifications."
+    },
+    {
+      "branch": "codex/cheap-quality-retrieval-20260929",
+      "head": "bdc71a6d58c8c0f6353b1d3ea5291aedba55617e",
+      "pr": 34,
+      "url": "https://github.com/LUNCY579/ChatBubble/pull/34",
+      "status": "DRAFT_BLOCKED",
+      "reason": "Ten existing tests pass, but test_native_tokenizer_exact_consumed_budgets errors because the mandatory exact tokenizer is unavailable. The test explicitly forbids a skip or approximate substitute."
+    }
+  ],
+  "recovery_contract": "Expanded manual-manifest commands use the explicit repository URL and an empty expected lease to restore an absent branch only. The immutable original 38-ref cleanup_manifest.json remains unchanged.",
+  "source_sha256_scope": "Checksums of the original input snapshots used to prepare the preserved-alias baseline. cleanup_manifest.json remains byte-identical; branch_registry.json has since been updated with actual execution outcomes, so its recorded input checksum is historical provenance, not the checksum of the updated sibling file."
+}
