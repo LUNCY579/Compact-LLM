@@ -1,0 +1,552 @@
+{
+  "evidence_level": "SYNTHETIC_TORCH_MECHANICS_ONLY",
+  "native_quality_claim": false,
+  "runs": [
+    {
+      "actor_steps": 28,
+      "arm": "control",
+      "baseline_scores": {
+        "acquisition": 0.5,
+        "retention": 0.25
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [],
+      "critic_steps": 0,
+      "generated_tokens": 276,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 3126,
+      "seed": 20261007,
+      "selected_checkpoint": "distill",
+      "selected_scores": {
+        "acquisition": 0.5,
+        "retention": 0.25
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "rl2",
+      "terminal_scores": {
+        "acquisition": 0.5,
+        "retention": 0.125
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "soup_only",
+      "baseline_scores": {
+        "acquisition": 0.5,
+        "retention": 0.25
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [],
+      "critic_steps": 0,
+      "generated_tokens": 340,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 3606,
+      "seed": 20261007,
+      "selected_checkpoint": "tail_soup",
+      "selected_scores": {
+        "acquisition": 0.5,
+        "retention": 0.25
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "tail_soup",
+      "terminal_scores": {
+        "acquisition": 0.5,
+        "retention": 0.25
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "layered",
+      "baseline_scores": {
+        "acquisition": 0.5,
+        "retention": 0.25
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [],
+      "critic_steps": 0,
+      "generated_tokens": 476,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 4332,
+      "seed": 20261007,
+      "selected_checkpoint": "soup1",
+      "selected_scores": {
+        "acquisition": 0.5,
+        "retention": 0.25
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "soup1",
+      "terminal_scores": {
+        "acquisition": 0.5,
+        "retention": 0.25
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "full",
+      "baseline_scores": {
+        "acquisition": 0.5,
+        "retention": 0.25
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [
+        {
+          "audit": {
+            "auroc": 0.453125,
+            "constant_mse": 0.1875,
+            "count": 32,
+            "mse": 0.226621732255435,
+            "raw_value_not_probability": true
+          },
+          "fixture_gate_bypass": true,
+          "qualified_for_native_rl": false,
+          "stage": "critic_fit"
+        }
+      ],
+      "critic_steps": 10,
+      "generated_tokens": 948,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 8460,
+      "seed": 20261007,
+      "selected_checkpoint": "soup2.three_parent",
+      "selected_scores": {
+        "acquisition": 0.5,
+        "retention": 0.25
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "rl3",
+      "terminal_scores": {
+        "acquisition": 0.5,
+        "retention": 0.125
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "full_no_critic",
+      "baseline_scores": {
+        "acquisition": 0.5,
+        "retention": 0.25
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [],
+      "critic_steps": 0,
+      "generated_tokens": 836,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 7188,
+      "seed": 20261007,
+      "selected_checkpoint": "soup2.three_parent",
+      "selected_scores": {
+        "acquisition": 0.5,
+        "retention": 0.25
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "rl3",
+      "terminal_scores": {
+        "acquisition": 0.5,
+        "retention": 0.25
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "full_no_soup",
+      "baseline_scores": {
+        "acquisition": 0.5,
+        "retention": 0.25
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [
+        {
+          "audit": {
+            "auroc": 0.7410714285714286,
+            "constant_mse": 0.109375,
+            "count": 32,
+            "mse": 0.184326296983265,
+            "raw_value_not_probability": true
+          },
+          "fixture_gate_bypass": true,
+          "qualified_for_native_rl": false,
+          "stage": "critic_fit"
+        }
+      ],
+      "critic_steps": 10,
+      "generated_tokens": 468,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 4860,
+      "seed": 20261007,
+      "selected_checkpoint": "rl3",
+      "selected_scores": {
+        "acquisition": 0.5,
+        "retention": 0.375
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "rl3",
+      "terminal_scores": {
+        "acquisition": 0.5,
+        "retention": 0.375
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "control",
+      "baseline_scores": {
+        "acquisition": 0.25,
+        "retention": 0.25
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [],
+      "critic_steps": 0,
+      "generated_tokens": 276,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 3126,
+      "seed": 20261008,
+      "selected_checkpoint": "rl1",
+      "selected_scores": {
+        "acquisition": 0.25,
+        "retention": 0.25
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "rl2",
+      "terminal_scores": {
+        "acquisition": 0.125,
+        "retention": 0.125
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "soup_only",
+      "baseline_scores": {
+        "acquisition": 0.25,
+        "retention": 0.25
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [],
+      "critic_steps": 0,
+      "generated_tokens": 340,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 3606,
+      "seed": 20261008,
+      "selected_checkpoint": "tail_soup",
+      "selected_scores": {
+        "acquisition": 0.25,
+        "retention": 0.25
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "tail_soup",
+      "terminal_scores": {
+        "acquisition": 0.25,
+        "retention": 0.25
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "layered",
+      "baseline_scores": {
+        "acquisition": 0.25,
+        "retention": 0.25
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [],
+      "critic_steps": 0,
+      "generated_tokens": 476,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 4332,
+      "seed": 20261008,
+      "selected_checkpoint": "soup1.alpha_0.25",
+      "selected_scores": {
+        "acquisition": 0.25,
+        "retention": 0.25
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "soup1",
+      "terminal_scores": {
+        "acquisition": 0.25,
+        "retention": 0.25
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "full",
+      "baseline_scores": {
+        "acquisition": 0.25,
+        "retention": 0.25
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [
+        {
+          "audit": {
+            "auroc": 0.44871794871794873,
+            "constant_mse": 0.15234375,
+            "count": 32,
+            "mse": 0.18030430533693986,
+            "raw_value_not_probability": true
+          },
+          "fixture_gate_bypass": true,
+          "qualified_for_native_rl": false,
+          "stage": "critic_fit"
+        }
+      ],
+      "critic_steps": 10,
+      "generated_tokens": 948,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 8460,
+      "seed": 20261008,
+      "selected_checkpoint": "soup2.alpha_0",
+      "selected_scores": {
+        "acquisition": 0.25,
+        "retention": 0.25
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "rl3",
+      "terminal_scores": {
+        "acquisition": 0.125,
+        "retention": 0.25
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "full_no_critic",
+      "baseline_scores": {
+        "acquisition": 0.25,
+        "retention": 0.25
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [],
+      "critic_steps": 0,
+      "generated_tokens": 836,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 7188,
+      "seed": 20261008,
+      "selected_checkpoint": "soup2.alpha_0",
+      "selected_scores": {
+        "acquisition": 0.25,
+        "retention": 0.25
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "rl3",
+      "terminal_scores": {
+        "acquisition": 0.125,
+        "retention": 0.25
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "full_no_soup",
+      "baseline_scores": {
+        "acquisition": 0.25,
+        "retention": 0.25
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [
+        {
+          "audit": {
+            "auroc": 0.7257142857142858,
+            "constant_mse": 0.1708984375,
+            "count": 32,
+            "mse": 0.15477307920894753,
+            "raw_value_not_probability": true
+          },
+          "fixture_gate_bypass": true,
+          "qualified_for_native_rl": true,
+          "stage": "critic_fit"
+        }
+      ],
+      "critic_steps": 10,
+      "generated_tokens": 468,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 4860,
+      "seed": 20261008,
+      "selected_checkpoint": "rl2",
+      "selected_scores": {
+        "acquisition": 0.25,
+        "retention": 0.25
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "rl3",
+      "terminal_scores": {
+        "acquisition": 0.125,
+        "retention": 0.125
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "control",
+      "baseline_scores": {
+        "acquisition": 0.375,
+        "retention": 0.125
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [],
+      "critic_steps": 0,
+      "generated_tokens": 276,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 3126,
+      "seed": 20261009,
+      "selected_checkpoint": "rl2",
+      "selected_scores": {
+        "acquisition": 0.375,
+        "retention": 0.125
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "rl2",
+      "terminal_scores": {
+        "acquisition": 0.375,
+        "retention": 0.125
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "soup_only",
+      "baseline_scores": {
+        "acquisition": 0.375,
+        "retention": 0.125
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [],
+      "critic_steps": 0,
+      "generated_tokens": 340,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 3606,
+      "seed": 20261009,
+      "selected_checkpoint": "tail_soup.mean",
+      "selected_scores": {
+        "acquisition": 0.375,
+        "retention": 0.125
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "tail_soup",
+      "terminal_scores": {
+        "acquisition": 0.375,
+        "retention": 0.125
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "layered",
+      "baseline_scores": {
+        "acquisition": 0.375,
+        "retention": 0.125
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [],
+      "critic_steps": 0,
+      "generated_tokens": 476,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 4332,
+      "seed": 20261009,
+      "selected_checkpoint": "dpo",
+      "selected_scores": {
+        "acquisition": 0.5,
+        "retention": 0.125
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "soup1",
+      "terminal_scores": {
+        "acquisition": 0.375,
+        "retention": 0.125
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "full",
+      "baseline_scores": {
+        "acquisition": 0.375,
+        "retention": 0.125
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [
+        {
+          "audit": {
+            "auroc": 0.5367965367965368,
+            "constant_mse": 0.2255859375,
+            "count": 32,
+            "mse": 0.2890964767900705,
+            "raw_value_not_probability": true
+          },
+          "fixture_gate_bypass": true,
+          "qualified_for_native_rl": false,
+          "stage": "critic_fit"
+        }
+      ],
+      "critic_steps": 10,
+      "generated_tokens": 948,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 8460,
+      "seed": 20261009,
+      "selected_checkpoint": "soup2.three_parent",
+      "selected_scores": {
+        "acquisition": 0.5,
+        "retention": 0.125
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "rl3",
+      "terminal_scores": {
+        "acquisition": 0.25,
+        "retention": 0.125
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "full_no_critic",
+      "baseline_scores": {
+        "acquisition": 0.375,
+        "retention": 0.125
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [],
+      "critic_steps": 0,
+      "generated_tokens": 836,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 7188,
+      "seed": 20261009,
+      "selected_checkpoint": "soup2.three_parent",
+      "selected_scores": {
+        "acquisition": 0.5,
+        "retention": 0.125
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "rl3",
+      "terminal_scores": {
+        "acquisition": 0.5,
+        "retention": 0.125
+      }
+    },
+    {
+      "actor_steps": 28,
+      "arm": "full_no_soup",
+      "baseline_scores": {
+        "acquisition": 0.375,
+        "retention": 0.125
+      },
+      "confirmation_status": "SYNTHETIC_CONFIRMATION_ONLY",
+      "critic_audit": [
+        {
+          "audit": {
+            "auroc": 0.5045454545454545,
+            "constant_mse": 0.21484375,
+            "count": 32,
+            "mse": 0.2587544549303891,
+            "raw_value_not_probability": true
+          },
+          "fixture_gate_bypass": true,
+          "qualified_for_native_rl": false,
+          "stage": "critic_fit"
+        }
+      ],
+      "critic_steps": 10,
+      "generated_tokens": 468,
+      "max_sampler_trainer_error": 0.0,
+      "processed_tokens": 4860,
+      "seed": 20261009,
+      "selected_checkpoint": "sft1",
+      "selected_scores": {
+        "acquisition": 0.5,
+        "retention": 0.125
+      },
+      "status": "SYNTHETIC_TORCH_MECHANICS_PASS",
+      "terminal_checkpoint": "rl3",
+      "terminal_scores": {
+        "acquisition": 0.25,
+        "retention": 0.125
+      }
+    }
+  ]
+}
