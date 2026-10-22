@@ -1,0 +1,30 @@
+{
+  "accumulation": 8,
+  "attention": "sdpa",
+  "beta1": 0.9,
+  "beta2": 0.999,
+  "detach_alpha": false,
+  "detach_beta": true,
+  "dtype": "bfloat16",
+  "eval_lengths": [
+    1024,
+    2048,
+    4096,
+    8192
+  ],
+  "expected_layers": 28,
+  "gradient_checkpointing": true,
+  "learning_rate": 0.0001,
+  "lora_alpha": 16.0,
+  "max_grad_norm": 1.0,
+  "max_new_tokens": 32,
+  "max_steps": 512,
+  "max_tokens": 524288,
+  "mode": "vpad",
+  "probability": 0.1,
+  "rank": 8,
+  "seed": 101,
+  "train_context": 1024,
+  "warmup_fraction": 0.05,
+  "weight_decay": 0.0
+}

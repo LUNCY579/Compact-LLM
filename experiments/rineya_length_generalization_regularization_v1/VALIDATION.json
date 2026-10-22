@@ -1,0 +1,33 @@
+{
+  "base_commit": "03db218ceebc61a2bc04f2482cf7e094045e01c1",
+  "code_sha256": "b3f4edd40eefd3d37100d878715621ab8230938caed366996d4aebc980d18c47",
+  "codex_tasks_created": false,
+  "compileall": "passed",
+  "cpu_fixture_optimizer_steps": 6,
+  "cuda_available": false,
+  "experiment_id": "LGR-001",
+  "native_checkpoint_loaded": false,
+  "native_optimizer_steps": 0,
+  "owner_device_accessed": false,
+  "pytest": {
+    "command": "python -m pytest -q experiments/rineya_length_generalization_regularization_v1/tests",
+    "failed": 0,
+    "passed": 98,
+    "seconds": 1.7,
+    "skipped": 0
+  },
+  "pytest_version": "9.0.2",
+  "python": "3.13.5",
+  "scope": "Only the added isolated package and a copy of existing experiments/__init__.py were available locally. No full-repository regression result is claimed.",
+  "standalone_three_arm_smoke": "passed",
+  "status": "CPU_FIXTURE_VALIDATED_NATIVE_UNQUALIFIED",
+  "torch": "2.10.0+cpu",
+  "transformers_installed": false,
+  "unmeasured": [
+    "native Rineya graph/runtime qualification",
+    "pretrained training efficacy",
+    "GPU memory/throughput",
+    "RULER/HELMET scores",
+    "production serving/export parity"
+  ]
+}
