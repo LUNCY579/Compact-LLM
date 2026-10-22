@@ -1,0 +1,158 @@
+{
+  "confirmation_executed": false,
+  "development": {
+    "blocked_constructions": 6,
+    "blocked_sequential_subexperiments": 2,
+    "config_sha256": "45bc54f8ee815d567afc2094a1d40e40bfec60c7ad74e750f0c0dffd6c0ed7a2",
+    "construction_arms": 32,
+    "grid_cells": 8,
+    "measured_constructions": 26,
+    "summary_csv_sha256": "3afc7c727e6db2b7124317104484c2393b866fa964d921f6c0c2439c01a9fa2c"
+  },
+  "experiment": "RHF-001",
+  "mock_interface_test_only": true,
+  "native_model_executed": false,
+  "not_claimed": [
+    "pretrained Rineya improvement",
+    "paper speedup reproduction",
+    "asymptotic capacity proof",
+    "broad no-forgetting result",
+    "GPU/Windows qualification",
+    "statistical significance"
+  ],
+  "preserved_development_issue": {
+    "error": "An unconverged sequential factor fit initially aborted the outer sweep. Fixed nested failure reporting, added a regression test, preserved failure, reran final grid. No CG threshold was weakened.",
+    "first_attempt": "development",
+    "intermediate_runs_promoted": false
+  },
+  "raw_report_location": "Companion delivery ZIP: raw_runs/. Regenerating timings will change raw report byte hashes.",
+  "raw_reports": {
+    "final_development/provenance.json": "84b050fadb947c5cd24aa8d0eb6b2965ed340c25da4ecefdb96450e7b17299ca",
+    "final_development/report.json": "65e219eaf4577b29b7e7167fb5325ed0e20cb0c085f9121d89fdba9c47111e22",
+    "final_development/run_000.json": "9da0208621f117e08b06031d736ca875d624ab00854991c362062854de5c0d47",
+    "final_development/run_001.json": "aa7d1862d2de0f7505e62abc9ffe83d094661c875193f17c9b0c3dd2470fd45c",
+    "final_development/run_002.json": "cfdde168fba721d43cb2774a76a9d696c235371d28cbd63bb65931fffeee568f",
+    "final_development/run_003.json": "2c51509a46d0b9b19a691054de0faa5b4ac56ca2a9d8745d2003986d76616507",
+    "final_development/run_004.json": "0ad16115bc3c67a9f7a29fe4959398a0921d9e4bfa733873bcccb5d44eb27b6a",
+    "final_development/run_005.json": "f1fd0b6fe87dc3961b7335185d48db92b9051fb3b85104c28b0dca2bbc402294",
+    "final_development/run_006.json": "785b8156395e65dfde18afb2223526e4dc9bace157a235af2717ef57657921f9",
+    "final_development/run_007.json": "7f9780d35a8d25df51420262be665f8359b53d13381c6fed479e840ab7c09d8d",
+    "final_smoke/provenance.json": "84b050fadb947c5cd24aa8d0eb6b2965ed340c25da4ecefdb96450e7b17299ca",
+    "final_smoke/report.json": "41eef4ddedfc7f4a28f168b7e38d197eff40bd0c21fb5500b841dbb726f169bb",
+    "final_ssfr17/provenance.json": "84b050fadb947c5cd24aa8d0eb6b2965ed340c25da4ecefdb96450e7b17299ca",
+    "final_ssfr17/report.json": "26eb6cf373864cbe44374641fb6dfc6dd41bef96dddfa28c7206a83bbd74affb",
+    "final_ssfr29/provenance.json": "84b050fadb947c5cd24aa8d0eb6b2965ed340c25da4ecefdb96450e7b17299ca",
+    "final_ssfr29/report.json": "ee62948a05829bd011c56840353317274ba5de7b5af34fda2d03f66ccabc6743"
+  },
+  "runtime": {
+    "cuda_available": false,
+    "dependencies": {
+      "numpy": "2.3.5",
+      "safetensors": "0.7.0"
+    },
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "source_sha256": {
+      "__init__.py": "bde4975699ed31d672b39f59598860d29d9167c4ab3d078dfe7774c8221124bc",
+      "artifacts.py": "52a92b5c0b6ce47b6c599362f44f1603f7e1a6aee1122dfeca7e550092254bdb",
+      "bench.py": "1bc11806f338ac76d3a7b683a36d760f619ca33fe387023b85d7e9012dfaea3d",
+      "cli.py": "290c4e0221652ca677dff82e1da270ebd71ec0904626f1e8e4d66bc3a0ccbf29",
+      "memory.py": "d4b8c76e5cb40d4437cbfec23916b4429af80408e3af031d77294c7578089a5b",
+      "metrics.py": "3ce586d01fa5622d6bb61d3b8d4c92d645ab16ec2b0da2d71f1368abe93d358b",
+      "native.py": "4c4b3da51bf771ad303e72f420916bd31ad7e72c642b892ede2c1773788cdece"
+    },
+    "threads": 1,
+    "torch": "2.10.0+cpu"
+  },
+  "ssfr": [
+    {
+      "d": 16,
+      "eval_rng_disjoint": true,
+      "junk": 6,
+      "key_query_tag_channels": true,
+      "kind": "SYNTHETIC_FACT_ADAPTIVE_READER",
+      "maximum_query_l2_error": 0.011686235738130012,
+      "memory_scalars": 3072,
+      "n": 16,
+      "native_qualified": false,
+      "residual_bypass": false,
+      "seed": 17,
+      "stale_memory_negative_control": {
+        "accuracy": 0.0,
+        "margin_p05": -1.4934608841667651,
+        "median_margin": -0.8036911695668421,
+        "minimum_margin": -1.500143247170117,
+        "minimum_output_normalized_margin": -1.5044446932868714,
+        "strict_accuracy": 0.0
+      },
+      "steps": 400,
+      "swapped_mapping_b": {
+        "accuracy": 1.0,
+        "margin_p05": 0.4559004650759499,
+        "median_margin": 0.6441550063769501,
+        "minimum_margin": 0.4549690051964752,
+        "minimum_output_normalized_margin": 0.4572147880333263,
+        "strict_accuracy": 1.0
+      },
+      "train_mapping_a_heldout_context": {
+        "accuracy": 1.0,
+        "margin_p05": 0.4549229370198557,
+        "median_margin": 0.643735307692702,
+        "minimum_margin": 0.4506505011151921,
+        "minimum_output_normalized_margin": 0.45718878599689533,
+        "strict_accuracy": 1.0
+      },
+      "trainable_attention_scalars": 512,
+      "value_output_identity": true,
+      "width": 64
+    },
+    {
+      "d": 16,
+      "eval_rng_disjoint": true,
+      "junk": 6,
+      "key_query_tag_channels": true,
+      "kind": "SYNTHETIC_FACT_ADAPTIVE_READER",
+      "maximum_query_l2_error": 0.0066101773465944225,
+      "memory_scalars": 3072,
+      "n": 16,
+      "native_qualified": false,
+      "residual_bypass": false,
+      "seed": 29,
+      "stale_memory_negative_control": {
+        "accuracy": 0.0,
+        "margin_p05": -1.5028065985092136,
+        "median_margin": -0.9844741613504937,
+        "minimum_margin": -1.511477994447333,
+        "minimum_output_normalized_margin": -1.5196565455370217,
+        "strict_accuracy": 0.0
+      },
+      "steps": 400,
+      "swapped_mapping_b": {
+        "accuracy": 1.0,
+        "margin_p05": 0.481635915876629,
+        "median_margin": 0.5682981967237373,
+        "minimum_margin": 0.4793007599080842,
+        "minimum_output_normalized_margin": 0.4839176142087096,
+        "strict_accuracy": 1.0
+      },
+      "train_mapping_a_heldout_context": {
+        "accuracy": 1.0,
+        "margin_p05": 0.48247907657568967,
+        "median_margin": 0.5682543321889424,
+        "minimum_margin": 0.479492500503069,
+        "minimum_output_normalized_margin": 0.48491284178248695,
+        "strict_accuracy": 1.0
+      },
+      "trainable_attention_scalars": 512,
+      "value_output_identity": true,
+      "width": 64
+    }
+  ],
+  "status": "REFERENCE_IMPLEMENTED_NATIVE_EFFICACY_UNQUALIFIED",
+  "test_suite": {
+    "failed": 0,
+    "passed": 76,
+    "scope": "new package only; not the full repository"
+  },
+  "validation_date": "2026-10-07"
+}
