@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "scope": "LOCAL_IMPLEMENTATION_VALIDATION_NOT_TITAN_EFFICACY",
+  "starting_remote_commit": "88efa852689c162c131d9c698923d4327cdec853",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "torch": "2.10.0+cpu",
+  "unittest": {
+    "discovered": 78,
+    "passed": 76,
+    "skipped": 2,
+    "failed": 0,
+    "seconds": 1.616,
+    "skipped_reason": "Two original-centralized-generator tests require full repository; isolated implementation workspace lacks inherited generator",
+    "actual_torch_sampler_tests_passed": 11
+  },
+  "scripted_scenarios": [
+    {
+      "scenario": "minority",
+      "parents": 128,
+      "attempts": 2176,
+      "recorded_fixture_tokens": 4352,
+      "status": "COMPLETE_BANK",
+      "first_sample_accuracy": 0.1328125,
+      "coverage_at_16": 0.96875,
+      "vote_at_16": 0.0,
+      "diagnostic": "HEADROOM_OBSERVED",
+      "evidence": "SCRIPTED_FIXTURE_ONLY"
+    },
+    {
+      "scenario": "flat",
+      "parents": 128,
+      "attempts": 2176,
+      "recorded_fixture_tokens": 4352,
+      "status": "COMPLETE_BANK",
+      "first_sample_accuracy": 0.0,
+      "coverage_at_16": 0.0,
+      "vote_at_16": 0.0,
+      "diagnostic": "NO_HEADROOM_OBSERVED_WITHIN_BUDGET",
+      "evidence": "SCRIPTED_FIXTURE_ONLY"
+    },
+    {
+      "scenario": "vote_gain",
+      "parents": 128,
+      "attempts": 2176,
+      "recorded_fixture_tokens": 4352,
+      "status": "COMPLETE_BANK",
+      "first_sample_accuracy": 0.8671875,
+      "coverage_at_16": 1.0,
+      "vote_at_16": 1.0,
+      "diagnostic": "HEADROOM_OBSERVED",
+      "evidence": "SCRIPTED_FIXTURE_ONLY"
+    },
+    {
+      "scenario": "all_correct",
+      "parents": 128,
+      "attempts": 2176,
+      "recorded_fixture_tokens": 4352,
+      "status": "COMPLETE_BANK",
+      "first_sample_accuracy": 1.0,
+      "coverage_at_16": 1.0,
+      "vote_at_16": 1.0,
+      "diagnostic": "NO_HEADROOM_OBSERVED_WITHIN_BUDGET",
+      "evidence": "SCRIPTED_FIXTURE_ONLY"
+    }
+  ],
+  "total_scripted_completions": 8704,
+  "native_titan_loads": 0,
+  "native_titan_generation_tokens": 0,
+  "optimizer_steps": 0,
+  "teacher_model_calls": 0,
+  "protected_payloads_opened": 0,
+  "native_windows_cuda_qualification": "NOT_RUN",
+  "github_ci": "CHECK_SEPARATE_REMOTE_RUN_STATUS",
+  "source_files": {
+    "__init__.py": {
+      "sha256": "6ba7bb5bd98e8296a3a8f277a8098d84f3c755e021ad841efdde1bdf9dff0721",
+      "git_blob_sha": "16cfcecc7677c7e5aae7a022c01828bbf8636e97"
+    },
+    "__main__.py": {
+      "sha256": "26f63290a694fd20afb1f4cd7a0de2315e245d0ec3caa83b5af99a8852bdb8f3",
+      "git_blob_sha": "5e78d2e00e24d7dfef33eb87cf8d33203bfdfa5f"
+    },
+    "configs/titan_pilot.json": {
+      "sha256": "849ded51825bcee4e3840bcfd6e415e2e12d613f69c6368fdbc654e0ed26c130",
+      "git_blob_sha": "78b466dd2827e76dfed6788cc5d42598f5e0ae29"
+    },
+    "contracts.py": {
+      "sha256": "6cf4f50be906475be9fa65407ad229198f6d6f0c541fae28c9b3c91276b18277",
+      "git_blob_sha": "ba55b4297d7eab6d24404d8b2daf1c22a6910d97"
+    },
+    "datasets.py": {
+      "sha256": "1bdd05016c93492ad600a2fe641c7ea7e4aa3c7b002eacc86da6b7e698c3e0de",
+      "git_blob_sha": "1093167fa6a2c9c88c135416616ee3ed3a1dd5e5"
+    },
+    "driver.py": {
+      "sha256": "896614c6b223b43b78cb337f47cc2120f622689e940a487304a66b4210901cfb",
+      "git_blob_sha": "44ec9c615bb2d4f7b3b7cceb949f4f9c47f60eda"
+    },
+    "evaluation.py": {
+      "sha256": "1c13d2cd030979a18da15735bff790efdfce8639cda033071c69da3cffd29888",
+      "git_blob_sha": "d30ed3209f772e27e0cf255366dd084891134608"
+    },
+    "native.py": {
+      "sha256": "abb10ed7e561788d31fd3e9cd34738477dbd7656b021e18bf2a1e88bd7c0d90b",
+      "git_blob_sha": "9b02432a16cf996e05b586ce4808ff81b643d2b3"
+    },
+    "runner.py": {
+      "sha256": "3490b84137ebd6dfef6f33b9eb077dc141b628db556b50c65c7e0b8a17987b54",
+      "git_blob_sha": "c276c8d939d52051444a5bf108b5c77181ad714e"
+    },
+    "selection.py": {
+      "sha256": "c6af5adc4a71a53da57663fff70506b45dabe1c66aa271bb754163dc8b04d842",
+      "git_blob_sha": "98c67650dff5d8ea222d9d800e1943612036d282"
+    },
+    "tests/test_hardening.py": {
+      "sha256": "d2e9917ce1f4af362f119f46316c4eb88af9fc0a267717a310d3060cf4e1368b",
+      "git_blob_sha": "7758bb6cee6d89df4724437502cb1433d0f7f2ec"
+    },
+    "tests/test_rvs.py": {
+      "sha256": "d9b0abfcbf2ad6e10618d43e32843f240becf90669e8847b42dbb8fc89f8f3fd",
+      "git_blob_sha": "75e80678bec4550eec4062fe5795770637b4f162"
+    },
+    "tests/test_torch_sampler.py": {
+      "sha256": "958eb62be90f32cf281ddfeb10136ec1528f96b67f8ad3dd9d8f54317ab15ad5",
+      "git_blob_sha": "c3c05c265f9d32242a308f2d75cae60ad83ef110"
+    },
+    "torch_sampler.py": {
+      "sha256": "a3f3fa45e923b7a8035678e4fe8759db6c3986b0f03f1a58926a944d0afc3d5c",
+      "git_blob_sha": "7d46858953c520d1281f858523e71aff5702f82f"
+    }
+  }
+}

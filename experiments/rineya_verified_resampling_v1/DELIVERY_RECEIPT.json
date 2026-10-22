@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "experiment_id": "RVS-001",
+  "record_type": "planning_delivery_verification_not_experiment_result",
+  "recorded_date": "2026-09-29",
+  "repository": "LUNCY579/ChatBubble",
+  "branch": "research/rineya-verified-resampling-v1",
+  "verified_content_head_before_this_receipt": "dc1295d1e675732d363684401895c66c7fd27cf3",
+  "parent_commit": "ba683ac0fcadbf04e4e179200d035b6a980e388f",
+  "scope_note": "Checks below cover the seven-file content snapshot before this receipt was added. This file does not claim to contain its own final commit SHA.",
+  "remote_comparison": {
+    "status": "ahead",
+    "ahead_by": 7,
+    "behind_by": 0,
+    "total_commits": 7,
+    "added_files": 7,
+    "modified_existing_files": 0,
+    "deleted_files": 0,
+    "added_lines": 637,
+    "deleted_lines": 0
+  },
+  "saved_content_paths": [
+    "RVS_001_RESEARCH_INDEX.md",
+    "experiments/rineya_verified_resampling_v1/README.md",
+    "experiments/rineya_verified_resampling_v1/RESEARCH_PLAN.md",
+    "experiments/rineya_verified_resampling_v1/PROTOCOL.md",
+    "experiments/rineya_verified_resampling_v1/INTEGRATION_ROADMAP.md",
+    "experiments/rineya_verified_resampling_v1/SOURCES.md",
+    "experiments/rineya_verified_resampling_v1/plan.json"
+  ],
+  "content_commit_sequence": [
+    "cbe18be06b8e66bef14f83975d3dbf3b6316db5c",
+    "2a683c7eb9887140105139f8977542957601bf6e",
+    "989bc68ad028865e2f8a186449108361575815a5",
+    "a87630052eea21882f3acae4478cf635fc4ab117",
+    "4f16f6f37eb6af3637ed6f90b4ec522e35feedb3",
+    "1437b1b547636929867c19af9f6473584ddf2e3c",
+    "dc1295d1e675732d363684401895c66c7fd27cf3"
+  ],
+  "unchanged_refs_read_back_after_content_writes": {
+    "research/post-training-mimo-centralized-v1": "ba683ac0fcadbf04e4e179200d035b6a980e388f",
+    "main": "b0ca54bdc1b69e2b19d7baeca2e3fdde3ff0a7b2"
+  },
+  "plan_document_validation": {
+    "method": "local Python standard-library JSON parsing and assertions, followed by remote Git blob identity readback",
+    "json_syntax": "PASS",
+    "source_hash_string_formats": "PASS_NOT_BINARY_HASH_VERIFICATION",
+    "parent_domain_quotas_and_completion_counts": "PASS",
+    "closed_execution_permissions": "PASS",
+    "protected_roles_closed": "PASS",
+    "KV_illustration_arithmetic": "PASS_NOT_NATIVE_MEMORY_MEASUREMENT",
+    "plan_utf8_bytes": 5551,
+    "plan_sha256": "4e6dbc79ce83b3d07978a3b1d51c4b9c7c87d5c43e2fce82dd9fbf50fa7a000b",
+    "locally_computed_git_blob_sha": "3ea670338aa3f22a98ec37fe16251f3affdc2a8a",
+    "remote_readback_git_blob_sha": "3ea670338aa3f22a98ec37fe16251f3affdc2a8a",
+    "remote_plan_matches_validated_local_bytes": true
+  },
+  "boundaries": {
+    "new_rvs_runtime_implemented": false,
+    "new_rvs_runtime_tests_run": false,
+    "native_qualification": "NOT_RUN",
+    "scientific_efficacy": "UNMEASURED",
+    "training_and_inference_launched": false,
+    "protected_evaluation_opened": false,
+    "remote_CI_status": "NOT_ASSERTED",
+    "working_tree_cleanliness": "NOT_ASSERTED_REMOTE_API_WRITES"
+  }
+}
