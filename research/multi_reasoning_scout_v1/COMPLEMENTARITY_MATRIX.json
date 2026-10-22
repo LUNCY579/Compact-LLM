@@ -1,0 +1,45 @@
+{
+ "cases_scored": 0,
+ "experiment": "MRS-1",
+ "measured_elsewhere": "MRS-2 computes this matrix on the same bank; see research/multi_reasoning_scout_v2/analysis/",
+ "model_generations": 180,
+ "native_execution_pass": "PARTIAL",
+ "note": "Superseded update: the blocking event is the frozen SCHEMA_SMOKE gate, not the preload resource guard. The 001 refusal receipts are retained unchanged.",
+ "null_reason": "Role outputs were generated for the 8 SMOKE items on both candidates, but 0/8 were schema-valid on every role, so no answer could be extracted and no complementarity is computable. CHECK was never reached.",
+ "per_model": {
+  "d1-seed17-bf16-export": {
+   "oracle_candidate_ceiling": null,
+   "pairs": {
+    "R0:R1": null,
+    "R0:R2": null,
+    "R0:R3": null,
+    "R1:R2": null,
+    "R1:R3": null,
+    "R2:R3": null
+   },
+   "per_family": null,
+   "role_disagreement_rate": null,
+   "selector_efficiency": null,
+   "smoke_valid_answers_extracted": 0,
+   "unique_candidate_answers": null
+  },
+  "supa-1.7-frozen": {
+   "oracle_candidate_ceiling": null,
+   "pairs": {
+    "R0:R1": null,
+    "R0:R2": null,
+    "R0:R3": null,
+    "R1:R2": null,
+    "R1:R3": null,
+    "R2:R3": null
+   },
+   "per_family": null,
+   "role_disagreement_rate": null,
+   "selector_efficiency": null,
+   "smoke_valid_answers_extracted": 0,
+   "unique_candidate_answers": null
+  }
+ },
+ "status": "NOT_MEASURED_SCHEMA_SMOKE_FAILED",
+ "supersedes": "NOT_MEASURED_RESOURCE_BLOCKED"
+}

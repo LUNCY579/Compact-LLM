@@ -1,0 +1,123 @@
+{
+ "cells": {
+  "A": "NOT_PRODUCED",
+  "B": "NOT_PRODUCED",
+  "C": "NOT_PRODUCED",
+  "D": "NOT_PRODUCED"
+ },
+ "confirmatory_claim": false,
+ "evidence_class": "NATIVE_EXECUTION_WITH_FROZEN_FORMAT_GATE_FAILURE",
+ "experiment": "MRS-1",
+ "model_generations": 180,
+ "model_loads": 2,
+ "native_efficacy": false,
+ "native_execution_pass": "PARTIAL: NATIVE_QUALIFICATION passed on both candidates; FROZEN_SCOUT_GENERATION not reached",
+ "note": "Superseded update: the blocking event is the frozen SCHEMA_SMOKE gate, not the preload resource guard. The 001 refusal receipts are retained unchanged.",
+ "null_reason": "Both candidates loaded and generated the 8 SMOKE items, then failed the prospectively frozen SCHEMA_SMOKE gate at 0/8 valid on every role: the family emits a bare in-vocabulary answer token instead of the required JSON object. The gate stopped both runs before CAL or CHECK, so no item was scored. MRS-1 forbids prompt repair and both MODEL_LAUNCH tokens are spent, so cells A and B are unproducible under this freeze.",
+ "per_item": [],
+ "per_model": {
+  "d1-seed17-bf16-export": {
+   "attempts": [
+    "native-d1-001",
+    "native-d1-002"
+   ],
+   "classification": "NATIVE QUALIFICATION PASS; FROZEN FORMAT GATE FAIL",
+   "model_generations": 90,
+   "model_launch_token_spent": true,
+   "model_loads": 1,
+   "native_qualification": {
+    "cache_max_abs": 2.09808349609375e-05,
+    "causality": true,
+    "repeat_ids_identical": true,
+    "status": "PASS",
+    "strict_loading_discrepancies": 0
+   },
+   "peak_gpu_allocated_bytes": 3114824192,
+   "peak_host_rss_bytes_sampled": 2630647808,
+   "reserved_generated_tokens": 7712,
+   "schema_smoke": {
+    "correctness_inspected": false,
+    "instrument_defect_ruled_out": "rendered chat template delivers the frozen system prompt verbatim, thinking disabled",
+    "items": 8,
+    "observed_output_form": "bare in-vocabulary answer token, 2 tokens, then EOS",
+    "parse_error": "invalid answer schema",
+    "status": "FAIL",
+    "valid_per_role": {
+     "A1": 0,
+     "A2_selector": 0,
+     "A3_selector": 0,
+     "D1": 0,
+     "D2": 0,
+     "D3": 0,
+     "R0": 0,
+     "R1": 0,
+     "R2": 0,
+     "R3": 0,
+     "S1_diagnostic": 0
+    }
+   },
+   "scored_CHECK_cases": 0,
+   "status": "BLOCKED_ON_SCHEMA_SMOKE",
+   "worker_wall_seconds": 52.84400000000005
+  },
+  "supa-1.7-frozen": {
+   "attempts": [
+    "native-supa-001",
+    "native-supa-002"
+   ],
+   "classification": "NATIVE QUALIFICATION PASS; FROZEN FORMAT GATE FAIL",
+   "model_generations": 90,
+   "model_launch_token_spent": true,
+   "model_loads": 1,
+   "native_qualification": {
+    "cache_max_abs": 4.1961669921875e-05,
+    "causality": true,
+    "repeat_ids_identical": true,
+    "status": "PASS",
+    "strict_loading_discrepancies": 0
+   },
+   "peak_gpu_allocated_bytes": 3114824192,
+   "peak_host_rss_bytes_sampled": 2594693120,
+   "reserved_generated_tokens": 7712,
+   "schema_smoke": {
+    "correctness_inspected": false,
+    "instrument_defect_ruled_out": "rendered chat template delivers the frozen system prompt verbatim, thinking disabled",
+    "items": 8,
+    "observed_output_form": "bare in-vocabulary answer token, 2 tokens, then EOS",
+    "parse_error": "invalid answer schema",
+    "status": "FAIL",
+    "valid_per_role": {
+     "A1": 0,
+     "A2_selector": 0,
+     "A3_selector": 0,
+     "D1": 0,
+     "D2": 0,
+     "D3": 0,
+     "R0": 0,
+     "R1": 0,
+     "R2": 0,
+     "R3": 0,
+     "S1_diagnostic": 0
+    }
+   },
+   "scored_CHECK_cases": 0,
+   "status": "BLOCKED_ON_SCHEMA_SMOKE",
+   "worker_wall_seconds": 32.233999999999924
+  }
+ },
+ "release_claim": false,
+ "scored_CHECK_cases": 0,
+ "status": "BLOCKED_ON_SCHEMA_SMOKE",
+ "successors": {
+  "MRS-2": {
+   "branch": "research/multi-reasoning-scout-v2",
+   "result": "cells A and B PRODUCED on the same bank, reused by hash"
+  },
+  "MRS-FP-1": {
+   "branch": "research/mrs-format-probe-v1",
+   "measured_limitation": "this family emits exactly one field and then stops",
+   "result": "C1_BARE is the only eligible output contract, 8/8 on every gated role for both models"
+  }
+ },
+ "supersedes": "BLOCKED_ON_RESOURCE_LIMIT (preload refusal, attempts 001)"
+}
