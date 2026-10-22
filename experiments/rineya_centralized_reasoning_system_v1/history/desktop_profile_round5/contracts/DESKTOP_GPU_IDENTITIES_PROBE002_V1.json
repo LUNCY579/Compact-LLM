@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "probe_key": "CRS-OWNED-IDENTITY-002",
+  "status": "FROZEN_CANDIDATE_PENDING_INDEPENDENT_SOURCE_REVIEW",
+  "authority": {
+    "path": "authorization/OWNER_EXCEPTION_DESKTOP_PROFILE_GRANTED_2026-10-04.json",
+    "sha256": "479b6c5284da978c491a6477a9064f21b585fa29e9991bf84d75960c380d18f0"
+  },
+  "context_disposition": {
+    "path": "evidence/desktop_profile_integration_001/source/COOPERATIVE_CONTEXT_DISPOSITION.json",
+    "sha256": "b2a64e3bd3471d42db805d06cba44c1c4ffed6af79ff19dc9c2f4bb94954f49e"
+  },
+  "original_native_contract_sha256": "d79f3b6a51e939d78a99c5c287ef6f33ef5979cfa50e76ba3d930ed3724f826a",
+  "original_owned_child_registry_sha256": "15158c7e894334c1434be492d8a9dc3e22dd620b112b078516b6adc00b190969",
+  "original_desktop_registry": [
+    {
+      "path": "C:\\Windows\\System32\\dwm.exe",
+      "sha256": "00eb3d5e6092e1246bd0956ff0a341c2afa6f96bb805b93d36a7192a9c29e475",
+      "role": "Windows desktop compositor",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\explorer.exe",
+      "sha256": "87811a107eed62900b230c49a252170d6a7307e94a08307ce972f9b9b8155d54",
+      "role": "Windows desktop shell",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+      "sha256": "b15e9da33402779e60c43a358c6aae5aa071a8c7723f200cda50e87ba650ff8a",
+      "role": "Windows graphical resume service",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+      "sha256": "b012b84674ae63052c368227ce41be39e5586d759b5eff8e3fbf01f53bfd00f1",
+      "role": "Windows Start menu UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+      "sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+      "role": "Windows search UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.48\\msedgewebview2.exe",
+      "sha256": "8454a3b710d8a8a7002af5f16349fe6214df14cec90a2008e4790bf5728c4a3b",
+      "role": "Microsoft embedded WebView rendering",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Program Files\\WindowsApps\\Microsoft.YourPhone_1.26072.257.0_x64__8wekyb3d8bbwe\\PhoneExperienceHost.exe",
+      "sha256": "ae33df1ab74d1a0b52df84bbf9832d0501cef6a74fdb36d2c14dc0e5bea83abe",
+      "role": "Windows Phone Link UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+      "sha256": "d0e70f62928d634e3866a2599fa21ae42d7f1c5b053ee4c8c6fdcac7ae9e1385",
+      "role": "Windows text input UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+      "sha256": "9d6d7b37ba8f6db67c3c33111ab32842abb5b4a940ff61c106899b4be5ecfc00",
+      "role": "Windows shell UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe",
+      "sha256": "53d3e7a527b7bc6ef1d0a6f9336b288cbb31b2805c8c6905ee2375061464716e",
+      "role": "Windows Widgets UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\SystemApps\\Microsoft.LockApp_cw5n1h2txyewy\\LockApp.exe",
+      "sha256": "76643b5929faebb04e67e1f5421363f3ec327fe555c596245abba4586d5cf322",
+      "role": "Windows lock screen UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.928.3736.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "sha256": "8fb63474e98f6651105fd78c575be5ebae67fb869849b16e7a940f2da54c28ab",
+      "role": "Codex desktop graphical application",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Program Files\\miHoYo Launcher\\1.18.0.380\\HYPHelper.exe",
+      "sha256": "870501007ce67af0931ab576c9b06335cdc6126a5f898dadbb3fda816113989d",
+      "role": "Installed miHoYo graphical launcher helper",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\154806497bb51bae\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+      "sha256": "76439e11d1ba548251ca0224158002bd8747a2baac4d20363cc7910f26523b8e",
+      "role": "Codex computer-use graphical runtime",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+      "sha256": "cb5b327020f3da829489bf6ba7749c12d7730267d607678c3dcd4917168016fe",
+      "role": "Windows graphical app frame host",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+      "sha256": "11382f7efac4978063f568f06fe90af38f136fbe975cce39d13667bd288b71c9",
+      "role": "Windows settings UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Program Files\\WindowsApps\\Microsoft.Edge.GameAssist_1.0.4019.0_x64__8wekyb3d8bbwe\\EdgeGameAssist.exe",
+      "sha256": "4dea94593a713f760ee417fac2af6d373e1741c3149af79ee31680cc225af9c7",
+      "role": "Microsoft graphical game overlay",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\154806497bb51bae\\bin\\node_modules\\@oai\\sky\\bin\\windows\\codex-computer-use.exe",
+      "sha256": "0d00dfdaee0c1f04d16095228e07ffd091ac1a95edc6f6ca4b4a316b39b6441a",
+      "role": "Codex computer-use graphical runtime",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\System32\\Taskmgr.exe",
+      "sha256": "580dda0bb155f7faf5e9f11e5bf5b4fdc677cdb2adb4dbf48708121ce3965cbd",
+      "role": "Windows Task Manager UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Windows\\System32\\ShellHost.exe",
+      "sha256": "75268bc04679fdddbea23e72274351641e44bd7019d8c625d61fbdc574ec0353",
+      "role": "Windows shell UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Flip Hero\\Builds\\MvpSteam\\FlipHero.exe",
+      "sha256": "0d3e08bb0b1f4950dbfdfc7185c887ac3b252e657dcb22cf6e280379c54ca231",
+      "role": "Observed local Unity graphical game, narrow resource policy exception",
+      "dependency_sha256": {
+        "C:\\Users\\clclc\\BusinessProject\\Flip Hero\\Builds\\MvpSteam\\UnityPlayer.dll": "4f8eb2a1431ff69de5aa8ea2c595ceb5d84d9f6ef8141646301f259fd86b9cac"
+      },
+      "justification": "Actual WDDM GPU process type C+G; exe version6000.6.2f1 and matching UnityPlayer.dll Unity playback engine/UnityTechnologies/version6000.6.2f1. Exact executable plus engine DLL pins; metadata unsigned with blank product/company/description fields. Cooperative classification, not proof of absence of all inference or permission to terminate/control app.",
+      "evidence": {
+        "observed_gpu_type": "C+G",
+        "executable_product_version": "6000.6.2f1 (770e33f6875c)",
+        "executable_file_version": "6000.6.2.7802419",
+        "product_name": "",
+        "company_name": "",
+        "file_description": "",
+        "signature_status": "NotSigned",
+        "unity_player_product_name": "Unity",
+        "unity_player_company": "Unity Technologies",
+        "unity_player_description": "Unity playback engine",
+        "unity_player_version": "6000.6.2f1 (770e33f6875c)",
+        "build_receipt_sha256": "f3751c9bb86fc5949558f52928eaa079062e70d22152a118d1e6855f456f4784",
+        "build_receipt": {
+          "schemaVersion": 1,
+          "productName": "Flip Hero",
+          "companyName": "Nookumi",
+          "version": "0.1.0",
+          "unityVersion": "6000.6.2f1",
+          "target": "StandaloneWindows64",
+          "executable": "FlipHero.exe",
+          "builtUtc": "2026-10-02T04:16:46.7877453Z",
+          "buildOptions": "None",
+          "development": false,
+          "totalBytes": 1176184993,
+          "errors": 0,
+          "warnings": 12
+        },
+        "independent_policy_reviewer": "/root/data_audit"
+      }
+    }
+  ],
+  "updated_rows": [
+    {
+      "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+      "sha256": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+      "role": "Microsoft embedded WebView rendering candidate; compute-capable",
+      "dependency_sha256": {
+        "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedge.dll": "0203543127df71e7721fed2eef97447d32931a08f86b93f0f261b423b4af499a"
+      },
+      "role_id": "webview",
+      "owner_roots": [
+        "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+        "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe"
+      ],
+      "allowed_ancestry_paths": [
+        "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+        "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+        "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe"
+      ]
+    },
+    {
+      "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+      "role": "Updated Codex desktop graphical application candidate",
+      "dependency_sha256": {
+        "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\resources\\app.asar": "af98213984ec4556778ef9276193d51460153fb9b30fded882d503637b84abba"
+      },
+      "role_id": "codex",
+      "owner_roots": [
+        "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe"
+      ],
+      "allowed_ancestry_paths": [
+        "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe"
+      ]
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+      "sha256": "623c2f1acf5f2fff3c57cf1a24596fd4083cb3ea2cfc07b741ba5d662235d310",
+      "role": "Updated Codex computer-use graphical runtime candidate",
+      "dependency_sha256": {
+        "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\manifest.json": "acc7031ad2d44a5e47a754594e86ab5abdc4839c94ae9d04af14081ea5115076"
+      },
+      "role_id": "swift",
+      "owner_roots": [
+        "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe"
+      ],
+      "allowed_ancestry_paths": [
+        "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+        "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe"
+      ]
+    }
+  ],
+  "inspection_only_original_anchors": [
+    {
+      "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+      "sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+      "role": "Windows search UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    },
+    {
+      "path": "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe",
+      "sha256": "53d3e7a527b7bc6ef1d0a6f9336b288cbb31b2805c8c6905ee2375061464716e",
+      "role": "Windows Widgets UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    }
+  ],
+  "inspection_only_ancestor_sha256": {
+    "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+    "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+    "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe": "623c2f1acf5f2fff3c57cf1a24596fd4083cb3ea2cfc07b741ba5d662235d310",
+    "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+    "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe": "53d3e7a527b7bc6ef1d0a6f9336b288cbb31b2805c8c6905ee2375061464716e"
+  },
+  "context_policy": {
+    "max_depth": 8,
+    "freshness_seconds": 5,
+    "actual_noncompute_workload_proved": false,
+    "hidden_inprocess_GPU_operations": "UNMEASURED",
+    "inspection_pins_are_permissions": false,
+    "kind": "MEASURED_OWNERSHIP_AND_COOPERATIVE_DESKTOP_CONTEXT_ONLY",
+    "known_compute_or_unknown_observed_PID_context_refused": true,
+    "native_or_owned_child_registry_inheritance": false
+  }
+}

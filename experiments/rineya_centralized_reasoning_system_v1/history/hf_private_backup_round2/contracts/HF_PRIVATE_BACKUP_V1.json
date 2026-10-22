@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "candidate": 2,
+  "repair_basis": {"review": "audits/HF_PRIVATE_BACKUP_OPERATIONAL_REVIEW_001.md", "sha256": "8de1218d2b3a22d8d74516b2fa64af128fa352eb155b92c429901c10301bd276", "findings": ["HF-OPS-001", "HF-OPS-002", "HF-OPS-003"], "prior_source_preserved": "history/hf_private_backup_round1", "max_backup_source_rounds": 3},
+  "contract_id": "CRS-HF-PRIVATE-RESEARCH-BACKUP-001",
+  "authority_receipt": "authorization/OWNER_EXCEPTION_001_GRANTED_2026-10-04.json",
+  "repo_id": "Luncy1978/rineya-crs-001-research",
+  "repo_type": "dataset",
+  "visibility_required": "private",
+  "purpose": "Durable complementary CRS-001 research preservation after meaningful source or data-quality changes, including failed and quarantined history; not training or model publication.",
+  "commands": {
+    "dry_run": "--dry-run: read-only allowlist inventory; no local preparation or remote calls",
+    "prepare": "--prepare: deterministic immutable raw tar and manifest, local only",
+    "upload": "--upload --snapshot CONTENT_SHA256: explicit sole SDK expected-parent remote write; fixed dataset and CLI/API verified private visibility",
+    "reconcile": "--reconcile --snapshot CONTENT_SHA256: verify pinned remote archive/manifest bytes or absence before retry"
+  },
+  "source_boundaries": {
+    "primary": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-centralized-reasoning-system-v1/experiments/rineya_centralized_reasoning_system_v1",
+    "exception_optional": "C:/Users/clclc/.codex/worktrees/crs-native-desktop-v2/ChatBubble-rineya-centralized-reasoning-system-v1/experiments/rineya_centralized_reasoning_system_v1",
+    "exception_required_arguments": ["--exception-worktree", "--exception-sha256"],
+    "exception_freeze": "A fresh full exception inventory digest must be supplied after Root freezes the worktree; compute with --dry-run --exception-worktree PATH. The digest is checked before and after packaging. A dry-run inventory is not a freeze or upload approval.",
+    "root_provenance_only": ["AGENTS.md", "RINEYA_CENTRALIZED_REASONING_SYSTEM.md"],
+    "archive_prefixes": ["primary/package", "primary/provenance", "exception/package", "exception/provenance"],
+    "follow_paths_inside_json": false
+  },
+  "coverage": ["supplied source and tests", "research documents and contracts", "generated open TRAIN/DEV fixtures", "retained raw predictions and results", "quality and failure evidence", "quarantined history", "checked upstream source/license/paper provenance"],
+  "training_eligible": false,
+  "known_nonbinary_nul_text_provenance": {"path": "audits/sources/AI-Newton.txt", "sha256": "9e70f23c4afe2a9831001390d28556368f3bf2662f99843edcdb6c6ce53c261c", "bytes": 28914, "nul_bytes": 2, "scope": "Only these exact existing UTF-8 PDF-extraction bytes may contain NUL; all other NUL-bearing text is refused."},
+  "qualification_policy": "Preserve original qualification boundaries; qualified/failed/quarantined records are all research evidence and remain not training eligible. Archive status never opens a launch/training/evaluation gate or promotes a hypothesis.",
+  "exclusions": ["credentials, token and environment files", "canonical model weights and weight directories", "tensor/activation artifacts, flagged as ambiguity without reading", "protected central CHECK/FINAL banks", "all SQLite/database files and companions, without opening", "Git metadata", "virtual environments and caches", "opaque compressed source bundles, without extraction", "backup-local staging/upload state/reconcile cache", "backup receipt-only files and directories"],
+  "reject": ["symlinks and Windows reparse points", "source hardlinks", "path escapes and traversal", "unexpected sensitive names or high-confidence credential content", "unexpected file types or disguised binary content", "changed source after inventory", "mutable exception worktree without matching supplied freeze", "local archive tampering or expanded prepared upload contents", "public or unverified fixed destination", "partial/conflicting remote snapshot", "pending/unknown upload repeated without explicit reconciliation"],
+  "limits": {
+    "max_artifact_bytes": 16777216,
+    "max_combined_payload_bytes": 134217728,
+    "max_combined_included_files": 4096,
+    "max_walk_entries_per_source": 16384,
+    "max_directory_depth": 24,
+    "max_manifest_bytes": 8388608,
+    "hf_read_timeout_seconds": 120,
+    "hf_upload_timeout_seconds": 600
+  },
+  "content_identity": "SHA-256 of canonically sorted archive paths, source bytes and SHA-256 values. Git HEAD is provenance only and excluded from content identity. Exclusions, backup-local state and receipt-only files cannot self-trigger an upload.",
+  "manifest_integrity": "Scan complete uploaded manifest and constant README bytes for credentials/binary content. Require canonical JSON, no duplicate/non-finite keys, exact allowed fields, fixed coverage/limits/policies, bounded valid source roots/Git hashes, exact row/source/type/aggregate associations and exclusion reasons. A separate backup-local binding pins complete manifest, archive and card hashes at preparation; metadata/provenance mutations refuse even when payload identity is unchanged. JSON metadata paths are validated as literals and never followed.",
+  "remote_inventory_integrity": "Require a complete bounded list of exact rfilename entries. Reject malformed, nonstring, ambiguous, duplicate, case-colliding, control-character, absolute, traversal, noncanonical, backslash, colon, file/directory-conflicting paths. Invalid inventory cannot produce RECONCILED_ABSENT or permit a write.",
+  "atomic_write": "CLI's final verified private identity and complete target absence produce the strict expected parent SHA. SDK independently verifies fixed private dataset identity, full inventory, unchanged parent and target absence, then creates one synchronous main-branch commit with parent_commit=EXPECTED_SHA, repo_type=dataset, create_pr=false and run_as_future=false. Exactly three prepared files are supplied as immutable verified bytes via CommitOperationAdd; no deletes. Concurrent branch change rejects atomically and leaves UNKNOWN requiring explicit reconciliation; concurrent bytes are retained.",
+  "sdk_transport": {
+    "python": "C:/Users/clclc/AppData/Local/hermes/hermes-agent/venv/Scripts/python.exe",
+    "huggingface_hub_version": "1.27.0",
+    "sdk_root": "C:/Users/clclc/AppData/Local/hermes/hermes-agent/venv/Lib/site-packages/huggingface_hub",
+    "source_sha256": {"hf_api.py": "44da5ff83a41741410e7e9588c1f003e545a08e21c48ae255944cc92f4223dc0", "_commit_api.py": "95a96a8492a5f3f456547800767cd9286fdfcb813b7dbc8721ebfa9c32eb8f8c", "utils/_validators.py": "b6e0b5538cb107ee172886a364c9ca65448abd9eaa3e9c9d63c2c8b5f6b4838d"},
+    "stdin_request_max_bytes": 16384,
+    "scope": "Fixed embedded bridge and fixed helper import; no request code/path evaluation, arbitrary shell, token argument, new public interface or background operation. Installed SDK source pins verify before SDK import; identity/version verifies before API calls. Only repo_info and expected-parent create_commit are used. All subprocess output is captured and raw output withheld."
+  },
+  "remote_layout": ["README.md (constant research archive dataset card)", "snapshots/CONTENT_SHA256/archive.tar", "snapshots/CONTENT_SHA256/manifest.json"],
+  "history_policy": "Never delete remote files or overwrite an existing snapshot. New content gets a new path and Hub commit; same content is a no-op only after remote manifest and archive bytes verify at a pinned commit.",
+  "upload_state": ["UNATTEMPTED", "PENDING", "UNKNOWN", "RECONCILED_ABSENT", "VERIFIED"],
+  "unknown_response_policy": "Persist UNKNOWN, refuse repeated upload, require a separate explicit --reconcile. A verified matching remote snapshot is a no-op; confirmed absence permits a later separately invoked upload. Partial/conflicting snapshots require human review and are never overwritten.",
+  "execution": "Python standard library preparation and fixed hf CLI info/download reads; narrow pinned Hermes Python/Hugging Face SDK bridge is the sole explicit remote write because hf CLI 1.27 upload exposes no expected-parent flag. Pinned download inventory/size dry-run precedes bounded reconciliation transfer. No token arguments or raw CLI output, model/framework/GPU imports, native host database access, extraction to disk, scheduler, background watcher, paid jobs or external people contact.",
+  "integration": "Root invokes after meaningful changes; the existing quiet hourly supervisor may supply a fallback when authorized. This helper creates no schedule or background process.",
+  "test_policy": "Focused local fixture tests only; all HF operations faked and no network writes. Independent Root review precedes the first upload."
+}

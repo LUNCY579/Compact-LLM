@@ -67,6 +67,212 @@ def completion_fixture(root):
     return go,cfg,events,containment
 
 
+class DesktopBoundaryCorrectionTests(unittest.TestCase):
+    """Exercise real collector branches through deterministic process adapters."""
+    def collect(self, *, role="codex", depth=1, outside="live", orphan=False):
+        import psutil
+        cfg=probe.native.read_json(probe.CONTRACT)
+        profile=probe.checked_desktop_profile(cfg,probe.native.read_json(probe.native.CONTRACT))
+        row=next(r for r in profile["updated_rows"] if r["role_id"]==role)
+        codex=next(r for r in profile["updated_rows"] if r["role_id"]=="codex")
+        principal={"sid_sha256":"a"*64,"session":1}
+        records={100+i:{"ctime":1000.0-i,"exe":row["path"] if i==0 else codex["path"],
+                        "ppid":100+i+1 if i+1<depth else 9000} for i in range(depth)}
+        if orphan: records[100]["ppid"]=8000
+        counts={}
+        def provider(pid):
+            counts[pid]=counts.get(pid,0)+1
+            if pid==9000:
+                if outside=="denied": raise psutil.AccessDenied(pid)
+                if outside=="absent" or (outside=="reuse_absent" and counts[pid]==1): raise psutil.NoSuchProcess(pid)
+                return SimpleNamespace(create_time=lambda:1.0 if outside!="reuse_live" or counts[pid]==1 else 2.0,
+                                       exe=lambda:r"C:\Windows\explorer.exe",ppid=lambda:1)
+            if pid not in records: raise psutil.NoSuchProcess(pid)
+            record=records[pid]
+            return SimpleNamespace(create_time=lambda:record["ctime"],exe=lambda:record["exe"],ppid=lambda:record["ppid"])
+        with patch("psutil.Process",side_effect=provider),\
+             patch.object(probe,"stable_desktop_hash",side_effect=lambda _p,d:d),\
+             patch.object(probe,"process_principal",return_value=principal):
+            witness=probe.collect_desktop_context(profile,row,100,principal)
+        return profile,row,principal,witness
+
+    def test_actual_collector_genuine_depth7_and8_boundaries(self):
+        for depth in (7,8):
+            with self.subTest(depth=depth):
+                _,_,_,witness=self.collect(depth=depth)
+                self.assertEqual(len(witness["chain"]),depth)
+                self.assertTrue(witness["owner_boundary"]["attained"])
+                self.assertEqual(witness["owner_boundary"]["reason"],"OBSERVED_NONFAMILY_PARENT")
+
+    def test_actual_collector_depth8_continuation_and_deep_Swift_refuse(self):
+        for role in ("codex","swift"):
+            with self.subTest(role=role),self.assertRaisesRegex(probe.native.NativeBlocked,"depth exhausted"):
+                self.collect(role=role,depth=9)
+
+    def test_missing_false_and_inconsistent_boundary_witness_refuse(self):
+        profile,row,principal,witness=self.collect(depth=8)
+        cases=[]
+        altered=copy.deepcopy(witness);altered.pop("owner_boundary");cases.append(altered)
+        for field,value in (("attained",False),("reason","DEPTH_EXHAUSTED"),("owner_pid",999),("owner_ppid",999),
+                             ("relation_rechecked",False)):
+            altered=copy.deepcopy(witness);altered["owner_boundary"][field]=value;cases.append(altered)
+        altered=copy.deepcopy(witness);altered["owner_boundary"]["external_parent"]["executable"]=row["path"];cases.append(altered)
+        for altered in cases:
+            with self.assertRaises(probe.native.NativeBlocked):
+                probe.validate_desktop_context(profile,row,altered,principal,now=altered["completed_at"])
+
+    def test_actual_Codex_and_Swift_absent_external_parent_boundaries(self):
+        for role,depth in (("codex",1),("swift",2)):
+            with self.subTest(role=role):
+                _,_,_,witness=self.collect(role=role,depth=depth,outside="absent")
+                boundary=witness["owner_boundary"]
+                self.assertEqual(boundary["reason"],"OBSERVED_ABSENT_EXTERNAL_PARENT")
+                self.assertTrue(boundary["external_parent"]["absence_rechecked"])
+                self.assertTrue(all(member["stable_after_checks"] for member in witness["chain"]))
+
+    def test_actual_AccessDenied_parent_reuse_and_orphanhelper_refuse(self):
+        import psutil
+        with self.assertRaises(psutil.AccessDenied): self.collect(outside="denied")
+        for outside in ("reuse_absent","reuse_live"):
+            with self.subTest(outside=outside),self.assertRaises(probe.native.NativeBlocked): self.collect(outside=outside)
+        with self.assertRaises(psutil.NoSuchProcess): self.collect(role="swift",orphan=True)
+        self.assertNotIn("torch",sys.modules);self.assertNotIn("transformers",sys.modules)
+
+
+class DesktopProfileTests(unittest.TestCase):
+    """Synthetic validator positives; live application intent remains unmeasured."""
+    def fixture(self):
+        cfg = probe.native.read_json(probe.CONTRACT)
+        original = probe.native.read_json(probe.native.CONTRACT)
+        profile = probe.checked_desktop_profile(cfg, original)
+        row = next(r for r in profile["updated_rows"] if r["role_id"] == "swift")
+        owner = {"sid_sha256": "a"*64, "session": 1}
+        codex = next(r for r in profile["updated_rows"] if r["role_id"] == "codex")
+        chain = [{"pid": 12, "ppid": 11, "creation_time": 12.0, "executable": row["path"], "sha256": row["sha256"],
+                  "principal": owner, "stable_after_checks": True},
+                 {"pid": 11, "ppid": 1, "creation_time": 11.0, "executable": codex["path"], "sha256": codex["sha256"],
+                  "principal": owner, "stable_after_checks": True}]
+        witness = {"activity": "PERMITTED_COOPERATIVE_DESKTOP_CONTEXT", "profile_sha256": hashlib.sha256(probe.canonical(profile)).hexdigest(),
+                   "authority_sha256": probe.DESKTOP_AUTHORITY_SHA, "began_at": 100.0, "completed_at": 101.0, "chain": chain,
+                   "owner_boundary":{"attained":True,"reason":"OBSERVED_ABSENT_EXTERNAL_PARENT","owner_pid":11,
+                                     "owner_ppid":1,"relation_rechecked":True,
+                                     "external_parent":{"pid":1,"state":"ABSENT","absence_rechecked":True}}}
+        return cfg, original, profile, row, owner, witness
+
+    def test_exact_profile_context_and_original_registry_preserved(self):
+        cfg, original, profile, row, owner, witness = self.fixture()
+        before = copy.deepcopy(original)
+        self.assertTrue(probe.validate_desktop_context(profile, row, witness, owner, now=102.0))
+        self.assertEqual(original, before)
+        self.assertEqual(hashlib.sha256(probe.canonical(probe.registry(original))).hexdigest(), cfg["registry_sha256"])
+        self.assertEqual(probe.KEY, "CRS-OWNED-IDENTITY-002")
+        self.assertEqual((cfg["limits"]["runs"], cfg["limits"]["wall_seconds"]), (1, 60))
+        self.assertFalse(cfg["limits"]["automatic_retry"])
+        self.assertFalse(profile["context_policy"]["actual_noncompute_workload_proved"])
+        self.assertEqual(profile["context_policy"]["hidden_inprocess_GPU_operations"], "UNMEASURED")
+        for source, digest in cfg["source_sha256"].items(): self.assertEqual(probe.native.sha(probe.ROOT/source), digest)
+        self.assertEqual(probe.native.sha(probe.native.CONTRACT), cfg["preserved_native"]["native_contract_sha256"])
+
+    def test_missing_unknown_compute_stale_owner_session_PID_parent_and_provenance_refuse(self):
+        _, _, profile, row, owner, witness = self.fixture()
+        bad = []
+        for activity in (None, "UNKNOWN", "GPU_COMPUTE"):
+            item = copy.deepcopy(witness); item["activity"] = activity; bad.append(item)
+        for field, value in (("began_at", 94.0), ("began_at", 103.0), ("completed_at", 106.0),
+                             ("profile_sha256", "0"*64), ("authority_sha256", "0"*64)):
+            item = copy.deepcopy(witness); item[field] = value; bad.append(item)
+        for index, field, value in ((0,"principal",{"sid_sha256":"b"*64,"session":1}),
+                                    (0,"principal",{"sid_sha256":"a"*64,"session":2}),
+                                    (0,"stable_after_checks",False), (0,"ppid",999),
+                                    (1,"creation_time",13.0), (1,"pid",12),
+                                    (1,"sha256","0"*64), (1,"executable",r"C:\unknown.exe")):
+            item = copy.deepcopy(witness); item["chain"][index][field] = value; bad.append(item)
+        item = copy.deepcopy(witness); item["chain"] = item["chain"][:1]; bad.append(item)
+        for item in bad:
+            with self.subTest(item=item), self.assertRaises(probe.native.NativeBlocked):
+                probe.validate_desktop_context(profile, row, item, owner, now=102.0)
+        for principal in ({}, {"sid_sha256":"a"*64,"session":0}):
+            with self.assertRaises(probe.native.NativeBlocked): probe.validate_desktop_context(profile,row,witness,principal,now=102)
+
+    def test_profile_duplicates_wildcards_hash_authority_registry_and_scope_drift_refuse(self):
+        cfg, original, profile, _, _, _ = self.fixture()
+        def load(altered):
+            with tempfile.TemporaryDirectory() as td:
+                root = Path(td)
+                for relative in (cfg["desktop_profile"]["path"], profile["authority"]["path"], profile["context_disposition"]["path"]):
+                    target = root/relative; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes((probe.PACKAGE/relative).read_bytes())
+                path = root/cfg["desktop_profile"]["path"]; path.write_bytes(probe.canonical(altered))
+                changed = copy.deepcopy(cfg); changed["desktop_profile"]["sha256"] = probe.native.sha(path)
+                with patch.object(probe,"PACKAGE",root): probe.checked_desktop_profile(changed, original)
+        altered = copy.deepcopy(profile); altered["updated_rows"].append(altered["updated_rows"][0])
+        cases = [altered]
+        for field, value in (("path",r"C:\*\ChatGPT.exe"),("path",r"C:/wrong/ChatGPT.exe"),("sha256","bad")):
+            altered = copy.deepcopy(profile); altered["updated_rows"][0][field] = value; cases.append(altered)
+        for field, value in (("original_owned_child_registry_sha256","0"*64),("probe_key","NEW"),
+                             ("original_desktop_registry",[])):
+            altered=copy.deepcopy(profile); altered[field]=value; cases.append(altered)
+        altered=copy.deepcopy(profile); altered["authority"]["sha256"]="0"*64; cases.append(altered)
+        for altered in cases:
+            with self.assertRaises(probe.native.NativeBlocked): load(altered)
+        with tempfile.TemporaryDirectory() as td:
+            path=Path(td)/"duplicate.json"; path.write_text('{"a":1,"a":2}')
+            with self.assertRaises(probe.native.NativeBlocked): probe.unique_json(path)
+            exe=Path(td)/"test.exe"; exe.write_bytes(b"exact")
+            self.assertEqual(probe.stable_desktop_hash(exe,hashlib.sha256(b"exact").hexdigest()),hashlib.sha256(b"exact").hexdigest())
+            with self.assertRaises(probe.native.NativeBlocked): probe.stable_desktop_hash(exe,"0"*64)
+        with self.assertRaises(probe.native.NativeBlocked): probe.checked_contract("0"*64)
+        actual_sha=probe.native.sha
+        for target in (Path(probe.native.__file__), probe.native.CONTRACT, Path(probe.__file__),
+                       probe.PACKAGE/profile["authority"]["path"], probe.PACKAGE/cfg["desktop_profile"]["path"]):
+            def drift(path): return "0"*64 if Path(path)==target else actual_sha(path)
+            with patch.object(probe.native,"sha",side_effect=drift), self.assertRaises(probe.native.NativeBlocked):
+                probe.checked_contract(actual_sha(probe.CONTRACT))
+        read=probe.native.read_json
+        for field,value in (("runs",2),("wall_seconds",61)):
+            altered=copy.deepcopy(cfg);altered["limits"][field]=value
+            with patch.object(probe.native,"read_json",side_effect=lambda path:altered if Path(path)==probe.CONTRACT else read(path)),\
+                 self.assertRaises(probe.native.NativeBlocked): probe.checked_contract(actual_sha(probe.CONTRACT))
+
+    def test_wrapper_preserves_unknown_compute_and_original_native_configuration(self):
+        cfg, original, profile, row, owner, witness = self.fixture()
+        now = time.time()
+        def telemetry():
+            return {"sampled_at":now,"gpu_uuid":original["gpu_uuid"],"host_available_gib":8,"gpu_free_gib":6,
+                    "disk_free_gib":10,"process_inventory_available":True,"unresolved_gpu_pids":[],"competing_gpu_pids":[],
+                    "unclassified_gpu_pids":[12,99],"processes":[{"pid":12,"name":row["path"]},{"pid":99,"name":r"C:\Chrome.exe"}]}
+        before=copy.deepcopy(original)
+        with patch.object(probe.native,"collect_telemetry",side_effect=lambda *_a,**_k:telemetry()),\
+             patch.object(probe,"process_principal",return_value=owner),\
+             patch.object(probe,"collect_desktop_context",return_value=witness):
+            actual=probe.collect_probe_telemetry(probe.PACKAGE,cfg,original)
+        self.assertEqual(actual["unclassified_gpu_pids"],[99]); self.assertEqual(original,before)
+        self.assertTrue(probe.native.admission_reasons(original,actual,current_time=now))
+        for field,value in (("sampled_at",now-6),("sampled_at",now+1),("host_available_gib",0),("gpu_free_gib",0),("disk_free_gib",0)):
+            altered=telemetry();altered["unclassified_gpu_pids"]=[];altered[field]=value
+            self.assertTrue(probe.native.admission_reasons(original,altered,current_time=now))
+        with patch.object(probe.native,"collect_telemetry",side_effect=lambda *_a,**_k:telemetry()),\
+             patch.object(probe,"process_principal",return_value=owner),\
+             patch.object(probe,"collect_desktop_context",side_effect=probe.native.NativeBlocked("unknown context")):
+            actual=probe.collect_probe_telemetry(probe.PACKAGE,cfg,original)
+        self.assertIn(12,actual["unclassified_gpu_pids"])
+        competing=telemetry();competing["competing_gpu_pids"]=[12]
+        with patch.object(probe.native,"collect_telemetry",return_value=competing),\
+             patch.object(probe,"process_principal",return_value=owner),\
+             patch.object(probe,"collect_desktop_context",side_effect=AssertionError("compute must reject before context")):
+            actual=probe.collect_probe_telemetry(probe.PACKAGE,cfg,original)
+        self.assertIn(12,actual["competing_gpu_pids"]);self.assertIn(12,actual["unclassified_gpu_pids"])
+
+    def test_actual_selected_application_hash_cost_no_GPU_or_framework(self):
+        _,_,profile,_,_,_=self.fixture()
+        began=time.monotonic(); count=0
+        for row in profile["updated_rows"]:
+            for path,digest in {row["path"]:row["sha256"],**row["dependency_sha256"]}.items():
+                count += Path(path).stat().st_size; probe.stable_desktop_hash(path,digest)
+        print(json.dumps({"static_selected_identity_bytes":count,"seconds":time.monotonic()-began,
+                          "live_context_or_GPU_feasibility_measured":False}),flush=True)
+        self.assertNotIn("torch",sys.modules);self.assertNotIn("transformers",sys.modules)
+
+
 class IdentityProbeTests(unittest.TestCase):
     def test_unknown_path_wrong_hash_distinct_and_python_serialization_covered(self):
         permitted={"c:/python.exe":"a"*64}
@@ -79,20 +285,42 @@ class IdentityProbeTests(unittest.TestCase):
     def test_final_exact_reviewer_roles_reject_builder_aliases_unknown_and_duplicates(self):
         with tempfile.TemporaryDirectory() as td:
             paths=[Path(td)/"science.json",Path(td)/"operations.json"];binding={"scope":probe.SCOPE}
-            def reviews(science,operations="/root/data_audit",science_role="science"):
+            def reviews(science,operations="/root/exception_ops",science_role="science"):
                 for path,role,name in zip(paths,(science_role,"operations"),(science,operations)):
                     path.write_bytes(probe.canonical({"status":"APPROVED_FOR_OWNED_IDENTITY_PROBE",
                         "binding":binding,"role":role,"reviewer":name}))
-            roles={"science":"/root/runtime_audit","operations":"/root/data_audit"}
+            roles={"science":"/root/exception_science","operations":"/root/exception_ops"}
             for name in ("scientific_audit","\\root\\scientific_audit","/root/scientific_audit/",
-                         " /ROOT/ SCIENTIFIC_AUDIT / ","root","/root/","unknown","/other/runtime_audit","/root/data_audit"):
+                         " /ROOT/ SCIENTIFIC_AUDIT / ","root","/root/","runtime_audit","data_audit","exception_builder",
+                         "/root/exception_builder/","unknown","/other/exception_science","/root/exception_ops"):
                 reviews(name)
                 with self.assertRaises(probe.native.NativeBlocked):probe.checked_reviews(paths,binding,roles)
-            reviews("runtime_audit"," /ROOT\\DATA_AUDIT/ ");probe.checked_reviews(paths,binding,roles)
-            reviews("/root/runtime_audit/","runtime_audit")
+            reviews("exception_science"," /ROOT\\EXCEPTION_OPS/ ");probe.checked_reviews(paths,binding,roles)
+            reviews("/root/exception_science/","exception_science")
             with self.assertRaises(probe.native.NativeBlocked):probe.checked_reviews(paths,binding,roles)
-            reviews("/root/runtime_audit",science_role="operations")
+            reviews("/root/exception_science",science_role="operations")
             with self.assertRaises(probe.native.NativeBlocked):probe.checked_reviews(paths,binding,roles)
+            reviews("/root/exception_science")
+            with self.assertRaises(probe.native.NativeBlocked):probe.checked_reviews(paths,binding,
+                {"science":"/root/exception_ops","operations":"/root/exception_science"})
+            with self.assertRaises(probe.native.NativeBlocked):probe.checked_reviews(paths,binding,
+                {"science":"/root/runtime_audit","operations":"/root/data_audit"})
+
+    def test_actual_pinned_psutil_path_refusal_and_string_success(self):
+        """Actual psutil API only; these disk values are not host admission."""
+        import psutil
+        self.assertEqual(os.name,'nt');self.assertEqual(psutil.__version__,'7.2.2')
+        with tempfile.TemporaryDirectory() as td:
+            path=Path(td)
+            with self.assertRaises(TypeError):psutil.disk_usage(path)
+            actual=psutil.disk_usage(str(path))
+            self.assertGreater(actual.total,0);self.assertTrue(0 <= actual.free <= actual.total)
+        source=Path(probe.__file__).read_text()
+        self.assertIn('psutil.disk_usage(str(self.output))',source)
+        self.assertIn('psutil.disk_usage(str(output))',source)
+        self.assertNotIn('psutil.disk_usage(self.output)',source)
+        self.assertNotIn('psutil.disk_usage(output)',source)
+        self.assertEqual(probe.KEY,'CRS-OWNED-IDENTITY-002')
 
     def test_final_publication_fault_reports_known_state_and_idempotent_no_worker_recovery(self):
         for mode in ("before_release","after_release","lost_write_response"):
@@ -363,7 +591,8 @@ class IdentityProbeTests(unittest.TestCase):
     def test_actual_exact_job_deadline_kills_while_observer_sample_blocks(self):
         from experiments.opallo_native_collector_v1.supervisor import WindowsJob
         with tempfile.TemporaryDirectory() as td:
-            process=subprocess.Popen([sys.executable,"-B","-c","import time;time.sleep(30)"],
+            script="import subprocess,sys,time\nsubprocess.Popen([sys.executable,'-B','-c','import time;time.sleep(30)'])\ntime.sleep(30)"
+            process=subprocess.Popen([sys.executable,"-B","-c",script],
                     stdout=subprocess.PIPE,stderr=subprocess.PIPE,creationflags=subprocess.CREATE_NEW_PROCESS_GROUP|4)
             job=None;watch=None;release=threading.Event()
             try:

@@ -1,0 +1,180 @@
+{
+  "contract_id": "CRS-CPU-ONLY-TOOL-VERSION-V3",
+  "status": "FINAL_SOURCE_CANDIDATE3_NOT_READY_NO_ACTUAL_DISPATCH",
+  "milestone_unchanged": "CRS-CPU-ONLY-TOOL-VERSION",
+  "source_candidate": 3,
+  "source_candidates_max": 3,
+  "authorization_path": "authorization/DELEGATED_CPU_ONLY_TOOL_VERSION_FINAL_CORRECTION_009.json",
+  "authorization_sha256": "15d7e127912b3def585a561007ca3fe997b28132ce3d9e44d59add7a29766b37",
+  "prior_candidate1_preservation_sha256": "c18b44aea78fe55cb5b9230c29036be4c9b32fb9f1405a1085780d399f984e09",
+  "tool_path": "C:/Users/clclc/.local/bin/uv.exe",
+  "tool_sha256": "5a7ec85884c2ccb1be560cb8fac3eb890df1adf49bfcc070a270ba70401bdd68",
+  "tool_bytes": 68317696,
+  "argv": [
+    "--version"
+  ],
+  "actual_attempts_allowed_here": 0,
+  "future_separately_registered_attempts_max": 1,
+  "combined_wall_seconds_max": 10,
+  "stdout_stderr_combined_bytes_max": 8192,
+  "combined_overflow_sentinel_bytes_max": 1,
+  "maximum_captured_with_overflow_sentinel_bytes": 8193,
+  "no_retry": true,
+  "Job": {
+    "ActiveProcessLimit": 1,
+    "LimitFlags": 8712,
+    "kill_on_close": true,
+    "breakaway": false,
+    "committed_memory_bytes_max": 2147483648,
+    "assignment_before_resume": true,
+    "descendants_max": 0
+  },
+  "resource": {
+    "whole_tree_RSS_bytes_max": 2147483648,
+    "one_process_peak_RSS_required": true,
+    "peak_source": "GetProcessMemoryInfo.PeakWorkingSetSize on exact created process handle even after exit; unavailable witness refuses",
+    "host_reserve_GiB": 1.25,
+    "preworker_available_GiB": 3.3125,
+    "disk_free_GiB": 4,
+    "telemetry_age_seconds_max": 5,
+    "watchdog_poll_seconds": 0.1,
+    "resource_journal_samples_max": 128,
+    "numerical_threads_max": 2,
+    "UV_Rust_thread_count_enforced": false,
+    "GPU_status": "UNMEASURED_NOT_QUALIFIED"
+  },
+  "paths": {
+    "empty_cwd_temp_root": ".venv/tool-version-007",
+    "future_receipt_root": "evidence/cpu_only_tool_version_actual_007",
+    "no_setup_runtime_cache_creation": true,
+    "lexical_checks_are_not_physical_reparse_proof": true
+  },
+  "literal_environment_only": [
+    "SystemRoot=C:/Windows",
+    "WINDIR=C:/Windows",
+    "PATH=C:/Windows/System32",
+    "TEMP=<exact_scoped_temp>",
+    "TMP=<exact_scoped_temp>"
+  ],
+  "created_process": {
+    "API": "CreateProcessW",
+    "suspended": true,
+    "hidden_window": true,
+    "extended_exact_inherited_handle_list": true,
+    "handles_owned_before_postcall_deadline_or_identity": true,
+    "primary_thread_from_PROCESS_INFORMATION_only": true,
+    "required_ResumeThread_prior_suspend_count": 1,
+    "no_pid_lookup_for_termination": true,
+    "requested_argv_hash_is_not_observed_command_line": true
+  },
+  "cleanup": {
+    "partial_constructor_ownership": "Deadline owns partial WindowsPort and OwnedJob before later failures",
+    "known_preJob_process": "Exact returned process handle is retained on failed termination or unproved signal. A successful TerminateProcess request requires one subsequent nonblocking held-handle signal witness before release; no PID reopen or cleanup retry loop.",
+    "independent_steps": [
+      "quiesce timer",
+      "attempt owned Job termination",
+      "attempt known created handle termination and signal proof",
+      "witness empty owned Job",
+      "attribute deletion",
+      "every safe pipe close",
+      "primary thread close",
+      "release Job/process only after signal plus empty Job proof"
+    ],
+    "timer_must_be_quiescent_before_handle_close": true,
+    "unquiescent_callback_or_failed_close_retains_exact_handle_and_unknown_outcome": true,
+    "retained_owner": "Returned recovery_owner is the actual Deadline object retaining the original WindowsPort/OwnedJob and cleanup methods. It keeps exact valid Job/process handles reachable after library return, including partial assignment or wait/deadline uncertainty. Numeric retained_ownership is only a snapshot.",
+    "retained_owner_is_only_in_memory_not_durable_or_acknowledged_transfer": true,
+    "timer_quiescence_at_return_reported": true,
+    "unquiescent_timer_preserves_targets_and_safe_independent_cleanup": true,
+    "created_termination_failure_not_automatically_retried": true,
+    "release_requires_signaled_process_and_empty_Job": true,
+    "concrete_external_ownership_transfer_implemented": false
+  },
+  "streams": {
+    "complete_stdout_and_stderr_EOF_required": true,
+    "EOF_witness": "PeekNamedPipe failure with ERROR_BROKEN_PIPE109; other errors refuse",
+    "complete_exit": "signaled exact process handle, nonSTILL_ACTIVE exit code, empty assigned Job and both EOF witnesses",
+    "output_byte_count_bounds_checked": true
+  },
+  "version_parser": "One complete ASCII uv major.minor.patch[prerelease/build] line, optional bounded parenthesized build claim, optional CRLF; no stderr/nonzero/extra lines/truncation accepted. Raw bytes retained as data; emitted lookup key is not publisher/source/setup proof.",
+  "deadline": {
+    "independent_owned_worker_timer_seconds": 10,
+    "timer_kills_owned_Job_and_known_created_process_handle": true,
+    "cooperative_checks_before_and_after_kernel_store_pipe_calls": true,
+    "source_cannot_abort_blocked_OS_SQLite_or_receipt_calls": true,
+    "independent_complete_caller_wall_limit_qualified_here": false,
+    "whole_caller_includes": [
+      "preparation",
+      "reservation",
+      "process creation and execution",
+      "complete output and owned exit",
+      "cleanup",
+      "durable observations",
+      "terminal serialization and publication"
+    ],
+    "required_external_gate": "Separately identified immutable observer and bounded caller must establish actual whole-call completion within unchanged10s; this library never publishes canonical terminal success or failure from an earlier time sample.",
+    "late_or_unknown": "Retain full10 reservation and distinct native interval/internal finalization wall; preserve actual overrun for qualified external reconciliation."
+  },
+  "canonical_accounting": {
+    "operations_sha256": "ba27ec8a31437459b956a5642e6ece4838f0584602db2c93ff7bc61437806e30",
+    "reservation_seconds": 10,
+    "one_global_native_worker": true,
+    "epoch_seconds": 7200,
+    "rolling_24h_seconds": 14400,
+    "historical_seconds_preserved": 47.42100000000573,
+    "unknown_retains_full_reservation": true,
+    "pre_registered_exact_request_only": true,
+    "source_terminal_reconcile": false,
+    "host_DB_created_or_opened_here": false,
+    "synthetic_fixture_DB": "Actual unchanged OperationsStore on temporary DB only; exact request/owner/fence/worker/receipt validation, nonzero positive reconciliation, wrongproof/zero/unknown controls. Synthetic observer labels confer no real provenance."
+  },
+  "authors": {
+    "candidate1_and_initial_candidate2": "/root/cpu_artifact_lock_inspector",
+    "candidate2_fixture_finisher_and_candidate3_builder": "/root/tool_candidate2_finisher",
+    "candidate3_contribution": "Only retained exact process/Job ownership, safe independent cleanup/timer state, faithful live-failure controls, V3 and one fixture freeze; no self approval."
+  },
+  "lineage": {
+    "WindowsJob_structure_sha256": "d31370de4f6b09052fac2f3505fc38a40041e76bd2137435a1f3678f4346a54d",
+    "suspended_resume_exit_sha256": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3",
+    "old_loader_imported": false,
+    "all_candidate1_source_temporal_documentary_records_preserved": true
+  },
+  "trusted_scope": {
+    "OS_process_count_Job_commit_killonclose_prospective_controls": true,
+    "OS_network_filesystem_device_secrecy_sandbox": false,
+    "UV_publisher_source_unknown": true,
+    "narrow_metadata_trust_accepted_here": false,
+    "visible_checks_do_not_prove_all_internal_C_side_effects_or_Rust_threads": true
+  },
+  "external_gates_unresolved": [
+    "Immutable nonbuilder SCI/OPS exact-source and clean-commit receipts",
+    "Qualified bounded caller and independent actual-completion observer",
+    "Current source/runtime/physical UV/systemDLL/search-path and loader bindings",
+    "Trusted metadata-only tool boundary policy",
+    "Current physical empty roots and canonical host DB identity",
+    "Current resources, lease/fence/request registration and complete canonical outcome accounting"
+  ],
+  "fixture": {
+    "invocations_max": 1,
+    "wall_seconds_max": 60,
+    "stdlib_synthetic_only": true,
+    "actual_Windows_UV_Python_child_process_framework_model_installer_host_DB_GPU_network": 0,
+    "failure_freezes_without_repair_or_retest": true,
+    "complete_terminal_output_before_FINAL_FREEZE": true,
+    "retained_live_failed_termination_controls": [
+      "first identity failure",
+      "assignment refusal",
+      "partial creation and assignment",
+      "unknown held-handle wait",
+      "successful termination request without signal",
+      "deadline crossing",
+      "unknown Job membership",
+      "unquiescent timer with and without port",
+      "timer failure not retried by cleanup"
+    ],
+    "capture_artifact_policy": "High-level admitted JSON/text provenance only; no new raw executable wrapper or encoded/translated wrapper copy enters payload."
+  },
+  "next_gate": "Final candidate3/max3 immutable source/contract/raw fixture and nonbuilder SCI/OPS disposition. Full caller/observer/trust/current-path gates remain NOT_READY. Rejection quarantines at3/3; no fourth repair or renamed milestone.",
+  "prior_candidate2_preservation_sha256": "af4668dc49d54a585617c2f0e7d81ad15cbb3d4aa58075b68d08f0ca6f1ca271",
+  "prior_candidate2_final_freeze_sha256": "924c6716cb517104ed61defd21c53d937d1457fd65a074e110def0e657c1ea69"
+}

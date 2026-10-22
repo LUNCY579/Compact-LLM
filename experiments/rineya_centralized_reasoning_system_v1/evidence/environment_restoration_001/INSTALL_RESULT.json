@@ -1,0 +1,28 @@
+{
+  "command": [
+    "uv",
+    "pip",
+    "install",
+    "--python",
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "torch==2.10.0+cu126",
+    "transformers==4.57.1",
+    "safetensors==0.7.0",
+    "tokenizers==0.22.2",
+    "psutil==7.2.2",
+    "--index",
+    "https://download.pytorch.org/whl/cu126",
+    "--index",
+    "https://pypi.org/simple",
+    "--only-binary",
+    ":all:"
+  ],
+  "exit_code": 0,
+  "failure": null,
+  "framework_imports": 0,
+  "model_loads": 0,
+  "native_budget_reset": false,
+  "probe_attempts": 0,
+  "qualification": "DEPENDENCY_SETUP_ONLY; exact old runtime/file pins must still pass",
+  "wall_seconds": 20.7264925999998
+}

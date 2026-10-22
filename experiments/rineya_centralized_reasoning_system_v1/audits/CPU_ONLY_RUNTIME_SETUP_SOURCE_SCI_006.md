@@ -1,0 +1,22 @@
+# Source-evidence006: science stopping disposition
+
+2026-10-05. Reviewer `/root/cpu_runtime_control_audit`; builder separate. Shared workspace/model/prior advice are disclosed. This create-only review reads frozen006 documents and hashes those documents plus its scope receipt. No additional binary scan, official HTTP, source acquisition,005 rerun, UV/interpreter/installer execution, framework/model import, live host/process/GPU/DB action or implementation occurs.
+
+**Verdict: ACCEPTED_HONEST_UNKNOWN_RELEASE_CORRESPONDENCE_STOP; OVERALL300s_COMPLIANCE_UNVERIFIED.** The retained selected metadata does not establish an exact UV release/source identity. Stopping without guessed tags, latest-source substitution, HTTP, installation or command probing is consistent with006. This accepts the truthful stopping record, not timing qualification, sufficient tool provenance, safe query/CLI semantics or setup eligibility.
+
+| Frozen artifact | SHA256 |
+| --- | --- |
+| RAW_LOCAL_METADATA.json | `d4c1256d0464291444abe6ae0c994fe7dc96e3c74cb06412bc4fb9fdd78d67c7` |
+| READINESS.json | `7a74dd939865d7a61d88b05f94e84d197f5ce86d1b243799b15c35db70f3e551` |
+| FREEZE.json | `bb7feb354930e062cca2e8166e13bfeb1f63acdec443cc96107587f645c72f54` |
+| scope006 | `313cdcdff64b2063ae93da95e6aed9132e4764d694460e3b762b7ce2b5905635` |
+
+Physical document hashes match the freeze. RAW retains005's physical UV identity `5a7ec85884c2ccb1be560cb8fac3eb890df1adf49bfcc070a270ba70401bdd68`, rather than claiming a newly verified publisher identity. The single selected file is68317696 bytes. Three whole-file read passes/204953088 bytes of IO are explicitly disclosed. Interpreting the96MiB selection cap as aggregate size of unique selected files is consistent with the scope's selected-file wording; repeated-read IO must remain separately visible and must not be relabeled96MiB total IO. No claim of an IO cap waiver follows.
+
+The record reports null Windows FileVersion/ProductVersion/ProductName/CompanyName/OriginalFilename, a CodeView `uv.pdb` anchor with undecoded GUID/age, and unbound strings/dates/semver candidates attributable to other code/help/dependencies. These are bounded discovery observations, not proof that no identifying bytes exist anywhere in the binary. Neither `uv.pdb`, `Astral`, `--version`, dependency versions nor interpreter-query anchor offsets establishes this executable's release or official source commit. The whole actual query and argument construction remain unbound. No official URLs were requested; Microsoft loader evidence was also not fetched after the correspondence stop.
+
+The timing limitation is material to finite-stage provenance: reported metadata command walls are4.9840239+11.8157557+0.3391098=17.1388894s. The record explicitly lacks the overall stage start and preparation/finalization elapsed. Therefore the original300s evidence envelope cannot be verified from these records, even though the reported command sum is much smaller. No cap breach is demonstrated either. Do not erase this gap, retrospectively invent a start or promote the command sum to total stage wall. Preserve the exact record without replay; any later distinct stage must capture one monotonic whole-stage start/deadline through finalization and frozen exact command/source provenance.
+
+The status UNKNOWN_EXACT_UV_RELEASE_SOURCE_CORRESPONDENCE_STOPPED agrees with the evidence. Prohibited actions are recorded0; neither a command result nor setup attempt exists. The preserved005 freeze `d152e3b138ffa281658fd2d41f1c56fd47531e4a17ebe3bc5b64935891af6015` and result `42b600de8a61209984d69733b03cc49f300dbe535109549436f3d43e53cef092` still have three attempted/two completed API-set rows and no completed UV-shadow/query scan. The linked plan/proposal and old loader/frontier histories remain unchanged.
+
+A separately registered bounded tool-version observation is a possible resolving question, addressed prospectively in CPU_ONLY_RUNTIME_TOOL_VERSION_SCI_ADVISORY_007.md;006 supplies no authority or readiness for it. Exact official publisher correspondence is another possible route, but cannot be fabricated from latest documentation. No005/006 rerun, additional binary search, guessed release download, alternate installer or candidate2 automatically follows this disposition. Setup, hardware isolation, bootstrap, model loading/numerics, reader and full research completion remain unqualified.

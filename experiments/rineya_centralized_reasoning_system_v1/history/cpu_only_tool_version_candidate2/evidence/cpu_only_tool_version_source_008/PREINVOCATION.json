@@ -1,0 +1,46 @@
+{
+  "status": "STATIC_PREPARATION_COMPLETE_BEFORE_SINGLE_FIXTURE",
+  "candidate": 2,
+  "default_candidates_max": 3,
+  "known_prior_invocations": 0,
+  "remaining_invocations_max": 1,
+  "handoff_evidence": "authorization/TOOL_VERSION_CANDIDATE2_BUILDER_HANDOFF_008.json",
+  "absence_alone_not_no_execution_proof": true,
+  "no_separate_test_smoke_or_import_run": true,
+  "prior_builder": "/root/cpu_artifact_lock_inspector",
+  "finisher": "/root/tool_candidate2_finisher",
+  "finisher_source_edits": 0,
+  "initial_builder_and_interruption_whole_stage_monotonic_interval_unavailable": true,
+  "measured_stage_boundary": "This resumed invocation/finalization script starts before preinvocation evidence and includes complete terminal capture and immutable final freeze. Earlier static construction is not claimed as this measured interval.",
+  "start_utc": "2026-10-05T19:36:36.7485581Z",
+  "exact_source": {
+    "path": "cpu_only_tool_version.py",
+    "bytes": 28352,
+    "sha256": "d3fe7660ca206ae88f23be34604145b1b8031e5a99af65c08ffa1076bc968aa8"
+  },
+  "exact_test": {
+    "path": "test_cpu_only_tool_version.py",
+    "bytes": 25663,
+    "sha256": "5dc7f6db06da5721d9e38bd2d8ff5205676f8489b3108c5e0d4b54b16aac9955"
+  },
+  "exact_contract": {
+    "path": "contracts/CPU_ONLY_TOOL_VERSION_V2.json",
+    "bytes": 7305,
+    "sha256": "3edc3fff2ba27e3d9d07c4c669bd7d037259ee52f8874d614131b2b600f9c5a0"
+  },
+  "unchanged_operations": {
+    "path": "operations.py",
+    "bytes": 31728,
+    "sha256": "ba27ec8a31437459b956a5642e6ece4838f0584602db2c93ff7bc61437806e30"
+  },
+  "unchanged_helper": {
+    "path": "hub_backup.py",
+    "bytes": 48738,
+    "sha256": "09efd5634209e424e2dfe711c8ff9a91d26e4cfec3926c0aa05c5d1298a368fe"
+  },
+  "unchanged_old_loader": {
+    "path": "cpu_native_load.py",
+    "bytes": 37379,
+    "sha256": "e178c8cdc94ff52a952916d1c492e768af5662bf05292e4804fd4f60c9b681b9"
+  }
+}

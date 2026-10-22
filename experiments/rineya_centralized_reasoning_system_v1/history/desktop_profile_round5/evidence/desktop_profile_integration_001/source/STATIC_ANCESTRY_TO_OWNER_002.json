@@ -1,0 +1,584 @@
+{
+  "status": "STATIC_NEAREST_DECLARED_OWNER_ANCESTRY_ONLY_NOT_ADMISSION_OR_ZERO_COMPUTE",
+  "previous_overbroad_capture_retained": "STATIC_ANCESTRY.json",
+  "correction": "Retain partial chains; stop at nearest exactly named Codex or original Widgets owner anchor rather than walking above application ownership root. This is static bounded evidence, no live policy verdict.",
+  "observed_started_unix": 1791158245.537801,
+  "observed_ended_unix": 1791158247.0436537,
+  "observer": {
+    "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+    "session_id": 1
+  },
+  "inspection_only_candidate_anchors": [
+    {
+      "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+      "role": "Updated Codex desktop graphical application candidate",
+      "dependency_sha256": {
+        "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\resources\\app.asar": "af98213984ec4556778ef9276193d51460153fb9b30fded882d503637b84abba"
+      }
+    },
+    {
+      "path": "C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe",
+      "sha256": "53d3e7a527b7bc6ef1d0a6f9336b288cbb31b2805c8c6905ee2375061464716e",
+      "role": "Windows Widgets UI",
+      "justification": "Observed current executable at its installed absolute path; registry admits this graphical/system identity only. It does not whitelist arbitrary filenames or native inference workloads."
+    }
+  ],
+  "rows": [
+    {
+      "candidate_pid": 2736,
+      "candidate_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "chain": [
+        {
+          "pid": 2736,
+          "creation_time": 1791143998.5306,
+          "ppid": 2744,
+          "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+          "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+          "bytes": 4732720,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        }
+      ],
+      "anchor_reached": true,
+      "anchor_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "all_nodes_same_observer_owner_session": true
+    },
+    {
+      "candidate_pid": 2744,
+      "candidate_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "chain": [
+        {
+          "pid": 2744,
+          "creation_time": 1791143998.41303,
+          "ppid": 13236,
+          "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+          "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+          "bytes": 4732720,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        }
+      ],
+      "anchor_reached": true,
+      "anchor_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "all_nodes_same_observer_owner_session": true
+    },
+    {
+      "candidate_pid": 5500,
+      "candidate_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "chain": [
+        {
+          "pid": 5500,
+          "creation_time": 1791153398.1065583,
+          "ppid": 2744,
+          "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+          "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+          "bytes": 4732720,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        }
+      ],
+      "anchor_reached": true,
+      "anchor_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "all_nodes_same_observer_owner_session": true
+    },
+    {
+      "candidate_pid": 13348,
+      "candidate_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "chain": [
+        {
+          "pid": 13348,
+          "creation_time": 1791143998.5567963,
+          "ppid": 2736,
+          "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+          "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+          "bytes": 4732720,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        }
+      ],
+      "anchor_reached": true,
+      "anchor_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "all_nodes_same_observer_owner_session": true
+    },
+    {
+      "candidate_pid": 18764,
+      "candidate_path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+      "chain": [
+        {
+          "pid": 18764,
+          "creation_time": 1791143987.1594298,
+          "ppid": 15580,
+          "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+          "sha256": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+          "bytes": 4862792,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 15580,
+          "creation_time": 1791143985.1867833,
+          "ppid": 2400,
+          "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+          "sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+          "bytes": 57856,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 2400,
+          "creation_time": 1791143979.0590196,
+          "ppid": 2220,
+          "path": "C:\\Windows\\System32\\svchost.exe",
+          "sha256": "1222a44a5fdb4efde4dfcb41093648627950e7ec02d8667f1c26ccae31d922e2",
+          "bytes": 88312
+        }
+      ],
+      "anchor_reached": false,
+      "error": "OSError: [Errno 5] OpenProcess token failed"
+    },
+    {
+      "candidate_pid": 18912,
+      "candidate_path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+      "chain": [
+        {
+          "pid": 18912,
+          "creation_time": 1791143987.2162616,
+          "ppid": 18764,
+          "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+          "sha256": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+          "bytes": 4862792,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 18764,
+          "creation_time": 1791143987.1594298,
+          "ppid": 15580,
+          "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+          "sha256": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+          "bytes": 4862792,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 15580,
+          "creation_time": 1791143985.1867833,
+          "ppid": 2400,
+          "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+          "sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+          "bytes": 57856,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 2400,
+          "creation_time": 1791143979.0590196,
+          "ppid": 2220,
+          "path": "C:\\Windows\\System32\\svchost.exe",
+          "sha256": "1222a44a5fdb4efde4dfcb41093648627950e7ec02d8667f1c26ccae31d922e2",
+          "bytes": 88312
+        }
+      ],
+      "anchor_reached": false,
+      "error": "OSError: [Errno 5] OpenProcess token failed"
+    },
+    {
+      "candidate_pid": 19508,
+      "candidate_path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+      "chain": [
+        {
+          "pid": 19508,
+          "creation_time": 1791143988.357276,
+          "ppid": 18764,
+          "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+          "sha256": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+          "bytes": 4862792,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 18764,
+          "creation_time": 1791143987.1594298,
+          "ppid": 15580,
+          "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+          "sha256": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+          "bytes": 4862792,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 15580,
+          "creation_time": 1791143985.1867833,
+          "ppid": 2400,
+          "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+          "sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+          "bytes": 57856,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 2400,
+          "creation_time": 1791143979.0590196,
+          "ppid": 2220,
+          "path": "C:\\Windows\\System32\\svchost.exe",
+          "sha256": "1222a44a5fdb4efde4dfcb41093648627950e7ec02d8667f1c26ccae31d922e2",
+          "bytes": 88312
+        }
+      ],
+      "anchor_reached": false,
+      "error": "OSError: [Errno 5] OpenProcess token failed"
+    },
+    {
+      "candidate_pid": 19536,
+      "candidate_path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+      "chain": [
+        {
+          "pid": 19536,
+          "creation_time": 1791143988.3584707,
+          "ppid": 18764,
+          "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+          "sha256": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+          "bytes": 4862792,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 18764,
+          "creation_time": 1791143987.1594298,
+          "ppid": 15580,
+          "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+          "sha256": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+          "bytes": 4862792,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 15580,
+          "creation_time": 1791143985.1867833,
+          "ppid": 2400,
+          "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+          "sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+          "bytes": 57856,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 2400,
+          "creation_time": 1791143979.0590196,
+          "ppid": 2220,
+          "path": "C:\\Windows\\System32\\svchost.exe",
+          "sha256": "1222a44a5fdb4efde4dfcb41093648627950e7ec02d8667f1c26ccae31d922e2",
+          "bytes": 88312
+        }
+      ],
+      "anchor_reached": false,
+      "error": "OSError: [Errno 5] OpenProcess token failed"
+    },
+    {
+      "candidate_pid": 19652,
+      "candidate_path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+      "chain": [
+        {
+          "pid": 19652,
+          "creation_time": 1791143988.3972447,
+          "ppid": 18764,
+          "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+          "sha256": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+          "bytes": 4862792,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 18764,
+          "creation_time": 1791143987.1594298,
+          "ppid": 15580,
+          "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+          "sha256": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+          "bytes": 4862792,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 15580,
+          "creation_time": 1791143985.1867833,
+          "ppid": 2400,
+          "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+          "sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+          "bytes": 57856,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 2400,
+          "creation_time": 1791143979.0590196,
+          "ppid": 2220,
+          "path": "C:\\Windows\\System32\\svchost.exe",
+          "sha256": "1222a44a5fdb4efde4dfcb41093648627950e7ec02d8667f1c26ccae31d922e2",
+          "bytes": 88312
+        }
+      ],
+      "anchor_reached": false,
+      "error": "OSError: [Errno 5] OpenProcess token failed"
+    },
+    {
+      "candidate_pid": 19932,
+      "candidate_path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+      "chain": [
+        {
+          "pid": 19932,
+          "creation_time": 1791143988.4938412,
+          "ppid": 18764,
+          "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+          "sha256": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+          "bytes": 4862792,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 18764,
+          "creation_time": 1791143987.1594298,
+          "ppid": 15580,
+          "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+          "sha256": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+          "bytes": 4862792,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 15580,
+          "creation_time": 1791143985.1867833,
+          "ppid": 2400,
+          "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+          "sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+          "bytes": 57856,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 2400,
+          "creation_time": 1791143979.0590196,
+          "ppid": 2220,
+          "path": "C:\\Windows\\System32\\svchost.exe",
+          "sha256": "1222a44a5fdb4efde4dfcb41093648627950e7ec02d8667f1c26ccae31d922e2",
+          "bytes": 88312
+        }
+      ],
+      "anchor_reached": false,
+      "error": "OSError: [Errno 5] OpenProcess token failed"
+    },
+    {
+      "candidate_pid": 22200,
+      "candidate_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "chain": [
+        {
+          "pid": 22200,
+          "creation_time": 1791143999.610653,
+          "ppid": 2744,
+          "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+          "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+          "bytes": 4732720,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        }
+      ],
+      "anchor_reached": true,
+      "anchor_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "all_nodes_same_observer_owner_session": true
+    },
+    {
+      "candidate_pid": 22632,
+      "candidate_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "chain": [
+        {
+          "pid": 22632,
+          "creation_time": 1791143999.65735,
+          "ppid": 2744,
+          "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+          "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+          "bytes": 4732720,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        }
+      ],
+      "anchor_reached": true,
+      "anchor_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "all_nodes_same_observer_owner_session": true
+    },
+    {
+      "candidate_pid": 26056,
+      "candidate_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "chain": [
+        {
+          "pid": 26056,
+          "creation_time": 1791144005.6777682,
+          "ppid": 2744,
+          "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+          "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+          "bytes": 4732720,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        }
+      ],
+      "anchor_reached": true,
+      "anchor_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "all_nodes_same_observer_owner_session": true
+    },
+    {
+      "candidate_pid": 26064,
+      "candidate_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "chain": [
+        {
+          "pid": 26064,
+          "creation_time": 1791144005.6789844,
+          "ppid": 2744,
+          "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+          "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+          "bytes": 4732720,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        }
+      ],
+      "anchor_reached": true,
+      "anchor_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "all_nodes_same_observer_owner_session": true
+    },
+    {
+      "candidate_pid": 29588,
+      "candidate_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "chain": [
+        {
+          "pid": 29588,
+          "creation_time": 1791144011.758878,
+          "ppid": 2744,
+          "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+          "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+          "bytes": 4732720,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        }
+      ],
+      "anchor_reached": true,
+      "anchor_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "all_nodes_same_observer_owner_session": true
+    },
+    {
+      "candidate_pid": 29872,
+      "candidate_path": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+      "chain": [
+        {
+          "pid": 29872,
+          "creation_time": 1791144013.4924436,
+          "ppid": 2744,
+          "path": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+          "sha256": "623c2f1acf5f2fff3c57cf1a24596fd4083cb3ea2cfc07b741ba5d662235d310",
+          "bytes": 56534320,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        },
+        {
+          "pid": 2744,
+          "creation_time": 1791143998.41303,
+          "ppid": 13236,
+          "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+          "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+          "bytes": 4732720,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        }
+      ],
+      "anchor_reached": true,
+      "anchor_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "all_nodes_same_observer_owner_session": true
+    },
+    {
+      "candidate_pid": 32188,
+      "candidate_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "chain": [
+        {
+          "pid": 32188,
+          "creation_time": 1791144022.163594,
+          "ppid": 2744,
+          "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+          "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+          "bytes": 4732720,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        }
+      ],
+      "anchor_reached": true,
+      "anchor_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "all_nodes_same_observer_owner_session": true
+    },
+    {
+      "candidate_pid": 32496,
+      "candidate_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "chain": [
+        {
+          "pid": 32496,
+          "creation_time": 1791144022.1771803,
+          "ppid": 2744,
+          "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+          "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+          "bytes": 4732720,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        }
+      ],
+      "anchor_reached": true,
+      "anchor_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "all_nodes_same_observer_owner_session": true
+    },
+    {
+      "candidate_pid": 33640,
+      "candidate_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "chain": [
+        {
+          "pid": 33640,
+          "creation_time": 1791144021.4087336,
+          "ppid": 2744,
+          "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+          "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+          "bytes": 4732720,
+          "owner_sid_sha256": "7c687bc76b12fba6bdb1093f9d298455cfb6dc10408cc6127cd462d47d147ae6",
+          "session_id": 1
+        }
+      ],
+      "anchor_reached": true,
+      "anchor_path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "all_nodes_same_observer_owner_session": true
+    }
+  ],
+  "unique_files": [
+    {
+      "path": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+      "sha256": "b35bf062c01d73da090c60e62186dc180c2a8545cb6fc9575b4403c8fa3db49e",
+      "bytes": 4732720
+    },
+    {
+      "path": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.53\\msedgewebview2.exe",
+      "sha256": "30285e24a33be3c0b2d0a7c3909fa1cc21d2fc0f0c2ab4eb79e46a9304b4256d",
+      "bytes": 4862792
+    },
+    {
+      "path": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+      "sha256": "2ab7ed99d701862391461f3efdc8f71df8435851bf647cb4b00cb4d145887183",
+      "bytes": 57856
+    },
+    {
+      "path": "C:\\Windows\\System32\\svchost.exe",
+      "sha256": "1222a44a5fdb4efde4dfcb41093648627950e7ec02d8667f1c26ccae31d922e2",
+      "bytes": 88312
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\45309f9050f7314b\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+      "sha256": "623c2f1acf5f2fff3c57cf1a24596fd4083cb3ea2cfc07b741ba5d662235d310",
+      "bytes": 56534320
+    }
+  ],
+  "GPU_samples": 0,
+  "framework_model_imports": 0,
+  "policy_or_source_changes": 0,
+  "database_access": 0,
+  "worker_or_app_actions": 0
+}

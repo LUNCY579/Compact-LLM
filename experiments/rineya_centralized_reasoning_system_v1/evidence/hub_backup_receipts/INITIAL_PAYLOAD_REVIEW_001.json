@@ -1,0 +1,86 @@
+{
+  "actual_uploads_so_far": 0,
+  "archive": {
+    "bytes": 33925120,
+    "name": "archive.tar",
+    "sha256": "b47df9888620c9543f0bdae4ea3e6bd05fcc8c144ea7c09e26d77543d2f2fbf5"
+  },
+  "authority_sha256": "98cf7abb53bacf8fe40d3b4f74f59c44135ab39b5cf8bdddb18b2f1e9dc87eef",
+  "content_sha256": "9c7c2b8a3ebce922ddd4540f2d3b0ac04462fc80dc243633430b523a1c475fdd",
+  "exception_digest": "af9ba1a3ee453f3057833d6579932984620e05d6ddea10a10552275861a65e70",
+  "exclusions": [
+    {
+      "bytes": null,
+      "path": "primary/package/.hub_backup_local",
+      "reason": "cache_or_backup_local_state"
+    },
+    {
+      "bytes": null,
+      "path": "primary/package/__pycache__",
+      "reason": "cache_or_backup_local_state"
+    },
+    {
+      "bytes": 7590546,
+      "path": "primary/package/audits/sources/AI-Newton-source-v2-verification.tar.gz",
+      "reason": "opaque_archive_not_inspected"
+    },
+    {
+      "bytes": 7590546,
+      "path": "primary/package/audits/sources/AI-Newton-source.tar.gz",
+      "reason": "opaque_archive_not_inspected"
+    },
+    {
+      "bytes": 270336,
+      "path": "primary/package/outputs/procedure_development_v1/operations.sqlite3",
+      "reason": "database_not_opened"
+    },
+    {
+      "bytes": 270336,
+      "path": "primary/package/outputs/procedure_development_v2_recovery_qualified/operations.sqlite3",
+      "reason": "database_not_opened"
+    },
+    {
+      "bytes": 36864,
+      "path": "primary/package/outputs/tmpigyd6q25/host.sqlite3",
+      "reason": "database_not_opened"
+    },
+    {
+      "bytes": 36864,
+      "path": "primary/package/state/operations.sqlite3",
+      "reason": "database_not_opened"
+    },
+    {
+      "bytes": null,
+      "path": "primary/package/tests/__pycache__",
+      "reason": "cache_or_backup_local_state"
+    },
+    {
+      "bytes": null,
+      "path": "exception/package/__pycache__",
+      "reason": "cache_or_backup_local_state"
+    }
+  ],
+  "included_bytes": 32768771,
+  "included_files": 1520,
+  "local_archive_membership_hash_privacy_limits_validated": true,
+  "manifest_sha256": "e31cc2849a70ad580f85a0d7bcd0d56c1dd98cb29937dd8f8ee4082bd215a96e",
+  "next": "Privatefixedidentity/completeinventory/verifiedparentCAS; retainremotecommit+downloadedbyteverification.",
+  "operations_review_sha256": "9f54c4c26d7e64bfa27b41e64fc892de714fff132ae18f90a9ac29e3b1b01348",
+  "source_helper_sha256": "09efd5634209e424e2dfe711c8ff9a91d26e4cfec3926c0aa05c5d1298a368fe",
+  "sources": [
+    {
+      "git_head_provenance_only": "a374d88b9c7b70f187f41b24b3b5fe80a3e172d7",
+      "included_bytes": 25523734,
+      "included_files": 1053,
+      "prefix": "primary"
+    },
+    {
+      "git_head_provenance_only": "ff481f0ec7a25131e5fd350c9a8b0a61f1112b62",
+      "included_bytes": 7245037,
+      "included_files": 467,
+      "prefix": "exception"
+    }
+  ],
+  "status": "CONCRETE_FIRST_PAYLOAD_REVIEWED_FOR_AUTHORIZED_PRIVATE_UPLOAD",
+  "training_eligible": false
+}

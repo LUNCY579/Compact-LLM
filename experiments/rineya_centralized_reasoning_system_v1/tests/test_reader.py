@@ -1,5 +1,6 @@
 """Lightweight stdlib-only reader rejection/geometry/termination controls."""
 import copy
+import contextlib
 import hashlib
 import struct
 import math
@@ -108,7 +109,7 @@ def artifact_fixture(cfg):
     context,members,transfer,go=run_fixture(cfg);binding=context['binding'];run=context['run_identity']
     artifacts={
       'worker_result':{'evidence_class':'CPU_SYNTHETIC_INTERFACE_NOT_NATIVE','wall_seconds':.9,**context},
-      'source_launch_review':{'status':'APPROVED_FOR_READER_QUALIFICATION','binding':binding,'reviewer':'independent'},
+      'source_launch_review':{'status':'APPROVED_FOR_READER_QUALIFICATION','binding':binding,'reviewer':'/root/exception_science'},
       'supervisor_result':{**context,'job_key':run['job_key'],'owner':run['owner'],'fence':run['fence'],
           'status':'SUCCEEDED','exit_code':0,'launch_attempted':True,'worker_dispatched':True,'subprocess_creation_outcome_unknown':False,
           'reason':None,'wall_seconds':1.0,'owned_tree_exit':{'owned_tree_exited':True,'remaining_owned_pids':[],'observed_at':102.0},
@@ -147,6 +148,17 @@ def artifact_fixture(cfg):
          'native_outcome_proof_ref':{'path':proof_path,'sha256':reader.digest(receipt)}},'outcome':'SUCCEEDED','actual_native_seconds':1.0,'reservation_exceeded':False}}
     artifacts['job_outcome']={**context,'job':row};artifacts['native_outcome']=receipt
     return binding,artifacts
+
+
+def supervisor_reference(artifacts):
+    """Actual unchanged native writer bytes in a temporary CPU protocol run."""
+    output=Path(artifacts['go']['run_identity']['registration_payload']['output'])
+    output.mkdir(parents=True,exist_ok=True)
+    path=output/'SUPERVISOR_RESULT.json'
+    execution.write_new(path,artifacts['supervisor_result'])
+    reference={'path':str(path.resolve()),'sha256':reader.sha(path)}
+    artifacts['job_outcome']['job']['result']['evidence']['supervisor_receipt_sha256']=reference['sha256']
+    return {'supervisor_result':reference}
 
 
 class ReaderTests(unittest.TestCase):
@@ -288,12 +300,18 @@ class ReaderTests(unittest.TestCase):
     def test_status_only_unexecuted_native_artifacts_cannot_open_serving(self):
         binding=execution.binding(self.cfg,reader.sha(reader.CONTRACT),'a'*40)
         minimal={k:{'binding':binding,'status':'SUCCEEDED'} for k in reader.EVIDENCE_NAMES if k!='events'}
-        minimal['source_launch_review']={'status':'APPROVED_FOR_READER_QUALIFICATION','binding':binding,'reviewer':'independent'}
-        with self.assertRaises(reader.ReaderBlocked):execution.validate_native_artifacts(minimal,self.cfg,binding)
+        minimal['source_launch_review']={'status':'APPROVED_FOR_READER_QUALIFICATION','binding':binding,'reviewer':'/root/exception_science'}
+        with self.assertRaises(reader.ReaderBlocked):execution.validate_native_artifacts(minimal,self.cfg,binding,{})
 
     def test_complete_artifact_schema_and_source_tree_loader_tokenizer_rejections(self):
-        binding,artifacts=artifact_fixture(self.cfg)
-        self.assertTrue(execution.validate_native_artifacts(artifacts,self.cfg,binding))
+        with tempfile.TemporaryDirectory() as td:
+            package=Path(td)
+            with patch.object(reader,'PACKAGE',package),patch.object(execution,'PACKAGE',package):
+                binding,artifacts=artifact_fixture(self.cfg);refs=supervisor_reference(artifacts)
+                self.assertTrue(execution.validate_native_artifacts(artifacts,self.cfg,binding,refs))
+                self.check_artifact_rejections(binding,artifacts,refs)
+
+    def check_artifact_rejections(self,binding,artifacts,refs):
         mutations=[lambda a:a['supervisor_result'].update(worker_dispatched=False),
                    lambda a:a['supervisor_result'].update(exit_code=False),
                    lambda a:a['containment'].update(query_handle_closed_before_framework=False),
@@ -314,7 +332,33 @@ class ReaderTests(unittest.TestCase):
                       lambda a:a['job_outcome']['job'].update(actual_seconds=0)]
         for mutate in mutations:
             bad=copy.deepcopy(artifacts);mutate(bad)
-            with self.assertRaises(reader.ReaderBlocked):execution.validate_native_artifacts(bad,self.cfg,binding)
+            with self.assertRaises(reader.ReaderBlocked):execution.validate_native_artifacts(bad,self.cfg,binding,refs)
+
+    def test_actual_supervisor_newline_bytes_and_same_object_whitespace_drift_reject(self):
+        with tempfile.TemporaryDirectory() as td:
+            package=Path(td)
+            with patch.object(reader,'PACKAGE',package),patch.object(execution,'PACKAGE',package):
+                binding,artifacts=artifact_fixture(self.cfg);refs=supervisor_reference(artifacts)
+                path=Path(refs['supervisor_result']['path']);original=path.read_bytes()
+                self.assertTrue(original.endswith(b'\n'))
+                self.assertNotEqual(refs['supervisor_result']['sha256'],reader.digest(artifacts['supervisor_result']))
+                self.assertTrue(execution.validate_native_artifacts(artifacts,self.cfg,binding,refs))
+                for missing in (None,{}, {'supervisor_result':{'path':str(path),'sha256':'invalid'}}):
+                    with self.assertRaises(reader.ReaderBlocked):execution.validate_native_artifacts(artifacts,self.cfg,binding,missing)
+                other=path.parent/'WRONG_SUPERVISOR_RESULT.json';other.write_bytes(original)
+                with self.assertRaises(reader.ReaderBlocked):execution.validate_native_artifacts(artifacts,self.cfg,binding,
+                    {'supervisor_result':{'path':str(other),'sha256':reader.sha(other)}})
+                canonical_only=copy.deepcopy(artifacts)
+                canonical_only['job_outcome']['job']['result']['evidence']['supervisor_receipt_sha256']=reader.digest(artifacts['supervisor_result'])
+                with self.assertRaises(reader.ReaderBlocked):execution.validate_native_artifacts(canonical_only,self.cfg,binding,refs)
+                path.write_bytes(original+b' ')
+                self.assertEqual(reader.read_json(path),artifacts['supervisor_result'])
+                with self.assertRaises(reader.ReaderBlocked):execution.validate_native_artifacts(artifacts,self.cfg,binding,refs)
+                updated={'supervisor_result':{'path':str(path),'sha256':reader.sha(path)}}
+                with self.assertRaises(reader.ReaderBlocked):execution.validate_native_artifacts(artifacts,self.cfg,binding,updated)
+                path.write_bytes(original)
+                changed=copy.deepcopy(artifacts);changed['supervisor_result']['wall_seconds']=1.1
+                with self.assertRaises(reader.ReaderBlocked):execution.validate_native_artifacts(changed,self.cfg,binding,refs)
 
     def test_constant_response_or_missing_unprotected_causal_controls_reject(self):
         original,events=completion_fixture(self.cfg)
@@ -335,7 +379,8 @@ class ReaderTests(unittest.TestCase):
 
     def test_normalized_builder_aliases_reject_at_both_review_stages(self):
         aliases=['runtime_audit','/root/runtime_audit','\\root\\runtime_audit','/root/runtime_audit/',
-                 ' \\ROOT\\Runtime_Audit\\ ']
+                 ' \\ROOT\\Runtime_Audit\\ ','root','/root/','scientific_audit','data_audit','exception_builder',
+                 '/root/exception_builder/','unknown','/other/exception_science','independent']
         expected={'source_commit':'a'*40};refs={'CPU_ONLY':{'path':'CPU_ONLY','sha256':'a'*64}}
         for alias in aliases:
             source={'status':'APPROVED_FOR_READER_QUALIFICATION','binding':expected,'reviewer':alias}
@@ -343,6 +388,8 @@ class ReaderTests(unittest.TestCase):
                   'actual_native_evidence_reviewed':True,'binding':expected,'evidence_refs':refs,'reviewer':alias}
             with self.assertRaises(reader.ReaderBlocked):execution.review_matches(source,expected)
             with self.assertRaises(reader.ReaderBlocked):reader.validate_native_evidence_review(post,expected,refs)
+        for alias in ('exception_science',' /ROOT\\EXCEPTION_SCIENCE/ ','/root/exception_ops/'):
+            self.assertIn(reader.independent_reviewer_id(alias),('/root/exception_science','/root/exception_ops'))
 
     def test_invalid_source_review_path_rejects_before_inner_dispatch(self):
         args=SimpleNamespace(review=reader.PACKAGE.parent/'OUTSIDE_READER_RESULTS.json',output=reader.PACKAGE/'results/CPU_ONLY',
@@ -426,10 +473,12 @@ class ReaderTests(unittest.TestCase):
                        'containment':'CONTAINMENT_RECEIPT.json','tree_containment':'TREE_CONTAINMENT.json','go':'GO.json',
                        'runtime':'RUNTIME_RECEIPT.json','model':'MODEL_RECEIPT.json','tokenizer':'TOKENIZER_RECEIPT.json',
                        'launch_intent':'LAUNCH_INTENT.json','launch_attempt':'LAUNCH_ATTEMPT.json'}
-                for name,filename in files.items():(output/filename).write_bytes(reader.canonical(artifacts[name]))
+                for name,filename in files.items():execution.write_new(output/filename,artifacts[name])
+                self.assertTrue((output/'SUPERVISOR_RESULT.json').read_bytes().endswith(b'\n'))
+                self.assertNotEqual(reader.sha(output/'SUPERVISOR_RESULT.json'),reader.digest(artifacts['supervisor_result']))
                 (output/'EVENTS.jsonl').write_bytes(b''.join(reader.canonical(event)+b'\n' for event in events))
                 verified=execution.validate_qualification_result(result,self.cfg,'a'*40,events)
-                verified['events_sha256']=reader.sha(output/'EVENTS.jsonl');(output/'COMPLETION_VERIFICATION.json').write_bytes(reader.canonical(verified))
+                verified['events_sha256']=reader.sha(output/'EVENTS.jsonl');execution.write_new(output/'COMPLETION_VERIFICATION.json',verified)
                 clock=[100.0];store=OperationsStore(db,output/'receipts',clock=lambda:clock[0])
                 try:
                     store.register_job(run['job_key'],run['registration_payload'],run['epoch']);store.ready(run['job_key'])
@@ -437,8 +486,17 @@ class ReaderTests(unittest.TestCase):
                     store.mark_running(run['job_key'],run['owner'],lease['fence'],context['worker_identity'])
                     clock[0]=104.0;proof_ref=store.write_receipt('native_outcome_observation',run['job_key'],artifacts['native_outcome']['payload'])
                     evidence={'supervisor_receipt_sha256':reader.sha(output/'SUPERVISOR_RESULT.json'),'native_outcome_proof_ref':proof_ref}
-                    store.reconcile(run['job_key'],'SUCCEEDED',1.0,evidence,owner=run['owner'],fence=lease['fence']);store.release_lease(run['owner'],lease['fence'])
+                    store.reconcile(run['job_key'],'SUCCEEDED',1.0,evidence,owner=run['owner'],fence=lease['fence'])
+                    terminal=store.get_job(run['job_key']);events_before_retry=[dict(row) for row in store.db.execute('SELECT * FROM events ORDER BY id')]
+                    self.assertEqual(store.reconcile(run['job_key'],'SUCCEEDED',1.0,evidence,owner=run['owner'],fence=lease['fence']),terminal)
+                    self.assertEqual([dict(row) for row in store.db.execute('SELECT * FROM events ORDER BY id')],events_before_retry)
+                    store.release_lease(run['owner'],lease['fence'])
                     original_row=store.get_job(run['job_key'])
+                    original_events=[dict(row) for row in store.db.execute('SELECT * FROM events ORDER BY id')]
+                    original_cost=store.budget_snapshot(run['epoch'])['epoch_charged_seconds']
+                    original_receipt=Path(proof_ref['path']).read_bytes()
+                    self.assertEqual(original_receipt,reader.canonical(artifacts['native_outcome']))
+                    self.assertEqual(original_cost,1.0)
                 finally:store.close()
                 args=SimpleNamespace(output=output,review=source_review,job_key=run['job_key'],epoch=run['epoch'],host_db=db,
                                      contract_sha256=reader.sha(reader.CONTRACT))
@@ -446,8 +504,11 @@ class ReaderTests(unittest.TestCase):
                 def interrupted(path,value):
                     if Path(path).name=='READER_EVIDENCE_PENDING_REVIEW.json':raise reader.ReaderBlocked('CPU interrupted pending publication')
                     return publish(path,value)
-                with patch.object(execution,'committed_snapshot',return_value={'commit':'a'*40,'dirty':False}),\
-                     patch.object(execution.subprocess,'Popen',side_effect=AssertionError('model redispatch')) as spawn:
+                with contextlib.ExitStack() as guards:
+                    guards.enter_context(patch.object(execution,'committed_snapshot',return_value={'commit':'a'*40,'dirty':False}))
+                    spawn=guards.enter_context(patch.object(execution.subprocess,'Popen',side_effect=AssertionError('model redispatch')))
+                    mutations=[guards.enter_context(patch.object(OperationsStore,name,side_effect=AssertionError('recovery mutation: '+name)))
+                               for name in ('reserve','acquire_lease','reconcile','release_lease')]
                     with patch.object(execution,'publish_exact',side_effect=interrupted):
                         with self.assertRaises(reader.ReaderBlocked):execution.recover_pending_publication(args,self.cfg)
                     first=execution.recover_pending_publication(args,self.cfg);second=execution.recover_pending_publication(args,self.cfg)
@@ -455,8 +516,13 @@ class ReaderTests(unittest.TestCase):
                     Path(first['path']).write_bytes(b'{')
                     with self.assertRaises(reader.ReaderBlocked):execution.recover_pending_publication(args,self.cfg)
                     self.assertEqual(Path(first['path']).read_bytes(),b'{');spawn.assert_not_called()
+                    for mutation in mutations:mutation.assert_not_called()
                 readonly=execution.ReadOnlyOperationsStore(db,output/'receipts')
-                try:self.assertEqual(readonly.get_job(run['job_key']),original_row)
+                try:
+                    self.assertEqual(readonly.get_job(run['job_key']),original_row)
+                    self.assertEqual([dict(row) for row in readonly.db.execute('SELECT * FROM events ORDER BY id')],original_events)
+                    self.assertEqual(readonly.budget_snapshot(run['epoch'])['epoch_charged_seconds'],original_cost)
+                    self.assertEqual(Path(proof_ref['path']).read_bytes(),original_receipt)
                 finally:readonly.close()
 
     def test_quarantined_inherited_path_blocks_preflight_before_host_checks(self):
@@ -472,7 +538,7 @@ class ReaderTests(unittest.TestCase):
     def test_source_review_cannot_be_reused_as_actual_native_evidence_approval(self):
         binding={'source_commit':'a'*40};refs={'worker_result':{'path':'CPU_ONLY','sha256':'a'*64}}
         source={'status':'APPROVED_FOR_READER_QUALIFICATION','review_kind':'PRELAUNCH_SOURCE_ONLY',
-                'actual_native_evidence_reviewed':False,'binding':binding,'evidence_refs':refs,'reviewer':'independent'}
+                'actual_native_evidence_reviewed':False,'binding':binding,'evidence_refs':refs,'reviewer':'/root/exception_science'}
         with self.assertRaises(reader.ReaderBlocked):reader.validate_native_evidence_review(source,binding,refs)
         post={**source,'status':'APPROVED_READER_NATIVE_EVIDENCE','review_kind':'POST_RUN_NATIVE_EVIDENCE','actual_native_evidence_reviewed':True}
         self.assertTrue(reader.validate_native_evidence_review(post,binding,refs))

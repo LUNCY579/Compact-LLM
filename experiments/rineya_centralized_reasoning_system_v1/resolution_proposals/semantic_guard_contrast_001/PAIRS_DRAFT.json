@@ -1,0 +1,90 @@
+{
+  "status": "DRAFT_ONLY_NO_EXECUTION_OR_BANK_AUTHORITY",
+  "created": "2026-10-04",
+  "author": "Codex /root/semantic_data_resolver",
+  "classification": "OPEN_EXPOSED_DEVELOPMENT_INSTRUMENT_COUNTEREXAMPLES",
+  "hand_derived_expected_answers_are_observations": false,
+  "original_acquisition_source_sha256": "7742ae86bf5b4b2831ae4851ddbadd2356fd7e58dbbd6a5e75eb4ccf4da3e054",
+  "interpretation": "Copy literal base_lines, append pair.common_lines, replace whole lines identified by first-token event IDs using case.replace_lines. No deletion, shuffling, name generation, or executable constructor is supplied. This is a proposed declarative record set only.",
+  "solver_input_only": ["source", "query", "rules"],
+  "rules": {"cancel_mode": "remove_event", "equal_time": "contradictory", "complete": true},
+  "default_query": {"entity": "Nxxx", "time": 70},
+  "uncanceled_candidate_positions": [0, 1, 2, 3, 4, 5],
+  "candidate_binding_times": [10, 20, 30, 40, 50, 60],
+  "base_lines": [
+    "bz @0 EMPTY Nxxx",
+    "bq @10 TRANSFER Nxxx Noaa CONFIRMED",
+    "br @20 TRANSFER Nxxx Nobb CONFIRMED",
+    "bs @30 TRANSFER Nxxx Nocc CONFIRMED",
+    "bt @40 TRANSFER Nxxx Nodd CONFIRMED",
+    "bu @50 TRANSFER Nxxx Noee CONFIRMED",
+    "bv @60 TRANSFER Nxxx Noff CONFIRMED",
+    "rq @0 REQUIRE bq Ntbb",
+    "rr @0 REQUIRE br Ntbb",
+    "rs @0 REQUIRE bs Ntbb",
+    "rt @0 REQUIRE bt Ntbb",
+    "ru @0 REQUIRE bu Ntbb",
+    "rv @0 REQUIRE bv Ntbb",
+    "xq @0 EXCEPT bq Ntbb",
+    "xr @0 EXCEPT br Ntbb",
+    "xs @0 EXCEPT bs Ntbb",
+    "xt @0 EXCEPT bt Ntbb",
+    "xu @0 EXCEPT bu Ntbb",
+    "xv @0 EXCEPT bv Ntbb",
+    "fg @0 FACT Ntgg SUPPORTED",
+    "fb @0 FACT Ntbb REFUTED",
+    "fc @39 FACT Ntcc SUPPORTED",
+    "fd @39 FACT Ntcc REFUTED",
+    "fu @41 FACT Ntuu SUPPORTED",
+    "fv @41 FACT Ntuu REFUTED"
+  ],
+  "pairs": [
+    {
+      "draft_pair_label": "A",
+      "family_decoration": "empty_joint_gates",
+      "question": "Which transfer does the supported prerequisite authorize?",
+      "common_lines": [],
+      "cases": [
+        {"private_variant": "a", "replace_lines": {"rr": "rr @0 REQUIRE br Ntgg", "rt": "rt @0 REQUIRE bt Ntbb"}, "expected": {"status": "SUPPORTED", "value": "Nobb"}},
+        {"private_variant": "b", "replace_lines": {"rr": "rr @0 REQUIRE br Ntbb", "rt": "rt @0 REQUIRE bt Ntgg"}, "expected": {"status": "SUPPORTED", "value": "Nodd"}}
+      ]
+    },
+    {
+      "draft_pair_label": "B",
+      "family_decoration": "canceled_prefix_joint_gates",
+      "question": "Which supported transfer survives its exception?",
+      "common_lines": ["bp @1 TRANSFER Nxxx Nopp CONFIRMED", "cp @2 CANCEL bp"],
+      "cases": [
+        {"private_variant": "a", "replace_lines": {"rr": "rr @0 REQUIRE br Ntgg", "rt": "rt @0 REQUIRE bt Ntgg", "xr": "xr @0 EXCEPT br Ntbb", "xt": "xt @0 EXCEPT bt Ntgg"}, "expected": {"status": "SUPPORTED", "value": "Nobb"}},
+        {"private_variant": "b", "replace_lines": {"rr": "rr @0 REQUIRE br Ntgg", "rt": "rt @0 REQUIRE bt Ntgg", "xr": "xr @0 EXCEPT br Ntgg", "xt": "xt @0 EXCEPT bt Ntbb"}, "expected": {"status": "SUPPORTED", "value": "Nodd"}}
+      ]
+    },
+    {
+      "draft_pair_label": "C",
+      "family_decoration": "alias_selector_joint_gates",
+      "question": "Does the latest unresolved transfer lack eligible facts or have conflicting latest facts?",
+      "query": {"entity": "Naxx", "time": 70},
+      "common_lines": ["aq @0 ALIAS Naxx Namm", "ar @0 ALIAS Namm Nxxx", "as @0 ALIAS Noyy Nodd"],
+      "cases": [
+        {"private_variant": "a", "replace_lines": {"bt": "bt @40 TRANSFER Namm Noyy CONFIRMED", "rr": "rr @0 REQUIRE br Ntcc", "rt": "rt @0 REQUIRE bt Ntuu"}, "expected": {"status": "UNKNOWN", "value": null}},
+        {"private_variant": "b", "replace_lines": {"bt": "bt @40 TRANSFER Namm Noyy CONFIRMED", "rr": "rr @0 REQUIRE br Ntuu", "rt": "rt @0 REQUIRE bt Ntcc"}, "expected": {"status": "CONTRADICTORY", "value": null}}
+      ]
+    },
+    {
+      "draft_pair_label": "D",
+      "family_decoration": "conjunctive_joint_gates",
+      "question": "Does definite exception exclusion precede a contradictory conjunct?",
+      "common_lines": [
+        "hq @0 REQUIRE bq Ntgg", "hr @0 REQUIRE br Ntgg", "hs @0 REQUIRE bs Ntgg",
+        "ht @0 REQUIRE bt Ntgg", "hu @0 REQUIRE bu Ntgg", "hv @0 REQUIRE bv Ntgg"
+      ],
+      "cases": [
+        {"private_variant": "a", "replace_lines": {"rt": "rt @0 REQUIRE bt Ntgg", "ht": "ht @0 REQUIRE bt Ntcc", "xt": "xt @0 EXCEPT bt Ntgg"}, "expected": {"status": "REFUTED", "value": null}},
+        {"private_variant": "b", "replace_lines": {"rt": "rt @0 REQUIRE bt Ntgg", "ht": "ht @0 REQUIRE bt Ntgg", "xt": "xt @0 EXCEPT bt Ntcc"}, "expected": {"status": "CONTRADICTORY", "value": null}}
+      ]
+    }
+  ],
+  "prospective_counts": {"primary_cases": 8, "pair_parents": 4, "conservative_independent_recipe_clusters": 1, "full_solver_predictions": 8, "count_relative_predictions": 8, "three_position_predictions": 8, "aggregate_scorer_calls": 3, "standalone_scorer_probe_calls": 4, "historical_constructor_oracle_core_canonicalizer_calls": 0, "native_calls": 0},
+  "exposure": "All draft records and expected answers are already exposed development material; related variants stay in one split. No sealed, fresh-parent, confirmation, training, acquisition-population, or model-efficacy status follows.",
+  "ancestry": "Shared supplied grammar and base skeleton; conceptual/template ancestry from exposed TRAIN32 and rejected acquisition v1/v2/v3. No exact registered historical root is asserted as parent and no root fingerprint was computed. Pair variants are kin; all four pairs share one recipe cluster."
+}

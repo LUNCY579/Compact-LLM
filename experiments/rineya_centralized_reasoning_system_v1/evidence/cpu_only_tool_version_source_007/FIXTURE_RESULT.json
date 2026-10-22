@@ -1,0 +1,15 @@
+{
+  "status": "PASS_SYNTHETIC_ONLY",
+  "tests": 7,
+  "failures": 0,
+  "errors": 0,
+  "tool_framework_model_hostDB_GPU_process_actions": 0,
+  "source_candidate": 1,
+  "elapsed_before_receipt_seconds": 0.28100000000085856,
+  "whole_stage_monotonic_start": 15394.125,
+  "real_Windows_interface": "OwnedJob typed calls and WindowsPort suspended Popen argument adapter, controlled fake kernel/process; no actual Win32/UV invocation",
+  "known_gaps": [
+    "WindowsPort identity/resume/pipe/RSS actual calls were not exercised against an OS or complete fake-kernel fixture; source remains NOT_READY.",
+    "Caller receipt/clean-commit gates and trusted side-effect scope remain independently unresolved."
+  ]
+}

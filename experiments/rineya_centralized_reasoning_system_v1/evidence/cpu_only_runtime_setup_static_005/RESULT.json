@@ -1,0 +1,3008 @@
+{
+  "status": "NOT_READY_STATIC_PROOF_STOPPED_NO_EXPANSION",
+  "scope_sha256": "c319e24a1d0066c2735266824990b863a4c08faf4c4c077d55ad649712a0f64e",
+  "plan_sha256": "57397ff857168d2ae26cd716665f6356e1b3f63a16ae0fff39ff6d130d738d25",
+  "proposal_sha256": "46192021cf96bad9f3d291e5326a22886d2652b39e10577815169f9c7f86caf3",
+  "source_sha256": "5b75d19c2a01f6dc4961cbddb123aa9be72456d783242f52f20c8d7020f348d8",
+  "began_utc": "2026-10-05T18:10:27Z",
+  "cost": {
+    "selected_tool_binary_files": 25,
+    "selected_tool_binary_bytes": 101061536,
+    "selected_startup_source_data_files": 7,
+    "selected_startup_source_data_bytes": 131932,
+    "import_API_set_rows": 3,
+    "elapsed_seconds": 0.3279999999995198
+  },
+  "selected_files": [
+    {
+      "path": "C:\\Users\\clclc\\.local\\bin\\uv.exe",
+      "bytes": 68317696,
+      "sha256": "5a7ec85884c2ccb1be560cb8fac3eb890df1adf49bfcc070a270ba70401bdd68",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "ntdll.dll",
+          "advapi32.dll",
+          "kernel32.dll",
+          "bcryptprimitives.dll",
+          "api-ms-win-core-synch-l1-2-0.dll",
+          "shell32.dll",
+          "ole32.dll",
+          "userenv.dll",
+          "oleaut32.dll",
+          "user32.dll",
+          "cfgmgr32.dll",
+          "ws2_32.dll",
+          "bcrypt.dll",
+          "crypt32.dll",
+          "KERNEL32.dll",
+          "ADVAPI32.dll"
+        ],
+        "delay_imports": [],
+        "selected_dynamic_loader_import_symbols": {
+          "ntdll.dll": [],
+          "advapi32.dll": [],
+          "kernel32.dll": [
+            "GetProcAddress",
+            "CreateProcessA",
+            "LoadLibraryA",
+            "CreateProcessW",
+            "LoadLibraryExA",
+            "LoadLibraryW",
+            "LoadLibraryExW"
+          ],
+          "bcryptprimitives.dll": [],
+          "api-ms-win-core-synch-l1-2-0.dll": [],
+          "shell32.dll": [],
+          "ole32.dll": [],
+          "userenv.dll": [],
+          "oleaut32.dll": [],
+          "user32.dll": [],
+          "cfgmgr32.dll": [],
+          "ws2_32.dll": [],
+          "bcrypt.dll": [],
+          "crypt32.dll": [],
+          "KERNEL32.dll": [],
+          "ADVAPI32.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+      "bytes": 91648,
+      "sha256": "28d2965d061656abbe3a46100bd3342d1152185289445d489782a21a8cfe9b57",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "python311.dll",
+          "VCRUNTIME140.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "KERNEL32.dll"
+        ],
+        "delay_imports": [],
+        "selected_dynamic_loader_import_symbols": {
+          "python311.dll": [],
+          "VCRUNTIME140.dll": [],
+          "api-ms-win-crt-runtime-l1-1-0.dll": [],
+          "api-ms-win-crt-math-l1-1-0.dll": [],
+          "api-ms-win-crt-stdio-l1-1-0.dll": [],
+          "api-ms-win-crt-locale-l1-1-0.dll": [],
+          "api-ms-win-crt-heap-l1-1-0.dll": [],
+          "KERNEL32.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python3.dll",
+      "bytes": 55296,
+      "sha256": "0de2fcd912ceb27f93a2669bb8bfcd2b551413313f48bcf18af5ba2edbcf6f04",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [],
+        "delay_imports": [],
+        "selected_dynamic_loader_import_symbols": {}
+      }
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python311.dll",
+      "bytes": 5846016,
+      "sha256": "dabb2dec30c6a63ab4f669ed0d2ac6fe465d0d498b509a2e2b488ab0984600cf",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "VERSION.dll",
+          "WS2_32.dll",
+          "api-ms-win-core-path-l1-1-0.dll",
+          "bcrypt.dll",
+          "ADVAPI32.dll",
+          "KERNEL32.dll",
+          "VCRUNTIME140.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-process-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-conio-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll"
+        ],
+        "delay_imports": [],
+        "selected_dynamic_loader_import_symbols": {
+          "VERSION.dll": [],
+          "WS2_32.dll": [],
+          "api-ms-win-core-path-l1-1-0.dll": [],
+          "bcrypt.dll": [],
+          "ADVAPI32.dll": [],
+          "KERNEL32.dll": [
+            "LoadLibraryW",
+            "GetProcAddress",
+            "CreateProcessW",
+            "LoadLibraryExW"
+          ],
+          "VCRUNTIME140.dll": [],
+          "api-ms-win-crt-stdio-l1-1-0.dll": [],
+          "api-ms-win-crt-environment-l1-1-0.dll": [],
+          "api-ms-win-crt-locale-l1-1-0.dll": [],
+          "api-ms-win-crt-string-l1-1-0.dll": [],
+          "api-ms-win-crt-runtime-l1-1-0.dll": [],
+          "api-ms-win-crt-convert-l1-1-0.dll": [],
+          "api-ms-win-crt-math-l1-1-0.dll": [],
+          "api-ms-win-crt-time-l1-1-0.dll": [],
+          "api-ms-win-crt-process-l1-1-0.dll": [],
+          "api-ms-win-crt-heap-l1-1-0.dll": [],
+          "api-ms-win-crt-conio-l1-1-0.dll": [],
+          "api-ms-win-crt-filesystem-l1-1-0.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\vcruntime140.dll",
+      "bytes": 124544,
+      "sha256": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "KERNEL32.dll"
+        ],
+        "delay_imports": [],
+        "selected_dynamic_loader_import_symbols": {
+          "api-ms-win-crt-runtime-l1-1-0.dll": [],
+          "api-ms-win-crt-string-l1-1-0.dll": [],
+          "api-ms-win-crt-heap-l1-1-0.dll": [],
+          "api-ms-win-crt-stdio-l1-1-0.dll": [],
+          "api-ms-win-crt-convert-l1-1-0.dll": [],
+          "KERNEL32.dll": [
+            "LoadLibraryExW",
+            "GetProcAddress"
+          ]
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\vcruntime140_1.dll",
+      "bytes": 49792,
+      "sha256": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "VCRUNTIME140.dll",
+          "KERNEL32.dll"
+        ],
+        "delay_imports": [],
+        "selected_dynamic_loader_import_symbols": {
+          "api-ms-win-crt-runtime-l1-1-0.dll": [],
+          "api-ms-win-crt-string-l1-1-0.dll": [],
+          "api-ms-win-crt-heap-l1-1-0.dll": [],
+          "VCRUNTIME140.dll": [],
+          "KERNEL32.dll": [
+            "LoadLibraryExW",
+            "GetProcAddress"
+          ]
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site.py",
+      "bytes": 22987,
+      "sha256": "0577e4b379d8ef4aa0ecf88a264ef18c10f72ea72119afae36524d1aae77c9bf",
+      "kind": "startup_source_data"
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\_sitebuiltins.py",
+      "bytes": 3128,
+      "sha256": "b9388bc1d6d12ed6be12da420ab1feca40f99c0e33ec315d92b1e01cb69b25bc",
+      "kind": "startup_source_data"
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\sysconfig.py",
+      "bytes": 30315,
+      "sha256": "c16887bf792dc21f27fe5d2ca4ee271f131b7f6a88593def43be52cfbc846759",
+      "kind": "startup_source_data"
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\platform.py",
+      "bytes": 42273,
+      "sha256": "4a3cc68ba7354f8d5cc28c55315a7d77b77dcdbbaa3a092572a636b5fb5b6938",
+      "kind": "startup_source_data"
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\venv\\__init__.py",
+      "bytes": 26323,
+      "sha256": "8671bc5810ee3e52a5ae7aa3b625764688cf12513b2f8e1b0b82aaec93f118a6",
+      "kind": "startup_source_data"
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\venv\\scripts\\nt\\python.exe",
+      "bytes": 262144,
+      "sha256": "de13d8017f63cb63b0b5bfd2f25e69245c9196433a224856ca1abde1e24d0cb7",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "VERSION.dll",
+          "KERNEL32.dll"
+        ],
+        "delay_imports": [],
+        "selected_dynamic_loader_import_symbols": {
+          "VERSION.dll": [],
+          "KERNEL32.dll": [
+            "CreateProcessW",
+            "GetProcAddress",
+            "LoadLibraryExW"
+          ]
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\venv\\scripts\\nt\\pythonw.exe",
+      "bytes": 249856,
+      "sha256": "336ac41b9ea44b70b9afc3203d31503d0233989cc040ea80229c4a4c60fff556",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "VERSION.dll",
+          "KERNEL32.dll",
+          "USER32.dll"
+        ],
+        "delay_imports": [],
+        "selected_dynamic_loader_import_symbols": {
+          "VERSION.dll": [],
+          "KERNEL32.dll": [
+            "CreateProcessW",
+            "GetProcAddress",
+            "LoadLibraryExW"
+          ],
+          "USER32.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\distutils-precedence.pth",
+      "bytes": 151,
+      "sha256": "2638ce9e2500e572a5e0de7faed6661eb569d1b696fcba07b0dd223da5f5d224",
+      "kind": "startup_source_data"
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\_distutils_hack\\__init__.py",
+      "bytes": 6755,
+      "sha256": "df81e6bcba34ee3e3952f776551fb669143b9490fdd6c4caeb32609f97e985b4",
+      "kind": "startup_source_data"
+    },
+    {
+      "path": "C:\\Windows\\System32\\ntdll.dll",
+      "bytes": 2522080,
+      "sha256": "a74f7482085eab125ccc09152ab7e0b5994bcb13e1a7b29880bdbb24179ecb8b",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [],
+        "delay_imports": [],
+        "selected_dynamic_loader_import_symbols": {}
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\kernel32.dll",
+      "bytes": 844496,
+      "sha256": "8f8629741558b5df71def4e1dd8ef9645d4f806b949762c47757c50fea1a9e6d",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "api-ms-win-core-rtlsupport-l1-1-0.dll",
+          "api-ms-win-core-rtlsupport-l1-2-2.dll",
+          "ntdll.dll",
+          "KERNELBASE.dll",
+          "api-ms-win-core-processthreads-l1-1-3.dll",
+          "api-ms-win-core-processthreads-l1-1-2.dll",
+          "api-ms-win-core-processthreads-l1-1-1.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-core-registry-l1-1-0.dll",
+          "api-ms-win-core-heap-l1-1-0.dll",
+          "api-ms-win-core-heap-l2-1-0.dll",
+          "api-ms-win-core-memory-l1-1-1.dll",
+          "api-ms-win-core-memory-l1-1-0.dll",
+          "api-ms-win-core-memory-l1-1-2.dll",
+          "api-ms-win-core-handle-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-2-1.dll",
+          "api-ms-win-core-synch-l1-2-0.dll",
+          "api-ms-win-core-file-l1-1-0.dll",
+          "api-ms-win-core-file-l1-2-5.dll",
+          "api-ms-win-core-file-l1-2-0.dll",
+          "api-ms-win-core-file-l1-2-2.dll",
+          "api-ms-win-core-file-l1-2-3.dll",
+          "api-ms-win-core-file-l1-2-1.dll",
+          "api-ms-win-core-delayload-l1-1-0.dll",
+          "api-ms-win-core-io-l1-1-0.dll",
+          "api-ms-win-core-io-l1-1-1.dll",
+          "api-ms-win-core-job-l1-1-0.dll",
+          "api-ms-win-core-threadpool-legacy-l1-1-0.dll",
+          "api-ms-win-core-threadpool-private-l1-1-0.dll",
+          "api-ms-win-core-largeinteger-l1-1-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-3.dll",
+          "api-ms-win-core-libraryloader-l1-2-2.dll",
+          "api-ms-win-core-libraryloader-l1-2-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-1.dll",
+          "api-ms-win-core-libraryloader-l2-1-0.dll",
+          "api-ms-win-core-namedpipe-l1-2-2.dll",
+          "api-ms-win-core-namedpipe-l1-1-0.dll",
+          "api-ms-win-core-namedpipe-l1-2-1.dll",
+          "api-ms-win-core-datetime-l1-1-1.dll",
+          "api-ms-win-core-datetime-l1-1-0.dll",
+          "api-ms-win-core-datetime-l1-1-2.dll",
+          "api-ms-win-core-sysinfo-l1-2-0.dll",
+          "api-ms-win-core-sysinfo-l1-2-1.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-2-3.dll",
+          "api-ms-win-core-timezone-l1-1-0.dll",
+          "api-ms-win-core-localization-l1-2-0.dll",
+          "api-ms-win-core-processsnapshot-l1-1-0.dll",
+          "api-ms-win-core-processenvironment-l1-1-0.dll",
+          "api-ms-win-core-processenvironment-l1-2-0.dll",
+          "api-ms-win-core-string-l1-1-0.dll",
+          "api-ms-win-core-debug-l1-1-0.dll",
+          "api-ms-win-core-debug-l1-1-1.dll",
+          "api-ms-win-core-errorhandling-l1-1-3.dll",
+          "api-ms-win-core-errorhandling-l1-1-0.dll",
+          "api-ms-win-core-fibers-l1-1-0.dll",
+          "api-ms-win-core-util-l1-1-0.dll",
+          "api-ms-win-core-profile-l1-1-0.dll",
+          "api-ms-win-security-base-l1-1-0.dll",
+          "api-ms-win-security-base-l1-2-0.dll",
+          "api-ms-win-security-appcontainer-l1-1-0.dll",
+          "api-ms-win-core-comm-l1-1-0.dll",
+          "api-ms-win-core-realtime-l1-1-0.dll",
+          "api-ms-win-core-wow64-l1-1-1.dll",
+          "api-ms-win-core-wow64-l1-1-0.dll",
+          "api-ms-win-core-wow64-l1-1-3.dll",
+          "api-ms-win-core-systemtopology-l1-1-1.dll",
+          "api-ms-win-core-systemtopology-l1-1-0.dll",
+          "api-ms-win-core-processtopology-l1-1-0.dll",
+          "api-ms-win-core-namespace-l1-1-0.dll",
+          "api-ms-win-core-file-l2-1-2.dll",
+          "api-ms-win-core-file-l2-1-0.dll",
+          "api-ms-win-core-file-l2-1-1.dll",
+          "api-ms-win-core-file-l2-1-4.dll",
+          "api-ms-win-core-file-l2-1-3.dll",
+          "api-ms-win-core-xstate-l2-1-0.dll",
+          "api-ms-win-core-xstate-l2-1-1.dll",
+          "api-ms-win-core-xstate-l2-1-2.dll",
+          "api-ms-win-core-localization-l2-1-0.dll",
+          "api-ms-win-core-normalization-l1-1-0.dll",
+          "api-ms-win-core-heap-obsolete-l1-1-0.dll",
+          "api-ms-win-core-fibers-l2-1-0.dll",
+          "api-ms-win-core-fibers-l2-1-1.dll",
+          "api-ms-win-core-localization-private-l1-1-0.dll",
+          "api-ms-win-core-sidebyside-l1-1-0.dll",
+          "api-ms-win-core-appcompat-l1-1-0.dll",
+          "api-ms-win-core-windowserrorreporting-l1-1-1.dll",
+          "api-ms-win-core-windowserrorreporting-l1-1-2.dll",
+          "api-ms-win-core-windowserrorreporting-l1-1-0.dll",
+          "api-ms-win-core-windowserrorreporting-l1-1-3.dll",
+          "api-ms-win-core-console-l1-1-0.dll",
+          "api-ms-win-core-console-l1-2-2.dll",
+          "api-ms-win-core-console-l1-2-0.dll",
+          "api-ms-win-core-console-l1-2-1.dll",
+          "api-ms-win-core-console-l2-1-0.dll",
+          "api-ms-win-core-console-l2-2-0.dll",
+          "api-ms-win-core-console-l3-2-0.dll",
+          "api-ms-win-core-psapi-l1-1-0.dll",
+          "api-ms-win-core-psapi-ansi-l1-1-0.dll",
+          "api-ms-win-eventing-provider-l1-1-0.dll",
+          "api-ms-win-core-apiquery-l1-1-0.dll",
+          "api-ms-win-core-delayload-l1-1-1.dll",
+          "api-ms-win-core-appcompat-l1-1-1.dll"
+        ],
+        "delay_imports": [
+          "ext-ms-win-oobe-query-l1-1-0.dll",
+          "ext-ms-win-packagevirtualizationcontext-l1-1-0.dll",
+          "RPCRT4.dll"
+        ],
+        "selected_dynamic_loader_import_symbols": {
+          "api-ms-win-core-rtlsupport-l1-1-0.dll": [],
+          "api-ms-win-core-rtlsupport-l1-2-2.dll": [],
+          "ntdll.dll": [
+            "LdrGetDllDirectory",
+            "LdrSetDllDirectory"
+          ],
+          "KERNELBASE.dll": [
+            "CreateProcessAsUserA",
+            "CreateProcessInternalA",
+            "GetProcAddressForCaller",
+            "CreateProcessAsUserW",
+            "CreateProcessInternalW"
+          ],
+          "api-ms-win-core-processthreads-l1-1-3.dll": [],
+          "api-ms-win-core-processthreads-l1-1-2.dll": [],
+          "api-ms-win-core-processthreads-l1-1-1.dll": [],
+          "api-ms-win-core-processthreads-l1-1-0.dll": [
+            "CreateProcessW",
+            "CreateProcessA"
+          ],
+          "api-ms-win-core-registry-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l2-1-0.dll": [],
+          "api-ms-win-core-memory-l1-1-1.dll": [],
+          "api-ms-win-core-memory-l1-1-0.dll": [],
+          "api-ms-win-core-memory-l1-1-2.dll": [],
+          "api-ms-win-core-handle-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-2-1.dll": [],
+          "api-ms-win-core-synch-l1-2-0.dll": [],
+          "api-ms-win-core-file-l1-1-0.dll": [],
+          "api-ms-win-core-file-l1-2-5.dll": [],
+          "api-ms-win-core-file-l1-2-0.dll": [],
+          "api-ms-win-core-file-l1-2-2.dll": [],
+          "api-ms-win-core-file-l1-2-3.dll": [],
+          "api-ms-win-core-file-l1-2-1.dll": [],
+          "api-ms-win-core-delayload-l1-1-0.dll": [],
+          "api-ms-win-core-io-l1-1-0.dll": [],
+          "api-ms-win-core-io-l1-1-1.dll": [],
+          "api-ms-win-core-job-l1-1-0.dll": [],
+          "api-ms-win-core-threadpool-legacy-l1-1-0.dll": [],
+          "api-ms-win-core-threadpool-private-l1-1-0.dll": [],
+          "api-ms-win-core-largeinteger-l1-1-0.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-3.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-2.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-0.dll": [
+            "GetProcAddress",
+            "LoadLibraryExA",
+            "LoadLibraryExW"
+          ],
+          "api-ms-win-core-libraryloader-l1-2-1.dll": [
+            "LoadLibraryW",
+            "LoadLibraryA"
+          ],
+          "api-ms-win-core-libraryloader-l2-1-0.dll": [],
+          "api-ms-win-core-namedpipe-l1-2-2.dll": [],
+          "api-ms-win-core-namedpipe-l1-1-0.dll": [],
+          "api-ms-win-core-namedpipe-l1-2-1.dll": [],
+          "api-ms-win-core-datetime-l1-1-1.dll": [],
+          "api-ms-win-core-datetime-l1-1-0.dll": [],
+          "api-ms-win-core-datetime-l1-1-2.dll": [],
+          "api-ms-win-core-sysinfo-l1-2-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-2-1.dll": [],
+          "api-ms-win-core-sysinfo-l1-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-2-3.dll": [],
+          "api-ms-win-core-timezone-l1-1-0.dll": [],
+          "api-ms-win-core-localization-l1-2-0.dll": [],
+          "api-ms-win-core-processsnapshot-l1-1-0.dll": [],
+          "api-ms-win-core-processenvironment-l1-1-0.dll": [],
+          "api-ms-win-core-processenvironment-l1-2-0.dll": [],
+          "api-ms-win-core-string-l1-1-0.dll": [],
+          "api-ms-win-core-debug-l1-1-0.dll": [],
+          "api-ms-win-core-debug-l1-1-1.dll": [],
+          "api-ms-win-core-errorhandling-l1-1-3.dll": [],
+          "api-ms-win-core-errorhandling-l1-1-0.dll": [],
+          "api-ms-win-core-fibers-l1-1-0.dll": [],
+          "api-ms-win-core-util-l1-1-0.dll": [],
+          "api-ms-win-core-profile-l1-1-0.dll": [],
+          "api-ms-win-security-base-l1-1-0.dll": [],
+          "api-ms-win-security-base-l1-2-0.dll": [],
+          "api-ms-win-security-appcontainer-l1-1-0.dll": [],
+          "api-ms-win-core-comm-l1-1-0.dll": [],
+          "api-ms-win-core-realtime-l1-1-0.dll": [],
+          "api-ms-win-core-wow64-l1-1-1.dll": [],
+          "api-ms-win-core-wow64-l1-1-0.dll": [],
+          "api-ms-win-core-wow64-l1-1-3.dll": [],
+          "api-ms-win-core-systemtopology-l1-1-1.dll": [],
+          "api-ms-win-core-systemtopology-l1-1-0.dll": [],
+          "api-ms-win-core-processtopology-l1-1-0.dll": [],
+          "api-ms-win-core-namespace-l1-1-0.dll": [],
+          "api-ms-win-core-file-l2-1-2.dll": [],
+          "api-ms-win-core-file-l2-1-0.dll": [],
+          "api-ms-win-core-file-l2-1-1.dll": [],
+          "api-ms-win-core-file-l2-1-4.dll": [],
+          "api-ms-win-core-file-l2-1-3.dll": [],
+          "api-ms-win-core-xstate-l2-1-0.dll": [],
+          "api-ms-win-core-xstate-l2-1-1.dll": [],
+          "api-ms-win-core-xstate-l2-1-2.dll": [],
+          "api-ms-win-core-localization-l2-1-0.dll": [],
+          "api-ms-win-core-normalization-l1-1-0.dll": [],
+          "api-ms-win-core-heap-obsolete-l1-1-0.dll": [],
+          "api-ms-win-core-fibers-l2-1-0.dll": [],
+          "api-ms-win-core-fibers-l2-1-1.dll": [],
+          "api-ms-win-core-localization-private-l1-1-0.dll": [],
+          "api-ms-win-core-sidebyside-l1-1-0.dll": [],
+          "api-ms-win-core-appcompat-l1-1-0.dll": [],
+          "api-ms-win-core-windowserrorreporting-l1-1-1.dll": [],
+          "api-ms-win-core-windowserrorreporting-l1-1-2.dll": [],
+          "api-ms-win-core-windowserrorreporting-l1-1-0.dll": [],
+          "api-ms-win-core-windowserrorreporting-l1-1-3.dll": [],
+          "api-ms-win-core-console-l1-1-0.dll": [],
+          "api-ms-win-core-console-l1-2-2.dll": [],
+          "api-ms-win-core-console-l1-2-0.dll": [],
+          "api-ms-win-core-console-l1-2-1.dll": [],
+          "api-ms-win-core-console-l2-1-0.dll": [],
+          "api-ms-win-core-console-l2-2-0.dll": [],
+          "api-ms-win-core-console-l3-2-0.dll": [],
+          "api-ms-win-core-psapi-l1-1-0.dll": [],
+          "api-ms-win-core-psapi-ansi-l1-1-0.dll": [],
+          "api-ms-win-eventing-provider-l1-1-0.dll": [],
+          "api-ms-win-core-apiquery-l1-1-0.dll": [],
+          "api-ms-win-core-delayload-l1-1-1.dll": [],
+          "api-ms-win-core-appcompat-l1-1-1.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\KernelBase.dll",
+      "bytes": 4212112,
+      "sha256": "becad014fb8efa8cb5e314931cca92778ad42c649b12a6909632cacd68af4f40",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "ntdll.dll",
+          "api-ms-win-eventing-provider-l1-1-0.dll",
+          "api-ms-win-core-apiquery-l1-1-0.dll",
+          "api-ms-win-core-apiquery-l1-1-2.dll"
+        ],
+        "delay_imports": [
+          "ext-ms-win-advapi32-registry-l1-1-0.dll",
+          "ext-ms-win-advapi32-registry-l1-1-1.dll",
+          "ext-ms-win-kernel32-appcompat-l1-1-0.dll",
+          "ext-ms-win-ntuser-string-l1-1-0.dll",
+          "ext-ms-win-kernel32-file-l1-1-0.dll",
+          "ext-ms-win-kernel32-datetime-l1-1-0.dll",
+          "ext-ms-win-kernel32-quirks-l1-1-0.dll",
+          "ext-ms-win-kernel32-quirks-l1-1-1.dll",
+          "ext-ms-win-kernel32-sidebyside-l1-1-0.dll",
+          "ext-ms-win-mrmcorer-resmanager-l1-1-0.dll",
+          "ext-ms-win-gpapi-grouppolicy-l1-1-0.dll",
+          "ext-ms-win-ntdsapi-activedirectoryclient-l1-1-0.dll",
+          "ext-ms-win-ntdsapi-activedirectoryclient-l1-1-1.dll",
+          "ext-ms-win-shell32-shellcom-l1-1-0.dll",
+          "ext-ms-win-advapi32-ntmarta-l1-1-0.dll",
+          "ext-ms-win-security-capauthz-l1-1-1.dll",
+          "ext-ms-win-feclient-encryptedfile-l1-1-0.dll",
+          "ext-ms-win-security-efswrt-l1-1-0.dll",
+          "api-ms-win-security-sddl-l1-1-0.dll",
+          "ext-ms-onecore-appmodel-staterepository-cache-l1-1-0.dll",
+          "ext-ms-onecore-appmodel-staterepository-cache-l1-1-4.dll",
+          "ext-ms-onecore-appmodel-staterepository-cache-l1-1-2.dll",
+          "api-ms-win-security-sddlparsecond-l1-1-0.dll",
+          "api-ms-win-security-provider-l1-1-0.dll",
+          "ext-ms-win-winrt-storage-win32broker-l1-1-0.dll",
+          "api-ms-win-privacy-coreprivacysettingsstore-l1-1-0.dll",
+          "ext-ms-onecore-appmodel-deployment-internal-l1-1-2.dll",
+          "ext-ms-onecore-appmodel-deployment-internal-l1-1-0.dll",
+          "WINTRUST.dll",
+          "api-ms-win-core-winrt-error-l1-1-0.dll",
+          "OLEAUT32.dll",
+          "ext-ms-win-appmodel-daxcore-l1-1-2.dll",
+          "ext-ms-win-appmodel-daxcore-l1-1-0.dll",
+          "ext-ms-win-kernel32-errorhandling-l1-1-0.dll",
+          "ext-ms-win-kernel32-registry-l1-1-0.dll",
+          "ext-ms-win-kernelbase-processthread-l1-2-0.dll",
+          "ext-ms-win-kernelbase-processthread-l1-2-1.dll",
+          "ext-ms-win-kernelbase-processthread-l1-1-0.dll",
+          "ext-ms-win-kernelbase-processthread-l1-1-3.dll",
+          "ext-ms-win-kernelbase-processthread-l1-1-2.dll",
+          "ext-ms-win-kernelbase-processthread-l1-1-1.dll",
+          "ext-ms-win-advapi32-npusername-l1-1-0.dll",
+          "ext-ms-win-appxdeploymentclient-appxdeploy-l1-1-0.dll",
+          "ext-ms-onecore-appmodel-staterepository-internal-l1-1-4.dll",
+          "ext-ms-onecore-appmodel-staterepository-internal-l1-1-7.dll",
+          "ext-ms-onecore-appmodel-staterepository-internal-l1-1-6.dll",
+          "ext-ms-onecore-appmodel-staterepository-internal-l1-1-3.dll",
+          "ext-ms-win-appxdeploymentclient-appxdeployonecore-l1-1-0.dll",
+          "api-ms-win-core-psm-app-l1-1-0.dll",
+          "ext-ms-win-cng-rng-l1-1-1.dll",
+          "ext-ms-win-winrt-device-access-l1-1-0.dll",
+          "ext-ms-win-appmodel-appexecutionalias-l1-1-5.dll",
+          "ext-ms-win-appmodel-appexecutionalias-l1-1-0.dll",
+          "ext-ms-win-appmodel-appexecutionalias-l1-1-3.dll",
+          "ext-ms-win-appmodel-appexecutionalias-l1-1-1.dll",
+          "api-ms-win-security-isolationpolicy-l1-2-0.dll"
+        ],
+        "selected_dynamic_loader_import_symbols": {
+          "ntdll.dll": [
+            "RtlpCreateProcessRegistryInfo",
+            "RtlCreateProcessParametersEx",
+            "LdrAddDllDirectory",
+            "LdrRemoveDllDirectory",
+            "LdrGetDllDirectory",
+            "RtlCreateProcessParametersWithTemplate"
+          ],
+          "api-ms-win-eventing-provider-l1-1-0.dll": [],
+          "api-ms-win-core-apiquery-l1-1-0.dll": [],
+          "api-ms-win-core-apiquery-l1-1-2.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\advapi32.dll",
+      "bytes": 778344,
+      "sha256": "e036c9baecd170d7ef4759a5a7eb76036158cacc4cd9e3f697dbf410a3457224",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "msvcrt.dll",
+          "ntdll.dll",
+          "api-ms-win-eventing-controller-l1-1-0.dll",
+          "api-ms-win-eventing-consumer-l1-1-0.dll",
+          "api-ms-win-eventing-consumer-l1-1-1.dll",
+          "KERNELBASE.dll",
+          "SECHOST.dll",
+          "api-ms-win-service-core-l1-1-0.dll",
+          "api-ms-win-service-core-l1-1-1.dll",
+          "api-ms-win-service-core-l1-1-2.dll",
+          "api-ms-win-service-management-l1-1-0.dll",
+          "api-ms-win-service-management-l2-1-0.dll",
+          "api-ms-win-service-private-l1-1-4.dll",
+          "api-ms-win-service-private-l1-1-2.dll",
+          "api-ms-win-service-private-l1-1-3.dll",
+          "api-ms-win-service-private-l1-1-0.dll",
+          "api-ms-win-service-winsvc-l1-1-0.dll",
+          "api-ms-win-core-namedpipe-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-1.dll",
+          "api-ms-win-security-base-l1-1-0.dll",
+          "api-ms-win-security-base-private-l1-1-0.dll",
+          "api-ms-win-core-registry-l1-1-0.dll",
+          "api-ms-win-core-registry-l1-1-1.dll",
+          "api-ms-win-core-registry-l1-1-2.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-2-0.dll",
+          "KERNEL32.dll",
+          "RPCRT4.dll",
+          "api-ms-win-core-timezone-l1-1-0.dll",
+          "api-ms-win-security-audit-l1-1-1.dll",
+          "api-ms-win-security-audit-l1-1-0.dll",
+          "api-ms-win-core-apiquery-l1-1-0.dll",
+          "api-ms-win-eventing-provider-l1-1-0.dll",
+          "api-ms-win-core-pcw-l1-1-0.dll"
+        ],
+        "delay_imports": [
+          "CRYPTSP.dll",
+          "WINTRUST.dll",
+          "CRYPTBASE.dll",
+          "SspiCli.dll",
+          "USER32.dll",
+          "CRYPT32.dll",
+          "bcrypt.dll",
+          "api-ms-win-security-lsalookup-l1-1-0.dll",
+          "api-ms-win-security-credentials-l1-1-0.dll",
+          "api-ms-win-security-credentials-l2-1-0.dll",
+          "api-ms-win-security-provider-l1-1-0.dll",
+          "api-ms-win-devices-config-l1-1-1.dll"
+        ],
+        "selected_dynamic_loader_import_symbols": {
+          "msvcrt.dll": [],
+          "ntdll.dll": [],
+          "api-ms-win-eventing-controller-l1-1-0.dll": [],
+          "api-ms-win-eventing-consumer-l1-1-0.dll": [],
+          "api-ms-win-eventing-consumer-l1-1-1.dll": [],
+          "KERNELBASE.dll": [
+            "CreateProcessAsUserW",
+            "CreateProcessAsUserA"
+          ],
+          "SECHOST.dll": [],
+          "api-ms-win-service-core-l1-1-0.dll": [],
+          "api-ms-win-service-core-l1-1-1.dll": [],
+          "api-ms-win-service-core-l1-1-2.dll": [],
+          "api-ms-win-service-management-l1-1-0.dll": [],
+          "api-ms-win-service-management-l2-1-0.dll": [],
+          "api-ms-win-service-private-l1-1-4.dll": [],
+          "api-ms-win-service-private-l1-1-2.dll": [],
+          "api-ms-win-service-private-l1-1-3.dll": [],
+          "api-ms-win-service-private-l1-1-0.dll": [],
+          "api-ms-win-service-winsvc-l1-1-0.dll": [],
+          "api-ms-win-core-namedpipe-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-1.dll": [],
+          "api-ms-win-security-base-l1-1-0.dll": [],
+          "api-ms-win-security-base-private-l1-1-0.dll": [],
+          "api-ms-win-core-registry-l1-1-0.dll": [],
+          "api-ms-win-core-registry-l1-1-1.dll": [],
+          "api-ms-win-core-registry-l1-1-2.dll": [],
+          "api-ms-win-core-sysinfo-l1-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-2-0.dll": [],
+          "KERNEL32.dll": [
+            "GetProcAddress",
+            "LoadLibraryExW",
+            "LoadLibraryW",
+            "LoadLibraryA",
+            "LoadLibraryExA"
+          ],
+          "RPCRT4.dll": [],
+          "api-ms-win-core-timezone-l1-1-0.dll": [],
+          "api-ms-win-security-audit-l1-1-1.dll": [],
+          "api-ms-win-security-audit-l1-1-0.dll": [],
+          "api-ms-win-core-apiquery-l1-1-0.dll": [],
+          "api-ms-win-eventing-provider-l1-1-0.dll": [],
+          "api-ms-win-core-pcw-l1-1-0.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\bcryptprimitives.dll",
+      "bytes": 716408,
+      "sha256": "46c06a0f0323d25a32c2b16da1a4a09e9234d282be7714469b7985bb98031ab6",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "ntdll.dll",
+          "api-ms-win-core-errorhandling-l1-1-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-0.dll",
+          "api-ms-win-eventing-provider-l1-1-0.dll",
+          "api-ms-win-core-profile-l1-1-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-1.dll",
+          "api-ms-win-core-io-l1-1-0.dll",
+          "api-ms-win-core-handle-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-1-0.dll",
+          "api-ms-win-core-registry-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-core-memory-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-core-xstate-l2-1-0.dll"
+        ],
+        "delay_imports": [],
+        "selected_dynamic_loader_import_symbols": {
+          "ntdll.dll": [],
+          "api-ms-win-core-errorhandling-l1-1-0.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-0.dll": [
+            "GetProcAddress"
+          ],
+          "api-ms-win-eventing-provider-l1-1-0.dll": [],
+          "api-ms-win-core-profile-l1-1-0.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-1.dll": [
+            "LoadLibraryW"
+          ],
+          "api-ms-win-core-io-l1-1-0.dll": [],
+          "api-ms-win-core-handle-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-1-0.dll": [],
+          "api-ms-win-core-registry-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-0.dll": [],
+          "api-ms-win-core-memory-l1-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-1-0.dll": [],
+          "api-ms-win-core-xstate-l2-1-0.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\shell32.dll",
+      "bytes": 8009440,
+      "sha256": "57231c16611c536a5905395858af37120bce730092786238b1a9dfab0db7afac",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "msvcp_win.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-core-heap-l2-1-0.dll",
+          "api-ms-win-core-file-l1-1-0.dll",
+          "api-ms-win-core-errorhandling-l1-1-0.dll",
+          "api-ms-win-core-handle-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-core-string-l2-1-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-1.dll",
+          "api-ms-win-core-processenvironment-l1-1-0.dll",
+          "api-ms-win-core-string-l1-1-0.dll",
+          "api-ms-win-core-registry-l1-1-0.dll",
+          "api-ms-win-security-base-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-2-0.dll",
+          "api-ms-win-core-synch-l1-1-0.dll",
+          "api-ms-win-core-heap-l1-1-0.dll",
+          "api-ms-win-core-threadpool-l1-2-0.dll",
+          "api-ms-win-core-localization-l1-2-0.dll",
+          "api-ms-win-core-debug-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-core-memory-l1-1-0.dll",
+          "api-ms-win-core-psapi-l1-1-0.dll",
+          "api-ms-win-core-path-l1-1-0.dll",
+          "api-ms-win-core-file-l1-2-0.dll",
+          "api-ms-win-core-io-l1-1-0.dll",
+          "api-ms-win-core-datetime-l1-1-0.dll",
+          "api-ms-win-core-timezone-l1-1-0.dll",
+          "api-ms-win-core-registry-l1-1-1.dll",
+          "api-ms-win-core-profile-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-2-0.dll",
+          "api-ms-win-core-wow64-l1-1-0.dll",
+          "api-ms-win-core-wow64-l1-1-1.dll",
+          "api-ms-win-core-localization-l1-2-2.dll",
+          "api-ms-win-core-string-l2-1-1.dll",
+          "api-ms-win-core-util-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-1.dll",
+          "api-ms-win-core-file-l2-1-0.dll",
+          "api-ms-win-core-version-l1-1-1.dll",
+          "api-ms-win-core-version-l1-1-0.dll",
+          "api-ms-win-core-file-l2-1-2.dll",
+          "api-ms-win-core-io-l1-1-1.dll",
+          "api-ms-win-core-realtime-l1-1-0.dll",
+          "api-ms-win-core-localization-l2-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-2-3.dll",
+          "api-ms-win-core-memory-l1-1-1.dll",
+          "api-ms-win-eventing-provider-l1-1-0.dll",
+          "api-ms-win-eventing-classicprovider-l1-1-0.dll",
+          "api-ms-win-core-delayload-l1-1-1.dll",
+          "api-ms-win-core-delayload-l1-1-0.dll",
+          "api-ms-win-core-interlocked-l1-1-0.dll",
+          "api-ms-win-core-rtlsupport-l1-1-0.dll",
+          "api-ms-win-core-shlwapi-obsolete-l1-1-0.dll",
+          "api-ms-win-core-stringansi-l1-1-0.dll",
+          "api-ms-win-core-string-obsolete-l1-1-0.dll",
+          "api-ms-win-core-heap-obsolete-l1-1-0.dll",
+          "api-ms-win-core-localization-obsolete-l1-2-0.dll",
+          "api-ms-win-core-atoms-l1-1-0.dll",
+          "api-ms-win-core-privateprofile-l1-1-0.dll",
+          "api-ms-win-core-kernel32-legacy-l1-1-0.dll",
+          "api-ms-win-core-shlwapi-legacy-l1-1-0.dll",
+          "api-ms-win-core-kernel32-legacy-l1-1-1.dll",
+          "api-ms-win-core-threadpool-legacy-l1-1-0.dll",
+          "api-ms-win-core-kernel32-legacy-l1-1-2.dll",
+          "api-ms-win-core-url-l1-1-0.dll",
+          "api-ms-win-core-registryuserspecific-l1-1-0.dll",
+          "api-ms-win-core-sidebyside-l1-1-0.dll",
+          "api-ms-win-core-kernel32-private-l1-1-0.dll",
+          "api-ms-win-core-normalization-l1-1-0.dll",
+          "KERNELBASE.dll",
+          "USER32.dll",
+          "ntdll.dll",
+          "GDI32.dll",
+          "api-ms-win-stateseparation-helpers-l1-1-0.dll",
+          "api-ms-win-core-apiquery-l1-1-0.dll",
+          "api-ms-win-core-job-l2-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll"
+        ],
+        "delay_imports": [
+          "UIAutomationCore.DLL",
+          "api-ms-win-core-com-l1-1-0.dll",
+          "OLEAUT32.dll",
+          "USERENV.dll",
+          "api-ms-win-core-com-l1-1-1.dll",
+          "MPR.dll",
+          "api-ms-win-core-winrt-string-l1-1-0.dll",
+          "api-ms-win-core-winrt-l1-1-0.dll",
+          "api-ms-win-core-winrt-error-l1-1-0.dll",
+          "api-ms-win-security-sddl-l1-1-0.dll",
+          "RPCRT4.dll",
+          "IPHLPAPI.DLL",
+          "SspiCli.dll",
+          "api-ms-win-core-winrt-error-l1-1-1.dll",
+          "samcli.dll",
+          "netutils.dll",
+          "WS2_32.dll",
+          "api-ms-win-power-base-l1-1-0.dll",
+          "wkscli.dll",
+          "api-ms-win-core-com-l1-1-2.dll",
+          "bcrypt.dll",
+          "api-ms-win-security-lsalookup-l2-1-0.dll",
+          "api-ms-win-service-management-l1-1-0.dll",
+          "api-ms-win-service-winsvc-l1-1-0.dll",
+          "api-ms-win-shcore-obsolete-l1-1-0.dll",
+          "api-ms-win-core-registry-l2-1-0.dll",
+          "api-ms-win-security-provider-l1-1-0.dll",
+          "api-ms-win-security-lsalookup-l1-1-0.dll",
+          "api-ms-win-core-com-private-l1-1-0.dll",
+          "api-ms-win-devices-query-l1-1-0.dll",
+          "DEVOBJ.dll",
+          "CRYPTSP.dll",
+          "api-ms-win-shcore-registry-l1-1-0.dll",
+          "api-ms-win-shcore-path-l1-1-0.dll",
+          "api-ms-win-shcore-thread-l1-1-0.dll",
+          "api-ms-win-shcore-comhelpers-l1-1-0.dll",
+          "api-ms-win-shcore-unicodeansi-l1-1-0.dll",
+          "api-ms-win-shcore-registry-l1-1-1.dll",
+          "api-ms-win-shcore-stream-l1-1-0.dll",
+          "api-ms-win-shcore-taskpool-l1-1-0.dll",
+          "api-ms-win-shcore-sysinfo-l1-1-0.dll",
+          "api-ms-win-shcore-stream-winrt-l1-1-0.dll",
+          "api-ms-win-shcore-scaling-l1-1-1.dll",
+          "SHCORE.dll",
+          "api-ms-win-storage-exports-internal-l1-1-0.dll",
+          "api-ms-win-storage-exports-external-l1-1-0.dll",
+          "api-ms-win-storage-exports-external-l1-1-2.dll",
+          "api-ms-win-winrt-search-folder-l1-1-1.dll",
+          "api-ms-win-winrt-search-folder-l1-1-0.dll",
+          "api-ms-win-shlwapi-ie-l1-1-0.dll",
+          "SHLWAPI.dll",
+          "api-ms-win-shell-shellcom-l1-1-0.dll",
+          "ext-ms-onecore-appmodel-staterepository-internal-l1-1-3.dll",
+          "api-ms-win-shell-associations-l1-1-0.dll",
+          "api-ms-win-shell-associations-l1-1-3.dll",
+          "api-ms-win-shell-associations-l1-1-2.dll",
+          "api-ms-win-shell-changenotify-l1-1-0.dll",
+          "api-ms-win-shell-changenotify-l1-1-1.dll",
+          "api-ms-win-shell-shellfolders-l1-1-0.dll",
+          "api-ms-win-shell-shellfolders-l1-1-1.dll",
+          "ext-ms-win-search-folder-l1-1-1.dll",
+          "ext-ms-win-domainjoin-netjoin-l1-1-0.dll",
+          "ext-ms-win-com-ole32-l1-1-1.dll",
+          "ext-ms-win-com-ole32-l1-1-5.dll",
+          "ext-ms-win-com-ole32-l1-1-0.dll",
+          "ext-ms-win-com-ole32-l1-1-3.dll",
+          "ext-ms-win-com-ole32-l1-1-4.dll",
+          "ext-ms-win-com-sta-l1-1-0.dll",
+          "ext-ms-win-ole32-bindctx-l1-1-0.dll",
+          "ole32.dll",
+          "ADVAPI32.dll",
+          "WINMM.dll",
+          "msiltcfg.dll",
+          "DEVMGR.DLL",
+          "dwmapi.dll",
+          "urlmon.dll",
+          "WININET.dll",
+          "OLEACC.dll",
+          "DAVHLPR.dll",
+          "CSCAPI.dll",
+          "UxTheme.dll",
+          "ntshrui.dll",
+          "POWRPROF.dll",
+          "SHDOCVW.dll",
+          "EFSADU.dll",
+          "DUI70.dll",
+          "DUser.dll",
+          "WTSAPI32.dll",
+          "apphelp.dll",
+          "ADVPACK.dll",
+          "WINBRAND.dll",
+          "iertutil.dll",
+          "PROPSYS.dll",
+          "WindowsCodecs.dll",
+          "elscore.dll",
+          "credui.dll",
+          "gdiplus.dll",
+          "IMM32.dll",
+          "combase.dll",
+          "XmlLite.dll",
+          "VirtDisk.dll",
+          "WINTRUST.dll",
+          "CHARTV.dll",
+          "twinapi.appcore.dll",
+          "efswrt.dll",
+          "ext-ms-win-feclient-encryptedfile-l1-1-0.dll",
+          "edputil.dll",
+          "ext-ms-win-devmgmt-policy-l1-1-1.dll",
+          "ext-ms-win-devmgmt-policy-l1-1-0.dll",
+          "LINKINFO.dll",
+          "ext-ms-win-storage-sense-l1-2-0.dll",
+          "ext-ms-win-storage-sense-l1-2-3.dll",
+          "ext-ms-win-storage-sense-l1-2-2.dll",
+          "ext-ms-win-storage-sense-l1-1-0.dll",
+          "ext-ms-win-gui-dui70-l1-1-0.dll",
+          "cldapi.dll",
+          "api-ms-win-service-management-l2-1-0.dll",
+          "api-ms-win-security-capability-l1-1-0.dll",
+          "api-ms-win-security-lsapolicy-l1-1-0.dll",
+          "api-ms-win-power-setting-l1-1-0.dll",
+          "api-ms-win-security-cryptoapi-l1-1-0.dll",
+          "profapi.dll",
+          "HvsiFileTrust.dll",
+          "dxgi.dll",
+          "d2d1.dll",
+          "CoreMessaging.dll",
+          "MSCTF.dll",
+          "HwReqChk.dll",
+          "api-ms-win-gaming-experience-l1-1-0.dll",
+          "Wldp.dll",
+          "ext-ms-win-shell-fileplaceholder-l1-1-0.dll",
+          "Windows.Storage.dll",
+          "api-ms-win-devices-config-l1-1-1.dll",
+          "Bcp47Langs.dll",
+          "dsreg.dll",
+          "EFSUTIL.dll",
+          "CFGMGR32.dll",
+          "WINSTA.dll"
+        ],
+        "selected_dynamic_loader_import_symbols": {
+          "msvcp_win.dll": [],
+          "api-ms-win-crt-string-l1-1-0.dll": [],
+          "api-ms-win-crt-runtime-l1-1-0.dll": [],
+          "api-ms-win-crt-private-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l2-1-0.dll": [],
+          "api-ms-win-core-file-l1-1-0.dll": [],
+          "api-ms-win-core-errorhandling-l1-1-0.dll": [],
+          "api-ms-win-core-handle-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-0.dll": [
+            "CreateProcessW"
+          ],
+          "api-ms-win-core-string-l2-1-0.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-0.dll": [
+            "LoadLibraryExA",
+            "LoadLibraryExW",
+            "GetProcAddress"
+          ],
+          "api-ms-win-core-libraryloader-l1-2-1.dll": [
+            "LoadLibraryW"
+          ],
+          "api-ms-win-core-processenvironment-l1-1-0.dll": [],
+          "api-ms-win-core-string-l1-1-0.dll": [],
+          "api-ms-win-core-registry-l1-1-0.dll": [],
+          "api-ms-win-security-base-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-2-0.dll": [],
+          "api-ms-win-core-synch-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l1-1-0.dll": [],
+          "api-ms-win-core-threadpool-l1-2-0.dll": [],
+          "api-ms-win-core-localization-l1-2-0.dll": [],
+          "api-ms-win-core-debug-l1-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-1-0.dll": [],
+          "api-ms-win-core-memory-l1-1-0.dll": [],
+          "api-ms-win-core-psapi-l1-1-0.dll": [],
+          "api-ms-win-core-path-l1-1-0.dll": [],
+          "api-ms-win-core-file-l1-2-0.dll": [],
+          "api-ms-win-core-io-l1-1-0.dll": [],
+          "api-ms-win-core-datetime-l1-1-0.dll": [],
+          "api-ms-win-core-timezone-l1-1-0.dll": [],
+          "api-ms-win-core-registry-l1-1-1.dll": [],
+          "api-ms-win-core-profile-l1-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-2-0.dll": [],
+          "api-ms-win-core-wow64-l1-1-0.dll": [],
+          "api-ms-win-core-wow64-l1-1-1.dll": [],
+          "api-ms-win-core-localization-l1-2-2.dll": [],
+          "api-ms-win-core-string-l2-1-1.dll": [],
+          "api-ms-win-core-util-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-1.dll": [],
+          "api-ms-win-core-file-l2-1-0.dll": [],
+          "api-ms-win-core-version-l1-1-1.dll": [],
+          "api-ms-win-core-version-l1-1-0.dll": [],
+          "api-ms-win-core-file-l2-1-2.dll": [],
+          "api-ms-win-core-io-l1-1-1.dll": [],
+          "api-ms-win-core-realtime-l1-1-0.dll": [],
+          "api-ms-win-core-localization-l2-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-2-3.dll": [],
+          "api-ms-win-core-memory-l1-1-1.dll": [],
+          "api-ms-win-eventing-provider-l1-1-0.dll": [],
+          "api-ms-win-eventing-classicprovider-l1-1-0.dll": [],
+          "api-ms-win-core-delayload-l1-1-1.dll": [],
+          "api-ms-win-core-delayload-l1-1-0.dll": [],
+          "api-ms-win-core-interlocked-l1-1-0.dll": [],
+          "api-ms-win-core-rtlsupport-l1-1-0.dll": [],
+          "api-ms-win-core-shlwapi-obsolete-l1-1-0.dll": [],
+          "api-ms-win-core-stringansi-l1-1-0.dll": [],
+          "api-ms-win-core-string-obsolete-l1-1-0.dll": [],
+          "api-ms-win-core-heap-obsolete-l1-1-0.dll": [],
+          "api-ms-win-core-localization-obsolete-l1-2-0.dll": [],
+          "api-ms-win-core-atoms-l1-1-0.dll": [],
+          "api-ms-win-core-privateprofile-l1-1-0.dll": [],
+          "api-ms-win-core-kernel32-legacy-l1-1-0.dll": [],
+          "api-ms-win-core-shlwapi-legacy-l1-1-0.dll": [],
+          "api-ms-win-core-kernel32-legacy-l1-1-1.dll": [],
+          "api-ms-win-core-threadpool-legacy-l1-1-0.dll": [],
+          "api-ms-win-core-kernel32-legacy-l1-1-2.dll": [],
+          "api-ms-win-core-url-l1-1-0.dll": [],
+          "api-ms-win-core-registryuserspecific-l1-1-0.dll": [],
+          "api-ms-win-core-sidebyside-l1-1-0.dll": [],
+          "api-ms-win-core-kernel32-private-l1-1-0.dll": [],
+          "api-ms-win-core-normalization-l1-1-0.dll": [],
+          "KERNELBASE.dll": [],
+          "USER32.dll": [
+            "OpenClipboard"
+          ],
+          "ntdll.dll": [],
+          "GDI32.dll": [],
+          "api-ms-win-stateseparation-helpers-l1-1-0.dll": [],
+          "api-ms-win-core-apiquery-l1-1-0.dll": [],
+          "api-ms-win-core-job-l2-1-0.dll": [],
+          "api-ms-win-crt-time-l1-1-0.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\ole32.dll",
+      "bytes": 1695680,
+      "sha256": "4b81e4a4cb982915ceb3ebef0148227689306c274d5b2f6068ea143ae4db3e40",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "msvcp_win.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "ntdll.dll",
+          "KERNELBASE.dll",
+          "api-ms-win-core-libraryloader-l1-2-0.dll",
+          "api-ms-win-core-synch-l1-1-0.dll",
+          "api-ms-win-core-heap-l1-1-0.dll",
+          "api-ms-win-core-errorhandling-l1-1-0.dll",
+          "api-ms-win-core-threadpool-l1-2-0.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-core-wow64-l1-1-1.dll",
+          "api-ms-win-core-localization-l1-2-0.dll",
+          "api-ms-win-core-debug-l1-1-0.dll",
+          "api-ms-win-core-handle-l1-1-0.dll",
+          "api-ms-win-core-registry-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-2-0.dll",
+          "api-ms-win-core-file-l1-1-0.dll",
+          "api-ms-win-core-string-l2-1-0.dll",
+          "api-ms-win-core-string-l1-1-0.dll",
+          "api-ms-win-core-interlocked-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-1.dll",
+          "api-ms-win-core-memory-l1-1-0.dll",
+          "api-ms-win-core-processenvironment-l1-1-0.dll",
+          "api-ms-win-core-heap-l2-1-0.dll",
+          "api-ms-win-eventing-provider-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-1.dll",
+          "api-ms-win-core-debug-l1-1-1.dll",
+          "api-ms-win-security-base-l1-1-0.dll",
+          "api-ms-win-core-psapi-l1-1-0.dll",
+          "api-ms-win-core-file-l1-2-3.dll",
+          "api-ms-win-core-processenvironment-l1-2-0.dll",
+          "api-ms-win-core-wow64-l1-1-0.dll",
+          "api-ms-win-core-profile-l1-1-0.dll",
+          "api-ms-win-core-kernel32-legacy-l1-1-0.dll",
+          "api-ms-win-core-kernel32-private-l1-1-0.dll",
+          "api-ms-win-core-heap-obsolete-l1-1-0.dll",
+          "api-ms-win-core-stringansi-l1-1-0.dll",
+          "api-ms-win-core-atoms-l1-1-0.dll",
+          "api-ms-win-core-threadpool-legacy-l1-1-0.dll",
+          "api-ms-win-core-sidebyside-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-2-1.dll",
+          "GDI32.dll",
+          "USER32.dll",
+          "combase.dll",
+          "api-ms-win-core-psm-key-l1-1-0.dll",
+          "KERNEL32.dll",
+          "api-ms-win-core-quirks-l1-1-0.dll",
+          "api-ms-win-core-delayload-l1-1-1.dll",
+          "api-ms-win-core-delayload-l1-1-0.dll",
+          "api-ms-win-core-apiquery-l1-1-0.dll"
+        ],
+        "delay_imports": [
+          "OLEAUT32.dll",
+          "MPR.dll",
+          "api-ms-win-core-com-l1-1-0.dll",
+          "RPCRT4.dll",
+          "api-ms-win-core-winrt-string-l1-1-0.dll",
+          "api-ms-win-core-com-midlproxystub-l1-1-0.dll",
+          "api-ms-win-core-winrt-l1-1-0.dll",
+          "api-ms-win-core-winrt-error-l1-1-0.dll",
+          "api-ms-win-core-com-l1-1-2.dll",
+          "api-ms-win-core-com-private-l1-1-0.dll",
+          "api-ms-win-core-com-private-l1-3-1.dll",
+          "api-ms-win-core-com-private-l1-3-0.dll",
+          "api-ms-win-core-com-private-l1-1-1.dll",
+          "api-ms-win-core-shlwapi-legacy-l1-1-0.dll",
+          "api-ms-win-eventlog-legacy-l1-1-0.dll",
+          "api-ms-win-core-registry-l2-1-0.dll",
+          "api-ms-win-core-marshal-l1-1-0.dll",
+          "coml2.dll",
+          "ADVAPI32.dll",
+          "SHELL32.dll",
+          "ServicingCommon.dll",
+          "ext-ms-win-sxs-oleautomation-l1-1-0.dll",
+          "ext-ms-win32-subsystem-query-l1-1-0.dll",
+          "api-ms-win-core-com-l2-1-1.dll",
+          "ext-ms-win-edputil-policy-l1-1-0.dll",
+          "ext-ms-win-feclient-encryptedfile-l1-1-0.dll",
+          "api-ms-win-shell-shellfolders-l1-1-1.dll",
+          "wtdccm.dll",
+          "api-ms-win-service-management-l1-1-0.dll",
+          "api-ms-win-service-winsvc-l1-1-0.dll",
+          "api-ms-win-security-sddl-l1-1-0.dll",
+          "api-ms-win-core-com-private-l1-2-0.dll"
+        ],
+        "selected_dynamic_loader_import_symbols": {
+          "msvcp_win.dll": [],
+          "api-ms-win-crt-string-l1-1-0.dll": [],
+          "api-ms-win-crt-runtime-l1-1-0.dll": [],
+          "api-ms-win-crt-private-l1-1-0.dll": [],
+          "ntdll.dll": [],
+          "KERNELBASE.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-0.dll": [
+            "LoadLibraryExW",
+            "LoadLibraryExA",
+            "GetProcAddress"
+          ],
+          "api-ms-win-core-synch-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l1-1-0.dll": [],
+          "api-ms-win-core-errorhandling-l1-1-0.dll": [],
+          "api-ms-win-core-threadpool-l1-2-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-0.dll": [
+            "CreateProcessW"
+          ],
+          "api-ms-win-core-wow64-l1-1-1.dll": [],
+          "api-ms-win-core-localization-l1-2-0.dll": [],
+          "api-ms-win-core-debug-l1-1-0.dll": [],
+          "api-ms-win-core-handle-l1-1-0.dll": [],
+          "api-ms-win-core-registry-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-2-0.dll": [],
+          "api-ms-win-core-file-l1-1-0.dll": [],
+          "api-ms-win-core-string-l2-1-0.dll": [],
+          "api-ms-win-core-string-l1-1-0.dll": [],
+          "api-ms-win-core-interlocked-l1-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-1-0.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-1.dll": [
+            "LoadLibraryA"
+          ],
+          "api-ms-win-core-memory-l1-1-0.dll": [],
+          "api-ms-win-core-processenvironment-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l2-1-0.dll": [],
+          "api-ms-win-eventing-provider-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-1.dll": [],
+          "api-ms-win-core-debug-l1-1-1.dll": [],
+          "api-ms-win-security-base-l1-1-0.dll": [],
+          "api-ms-win-core-psapi-l1-1-0.dll": [],
+          "api-ms-win-core-file-l1-2-3.dll": [],
+          "api-ms-win-core-processenvironment-l1-2-0.dll": [],
+          "api-ms-win-core-wow64-l1-1-0.dll": [],
+          "api-ms-win-core-profile-l1-1-0.dll": [],
+          "api-ms-win-core-kernel32-legacy-l1-1-0.dll": [],
+          "api-ms-win-core-kernel32-private-l1-1-0.dll": [],
+          "api-ms-win-core-heap-obsolete-l1-1-0.dll": [],
+          "api-ms-win-core-stringansi-l1-1-0.dll": [],
+          "api-ms-win-core-atoms-l1-1-0.dll": [],
+          "api-ms-win-core-threadpool-legacy-l1-1-0.dll": [],
+          "api-ms-win-core-sidebyside-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-2-1.dll": [],
+          "GDI32.dll": [],
+          "USER32.dll": [
+            "OpenClipboard",
+            "GetOpenClipboardWindow"
+          ],
+          "combase.dll": [],
+          "api-ms-win-core-psm-key-l1-1-0.dll": [],
+          "KERNEL32.dll": [],
+          "api-ms-win-core-quirks-l1-1-0.dll": [],
+          "api-ms-win-core-delayload-l1-1-1.dll": [],
+          "api-ms-win-core-delayload-l1-1-0.dll": [],
+          "api-ms-win-core-apiquery-l1-1-0.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\userenv.dll",
+      "bytes": 224656,
+      "sha256": "e5e77885cbac08ac247fa45916eca36d2fde292a8527ac2c428f36a691827fea",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-0.dll",
+          "api-ms-win-core-heap-l1-1-0.dll",
+          "api-ms-win-core-registry-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-core-localization-l1-2-0.dll",
+          "api-ms-win-core-string-l1-1-0.dll",
+          "api-ms-win-core-debug-l1-1-0.dll",
+          "api-ms-win-security-base-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-2-0.dll",
+          "api-ms-win-core-synch-l1-1-0.dll",
+          "api-ms-win-core-errorhandling-l1-1-0.dll",
+          "api-ms-win-core-processenvironment-l1-1-0.dll",
+          "RPCRT4.dll",
+          "api-ms-win-core-handle-l1-1-0.dll",
+          "api-ms-win-core-psapi-l1-1-0.dll",
+          "api-ms-win-core-heap-l2-1-0.dll",
+          "api-ms-win-core-threadpool-l1-2-0.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-core-profile-l1-1-0.dll",
+          "api-ms-win-core-interlocked-l1-1-0.dll",
+          "api-ms-win-core-rtlsupport-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-1.dll",
+          "api-ms-win-eventing-provider-l1-1-0.dll",
+          "api-ms-win-core-file-l1-1-0.dll",
+          "api-ms-win-core-file-l2-1-0.dll",
+          "api-ms-win-core-timezone-l1-1-0.dll",
+          "api-ms-win-core-path-l1-1-0.dll",
+          "api-ms-win-security-grouppolicy-l1-1-0.dll",
+          "api-ms-win-core-kernel32-private-l1-1-1.dll",
+          "ntdll.dll",
+          "api-ms-win-core-delayload-l1-1-1.dll",
+          "api-ms-win-core-delayload-l1-1-0.dll",
+          "api-ms-win-core-apiquery-l1-1-0.dll"
+        ],
+        "delay_imports": [
+          "api-ms-win-security-sddl-l1-1-0.dll",
+          "SspiCli.dll",
+          "IPHLPAPI.DLL",
+          "DNSAPI.dll",
+          "netutils.dll",
+          "logoncli.dll",
+          "profapi.dll",
+          "api-ms-win-security-provider-l1-1-0.dll",
+          "ext-ms-win-profile-userenv-l1-1-0.dll",
+          "ext-ms-win-profile-userenv-l1-1-1.dll",
+          "cldapi.dll"
+        ],
+        "selected_dynamic_loader_import_symbols": {
+          "api-ms-win-crt-runtime-l1-1-0.dll": [],
+          "api-ms-win-crt-private-l1-1-0.dll": [],
+          "api-ms-win-crt-string-l1-1-0.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-0.dll": [
+            "GetProcAddress"
+          ],
+          "api-ms-win-core-heap-l1-1-0.dll": [],
+          "api-ms-win-core-registry-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-0.dll": [],
+          "api-ms-win-core-localization-l1-2-0.dll": [],
+          "api-ms-win-core-string-l1-1-0.dll": [],
+          "api-ms-win-core-debug-l1-1-0.dll": [],
+          "api-ms-win-security-base-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-2-0.dll": [],
+          "api-ms-win-core-synch-l1-1-0.dll": [],
+          "api-ms-win-core-errorhandling-l1-1-0.dll": [],
+          "api-ms-win-core-processenvironment-l1-1-0.dll": [],
+          "RPCRT4.dll": [],
+          "api-ms-win-core-handle-l1-1-0.dll": [],
+          "api-ms-win-core-psapi-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l2-1-0.dll": [],
+          "api-ms-win-core-threadpool-l1-2-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-1-0.dll": [],
+          "api-ms-win-core-profile-l1-1-0.dll": [],
+          "api-ms-win-core-interlocked-l1-1-0.dll": [],
+          "api-ms-win-core-rtlsupport-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-1.dll": [],
+          "api-ms-win-eventing-provider-l1-1-0.dll": [],
+          "api-ms-win-core-file-l1-1-0.dll": [],
+          "api-ms-win-core-file-l2-1-0.dll": [],
+          "api-ms-win-core-timezone-l1-1-0.dll": [],
+          "api-ms-win-core-path-l1-1-0.dll": [],
+          "api-ms-win-security-grouppolicy-l1-1-0.dll": [],
+          "api-ms-win-core-kernel32-private-l1-1-1.dll": [],
+          "ntdll.dll": [],
+          "api-ms-win-core-delayload-l1-1-1.dll": [],
+          "api-ms-win-core-delayload-l1-1-0.dll": [],
+          "api-ms-win-core-apiquery-l1-1-0.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\oleaut32.dll",
+      "bytes": 898200,
+      "sha256": "e276bb09983606469c50f0f03c9604bbeffd7d669d996526c8c1af89042fbae0",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "msvcp_win.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "ntdll.dll",
+          "combase.dll",
+          "api-ms-win-core-localization-l1-2-0.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-core-heap-l1-1-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-0.dll",
+          "api-ms-win-core-debug-l1-1-0.dll",
+          "api-ms-win-core-errorhandling-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-1-0.dll",
+          "api-ms-win-core-handle-l1-1-0.dll",
+          "api-ms-win-core-threadpool-l1-2-0.dll",
+          "api-ms-win-security-base-l1-1-0.dll",
+          "api-ms-win-core-wow64-l1-1-1.dll",
+          "api-ms-win-core-registry-l1-1-0.dll",
+          "api-ms-win-core-string-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-core-processenvironment-l1-1-0.dll",
+          "api-ms-win-core-file-l1-1-0.dll",
+          "api-ms-win-core-wow64-l1-1-0.dll",
+          "api-ms-win-core-memory-l1-1-0.dll",
+          "api-ms-win-core-processenvironment-l1-2-0.dll",
+          "api-ms-win-eventing-provider-l1-1-0.dll",
+          "RPCRT4.dll",
+          "api-ms-win-core-localization-l2-1-0.dll",
+          "api-ms-win-core-datetime-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-2-0.dll",
+          "api-ms-win-core-processthreads-l1-1-1.dll",
+          "api-ms-win-core-profile-l1-1-0.dll",
+          "api-ms-win-core-interlocked-l1-1-0.dll",
+          "api-ms-win-core-kernel32-private-l1-1-0.dll",
+          "api-ms-win-core-localization-private-l1-1-0.dll",
+          "KERNELBASE.dll",
+          "api-ms-win-core-delayload-l1-1-1.dll",
+          "api-ms-win-core-delayload-l1-1-0.dll",
+          "api-ms-win-core-apiquery-l1-1-0.dll"
+        ],
+        "delay_imports": [
+          "api-ms-win-core-com-l1-1-0.dll",
+          "api-ms-win-core-winrt-string-l1-1-0.dll",
+          "ext-ms-win-ole32-oleautomation-l1-1-0.dll",
+          "ext-ms-win-sxs-oleautomation-l1-1-0.dll"
+        ],
+        "selected_dynamic_loader_import_symbols": {
+          "msvcp_win.dll": [],
+          "api-ms-win-crt-string-l1-1-0.dll": [],
+          "api-ms-win-crt-runtime-l1-1-0.dll": [],
+          "api-ms-win-crt-private-l1-1-0.dll": [],
+          "ntdll.dll": [],
+          "combase.dll": [],
+          "api-ms-win-core-localization-l1-2-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l1-1-0.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-0.dll": [
+            "LoadLibraryExA",
+            "LoadLibraryExW",
+            "GetProcAddress"
+          ],
+          "api-ms-win-core-debug-l1-1-0.dll": [],
+          "api-ms-win-core-errorhandling-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-1-0.dll": [],
+          "api-ms-win-core-handle-l1-1-0.dll": [],
+          "api-ms-win-core-threadpool-l1-2-0.dll": [],
+          "api-ms-win-security-base-l1-1-0.dll": [],
+          "api-ms-win-core-wow64-l1-1-1.dll": [],
+          "api-ms-win-core-registry-l1-1-0.dll": [],
+          "api-ms-win-core-string-l1-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-1-0.dll": [],
+          "api-ms-win-core-processenvironment-l1-1-0.dll": [],
+          "api-ms-win-core-file-l1-1-0.dll": [],
+          "api-ms-win-core-wow64-l1-1-0.dll": [],
+          "api-ms-win-core-memory-l1-1-0.dll": [],
+          "api-ms-win-core-processenvironment-l1-2-0.dll": [],
+          "api-ms-win-eventing-provider-l1-1-0.dll": [],
+          "RPCRT4.dll": [],
+          "api-ms-win-core-localization-l2-1-0.dll": [],
+          "api-ms-win-core-datetime-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-2-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-1.dll": [],
+          "api-ms-win-core-profile-l1-1-0.dll": [],
+          "api-ms-win-core-interlocked-l1-1-0.dll": [],
+          "api-ms-win-core-kernel32-private-l1-1-0.dll": [],
+          "api-ms-win-core-localization-private-l1-1-0.dll": [],
+          "KERNELBASE.dll": [],
+          "api-ms-win-core-delayload-l1-1-1.dll": [],
+          "api-ms-win-core-delayload-l1-1-0.dll": [],
+          "api-ms-win-core-apiquery-l1-1-0.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\user32.dll",
+      "bytes": 1914656,
+      "sha256": "93a4310e66a47fa359f588c2ebda64fe3651771c6f9ff30d462a77215a2e558e",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "win32u.dll",
+          "ntdll.dll",
+          "api-ms-win-eventing-classicprovider-l1-1-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-0.dll",
+          "api-ms-win-core-synch-l1-1-0.dll",
+          "api-ms-win-core-localization-l1-2-0.dll",
+          "api-ms-win-core-registry-l1-1-0.dll",
+          "api-ms-win-core-heap-l2-1-0.dll",
+          "api-ms-win-eventing-provider-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-core-string-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-security-base-l1-1-0.dll",
+          "api-ms-win-core-handle-l1-1-0.dll",
+          "api-ms-win-core-errorhandling-l1-1-0.dll",
+          "api-ms-win-core-string-l2-1-0.dll",
+          "api-ms-win-core-synch-l1-2-0.dll",
+          "api-ms-win-core-processenvironment-l1-1-0.dll",
+          "api-ms-win-core-file-l1-1-0.dll",
+          "api-ms-win-core-threadpool-l1-2-0.dll",
+          "api-ms-win-core-heap-l1-1-0.dll",
+          "api-ms-win-core-errorhandling-l1-1-2.dll",
+          "api-ms-win-core-processthreads-l1-1-1.dll",
+          "api-ms-win-core-debug-l1-1-0.dll",
+          "api-ms-win-core-memory-l1-1-0.dll",
+          "api-ms-win-core-profile-l1-1-0.dll",
+          "api-ms-win-core-memory-l1-1-3.dll",
+          "api-ms-win-core-privateprofile-l1-1-0.dll",
+          "api-ms-win-core-atoms-l1-1-0.dll",
+          "api-ms-win-core-heap-obsolete-l1-1-0.dll",
+          "api-ms-win-core-string-obsolete-l1-1-0.dll",
+          "api-ms-win-core-localization-obsolete-l1-2-0.dll",
+          "api-ms-win-core-stringansi-l1-1-0.dll",
+          "api-ms-win-core-sidebyside-l1-1-0.dll",
+          "api-ms-win-core-kernel32-private-l1-1-0.dll",
+          "KERNELBASE.dll",
+          "api-ms-win-core-kernel32-legacy-l1-1-0.dll",
+          "api-ms-win-core-kernel32-legacy-l1-1-1.dll",
+          "api-ms-win-core-appinit-l1-1-0.dll",
+          "GDI32.dll",
+          "api-ms-win-stateseparation-helpers-l1-1-0.dll",
+          "api-ms-win-core-delayload-l1-1-1.dll",
+          "api-ms-win-core-delayload-l1-1-0.dll",
+          "api-ms-win-core-apiquery-l1-1-0.dll"
+        ],
+        "delay_imports": [
+          "api-ms-win-power-setting-l1-1-0.dll",
+          "api-ms-win-power-base-l1-1-0.dll",
+          "api-ms-win-service-private-l1-1-0.dll",
+          "MSIMG32.dll",
+          "WINSTA.dll",
+          "ext-ms-win-edputil-policy-l1-1-0.dll",
+          "ext-ms-win32-subsystem-query-l1-1-0.dll",
+          "wtdccm.dll"
+        ],
+        "selected_dynamic_loader_import_symbols": {
+          "win32u.dll": [
+            "NtUserOpenClipboard",
+            "NtUserGetOpenClipboardWindow"
+          ],
+          "ntdll.dll": [],
+          "api-ms-win-eventing-classicprovider-l1-1-0.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-0.dll": [
+            "LoadLibraryExW",
+            "GetProcAddress"
+          ],
+          "api-ms-win-core-synch-l1-1-0.dll": [],
+          "api-ms-win-core-localization-l1-2-0.dll": [],
+          "api-ms-win-core-registry-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l2-1-0.dll": [],
+          "api-ms-win-eventing-provider-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-0.dll": [
+            "CreateProcessW"
+          ],
+          "api-ms-win-core-string-l1-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-1-0.dll": [],
+          "api-ms-win-security-base-l1-1-0.dll": [],
+          "api-ms-win-core-handle-l1-1-0.dll": [],
+          "api-ms-win-core-errorhandling-l1-1-0.dll": [],
+          "api-ms-win-core-string-l2-1-0.dll": [],
+          "api-ms-win-core-synch-l1-2-0.dll": [],
+          "api-ms-win-core-processenvironment-l1-1-0.dll": [],
+          "api-ms-win-core-file-l1-1-0.dll": [],
+          "api-ms-win-core-threadpool-l1-2-0.dll": [],
+          "api-ms-win-core-heap-l1-1-0.dll": [],
+          "api-ms-win-core-errorhandling-l1-1-2.dll": [],
+          "api-ms-win-core-processthreads-l1-1-1.dll": [],
+          "api-ms-win-core-debug-l1-1-0.dll": [],
+          "api-ms-win-core-memory-l1-1-0.dll": [],
+          "api-ms-win-core-profile-l1-1-0.dll": [],
+          "api-ms-win-core-memory-l1-1-3.dll": [],
+          "api-ms-win-core-privateprofile-l1-1-0.dll": [],
+          "api-ms-win-core-atoms-l1-1-0.dll": [],
+          "api-ms-win-core-heap-obsolete-l1-1-0.dll": [],
+          "api-ms-win-core-string-obsolete-l1-1-0.dll": [],
+          "api-ms-win-core-localization-obsolete-l1-2-0.dll": [],
+          "api-ms-win-core-stringansi-l1-1-0.dll": [],
+          "api-ms-win-core-sidebyside-l1-1-0.dll": [],
+          "api-ms-win-core-kernel32-private-l1-1-0.dll": [],
+          "KERNELBASE.dll": [],
+          "api-ms-win-core-kernel32-legacy-l1-1-0.dll": [],
+          "api-ms-win-core-kernel32-legacy-l1-1-1.dll": [],
+          "api-ms-win-core-appinit-l1-1-0.dll": [],
+          "GDI32.dll": [],
+          "api-ms-win-stateseparation-helpers-l1-1-0.dll": [],
+          "api-ms-win-core-delayload-l1-1-1.dll": [],
+          "api-ms-win-core-delayload-l1-1-0.dll": [],
+          "api-ms-win-core-apiquery-l1-1-0.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\cfgmgr32.dll",
+      "bytes": 344488,
+      "sha256": "3842054f8a402a8fc6906c31cff6cc6f4eb2bf4b3443a12b363f0469c72cd9bc",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "api-ms-win-core-crt-l1-1-0.dll",
+          "api-ms-win-core-crt-l2-1-0.dll",
+          "ntdll.dll",
+          "api-ms-win-core-libraryloader-l1-2-0.dll",
+          "api-ms-win-core-heap-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-1-0.dll",
+          "api-ms-win-core-errorhandling-l1-1-0.dll",
+          "api-ms-win-core-handle-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-2-0.dll",
+          "api-ms-win-core-io-l1-1-0.dll",
+          "api-ms-win-core-threadpool-l1-2-0.dll",
+          "api-ms-win-core-heap-l2-1-0.dll",
+          "api-ms-win-core-registry-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-core-string-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-security-base-l1-1-0.dll",
+          "api-ms-win-core-wow64-l1-1-0.dll",
+          "api-ms-win-core-localization-l1-2-0.dll",
+          "api-ms-win-eventing-provider-l1-1-0.dll",
+          "api-ms-win-core-util-l1-1-0.dll",
+          "api-ms-win-core-profile-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-core-processenvironment-l1-1-0.dll",
+          "api-ms-win-core-file-l1-1-0.dll",
+          "api-ms-win-core-memory-l1-1-0.dll",
+          "api-ms-win-core-delayload-l1-1-1.dll",
+          "api-ms-win-core-delayload-l1-1-0.dll"
+        ],
+        "delay_imports": [
+          "api-ms-win-security-sddl-l1-1-0.dll",
+          "RPCRT4.dll"
+        ],
+        "selected_dynamic_loader_import_symbols": {
+          "api-ms-win-core-crt-l1-1-0.dll": [],
+          "api-ms-win-core-crt-l2-1-0.dll": [],
+          "ntdll.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-0.dll": [
+            "GetProcAddress",
+            "LoadLibraryExW"
+          ],
+          "api-ms-win-core-heap-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-1-0.dll": [],
+          "api-ms-win-core-errorhandling-l1-1-0.dll": [],
+          "api-ms-win-core-handle-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-2-0.dll": [],
+          "api-ms-win-core-io-l1-1-0.dll": [],
+          "api-ms-win-core-threadpool-l1-2-0.dll": [],
+          "api-ms-win-core-heap-l2-1-0.dll": [],
+          "api-ms-win-core-registry-l1-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-1-0.dll": [],
+          "api-ms-win-core-string-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-0.dll": [],
+          "api-ms-win-security-base-l1-1-0.dll": [],
+          "api-ms-win-core-wow64-l1-1-0.dll": [],
+          "api-ms-win-core-localization-l1-2-0.dll": [],
+          "api-ms-win-eventing-provider-l1-1-0.dll": [],
+          "api-ms-win-core-util-l1-1-0.dll": [],
+          "api-ms-win-core-profile-l1-1-0.dll": [],
+          "api-ms-win-crt-runtime-l1-1-0.dll": [],
+          "api-ms-win-core-processenvironment-l1-1-0.dll": [],
+          "api-ms-win-core-file-l1-1-0.dll": [],
+          "api-ms-win-core-memory-l1-1-0.dll": [],
+          "api-ms-win-core-delayload-l1-1-1.dll": [],
+          "api-ms-win-core-delayload-l1-1-0.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\ws2_32.dll",
+      "bytes": 534592,
+      "sha256": "535d7a8336ddbae77b1f2c68339e5e7dbeb5f06445d6e42b19c794ef0e26f6a3",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "ntdll.dll",
+          "api-ms-win-core-errorhandling-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-core-string-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-2-0.dll",
+          "api-ms-win-core-handle-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-1-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-0.dll",
+          "api-ms-win-core-threadpool-l1-2-0.dll",
+          "api-ms-win-security-base-l1-1-0.dll",
+          "api-ms-win-eventing-provider-l1-1-0.dll",
+          "api-ms-win-core-heap-l1-1-0.dll",
+          "api-ms-win-core-localization-l1-2-0.dll",
+          "api-ms-win-core-debug-l1-1-0.dll",
+          "api-ms-win-core-registry-l1-1-0.dll",
+          "api-ms-win-core-processenvironment-l1-1-0.dll",
+          "api-ms-win-core-heap-l2-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-core-file-l1-1-0.dll",
+          "api-ms-win-core-wow64-l1-1-0.dll",
+          "api-ms-win-core-io-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-1.dll",
+          "api-ms-win-core-profile-l1-1-0.dll",
+          "api-ms-win-core-interlocked-l1-1-0.dll",
+          "api-ms-win-core-string-obsolete-l1-1-0.dll",
+          "api-ms-win-core-kernel32-legacy-l1-1-0.dll",
+          "RPCRT4.dll",
+          "api-ms-win-core-delayload-l1-1-1.dll",
+          "api-ms-win-core-delayload-l1-1-0.dll",
+          "api-ms-win-core-apiquery-l1-1-0.dll"
+        ],
+        "delay_imports": [
+          "api-ms-win-service-winsvc-l1-1-0.dll",
+          "api-ms-win-service-management-l1-1-0.dll",
+          "NSI.dll",
+          "ext-ms-win-rtcore-ntuser-window-ext-l1-1-0.dll"
+        ],
+        "selected_dynamic_loader_import_symbols": {
+          "api-ms-win-crt-string-l1-1-0.dll": [],
+          "api-ms-win-crt-runtime-l1-1-0.dll": [],
+          "api-ms-win-crt-private-l1-1-0.dll": [],
+          "ntdll.dll": [],
+          "api-ms-win-core-errorhandling-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-0.dll": [],
+          "api-ms-win-core-string-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-2-0.dll": [],
+          "api-ms-win-core-handle-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-1-0.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-0.dll": [
+            "GetProcAddress",
+            "LoadLibraryExW",
+            "LoadLibraryExA"
+          ],
+          "api-ms-win-core-threadpool-l1-2-0.dll": [],
+          "api-ms-win-security-base-l1-1-0.dll": [],
+          "api-ms-win-eventing-provider-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l1-1-0.dll": [],
+          "api-ms-win-core-localization-l1-2-0.dll": [],
+          "api-ms-win-core-debug-l1-1-0.dll": [],
+          "api-ms-win-core-registry-l1-1-0.dll": [],
+          "api-ms-win-core-processenvironment-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l2-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-1-0.dll": [],
+          "api-ms-win-core-file-l1-1-0.dll": [],
+          "api-ms-win-core-wow64-l1-1-0.dll": [],
+          "api-ms-win-core-io-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-1.dll": [],
+          "api-ms-win-core-profile-l1-1-0.dll": [],
+          "api-ms-win-core-interlocked-l1-1-0.dll": [],
+          "api-ms-win-core-string-obsolete-l1-1-0.dll": [],
+          "api-ms-win-core-kernel32-legacy-l1-1-0.dll": [],
+          "RPCRT4.dll": [],
+          "api-ms-win-core-delayload-l1-1-1.dll": [],
+          "api-ms-win-core-delayload-l1-1-0.dll": [],
+          "api-ms-win-core-apiquery-l1-1-0.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\bcrypt.dll",
+      "bytes": 183376,
+      "sha256": "b5691584e857caf0c6c590dda13779966b383d66be3c87d5b3cbbc2f5005495b",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "ntdll.dll",
+          "api-ms-win-core-libraryloader-l1-2-0.dll",
+          "api-ms-win-core-errorhandling-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-core-handle-l1-1-0.dll",
+          "api-ms-win-security-base-l1-1-0.dll",
+          "api-ms-win-eventing-provider-l1-1-0.dll",
+          "api-ms-win-core-psapi-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-core-xstate-l2-1-0.dll",
+          "api-ms-win-core-heap-l1-1-0.dll",
+          "api-ms-win-core-threadpool-l1-2-0.dll",
+          "api-ms-win-core-threadpool-private-l1-1-0.dll",
+          "api-ms-win-core-threadpool-legacy-l1-1-0.dll",
+          "api-ms-win-core-memory-l1-1-0.dll",
+          "api-ms-win-core-delayload-l1-1-1.dll",
+          "api-ms-win-core-delayload-l1-1-0.dll",
+          "api-ms-win-core-heap-l2-1-0.dll",
+          "api-ms-win-service-private-l1-1-0.dll"
+        ],
+        "delay_imports": [
+          "bcryptPrimitives.dll"
+        ],
+        "selected_dynamic_loader_import_symbols": {
+          "ntdll.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-0.dll": [
+            "GetProcAddress",
+            "LoadLibraryExW"
+          ],
+          "api-ms-win-core-errorhandling-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-0.dll": [],
+          "api-ms-win-core-handle-l1-1-0.dll": [],
+          "api-ms-win-security-base-l1-1-0.dll": [],
+          "api-ms-win-eventing-provider-l1-1-0.dll": [],
+          "api-ms-win-core-psapi-l1-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-1-0.dll": [],
+          "api-ms-win-core-xstate-l2-1-0.dll": [],
+          "api-ms-win-core-heap-l1-1-0.dll": [],
+          "api-ms-win-core-threadpool-l1-2-0.dll": [],
+          "api-ms-win-core-threadpool-private-l1-1-0.dll": [],
+          "api-ms-win-core-threadpool-legacy-l1-1-0.dll": [],
+          "api-ms-win-core-memory-l1-1-0.dll": [],
+          "api-ms-win-core-delayload-l1-1-1.dll": [],
+          "api-ms-win-core-delayload-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l2-1-0.dll": [],
+          "api-ms-win-service-private-l1-1-0.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\crypt32.dll",
+      "bytes": 1559296,
+      "sha256": "c720af58976a3624dbc5b74ec4e470d8fec8a4645dc06947906c49e929862dc3",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-core-errorhandling-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-1-0.dll",
+          "api-ms-win-core-registry-l1-1-0.dll",
+          "api-ms-win-core-processenvironment-l1-1-0.dll",
+          "api-ms-win-core-heap-l2-1-0.dll",
+          "api-ms-win-core-version-l1-1-0.dll",
+          "api-ms-win-core-rtlsupport-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-1.dll",
+          "api-ms-win-core-profile-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-core-interlocked-l1-1-0.dll",
+          "api-ms-win-core-debug-l1-1-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-0.dll",
+          "api-ms-win-core-file-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-2-0.dll",
+          "api-ms-win-eventing-provider-l1-1-0.dll",
+          "api-ms-win-core-localization-l1-2-0.dll",
+          "api-ms-win-core-string-l1-1-0.dll",
+          "api-ms-win-core-handle-l1-1-0.dll",
+          "api-ms-win-core-psapi-l1-1-0.dll",
+          "api-ms-win-core-heap-l1-1-0.dll",
+          "api-ms-win-core-threadpool-l1-2-0.dll",
+          "api-ms-win-core-timezone-l1-1-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-1.dll",
+          "api-ms-win-core-datetime-l1-1-0.dll",
+          "api-ms-win-core-memory-l1-1-0.dll",
+          "api-ms-win-core-file-l1-2-0.dll",
+          "api-ms-win-core-threadpool-private-l1-1-0.dll",
+          "api-ms-win-security-grouppolicy-l1-1-0.dll",
+          "api-ms-win-core-threadpool-legacy-l1-1-0.dll",
+          "api-ms-win-core-kernel32-legacy-l1-1-0.dll",
+          "api-ms-win-core-heap-obsolete-l1-1-0.dll",
+          "api-ms-win-core-localization-obsolete-l1-2-0.dll",
+          "api-ms-win-core-string-obsolete-l1-1-0.dll",
+          "ntdll.dll",
+          "api-ms-win-core-delayload-l1-1-1.dll",
+          "api-ms-win-core-delayload-l1-1-0.dll"
+        ],
+        "delay_imports": [
+          "api-ms-win-power-setting-l1-1-0.dll",
+          "api-ms-win-security-base-l1-1-0.dll",
+          "RPCRT4.dll",
+          "api-ms-win-security-sddl-l1-1-0.dll",
+          "api-ms-win-security-base-l1-2-0.dll",
+          "ncrypt.dll",
+          "bcrypt.dll",
+          "SspiCli.dll",
+          "api-ms-win-security-base-l1-2-1.dll",
+          "CRYPTSP.dll",
+          "api-ms-win-core-registry-private-l1-1-0.dll",
+          "profapi.dll",
+          "MSASN1.dll",
+          "DPAPI.dll",
+          "Cabinet.dll",
+          "api-ms-win-service-management-l1-1-0.dll",
+          "api-ms-win-service-management-l2-1-0.dll",
+          "api-ms-win-service-winsvc-l1-1-0.dll",
+          "api-ms-win-service-private-l1-1-0.dll"
+        ],
+        "selected_dynamic_loader_import_symbols": {
+          "api-ms-win-crt-runtime-l1-1-0.dll": [],
+          "api-ms-win-crt-private-l1-1-0.dll": [],
+          "api-ms-win-crt-string-l1-1-0.dll": [],
+          "api-ms-win-core-errorhandling-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-1-0.dll": [],
+          "api-ms-win-core-registry-l1-1-0.dll": [],
+          "api-ms-win-core-processenvironment-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l2-1-0.dll": [],
+          "api-ms-win-core-version-l1-1-0.dll": [],
+          "api-ms-win-core-rtlsupport-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-1.dll": [],
+          "api-ms-win-core-profile-l1-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-1-0.dll": [],
+          "api-ms-win-core-interlocked-l1-1-0.dll": [],
+          "api-ms-win-core-debug-l1-1-0.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-0.dll": [
+            "LoadLibraryExW",
+            "GetProcAddress"
+          ],
+          "api-ms-win-core-file-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-2-0.dll": [],
+          "api-ms-win-eventing-provider-l1-1-0.dll": [],
+          "api-ms-win-core-localization-l1-2-0.dll": [],
+          "api-ms-win-core-string-l1-1-0.dll": [],
+          "api-ms-win-core-handle-l1-1-0.dll": [],
+          "api-ms-win-core-psapi-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l1-1-0.dll": [],
+          "api-ms-win-core-threadpool-l1-2-0.dll": [],
+          "api-ms-win-core-timezone-l1-1-0.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-1.dll": [
+            "LoadLibraryA"
+          ],
+          "api-ms-win-core-datetime-l1-1-0.dll": [],
+          "api-ms-win-core-memory-l1-1-0.dll": [],
+          "api-ms-win-core-file-l1-2-0.dll": [],
+          "api-ms-win-core-threadpool-private-l1-1-0.dll": [],
+          "api-ms-win-security-grouppolicy-l1-1-0.dll": [],
+          "api-ms-win-core-threadpool-legacy-l1-1-0.dll": [],
+          "api-ms-win-core-kernel32-legacy-l1-1-0.dll": [],
+          "api-ms-win-core-heap-obsolete-l1-1-0.dll": [],
+          "api-ms-win-core-localization-obsolete-l1-2-0.dll": [],
+          "api-ms-win-core-string-obsolete-l1-1-0.dll": [],
+          "ntdll.dll": [],
+          "api-ms-win-core-delayload-l1-1-1.dll": [],
+          "api-ms-win-core-delayload-l1-1-0.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\version.dll",
+      "bytes": 55192,
+      "sha256": "cea99f212af557a9613150c5509631403ed0f05f5d9a06ac42039bd59b40e39a",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "msvcrt.dll",
+          "api-ms-win-core-errorhandling-l1-1-0.dll",
+          "api-ms-win-core-version-l1-1-0.dll",
+          "api-ms-win-core-localization-l1-2-0.dll",
+          "api-ms-win-core-version-l1-1-1.dll",
+          "api-ms-win-core-file-l1-1-0.dll",
+          "api-ms-win-core-handle-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-0.dll",
+          "api-ms-win-core-heap-l2-1-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-1.dll",
+          "api-ms-win-core-string-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-2-0.dll",
+          "api-ms-win-core-profile-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-core-rtlsupport-l1-1-0.dll",
+          "api-ms-win-core-versionansi-l1-1-0.dll",
+          "api-ms-win-core-versionansi-l1-1-1.dll",
+          "api-ms-win-core-version-private-l1-1-0.dll",
+          "KERNELBASE.dll",
+          "ntdll.dll",
+          "KERNEL32.dll"
+        ],
+        "delay_imports": [],
+        "selected_dynamic_loader_import_symbols": {
+          "msvcrt.dll": [],
+          "api-ms-win-core-errorhandling-l1-1-0.dll": [],
+          "api-ms-win-core-version-l1-1-0.dll": [],
+          "api-ms-win-core-localization-l1-2-0.dll": [],
+          "api-ms-win-core-version-l1-1-1.dll": [],
+          "api-ms-win-core-file-l1-1-0.dll": [],
+          "api-ms-win-core-handle-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-0.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-0.dll": [
+            "GetProcAddress"
+          ],
+          "api-ms-win-core-heap-l2-1-0.dll": [],
+          "api-ms-win-core-libraryloader-l1-2-1.dll": [
+            "LoadLibraryW"
+          ],
+          "api-ms-win-core-string-l1-1-0.dll": [],
+          "api-ms-win-core-synch-l1-2-0.dll": [],
+          "api-ms-win-core-profile-l1-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-1-0.dll": [],
+          "api-ms-win-core-rtlsupport-l1-1-0.dll": [],
+          "api-ms-win-core-versionansi-l1-1-0.dll": [],
+          "api-ms-win-core-versionansi-l1-1-1.dll": [],
+          "api-ms-win-core-version-private-l1-1-0.dll": [],
+          "KERNELBASE.dll": [],
+          "ntdll.dll": [],
+          "KERNEL32.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\ucrtbase.dll",
+      "bytes": 1377512,
+      "sha256": "5c52e3a303baaac0e0af8bd9b96134993da34bc9d834a31ef37e1d2cdc7fe192",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [
+          "api-ms-win-core-errorhandling-l1-1-0.dll",
+          "api-ms-win-core-heap-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-core-libraryloader-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-2-0.dll",
+          "api-ms-win-core-kernel32-legacy-l1-1-1.dll",
+          "api-ms-win-core-synch-l1-1-0.dll",
+          "api-ms-win-core-debug-l1-1-0.dll",
+          "api-ms-win-core-processenvironment-l1-1-0.dll",
+          "api-ms-win-core-file-l1-1-0.dll",
+          "api-ms-win-core-string-l1-1-0.dll",
+          "api-ms-win-core-memory-l1-1-0.dll",
+          "api-ms-win-core-fibers-l1-1-0.dll",
+          "api-ms-win-core-file-l1-2-0.dll",
+          "api-ms-win-core-localization-l1-2-0.dll",
+          "api-ms-win-core-fibers-l1-1-1.dll",
+          "api-ms-win-core-datetime-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-core-rtlsupport-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-1.dll",
+          "api-ms-win-core-console-l1-1-0.dll",
+          "api-ms-win-core-handle-l1-1-0.dll",
+          "api-ms-win-core-namedpipe-l1-1-0.dll",
+          "api-ms-win-core-timezone-l1-1-0.dll",
+          "api-ms-win-core-file-l2-1-0.dll",
+          "api-ms-win-core-synch-l1-2-0.dll",
+          "api-ms-win-core-profile-l1-1-0.dll",
+          "api-ms-win-core-util-l1-1-0.dll",
+          "api-ms-win-core-interlocked-l1-1-0.dll"
+        ],
+        "delay_imports": [],
+        "selected_dynamic_loader_import_symbols": {
+          "api-ms-win-core-errorhandling-l1-1-0.dll": [],
+          "api-ms-win-core-heap-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-0.dll": [
+            "CreateProcessW"
+          ],
+          "api-ms-win-core-libraryloader-l1-1-0.dll": [
+            "LoadLibraryExW",
+            "GetProcAddress"
+          ],
+          "api-ms-win-core-sysinfo-l1-2-0.dll": [],
+          "api-ms-win-core-kernel32-legacy-l1-1-1.dll": [],
+          "api-ms-win-core-synch-l1-1-0.dll": [],
+          "api-ms-win-core-debug-l1-1-0.dll": [],
+          "api-ms-win-core-processenvironment-l1-1-0.dll": [],
+          "api-ms-win-core-file-l1-1-0.dll": [],
+          "api-ms-win-core-string-l1-1-0.dll": [],
+          "api-ms-win-core-memory-l1-1-0.dll": [],
+          "api-ms-win-core-fibers-l1-1-0.dll": [],
+          "api-ms-win-core-file-l1-2-0.dll": [],
+          "api-ms-win-core-localization-l1-2-0.dll": [],
+          "api-ms-win-core-fibers-l1-1-1.dll": [],
+          "api-ms-win-core-datetime-l1-1-0.dll": [],
+          "api-ms-win-core-sysinfo-l1-1-0.dll": [],
+          "api-ms-win-core-rtlsupport-l1-1-0.dll": [],
+          "api-ms-win-core-processthreads-l1-1-1.dll": [],
+          "api-ms-win-core-console-l1-1-0.dll": [],
+          "api-ms-win-core-handle-l1-1-0.dll": [],
+          "api-ms-win-core-namedpipe-l1-1-0.dll": [],
+          "api-ms-win-core-timezone-l1-1-0.dll": [],
+          "api-ms-win-core-file-l2-1-0.dll": [],
+          "api-ms-win-core-synch-l1-2-0.dll": [],
+          "api-ms-win-core-profile-l1-1-0.dll": [],
+          "api-ms-win-core-util-l1-1-0.dll": [],
+          "api-ms-win-core-interlocked-l1-1-0.dll": []
+        }
+      }
+    },
+    {
+      "path": "C:\\Windows\\System32\\apisetschema.dll",
+      "bytes": 194016,
+      "sha256": "391a2818fdef14f4a9b6e6ce2a7e7f01d04f943de9ef543ec683927cfe480889",
+      "kind": "tool_binary",
+      "PE": {
+        "machine": "0x8664",
+        "machine_name": "AMD64",
+        "optional_magic": "0x20b",
+        "imports": [],
+        "delay_imports": [],
+        "selected_dynamic_loader_import_symbols": {}
+      }
+    }
+  ],
+  "presence_checks": [
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site.py",
+      "exists": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\_sitebuiltins.py",
+      "exists": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\sysconfig.py",
+      "exists": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\platform.py",
+      "exists": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\venv\\__init__.py",
+      "exists": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\venv\\scripts\\nt\\python.exe",
+      "exists": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\venv\\scripts\\nt\\pythonw.exe",
+      "exists": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\distutils-precedence.pth",
+      "exists": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\_distutils_hack\\__init__.py",
+      "exists": true
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\sitecustomize.py",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\usercustomize.py",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python311._pth",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python._pth",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\_virtualenv.pth",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\_virtualenv.py",
+      "exists": false
+    }
+  ],
+  "path_checks": [
+    {
+      "path": "C:\\Users\\clclc\\.local\\bin",
+      "exists": true,
+      "canonical_when_present": "C:\\Users\\clclc\\.local\\bin",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none",
+      "exists": true,
+      "canonical_when_present": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv",
+      "exists": true,
+      "canonical_when_present": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\artifacts",
+      "exists": true,
+      "canonical_when_present": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\artifacts",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\runtime",
+      "exists": false,
+      "canonical_when_present": null,
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\.venv\\setup-cache-001",
+      "exists": false,
+      "canonical_when_present": null,
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\ntdll.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\ntdll.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\kernel32.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\kernel32.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\KernelBase.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\KernelBase.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\advapi32.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\advapi32.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\bcryptprimitives.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\bcryptprimitives.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\shell32.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\shell32.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\ole32.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\ole32.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\userenv.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\userenv.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\oleaut32.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\oleaut32.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\user32.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\user32.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\cfgmgr32.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\cfgmgr32.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\ws2_32.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\ws2_32.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\bcrypt.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\bcrypt.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\crypt32.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\crypt32.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\version.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\version.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\ucrtbase.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\ucrtbase.dll",
+      "existing_ancestor_reparse": false
+    },
+    {
+      "path": "C:\\Windows\\System32\\apisetschema.dll",
+      "exists": true,
+      "canonical_when_present": "C:\\Windows\\System32\\apisetschema.dll",
+      "existing_ancestor_reparse": false
+    }
+  ],
+  "import_API_set_dispositions": [
+    {
+      "import_name": "advapi32.dll",
+      "selected_origins": [
+        "C:\\Users\\clclc\\.local\\bin\\uv.exe",
+        "C:\\Users\\clclc\\.local\\bin\\uv.exe",
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python311.dll"
+      ],
+      "recursive_expansion": false,
+      "disposition": "EXACT_LITERAL_SYSTEM32_FILE",
+      "path": "C:\\Windows\\System32\\advapi32.dll",
+      "sha256": "e036c9baecd170d7ef4759a5a7eb76036158cacc4cd9e3f697dbf410a3457224"
+    },
+    {
+      "import_name": "api-ms-win-core-path-l1-1-0.dll",
+      "selected_origins": [
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python311.dll"
+      ],
+      "recursive_expansion": false,
+      "disposition": "EXACT_INSTALLED_API_SET_SCHEMA_DEFAULT_HOST",
+      "schema_values": [
+        {
+          "alias": "",
+          "host": "kernelbase.dll"
+        }
+      ],
+      "hosts": [
+        {
+          "path": "C:\\Windows\\System32\\KernelBase.dll",
+          "sha256": "becad014fb8efa8cb5e314931cca92778ad42c649b12a6909632cacd68af4f40"
+        }
+      ]
+    }
+  ],
+  "startup_findings": [
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site.py",
+      "relevant_lines": [
+        {
+          "line": 1,
+          "text": "\"\"\"Append module search paths for third-party packages to sys.path."
+        },
+        {
+          "line": 8,
+          "text": "Unix (including Mac OSX), it starts with sys.prefix and"
+        },
+        {
+          "line": 13,
+          "text": "resulting directories, if they exist, are appended to sys.path, and"
+        },
+        {
+          "line": 17,
+          "text": "sys.prefix and sys.exec_prefix are set to that directory and"
+        },
+        {
+          "line": 18,
+          "text": "it is also checked for site-packages (sys.base_prefix and"
+        },
+        {
+          "line": 21,
+          "text": "the key \"include-system-site-packages\" set to anything other than \"false\""
+        },
+        {
+          "line": 26,
+          "text": "appended to sys.path, and also inspected for path configuration"
+        },
+        {
+          "line": 30,
+          "text": "<package>.pth; its contents are additional directories (one per line)"
+        },
+        {
+          "line": 31,
+          "text": "to be added to sys.path.  Non-existing directories (or"
+        },
+        {
+          "line": 32,
+          "text": "non-directories) are never added to sys.path; no directory is added to"
+        },
+        {
+          "line": 33,
+          "text": "sys.path more than once.  Blank lines and lines beginning with"
+        },
+        {
+          "line": 36,
+          "text": "For example, suppose sys.prefix and sys.exec_prefix are set to"
+        },
+        {
+          "line": 39,
+          "text": "configuration files, foo.pth and bar.pth.  Assume foo.pth contains the"
+        },
+        {
+          "line": 47,
+          "text": "and bar.pth contains:"
+        },
+        {
+          "line": 52,
+          "text": "Then the following directories are added to sys.path, in this order:"
+        },
+        {
+          "line": 58,
+          "text": "because bar.pth comes alphabetically before foo.pth; and spam is"
+        },
+        {
+          "line": 63,
+          "text": "sitecustomize, usercustomize or PYTHONSTARTUP.  Starting Python in"
+        },
+        {
+          "line": 67,
+          "text": "named sitecustomize, which can perform arbitrary additional"
+        },
+        {
+          "line": 80,
+          "text": "PREFIXES = [sys.prefix, sys.exec_prefix]"
+        },
+        {
+          "line": 83,
+          "text": "ENABLE_USER_SITE = None"
+        },
+        {
+          "line": 130,
+          "text": "    \"\"\" Remove duplicate entries from sys.path along with making them"
+        },
+        {
+          "line": 136,
+          "text": "    for dir in sys.path:"
+        },
+        {
+          "line": 144,
+          "text": "    sys.path[:] = L"
+        },
+        {
+          "line": 149,
+          "text": "    \"\"\"Return a set containing all existing file system items from sys.path.\"\"\""
+        },
+        {
+          "line": 151,
+          "text": "    for item in sys.path:"
+        },
+        {
+          "line": 162,
+          "text": "    \"\"\"Process a .pth file within the site-packages directory:"
+        },
+        {
+          "line": 178,
+          "text": "        _trace(f\"Skipping hidden .pth file: {fullname!r}\")"
+        },
+        {
+          "line": 180,
+          "text": "    _trace(f\"Processing .pth file: {fullname!r}\")"
+        },
+        {
+          "line": 195,
+          "text": "                    exec(line)"
+        },
+        {
+          "line": 200,
+          "text": "                    sys.path.append(dir)"
+        },
+        {
+          "line": 217,
+          "text": "    \"\"\"Add 'sitedir' argument to sys.path if missing and handle .pth files in"
+        },
+        {
+          "line": 227,
+          "text": "        sys.path.append(sitedir)        # Add path component"
+        },
+        {
+          "line": 234,
+          "text": "             if name.endswith(\".pth\") and not name.startswith(\".\")]"
+        },
+        {
+          "line": 330,
+          "text": "    global USER_SITE, ENABLE_USER_SITE"
+        },
+        {
+          "line": 335,
+          "text": "            ENABLE_USER_SITE = False # disable user site and return None"
+        },
+        {
+          "line": 342,
+          "text": "    \"\"\"Add a per user site-package to sys.path"
+        },
+        {
+          "line": 352,
+          "text": "    if ENABLE_USER_SITE and os.path.isdir(user_site):"
+        },
+        {
+          "line": 390,
+          "text": "    \"\"\"Add site-packages to sys.path\"\"\""
+        },
+        {
+          "line": 449,
+          "text": "    This can be overridden in the sitecustomize or usercustomize module,"
+        },
+        {
+          "line": 503,
+          "text": "    global PREFIXES, ENABLE_USER_SITE"
+        },
+        {
+          "line": 533,
+          "text": "                    if key == 'include-system-site-packages':"
+        },
+        {
+          "line": 538,
+          "text": "        sys.prefix = sys.exec_prefix = site_prefix"
+        },
+        {
+          "line": 541,
+          "text": "        addsitepackages(known_paths, [sys.prefix])"
+        },
+        {
+          "line": 546,
+          "text": "            PREFIXES.insert(0, sys.prefix)"
+        },
+        {
+          "line": 548,
+          "text": "            PREFIXES = [sys.prefix]"
+        },
+        {
+          "line": 549,
+          "text": "            ENABLE_USER_SITE = False"
+        },
+        {
+          "line": 554,
+          "text": "def execsitecustomize():"
+        },
+        {
+          "line": 558,
+          "text": "            import sitecustomize"
+        },
+        {
+          "line": 560,
+          "text": "            if exc.name == 'sitecustomize':"
+        },
+        {
+          "line": 569,
+          "text": "                \"Error in sitecustomize; set PYTHONVERBOSE for traceback:\\n\""
+        },
+        {
+          "line": 574,
+          "text": "def execusercustomize():"
+        },
+        {
+          "line": 578,
+          "text": "            import usercustomize"
+        },
+        {
+          "line": 580,
+          "text": "            if exc.name == 'usercustomize':"
+        },
+        {
+          "line": 589,
+          "text": "                \"Error in usercustomize; set PYTHONVERBOSE for traceback:\\n\""
+        },
+        {
+          "line": 600,
+          "text": "    global ENABLE_USER_SITE"
+        },
+        {
+          "line": 602,
+          "text": "    orig_path = sys.path[:]"
+        },
+        {
+          "line": 604,
+          "text": "    if orig_path != sys.path:"
+        },
+        {
+          "line": 605,
+          "text": "        # removeduppaths() might make sys.path absolute."
+        },
+        {
+          "line": 610,
+          "text": "    if ENABLE_USER_SITE is None:"
+        },
+        {
+          "line": 611,
+          "text": "        ENABLE_USER_SITE = check_enableusersite()"
+        },
+        {
+          "line": 619,
+          "text": "    execsitecustomize()"
+        },
+        {
+          "line": 620,
+          "text": "    if ENABLE_USER_SITE:"
+        },
+        {
+          "line": 621,
+          "text": "        execusercustomize()"
+        },
+        {
+          "line": 623,
+          "text": "# Prevent extending of sys.path when python was started with -S and"
+        },
+        {
+          "line": 647,
+          "text": "        print(\"sys.path = [\")"
+        },
+        {
+          "line": 648,
+          "text": "        for dir in sys.path:"
+        },
+        {
+          "line": 658,
+          "text": "        print(f\"ENABLE_USER_SITE: {ENABLE_USER_SITE!r}\")"
+        },
+        {
+          "line": 669,
+          "text": "        if ENABLE_USER_SITE:"
+        },
+        {
+          "line": 671,
+          "text": "        elif ENABLE_USER_SITE is False:"
+        },
+        {
+          "line": 673,
+          "text": "        elif ENABLE_USER_SITE is None:"
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\_sitebuiltins.py",
+      "relevant_lines": []
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\sysconfig.py",
+      "relevant_lines": [
+        {
+          "line": 171,
+          "text": "_PREFIX = os.path.normpath(sys.prefix)"
+        },
+        {
+          "line": 172,
+          "text": "_BASE_PREFIX = os.path.normpath(sys.base_prefix)"
+        },
+        {
+          "line": 300,
+          "text": "    if key == 'prefix' and sys.prefix != sys.base_prefix:"
+        },
+        {
+          "line": 523,
+          "text": "    # Create file used for sys.path fixup -- see Modules/getpath.c"
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\platform.py",
+      "relevant_lines": [
+        {
+          "line": 74,
+          "text": "#    0.3.4 - fixed a bug in _follow_symlinks()"
+        },
+        {
+          "line": 196,
+          "text": "    # able to open symlinks for reading"
+        },
+        {
+          "line": 590,
+          "text": "def _follow_symlinks(filepath):"
+        },
+        {
+          "line": 592,
+          "text": "    \"\"\" In case filepath is a symlink, follow it until a"
+        },
+        {
+          "line": 607,
+          "text": "        omit the filename in its output. Follow the symlinks. It returns"
+        },
+        {
+          "line": 619,
+          "text": "    target = _follow_symlinks(target)"
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\venv\\__init__.py",
+      "relevant_lines": [
+        {
+          "line": 31,
+          "text": "    on Windows platforms but symlinks elsewhere. If instantiated some"
+        },
+        {
+          "line": 32,
+          "text": "    other way, the default is to *not* use symlinks."
+        },
+        {
+          "line": 38,
+          "text": "    :param symlinks: If True, attempt to symlink rather than copy files into"
+        },
+        {
+          "line": 48,
+          "text": "                 symlinks=False, upgrade=False, with_pip=False, prompt=None,"
+        },
+        {
+          "line": 52,
+          "text": "        self.symlinks = symlinks"
+        },
+        {
+          "line": 148,
+          "text": "        # Issue 21197: create lib64 as a symlink to lib on 64-bit non-OS X POSIX"
+        },
+        {
+          "line": 153,
+          "text": "                os.symlink('lib', link_path)"
+        },
+        {
+          "line": 190,
+          "text": "            f.write('include-system-site-packages = %s\\n' % incl)"
+        },
+        {
+          "line": 197,
+          "text": "            if nt and self.symlinks:"
+        },
+        {
+          "line": 198,
+          "text": "                args.append('--symlinks')"
+        },
+        {
+          "line": 199,
+          "text": "            if not nt and not self.symlinks:"
+        },
+        {
+          "line": 219,
+          "text": "        def symlink_or_copy(self, src, dst, relative_symlinks_ok=False):"
+        },
+        {
+          "line": 221,
+          "text": "            Try symlinking a file, and if that fails, fall back to copying."
+        },
+        {
+          "line": 223,
+          "text": "            force_copy = not self.symlinks"
+        },
+        {
+          "line": 227,
+          "text": "                        if relative_symlinks_ok:"
+        },
+        {
+          "line": 229,
+          "text": "                            os.symlink(os.path.basename(src), dst)"
+        },
+        {
+          "line": 231,
+          "text": "                            os.symlink(src, dst)"
+        },
+        {
+          "line": 233,
+          "text": "                    logger.warning('Unable to symlink %r to %r', src, dst)"
+        },
+        {
+          "line": 238,
+          "text": "        def symlink_or_copy(self, src, dst, relative_symlinks_ok=False):"
+        },
+        {
+          "line": 240,
+          "text": "            Try symlinking a file, and if that fails, fall back to copying."
+        },
+        {
+          "line": 243,
+          "text": "            if self.symlinks and not bad_src and not os.path.islink(dst):"
+        },
+        {
+          "line": 245,
+          "text": "                    if relative_symlinks_ok:"
+        },
+        {
+          "line": 247,
+          "text": "                        os.symlink(os.path.basename(src), dst)"
+        },
+        {
+          "line": 249,
+          "text": "                        os.symlink(src, dst)"
+        },
+        {
+          "line": 252,
+          "text": "                    logger.warning('Unable to symlink %r to %r', src, dst)"
+        },
+        {
+          "line": 254,
+          "text": "            # On Windows, we rewrite symlinks to our base python.exe into"
+        },
+        {
+          "line": 255,
+          "text": "            # copies of venvlauncher.exe"
+        },
+        {
+          "line": 268,
+          "text": "                    basename = 'venvlauncher'"
+        },
+        {
+          "line": 290,
+          "text": "        copier = self.symlink_or_copy"
+        },
+        {
+          "line": 300,
+          "text": "                    # symlinks are not wanted"
+        },
+        {
+          "line": 301,
+          "text": "                    copier(context.env_exe, path, relative_symlinks_ok=True)"
+        },
+        {
+          "line": 305,
+          "text": "            if self.symlinks:"
+        },
+        {
+          "line": 306,
+          "text": "                # For symlinking, we need a complete copy of the root directory"
+        },
+        {
+          "line": 307,
+          "text": "                # If symlinks fail, you'll get unnecessary copies of files, but"
+        },
+        {
+          "line": 308,
+          "text": "                # we assume that if you've opted into symlinks on Windows then"
+        },
+        {
+          "line": 495,
+          "text": "           symlinks=False, with_pip=False, prompt=None, upgrade_deps=False):"
+        },
+        {
+          "line": 498,
+          "text": "                         clear=clear, symlinks=symlinks, with_pip=with_pip,"
+        },
+        {
+          "line": 530,
+          "text": "            use_symlinks = False"
+        },
+        {
+          "line": 532,
+          "text": "            use_symlinks = True"
+        },
+        {
+          "line": 534,
+          "text": "        group.add_argument('--symlinks', default=use_symlinks,"
+        },
+        {
+          "line": 535,
+          "text": "                           action='store_true', dest='symlinks',"
+        },
+        {
+          "line": 536,
+          "text": "                           help='Try to use symlinks rather than copies, '"
+        },
+        {
+          "line": 537,
+          "text": "                                'when symlinks are not the default for '"
+        },
+        {
+          "line": 539,
+          "text": "        group.add_argument('--copies', default=not use_symlinks,"
+        },
+        {
+          "line": 540,
+          "text": "                           action='store_false', dest='symlinks',"
+        },
+        {
+          "line": 541,
+          "text": "                           help='Try to use copies rather than symlinks, '"
+        },
+        {
+          "line": 542,
+          "text": "                                'even when symlinks are the default for '"
+        },
+        {
+          "line": 572,
+          "text": "                             symlinks=options.symlinks,"
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\distutils-precedence.pth",
+      "relevant_lines": [
+        {
+          "line": 1,
+          "text": "import os; var = 'SETUPTOOLS_USE_DISTUTILS'; enabled = os.environ.get(var, 'local') == 'local'; enabled and __import__('_distutils_hack').add_shim(); "
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\_distutils_hack\\__init__.py",
+      "relevant_lines": [
+        {
+          "line": 49,
+          "text": "    which = os.environ.get('SETUPTOOLS_USE_DISTUTILS', 'local')"
+        },
+        {
+          "line": 57,
+          "text": "            \"and avoid setting SETUPTOOLS_USE_DISTUTILS=stdlib. \""
+        },
+        {
+          "line": 126,
+          "text": "            # - Path manipulation during sitecustomize removes"
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\distutils-precedence.pth",
+      "SETUPTOOLS_USE_DISTUTILS_stdlib": "conditional static interpretation only; exact source requires independent review"
+    }
+  ],
+  "UV_embedded_query_evidence": {},
+  "unknowns": [],
+  "prohibited_actions": {
+    "UV_invocations": 0,
+    "venv_creation_install": 0,
+    "target_code_execution": 0,
+    "framework_model_GPU_process_DB_observation": 0,
+    "network_transfers_tests": 0
+  },
+  "inspection_interpreter": {
+    "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+    "version": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+    "isolated": 1,
+    "site_disabled": 1,
+    "tool_mode": "stdlib-data-only, not an interpreter/base qualification test"
+  },
+  "PE_parser_binding": {
+    "source": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\evidence\\cpu_only_runtime_lock_003\\inspect_static.py",
+    "sha256": "e2608322bb848d1a16c6f53aaea848ada7475dc5fb4c02d87cd8caf994d23c9d",
+    "target_code": false
+  },
+  "base_startup_direct_inventory": {
+    "directory": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages",
+    "hooks": [
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\Lib\\site-packages\\distutils-precedence.pth"
+    ],
+    "recursive": false
+  },
+  "API_set_schema": {
+    "version": 6,
+    "namespace_bytes": 171104,
+    "entries": 984,
+    "selected_section_sha256": "c08115387a3a0044edea28ac41271efeb78880531ad53153a51cc1b65798f6df"
+  },
+  "stop_reason": "Stop: unresolved_selected_API_set:api-ms-win-core-synch-l1-2-0.dll",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\evidence\\cpu_only_runtime_setup_static_005\\inspect_setup_paths.py\", line 210, in <module>\n    try:main()\n        ^^^^^^\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\evidence\\cpu_only_runtime_setup_static_005\\inspect_setup_paths.py\", line 169, in main\n    check(values is not None,'unresolved_selected_API_set:'+name)\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\experiments\\rineya_centralized_reasoning_system_v1\\evidence\\cpu_only_runtime_setup_static_005\\inspect_setup_paths.py\", line 35, in check\n    if not value:raise Stop(reason)\n                 ^^^^^^^^^^^^^^^^^^\nStop: unresolved_selected_API_set:api-ms-win-core-synch-l1-2-0.dll\n",
+  "next_prerequisite": "Independent review of exact frozen failure/partial proof; any unresolved route needs separately scoped evidence disposition. No automatic expansion, retry or setup."
+}

@@ -1,0 +1,36 @@
+{
+  "study_id": "CRS-CPU-NATIVE-LOAD-FEASIBILITY-001",
+  "status": "FINAL_FINITE_SOURCE_ROUND3_REGISTERED_NOT_STARTED_NO_MODEL_ATTEMPT",
+  "decided_by": "/root",
+  "standing_authority_sha256": "479b6c5284da978c491a6477a9064f21b585fa29e9991bf84d75960c380d18f0",
+  "original_scope_sha256": "e66d181f01a2346617b5433623859e71b518eefe45c896e117d097c2ddeeeb86",
+  "source_round": 3,
+  "default_source_round_limit": 3,
+  "no_fourth_repair_or_reset_inside_this_scope": true,
+  "source2_freeze_sha256": "bbf52867244eb6cbcd03b870db7b0501b2793e4e360a7e39e5db0312f36e20e9",
+  "source2_history_preservation_sha256": "12e30f06504e1de86c3aa372ba11e0ad80238d032bdd6ec77abf04603df7ce01",
+  "reviews": [
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\audits\\CPU_NATIVE_LOAD_SCI_SOURCE_002.md",
+      "sha256": "68f7ae437472a18a5bc84cd469624bd9d29d98e69630e9cc6d35e3fe924baf4f"
+    },
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\audits\\CPU_NATIVE_LOAD_OPS_SOURCE_002.md",
+      "sha256": "840e261ea9f2deeaaa7e63b5e5e47c2f4ca8b6e433f32fc62eb103a9c2603c2e"
+    }
+  ],
+  "closed_previous_findings": [
+    "310ordereduniquecompletion/strictzerodose",
+    "final120deadline/resource/knownaccounting",
+    "exactknownsuspendedlauncherpreJobcleanup"
+  ],
+  "remaining_finding": "Pinned torch.cuda imports nested definition modules before assigning_initialized=False; None bootstrapentry/return incorrectlyrefused",
+  "permitted_fix": "Narrow exactpinned bootstrapmoduledefinition entry/return allowlist forNone beforeassignment duringTORCH_IMPORT only; importeddefinitions notdeviceactions. Restrict knownmodulepaths/body/sourcepins. Metadatafunctions requireFalse and returnstateproof, _lazy_call cannotexecute callback. Neverallow availability/init/device/RNG/sync/CUDAallocation or genericunknowncudaNone calls.",
+  "files": "cpu_native_load.py/tests plusnew immutableCPU_NATIVE_LOAD_FEASIBILITY_V3.json; preserveV2/source2/rawhistory unchanged",
+  "validation": "One<=30s no-modeltargeted invocation with nestedknownmoduleNoneentry+returnpositive, unrelatedmoduleNone/function/deviceaction/init/non-importphase negative, Falsemetadata existingguard, knowncallback queueState unchanged; no actualTorch/model/assets/GPU/canonicalDB/nativeattempt duringfixtures. Freezeonce+freshnonbuilderSCI_OPSstaticreview.",
+  "all_model_dose_resource_asset_budget_lease_guards_unchanged": true,
+  "same_one120s_cpu_model_attempt_unconsumed": true,
+  "existing_probe002_and_GPUfloor_quarantine_unchanged": true,
+  "unresolved_material_disagreement_after_final_round": "Preserve/sourcequarantine and register a genuinely resolving experiment/disposition; no fourthloop/relabel or model launch fromunacceptedsource",
+  "scope_currently_not_executed": true
+}

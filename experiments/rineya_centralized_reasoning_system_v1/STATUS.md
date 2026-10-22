@@ -1,5 +1,248 @@
 # CRS-001 status and continuation
 
+Current final disposition014: cumulative source6 is rejected BEFORE its fixture;
+scope014 is exhausted at2/2 candidates (prior library3/3 and0131/1 preserved).
+Final disposition5547fb0b/readinesscb80f30d bind source7bfe16f5/tests98abe3c6/
+contractd88cf647/freeze82f7398f at source commit25752e85. Original SCI6 fixture
+eligibility59681821 is retained unchanged; OPS8ce0cca6 rejects the actual-return
+phase gap and focused SCI addendum346bb1ad withdraws eligibility. Validation may
+cross the phase deadline after its pre-read time sample without a final resample.
+Independent child containment does not satisfy that every-return assertion.
+The executable caller/observer/transport/ownership/publication progress and closed
+ordinary findings remain useful supplied source evidence, not full acceptance.
+45 methods are only AST-discovered plans; source5 and6 fixtures both remain0.
+Source6 construction513.1702279s monotonic/CPUunknown, source5 timingunknown and
+all earlier costs remain recorded. Actual OS/UV/hostDB/key/setup/model actions0;
+actual grant registry empty. No round7, retest, reset or automated source follows.
+Necessary work is read-only reconciliation/preservation until a genuinely concrete
+resolving scope is explicitly justified and independently reviewed. Permission is
+delegated; qualification is not. Full neural mission and all questions stay open.
+Earlier active/resumption paragraphs below are preserved historical chronology.
+
+Current scope014 checkpoint: cumulative source5 is rejected before its fixture
+by SCI f311ca04 / OPS a8289f7a. Its34 AST-discovered methods are not passes;
+invocations remain0. Exact source5/history/reviews are preserved at7aaf81a4.
+Root triggera86331ff authorizes ONLY final cumulative source6 correction for
+the six recorded admission/custody/timer/Git/reply/failure-cost findings.
+Source6 must pass independent source review before its ONE<=60s fixture.
+No cumulative7, rerun, actual launch or runtime/model qualification follows.
+Earlier resumption and source013 paragraphs below remain historical chronology.
+
+Current resumption, 2026-10-10: the human explicitly requested resolution of the
+missing caller/observer integration. Scope014 is independently accepted for
+source construction only (SCI f9111dbc / OPS fd98cd3b), with fixed input freeze
+04f03f33. It allows cumulative integration round5 and one finding-justified
+round6 correction, one<=60s synthetic invocation each after independent source
+review, maximum120s total. Library3/3 and integration0131/1 remain consumed.
+Actual OS children/UV/hostDB/native keys/setup/model/learning gates stay closed.
+See resolution_proposals/caller_observer_integration_014/SCOPE.md and
+evidence/caller_observer_integration_014/SCOPE_ADOPTION.json. Older authoritative
+state and action paragraphs below are preserved historical chronology.
+
+Current authoritative state: integration013 is quarantined at its sole
+supplemental candidate, cumulative round4. Its source is incomplete and actual
+dispatch refuses. No successor source scope or actual query is registered.
+Standing owner authority remains current; this is a technical/source gate, not
+an unanswered approval question. Necessary work is read-only reconciliation until
+concrete complete caller/RPC/ownership/endpoint/resource evidence and an explicit
+bounded restart scope exist. Older "active" and "next action" paragraphs below
+are retained historical chronology, not instructions to repeat consumed work.
+
+Latest private snapshot919fd0d9 is VERIFIED,content2b003d05,2004 files and
+38692409 payload bytes,archive9532fb27; excluded receipt committed022ba16f. No
+active/unknown native jobs were found in the current read-only ledger check;
+leases remain RECONCILED and epoch charge47.421s is unchanged. Rolling aging is
+not a reset. Routine reconciliation/status changes do not self-trigger upload.
+
+Active work: ONE cumulative same-milestone integrationround4 candidate013 is
+frozen against adopted contract012 exact61a20d05. Accepted library3,
+V3 and operations are fixed. One controlled synthetic invocation<=60s and fresh
+nonbuilder SCI/OPS review follow; no fifth repair/retest or actual query is granted.
+The implementation must realize typed broker birth/ownership, truthful canonical
+state delegation, complete caller10/observer2 endpoints and combined resource/cost
+interfaces. Unimplemented boundaries stay explicitly NOT_READY, not fake flags.
+The sole invocation passed26 component groups,0failures/errors; external1.7794775s,
+complete capture/freeze2.1626892s, toolenvelope2.5398962s. FINALc873cbf3/source254d4d04/
+testf09ad6c4/readinessf68f09c7 are frozen. Complete C-RPC/bootstrap, observer-loss
+ownership, actual TC/OE/stop and combined graph enforcement remain unimplemented;
+actual dispatch is refused. Nonbuilder reviews must disposition full contract
+incompleteness, not promote the passing components. No fifth/retest is granted.
+Final SCI f32ac075/OPS5f9374c7 reject complete integration and quarantine013 at
+its ONE supplemental candidate, cumulative round4. Quarantine013 retains all26
+component passes and exact source/failure findings. Missing executable C/RPC,
+O-loss ownership, actual TC/OE/stop and combined enforcement are implementation
+gaps, not live-host gates alone. No fifth repair or renamed route follows.
+The native query remains unused; full neural/reader/training/acquisition mission
+and all prior track questions remain open. Preserve this result privately.
+
+Latest private preservation is VERIFIED9945121d,content79fe4640,1991 files and
+38604457 bytes,archivef2393aa9; excluded receipt committedbebaf53c. No canonical
+host DB/native reservation/model action occurred. All earlier history and custody
+records remain intact; full neural mission remains incomplete.
+
+Current next action, after verified preservation: explicit exception013 permits
+ONE cumulative same-milestone integrationround4 source/fixture/review candidate.
+Prospective contract012 exact61a20d05 is adopted after SCI21b32094/OPS47f95bed;
+cost/endpoint/order and truthful created-worker failure states are fixed. This
+is no newmax3 or library repair. Accepted library3/V3/operations remain unchanged,
+no fifth/retest or actual key/query. Implementation and live admission are absent.
+
+Current checkpoint: accepted library3/source82f211eb/V3e1a23e03 is fixed after43
+synthetic passes and limited SCI/OPS acceptance. The actual query/caller/observer,
+runtime trust and current admission remain unqualified. Original design010 is
+preserved with rejected cost/endpoint premises. One registered clarification011
+is now frozen, design-only; it grants no source4, API change, test or query.
+CLARIFICATION30ae57b9/PROPOSAL09471375/READINESSe6ab4bd5,total24024 bytes,
+8 selected files79115 unique/183415 read-pass bytes, preserve original010 and all
+fixed sources. Prospective caller10s/observer2s, native-versus-whole status and
+cost admission require independent review. Created-workerNone/OUTCOME_UNKNOWN
+recovery remains unqualified; there is no automatic successor clarification.
+SCI0f4c522f/OPS7b3abe02 now accept the corrected prospective definitions only.
+Disposition011 keeps complete integration NOT_READY: cost/admission and exact
+caller/observer endpoint producers plus broker-held creation/identity/failure
+accounting must be adopted concretely before any source exception. No platform
+impossibility or human-authority impasse is established. No further clarification,
+source4, API edit, test or query is automatically granted.
+
+Latest private preservation is VERIFIEDb75ee1bd,content0ccfdf17,1979 files and
+38522311 payload bytes,archived5cd6e3e. Local Git72863e8b contains its excluded
+receipt. Raw pages/wrapper/runtime remain in excluded local custody; canonical
+weights and protected banks remain closed and historical47.421s is unchanged.
+
+Current action: final correction009 is candidate3 of the same metadata-controller
+milestone. Candidate2 remains rejected and its32 synthetic passes/finding are
+preserved. The builder must preserve exact candidate2 history before edits and
+fix only failed-termination/unproved-exit stable ownership retention. One synthetic
+invocation and fresh independent reviews follow; unresolved findings quarantine
+the source at3/3. No actual tool query, native reservation, installer or model
+operation is authorized by this source-only scope.
+Candidate2 preservationaf4668dc is independently verified before final edits:
+20 safe source/evidence/review files match, with raw-wrapper/document custody
+references retained. Final source/fixtures are now frozen after their one
+invocation. Full caller/observer qualification remains open.
+Final candidate3 is now frozen:6e88dc0a/source82f211eb/testa9908636/V3e1a23e03/
+readiness1972e755. ONE synthetic invocation passed43/43 groups, zero failures/errors;
+external process return1.1168719s, capture-through-final-freeze1.2810476s, tool
+envelope1.5227301s. Complete terminal output closed before the immutable freeze.
+Retained recovery owner is explicitly same-caller in-memory only. No source repair
+or retest follows this outcome. Final SCI/OPS review is complete; actual complete
+caller/observer, runtime/trust/current admission and model gates remain closed.
+Final SCI48eca65d/OPSd10cf7e3 accept the exact library mechanics and close the
+failed-termination ownership finding. Acceptance003 is limited to source and
+controlled fixtures, with43 passes preserved. Complete actual caller/observer,
+durable recovery, metadata trust and current launch bindings remain NOT_READY.
+No fourth repair, actual query or model result follows. A bounded assessment of
+the missing complete observer is pending before any further integration decision.
+Design010 is now reviewed, not accepted: PLAN70f07ef7/PROPOSAL8a9491fb/
+READINESSd3cf3663, SCIaf0272c6/OPS7d3aa2d2. Its chosen aggregate-cost and all-
+observer-work-inside-caller10s premises do not prove general API impossibility.
+Concrete ownership/caller/trust gates remain unqualified. Disposition010 preserves
+the rejected design; one finite same-proposal clarification011 is registered for
+cost classification and separate caller/observer endpoints. It grants no source4,
+API change, test or query. Final library acceptance003 remains exact and limited.
+
+Latest private preservation is VERIFIED6c2e73e7,content46a32ada,1937 files and
+38268850 payload bytes; archive3a4120f4. Raw documentary pages and the capture
+wrapper are locally preserved in excluded custody. The accepted backup helper,
+canonical accounting source and old CPU-loader bytes remain unchanged.
+
+Active source continuation: correction008 candidate2 is frozen under
+its finite source-only scope. Candidate1 historyc18b44ae is independently verified
+before edits/fixtures. The latest private preservation is VERIFIED61764ca4,
+1894 files/38060272 bytes, archive e9297673; raw documentary pages remain local
+and excluded. Source tests are not a tool, model or learning result.
+
+Correction008 is now frozen: FINAL924c6716/source d3fe7660/tests5dc7f6db/
+V2contract3edc3fff/readiness72335a1e. ONE synthetic invocation passed32/32 groups,
+zero failures/errors; external Python return0.9313759s, resumed final-freeze
+completion1.0699511s, tool shell envelope1.334506s. Builder handoffcb055faf and
+unavailable interrupted construction timing are explicit. Final terminal output
+closed before the immutable freeze. Nonbuilder SCI/OPS reviews are pending.
+The library retains unknown reservations; the actual complete caller/observer,
+physical runtime/loader/trusted-tool/current admission gates remain NOT_READY.
+SCI5ba5e366/OPSd2913597 now reject candidate2 on failed-termination live-handle
+loss, with ordinary cleanup/EOF/peak/accounting improvements retained. Rejection002
+preserves all32 passes. Final source correction009 is registered as candidate3
+of the same maximum3: preserve candidate2 before edits, faithful live failed-
+termination fixture, retain exact unknown ownership, one test/freeze/review.
+No actual query or broader caller implementation is admitted; unresolved source
+after final review is quarantined without a fourth repair.
+Candidate2 backup inventory refused the newly retained `.ps1` wrapper; no upload
+followed. Separately reviewed custody008 preserves that exact9073-byte wrapper
+locally under excluded `.venv`, with Gitd0d05ede/hash4efa78ca and receipt970323de/
+freeze6a077b2e. The original source008 freeze is a historical original-path record;
+safe Markdown records the Hermes synthetic command/result without raw script.
+Accepted backup helper09efd563 is unchanged. Custody verification and fresh normal
+backup gates precede source009; another refusal stops without an allowlist change.
+
+Current checkpoint, 2026-10-05: the exact CPU runtime artifact lock is accepted;
+no environment, tool query or model has run. Metadata controller candidate1 was
+rejected, and its registered candidate2 correction008 is queued. Backup helper
+candidate3 failed the unchanged credential-content guard and is quarantined at
+3/3. Its exact source is preserved; the active helper/tests/contract are restored
+byte-for-byte to accepted candidate2, without resetting the failed round count.
+
+Six raw Microsoft page files remain intact in excluded local custody, bound by
+receipt a315569d and freeze d5c18b5f. Vetted summaries, URLs and hashes preserve
+remote provenance while raw pages stay out of the private payload. Original
+source007 and failed backup3 freezes are historical original-path records with
+explicit custody mappings. Independent custody verification precedes fresh
+accepted-helper inventory. Any further refusal stops. Previous private snapshot
+9494969 remains verified. Custody SCIea93628f and OPS736a211a accept retention;
+fresh normal backup gates are eligible. Read the latest excluded Hub backup
+receipt for the actual remote completion state; retention is not a tool result.
+
+Latest continuation,2026-10-05: owner progress approval reinforces standing
+automatic in-scope authority. A genuinely distinct CPU-only compiled runtime
+condition is under finite artifact qualification; read CPU_ONLY_RUNTIME_CONTROL_2026-10-05.
+Exact official Torch2.10.0+cpu cp311/Windows wheel113636478bytes matches published
+SHA17a09465. Indexedhost403/0bytes is preserved; same-hash officialCDN succeeds.
+The artifact stage is frozen for independent review:25 exact wheels,152491224
+compressed bytes,570999036 declared ZIP bytes;24 dependency transfers and42
+selected PE files. Final freeze b8e2c626/batch f95186e2/lock a39fae22 retain the
+earlier incomplete checkpoint cf3b181d. Dynamic DLL loading, system DLL identities,
+sanitized search paths and actual loaded modules remain unresolved. No package
+installation/import/model execution is qualified yet. Static artifact SCI fd5f8631
+and OPS b1005b17 accept exact lock scope; acceptance is separately recorded.
+ONE setup-static005<=60s/64files512MiB/32startupfiles8MiB/64direct rows is recorded
+to bind installer/base startup/system roots before independent review. It grants
+no installer/venv/framework/model execution. Old3-round loader and
+all other quarantines, model assets, protected banks and fixedkeys are unchanged.
+
+Setup design001 PLAN57397ff8/PROPOSAL46192021 has conditional SCI450f9792 and
+NOT_READY OPScf2caf44: exact UV query/argv/startup/target semantics and concrete
+controller remain unproven. ONE static005 froze NOT_READY d152e3b1/result42b600de
+with reported active0.328s on selected api-ms-win-core-synch-l1-2-0.dll exact-name
+schema lookup (shell/finalization timing unverified;3attempted/2completed rows).
+This is a mapping-proof gap, not incompatibility. No retry/setup followed.
+Next evidence-only scope006 allows<=16 official responses8MiB/300s and<=4 local
+binary metadatafiles96MiB for exact UV source and Microsoft loader contract,
+with no executable/install/model/host action. Unknown exact release binding stops.
+Scope006 now froze UNKNOWN bb7feb35/readiness7a74dd93: local UV version/build
+metadata cannot establish release/commit. One selected68317696bytefile/3read
+passes204953088bytes; reported metadata commandwall17.139s,overall300swall
+unverified.0HTTP/transfers/UV invocations. No guessed/latest source or setup.
+Independent disposition and prospective contained version-probe advisories are
+the next gate; a version claim alone would still need publisher/source binding.
+006 honestUNKNOWN is independently accepted SCI900cc6e6/OPS318f1854.
+Version advisories SCI faa9c60c/OPS208bddc6 support prospective source007 only:
+finite Microsoft documentary/first controller candidate/ONEsyntheticfixture,
+independent freeze reviews precede any actual10s/8KiB/JobActiveProcessLimit1 query.
+No version query or setup is launched or native-reserved at this checkpoint.
+Source007 candidate1 is now frozen NOT_READY a277fce0/source6df8b6e/testaa481da1/
+contractd0f72520/readiness0c6a2fcd. ONEsynthetic invocation7/7,.3743525s external;
+3Microsoftpages178240bytes1.5597334s external retained including identical.txt
+copies. No UV/DB/GPU/model action. Identity/resume/pipe/RSS fixture coverage,
+immutable caller/review/cleancommit gates and metadata-only tool trust remain
+unresolved. Independent source SCI/OPS reviews are pending; no launch follows.
+Candidate1 source is now rejected SCIcd2f3fab/OPS5e90d050 despite7passes: partial
+constructor/firstidentity cleanup, independent complete10s/accounting endpoint,
+typed identity/resume/pipeEOF/peakRSS and canonicalfixture gaps. Rejection001
+retains original zero-byte completion-freeze discrepancy and accurate final
+retention. Next registered source008 is candidate2 of SAME default3, preserve
+candidate1 before editing/ONEstdlibfixture<=60s/onefreeze/freshreviews; no docs
+repeat/UV/hostDB/action or launch. Immutable caller/currentgates remain separate.
+
 ## Implementation epoch 001, authorized 2026-10-01
 
 The new owner request is retained byte-for-byte with a hash in
@@ -7,7 +250,138 @@ The new owner request is retained byte-for-byte with a hash in
 [AUTHORIZATION_2026-10-01.md](AUTHORIZATION_2026-10-01.md). The historical founding
 section below, charter and manifest are preserved. All central CHECK/FINAL remain closed.
 
-Current milestone, 2026-10-02: **CPU_QUALIFIED for the supplied reference pipeline;
+Latest owner direction,2026-10-04: **Desktop-profile proposal002 approved;
+routine in-scope continuation is delegated without further human approval.**
+Read AUTONOMOUS_AUTHORIZATION_2026-10-04.md and actual authority receipt479b6c52
+before the historical pending question below. Implementation of the exact
+three-row cooperative ownership/context amendment is in progress in the
+preserved exception worktree. Fresh source/test/review and all live gates remain
+required. No numerical/resource gate, historical finding or fixed002 limit is
+waived. Read-only reconciliation confirms no002 registration or active/unknown
+job and no actual CRS worker; historical47.421s remains charged.
+
+Fifth-round candidate is frozen and rejected by independent review despite
+8/8 targeted CPU tests. SCI08aa66f0 identifies ancestry-depth exhaustion accepted
+without a proven owner boundary; OPS42b2699f reproduces refusal above a verified
+app root when its external launcher parent has exited. Exact source/raw evidence
+is retained in history/desktop_profile_round5/. No source approval or002 attempt
+followed. Under standing owner delegation, finite correction scope006 is recorded
+in authorization/DELEGATED_DESKTOP_BOUNDARY_CORRECTION_006.json SHA84f56a6f.
+It is explicitly the sixth cumulative round of the same milestone, one targeted
+CPU invocation<=60s and fresh independent reviews, with no extra worker attempt
+or gate change. The old fifth-round source/contract/profile remain preserved.
+
+Correction006 is now source-accepted after5/5 actual-collector mocked test groups
+and fresh SCI69660fb8/OPS0ebab07f reviews. Both fifth-round findings are closed
+for this source only. Clean execution worktree commit is e47796f1e9b198f9c3213f471f0151ce517a183b;
+probe845d1e66/profileb433c5d1/V42f9e92db. Exact-commit attestations and current
+live host admission still precede the single002 observation. Native/reader/
+training/learning qualification remains unestablished. Primary adopts identical
+reviewed bytes while preserving its priorV2 sources separately.
+
+Exact-commit SCI8505b049/OPSd55edaa7 attest the seven-field e477 binding.
+One necessary read-only live admission564fe593 verifies the current Codex owner
+context and0.6644s telemetry age, but blocks on unregistered GPU applications and
+only1.0654GiB free GPU below4GiB. Collection0.7264s; no worker,002 registration,
+reservation or budget mutation. Preserve this evidence rather than repeat the
+same observation. A separately bounded semantic guard contrast is being scoped
+for useful dataset-validity work while neural launch resources are unavailable.
+
+Semantic contrast001 is completed and independently accepted: supplied F8/8,
+literal L/P1/8 on eight exposed DEV examples, with four answer-changing semantic
+link swaps holding bags/counts/positions/inspected guards fixed. Exactly24
+predictions/7 scorer entries, final20.375MiB/0.078s, source/actual audits and
+acceptancecb535990 preserve all raw evidence and the consumed one attempt.
+This falsifies those instruments on the finite examples, not historical32,
+model ability, unused acquisition status or learning. H01/LA-I1-002 stay open.
+
+The next native resolving direction is an independently registered CPU-device
+load-only fit study e66d181f, with unchanged2GiB RSS/commit cap and0 forwards.
+Its first source/contract/no-model WindowsJob fixtures are frozen386f635d;
+5groups pass but fresh SCI/OPS source review remains pending. Actual checkpoint
+load, CPU fit, CUDA isolation and CPU reader/numerics are unmeasured. GPU floor/
+quarantine, canonical weights, protected banks and single unused002 are intact.
+
+First CPU-load source is withheld by SCI7fd0fe6f andOPS20da27c4: completion lacks
+ordered unique310-tensor proof, cleanup can report late success, CUDA definition
+imports are misclassified, and known pre-Job launcher cleanup is incomplete.
+All first source/fixture bytes are preserved in history/cpu_native_load_source_round1.
+Finite source correction002 is registered under standing authority (af6f1d65),
+within default3 CPU source rounds. No actual model attempt has occurred. Scope
+keeps the same120s/2GiB/device/asset/budget limits and requires fresh reviews.
+
+CPU source2 is now frozen bbf52867/source5c069a26/testa2302e5b/V2019c202a;
+5 targeted no-model fixture groups pass0.225s/0.563s, including exact suspended
+launcher cleanup. Fresh source review is pending; no actual checkpoint or
+framework load, GPU observation or CPU-study attempt has occurred. Do not infer
+fit or readiness from fixtures. All writes stopped at the frozen checkpoint.
+
+Source2 is withheld after SCI68f7ae43/OPS840e261e: prior tensor/deadline/cleanup
+findings are closed, but pinned nested CUDA definition modules execute with
+initialization stateNone before its assignment. Final finite source round3 is
+registered in DELEGATED_CPU_NATIVE_SOURCE_CORRECTION_003; it has not started.
+No model job/attempt or native budget change exists. Default3 remains the limit;
+no fourth loop is permitted by this scoped checkpoint.
+
+Final CPU source3 is now quarantined after SCI358c856f/OPS439b5cf5. The nested
+None definition issue is closed, but mandatory scalar-format functions in
+_memory_viz still hit the fatal CUDA classifier. Freeze52d65157/sourcee178c8cd/
+V389cb94da and3 passing synthetic groups are preserved; no model attempt or
+actual Torch import occurred. CPU fit remains unmeasured. No fourth loader
+repair or renamed model attempt is eligible. The separately recommended next
+question is a no-model import event-typing observation, currently design-only.
+It measures the denied frontier rather than forcing import completion and must
+have new finite registration/review without borrowing Probe002.
+
+The distinct import-frontier design f725c1be/a2be0056 has conditional scope
+SCI d3b69810/OPS1ee2c7b0 support only. Static preclassification stage dd965407
+is registered (12files/4MiB/64rows, at most one stdlib-AST invocation,5minutes).
+It must identify an informative frontier and API/argument gaps before any
+instrument implementation or import. A trivial already-known first event or
+unjustified native boundary leaves NOT_READY_SOURCE_MAP. No worker key, model
+attempt or budget mutation follows from the proposal/table.
+
+Static preclassification is completed with NOT_READY_SOURCE_MAP: seven selected
+files/353529bytes/33rows, one reported AST pass. SCI8d082bf5/OPSdb6658fd accept
+the bounded stopping record, not runtime coverage. Frozen-code/native/DLL/C-arg
+bindings remain missing, and the draft would stop at already-known import
+bookkeeping before an informative Torch frontier. No import/instrument/model
+worker is admitted; all keys/budgets remain untouched. Do not manufacture a new
+generic coverage helper or extend the map just to continue. Preserve the exact
+table, unknown fields, cost-provenance caveat and all quarantined histories.
+
+Read-only host-change reconciliation found the prior game/helper PIDs gone but
+Chrome/Edge still present. Prospective desktop-policy scope007 SCI812559a6/
+OPS4f1ebd29 is conditional only. Chrome's GPU process links to a visible root;
+Edge's same-family root has no observed visible/equivalent interactive owner.
+Dispositiond9737f7d defers the extension; no partial Chrome-only code, headless
+permission, GPU sample, model/probe dispatch or reservation occurred. Existing
+e477/V4 three-role policy stays unchanged. Genuine context/process changes and
+fresh independent bindings/resource gates are required for restart.
+
+Previous accepted milestone, 2026-10-04: **Approved reader/probe compatibility integration
+accepted after48 CPU tests and fresh SCI/OPS review; exact original environment
+restored. The one permitted002 identity observation is unused because current
+GPU admission is closed. Private Hugging Face artifact backup is uploaded and
+verified; automatic preservation after meaningful changes is enabled. Full
+research mission remains incomplete.**
+The next concrete owner decision is the additional probe-only desktop profile
+in resolution_proposals/author_exception_002_desktop_profile/README.md. A single
+static GPU audit found five unmatched desktop identities; the proposal selects
+only the three updated prior roles and excludes Chrome/Edge. The approved fourth
+source round preserved the registry, so a fifth bounded profile/source review
+round needs actual human approval. No policy/source/worker change follows from
+this draft. Signatures/C+G do not prove compute-free activity; ownership/context
+and existing freshness/resource gates must still pass or admission stays closed.
+Current read-only ledger reconciliation confirms no002 registration or active/
+unknown jobs, reconciled leases,47.421s epoch charge and0 rolling24h by natural
+aging. No budget or historical evidence was reset. New audit and decision
+artifacts are preserved under evidence/desktop_registry_continuation_001/.
+Read RESUMPTION_2026-10-04.md and the latest actual authority receipt. The prior
+pending decision below is historical; acquisition/native/serving/training
+quarantines and protected-bank gates remain unchanged.
+
+Previous milestone, 2026-10-02: **CPU_QUALIFIED for the supplied reference pipeline;
 native operational revision 3 whole-path claim quarantined at its review limit.
 The final reader and no-model identity probe are also quarantined at their
 three-round limits; proposed corrections remain outside frozen source.

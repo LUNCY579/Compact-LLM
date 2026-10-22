@@ -1,0 +1,63 @@
+{
+  "study_id": "CRS-SEMANTIC-GUARD-CONTRAST-001",
+  "status": "SOURCE_FROZEN_PENDING_INDEPENDENT_SOURCE_REVIEW_NO_EXECUTION",
+  "preregistration_sha256": "cabf16f5f96a19b741015b9c7286dd22a803d7f325ca01db2937be7779d7aa58",
+  "ordered_case_ids": [
+    "Aa",
+    "Ab",
+    "Ba",
+    "Bb",
+    "Ca",
+    "Cb",
+    "Da",
+    "Db"
+  ],
+  "files": {
+    "run_once.py": "159c0d8f8cca6d7cac42ea069c654dd47abe6a037d8ba5d1f8af04009554a9d4",
+    "instruments.py": "be874146481bce800038e2ef801be814db947106cfe9452e460562c2fb11d945",
+    "PUBLIC_INPUTS.json": "eb5d55cad62de5e3dbfe1a632107c8a9575fd80b8960e919268e42ddd3d8f633",
+    "MANUAL_EXPECTATIONS.json": "82486dce64e4a1a2e4bde1939cd49ff556d9eb3d16303b9fe934fbcbdb173471",
+    "README.md": "e574212a552c3dc3e87abed6cd235911c740d38349469b9821a59987388332d7"
+  },
+  "dependencies": [
+    {
+      "path": "experiments/rineya_centralized_reasoning_system_v1/authorization/DELEGATED_SEMANTIC_GUARD_CONTRAST_001.json",
+      "sha256": "cabf16f5f96a19b741015b9c7286dd22a803d7f325ca01db2937be7779d7aa58"
+    },
+    {
+      "path": "experiments/rineya_centralized_reasoning_system_v1/resolution_proposals/semantic_guard_contrast_001/PROPOSAL.md",
+      "sha256": "3d609fd452792067460108d46085e1ceb6b81321c4a38502da226c98a7fa27f3"
+    },
+    {
+      "path": "experiments/rineya_centralized_reasoning_system_v1/resolution_proposals/semantic_guard_contrast_001/PAIRS_DRAFT.json",
+      "sha256": "5b03c714a865fede8810709470de44ec4dbcbe84dfa9383dcdfcd785cb778614"
+    },
+    {
+      "path": "experiments/rineya_centralized_reasoning_system_v1/resolution_proposals/semantic_guard_contrast_001/SCOPE_CLARIFICATIONS.json",
+      "sha256": "9f72f9a67f3d1fe2710b885355e4720316ad3e7f9665078a024ea38e3bf9f909"
+    },
+    {
+      "path": "experiments/rineya_centralized_reasoning_system_v1/audits/SEMANTIC_GUARD_CONTRAST_SCI_SCOPE_001.md",
+      "sha256": "ee7460471c1c2a7c0261c5906e92464f5b15fa3a568cb34ebd35c873ea97a92e"
+    },
+    {
+      "path": "experiments/rineya_centralized_reasoning_system_v1/audits/SEMANTIC_GUARD_CONTRAST_OPS_SCOPE_001.md",
+      "sha256": "35b777599d2b02dc22f2f0c0d44ee4dcff9c9dbf0e46acb7e37f7998a43f9e59"
+    },
+    {
+      "path": "experiments/rineya_centralized_reasoning_system_v1/scoring_v2.py",
+      "sha256": "4233a0841824191955c523a2d09d0bdb1fa9d2fc5b4ab430af39594fbf9c2f54"
+    },
+    {
+      "path": "experiments/rineya_centralized_reasoning_system_v1/acquisition_data.py",
+      "sha256": "7742ae86bf5b4b2831ae4851ddbadd2356fd7e58dbbd6a5e75eb4ccf4da3e054"
+    }
+  ],
+  "scorer_path": "experiments/rineya_centralized_reasoning_system_v1/scoring_v2.py",
+  "exposure": "OPEN_EXPOSED_DEV;builder/reviewers gold-exposed;4pairs1cluster",
+  "intended_prediction_calls": 24,
+  "intended_scorer_entry_calls": 7,
+  "intended_nested_items": 28,
+  "implementation_never_executed_by_builder": true,
+  "original_source_quarantine_preserved": true
+}

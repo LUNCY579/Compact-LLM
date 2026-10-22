@@ -1,0 +1,660 @@
+{
+  "info": {
+    "author": null,
+    "author_email": "Nicolas Patry <patry.nicolas@protonmail.com>",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Development Status :: 5 - Production/Stable",
+      "Intended Audience :: Developers",
+      "Intended Audience :: Education",
+      "Intended Audience :: Science/Research",
+      "License :: OSI Approved :: Apache Software License",
+      "Operating System :: OS Independent",
+      "Programming Language :: Python :: 3",
+      "Programming Language :: Python :: 3.10",
+      "Programming Language :: Python :: 3.7",
+      "Programming Language :: Python :: 3.8",
+      "Programming Language :: Python :: 3.9",
+      "Topic :: Scientific/Engineering :: Artificial Intelligence",
+      "Typing :: Typed"
+    ],
+    "description": "## Installation\n\n```\npip install safetensors\n```\n\n\n## Usage\n\n### Numpy\n\n```python\nfrom safetensors.numpy import save_file, load_file\nimport numpy as np\n\ntensors = {\n   \"a\": np.zeros((2, 2)),\n   \"b\": np.zeros((2, 3), dtype=np.uint8)\n}\n\nsave_file(tensors, \"./model.safetensors\")\n\n\n# Now loading\nloaded = load_file(\"./model.safetensors\")\n```\n\n### Torch\n\n```python\nfrom safetensors.torch import save_file, load_file\nimport torch\n\ntensors = {\n   \"a\": torch.zeros((2, 2)),\n   \"b\": torch.zeros((2, 3), dtype=torch.uint8)\n}\n\nsave_file(tensors, \"./model.safetensors\")\n\n\n# Now loading\nloaded = load_file(\"./model.safetensors\")\n```\n\n### Developing\n\n```\n# inside ./safetensors/bindings/python\npip install .[dev]\n```\nShould be enough to install this library locally.\n\n### Testing\n\n```\n# inside ./safetensors/bindings/python\npip install .[dev]\npytest -sv tests/\n```\n\n",
+    "description_content_type": "text/markdown; charset=UTF-8; variant=GFM",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": null,
+    "keywords": null,
+    "license": null,
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "safetensors",
+    "package_url": "https://pypi.org/project/safetensors/",
+    "platform": null,
+    "project_url": "https://pypi.org/project/safetensors/",
+    "project_urls": {
+      "Homepage": "https://github.com/huggingface/safetensors",
+      "Source": "https://github.com/huggingface/safetensors"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/safetensors/0.7.0/",
+    "requires_dist": [
+      "numpy>=1.21.6; extra == \"numpy\"",
+      "packaging; extra == \"torch\"",
+      "safetensors[numpy]; extra == \"torch\"",
+      "torch>=1.10; extra == \"torch\"",
+      "safetensors[numpy]; extra == \"tensorflow\"",
+      "tensorflow>=2.11.0; extra == \"tensorflow\"",
+      "safetensors[numpy]; extra == \"pinned-tf\"",
+      "tensorflow==2.18.0; extra == \"pinned-tf\"",
+      "safetensors[numpy]; extra == \"jax\"",
+      "flax>=0.6.3; extra == \"jax\"",
+      "jax>=0.3.25; extra == \"jax\"",
+      "jaxlib>=0.3.25; extra == \"jax\"",
+      "mlx>=0.0.9; extra == \"mlx\"",
+      "safetensors[numpy]; extra == \"paddlepaddle\"",
+      "paddlepaddle>=2.4.1; extra == \"paddlepaddle\"",
+      "ruff; extra == \"quality\"",
+      "safetensors[numpy]; extra == \"testing\"",
+      "h5py>=3.7.0; extra == \"testing\"",
+      "huggingface-hub>=0.12.1; extra == \"testing\"",
+      "setuptools-rust>=1.5.2; extra == \"testing\"",
+      "pytest>=7.2.0; extra == \"testing\"",
+      "pytest-benchmark>=4.0.0; extra == \"testing\"",
+      "hypothesis>=6.70.2; extra == \"testing\"",
+      "safetensors[numpy]; extra == \"testingfree\"",
+      "huggingface-hub>=0.12.1; extra == \"testingfree\"",
+      "setuptools-rust>=1.5.2; extra == \"testingfree\"",
+      "pytest>=7.2.0; extra == \"testingfree\"",
+      "pytest-benchmark>=4.0.0; extra == \"testingfree\"",
+      "hypothesis>=6.70.2; extra == \"testingfree\"",
+      "safetensors[torch]; extra == \"all\"",
+      "safetensors[numpy]; extra == \"all\"",
+      "safetensors[pinned-tf]; extra == \"all\"",
+      "safetensors[jax]; extra == \"all\"",
+      "safetensors[paddlepaddle]; extra == \"all\"",
+      "safetensors[quality]; extra == \"all\"",
+      "safetensors[testing]; extra == \"all\"",
+      "safetensors[all]; extra == \"dev\""
+    ],
+    "requires_python": ">=3.9",
+    "summary": null,
+    "version": "0.7.0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 41419513,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "McPotato"
+      },
+      {
+        "role": "Owner",
+        "user": "danieldk"
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "fa47aef6c06649039accf914afef490268e1067ed82be62bcfa5b7e886ad15e8",
+        "md5": "4aa361f91e49e76e6a754887ba3d4ff1",
+        "sha256": "c82f4d474cf725255d9e6acf17252991c3c8aac038d6ef363a4bf8be2f6db517"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-cp38-abi3-macosx_10_12_x86_64.whl",
+      "has_sig": false,
+      "md5_digest": "4aa361f91e49e76e6a754887ba3d4ff1",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.9",
+      "size": 467781,
+      "upload_time": "2025-11-19T15:18:35",
+      "upload_time_iso_8601": "2025-11-19T15:18:35.840924Z",
+      "url": "https://files.pythonhosted.org/packages/fa/47/aef6c06649039accf914afef490268e1067ed82be62bcfa5b7e886ad15e8/safetensors-0.7.0-cp38-abi3-macosx_10_12_x86_64.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "e800374c0c068e30cd31f1e1b46b4b5738168ec79e7689ca82ee93ddfea05109",
+        "md5": "c165894f7a3bfd730662d10f054d89e3",
+        "sha256": "94fd4858284736bb67a897a41608b5b0c2496c9bdb3bf2af1fa3409127f20d57"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-cp38-abi3-macosx_11_0_arm64.whl",
+      "has_sig": false,
+      "md5_digest": "c165894f7a3bfd730662d10f054d89e3",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.9",
+      "size": 447058,
+      "upload_time": "2025-11-19T15:18:34",
+      "upload_time_iso_8601": "2025-11-19T15:18:34.416502Z",
+      "url": "https://files.pythonhosted.org/packages/e8/00/374c0c068e30cd31f1e1b46b4b5738168ec79e7689ca82ee93ddfea05109/safetensors-0.7.0-cp38-abi3-macosx_11_0_arm64.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "f106578ffed52c2296f93d7fd2d844cabfa92be51a587c38c8afbb8ae449ca89",
+        "md5": "7a7be2ed9c9d96ecc90dd56f617c9f3a",
+        "sha256": "e07d91d0c92a31200f25351f4acb2bc6aff7f48094e13ebb1d0fb995b54b6542"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-cp38-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "has_sig": false,
+      "md5_digest": "7a7be2ed9c9d96ecc90dd56f617c9f3a",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.9",
+      "size": 491748,
+      "upload_time": "2025-11-19T15:18:09",
+      "upload_time_iso_8601": "2025-11-19T15:18:09.790508Z",
+      "url": "https://files.pythonhosted.org/packages/f1/06/578ffed52c2296f93d7fd2d844cabfa92be51a587c38c8afbb8ae449ca89/safetensors-0.7.0-cp38-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "ae331debbbb70e4791dde185edb9413d1fe01619255abb64b300157d7f15dddd",
+        "md5": "25cdc2a80bc780489fe494230e95bced",
+        "sha256": "8469155f4cb518bafb4acf4865e8bb9d6804110d2d9bdcaa78564b9fd841e104"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-cp38-abi3-manylinux_2_17_armv7l.manylinux2014_armv7l.whl",
+      "has_sig": false,
+      "md5_digest": "25cdc2a80bc780489fe494230e95bced",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.9",
+      "size": 503881,
+      "upload_time": "2025-11-19T15:18:16",
+      "upload_time_iso_8601": "2025-11-19T15:18:16.145273Z",
+      "url": "https://files.pythonhosted.org/packages/ae/33/1debbbb70e4791dde185edb9413d1fe01619255abb64b300157d7f15dddd/safetensors-0.7.0-cp38-abi3-manylinux_2_17_armv7l.manylinux2014_armv7l.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "8e1c40c2ca924d60792c3be509833df711b553c60effbd91da6f5284a83f7122",
+        "md5": "614674ba5686f9421ed245d0a005d7f1",
+        "sha256": "54bef08bf00a2bff599982f6b08e8770e09cc012d7bba00783fc7ea38f1fb37d"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-cp38-abi3-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl",
+      "has_sig": false,
+      "md5_digest": "614674ba5686f9421ed245d0a005d7f1",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.9",
+      "size": 623463,
+      "upload_time": "2025-11-19T15:18:21",
+      "upload_time_iso_8601": "2025-11-19T15:18:21.110678Z",
+      "url": "https://files.pythonhosted.org/packages/8e/1c/40c2ca924d60792c3be509833df711b553c60effbd91da6f5284a83f7122/safetensors-0.7.0-cp38-abi3-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "9b3a13784a9364bd43b0d61eef4bea2845039bc2030458b16594a1bd787ae26e",
+        "md5": "b70d142f2e7a4dcb421dc46a62d5d932",
+        "sha256": "42cb091236206bb2016d245c377ed383aa7f78691748f3bb6ee1bfa51ae2ce6a"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-cp38-abi3-manylinux_2_17_s390x.manylinux2014_s390x.whl",
+      "has_sig": false,
+      "md5_digest": "b70d142f2e7a4dcb421dc46a62d5d932",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.9",
+      "size": 532855,
+      "upload_time": "2025-11-19T15:18:25",
+      "upload_time_iso_8601": "2025-11-19T15:18:25.719869Z",
+      "url": "https://files.pythonhosted.org/packages/9b/3a/13784a9364bd43b0d61eef4bea2845039bc2030458b16594a1bd787ae26e/safetensors-0.7.0-cp38-abi3-manylinux_2_17_s390x.manylinux2014_s390x.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "a060429e9b1cb3fc651937727befe258ea24122d9663e4d5709a48c9cbfceecb",
+        "md5": "52c17d705e381f981dd4e65c6aff8eb4",
+        "sha256": "dac7252938f0696ddea46f5e855dd3138444e82236e3be475f54929f0c510d48"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "has_sig": false,
+      "md5_digest": "52c17d705e381f981dd4e65c6aff8eb4",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.9",
+      "size": 507152,
+      "upload_time": "2025-11-19T15:18:33",
+      "upload_time_iso_8601": "2025-11-19T15:18:33.023915Z",
+      "url": "https://files.pythonhosted.org/packages/a0/60/429e9b1cb3fc651937727befe258ea24122d9663e4d5709a48c9cbfceecb/safetensors-0.7.0-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "3ca84b45e4e059270d17af60359713ffd83f97900d45a6afa73aaa0d737d48b6",
+        "md5": "b0f0c0eb87d8ac9a466c53864f777cc6",
+        "sha256": "1d060c70284127fa805085d8f10fbd0962792aed71879d00864acda69dbab981"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-cp38-abi3-manylinux_2_5_i686.manylinux1_i686.whl",
+      "has_sig": false,
+      "md5_digest": "b0f0c0eb87d8ac9a466c53864f777cc6",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.9",
+      "size": 541856,
+      "upload_time": "2025-11-19T15:18:31",
+      "upload_time_iso_8601": "2025-11-19T15:18:31.075456Z",
+      "url": "https://files.pythonhosted.org/packages/3c/a8/4b45e4e059270d17af60359713ffd83f97900d45a6afa73aaa0d737d48b6/safetensors-0.7.0-cp38-abi3-manylinux_2_5_i686.manylinux1_i686.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "0687d26d8407c44175d8ae164a95b5a62707fcc445f3c0c56108e37d98070a3d",
+        "md5": "06e75c88f5464f04e30c1074d4d867b3",
+        "sha256": "cdab83a366799fa730f90a4ebb563e494f28e9e92c4819e556152ad55e43591b"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-cp38-abi3-musllinux_1_2_aarch64.whl",
+      "has_sig": false,
+      "md5_digest": "06e75c88f5464f04e30c1074d4d867b3",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.9",
+      "size": 674060,
+      "upload_time": "2025-11-19T15:18:37",
+      "upload_time_iso_8601": "2025-11-19T15:18:37.211922Z",
+      "url": "https://files.pythonhosted.org/packages/06/87/d26d8407c44175d8ae164a95b5a62707fcc445f3c0c56108e37d98070a3d/safetensors-0.7.0-cp38-abi3-musllinux_1_2_aarch64.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "11f557644a2ff08dc6325816ba7217e5095f17269dada2554b658442c66aed51",
+        "md5": "e3da30387b9bae31725ed5c91bd630b4",
+        "sha256": "672132907fcad9f2aedcb705b2d7b3b93354a2aec1b2f706c4db852abe338f85"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-cp38-abi3-musllinux_1_2_armv7l.whl",
+      "has_sig": false,
+      "md5_digest": "e3da30387b9bae31725ed5c91bd630b4",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.9",
+      "size": 771715,
+      "upload_time": "2025-11-19T15:18:38",
+      "upload_time_iso_8601": "2025-11-19T15:18:38.689705Z",
+      "url": "https://files.pythonhosted.org/packages/11/f5/57644a2ff08dc6325816ba7217e5095f17269dada2554b658442c66aed51/safetensors-0.7.0-cp38-abi3-musllinux_1_2_armv7l.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "863117883e13a814bd278ae6e266b13282a01049b0c81341da7fd0e3e71a80a3",
+        "md5": "3f6fd5f40f3d1f9e017410f6ab203533",
+        "sha256": "5d72abdb8a4d56d4020713724ba81dac065fedb7f3667151c4a637f1d3fb26c0"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-cp38-abi3-musllinux_1_2_i686.whl",
+      "has_sig": false,
+      "md5_digest": "3f6fd5f40f3d1f9e017410f6ab203533",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.9",
+      "size": 714377,
+      "upload_time": "2025-11-19T15:18:40",
+      "upload_time_iso_8601": "2025-11-19T15:18:40.162350Z",
+      "url": "https://files.pythonhosted.org/packages/86/31/17883e13a814bd278ae6e266b13282a01049b0c81341da7fd0e3e71a80a3/safetensors-0.7.0-cp38-abi3-musllinux_1_2_i686.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "4ad80c8a7dc9b41dcac53c4cbf9df2b9c83e0e0097203de8b37a712b345c0be5",
+        "md5": "ce467f7577934e220e1f71331f0d7ffe",
+        "sha256": "b0f6d66c1c538d5a94a73aa9ddca8ccc4227e6c9ff555322ea40bdd142391dd4"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-cp38-abi3-musllinux_1_2_x86_64.whl",
+      "has_sig": false,
+      "md5_digest": "ce467f7577934e220e1f71331f0d7ffe",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.9",
+      "size": 677368,
+      "upload_time": "2025-11-19T15:18:41",
+      "upload_time_iso_8601": "2025-11-19T15:18:41.627138Z",
+      "url": "https://files.pythonhosted.org/packages/4a/d8/0c8a7dc9b41dcac53c4cbf9df2b9c83e0e0097203de8b37a712b345c0be5/safetensors-0.7.0-cp38-abi3-musllinux_1_2_x86_64.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "8f8c97a6df7b185a07c2b89e7eaf9d13057d657ffb499292efde5b32d614881b"
+      },
+      "digests": {
+        "blake2b_256": "05e5cb4b713c8a93469e3c5be7c3f8d77d307e65fe89673e731f5c2bfd0a9237",
+        "md5": "034ead8703f5044bc3b8c31517ec1549",
+        "sha256": "c74af94bf3ac15ac4d0f2a7c7b4663a15f8c2ab15ed0fc7531ca61d0835eccba"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-cp38-abi3-win32.whl",
+      "has_sig": false,
+      "md5_digest": "034ead8703f5044bc3b8c31517ec1549",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.9",
+      "size": 326423,
+      "upload_time": "2025-11-19T15:18:45",
+      "upload_time_iso_8601": "2025-11-19T15:18:45.740127Z",
+      "url": "https://files.pythonhosted.org/packages/05/e5/cb4b713c8a93469e3c5be7c3f8d77d307e65fe89673e731f5c2bfd0a9237/safetensors-0.7.0-cp38-abi3-win32.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "8f8c97a6df7b185a07c2b89e7eaf9d13057d657ffb499292efde5b32d614881b"
+      },
+      "digests": {
+        "blake2b_256": "5de6ec8471c8072382cb91233ba7267fd931219753bb43814cbc71757bfd4dab",
+        "md5": "2ff1c3fb68fffb8c5c48126985456fb7",
+        "sha256": "d1239932053f56f3456f32eb9625590cc7582e905021f94636202a864d470755"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-cp38-abi3-win_amd64.whl",
+      "has_sig": false,
+      "md5_digest": "2ff1c3fb68fffb8c5c48126985456fb7",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.9",
+      "size": 341380,
+      "upload_time": "2025-11-19T15:18:44",
+      "upload_time_iso_8601": "2025-11-19T15:18:44.427209Z",
+      "url": "https://files.pythonhosted.org/packages/5d/e6/ec8471c8072382cb91233ba7267fd931219753bb43814cbc71757bfd4dab/safetensors-0.7.0-cp38-abi3-win_amd64.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "a76a4d08d89a6fcbe905c5ae68b8b34f0791850882fc19782d0d02c65abbdf3b",
+        "md5": "c788aee9d415f654262484cecbf5c276",
+        "sha256": "f4729811a6640d019a4b7ba8638ee2fd21fa5ca8c7e7bdf0fed62068fcaac737"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-pp310-pypy310_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "has_sig": false,
+      "md5_digest": "c788aee9d415f654262484cecbf5c276",
+      "packagetype": "bdist_wheel",
+      "python_version": "pp310",
+      "requires_python": ">=3.9",
+      "size": 492430,
+      "upload_time": "2025-11-19T15:18:11",
+      "upload_time_iso_8601": "2025-11-19T15:18:11.884412Z",
+      "url": "https://files.pythonhosted.org/packages/a7/6a/4d08d89a6fcbe905c5ae68b8b34f0791850882fc19782d0d02c65abbdf3b/safetensors-0.7.0-pp310-pypy310_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "dd2959ed8152b30f72c42d00d241e58eaca558ae9dbfa5695206e2e0f54c7063",
+        "md5": "5bcdf995b8b17a3990dacd5a50a1ad66",
+        "sha256": "12f49080303fa6bb424b362149a12949dfbbf1e06811a88f2307276b0c131afd"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-pp310-pypy310_pp73-manylinux_2_17_armv7l.manylinux2014_armv7l.whl",
+      "has_sig": false,
+      "md5_digest": "5bcdf995b8b17a3990dacd5a50a1ad66",
+      "packagetype": "bdist_wheel",
+      "python_version": "pp310",
+      "requires_python": ">=3.9",
+      "size": 503977,
+      "upload_time": "2025-11-19T15:18:17",
+      "upload_time_iso_8601": "2025-11-19T15:18:17.523017Z",
+      "url": "https://files.pythonhosted.org/packages/dd/29/59ed8152b30f72c42d00d241e58eaca558ae9dbfa5695206e2e0f54c7063/safetensors-0.7.0-pp310-pypy310_pp73-manylinux_2_17_armv7l.manylinux2014_armv7l.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "d30b4811bfec67fa260e791369b16dab105e4bae82686120554cc484064e22b4",
+        "md5": "4f67a1b4f08d1ed8fe00f82280d2feff",
+        "sha256": "0071bffba4150c2f46cae1432d31995d77acfd9f8db598b5d1a2ce67e8440ad2"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-pp310-pypy310_pp73-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl",
+      "has_sig": false,
+      "md5_digest": "4f67a1b4f08d1ed8fe00f82280d2feff",
+      "packagetype": "bdist_wheel",
+      "python_version": "pp310",
+      "requires_python": ">=3.9",
+      "size": 623890,
+      "upload_time": "2025-11-19T15:18:22",
+      "upload_time_iso_8601": "2025-11-19T15:18:22.666655Z",
+      "url": "https://files.pythonhosted.org/packages/d3/0b/4811bfec67fa260e791369b16dab105e4bae82686120554cc484064e22b4/safetensors-0.7.0-pp310-pypy310_pp73-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "585b632a58724221ef03d78ab65062e82a1010e1bef8e8e0b9d7c6d7b8044841",
+        "md5": "f1a02c2cbbf5c5641f5752cee517c5d0",
+        "sha256": "473b32699f4200e69801bf5abf93f1a4ecd432a70984df164fc22ccf39c4a6f3"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-pp310-pypy310_pp73-manylinux_2_17_s390x.manylinux2014_s390x.whl",
+      "has_sig": false,
+      "md5_digest": "f1a02c2cbbf5c5641f5752cee517c5d0",
+      "packagetype": "bdist_wheel",
+      "python_version": "pp310",
+      "requires_python": ">=3.9",
+      "size": 531885,
+      "upload_time": "2025-11-19T15:18:27",
+      "upload_time_iso_8601": "2025-11-19T15:18:27.146114Z",
+      "url": "https://files.pythonhosted.org/packages/58/5b/632a58724221ef03d78ab65062e82a1010e1bef8e8e0b9d7c6d7b8044841/safetensors-0.7.0-pp310-pypy310_pp73-manylinux_2_17_s390x.manylinux2014_s390x.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "946013ccb63ea85bfe2e4fe6af602cf1272155f048906556d5ec8509da9dba42",
+        "md5": "c60690f67c818795b741ca11266da719",
+        "sha256": "7b95a3fa7b3abb9b5b0e07668e808364d0d40f6bbbf9ae0faa8b5b210c97b140"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-pp39-pypy39_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "has_sig": false,
+      "md5_digest": "c60690f67c818795b741ca11266da719",
+      "packagetype": "bdist_wheel",
+      "python_version": "pp39",
+      "requires_python": ">=3.9",
+      "size": 492627,
+      "upload_time": "2025-11-19T15:18:14",
+      "upload_time_iso_8601": "2025-11-19T15:18:14.661049Z",
+      "url": "https://files.pythonhosted.org/packages/94/60/13ccb63ea85bfe2e4fe6af602cf1272155f048906556d5ec8509da9dba42/safetensors-0.7.0-pp39-pypy39_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "2e2be2fde0d6334439908b0b0c4cba18b8ad76ea6a03b569d4a3388f423b4046",
+        "md5": "f7abe530913641279a9348f0c2fa46cb",
+        "sha256": "cfdead2f57330d76aa7234051dadfa7d4eedc0e5a27fd08e6f96714a92b00f09"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-pp39-pypy39_pp73-manylinux_2_17_armv7l.manylinux2014_armv7l.whl",
+      "has_sig": false,
+      "md5_digest": "f7abe530913641279a9348f0c2fa46cb",
+      "packagetype": "bdist_wheel",
+      "python_version": "pp39",
+      "requires_python": ">=3.9",
+      "size": 503861,
+      "upload_time": "2025-11-19T15:18:19",
+      "upload_time_iso_8601": "2025-11-19T15:18:19.418040Z",
+      "url": "https://files.pythonhosted.org/packages/2e/2b/e2fde0d6334439908b0b0c4cba18b8ad76ea6a03b569d4a3388f423b4046/safetensors-0.7.0-pp39-pypy39_pp73-manylinux_2_17_armv7l.manylinux2014_armv7l.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "f071566e3dd559a9cef1b4775c239daae09e6b6a32ca8b45eb1db9a4dfa1ba81",
+        "md5": "48e1e21b1f371678ec355afd0e73fcfc",
+        "sha256": "dc92bc2db7b45bda4510e4f51c59b00fe80b2d6be88928346e4294ce1c2abe7c"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-pp39-pypy39_pp73-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl",
+      "has_sig": false,
+      "md5_digest": "48e1e21b1f371678ec355afd0e73fcfc",
+      "packagetype": "bdist_wheel",
+      "python_version": "pp39",
+      "requires_python": ">=3.9",
+      "size": 623577,
+      "upload_time": "2025-11-19T15:18:24",
+      "upload_time_iso_8601": "2025-11-19T15:18:24.275584Z",
+      "url": "https://files.pythonhosted.org/packages/f0/71/566e3dd559a9cef1b4775c239daae09e6b6a32ca8b45eb1db9a4dfa1ba81/safetensors-0.7.0-pp39-pypy39_pp73-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "6809326fbf17444dd520ab19f0a55b7a18476dbe52a430466bbf5389967c2aaa"
+      },
+      "digests": {
+        "blake2b_256": "82fc3035c5c30c8a5a82c31c6b2ad6f8bcd45ea2ddd9a8088840406bcf997413",
+        "md5": "2dbbab023b2386a5dab72e4bafdf183a",
+        "sha256": "6999421eb8ba9df4450a16d9184fcb7bef26240b9f98e95401f17af6c2210b71"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0-pp39-pypy39_pp73-manylinux_2_17_s390x.manylinux2014_s390x.whl",
+      "has_sig": false,
+      "md5_digest": "2dbbab023b2386a5dab72e4bafdf183a",
+      "packagetype": "bdist_wheel",
+      "python_version": "pp39",
+      "requires_python": ">=3.9",
+      "size": 532524,
+      "upload_time": "2025-11-19T15:18:29",
+      "upload_time_iso_8601": "2025-11-19T15:18:29.334226Z",
+      "url": "https://files.pythonhosted.org/packages/82/fc/3035c5c30c8a5a82c31c6b2ad6f8bcd45ea2ddd9a8088840406bcf997413/safetensors-0.7.0-pp39-pypy39_pp73-manylinux_2_17_s390x.manylinux2014_s390x.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": false,
+      "digests": {
+        "blake2b_256": "299c6e74567782559a63bd040a236edca26fd71bc7ba88de2ef35d75df3bca5e",
+        "md5": "41fd9ca12ba1b5c6eb81e25921a60adf",
+        "sha256": "07663963b67e8bd9f0b8ad15bb9163606cd27cc5a1b96235a50d8369803b96b0"
+      },
+      "downloads": -1,
+      "filename": "safetensors-0.7.0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "41fd9ca12ba1b5c6eb81e25921a60adf",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.9",
+      "size": 200878,
+      "upload_time": "2025-11-19T15:18:43",
+      "upload_time_iso_8601": "2025-11-19T15:18:43.199280Z",
+      "url": "https://files.pythonhosted.org/packages/29/9c/6e74567782559a63bd040a236edca26fd71bc7ba88de2ef35d75df3bca5e/safetensors-0.7.0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "decision_id": "CRS-DELEGATED-DESKTOP-BOUNDARY-CORRECTION-006",
+  "client_date": "2026-10-04",
+  "decided_by": "/root",
+  "status": "REGISTERED_FINITE_CORRECTIVE_SOURCE_SCOPE_UNDER_ACTUAL_STANDING_HUMAN_DELEGATION",
+  "human_authority_receipt_sha256": "479b6c5284da978c491a6477a9064f21b585fa29e9991bf84d75960c380d18f0",
+  "not_a_new_human_message_or_independent_permission_grant": true,
+  "same_milestone": "owned_runtime_identity_probe",
+  "cumulative_source_review_round": 6,
+  "default_three_round_rule_and_historical_exceptions_not_reset": true,
+  "rejected_round5_freeze_sha256": "dc9c9d277b71011912bd90964b3f43481ece652c826417714c73fad0eefd6394",
+  "round5_history_preservation_sha256": "283b1403cd9bd79f564a0e77c7fb8e032cafea4b16eba6d70a322a5fe6bd4e27",
+  "independent_findings": [
+    {
+      "id": "DP5-SCI-001",
+      "report_path": "experiments\\rineya_centralized_reasoning_system_v1\\audits\\DESKTOP_PROFILE_INTEGRATION_SCI_REVIEW_001.md",
+      "report_sha256": "08aa66f091be5f3debbd3773590ed24fbbf2365044c0caa25da83012315478d9",
+      "problem": "Depth8 exhaustion can falsely accept a truncated Codex owner chain"
+    },
+    {
+      "id": "DP5-OPS-001",
+      "report_path": "experiments\\rineya_centralized_reasoning_system_v1\\audits\\DESKTOP_PROFILE_INTEGRATION_OPS_REVIEW_001.md",
+      "report_sha256": "42b2699f45ca8d3c75a9fd34dfd707ba71374b294ca82dfda7cd4852c13d9bd9",
+      "problem": "Collector unnecessarily walks above verified app root and rejects actual missing external launcher parent"
+    }
+  ],
+  "scope": {
+    "additional_finite_correction_rounds": 1,
+    "files": [
+      "owned_runtime_identity_probe.py",
+      "tests/test_owned_runtime_identity_probe.py",
+      "contracts/OWNED_RUNTIME_IDENTITY_DIAGNOSTIC_002_V4.json"
+    ],
+    "preserve_V3_and_desktop_profile_V1_unchanged": true,
+    "correction": "Require actual owner-boundary attainment with bound termination reason and stable parent relationship; depth exhaustion refuses; a positively observed absent external parent after a verified Codex anchor can delimit earliest live same-family app boundary, with absence rechecked; inaccessible/unknown relation or orphaned helper still refuses",
+    "depth_limit_unchanged": 8,
+    "known_no_such_external_parent_is_not_generic_error_fallback": true,
+    "actual_collector_logic_mock_reproduction_required": true,
+    "tests_include": [
+      "genuine depth7 and8 boundaries",
+      "depth8 continuing samefamily refuses",
+      "Swift deepchain refuses",
+      "missing/false/inconsistent boundary witness refuses",
+      "actual verified Codex and Swift-to-Codex external parentNoSuchProcess positive",
+      "AccessDenied refuses",
+      "parentPID reuse/change duringchecks refuses",
+      "orphanhelper noanchor refuses"
+    ],
+    "CPU_test_invocations_max": 1,
+    "CPU_test_wall_seconds_max": 60,
+    "no_full_bank_model_suite_or_unchanged_static_large_hash_repeat_needed": true,
+    "freeze_and_fresh_independent_nonbuilder_SCI_OPS_reviews": 1,
+    "extra_worker_attempts": 0,
+    "remaining_fixed_key": "CRS-OWNED-IDENTITY-002",
+    "remaining_fixed_runs_max": 1,
+    "remaining_wall_seconds_max": 60,
+    "automatic_retry": false,
+    "unresolved_material_findings_stop_this_scope": true,
+    "no_silent_further_repair_in_this_scope": true
+  },
+  "unchanged": [
+    "native845",
+    "nativecontractd79",
+    "operationsba27",
+    "reader0299",
+    "reader_executionc66",
+    "ownedfourregistry15158",
+    "originaldesktopregistry",
+    "exactthreeupdateddesktopGPUroles_only",
+    "ChromeEdgeexcluded",
+    "numerical_resource_lease_budget_freshness_independent_deadline_guards",
+    "historical47.421seconds",
+    "protectedcentralbanks",
+    "canonicalweights"
+  ],
+  "scientific_model_claims": false,
+  "source_accepted_or_live_launch_by_this_decision": false
+}

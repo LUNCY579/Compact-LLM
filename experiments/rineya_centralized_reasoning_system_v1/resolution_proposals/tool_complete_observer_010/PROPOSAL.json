@@ -1,0 +1,70 @@
+{
+  "proposal_id": "CRS-TOOL-COMPLETE-OBSERVER-DESIGN-010",
+  "status": "BLOCKED_COMPLETE_ENDPOINT_OR_ACCOUNTING_BOUNDARY",
+  "author": "/root/tool_candidate2_finisher",
+  "client_date": "2026-10-05",
+  "authorization_sha256": "55e3a596e3d20d21971857941e4ad1d7b40a66bf74ca36df1707f450e561da64",
+  "milestone": "SAME_CRS_CPU_ONLY_TOOL_VERSION_METADATA_QUERY",
+  "design_only": true,
+  "self_approved": false,
+  "selected_source_files": [
+    {"path":"authorization/DELEGATED_TOOL_COMPLETE_OBSERVER_DESIGN_010.json","bytes":3029,"sha256":"55e3a596e3d20d21971857941e4ad1d7b40a66bf74ca36df1707f450e561da64"},
+    {"path":"audits/TOOL_VERSION_COMPLETE_OBSERVER_SCI_ASSESSMENT_001.md","bytes":7014,"sha256":"413bbe21c14ed4a541f66147b4c68d5810e88d47f0745bb6a52bf68d206571db"},
+    {"path":"audits/TOOL_VERSION_COMPLETE_OBSERVER_OPS_ASSESSMENT_001.md","bytes":8340,"sha256":"576892ecece4eb03565feb45f7937d7801b1bc38b946047f2c0bafeaa7c0c15a"},
+    {"path":"cpu_only_tool_version.py","bytes":31002,"sha256":"82f211ebd5a49dfa9c2b8cbb098566f459181fab29f9ee19a2c6a917989d9cb0"},
+    {"path":"contracts/CPU_ONLY_TOOL_VERSION_V3.json","bytes":9752,"sha256":"e1a23e03b4c5250bd28193390bf7f609738751b4b1da72e99c40c1d337f68972"},
+    {"path":"operations.py","bytes":31728,"sha256":"ba27ec8a31437459b956a5642e6ece4838f0584602db2c93ff7bc61437806e30"}
+  ],
+  "selected_file_count": 6,
+  "selected_unique_bytes": 90865,
+  "source_read_pass_accounting": {"initial_content_and_hash_passes_bytes":181730,"final_three_core_hash_verification_bytes":72482,"conservative_total_bytes":254212,"limit_bytes":262144,"no_further_existing_source_reads_in_this_scope":true},
+  "accepted_library_unchanged": true,
+  "library_candidates_used": 3,
+  "library_candidates_max": 3,
+  "integration_round4_exception_granted": false,
+  "fifth_round_retry_or_new_milestone_granted": false,
+  "process_boundary": {
+    "observer": "One external observer/broker O with supervision thread distinct from potentially blocked validation/accounting thread",
+    "caller": "One broker-created contained caller C, immutable library3, injected typed broker port only",
+    "UV": "One broker-created pinned U, never local caller fallback; original U Job ActiveProcessLimit1/no descendants",
+    "birth_ownership_requirement": "O retains original caller/UV/Job/process/thread handles before caller acknowledgement. Required atomic birth containment must cover blocking CreateProcess before postreturn assignment. Not implemented or OS-qualified.",
+    "caller_loss": "O retains exact U/Job handles and cleanup capability; no PID reopen or duplicate query",
+    "observer_loss": "No durable acknowledged takeover implemented or qualified; refusal/unknown, never inferred orphan clearance",
+    "retained_live_handles": "No last process/necessary Job close until exact signaled exit and required empty Job proof",
+    "resource_scope": "Combined controlled caller/worker/observer activity must fit original2GiB RSS/separate2GiB commit scope; no invisible observer baseline exemption. Enforceable graph admission unqualified."
+  },
+  "event_boundary": {
+    "t0": "External O monotonic start before caller preparation, validation and canonical reservation",
+    "deadline": "t0+10 seconds, unchanged",
+    "tU": "Actual UV dispatch start",
+    "tX": "Verified exact held-handle UV exit",
+    "tC": "After durable fixed caller artifact, complete output serialization/publication, closed streams, exact caller exit and required EOF/peak/resource/cleanup proofs",
+    "validation_budget_seconds": 0.5,
+    "publication_accounting_budget_seconds": 0.5,
+    "success_budgets": "Each budget also limited by remaining original10s; insufficient remainder refuses success",
+    "tE": "Externally observed completion after all required caller and observer durable publication and canonical accounting; tE<=deadline required",
+    "postdeadline_failure_observation": "Separate0.5s validation+0.5s accounting cutoffs, failure/unknown only, no continued query permission or success backdating. Blocking calls are unqualified, not asserted bounded.",
+    "self_certification_limit": "One fixed set of caller leaf artifacts, one observer assessment; no certificate chain. Observer-required own publication/accounting must actually complete within original10s, not be certified by a prewrite time."
+  },
+  "clock_and_cost": {
+    "UV_interval": "tX-tU",
+    "caller_interval": "tC-t0",
+    "observer_interval": "Actual validation/publication/accounting after tC",
+    "fully_charged_interval": "Governed preparation/qualification/query/failure through required actual finalization, measured fromt0 without double-counting overlapping component intervals",
+    "lease_clock": "Wall-clock lease/receipt observations separately bound to monotonic event provenance",
+    "unknown": "Full10 reservation and global-worker exclusion remain; unknown exposure is not completion",
+    "known_overrun": "Actual measured cost preserved, never clipped to10",
+    "additive_reservation": "No extra key/dose/observer reservation while unresolved native admission remains; original qualification allowance not extended"
+  },
+  "concrete_blockers": [
+    {"id":"B1_NARROW_IMMUTABLE_COST_RECEIPT","source":"cpu_only_tool_version.py finalization; operations.py write_receipt460-486/verify_receipt/reconcile371-437","finding":"Library fixes one native_outcome_observation kind/key receipt to narrower native interval. Canonical reconcile requires actual cost equal to that receipt and exact filename identity. Complete caller/observer qualification cost cannot be substituted without immutable conflict or verifier refusal.","no_workaround_assumed":"No receipt overwrite/diversion, shortened charge or new observer key"},
+    {"id":"B2_DEADLINE_UNAWARE_IMMUTABLE_TERMINAL_COMMIT","source":"operations.py reconcile finished_at/UPDATE/event and enclosing transaction commit","finding":"SUCCEEDED can become durable after the precommit clock sample or absolute deadline. No deadline-aware verified completion primitive exists; terminal conflict is immutable. Kill during COMMIT is not rollback proof. Later observation cannot retract late success.","no_workaround_assumed":"No precommit timestamp success, postendpoint required accounting, infinite certificate chain or permanentUNKNOWN-as-completion"},
+    {"id":"B3_UNQUALIFIED_BIRTH_AND_OBSERVER_LOSS_OWNERSHIP","source":"Immutable library locally creates suspended process then assigns Job; V3 explicitly lacks crossprocess transfer","finding":"Broker-held atomic birth containment/handle RPC and observer-loss continuity remain exact unimplemented prerequisites, not inferred OS guarantees."}
+  ],
+  "unchanged_query": {"tool_path":"C:/Users/clclc/.local/bin/uv.exe","tool_sha256":"5a7ec85884c2ccb1be560cb8fac3eb890df1adf49bfcc070a270ba70401bdd68","tool_bytes":68317696,"argv":["--version"],"attempts_max":1,"wall_seconds":10,"combined_output_bytes":8192,"overflow_sentinel_bytes_max":1,"ActiveProcessLimit":1,"descendants_max":0,"retry":false},
+  "unchanged_policies": {"RSS_bytes_max":2147483648,"Job_commit_bytes_max":2147483648,"host_reserve_GiB":1.25,"preworker_available_GiB":3.3125,"disk_free_GiB":4,"telemetry_age_seconds_max":5,"watchdog_poll_seconds":0.1,"numerical_threads_max":2,"UV_Rust_threads_enforced":false,"epoch_seconds":7200,"rolling24h_seconds":14400,"historical_seconds":47.42100000000573,"GPU_and_native_reader_acquisition_quarantines_unchanged":true,"keys_Probe002_weights_CHECKFINAL_unchanged":true},
+  "required_binding_schema": ["immutable nonbuilder SCI/OPS and exact clean commit","accepted library/V3 hashes","caller/broker exact source/runtime and physical identities","UV hash/size/path and exact requested argv","controller DLL/search-root/selected loader/trusted metadata disposition","physical empty roots and canonical hostDB identity","current host/disk/freshness and numerical/resource policy","owner/fence/request/key/epoch/lease and exact worker identity","raw output and separate EOF/peak/resource/exit/cleanup evidence","completed leaf caller serialization/publication identity","complete observer interval/cost/publication/accounting identity"],
+  "finite_falsifiers_unexecuted": ["blocked fsync/SQLite/serialization through deadline","caller death during creation before acknowledgement","failed termination leaves exact live handle","successful termination without signal","unknown Job membership or timer quiescence","observer death has no fabricated takeover","missing EOF/peak/identity/resource witness","observer publication or canonical COMMIT afterdeadline","COMMIT crash/kill has unknown durability","complete cost differs from immutable narrow receipt","extra reservation while original unknown","late qualification failure after immutable apparent success"],
+  "actions_performed": {"source_implementation":0,"fixtures_imports":0,"UV_OS_workers":0,"hostDB_GPU_network":0,"registration_or_reservation":0,"documents_or_binary_scan":0},
+  "scope_stop": "Freeze exact blocked proposal for independent review. No library/accounting edit, source4 exception, actual query or automatic new route follows. This finding is limited to current pinned API/contract, not all platforms."
+}

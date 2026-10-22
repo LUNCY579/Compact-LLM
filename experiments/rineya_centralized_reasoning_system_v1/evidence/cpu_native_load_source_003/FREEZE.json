@@ -1,0 +1,112 @@
+{
+  "status": "FINAL_CPU_SOURCE_ROUND3_FROZEN_PENDING_FRESH_SCI_OPS",
+  "source_round": 3,
+  "source_rounds_max": 3,
+  "no_fourth_repair_reset_or_extra_model_attempt": true,
+  "changed_functions": [
+    "checked_contract",
+    "allowed_cuda_import_call",
+    "arm_boundary"
+  ],
+  "builder": "/root/desktop_profile_builder",
+  "source_files": [
+    {
+      "path": "cpu_native_load.py",
+      "sha256": "e178c8cdc94ff52a952916d1c492e768af5662bf05292e4804fd4f60c9b681b9"
+    },
+    {
+      "path": "tests/test_cpu_native_load.py",
+      "sha256": "90fe9c0e71b1d2c919079cdf8a5d72e34569a58daf4a525f98a0ed277c92aaa6"
+    },
+    {
+      "path": "contracts/CPU_NATIVE_LOAD_FEASIBILITY_V3.json",
+      "sha256": "89cb94da80a74cd689339dc1f11d44fff30909a6b5ed85b42139de4d8a23ac1a"
+    },
+    {
+      "path": "authorization/DELEGATED_CPU_NATIVE_SOURCE_CORRECTION_003.json",
+      "sha256": "a201e42c7d18439a8dead889c7da6c57a136d74081b90d765c3a96f2e08192b5"
+    }
+  ],
+  "preserved_files": [
+    {
+      "path": "native.py",
+      "sha256": "8453128981280019702dff80ebd5083031f7f2dcd8a7c6c9094587d9a2e377a3"
+    },
+    {
+      "path": "operations.py",
+      "sha256": "ba27ec8a31437459b956a5642e6ece4838f0584602db2c93ff7bc61437806e30"
+    },
+    {
+      "path": "owned_runtime_identity_probe.py",
+      "sha256": "845d1e6624cea3ce0686aecc2f4e79e96cd1c37f0abd890877eb1212c8a9a8ab"
+    },
+    {
+      "path": "reader.py",
+      "sha256": "0299cb37b417bf142341509efd9d728263ddcbe89f02e6cc8b49b01f4ec851ab"
+    },
+    {
+      "path": "reader_execution.py",
+      "sha256": "c66a1b6453f1bad19e0f51eb7d2cf2b763eb0e6e7a09e124eebcb613ef53f9d3"
+    },
+    {
+      "path": "contracts/NATIVE_DIAGNOSTIC_V1.json",
+      "sha256": "d79f3b6a51e939d78a99c5c287ef6f33ef5979cfa50e76ba3d930ed3724f826a"
+    }
+  ],
+  "source2_freeze_sha256": "bbf52867244eb6cbcd03b870db7b0501b2793e4e360a7e39e5db0312f36e20e9",
+  "preserved_V2_sha256": "019c202afa302a9172a2d025591b9ad19bc508ccae485fbc8290405442287413",
+  "evidence_files": [
+    {
+      "path": "evidence/cpu_native_load_source_003/BUILD_TEST_FREEZE_ONCE.py",
+      "sha256": "2e3647e9f5aaa8c49662ae151d638a972c2528992e1e7b733aa1c5e199be4b73"
+    },
+    {
+      "path": "evidence/cpu_native_load_source_003/CPU_STDERR.txt",
+      "sha256": "91a31fe7422952edf21b92a6a05941c1f88c5b34737b937d33270e0d6fda39f7"
+    },
+    {
+      "path": "evidence/cpu_native_load_source_003/CPU_STDOUT.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/cpu_native_load_source_003/source_before/cpu_native_load.py",
+      "sha256": "5c069a26c42bb135ff31dd60dd93a3d8f6aa855db5c5c8c05490d54140532c33"
+    },
+    {
+      "path": "evidence/cpu_native_load_source_003/source_before/test_cpu_native_load.py",
+      "sha256": "a2302e5b1e9d7f9f2887d4318a9679f09c8f64b164731563e55a83861b49b8da"
+    },
+    {
+      "path": "evidence/cpu_native_load_source_003/TEST_RESULT.json",
+      "sha256": "c3e1b6dd40b371d61428a4dcb01f55c2b50bf8ae1107fb7e8eba5947d060fa54"
+    }
+  ],
+  "test_receipt": {
+    "status": "PASSED",
+    "command": [
+      "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+      "-B",
+      "-m",
+      "unittest",
+      "-f",
+      "-v",
+      "experiments.rineya_centralized_reasoning_system_v1.tests.test_cpu_native_load.CPUSourceRound3Tests"
+    ],
+    "source_round": 3,
+    "invocations": 1,
+    "fixture_groups": 3,
+    "wall_seconds": 0.3279999999977008,
+    "wall_seconds_max": 30,
+    "exit_code": 0,
+    "actual_model_framework_tokenizer_GPU_checkpoint_canonicalDB_actions": 0,
+    "actual_CPU_study_attempts": 0,
+    "actual_Torch_bootstrap": "NOT_EXECUTED",
+    "CPU_fit": "UNMEASURED",
+    "raw_sha256": {
+      "CPU_STDOUT.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "CPU_STDERR.txt": "91a31fe7422952edf21b92a6a05941c1f88c5b34737b937d33270e0d6fda39f7"
+    }
+  },
+  "actual_CPU_study_attempts": 0,
+  "source_or_launch_accepted": false
+}

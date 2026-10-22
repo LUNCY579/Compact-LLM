@@ -1,0 +1,89 @@
+test_HTML_UTF8_NUL_and_credential_checks_still_precede_pin (frozen_hf_backup_tests.BackupTests.test_HTML_UTF8_NUL_and_credential_checks_still_precede_pin) ... ok
+test_HTML_wrong_hash_same_basename_unlisted_and_case_refused (frozen_hf_backup_tests.BackupTests.test_HTML_wrong_hash_same_basename_unlisted_and_case_refused) ... FAIL
+test_added_source_after_inventory_refused (frozen_hf_backup_tests.BackupTests.test_added_source_after_inventory_refused) ... ok
+test_complete_manifest_credential_bypass_refused_before_write (frozen_hf_backup_tests.BackupTests.test_complete_manifest_credential_bypass_refused_before_write) ... ok
+test_credential_filename_refused_without_echoing_token (frozen_hf_backup_tests.BackupTests.test_credential_filename_refused_without_echoing_token) ... ok
+test_download_inventory_bounds_before_transfer (frozen_hf_backup_tests.BackupTests.test_download_inventory_bounds_before_transfer) ... ok
+test_exact_three_HTML_source_and_prepared_archive_paths (frozen_hf_backup_tests.BackupTests.test_exact_three_HTML_source_and_prepared_archive_paths) ... ERROR
+test_exception_has_separate_prefix_and_exact_freeze (frozen_hf_backup_tests.BackupTests.test_exception_has_separate_prefix_and_exact_freeze) ... ok
+test_hardlink_refused (frozen_hf_backup_tests.BackupTests.test_hardlink_refused) ... ok
+test_hfcli_fixed_private_dataset_and_forbidden_flags_absent (frozen_hf_backup_tests.BackupTests.test_hfcli_fixed_private_dataset_and_forbidden_flags_absent) ... ok
+test_inside_write_concurrency_preserves_remote_and_requires_reconcile (frozen_hf_backup_tests.BackupTests.test_inside_write_concurrency_preserves_remote_and_requires_reconcile) ... ok
+test_invalid_remote_inventory_never_proves_absence_or_writes (frozen_hf_backup_tests.BackupTests.test_invalid_remote_inventory_never_proves_absence_or_writes) ... ok
+test_inventory_preserves_paths_bytes_hash_and_no_training_promotion (frozen_hf_backup_tests.BackupTests.test_inventory_preserves_paths_bytes_hash_and_no_training_promotion) ... ok
+test_manifest_schema_and_provenance_are_bound (frozen_hf_backup_tests.BackupTests.test_manifest_schema_and_provenance_are_bound) ... ok
+test_never_reads_database_tensor_cache_or_opaque_archive (frozen_hf_backup_tests.BackupTests.test_never_reads_database_tensor_cache_or_opaque_archive) ... ok
+test_path_escape_and_source_link_refused (frozen_hf_backup_tests.BackupTests.test_path_escape_and_source_link_refused) ... ok
+test_payload_digest_excludes_backup_state_receipts_and_head (frozen_hf_backup_tests.BackupTests.test_payload_digest_excludes_backup_state_receipts_and_head) ... ok
+test_prepared_HTML_pin_refuses_internally_consistent_forged_bytes (frozen_hf_backup_tests.BackupTests.test_prepared_HTML_pin_refuses_internally_consistent_forged_bytes) ... ERROR
+test_prepared_tamper_and_extra_file_refused (frozen_hf_backup_tests.BackupTests.test_prepared_tamper_and_extra_file_refused) ... ok
+test_remote_partial_or_changed_snapshot_never_overwritten (frozen_hf_backup_tests.BackupTests.test_remote_partial_or_changed_snapshot_never_overwritten) ... ok
+test_remote_target_appearing_immediately_before_write_refused (frozen_hf_backup_tests.BackupTests.test_remote_target_appearing_immediately_before_write_refused) ... ok
+test_remote_visibility_gate_no_write (frozen_hf_backup_tests.BackupTests.test_remote_visibility_gate_no_write) ... ok
+test_safe_size_and_count_bounds (frozen_hf_backup_tests.BackupTests.test_safe_size_and_count_bounds) ... ok
+test_sdk_exact_three_byte_additions_and_atomic_parent (frozen_hf_backup_tests.BackupTests.test_sdk_exact_three_byte_additions_and_atomic_parent) ... ok
+test_sdk_source_mutation_after_validation_is_refused (frozen_hf_backup_tests.BackupTests.test_sdk_source_mutation_after_validation_is_refused) ... ok
+test_sensitive_name_and_actual_token_rejected (frozen_hf_backup_tests.BackupTests.test_sensitive_name_and_actual_token_rejected) ... ok
+test_source_operation_lock_blocks_parallel_write (frozen_hf_backup_tests.BackupTests.test_source_operation_lock_blocks_parallel_write) ... ok
+test_stale_inventory_and_mutable_exception_refused (frozen_hf_backup_tests.BackupTests.test_stale_inventory_and_mutable_exception_refused) ... ok
+test_successful_upload_then_verified_remote_noop (frozen_hf_backup_tests.BackupTests.test_successful_upload_then_verified_remote_noop) ... ok
+test_unknown_absent_reconciled_before_separate_retry (frozen_hf_backup_tests.BackupTests.test_unknown_absent_reconciled_before_separate_retry) ... ok
+test_unknown_binary_suffix_and_disguised_binary_refused (frozen_hf_backup_tests.BackupTests.test_unknown_binary_suffix_and_disguised_binary_refused) ... ok
+test_unknown_response_requires_explicit_reconcile_not_repeat (frozen_hf_backup_tests.BackupTests.test_unknown_response_requires_explicit_reconcile_not_repeat) ... ok
+
+======================================================================
+ERROR: test_exact_three_HTML_source_and_prepared_archive_paths (frozen_hf_backup_tests.BackupTests.test_exact_three_HTML_source_and_prepared_archive_paths)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\tests\test_hub_backup.py", line 158, in test_exact_three_HTML_source_and_prepared_archive_paths
+    h.validate_bytes(h.PurePosixPath(relative), data)
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\hub_backup.py", line 229, in validate_bytes
+    raise BackupError(f"Credential material refused: {relative}")
+experiments.rineya_centralized_reasoning_system_v1.hub_backup.BackupError: Credential material refused: evidence/cpu_only_tool_version_source_007/windows-apisets.html
+
+======================================================================
+ERROR: test_prepared_HTML_pin_refuses_internally_consistent_forged_bytes (frozen_hf_backup_tests.BackupTests.test_prepared_HTML_pin_refuses_internally_consistent_forged_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\tests\test_hub_backup.py", line 198, in test_prepared_HTML_pin_refuses_internally_consistent_forged_bytes
+    result = self.prepare()
+             ^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\tests\test_hub_backup.py", line 87, in prepare
+    return h.prepare(self.root, head_reader=self.head, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\hub_backup.py", line 389, in prepare
+    inventories = [inventory(primary, "primary")]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\hub_backup.py", line 300, in inventory
+    walk(base, 0)
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\hub_backup.py", line 290, in walk
+    walk(path, depth + 1)
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\hub_backup.py", line 290, in walk
+    walk(path, depth + 1)
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\hub_backup.py", line 292, in walk
+    add(path, f"{prefix}/package/{relative}")
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\hub_backup.py", line 295, in add
+    data = read_stable(root, path)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\hub_backup.py", line 221, in read_stable
+    validate_bytes(PurePosixPath(path.relative_to(root).as_posix()), data)
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\hub_backup.py", line 229, in validate_bytes
+    raise BackupError(f"Credential material refused: {relative}")
+experiments.rineya_centralized_reasoning_system_v1.hub_backup.BackupError: Credential material refused: experiments/rineya_centralized_reasoning_system_v1/evidence/cpu_only_tool_version_source_007/windows-apisets.html
+
+======================================================================
+FAIL: test_HTML_wrong_hash_same_basename_unlisted_and_case_refused (frozen_hf_backup_tests.BackupTests.test_HTML_wrong_hash_same_basename_unlisted_and_case_refused)
+----------------------------------------------------------------------
+experiments.rineya_centralized_reasoning_system_v1.hub_backup.BackupError: Credential material refused: evidence/cpu_only_tool_version_source_007/windows-apisets.html
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-centralized-reasoning-system-v1\experiments\rineya_centralized_reasoning_system_v1\tests\test_hub_backup.py", line 169, in test_HTML_wrong_hash_same_basename_unlisted_and_case_refused
+    with self.assertRaisesRegex(h.BackupError, "HTML provenance hash differs"):
+AssertionError: "HTML provenance hash differs" does not match "Credential material refused: evidence/cpu_only_tool_version_source_007/windows-apisets.html"
+
+----------------------------------------------------------------------
+Ran 32 tests in 15.040s
+
+FAILED (failures=1, errors=2)

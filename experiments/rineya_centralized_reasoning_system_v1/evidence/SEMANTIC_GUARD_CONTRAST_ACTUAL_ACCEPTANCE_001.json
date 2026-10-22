@@ -1,0 +1,62 @@
+{
+  "study_id": "CRS-SEMANTIC-GUARD-CONTRAST-001",
+  "status": "ACTUAL_EXPOSED_CPU_INSTRUMENT_COUNTEREXAMPLES_ACCEPTED",
+  "study_attempt_consumed_no_retry": true,
+  "marker_preserved_unknown_state_resolved_by_actual_result_and_reviews": true,
+  "freeze_sha256": "04737a67519f3e658e9ff92065a211ae458bc0659dd42ed8e83a32e52385970d",
+  "source_acceptance_sha256": "25c2a174547364c940cc97a202c756ae188b44ee9a1b726a0868306b6c69cb64",
+  "actual_command_receipt_sha256": "226fc7158f0dcaa261be5b15de04a046392d813c47715479e5ef7e4c1c571d63",
+  "actual_raw_refs": [
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\resolution_studies\\semantic_guard_contrast_001\\outputs\\actual_cpu_001\\ATTEMPT.json",
+      "sha256": "2a67c9e0d8e67a6ddd20833ae67d9c22b7437b58c98a617fa8676f3ad0a52c53"
+    },
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\resolution_studies\\semantic_guard_contrast_001\\outputs\\actual_cpu_001\\PARTIAL.jsonl",
+      "sha256": "5ca20676a0aa888bacd7ebc333c24a51f399bd80797362019f3617aa93f1411a"
+    },
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\resolution_studies\\semantic_guard_contrast_001\\outputs\\actual_cpu_001\\RESULT.json",
+      "sha256": "15c2c9ce0317c449664f6fcf2e0b729d4f0c3a0d50eb560aa033ad3bec88230e"
+    }
+  ],
+  "independent_actual_reviews": [
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\audits\\SEMANTIC_GUARD_CONTRAST_SCI_ACTUAL_001.md",
+      "sha256": "686a5709fa3d64e3c51b7ad5f1557827a6e9c1ba3b689c48bae74770889a4a25"
+    },
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\audits\\SEMANTIC_GUARD_CONTRAST_OPS_ACTUAL_001.md",
+      "sha256": "0eaba85ad9da90e989f15ff44860d44663b438cd21db9e66313178f3cf133314"
+    }
+  ],
+  "counts": {
+    "F": 8,
+    "L": 8,
+    "P": 8,
+    "aggregate_scorer_entry_calls": 3,
+    "nested_item_scorings": 28,
+    "standalone_scorer_entry_calls": 4
+  },
+  "scores_exact": {
+    "F": 8,
+    "L": 1,
+    "P": 1
+  },
+  "scheduled_cases_per_arm": 8,
+  "pair_parents": 4,
+  "independent_recipe_clusters": 1,
+  "four_F_pair_divergences": true,
+  "L_P_inspected_guard_and_wordbag_invariance": true,
+  "final_peak_working_set_bytes": 21364736,
+  "runner_wall_seconds": 0.07800000000133878,
+  "command_wall_seconds": 0.4330583,
+  "command_exit_code": 0,
+  "actual_output_bytes": 124886,
+  "native_cost_seconds": 0,
+  "interpretation": "ExactL/P failon7of8whilefullsuppliedsemanticF matches8manualderivations. Thesefiniteexposedlinkedexamples falsifystructural-onlyinstrumentvalidity,notmodelability orpopulationgeneralization.",
+  "exposure": "OPEN_EXPOSED_DEV;fourrelatedpairs1sharedrecipecluster;notunusedacquisitionpanel/confirmation/training",
+  "no_Rineya_discovery_learning_retention_efficiency_or_native_qualification": true,
+  "historical32_shortcut_results_and_quarantined_acquisition7742_preserved": true,
+  "H01_LAI1002_still_open": true
+}

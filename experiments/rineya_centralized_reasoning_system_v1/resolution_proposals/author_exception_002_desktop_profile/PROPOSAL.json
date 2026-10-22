@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "proposal_id": "CRS-OWNER-EXCEPTION-002-DESKTOP-PROFILE",
+  "status": "REVIEWABLE_PROPOSAL_ONLY_NOT_AUTHORIZED_NOT_INTEGRATED",
+  "author": "/root",
+  "same_milestone": "owned_runtime_identity_probe",
+  "historical_three_round_limit_and_approved_fourth_round_preserved": true,
+  "fifth_targeted_round_explicitly_requested_not_relabelled": true,
+  "current_owner_grant_sha256": "98cf7abb53bacf8fe40d3b4f74f59c44135ab39b5cf8bdddb18b2f1e9dc87eef",
+  "current_approved_test_plan_sha256": "762233f4e2ee43898ff60b2318304cdde1985ed03e9bb3e669bb24a16254825e",
+  "scope_boundary_quote": "keep native845/d79/opsba27/registry unchanged",
+  "base_execution_commit": "ff481f0ec7a25131e5fd350c9a8b0a61f1112b62",
+  "requested_scope": {
+    "additional_targeted_source_profile_test_review_rounds": 1,
+    "profile_rows": 3,
+    "updated_roles": [
+      "Microsoft embedded WebView2",
+      "Codex desktop application",
+      "Codex computer-use runtime"
+    ],
+    "new_Chrome_Edge_rows_authorized": false,
+    "change_files": [
+      "contracts/DESKTOP_GPU_IDENTITIES_PROBE002_V1.json",
+      "contracts/OWNED_RUNTIME_IDENTITY_DIAGNOSTIC_002_V3.json",
+      "owned_runtime_identity_probe.py",
+      "tests/test_owned_runtime_identity_probe.py"
+    ],
+    "change_purpose": "Probe-only exact desktop update binding, bounded context validation and associated rejection tests",
+    "targeted_CPU_invocations": 1,
+    "targeted_CPU_wall_seconds_max": 60,
+    "fresh_independent_nonbuilder_SCI_OPS_required": true,
+    "new_worker_attempt_allowance": 0,
+    "remaining_already_authorized_key": "CRS-OWNED-IDENTITY-002",
+    "remaining_key_runs_max": 1,
+    "remaining_key_wall_seconds_max": 60,
+    "automatic_retry": false,
+    "all_original_numerical_resource_lease_budget_gates_unchanged": true,
+    "no_material_broader_redesign_or_further_round": true
+  },
+  "explicit_exclusions": [
+    "native.py",
+    "operations.py",
+    "NATIVE_DIAGNOSTIC_V1.json",
+    "four owned child executable registry",
+    "reader source and serving",
+    "training",
+    "acquisition fourth repair",
+    "protected central CHECK/FINAL",
+    "canonical weights",
+    "unrelated application termination",
+    "paid or cloud compute",
+    "publication",
+    "merge force-push branch deletion or people contact"
+  ],
+  "known_limits": [
+    "Signed desktop binaries can perform GPU compute; no compute-free proof exists",
+    "Context evidence must pass independent review or gate remains closed",
+    "Chrome and Edge remain refused if present; owner may close them",
+    "Dependency hash cost may fail existing5s freshness; no cache or weakened fallback",
+    "A successful probe still does not qualify native model execution"
+  ],
+  "evidence_refs": [
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\outputs\\desktop_registry_proposal_001\\OBSERVATION.json",
+      "sha256": "651d3728d0875810e6d7d1d20cf6dbeb1461a148734dbfcb889c635f88902589"
+    },
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\outputs\\desktop_registry_proposal_001\\PROPOSED_DELTA.json",
+      "sha256": "c15cfef7b86128650f741357cac48334aad2045e110327c3f13402e5610cd6d6"
+    },
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\audits\\DESKTOP_REGISTRY_CONTINUATION_REVIEW_001.md",
+      "sha256": "851bc1a4c2a3818c59b31b93b5133559ec53f944b5e7b02252cdc89d96b5cdea"
+    },
+    {
+      "path": "experiments\\rineya_centralized_reasoning_system_v1\\resolution_proposals\\author_exception_002_desktop_profile\\DESKTOP_PROFILE_DRAFT.json",
+      "sha256": "dc8634de2d851c1b88b16de152a06f5b6385b75dbd0fe0edc95442a4a1d646b0"
+    }
+  ],
+  "actual_authorization_received": false,
+  "actual_probe_attempts": 0,
+  "actual_source_or_policy_changes": false
+}
