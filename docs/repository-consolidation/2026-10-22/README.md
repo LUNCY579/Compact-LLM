@@ -1,196 +1,100 @@
-# ChatBubble branch consolidation plan
+# ChatBubble branch consolidation — executed plan and manual pruning handoff
 
-**Plan date: 2026-10-22 (America/Chicago).** Inventory captured on October 21; the 149 source heads were rechecked unchanged on October 22 before execution began.
+**Updated 2026-10-22T18:21:09.363Z (UTC).** Source integration is complete for this reviewed batch. **28 source branches are merged into MiMo central and one publication branch is merged into durable CRS.** The owner will delete obsolete branch names manually. No branch deletion was performed by the assistant.
 
-## Execution checkpoint
+## Current result
 
-The seven first-wave sources have been merged on `research/rineya-consolidation-20261022`. Remote verification confirmed all 9,565 original file entries unchanged, all 393 incoming blobs/modes matched, and both parents recorded for every merge. Central promotion is pending. The 38-ref deletion batch passed fresh head/preservation/open-PR checks but has not been executed because the available deletion route requires browser sign-in. The detailed [execution receipt](execution_receipt.json) is authoritative for subsequent outcomes.
+| Track / action | Result | Evidence |
+| --- | --- | --- |
+| MiMo cohort 1 | 7 source branches; 393 added source files | [Merged PR #29](https://github.com/LUNCY579/ChatBubble/pull/29) |
+| Durable CRS publication | 1 source branch; 551 additions and 10 modifications; no removed files | [Merged PR #30](https://github.com/LUNCY579/ChatBubble/pull/30) |
+| MiMo cohort 2 | 14 source branches; 842 added files | [Merged PR #31](https://github.com/LUNCY579/ChatBubble/pull/31) |
+| MiMo cohort 3 | 7 source branches; 253 additions and one EFE README update | [Merged PR #32](https://github.com/LUNCY579/ChatBubble/pull/32) |
+| Old EFE PR | Closed as superseded after exact source preservation in #29 | [PR #28](https://github.com/LUNCY579/ChatBubble/pull/28) |
+| Abstention | Held for damaged inherited data | [Draft PR #33](https://github.com/LUNCY579/ChatBubble/pull/33) |
+| Retrieval | Held for unavailable mandatory tokenizer fixture | [Draft PR #34](https://github.com/LUNCY579/ChatBubble/pull/34) |
 
-## Decision and scope
+The latest verified MiMo source-integration commit is [`66a1c223630fee8aa1a5fdab22ac1db1125a050b`](https://github.com/LUNCY579/ChatBubble/commit/66a1c223630fee8aa1a5fdab22ac1db1125a050b). This concluding documentation update advances that branch without changing project code. Its own final head and merge SHA are recorded by the GitHub PR carrying these documents.
 
-Use **`research/post-training-mimo-centralized-v1`** as the enduring research integration branch. Its audited starting head is [`bf2567da46a310aa39f590cc6c73c99961d2ae90`](https://github.com/LUNCY579/ChatBubble/commit/bf2567da46a310aa39f590cc6c73c99961d2ae90). Create the temporary staging branch **`research/rineya-consolidation-20261022`** from that exact commit, integrate the seven validated source branches below, and promote the result through a PR into the enduring central branch after verification.
+The durable CRS tip is [`1f5e72df4d609b3af70f60b3677d09c32a36455a`](https://github.com/LUNCY579/ChatBubble/commit/1f5e72df4d609b3af70f60b3677d09c32a36455a). The separate CRS track remains required by its preservation charter. The `main` and `post-training-Mimo` historical baselines were rechecked unchanged.
 
-The objective is to preserve all source, history, experiment identity and evidence while reducing redundant branch names. Keep historical work reachable through verified tags and a searchable registry. A branch's age, name, negative result or absence of current activity does not prove that its contents are obsolete.
+## What to prune manually
 
-This document records the intended order. **Candidate, validated and executed are separate states.** The immutable source SHAs in [branch_registry.json](branch_registry.json) describe the original 149 branches. Update its execution fields only from actual remote receipts; the presence of a plan or a passing local test does not establish that a merge or deletion occurred.
+Use **[MANUAL_PRUNING.md](MANUAL_PRUNING.md)** for the exact full names, full head SHAs, preservation destinations, recovery mappings and deletion order. It contains:
 
-At this document's preparation checkpoint, the staging branch has been created; the 38 deletions have **not** been executed. The live count is therefore 150 at that checkpoint. Subsequent outcomes belong in [execution_receipt.json](execution_receipt.json), with exact incoming scope in [merge_plan.json](merge_plan.json) and test evidence/limits in [validation.json](validation.json). The bounded cleanup is defined by [cleanup_manifest.json](cleanup_manifest.json) and its guarded executor [prune_branches.py](prune_branches.py).
+- **38 preserved alias/duplicate names:** 30 archive aliases, five worktree parent aliases and three redundant original/duplicate names. Thirty-three have existing tag preservation; five are parents of two retained worktree snapshots.
+- **29 actually absorbed source names:** 28 now reachable from MiMo central and one from durable CRS.
+- **One temporary staging name:** `research/rineya-consolidation-20261022`, to retire last after this concluding documentation PR merges and its exact head is verified in central.
 
-### Audit results
+The fresh inventory observed **150 branches**: the original 149 plus the one reused staging branch. All 67 pinned candidates matched their reviewed heads, none was protected or used by an open PR, and all original preservation references matched. If those 67 names and final staging are removed at the verified heads, the count becomes **82**. This is conditional; the assistant has not reported or performed those deletions.
 
-| Finding | Verified amount | Consequence |
-|---|---:|---|
-| Original branch names | 149 | Every name and exact head appears once in the registry |
-| Distinct head commits | 116 | There are 33 excess names pointing to identical heads |
-| Initial cleanup candidates | 38 | Bounded manifest; independently preserved by 33 tag references and 5 parent-history references |
-| Validated first integration cohort | 7 branches / 393 added source files | Additive package integration into temporary staging |
-| Scoped validation | 654 passed / 40 skip records | 39 individual test-case skips plus one RGI module-level skip |
-| Later systems ancestry candidates | 14 | Separate retirement batch after preservation and consumer checks |
-| Additional small-vocabulary ancestry candidate | 1 | Deferred; excluded from initial cleanup |
-| Untagged historical-main snapshots retained | 2 | Existing archive tag does not preserve either exact tip |
-| Full worktree evidence snapshots retained | 14 | Preserve potentially unique ignored/untracked research evidence |
+The 38-ref [cleanup_manifest.json](cleanup_manifest.json) remains byte-for-byte unchanged at SHA-256 `624f2b5ea197d1d98035e856b10aff205876737a19621ab2ddf8b28ee25a53e4`. Its guarded executor remains limited to those 38 entries and was not used for deletion. The larger owner-managed set is recorded separately in [manual_pruning_manifest.json](manual_pruning_manifest.json).
 
-Current central already contains [`main`](https://github.com/LUNCY579/ChatBubble/compare/b0ca54bdc1b69e2b19d7baeca2e3fdde3ff0a7b2...bf2567da46a310aa39f590cc6c73c99961d2ae90) and [`post-training-Mimo`](https://github.com/LUNCY579/ChatBubble/compare/03db218ceebc61a2bc04f2482cf7e094045e01c1...bf2567da46a310aa39f590cc6c73c99961d2ae90): it is 540 commits ahead of the former and 79 ahead of the latter. Neither needs a broad merge merely to establish the central destination.
+## Why these merges preserve the work
 
-## 1. Preserve the baseline and freeze the first batch
+Every MiMo source tip is an actual second parent of a dedicated merge commit. Each cohort was promoted using a normal GitHub merge PR with an expected head SHA. There were no force pushes. Complete recursive Git trees were compared rather than relying on capped PR file listings.
 
-The original baseline references are:
+PR #29 preserved 9,565 pre-existing file entries unchanged and imported its 393 files at original blob IDs and modes. PR #31 preserved all 9,967 then-existing files and imported 842 more exactly. PR #32 preserved 10,808 then-existing files unchanged, imported 253 files, and applied the single reviewed EFE README update. The EFE update is a three-line link which explicitly preserves the finding that trained endpoints were missing and no fresh native experiment ran.
 
-| Role | Branch | Audited head |
-|---|---|---|
-| Default historical baseline | `main` | `b0ca54bdc1b69e2b19d7baeca2e3fdde3ff0a7b2` |
-| Historical MiMo integration parent | `post-training-Mimo` | `03db218ceebc61a2bc04f2482cf7e094045e01c1` |
-| Enduring research integration | `research/post-training-mimo-centralized-v1` | `bf2567da46a310aa39f590cc6c73c99961d2ae90` |
-| Durable complementary reasoning track | `research/rineya-centralized-reasoning-system-v1` | `2b77e25035bac66b39d1fa83bcb94660a0df4568` |
+Two nontrivial union decisions were checked independently. The cheap-quality sources share two identical campaign files but have different run directories, so their per-file union retains every sibling directory. Quality-SFT carries the unchanged 24-file SDA ancestor; central now has a newer 51-file SDA tree. The correct merge keeps all 51 newer files and adds only the 55 quality-SFT files. No incoming SDA change was discarded.
 
-Before a mutation, re-read the involved source/destination heads and compare them with the frozen SHA. A moved head requires a refreshed diff and decision. Keep source heads as parents of genuine integration commits so their provenance remains accessible. Record the starting central head and each resulting commit. Do not force-push or use an empty “ours” merge to label unintegrated work as merged.
+Recursive self-distillation retains both its own package and the complete 57-file quality-queue addition, together with its original CPU workflow. SpikingBrain retains its complete 369-file subtree, including historical artifacts. These preservation checks do not claim that all historical campaigns were rerun.
 
-The CRS track has an explicit [owner-directed preservation charter](https://github.com/LUNCY579/ChatBubble/blob/2b77e25035bac66b39d1fa83bcb94660a0df4568/AGENTS.md). Retain its named branch and identity. A newer central branch or reviewed-publication branch does not make CRS obsolete. Its retirement, replacement or abandonment is outside this batch.
+## Validation and practical limits
 
-## 2. Integrate the seven validated branches in this order
+| Cohort | Local validation | Limit |
+| --- | --- | --- |
+| PR #29 | 654 passing test cases; 40 skip records | 39 individual skips plus one RGI module skip; optional Torch/native coverage was not exercised in that cohort |
+| PR #31 | 1,859 passing test cases; 479 additional passing subtests; five optional skips | Four triadic checks needed Transformers 4.57.1; one check needed an optional sibling worktree |
+| PR #32 | 244 passing test cases; 31 additional passing subtests; no final failures/errors/skips | Data-admission is separately static-only: two syntax-checked Python files, no standalone runtime suite |
+| PR #30 | Read-only publication review; 17 immutable pins and 12 final014 freeze rows verified | No fixture replay, native action or model test |
 
-All counts below refer to source files added by the incoming branches, excluding the consolidation documentation itself. The complete trees were checked for these candidates; the GD package has 301 files, exceeding the compare API's 300-file display limit.
+These are cohort execution counts, not a deduplicated count of unique tests across cohorts. Subtests are reported separately. Initial fixture-layout and missing-dependency attempts are retained in the validation records; complete unchanged suites subsequently passed where reported. Exact original source/dependency bytes were rechecked after tests. Source, test, custody and qualification guards were not edited to obtain a pass.
 
-| Order | Source branch | Pinned head | Added files | Validation already completed |
-|---:|---|---|---:|---|
-| 1 | `research/deferred-diffusion-context-hci-notes-v1` | `451ef168ce9521a538b4e31c8ab46d0009b6f5f5` | 4 | Markdown-only scope; retain `DEFERRED_DOCS_ONLY` |
-| 2 | `codex/confirm002-paired-correctness-audit-20260930` | `224233406c42d90ab30b6599303323a10c54fb0f` | 6 | 30 synthetic standard-library tests passed |
-| 3 | `research/rineya-evidence-function-equilibrium-v1` | `c934589026f7456352d62a83bb102c453e15519a` | 9 | 40 tests passed |
-| 4 | `research/rineya-verified-resampling-v1` | `ac9b79ac07ad650d8815c76eb4194a180f23e8d4` | 26 | 67 passed; 11 optional Torch tests skipped |
-| 5 | `research/rineya-recursive-self-rewrite-v1` | `8d3ee140accb054273580adb4291384e0dd88e0f` | 22 | 79 passed; 7 optional Torch tests skipped |
-| 6 | `research/rineya-generalization-dynamics-v1` | `7ae47a21581e15aa83e0859b880a84eb2d7dcb1d` | 301 | 310 passed; 21 optional Torch tests skipped |
-| 7 | `research/rineya-relative-generalization-invariance-v1` | `53b2155b2c54137891ea98a24f9e79892e658527` | 25 | 128 passed; one Torch-dependent module skipped |
+GitHub's RVS jobs for #29 and CDE/RSD jobs for #31 failed before a runner was allocated: `runner_id=0`, empty runner names and no steps. Hosted test commands did not run. The exact startup cause was unavailable through the connector, so hosted validation is recorded as unavailable, not passing. No repository settings, branch protections, workflow requirements or rulesets were weakened to merge. PR #32 had no matching hosted check runs.
 
-The tests cover source/reference mechanics in Python 3.12.14, with NumPy 2.3.5 and pytest 9.1.1 where needed. Torch and Transformers were not installed in the audit environment. Skipped coverage is unexecuted coverage; the RGI skip represents an entire module and should not be described as one passing or exercised native test.
+Only bounded local CPU mechanics and synthetic fixtures were exercised. No pretrained checkpoint downloads, native training campaigns, GPU runs, provider calls or protected benchmark execution were performed. Passing these fixtures does not establish model quality, native-host qualification or scientific efficacy.
 
-### Merge and promotion checks
+## Keep and resolve the two blocked branches
 
-For each incoming source, verify its exact head and complete changed scope, then create the integration commit on staging. The resulting tree must retain every existing central blob and add only the approved package paths. Keep the original experiment directories, evidence files and qualification labels. RVS also carries its original root index and CPU workflow; preserve those additions exactly.
+**Abstention remains in [draft #33](https://github.com/LUNCY579/ChatBubble/pull/33).** Two exact incoming blobs replace valid inherited JSON/JSONL with large NUL-filled byte sequences that fail UTF-8 and ordinary UTF-16/32 parsing. A third inherited replacement could not be retrieved completely. The 16 passing isolated package tests do not validate those unrelated data changes. Recover intended bytes, decide whether restoration is appropriate, and review all three replacements before integration.
 
-After all seven merges, check the aggregate tree and ancestry: all seven source heads must be reachable, all 393 approved additions must match their source blobs, and central's existing source files must be unchanged. Review the staged consolidation documentation separately. Recheck the live central head before promotion. If it moved, reconcile the new changes rather than overwriting them.
+**Retrieval remains in [draft #34](https://github.com/LUNCY579/ChatBubble/pull/34).** Ten existing tests passed; `test_native_tokenizer_exact_consumed_budgets` errored because the original tokenizer asset was unavailable. Its mandatory SHA-256 and candidate committed blob are pinned in the draft and [review_blockers.md](review_blockers.md). Obtain the original bytes from an authenticated checkout or existing trusted asset, verify both hashes, and rerun the unchanged complete suite. An approximate tokenizer or skipped assertion does not satisfy that gate.
 
-Open a PR from staging to central describing the additive source integration, the test results and the skipped coverage. Inspect applicable checks and the final PR diff. Promote only after the scope and preservation checks pass. The original RVS workflow's push filter does not cover the new central/staging names, so local validation must not be presented as an automatically completed GitHub Actions run.
+The separate archive aliases for these two branches are still preserved manual-cleanup candidates. Keep the active source names and open draft PRs until resolved.
 
-The EFE source is the head of [open PR #28](https://github.com/LUNCY579/ChatBubble/pull/28), whose base is `post-training-Mimo`. Retain that source branch while the PR remains unresolved. Once its exact head is verifiably incorporated into central, record the integration destination when resolving the older PR; do not silently treat an open PR as deleted or merged.
+## Preserve the CRS boundary
 
-This integration validates no new model quality claim. The paired CONFIRM-002 helper remains a descriptive audit of stored outputs on a spent instrument; its synthetic tests did not reopen that bank. Historical GD evidence remains historical. No checkpoint load, training, GPU run, paid provider call or native efficacy qualification is part of this consolidation.
+PR #30 absorbed the safe, already-published CRS snapshot into the same durable named branch. Its two source commits are a linear descendant of the prior CRS tip; all 561 changes stay inside the CRS package, with no removed files or workflow changes. Original unpublished raw local history was not introduced as merge parents.
 
-## 3. Execute the bounded 38-reference cleanup
+The governing result remains **source6 rejected before fixture; scope014 exhausted at 2/2; full acceptance false; runtime NOT_READY**. Source5/source6 fixture invocations remain zero. The 45 discovered methods are plans, not passing tests. The binding addendum withdrawing overall fixture eligibility remains present. Historical native consumption remains 47.421 seconds, the grant registry remains empty, canonical weights are read-only and CHECK/FINAL remain closed. This consolidation does not authorize another source7, retry, renamed milestone or budget reset under exhausted scope014. The owner-exception branch and detached native worktree remain separate.
 
-Use [cleanup_manifest.json](cleanup_manifest.json) as the complete allowlist. Its candidate entries contain the exact branch name, expected source SHA, independent preservation reference, peeled target/ancestry proof and a recovery command. Do not broaden the batch with prefix matching or “all merged branches” deletion.
+## Recommended order for remaining work
 
-| Initial deletion category | Count | Preservation mechanism |
-|---|---:|---|
-| Redundant `codex/archive-20261004/*` references | 30 | Existing annotated tags preserve the exact head or verified ancestor history |
-| Worktree parent reference aliases | 5 | Two retained full worktree snapshots preserve their parent history |
-| `codex/rvs001-inference-pilot-20260929` | 1 | Independent verified tag; named research RVS branch also remains |
-| `multi-reasoning-slft` | 1 | Independent verified tag; `single-layer-fine-tuning` remains |
-| `fma-finalize` | 1 | Existing exact-head tag; its commit is also contained in central |
-| **Total** | **38** | No preservation keeper is itself a deletion candidate |
+1. **Finish this manual cleanup.** Use the exact 67-row list, retain archive tags and snapshot keepers, then remove staging after the concluding documentation PR merges. Recheck a row immediately before deleting it; any moved head or new consumer needs review.
+2. **Resolve retrieval and abstention through their draft PRs.** Retrieval needs original bytes and its mandatory test; abstention needs a reviewed data-restoration decision. Their blockers are concrete, so unrelated branches did not wait for them.
+3. **Review the 15 conditional ancestor names.** Their successors already preserve the source history, but branch-based launchers, CI, worktree instructions and qualification/checkpoint references still need an explicit handoff. Their exact heads, keeper checkpoints, tag requirements and consumer tasks are in the manual guide. They are not included in the ready set.
+4. **Integrate Windows supervisor work selectively.** The remaining MiMo process/containment branches need native-host-specific review and tests. Preserve qualification receipts and operating-system behavior; a Linux CPU fixture pass cannot substitute for those gates.
+5. **Keep architecture and evidence tracks until their distinct work is reviewed.** CED/TGSA qualification, divergent DMRF/dose/tangent work and unrelated-history TGSA ledger need selective comparison or separate tracks. Four scope-stripped branches remove broad repository content and are unsuitable for a wholesale central merge. Negative results and old timestamps alone do not make research obsolete.
+6. **Preserve unique snapshots.** Historical-main snapshots 24 and 27 have tips not covered by the existing historical-main tag. All 14 full worktree snapshots remain; some capture previously ignored/untracked evidence. The five removable parent aliases are not those full snapshots.
 
-Immediately before deleting each ref, verify the candidate head, preservation ref object, peeled commit and required ancestry. Reject the candidate if any expected value changed. Verify it is not a protected baseline, the head/base of an unresolved PR requiring retention, or a known active dependency. Keep preservation tags and the manifest unchanged. Record deletion results individually, including failures; a successful batch request is not proof that every ref was removed.
+## Branch policy after consolidation
 
-The dependency scan is bounded: six central workflows, three metadata files and eight exact-central materialized files were checked without finding the 38 names. Five additional default-branch searches returned no matches. This is useful negative evidence, not a complete repository or local-host dependency audit. No local Windows worktree/process state was available. Preserve the full worktree snapshots and avoid replaying historical destructive cleanup scripts.
+Keep the two durable central branches and the named historical baselines. Use a short-lived branch for each bounded change and a PR into its appropriate central track. Preserve research milestones by exact commits and recovery tags where needed. Retire a source name after its source head, intended file union and branch-name consumers have been accounted for. The registry records the original source SHA separately from later central execution state so historical evidence remains traceable.
 
-If exactly this 38-ref batch completes, the original 149 names become **111 original names**. A temporary staging branch would make the live total **112** until it is retired after central promotion and recovery verification. These are projected counts, not execution claims; record the actual post-operation inventory.
+## Evidence index
 
-## 4. Consolidate the remaining additive work
-
-The registry records all 13 remaining isolated Rineya package candidates and their exact heads. Use this order, refreshing the target tree and running the package's existing scoped CPU suite before each merge:
-
-1. `research/rineya-layered-post-training-v1`, then `research/rineya-tropical-verified-composition-v1`.
-2. `research/rineya-bf16-attention-gproj-v1`, `research/rineya-compute-depth-elasticity-v1`, and `research/rineya-length-generalization-regularization-v1`.
-3. `research/rineya-self-distillation-axes-v1`, followed by `research/rineya-distillation-dynamics-v1`.
-4. `research/rineya-triadic-working-memory-v1`, `research/rineya-useful-fixed-point-recurrence-v1`, `research/rineya-id-balancing-skill-routing-v1`, and `research/rineya-hebbian-fact-memory-v1`.
-5. `research/rineya-recursive-self-distillation-v1`, then `research/rineya-spikingbrain-hybrid-memory-v1`.
-
-These are additive source candidates, not already executed merges. The final SpikingBrain branch contains 369 files and substantial historical evidence; inspect the complete tree and preserve source qualification boundaries. RSD also carries workflow/quality-queue additions that require their own scope review. Do not infer that every package is natively qualified because its source merges cleanly.
-
-In parallel with those independent packages, integrate systems work in dependency order:
-
-| Workstream | Concrete next action | Dependency and validation |
-|---|---|---|
-| Cross-scale stitch/graft | Review 30 isolated additions under `experiments/cross_scale_stitch_graft_v1` | Run existing CPU mechanics suite; preserve native contract |
-| EFE fresh validation | Review `codex/efe-func001-fresh-validation` after EFE base | Its two extra commits include native/preflight preparation; preserve blocked/unqualified distinctions |
-| Cheap quality and data admission | Review the six cheap-quality branches and `codex/data-admission-001-20260930` after RVS | Compare remaining unique paths after the shared RVS base; abstention also modifies inherited files |
-| Quality SFT | Review `codex/rineya-quality-sft-v1` after self-distillation axes | Compare shared package versions; avoid replacing the newer axes package with an older copied version |
-| MiMo supervisor | Begin with `codex/mimo-supervisor-death-review-fix-20261002`, then port remaining unique fixes | Preserve receipt identity; Windows lifecycle behavior needs appropriate host validation |
-| CRS | Review the two commits in `codex/crs-reviewed-publication-20261010` above durable CRS | Consider advancing the existing CRS branch; its owner-exception branch still has distinct commits |
-| PPT and SYNTH | Preserve their distinct packages and evidence; reconcile shared CRS documents explicitly | They diverge from one another; stale shared files must not replace newer CRS work |
-| CE8, corpus and Triskill | Use verified family successors as reference points | Development, scout completion, stage-a and soup heads still contain unique commits |
-
-## 5. Retire proven ancestors in a later recorded batch
-
-Four heads are already contained in central. Ten more are contained in named family successors. Keep these out of the initial 38-ref batch until exact-head recovery tags and branch-consumer handoffs are verified.
-
-| Later candidate | Retained successor |
-|---|---|
-| `codex/dataset-retention-audit-v1` | Central |
-| `research/jumplora-rineya-skill-isolation-v1` | Central |
-| `research/maxrl-comp002-pretraining-qualification-v1` | Central |
-| `research/titan-opallo-exact-endpoint-v3` | Central |
-| `codex/comp-rs-native-q1` | `codex/ce8-reviewed-evidence-20261009` |
-| `research/comp-rs-001-amendment-1` | Same CE8 successor |
-| `codex/comp-rs-methods-warmstart-20260930` | Same CE8 successor |
-| `codex/comp-rs-s1-dev-20260930` | Same CE8 successor |
-| `codex/triskill-geometric-pilot-20261001` | `research/triskill-geo001-parentq` |
-| `codex/triskill-geometric-gapfix-20261001` | Same Triskill successor |
-| `research/titan-clare-sparse-composable-skills-v1-claude` | `codex/clare-phase4-scope-fail-closed-20260930` |
-| `codex/mrs-phase2-dataset-selection-v1` | `research/rineya-reasoning-corpus-v1` |
-| `research/mrs-format-probe-v1` | Same corpus successor |
-| `codex/mimo-job-handle-fix-20261001` | `codex/mimo-supervisor-death-review-fix-20261002` |
-
-`research/rineya-small-vocab-depth-distill-v1` is one additional proven ancestor of central and is deferred to a later preservation batch. TAPS is also contained in its adaptation-loop successor, but retain its named qualification baseline until the large campaign and native-host handoff are reviewed.
-
-Ancestry establishes that old commits remain reachable. It does not establish that every old file remains in the successor's current tree or that the successor is scientifically superior. Exact-head tags and the registry preserve the old state for inspection and restoration.
-
-## 6. Keep divergent architecture and historical evidence intact
-
-Do not wholesale merge the following scope-stripped snapshots. Their comparisons begin with at least 300 removed files:
-
-- `codex/clare-phase4-scope-fail-closed-20260930`
-- `codex/mimo-artifact-stream-budget-20260930`
-- `codex/mimo-capture-fixed-input-audit-20260930`
-- `research/fwanda-delta-retention-v1`
-
-Preserve their exact heads and selectively port unique, reviewed changes. GitHub's 300-file compare limit makes a capped file list insufficient for merge approval.
-
-DMRF source-observability, pairwise-disjointness and factorial heads still diverge. The apparent older branches each retain unique commits. Retention-dose, Titan tangent, CED conversion/host qualification and TGSA architecture work require family-specific reconstruction or selective ports with their provenance. `research/tgsa-programme-ledger` has no common ancestor with central or main; keep it as a separate ledger rather than forcing an unrelated-history merge.
-
-Retain these two historical-main references because their exact tips are not covered by the existing historical-main tag:
-
-- `codex/archive-20261004/historical-main-snapshots-24`
-- `codex/archive-20261004/historical-main-snapshots-27`
-
-Retain all 14 full worktree snapshots listed as `KEEP_WORKTREE_EVIDENCE_SNAPSHOT` in the registry. The CED loader snapshot contains preservation evidence for previously ignored/untracked files; its older qualification tag does not cover that snapshot. The detached CRS native snapshot diverges from the named CRS and owner-exception histories. Catalogue their unique contents and preserve exact-tip references before considering any branch-name retirement.
-
-## 7. Branch policy after consolidation
-
-Maintain three repository baselines: `main`, the historical `post-training-Mimo` parent, and the enduring central research branch. CRS remains a durable named complementary track. Keep a small explicit set of active family branches while compatibility, native-host qualification or distinct evidence work requires them; CED, TGSA, CRS-related extensions and unresolved native campaigns are examples requiring actual handoff decisions.
-
-For new work, create a temporary feature branch from the appropriate current baseline, record its experiment/family, owner and intended destination, and merge through a scoped review. Once its complete source is integrated and an exact recovery tag/receipt exists, retire the temporary name. Use tags for frozen research milestones and historical snapshots. Creating another `archive/*` branch does not reduce branch clutter.
-
-A practical steady-state target is the three baselines, roughly four to eight active family heads, and a few temporary integration/feature branches. This is an operating target, not a quota that authorizes deleting unresolved work. The 149-row registry remains the searchable index of where every original line of work went.
-
-## Completion and recovery
-
-For every completed merge, record the source SHA, destination before/after, merge commit, PR, file-scope verification and validation limits. For every deleted branch, record its expected SHA, actual deletion result, independent preserved target and restoration command. Re-inventory the repository and reconcile the observed branch count with the successful operations.
-
-Restore a removed branch only to the manifest's recorded commit after confirming that commit remains reachable from its preserved tag/keeper. Undo a faulty central integration through a reviewed revert of its specific merge commit; do not reset or force-push the shared central history. A stalled or failed cohort remains on staging while its discrepancy is resolved.
-
-The first cycle is complete when the seven source heads are verifiably integrated into central, the 38 cleanup candidates have individual successful or explicitly blocked receipts, the remaining preserved tracks/snapshots are intact, and this registry reflects actual remote outcomes. Native model qualification and additional research experiments remain separately scoped work.
-
-## Running the reviewed cleanup
-
-The guarded [`prune_branches.py`](prune_branches.py) accepts only the frozen 38-reference allowlist. It defaults to a read-only dry run and records a new JSONL receipt. It requires Python 3.10+, Git, and an authenticated GitHub CLI (`gh`); native Git HTTPS/SSH authentication must also work. The script does not configure credentials, change your checkout, or modify global Git settings.
-
-From a checkout containing this folder:
-
-```bash
-python docs/repository-consolidation/2026-10-22/prune_branches.py --receipt chatbubble-prune-dry-run.jsonl
-python docs/repository-consolidation/2026-10-22/prune_branches.py --apply --receipt chatbubble-prune-apply.jsonl
-```
-
-Run the second command only after the first succeeds and the displayed scope matches the reviewed batch. A moved head, changed/missing preservation ref, protected/default branch, or open PR stops the entire batch. The deletion push is atomic and uses an expected-SHA lease for each branch. There is no non-atomic fallback. Keep the emitted receipt; if verification fails after an attempted push, the script retains its temporary recovery object repository and reports its path. Existing receipt files are never overwritten.
-
-`--print-recovery` prints the manifest's per-branch restoration commands without contacting GitHub or changing refs. Restoration must not overwrite a new branch created under an old name. The separate [`script_validation.json`](script_validation.json) records tests of these cleanup controls; those tests used fixtures and a temporary local Git remote, not this live repository.
+| File | Purpose |
+| --- | --- |
+| [MANUAL_PRUNING.md](MANUAL_PRUNING.md) | Human-readable full deletion candidates, exact heads, keep list, conditional list and recovery order |
+| [manual_pruning_manifest.json](manual_pruning_manifest.json) | The 67 pinned candidates, staging condition, recovery mappings and 15 deferred ancestors |
+| [manual_pruning_preflight.json](manual_pruning_preflight.json) | Fresh heads, preservation refs, open-PR exclusions, branch count and baseline checks |
+| [branch_registry.json](branch_registry.json) | Every original branch, its immutable audited SHA and its updated disposition |
+| [execution_receipt.json](execution_receipt.json) | Actual PR outcomes, merge SHAs, zero assistant deletions and hosted-CI limitations |
+| [merge_plan.json](merge_plan.json) | First cohort's full file map and links to later executed cohorts |
+| [wave2_manifest.json](wave2_manifest.json) | Fourteen-source full scope, merge parents, complete tree checks and validation |
+| [wave3_manifest.json](wave3_manifest.json) | Seven-source union, two held sources, overlap decisions, exact file maps and tests |
+| [crs_manifest.json](crs_manifest.json) | CRS publication provenance, 561-file scope and preserved governing state |
+| [validation.json](validation.json) | Cohort test counts, skips, static-only review, environments and practical limits |
+| [independent_reviews.json](independent_reviews.json) | Independent source-map, tree-object and test-count reviews |
+| [review_blockers.md](review_blockers.md) | Concrete blocked-PR diagnosis and remediation steps |

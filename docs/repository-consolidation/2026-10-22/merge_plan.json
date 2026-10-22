@@ -4,7 +4,7 @@
   "repository": "LUNCY579/ChatBubble",
   "canonical_branch": "research/post-training-mimo-centralized-v1",
   "central_head_at_audit": "bf2567da46a310aa39f590cc6c73c99961d2ae90",
-  "status": "MERGED_ON_STAGING_AWAITING_CENTRAL_PROMOTION",
+  "status": "MERGED_INTO_CENTRAL",
   "summary": {
     "source_branches": 7,
     "merge_commits_planned": 7,
@@ -72,8 +72,9 @@
         }
       ],
       "validation_id": "deferred_docs",
-      "status": "MERGED_ON_STAGING",
-      "merge_commit_sha": "70a3e9185b3105ea05bd0a629373ca006c578159"
+      "status": "MERGED_INTO_CENTRAL",
+      "merge_commit_sha": "70a3e9185b3105ea05bd0a629373ca006c578159",
+      "pr": 29
     },
     {
       "order": 2,
@@ -140,8 +141,9 @@
         }
       ],
       "validation_id": "confirm002",
-      "status": "MERGED_ON_STAGING",
-      "merge_commit_sha": "7fada7dc22db5438ecbc742a741f31249e51fba6"
+      "status": "MERGED_INTO_CENTRAL",
+      "merge_commit_sha": "7fada7dc22db5438ecbc742a741f31249e51fba6",
+      "pr": 29
     },
     {
       "order": 3,
@@ -232,8 +234,9 @@
         }
       ],
       "validation_id": "efe",
-      "status": "MERGED_ON_STAGING",
-      "merge_commit_sha": "22f62afd99771705b8977ecb8298c87b6da4b9f8"
+      "status": "MERGED_INTO_CENTRAL",
+      "merge_commit_sha": "22f62afd99771705b8977ecb8298c87b6da4b9f8",
+      "pr": 29
     },
     {
       "order": 4,
@@ -470,8 +473,9 @@
         }
       ],
       "validation_id": "rvs",
-      "status": "MERGED_ON_STAGING",
-      "merge_commit_sha": "0658a67ae42f5bffe1a3e0cd0b4b402eea825215"
+      "status": "MERGED_INTO_CENTRAL",
+      "merge_commit_sha": "0658a67ae42f5bffe1a3e0cd0b4b402eea825215",
+      "pr": 29
     },
     {
       "order": 5,
@@ -666,8 +670,9 @@
         }
       ],
       "validation_id": "rsr",
-      "status": "MERGED_ON_STAGING",
-      "merge_commit_sha": "cd8d6c6de57f592f11fb5f3f7819930b733dc4eb"
+      "status": "MERGED_INTO_CENTRAL",
+      "merge_commit_sha": "cd8d6c6de57f592f11fb5f3f7819930b733dc4eb",
+      "pr": 29
     },
     {
       "order": 6,
@@ -3094,8 +3099,9 @@
         }
       ],
       "validation_id": "gd",
-      "status": "MERGED_ON_STAGING",
-      "merge_commit_sha": "7992da4507724c9d6a549af0d56a436ec18a2671"
+      "status": "MERGED_INTO_CENTRAL",
+      "merge_commit_sha": "7992da4507724c9d6a549af0d56a436ec18a2671",
+      "pr": 29
     },
     {
       "order": 7,
@@ -3314,8 +3320,54 @@
         }
       ],
       "validation_id": "rgi",
-      "status": "MERGED_ON_STAGING",
-      "merge_commit_sha": "600b7957e43743dd0374cfc4ec4e66a89b5f5adf"
+      "status": "MERGED_INTO_CENTRAL",
+      "merge_commit_sha": "600b7957e43743dd0374cfc4ec4e66a89b5f5adf",
+      "pr": 29
     }
-  ]
+  ],
+  "pr": 29,
+  "merge_sha": "7a9316343615fde3c478c6955c8504ee93feaa57",
+  "additional_cohorts": [
+    {
+      "sources": 14,
+      "pr": 31,
+      "merge_sha": "ce3d98ca2ce9c2cee91406b6c2347e54693b285f",
+      "manifest": "wave2_manifest.json"
+    },
+    {
+      "sources": 7,
+      "pr": 32,
+      "merge_sha": "66a1c223630fee8aa1a5fdab22ac1db1125a050b",
+      "manifest": "wave3_manifest.json"
+    },
+    {
+      "sources": 1,
+      "pr": 30,
+      "destination": "research/rineya-centralized-reasoning-system-v1",
+      "manifest": "crs_manifest.json"
+    }
+  ],
+  "next_actions": {
+    "manual_pruning": "MANUAL_PRUNING.md",
+    "holds": [
+      {
+        "branch": "codex/cheap-quality-abstention-20260929",
+        "head": "351e93120c814d719b340bc4e2ddb5bb506e8b20",
+        "pr": 33,
+        "url": "https://github.com/LUNCY579/ChatBubble/pull/33",
+        "status": "DRAFT_BLOCKED",
+        "reason": "Whole-branch integration would replace inherited valid JSON/JSONL with two confirmed damaged byte sequences. Sixteen local package tests passing does not validate those unrelated inherited data modifications."
+      },
+      {
+        "branch": "codex/cheap-quality-retrieval-20260929",
+        "head": "bdc71a6d58c8c0f6353b1d3ea5291aedba55617e",
+        "pr": 34,
+        "url": "https://github.com/LUNCY579/ChatBubble/pull/34",
+        "status": "DRAFT_BLOCKED",
+        "reason": "Ten existing tests pass, but test_native_tokenizer_exact_consumed_budgets errors because the mandatory exact tokenizer is unavailable. The test explicitly forbids a skip or approximate substitute."
+      }
+    ],
+    "conditional_ancestors": "manual_pruning_manifest.json"
+  },
+  "preconditions_scope": "These preconditions govern the original seven-source additive cohort. Later cohorts have their own full-tree and three-way union gates in wave2_manifest.json and wave3_manifest.json."
 }
