@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-09-30T09:49:51.8802817Z",
+  "failed_supervisor": "supervisor-002",
+  "reason": "ModuleNotFoundError: No module named experiments",
+  "worker_started": false,
+  "resource_admission_passed": true,
+  "failure_phase": "CONTROL_IMPORT_BEFORE_ANY_WORKER",
+  "original_invocation": "python experiments/data_admission_v1/supervise_cpu.py",
+  "corrected_invocation": "python -m experiments.data_admission_v1.supervise_cpu",
+  "code_changed": false,
+  "resource_guards_changed": false,
+  "first_audit_worker_still_not_launched": true,
+  "previous_receipts_preserved": true,
+  "native_work_not_started": true,
+  "notification": "Failure and invocation correction disclosed in commentary",
+  "new_supervisor": "supervisor-003"
+}

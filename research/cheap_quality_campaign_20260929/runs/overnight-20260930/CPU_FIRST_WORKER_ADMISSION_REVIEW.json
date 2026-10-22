@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-09-30T09:48:44.1671271Z",
+  "action": "FIRST_ACTUAL_CPU_WORKER_ADMISSION_WHEN_RESOURCES_RETURN",
+  "previous_supervisor": "supervisor-001",
+  "previous_status": "BLOCKED_CPU_ADMISSION",
+  "previous_worker_started": false,
+  "previous_worker_corpus_rows": 0,
+  "prior_receipt_and_costs_preserved": true,
+  "new_host_available_gib": 4.588,
+  "new_observation_utc": "2026-09-30T09:45:49.5631233Z",
+  "authoritative_rule": "Current user heartbeat and V3 plan: when adequate CPU resources return, perform at most one DATA-ADMISSION-001 audit",
+  "interpretation_correction": "Prior WATCH_STATE no-automatic-CPU-retry wording was an over-conservative interpretation. A denied preflight started no audit worker. The first actual worker is still authorized; native retry prohibitions and all admission thresholds remain unchanged.",
+  "read_only_independent_review": "dataset_contract_review concurs",
+  "worker_launches_max": 1,
+  "no_relaunch_after_started_worker_failure": true,
+  "same_worktree": "C:/Users/clclc/.codex/worktrees/rineya-dataset-admission/ChatBubble-rvs001",
+  "same_prepared_code_hashes_verified": true,
+  "new_supervisor_directory": "experiments/data_admission_v1/runs/supervisor-002",
+  "unchanged_worker_output": "experiments/data_admission_v1/runs/audit-001",
+  "native_launched": false
+}

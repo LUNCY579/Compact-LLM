@@ -1,0 +1,5 @@
+"""RQSFT-001: reviewed bank consumer and bounded balanced-quality SFT successor."""
+EXPERIMENT = "RQSFT-001"
+BASE_COMMIT = "e1737660cd0feacd6efd4177ea1d1579bf0cd865"
+SOURCE_WEIGHT_SHA256 = "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b"
+SOURCE_CORE = "rineya.core.supa.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-0p8125"

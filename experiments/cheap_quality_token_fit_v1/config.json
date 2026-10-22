@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "experiment": "cheap_quality_token_fit_v1",
+  "source_revision": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+  "selection_seed": 20260929,
+  "counts": {"TRAIN":128,"TRAIN_SELECTION":0,"DEV":0,"CHECK":0,"FINAL":0},
+  "parents_per_family":32,
+  "variants":[0,1],
+  "context_profiles":[512,1024,2048],
+  "completion_reserve":128,
+  "max_supervised_completion":128,
+  "system_message":"Solve the supplied deterministic task. Return only the requested JSON object. Do not show reasoning.",
+  "mode":"direct",
+  "resource_budget":{"tree_rss_mib":512,"wall_seconds":900,"output_mib":50},
+  "runtime":{"transformers":"4.57.1","tokenizers":"0.22.2"},
+  "source_files":{
+    "bridge":{"path":"experiments/post_training_mimo_centralized_v1/scripts/bridge_data.py","sha256":"d3a10f84713ae7164775e00514c5584bc4f03525b229f3afe4ebf05f52ea57f1"},
+    "serialization":{"path":"experiments/reasoning_posttraining_v1/serialization.py","sha256":"4be59f7d4022f1e0687a47a42be4949d6020516b697155245e6763dcb0aa1b40"}
+  },
+  "tokenizer_directory":"C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Titan-Experimental-1.0.0-devfreeze",
+  "tokenizer_class":"Qwen2Tokenizer",
+  "eos_token":"<|im_end|>",
+  "eos_id":151645,
+  "chat_template_sha256":"a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+  "tokenizer_assets":{
+    "tokenizer.json":"aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json":"d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "vocab.json":"ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+    "merges.txt":"8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+  }
+}

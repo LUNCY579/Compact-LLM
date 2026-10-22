@@ -1,0 +1,72 @@
+{
+  "scope": "READ_ONLY_DOCUMENT_MANIFEST_EXISTENCE_AND_SMALL_TRAIN_SCHEMA_TRIAGE_NOT_NATIVE_ADMISSION",
+  "date": "2026-09-30",
+  "fresh_revalidation": false,
+  "findings": [
+    {
+      "bundle": "IFC-001",
+      "materialized": true,
+      "short": true,
+      "declared_train_rows": 18000,
+      "declared_train_empty_targets": 657,
+      "verification": "release-reported independent rule-plan recomputation",
+      "verdict": "Best short-SFT candidate pending exact whitespace/EOS-only tokenizer and native recipe qualification"
+    },
+    {
+      "bundle": "GAA-001",
+      "materialized": true,
+      "short": true,
+      "declared_train_rows": 30000,
+      "context_words": {
+        "median": 23,
+        "max": 50
+      },
+      "verification": "release-reported symbolic oracle uses shared renderer latent facts; no independent NL certification",
+      "verdict": "Best short grounding probe pending custom scorer/public-view adapter; all human_reviewed=false"
+    },
+    {
+      "bundle": "MAXRL-DATA-001",
+      "materialization": "original v1 corpus not established at documented experiment data path",
+      "verification": "semantic any-valid-certificate verifier; multiple accepted answers",
+      "verdict": "Current exact-string RVS would reject valid alternatives; root data belongs to different v2 release, do not substitute"
+    },
+    {
+      "bundle": "MAXRL-COMP-002",
+      "materialized": "root data declared41500 primary examples",
+      "verification": "all provided evals exposed; source group and answerability pairs; native unqualified",
+      "verdict": "Later structured reasoning study; any-valid answer scorer and exact role binding required"
+    },
+    {
+      "bundle": "SkillFoundry-v1",
+      "licence": "MIT read",
+      "review": "PENDING",
+      "native": "adapter excludes LoRA/PEFT; unqualified",
+      "verdict": "Small licensed alternative, not ready native training"
+    },
+    {
+      "bundle": "ToolUseFoundry-v1",
+      "licence": "Explicit user training/commercial permission read",
+      "context_characters": {
+        "min": 4848,
+        "median": 5812,
+        "max": 7980
+      },
+      "native": "JSON action collector/trainer and token masks unqualified",
+      "verdict": "Useful observation-grounding later; short next-action targets do not imply short context"
+    },
+    {
+      "bundle": "Coconut-v3",
+      "licence": "CC0 data/MIT code",
+      "context_characters": {
+        "median": 4124,
+        "max": 16517
+      },
+      "verdict": "Defer latent-feedback/long-context architecture and gradient changes"
+    },
+    {
+      "bundle": "Coding/DPO/REX/SkillIntegration",
+      "verdict": "Later: sandbox/code risk, reference/chosen/rejected costs, long contexts, or licence/native readiness unresolved"
+    }
+  ],
+  "caveat": "No full-corpus verification or tokenizer/native execution occurred; do not convert declared counts, mechanical checks or templates into human review/quality evidence."
+}

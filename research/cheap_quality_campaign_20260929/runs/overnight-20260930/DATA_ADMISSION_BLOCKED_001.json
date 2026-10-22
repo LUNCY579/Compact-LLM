@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "study": "DATA-ADMISSION-001",
+  "status": "PREPARATION_COMPLETE_GUARDED_AUDIT_BLOCKED_NO_WORKER",
+  "recorded_utc": "2026-09-30T08:29:52.0985766Z",
+  "worktree": "C:/Users/clclc/.codex/worktrees/rineya-dataset-admission/ChatBubble-rvs001",
+  "head": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+  "branch": "codex/data-admission-001-20260930",
+  "tracked_diff_empty": true,
+  "new_source_scope": "experiments/data_admission_v1/ only",
+  "implementation": {
+    "audit.py": {
+      "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-dataset-admission\\ChatBubble-rvs001\\experiments\\data_admission_v1\\audit.py",
+      "sha256": "d22505e7743eff6af3193f7b98d22f954f77443c4671d4fba992bb128de94f9e",
+      "bytes": 22791
+    },
+    "supervise_cpu.py": {
+      "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-dataset-admission\\ChatBubble-rvs001\\experiments\\data_admission_v1\\supervise_cpu.py",
+      "sha256": "9667be4272a927f73eb7539308083a30f7a71dce8d3d38a34e0565d4cbdfe0d3",
+      "bytes": 8104
+    },
+    "README.md": {
+      "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-dataset-admission\\ChatBubble-rvs001\\experiments\\data_admission_v1\\README.md",
+      "sha256": "4d4a924019e1222a1c8deec4f26477b44a895fe8c26bcd74d33cea56f7da9b3d",
+      "bytes": 1702
+    },
+    ".gitignore": {
+      "path": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-dataset-admission\\ChatBubble-rvs001\\experiments\\data_admission_v1\\.gitignore",
+      "sha256": "637400650411cd4eaf40681601af96eed5b72b298b06e54ed82a3d143938956a",
+      "bytes": 20
+    }
+  },
+  "read_only_contract_review": "dataset_contract_review: no launch blocker; exact message values/nonce, complete groups, private-field projection, offline tokenizer masks; not exporter JSON byte parity",
+  "review_is_human_certification": false,
+  "supervisor_receipt": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-dataset-admission\\ChatBubble-rvs001\\experiments\\data_admission_v1\\runs\\supervisor-001\\SUPERVISOR.json",
+  "guard_status": "BLOCKED_CPU_ADMISSION",
+  "admission_utc": "2026-09-30T08:27:25.467258+00:00",
+  "host_available_bytes": 1003315200,
+  "host_available_gib": 0.9344100952148438,
+  "required_host_gib": 2.0,
+  "disk_free_bytes": 101953187840,
+  "gpu_free_mib": 6693,
+  "supervisor_invocations": 1,
+  "worker_launches": 0,
+  "audit_streamed_rows": 0,
+  "preparation_schema_rows": 2,
+  "tokenizer_measurements": 0,
+  "native_model_loads": 0,
+  "optimizer_updates": 0,
+  "gpu_workers": 0,
+  "paid_calls": 0,
+  "protected_payloads_opened": 0,
+  "measurement_freeze_status": "NOT_CREATED_BECAUSE_WORKER_NEVER_ADMITTED",
+  "per_row_masks": "NOT_MEASURED",
+  "corpus_hashes": "MANIFEST_DECLARATIONS_ONLY_NOT_FRESHLY_VALIDATED",
+  "native_training_admitted": false,
+  "original_rvs_head": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+  "original_rvs_clean": true,
+  "qualification_directory_exists": false,
+  "collection_directory_exists": false,
+  "recommendation": "HOLD: preserve prepared audit and CPU guard receipt; no automatic retry. Continue only authorized lightweight hardware watch/conditional native qualification until the fixed deadline.",
+  "inference_accuracy_curves": "UNAVAILABLE_NO_NATIVE_BANK",
+  "voting_repairs_damages": "UNAVAILABLE_NO_NATIVE_BANK",
+  "invalid_native_outputs": "UNAVAILABLE_NO_NATIVE_BANK",
+  "costs": {
+    "supervisor_exec_observed_wall_seconds": 0.5250768,
+    "worker_cpu_wall_seconds": 0,
+    "worker_tree_rss_bytes": 0,
+    "generated_tokens": 0,
+    "collection_seconds": 0,
+    "preparation_agent_tokens": "NOT_METERED",
+    "supervisor_elapsed_receipt": "NOT_RECORDED_ON_ADMISSION_BLOCK; shell observed wall retained",
+    "preparation_wall_not_worker_cost": true
+  }
+}

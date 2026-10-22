@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "experiment_id": "cheap_quality_complementarity_v1",
+  "status": "IMPLEMENTATION_PREDECLARATION_BEFORE_NEW_ANALYSIS",
+  "scope": "Retrospective arithmetic150 cached-answer headroom study on an already exposed development panel; no new model evaluation or qualification.",
+  "inputs": {
+    "probe": {"path": "experiments/architecture_benchmark_001/data/monitor_probe.jsonl", "bytes": 129415, "sha256": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266"},
+    "audit": {"path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/PROBE_LABEL_AUDIT.json", "bytes": 308132, "sha256": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7"},
+    "scorer": {"path": "experiments/architecture_benchmark_001/retention.py", "bytes": 33056, "sha256": "c52b6a48cb811e3c272793a66765e82152fe170e8307eea153c3b1b6c5c58322"},
+    "scoring_contract": {"path": "experiments/architecture_benchmark_001/TYPED_SCORING_CONTRACT.md", "bytes": 9615, "sha256": "871d3bb860be27ff64bb613cccd51349b080412573c6517a64dee181389cedc5"},
+    "last20": {"path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json", "bytes": 125627, "sha256": "65e7977600d3e74526a2514c12b135fb47e8f3e63d086c947dcdc314e1caa619"},
+    "fullb28": {"path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json", "bytes": 149183, "sha256": "ceb1912c1d317c0b4388afc47975708f9c521fdbf69ed0a4c2adb1c0a3dd4d21"},
+    "opallo": {"path": "Rineya_Published_Cores/Rineya-Opallo-1.0.0-devfreeze/PANEL.json", "bytes": 37311, "sha256": "f3913133259ba55fb2b31628715ca8247b679ee976cb67abfb70fd7db8837f6f"},
+    "opallo_core": {"path": "Rineya_Published_Cores/Rineya-Opallo-1.0.0-devfreeze/CORE.json", "bytes": 8010, "sha256": "674d6d0cb5a80b740b8cf72a9ebba2f342541327c342be27839ff23bb09abb51"},
+    "opallo_files": {"path": "Rineya_Published_Cores/Rineya-Opallo-1.0.0-devfreeze/FILES.json", "bytes": 943, "sha256": "3b391f5b25026bd2bced7a396b51d804e15f9634fd73a8fe22a67aec304d6f46"}
+  },
+  "panel": {
+    "row_count": 150,
+    "unique_family_count": 150,
+    "class_counts": {"percentage_reasoning": 50, "ratio_proportion": 50, "time_duration": 50},
+    "sorted_ids_sha256": "c8ef6b27131df55dbe85c35fddb7faca9870b11f8edea3aa95cc600b0d5385a1",
+    "id_hash_encoding": "UTF-8 JSON sorted list, ensure_ascii=False, separators=(comma,colon)",
+    "exposure": "historically measured/exposed development evidence",
+    "pending_reviews": ["semantic target overlay", "bare-value permission axis", "multi-turn correction precedence"],
+    "policy": ["strict", "permissive"],
+    "termination": "EOS required; recomputed from raw saved termination flag; not regenerated",
+    "family_scores": "One row per distinct family, retained in rows.csv with binary correctness. Class counts are descriptive; repeated policies/models are not independent observations."
+  },
+  "bank_metadata": {
+    "last20": {"arm": "B28last20", "mode": "B28", "block_tail": 20, "seed": 17, "token_budget": 5200, "schedule_spec": "wsd:0.2:0.2", "probe_device": "cpu", "canonical_tag": "B28last20_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95"},
+    "fullb28": {"arm": "B28", "mode": "B28", "block_tail": null, "seed": 17, "token_budget": 5200, "schedule_spec": "wsd:0.2:0.2", "probe_device": "cpu", "canonical_tag": "B28_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95"}
+  },
+  "provenance": {
+    "source_weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "last20_checkpoint_sha256": "915af77f4ad2a1813df46a5b5a65b9dddd138b820e2e9e53ad8845bdf8d0db0d",
+    "fullb28_checkpoint_sha256": "ebcdcf0be937ca22536bd230a3f248dac2107c2b78e4854cb77a8756f903a117",
+    "opallo_weight_sha256": "e726d6bea1139eddfbcdadeb4c8d7b979e7a55e43490d9787ab99a3ab12ee76b",
+    "weight_hash_scope": "Historical metadata declarations cross-checked only; no weight file read or current file qualification."
+  },
+  "models": {
+    "supa_initial": {"capture": "last20.checkpoints[0].outputs; exact equality required against fullb28.checkpoints[0].outputs", "storage": "historical Supa BF16 source", "compute": "CPU FP32 historical probe", "training": "unmodified source baseline"},
+    "last20_fp32": {"capture": "last20.checkpoints[1].outputs", "storage": "FP32 trainable checkpoint reconstructed with frozen source", "compute": "CPU FP32 historical probe", "training": "last 20 blocks; 5233 supervised tokens; 41 steps; seed 17"},
+    "fullb28_fp32": {"capture": "fullb28.checkpoints[1].outputs", "storage": "FP32 full-parameter checkpoint", "compute": "CPU FP32 historical probe", "training": "full B28; matched draw/dose/schedule; 5233 tokens; 41 steps; seed 17"},
+    "opallo_bf16_storage_fp32_compute": {"capture": "opallo.predictions", "storage": "published BF16 core derived from the same last20 seed 17 checkpoint", "compute": "BF16 weights upcast to CPU FP32; historical PANEL probe", "training": "same lineage as last20_fp32; not an independent training draw"}
+  },
+  "resource_budget": {
+    "lane": "sequential CPU-only offline analysis, one process, Python standard library",
+    "max_process_rss_bytes": 536870912,
+    "max_wall_seconds": 900,
+    "max_output_bytes": 52428800,
+    "monitoring": "Current/peak process RSS and host physical/commit memory at stage boundaries on Windows; root supervisor supplies continuous admission, polling, timeout and limits. No GPU compute."
+  },
+  "analysis_predeclaration": [
+    "Independently rescore every saved raw answer using immutable source retention.py and audit overlay under strict and permissive policies; caller correctness never overrides parser.",
+    "Verify hashes, IDs, full messages and operative prompt bindings, 150 unique families, exact Supa initialization equality, lineage/precision metadata, matched draw/dose, and stored aggregate/per-row scoring cross-checks.",
+    "Report class and family scores, every pair both/left-only/right-only/neither correct, every nonempty subset oracle union, best single, headroom and joint failure IDs.",
+    "Report source retained/lost/gained separately; gains cannot offset losses. Preserve format/type rejection, parsed numeric/clock mismatch, EOS failure and bare-policy sensitivity.",
+    "Compare text and exact typed value differences separately; never extract a number from rejected free-form prose.",
+    "Every oracle union is retrospective headroom using known targets, not a selector evaluation, sampling gain, merged weights or a current native qualification. No p-values or new population efficacy claims."
+  ],
+  "outputs": ["RUN.json", "resources.jsonl", "analysis.json", "rows.csv", "pairs.csv", "subset_oracles.csv", "report.html", "COMPLETED.json or FAILED.json"],
+  "forbidden": ["model or tensor loading", "Torch/NumPy imports", "protected/sealed input reads", "confidence calibration without logits", "changing historical data/scorer", "claiming an oracle selector deploys", "weight merging", "native qualification bypass", "parallel experiment workers"],
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false,
+  "opens_gate": false
+}

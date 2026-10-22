@@ -17,6 +17,9 @@ Created: September 29, 2026.
 
 ## Read first
 
+- [Fresh-validation preparation](fresh_validation/RESULT.md): September 29 first-stage
+  asset/data audits, frozen blocked design, guarded native mechanics, and external receipts.
+  Exact trained endpoints are missing; no fresh native experiment has run.
 - [Research plan](RESEARCH_PLAN.md): hypotheses, controls, falsification, cumulative experiments.
 - [Host handoff](HOST_HANDOFF.md): native integration boundaries and required receipts.
 - [Source ledger](SOURCES.md): papers, inspected repository evidence, and transcript-only claims.
