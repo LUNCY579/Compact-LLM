@@ -1,0 +1,54 @@
+{
+  "experiment": "GD-001",
+  "recorded_utc": "20261003T051747Z",
+  "interpreter": "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe",
+  "cpu": {
+    "status": "BLOCKED",
+    "reasons": [
+      "host RAM below registered guard"
+    ],
+    "versions": {
+      "torch": "2.6.0+cu124",
+      "transformers": "5.14.1",
+      "safetensors": "0.8.0",
+      "psutil": "7.2.2",
+      "peft": "0.20.0"
+    },
+    "python": "3.11.15",
+    "free_ram_gib": 3.8031883239746094,
+    "free_vram_gib": null,
+    "does_not_authorize_training_or_establish_compatibility": true
+  },
+  "cuda": {
+    "status": "BLOCKED",
+    "reasons": [
+      "host RAM below registered guard",
+      "CUDA free memory below registered guard",
+      "another CUDA compute process is active; do not interrupt it"
+    ],
+    "versions": {
+      "torch": "2.6.0+cu124",
+      "transformers": "5.14.1",
+      "safetensors": "0.8.0",
+      "psutil": "7.2.2",
+      "peft": "0.20.0"
+    },
+    "python": "3.11.15",
+    "free_ram_gib": 3.8019332885742188,
+    "free_vram_gib": 6.890625,
+    "does_not_authorize_training_or_establish_compatibility": true
+  },
+  "planned_aggregate_budget": {
+    "max_native_wall_seconds": 1800,
+    "max_native_forward_calls": 16000,
+    "scope": "per split, cumulative across checkpoints and resumed attempts"
+  },
+  "native_model_loads": 0,
+  "native_forward_calls": 0,
+  "confirmation_generated_or_opened": false,
+  "permits_model_promotion": false,
+  "publication_derivative": {
+    "original_sha256": "91833e5d4d835eacb6d43a2e876247fe08aa71999ea6d63a5e8101e9d2d531d9",
+    "omitted": "Unrelated process names/PIDs; native preflight resource results preserved."
+  }
+}

@@ -1,0 +1,1233 @@
+{
+  "schema_version": 1,
+  "repository": "LUNCY579/ChatBubble",
+  "remote_url": "https://github.com/LUNCY579/ChatBubble.git",
+  "audit_date": "2026-10-22",
+  "user_timezone": "America/Chicago",
+  "manifest_status": "READY_FOR_FRESH_PREDELETE_VERIFICATION",
+  "execution_status": "NOT_EXECUTED_BY_MANIFEST_AUTHOR",
+  "baseline": {
+    "branches": 149,
+    "unique_head_shas": 116,
+    "initial_audit_date": "2026-10-21",
+    "branch_refresh": "Root agent reports all 149 refs re-fetched unchanged on 2026-10-22; executor must still refresh before deletion.",
+    "central_branch": "research/post-training-mimo-centralized-v1",
+    "central_sha": "bf2567da46a310aa39f590cc6c73c99961d2ae90",
+    "expected_remaining_branches_after_this_pass": 111,
+    "count_excludes_new_integration_branches": true
+  },
+  "candidate_count": 38,
+  "preservation_summary": {
+    "tag_preserved_refs": 33,
+    "branch_ancestor_preserved_refs": 5,
+    "unique_preservation_refs": 29,
+    "keepers_in_delete_set": []
+  },
+  "candidates": [
+    {
+      "order": 1,
+      "branch": "codex/archive-20261004/codex-cheap-quality-abstention-20260929",
+      "expected_sha": "351e93120c814d719b340bc4e2ddb5bb506e8b20",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-cheap-quality-abstention-20260929",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-cheap-quality-abstention-20260929",
+        "kind": "annotated_tag",
+        "ref_object_sha": "cc03896e385eec77bed490522ab0d45aa0ec119b",
+        "peeled_commit_sha": "351e93120c814d719b340bc4e2ddb5bb506e8b20",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-cheap-quality-abstention-20260929",
+        "git_command": "git push origin 351e93120c814d719b340bc4e2ddb5bb506e8b20:refs/heads/codex/archive-20261004/codex-cheap-quality-abstention-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 2,
+      "branch": "codex/archive-20261004/codex-cheap-quality-complementarity-20260929",
+      "expected_sha": "63ff0f6d5cef6c4779ac173a95f9e8c703b2b949",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-cheap-quality-complementarity-20260929",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-cheap-quality-complementarity-20260929",
+        "kind": "annotated_tag",
+        "ref_object_sha": "bcad0a72f7c1a16b738b403608a390ef2c556fc9",
+        "peeled_commit_sha": "63ff0f6d5cef6c4779ac173a95f9e8c703b2b949",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-cheap-quality-complementarity-20260929",
+        "git_command": "git push origin 63ff0f6d5cef6c4779ac173a95f9e8c703b2b949:refs/heads/codex/archive-20261004/codex-cheap-quality-complementarity-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 3,
+      "branch": "codex/archive-20261004/codex-cheap-quality-retrieval-20260929",
+      "expected_sha": "bdc71a6d58c8c0f6353b1d3ea5291aedba55617e",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-cheap-quality-retrieval-20260929",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-cheap-quality-retrieval-20260929",
+        "kind": "annotated_tag",
+        "ref_object_sha": "3374ea828fe1976478dd5c50becc2339b8223c71",
+        "peeled_commit_sha": "bdc71a6d58c8c0f6353b1d3ea5291aedba55617e",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-cheap-quality-retrieval-20260929",
+        "git_command": "git push origin bdc71a6d58c8c0f6353b1d3ea5291aedba55617e:refs/heads/codex/archive-20261004/codex-cheap-quality-retrieval-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 4,
+      "branch": "codex/archive-20261004/codex-cheap-quality-shortcuts-20260929",
+      "expected_sha": "97081cb9cb9af1f7d1be5ced74c788b8b5f89326",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-cheap-quality-shortcuts-20260929",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-cheap-quality-shortcuts-20260929",
+        "kind": "annotated_tag",
+        "ref_object_sha": "95b3bcf20a92465f45f669b3157f70737bafac7b",
+        "peeled_commit_sha": "97081cb9cb9af1f7d1be5ced74c788b8b5f89326",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-cheap-quality-shortcuts-20260929",
+        "git_command": "git push origin 97081cb9cb9af1f7d1be5ced74c788b8b5f89326:refs/heads/codex/archive-20261004/codex-cheap-quality-shortcuts-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 5,
+      "branch": "codex/archive-20261004/codex-cheap-quality-stability-20260929",
+      "expected_sha": "996cf0ebc946ceccc9a36e0e38a5303ad8326c40",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-cheap-quality-stability-20260929",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-cheap-quality-stability-20260929",
+        "kind": "annotated_tag",
+        "ref_object_sha": "438f6c0fdbf98ffc3ba52a892beae318ee50be0e",
+        "peeled_commit_sha": "996cf0ebc946ceccc9a36e0e38a5303ad8326c40",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-cheap-quality-stability-20260929",
+        "git_command": "git push origin 996cf0ebc946ceccc9a36e0e38a5303ad8326c40:refs/heads/codex/archive-20261004/codex-cheap-quality-stability-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 6,
+      "branch": "codex/archive-20261004/codex-cheap-quality-token-fit-20260929",
+      "expected_sha": "1861a4859fbd3f4ced8215ece711c3d65186ea10",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-cheap-quality-token-fit-20260929",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-cheap-quality-token-fit-20260929",
+        "kind": "annotated_tag",
+        "ref_object_sha": "734053de013f41920c1fd8ea487a2b77d6043082",
+        "peeled_commit_sha": "1861a4859fbd3f4ced8215ece711c3d65186ea10",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-cheap-quality-token-fit-20260929",
+        "git_command": "git push origin 1861a4859fbd3f4ced8215ece711c3d65186ea10:refs/heads/codex/archive-20261004/codex-cheap-quality-token-fit-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 7,
+      "branch": "codex/archive-20261004/codex-clare-phase4-scope-fail-closed-20260930",
+      "expected_sha": "c006715d82fbebfccf4e19a97ff4b149befb0b48",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-clare-phase4-scope-fail-closed-20260930",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-clare-phase4-scope-fail-closed-20260930",
+        "kind": "annotated_tag",
+        "ref_object_sha": "053683ede813692a515a6f835fe8c8594c271231",
+        "peeled_commit_sha": "c006715d82fbebfccf4e19a97ff4b149befb0b48",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-clare-phase4-scope-fail-closed-20260930",
+        "git_command": "git push origin c006715d82fbebfccf4e19a97ff4b149befb0b48:refs/heads/codex/archive-20261004/codex-clare-phase4-scope-fail-closed-20260930",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 8,
+      "branch": "codex/archive-20261004/codex-confirm002-paired-correctness-audit-20260930",
+      "expected_sha": "224233406c42d90ab30b6599303323a10c54fb0f",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-confirm002-paired-correctness-audit-20260930",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-confirm002-paired-correctness-audit-20260930",
+        "kind": "annotated_tag",
+        "ref_object_sha": "f225d71522092ea045a7d3e67394b644856ce113",
+        "peeled_commit_sha": "224233406c42d90ab30b6599303323a10c54fb0f",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-confirm002-paired-correctness-audit-20260930",
+        "git_command": "git push origin 224233406c42d90ab30b6599303323a10c54fb0f:refs/heads/codex/archive-20261004/codex-confirm002-paired-correctness-audit-20260930",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 9,
+      "branch": "codex/archive-20261004/codex-data-admission-001-20260930",
+      "expected_sha": "00b1ee366207a039f344724bf0acb4b2e6e35281",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-data-admission-001-20260930",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-data-admission-001-20260930",
+        "kind": "annotated_tag",
+        "ref_object_sha": "7a58b7d2afbbfbcd9ac718b95b4b3bdc57601f37",
+        "peeled_commit_sha": "00b1ee366207a039f344724bf0acb4b2e6e35281",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-data-admission-001-20260930",
+        "git_command": "git push origin 00b1ee366207a039f344724bf0acb4b2e6e35281:refs/heads/codex/archive-20261004/codex-data-admission-001-20260930",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 10,
+      "branch": "codex/archive-20261004/codex-mimo-artifact-stream-budget-20260930",
+      "expected_sha": "9d882d38d307c5a6a2cecb8075e9ae314ae879b3",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-artifact-stream-budget-20260930",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-artifact-stream-budget-20260930",
+        "kind": "annotated_tag",
+        "ref_object_sha": "05264a052ea2223f08f727a486cf774251d68dc6",
+        "peeled_commit_sha": "9d882d38d307c5a6a2cecb8075e9ae314ae879b3",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-mimo-artifact-stream-budget-20260930",
+        "git_command": "git push origin 9d882d38d307c5a6a2cecb8075e9ae314ae879b3:refs/heads/codex/archive-20261004/codex-mimo-artifact-stream-budget-20260930",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 11,
+      "branch": "codex/archive-20261004/codex-mimo-capture-failure-accounting-20261001",
+      "expected_sha": "07b65f3e3651788a80bcb042d0d369954fc7cd0c",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-capture-failure-accounting-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-capture-failure-accounting-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "3ee7469b523296b11af505068829e70a460f6ae5",
+        "peeled_commit_sha": "07b65f3e3651788a80bcb042d0d369954fc7cd0c",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-mimo-capture-failure-accounting-20261001",
+        "git_command": "git push origin 07b65f3e3651788a80bcb042d0d369954fc7cd0c:refs/heads/codex/archive-20261004/codex-mimo-capture-failure-accounting-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 12,
+      "branch": "codex/archive-20261004/codex-mimo-capture-fixed-input-audit-20260930",
+      "expected_sha": "bbe2343a5817e9512a408270f9215df0116625d0",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-capture-fixed-input-audit-20260930",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-capture-fixed-input-audit-20260930",
+        "kind": "annotated_tag",
+        "ref_object_sha": "307e4b4d97d7203a1af660723cf3321fea3554d0",
+        "peeled_commit_sha": "bbe2343a5817e9512a408270f9215df0116625d0",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-mimo-capture-fixed-input-audit-20260930",
+        "git_command": "git push origin bbe2343a5817e9512a408270f9215df0116625d0:refs/heads/codex/archive-20261004/codex-mimo-capture-fixed-input-audit-20260930",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 13,
+      "branch": "codex/archive-20261004/codex-mimo-exact-prefix-capture-20261001",
+      "expected_sha": "b379f727b06e075b7eaeef3e029583f146e7fe81",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-exact-prefix-capture-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-exact-prefix-capture-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "3a2bece843ce80160f39f2e4e5aa6b5cdaf7ccbd",
+        "peeled_commit_sha": "b379f727b06e075b7eaeef3e029583f146e7fe81",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-mimo-exact-prefix-capture-20261001",
+        "git_command": "git push origin b379f727b06e075b7eaeef3e029583f146e7fe81:refs/heads/codex/archive-20261004/codex-mimo-exact-prefix-capture-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 14,
+      "branch": "codex/archive-20261004/codex-mimo-job-containment-20261001",
+      "expected_sha": "f4622874de970441e9d255297a72b0b671c8bdb2",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-job-containment-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-job-containment-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "a827b7df8b5211c146b8914b41c9e91d20b9e33b",
+        "peeled_commit_sha": "f4622874de970441e9d255297a72b0b671c8bdb2",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-mimo-job-containment-20261001",
+        "git_command": "git push origin f4622874de970441e9d255297a72b0b671c8bdb2:refs/heads/codex/archive-20261004/codex-mimo-job-containment-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 15,
+      "branch": "codex/archive-20261004/codex-mimo-job-handle-fix-20261001",
+      "expected_sha": "863476aaf1e394a0796f4c59dcf96f0cc3793d4a",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-job-handle-fix-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-job-handle-fix-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "5d6a84bdc1627636fe52f61674be03c2be184676",
+        "peeled_commit_sha": "863476aaf1e394a0796f4c59dcf96f0cc3793d4a",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-mimo-job-handle-fix-20261001",
+        "git_command": "git push origin 863476aaf1e394a0796f4c59dcf96f0cc3793d4a:refs/heads/codex/archive-20261004/codex-mimo-job-handle-fix-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 16,
+      "branch": "codex/archive-20261004/codex-mimo-supervisor-death-cpu-20261001",
+      "expected_sha": "c42d494e751543b5fb896bbccecd16436003354d",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-supervisor-death-cpu-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-supervisor-death-cpu-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "9555444e4766baf9f7f3968697250cc7bbe7115e",
+        "peeled_commit_sha": "c42d494e751543b5fb896bbccecd16436003354d",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-mimo-supervisor-death-cpu-20261001",
+        "git_command": "git push origin c42d494e751543b5fb896bbccecd16436003354d:refs/heads/codex/archive-20261004/codex-mimo-supervisor-death-cpu-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 17,
+      "branch": "codex/archive-20261004/codex-mimo-suspended-job-launch-20261001",
+      "expected_sha": "44cbce50dfe85fb79a35eefee4918b2a0bffef9a",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-mimo-suspended-job-launch-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-mimo-suspended-job-launch-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "e9301a97d79b41ba4150424fac52b2b21998d689",
+        "peeled_commit_sha": "44cbce50dfe85fb79a35eefee4918b2a0bffef9a",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-mimo-suspended-job-launch-20261001",
+        "git_command": "git push origin 44cbce50dfe85fb79a35eefee4918b2a0bffef9a:refs/heads/codex/archive-20261004/codex-mimo-suspended-job-launch-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 18,
+      "branch": "codex/archive-20261004/codex-triskill-geometric-gapfix-20261001",
+      "expected_sha": "332b7f9beffe0c25361258c937fa481df0c68f58",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-triskill-geometric-gapfix-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-triskill-geometric-gapfix-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "29cf13529b64b6a8cc365a7c8c5f593363df0786",
+        "peeled_commit_sha": "332b7f9beffe0c25361258c937fa481df0c68f58",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-triskill-geometric-gapfix-20261001",
+        "git_command": "git push origin 332b7f9beffe0c25361258c937fa481df0c68f58:refs/heads/codex/archive-20261004/codex-triskill-geometric-gapfix-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 19,
+      "branch": "codex/archive-20261004/codex-triskill-geometric-pilot-20261001",
+      "expected_sha": "09a0514e1cdf8e7b1dc7960fc4a8aa2aea94cbbe",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-triskill-geometric-pilot-20261001",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-triskill-geometric-pilot-20261001",
+        "kind": "annotated_tag",
+        "ref_object_sha": "ea2911c57fc4aa5d1f210fbd6f4362bca415a98c",
+        "peeled_commit_sha": "09a0514e1cdf8e7b1dc7960fc4a8aa2aea94cbbe",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-triskill-geometric-pilot-20261001",
+        "git_command": "git push origin 09a0514e1cdf8e7b1dc7960fc4a8aa2aea94cbbe:refs/heads/codex/archive-20261004/codex-triskill-geometric-pilot-20261001",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 20,
+      "branch": "codex/archive-20261004/codex-triskill-stage-a",
+      "expected_sha": "ef4b4d208dfa1a603a5f5bde88a98a06c5ca81bf",
+      "delete_ref": "refs/heads/codex/archive-20261004/codex-triskill-stage-a",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/codex-triskill-stage-a",
+        "kind": "annotated_tag",
+        "ref_object_sha": "3a031ecaef566bf2bfe35c574d20c9c44bcc7992",
+        "peeled_commit_sha": "ef4b4d208dfa1a603a5f5bde88a98a06c5ca81bf",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/codex-triskill-stage-a",
+        "git_command": "git push origin ef4b4d208dfa1a603a5f5bde88a98a06c5ca81bf:refs/heads/codex/archive-20261004/codex-triskill-stage-a",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 21,
+      "branch": "codex/archive-20261004/fma-finalize",
+      "expected_sha": "5ea07037b15471d6930347f65ead399e7b40b045",
+      "delete_ref": "refs/heads/codex/archive-20261004/fma-finalize",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/fma-finalize",
+        "kind": "annotated_tag",
+        "ref_object_sha": "bf1dccc23c76181d703895221de8be7754533d64",
+        "peeled_commit_sha": "5ea07037b15471d6930347f65ead399e7b40b045",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/fma-finalize",
+        "git_command": "git push origin 5ea07037b15471d6930347f65ead399e7b40b045:refs/heads/codex/archive-20261004/fma-finalize",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 22,
+      "branch": "codex/archive-20261004/historical-main-snapshots-22",
+      "expected_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+      "delete_ref": "refs/heads/codex/archive-20261004/historical-main-snapshots-22",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/historical-main-snapshots",
+        "kind": "annotated_tag",
+        "ref_object_sha": "f3299697d43a9971ce15d47cf1f01130331dc0cf",
+        "peeled_commit_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/historical-main-snapshots",
+        "git_command": "git push origin 7d9b4fd450bc56405f6cec41459a7e83df7958ae:refs/heads/codex/archive-20261004/historical-main-snapshots-22",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 23,
+      "branch": "codex/archive-20261004/historical-main-snapshots-retained-refs-heads-fma-finalize",
+      "expected_sha": "5ea07037b15471d6930347f65ead399e7b40b045",
+      "delete_ref": "refs/heads/codex/archive-20261004/historical-main-snapshots-retained-refs-heads-fma-finalize",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/fma-finalize",
+        "kind": "annotated_tag",
+        "ref_object_sha": "bf1dccc23c76181d703895221de8be7754533d64",
+        "peeled_commit_sha": "5ea07037b15471d6930347f65ead399e7b40b045",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/fma-finalize",
+        "git_command": "git push origin 5ea07037b15471d6930347f65ead399e7b40b045:refs/heads/codex/archive-20261004/historical-main-snapshots-retained-refs-heads-fma-finalize",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 24,
+      "branch": "codex/archive-20261004/historical-main-snapshots-retained-refs-heads-research-factorized-memory-attention-v1",
+      "expected_sha": "1cce3aaa7d5975c97a21d0534e9652bf993a61f2",
+      "delete_ref": "refs/heads/codex/archive-20261004/historical-main-snapshots-retained-refs-heads-research-factorized-memory-attention-v1",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/research-factorized-memory-attention-v1",
+        "kind": "annotated_tag",
+        "ref_object_sha": "a073afdba783f95d21bf4a6b9656558d081bb495",
+        "peeled_commit_sha": "1cce3aaa7d5975c97a21d0534e9652bf993a61f2",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/research-factorized-memory-attention-v1",
+        "git_command": "git push origin 1cce3aaa7d5975c97a21d0534e9652bf993a61f2:refs/heads/codex/archive-20261004/historical-main-snapshots-retained-refs-heads-research-factorized-memory-attention-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 25,
+      "branch": "codex/archive-20261004/research-factorized-memory-attention-v1",
+      "expected_sha": "1cce3aaa7d5975c97a21d0534e9652bf993a61f2",
+      "delete_ref": "refs/heads/codex/archive-20261004/research-factorized-memory-attention-v1",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/research-factorized-memory-attention-v1",
+        "kind": "annotated_tag",
+        "ref_object_sha": "a073afdba783f95d21bf4a6b9656558d081bb495",
+        "peeled_commit_sha": "1cce3aaa7d5975c97a21d0534e9652bf993a61f2",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/research-factorized-memory-attention-v1",
+        "git_command": "git push origin 1cce3aaa7d5975c97a21d0534e9652bf993a61f2:refs/heads/codex/archive-20261004/research-factorized-memory-attention-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 26,
+      "branch": "codex/archive-20261004/research-fwanda-delta-retention-v1-retained-refs-heads-research-fwanda-delta-retention-v1",
+      "expected_sha": "058e0a8a61c603cb175710e63003ce4a31812e34",
+      "delete_ref": "refs/heads/codex/archive-20261004/research-fwanda-delta-retention-v1-retained-refs-heads-research-fwanda-delta-retention-v1",
+      "reason": "Exact head is ancestor of tagged FWANDA tip 80fe326; compare behind_by=0 and merge_base equals candidate.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/research-fwanda-delta-retention-v1",
+        "kind": "annotated_tag",
+        "ref_object_sha": "9c5ac1714fd3ad4c5478b4571594d56d5c54593d",
+        "peeled_commit_sha": "80fe326f6620d3d084165929637230c6b3620239",
+        "proof": "ancestor_commit",
+        "ancestry": {
+          "base_sha": "058e0a8a61c603cb175710e63003ce4a31812e34",
+          "head_sha": "80fe326f6620d3d084165929637230c6b3620239",
+          "status": "ahead",
+          "head_ahead_by": 1,
+          "head_behind_by": 0,
+          "merge_base_sha": "058e0a8a61c603cb175710e63003ce4a31812e34",
+          "source_url": "https://github.com/LUNCY579/ChatBubble/compare/058e0a8a61c603cb175710e63003ce4a31812e34...80fe326f6620d3d084165929637230c6b3620239"
+        },
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/research-fwanda-delta-retention-v1",
+        "git_command": "git push origin 058e0a8a61c603cb175710e63003ce4a31812e34:refs/heads/codex/archive-20261004/research-fwanda-delta-retention-v1-retained-refs-heads-research-fwanda-delta-retention-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 27,
+      "branch": "codex/archive-20261004/research-fwanda-delta-retention-v1",
+      "expected_sha": "80fe326f6620d3d084165929637230c6b3620239",
+      "delete_ref": "refs/heads/codex/archive-20261004/research-fwanda-delta-retention-v1",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/research-fwanda-delta-retention-v1",
+        "kind": "annotated_tag",
+        "ref_object_sha": "9c5ac1714fd3ad4c5478b4571594d56d5c54593d",
+        "peeled_commit_sha": "80fe326f6620d3d084165929637230c6b3620239",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/research-fwanda-delta-retention-v1",
+        "git_command": "git push origin 80fe326f6620d3d084165929637230c6b3620239:refs/heads/codex/archive-20261004/research-fwanda-delta-retention-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 28,
+      "branch": "codex/archive-20261004/research-jumplora-rineya-skill-isolation-v1-retained-refs-heads-research-jumplora-rineya-skill-isolation-v1",
+      "expected_sha": "2f7c0e138e27f1fc4bc0fc13dfc814fb86144921",
+      "delete_ref": "refs/heads/codex/archive-20261004/research-jumplora-rineya-skill-isolation-v1-retained-refs-heads-research-jumplora-rineya-skill-isolation-v1",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/research-jumplora-rineya-skill-isolation-v1",
+        "kind": "annotated_tag",
+        "ref_object_sha": "8a55794aac8a2d2cb1485b2f6e8c1744666dfe3d",
+        "peeled_commit_sha": "2f7c0e138e27f1fc4bc0fc13dfc814fb86144921",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/research-jumplora-rineya-skill-isolation-v1",
+        "git_command": "git push origin 2f7c0e138e27f1fc4bc0fc13dfc814fb86144921:refs/heads/codex/archive-20261004/research-jumplora-rineya-skill-isolation-v1-retained-refs-heads-research-jumplora-rineya-skill-isolation-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 29,
+      "branch": "codex/archive-20261004/research-jumplora-rineya-skill-isolation-v1",
+      "expected_sha": "2f7c0e138e27f1fc4bc0fc13dfc814fb86144921",
+      "delete_ref": "refs/heads/codex/archive-20261004/research-jumplora-rineya-skill-isolation-v1",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/research-jumplora-rineya-skill-isolation-v1",
+        "kind": "annotated_tag",
+        "ref_object_sha": "8a55794aac8a2d2cb1485b2f6e8c1744666dfe3d",
+        "peeled_commit_sha": "2f7c0e138e27f1fc4bc0fc13dfc814fb86144921",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/research-jumplora-rineya-skill-isolation-v1",
+        "git_command": "git push origin 2f7c0e138e27f1fc4bc0fc13dfc814fb86144921:refs/heads/codex/archive-20261004/research-jumplora-rineya-skill-isolation-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 30,
+      "branch": "codex/archive-20261004/retained-refs-heads-main-7d9b4fd4",
+      "expected_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+      "delete_ref": "refs/heads/codex/archive-20261004/retained-refs-heads-main-7d9b4fd4",
+      "reason": "Exact head is preserved by a verified existing annotated archive tag; tag is retained and manifest records old name.",
+      "category": "PRUNE_ARCHIVE_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/historical-main-snapshots",
+        "kind": "annotated_tag",
+        "ref_object_sha": "f3299697d43a9971ce15d47cf1f01130331dc0cf",
+        "peeled_commit_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/historical-main-snapshots",
+        "git_command": "git push origin 7d9b4fd450bc56405f6cec41459a7e83df7958ae:refs/heads/codex/archive-20261004/retained-refs-heads-main-7d9b4fd4",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 31,
+      "branch": "codex/rvs001-inference-pilot-20260929",
+      "expected_sha": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "delete_ref": "refs/heads/codex/rvs001-inference-pilot-20260929",
+      "reason": "Identical full commit SHA is retained by canonical keeper.",
+      "category": "PRUNE_EXACT_DUPLICATE_ALIAS",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-09/worktrees/rvs001-frozen-pilot",
+        "kind": "annotated_tag",
+        "ref_object_sha": "602305569f5ad50dfb7fd1900deca7348d1e979b",
+        "peeled_commit_sha": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-09/worktrees/rvs001-frozen-pilot",
+        "git_command": "git push origin ac9b79ac07ad650d8815c76eb4194a180f23e8d4:refs/heads/codex/rvs001-inference-pilot-20260929",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 32,
+      "branch": "codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "expected_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+      "delete_ref": "refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "reason": "All four aliases are direct parent of retained full worktree snapshot; preserving that snapshot preserves exact commit and all prior history.",
+      "category": "PRUNE_PARENT_SNAPSHOT_REF",
+      "preservation": {
+        "ref": "refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "kind": "branch",
+        "ref_object_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "peeled_commit_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "proof": "ancestor_commit",
+        "ancestry": {
+          "base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "head_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+          "status": "ahead",
+          "head_ahead_by": 1,
+          "head_behind_by": 0,
+          "merge_base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "source_url": "https://github.com/LUNCY579/ChatBubble/compare/5b4c22dae78f587c41575269f419087b0c7997f6...8e9e4ba9420ab3dc650d247bba36d47329b12ccd"
+        },
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "git_command": "git push origin 5b4c22dae78f587c41575269f419087b0c7997f6:refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 33,
+      "branch": "codex/worktree-save-20261002/chatbubble-binding-mixture-pilot-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "expected_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+      "delete_ref": "refs/heads/codex/worktree-save-20261002/chatbubble-binding-mixture-pilot-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "reason": "All four aliases are direct parent of retained full worktree snapshot; preserving that snapshot preserves exact commit and all prior history.",
+      "category": "PRUNE_PARENT_SNAPSHOT_REF",
+      "preservation": {
+        "ref": "refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "kind": "branch",
+        "ref_object_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "peeled_commit_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "proof": "ancestor_commit",
+        "ancestry": {
+          "base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "head_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+          "status": "ahead",
+          "head_ahead_by": 1,
+          "head_behind_by": 0,
+          "merge_base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "source_url": "https://github.com/LUNCY579/ChatBubble/compare/5b4c22dae78f587c41575269f419087b0c7997f6...8e9e4ba9420ab3dc650d247bba36d47329b12ccd"
+        },
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "git_command": "git push origin 5b4c22dae78f587c41575269f419087b0c7997f6:refs/heads/codex/worktree-save-20261002/chatbubble-binding-mixture-pilot-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 34,
+      "branch": "codex/worktree-save-20261002/chatbubble-compose-lane-20260918-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "expected_sha": "8afe9f6bc902dcb270e8121a36a2bd24e982bf87",
+      "delete_ref": "refs/heads/codex/worktree-save-20261002/chatbubble-compose-lane-20260918-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "reason": "Direct parent is preserved by retained full compose-lane worktree snapshot.",
+      "category": "PRUNE_PARENT_SNAPSHOT_REF",
+      "preservation": {
+        "ref": "refs/heads/codex/worktree-save-20261002/chatbubble-compose-lane-20260918",
+        "kind": "branch",
+        "ref_object_sha": "dc511f919ce0b57dc8b20b254ce11ae0150e5316",
+        "peeled_commit_sha": "dc511f919ce0b57dc8b20b254ce11ae0150e5316",
+        "proof": "ancestor_commit",
+        "ancestry": {
+          "base_sha": "8afe9f6bc902dcb270e8121a36a2bd24e982bf87",
+          "head_sha": "dc511f919ce0b57dc8b20b254ce11ae0150e5316",
+          "status": "ahead",
+          "head_ahead_by": 1,
+          "head_behind_by": 0,
+          "merge_base_sha": "8afe9f6bc902dcb270e8121a36a2bd24e982bf87",
+          "source_url": "https://github.com/LUNCY579/ChatBubble/compare/8afe9f6bc902dcb270e8121a36a2bd24e982bf87...dc511f919ce0b57dc8b20b254ce11ae0150e5316"
+        },
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/heads/codex/worktree-save-20261002/chatbubble-compose-lane-20260918",
+        "git_command": "git push origin 8afe9f6bc902dcb270e8121a36a2bd24e982bf87:refs/heads/codex/worktree-save-20261002/chatbubble-compose-lane-20260918-ref-refs-heads-codex-dataset-retention-audit-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 35,
+      "branch": "codex/worktree-save-20261002/chatbubble-retention-doselora-resume-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "expected_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+      "delete_ref": "refs/heads/codex/worktree-save-20261002/chatbubble-retention-doselora-resume-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "reason": "All four aliases are direct parent of retained full worktree snapshot; preserving that snapshot preserves exact commit and all prior history.",
+      "category": "PRUNE_PARENT_SNAPSHOT_REF",
+      "preservation": {
+        "ref": "refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "kind": "branch",
+        "ref_object_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "peeled_commit_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "proof": "ancestor_commit",
+        "ancestry": {
+          "base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "head_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+          "status": "ahead",
+          "head_ahead_by": 1,
+          "head_behind_by": 0,
+          "merge_base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "source_url": "https://github.com/LUNCY579/ChatBubble/compare/5b4c22dae78f587c41575269f419087b0c7997f6...8e9e4ba9420ab3dc650d247bba36d47329b12ccd"
+        },
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "git_command": "git push origin 5b4c22dae78f587c41575269f419087b0c7997f6:refs/heads/codex/worktree-save-20261002/chatbubble-retention-doselora-resume-20260920-ref-refs-heads-codex-dataset-retention-audit-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 36,
+      "branch": "codex/worktree-save-20261002/chatbubble-retention-pilot-20260917-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "expected_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+      "delete_ref": "refs/heads/codex/worktree-save-20261002/chatbubble-retention-pilot-20260917-ref-refs-heads-codex-dataset-retention-audit-v1",
+      "reason": "All four aliases are direct parent of retained full worktree snapshot; preserving that snapshot preserves exact commit and all prior history.",
+      "category": "PRUNE_PARENT_SNAPSHOT_REF",
+      "preservation": {
+        "ref": "refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "kind": "branch",
+        "ref_object_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "peeled_commit_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+        "proof": "ancestor_commit",
+        "ancestry": {
+          "base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "head_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+          "status": "ahead",
+          "head_ahead_by": 1,
+          "head_behind_by": 0,
+          "merge_base_sha": "5b4c22dae78f587c41575269f419087b0c7997f6",
+          "source_url": "https://github.com/LUNCY579/ChatBubble/compare/5b4c22dae78f587c41575269f419087b0c7997f6...8e9e4ba9420ab3dc650d247bba36d47329b12ccd"
+        },
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/heads/codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+        "git_command": "git push origin 5b4c22dae78f587c41575269f419087b0c7997f6:refs/heads/codex/worktree-save-20261002/chatbubble-retention-pilot-20260917-ref-refs-heads-codex-dataset-retention-audit-v1",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 37,
+      "branch": "fma-finalize",
+      "expected_sha": "5ea07037b15471d6930347f65ead399e7b40b045",
+      "delete_ref": "refs/heads/fma-finalize",
+      "reason": "Exact tag preserved, and candidate is ancestor of current central (behind_by=0; merge_base exact).",
+      "category": "PRUNE_ALREADY_CONTAINED_TAGGED_REF",
+      "preservation": {
+        "ref": "refs/tags/archive/2026-10-04/fma-finalize",
+        "kind": "annotated_tag",
+        "ref_object_sha": "bf1dccc23c76181d703895221de8be7754533d64",
+        "peeled_commit_sha": "5ea07037b15471d6930347f65ead399e7b40b045",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/2026-10-04/fma-finalize",
+        "git_command": "git push origin 5ea07037b15471d6930347f65ead399e7b40b045:refs/heads/fma-finalize",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    },
+    {
+      "order": 38,
+      "branch": "multi-reasoning-slft",
+      "expected_sha": "954a0c2637e691b493c5ac3d488653a8c1adf675",
+      "delete_ref": "refs/heads/multi-reasoning-slft",
+      "reason": "Identical full commit SHA is retained by canonical keeper.",
+      "category": "PRUNE_EXACT_DUPLICATE_ALIAS",
+      "preservation": {
+        "ref": "refs/tags/archive/Titan-Sparse/single-layer-fine-tuning",
+        "kind": "lightweight_tag",
+        "ref_object_sha": "954a0c2637e691b493c5ac3d488653a8c1adf675",
+        "peeled_commit_sha": "954a0c2637e691b493c5ac3d488653a8c1adf675",
+        "proof": "exact_commit",
+        "ancestry": null,
+        "fresh_verification_required": true
+      },
+      "dependency_scan_status": "no_name_hits_in_bounded_scan",
+      "recovery": {
+        "required_objects_fetch_command": "git fetch --no-tags origin refs/tags/archive/Titan-Sparse/single-layer-fine-tuning",
+        "git_command": "git push origin 954a0c2637e691b493c5ac3d488653a8c1adf675:refs/heads/multi-reasoning-slft",
+        "requires_remote_name_absent": true,
+        "overwrite_existing_ref": false
+      }
+    }
+  ],
+  "explicitly_excluded": [
+    {
+      "branch": "codex/archive-20261004/historical-main-snapshots-24",
+      "expected_sha": "6b539d9abf3a71e0c60c7b8342a3c79871205f0a",
+      "reason": "Unique archive merge commit is two commits beyond historical main and diverges from both current main and central; historical-main archive tag points to its ancestor, not this tip."
+    },
+    {
+      "branch": "codex/archive-20261004/historical-main-snapshots-27",
+      "expected_sha": "4f273e4efc443d422ed5c151bb00938d7fa65ccb",
+      "reason": "Unique archive merge commit is two commits beyond historical main and diverges from both current main and central; historical-main archive tag points to its ancestor, not this tip."
+    },
+    {
+      "branch": "codex/worktree-save-20261002/chat-bubble-rineya-retrofit",
+      "expected_sha": "6647eabf3bac9c3f08fce9dfa4998cc07bac3d16",
+      "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+    },
+    {
+      "branch": "codex/worktree-save-20261002/chatbubble-binding-integration-pilot-20260920",
+      "expected_sha": "8e9e4ba9420ab3dc650d247bba36d47329b12ccd",
+      "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+    },
+    {
+      "branch": "codex/worktree-save-20261002/chatbubble-binding-mixture-pilot-20260920",
+      "expected_sha": "f0a32c916a935852017d62846b46b080deed5c59",
+      "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+    },
+    {
+      "branch": "codex/worktree-save-20261002/chatbubble-ced-native-loader-qualification",
+      "expected_sha": "840714fa269db8d5d3382b00b0aaf302b3bf1bf4",
+      "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+    },
+    {
+      "branch": "codex/worktree-save-20261002/chatbubble-compose-lane-20260918",
+      "expected_sha": "dc511f919ce0b57dc8b20b254ce11ae0150e5316",
+      "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+    },
+    {
+      "branch": "codex/worktree-save-20261002/chatbubble-cross-scale",
+      "expected_sha": "174ee4fecd7a69b3746d8c2e6107220685047dc9",
+      "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+    },
+    {
+      "branch": "codex/worktree-save-20261002/chatbubble-dmrf",
+      "expected_sha": "1e67cef6f3b9a900ed6acfbc0df185d9599c1a4c",
+      "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+    },
+    {
+      "branch": "codex/worktree-save-20261002/chatbubble-dose-param",
+      "expected_sha": "40bfac02c8bdf547bcfd7fdec3684c4918613dd7",
+      "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+    },
+    {
+      "branch": "codex/worktree-save-20261002/chatbubble-mrs-phase2-dataset-selection-v1",
+      "expected_sha": "9cbc48031dd52789f3e136b464a5cd9adb60e2b8",
+      "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+    },
+    {
+      "branch": "codex/worktree-save-20261002/chatbubble-retention-doselora-resume-20260920",
+      "expected_sha": "621d09ccccd82f7f16d2c13eb4c5b70643e5c961",
+      "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+    },
+    {
+      "branch": "codex/worktree-save-20261002/chatbubble-retention-pilot-20260917",
+      "expected_sha": "fae9f3fed9a1387400e35b721c708b87cda27262",
+      "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+    },
+    {
+      "branch": "codex/worktree-save-20261002/chatbubble-slft",
+      "expected_sha": "7f34ce84ae1ccf1b6ab7b9b5512ffe99468791ca",
+      "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+    },
+    {
+      "branch": "codex/worktree-save-20261002/detached-crs-native-desktop-v2",
+      "expected_sha": "f9e5e11997bc7e23bdb0378574fe447dc3c3ee8b",
+      "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+    },
+    {
+      "branch": "codex/worktree-save-20261002/rineyabeta-supa-fwa-v1",
+      "expected_sha": "96c3931eb51c1b272951d4ddbc60b8c863c17257",
+      "reason": "Snapshot is not contained in central and can include previously ignored or untracked research evidence. Named research branch is not necessarily a successor."
+    }
+  ],
+  "protected_by_task_scope": [
+    "main",
+    "post-training-Mimo",
+    "research/post-training-mimo-centralized-v1",
+    "research/rineya-centralized-reasoning-system-v1",
+    "research/rineya-evidence-function-equilibrium-v1"
+  ],
+  "dependency_scan": {
+    "result": "NO_MATCHES_IN_BOUNDED_SCAN; EXTERNAL_OR_UNREAD_CONSUMERS_NOT_PROVEN_ABSENT",
+    "central_sha": "bf2567da46a310aa39f590cc6c73c99961d2ae90",
+    "workflow_files": [
+      {
+        "path": ".github/workflows/benchmark-001-architecture.yml",
+        "sha": "01631d7e897638b8a464ed02dbb5eb14dcb8e178",
+        "isError": false
+      },
+      {
+        "path": ".github/workflows/ced-native-loader-issue4-v2.yml",
+        "sha": "0f18fdfa1b95cd2831563a76aa2c3700dbe879c8",
+        "isError": false
+      },
+      {
+        "path": ".github/workflows/fma-qualification.yml",
+        "sha": "1d6116198ba030c51ca3b8170e2624732b4b05de",
+        "isError": false
+      },
+      {
+        "path": ".github/workflows/progressive-rl-curriculum.yml",
+        "sha": "70ae6503598e9f97a164db9aff90b8dccdef309f",
+        "isError": false
+      },
+      {
+        "path": ".github/workflows/rineya-harness-distillation.yml",
+        "sha": "0c089b584acb723876241928c983cbebb06badd5",
+        "isError": false
+      },
+      {
+        "path": ".github/workflows/xsc-d82-mechanical-receipt.yml",
+        "sha": "cb41a81662b0ecd03a5bb7357d03cdec47ab43a5",
+        "isError": false
+      }
+    ],
+    "other_remote_metadata_files": [
+      {
+        "path": "README.md",
+        "sha": "7ece84db4f8a715a98d9a546b3c393aa5cfe732b",
+        "isError": false
+      },
+      {
+        "path": "CONTINUATION.md",
+        "sha": "c286fa912de84fa0c51adb06bee70bdb4cbb015d",
+        "isError": false
+      },
+      {
+        "path": "experiments/native_sparse_attention_v1/BRANCH_AUDIT.json",
+        "sha": "bdb2bcb69de8c3bb0d742ebc11365d02add0f6ef",
+        "isError": false
+      }
+    ],
+    "remote_files_scanned": 9,
+    "materialized_exact_central_blobs_scanned": 8,
+    "materialized_exact_central_blobs": [
+      {
+        "path": "experiments/__init__.py",
+        "sha": "77f98cfdab4dac80e706893fe5269e1cf0561b29"
+      },
+      {
+        "path": "experiments/opallo_native_collector_v1/supervisor.py",
+        "sha": "dc8f25bfbed2f7f2159ada79a9fec55622f8010d"
+      },
+      {
+        "path": "experiments/opallo_native_collector_v1/__init__.py",
+        "sha": "5682544bcf60951497471ec59b1bfc76d3eb3300"
+      },
+      {
+        "path": "experiments/opallo_native_collector_v1/contract.py",
+        "sha": "e6b625ade48e0be7059dc561f865bb4888326697"
+      },
+      {
+        "path": "experiments/rineya_harness_distillation_v1/environment.py",
+        "sha": "9fe2a782659500f01aa00abdf23005dfd8eee349"
+      },
+      {
+        "path": "experiments/rineya_harness_distillation_v1/__init__.py",
+        "sha": "a7134d0b326230a7d8facd821a851e1347d930f7"
+      },
+      {
+        "path": "experiments/rineya_harness_distillation_v1/contracts.py",
+        "sha": "527b6e035e444cd56193de024d4a94b9281129d7"
+      },
+      {
+        "path": "experiments/post_training_mimo_centralized_v1/scripts/bridge_data.py",
+        "sha": "2c17f08e35bf13ca5baf3888c01df55b0138b9c1"
+      }
+    ],
+    "exact_branch_name_hits": [],
+    "default_branch_code_searches": [
+      {
+        "query": "fma-finalize",
+        "returned_results": 0,
+        "scope": "GitHub connector default-branch search; empty results do not prove exhaustive coverage."
+      },
+      {
+        "query": "multi-reasoning-slft",
+        "returned_results": 0,
+        "scope": "GitHub connector default-branch search; empty results do not prove exhaustive coverage."
+      },
+      {
+        "query": "codex/rvs001-inference-pilot-20260929",
+        "returned_results": 0,
+        "scope": "GitHub connector default-branch search; empty results do not prove exhaustive coverage."
+      },
+      {
+        "query": "codex/archive-20261004",
+        "returned_results": 0,
+        "scope": "GitHub connector default-branch search; empty results do not prove exhaustive coverage."
+      },
+      {
+        "query": "codex/worktree-save-20261002",
+        "returned_results": 0,
+        "scope": "GitHub connector default-branch search; empty results do not prove exhaustive coverage."
+      }
+    ],
+    "uncertainties": [
+      "The source tree has 10816 entries; only the listed files and bounded default-branch searches were content-scanned.",
+      "No access to local Windows worktree/process state or external automation definitions; any external consumer pinned to a removed branch name must switch to the recorded tag/SHA or restore the branch.",
+      "Existing source tag annotations and historical metadata are preservation evidence, not proof of current runtime dependency absence."
+    ],
+    "known_preserved_dependencies": [
+      "FMA workflow references research/factorized-memory-attention-v1, which is not deleted.",
+      "Central CONTINUATION references codex/dataset-retention-audit-v1, which is not deleted.",
+      "The two full worktree keeper branches remain reachable and outside this deletion set.",
+      "The two untagged historical-main snapshot refs and 14 full worktree snapshots remain outside this deletion set."
+    ]
+  },
+  "executor_contract": {
+    "default_mode": "dry_run",
+    "repository_must_match_exactly": true,
+    "validate_all_before_any_write": true,
+    "fresh_checks": [
+      "Confirm every delete_ref still equals expected_sha; stop on any mismatch, missing ref, or inability to read.",
+      "Confirm each preservation ref still equals ref_object_sha and peels to peeled_commit_sha; stop if altered or absent.",
+      "For ancestor_commit entries, verify candidate is an ancestor of peeled_commit_sha (merge-base exact, no candidate-only commits).",
+      "List current open pull requests and reject a candidate used as a head or base; never retarget or close PRs as part of cleanup.",
+      "Confirm no candidate is the repository default branch or currently protected; honor server branch/ruleset policy.",
+      "Confirm none of the preservation refs is present in the deletion set.",
+      "Publish or otherwise durably retain this complete name/SHA/recovery mapping before deletion."
+    ],
+    "preferred_apply_transport": "One atomic git push with a distinct --force-with-lease=<delete_ref>:<expected_sha> argument per candidate and deletion refspec :<delete_ref>; no force overwrite of history.",
+    "if_using_non_atomic_api_or_ui": "Recheck exact candidate and preservation refs immediately before each deletion, record a per-candidate receipt, and stop on the first unexpected result. This is not equivalent to an atomic lease.",
+    "postconditions": [
+      "Re-list all remote branch refs; verify all 38 candidates absent and every kept ref unchanged.",
+      "Re-read all preservation refs and compare object/peeled SHAs against manifest.",
+      "Record actual removed count, actual remaining count, execution time, transport, and failures; do not infer completion from an attempted operation."
+    ],
+    "recovery_instructions": [
+      "Only restore a missing branch; do not overwrite a name recreated or advanced by another worker.",
+      "Fetch the candidate preservation ref, which makes the recorded target commit or its history locally available.",
+      "Run the candidate recovery.git_command to create exactly the former branch at expected_sha.",
+      "Read remote branch head after restoration and require expected_sha."
+    ],
+    "offline_use": "This JSON can be validated offline; remote freshness/ancestry verification and mutation require an authenticated GitHub session. No embedded command executes automatically."
+  }
+}

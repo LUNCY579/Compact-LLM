@@ -1,0 +1,136 @@
+{
+  "advance_decision": "DO_NOT_ADVANCE_TO_CONFIRMATION",
+  "blockers": [
+    "CPU preflight observed about 3.8 GiB available host RAM, below unchanged 7.4 GiB guard.",
+    "CUDA preflight also observed about 6.9 GiB free VRAM and foreign reported CUDA processes; guards retained.",
+    "No complete, loadable single trajectory with its complete consumed-prompt inventory was identified in the local audit."
+  ],
+  "branch": "research/rineya-generalization-dynamics-v1",
+  "client_date": "2026-10-03",
+  "code_sha256": "f4951e529a0ff938e8d46158815d1a78d12994d8bd123f97e1d6f3c033e2e553",
+  "existing_sealed_bank_reads": 0,
+  "experiment": "GD-001",
+  "host_preflight_receipt": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\qualification-20261003T051747Z\\host_preflight.json",
+    "sha256": "91833e5d4d835eacb6d43a2e876247fe08aa71999ea6d63a5e8101e9d2d531d9"
+  },
+  "local_trajectory_findings": [
+    {
+      "limitations": [
+        "No training completion/final-control receipt.",
+        "No complete consumed-prompt manifest; raw source recipe cannot stand in for rendered/dropped/trimmed prompts."
+      ],
+      "name": "Halo Stage-A",
+      "planned_steps": 800,
+      "saved_steps_with_payloads": [
+        200,
+        225,
+        250
+      ],
+      "usable_for_registered_question": false
+    },
+    {
+      "completed_steps": 1200,
+      "limitations": [
+        "All adapter weight payloads under local run are absent.",
+        "Prompt inventory still requires reconstruction and provenance verification."
+      ],
+      "name": "Baya Stage-A",
+      "saved_metadata_steps": [
+        1150,
+        1175,
+        1200
+      ],
+      "usable_for_registered_question": false
+    },
+    {
+      "limitations": [
+        "Exact base uses a custom abstention readout rejected by current native registry; no conversion/fallback performed."
+      ],
+      "name": "Single-layer Supa puzzle/CC0 trajectories",
+      "usable_for_registered_question": false
+    },
+    {
+      "limitations": [
+        "Derived family variants are not consecutive saved checkpoints.",
+        "Referenced RRP015 local source snapshot payloads were not found."
+      ],
+      "name": "Titan Experimental/Sparse/Transition",
+      "usable_for_registered_question": false
+    }
+  ],
+  "model_weights_modified": false,
+  "native_confirmation_accesses": 0,
+  "native_forward_calls": 0,
+  "native_model_loads": 0,
+  "next_native_sequence": [
+    "Register exact base plus two restored snapshots, including a verified final control, and the aggregate budget in a fresh DEV-only run.",
+    "Qualify loading and full answer-token scoring; retain any blocked attempts.",
+    "When the complete trajectory and selection procedure are ready, assess clean and misleading DEV rankings and linked R/S/RS support, then preregister reproducibility checks.",
+    "Keep confirmation unopened; any later independently authorized fresh confirmation must compare selected with final and retention."
+  ],
+  "permits_model_promotion": false,
+  "prepared_aggregate_budget": {
+    "counts": "actual generation and candidate-likelihood forwards",
+    "interrupted_attempts": "immutable unclosed STARTED receipt blocks resume and selection",
+    "max_native_forward_calls": 16000,
+    "max_native_wall_seconds": 1800,
+    "scope": "per split, cumulative across checkpoints and resumed attempts",
+    "time_enforcement": "cooperative; in-flight load/forward may exceed deadline; hard timeout requires owned-worker supervisor"
+  },
+  "qualification_status": "BLOCKED_NATIVE_PREREQUISITES",
+  "question_results": {
+    "R_and_S_solved_but_RS_failed": "NOT_MEASURED",
+    "native_loading_and_scoring": "NOT_QUALIFIED",
+    "ordinary_vs_misleading_checkpoint_ranking": "NOT_MEASURED"
+  },
+  "recorded_utc": "2026-10-03T05:26:48.081502+00:00",
+  "required_next_inputs": [
+    "Original saved weight payloads from one completed admissible trajectory, with the exact base/tokenizer and source receipts.",
+    "Complete actual-training-prompt inventory covering that trajectory, including rendered/drop/trim handling and provenance.",
+    "A host meeting unchanged memory guards and an explicitly chosen local dependency runtime."
+  ],
+  "sha256": "9fd170db1a6fb56dfb22d8c0d1dd49a89e13532242c1c202dbeca180c661cf85",
+  "source_base_commit": "9044d41f019fd93daad116c5ded1fda7469d5fa5",
+  "training_runs": 0,
+  "trajectory_audit_receipts": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\qualification-20261003T051747Z\\trajectory_audit.json",
+      "sha256": "0a8c06e05d06876a0aa9051e5407d0df9a6364f87fed8242b5e8d68a31739116"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\qualification-20261003T051747Z\\additional_trajectory_audit.json",
+      "sha256": "d2fda294b378254ef98fd5d81f87be0fc314fead1f8d2ce2ae48f28874afc07d"
+    }
+  ],
+  "validation": {
+    "code_sha256": "f4951e529a0ff938e8d46158815d1a78d12994d8bd123f97e1d6f3c033e2e553",
+    "compileall": "PASS",
+    "errors": 0,
+    "evidence_level": "MECHANICS_AND_TENSOR_STUBS_ONLY",
+    "example_runtime_config": "PASS",
+    "existing_sealed_bank_reads": 0,
+    "failures": 0,
+    "git_diff_check": {
+      "output": "",
+      "status": "PASS"
+    },
+    "interpreter": "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe",
+    "native_confirmation_accesses": 0,
+    "native_forward_calls": 0,
+    "native_model_loads": 0,
+    "passed": 84,
+    "recorded_utc": "2026-10-03T05:25:28.234537+00:00",
+    "scoped_unittest_tests": 85,
+    "skipped": [
+      {
+        "reason": "Windows host does not permit file symlink creation",
+        "test": "test_symlinked_asset_rejected (test_gd001.RegistryTests.test_symlinked_asset_rejected)"
+      }
+    ]
+  },
+  "validation_receipt": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\qualification-20261003T051747Z\\validation.json",
+    "sha256": "5f9be286f205f3926e223ac2f1055f4f08ee60894147bcc366d0c42ca61fb881"
+  }
+}

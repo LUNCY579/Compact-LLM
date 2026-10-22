@@ -1,0 +1,49 @@
+{
+  "actual_dataset_admission": false,
+  "authorizes_confirmation": false,
+  "authorizes_native_run": false,
+  "authorizes_training": false,
+  "binding_sha256": "053c277fae257d86a00a6d3714f3803ddbeb78dcafea617792c3768e857c6197",
+  "blockers": [
+    "physical proposed dose: complete frozen original dose and occurrence schedule not supplied",
+    "physical source/task/tokenizer payloads: metadata summaries cannot substitute for exact retained inputs",
+    "rendered consumption: complete actual token/EOS/response masks and empty-output supervision not supplied",
+    "filtering/truncation: complete original dispositions, transformations and repeated consumption not supplied",
+    "reviewer diagnostic: frozen224 assignment ledger not supplied; do not dispatch from this packet",
+    "reviewer diagnostic: completed224 outcomes and observed exposure history not supplied; exposure remains UNKNOWN",
+    "reviewer diagnostic: aggregate executed custodian evidence and independent history review not supplied",
+    "source_use_rights: completed independent reviewed production gate not supplied",
+    "split_parent_family_closure: completed independent reviewed production gate not supplied",
+    "raw_rendered_overlap: completed independent reviewed production gate not supplied",
+    "independent_solver: completed independent reviewed production gate not supplied",
+    "independent_scorer: completed independent reviewed production gate not supplied",
+    "native_rendering_eos_loss: completed independent reviewed production gate not supplied",
+    "production_grader: completed independent reviewed production gate not supplied"
+  ],
+  "diagnostic": {
+    "assigned_trials": 224,
+    "completed_trials": 0,
+    "exposure_history": "UNKNOWN",
+    "independent_parents": 28,
+    "positive_control_results": false,
+    "production_grader_qualification": false,
+    "reported_slots": 0,
+    "scope": "PUBLIC_PENDING_METADATA_ONLY"
+  },
+  "evidence_level": "PUBLIC_PENDING_METADATA_ONLY",
+  "limitations": [
+    "Pending public summaries cannot substitute for retained production inputs or gates.",
+    "No TRAIN body, diagnostic packet/candidate or private truth payload is opened.",
+    "The existing data owner retains admission and diagnostic dispatch authority."
+  ],
+  "model_quality_established": false,
+  "native_execution_independently_verified": false,
+  "packet": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\gd001-records\\quality-roadmap-implementation-20261005\\data-admission-packet.json",
+    "sha256": "41fedbac9e748f0712199a462e97a6fd4b0dc9b3e215039b8a36de3210250a9e"
+  },
+  "permits_model_promotion": false,
+  "schema": "gd001_data_admission_assessment_v1",
+  "sha256": "f1443f37f0b37c86cbcea808fba4ff96ef236fe11377c36cc97a4f7e3b4411ca",
+  "status": "BLOCKED"
+}

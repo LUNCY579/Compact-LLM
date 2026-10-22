@@ -1,0 +1,95 @@
+{
+  "schema": "COMP-RS-WARM-COMPLETION-AUDIT-1",
+  "utc": "2026-10-01T15:38:05.219802+00:00",
+  "receipt_sha256": "dceec5aba2cf06645f19ebb9c9afc0f10ebd618c4cd3fd625af88b3de0999784",
+  "journal_sha256": "e2816a402a7757efc68949536f204d341bab8a0520eac8f5a734e8ee43842578",
+  "summary": {
+    "P": {
+      "prompts": 150,
+      "samples": 1200,
+      "strict_successes": 285,
+      "content_pass": 285,
+      "groups": {
+        "all_fail": 91,
+        "all_success": 9,
+        "mixed": 50
+      },
+      "zero_centered_advantage_groups": 100,
+      "format_only_failures": 0
+    },
+    "R": {
+      "prompts": 150,
+      "samples": 1200,
+      "strict_successes": 6,
+      "content_pass": 6,
+      "groups": {
+        "all_fail": 145,
+        "all_success": 0,
+        "mixed": 5
+      },
+      "zero_centered_advantage_groups": 145,
+      "format_only_failures": 0
+    },
+    "S": {
+      "prompts": 150,
+      "samples": 1200,
+      "strict_successes": 179,
+      "content_pass": 179,
+      "groups": {
+        "all_fail": 77,
+        "all_success": 1,
+        "mixed": 72
+      },
+      "zero_centered_advantage_groups": 78,
+      "format_only_failures": 0
+    }
+  },
+  "gate": {
+    "below_m_min": [
+      "R"
+    ],
+    "delta_acq_rows": 13,
+    "gated": [
+      "R",
+      "S"
+    ],
+    "m_min": 0.1,
+    "outcome": "STOP_NO_SIGNAL",
+    "recorded_only": [
+      "P"
+    ],
+    "rule": "STOP_NO_SIGNAL iff the mixed-group fraction of R or S is < m_min (P recorded, not gated)",
+    "s1_first_skill": "R",
+    "s1_order_rule": "section 12: the skill with the lower mixed-group fraction trains first (tie: R)",
+    "skills": {
+      "P": {
+        "below_m_min": false,
+        "gated": false,
+        "mixed": 50,
+        "mixed_fraction": 0.3333333333333333,
+        "prompts": 150
+      },
+      "R": {
+        "below_m_min": true,
+        "gated": true,
+        "mixed": 5,
+        "mixed_fraction": 0.03333333333333333,
+        "prompts": 150
+      },
+      "S": {
+        "below_m_min": false,
+        "gated": true,
+        "mixed": 72,
+        "mixed_fraction": 0.48,
+        "prompts": 150
+      }
+    }
+  },
+  "completion_source": "root checks plus independent centralized_audit recomputation of all450rows/eight scorers/canary/source/runtime/anchor/seeds",
+  "canary_sha256": "e8eb4a612f4d30ee5e97e2a29856ddef7102fc59ed985e6683d4f79d86cf9727",
+  "full_audit_passed": true,
+  "native_training_in_read": false,
+  "original_path_stopped": true,
+  "next_training_requires_new_operator_choice": true,
+  "acquisition_composition_retention_proven": false
+}

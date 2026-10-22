@@ -1,0 +1,156 @@
+{
+  "schema": "PRSC-001-run-decision-v1",
+  "status": "PROPOSED_NOT_APPROVED",
+  "study_id": "PRSC-001",
+  "branch": "research/rineya-pruning-retention-confirm-v1",
+  "starting_commit": "954a0c2637e691b493c5ac3d488653a8c1adf675",
+  "worktree": "C:\\Users\\clclc\\.codex\\worktrees\\rineya-pruning-retention-confirm-v1\\Chat-Bubble",
+  "external_output_root": "C:\\Users\\clclc\\BusinessProject\\rineya-pruning-retention-confirm-v1",
+  "approval": {
+    "approved_by": null,
+    "approval_reference": null,
+    "approved_scope": null,
+    "native_qualification": false,
+    "model_evaluation": false,
+    "source_confirmation_reads": false,
+    "candidate_confirmation_reads": false,
+    "training": false,
+    "deployment": false
+  },
+  "source": {
+    "weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-1.7.0-devfreeze"
+  },
+  "donor": {
+    "id": "historical-rep001-seed23",
+    "trained_tensor_sha256": "e7f171756d17d833f4a30bf700e23c5a1220b3d8175ceba276b6239e53f8fb10",
+    "path": "C:\\Users\\clclc\\BusinessProject\\rineya-pruning-retention-confirm-v1\\custody\\research-records\\delta-weight-screens-20260918\\_trained_tensors\\delta_T_seed23.safetensors",
+    "independent_draws": 1,
+    "native_qualified_for_this_study": false
+  },
+  "interventions": {
+    "arms": ["source", "full", "scalar", "magnitude", "random"],
+    "stored_dtype": "float32",
+    "native_dtype": "float32",
+    "offline_delta_and_interpolation_dtype": "float64",
+    "final_cast": "once to float32",
+    "kept_count": "exact N/4 per trained tensor; reject indivisible N",
+    "magnitude_ties": "ascending C-order flat index via stable descending absolute FP64 delta sort",
+    "random_master_seed": 730001,
+    "random_algorithm": "prep.py PCG64 per tensor, NumPy2.4.6",
+    "scalar_grid": [0, 0.125, 0.25, 0.375, 0.5, 0.75, 1],
+    "selected_scalar": null,
+    "confirmation_freeze_sha256": null
+  },
+  "runtime": {
+    "python": "3.11.15",
+    "torch": "2.10.0+cu126",
+    "transformers": "4.57.1",
+    "safetensors": "0.7.0",
+    "numpy": "2.4.6",
+    "attention": "eager",
+    "device": "cuda:0 single worker",
+    "tf32": false,
+    "float32_matmul_precision": "highest",
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8",
+    "cpu_threads": 1,
+    "seed": 730003,
+    "decoding": "greedy no logits edits batch1",
+    "max_new_tokens": 128,
+    "max_total_context": 4096,
+    "truncation_or_overflow_skips": 0,
+    "thinking_enabled": false,
+    "eos_token_id": 151645,
+    "scorer_version": "PRSC-001-exact-v1"
+  },
+  "next_decision": {
+    "phase": "Q0_NATIVE_SOURCE_QUALIFICATION_ONLY",
+    "purpose": "qualify source/runtime/zero-update path before spending on calibration",
+    "synthetic_prompts": 32,
+    "qualification_matrix": {
+      "prompt_token_lengths": [32, 512, 2048, 3968],
+      "cache_group": "16 prompts:4 at each length; exact source cached versus uncached greedy,16 tokens per path",
+      "copy_group": "16 prompts:4 at each length; exact source versus zero-update FP32 copy,both cached greedy,16 tokens per path",
+      "total_greedy_paths": 64,
+      "max_generated_tokens_per_path": 16,
+      "additional_checks": "at most512 additional prefill/causality/teacher-forced boundary forward calls; known replay tokens are not generated tokens",
+      "maximum_boundary": "two predetermined3968token prompts replay128 frozen synthetic continuation tokens to4096; no fresh-case input",
+      "cartesian_four_path_expansion_allowed": false
+    },
+    "fresh_bank_rows": 0,
+    "training_tokens": 0,
+    "optimizer_steps": 0,
+    "checks": [
+      "exact source payload and tokenizer/readout binding",
+      "FP32 source versus zero-update copy logits and greedy token identity",
+      "cached versus uncached logits and token parity",
+      "tied readout storage and unmodified tensor identity",
+      "causality, EOS and exact chat rendering",
+      "32/512/2048/3968 prompt-token boundary behavior and finite logits"
+    ],
+    "logit_tolerance": {"rtol": 0.00001, "atol": 0.0002},
+    "equivalent_output_token_tolerance": 0,
+    "limits_all_attempts": {
+      "native_forward_calls": 1536,
+      "generated_tokens": 1024,
+      "model_worker_wall_seconds": 3600,
+      "model_worker_launches": 1,
+      "automatic_retries": 0,
+      "new_disk_bytes": 17179869184,
+      "cloud_or_teacher_spend": 0
+    },
+    "memory_stop_limits_unverified": {"host_rss_bytes": 12884901888, "gpu_allocated_bytes": 7301444403},
+    "runner_status": "REVIEWED_ADAPTATION_AND_HASH_BINDING_REQUIRED_BEFORE_GRANT",
+    "reusable_native_code_git_commit": "8afe9f6bc902dcb270e8121a36a2bd24e982bf87",
+    "reusable_native_code_path": "experiments/model_quality_gpu_v1/native.py",
+    "approval_does_not_include": ["training", "fresh_calibration", "source_confirmation_screening", "candidate_confirmation", "deployment"]
+  },
+  "later_separate_decisions": [
+    {
+      "phase": "Q1_SINGLE_DONOR_CALIBRATION_AND_SOURCE_SCREENING",
+      "requires": ["Q0PASS", "independent freshness/reference review", "reviewed frozen runner", "separate Q1grant"],
+      "calibration_acquisition_rows": 3600,
+      "calibration_acquisition_distinct_conditions": 8,
+      "source_only_retention_candidate_cap": 21600,
+      "planned_row_generations": 50400,
+      "source_confirmation_reads": "only if explicitly named in Q1grant",
+      "candidate_confirmation_reads": 0,
+      "training_tokens": 0,
+      "generated_token_ceiling_planned": 6451200,
+      "worker_wall_seconds_at_assumed5sec_per_row": 252000,
+      "time_assumption_measured": false
+    },
+    {
+      "phase": "Q2_SINGLE_DONOR_CONFIRMATION",
+      "requires": ["sealed fresh banks", "frozen alpha/masks/artifacts/runtime/scorer/eligibility", "independent freeze review", "separate Q2grant"],
+      "acquisition_rows": 7200,
+      "source_correct_retention_rows": 7200,
+      "raw_retention_rows_scored": 14400,
+      "arms": 5,
+      "planned_row_generations_safe_bound": 108000,
+      "worker_wall_seconds_at_assumed5sec_per_row": 540000,
+      "time_assumption_measured": false,
+      "inferential_scope": "one historical donor conditional on fresh fixed bank"
+    },
+    {
+      "phase": "RECIPE_REPLICATION_12_NEW_DRAWS",
+      "requires": ["explicit new donor training grant", "all donor custody/native checks", "separate full calibration and confirmation grants"],
+      "selection_seeds": [101,103,107,109,113,127,131,137,139,149,151,157],
+      "order_seed": 17,
+      "training_recipe": "RRP015 no rehearsal,384 parents128/family,1 exposure,blocks8-27 FP32,response+EOS,CpuAdamW LR1e-5 WSD20/60/20to0.1,betas0.9/0.95 eps1e-8 wd0 clip1 maxseq2048",
+      "power_and_budget_reference": "POWER.md",
+      "training_authorized": false
+    }
+  ],
+  "failure_policy": "create-only attempt directories; preserve raw failure and partial evidence; no seed rerolls, exclusions, silent restarts or outcome-driven changes",
+  "open_inputs": [
+    "Q0runner adaptation/code review and exact code/runtime receipt",
+    "actual available memory and serial throughput",
+    "fresh bank generator/reference simulator, content and independent reviewer",
+    "exclusion register and unknown source-pretraining contact disposition",
+    "source-correct quotas and confirmation custodian",
+    "calibrated alpha and final FREEZE",
+    "separate human grants for each native phase; training if12draw design selected"
+  ]
+}

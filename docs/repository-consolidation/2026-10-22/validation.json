@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "prepared_at_utc": "2026-10-22T15:19:43Z",
+  "repository": "LUNCY579/ChatBubble",
+  "scope": "Source consolidation of seven additive branches; software mechanics and documentation integrity only.",
+  "central_base": "bf2567da46a310aa39f590cc6c73c99961d2ae90",
+  "status": "PASS_WITH_EXPLICIT_OPTIONAL_DEPENDENCY_SKIPS",
+  "aggregate": {
+    "passed": 654,
+    "skipped": 40,
+    "failed": 0,
+    "errors": 0,
+    "executable_suites": 6,
+    "documentation_only_sources": 1,
+    "counting_note": "RGI contributes one module-level skip for an optional Torch-dependent file; no skipped native cases are implied to have run."
+  },
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pytest": "9.1.1",
+    "torch": null,
+    "transformers": null,
+    "install_scope": "Isolated temporary virtual environment; source requirements and existing environments unchanged.",
+    "execution": "CPU fixtures/offline source checks; no native checkpoint, GPU, provider call, model download, protected bank evaluation or training job."
+  },
+  "source_shas": {
+    "research/deferred-diffusion-context-hci-notes-v1": "451ef168ce9521a538b4e31c8ab46d0009b6f5f5",
+    "codex/confirm002-paired-correctness-audit-20260930": "224233406c42d90ab30b6599303323a10c54fb0f",
+    "research/rineya-evidence-function-equilibrium-v1": "c934589026f7456352d62a83bb102c453e15519a",
+    "research/rineya-verified-resampling-v1": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+    "research/rineya-recursive-self-rewrite-v1": "8d3ee140accb054273580adb4291384e0dd88e0f",
+    "research/rineya-generalization-dynamics-v1": "7ae47a21581e15aa83e0859b880a84eb2d7dcb1d",
+    "research/rineya-relative-generalization-invariance-v1": "53b2155b2c54137891ea98a24f9e79892e658527"
+  },
+  "tests": [
+    {
+      "id": "deferred_docs",
+      "source_sha": "451ef168ce9521a538b4e31c8ab46d0009b6f5f5",
+      "kind": "documentation",
+      "passed": null,
+      "skipped": null,
+      "notes": "Four Markdown files inspected. Original DEFERRED_DOCS_ONLY status preserved; no runtime test suite applies.",
+      "tree_sha": "efd83f127332e328da56a043b007d9904d08428b"
+    },
+    {
+      "id": "confirm002",
+      "source_sha": "224233406c42d90ab30b6599303323a10c54fb0f",
+      "kind": "unittest",
+      "command": "python -B -I -S -m unittest discover -s ${CHECKOUT}/experiments/confirm002_paired_audit_v1 -p 'test_*.py' -v",
+      "recorded_at_utc": "2026-10-22T15:19:43Z",
+      "passed": 30,
+      "skipped": 0,
+      "failed": 0,
+      "errors": 0,
+      "notes": "Reran on exact remote Git bytes after the earlier temporary copies were found to contain one extra trailing newline each. Both Git blob identities now match. Synthetic fixtures only; no stored historical bank evaluated.",
+      "source_blob_shas": {
+        "paired_correctness.py": "58afd7c72fef17e827ca1061be64935c98fe76b2",
+        "test_paired_correctness.py": "59a28290717014addd130162278da0f76441029e"
+      }
+    },
+    {
+      "id": "efe",
+      "source_sha": "c934589026f7456352d62a83bb102c453e15519a",
+      "kind": "unittest",
+      "command": "python -m unittest discover -s experiments/rineya_evidence_function_equilibrium_v1 -p 'test_*.py' -v",
+      "recorded_at_utc": "2026-10-22T02:07:38.806406+00:00",
+      "passed": 40,
+      "skipped": 0,
+      "failed": 0,
+      "errors": 0,
+      "notes": "NumPy fixtures; no native adapter execution."
+    },
+    {
+      "id": "rvs",
+      "source_sha": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "kind": "unittest",
+      "command": "python -m unittest discover -s experiments/rineya_verified_resampling_v1/tests -v",
+      "recorded_at_utc": "2026-10-22T02:07:44.210879+00:00",
+      "passed": 67,
+      "skipped": 11,
+      "failed": 0,
+      "errors": 0,
+      "notes": "Both original centralized-generator integration tests executed; 11 optional Torch sampler tests skipped."
+    },
+    {
+      "id": "rsr",
+      "source_sha": "8d3ee140accb054273580adb4291384e0dd88e0f",
+      "kind": "unittest",
+      "command": "python -m unittest discover -s experiments/rineya_recursive_self_rewrite_v1/tests -v",
+      "recorded_at_utc": "2026-10-22T02:07:39.072807+00:00",
+      "passed": 79,
+      "skipped": 7,
+      "failed": 0,
+      "errors": 0,
+      "notes": "Inherited pinned RHD contract/environment sources match current central. Seven optional Torch tests skipped."
+    },
+    {
+      "id": "gd",
+      "source_sha": "7ae47a21581e15aa83e0859b880a84eb2d7dcb1d",
+      "kind": "unittest",
+      "command": "python -B -m unittest discover -s experiments/rineya_generalization_dynamics_v1/tests -q",
+      "recorded_at_utc": "2026-10-22T02:09:19.227076+00:00",
+      "passed": 310,
+      "skipped": 21,
+      "failed": 0,
+      "errors": 0,
+      "notes": "331 cases enumerated; 21 optional Torch tensor/budget-hook tests skipped. The quiet/custom runner summary is authoritative; initial verbose local log was incomplete. Historical evidence archive preserved by subtree SHA, not executed."
+    },
+    {
+      "id": "rgi",
+      "source_sha": "53b2155b2c54137891ea98a24f9e79892e658527",
+      "kind": "pytest",
+      "command": "python -m pytest -q -c experiments/rineya_relative_generalization_invariance_v1/pytest.ini experiments/rineya_relative_generalization_invariance_v1/tests -ra",
+      "recorded_at_utc": "2026-10-22T02:07:39.364868+00:00",
+      "passed": 128,
+      "skipped": 1,
+      "failed": 0,
+      "errors": 0,
+      "notes": "One optional Torch-dependent test module skipped at import; native HF/PEFT tests were not qualified."
+    }
+  ],
+  "source_integrity": {
+    "exact_git_blob_files_materialized": 168,
+    "first_five_plus_inherited_dependencies_verified_after_tests": 158,
+    "additional_confirm_and_deferred_files_verified": 10,
+    "python_files_compiled": 76,
+    "syntax_errors": 0,
+    "python_trailing_whitespace_findings": 0,
+    "remote_source_files_changed": 0,
+    "full_source_addition_count": 393,
+    "local_checkout_scope": "Sparse test checkout. Original complete source/evidence directories are preserved by exact Git subtree SHAs in merge_plan.json."
+  },
+  "pinned_dependencies": {
+    "experiments/post_training_mimo_centralized_v1/scripts/bridge_data.py": "2c17f08e35bf13ca5baf3888c01df55b0138b9c1",
+    "experiments/opallo_native_collector_v1/supervisor.py": "dc8f25bfbed2f7f2159ada79a9fec55622f8010d",
+    "experiments/rineya_harness_distillation_v1/contracts.py": "527b6e035e444cd56193de024d4a94b9281129d7",
+    "experiments/rineya_harness_distillation_v1/environment.py": "9fe2a782659500f01aa00abdf23005dfd8eee349"
+  },
+  "governance": {
+    "instruction_files_read": [
+      "experiments/rineya_generalization_dynamics_v1/AGENTS.md",
+      "experiments/rineya_recursive_self_rewrite_v1/AGENTS.md"
+    ],
+    "ancestor_instruction_files_found": [],
+    "interpretation": "Current explicit source consolidation request expands the prior experiment-local scope. Preserve isolated package paths, pinned upstream code, historical receipts, failed/blocked outcomes and all native execution gates. No main merge or force push is part of this wave. Aggregated validation is recorded; raw private logs/runbooks/rejected proposals are not published.",
+    "gd_required_checks": "Scoped unittest suite, package Python compilation and whitespace checks completed.",
+    "native_boundary": "Software merge and CPU mechanics do not authorize native runs, establish efficacy, or promote model weights."
+  },
+  "rvs_workflow_review": {
+    "path": ".github/workflows/rvs-001.yml",
+    "blob_sha": "014959b864fb60c38741977288b7eac6eb222db4",
+    "reviewed_entire_file": true,
+    "runner": "ubuntu-latest",
+    "permissions": {
+      "contents": "read"
+    },
+    "timeout_minutes": 10,
+    "push_branch_filter": [
+      "research/rineya-verified-resampling-v1"
+    ],
+    "pull_request_paths": [
+      "experiments/rineya_verified_resampling_v1/**",
+      ".github/workflows/rvs-001.yml"
+    ],
+    "commands": [
+      "python -m unittest discover -s experiments/rineya_verified_resampling_v1/tests -v",
+      "python -m experiments.rineya_verified_resampling_v1 demo --out /tmp/rvs-demo --parents 128",
+      "python -m experiments.rineya_verified_resampling_v1 doctor"
+    ],
+    "behavior": "A matching PR may run CPU tests, a FixtureBackend synthetic demonstration and package-metadata inspection. No native checkpoint/GPU/provider/model-download command is present."
+  }
+}

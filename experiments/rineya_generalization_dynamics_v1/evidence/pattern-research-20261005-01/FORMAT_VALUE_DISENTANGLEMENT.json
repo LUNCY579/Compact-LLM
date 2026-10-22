@@ -1,0 +1,599 @@
+{
+  "additional_contract_valid_wrong_values": 207,
+  "deployment_authorized": false,
+  "design_metadata": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\design.json",
+    "sha256": "03e40f39f8a8628557de76d9e5fffabc738efcdb2c1032e4aacf578dae619767"
+  },
+  "interpretation": "Serialization recovers existing correct choices, but also makes wrong choices parseable. Valid JSON cannot stand in for semantic validation.",
+  "learned_gain_established": false,
+  "model_quality_goal_complete": false,
+  "native_model_calls": 0,
+  "presented_source": {
+    "contract": 598,
+    "contract_valid_wrong_values": 260,
+    "strict": 338,
+    "typed": 338
+  },
+  "proposal": "For a future separately registered learning comparison, use the same qualified presentation contract across all arms and independently enroll semantic preservation; never retroactively alter the stopped run.",
+  "public_input_role": "original fresh unprotected DEV; no protected bank or confirmation access",
+  "raw_source": {
+    "contract": 108,
+    "contract_valid_wrong_values": 53,
+    "strict": 55,
+    "typed": 55
+  },
+  "registered_owner_endpoints_changed": false,
+  "rule_action_used_targets_or_world_metadata": false,
+  "schema": "gd001_public_schema_value_disentanglement_v1",
+  "sha256": "08f2f971ed55f06a80ce59346f667222e997b81bad99c8d6c71acb479ab3630b",
+  "source_correct_retention_subset_was_not_redefined": true,
+  "status": "POSTHOC_DIAGNOSTIC_NOT_SAFE_SERVING_OR_LEARNED_GAIN",
+  "summary_after_original_scorer": {
+    "first_record_copy_errors": 14,
+    "missing_evidence": {
+      "correct_abstention": {
+        "json_contract_compliance": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 32
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 32,
+          "total": 32
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 32
+        },
+        "rows": 32,
+        "strict_exact_match": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 32
+        },
+        "typed_value_correct": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 32
+        }
+      },
+      "present_fact": {
+        "json_contract_compliance": {
+          "accuracy": 1.0,
+          "correct": 32,
+          "total": 32
+        },
+        "json_valid": {
+          "accuracy": 1.0,
+          "correct": 32,
+          "total": 32
+        },
+        "normalized_exact_match": {
+          "accuracy": 0.96875,
+          "correct": 31,
+          "total": 32
+        },
+        "rows": 32,
+        "strict_exact_match": {
+          "accuracy": 0.96875,
+          "correct": 31,
+          "total": 32
+        },
+        "typed_value_correct": {
+          "accuracy": 0.96875,
+          "correct": 31,
+          "total": 32
+        }
+      }
+    },
+    "overall": {
+      "json_contract_compliance": {
+        "accuracy": 0.8898809523809523,
+        "correct": 598,
+        "total": 672
+      },
+      "json_valid": {
+        "accuracy": 0.9404761904761905,
+        "correct": 632,
+        "total": 672
+      },
+      "normalized_exact_match": {
+        "accuracy": 0.5059523809523809,
+        "correct": 340,
+        "total": 672
+      },
+      "rows": 672,
+      "strict_exact_match": {
+        "accuracy": 0.5029761904761905,
+        "correct": 338,
+        "total": 672
+      },
+      "typed_value_correct": {
+        "accuracy": 0.5029761904761905,
+        "correct": 338,
+        "total": 672
+      }
+    },
+    "six_order_groups": [
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-000"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-000"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-000"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-000"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-001"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": true,
+        "typed_all_six_correct": true,
+        "world_id": "uo1-dev-update-world-001"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-001"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": true,
+        "typed_all_six_correct": true,
+        "world_id": "uo1-dev-update-world-001"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-002"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-002"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-002"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": true,
+        "typed_all_six_correct": true,
+        "world_id": "uo1-dev-update-world-002"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-003"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-003"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-003"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-003"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": true,
+        "typed_all_six_correct": true,
+        "world_id": "uo1-dev-update-world-004"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": true,
+        "typed_all_six_correct": true,
+        "world_id": "uo1-dev-update-world-004"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-004"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-004"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-005"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-005"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-005"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-005"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-006"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-006"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-006"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-006"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-007"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-007"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-007"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-007"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-008"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-008"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-008"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": true,
+        "typed_all_six_correct": true,
+        "world_id": "uo1-dev-update-world-008"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-009"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": true,
+        "typed_all_six_correct": true,
+        "world_id": "uo1-dev-update-world-009"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-009"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-009"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-010"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": true,
+        "typed_all_six_correct": true,
+        "world_id": "uo1-dev-update-world-010"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-010"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-010"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-011"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-011"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-011"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-011"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-012"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-012"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-012"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-012"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-013"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-013"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-013"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-013"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-014"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-014"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-014"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-014"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-015"
+      },
+      {
+        "counterfactual_id": 0,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-015"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "distant_heldout",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-015"
+      },
+      {
+        "counterfactual_id": 1,
+        "role": "near_control",
+        "strict_all_six_correct": false,
+        "typed_all_six_correct": false,
+        "world_id": "uo1-dev-update-world-015"
+      }
+    ],
+    "updates": {
+      "json_contract_compliance": {
+        "accuracy": 1.0,
+        "correct": 384,
+        "total": 384
+      },
+      "json_valid": {
+        "accuracy": 1.0,
+        "correct": 384,
+        "total": 384
+      },
+      "normalized_exact_match": {
+        "accuracy": 0.515625,
+        "correct": 198,
+        "total": 384
+      },
+      "rows": 384,
+      "strict_exact_match": {
+        "accuracy": 0.515625,
+        "correct": 198,
+        "total": 384
+      },
+      "typed_value_correct": {
+        "accuracy": 0.515625,
+        "correct": 198,
+        "total": 384
+      }
+    }
+  }
+}

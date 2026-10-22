@@ -1,0 +1,458 @@
+{
+  "base_content_sha256": "c2118adf521178de2ad0da047296232dcb224110cc310853c350d05ae787f76b",
+  "caller_declared_model_execution": false,
+  "checkpoints": [
+    {
+      "checkpoint_content_sha256": "c2118adf521178de2ad0da047296232dcb224110cc310853c350d05ae787f76b",
+      "id": "base",
+      "kind": "base",
+      "load_receipt": {
+        "actual_base_parameters": 600000000,
+        "adapter_tensor_keys_equal": null,
+        "adapter_tensor_shapes_equal": null,
+        "adapter_tensors_equal": null,
+        "base_content_sha256": "c2118adf521178de2ad0da047296232dcb224110cc310853c350d05ae787f76b",
+        "checkpoint_content_sha256": "c2118adf521178de2ad0da047296232dcb224110cc310853c350d05ae787f76b",
+        "checkpoint_id": "base",
+        "error_msgs": [],
+        "eval_mode": true,
+        "evidence_level": "mechanical_fixture",
+        "mismatched_keys": [],
+        "missing_keys": [],
+        "requires_grad": false,
+        "runtime_sha256": "0a52590c4fe462dd665aa6d88aee721ae1b2577e1cf741587053e826c3c51380",
+        "sha256": "3e19443bed258fd3e10864ad29d3612aee9e60f2e4abde3623a80c0e1d0605af",
+        "source_sha256": "b40ba8afd768c54e5a8360c39137b3f5a22c15086500657525ac009b8ed05fca",
+        "status": "STRICT_LOAD_REPORTED",
+        "tokenizer_content_sha256": "bf8991116f7e7629d37829866809dc27da82bbea56d3a126232d9e2217e52b85",
+        "unexpected_keys": []
+      },
+      "origin": "base",
+      "probes": [
+        {
+          "candidates": [
+            {
+              "answer_logp": -3.0,
+              "candidate_encoding": "space_prefix_no_special_tokens",
+              "includes_prompt_loss": false,
+              "label": "answer",
+              "logit_shift": 1,
+              "teacher_forced": true,
+              "text": "15",
+              "token_ids": [
+                4,
+                5
+              ],
+              "token_scores": [
+                {
+                  "position": 0,
+                  "probe_logits": [
+                    0.5,
+                    -0.2,
+                    0.25
+                  ],
+                  "target_logp": -1.0,
+                  "token_id": 4
+                },
+                {
+                  "position": 1,
+                  "probe_logits": [
+                    1.5,
+                    -0.2,
+                    0.25
+                  ],
+                  "target_logp": -2.0,
+                  "token_id": 5
+                }
+              ],
+              "token_sha256": "d4c7a98da55490b0a5a65cc5057db99aa708a436609b177748505342d569457b"
+            },
+            {
+              "answer_logp": -3.0,
+              "candidate_encoding": "space_prefix_no_special_tokens",
+              "includes_prompt_loss": false,
+              "label": "distractor",
+              "logit_shift": 1,
+              "teacher_forced": true,
+              "text": "14",
+              "token_ids": [
+                4,
+                6
+              ],
+              "token_scores": [
+                {
+                  "position": 0,
+                  "probe_logits": [
+                    0.5,
+                    -0.2,
+                    0.25
+                  ],
+                  "target_logp": -1.0,
+                  "token_id": 4
+                },
+                {
+                  "position": 1,
+                  "probe_logits": [
+                    1.5,
+                    -0.2,
+                    0.25
+                  ],
+                  "target_logp": -2.0,
+                  "token_id": 6
+                }
+              ],
+              "token_sha256": "bd0a0651ccfbeba3bf2507398e3d12f8b87c643984c65a8868d1a1797290dd25"
+            }
+          ],
+          "eos_token_id": 99,
+          "generated_text": "15",
+          "generated_token_ids": [
+            4,
+            5,
+            99
+          ],
+          "id": "dev-fixture-multitoken",
+          "prompt": "Fixture-only arithmetic: 12 plus 3 equals?",
+          "prompt_token_ids": [
+            7,
+            8,
+            9
+          ],
+          "prompt_token_sha256": "a41ad919bdd6044484ca97585e715e69b10493c6d5c044d08d761bffcfc835dd",
+          "rendered_prompt": "Fixture-only arithmetic: 12 plus 3 equals?",
+          "split": "dev",
+          "stop_reason": "eos",
+          "truncation_applied": false
+        }
+      ],
+      "scoring_receipt": {
+        "checkpoint_id": "base",
+        "dev_suite_sha256": "b93edd80a55a13237a1eafb205413b9d70022c0d1f9f45c719c3c3aeec3fd1a5",
+        "evidence_level": "mechanical_fixture",
+        "full_candidate_scoring": true,
+        "load_receipt_sha256": "3e19443bed258fd3e10864ad29d3612aee9e60f2e4abde3623a80c0e1d0605af",
+        "probe_payload_sha256": "0246c6cd1f42832bea8c94de2b634d9ac0d91440a71862d5a01e45b7b7ae11cd",
+        "sha256": "b3e3a15bd575743ec3a95e6970f502b1bdad577d6623fe79edcf477252d0d7b8",
+        "split": "dev",
+        "status": "DEV_SCORING_REPORTED"
+      },
+      "snapshot_receipt_sha256": null,
+      "step": 0
+    },
+    {
+      "checkpoint_content_sha256": "87e9bf8bff0f8e9401aa8a46ae6f8e74ed5aa948983f338ccf57f64cca2d883d",
+      "id": "step_10",
+      "kind": "peft",
+      "load_receipt": {
+        "actual_base_parameters": 600000000,
+        "adapter_tensor_keys_equal": true,
+        "adapter_tensor_shapes_equal": true,
+        "adapter_tensors_equal": true,
+        "base_content_sha256": "c2118adf521178de2ad0da047296232dcb224110cc310853c350d05ae787f76b",
+        "checkpoint_content_sha256": "87e9bf8bff0f8e9401aa8a46ae6f8e74ed5aa948983f338ccf57f64cca2d883d",
+        "checkpoint_id": "step_10",
+        "error_msgs": [],
+        "eval_mode": true,
+        "evidence_level": "mechanical_fixture",
+        "mismatched_keys": [],
+        "missing_keys": [],
+        "requires_grad": false,
+        "runtime_sha256": "0a52590c4fe462dd665aa6d88aee721ae1b2577e1cf741587053e826c3c51380",
+        "sha256": "fa04594995f9f4cf033f6d34ef369fb104eacbb773eac0d4c4340dd897290f20",
+        "source_sha256": "b40ba8afd768c54e5a8360c39137b3f5a22c15086500657525ac009b8ed05fca",
+        "status": "STRICT_LOAD_REPORTED",
+        "tokenizer_content_sha256": "bf8991116f7e7629d37829866809dc27da82bbea56d3a126232d9e2217e52b85",
+        "unexpected_keys": []
+      },
+      "origin": "original_training_snapshot",
+      "probes": [
+        {
+          "candidates": [
+            {
+              "answer_logp": -3.0,
+              "candidate_encoding": "space_prefix_no_special_tokens",
+              "includes_prompt_loss": false,
+              "label": "answer",
+              "logit_shift": 1,
+              "teacher_forced": true,
+              "text": "15",
+              "token_ids": [
+                4,
+                5
+              ],
+              "token_scores": [
+                {
+                  "position": 0,
+                  "probe_logits": [
+                    0.5,
+                    -0.2,
+                    0.25
+                  ],
+                  "target_logp": -1.0,
+                  "token_id": 4
+                },
+                {
+                  "position": 1,
+                  "probe_logits": [
+                    1.5,
+                    -0.2,
+                    0.25
+                  ],
+                  "target_logp": -2.0,
+                  "token_id": 5
+                }
+              ],
+              "token_sha256": "d4c7a98da55490b0a5a65cc5057db99aa708a436609b177748505342d569457b"
+            },
+            {
+              "answer_logp": -3.0,
+              "candidate_encoding": "space_prefix_no_special_tokens",
+              "includes_prompt_loss": false,
+              "label": "distractor",
+              "logit_shift": 1,
+              "teacher_forced": true,
+              "text": "14",
+              "token_ids": [
+                4,
+                6
+              ],
+              "token_scores": [
+                {
+                  "position": 0,
+                  "probe_logits": [
+                    0.5,
+                    -0.2,
+                    0.25
+                  ],
+                  "target_logp": -1.0,
+                  "token_id": 4
+                },
+                {
+                  "position": 1,
+                  "probe_logits": [
+                    1.5,
+                    -0.2,
+                    0.25
+                  ],
+                  "target_logp": -2.0,
+                  "token_id": 6
+                }
+              ],
+              "token_sha256": "bd0a0651ccfbeba3bf2507398e3d12f8b87c643984c65a8868d1a1797290dd25"
+            }
+          ],
+          "eos_token_id": 99,
+          "generated_text": "15",
+          "generated_token_ids": [
+            4,
+            5,
+            99
+          ],
+          "id": "dev-fixture-multitoken",
+          "prompt": "Fixture-only arithmetic: 12 plus 3 equals?",
+          "prompt_token_ids": [
+            7,
+            8,
+            9
+          ],
+          "prompt_token_sha256": "a41ad919bdd6044484ca97585e715e69b10493c6d5c044d08d761bffcfc835dd",
+          "rendered_prompt": "Fixture-only arithmetic: 12 plus 3 equals?",
+          "split": "dev",
+          "stop_reason": "eos",
+          "truncation_applied": false
+        }
+      ],
+      "scoring_receipt": {
+        "checkpoint_id": "step_10",
+        "dev_suite_sha256": "b93edd80a55a13237a1eafb205413b9d70022c0d1f9f45c719c3c3aeec3fd1a5",
+        "evidence_level": "mechanical_fixture",
+        "full_candidate_scoring": true,
+        "load_receipt_sha256": "fa04594995f9f4cf033f6d34ef369fb104eacbb773eac0d4c4340dd897290f20",
+        "probe_payload_sha256": "0246c6cd1f42832bea8c94de2b634d9ac0d91440a71862d5a01e45b7b7ae11cd",
+        "sha256": "ea62b155c55b220a7b7cd73a615f57efa8b38dc19364ccfcc14f9a6706da5049",
+        "split": "dev",
+        "status": "DEV_SCORING_REPORTED"
+      },
+      "snapshot_receipt_sha256": "98a0866f77c1017b8a57992f5ed68a2afa8822975ff2bacb70c0d11129d98c83",
+      "step": 10
+    },
+    {
+      "checkpoint_content_sha256": "ab56f7c21ef3c46afacbc67189f10035ee98f55b74ff220f9adc3317cddebb25",
+      "id": "step_20",
+      "kind": "peft",
+      "load_receipt": {
+        "actual_base_parameters": 600000000,
+        "adapter_tensor_keys_equal": true,
+        "adapter_tensor_shapes_equal": true,
+        "adapter_tensors_equal": true,
+        "base_content_sha256": "c2118adf521178de2ad0da047296232dcb224110cc310853c350d05ae787f76b",
+        "checkpoint_content_sha256": "ab56f7c21ef3c46afacbc67189f10035ee98f55b74ff220f9adc3317cddebb25",
+        "checkpoint_id": "step_20",
+        "error_msgs": [],
+        "eval_mode": true,
+        "evidence_level": "mechanical_fixture",
+        "mismatched_keys": [],
+        "missing_keys": [],
+        "requires_grad": false,
+        "runtime_sha256": "0a52590c4fe462dd665aa6d88aee721ae1b2577e1cf741587053e826c3c51380",
+        "sha256": "3793ab822227e55243d2daaf007f2e5ae06345b55390a3db288272a4c5973e3c",
+        "source_sha256": "b40ba8afd768c54e5a8360c39137b3f5a22c15086500657525ac009b8ed05fca",
+        "status": "STRICT_LOAD_REPORTED",
+        "tokenizer_content_sha256": "bf8991116f7e7629d37829866809dc27da82bbea56d3a126232d9e2217e52b85",
+        "unexpected_keys": []
+      },
+      "origin": "original_training_snapshot",
+      "probes": [
+        {
+          "candidates": [
+            {
+              "answer_logp": -3.0,
+              "candidate_encoding": "space_prefix_no_special_tokens",
+              "includes_prompt_loss": false,
+              "label": "answer",
+              "logit_shift": 1,
+              "teacher_forced": true,
+              "text": "15",
+              "token_ids": [
+                4,
+                5
+              ],
+              "token_scores": [
+                {
+                  "position": 0,
+                  "probe_logits": [
+                    0.5,
+                    -0.2,
+                    0.25
+                  ],
+                  "target_logp": -1.0,
+                  "token_id": 4
+                },
+                {
+                  "position": 1,
+                  "probe_logits": [
+                    1.5,
+                    -0.2,
+                    0.25
+                  ],
+                  "target_logp": -2.0,
+                  "token_id": 5
+                }
+              ],
+              "token_sha256": "d4c7a98da55490b0a5a65cc5057db99aa708a436609b177748505342d569457b"
+            },
+            {
+              "answer_logp": -3.0,
+              "candidate_encoding": "space_prefix_no_special_tokens",
+              "includes_prompt_loss": false,
+              "label": "distractor",
+              "logit_shift": 1,
+              "teacher_forced": true,
+              "text": "14",
+              "token_ids": [
+                4,
+                6
+              ],
+              "token_scores": [
+                {
+                  "position": 0,
+                  "probe_logits": [
+                    0.5,
+                    -0.2,
+                    0.25
+                  ],
+                  "target_logp": -1.0,
+                  "token_id": 4
+                },
+                {
+                  "position": 1,
+                  "probe_logits": [
+                    1.5,
+                    -0.2,
+                    0.25
+                  ],
+                  "target_logp": -2.0,
+                  "token_id": 6
+                }
+              ],
+              "token_sha256": "bd0a0651ccfbeba3bf2507398e3d12f8b87c643984c65a8868d1a1797290dd25"
+            }
+          ],
+          "eos_token_id": 99,
+          "generated_text": "15",
+          "generated_token_ids": [
+            4,
+            5,
+            99
+          ],
+          "id": "dev-fixture-multitoken",
+          "prompt": "Fixture-only arithmetic: 12 plus 3 equals?",
+          "prompt_token_ids": [
+            7,
+            8,
+            9
+          ],
+          "prompt_token_sha256": "a41ad919bdd6044484ca97585e715e69b10493c6d5c044d08d761bffcfc835dd",
+          "rendered_prompt": "Fixture-only arithmetic: 12 plus 3 equals?",
+          "split": "dev",
+          "stop_reason": "eos",
+          "truncation_applied": false
+        }
+      ],
+      "scoring_receipt": {
+        "checkpoint_id": "step_20",
+        "dev_suite_sha256": "b93edd80a55a13237a1eafb205413b9d70022c0d1f9f45c719c3c3aeec3fd1a5",
+        "evidence_level": "mechanical_fixture",
+        "full_candidate_scoring": true,
+        "load_receipt_sha256": "3793ab822227e55243d2daaf007f2e5ae06345b55390a3db288272a4c5973e3c",
+        "probe_payload_sha256": "0246c6cd1f42832bea8c94de2b634d9ac0d91440a71862d5a01e45b7b7ae11cd",
+        "sha256": "d2bf78a5c7d213be7c381dc854f970859a3f627ac5c516fc6eed0199f2a2b49a",
+        "split": "dev",
+        "status": "DEV_SCORING_REPORTED"
+      },
+      "snapshot_receipt_sha256": "5ca1f343559da99bfefffd49efb1443550fd82995d1a3bbecfa4fdc2e2b4b83e",
+      "step": 20
+    }
+  ],
+  "decoding_policy": {
+    "candidate_encoding": "space_prefix_no_special_tokens",
+    "do_sample": false,
+    "enable_thinking": false,
+    "eos_token_id": 99,
+    "max_new_tokens": 4,
+    "num_beams": 1,
+    "pad_token_id": 99,
+    "repetition_penalty": 1.0,
+    "truncation": false,
+    "use_cache": true
+  },
+  "dev_suite_sha256": "b93edd80a55a13237a1eafb205413b9d70022c0d1f9f45c719c3c3aeec3fd1a5",
+  "evidence_level": "mechanical_fixture",
+  "expected_base_parameters": 600000000,
+  "expected_sha256": "dc9fb9da5c244c2ceb1023ef26569cea05014afa10c703da0b31299654a8b4e2",
+  "parity_policy_sha256": "5333201bc42dda43b3055f6a507575a092a89e2a953ddd11c6558c19b68d0988",
+  "prompt_format": "plain",
+  "role": "gd",
+  "runtime": {
+    "attention": "eager",
+    "cpu_threads": 2,
+    "deterministic_algorithms": true,
+    "device": "cpu",
+    "dtype": "float32",
+    "local_files_only": true,
+    "one_checkpoint_at_a_time": true,
+    "python": "fixture-only",
+    "quantized": false,
+    "trust_remote_code": false,
+    "versions": {
+      "torch": "fixture-only",
+      "transformers": "fixture-only"
+    }
+  },
+  "schema": "gd001_export_trace_v1",
+  "sha256": "76f76631fe036045a66015f9db0c68e82c19408d82b65b215659f6ce6a5bc142",
+  "source_sha256": "b40ba8afd768c54e5a8360c39137b3f5a22c15086500657525ac009b8ed05fca",
+  "split": "dev",
+  "tokenizer_content_sha256": "bf8991116f7e7629d37829866809dc27da82bbea56d3a126232d9e2217e52b85",
+  "trajectory_id": "fixture-only"
+}

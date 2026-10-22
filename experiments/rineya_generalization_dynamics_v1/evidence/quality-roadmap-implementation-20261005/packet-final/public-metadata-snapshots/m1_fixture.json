@@ -1,0 +1,55 @@
+{
+  "backward_calls": 0,
+  "base_runtime_files": {
+    "python.exe": {
+      "bytes": 91648,
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+      "sha256": "28d2965d061656abbe3a46100bd3342d1152185289445d489782a21a8cfe9b57"
+    },
+    "python3.dll": {
+      "bytes": 55296,
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python3.dll",
+      "sha256": "0de2fcd912ceb27f93a2669bb8bfcd2b551413313f48bcf18af5ba2edbcf6f04"
+    },
+    "python311.dll": {
+      "bytes": 5846016,
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python311.dll",
+      "sha256": "dabb2dec30c6a63ab4f669ed0d2ac6fe465d0d498b509a2e2b488ab0984600cf"
+    }
+  },
+  "child": {
+    "cmdline": [
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+      "-B",
+      "-c",
+      "import json,os,sys,time; print(json.dumps({\"pid\":os.getpid(),\"ppid\":os.getppid(),\"supervisor\":os.environ[\"MLP_SHIP_SUPERVISOR_PID\"],\"executable\":sys.executable,\"guard_passed\":os.environ[\"MLP_SHIP_SUPERVISOR_PID\"]==str(os.getppid())}),flush=True); time.sleep(0.5)"
+    ],
+    "create_time": 1791227299.9092956,
+    "pid": 243468
+  },
+  "child_exited": true,
+  "child_returncode": 0,
+  "model_loads": 0,
+  "native_forwards": 0,
+  "new_native_execution_authorized": false,
+  "observation": {
+    "executable": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+    "guard_passed": true,
+    "pid": 243468,
+    "ppid": 243420,
+    "supervisor": "243420"
+  },
+  "optimizer_steps": 0,
+  "parent": {
+    "cmdline": [
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+      "-B",
+      "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/launcher_identity_fixture.py"
+    ],
+    "create_time": 1791227299.7550364,
+    "pid": 243420
+  },
+  "schema": "mlp_ship.launcher_identity_fixture/1",
+  "status": "PASS_OWNED_PID_FIXTURE_ONLY",
+  "task_rows_read": 0
+}

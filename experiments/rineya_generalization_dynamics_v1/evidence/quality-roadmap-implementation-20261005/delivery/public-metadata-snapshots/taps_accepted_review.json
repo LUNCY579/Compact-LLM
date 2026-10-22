@@ -1,0 +1,239 @@
+{
+  "schema": "independent_bulk_restart_execution_review_v1",
+  "created_utc": "2026-10-05T19:36:51.231010+00:00",
+  "status": "PASS_COMPLETE_EXPLORATORY_RESULT_NO_CONTROLLER_PROMOTION",
+  "disposition": "Accept the complete exploratory comparison and restricted negative conclusion; do not promote the adaptive controller.",
+  "errors": [],
+  "models_launched_by_reviewer": 0,
+  "native_budget_seconds_by_reviewer": 0,
+  "protected_TEST_access": false,
+  "source_or_report_edits": false,
+  "admission_sha256": "a6611ea9c493d314fbe47771ec59521440178153e0779be283128c6ae59e723c",
+  "report_sha256": "67c7d5d9fc128b148afc6d056cb26f9ecef4e05dde78a7405358125250cb9d21",
+  "direct_independent_checks": [
+    "All 3296 physical outcomes independently regraded: 3168 strict bulk task/format scores and 128 pinned inherited SMOKE scores; zero disagreements.",
+    "All 288 prompt-only positive controls and own-bank query-blind floors recomputed; all expected cells, per-case means, parent paired deltas and gains/losses reconciled.",
+    "DEV-only fixed alpha 1.0 and 513-entry live DEV A3 pool reconstructed; all 1548 scientific A5 draws reconstructed from actual seeds 17/29 with FP32 casting and surviving per-case streams.",
+    "All three raw integrity proofs checked against exact admitted 107 source and ten asset maps, state b23, gradient/eval flags, row counts, source current byte hashes, and every recorded journal prefix byte/line/SHA commitment.",
+    "Raw integrity proof file hashes, frozen-file binding and parent-clock ordering checked before freeze and before first validation forward; final source/state and complete counts checked.",
+    "Raw forward event cardinality and completed prefix-position sum recomputed; charged worker time, exact consumed human-grant SHA and terminal exit checked.",
+    "Corrected synthesis counts, separate format/EOS wording, finite-grid oracle limits and nonpromotion conclusion checked against independently recomputed results."
+  ],
+  "source_bound_audit_support": {
+    "native_author_audit": {
+      "path": "audits/full_generation_restart_native_execution_001.json",
+      "sha256": "a8a9810e7c2993b653cc487e344453b446e73e1e120e1a3aa7573035bde84989",
+      "independent_source_reviewer": false,
+      "use": "Loaded-class/mask/position/cache/hook/identity qualification and runtime restoration evidence, current canonical asset rehash and all resource sampling reconciliation; raw proof maps and counts independently cross-checked."
+    },
+    "math_author_audit": {
+      "path": "audits/bulk_restart_execution_math_001.json",
+      "sha256": "5d96663695af200f2a3875c84067825c557660d35214dcaa179613ca432adc3b",
+      "analyzer_and_scorer_author": true,
+      "use": "Separate raw Fraction reconstruction with zero disagreements corroborates this reviewer, not substituted for independent regrading."
+    }
+  },
+  "population": {
+    "cases": 288,
+    "world_parents": 144,
+    "DEV_cases": 192,
+    "DEV_parents": 96,
+    "OPEN_VALIDATION_cases": 96,
+    "OPEN_VALIDATION_parents": 48,
+    "shared_generator_families": 6,
+    "validation_exposed": true,
+    "independent_source_confirmation": false
+  },
+  "quality": {
+    "DEV_correct_out_of_192": {
+      "A0": 63,
+      "unit_and_frozen_fixed1": 69,
+      "TAPS": 67,
+      "A5_item_mean": 67,
+      "finite_six_constant_oracle": 70,
+      "own_query_blind_last_floor": 71
+    },
+    "VAL_correct_out_of_96": {
+      "A0": 33,
+      "unit_and_frozen_fixed1": 34,
+      "TAPS": 34,
+      "A5_item_mean": 34,
+      "finite_six_constant_oracle": 35,
+      "own_query_blind_last_floor": 42
+    },
+    "TAPS_vs_frozen_fixed": {
+      "DEV_wins": 0,
+      "DEV_losses": 2,
+      "VAL_wins": 1,
+      "VAL_losses": 1,
+      "VAL_retained_correct": 33,
+      "VAL_comparator_correct": 34
+    },
+    "TAPS_vs_intact": {
+      "DEV_wins": 12,
+      "DEV_losses": 8,
+      "DEV_retained_correct": 55,
+      "DEV_comparator_correct": 63,
+      "VAL_wins": 7,
+      "VAL_losses": 6,
+      "VAL_retained_correct": 27,
+      "VAL_comparator_correct": 33
+    },
+    "VAL_unit_vs_TAPS": {
+      "format_valid": [
+        93,
+        91
+      ],
+      "EOS_endings": [
+        96,
+        95
+      ],
+      "unsupported_answers_on_24_unanswerable": [
+        2,
+        3
+      ],
+      "false_UNKNOWN_on_72_answerable": [
+        20,
+        19
+      ]
+    },
+    "finite_grid_headroom": {
+      "DEV": 0.005208333333333333,
+      "VAL": 0.010416666666666666,
+      "capture_DEV": -2,
+      "capture_VAL": 0,
+      "continuous_or_token_schedule_upper_bound": false
+    },
+    "practical_margin": 0.05,
+    "adaptive_gain_over_frozen_control": false,
+    "observed_preservation_screen_passed": false,
+    "confirmatory_CI": null,
+    "confirmatory_p_value": null,
+    "noninferiority": "NOT_ESTABLISHED"
+  },
+  "controls": {
+    "fixed_alpha": 1.0,
+    "fixed_grid": [
+      0.8,
+      0.9,
+      1.0,
+      1.1,
+      1.1473425965417514,
+      1.2
+    ],
+    "DEV_pool_entries": 513,
+    "scientific_A5_draws_verified": 1548,
+    "actual_A5_seeds": [
+      17,
+      29
+    ],
+    "replicates_averaged_within_case": true,
+    "oracle_and_alias_rows_physical": false,
+    "fit_or_controller_revision": false
+  },
+  "integrity_proofs": [
+    {
+      "file": "DEV_DETERMINISTIC_INTEGRITY.json",
+      "sha256": "fb835e19fe5899365e05ff9970d055f9ec6492bc21cc5683e3f209b186f36efb",
+      "physical_rows": 1848,
+      "scientific_rows": 1728,
+      "state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+      "elapsed_seconds": 4.03081259999999,
+      "PASS_parent_elapsed_seconds": 424.8228104000009
+    },
+    {
+      "file": "DEV_COMPLETE_INTEGRITY.json",
+      "sha256": "e2075fb439ca62b85630fcc7093eba331c95583273e1bc708663d43a3ef218a7",
+      "physical_rows": 2240,
+      "scientific_rows": 2112,
+      "state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+      "elapsed_seconds": 3.7249278999988746,
+      "PASS_parent_elapsed_seconds": 510.353866200001
+    },
+    {
+      "file": "FINAL_INTEGRITY.json",
+      "sha256": "2e5347e577cc990a1ac7000c47a0c93d2f3e9945983e1283cf8f059d2a2ec5dc",
+      "physical_rows": 3296,
+      "scientific_rows": 3168,
+      "state_sha256": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+      "elapsed_seconds": 4.298041699999885,
+      "PASS_parent_elapsed_seconds": 742.1811909999997
+    }
+  ],
+  "costs": {
+    "physical_evaluations": 3296,
+    "scientific_evaluations": 3168,
+    "SMOKE_evaluations": 128,
+    "API_attempts": 9200,
+    "full_forward_attempts": 9198,
+    "completed_full_forwards": 9197,
+    "ordinary_generation_calls": 9180,
+    "max_completed": 17,
+    "expected_partial_attempts": 1,
+    "cache_prebody_rejections": 2,
+    "completed_prefix_positions": 1144030,
+    "partial_prefix_positions": null,
+    "state_adjoints": 0,
+    "charged_worker_seconds": 743.3900000000012,
+    "integrity_wall_seconds": 12.05378219999875,
+    "cumulative_native_seconds": 3581.233,
+    "remaining_native_seconds": 18018.767,
+    "missing_controller_timing_rows": 16,
+    "complete_controller_timing_total": null,
+    "timing_speedup_claim": false
+  },
+  "resource_evidence": {
+    "source_bound_all_sampled_guards_pass": true,
+    "peak_process_tree_RSS_bytes": 2898788352,
+    "peak_GPU_allocated_bytes": 2627059200,
+    "minimum_recorded_GPU_free_bytes": 4622123008,
+    "minimum_recorded_host_available_bytes": 12181889024,
+    "resource_sample_reconciliation_attribution": "native author audit; direct proof samples are within unchanged bounds"
+  },
+  "offline_binding_correction": {
+    "native_admission_files": 107,
+    "four_old_offline_helpers_not_native_admitted": true,
+    "exact_prelaunch_manifest_sha256": "cdc5a256d09c6d440bf40e69e932d0acc13d00138688e14b379b73b6a0584467",
+    "separate_reviewed_reader_sha256": "5bc14dc13371b1a13018943ad6b60bb83ea373f088129143084aa6c98cb34511",
+    "original_null_report_preserved": true,
+    "no_native_retry_or_gate_override": true
+  },
+  "limitations": [
+    "This is a conditional authored-bank exploratory comparison with 48 validation world parents and six shared generators, prior validation exposure and no independent source confirmation.",
+    "The scored canonical UNKNOWN contract is measured; broader semantic abstention and broad intelligence are not human-adjudicated.",
+    "Finite six-constant headroom does not bound continuous alpha or token schedules. TAPS and A5 equality concerns scored endpoints, not all logits.",
+    "Full byte-for-byte REPORT document regeneration was not claimed. Independent scalar tables, scores, contrasts, floors and raw gate/cost checks are accepted; ordered auxiliary diagnostic serialization was not fully reconciled.",
+    "Runtime masks, layer anchors, custom head and native restoration are supported by frozen reviewed code plus native qualification receipts; this reviewer did not load or rerun a model.",
+    "Missing inherited controller/logging measurements remain null; known subtotals do not establish complete latency totals or target-quality speedup.",
+    "A successful fresh process does not identify or repair the earlier TDR/illegal-access cause or establish universal long-run stability. The exact human allowance is spent and no native rerun is authorized."
+  ],
+  "mission_scope_recommendation": "The complete generation gap is now filled for the scoped comparison. Accept the restricted negative controller finding and finalize artifacts; no positive-controller search, confirmation or speed claim is required for rejecting this arm.",
+  "bindings": {
+    "full_generation_restart_admission_v1.json": "a6611ea9c493d314fbe47771ec59521440178153e0779be283128c6ae59e723c",
+    "HUMAN_FULL_GENERATION_RESTART_ALLOWANCE_001.json": "2f42ce379924f37fa497700cf660af57d8577c14d9a9eda072be6b4481fc817e",
+    "HUMAN_FULL_GENERATION_RESTART_APPROVAL_RECORD_001.json": "66fe9a721c025004e492a0e707d0492a74d7344c24954875b1d9472cc1146f1e",
+    "bulk_restart_native.py": "899d88cf37fe2399cab445400934a12dff1eb997e9085352c82ec32ad663dd4f",
+    "bulk_restart_analysis.py": "9c95e00731525c34537696e79f4cc776ebfb2d5f560da0888da2feaf7b62c543",
+    "bulk_restart_analysis_manifest_bound.py": "5bc14dc13371b1a13018943ad6b60bb83ea373f088129143084aa6c98cb34511",
+    "analyses/bulk-restart-001/REPORT.json": "06b2ae44e56ee894ab4743883798fdb7550b64700178dd931ad2b1635f305357",
+    "analyses/bulk-restart-manifest-reviewed-001/REPORT.json": "67c7d5d9fc128b148afc6d056cb26f9ecef4e05dde78a7405358125250cb9d21",
+    "audits/full_generation_restart_native_execution_001.json": "a8a9810e7c2993b653cc487e344453b446e73e1e120e1a3aa7573035bde84989",
+    "audits/bulk_restart_execution_math_001.json": "5d96663695af200f2a3875c84067825c557660d35214dcaa179613ca432adc3b",
+    "reviews/bulk_restart_manifest_reader_review_001.json": "6b76616f3a7a671a66f105b713b970c8ad502b63daa92375c287155486de2802",
+    "reviews/research_policy_v11_receipt.json": "da4901d47048eff09bc2eaf7beb04bc549485f4a23aeb22a4940bd98912ed349",
+    "BULK_RESTART_RESULT_001.md": "961c13a18a5c111090dbd215ae7da63b9e28117195f983c198ff980b67ddb57f",
+    "runs/native-bulk-restart-001/source_manifest.json": "cdc5a256d09c6d440bf40e69e932d0acc13d00138688e14b379b73b6a0584467",
+    "runs/native-bulk-restart-001/terminal_receipt.json": "dc4d8c7a5895e846aee3c1b1b19b9e4f4909386779b313aa5693599ec9f2ded6",
+    "runs/native-bulk-restart-001/result/receipt.json": "d9c34a822d9bdaaac39d33820eaacf05d083974cd9191e43559307bd2258ff19",
+    "runs/native-bulk-restart-001/result/qualification.json": "f5dcc3fd73bfba345b2b81fdee82bd66d931dd9fd619636106f50d88d85e955a",
+    "runs/native-bulk-restart-001/result/matrix_forecast.json": "e8b4f2b1e598c8299670d98965db6653b2de8c0027ae73931b99bf9ae0bb9621",
+    "runs/native-bulk-restart-001/result/integrity_journal.jsonl": "e6caa0c310ec5c7bd52477dba29e52aacda5b8156386d6f804982c64c6340d8b",
+    "runs/native-bulk-restart-001/result/outcomes.jsonl": "858ba6c1b5105b460e600c93872575c78e2c3e43545538847e3d9eba30e01cd8",
+    "runs/native-bulk-restart-001/result/trajectories.jsonl": "0b9a1266a33320eb765e9a27a65ddf7d2a49fae45af9ae78bd81b8b86257c0c3",
+    "runs/native-bulk-restart-001/result/forwards.jsonl": "55e9219415b7e95d78778b7f9a9ba0bc178430fc38cd6735eb2059a687dfb9d6",
+    "runs/native-bulk-restart-001/result/readout_pairs.jsonl": "3018c732c22d45bab977e60aea49c3a800ba5ee6cd8e7ea4b2e37f51a63c4e75",
+    "runs/native-bulk-restart-001/result/frozen_development.json": "9a7269deeaf116666a45dba329e32adb2be41b0a3f67ad74e3f5ff9714250bf2",
+    "runs/native-bulk-restart-001/result/A5_qualification.json": "564b3faa455cf9841c1f8403efeda7fead0f06e562a2d6eb305575eeb008743a"
+  },
+  "review_md_sha256": "d7d853a5c4af39587c85e166477da1cc1ce75c54f5d124f2e18a4a944200ad6f"
+}

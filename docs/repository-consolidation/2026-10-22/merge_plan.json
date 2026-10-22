@@ -1,0 +1,3321 @@
+{
+  "schema_version": 1,
+  "prepared_at_utc": "2026-10-22T15:19:43Z",
+  "repository": "LUNCY579/ChatBubble",
+  "canonical_branch": "research/post-training-mimo-centralized-v1",
+  "central_head_at_audit": "bf2567da46a310aa39f590cc6c73c99961d2ae90",
+  "status": "MERGED_ON_STAGING_AWAITING_CENTRAL_PROMOTION",
+  "summary": {
+    "source_branches": 7,
+    "merge_commits_planned": 7,
+    "tree_or_blob_insertions": 9,
+    "added_files": 393,
+    "modified_files": 0,
+    "deleted_files": 0,
+    "source_paths_disjoint": true
+  },
+  "preconditions": [
+    "Recheck every source ref equals source_sha before its merge.",
+    "Create trees from the current staging tree, not from an old source tree.",
+    "All listed insertion paths must be absent; reject accidental replacement.",
+    "Each merge commit must have current staging head as first parent and the corresponding source_sha as second parent.",
+    "Update refs with expected-head protection and no force push.",
+    "Verify resulting full tree equals old central tree plus every listed exact Git blob and explicitly authored consolidation documents."
+  ],
+  "sources": [
+    {
+      "order": 1,
+      "branch": "research/deferred-diffusion-context-hci-notes-v1",
+      "source_sha": "451ef168ce9521a538b4e31c8ab46d0009b6f5f5",
+      "merge_base_sha": "b0ca54bdc1b69e2b19d7baeca2e3fdde3ff0a7b2",
+      "additions": 4,
+      "merge_entries": [
+        {
+          "path": "docs/research_backlog/deferred_diffusion_context_hci_v1",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "efd83f127332e328da56a043b007d9904d08428b"
+        }
+      ],
+      "changed_files": [
+        {
+          "path": "docs/research_backlog/deferred_diffusion_context_hci_v1/BLOCK_PARALLELISM.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3fe95700697a938bb213761daedf977e034e225c",
+          "size": 5155,
+          "status": "added"
+        },
+        {
+          "path": "docs/research_backlog/deferred_diffusion_context_hci_v1/COGNITIVE_DIVERGENCE.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e070fd2a05ae13549ec87f61444fa56ac8e83548",
+          "size": 5700,
+          "status": "added"
+        },
+        {
+          "path": "docs/research_backlog/deferred_diffusion_context_hci_v1/CONTEXT_SHARDED_BP.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5b6b2c8bff1abd8d60e94c6a3b903ed5c7796621",
+          "size": 5333,
+          "status": "added"
+        },
+        {
+          "path": "docs/research_backlog/deferred_diffusion_context_hci_v1/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5945e96445d3f9bafa1e3f2cb5dd4f5d179e5310",
+          "size": 5820,
+          "status": "added"
+        }
+      ],
+      "validation_id": "deferred_docs",
+      "status": "MERGED_ON_STAGING",
+      "merge_commit_sha": "70a3e9185b3105ea05bd0a629373ca006c578159"
+    },
+    {
+      "order": 2,
+      "branch": "codex/confirm002-paired-correctness-audit-20260930",
+      "source_sha": "224233406c42d90ab30b6599303323a10c54fb0f",
+      "merge_base_sha": "03db218ceebc61a2bc04f2482cf7e094045e01c1",
+      "additions": 6,
+      "merge_entries": [
+        {
+          "path": "experiments/confirm002_paired_audit_v1",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "7ff176aff03e45a338e5fccd49479988140cd6b1"
+        }
+      ],
+      "changed_files": [
+        {
+          "path": "experiments/confirm002_paired_audit_v1/CONFIRM002_PAIRED_CORRECTNESS.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "14efefc4591a695d066949a1baaaf6643e641a82",
+          "size": 161637,
+          "status": "added"
+        },
+        {
+          "path": "experiments/confirm002_paired_audit_v1/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d7c79435fb172c0f05857efd6c9b7bbd15a4d24b",
+          "size": 2674,
+          "status": "added"
+        },
+        {
+          "path": "experiments/confirm002_paired_audit_v1/REPORT.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b654172b85dddd6baec49d341ca070edee35928a",
+          "size": 9419,
+          "status": "added"
+        },
+        {
+          "path": "experiments/confirm002_paired_audit_v1/SOURCE_PROVENANCE.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f8803a106777bbfa8c2250c3d7c5ad6bf7627c78",
+          "size": 21283,
+          "status": "added"
+        },
+        {
+          "path": "experiments/confirm002_paired_audit_v1/paired_correctness.py",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "58afd7c72fef17e827ca1061be64935c98fe76b2",
+          "size": 17465,
+          "status": "added"
+        },
+        {
+          "path": "experiments/confirm002_paired_audit_v1/test_paired_correctness.py",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "59a28290717014addd130162278da0f76441029e",
+          "size": 22693,
+          "status": "added"
+        }
+      ],
+      "validation_id": "confirm002",
+      "status": "MERGED_ON_STAGING",
+      "merge_commit_sha": "7fada7dc22db5438ecbc742a741f31249e51fba6"
+    },
+    {
+      "order": 3,
+      "branch": "research/rineya-evidence-function-equilibrium-v1",
+      "source_sha": "c934589026f7456352d62a83bb102c453e15519a",
+      "merge_base_sha": "03db218ceebc61a2bc04f2482cf7e094045e01c1",
+      "additions": 9,
+      "merge_entries": [
+        {
+          "path": "experiments/rineya_evidence_function_equilibrium_v1",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "5622d245c5d4538b63bb521a2ed804a4ae12f03a"
+        }
+      ],
+      "changed_files": [
+        {
+          "path": "experiments/rineya_evidence_function_equilibrium_v1/HOST_HANDOFF.md",
+          "sha": "4ed2fb818fc13bf74053c555cd6d171ac17db202",
+          "mode": "100644",
+          "size": 5800,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_evidence_function_equilibrium_v1/README.md",
+          "sha": "4ca44f6ee62656f8c23e7809ef2a9a39b10face9",
+          "mode": "100644",
+          "size": 3948,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_evidence_function_equilibrium_v1/RESEARCH_PLAN.md",
+          "sha": "9c27b84314710a36addf4cb90de1b8d5413ca7d7",
+          "mode": "100644",
+          "size": 14103,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_evidence_function_equilibrium_v1/SOURCES.md",
+          "sha": "e0747d1ef5743510c52ecd09cad3684fcf93af2f",
+          "mode": "100644",
+          "size": 3726,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_evidence_function_equilibrium_v1/VALIDATION.md",
+          "sha": "d492bb5d4e9426d5ad77019ffdd62ee89b625ff1",
+          "mode": "100644",
+          "size": 1965,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_evidence_function_equilibrium_v1/efe_reference.py",
+          "sha": "85e421e5c9fc49d51bdd02541209034ec4f92547",
+          "mode": "100644",
+          "size": 13151,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_evidence_function_equilibrium_v1/plan.json",
+          "sha": "2ff0f7bcf83b6bf6a96247c8672d7d7a9547b89b",
+          "mode": "100644",
+          "size": 2578,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_evidence_function_equilibrium_v1/requirements.txt",
+          "sha": "e1ca83d73c8d6d698388d48a33700617b3513c7f",
+          "mode": "100644",
+          "size": 83,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_evidence_function_equilibrium_v1/test_reference.py",
+          "sha": "8f5e3888da203ba76cc7d15bb76036fafca0e500",
+          "mode": "100644",
+          "size": 11316,
+          "status": "added",
+          "type": "blob"
+        }
+      ],
+      "validation_id": "efe",
+      "status": "MERGED_ON_STAGING",
+      "merge_commit_sha": "22f62afd99771705b8977ecb8298c87b6da4b9f8"
+    },
+    {
+      "order": 4,
+      "branch": "research/rineya-verified-resampling-v1",
+      "source_sha": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "merge_base_sha": "ba683ac0fcadbf04e4e179200d035b6a980e388f",
+      "additions": 26,
+      "merge_entries": [
+        {
+          "path": "experiments/rineya_verified_resampling_v1",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "6cfed0a21cf54afcb5021859ad771e281ff7274d"
+        },
+        {
+          "path": ".github/workflows/rvs-001.yml",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "014959b864fb60c38741977288b7eac6eb222db4"
+        },
+        {
+          "path": "RVS_001_RESEARCH_INDEX.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "00c5a1d628ed01a1aac90da5e3d357200ca23a0e"
+        }
+      ],
+      "changed_files": [
+        {
+          "path": "experiments/rineya_verified_resampling_v1/.gitignore",
+          "sha": "44979a3ff330ad6a0de64f937cbf71ceb881bd87",
+          "mode": "100644",
+          "size": 44,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/AMENDMENT_001_IMPLEMENTATION.md",
+          "sha": "9958506aa22de05f852633edf2dfa87b775341e1",
+          "mode": "100644",
+          "size": 5941,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/DELIVERY_RECEIPT.json",
+          "sha": "b6bd3c15c18a69e6e4a03723e35f2ef52a243247",
+          "mode": "100644",
+          "size": 3012,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/INTEGRATION_ROADMAP.md",
+          "sha": "ec39068b59e5577e102d80f6f41d46ec23398a1e",
+          "mode": "100644",
+          "size": 10898,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/PROTOCOL.md",
+          "sha": "4cff8a385ecdfb6e4114dbc92fb7b2a88aac1bff",
+          "mode": "100644",
+          "size": 13221,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/README.md",
+          "sha": "3bc0fe5fc28284f195e1f8d57103f8d85b53fd60",
+          "mode": "100644",
+          "size": 8729,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/RESEARCH_PLAN.md",
+          "sha": "21c28bf46c113ef86af93a41f225494c43473c83",
+          "mode": "100644",
+          "size": 10931,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/SOURCES.md",
+          "sha": "1c90216e397dc9ef4ed5551f5b80b958c85f333e",
+          "mode": "100644",
+          "size": 5830,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/__init__.py",
+          "sha": "16cfcecc7677c7e5aae7a022c01828bbf8636e97",
+          "mode": "100644",
+          "size": 108,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/__main__.py",
+          "sha": "5e78d2e00e24d7dfef33eb87cf8d33203bfdfa5f",
+          "mode": "100644",
+          "size": 6336,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/configs/titan_pilot.json",
+          "sha": "78b466dd2827e76dfed6788cc5d42598f5e0ae29",
+          "mode": "100644",
+          "size": 416,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/contracts.py",
+          "sha": "ba55b4297d7eab6d24404d8b2daf1c22a6910d97",
+          "mode": "100644",
+          "size": 8893,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/datasets.py",
+          "sha": "1093167fa6a2c9c88c135416616ee3ed3a1dd5e5",
+          "mode": "100644",
+          "size": 7074,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/driver.py",
+          "sha": "44ec9c615bb2d4f7b3b7cceb949f4f9c47f60eda",
+          "mode": "100644",
+          "size": 7989,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/evaluation.py",
+          "sha": "d30ed3209f772e27e0cf255366dd084891134608",
+          "mode": "100644",
+          "size": 12067,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/native.py",
+          "sha": "9b02432a16cf996e05b586ce4808ff81b643d2b3",
+          "mode": "100644",
+          "size": 12324,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/plan.json",
+          "sha": "3ea670338aa3f22a98ec37fe16251f3affdc2a8a",
+          "mode": "100644",
+          "size": 5551,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/receipts/CPU_VALIDATION.json",
+          "sha": "af5a64f2646ca15997c838a7c4d68c081a934dc3",
+          "mode": "100644",
+          "size": 4870,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/runner.py",
+          "sha": "c276c8d939d52051444a5bf108b5c77181ad714e",
+          "mode": "100644",
+          "size": 11062,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/selection.py",
+          "sha": "98c67650dff5d8ea222d9d800e1943612036d282",
+          "mode": "100644",
+          "size": 1810,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/tests/test_hardening.py",
+          "sha": "7758bb6cee6d89df4724437502cb1433d0f7f2ec",
+          "mode": "100644",
+          "size": 2344,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/tests/test_rvs.py",
+          "sha": "75e80678bec4550eec4062fe5795770637b4f162",
+          "mode": "100644",
+          "size": 18487,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/tests/test_torch_sampler.py",
+          "sha": "c3c05c265f9d32242a308f2d75cae60ad83ef110",
+          "mode": "100644",
+          "size": 4705,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_verified_resampling_v1/torch_sampler.py",
+          "sha": "7d46858953c520d1281f858523e71aff5702f82f",
+          "mode": "100644",
+          "size": 5108,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": ".github/workflows/rvs-001.yml",
+          "status": "added",
+          "sha": "014959b864fb60c38741977288b7eac6eb222db4",
+          "type": "blob",
+          "mode": "100644"
+        },
+        {
+          "path": "RVS_001_RESEARCH_INDEX.md",
+          "status": "added",
+          "sha": "00c5a1d628ed01a1aac90da5e3d357200ca23a0e",
+          "type": "blob",
+          "mode": "100644"
+        }
+      ],
+      "validation_id": "rvs",
+      "status": "MERGED_ON_STAGING",
+      "merge_commit_sha": "0658a67ae42f5bffe1a3e0cd0b4b402eea825215"
+    },
+    {
+      "order": 5,
+      "branch": "research/rineya-recursive-self-rewrite-v1",
+      "source_sha": "8d3ee140accb054273580adb4291384e0dd88e0f",
+      "merge_base_sha": "19551ddebc87c93161c303865ce6d0f130de0093",
+      "additions": 22,
+      "merge_entries": [
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "548be3b3ff1cb325b5b5ded38200d93622067dbd"
+        }
+      ],
+      "changed_files": [
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/.gitignore",
+          "sha": "5361e6aa9e4ba20d93f27e3e16ae9fff32cd2fba",
+          "mode": "100644",
+          "size": 71,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/AGENTS.md",
+          "sha": "13d57ee360c61bb525ea28b520b359c9ad8e5002",
+          "mode": "100644",
+          "size": 1094,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/FILE_HASHES.json",
+          "sha": "cb2fc44062c12ab37422351cf245b072f79d904c",
+          "mode": "100644",
+          "size": 1829,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/HOST_HANDOFF.md",
+          "sha": "a4f8989495be82d93722d6621ffd936ec0fd6ffe",
+          "mode": "100644",
+          "size": 4823,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/PROTOCOL.md",
+          "sha": "f0224b84f7744292185574450e481f64bf219592",
+          "mode": "100644",
+          "size": 7159,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/README.md",
+          "sha": "e291e39c3b77cd2206f36eca02b75cde4dccda74",
+          "mode": "100644",
+          "size": 7610,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/SOURCES.md",
+          "sha": "fa95aadebcc1a9da9b22143641df52a5449b6665",
+          "mode": "100644",
+          "size": 2251,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/VALIDATION.json",
+          "sha": "be554d711a7b121c46dd0b3dce77feeadb16dced",
+          "mode": "100644",
+          "size": 1513,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/__init__.py",
+          "sha": "b5d300dd1d9243fc1c092e03b462e5d198530652",
+          "mode": "100644",
+          "size": 106,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/__main__.py",
+          "sha": "c6fc97a6ed5530fa49cf3072e24ea7800f6382b6",
+          "mode": "100644",
+          "size": 1939,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/artifacts.py",
+          "sha": "dd5be1721611258d0a5617c271ab50c5386b9a2e",
+          "mode": "100644",
+          "size": 3677,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/core.py",
+          "sha": "14753252de4b6780811755dd466fb4615c1b1e20",
+          "mode": "100644",
+          "size": 9488,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/data.py",
+          "sha": "53cd6229320da4f034a6f0fb6320b74e6b22823e",
+          "mode": "100644",
+          "size": 6152,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/evaluation.py",
+          "sha": "0846a18fafbfa2ba88727d0e54cafd1a863fad8c",
+          "mode": "100644",
+          "size": 5568,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/fixtures.py",
+          "sha": "8aaba676a4f64bd4f6c059ec39339b79082b3200",
+          "mode": "100644",
+          "size": 2996,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/pipeline.py",
+          "sha": "662d6ec1b4062ac7987bc126632172d28e2355f0",
+          "mode": "100644",
+          "size": 11451,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/protocol.json",
+          "sha": "97c0aaf6abff7c03accc4ce2c65bb1836622892d",
+          "mode": "100644",
+          "size": 1652,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/runtime.py",
+          "sha": "5a538302566c2463cfcba68fcdd4b35d04939799",
+          "mode": "100644",
+          "size": 10925,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/tests/test_pipeline.py",
+          "sha": "6709b1ea091ed346b630ae0743e101e499d6cfdb",
+          "mode": "100644",
+          "size": 12760,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/tests/test_runtime.py",
+          "sha": "507616ac325de8006c18e8cfb15fc687ebcfe59c",
+          "mode": "100644",
+          "size": 9649,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/tests/test_training_evaluation.py",
+          "sha": "06042d1b0ae648fcbf6f5c2036b85ef7f6099faa",
+          "mode": "100644",
+          "size": 7703,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_recursive_self_rewrite_v1/training.py",
+          "sha": "29b7ab861874c16d50ffc4b442a1ff5b1464cd04",
+          "mode": "100644",
+          "size": 8438,
+          "status": "added",
+          "type": "blob"
+        }
+      ],
+      "validation_id": "rsr",
+      "status": "MERGED_ON_STAGING",
+      "merge_commit_sha": "cd8d6c6de57f592f11fb5f3f7819930b733dc4eb"
+    },
+    {
+      "order": 6,
+      "branch": "research/rineya-generalization-dynamics-v1",
+      "source_sha": "7ae47a21581e15aa83e0859b880a84eb2d7dcb1d",
+      "merge_base_sha": "03db218ceebc61a2bc04f2482cf7e094045e01c1",
+      "additions": 301,
+      "merge_entries": [
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "d8f3451fde0ad36c6b14f7c07a1f1264553dcdd1"
+        }
+      ],
+      "changed_files": [
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/.gitattributes",
+          "sha": "2b77e01911167a1f032b833d06ae252c1bec733f",
+          "mode": "100644",
+          "size": 536,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/.gitignore",
+          "sha": "9398276d068d5dc6e5debbd7a2939b592153ef0a",
+          "mode": "100644",
+          "size": 69,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/AGENTS.md",
+          "sha": "db55c4c6ee02e4b6fb9dc826d92c75d0199255a9",
+          "mode": "100644",
+          "size": 1527,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/ATTACHMENT_CONTRACT.md",
+          "sha": "9583108772220457f0675a0eeff3622f3d3e344f",
+          "mode": "100644",
+          "size": 14140,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/NATIVE_QUALIFICATION_20261003.json",
+          "sha": "90e3461273421d2f1c00ff0e7585d42c3720e40c",
+          "mode": "100644",
+          "size": 6121,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/PATTERN_RESEARCH_20261005.md",
+          "sha": "b0631b588d27b2223ef05e5044219042f31ae715",
+          "mode": "100644",
+          "size": 7856,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/PROTOCOL.md",
+          "sha": "bda1cd026523b35640984ad5f1a133f25982ce1e",
+          "mode": "100644",
+          "size": 9892,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/QUALITY_ROADMAP.md",
+          "sha": "2a2d32f8505722d5a4edeead129ed53274c5d778",
+          "mode": "100644",
+          "size": 9970,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/QUALITY_ROADMAP_STATUS_20261005.md",
+          "sha": "7b6ebbb7b221c1b5fb0dfee430b92dde42a2e59d",
+          "mode": "100644",
+          "size": 5538,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/QUERY_DEPENDENCE_RESEARCH_20261005.md",
+          "sha": "a45b44d29c60974d99e60d4d35156247c2721573",
+          "mode": "100644",
+          "size": 7719,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/README.md",
+          "sha": "d9877c110f9cab756040e8ed85b0f4b74c2a9f0f",
+          "mode": "100644",
+          "size": 7495,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/RECONNAISSANCE.md",
+          "sha": "e34a17320773eb40de469d61b64b00a14d68a5c2",
+          "mode": "100644",
+          "size": 3683,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/RUNBOOK.md",
+          "sha": "28a989f8cffe6dfac875ff7061e79aac057795c0",
+          "mode": "100644",
+          "size": 8864,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/STATUS_20261005.md",
+          "sha": "bb8b14ca4a2a326d615931801121419552072ebd",
+          "mode": "100644",
+          "size": 4051,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/VALIDATION.json",
+          "sha": "668368f3ffa5ea7d5662811f154cb20247ccb98f",
+          "mode": "100644",
+          "size": 1754,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/__init__.py",
+          "sha": "a2bcf5ff24a4f8862c06ca23b5dd2b4eba7b9cff",
+          "mode": "100644",
+          "size": 97,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/__main__.py",
+          "sha": "bfdcd0c1158dff4fcc25157b317419f0a89dd33f",
+          "mode": "100644",
+          "size": 79,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/attachment.py",
+          "sha": "0537197ee39f8bf0c5d7256cbfa62dd0eeca6962",
+          "mode": "100644",
+          "size": 24193,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/attachment_cli.py",
+          "sha": "38ebebfe278269c606fc5b8df6e4a29eeadb8a64",
+          "mode": "100644",
+          "size": 12582,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/budget.py",
+          "sha": "1a31ad24e34c76b6cb6966f3a8d6e2f7512ff990",
+          "mode": "100644",
+          "size": 8587,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/cli.py",
+          "sha": "bac4d335c3ab0558e9613f12b2da8d99cec1401b",
+          "mode": "100644",
+          "size": 3341,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/common.py",
+          "sha": "e0dabfd5b01aa33bb852e737280ae268e5f5ce79",
+          "mode": "100644",
+          "size": 2615,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/configs/dev.proposal.example.json",
+          "sha": "a9bd5e5925439d293d9a00c0e98abcfca349a2d5",
+          "mode": "100644",
+          "size": 1496,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/configs/native.example.json",
+          "sha": "c50671872db23295e94634aac5bbe7e8963ea80a",
+          "mode": "100644",
+          "size": 885,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/configs/policy.default.json",
+          "sha": "1fc2cb5009064530bf90fd9c52e04591ee068add",
+          "mode": "100644",
+          "size": 134,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/data_admission.py",
+          "sha": "384245fcf6c679574d9604ddc19d83eb327c8e39",
+          "mode": "100644",
+          "size": 36863,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/diagnostics.py",
+          "sha": "76ba29e2844501125c6976730d81a55f0cdb1060",
+          "mode": "100644",
+          "size": 7693,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/PUBLICATION_INDEX.json",
+          "sha": "de7550da39cdc25e3a4049d8e7f304a5070aeec9",
+          "mode": "100644",
+          "size": 117468,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/README.md",
+          "sha": "f0f4865c7dfbe07df732f5fd87c28372d06705dd",
+          "mode": "100644",
+          "size": 2580,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/REVIEW_20261009.md",
+          "sha": "99c21c3ca5d9635405f2f9a74d6a46cab693a11c",
+          "mode": "100644",
+          "size": 3886,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/RECEIPT_INDEX.json",
+          "sha": "14407306067455005031fd9ffaffd42f762b7c57",
+          "mode": "100644",
+          "size": 4125,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/RECEIPT_INDEX_FINAL.json",
+          "sha": "52d674fdc3c6a1724da8207edd6303dffd7684c1",
+          "mode": "100644",
+          "size": 15436,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/baseline.json",
+          "sha": "bb15c9ce6d6734d032181c3235d03becf43a8491",
+          "mode": "100644",
+          "size": 8113,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/baseline.patch",
+          "sha": "ac840055963da92d9a40a26d86761f985cedf188",
+          "mode": "100644",
+          "size": 16630,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/mechanical_attachment_receipt.json",
+          "sha": "8b40b5e5d1daa486da4c3a32dcf6c87a6cadbed8",
+          "mode": "100644",
+          "size": 6519,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/mechanical_overlap_receipt.json",
+          "sha": "bc548278b3bb6fe8a45a5af979b41b01e675e406",
+          "mode": "100644",
+          "size": 1056,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/mechanical_parity_expected.json",
+          "sha": "ce3388e8993917b31f628d12afb418fb1b46d521",
+          "mode": "100644",
+          "size": 3510,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/mechanical_parity_gd.json",
+          "sha": "7e099c84b1d81db8748ddb5ca41e236bab9af9c9",
+          "mode": "100644",
+          "size": 16704,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/mechanical_parity_policy.json",
+          "sha": "d23f22ce52c4c914b07858bf7ea51e11fd828706",
+          "mode": "100644",
+          "size": 424,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/mechanical_parity_producer.json",
+          "sha": "16401c29419a1703b0c6603a3cceaef31e99cbcc",
+          "mode": "100644",
+          "size": 16710,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/mechanical_parity_receipt.json",
+          "sha": "7f9e7b8edd6cf6a128861c18c5981ebc331ee99b",
+          "mode": "100644",
+          "size": 1138,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/native_proposal.json",
+          "sha": "35f18e3774e64f468324321185535b781ed77ef7",
+          "mode": "100644",
+          "size": 5174,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/native_proposal_final.json",
+          "sha": "712912be22bd4ceac9ce7777791c994a316c555c",
+          "mode": "100644",
+          "size": 5982,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/producer_audit.json",
+          "sha": "ad6604a6475db89a0710d5b304f0e7d1b22449c0",
+          "mode": "100644",
+          "size": 17687,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/producer_audit_addendum.json",
+          "sha": "4c18ec544915ec24bec3bbca5069642d3ec038dc",
+          "mode": "100644",
+          "size": 3956,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/attachment.json",
+          "sha": "044ad0323f869166b4811b5fb9a3bfbded3f328d",
+          "mode": "100644",
+          "size": 2686,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/base/config.json",
+          "sha": "9f62f06c2c3e56ca2f92a25adac0de759695ba89",
+          "mode": "100644",
+          "size": 49,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/base/model.safetensors.fixture.txt",
+          "sha": "c459514bc626a8f8b4a36d6178424ad1488fbec6",
+          "mode": "100644",
+          "size": 36,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/completion.json",
+          "sha": "4e3bfd9256245cd0146a62bc16851e064427e6a5",
+          "mode": "100644",
+          "size": 3274,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/events.jsonl",
+          "sha": "cfeffa2e82dce9db828c59b22ca0acdb26480cca",
+          "mode": "100644",
+          "size": 4686,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/original-source.jsonl",
+          "sha": "a4bb49b623c726b5bc403b43f0ceeb516c9fdca6",
+          "mode": "100644",
+          "size": 186,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/owner-plan.json",
+          "sha": "a260db561542f8115b6eeeac1a4d34cf35468da7",
+          "mode": "100644",
+          "size": 1178,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/receipts/step_00000001.json",
+          "sha": "66beac9f0fea1090bf9e0211f60355c8a8985c2b",
+          "mode": "100644",
+          "size": 787,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/receipts/step_00000002.json",
+          "sha": "7b4aa230a3f0b20143108c4db8817956eac0d5ad",
+          "mode": "100644",
+          "size": 787,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/step-1/config.json",
+          "sha": "9f62f06c2c3e56ca2f92a25adac0de759695ba89",
+          "mode": "100644",
+          "size": 49,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/step-1/model.safetensors.fixture.txt",
+          "sha": "caa380837d4c1dae0d2ac6e28538a17ec3886c51",
+          "mode": "100644",
+          "size": 18,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/step-2/config.json",
+          "sha": "9f62f06c2c3e56ca2f92a25adac0de759695ba89",
+          "mode": "100644",
+          "size": 49,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/step-2/model.safetensors.fixture.txt",
+          "sha": "c5dc72d1b674b35bf23fc85109f9eaa140aa7f23",
+          "mode": "100644",
+          "size": 18,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/tokenizer/tokenizer.json",
+          "sha": "e58aab763d6c7365075b2ddd6c2ecaa861c78398",
+          "mode": "100644",
+          "size": 15,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/tokenizer/tokenizer_config.json",
+          "sha": "69a88e3b65423624fe7ea8b0f8beefcc62cc3d5f",
+          "mode": "100644",
+          "size": 4,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/retained-mechanical-attachment/1/training-manifest.jsonl",
+          "sha": "6a184191a0b83c310208970a9d72732340cce435",
+          "mode": "100644",
+          "size": 179,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/unittest.log",
+          "sha": "c75c605c741e907634fc8c61b5d1ca0f606eeafb",
+          "mode": "100644",
+          "size": 22357,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/unittest_final.log",
+          "sha": "bd9dc6fcef062bc65a6426e37dc13f481c729774",
+          "mode": "100644",
+          "size": 22723,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/validation.json",
+          "sha": "33ae05d965c80efb1060383c2f2a541cc122cccc",
+          "mode": "100644",
+          "size": 1572,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/attachment-20261005/validation_final.json",
+          "sha": "25351861f2dc38a5f9ea92c7279e3e7e04a4dfd7",
+          "mode": "100644",
+          "size": 1709,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-01/FORMAT_VALUE_DISENTANGLEMENT.json",
+          "sha": "a9ec1acebafdf48e62d46d853b01721c1ddc6558",
+          "mode": "100644",
+          "size": 18308,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-01/PUBLIC_CONTRACT_VS_TARGET_TYPE.json",
+          "sha": "4809f61d5e2201f2b1165d3db342ba8c189bc03e",
+          "mode": "100644",
+          "size": 1516,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-01/PUBLIC_SCHEMA_REPLAY_RESULT.json",
+          "sha": "21bc5c2dc517ad7c3abd8e52d26958dba509fdb8",
+          "mode": "100644",
+          "size": 12831,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-01/QUESTION_BLIND_ABSENCE_SHORTCUT.json",
+          "sha": "4bf79f0d09006993098920ea6b7d91648985019c",
+          "mode": "100644",
+          "size": 15988,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-01/RECEIPT_INDEX.json",
+          "sha": "fabb729bf0a32d0d24c1cafee8e64ede5937d466",
+          "mode": "100644",
+          "size": 4185,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-01/REPLAY_POLICY.json",
+          "sha": "3b4383c34027d0ca08eac7f5b4a08c9085c0f76a",
+          "mode": "100644",
+          "size": 1372,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-01/RESEARCH_ADDENDUM.json",
+          "sha": "b2c7511cd805bfcd25d0ccd3b7d30b9a4cf94035",
+          "mode": "100644",
+          "size": 1394,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-01/RESEARCH_PROGRESS.json",
+          "sha": "ef95e987a011563ffea920b66e92792abcda1872",
+          "mode": "100644",
+          "size": 8502,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-01/presented_responses_EXCLUDED_POSTHOC.jsonl",
+          "sha": "37ee5a971557481b43afe1eb5c273017afa8dff4",
+          "mode": "100644",
+          "size": 402154,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-01/preservation-baseline.json",
+          "sha": "60b057afcdbc40cb180b7f78ff96d73278fb5349",
+          "mode": "100644",
+          "size": 13148,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-01/unittest.log",
+          "sha": "a464395deb806a5db140b2f17d2a8f6c0e23f379",
+          "mode": "100644",
+          "size": 40485,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-01/validation.json",
+          "sha": "f7e2224474ce075974d303f1d6ff534436ff058f",
+          "mode": "100644",
+          "size": 1105,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/DOCUMENT_REVIEW_ADDENDUM.json",
+          "sha": "7f09cb1e09c811bef52a6c35bf2eb5b0b5102c95",
+          "mode": "100644",
+          "size": 1354,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/INDEPENDENT_WITNESS_REVIEW.json",
+          "sha": "2208d288500556574f671faf75bcc1a1151515b8",
+          "mode": "100644",
+          "size": 7363,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/QUERY_DEPENDENCE_RESEARCH_pre_document_review.md",
+          "sha": "f82ba74b83f49c55b52bd79e8c9f418bf615a048",
+          "mode": "100644",
+          "size": 7453,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/RECEIPT_INDEX.json",
+          "sha": "31b5a9e35415ae44229ca44e1da33057d7e16a6e",
+          "mode": "100644",
+          "size": 4759,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/RESEARCH_PROGRESS.json",
+          "sha": "34d02ffa9a9a1fadcc3776a04794ac974b04267d",
+          "mode": "100644",
+          "size": 1344,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/REVIEWED_DELIVERY_INDEX.json",
+          "sha": "80169de1fa31d84b58521edcbc5839b3efd71f24",
+          "mode": "100644",
+          "size": 5964,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/SELECT_THEN_READ_RESEARCH_CONTRACT.json",
+          "sha": "aa54876a198ac839d610602c962e4f1bae3ca307",
+          "mode": "100644",
+          "size": 4383,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/all_regular_EXCLUDED_MECHANICAL_WITNESS.json",
+          "sha": "e3d0aeaaca0b84a289710754d6ec1c88fe5318b3",
+          "mode": "100644",
+          "size": 1578816,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/all_regular_QUERY_DEPENDENCE_CERTIFICATE.json",
+          "sha": "82816c6ea1d50804218a6ece52acc2f3449107fe",
+          "mode": "100644",
+          "size": 4761,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/finalization-attempt01.json",
+          "sha": "aac94357a18730951f9e4e2d312b7b837d0b0981",
+          "mode": "100644",
+          "size": 275,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/finalize_receipts.py",
+          "sha": "847fb12618806e899eb9fd62d41610aa2def7141",
+          "mode": "100644",
+          "size": 8027,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/finalize_receipts_v2.py",
+          "sha": "28576794da7c6973cc3b1bb6551f6cc71c25e315",
+          "mode": "100644",
+          "size": 8189,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/fixture-tests-verified.txt",
+          "sha": "8923a56d209dfe4e855261d1b391a440eed15d41",
+          "mode": "100644",
+          "size": 5142,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/fixture-tests.txt",
+          "sha": "220eb8f7345de177261adecb6a2d1841cce50f71",
+          "mode": "100644",
+          "size": 5142,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/minimal_EXCLUDED_MECHANICAL_WITNESS.json",
+          "sha": "9a1f06c36dc1e3997c45fa1ac1fc92b62a2c1419",
+          "mode": "100644",
+          "size": 71232,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/minimal_QUERY_DEPENDENCE_CERTIFICATE.json",
+          "sha": "766ed0d9db9b391556e8a779765da1ac62eb5ff5",
+          "mode": "100644",
+          "size": 4719,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/preservation-baseline.json",
+          "sha": "85daf7f1466ca860f9f4d9d949443bdcfba8e8e5",
+          "mode": "100644",
+          "size": 12969,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-02/validation.json",
+          "sha": "42616a2ef85ff5a02e84684c57944a0578229252",
+          "mode": "100644",
+          "size": 14810,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/GOAL_COMPLETION_BLOCKER_AUDIT.json",
+          "sha": "d244558ff6a8c1eab153d8c2f54b34b45cba8971",
+          "mode": "100644",
+          "size": 30187,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/RECEIPT_INDEX.json",
+          "sha": "a5bc1719f43ba173026a0b208535024027a2e7f9",
+          "mode": "100644",
+          "size": 5387,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/data-fixed224.json",
+          "sha": "381fc8fea17f46b681e49586a1c3348afa11d029",
+          "mode": "100644",
+          "size": 4354,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/data-prior96.md",
+          "sha": "4486b450faa9832fd9ecbfe2bea88fb5ea718c61",
+          "mode": "100644",
+          "size": 7533,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/data-rqsft.json",
+          "sha": "d4f7feefca0c3075724aee57dca6774139f9b172",
+          "mode": "100644",
+          "size": 2640,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/data-supa-lane.json",
+          "sha": "e55827ced5603c5ac10309e835df277659ae87c5",
+          "mode": "100644",
+          "size": 11825,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/language-proposal.md",
+          "sha": "0fae87ace0b81e02622e270e301ac51f652a0813",
+          "mode": "100644",
+          "size": 12976,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/m1-native.json",
+          "sha": "e3ff710afb89b21963bb47e8ab9afd1e444c645b",
+          "mode": "100644",
+          "size": 6989,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/m1-start.json",
+          "sha": "f3ceb2e1bffd2ec2a014c757677986e72d506a79",
+          "mode": "100644",
+          "size": 793,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/m1-supervisor.json",
+          "sha": "9bb293fc118900986adba1f743a58e24b8dd9266",
+          "mode": "100644",
+          "size": 1133,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/m1-warm-window.json",
+          "sha": "0982a21f4815d60269412259ff133af26871d645",
+          "mode": "100644",
+          "size": 972,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/rdd-preparation.json",
+          "sha": "bf1df2428df76fc820c896b88f3d4907c299a08c",
+          "mode": "100644",
+          "size": 14570,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/rdd-proposal.json",
+          "sha": "2c9e8c57e3b6df2e7e6bde960002c6b2334c2ff8",
+          "mode": "100644",
+          "size": 8870,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/sbhm-blocker-audit.json",
+          "sha": "4f5a60dd765a8fee352c643db9405fd6e09344fe",
+          "mode": "100644",
+          "size": 4464,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/sbhm-completion-review.json",
+          "sha": "a3afca953c6f41319d4022f002906c20cbcb17bf",
+          "mode": "100644",
+          "size": 21036,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/sbhm-falsification.json",
+          "sha": "84f64bdaa60527fbaa297c5f71d35ce15c0eb00c",
+          "mode": "100644",
+          "size": 7749,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/sbhm-native-stop.json",
+          "sha": "b421c1963f59b1a3850e11f8f5d58aa65d495828",
+          "mode": "100644",
+          "size": 39124,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/sbhm-worker-snapshot.json",
+          "sha": "35a5f092397fdaff40493765aea69a9f397befe1",
+          "mode": "100644",
+          "size": 433,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/synth-private-mechanics.json",
+          "sha": "1598232260fb95e054fbb15d3cffbdf2306e79de",
+          "mode": "100644",
+          "size": 2859,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/pattern-research-20261005-03/retained-public-metadata/synth-readiness.json",
+          "sha": "e52338cfd1dd7d37b98015212435207553933a91",
+          "mode": "100644",
+          "size": 33898,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/publication-review-20261009/publication_review.json",
+          "sha": "e852f0d7490ca1cc8755d6bdebbec047ddc208ab",
+          "mode": "100644",
+          "size": 2329,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/publication-review-20261009/unittest.log",
+          "sha": "652c762b37c41ed858e811f439fc36c3be6e7219",
+          "mode": "100644",
+          "size": 48234,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/publication-review-20261009/validation.json",
+          "sha": "7fb664160cfbe5a66c047cb77e15c747f9800a44",
+          "mode": "100644",
+          "size": 1052,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/qualification-20261003T051747Z/additional_trajectory_audit.json",
+          "sha": "6b9e8e8c019c657d7d387fcc3538378a5ecea037",
+          "mode": "100644",
+          "size": 1852,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/qualification-20261003T051747Z/continuation_02_cache_audit.json",
+          "sha": "40626f619abb3c6e4d6ea7d247990b86636123ba",
+          "mode": "100644",
+          "size": 1107,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/qualification-20261003T051747Z/continuation_02_storage_audit.json",
+          "sha": "ab8c44811ca6ff707bff3aeff8acfb05455c01c5",
+          "mode": "100644",
+          "size": 1348,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/qualification-20261003T051747Z/continuation_03_blocked_audit.json",
+          "sha": "ddf28e3980da9d92637a25bf7a6f779d74b11fea",
+          "mode": "100644",
+          "size": 1560,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/qualification-20261003T051747Z/host_preflight.redacted.json",
+          "sha": "1efc98a5a0fe7ad263f65e8caa01bf0e7b11fe9b",
+          "mode": "100644",
+          "size": 1695,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/qualification-20261003T051747Z/qualification_summary.json",
+          "sha": "90e3461273421d2f1c00ff0e7585d42c3720e40c",
+          "mode": "100644",
+          "size": 6121,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/qualification-20261003T051747Z/trajectory_audit.json",
+          "sha": "6f57dad84785a4c478decc6391b2065648dcb1b3",
+          "mode": "100644",
+          "size": 7069,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/qualification-20261003T051747Z/unittest.log",
+          "sha": "cc479a518eedc2ab6d6431c8e5370f9b1b38ea7a",
+          "mode": "100644",
+          "size": 9682,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/qualification-20261003T051747Z/validation.json",
+          "sha": "803d80239842a7bfc8d780ffbe76d869e1d5e19e",
+          "mode": "100644",
+          "size": 861,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/DELIVERY_RECEIPT_INDEX.json",
+          "sha": "e9036f3b5d002137975a4ba5e152e021d218cfea",
+          "mode": "100644",
+          "size": 39281,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/baseline.json",
+          "sha": "dc4cee7454c621f6c62cca16fca8e91c882702a7",
+          "mode": "100644",
+          "size": 12145,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/baseline.patch",
+          "sha": "ac840055963da92d9a40a26d86761f985cedf188",
+          "mode": "100644",
+          "size": 16630,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/data-admission-assessment-release.json",
+          "sha": "35738656d300ecd799b4f38700721224b86a111a",
+          "mode": "100644",
+          "size": 2847,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/data-admission-assessment.json",
+          "sha": "6f6c0efcf416976599ab71d5a40381bac3b9804b",
+          "mode": "100644",
+          "size": 2838,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/data-admission-packet.json",
+          "sha": "98b8f8a251e56160b3fa47d67623853345ed1688",
+          "mode": "100644",
+          "size": 3405,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/data-admission-request-release.json",
+          "sha": "c95e575557e8278e1013a234b759a24907d522cc",
+          "mode": "100644",
+          "size": 3293,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/M1_OWNER_HANDOFF.json",
+          "sha": "773ef53c9175532b5f7a14bb35a08431fc7627a3",
+          "mode": "100644",
+          "size": 6250,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/OWNER_HANDOFFS.md",
+          "sha": "64060cc27e574e6c13596e4c01995f4b14332917",
+          "mode": "100644",
+          "size": 7774,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/ROADMAP_PACKET.json",
+          "sha": "74001b3bf98515a69b56387286ba49ec783eceff",
+          "mode": "100644",
+          "size": 54448,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/SUPERVISED_ACQUISITION_PROPOSAL.json",
+          "sha": "9ad5405ef78e378a3cac88b01461796de43c72a0",
+          "mode": "100644",
+          "size": 9586,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/owner-handoffs.json",
+          "sha": "e80921d033a8fbf76cd02d41fb3b21452f5c4ce9",
+          "mode": "100644",
+          "size": 15867,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/data_contract.json",
+          "sha": "37f40c0bd75f06a97f9c6698b72ca30d57409bf0",
+          "mode": "100644",
+          "size": 825,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/data_contract_review.json",
+          "sha": "4f63f9d3b313a43a0486a3c2ce89ab44fdb1966f",
+          "mode": "100644",
+          "size": 6959,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/data_mechanics.json",
+          "sha": "3173372fb308bb33674c8663af3a20407eca8c49",
+          "mode": "100644",
+          "size": 2474,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/data_progress.json",
+          "sha": "6b96059239b06053eab6f8bc6c7cf4d1f8b79ce6",
+          "mode": "100644",
+          "size": 1787,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/dsd_proposal.json",
+          "sha": "f3323e0a6ff9373a541d549d82343184634721de",
+          "mode": "100644",
+          "size": 36216,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/dsd_verification.json",
+          "sha": "9ef12c01b0a8356794bb5c5c15c2ef34039e1cb0",
+          "mode": "100644",
+          "size": 4195,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/gd_contract.md",
+          "sha": "9583108772220457f0675a0eeff3622f3d3e344f",
+          "mode": "100644",
+          "size": 14140,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/gd_status.md",
+          "sha": "db003e4e562b66147565f867aacac2b181205a5f",
+          "mode": "100644",
+          "size": 4231,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/m1_failure.json",
+          "sha": "425c9b7cc778241693070a478108e750be62e3cc",
+          "mode": "100644",
+          "size": 3899,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/m1_fixture.json",
+          "sha": "2556d8095bfd0d41f6c8b3407550b11ea578b859",
+          "mode": "100644",
+          "size": 2208,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/m1_m2_handoff.json",
+          "sha": "aae882c73c995e6c829fe36efc25bbf5771f6a8b",
+          "mode": "100644",
+          "size": 21041,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/m1_proposal.json",
+          "sha": "e599a29482934df6a5a5540b309407ddea079aa9",
+          "mode": "100644",
+          "size": 6971,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/m2_proposal.md",
+          "sha": "4c3486e636fb17419bf57ce093fa215eb4358152",
+          "mode": "100644",
+          "size": 26536,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/m2_status.json",
+          "sha": "ac5ada35e5b684ad24ba793a37b9ab308a6ff85c",
+          "mode": "100644",
+          "size": 1742,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/pruning_proposal.json",
+          "sha": "30e586ca086910319b3bd227b2c31562ef9fd328",
+          "mode": "100644",
+          "size": 7506,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/r_signal.json",
+          "sha": "a7a4dd715f003b71a06c2b1dcac26063e16ac65b",
+          "mode": "100644",
+          "size": 2657,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/rdd_proposal.json",
+          "sha": "2c9e8c57e3b6df2e7e6bde960002c6b2334c2ff8",
+          "mode": "100644",
+          "size": 8870,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/rdd_verification.json",
+          "sha": "bf1df2428df76fc820c896b88f3d4907c299a08c",
+          "mode": "100644",
+          "size": 14570,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/rsd_proposal.json",
+          "sha": "68ff460d443bf8ac9bd55672e109de63a2f68351",
+          "mode": "100644",
+          "size": 5575,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/rsd_readiness.json",
+          "sha": "572abc255183a8c739b8e5c30fb9562d0f16ce47",
+          "mode": "100644",
+          "size": 13585,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/sbhm_closeout.txt",
+          "sha": "8a60c7315c564cdb59a84c79bb856afa0bcc938c",
+          "mode": "100644",
+          "size": 18270,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/sbhm_receipt.json",
+          "sha": "e4cc0485f4b5a34ad11af99df35a15f64e75b7bf",
+          "mode": "100644",
+          "size": 17550,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/serving_history.md",
+          "sha": "175d3abbab050a13dbfc2f8a273b5435b90909d6",
+          "mode": "100644",
+          "size": 12371,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/synth_dose.md",
+          "sha": "197f2961d61df63a08e7a667b357ca160d38944a",
+          "mode": "100644",
+          "size": 6165,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/synth_draft.json",
+          "sha": "b4df4033f4785bdb9ee1de12015736a07f7d959d",
+          "mode": "100644",
+          "size": 235079,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/synth_qualification.json",
+          "sha": "a54ea64615c38fde83ceb596697ed130aa539ccb",
+          "mode": "100644",
+          "size": 7088,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/synth_status.md",
+          "sha": "abdf304bba3f7d39905a0f9bb3bf4b64434947ed",
+          "mode": "100644",
+          "size": 111773,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/taps_accepted_review.json",
+          "sha": "7167c3568cf53ab2ffafc698129390b601db2cbc",
+          "mode": "100644",
+          "size": 12994,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/taps_math_review.json",
+          "sha": "a3a38d2874a944eda2b5874ec84210045668ed93",
+          "mode": "100644",
+          "size": 97380,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/public-metadata-snapshots/taps_result.md",
+          "sha": "4ea4a5069a8e617c39705a277ba87792a50f109d",
+          "mode": "100644",
+          "size": 11367,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/quality-scorecard.json",
+          "sha": "8ab1e26ca54aa08ef6a50e54f5d98f0245fd143b",
+          "mode": "100644",
+          "size": 14509,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/delivery/snapshot-receipts.json",
+          "sha": "6e1843c178f0717050d8591ad32f6ee93a8e075e",
+          "mode": "100644",
+          "size": 9226,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/mechanical-quality-card-example.json",
+          "sha": "88ed3ed1af1a09586306beb9b330ee148fe5adeb",
+          "mode": "100644",
+          "size": 15689,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/mechanical-quality-card-validation.json",
+          "sha": "f5f401cd464d55fc2371288e9a42df1e6894e69c",
+          "mode": "100644",
+          "size": 19703,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/M1_OWNER_HANDOFF.json",
+          "sha": "50253f3a40becde6d18a1cd3bec2bb1bdce57f77",
+          "mode": "100644",
+          "size": 6169,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/OWNER_HANDOFFS.md",
+          "sha": "64060cc27e574e6c13596e4c01995f4b14332917",
+          "mode": "100644",
+          "size": 7774,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/ROADMAP_PACKET.json",
+          "sha": "c2cefac53f2d033ddf23a8d31ff137f87f3ecb42",
+          "mode": "100644",
+          "size": 44129,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/SUPERVISED_ACQUISITION_PROPOSAL.json",
+          "sha": "4791ad94cb9e2b890bd00a68c2aba5080c24f125",
+          "mode": "100644",
+          "size": 9623,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/owner-handoffs.json",
+          "sha": "e80921d033a8fbf76cd02d41fb3b21452f5c4ce9",
+          "mode": "100644",
+          "size": 15867,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/data_contract.json",
+          "sha": "37f40c0bd75f06a97f9c6698b72ca30d57409bf0",
+          "mode": "100644",
+          "size": 825,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/data_contract_review.json",
+          "sha": "4f63f9d3b313a43a0486a3c2ce89ab44fdb1966f",
+          "mode": "100644",
+          "size": 6959,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/data_mechanics.json",
+          "sha": "3173372fb308bb33674c8663af3a20407eca8c49",
+          "mode": "100644",
+          "size": 2474,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/data_progress.json",
+          "sha": "6b96059239b06053eab6f8bc6c7cf4d1f8b79ce6",
+          "mode": "100644",
+          "size": 1787,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/dsd_proposal.json",
+          "sha": "f3323e0a6ff9373a541d549d82343184634721de",
+          "mode": "100644",
+          "size": 36216,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/dsd_verification.json",
+          "sha": "9ef12c01b0a8356794bb5c5c15c2ef34039e1cb0",
+          "mode": "100644",
+          "size": 4195,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/gd_contract.md",
+          "sha": "9583108772220457f0675a0eeff3622f3d3e344f",
+          "mode": "100644",
+          "size": 14140,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/gd_status.md",
+          "sha": "db003e4e562b66147565f867aacac2b181205a5f",
+          "mode": "100644",
+          "size": 4231,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/m1_failure.json",
+          "sha": "425c9b7cc778241693070a478108e750be62e3cc",
+          "mode": "100644",
+          "size": 3899,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/m1_fixture.json",
+          "sha": "2556d8095bfd0d41f6c8b3407550b11ea578b859",
+          "mode": "100644",
+          "size": 2208,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/m1_m2_handoff.json",
+          "sha": "aae882c73c995e6c829fe36efc25bbf5771f6a8b",
+          "mode": "100644",
+          "size": 21041,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/m1_proposal.json",
+          "sha": "e599a29482934df6a5a5540b309407ddea079aa9",
+          "mode": "100644",
+          "size": 6971,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/m2_proposal.md",
+          "sha": "4c3486e636fb17419bf57ce093fa215eb4358152",
+          "mode": "100644",
+          "size": 26536,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/m2_status.json",
+          "sha": "ac5ada35e5b684ad24ba793a37b9ab308a6ff85c",
+          "mode": "100644",
+          "size": 1742,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/pruning_proposal.json",
+          "sha": "30e586ca086910319b3bd227b2c31562ef9fd328",
+          "mode": "100644",
+          "size": 7506,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/r_signal.json",
+          "sha": "a7a4dd715f003b71a06c2b1dcac26063e16ac65b",
+          "mode": "100644",
+          "size": 2657,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/rdd_proposal.json",
+          "sha": "2c9e8c57e3b6df2e7e6bde960002c6b2334c2ff8",
+          "mode": "100644",
+          "size": 8870,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/rdd_verification.json",
+          "sha": "bf1df2428df76fc820c896b88f3d4907c299a08c",
+          "mode": "100644",
+          "size": 14570,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/rsd_proposal.json",
+          "sha": "68ff460d443bf8ac9bd55672e109de63a2f68351",
+          "mode": "100644",
+          "size": 5575,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/rsd_readiness.json",
+          "sha": "572abc255183a8c739b8e5c30fb9562d0f16ce47",
+          "mode": "100644",
+          "size": 13585,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/sbhm_closeout.txt",
+          "sha": "8a60c7315c564cdb59a84c79bb856afa0bcc938c",
+          "mode": "100644",
+          "size": 18270,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/sbhm_receipt.json",
+          "sha": "e4cc0485f4b5a34ad11af99df35a15f64e75b7bf",
+          "mode": "100644",
+          "size": 17550,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/serving_history.md",
+          "sha": "175d3abbab050a13dbfc2f8a273b5435b90909d6",
+          "mode": "100644",
+          "size": 12371,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/synth_dose.md",
+          "sha": "197f2961d61df63a08e7a667b357ca160d38944a",
+          "mode": "100644",
+          "size": 6165,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/synth_draft.json",
+          "sha": "b4df4033f4785bdb9ee1de12015736a07f7d959d",
+          "mode": "100644",
+          "size": 235079,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/synth_qualification.json",
+          "sha": "a54ea64615c38fde83ceb596697ed130aa539ccb",
+          "mode": "100644",
+          "size": 7088,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/synth_status.md",
+          "sha": "abdf304bba3f7d39905a0f9bb3bf4b64434947ed",
+          "mode": "100644",
+          "size": 111773,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/taps_accepted_review.json",
+          "sha": "7167c3568cf53ab2ffafc698129390b601db2cbc",
+          "mode": "100644",
+          "size": 12994,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/taps_math_review.json",
+          "sha": "a3a38d2874a944eda2b5874ec84210045668ed93",
+          "mode": "100644",
+          "size": 97380,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/public-metadata-snapshots/taps_result.md",
+          "sha": "4ea4a5069a8e617c39705a277ba87792a50f109d",
+          "mode": "100644",
+          "size": 11367,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/quality-scorecard.json",
+          "sha": "8ab1e26ca54aa08ef6a50e54f5d98f0245fd143b",
+          "mode": "100644",
+          "size": 14509,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-final/snapshot-receipts.json",
+          "sha": "8924ab66939ac4d28ba232bf3c420e64a176e774",
+          "mode": "100644",
+          "size": 9346,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-verification-final.json",
+          "sha": "85f0afe8ba959f62a37a7f1947220d6b1f39d703",
+          "mode": "100644",
+          "size": 333,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-verification-release.json",
+          "sha": "5fe38dcf74b2ee4a33ee4ce67236940b48c86db9",
+          "mode": "100644",
+          "size": 333,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet-verification.json",
+          "sha": "d1d1e86566179eae1560b451edf8dd51e03be42a",
+          "mode": "100644",
+          "size": 333,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/M1_OWNER_HANDOFF.json",
+          "sha": "50253f3a40becde6d18a1cd3bec2bb1bdce57f77",
+          "mode": "100644",
+          "size": 6169,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/OWNER_HANDOFFS.md",
+          "sha": "64060cc27e574e6c13596e4c01995f4b14332917",
+          "mode": "100644",
+          "size": 7774,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/ROADMAP_PACKET.json",
+          "sha": "e07c56557e0ced9d8a30a4a255b91c2c36e45342",
+          "mode": "100644",
+          "size": 44123,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/SUPERVISED_ACQUISITION_PROPOSAL.json",
+          "sha": "4791ad94cb9e2b890bd00a68c2aba5080c24f125",
+          "mode": "100644",
+          "size": 9623,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/owner-handoffs.json",
+          "sha": "e80921d033a8fbf76cd02d41fb3b21452f5c4ce9",
+          "mode": "100644",
+          "size": 15867,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/data_contract.json",
+          "sha": "37f40c0bd75f06a97f9c6698b72ca30d57409bf0",
+          "mode": "100644",
+          "size": 825,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/data_contract_review.json",
+          "sha": "4f63f9d3b313a43a0486a3c2ce89ab44fdb1966f",
+          "mode": "100644",
+          "size": 6959,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/data_mechanics.json",
+          "sha": "3173372fb308bb33674c8663af3a20407eca8c49",
+          "mode": "100644",
+          "size": 2474,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/data_progress.json",
+          "sha": "6b96059239b06053eab6f8bc6c7cf4d1f8b79ce6",
+          "mode": "100644",
+          "size": 1787,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/dsd_proposal.json",
+          "sha": "f3323e0a6ff9373a541d549d82343184634721de",
+          "mode": "100644",
+          "size": 36216,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/dsd_verification.json",
+          "sha": "9ef12c01b0a8356794bb5c5c15c2ef34039e1cb0",
+          "mode": "100644",
+          "size": 4195,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/gd_contract.md",
+          "sha": "9583108772220457f0675a0eeff3622f3d3e344f",
+          "mode": "100644",
+          "size": 14140,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/gd_status.md",
+          "sha": "db003e4e562b66147565f867aacac2b181205a5f",
+          "mode": "100644",
+          "size": 4231,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/m1_failure.json",
+          "sha": "425c9b7cc778241693070a478108e750be62e3cc",
+          "mode": "100644",
+          "size": 3899,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/m1_fixture.json",
+          "sha": "2556d8095bfd0d41f6c8b3407550b11ea578b859",
+          "mode": "100644",
+          "size": 2208,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/m1_m2_handoff.json",
+          "sha": "aae882c73c995e6c829fe36efc25bbf5771f6a8b",
+          "mode": "100644",
+          "size": 21041,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/m1_proposal.json",
+          "sha": "e599a29482934df6a5a5540b309407ddea079aa9",
+          "mode": "100644",
+          "size": 6971,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/m2_proposal.md",
+          "sha": "4c3486e636fb17419bf57ce093fa215eb4358152",
+          "mode": "100644",
+          "size": 26536,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/m2_status.json",
+          "sha": "ac5ada35e5b684ad24ba793a37b9ab308a6ff85c",
+          "mode": "100644",
+          "size": 1742,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/pruning_proposal.json",
+          "sha": "30e586ca086910319b3bd227b2c31562ef9fd328",
+          "mode": "100644",
+          "size": 7506,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/r_signal.json",
+          "sha": "a7a4dd715f003b71a06c2b1dcac26063e16ac65b",
+          "mode": "100644",
+          "size": 2657,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/rdd_proposal.json",
+          "sha": "2c9e8c57e3b6df2e7e6bde960002c6b2334c2ff8",
+          "mode": "100644",
+          "size": 8870,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/rdd_verification.json",
+          "sha": "bf1df2428df76fc820c896b88f3d4907c299a08c",
+          "mode": "100644",
+          "size": 14570,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/rsd_proposal.json",
+          "sha": "68ff460d443bf8ac9bd55672e109de63a2f68351",
+          "mode": "100644",
+          "size": 5575,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/rsd_readiness.json",
+          "sha": "572abc255183a8c739b8e5c30fb9562d0f16ce47",
+          "mode": "100644",
+          "size": 13585,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/sbhm_closeout.txt",
+          "sha": "8a60c7315c564cdb59a84c79bb856afa0bcc938c",
+          "mode": "100644",
+          "size": 18270,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/sbhm_receipt.json",
+          "sha": "e4cc0485f4b5a34ad11af99df35a15f64e75b7bf",
+          "mode": "100644",
+          "size": 17550,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/serving_history.md",
+          "sha": "175d3abbab050a13dbfc2f8a273b5435b90909d6",
+          "mode": "100644",
+          "size": 12371,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/synth_dose.md",
+          "sha": "197f2961d61df63a08e7a667b357ca160d38944a",
+          "mode": "100644",
+          "size": 6165,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/synth_draft.json",
+          "sha": "b4df4033f4785bdb9ee1de12015736a07f7d959d",
+          "mode": "100644",
+          "size": 235079,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/synth_qualification.json",
+          "sha": "a54ea64615c38fde83ceb596697ed130aa539ccb",
+          "mode": "100644",
+          "size": 7088,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/synth_status.md",
+          "sha": "abdf304bba3f7d39905a0f9bb3bf4b64434947ed",
+          "mode": "100644",
+          "size": 111773,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/taps_accepted_review.json",
+          "sha": "7167c3568cf53ab2ffafc698129390b601db2cbc",
+          "mode": "100644",
+          "size": 12994,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/taps_math_review.json",
+          "sha": "a3a38d2874a944eda2b5874ec84210045668ed93",
+          "mode": "100644",
+          "size": 97380,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/public-metadata-snapshots/taps_result.md",
+          "sha": "4ea4a5069a8e617c39705a277ba87792a50f109d",
+          "mode": "100644",
+          "size": 11367,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/quality-scorecard.json",
+          "sha": "815d68bf7a590351f07a77a384ead423adb0252d",
+          "mode": "100644",
+          "size": 13276,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/packet/snapshot-receipts.json",
+          "sha": "b9de5e36648c8ad00ba594767e51496ff7604ad6",
+          "mode": "100644",
+          "size": 9166,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/roadmap-spec-final.json",
+          "sha": "c0dc093afc1b035692f02312d6a63b201ef5eb40",
+          "mode": "100644",
+          "size": 38141,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/roadmap-spec-release.json",
+          "sha": "6c8b9a5c563fb206e372fef0a79c3c3b8548e5b4",
+          "mode": "100644",
+          "size": 48483,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/roadmap-spec.json",
+          "sha": "7d4fd76dde772c1c382c90dbe677cad2c17c61d7",
+          "mode": "100644",
+          "size": 37735,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/unittest.log",
+          "sha": "5b7c5355c975c5f36305411d6ce489c1577c73f2",
+          "mode": "100644",
+          "size": 35725,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/unittest_final.log",
+          "sha": "be7777f85e971bf866a32c9d9ec201be84e7f056",
+          "mode": "100644",
+          "size": 35903,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/validation.json",
+          "sha": "110bfc6bffe4ee00f9e3ac2700275d2131c76b9e",
+          "mode": "100644",
+          "size": 1690,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/quality-roadmap-implementation-20261005/validation_final.json",
+          "sha": "cde5360a697b03bf88de79447264be2bb73496b6",
+          "mode": "100644",
+          "size": 1838,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/evidence/verify.py",
+          "sha": "d2a3ba182e38f36b0c2a4d45b6346e30f8231729",
+          "mode": "100644",
+          "size": 1891,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/export_parity.py",
+          "sha": "b2340f9004f7a679ae4fb293957b13f200a06763",
+          "mode": "100644",
+          "size": 22640,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/integration.py",
+          "sha": "89f80e6f25ab96cc59487153ea0754cd7dc1839e",
+          "mode": "100644",
+          "size": 1034,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/metrics.py",
+          "sha": "c1e06a023aace52f4c5b7f77e453c419a30919f9",
+          "mode": "100644",
+          "size": 9141,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/native.py",
+          "sha": "9f594815ba221cde59f9abf9ae3d7cf9bf3fc62b",
+          "mode": "100644",
+          "size": 11132,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/pipeline.py",
+          "sha": "6532daecbbfec667a20ec0f37c15608813505982",
+          "mode": "100644",
+          "size": 17762,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/producer_hook_example.py",
+          "sha": "2914b22009576e4625fee3c0fde3bf7ebbbf1201",
+          "mode": "100644",
+          "size": 4846,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/protected_paths.py",
+          "sha": "d9d3027ea1fd9ac0822a47f772cb395fa0ce146f",
+          "mode": "100644",
+          "size": 1796,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/public_schema_repair.py",
+          "sha": "69a4bb06333573a0492ad6a388f1d2409e59cdbd",
+          "mode": "100644",
+          "size": 12356,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/.gitattributes",
+          "sha": "fc0451e0bbca7cee457287dfedee4b6b2290a63e",
+          "mode": "100644",
+          "size": 194,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/FOLLOWUP_REVIEW.json",
+          "sha": "6c0293aa31b3c2dcd9d29787b6f2a2049a799340",
+          "mode": "100644",
+          "size": 2589,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/FOLLOWUP_VALIDATION.json",
+          "sha": "177aca8f7427d3002037e5aad16ffeedc3e9de61",
+          "mode": "100644",
+          "size": 5536,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/INDEPENDENT_REVIEW_PENDING.json",
+          "sha": "51fea87e6efc71d0a67dd4eabd7c054b58ee4574",
+          "mode": "100644",
+          "size": 1796,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/MANIFEST.json",
+          "sha": "698c8b461cc2fe9ec78d25ead44a623f2249539a",
+          "mode": "100644",
+          "size": 5773,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/README.md",
+          "sha": "921903fdaed32704a9e387bf2aded5db4aeea58d",
+          "mode": "100644",
+          "size": 1874,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/VALIDATION_ATTEMPT_INTERRUPTED.json",
+          "sha": "2e4fceafad4f295478aa117bd90199301bc51f0f",
+          "mode": "100644",
+          "size": 497,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/VALIDATION_STARTED.json",
+          "sha": "b332cf26a7bb80ed1bda22d054e0cb64aa55741d",
+          "mode": "100644",
+          "size": 365,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/archive_integrity-followup.log",
+          "sha": "05c69153ac9c45519f03ec77353806634c1bc3bd",
+          "mode": "100644",
+          "size": 87,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/compileall-followup.log",
+          "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "mode": "100644",
+          "size": 0,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/readiness/gd-publication-review.json",
+          "sha": "e852f0d7490ca1cc8755d6bdebbec047ddc208ab",
+          "mode": "100644",
+          "size": 2329,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/readiness/rdd-handoff.md",
+          "sha": "cf10815d18e3be7cd31e3b1d2575988315a5b48d",
+          "mode": "100644",
+          "size": 4847,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/readiness/synth-closed-partial-schedule.json",
+          "sha": "2ab519476cba82ba97f41fc336d071fae9089724",
+          "mode": "100644",
+          "size": 135600,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/readiness/synth-import-observation.md",
+          "sha": "75c8be2d8ed5e212ef4d6d4ed468e3e054eb378e",
+          "mode": "100644",
+          "size": 1250,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/readiness/synth-retention-handoff.json",
+          "sha": "22c44f946764c9c86c43631af525eb47fe7460b9",
+          "mode": "100644",
+          "size": 4089,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/unittest-followup.log",
+          "sha": "4d450bf73a300ef6463965edbb8c19eaa80bf58b",
+          "mode": "100644",
+          "size": 49416,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/publication_followup/whitespace-followup.log",
+          "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "mode": "100644",
+          "size": 0,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/quality_card.py",
+          "sha": "73cd310a5af8b433facce2e975d1c04d69907c74",
+          "mode": "100644",
+          "size": 27867,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/query_dependence_witness.py",
+          "sha": "39a308c76f5d7a5f331ff9c39e7693e3ec959998",
+          "mode": "100644",
+          "size": 20866,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/registry.py",
+          "sha": "03ddafc80fec97dd7ed026f1336e287f8129a98b",
+          "mode": "100644",
+          "size": 7277,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/requirements-native.txt",
+          "sha": "ff2aa88a4d2aac954274e7de3bb6649133dec120",
+          "mode": "100644",
+          "size": 231,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/roadmap.py",
+          "sha": "4693899daa73c747c8dfde8f2a4d31ae33f8031b",
+          "mode": "100644",
+          "size": 27272,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/roadmap_cli.py",
+          "sha": "7e4c326ab4e5c9fa4db299dc264e3fa1c117dc67",
+          "mode": "100644",
+          "size": 2259,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/test_attachment.py",
+          "sha": "3ddded460bdee1f2f8739870ad5ac29ec9cef40c",
+          "mode": "100644",
+          "size": 29834,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/test_attachment_cli.py",
+          "sha": "ec37eb2227f58fb59e5ac9524b274b2004cb272e",
+          "mode": "100644",
+          "size": 12922,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/test_budget.py",
+          "sha": "2c1c69bfa10d83253a5271256fb2933cd0eb4341",
+          "mode": "100644",
+          "size": 20839,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/test_data_admission.py",
+          "sha": "8ad1c9b0b0bf9ebe2c6b7e53fb1fd2fa9e4589b6",
+          "mode": "100644",
+          "size": 29513,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/test_export_parity.py",
+          "sha": "3de5db72dfc5ce57e1ad8a5125449998a2903e0d",
+          "mode": "100644",
+          "size": 22108,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/test_gd001.py",
+          "sha": "94b93ac8da00a6e3a9dc4e8be187a863d74792cc",
+          "mode": "100644",
+          "size": 19913,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/test_native_contract.py",
+          "sha": "24b49f04b15011afdb6f8b04f949fa751877f2a2",
+          "mode": "100644",
+          "size": 4540,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/test_producer_hook.py",
+          "sha": "f1b499a16fe5ed111586664e1702a1427b51f7bf",
+          "mode": "100644",
+          "size": 6149,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/test_public_schema_repair.py",
+          "sha": "76e1687dae7b104362de382fe8d20ffba1bd4f82",
+          "mode": "100644",
+          "size": 17191,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/test_quality_card.py",
+          "sha": "7d2464f506167a77fcffd7a1e58e653062a50c83",
+          "mode": "100644",
+          "size": 27531,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/test_query_dependence_witness.py",
+          "sha": "392ac0534262c3910df3885d48b39eaea1ed4222",
+          "mode": "100644",
+          "size": 13384,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_generalization_dynamics_v1/tests/test_roadmap.py",
+          "sha": "97745aedb42fdc8cfd9a0bb7680f0aa34fa8b0bc",
+          "mode": "100644",
+          "size": 29253,
+          "status": "added",
+          "type": "blob"
+        }
+      ],
+      "validation_id": "gd",
+      "status": "MERGED_ON_STAGING",
+      "merge_commit_sha": "7992da4507724c9d6a549af0d56a436ec18a2671"
+    },
+    {
+      "order": 7,
+      "branch": "research/rineya-relative-generalization-invariance-v1",
+      "source_sha": "53b2155b2c54137891ea98a24f9e79892e658527",
+      "merge_base_sha": "03db218ceebc61a2bc04f2482cf7e094045e01c1",
+      "additions": 25,
+      "merge_entries": [
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "202d25b809fe1ba9dd3a15b50aa518cc2d8f1c49"
+        }
+      ],
+      "changed_files": [
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/.gitignore",
+          "sha": "aa624534be4cdd14075f317c7d92afb024f02d3e",
+          "mode": "100644",
+          "size": 73,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/NATIVE_RUNBOOK.md",
+          "sha": "fbd1c4b34ef3c4c9a9538f6e76b90478fd8ab811",
+          "mode": "100644",
+          "size": 11510,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/PROTOCOL.md",
+          "sha": "e29159f9a3ae2a77fc74398bca08789cb6101a96",
+          "mode": "100644",
+          "size": 10226,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/README.md",
+          "sha": "b70d94a75c9c1cee604323437c5a4c4520a5124a",
+          "mode": "100644",
+          "size": 8838,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/SOURCES.md",
+          "sha": "4329c81420f64e75f14c3d1639fd09ddcc292988",
+          "mode": "100644",
+          "size": 3683,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/VALIDATION.md",
+          "sha": "6eae671d1ea4f8945e67fe000c9995e6035d1e30",
+          "mode": "100644",
+          "size": 2011,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/__init__.py",
+          "sha": "6f607547a588400c8b421208da7e8a3052b16274",
+          "mode": "100644",
+          "size": 78,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/configs/confirmation.example.json",
+          "sha": "b3620d7c575c9ac460a141ea80faf3f583ca50be",
+          "mode": "100644",
+          "size": 533,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/configs/native.example.json",
+          "sha": "e0b7235b31582b294b18eec7da1dfa1596e661dc",
+          "mode": "100644",
+          "size": 725,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/pytest.ini",
+          "sha": "b7e696f6180c57cbf459b29881222245409ad706",
+          "mode": "100644",
+          "size": 154,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/requirements-native.txt",
+          "sha": "fcb53c99b2f9e657610520442cfb7929abd5318c",
+          "mode": "100644",
+          "size": 200,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/requirements.txt",
+          "sha": "b2827751e796381a63e1ba1d795e6e0b79300608",
+          "mode": "100644",
+          "size": 29,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/rgi/__init__.py",
+          "sha": "9755a87e2c889da5bb46d5c3798b93e1c608ee11",
+          "mode": "100644",
+          "size": 102,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/rgi/__main__.py",
+          "sha": "556d2c3479727533883384d058f2e20c478ad9be",
+          "mode": "100644",
+          "size": 9139,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/rgi/data.py",
+          "sha": "6f63eeb7c37af8ab17bd6ed0b3e2a8436ceb4f19",
+          "mode": "100644",
+          "size": 9282,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/rgi/importer.py",
+          "sha": "5730db2797c37728ebe446c58f8b184708cc84d6",
+          "mode": "100644",
+          "size": 2589,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/rgi/io.py",
+          "sha": "e2d85b3caac8d0acaaf2cb9c25f1e584968c2cb8",
+          "mode": "100644",
+          "size": 10634,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/rgi/metrics.py",
+          "sha": "74399fe7f1ffe456251b97e1dbd1097fa034257f",
+          "mode": "100644",
+          "size": 11675,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/rgi/native.py",
+          "sha": "5e49b3b5144d9a0691d40b771793de370a3ba9da",
+          "mode": "100644",
+          "size": 17625,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/rgi/protocol.py",
+          "sha": "6a5e553005ca9777d08989df6a9648bd3e0e70eb",
+          "mode": "100644",
+          "size": 10917,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/tests/conftest.py",
+          "sha": "79d792719c74c9cc232c85b966a3ae0ccc2545d2",
+          "mode": "100644",
+          "size": 1246,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/tests/test_invariants.py",
+          "sha": "73227dbdf96f1f8d0423004dcf84b34f9a5c8fb9",
+          "mode": "100644",
+          "size": 25832,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/tests/test_torch_and_optional_hf.py",
+          "sha": "398676a5ff664823eb4deab703a9d0891d0d4454",
+          "mode": "100644",
+          "size": 9337,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/validation/RESULTS.json",
+          "sha": "67e68f10d431f5f5dd1ee0ff5f494b8467c42144",
+          "mode": "100644",
+          "size": 1595,
+          "status": "added",
+          "type": "blob"
+        },
+        {
+          "path": "experiments/rineya_relative_generalization_invariance_v1/validation/SYNTHETIC_RESULTS.json",
+          "sha": "20ab3568c7cd6dcccf1bf89f0687dc8c2e6abfbf",
+          "mode": "100644",
+          "size": 1267,
+          "status": "added",
+          "type": "blob"
+        }
+      ],
+      "validation_id": "rgi",
+      "status": "MERGED_ON_STAGING",
+      "merge_commit_sha": "600b7957e43743dd0374cfc4ec4e66a89b5f5adf"
+    }
+  ]
+}
