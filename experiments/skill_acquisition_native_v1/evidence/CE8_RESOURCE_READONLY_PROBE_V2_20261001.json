@@ -1,0 +1,99 @@
+{
+  "schema": "CE8-READONLY-RESOURCE-PROBE-1",
+  "utc": "2026-10-01T22:29:37.060698+00:00",
+  "classification": "actual current-process OS/driver metadata only; no model/native fit or qualification",
+  "spec": {
+    "schema": "CE8-RESOURCE-PROBE-SPEC-1",
+    "nvidia_smi_ref": {
+      "path": "C:\\Windows\\System32\\nvidia-smi.exe",
+      "sha256": "d20280bde5c23f6a3a3dd2179a0228242da58f90e85571457bebaff8b958aaf3",
+      "bytes": 863896
+    },
+    "output_root": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001",
+    "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+    "cuda_visible_devices": null,
+    "query_timeout_seconds": 5,
+    "probe_bounds": {
+      "read_bytes_upper": 863897,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 863897,
+      "wall_s_upper": 10
+    }
+  },
+  "sample": {
+    "host_total_bytes": 33520267264,
+    "host_free_bytes": 12180303872,
+    "worker_id": 228876,
+    "worker_working_set_bytes": 19369984,
+    "worker_peak_working_set_bytes": 19894272,
+    "worker_memory_primitive": "GetProcessMemoryInfo WorkingSetSize/PeakWorkingSetSize",
+    "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+    "gpu_total_bytes": 8585740288,
+    "gpu_free_bytes": 7256145920,
+    "gpu_used_bytes": 1078984704,
+    "gpu_driver_reserved_bytes": 251658240,
+    "gpu_memory_units": "nvidia-smi integer MiB, <=2 MiB total rounding allowance",
+    "schema": "CE8-RESOURCE-OBSERVATION-1",
+    "perf": 8013.812,
+    "disk_free_bytes": 82922500096,
+    "output_volume_path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001",
+    "native_qualified": false,
+    "classification": "actual read-only current-process resource sample; no model/native fit proof"
+  },
+  "events": [
+    {
+      "kind": "resource_probe",
+      "phase": "started",
+      "operation_id": "131df38196834ac9b216a741a7b8f6f4",
+      "read_bytes_upper": 863897,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 863897,
+      "wall_s_upper": 10
+    },
+    {
+      "kind": "resource_probe",
+      "phase": "returned",
+      "operation_id": "131df38196834ac9b216a741a7b8f6f4",
+      "wall_s": 0.09400000000005093,
+      "bytes_read": 863896,
+      "identity_hash_attempts_actual": 1,
+      "identity_hash_bytes_actual": 863896,
+      "resource_observation": {
+        "host_total_bytes": 33520267264,
+        "host_free_bytes": 12180303872,
+        "worker_id": 228876,
+        "worker_working_set_bytes": 19369984,
+        "worker_peak_working_set_bytes": 19894272,
+        "worker_memory_primitive": "GetProcessMemoryInfo WorkingSetSize/PeakWorkingSetSize",
+        "gpu_uuid": "GPU-bf962d49-2b03-1983-ef14-df4bc7fbb8b9",
+        "gpu_total_bytes": 8585740288,
+        "gpu_free_bytes": 7256145920,
+        "gpu_used_bytes": 1078984704,
+        "gpu_driver_reserved_bytes": 251658240,
+        "gpu_memory_units": "nvidia-smi integer MiB, <=2 MiB total rounding allowance",
+        "schema": "CE8-RESOURCE-OBSERVATION-1",
+        "perf": 8013.812,
+        "disk_free_bytes": 82922500096,
+        "output_volume_path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001",
+        "native_qualified": false,
+        "classification": "actual read-only current-process resource sample; no model/native fit proof"
+      }
+    }
+  ],
+  "remaining_prepaid_bounds": {
+    "read_bytes_upper": 0,
+    "identity_hash_attempts_upper": 0,
+    "identity_hash_bytes_upper": 0,
+    "wall_s_upper": 0
+  },
+  "source_before": "08535e43f3b9d1a886a243c920bd54db7c181e85815413c4cf03092f0bd08f3a",
+  "source_after": "08535e43f3b9d1a886a243c920bd54db7c181e85815413c4cf03092f0bd08f3a",
+  "source_unchanged": true,
+  "frameworks": [],
+  "model_loads": 0,
+  "optimizer_steps": 0,
+  "native_qualified": false,
+  "native_execution_authorized": false,
+  "elapsed_s": 0.0944327000006524,
+  "checker_sha256": "5ae50d7fd16eb5aeb4206d581980e2502f1513e51059a2d3f3a0ce8682d8c087"
+}

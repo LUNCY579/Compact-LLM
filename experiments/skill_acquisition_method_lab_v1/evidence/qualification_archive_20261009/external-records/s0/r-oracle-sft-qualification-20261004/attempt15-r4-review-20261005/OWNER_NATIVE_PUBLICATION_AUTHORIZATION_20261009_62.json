@@ -1,0 +1,38 @@
+{
+  "schema": "CE8-DIRECT-QUALIFICATION-PUBLICATION-AUTHORIZATION-62",
+  "owner_thread_id": "01a0dfa3-9cdf-7703-a362-32f559ec15a7",
+  "provenance": "Direct human user message in this owner chat; not delegated task text",
+  "direct_human_authorization": true,
+  "direct_user_quote": "I authorize native-eligibility publication for qualification only. Recheck RAM and continue through the normal approval and resource gates, keeping the existing caps and scope.Review everything you have made so far, commit and push necessary changes, records, evidence, and discoveries as necessary to the remote github repository.",
+  "authorized_action": "Qualification-only native-eligibility publication, followed by the existing review, fresh source-bound grant and resource gates",
+  "publication_scope": "QUALIFICATION_ONLY",
+  "normal_automatic_review_required": true,
+  "normal_resource_admission_required": true,
+  "existing_caps_and_scope_preserved": true,
+  "CPU_prerequisite": {
+    "physical_root_seconds": 60,
+    "single_nested_tail_seconds": 5,
+    "cases": ["normal_exit", "timeout"],
+    "attempts_per_fresh_reviewed_grant": 1,
+    "models_allowed": 0,
+    "optimizer_updates": 0,
+    "gpu_use_allowed": false,
+    "launch_ram_bytes": 8589934592,
+    "ongoing_ram_bytes": 2147483648
+  },
+  "registered_model_qualification_scope": {
+    "physical_optimizer_updates": 6,
+    "data": "TRAIN_ONLY",
+    "weights": "DISCARD",
+    "hard_physical_deadline_seconds": 19200,
+    "requires_separate_registered_model_source_and_native_checks": true
+  },
+  "excluded": ["acquisition experiment", "sham", "CE375 study expansion", "DEV evaluation", "confirmation evaluation", "production activation", "model promotion", "competing CE8 worker", "cap increase", "unreviewed retry"],
+  "commit_and_ordinary_push_authorized": true,
+  "protected_production_and_375_update_study_preserved": true,
+  "prior_automatic_rejection_preserved_as_historical_evidence": true,
+  "this_record_overrides_tool_policy": false,
+  "native_grant_created_by_this_record": false,
+  "execution_grant_created_by_this_record": false,
+  "qualification_pass": false
+}

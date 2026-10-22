@@ -1,0 +1,323 @@
+{
+  "schema": "RINEYA-CE8-PARTIAL-CAPTURE-LEDGER-SOURCE-REVIEW-1",
+  "observed_utc": "2026-10-09 20:56:08 UTC",
+  "classification": "FROZEN_SOURCE_AND_SANITIZED_METADATA_ONLY",
+  "verdict": "SCOPED_CAPTURE_LIBRARY_CLOSE_AND_PREP_WINDOW_REPAIRS_SUPPORTED_GUARD_LEDGER_AND_WHOLE_PRICE_HELD",
+  "instruction_check": "No applicable AGENT.md or AGENTS.md found in checked drive/user/BusinessProject/CE8 base ancestors, two current frozen source directories, or recognized price59/60 directories.",
+  "scope": {
+    "original_owner_retained": true,
+    "competing_workers": 0,
+    "owner_source_edits": 0,
+    "candidate_import_AST_compile_test_replay_execution": 0,
+    "native_profiler_ML_model_tokenizer_calls": 0,
+    "runtime_binary_ZIP_hash_reads": 0,
+    "raw_native_bank_FAILED_FIXTURE_PRE_GRANT_payload_reads": 0,
+    "unbound_price_helper_read_hash_execution": 0,
+    "eligibility_publication": 0,
+    "grants": 0,
+    "dispatchable": false
+  },
+  "pin_index": "C:/Users/clclc/BusinessProject/ce8-partial-capture-ledger-source-review-20261009-01/PIN_INDEX.json",
+  "point": {
+    "partial_freeze": {
+      "id": "wrapper-partial-failure-window-source-v1/OFFLINE_SOURCE_FREEZE.json",
+      "bytes": 11907,
+      "sha256": "b109b0b054173bb31f48c6756519e1f72551c7952688782c6be5c13f73230bd1",
+      "type": "frozen_contract",
+      "path": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-partial-failure-window-source-v1/OFFLINE_SOURCE_FREEZE.json"
+    },
+    "ledger_freeze": {
+      "id": "wrapper-bounded-failure-ledger-source-v1/OFFLINE_SOURCE_FREEZE.json",
+      "bytes": 12232,
+      "sha256": "7fd1661326fbf0b80de3a3f779e2f1ef53ed57a8d4e511d793eeb8a4f61b491e",
+      "type": "frozen_contract",
+      "path": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-bounded-failure-ledger-source-v1/OFFLINE_SOURCE_FREEZE.json"
+    },
+    "price59": {
+      "id": "failure-window-price-independent-review-20261009-59/REVIEW.json",
+      "bytes": 27167,
+      "sha256": "d1efabc5fcf80233b748252ee82662d4f1b275f0ae8388bbee5307bf2e29734f",
+      "type": "recognized_sanitized_price_metadata",
+      "path": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/failure-window-price-independent-review-20261009-59/REVIEW.json"
+    },
+    "price60": "Initial shallow inventory contained audit_failure_ledger.py only; REVIEW.json was absent. Unbound helpers and later publications were not read, hashed or followed. This is the initial point, not a assertion about later existence.",
+    "safe_pins": 48,
+    "current_declared_owned_source_support_matches": 42,
+    "excluded": "Runtime/artifact/ZIP/target payloads, actual native/FAILED/FIXTURE/PRE_GRANT records and later/WIP outputs were excluded. The price59 authors' runtime/component hash and Native recipe statements are attributed, not independently reproduced here."
+  },
+  "predecessor_resolution": [
+    {
+      "id": "F1",
+      "status": "TARGETED_SOURCE_BRANCH_REPAIRED",
+      "source": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-bounded-failure-ledger-source-v1/accounting.py",
+      "lines": [
+        151,
+        331,
+        333,
+        334,
+        337,
+        340,
+        342,
+        345,
+        346,
+        348,
+        349,
+        660,
+        819,
+        821
+      ],
+      "harness": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-bounded-failure-ledger-source-v1/harness.py",
+      "harness_lines": [
+        94,
+        96,
+        139,
+        140,
+        153,
+        154,
+        155,
+        156,
+        244,
+        246,
+        271,
+        272,
+        273,
+        274
+      ],
+      "detail": "Diagnostic state is initialized before output opens in its original constructor scope. Open callbacks retain the stream and capture into that existing object. Getter failures retain bounded type/status and known partial fd/HANDLE; COMPLETE is not inferred. Close checks initialized state before marking dispatch and no longer depends on successful capture construction. The old None-identity dereference before close is repaired at this source point. Allocation/physical failure recovery and complete cost/closure are separate holds."
+    },
+    {
+      "id": "F2_LIBRARY_CLOSE",
+      "status": "TARGETED_ERROR_TYPE_RETENTION_REPAIRED",
+      "source": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-bounded-failure-ledger-source-v1/harness.py",
+      "lines": [
+        92,
+        153,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        193,
+        516,
+        517,
+        518
+      ],
+      "schema": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-bounded-failure-ledger-source-v1/failure_envelope.py",
+      "schema_lines": [
+        137,
+        139,
+        140,
+        141,
+        142
+      ],
+      "detail": "Two fixed secondary_close_errors slots retain bounded type names from the actual stream.close exception, independently of the original reader errors slot. Failure observer emits those exact slots; schema rejects extra groups/fields. Primary operational object is not overwritten. This is bounded type/status retention, not retention of every secondary traceback or every selection/guard event; the residual below remains."
+    },
+    {
+      "id": "F3_PREP_PUBLISHER",
+      "status": "TARGETED_SAME_CLOCK_DISPOSITION_ROUTE_REPAIRED_NOT_ACTUAL_CLOSURE",
+      "source": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-bounded-failure-ledger-source-v1/accounting.py",
+      "lines": [
+        150,
+        151,
+        152,
+        211,
+        216,
+        218,
+        232,
+        235,
+        237,
+        238,
+        247,
+        248,
+        250,
+        253,
+        255,
+        257,
+        258,
+        260,
+        262,
+        263,
+        264,
+        266
+      ],
+      "detail": "Original PREP preallocates its output status and fixed failure path, selects the original failure subset before normal work, and requires actual failed source state before export. Opened stream and partial capture are retained. A finally route attempts the original close once only while the same clock admits it; observed return clears the stream before the afterguard, unknown or expiry retains evidence without retry. This repairs missing source cleanup routing but does not prove actual export, process exit, resource closure or final physical I/O."
+    },
+    {
+      "id": "METADATA_WINDOW",
+      "status": "SOURCE_GAP_IDENTIFIED_IN_PRICE59_REPAIRED",
+      "source": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-bounded-failure-ledger-source-v1/bootstrap_entry.py",
+      "lines": [
+        36,
+        40,
+        42,
+        43,
+        45,
+        46,
+        48,
+        50,
+        52,
+        53,
+        74,
+        75,
+        76,
+        77,
+        90,
+        91
+      ],
+      "metadata_entry": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-bounded-failure-ledger-source-v1/metadata_entry.py",
+      "metadata_lines": [
+        23,
+        24,
+        25,
+        28,
+        36,
+        39,
+        40,
+        41,
+        42
+      ],
+      "accounting": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-bounded-failure-ledger-source-v1/accounting.py",
+      "accounting_lines": [
+        177,
+        180,
+        182,
+        183,
+        184,
+        185,
+        187,
+        188,
+        191,
+        193,
+        195,
+        198,
+        200,
+        201,
+        202,
+        204,
+        211,
+        216,
+        666,
+        670
+      ],
+      "detail": "The trusted Layer0 authenticates the running fixed metadata code/global/module context before owner creation, retaining its failure-window identity in the original owner. The paid post-owner registration/read/hash/compile and materializer route are inside that same metadata main try/abort window, including registration failure. Healthy emergency work is refused. Exact original PREP latch forbids its longer deadline after CPU handoff. Before-owner startup/constructor remains explicitly unqualified and not free."
+    }
+  ],
+  "remaining_concrete_source_finding": {
+    "id": "R1_SECONDARY_GUARD_DETAIL",
+    "source": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-bounded-failure-ledger-source-v1/harness.py",
+    "lines": [
+      121,
+      124,
+      130,
+      131,
+      132,
+      133,
+      135,
+      136,
+      148,
+      153,
+      157,
+      158,
+      164,
+      193,
+      196,
+      197,
+      198,
+      199,
+      200
+    ],
+    "path": "The separate secondary ledger is written only inside the callback's except around stream.close. Before the callback, perform can refuse at the original clock or operation reservation guards. If a primary read/write error already occupies errors[index], this refusal reaches reader finally199-200 and is discarded as detail; close_attempted remains false and no underlying close occurs. An expiry between failure and cleanup is one allowed source branch. Returned close/afterguard events also need their state considered separately, rather than being labelled library close failures.",
+    "limit": "Static source branch only. No actual lost error, native leak, bypass, failure recovery or post-expiry dispatch was attempted or observed. Retained stream/status and existing primary still block success. The specific old library-close error drop is repaired; a complete noncompensating selection/refusal/dispatch/return ledger is not.",
+    "next_source_action": "Record a separately bounded cleanup selection/refusal/afterguard event when the primary already exists, preserving original identity and numeric status. Classify no-dispatch refusal separately from attempted unknown and observed returned close. Do not retry, dispatch after expiry, replace the primary, weaken guards or introduce another worker."
+  },
+  "supported_allocation_changes": [
+    {
+      "source": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-partial-failure-window-source-v1/PARTIAL_FAILURE_WINDOW_PLAN.md",
+      "quantities": {
+        "internal_block_bytes": 1792,
+        "two_block_bytes": 3584,
+        "state_bytes": 4608,
+        "sum": 8192
+      },
+      "scope": "This is an actual declared allocation redistribution within original8192 log workspace. Original2048 operation groups,8MiB logical read cap,8192 persisted-byte cap and order remain. It does not itself prove Thread/FileIO/C ABI/RSS or full callback lifetime."
+    },
+    {
+      "source": "C:/Users/clclc/BusinessProject/comp-rs-001-records/s0/r-oracle-sft-qualification-20261004/attempt15-r4-review-20261005/wrapper-bounded-failure-ledger-source-v1/failure_envelope.py",
+      "lines": [
+        266,
+        269,
+        271,
+        275,
+        276,
+        277,
+        278,
+        279
+      ],
+      "scope": "Fixed bounded bytearray replaces the old diagnostic character-reference list, removing its declared2064 logical list/header recipe. Selected text/raw<=256 and per-character escape token remain; saved byte-equivalence controls are software evidence, not native/model results."
+    }
+  ],
+  "price_and_phase_limits": {
+    "all7_fit": false,
+    "current_assembly": false,
+    "physical_qualification": false,
+    "root_caps_changed": false,
+    "PREP_caps_changed": false,
+    "refunds": 0,
+    "price59_scope": "Price59 binds the partial-window source b109b0b0. It still reports NO_ADMIT for F2, missing metadata failure window and whole occupied/PREP/publisher/runtime/current assembly. Ledger source7fd16613 repairs named F2 library-error and metadata-window components; its full repricing is absent at the initial point. Never transfer price59's conditional complete-file/component formulas into an adopted ledger whole-price result.",
+    "price59_conditional_graph": 22344,
+    "price59_conditional_probe": 971,
+    "price59_graph_gate": 22528,
+    "ledger_added_error_recipe": 352,
+    "ledger_conditional_graph": 22696,
+    "ledger_conditional_gate_excess": 168,
+    "graph_limit": "This exceeds the gate as a conditional conservative source recipe. It is not an actual reachable lower bound, observed overflow or universal Native NoFit. Old20488 identity/category assumptions remain conditional; exact owned typename identities, emitted rows, probe, build/encoder/cached frames, retained exceptions and log state must compose without dropping errors or discounting equal text.",
+    "PREP_failure_publisher_recipe": {
+      "state_refs": 928,
+      "scalar_positions": 512,
+      "type_fixed_path_payload": 512,
+      "json_text": 2048,
+      "raw": 2048,
+      "readback": 2049,
+      "descriptor_hash_refs_finalizer": 4096,
+      "sum": 12193,
+      "selected_failure_metadata": 131072
+    },
+    "PREP_recipe_limit": "The declared12193 is logical payload/reference arithmetic. Fixed2048 wire is checked before encoding; selected65536 read/write/hash ceilings and same1800s failure subset remain conservative reservations, not elapsed time or physical heap/C allocator proof. No actual publisher receipt/exit was read.",
+    "additional_metadata_registration": {
+      "operation_attempts": 32,
+      "read_bytes": 1048577,
+      "identity_hash_attempts": 1,
+      "identity_hash_bytes": 1048576,
+      "metadata_bytes": 1048576
+    },
+    "work_limit": "Post-owner source read/hash/compile and resource callbacks need inclusive composition in the original PREP selection. Source-unit recipes cover bounded logical groups, not arbitrary free scalar/native calls or platform timing. Root60, nested single5s tail, control16/cleanup16 and zero logical metadata headroom remain binding.",
+    "unresolved": [
+      "Residual cleanup guard/refusal event detail",
+      "Universal owned graph/typename identity/probe/encoder/cached frame/partial error lifetimes",
+      "PREP entry/constructor/source-loader/compile/callback plus ordinary/failure publisher composition",
+      "Thread/FileIO/native ABI/image/log/cleanup/control workspace and actual attempts",
+      "Current target/ENTRY/PACKET/nativefreeze/readiness/review/materialization binding",
+      "Actual terminal own/child I/O/process exit/Job0/handle/pin/lease closure"
+    ]
+  },
+  "saved_mechanics": {
+    "partial_source_controls": 17,
+    "ledger_source_controls": 11,
+    "reviewer_runs": 0,
+    "scope": "Reported extracted synthetic controls and overlapping source checks only; no independent scientific training draws, actual Native/resource/exit result or Rineya quality evidence."
+  },
+  "authority": {
+    "issuer_refusal_preserved": true,
+    "policy_denial_of_verification_plus_native_eligibility_publication_preserved": true,
+    "this_report_is_eligibility_dispatch_input": false,
+    "grant_retry_workaround": false,
+    "CPU60_not_model19200_P0_or_RSD": true
+  },
+  "next_concrete_decision": "Existing owner should address the residual guard/refusal ledger, then produce one exact frozen ledger graph/lifetime/source-unit all7 reprice and current non-dispatch assembly review. Credit repaired partial capture, actual close-type retention and authenticated PREP/metadata source routes narrowly; keep complete price, physical/native qualification, previous failed attempts and policy refusal held.",
+  "end_pin_check": {
+    "count": 48,
+    "drift": []
+  }
+}

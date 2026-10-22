@@ -1,0 +1,94 @@
+{
+  "global_caps": {
+    "identity_hash_attempts_upper": 1010000,
+    "identity_hash_bytes_upper": 4720169058304,
+    "io_read_bytes_upper": 1275605286912,
+    "io_write_bytes_upper": 163208757248,
+    "metadata_bytes_upper": 2080374784,
+    "operation_attempts_upper": 220000,
+    "wall_seconds_upper": 57600
+  },
+  "schema": "CE8-QUALIFICATION-CAPS-1",
+  "stage_caps": {
+    "adam_clipping": {
+      "identity_hash_attempts_upper": 100000,
+      "identity_hash_bytes_upper": 68719476736,
+      "io_read_bytes_upper": 34359738368,
+      "io_write_bytes_upper": 8589934592,
+      "max_attempts": 1,
+      "metadata_bytes_upper": 268435456,
+      "operation_attempts_upper": 20000,
+      "wall_seconds_upper": 3600
+    },
+    "checkpoint_resume": {
+      "identity_hash_attempts_upper": 400000,
+      "identity_hash_bytes_upper": 4398046511104,
+      "io_read_bytes_upper": 1099511627776,
+      "io_write_bytes_upper": 137438953472,
+      "max_attempts": 1,
+      "metadata_bytes_upper": 536870912,
+      "operation_attempts_upper": 30000,
+      "wall_seconds_upper": 3600
+    },
+    "delta_roundtrip": {
+      "identity_hash_attempts_upper": 100000,
+      "identity_hash_bytes_upper": 68719476736,
+      "io_read_bytes_upper": 34359738368,
+      "io_write_bytes_upper": 4294967296,
+      "max_attempts": 1,
+      "metadata_bytes_upper": 268435456,
+      "operation_attempts_upper": 20000,
+      "wall_seconds_upper": 1800
+    },
+    "ingestion_tokenizer": {
+      "identity_hash_attempts_upper": 100000,
+      "identity_hash_bytes_upper": 4294967296,
+      "io_read_bytes_upper": 2147483648,
+      "io_write_bytes_upper": 1073741824,
+      "max_attempts": 1,
+      "metadata_bytes_upper": 268435456,
+      "operation_attempts_upper": 50000,
+      "wall_seconds_upper": 1800
+    },
+    "likelihood_gradient_parity": {
+      "identity_hash_attempts_upper": 100000,
+      "identity_hash_bytes_upper": 68719476736,
+      "io_read_bytes_upper": 34359738368,
+      "io_write_bytes_upper": 8589934592,
+      "max_attempts": 1,
+      "metadata_bytes_upper": 268435456,
+      "operation_attempts_upper": 20000,
+      "wall_seconds_upper": 3600
+    },
+    "longest_masks": {
+      "identity_hash_attempts_upper": 100000,
+      "identity_hash_bytes_upper": 8589934592,
+      "io_read_bytes_upper": 2147483648,
+      "io_write_bytes_upper": 1073741824,
+      "max_attempts": 1,
+      "metadata_bytes_upper": 268435456,
+      "operation_attempts_upper": 50000,
+      "wall_seconds_upper": 1800
+    },
+    "resource_io_measurement": {
+      "identity_hash_attempts_upper": 100000,
+      "identity_hash_bytes_upper": 68719476736,
+      "io_read_bytes_upper": 34359738368,
+      "io_write_bytes_upper": 1073741824,
+      "max_attempts": 1,
+      "metadata_bytes_upper": 134217728,
+      "operation_attempts_upper": 20000,
+      "wall_seconds_upper": 1800
+    },
+    "runtime_anchor": {
+      "identity_hash_attempts_upper": 10000,
+      "identity_hash_bytes_upper": 34359738368,
+      "io_read_bytes_upper": 34359738368,
+      "io_write_bytes_upper": 1073741824,
+      "max_attempts": 1,
+      "metadata_bytes_upper": 67108864,
+      "operation_attempts_upper": 10000,
+      "wall_seconds_upper": 39600
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "R-ORACLE-CE-CHECKPOINT-CPU-CHECKS-1",
+  "utc": "2026-10-01T17:28:41.801917+00:00",
+  "scope": "synthetic CPU CE8 boundary/checkpoint integration and legacy B2 storage regression; no pretrained model or native experiment authorization",
+  "source_checkout": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930",
+  "source_before": {
+    "experiments/skill_acquisition_native_v1/ce_update.py": "b140fa6020f46b9c22d0a6e392df5ab4b4fd83ad57951a92342c0a226fb50b63",
+    "experiments/skill_acquisition_native_v1/checkpoint.py": "c4a2e34f68eb717011b85a2322fc09287d0dbe562aed19b950fc96248fec60da",
+    "experiments/skill_acquisition_native_v1/ce_checkpoint.py": "5eb5a59430cc62188db3e30d8fad509b2ba1821289bc4c9c10185cfac9bcfa89",
+    "experiments/skill_acquisition_native_v1/tests/test_checkpoint.py": "24689f26d4946e1ba6d5a0f60421d74425eda241c536c362ca0ae84ade22917c",
+    "experiments/skill_acquisition_native_v1/tests/test_ce_checkpoint.py": "d2b78a7d28ee6c36990692f47b63893765fa0489a87c12cbc33fb80c1e9e3c6d",
+    "experiments/skill_acquisition_native_v1/update.py": "455afd2a4fccb7614318ad2f0ce3e1ef630df6852b2976b3d86db130fb3027d0",
+    "experiments/skill_acquisition_native_v1/tests/test_ce_update.py": "d55b698281a7bd6f3b92cc98f0867cb6823048faa9a67333003837af0bf63e12",
+    "experiments/maxrl_comp002_pretraining_v1/s0_runtime.py": "739f97eda8688ffc32ab6683a6e98c4c2589a6bf2adc01bd18aabf10bca330bf",
+    "experiments/maxrl_comp002_pretraining_v1/s0_generate.py": "60ba77eb8f688347b7852bb9b53f2728b8b1250578d1b36c0e210b6e3e7b3457",
+    "experiments/maxrl_comp002_pretraining_v1/s0_pilot.py": "7ae20fda82fc3084b9a60634d213b7a62a7a494b64760e09710ca893c769e04c",
+    "experiments/maxrl_comp002_pretraining_v1/mechanics.py": "e643eb196341e65f926733f22a2d23f668d8c09f046ebc5ae1d6561471cb0e88"
+  },
+  "source_after": {
+    "experiments/skill_acquisition_native_v1/ce_update.py": "b140fa6020f46b9c22d0a6e392df5ab4b4fd83ad57951a92342c0a226fb50b63",
+    "experiments/skill_acquisition_native_v1/checkpoint.py": "c4a2e34f68eb717011b85a2322fc09287d0dbe562aed19b950fc96248fec60da",
+    "experiments/skill_acquisition_native_v1/ce_checkpoint.py": "5eb5a59430cc62188db3e30d8fad509b2ba1821289bc4c9c10185cfac9bcfa89",
+    "experiments/skill_acquisition_native_v1/tests/test_checkpoint.py": "24689f26d4946e1ba6d5a0f60421d74425eda241c536c362ca0ae84ade22917c",
+    "experiments/skill_acquisition_native_v1/tests/test_ce_checkpoint.py": "d2b78a7d28ee6c36990692f47b63893765fa0489a87c12cbc33fb80c1e9e3c6d",
+    "experiments/skill_acquisition_native_v1/update.py": "455afd2a4fccb7614318ad2f0ce3e1ef630df6852b2976b3d86db130fb3027d0",
+    "experiments/skill_acquisition_native_v1/tests/test_ce_update.py": "d55b698281a7bd6f3b92cc98f0867cb6823048faa9a67333003837af0bf63e12",
+    "experiments/maxrl_comp002_pretraining_v1/s0_runtime.py": "739f97eda8688ffc32ab6683a6e98c4c2589a6bf2adc01bd18aabf10bca330bf",
+    "experiments/maxrl_comp002_pretraining_v1/s0_generate.py": "60ba77eb8f688347b7852bb9b53f2728b8b1250578d1b36c0e210b6e3e7b3457",
+    "experiments/maxrl_comp002_pretraining_v1/s0_pilot.py": "7ae20fda82fc3084b9a60634d213b7a62a7a494b64760e09710ca893c769e04c",
+    "experiments/maxrl_comp002_pretraining_v1/mechanics.py": "e643eb196341e65f926733f22a2d23f668d8c09f046ebc5ae1d6561471cb0e88"
+  },
+  "source_unchanged": true,
+  "tests_run": 43,
+  "skipped": 0,
+  "failures": 0,
+  "errors": 0,
+  "abort": null,
+  "cuda_initialized": false,
+  "host_launch_gib": 5.575626373291016,
+  "min_host_at_test_start_gib": 4.945461273193359,
+  "elapsed_s": 3.9244896000000153,
+  "log": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\CE8_CHECKPOINT_CPU_CHECKS_V2_20261001.log",
+    "sha256": "7a876be5bb65da12641c8fdb1c02bb773567eab6d21b68edf46b5819e4067247"
+  },
+  "checker_sha256": "f94b7bbd6a7da90c30a7a4a7bf8b1906eb015311e40b2574e53e3dc041053d9d",
+  "related_ce_core_checks": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\CE_CORE_CPU_CHECKS_V2_20261001.json",
+  "native_training_authorized": false,
+  "passed": true
+}

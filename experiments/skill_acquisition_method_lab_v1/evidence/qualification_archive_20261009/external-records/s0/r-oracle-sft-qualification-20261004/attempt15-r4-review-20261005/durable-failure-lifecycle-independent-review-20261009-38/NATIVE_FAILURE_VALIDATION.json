@@ -1,0 +1,284 @@
+{
+  "audit_scope": "Separate postrun read/hash/process-inventory work, not free or chargedback/refunded into the completedworker. Read-only, no Nativequalification rerun, no processes interrupted.",
+  "checks": {
+    "216_pin_close_attempts_and_custody_closed": true,
+    "all216_pin_source_runtime_hashes_rechecked": true,
+    "all53_frozen_refs_unchanged": true,
+    "durable_failure_all7_and_partition_counters_within_caps": true,
+    "externaloriginalprocess_exit1_and_tracked_ownedPIDs_absent": true,
+    "failure_own_full_exporter_selection_included_before_snapshot": true,
+    "final_PREP_closed_in_grant_includes_constructor_and_under_all7": true,
+    "fresh_exact_source_packet_review_nativefreeze_grant_bindings": true,
+    "native_pin_opens_infos_hashes216_and_streambytes_match": true,
+    "normal_probe_receipt_own_predicates_valid": true,
+    "retained_backend_handles_closed_Job0_and_actor_terminal_observed": true,
+    "same_token_lease_released_and_absent": true,
+    "strict2s_timeout_fence_failed_by16ms": true,
+    "timeout_child124_Job0_handlesclosed": true
+  },
+  "closure": {
+    "backends": [
+      {
+        "all_owned_handles_closed": true,
+        "cleanup_errors": [],
+        "closed_flag": true,
+        "construction_returned": true,
+        "construction_started": true,
+        "job_created": false,
+        "job_empty_observed": false,
+        "process_created": false,
+        "process_terminal_observed": false,
+        "role": "initial_checker"
+      },
+      {
+        "all_owned_handles_closed": true,
+        "cleanup_errors": [],
+        "closed_flag": true,
+        "construction_returned": true,
+        "construction_started": true,
+        "job_created": true,
+        "job_empty_observed": true,
+        "process_created": true,
+        "process_terminal_observed": true,
+        "role": "normal_exit"
+      },
+      {
+        "all_owned_handles_closed": true,
+        "cleanup_errors": [],
+        "closed_flag": true,
+        "construction_returned": true,
+        "construction_started": true,
+        "job_created": true,
+        "job_empty_observed": true,
+        "process_created": true,
+        "process_terminal_observed": true,
+        "role": "timeout"
+      }
+    ],
+    "closed_pin_attempts": 216,
+    "custody_closed": true,
+    "owned_lease": {
+      "created": true,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-durable-failure-closure-source-v2\\native-one-attempt\\OWNER_FIXTURE.lock",
+      "released": true,
+      "status": "RELEASED_SAME_TOKEN",
+      "token_match": true
+    },
+    "processes_absent": [
+      235060,
+      244420,
+      233228,
+      244364,
+      232188
+    ]
+  },
+  "durable_failure_ref": {
+    "bytes": 3700,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-durable-failure-closure-source-v2\\FAILED_QUALIFICATION.json",
+    "sha256": "507cb6e5160f609e33af80d654475fc4de22b85e577f3cfc04c54e190787d9a6"
+  },
+  "external_tool_terminal_ref": {
+    "bytes": 3307,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\CPU_NATIVE_TOOL_TERMINAL_20261009_38.json",
+    "sha256": "980f6a17c130afff34480c7ce34b91ae63bd072d599dd01d3048ff3150d086eb"
+  },
+  "failed_root_accounting": {
+    "complete_failure_envelope_selected_before_snapshot": true,
+    "external_original_process_exit_required": true,
+    "failed": true,
+    "native_cleanup_attempts": 6,
+    "original_deadline": 44821.046,
+    "original_origin": 44761.046,
+    "partition_used": {
+      "control": {
+        "identity_hash_attempts": 5,
+        "identity_hash_bytes": 14114,
+        "metadata_bytes": 204736,
+        "operation_attempts": 1113,
+        "read_bytes": 16385,
+        "wall_seconds": 0,
+        "write_bytes": 28736
+      },
+      "final_tail": {
+        "identity_hash_attempts": 16,
+        "identity_hash_bytes": 65536,
+        "metadata_bytes": 65536,
+        "operation_attempts": 256,
+        "read_bytes": 65536,
+        "wall_seconds": 0,
+        "write_bytes": 65536
+      },
+      "logs": {
+        "identity_hash_attempts": 0,
+        "identity_hash_bytes": 0,
+        "metadata_bytes": 16384,
+        "operation_attempts": 4096,
+        "read_bytes": 16777216,
+        "wall_seconds": 0,
+        "write_bytes": 16384
+      },
+      "native_host": {
+        "identity_hash_attempts": 0,
+        "identity_hash_bytes": 0,
+        "metadata_bytes": 0,
+        "operation_attempts": 1639,
+        "read_bytes": 0,
+        "wall_seconds": 0,
+        "write_bytes": 0
+      },
+      "normal_exit": {
+        "identity_hash_attempts": 128,
+        "identity_hash_bytes": 4194304,
+        "metadata_bytes": 327680,
+        "operation_attempts": 8192,
+        "read_bytes": 4194304,
+        "wall_seconds": 60,
+        "write_bytes": 131072
+      },
+      "timeout": {
+        "identity_hash_attempts": 128,
+        "identity_hash_bytes": 4194304,
+        "metadata_bytes": 327680,
+        "operation_attempts": 8192,
+        "read_bytes": 4194304,
+        "wall_seconds": 60,
+        "write_bytes": 131072
+      }
+    },
+    "pin_cleanup_attempts": 216,
+    "pin_cleanup_limit": 216,
+    "publication_bytes_selected": 32768,
+    "publication_metadata_including_workspace_selected": 65536,
+    "publication_operations_selected": 8,
+    "refunds": 0,
+    "selected": {
+      "identity_hash_attempts": 2048,
+      "identity_hash_bytes": 33554432,
+      "metadata_bytes": 1048576,
+      "operation_attempts": 150000,
+      "read_bytes": 268435456,
+      "wall_seconds": 60,
+      "write_bytes": 1048576
+    },
+    "tail_control_attempts_selected": 12,
+    "tail_deadline": 44772.203,
+    "tail_start": 44767.203,
+    "used": {
+      "identity_hash_attempts": 277,
+      "identity_hash_bytes": 8468258,
+      "metadata_bytes": 942016,
+      "operation_attempts": 23488,
+      "read_bytes": 25247745,
+      "wall_seconds": 60,
+      "write_bytes": 372800
+    }
+  },
+  "final_preparation_accounting": {
+    "all_preparation_work_including_root_constructor_counted": true,
+    "closed": true,
+    "deadline": 46560.375,
+    "failed": false,
+    "origin": 44760.375,
+    "partition_used": {
+      "control": {
+        "identity_hash_attempts": 295,
+        "identity_hash_bytes": 94149364,
+        "metadata_bytes": 3435392,
+        "operation_attempts": 18026,
+        "read_bytes": 94760664,
+        "wall_seconds": 0,
+        "write_bytes": 131072
+      }
+    },
+    "selected": {
+      "identity_hash_attempts": 2048,
+      "identity_hash_bytes": 134217728,
+      "metadata_bytes": 8388608,
+      "operation_attempts": 50000,
+      "read_bytes": 134217728,
+      "wall_seconds": 1800,
+      "write_bytes": 4194304
+    },
+    "startup_claimed_free": false,
+    "trusted_localcaller_startup_qualified": false,
+    "used": {
+      "identity_hash_attempts": 295,
+      "identity_hash_bytes": 94149364,
+      "metadata_bytes": 3435392,
+      "operation_attempts": 18026,
+      "read_bytes": 94760664,
+      "wall_seconds": 0,
+      "write_bytes": 131072
+    }
+  },
+  "grant_ref": {
+    "bytes": 6419,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-durable-failure-closure-source-v2\\FIXTURE_GRANT.json",
+    "sha256": "77c4fbb0a666fcb7feec1a7880b339d0782f28068f5780204745992dd0c31e72"
+  },
+  "independent_postrun_audit": {
+    "raw_hash_attempts": 289,
+    "raw_hash_bytes": 93758328
+  },
+  "independent_source_review_ref": {
+    "bytes": 13387,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\durable-failure-lifecycle-independent-review-20261009-38\\SOURCE_REVIEW.json",
+    "sha256": "831631f26bbb368a70a527f76c15c8db400a098acee8aa82db20bb7834f056e6"
+  },
+  "limits": "Failed logical ledger/resourceclosure is not successful qualification. No complete normalroot CLOSED_ACCOUNTING/lastaggregatephysicalparentIO receipt was produced; physical wholemodel qualification/startup is not claimed. Records are preserved, no refunds or priorgrantreuse.",
+  "models_loaded": 0,
+  "native_freeze_ref": {
+    "bytes": 5041,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-durable-failure-closure-source-v2\\NATIVE_SOURCE_FREEZE.json",
+    "sha256": "6dad5ad0f1171480d5fba9fa9d9e2dcbe066bcba8da68c4b694d3d9eb438da41"
+  },
+  "next_required_decision": "Review ONE prospective controlled-timeout scheduling correction preserving2s/CPU60/caps and frozenfailedv2; no compile/Native retry or model work authorized by this validation.",
+  "normal_probe_ref": {
+    "bytes": 2190,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-durable-failure-closure-source-v2\\native-one-attempt\\actor-probe\\normal_exit\\ACTOR_PROBE_CLOSED.json",
+    "sha256": "387175fc7dd31742f778357b2500e91507f41ec5e653e3e5f80f73859b19687d"
+  },
+  "observed_failure": {
+    "actor_failure": "Nonzero timeoutactor follows strict stopfenceexception; exact actor returncode not separately persisted. Parentfailed existingactualactor-exit predicate.",
+    "child_returncode": 124,
+    "late_milliseconds": 16,
+    "nested_timeout_deadline": 44763.546,
+    "normal_case": "Actual normal receipt valid; no overall two-case/rootpass follows.",
+    "timeout_closed_probe_missing": true,
+    "timeout_stop_monotonic": 44763.562
+  },
+  "optimizer_updates": 0,
+  "packet_ref": {
+    "bytes": 8955,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-durable-failure-closure-source-v2\\PACKET.json",
+    "sha256": "a06a8139ab3f7a84cf613f499791e3ffc5b24abc83328ec9e669e2fe8746315d"
+  },
+  "preparation_ref": {
+    "bytes": 84965,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-durable-failure-closure-source-v2\\PRE_GRANT_PREPARATION.json",
+    "sha256": "ba62514b9b60f9b16d9a0cf68067c63042dbb2687befffd2394c3240478b1264"
+  },
+  "process_observation_ref": {
+    "bytes": 255,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\durable-failure-lifecycle-independent-review-20261009-38\\POST_NATIVE_PROCESS_OBSERVATION_V2.json",
+    "sha256": "8bda28b80a74a172457f55d1936b08b94ce96a27f290120a2225b9951a344796"
+  },
+  "qualification_pass": false,
+  "schema": "CE8-ACTUAL-NATIVE-CPU-FAILURE-INDEPENDENT-VALIDATION-1",
+  "source_freeze_ref": {
+    "bytes": 28787,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-durable-failure-closure-source-v2\\SOURCE_FREEZE.json",
+    "sha256": "ed7ee46775b08bf06ebde68cf09cebce669ee317a1e727d0d8b3f9d244965856"
+  },
+  "status": "QUALIFICATION_FAILED_NO_RETRY_FAILURE_RECORD_AND_RESOURCE_CLOSURE_VALIDATED",
+  "timeout_child_ref": {
+    "bytes": 396,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-durable-failure-closure-source-v2\\native-one-attempt\\actor-probe\\timeout\\QUALIFICATION_CHILD_TERMINAL.json",
+    "sha256": "ea23f25bdf2412f409677eeec4338a399c54f786bb5af83cb2aa6bf08104ad68"
+  },
+  "timeout_stderr_ref": {
+    "bytes": 314,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-durable-failure-closure-source-v2\\native-one-attempt\\parent_timeout\\supervisor.stderr.log",
+    "sha256": "28f9f5cf61abb0769b5b65c4a70a76c2dd84483242114e46ed99391d9f8b9b14"
+  }
+}

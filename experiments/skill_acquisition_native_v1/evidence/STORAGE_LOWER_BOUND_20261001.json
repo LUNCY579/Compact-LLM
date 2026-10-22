@@ -1,0 +1,28 @@
+{
+  "schema": "SKILL-ACQUISITION-STORAGE-LOWER-BOUND-1",
+  "utc": "2026-10-01T04:21:13.207137+00:00",
+  "numel_B": 220233216,
+  "no_models_loaded": true,
+  "classification": "analytical lower bound under current fixed cadence, unit and safe W-derived reservation",
+  "panels": [
+    {
+      "arm": "atomic",
+      "boundaries": 1500,
+      "minimum_checkpoint_saves": 151,
+      "lower_bound_assumption": "every checkpoint uses lazy Adam, no extra first-update checkpoint; omits positive metadata/RNG overhead",
+      "minimum_cumulative_binary_writes_bytes": 133901795328,
+      "minimum_cumulative_binary_writes_gib": 124.70576477050781,
+      "safe_fallback_required_free_disk_gib": 144.44879341125488
+    },
+    {
+      "arm": "MT",
+      "boundaries": 3000,
+      "minimum_checkpoint_saves": 301,
+      "lower_bound_assumption": "every checkpoint uses lazy Adam, no extra first-update checkpoint; omits positive metadata/RNG overhead",
+      "minimum_cumulative_binary_writes_bytes": 266041724928,
+      "minimum_cumulative_binary_writes_gib": 247.7706642150879,
+      "safe_fallback_required_free_disk_gib": 267.51369285583496
+    }
+  ],
+  "conclusion": "Current safe fallback cannot admit even the binary-write lower bound on the observed ~71.6GiB free drive; separately enforced metadata budget is required for practical local S1 units. No recipe/authorization changed."
+}

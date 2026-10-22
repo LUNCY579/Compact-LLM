@@ -1,0 +1,41 @@
+{
+  "mathematical_tests": {
+    "command": "python -m pytest -q experiments/skill_acquisition_method_lab_v1/tests",
+    "passed": 48,
+    "seconds": 0.07
+  },
+  "full_harness_before_envelope_fix": {
+    "passed": 811,
+    "skipped": 1,
+    "seconds": 294.23,
+    "superseded_for_native_launch": true
+  },
+  "independent_stopped_path_crosscheck": {
+    "full_Bernoulli_paths": 65536,
+    "p": 0.05,
+    "block_size": 4,
+    "cap_blocks": 4,
+    "gamma": 1,
+    "expected_draws": 12.073147075806798,
+    "pooled_expected_gradient": 0.4716991668143003,
+    "status": "matches block enumeration"
+  },
+  "artifact_audit": "exact-20260930-v2/RECEIPT.json",
+  "native_acquisition_claim": false,
+  "final_full_harness": {
+    "tests": 851,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 1,
+    "passed": 850,
+    "seconds": 249.053,
+    "optional_skips": [
+      {
+        "test": "experiments.maxrl_comp002_pretraining_v1.tests.test_s0pre_stats.test_cp_bounds_match_scipy_beta",
+        "reason": "could not import 'scipy.stats': No module named 'scipy'"
+      }
+    ],
+    "source_changed_during_test": false,
+    "qualification": "../maxrl_comp002_pretraining_v1/evidence/WARMSTART_QUALIFICATION_20260930.json"
+  }
+}

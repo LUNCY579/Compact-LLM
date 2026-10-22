@@ -1,0 +1,195 @@
+{
+  "citation_and_provenance_limits": [
+    "Primary-paper descriptions were checked against actual official text; the conditional rectangle/telescoping proofs and toy counterexamples are our own analysis.",
+    "The six exact outcomes and script hashes were checked by inspection and arithmetic reasoning; the previously recorded Fraction test run was not independently rerun.",
+    "SOURCE_PINS includes exact local protocol hashes, which were rehashed here. Their full scientific authority or local protocol semantics were not imported by this review.",
+    "The numerical addendum was not present in the older SOURCE_PINS references; this independent receipt pins its actual current bytes explicitly.",
+    "All statements remain conditional mathematics. No Rineya/Titan capability, skill acquisition, retention, model qualification, runtime admission or resource fit is certified."
+  ],
+  "classification": "INDEPENDENT_READ_ONLY_MATHEMATICS_AND_PRIMARY_SOURCE_SCOPE_REVIEW",
+  "decision": "PASS_CONDITIONAL_BOUNDS_AND_EXACT_EXAMPLES_DECODER_SCOPE_CORRECTION_REQUIRED",
+  "exact_example_algebra_review": [
+    {
+      "case": 1,
+      "decision": "PASS",
+      "verification": "For two(a,b,k)=(a-kab,b-kab), each entire coordinate axis equals the linear teacher, while E=(-kab,-kab). At a=b=1,k=100, joint=(-99,-99),E=(-100,-100). Allowing arbitrarily large finite k makes the logical mixed-damage family unbounded."
+    },
+    {
+      "case": 2,
+      "decision": "PASS",
+      "verification": "The directional Hessian is(-k,-k). In infinity norm kappa=100; a=1/2,b=1/4 yields E=(-25/2,-25/2), attaining|ab|kappa=25/2. In Euclidean output norm kappa would instead be sqrt(2)*100; the receipt correctly labels infinity norm."
+    },
+    {
+      "case": 3,
+      "decision": "PASS",
+      "verification": "At the anchor the two scalar task Jacobians are(1,0) and(0,1). With equal task weights and unit squared-loss output Hessian, GGN=diag(1/2,1/2). Both Euclidean and GGN cross-products are zero, yet mixed output is nonzero."
+    },
+    {
+      "case": 4,
+      "decision": "PASS",
+      "verification": "The first output marginal for v at a=0 is0; at a=1 it is-100. Their difference is the finite mixed interaction-100."
+    },
+    {
+      "case": 5,
+      "decision": "PASS",
+      "verification": "a+b+c-100abc is additive on every anchor axis and two-coordinate face. At(1,1,1),joint=-97,residual=-100. On[0,1]^3 each directional mixed Hessian has magnitude<=100, so the three-pair bound300 is valid, though loose."
+    },
+    {
+      "case": 6,
+      "decision": "PASS",
+      "verification": "Donor logits(1,0) have margin1; merged logits(-99,0) flip argmax. Infinity drift100 does not satisfy margin>200. This illustrates failure of a sufficient guarantee, not its necessity."
+    }
+  ],
+  "example_script_or_tests_rerun": false,
+  "execution_scope": {
+    "OS_state_inspections": 0,
+    "cache_package_modified": false,
+    "frameworks_imported": false,
+    "metadata_writer_only": true,
+    "model_or_data_or_evaluation_banks_read": false,
+    "models_loaded": 0,
+    "native_api_calls": 0,
+    "old_files_modified": false,
+    "tests_rerun": false
+  },
+  "primary_sources_actually_read": [
+    {
+      "access": "Direct official arXiv HTML via web tool on2026-10-06; selected text inspected, remote raw-byte SHA not established.",
+      "scope": "The toy counterexamples are independent mathematical inferences about axis-only information. They do not establish a counterexample to the complete DELTA training objective, its empirical benchmark results, or a paper claim of universal mixed-Hessian certification.",
+      "sections_read": [
+        "2",
+        "2.1",
+        "3.1",
+        "3.2",
+        "3.3"
+      ],
+      "supported_summary": "DELTA trains a linearized teacher and nonlinear student together, aligns hidden features along sampled scales, and regularizes with reference-data EK-FAC. Its sampled along-path scale lies in[0.5,1]. The local summary is accurate.",
+      "title": "Distilling Linearized Behavior into Non-Linear Fine-Tuning for Effective Task Arithmetic",
+      "url": "https://arxiv.org/html/2605.18993v1",
+      "version": "v1,18May2026"
+    },
+    {
+      "access": "Direct official NeurIPS PDF text read; abstract and weight-disentanglement discussion.",
+      "supported_summary": "The paper studies behavioral weight disentanglement and improved editing after tangent-space fine-tuning. The local summary is consistent. Affine parameterized outputs have zero mixed parameter Hessian, while off-task axis changes still require control.",
+      "title": "Task Arithmetic in the Tangent Space: Improved Editing of Pre-Trained Models",
+      "url": "https://papers.neurips.cc/paper_files/paper/2023/file/d28077e5ff52034cd35b4aa15320caea-Paper-Conference.pdf"
+    },
+    {
+      "access": "Direct official arXiv HTML abstract and analytical comparison discussion.",
+      "supported_summary": "The paper averages compatible fine-tuned weights and relates performance similarity to logit ensembles under flatness/confidence conditions. Its analysis does not provide a universal skill-retention guarantee for arbitrary update sums.",
+      "title": "Model soups: averaging weights of multiple fine-tuned models improves accuracy without increasing inference time",
+      "url": "https://arxiv.org/html/2203.05482v3"
+    }
+  ],
+  "proof_review": {
+    "implemented_nu_addendum": {
+      "decision": "PASS_CONDITIONAL_NUMERICAL_ERROR_BOUND",
+      "derivation": "Implemented mixture-to-donor drift is at most ||implemented_mix-ideal_mix||_infinity + ||ideal_mix-ideal_donor||_infinity + ||ideal_donor-implemented_donor||_infinity <= eta_j+2*nu. The actual donor margin above2*(eta_j+2*nu) therefore preserves its argmax.",
+      "no_owned_model_measurement": "No C2 region, uniform kappa, eta, nu, prefix coverage or actual margin certificate has been established for owned models.",
+      "required_error_scope": "nu must bound both actual implementations on every claimed input/prefix, including parameter composition/storage and evaluation errors. A parameter rounding norm alone requires an output sensitivity bound."
+    },
+    "logit_drift_and_margin": {
+      "argmax_derivation": "If donor winner q has margin m over every other r and each logit moves by at most delta, the mixture gap q-r is at least m-2*delta. Thus m>2*eta_j suffices for a unique unchanged argmax.",
+      "decision": "PASS_FOR_ARGMAX_AT_FIXED_INPUT_OR_PREFIX",
+      "eta_derivation": "Subtract the selected donor-j output from the mixture: the difference is the sum of the other axis drifts plus the n-way residual. Their infinity norms are bounded by eta_j.",
+      "necessity_limit": "This strict sufficient inequality is not a necessary condition for preservation; a conservative eta bound can be large while outputs remain identical."
+    },
+    "many_updates": {
+      "decision": "PASS",
+      "explicit_telescoping": "Write S_i=sum_{j<=i} a_j*u_j and G_i(z)=f(theta0+z+a_i*u_i)-f(theta0+z). The full residual is sum_i[G_i(S_{i-1})-G_i(0)]. Telescope the earlier coordinates within each bracket. The (i,j),j<i term equals int_0^{a_j} int_0^{a_i} D2f(theta0+S_{j-1}+s*u_j+t*u_i)[u_j,u_i] dt ds.",
+      "full_box_requirement": "Every point in each telescoped rectangle belongs to the full coefficient box; earlier coordinates may already be nonzero. Each unordered pair occurs exactly once, giving sum_{i<j}|a_i*a_j|*kappa_ij without an extra1/2 factor.",
+      "higher_order_terms": "C2 suffices. Higher interactions are included because the mixed Hessian depends on the remaining coordinates; no third-derivative assumption or truncation was used.",
+      "negative_or_dependent_updates": "Signed coefficients are handled by oriented integrals. Linear independence of update vectors is unnecessary. Full-box bounds must still cover the entire parameter-image of the coefficient box."
+    },
+    "two_updates": {
+      "boundary_cases": "If a=0 or b=0, E=0. Nonnegative finite kappa and a bound throughout the rectangle are required. Anchor-only Hessian/Gram information does not replace the uniform bound.",
+      "decision": "PASS",
+      "derivation": "Let F(s,t)=f(theta0+s*u+t*v). E=F(a,b)-F(a,0)-F(0,b)+F(0,0)=int_0^a int_0^b partial_s partial_t F(s,t) dt ds. C2 on an open neighborhood of the entire compact rectangle justifies both FTC applications, and partial_s partial_t F=D2f(theta)[u,v].",
+      "negative_coefficients": "Oriented integrals retain the identity for either sign. Taking norms turns orientation signs into absolute interval lengths, giving |a*b|*kappa.",
+      "vector_norm": "The integral triangle inequality holds for every fixed finite-dimensional output norm. kappa is already the directional Hessian norm for the actual u,v; no additional direction-length factors are missing."
+    }
+  },
+  "recorded_example_count": 6,
+  "recorded_example_source_identity_matches": true,
+  "required_scope_correction": {
+    "finding": "Deterministic decoding alone is too broad for an argmax-margin induction. Beam/search decoders can depend on alternative prefixes and aggregate sequence scores. Nontrivial logit processors may require applying the norm/margin bound to their final decision scores or proving a transfer bound.",
+    "minimal_correct_statement": "For greedy next-token argmax decoding with unchanged token support, masking, tie/stop/formatting policies, if the sufficient strict margin bound holds on the actual final decision-score vectors at every donor prefix, identical output follows by induction. Beam/search or other deterministic decision rules need corresponding score/order stability conditions.",
+    "original_files_modified": false,
+    "severity": "MATHEMATICAL_SCOPE_CORRECTION",
+    "source_fields": [
+      "CONDITIONAL_ANALYSIS.json:conditional_retention_link.autoregressive_limit",
+      "NUMERICAL_SCOPE_ADDENDUM.json:implemented_margin_certificate"
+    ],
+    "wording_precision": "Use a sufficient if condition rather than asserting that strict margin certification is necessary for identical generated output."
+  },
+  "reviewed_input_refs": {
+    "CONDITIONAL_ANALYSIS.json": {
+      "bytes": 7168,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\mixed-interactions-v1\\CONDITIONAL_ANALYSIS.json",
+      "sha256": "16427f16a8fef1df5bd45a8f19811ec883407ba4d0de784344d82937474ee6c0"
+    },
+    "EXACT_EXAMPLES_RECEIPT.json": {
+      "bytes": 2275,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\mixed-interactions-v1\\EXACT_EXAMPLES_RECEIPT.json",
+      "sha256": "23a03cd1adf71fc56180b364d2ef3af5b0c72414f4ae586d7c94555d2eb5f47c"
+    },
+    "NUMERICAL_SCOPE_ADDENDUM.json": {
+      "bytes": 1474,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\mixed-interactions-v1\\NUMERICAL_SCOPE_ADDENDUM.json",
+      "sha256": "28cbb236535311e034361c2dbc37919f89c97145c92071ad31692cff16f4161d"
+    },
+    "SOURCE_PINS.json": {
+      "bytes": 1836,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\mixed-interactions-v1\\SOURCE_PINS.json",
+      "sha256": "af2935c11e223cf0012c8075194af608efcf77a2ff663f3bab82a6d689c5bd93"
+    },
+    "exact_examples.py": {
+      "bytes": 4621,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\mixed-interactions-v1\\exact_examples.py",
+      "sha256": "b599156f71bfbc0c01c8aa440a2c2464e396025a390b56049b9e04b2c3784d31"
+    }
+  },
+  "schema": "CE8-INDEPENDENT-MIXED-INTERACTION-MATHEMATICS-REVIEW-1",
+  "source_pin_exact_checks": [
+    {
+      "exact_match": true,
+      "reference": {
+        "bytes": 4621,
+        "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\mixed-interactions-v1\\exact_examples.py",
+        "sha256": "b599156f71bfbc0c01c8aa440a2c2464e396025a390b56049b9e04b2c3784d31"
+      }
+    },
+    {
+      "exact_match": true,
+      "reference": {
+        "bytes": 7168,
+        "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\mixed-interactions-v1\\CONDITIONAL_ANALYSIS.json",
+        "sha256": "16427f16a8fef1df5bd45a8f19811ec883407ba4d0de784344d82937474ee6c0"
+      }
+    },
+    {
+      "exact_match": true,
+      "reference": {
+        "bytes": 2275,
+        "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\mixed-interactions-v1\\EXACT_EXAMPLES_RECEIPT.json",
+        "sha256": "23a03cd1adf71fc56180b364d2ef3af5b0c72414f4ae586d7c94555d2eb5f47c"
+      }
+    },
+    {
+      "exact_match": true,
+      "reference": {
+        "bytes": 4860,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\Rineya_Layerwise_Soup_Lab_v1.0\\docs\\RESEARCH_PROTOCOL.md",
+        "sha256": "3631d58b289097eb7ddfb9684775e4ba670eaf630b3c2a6c9f19f07139f3ab38"
+      }
+    },
+    {
+      "exact_match": true,
+      "reference": {
+        "bytes": 6052,
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\experiments\\post_training_mimo_centralized_v1\\RESEARCH_PROTOCOL.md",
+        "sha256": "24766497a27462a829df71cd9c9fb0a09d66e2628fcaa6e3f11df4438c8c102b"
+      }
+    }
+  ]
+}

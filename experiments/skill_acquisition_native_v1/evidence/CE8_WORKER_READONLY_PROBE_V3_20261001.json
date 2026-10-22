@@ -1,0 +1,590 @@
+{
+  "schema": "CE8-READONLY-WORKER-PROBE-1",
+  "utc": "2026-10-01T22:38:42.369315+00:00",
+  "classification": "actual current-PID OS/source metadata; not native freshness/execution/qualification",
+  "spec": {
+    "schema": "CE8-READONLY-WORKER-PROBE-SCOPE-1",
+    "mode": "readonly_current_probe",
+    "request_sha256": "ae336060220fd097ed96565cc60471c9dea4604b5203991ae2ee1b7d448bde6f",
+    "scope_sha256": "e621f5c72aeed6bb7f9c4c36adfdd53859ff7afd008df2b8958d799dbdb0967f",
+    "source_checkout": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930",
+    "python_ref": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+      "bytes": 262144,
+      "sha256": "de13d8017f63cb63b0b5bfd2f25e69245c9196433a224856ca1abde1e24d0cb7"
+    },
+    "process_image_ref": {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+      "bytes": 91648,
+      "sha256": "28d2965d061656abbe3a46100bd3342d1152185289445d489782a21a8cfe9b57"
+    },
+    "request_ref": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930\\experiments\\skill_acquisition_method_lab_v1\\CE8_REGISTRATION_PROPOSAL_20261001.json",
+      "bytes": 565625,
+      "sha256": "ae336060220fd097ed96565cc60471c9dea4604b5203991ae2ee1b7d448bde6f"
+    },
+    "source_files": {
+      "experiments/skill_acquisition_native_v1/ce_worker_evidence.py": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930\\experiments\\skill_acquisition_native_v1\\ce_worker_evidence.py",
+        "bytes": 27311,
+        "sha256": "16dfadd1c054fac6c8f240c85c7e5f74398563c0b902fe941a3434d76bfac76f"
+      },
+      "experiments/skill_acquisition_native_v1/runner.py": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930\\experiments\\skill_acquisition_native_v1\\runner.py",
+        "bytes": 42826,
+        "sha256": "e30ee498a046b7dd142308814569be5eb453030c870b11e9fed3cfe48d2acd0c"
+      }
+    },
+    "approved_code_sha256": {
+      "experiments/skill_acquisition_native_v1/ce_worker_evidence.py": "16dfadd1c054fac6c8f240c85c7e5f74398563c0b902fe941a3434d76bfac76f",
+      "experiments/skill_acquisition_native_v1/runner.py": "e30ee498a046b7dd142308814569be5eb453030c870b11e9fed3cfe48d2acd0c"
+    },
+    "entry_script_ref": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\run_ce_worker_readonly_probe_v3.py",
+      "bytes": 3869,
+      "sha256": "5de4581860450226f1590b4bf6f0f8583a29f48f80a835f7d300443b391691f0"
+    },
+    "bounds": {
+      "operation_attempts_upper": 100,
+      "io_read_bytes_upper": 4194304,
+      "identity_hash_attempts_upper": 100,
+      "identity_hash_bytes_upper": 4194304,
+      "wall_seconds_upper": 20
+    },
+    "expected_pid": 232152,
+    "expected_creation_filetime_100ns": 134353679221201500,
+    "launch_not_before_filetime_100ns": 134353679221201500,
+    "launch_not_after_filetime_100ns": 134353679221201500,
+    "expected_boot_identity": "windows-boot-guid-f04c76b5-411b-11f0-89c2-ddcd86d0f53c",
+    "argv": [
+      "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+      "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\run_ce_worker_readonly_probe_v3.py"
+    ],
+    "observed_process_image": {
+      "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+      "pid": 232152,
+      "creation_filetime_100ns": 134353679221201500,
+      "boot_identity": "windows-boot-guid-f04c76b5-411b-11f0-89c2-ddcd86d0f53c",
+      "classification": "prepaid read-only OS observation; raw image hash not yet verified"
+    }
+  },
+  "proof": {
+    "schema": "CE8-QUALIFICATION-WORKER-PROOF-1",
+    "worker_id": "win-worker-1b5b8375996f7e198b8d0c0036b09bdb07c9e6478a629dc63e8a477e27fc6755",
+    "worker_identity_sha256": "1b5b8375996f7e198b8d0c0036b09bdb07c9e6478a629dc63e8a477e27fc6755",
+    "boot_identity_sha256": "a2f426db50f81efaab3d66f6122ec35f96b0aefddb47344b5c72adb4c6dc4dc9",
+    "fresh_process": false,
+    "boot_verified": true,
+    "source_verified": false,
+    "raw_source_hashes_verified": true,
+    "request_sha256": "ae336060220fd097ed96565cc60471c9dea4604b5203991ae2ee1b7d448bde6f",
+    "scope_sha256": "e621f5c72aeed6bb7f9c4c36adfdd53859ff7afd008df2b8958d799dbdb0967f",
+    "os_identity": {
+      "schema": "CE8-WINDOWS-PROCESS-IDENTITY-1",
+      "pid": 232152,
+      "creation_filetime_100ns": 134353679221201500,
+      "boot_identity": "windows-boot-guid-f04c76b5-411b-11f0-89c2-ddcd86d0f53c",
+      "image_path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+      "argv": [
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+        "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\run_ce_worker_readonly_probe_v3.py"
+      ]
+    },
+    "sources": {
+      "python_ref": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+        "bytes": 262144,
+        "sha256": "de13d8017f63cb63b0b5bfd2f25e69245c9196433a224856ca1abde1e24d0cb7"
+      },
+      "process_image_ref": {
+        "path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+        "bytes": 91648,
+        "sha256": "28d2965d061656abbe3a46100bd3342d1152185289445d489782a21a8cfe9b57"
+      },
+      "request_ref": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930\\experiments\\skill_acquisition_method_lab_v1\\CE8_REGISTRATION_PROPOSAL_20261001.json",
+        "bytes": 565625,
+        "sha256": "ae336060220fd097ed96565cc60471c9dea4604b5203991ae2ee1b7d448bde6f"
+      },
+      "source_files": {
+        "experiments/skill_acquisition_native_v1/ce_worker_evidence.py": {
+          "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930\\experiments\\skill_acquisition_native_v1\\ce_worker_evidence.py",
+          "bytes": 27311,
+          "sha256": "16dfadd1c054fac6c8f240c85c7e5f74398563c0b902fe941a3434d76bfac76f"
+        },
+        "experiments/skill_acquisition_native_v1/runner.py": {
+          "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930\\experiments\\skill_acquisition_native_v1\\runner.py",
+          "bytes": 42826,
+          "sha256": "e30ee498a046b7dd142308814569be5eb453030c870b11e9fed3cfe48d2acd0c"
+        }
+      },
+      "entry": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\run_ce_worker_readonly_probe_v3.py",
+      "entry_script_ref": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\run_ce_worker_readonly_probe_v3.py",
+        "bytes": 3869,
+        "sha256": "5de4581860450226f1590b4bf6f0f8583a29f48f80a835f7d300443b391691f0"
+      },
+      "runtime_launcher": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+        "source": "current worker sys.executable, separate from OS image/argv"
+      },
+      "launcher_provenance": "current-runtime path plus raw hash",
+      "source_observation": "raw file hashes at initial handle admission; not current files or executed-code proof"
+    },
+    "native_qualified": false,
+    "execution_verified": false,
+    "classification": "read-only current-PID probe; no native provenance authority"
+  },
+  "events": [
+    {
+      "kind": "readonly_reference_prepare",
+      "phase": "started",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 8388608,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 8388608
+    },
+    {
+      "kind": "readonly_reference_prepare",
+      "phase": "returned",
+      "bytes_read": 27311
+    },
+    {
+      "kind": "readonly_reference_prepare",
+      "phase": "started",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 8388608,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 8388608
+    },
+    {
+      "kind": "readonly_reference_prepare",
+      "phase": "returned",
+      "bytes_read": 42826
+    },
+    {
+      "kind": "readonly_reference_prepare",
+      "phase": "started",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 8388608,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 8388608
+    },
+    {
+      "kind": "readonly_reference_prepare",
+      "phase": "returned",
+      "bytes_read": 262144
+    },
+    {
+      "kind": "readonly_reference_prepare",
+      "phase": "started",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 8388608,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 8388608
+    },
+    {
+      "kind": "readonly_reference_prepare",
+      "phase": "returned",
+      "bytes_read": 91648
+    },
+    {
+      "kind": "readonly_reference_prepare",
+      "phase": "started",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 8388608,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 8388608
+    },
+    {
+      "kind": "readonly_reference_prepare",
+      "phase": "returned",
+      "bytes_read": 565625
+    },
+    {
+      "kind": "readonly_reference_prepare",
+      "phase": "started",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 8388608,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 8388608
+    },
+    {
+      "kind": "readonly_reference_prepare",
+      "phase": "returned",
+      "bytes_read": 3869
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "0cee34c3e01c48a49df353a6d23e5336",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "0cee34c3e01c48a49df353a6d23e5336",
+      "wall_s": 0.0007898999992903555
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "066481d40e2544ad8ac586058362bddd",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "066481d40e2544ad8ac586058362bddd",
+      "wall_s": 1.5099998563528061e-05
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "e96348b040094f7ebdc3c94b1f1fa894",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "e96348b040094f7ebdc3c94b1f1fa894",
+      "wall_s": 2.1100000594742596e-05
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "0aa9a8e4c75f4081a6c4cf391ac6d915",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "0aa9a8e4c75f4081a6c4cf391ac6d915",
+      "wall_s": 0.0004287000010663178
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "9be385e6702b4571a15ae830b35bc2b3",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "9be385e6702b4571a15ae830b35bc2b3",
+      "wall_s": 0.10777349999989383
+    },
+    {
+      "kind": "worker_handle_close",
+      "phase": "started",
+      "operation_id": "7d57704222544090a688756a56b5e8b6",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_handle_close",
+      "phase": "returned",
+      "operation_id": "7d57704222544090a688756a56b5e8b6",
+      "wall_s": 2.950000089185778e-05
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "6a29793083cd461dbf30d1ce9a903c5f",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "6a29793083cd461dbf30d1ce9a903c5f",
+      "wall_s": 9.57000011112541e-05
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "521ff405426e49b497a4af012f68f403",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "521ff405426e49b497a4af012f68f403",
+      "wall_s": 1.900000097521115e-05
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "6be2c5d4fc354808b9496c49a7a22112",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "6be2c5d4fc354808b9496c49a7a22112",
+      "wall_s": 4.939999962516595e-05
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "6beb211b042841058819600a5a72247c",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "6beb211b042841058819600a5a72247c",
+      "wall_s": 0.00015239999993355013
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "started",
+      "operation_id": "f4375f145c254d4e9216373190d9dc73",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 262145,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 262145
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "returned",
+      "operation_id": "f4375f145c254d4e9216373190d9dc73",
+      "wall_s": 0.0004669999998441199
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "started",
+      "operation_id": "301175d2fdd64297a5815530564ca696",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 91649,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 91649
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "returned",
+      "operation_id": "301175d2fdd64297a5815530564ca696",
+      "wall_s": 0.00069199999961711
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "started",
+      "operation_id": "354c60ad1f49465a9b6b787c229ac67e",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 565626,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 565626
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "returned",
+      "operation_id": "354c60ad1f49465a9b6b787c229ac67e",
+      "wall_s": 0.0006745999999111518
+    },
+    {
+      "kind": "worker_runtime_binding",
+      "phase": "started",
+      "operation_id": "4cdf7eb5e6284a9b9cb42380bf510be8",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_runtime_binding",
+      "phase": "returned",
+      "operation_id": "4cdf7eb5e6284a9b9cb42380bf510be8",
+      "wall_s": 3.7000001611886546e-05
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "started",
+      "operation_id": "f868d58cd5fc4ad98012e52a03d3b951",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "returned",
+      "operation_id": "f868d58cd5fc4ad98012e52a03d3b951",
+      "wall_s": 0.0008111999995890073
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "started",
+      "operation_id": "6bc71143753248e8bc8723de44da08d9",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 27312,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 27312
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "returned",
+      "operation_id": "6bc71143753248e8bc8723de44da08d9",
+      "wall_s": 0.00026509999952395447
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "started",
+      "operation_id": "2102afd4c08b49aebe5aa5ce0a56d358",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "returned",
+      "operation_id": "2102afd4c08b49aebe5aa5ce0a56d358",
+      "wall_s": 0.0007838999990781303
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "started",
+      "operation_id": "584f280daddd4dc1bd3b84fd952bfe1b",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 42827,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 42827
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "returned",
+      "operation_id": "584f280daddd4dc1bd3b84fd952bfe1b",
+      "wall_s": 0.00026619999880495016
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "started",
+      "operation_id": "67bfba57596546e2a260fdd503513faf",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 3870,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 3870
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "returned",
+      "operation_id": "67bfba57596546e2a260fdd503513faf",
+      "wall_s": 0.0002645999993546866
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "bb3488c691b94150b00a2a8c988bda94",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "bb3488c691b94150b00a2a8c988bda94",
+      "wall_s": 0.0001388000000588363
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "cbc5f8c3928c4eceb296df83fa68f5f7",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "cbc5f8c3928c4eceb296df83fa68f5f7",
+      "wall_s": 5.8400000852998346e-05
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "85a9ef687e364f14acd6089fa721554b",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "85a9ef687e364f14acd6089fa721554b",
+      "wall_s": 4.780000017490238e-05
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "e8c3bdbec149466682162853fcbe7fbb",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "e8c3bdbec149466682162853fcbe7fbb",
+      "wall_s": 0.00012489999971876387
+    },
+    {
+      "kind": "worker_handle_close",
+      "phase": "started",
+      "operation_id": "0b991b18194b474da8f51fbd8fbab28d",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_handle_close",
+      "phase": "returned",
+      "operation_id": "0b991b18194b474da8f51fbd8fbab28d",
+      "wall_s": 1.3900000340072438e-05
+    }
+  ],
+  "remaining_prepaid_bounds": {
+    "operation_attempts_upper": 270,
+    "io_read_bytes_upper": 82892651,
+    "identity_hash_attempts_upper": 288,
+    "identity_hash_bytes_upper": 82892651,
+    "wall_seconds_upper": 30
+  },
+  "frameworks": [],
+  "model_loads": 0,
+  "native_execution_authorized": false,
+  "native_qualified": false,
+  "checker_sha256": "5de4581860450226f1590b4bf6f0f8583a29f48f80a835f7d300443b391691f0"
+}

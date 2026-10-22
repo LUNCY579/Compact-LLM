@@ -1,0 +1,34 @@
+{
+  "schema": "CE8-SHARED-LORA-RESPONSE-MOMENT-AND-GROUP-LIMITS-1",
+  "classification": "CONDITIONAL_MATHEMATICS_NO_MODEL_MEASUREMENTS",
+  "shared_factor_basis": {
+    "assumptions": "Same anchor, linear layer, input/output coordinates, fixed finite PSD Q, finite input second moment, ordinary effective deltas D_i=s_i B_i A_i.",
+    "definitions": [
+      "R=sum_i r_i; A_stack stacks the A_i vertically and B_cat concatenates B_i horizontally.",
+      "z=A_stack x; H=E[z z^T]; F=B_cat^T Q B_cat.",
+      "C(c) is block diagonal with blocks c_i s_i I_(r_i). Thus D(c)=B_cat C(c) A_stack."
+    ],
+    "identity": "E[(D(c)x)^T Q D(c)x] = tr(C(c) F C(c) H).",
+    "proof": "Substitute D(c), then use E[z^T C F C z]=tr(C F C E[zz^T]). The scalar block diagonal C is symmetric; all matrices in the trace are R by R.",
+    "streaming": "For common nonnegative token weights w_t and positive total weight W, accumulate H=(1/W) sum_t w_t z_t z_t^T. This can be done without storing all activations or forming the input second moment in d_in by d_in coordinates.",
+    "cost_scope": "Moment storage is O(R^2), plus factors and chosen output-metric representation. Computing z still costs O(d_in R) per dense input and outer-product accumulation O(R^2); forming F can be costly for dense Q. This is useful only when R is suitably small and does not make activation acquisition, model inference or numerical precision free.",
+    "gauge": "Under block invertible G=diag(G_i), B_cat becomes B_cat G and A_stack becomes G^-1 A_stack. F becomes G^T F G and H becomes G^-1 H G^-T. C commutes with G because each block is a scalar multiple of identity, so the trace is unchanged.",
+    "limits": [
+      "This factorization uses one fixed Q. Token-dependent Q(x) generally requires paired statistics; separate average Q and H do not preserve the exact metric.",
+      "Different anchors, token populations, masks or incompatible layer coordinates cannot be pooled as though they were one common moment.",
+      "If W=0 the metric is unmeasured, not a zero matrix. If K_ii=0 the corresponding functional cosine is undefined. Floating-point PSD errors require explicit diagnostics, not silent evidence of compatibility."
+    ]
+  },
+  "mean_error_does_not_preserve_every_group": {
+    "target": "T=I_2, Q=I_2, rank budget r=1.",
+    "population": "x=e_1 with probability 99/100 and x=e_2 with probability 1/100; X=diag(99/100,1/100).",
+    "weighted_optimum": "The rank-one optimum is D=diag(1,0), with weighted squared error 1/100. It has zero error on the common group and squared error one on the rare group.",
+    "rank_obstruction": "Exact preservation of T e_1=e_1 and T e_2=e_2 forces D=I_2, of rank two. No rank-one map can meet both exact layer-response constraints.",
+    "interpretation": "Small optimal average local error can coexist with complete loss of a rare direction. Behavioral skill retention still needs independent groupwise endpoints; a weighted spectral optimum is not a guarantee of acquisition or retention."
+  },
+  "execution_or_registration_authority": false,
+  "native_eligibility_block_unchanged": true,
+  "models_loaded": 0,
+  "optimizer_updates": 0,
+  "scientific_rows_read": 0
+}
