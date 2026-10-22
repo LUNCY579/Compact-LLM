@@ -1,0 +1,204 @@
+# ANCHOR-128 — the 128-token island has EIGHT arms and NO baseline
+
+> **STATUS: REGISTERED, NOT RUN.** Verified at this line: zero source/baseline artifacts exist on
+> bank `7dd53f2a` at `max_new_tokens 128`. The only baselines on that bank are at **96**.
+
+**Class: INSTRUMENT ANCHOR. One leg, ~270 s, no arm built, no model trained.**
+**Deliberately NOT part of DPACQ-001.** DPACQ-001 registered four rungs and it will run exactly
+four; folding an unregistered fifth leg into a live battery is how a registered scope quietly
+becomes whatever was convenient. This is its own measurement with its own file.
+
+---
+
+## 1. The gap
+
+Bank `7dd53f2a` carries two decode budgets and they are not comparable:
+
+| `max_new_tokens` | arms | baseline present? |
+|---:|---:|---|
+| 96 | 70 | **yes** — `rrp015_supa` **14/384** and `sv001_supa` **14/384**, two independent artifacts agreeing exactly |
+| **128** | **8** | **NO** |
+
+**Every acquisition number in the 128 family is currently quoted without a source anchor at its
+own decode budget** — the four dense rungs, the LoRA anchor, the extrapolated arm, both binding
+arms, and now the DPACQ rungs. That is a gap for interpreting all of them, not a detail of one.
+
+## 2. Why it cannot be filled by borrowing
+
+The obvious move is to quote the 96-token source (14) against a 128-token arm. **That is exactly
+the borrowed-scale error both this lane and a peer's amended their documents for within the last
+hours**, and doing it here would be the third instance.
+
+**And the direction of the bias is genuinely unknown.** More decode budget gives more chances to
+emit a canonical answer *and* more room to break canonical form. Neither of us has a measurement
+of which dominates, so **not even the sign of the correction can be assumed.**
+
+## 3. What the anchor adjudicates — a live disagreement, stated before it is resolved
+
+Two readings of DPACQ rung 1 (**52/384**, clearing 1 of 3 family floors) are on the table, and
+**they differ only in where the source sits**:
+
+| reading | requires | whose |
+|---|---|---|
+| *"β = 0.155 is a near-no-op; the arm is at source level"* | source at 128 ≈ 50 | the peer's |
+| *"a no-op would score like the source; this is worse than a trivial predictor, so it is degraded"* | source at 128 ≈ 14 | **mine** |
+
+> **A third possibility neither of us named, and it is the one the peer surfaced:** if the source
+> at 128 is near 14, then rung 1 at 52 has **ACQUIRED ~38 views while failing two family
+> floors** — a stranger object than either reading, and not describable as no-op *or* as
+> degraded.
+
+**Registered now: I will not write "no-op" or "actively degraded" about rung 1 until this leg
+exists.** What the floor comparison supports is exactly *"fails 2 of 3 family floors where the
+dense arm at identical norm clears 3 of 3"*, and that is the whole of what it supports.
+
+## 4. The measurement
+
+```
+process_probe.py --model <Rineya-Supa-1.7.0-devfreeze>
+                 --label supa_select_mnt128
+                 --device cuda --instrument select-views-001 --max-new-tokens 128
+```
+
+Same probe, unmodified, same `implementation_digest a329eb7bb06f` as all eight arms.
+**No prediction is registered.** An anchor is not a hypothesis test; predicting it would invite
+reading a number as confirming something. The single registered commitment is the **use**:
+
+> The resulting value becomes the source baseline for the 128-token family, and **any acquisition
+> claim on that family made after it exists must quote it.**
+
+## 5. Gates
+
+1. Bank `views_sha256 7dd53f2a…`, `views 384`, `max_new_tokens 128`, digest `a329eb7bb06f` —
+   asserted on the artifact after writing, as for every DPACQ rung.
+2. **Create-only**: `process_probe.py:263` refuses rather than skipping.
+3. Per-family floors recomputed from the frozen views before any model loads.
+4. **Runs only after DPACQ-001's four registered rungs complete**, so it cannot be mistaken for
+   part of that battery.
+
+## 6. What it does NOT license
+
+- **Not a retro-fix for 96-token comparisons.** Arms at 96 keep the 96 baseline.
+- **Not a correction factor.** It does not license rescaling any 128 number by a 96/128 ratio;
+  the two families stay separate.
+- **Not a DPACQ result.** DPACQ-001 has four rungs and this is not one of them.
+
+---
+
+# Amendment 1 — a READING RULE, registered before the leg runs; and BOTH prior readings are already dead
+
+**Filed before the anchor exists.** Raised by the peer. A reading rule is **not** a prediction —
+§4 registers none and still registers none. Its purpose is to stop a number being interpreted
+after the fact in whichever direction suits, which is the failure a no-prediction registration
+leaves open.
+
+## The floors are a BANK property, not a decode-budget one — verified
+
+The two artifacts carry **byte-identical** floors and identical
+`floors_published_before_any_model_call`:
+
+| family | floor | predictor | identical across 96 / 128? |
+|---|---:|---|---|
+| `ledger_replay` | 30 | `copy_before` | **yes** |
+| `prerequisite_plan` | 10 | `constant_majority` | **yes** |
+| `register_machine` | 9 | `copy_before` | **yes** |
+
+**So the BAR is fixed and floor-CLEARING is comparable across decode budgets even though the
+COUNTS are not.** That is a genuine cross-budget comparison available without the anchor.
+
+## What it shows, and it kills both readings including mine
+
+| family | floor | SOURCE (96) | clears | rung 1 (128) | clears |
+|---|---:|---:|---|---:|---|
+| `ledger_replay` | 30 | 14 | ✗ | 22 | ✗ |
+| `prerequisite_plan` | 10 | 0 | ✗ | 5 | ✗ |
+| `register_machine` | 9 | **0** | ✗ | **25** | **✓** |
+| | | 14 | **0/3** | 52 | **1/3** |
+
+**The source clears NOTHING. Rung 1 clears `register_machine` at 25 against a floor of 9, where
+the source scores zero.**
+
+> **"Worse than emitting the input unchanged" is the wrong description and I withdraw it.** On
+> `register_machine` rung 1 is far above a `copy_before` predictor that the source cannot beat
+> at all. **Rung 1 has acquired something real and insufficient** — the third possibility this
+> file registered as refuting both readings. Neither "no-op" nor "actively degraded" survives.
+
+**NOT established, and not claimed:** that 52 > 14 *as a quantity*. That is cross-budget and is
+the borrowed-scale error. **The clearing PATTERN is comparable because the bar is fixed; the
+COUNTS are not.**
+
+## Why the anchor is still required
+
+**If more decode budget helps, the source at 128 might clear floors it misses at 96.** Nothing
+above rules that out, so the pattern argument has a hole exactly where the anchor goes.
+
+## THE READING RULE, fixed now
+
+> **Read the anchor against one question: DOES THE SOURCE CLEAR `register_machine` AT 128?**
+>
+> - **NO** → the source fails 3/3 at both budgets, rung 1 clears a floor the source cannot, and
+>   **rung 1 has demonstrably acquired capability.** Third possibility confirmed.
+> - **YES** → the `register_machine` clearing is a **decode-budget effect**, not an acquisition
+>   effect, and rung 1 may be source-like after all. **The no-op reading revives; mine does
+>   not** — "actively degraded" is dead either way.
+>
+> The **aggregate** count is reported but is not the thing read. Per-family clearing is.
+
+---
+
+# RESULT — source at 128 is **14/384, clearing 0 of 3.** The reading rule fires NO.
+
+**`acq 14/384`, rate 0.0365, strict 6, wall 548.8 s. Comparable on every gate:** bank
+`7dd53f2a`, `max_new_tokens 128`, `views 384`, digest `a329eb7bb06f`, 384 predictions.
+
+| family | floor | source @128 | clears |
+|---|---:|---:|---|
+| `ledger_replay` | 30 | 14 | ✗ |
+| `prerequisite_plan` | 10 | 0 | ✗ |
+| `register_machine` | 9 | **0** | ✗ |
+| | | **14** | **0/3** |
+
+## The registered reading rule, applied
+
+> **Does the source clear `register_machine` at 128? — NO.**
+>
+> → The source fails **3/3 at both budgets**. Rung 1 clears `register_machine` at **25 against a
+> floor of 9**, where the source scores **0**.
+> **RUNG 1 HAS DEMONSTRABLY ACQUIRED CAPABILITY.** The third possibility is **CONFIRMED**, and
+> **both prior readings are dead** — the peer's *"no-op"* and my *"actively degraded"*.
+
+**And the counts are now usable, because the budget matches:**
+
+```
+source  @128   14/384   clears 0/3
+rung 1  @128   52/384   clears 1/3      +38 over the source AT THE SAME BUDGET
+```
+
+Rung 1 is **not** a no-op and **not** degraded. It is an arm that **acquired something real and
+insufficient** — 38 views above the source, clearing one family floor the source cannot touch,
+while still failing the other two.
+
+## A finding that fell out, and the reason it licenses LESS than it appears to
+
+The source scores **14/384 at 96 and 14/384 at 128 — and every per-family count is identical**
+(14 / 0 / 0 both times).
+
+> **For the source, the decode budget makes no difference at all.**
+
+**This does NOT license relaxing the decode-budget separation, and it must not be read that
+way.** The source is precisely the arm **most likely** to be budget-insensitive: it emits nothing
+canonical at either budget, so extra tokens have nothing to change. **One arm sitting at the
+floor is not the family.** The 70-arm / 8-arm split stays separate, and the `|net| ≥ 20` floor
+stays labelled as borrowed.
+
+What it *does* license: the anchor number itself, and the observation that **the one arm we can
+now compare across budgets shows zero sensitivity** — which is weak evidence, stated as weak.
+
+## What this closes
+
+- **DPACQ-001 §5's rung-1 suspension is lifted.** Rung 1 can now be described, and the
+  description is *"acquired capability, insufficient for the task"*.
+- **Every acquisition number in the 128-token family now has a source anchor at its own decode
+  budget**, which was the gap: eight arms and no baseline.
+- The registered commitment stands — any acquisition claim on this family made from here must
+  quote **14/384**.
