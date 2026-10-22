@@ -1,0 +1,25 @@
+{
+  "evidence_class": "native_model",
+  "precision": "float32",
+  "device": "cuda:0",
+  "model_path": "REPLACE_WITH_ABSOLUTE_LOCAL_TITAN_SPARSE_DIRECTORY",
+  "model_sha256": "REPLACE_WITH_MODEL_DIRECTORY_FINGERPRINT",
+  "tokenizer_path": "REPLACE_WITH_ABSOLUTE_LOCAL_TOKENIZER_DIRECTORY",
+  "tokenizer_sha256": "REPLACE_WITH_TOKENIZER_DIRECTORY_FINGERPRINT",
+  "max_length": 512,
+  "max_scored_tokens": 100000,
+  "min_free_ram_gib": 8,
+  "min_free_vram_gib": 7,
+  "adapters": [],
+  "training": {
+    "optimizer": "adamw",
+    "updates": 16,
+    "gradient_accumulation": 4,
+    "rank": 8,
+    "alpha": 16,
+    "learning_rate": 0.0001,
+    "max_grad_norm": 1.0,
+    "target_modules": ["q_proj", "v_proj"],
+    "seed": 17
+  }
+}
