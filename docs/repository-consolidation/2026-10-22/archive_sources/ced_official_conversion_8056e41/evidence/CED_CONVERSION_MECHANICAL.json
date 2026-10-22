@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "evidence_kind": "scoped_mechanical_tests_only",
+  "status": "PASS",
+  "base_commit": "2f65f9e96f8649a86c5d2f4369181df5b8b21aa5",
+  "selection": [
+    "experiments/architecture_benchmark_001/tests/test_reference.py",
+    "experiments/architecture_benchmark_001/tests/test_ced_conversion.py"
+  ],
+  "tests": 87,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "new_conversion_tests": 57,
+  "existing_reference_tests": 30,
+  "runtime": {
+    "python": "3.13.5",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.41",
+    "torch": "2.10.0+cpu",
+    "pytest": "9.0.2",
+    "safetensors": "0.7.0",
+    "transformers": "not_installed"
+  },
+  "new_python_sha256": {
+    "ced_conversion.py": "e34b9d39a4db109641cb04799e414009fcd3b6e256631231a15bf80c6c743add",
+    "tests/test_ced_conversion.py": "ee5d2109bcadc78080422c8a20ac4829e94b1c0aa050b1f3181884051eb0559e"
+  },
+  "unchanged_base_git_blob_sha": {
+    "budget.py": "a3e81369357ef939fe574e2ad400a22f45dee5b1",
+    "model.py": "b1bf7bb03c0691872d5b25c9eba62a4b1a5a90a8",
+    "transfer.py": "4d0a896279fbb542ec2527e0d64f908ffb53f6fa",
+    "run.py": "ebad6b97a7e2caf23df383f1af7ff0d3d1c1fd5a",
+    "gates.py": "595b5723343c1c09264a0b38270e5e71a7ac9ea0",
+    "source.py": "89a5b25627c1ea5c53d692f08789c3452a9fd20d",
+    "losses.py": "489b77dc84117882de9463a68d5fdfcba9801c3f",
+    "protocol.json": "63ebf2d85ca4f7512929e1d8d1b023c41cea19d4",
+    "source_lock.json": "080e0ed2fe3bfde5fb2f65fb86ac7d870268464d",
+    "tests/test_reference.py": "669dea8752b2cf9b5c09d87fa8058c21e04b7a8e"
+  },
+  "artifacts": {
+    "ced-conversion-junit.xml.gz": "4d8291969503487a20ece0f185fb034e444a1b831f626002a97d355ec13701c1",
+    "ced-conversion-tests.txt": "4eab560f8dd28291c7c9af8ba6726beac30502b7ed0202dbff6e369a331ea88e"
+  },
+  "uncompressed_junit_sha256": "b523dac0be2f7f7fa9c895d4ab47b8ac9d76d205c00d3f097112c84efa377706",
+  "full_package_suite_executed": false,
+  "native_test_modules_collected": false,
+  "official_checkpoint_loaded": false,
+  "official_CED_constructed": false,
+  "official_receipts_issued": false,
+  "remote_CI_claimed": false,
+  "licenses_registered_training": false,
+  "licenses_quality_evaluation": false,
+  "licenses_efficacy_claim": false,
+  "scope_note": "Tiny source/runtime/shape substitutions exist only in tests. Production source audit and receipt gates have no bypass. No official-model qualification claimed. A full-checkout implementation digest is intentionally not inferred from this scoped source snapshot."
+}
