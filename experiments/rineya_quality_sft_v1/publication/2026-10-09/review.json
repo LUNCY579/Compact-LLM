@@ -1,0 +1,14 @@
+{
+  "schema": "RESEARCH_PUBLICATION_REVIEW_V1",
+  "date": "2026-10-09",
+  "experiment": "RQSFT-001",
+  "review_method": "Independent read-only code/evidence reviews followed by root CPU fixture verification and portable export checks",
+  "review_scope": "Admission/compiler/engine/native/run/evaluation/analysis, pattern and mechanism helpers, retained evidence and publication context",
+  "finding_fixed": {"component": "objective_geometry.first_step_adam_delta", "problem": "Multiplication before division overflowed for finite inputs whose ideal final delta was representable", "change": "Compute bounded ratio before LR multiplication; reject nonfinite denominator or result", "regression": "FP64 gradient[1e150,-1e150,0],LR1e200,epsilon1e-8,clip1e200 returns finite[-1e200,1e200,0]", "native_recipe_or_optimizer_changed": false},
+  "remaining_blocking_code_findings": [],
+  "CPU_tests": {"passed": 153, "failures": 0, "errors": 0, "skips": 0, "warnings": 1},
+  "publication_limits": ["Fixtures and ideal mathematics are implementation evidence only", "Historical aggregates retain exposed-DEV and recipe/dose confounds", "Declared reviewer/source identities do not authenticate truth or actual semantic admission", "Package depends on audited model_quality_gpu_v1 modules and pinned local runtime/path/branch requirements; it is not standalone", "Publication changes checkout/code identity and cannot inherit any historical native grant", "The retained completion/blocked observations are dated October5; current external owner and GPU state are not asserted"],
+  "native_authority": false,
+  "actual_bank_admission": false,
+  "model_gain_established": false
+}
