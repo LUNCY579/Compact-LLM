@@ -1,0 +1,34 @@
+name: RSD-001 CPU mechanics
+on:
+  push:
+    branches: [research/rineya-recursive-self-distillation-v1]
+    paths:
+      - 'experiments/rineya_recursive_self_distillation_v1/**'
+      - '.github/workflows/rsd001-cpu.yml'
+  pull_request:
+    paths:
+      - 'experiments/rineya_recursive_self_distillation_v1/**'
+      - '.github/workflows/rsd001-cpu.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cpu-mechanics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GIT_LFS_SKIP_SMUDGE: '1'
+      HF_HUB_OFFLINE: '1'
+      TRANSFORMERS_OFFLINE: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          lfs: false
+          fetch-depth: 1
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11.15'
+      - run: python -m pip install torch==2.10.0 --index-url https://download.pytorch.org/whl/cpu
+      - run: python -m pip install safetensors==0.7.0
+      - run: python -B -m unittest discover -s experiments/rineya_recursive_self_distillation_v1/tests -v

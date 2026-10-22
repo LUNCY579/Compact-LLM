@@ -1,0 +1,38 @@
+{
+  "checked": [
+    "Duplicate and nonfinite JSON rejected; typed key/type/value contracts separate from strict score",
+    "16 cases/four skills independently per strict and typed anchor instruments",
+    "26/256 typed net and middle/last/six-order safeguards fixed prospectively",
+    "Source-correct damage separate from source-incorrect repairs and formatting diagnostics",
+    "Absolute present/absent correctness reported even when relative safeguard passes at poor quality",
+    "Source/condition/delta/qualification/exposure chain and DEV token/label hashes bound"
+  ],
+  "created_utc": "2026-10-05T19:52:29.846853+00:00",
+  "files": {
+    "comparison.py": "97993b0fc225356bfba50be1c40920f051c4576cba731dde8c5b23724754a3ef",
+    "metrics.py": "4168477a947815eca1bb778a1767bb43989b3e2940be64fa5eba7c757862c3d9",
+    "tests/test_metrics.py": "65aa2a6fdf784f85eebe246359d83a6fd5b75a46474636a31263ab6b6d791164"
+  },
+  "findings": [
+    {
+      "issue": "In-memory packet mutations could escape comparator byte validation",
+      "resolution": "Comparator now reloads exact frozen packet via load_packet and checks manifest/control/candidate/dev/design/ledger equality before scoring",
+      "status": "RESOLVED",
+      "verification": "Four adversarial in-memory mutation fixtures"
+    }
+  ],
+  "limitations": [
+    "Offline code/fixture review; no native model, GPU or bank access",
+    "Review applies to the listed file hashes; final full-code/corpus review and separate authorization belong to parent"
+  ],
+  "remaining_findings": [],
+  "reviewer": "quality_corpus subagent",
+  "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1/independent-code-review",
+  "scope": "Independent read-only review of metrics/comparison and fixture suite; no native capability evaluation.",
+  "status": "PASS_OFFLINE_CODE_REVIEW",
+  "tests": {
+    "kind": "CPU mechanical fixtures only",
+    "passed": 45,
+    "seconds": 6.09
+  }
+}

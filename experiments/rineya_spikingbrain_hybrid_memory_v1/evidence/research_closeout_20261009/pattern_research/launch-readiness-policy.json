@@ -1,0 +1,26 @@
+{
+  "additional_operator_start_condition": {
+    "minimum_available_host_RAM_GiB": 12.0,
+    "model_not_loaded_during_sampling": true,
+    "sample_period_seconds": 1,
+    "stable_sample_seconds": 60
+  },
+  "attempt_limit": 1,
+  "automatic_retry_after_failure": false,
+  "created_utc": "2026-10-05T21:23:58.402319+00:00",
+  "existing_stopped_run_resume": false,
+  "fresh_permission_ownership_environment_source_qualification_checks_required": true,
+  "native_code_guards_unchanged": {
+    "VRAM_reserve_GiB": 1.0,
+    "admission_RAM_GiB": 7.4,
+    "runtime_RAM_GiB": 6.0,
+    "worker_RSS_GiB": 4.0
+  },
+  "native_proposal_sha256": "5253d01843e39d0d38c90e1d9d2c1ae5a25e0f943242b0cddb5a5fb802df1aa4",
+  "other_owner_processes_may_be_stopped": false,
+  "rationale": "The prior attempt was admitted around9GiBfreehostRAMandlaterstopped below6GiB. Additionalstartingheadroomis a conservative operationalcondition, not proof of fit or an efficacy threshold.",
+  "resource_or_model_queries_by_this_preparation": false,
+  "schema": "RINEYA-QUALITY/operator-launch-readiness-v1",
+  "source_recipe_data_steps_rows_and_primary_gates_unchanged": true,
+  "state": "REQUIRES_SEPARATE_USER_AUTHORIZATION"
+}

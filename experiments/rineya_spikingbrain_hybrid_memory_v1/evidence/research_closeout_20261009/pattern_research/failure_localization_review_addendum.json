@@ -1,0 +1,200 @@
+{
+  "all_canonicalization_artifacts": [
+    {
+      "A_canonicalized_code_lexeme": "48.0",
+      "A_original_dtype": "float",
+      "A_raw": "48.00",
+      "A_raw_number_token": "48.00",
+      "B_C_D_outputs": {
+        "B": "{\"v\":\"48.00\"}",
+        "C": "{\"v\":\"48.00\"}",
+        "D": "{\"v\":\"48.00\"}"
+      },
+      "id": "dev-number-world-009-distant_heldout-cf-1",
+      "target": "{\"v\":\"48.00\"}"
+    },
+    {
+      "A_canonicalized_code_lexeme": "48.0",
+      "A_original_dtype": "float",
+      "A_raw": "48.00",
+      "A_raw_number_token": "48.00",
+      "B_C_D_outputs": {
+        "B": "{\"v\":\"48.00\"}",
+        "C": "{\"v\":\"48.00\"}",
+        "D": "{\"v\":\"48.00\"}"
+      },
+      "id": "dev-number-world-009-near_control-cf-1",
+      "target": "{\"v\":\"48.00\"}"
+    },
+    {
+      "A_canonicalized_code_lexeme": "99.9",
+      "A_original_dtype": "float",
+      "A_raw": "99.90",
+      "A_raw_number_token": "99.90",
+      "B_C_D_outputs": {
+        "B": "{\"v\":\"99.90\"}",
+        "C": "{\"v\":\"99.90\"}",
+        "D": "{\"v\":\"99.90\"}"
+      },
+      "id": "dev-number-world-004-distant_heldout-cf-1",
+      "target": "{\"v\":\"99.90\"}"
+    },
+    {
+      "A_canonicalized_code_lexeme": "38.2",
+      "A_original_dtype": "float",
+      "A_raw": "38.20",
+      "A_raw_number_token": "38.20",
+      "B_C_D_outputs": {
+        "B": "{\"v\":\"38.20\"}",
+        "C": "{\"v\":\"38.20\"}",
+        "D": "{\"v\":\"38.20\"}"
+      },
+      "id": "dev-number-world-009-distant_heldout-cf-0",
+      "target": "{\"v\":\"38.20\"}"
+    },
+    {
+      "A_canonicalized_code_lexeme": "38.2",
+      "A_original_dtype": "float",
+      "A_raw": "38.20",
+      "A_raw_number_token": "38.20",
+      "B_C_D_outputs": {
+        "B": "{\"v\":\"38.20\"}",
+        "C": "{\"v\":\"38.20\"}",
+        "D": "{\"v\":\"38.20\"}"
+      },
+      "id": "dev-number-world-009-near_control-cf-0",
+      "target": "{\"v\":\"38.20\"}"
+    },
+    {
+      "A_canonicalized_code_lexeme": "-99.1",
+      "A_original_dtype": "float",
+      "A_raw": "-99.10",
+      "A_raw_number_token": "-99.10",
+      "B_C_D_outputs": {
+        "B": "{\"v\":\"-99.10\"}",
+        "C": "{\"v\":\"-99.10\"}",
+        "D": "{\"v\":\"-99.10\"}"
+      },
+      "id": "dev-number-world-001-distant_heldout-cf-1",
+      "target": "{\"v\":\"-99.10\"}"
+    },
+    {
+      "A_canonicalized_code_lexeme": "-38.2",
+      "A_original_dtype": "float",
+      "A_raw": "-38.20",
+      "A_raw_number_token": "-38.20",
+      "B_C_D_outputs": {
+        "B": "{\"v\":\"-38.20\"}",
+        "C": "{\"v\":\"-38.20\"}",
+        "D": "{\"v\":\"-38.20\"}"
+      },
+      "id": "dev-number-world-002-distant_heldout-cf-0",
+      "target": "{\"v\":\"-38.20\"}"
+    },
+    {
+      "A_canonicalized_code_lexeme": "-99.1",
+      "A_original_dtype": "float",
+      "A_raw": "-99.10",
+      "A_raw_number_token": "-99.10",
+      "B_C_D_outputs": {
+        "B": "{\"v\":\"-99.10\"}",
+        "C": "{\"v\":\"-99.10\"}",
+        "D": "{\"v\":\"-99.10\"}"
+      },
+      "id": "dev-number-world-001-near_control-cf-1",
+      "target": "{\"v\":\"-99.10\"}"
+    }
+  ],
+  "corrected_selector_repair_lower_bounds": {
+    "B": {
+      "identifier": 4,
+      "number": 5,
+      "total": 9
+    },
+    "C": {
+      "identifier": 4,
+      "number": 3,
+      "total": 7
+    },
+    "D": {
+      "identifier": 4,
+      "number": 3,
+      "total": 7
+    }
+  },
+  "created_utc": "2026-10-05T21:35:37.849374+00:00",
+  "fixed_additional_extraction_rule": "Whole duplicate-free finite JSON parser with parse_int/parse_float retaining exact rawnumeric token. Inspect exact-v object payload or scalar. No punctuation stripping, substrings, numeric tolerance or target-dependent transformation. This is descriptive rawspelling, not typed correctness.",
+  "interpretation": [
+    "The8 earlier source_other_wrong_admitted_lexeme_to_correct cases are exact diagnostic canonicalization differences, not8 new correctselector outputs. RawA alreadyemits expecteddecimalspelling; parsing floats erases a trailingzero then serialization creates mismatch.",
+    "These8 adaptedstrictgains are representation/type/contract repairs. They do not alter any registeredstrict/typed score or nativeoutput.",
+    "Clear wrong-entityselector repairs remain4identifier rows ineachB/C/D plus5number rowsB and3number rowsC/D. These narrow repairs refute the claim all gains areonlyformat but do not establishgeneralbinding.",
+    "Oldnumber/source outputlexemes must report rawJSONnumericspelling besidecanonicalcodelexeme. Exactquotedmeasurement targets requirestringtype; mathematical equivalence or matching rawnumbercharacters isnottypedcorrectness."
+  ],
+  "model_Torch_GPU_calls": false,
+  "native_execution": false,
+  "no_changes": {
+    "corpora": true,
+    "earlier_review_receipt": true,
+    "native_scores": true,
+    "source": true
+  },
+  "number_source_A": {
+    "canonicalization_artifact_rows": 8,
+    "canonicalized_code_lexeme_matches": 49,
+    "raw_JSON_string_or_number_token_matches": 57,
+    "registered_strict_correct": 11,
+    "rows": 64,
+    "type_exact_expected_payload": 20,
+    "unadmitted_whole_outputs": 2,
+    "wrong_other_subject_payload_rows": 5
+  },
+  "original_input_fingerprints": {
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\corpora\\distant_evidence_v2\\dev.jsonl": {
+      "bytes": 819966,
+      "sha256": "72d85e135d2d368fd9817f36129d67373a4c7f3a4649491637e245cab1439d68"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\A-evaluation\\receipt.json": {
+      "bytes": 494103,
+      "sha256": "b66809d7ab64043661ea94fc79f00149bde024ec143dc0397ea0d4e057a2b948"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\B-evaluation\\receipt.json": {
+      "bytes": 764734,
+      "sha256": "0ceda58b5586e58f4db59cae9e9a46ac8e7b285831c059697a14476b383e95f5"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\C-evaluation\\receipt.json": {
+      "bytes": 791436,
+      "sha256": "4a1dc38e91f1a653f2b249f433312350252f5d3cd2c50575b404dbafc3bc5e46"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient\\D-evaluation\\receipt.json": {
+      "bytes": 791662,
+      "sha256": "32f51c000b397577cd9461049709345768472be79a57f354cc03e8bacbab6d61"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\dev.jsonl": {
+      "bytes": 2143651,
+      "sha256": "e4c2572c603d6700020091581ff7d8541647e6d48f0c1b22d5ddddfd17deb761"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-stop-receipt.json": {
+      "bytes": 39124,
+      "sha256": "23aed0fa7a160c0a022efc510093f8853d9b48a07faa32daa55e26a5e1402d29"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\receipt.json": {
+      "bytes": 999761,
+      "sha256": "5e9a1843c2f5f7229d5a073c632078ebfa0174143accac0c72d1b23975e85d37"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\auxiliary-readouts.json": {
+      "bytes": 2094,
+      "sha256": "2c1781c009ec4cb724e9ced9a4f4e03a84dedd980ea4e110ec6ac237eeab968c"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\launch-readiness-policy.json": {
+      "bytes": 1191,
+      "sha256": "a0badfa92e40a7c864c6064a60b3ec53c1279ba9415ed61eba413f6e9f8e0e13"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\proposal.json": {
+      "bytes": 25307,
+      "sha256": "066068fbbecf14abc7b7fd0f2ef4e89c1f00b39955a541d3e9b862c9db019e1e"
+    }
+  },
+  "review_receipt_sha256": "a7d96488f780da52a0de3b7538e18b8441c413e127e242f5062ae1bbf78e8bf1",
+  "schema": "RINEYA-QUALITY/failure-localization-numeric-lexeme-addendum-v1",
+  "status": "PASS_RAW_NUMBER_SPELLING_FALSIFIES_SEMANTIC_REPAIR_INTERPRETATION_FOR8ROWS"
+}

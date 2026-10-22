@@ -1,0 +1,26 @@
+{
+  "changed_scope": "Only auxiliary native-schema alignment check; no metric function or native/provenance/qualification/exposure validation changed",
+  "completed_run_binding": {
+    "code_sha256": "326d805bde96047ca0553f8c33e5124a6c346fc11caaf3c28b4221277ef82140",
+    "config_sha256": "30b85a8bd3e24043bbbd2983d735eaf64df47e60626dc051792b45f3918d2400",
+    "corpus_sha256": "6f9c858b39c6c45d4fd5cd6bfa29d79b3c2f12773af7f392b44cfa171379105f",
+    "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a"
+  },
+  "created_utc": "2026-10-04T21:55:04.148320+00:00",
+  "failure_record": "analysis-schema-failure.json",
+  "failure_record_sha256": "a2bfa36c8014178dd3b39f4d35698d31d9eeba00bb9b40e3f77528abfeb9bbee",
+  "metrics_tuned": false,
+  "native_code_config_data_changed": false,
+  "new_metric_or_threshold": false,
+  "new_script": "analyze_completed_matrix.py",
+  "new_script_sha256": "8fedd4b4c02c3838557a199cefaf02df430d3699d9d4c698b52704cc94c34813",
+  "old_script_sha256": "e6d2459c191e611161f25f3b86ef7debf824a4eba159249ca4add97f39f8eb91",
+  "original_plan": "analysis_interpretation_plan.json",
+  "original_plan_sha256": "a80de351b900c23285fd6a055c2cf6599d4b18bf43c49b788e8bab8df6f1c974",
+  "original_script": "analyze_completed_matrix.v1.py",
+  "reason": "Native contrast stores paired_rows outside each metric dictionary; auxiliary contrast stored it inside. Revised validation separately checks the same exact paired count and unchanged full numeric metric dictionary.",
+  "revision_made_after_native_completion": true,
+  "status": "TECHNICAL_ANALYSIS_SCHEMA_REVISION_WITH_UNCHANGED_FROZEN_METRICS",
+  "supplement": "completed_matrix_supplement.json",
+  "supplement_sha256": "6dbcf03ed76ac5237af140c81b92d4fc9c023b7781e861fbd21b4ca458d9a8f9"
+}

@@ -1,0 +1,87 @@
+{
+  "content": {
+    "branch": "research/rineya-self-distillation-axes-v1",
+    "design": {
+      "cells": 6,
+      "contrast_selected_before_native_outcomes": true,
+      "data_admission": "PENDING",
+      "gate_rows": 8,
+      "maximum_native_updates": 72,
+      "screen_rows": 56
+    },
+    "experiment": "DSD-001",
+    "head": "e1737660cd0feacd6efd4177ea1d1579bf0cd865",
+    "initial_local_changes": [],
+    "limitations": [
+      "Fixtures verify implementation only; source capability not measured.",
+      "Candidate admission and exact native tokenizer/runtime/load/parity/teacher/resource checks remain pending.",
+      "Maximum-shape SFT check is not maximum-shape KL/optimizer or worst-case fit.",
+      "Resource/time guards are cooperative boundary checks, not stalled-kernel preemption.",
+      "Two seeds reorder one bank; broader transfer/retention and SFT superiority are unestablished.",
+      "Comparison execution integration and separate training approval remain required; code changes invalidate qualification."
+    ],
+    "native_benefit_established": false,
+    "native_model_evaluations": 0,
+    "native_model_loads": 0,
+    "native_qualification_executed": false,
+    "native_resource_fit_established": false,
+    "native_teacher_competence_established": false,
+    "native_training_updates": 0,
+    "new_files_status": [
+      "?? experiments/rineya_self_distillation_axes_v1/RUNBOOK.md",
+      "?? experiments/rineya_self_distillation_axes_v1/comparison.py",
+      "?? experiments/rineya_self_distillation_axes_v1/mechanical_qualification.py",
+      "?? experiments/rineya_self_distillation_axes_v1/proposal.py",
+      "?? experiments/rineya_self_distillation_axes_v1/proposal_data.py",
+      "?? experiments/rineya_self_distillation_axes_v1/reviewed_qualification.py",
+      "?? experiments/rineya_self_distillation_axes_v1/tests/test_mechanical_qualification.py",
+      "?? experiments/rineya_self_distillation_axes_v1/tests/test_proposal.py",
+      "?? experiments/rineya_self_distillation_axes_v1/tests/test_proposal_data.py",
+      "?? experiments/rineya_self_distillation_axes_v1/tests/test_reviewed_qualification.py"
+    ],
+    "next_decision": "Review exact candidate data/design/runtime and approve only the byte-bound bounded zero-update qualification; comparison execution integration and training require a later explicit decision after qualification.",
+    "observed_at_utc": "2026-10-05T19:20:05.991731+00:00",
+    "pending_example_review_rejected": true,
+    "prospective_packet": {
+      "approval_ready": true,
+      "code_sha256": "d0fa1a46fc4408ab9e6149c7834193284f02b6074e1151d9ff6b5445e2378cdf",
+      "execution_authorized": false,
+      "path": "<BusinessProject>/dsd001-preparation-20261005/packet/proposal.json",
+      "sha256": "18ea848a375c6482d19f878b64ae4bb2f2495fb0bc64f0ec3fdd7168b31bd724"
+    },
+    "source": {
+      "checkpoint_sha256": "495dee5eef1eb5365188ee589961da75909feb4a7446ac4f2d0760e48602d6b4",
+      "core_id": "rineya.core.supa.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-0p8125",
+      "custody_final_path": "<BusinessProject>/dsd001-preparation-20261005/source-custody-final.json",
+      "static_eligible": true,
+      "weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b"
+    },
+    "status": "OFFLINE_PREPARATION_VERIFIED",
+    "tests": {
+      "CUDA_VISIBLE_DEVICES": "",
+      "ast_parsed_files": 23,
+      "evidence": "CPU_FIXTURES_ONLY_NOT_RINEYA_CAPABILITY",
+      "failed": 0,
+      "junit_path": "<BusinessProject>/dsd001-preparation-20261005/verified-tests.xml",
+      "junit_sha256": "1c7752197e4c2c00bc038da173abe9bfdc891a1be7a61be12999d8a7c5f4e0bb",
+      "log_path": "<BusinessProject>/dsd001-preparation-20261005/verified-tests.log",
+      "log_sha256": "121a87363991fc7e1047327ed00596cd3386a8d520d04c608a05ad7d9823f97d",
+      "passed": 196,
+      "runtime": {
+        "pytest": "9.1.1 (read-only Hermes pytest via appended site-packages)",
+        "python": "3.11.15",
+        "torch": "2.10.0+cu126"
+      },
+      "skipped": 0,
+      "warning": "PyTorch profiler cycle event-clearing warning",
+      "warning_count": 1
+    },
+    "tracked_historical_files_changed": []
+  },
+  "execution_authority": false,
+  "original_bytes": 4195,
+  "original_raw_sha256": "6da71442263ae0e0afdba78754bce8212991e5b5abf5d8fc9b9f45effac9a7fb",
+  "original_source": "<BusinessProject>/dsd001-preparation-20261005/verification-receipt.json",
+  "publication_policy": "Portable historical evidence only, not an executable packet or admission/qualification permit. Local paths, chat UUIDs and XML hostnames are removed; original raw-file hashes are retained separately from hashes of these exports. No banks, predictions, weights, checkpoints, environments or raw process inventories are exported. Originals remain unchanged outside Git.",
+  "record_type": "PORTABLE_EVIDENCE_EXPORT"
+}

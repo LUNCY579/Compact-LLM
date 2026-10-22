@@ -1,0 +1,399 @@
+{
+  "id": "matched_mlp",
+  "priority": 3,
+  "title": "Exact-parent matched MLP reliability qualification",
+  "checkout": "C:/Users/clclc/BusinessProject/SupaExperiment-matched-mlp-shipping-v1",
+  "expected_branch": "research/supa-a1.1-matched-mlp-shipping-v1",
+  "owner": {
+    "thread_id": "01a10d63-d938-7ea0-8595-8b2ce76be38c",
+    "title": "Complete MLP-SHIP-001 M1 mechanics",
+    "host_id": "local"
+  },
+  "candidate": {
+    "model_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "adapter_sha256": "f2ccf8faa099ba9e0dc5b07474c6a3a4ec42f5bee9141422dd795d9ae6612d79",
+    "checkpoint": "NOT_MEASURED",
+    "status": "M1_NATIVE_MECHANICS_PASS_M2_BEHAVIOR_NOT_MEASURED"
+  },
+  "evidence": [
+    {"id": "m1_native_pass_run", "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/native-attempt-03-thin-canonical-proposed/RUN.json", "classification": "native", "role": "receipt", "format": "json"},
+    {"id": "m1_native_pass_result", "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/native-attempt-03-thin-canonical-proposed/native.json", "classification": "native", "role": "receipt", "format": "json"},
+    {"id": "m1_native_pass_outcome", "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/thin-observer-review-01/thin-execution-04/ATTEMPT_OUTCOME.json", "classification": "native", "role": "receipt", "format": "json"},
+    {"id": "m1_native_pass_independent_audit", "path": "C:/Users/clclc/BusinessProject/rineya-mlp-native-pass-independent-review-20261006-01/REPORT.json", "classification": "native", "role": "receipt", "format": "json"},
+    {"id": "standing_research_consent", "path": "C:/Users/clclc/BusinessProject/rineya-standing-research-authorization-20261005-01/AUTHORIZATION.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m1_additional_failure", "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/native-attempt-02-proposed/native.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {
+      "id": "transfer3_reconciliation",
+      "path": "C:/Users/clclc/BusinessProject/supa-run-outputs/nonrecurrent-reconciliation-20261005-01a10d63/reconciliation-final.json",
+      "classification": "historical",
+      "role": "receipt",
+      "format": "json"
+    },
+    {
+      "id": "reconciliation_interpretation",
+      "path": "C:/Users/clclc/BusinessProject/SupaExperiment-nonrecurrent-adaptation-v1/experiments/nonrecurrent_adaptation_v1/RECONCILIATION_2026-10-05.md",
+      "classification": "historical",
+      "role": "source",
+      "format": "text"
+    },
+    {
+      "id": "m1_failure",
+      "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/FINAL_AUDIT.json",
+      "classification": "preparation",
+      "role": "receipt",
+      "format": "json"
+    },
+    {
+      "id": "m1_final_handoff",
+      "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/M2_HANDOFF_FINAL.json",
+      "classification": "preparation",
+      "role": "receipt",
+      "format": "json"
+    },
+    {
+      "id": "m1_report",
+      "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/REPORT.md",
+      "classification": "preparation",
+      "role": "source",
+      "format": "text"
+    },
+    {
+      "id": "m1_next_attempt_proposal",
+      "path": "C:/Users/clclc/BusinessProject/mlp-ship-001-records/20261005-m1-8ef12f4b/NEXT_ATTEMPT_PROPOSAL.json",
+      "classification": "preparation",
+      "role": "proposal",
+      "format": "json"
+    },
+    {
+      "id": "mlp_preregistration",
+      "path": "C:/Users/clclc/BusinessProject/SupaExperiment-matched-mlp-shipping-v1/experiments/matched_mlp_shipping_v1/PREREGISTRATION.md",
+      "classification": "preparation",
+      "role": "protocol",
+      "format": "text"
+    },
+    {
+      "id": "m2_status",
+      "path": "C:/Users/clclc/BusinessProject/SupaExperiment-matched-mlp-m2-readiness-v1/experiments/matched_mlp_m2_v1/readiness/STATUS.json",
+      "classification": "preparation",
+      "role": "receipt",
+      "format": "json"
+    },
+    {
+      "id": "m2_proposal",
+      "path": "C:/Users/clclc/BusinessProject/SupaExperiment-matched-mlp-m2-readiness-v1/experiments/matched_mlp_m2_v1/readiness/NATIVE_RUN_PROPOSAL.md",
+      "classification": "preparation",
+      "role": "proposal",
+      "format": "text"
+    },
+    {
+      "id": "m2_fixture_receipt",
+      "path": "C:/Users/clclc/BusinessProject/SupaExperiment-matched-mlp-m2-readiness-v1/experiments/matched_mlp_m2_v1/readiness/evidence/2026-10-05-integration/RESULT.json",
+      "classification": "fixture",
+      "role": "receipt",
+      "format": "json"
+    },
+    {"id": "m2_minimum_scope_independent_review", "path": "C:/Users/clclc/BusinessProject/rineya-m2-next-proposal-independent-review-20261006-01/NEXT_PHASE_PROPOSAL_REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m2_served_scope_provisional_review", "path": "C:/Users/clclc/BusinessProject/rineya-m2-next-proposal-independent-review-20261006-01/SERVED_SCOPE_PROVISIONAL_REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "lossless_archive_fixture", "path": "C:/Users/clclc/BusinessProject/rineya-vector-archive-fixtures-20261006-01/combined-queue-01/FIXTURE_RESULT.json", "classification": "fixture", "role": "receipt", "format": "json"},
+    {"id": "lossless_capture_repacking", "path": "C:/Users/clclc/BusinessProject/rineya-vector-archive-native-capture-audit-20261006-01/REPACKING_RECEIPT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m2_interface_draft_independent_review", "path": "C:/Users/clclc/BusinessProject/rineya-m2-provider-interface-independent-review-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m2_sealed_v1_static_delivery", "path": "C:/Users/clclc/BusinessProject/titan-sparse-quality-records/standing-continuation-20261005-01a10d64-v1/m2-qualification-source-v1/STATIC_DELIVERY_RECEIPT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m2_integration_v2_interface_review", "path": "C:/Users/clclc/BusinessProject/rineya-m2-integration-v2-interface-review-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "f16_full_vector_fixture_checks", "path": "C:/Users/clclc/BusinessProject/rineya-f16-inspection-fixtures-20261006-01/FIXTURE_RESULT.json", "classification": "fixture", "role": "receipt", "format": "json"},
+    {"id": "historical_length_reliability_audit", "path": "C:/Users/clclc/BusinessProject/rineya-mlp-length-reliability-independent-review-20261006-01/REPORT.json", "classification": "historical", "role": "receipt", "format": "json"},
+    {"id": "historical_score_policy_addendum", "path": "C:/Users/clclc/BusinessProject/rineya-mlp-length-reliability-independent-review-20261006-01/SCORE_POLICY_ADDENDUM.json", "classification": "historical", "role": "receipt", "format": "json"},
+    {"id": "m2_final_source_delivery", "path": "C:/Users/clclc/BusinessProject/titan-sparse-quality-records/delivery-consolidation-20261006-01/M2_SOURCE_REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m2_final_source_independent_review", "path": "C:/Users/clclc/BusinessProject/rineya-m2-final-source-independent-review-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "primary375_prospective_amendment", "path": "C:/Users/clclc/BusinessProject/supa-run-outputs/nonrecurrent-authority-20261005-01a10d63-v1/PRIMARY_375_PROSPECTIVE_AMENDMENT_V2.json", "classification": "preparation", "role": "proposal", "format": "json"},
+    {"id": "primary375_owner_reconciliation", "path": "C:/Users/clclc/BusinessProject/titan-sparse-quality-records/delivery-consolidation-20261006-01/PRIMARY_375_PREPARATION_RECONCILIATION.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "primary375_direct_human_reconciliation", "path": "C:/Users/clclc/BusinessProject/rineya-mlp-primary375-human-reconciliation-20261006-01/REVIEW.v2.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "primary375_analysis_commitments_review", "path": "C:/Users/clclc/BusinessProject/rineya-primary375-analysis-source-review-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "primary375_metadata_prototype", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-recursive-self-distillation-v1/experiments/rineya_quality_queue_v1/primary375_analysis.py", "classification": "preparation", "role": "source", "format": "text"},
+    {"id": "declared_cluster_metadata_prototype", "path": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-recursive-self-distillation-v1/experiments/rineya_quality_queue_v1/cluster_statistics.py", "classification": "preparation", "role": "source", "format": "text"},
+    {"id": "analysis_prototype_fixture_verification", "path": "C:/Users/clclc/BusinessProject/rineya-primary375-analysis-prototypes-fixtures-20261006-01/COMPLETE_RESULT.v3.json", "classification": "fixture", "role": "receipt", "format": "json"},
+    {"id": "declared_cluster_source_review", "path": "C:/Users/clclc/BusinessProject/rineya-primary375-prototypes-independent-review-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "primary375_tally_source_review", "path": "C:/Users/clclc/BusinessProject/rineya-primary375-prototypes-independent-review-20261006-01/PRIMARY375_SOURCE_ADDENDUM.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m2_v3_terminal_order_scoped_review", "path": "C:/Users/clclc/BusinessProject/rineya-m2-v3-terminal-order-independent-review-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m2_outer_provider_availability_review", "path": "C:/Users/clclc/BusinessProject/rineya-m2-outer-provider-availability-20261006-01/REPORT.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m2_precursor_enrollment_source_decision", "path": "C:/Users/clclc/BusinessProject/rineya-m2-precursor-enrollment-decision-20261006-01/DECISION.json", "classification": "preparation", "role": "proposal", "format": "json"},
+    {"id": "m2_own_outer_provider_source", "path": "C:/Users/clclc/BusinessProject/titan-sparse-quality-records/standing-continuation-20261005-01a10d64-v1/m2-outer-intake-source-v1/owned_outer_supervisor.py", "classification": "preparation", "role": "source", "format": "text"},
+    {"id": "m2_own_outer_corrected_enrollment_proposal", "path": "C:/Users/clclc/BusinessProject/titan-sparse-quality-records/standing-continuation-20261005-01a10d64-v1/m2-outer-intake-source-v1/ENGINEERING_ENROLLMENT_PROPOSAL.json", "classification": "preparation", "role": "proposal", "format": "json"},
+    {"id": "m2_own_outer_corrected_interface", "path": "C:/Users/clclc/BusinessProject/titan-sparse-quality-records/standing-continuation-20261005-01a10d64-v1/m2-outer-intake-source-v1/INTERFACE.v2.json", "classification": "preparation", "role": "protocol", "format": "json"},
+    {"id": "m2_precursor_frozen_delivery", "path": "C:/Users/clclc/BusinessProject/m2-readiness-records/precursor-source-delivery-20261007-01/SOURCE_DELIVERY.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m2_precursor_frozen_binding", "path": "C:/Users/clclc/BusinessProject/m2-readiness-records/precursor-source-delivery-20261007-01/SOURCE_BINDING.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m2_precursor_frozen_metadata_review", "path": "C:/Users/clclc/BusinessProject/rineya-m2-precursor-entry-join-review-20261006-01/FROZEN_DELIVERY_REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m2_v2_initial_boundary_independent_review", "path": "C:/Users/clclc/BusinessProject/m2-readiness-records/initial-boundary-independent-review-20261007-01/INDEPENDENT_INITIAL_BOUNDARY_REVIEW.json", "classification": "preparation", "role": "receipt", "format": "json"},
+    {"id": "m2_current_held_delivery_review", "path": "C:/Users/clclc/BusinessProject/m2-current-delivery-state-independent-review-20261007-01/CURRENT_M2_SOURCE_STATE.json", "classification": "preparation", "role": "receipt", "format": "json"}
+  ],
+  "source_assets": [
+    {
+      "name": "Exact Supa A1.1 frozen parent",
+      "kind": "model_weights",
+      "path": "C:/Users/clclc/BusinessProject/SupaExperiment-matched-mlp-shipping-v1/Rineya-Supa-A1.1/model.safetensors",
+      "sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+      "evidence_id": "m1_final_handoff",
+      "json_pointer": "/source_snapshot/model_files/model.safetensors",
+      "custody_status": "RECORDED_VERIFIED_METADATA"
+    },
+    {
+      "name": "Historical CAPABILITY-1 matched MLP sidecar",
+      "kind": "trained_adapter",
+      "path": "C:/Users/clclc/BusinessProject/SupaExperiment-matched-mlp-shipping-v1/experiments/nonrecurrent_adaptation_v1/evidence/2026-09-10-capability1/adapter/adapter.safetensors",
+      "sha256": "f2ccf8faa099ba9e0dc5b07474c6a3a4ec42f5bee9141422dd795d9ae6612d79",
+      "evidence_id": "m1_final_handoff",
+      "json_pointer": "/source_snapshot/adapter_tensor_sha256",
+      "custody_status": "RECORDED_VERIFIED_METADATA"
+    }
+  ],
+  "metrics": [
+    {
+      "name": "historical_bias0_answerable_correct",
+      "numerator": 204,
+      "denominator": 720,
+      "unit": "count",
+      "scope_unit": "correct_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/answerable",
+      "denominator_json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/answerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_bias0_unanswerable_correct",
+      "numerator": 240,
+      "denominator": 240,
+      "unit": "count",
+      "scope_unit": "correct_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/unanswerable",
+      "denominator_json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/unanswerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_bias0_answerable_repairs_vs_frozen",
+      "numerator": 54,
+      "denominator": 720,
+      "unit": "count",
+      "scope_unit": "paired_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/answerable_pair/better",
+      "denominator_json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/answerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_bias0_answerable_damages_vs_frozen",
+      "numerator": 43,
+      "denominator": 720,
+      "unit": "count",
+      "scope_unit": "paired_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/answerable_pair/worse",
+      "denominator_json_pointer": "/historical_endpoint_tables/gate_neutral/aggregate/matched_mlp/answerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_canonical_bias_answerable_correct",
+      "numerator": 202,
+      "denominator": 720,
+      "unit": "count",
+      "scope_unit": "correct_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/answerable",
+      "denominator_json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/answerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_canonical_bias_unanswerable_correct",
+      "numerator": 240,
+      "denominator": 240,
+      "unit": "count",
+      "scope_unit": "correct_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/unanswerable",
+      "denominator_json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/unanswerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_canonical_bias_answerable_repairs_vs_frozen",
+      "numerator": 99,
+      "denominator": 720,
+      "unit": "count",
+      "scope_unit": "paired_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/answerable_pair/better",
+      "denominator_json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/answerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_canonical_bias_answerable_damages_vs_frozen",
+      "numerator": 6,
+      "denominator": 720,
+      "unit": "count",
+      "scope_unit": "paired_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/answerable_pair/worse",
+      "denominator_json_pointer": "/historical_endpoint_tables/canonical/aggregate/matched_mlp/answerable_pair/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_bias0_state_tracking_correct_confounded_bank",
+      "numerator": 5,
+      "denominator": 360,
+      "unit": "count",
+      "scope_unit": "correct_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/gate_neutral/families/state_tracking/answerable/arms/matched_mlp/correct",
+      "denominator_json_pointer": "/historical_endpoint_tables/gate_neutral/families/state_tracking/answerable/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "historical_canonical_state_tracking_correct_confounded_bank",
+      "numerator": 3,
+      "denominator": 360,
+      "unit": "count",
+      "scope_unit": "correct_rows",
+      "evidence_id": "transfer3_reconciliation",
+      "json_pointer": "/historical_endpoint_tables/canonical/families/state_tracking/answerable/arms/matched_mlp/correct",
+      "denominator_json_pointer": "/historical_endpoint_tables/canonical/families/state_tracking/answerable/n",
+      "status": "MEASURED"
+    },
+    {
+      "name": "reliable_answering_at_live_bias_3_75",
+      "numerator": null,
+      "denominator": null,
+      "unit": "paired_correct_rows",
+      "evidence_id": "reconciliation_interpretation",
+      "text_anchor": "Neither is a measured reduction at 3.75.",
+      "status": "NOT_MEASURED"
+    },
+    {
+      "name": "broad_conversation_retention",
+      "numerator": null,
+      "denominator": null,
+      "unit": "prior_correct_rows",
+      "evidence_id": "mlp_preregistration",
+      "text_anchor": "Add ordinary conversation/retention cases prospectively;",
+      "status": "NOT_MEASURED"
+    },
+    {
+      "name": "response_length_at_live_policy",
+      "numerator": null,
+      "denominator": null,
+      "unit": "generated_tokens_per_complete_response",
+      "evidence_id": "m1_report",
+      "text_anchor": "No pretrained model load or native forward,",
+      "status": "NOT_MEASURED"
+    },
+    {
+      "name": "reasoning_generalization",
+      "numerator": null,
+      "denominator": null,
+      "unit": "independent_parent_correctness",
+      "evidence_id": "reconciliation_interpretation",
+      "text_anchor": "state-tracking capability or population generalization.",
+      "status": "NOT_MEASURED"
+    },
+    {"name": "historical_bias0_FV_source_correct_losses", "numerator": 43, "denominator": 193, "unit": "count", "scope_unit": "historical_FV_scored_answerable_source_correct_row", "evidence_id": "historical_length_reliability_audit", "json_pointer": "/paired_cohorts/gate_neutral/answerable/predicate_correct_to_incorrect_losses", "denominator_json_pointer": "/paired_cohorts/gate_neutral/answerable/frozen_correct", "status": "MEASURED"},
+    {"name": "historical_bias0_parent_answerable_completion_length", "numerator": 4.872222222, "denominator": 1, "unit": "tokens", "scope_unit": "historical_answerable_row_completion_including_EOS", "aggregation": "source_mean", "evidence_id": "historical_length_reliability_audit", "json_pointer": "/paired_cohorts/gate_neutral/answerable/frozen_length/mean", "denominator_explanation": "Source mean of720 saved completion arrays including oneEOS. Denominator1 preserves that reported mean; changing cohorts/repeatedIDs are not training replication.", "status": "MEASURED"},
+    {"name": "historical_bias0_MLP_answerable_completion_length", "numerator": 3.1, "denominator": 1, "unit": "tokens", "scope_unit": "historical_answerable_row_completion_including_EOS", "aggregation": "source_mean", "evidence_id": "historical_length_reliability_audit", "json_pointer": "/paired_cohorts/gate_neutral/answerable/MLP_length/mean", "denominator_explanation": "Source mean of720 saved completion arrays including oneEOS. Denominator1 preserves that reported mean; changing cohorts/repeatedIDs are not training replication.", "status": "MEASURED"},
+    {"name": "historical_canonical_bias_FV_source_correct_losses", "numerator": 6, "denominator": 109, "unit": "count", "scope_unit": "historical_FV_scored_answerable_source_correct_row", "evidence_id": "historical_length_reliability_audit", "json_pointer": "/paired_cohorts/canonical/answerable/predicate_correct_to_incorrect_losses", "denominator_json_pointer": "/paired_cohorts/canonical/answerable/frozen_correct", "status": "MEASURED"},
+    {"name": "historical_canonical_bias_parent_answerable_completion_length", "numerator": 2.516666667, "denominator": 1, "unit": "tokens", "scope_unit": "historical_answerable_row_completion_including_EOS", "aggregation": "source_mean", "evidence_id": "historical_length_reliability_audit", "json_pointer": "/paired_cohorts/canonical/answerable/frozen_length/mean", "denominator_explanation": "Source mean of720 saved completion arrays including oneEOS. Denominator1 preserves that reported mean; changing cohorts/repeatedIDs are not training replication.", "status": "MEASURED"},
+    {"name": "historical_canonical_bias_MLP_answerable_completion_length", "numerator": 2.870833333, "denominator": 1, "unit": "tokens", "scope_unit": "historical_answerable_row_completion_including_EOS", "aggregation": "source_mean", "evidence_id": "historical_length_reliability_audit", "json_pointer": "/paired_cohorts/canonical/answerable/MLP_length/mean", "denominator_explanation": "Source mean of720 saved completion arrays including oneEOS. Denominator1 preserves that reported mean; changing cohorts/repeatedIDs are not training replication.", "status": "MEASURED"},
+    {"name": "historical_bias0_strict_source_correct_losses", "numerator": 3, "denominator": 126, "unit": "count", "scope_unit": "historical_strict_scored_answerable_source_correct_row", "evidence_id": "historical_score_policy_addendum", "json_pointer": "/aggregate_by_policy_and_answerability/gate_neutral/answerable/strict/source_correct_losses", "denominator_json_pointer": "/aggregate_by_policy_and_answerability/gate_neutral/answerable/strict/frozen_correct", "status": "MEASURED"},
+    {"name": "historical_canonical_bias_strict_source_correct_losses", "numerator": 3, "denominator": 88, "unit": "count", "scope_unit": "historical_strict_scored_answerable_source_correct_row", "evidence_id": "historical_score_policy_addendum", "json_pointer": "/aggregate_by_policy_and_answerability/canonical/answerable/strict/source_correct_losses", "denominator_json_pointer": "/aggregate_by_policy_and_answerability/canonical/answerable/strict/frozen_correct", "status": "MEASURED"}
+  ],
+  "requirements": [
+    {"id": "reviewed_m2_observer_qualification_scope", "status": "BLOCKED", "evidence_ids": ["m2_minimum_scope_independent_review", "m2_served_scope_provisional_review", "m2_interface_draft_independent_review", "m2_sealed_v1_static_delivery", "m2_integration_v2_interface_review", "m2_final_source_independent_review", "m2_v3_terminal_order_scoped_review"], "reason": "The128/16 minimum and1024/64 served envelope remain distinct. Final V2 fixes the exact issuer/ledger API, EOF reservation and fixed-cell full-vector completion source findings; prior revisions remain preserved. Active V3 adds model-free actor/process/journal source bodies and a12-case proposal, with terminal ordering resolved in a narrow captured snapshot. Whole frozen/adopted PREP/actor/worker/terminal integration, authentic signing/outer/source/runtime/physical qualification and genuine native producer/CUDA/template/decoder/full-boundary evidence remain absent. No static metadata, model-free phase or helper fixture transfers M1/runtime authority."},
+    {"id": "standing_research_consent", "status": "PASS", "evidence_ids": ["standing_research_consent"], "reason": "Direct human standing consent covers the recommended bounded research progression without repeated consent questions. Exact owner phase grants, real source/data/runtime/resource qualification and registered preservation gates remain required; this index issues no execution grant."},
+    {"id": "recorded_asset_custody", "status": "PASS", "evidence_ids": ["m1_final_handoff"], "reason": "Final offline postflight records unchanged exact parent and historical adapter bytes; this is metadata custody, not native endpoint qualification."},
+    {"id": "original_m1_native_mechanics", "status": "PASS", "evidence_ids": ["m1_native_pass_run", "m1_native_pass_result", "m1_native_pass_outcome", "m1_native_pass_independent_audit"], "reason": "Exact original-source attempt03 completed PASS_NATIVE_MECHANICS_ONLY with immutable source/base/adapter, policy isolation, restoration/reload, finite full-vocabulary captures and owned Job exit. Cache parity compares tokens only; uncached vectors were not retained. No task-bank, backward or optimizer work; no quality or retention claim."},
+    {"id": "reviewed_source_bound_retry_grant", "status": "PASS", "evidence_ids": ["m1_native_pass_outcome", "m1_native_pass_independent_audit", "standing_research_consent"], "reason": "The one exact canonical invocation completed under its own standing-authorized action and unchanged original guards. Two prior failures and zero-attempt preflights remain preserved. This completed action grants no future retry or M2 phase."},
+    {"id": "native_observer_and_complete_cal_derivation", "status": "BLOCKED", "evidence_ids": ["m2_proposal", "m2_fixture_receipt"], "reason": "M1 mechanics are now qualified. M2 observer/template/sensor/writer/containment qualification and complete registered CAL grid continuation outcomes remain absent. Three visited trace arms cannot supply unvisited outcomes after divergence; selected-bias replay cannot retroactively complete CAL."},
+    {"id": "fresh_open_bank_and_independent_review", "status": "BLOCKED", "evidence_ids": ["m2_proposal", "m2_fixture_receipt"], "reason": "Fresh source/rights/gold review and exact CAL/CHECK registration are not supplied; fixture projections are not data admission."},
+    {"id": "live_policy_behavior_and_retention", "status": "NOT_MEASURED", "evidence_ids": ["reconciliation_interpretation", "mlp_preregistration"], "reason": "Live bias3.75 quality, broad conversation retention, fair performance and length outcomes remain unmeasured."},
+    {"id": "m2_final_committed_source", "status": "BLOCKED", "evidence_ids": ["m2_fixture_receipt", "m2_sealed_v1_static_delivery", "m2_final_source_delivery", "m2_final_source_independent_review", "m2_v3_terminal_order_scoped_review", "m2_outer_provider_availability_review", "m2_precursor_enrollment_source_decision", "m2_own_outer_provider_source"], "reason": "Original32 readiness files and V1/V2 remain preserved. Finished V3 delivery has16matching rawfiles/inventory42af2311. The preserved availability review predates the additive own provider5b30a545; that implemented source now exists but genuine authority/key/prior own qualification/runtime/consumer/allocation registrations remain absent. Its corrected composed case requires prior admission and cannot qualify that admission from its own future receipt. A distinct guarded model-free precursor and compatible single-owner lease contract remain source requirements, not executable qualification. M1 supplies code patterns only. Whole successor ownership/budget/physical/native qualification remains missing; no production readiness follows."},
+    {"id": "initial_control_adoption_and_finite_lifecycle_fit", "status": "BLOCKED", "evidence_ids": ["m2_current_held_delivery_review"], "reason": "The seven-file initial bootstrap/executor/custody implementation exists as held source,367767 bytes/aggregate6766f4de; it is unadopted and not executable qualification. Preserved9c155 bootstrap retains reopened early terminal-start F1; reviewed9a424 one-file correction is NOT_ADOPTED. Full900+10 sensor/message/native/failure/cleanup iteration bound and all-seven prices remain null/REFUSE_UNFIT. Genuine distinct qualified control, initial source/runtime/action/allocation and both controller/recipient adoption/physical evidence remain absent. Original owner is blocked pending matching external evidence; no revival, competing worker or imported M1/Titan permit follows."},
+    {"id": "release_authority", "status": "BLOCKED", "evidence_ids": ["m2_status"], "reason": "CAL, CHECK, native execution, training and release are separate closed decisions; historical recommendation transfers no permit."},
+    {"id": "complete_full_vector_storage_and_continuation", "status": "BLOCKED", "evidence_ids": ["m2_minimum_scope_independent_review", "lossless_capture_repacking", "lossless_archive_fixture"], "reason": "The complete registered 34-profile CAL must retain every full vector on every actual visited/diverged continuation within the original cumulative storage/I/O limits. Lossless canonical-row deduplication with actual UNKNOWN patches and optional zlib reconstructs the small preserved M1 sample exactly; its measured sample savings do not establish worst-case CAL fit. Independent streaming writer/restoration/accounting integration remains unqualified; no approximation, missing paths or reduced grid."},
+    {"id": "primary375_source_design_recorded", "status": "PASS", "evidence_ids": ["primary375_prospective_amendment", "primary375_owner_reconciliation", "primary375_direct_human_reconciliation"], "reason": "Direct human items and exact source design support preparing fixed3.75 parent/unchanged-MLP operational utility separately from calibration, retaining96CAL/192CHECK and original decoding. This is prospective preparation only; it neither measures utility nor replaces the original selected/live objective."},
+    {"id": "primary375_analysis_data_and_physical_admission", "status": "BLOCKED", "evidence_ids": ["primary375_prospective_amendment", "primary375_owner_reconciliation"], "reason": "Exact practical margin, paired confidence/multiplicity/clustering acceptance, shortcut controls, outcome-blind semantic/refusal rubric and real independent rights/gold/freshness/exclusion commitments remain pre-outcome prerequisites. Genuine observer/source/runtime/provider/physical qualification and full cumulative capture/retention/cost budgets remain required. First experimental CHECK access consumes that192bank, including partial/failure; later selected-bias confirmation needs independently fresh custody."}
+  ],
+  "next_proposal": {
+    "phase": "OFFLINE_M2_HELD_SOURCE_AND_GENUINE_CONTROL_FEASIBILITY_REVIEW",
+    "proposal_evidence_id": "m2_current_held_delivery_review",
+    "requires": [
+      "original_m1_native_mechanics",
+      "recorded_asset_custody",
+      "reviewed_m2_observer_qualification_scope",
+      "initial_control_adoption_and_finite_lifecycle_fit",
+      "standing_research_consent"
+    ],
+    "limits": {
+      "native_attempts_authorized_now": 0,
+      "model_calls": 0,
+      "task_bank_reads": 0,
+      "optimizer_updates": 0,
+      "future_calibration_rows": 96,
+      "future_check_rows": 192,
+      "live_unknown_bias": 3.75
+    },
+    "native_execution_authorized": false
+  },
+  "related_primary_375_proposal": {
+    "phase": "OFFLINE_FIXED375_ANALYSIS_REGISTRATION_AND_OBSERVER_REVIEW",
+    "proposal_evidence_id": "primary375_prospective_amendment",
+    "requires": ["standing_research_consent", "original_m1_native_mechanics", "recorded_asset_custody", "primary375_source_design_recorded", "reviewed_m2_observer_qualification_scope", "primary375_analysis_data_and_physical_admission"],
+    "arms": ["parent_3.75", "matched_mlp_3.75"],
+    "limits": {"native_attempts_authorized_now": 0, "bank_reads_authorized_now": 0, "future_CAL_rows": 96, "future_CHECK_rows": 192, "max_input_tokens": 1024, "max_new_tokens": 64, "future_generation_calls_upper": 576, "future_generation_forwards_upper": 36864, "future_raw_full_vector_bytes_upper_fp16": 11201937408, "future_raw_full_vector_bytes_upper_fp32": 22403874816, "qualification_prior_partial_metadata_retention_cost_terminal_accounting": "ADDITIONAL_NOT_QUALIFIED", "retuning": false, "automatic_retries": 0},
+    "original_calibration_obligations": "Original34-point CAL, complete selected-bias replay and selected/live objective remain outstanding independently. Selected-bias success cannot rescue a failed primary. No blind CHECK reuse after experimental primary exposure.",
+    "native_execution_authorized": false
+  },
+  "observed_patterns": [
+    {"evidence_id": "transfer3_reconciliation", "text": "Historical bias0 MLP records204/720 answerable and240/240 unanswerable correctness with54 answerable repairs and43 damages versus frozen. Canonical bias records202/720 and240/240, with99 repairs and6 damages."},
+    {"evidence_id": "reconciliation_interpretation", "text": "The reliability/calibration pattern does not establish live3.75 quality or compositional reasoning. State tracking5/360 and3/360 remains non-significant and limited by E36/E38."},
+    {"evidence_id": "m1_report", "text": "Fresh M1 failure is a launcher ownership failure before native model work. CPU and launcher fixtures are software checks only."},
+    {"evidence_ids": ["lossless_capture_repacking", "lossless_archive_fixture"], "statement": "The archive helper is pure standard-library byte mechanics with a separately trusted manifest root, exact row/provenance hashes, finite chunk limits and closed permissions. The preserved M1 capture repacking was offline: no new model call, task-bank access, loss or floating-point conversion. Original captures remain immutable; archive totals exclude the separate provenance receipt and originals. This is a possible storage design, not model-quality evidence or a production fit/adoption claim."},
+    {"evidence_ids": ["m2_interface_draft_independent_review", "m2_sealed_v1_static_delivery"], "statement": "The independent draft audit and later sealed delivery represent distinct source snapshots. Earlier missing provider adapters were fixed during review; final delivery still discloses bounded source/slot-proof reads are not fully owner-global precharged. Genuine issuer, authenticated worker/CUDA and watchdog channels and surviving terminal writer remain prerequisites; no34-grid/cap/treatment change or M1 permit transfer."},
+    {"evidence_ids": ["m2_integration_v2_interface_review", "f16_full_vector_fixture_checks"], "statement": "Integration review found missing issuer-to-ledger admission API, omitted EOF read charge and a weaker completion predicate than sealed V1. Fixed input/cell/route binding and complete finite-vector lowest-ID argmax validation must be restored. The root inspector passes exhaustive-pattern/full-size fixtures, attesting supplied bytes only; no physical provider adoption or grant follows."},
+    {"evidence_ids": ["historical_length_reliability_audit"], "statement": "Historical gains include changed contract-coded attempts/UNKNOWN and score predicates, not only coverage or shortening. FV losses43/193 at0 and6/109canonical stay distinct from strict or semantic correctness. Wrong attempts rise; all3840 responses terminate below64. Stored completion lengths includeEOS; changing-cohort means cannot prove safer shortening or probability calibration. One draw/spent templates do not establish live3.75 benefit."},
+    {"evidence_ids": ["historical_length_reliability_audit", "historical_score_policy_addendum"], "statement": "Score-policy disambiguation: neutral43 FV losses include3 strict-correct losses and40 already strict-incorrect outputs; canonical6 split3/3. Strict repairs/losses/net are81/3/+78 and117/3/+114. The three neutral strict losses keep identical lengths, so long-response shortening is not a demonstrated cause of strict damage. Four neutral new answerable UNKNOWNs are separately preserved; canonical has0. Neither frozen predicate supplies semantic adjudication or live3.75 evidence."},
+    {"evidence_ids": ["m2_final_source_independent_review"], "statement": "The final six-file source packet repairs admission API, durable EOF+1 precharge and36-cell/input/arm/bias/route/EOS joins, with actual retained-handle full F16/F32 finite lowest-ID argmax/readback checks bracketed by LIVE checks. Static correction has no new blocker in that narrow scope. Genuine producer/PREP/actor/worker/terminal/runtime/provider/physical integration remains HOLD; bytes alone cannot prove native producer origin. The full34-profile CAL, selected-bias replay and live3.75 preservation comparisons remain unchanged."},
+    {"evidence_ids": ["primary375_direct_human_reconciliation", "primary375_prospective_amendment", "primary375_owner_reconciliation"], "statement": "Direct human plan prioritizes fixed serving3.75 and treats calibration separately. An independent fixed-bias operational estimand does not intrinsically depend on34-point search; the original selected-bias objective does. Primary preparation keeps96CAL/192CHECK, unchanged parent/adapter and answer-only1024/64 decoding with family NET/refusal/unanswerable/complete-pair/retention/cost gates. It requires frozen positive practical/confidence/cluster/shortcut and real data reviews before outcomes, consumes primary CHECK at first experimental access and needs fresh later calibration confirmation. No intrinsic reasoning or general-quality claim follows."},
+    {"evidence_ids": ["primary375_analysis_commitments_review", "primary375_metadata_prototype", "declared_cluster_metadata_prototype", "analysis_prototype_fixture_verification", "declared_cluster_source_review", "primary375_tally_source_review"], "statement": "Unselected plain-metadata prototypes validate explicit registration declarations and complete192CHECK48A/16U family joins, tally repairs/losses/refusals separately and preserve exact inherited proxy arithmetic. Positive aggregate gain cannot override family NET loss, new answerable refusal or unanswerable regression; content losses remain reported without inventing a zero-all-answerable-loss rule. Declared-component Monte Carlo keeps case-weighted family ratios and explicit binary-float confidence ranks, with no independence or confirmation claim.116 synthetic software fixtures pass; real method values, component design, scorer-domain/rubric, controls, data, retention, costs and physical/native qualification remain unbound. No method was selected, task bank read or model gain established."}
+  ],
+  "exposure": {"status": "HISTORICAL_DEVELOPMENT_EXPOSED_NEW_CAL_CHECK_UNREGISTERED", "scope": "TRANSFER-3 is spent development evidence. Fresh open CAL96/CHECK192 is only a prospective design; no protected-bank access is granted.", "protected_bank_access": false},
+  "quality_gates": [
+    {"id": "mlp_lower_registered_loss", "evidence_ids": ["mlp_preregistration"], "rule": "Select using CAL ONLY from the complete grid and unchanged frozen-at-live-3.75 control: strictly lower proxy loss."},
+    {"id": "mlp_no_unanswerable_regressions", "evidence_ids": ["mlp_preregistration"], "rule": "Zero unanswerable correct->incorrect pairs."},
+    {"id": "mlp_no_new_answerable_abstentions", "evidence_ids": ["mlp_preregistration"], "rule": "Zero newly introduced answerable abstentions."},
+    {"id": "mlp_no_family_answerable_net_loss", "evidence_ids": ["mlp_preregistration"], "rule": "No negative net answerable delta in any family."},
+    {"id": "mlp_complete_pairs_and_actual_replay", "evidence_ids": ["mlp_preregistration", "m2_proposal"], "rule": "No incomplete pair; actual selected-bias native replay must agree with qualified complete outcomes; first path divergence remains unresolved."},
+    {"id": "mlp_both_parent_controls", "evidence_ids": ["mlp_preregistration"], "rule": "CHECK must pass the same conservative gates against BOTH parent-selected and parent-at-live3.75 controls; no CHECK retuning."},
+    {"id": "mlp_release_retention_and_fair_performance", "evidence_ids": ["mlp_preregistration"], "rule": "Separately registered ordinary conversation/retention, exact selected-policy integrity/reload, matched latency/memory and explicit owner release authority are required."}
+  ],
+  "completed_failed_attempts": [
+    {"id": "m1_attempt_03", "evidence_id": "m1_native_pass_independent_audit", "status": "PASS_NATIVE_MECHANICS_ONLY", "scope": "One actual model load; zero task rows, backward calls and optimizer steps. Original900-second/6144MiB supervisor completed45.75seconds with observed peak2243.93359375MiB. Capture and terminal audit is mechanical-only; static readiness inventory model_calls0 is not the actual executed-call count."},
+    {"id": "m1_attempt_02", "evidence_id": "m1_additional_failure", "status": "FAIL_PREMODEL_INTEGRITY", "scope": "Separately authorized direct-interpreter attempt; zero model load attempts, task rows, backward calls and optimizer steps. Host-memory guard stopped the worker. Preserve original source, failure and exited-process evidence."},
+    {"id": "m1_attempt_01", "evidence_id": "m1_failure", "status": "FAIL_CHILD_OR_MISSING_RECEIPT", "scope": "One attempt, zero retries; worker rejected immediate parent identity before native import. Preserve final failure and all exited-owner receipts."}
+  ],
+  "own_outer_precursor_readiness": {
+    "evidence_ids": ["m2_precursor_enrollment_source_decision", "m2_own_outer_provider_source", "m2_own_outer_corrected_enrollment_proposal", "m2_own_outer_corrected_interface"],
+    "status": "SOURCE_PROVIDER_PRESENT_AUTHENTIC_PRECURSOR_AND_LEASE_OWNERSHIP_UNRESOLVED",
+    "statement": "Own provider5b30a545 is implemented unqualified source. Its post-prerequisite factory requires already genuine engineering authority and own outer source/runtime/ID; the corrected composition proposal supplies no initial qualification path. The factory also opens share=0 hardware-worker.lock itself, which conflicts with a retained enclosing exclusive same-path keeper. Existing owners received a source-only requirement for independently accepted model-free precursor qualification, separate genuine issuer/purpose-key registration and privately authenticated known-created lease transfer/duplication by one acquisition owner. No None-field patch, caller numeric handle adoption, enclosing-lease release, future PASS, foreign permit or fixture can satisfy these prerequisites. All exact drivers/runtime/costs/keys/acceptances/physical receipts remain missing; no credential or handle was created by this programme decision."
+  },
+  "precursor_frozen_source_state": {
+    "evidence_ids": ["m2_precursor_frozen_delivery", "m2_precursor_frozen_binding", "m2_precursor_frozen_metadata_review"],
+    "status": "SEVEN_FILE_SOURCE_FREEZE_VERIFIED_INITIAL_EXECUTOR_AND_BOOTSTRAP_ABSENT",
+    "statement": "Delivery75ea/bindingf8dc freeze7 files/157787 bytes, aggregate1c87a3a8; programme metadata review independently rehashes every raw file and reconstructs the declared path-NUL-bytes-NUL-SHA-LF aggregate. Owner scoped source reviews close failed-result success/failuretrace/self-hash/same-original-action/custody/loaded-namespace and accounting/cleanup findings; that attribution does not certify whole runtime, ABI, crypto or OS behavior. Initial executor/bootstrap/private acceptance/loader/source-runtime/cost/slot/physical evidence remain genuinely absent, with all tests/imports/keys/handles/model work unperformed. The next source action is one fixed qualification-only initial bootstrap/executor matching all frozen interfaces, not a new generic authority hierarchy or a future target PASS. Existing5b30 still requires a separately versioned keeper-compatible production successor. The saved post-reboot disk point is below the unchanged46GiB native floor; fresh actual admission remains required."
+  },
+  "initial_executor_boundary_prior_snapshot": {
+    "evidence_ids": ["m2_v2_initial_boundary_independent_review"],
+    "status": "BOUNDED_V2_SOURCE_CONTRACT_COHERENT_ACTUAL_EXECUTOR_CONTROL_AND_ENROLLMENT_MISSING",
+    "statement": "The bounded independent review verifies V2 delivery2710/bindingc769/eight raw files183648 bytes and aggregate1a3cb33, preserving V1. The declared initial contract has no new contradiction within the reviewed source scope, but genuine three-file bootstrap/executor-registry/watchdog-terminal custody implementation and enrollment/control/runtime/cost/slot facts remain absent. UNQUALIFIED-target allowance differs from ACTUAL_PREQUALIFIED_ENCLOSING_CONTROL_CURRENT and cannot produce that control from its own future PASS. Direct isolated child entry still lacks declared bootstrap adoption. Existing owners received the concrete three-file source-only assignment plus separate versioned controller/recipient adoption. No caller flag, None-field patch, foreign permit, source attestation or precursor result can create production/native/key/custody authority. All physical and quality evidence stays missing."
+  },
+  "initial_executor_current_held_state": {
+    "evidence_ids": ["m2_current_held_delivery_review"],
+    "status": "IMPLEMENTATION_EXISTS_ERRATUM_PRESERVED_CORRECTION_UNADOPTED_FINITE_COST_AND_GENUINE_CONTROL_BLOCKED",
+    "statement": "Exact49acf delivery/975973 erratum/169b cost/87e6 correction/8589 NOT_ADOPTED decision,7 held files and3 candidate files match. The original bootstrap9c155/custody04db/executorb08 exists; earlier source-absence statements remain historical. Reviewed one-file9a424 early terminal-start correction joins existing private request/session/descriptor and prepaid CUSTODY_TERMINAL_IO, not a caller flag or new authority. OriginalROOT/status,900+10 clocks, source/runtime checks and public refusal remain. The held source retains its F1 erratum because no adoption occurred. Current cost binds actual04db/b08 and68 reservation envelopes per sensor pass;47 reserve52363264 write bytes leaving65536,48 exceed50MiB by1048576 before other lifecycle costs. A50ms maximum poll supplies no minimum cadence or finite full-phase bound. Budget-exhaustion stop is refusal, not complete control coverage. Authentic startup producer, distinct qualified enclosing control, runtime/action/slot/fresh floors, full seven-dimensional costs and both-role adoption/actual qualification remain absent. The original owner reports blocked; repeated fixture counts/flags or foreign receipts cannot supply those facts. No source execution, OS/key/lease/bank/native/model or owner revival occurred in this review."
+  },
+  "advancement": false
+}

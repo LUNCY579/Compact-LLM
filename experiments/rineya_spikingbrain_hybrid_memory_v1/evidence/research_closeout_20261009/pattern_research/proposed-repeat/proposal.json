@@ -1,0 +1,509 @@
+{
+  "bindings": {
+    "anchor": {
+      "arm": "A",
+      "code_sha256": "26f1c07bbe354a422b1a6d4ea5988a21b063621f055c9a92155fa5e5e2a738ef",
+      "condition": "anchor",
+      "config_sha256": "7943f4fdf25b6b6a75136af42a48a4f4edd847569186068f50587765a7e7c2d2",
+      "corpus_sha256": "ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3",
+      "delta_manifest_sha256": null,
+      "delta_sha256": null,
+      "environment": {
+        "cuda": "12.4",
+        "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "python": "3.10.11",
+        "versions": {
+          "accelerate": "1.15.0",
+          "psutil": "7.2.2",
+          "safetensors": "0.7.0",
+          "tokenizers": "0.21.4",
+          "torch": "2.6.0+cu124",
+          "transformers": "4.51.3"
+        }
+      },
+      "ledger_sha256": "af19ce6a7a31fd07ae481e291478d89386855543b23191b6d1ffb6f1442c6678",
+      "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1",
+      "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a",
+      "study_id": "update-order-v1",
+      "tokenizer_sha256": "c8b302355b0f056818464137097cd078bda7a69c4f52ea99aee36030d6b07cdf"
+    },
+    "candidate": {
+      "arm": "B",
+      "code_sha256": "26f1c07bbe354a422b1a6d4ea5988a21b063621f055c9a92155fa5e5e2a738ef",
+      "condition": "candidate",
+      "config_sha256": "7943f4fdf25b6b6a75136af42a48a4f4edd847569186068f50587765a7e7c2d2",
+      "corpus_sha256": "ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3",
+      "delta_manifest_sha256": null,
+      "delta_sha256": null,
+      "environment": {
+        "cuda": "12.4",
+        "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "python": "3.10.11",
+        "versions": {
+          "accelerate": "1.15.0",
+          "psutil": "7.2.2",
+          "safetensors": "0.7.0",
+          "tokenizers": "0.21.4",
+          "torch": "2.6.0+cu124",
+          "transformers": "4.51.3"
+        }
+      },
+      "ledger_sha256": "af19ce6a7a31fd07ae481e291478d89386855543b23191b6d1ffb6f1442c6678",
+      "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1",
+      "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a",
+      "study_id": "update-order-v1",
+      "tokenizer_sha256": "c8b302355b0f056818464137097cd078bda7a69c4f52ea99aee36030d6b07cdf"
+    },
+    "control": {
+      "arm": "B",
+      "code_sha256": "26f1c07bbe354a422b1a6d4ea5988a21b063621f055c9a92155fa5e5e2a738ef",
+      "condition": "control",
+      "config_sha256": "7943f4fdf25b6b6a75136af42a48a4f4edd847569186068f50587765a7e7c2d2",
+      "corpus_sha256": "ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3",
+      "delta_manifest_sha256": null,
+      "delta_sha256": null,
+      "environment": {
+        "cuda": "12.4",
+        "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "python": "3.10.11",
+        "versions": {
+          "accelerate": "1.15.0",
+          "psutil": "7.2.2",
+          "safetensors": "0.7.0",
+          "tokenizers": "0.21.4",
+          "torch": "2.6.0+cu124",
+          "transformers": "4.51.3"
+        }
+      },
+      "ledger_sha256": "af19ce6a7a31fd07ae481e291478d89386855543b23191b6d1ffb6f1442c6678",
+      "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1",
+      "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a",
+      "study_id": "update-order-v1",
+      "tokenizer_sha256": "c8b302355b0f056818464137097cd078bda7a69c4f52ea99aee36030d6b07cdf"
+    }
+  },
+  "code_inventory": {
+    "quality_followup/__init__.py": "7331b42618a104a563f7c59c1a1fa51c5338e1fc6802d47f0640f9a5828d4fc0",
+    "quality_followup/__main__.py": "02a92a9b1c615cc211fc96dee5726a4354601a9cf4d55c13f5069c669ab772f5",
+    "quality_followup/audit.py": "863b21a76cd60f613b378c4e993cb1536524a883f5ea0fb33053485738c05f38",
+    "quality_followup/comparison.py": "97993b0fc225356bfba50be1c40920f051c4576cba731dde8c5b23724754a3ef",
+    "quality_followup/corpus.py": "00ff1d334eddf0408c3f5e1389d95ba2d429db73531328244b2bcc694a914691",
+    "quality_followup/metrics.py": "4168477a947815eca1bb778a1767bb43989b3e2940be64fa5eba7c757862c3d9",
+    "quality_followup/prepare.py": "73c0e2f6605b1274c01f6f87e0ca2ae6d7837914781affcf07df624815df23dd",
+    "quality_followup/protocol.py": "c0dd78eb0f9179e568ea998e60bf592cc27f4f2961b922128f851bcbc5a8d19d",
+    "quality_followup/runner.py": "8694901e319505352eb8afe81dff0f7834667eb67b950c1534256d86eea1ed56",
+    "quality_followup/tests/test_corpus.py": "b17bfece21d10f51eb80953cc3f96daf1a05238397ed7b52c95de637b448c4a8",
+    "quality_followup/tests/test_metrics.py": "65aa2a6fdf784f85eebe246359d83a6fd5b75a46474636a31263ab6b6d791164",
+    "quality_followup/tests/test_protocol.py": "b1d7a9366b6319ff59b03e9ceae12c7d8f63a18ea058f8aa65e6d7db8e4e3ab5",
+    "quality_followup/utils.py": "44c342231f96ebab3d23882fdd23b4a683b414a0960507de0038e9195e961274",
+    "sbhm/__init__.py": "f0c04570eeb48a784f52eaaa5c2b6b0bb58d910d00e9204feb8317a86fe8e9aa",
+    "sbhm/__main__.py": "6e5565d5098419f16ac6ba2bb299af0b2bd675aba411695464d37595281dd287",
+    "sbhm/core.py": "e383d8333a8c669ab74cfcd9f4506d1a2930c7cf89164c51f718a7fc2128f78d",
+    "sbhm/data.py": "ded0427b69fcf2c70f9bc250ac522a5a79229301f61d38a4ab8151fc2a815f89",
+    "sbhm/matrix.py": "b681fcdb814661016c973df775c169110b2ab6dbe08ce7e6beae08d426e3e3db",
+    "sbhm/native.py": "ed278b23436c91389a2f1e04556fe0842c65de287226bafbc93ff1852fc8edf6",
+    "sbhm/pipeline.py": "791a9e8176262e5b3f6e773a322640b8ae417956e1584b5de2724d6afa659c60",
+    "sbhm/protocol.py": "d03690b07ffe7324d3d97d3a80ed3fa58d4c0df1550e985e1a618ca23dc2f7ff",
+    "sbhm/quantization.py": "478f643f2c8305be85d7dc717982b8c02dea3e78fbde2c4f2e3b528a193395ba",
+    "scripts/build_robust_corpus.py": "1fcdb5df7f74e6fd5821a27c44fcf4d8878b71ed9669a3a292529db97b925e66"
+  },
+  "commands": [
+    {
+      "argv": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "quality_followup",
+        "stage",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\study.json",
+        "--stage",
+        "qualify",
+        "--condition",
+        "anchor",
+        "--output",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\anchor-qualification",
+        "--allow-model-load"
+      ],
+      "condition": "anchor",
+      "delta": null,
+      "name": "anchor-qualification",
+      "output": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\anchor-qualification",
+      "qualification": null,
+      "stage": "qualify"
+    },
+    {
+      "argv": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "quality_followup",
+        "stage",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\study.json",
+        "--stage",
+        "evaluate",
+        "--condition",
+        "anchor",
+        "--output",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\anchor-evaluation",
+        "--allow-model-load",
+        "--qualification",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\anchor-qualification\\receipt.json"
+      ],
+      "condition": "anchor",
+      "delta": null,
+      "name": "anchor-evaluation",
+      "output": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\anchor-evaluation",
+      "qualification": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\anchor-qualification\\receipt.json",
+      "stage": "evaluate"
+    },
+    {
+      "argv": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "quality_followup",
+        "stage",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\study.json",
+        "--stage",
+        "qualify",
+        "--condition",
+        "control",
+        "--output",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-initial-qualification",
+        "--allow-model-load"
+      ],
+      "condition": "control",
+      "delta": null,
+      "name": "control-initial-qualification",
+      "output": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-initial-qualification",
+      "qualification": null,
+      "stage": "qualify"
+    },
+    {
+      "argv": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "quality_followup",
+        "stage",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\study.json",
+        "--stage",
+        "qualify",
+        "--condition",
+        "candidate",
+        "--output",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-initial-qualification",
+        "--allow-model-load"
+      ],
+      "condition": "candidate",
+      "delta": null,
+      "name": "candidate-initial-qualification",
+      "output": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-initial-qualification",
+      "qualification": null,
+      "stage": "qualify"
+    },
+    {
+      "argv": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "quality_followup",
+        "stage",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\study.json",
+        "--stage",
+        "train",
+        "--condition",
+        "control",
+        "--output",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-train",
+        "--allow-model-load",
+        "--allow-training",
+        "--qualification",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-initial-qualification\\receipt.json"
+      ],
+      "condition": "control",
+      "delta": null,
+      "name": "control-train",
+      "output": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-train",
+      "qualification": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-initial-qualification\\receipt.json",
+      "stage": "train"
+    },
+    {
+      "argv": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "quality_followup",
+        "stage",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\study.json",
+        "--stage",
+        "qualify",
+        "--condition",
+        "control",
+        "--output",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-trained-qualification",
+        "--allow-model-load",
+        "--delta",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-train"
+      ],
+      "condition": "control",
+      "delta": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-train",
+      "name": "control-trained-qualification",
+      "output": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-trained-qualification",
+      "qualification": null,
+      "stage": "qualify"
+    },
+    {
+      "argv": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "quality_followup",
+        "stage",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\study.json",
+        "--stage",
+        "evaluate",
+        "--condition",
+        "control",
+        "--output",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-evaluation",
+        "--allow-model-load",
+        "--qualification",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-trained-qualification\\receipt.json",
+        "--delta",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-train"
+      ],
+      "condition": "control",
+      "delta": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-train",
+      "name": "control-evaluation",
+      "output": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-evaluation",
+      "qualification": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-trained-qualification\\receipt.json",
+      "stage": "evaluate"
+    },
+    {
+      "argv": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "quality_followup",
+        "stage",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\study.json",
+        "--stage",
+        "train",
+        "--condition",
+        "candidate",
+        "--output",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-train",
+        "--allow-model-load",
+        "--allow-training",
+        "--qualification",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-initial-qualification\\receipt.json"
+      ],
+      "condition": "candidate",
+      "delta": null,
+      "name": "candidate-train",
+      "output": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-train",
+      "qualification": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-initial-qualification\\receipt.json",
+      "stage": "train"
+    },
+    {
+      "argv": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "quality_followup",
+        "stage",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\study.json",
+        "--stage",
+        "qualify",
+        "--condition",
+        "candidate",
+        "--output",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-trained-qualification",
+        "--allow-model-load",
+        "--delta",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-train"
+      ],
+      "condition": "candidate",
+      "delta": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-train",
+      "name": "candidate-trained-qualification",
+      "output": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-trained-qualification",
+      "qualification": null,
+      "stage": "qualify"
+    },
+    {
+      "argv": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "quality_followup",
+        "stage",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\study.json",
+        "--stage",
+        "evaluate",
+        "--condition",
+        "candidate",
+        "--output",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-evaluation",
+        "--allow-model-load",
+        "--qualification",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-trained-qualification\\receipt.json",
+        "--delta",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-train"
+      ],
+      "condition": "candidate",
+      "delta": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-train",
+      "name": "candidate-evaluation",
+      "output": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-evaluation",
+      "qualification": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-trained-qualification\\receipt.json",
+      "stage": "evaluate"
+    },
+    {
+      "argv": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "quality_followup",
+        "compare",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\study.json",
+        "--reports",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\anchor-evaluation\\receipt.json",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\control-evaluation\\receipt.json",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\candidate-evaluation\\receipt.json",
+        "--output",
+        "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\comparison.json"
+      ],
+      "condition": null,
+      "delta": null,
+      "name": "comparison",
+      "output": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run\\comparison.json",
+      "qualification": null,
+      "stage": "compare"
+    }
+  ],
+  "config_path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\study.json",
+  "counts": {
+    "comparisons": 1,
+    "dev_measurements": 3,
+    "qualifications": 5,
+    "rows_per_measurement": 672,
+    "steps_per_training_stage": 512,
+    "training_stages": 2
+  },
+  "execution": false,
+  "grant_requirements": {
+    "actions": [
+      {
+        "condition": "anchor",
+        "stage": "qualify"
+      },
+      {
+        "condition": "anchor",
+        "stage": "evaluate"
+      },
+      {
+        "condition": "control",
+        "stage": "qualify"
+      },
+      {
+        "condition": "control",
+        "stage": "train"
+      },
+      {
+        "condition": "control",
+        "stage": "evaluate"
+      },
+      {
+        "condition": "candidate",
+        "stage": "qualify"
+      },
+      {
+        "condition": "candidate",
+        "stage": "train"
+      },
+      {
+        "condition": "candidate",
+        "stage": "evaluate"
+      }
+    ],
+    "grant_path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native-grant.json",
+    "maximum_lifetime_days": 7,
+    "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1/native-grant",
+    "separate_authorization_required": true
+  },
+  "guards": {
+    "admission_available_ram_gib": 7.4,
+    "device": "cuda:0",
+    "maximum_worker_rss_gib": 4.0,
+    "minimum_free_vram_gib": 1.0,
+    "ownership_max_age_minutes": 5,
+    "qualification_max_age_hours": 24,
+    "runtime_available_ram_gib": 6.0
+  },
+  "model_loaded": false,
+  "native_run_root": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\native_run",
+  "promotion": false,
+  "proposal_sha256": "5253d01843e39d0d38c90e1d9d2c1ae5a25e0f943242b0cddb5a5fb802df1aa4",
+  "recipe": {
+    "device": "cuda:0",
+    "dtype": "float32",
+    "layer": 14,
+    "learning_rate": 0.0001,
+    "max_new_tokens": 32,
+    "max_prompt_tokens": 1158,
+    "max_train_tokens": 259,
+    "optimizer": "AdamW(.9,.95), wd=0, eps=1e-8, clip=1",
+    "prefill_chunk": 64,
+    "qualification_tokens": 2048,
+    "rank": 8,
+    "seed": 17,
+    "steps": 512,
+    "window": 128
+  },
+  "registration": {
+    "all_six_correct_groups_increase": true,
+    "answerable_and_absent_each_no_decline": true,
+    "automatic_followup": false,
+    "baseline_minimum_correct_per_metric": 16,
+    "baseline_minimum_skills_per_metric": 4,
+    "dev_rows_per_condition": 672,
+    "greatest_first_no_decline": true,
+    "json_contract_no_decline": true,
+    "maximum_source_correct_damage_per_metric": 0,
+    "middle_and_last_each_improve": true,
+    "minimum_gain_percentage_points": 10.0,
+    "minimum_net_correct": 26,
+    "model_promotion": false,
+    "primary": "typed_update_greatest_not_first",
+    "primary_rows": 256,
+    "retention_metrics": [
+      "strict_exact_match",
+      "typed_value_correct"
+    ],
+    "seed_count": 1,
+    "training_steps_per_condition": 512,
+    "update_worlds_dev": 16
+  },
+  "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1/proposal",
+  "status": "PLAN_ONLY",
+  "study_id": "update-order-v1",
+  "warnings": [
+    "One synthetic DEV panel and one seed; no broad quality or retention claim.",
+    "Stop on failure; no automatic retries, expansion, or follow-up campaign.",
+    "Implementation approval does not authorize these native commands."
+  ]
+}

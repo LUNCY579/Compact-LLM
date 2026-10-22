@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "learning_rates": [
+    1e-05,
+    2e-05
+  ],
+  "steps": 32,
+  "batch_tasks": 2,
+  "replay_tasks": 1,
+  "replay_weight": 0.1,
+  "max_new_tokens": 128,
+  "max_context_tokens": 1024,
+  "chunk_tokens": 8,
+  "checkpoint_every": 8,
+  "eval_samples": 4,
+  "sampling_temperature": 1.0,
+  "max_grad_norm": 1.0,
+  "rank": 8,
+  "alpha": 16.0,
+  "weight_decay": 0.0,
+  "teacher_min_accuracy": 0.6,
+  "teacher_min_advantage": 0.1,
+  "min_acquisition_gain": 0.03,
+  "max_retention_drop": 0.02
+}

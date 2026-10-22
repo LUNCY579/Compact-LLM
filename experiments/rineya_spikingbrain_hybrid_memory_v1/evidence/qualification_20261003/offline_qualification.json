@@ -1,0 +1,74 @@
+{
+  "created_utc": "2026-10-03T05:25:48.390406+00:00",
+  "status": "PASS_OFFLINE_PINNED_LIBRARY_MECHANICS_ONLY",
+  "cwd": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1",
+  "python_command": ".\\.venv\\Scripts\\python.exe",
+  "environment": {
+    "created_utc": "2026-10-03T05:22:38.142942+00:00",
+    "python_executable": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv\\Scripts\\python.exe",
+    "python_version": "3.10.11",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "versions": {
+      "torch": "2.10.0+cpu",
+      "transformers": "4.51.3",
+      "tokenizers": "0.21.4",
+      "safetensors": "0.7.0",
+      "psutil": "7.2.2",
+      "pytest": "8.4.2",
+      "accelerate": "1.15.0",
+      "numpy": "2.2.6",
+      "huggingface-hub": "0.36.2",
+      "pip": "26.2.1"
+    },
+    "compiled_cuda": null,
+    "available_host_ram_bytes": 6039240704,
+    "process_rss_bytes": 220925952,
+    "scope": "isolated experiment-local CPU-only environment; shared stacks unchanged",
+    "native_cuda_qualified": false,
+    "native_training_fit_established": false
+  },
+  "code_sha256": "f869e8f6d41d4c4072854c1eb66c3b3efb4ed2961791a9b0c54de5a3e224e0fc",
+  "tests_sha256": {
+    "tests\\test_comparison.py": "7bec9d83ced08b3adbde5b2e001d7b38ac5c2c157fcaa7e6825d1b5c0cb3375b",
+    "tests\\test_experiment.py": "84466b1cab9a7900b0b51eeb4556f18840369de828333dec4b8cf4eedb7dce77",
+    "tests\\test_preflight.py": "05585280d24f34bd7b74ff0ebee0f981f256352613afad34c18ca3b6385c4685"
+  },
+  "commands": [
+    "py -3.10 -m venv .venv",
+    ".\\.venv\\Scripts\\python.exe -m pip install --upgrade pip",
+    ".\\.venv\\Scripts\\python.exe -m pip install torch==2.10.0 --index-url https://download.pytorch.org/whl/cpu",
+    ".\\.venv\\Scripts\\python.exe -m pip install -r requirements.txt",
+    "$env:HF_HUB_OFFLINE=\"1\"; $env:TRANSFORMERS_OFFLINE=\"1\"; $env:CUDA_VISIBLE_DEVICES=\"-1\"",
+    ".\\.venv\\Scripts\\python.exe -m pytest -q tests/test_experiment.py -k real_transformers --disable-warnings",
+    ".\\.venv\\Scripts\\python.exe -m pytest -q tests --disable-warnings",
+    ".\\.venv\\Scripts\\python.exe -m compileall -q sbhm tests",
+    ".\\.venv\\Scripts\\python.exe -m pip check",
+    ".\\.venv\\Scripts\\python.exe evidence/qualification_20261003/inspect_pinned_environment.py",
+    ".\\.venv\\Scripts\\python.exe evidence/qualification_20261003/inspect_corpus_token_geometry.py"
+  ],
+  "tests": {
+    "full_suite_passed": 80,
+    "full_suite_skipped": 0,
+    "original_suite_including_integration": 57,
+    "new_comparison_cases": 23,
+    "targeted_real_library_passed": 1
+  },
+  "official_library_checks": [
+    "Tiny random CPU Qwen3 with explicit head_dim=8 != hidden_size/heads=4 and native sdpa",
+    "Same frozen random source across A/B/C/D; A/B zero-initialized logits equal frozen base exactly",
+    "Exact identity-wrapper logits",
+    "Full/tokenwise/chunked prefix logit and greedy-token parity at chunk sizes1/3/full",
+    "Fresh request independence and no converted-site full-history KV",
+    "Hybrid zero-mix logits equal local-only logits exactly"
+  ],
+  "installation_repair": "Bundled Python3.10 pip23.0.1 rejected typing_extensions normalized wheel name; upgrading only scoped pip to26.2.1 resolved installation. No shared environment changes.",
+  "pretrained_weights_loaded": false,
+  "model_download_or_upload": false,
+  "gpu_execution": false,
+  "protected_data_access": false,
+  "native_model_qualified": false,
+  "native_training_fit_established": false,
+  "behavior_or_efficiency_result": false,
+  "corpus_reviewed": false,
+  "operator_grant_created": false
+}

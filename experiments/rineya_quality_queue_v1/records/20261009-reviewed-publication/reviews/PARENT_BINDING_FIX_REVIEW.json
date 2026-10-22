@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "experiment": "RSD-001",
+  "recorded_at_utc": "2026-10-10T03:42:14.8464288Z",
+  "status": "P2_HISTORICAL_SOURCE_BINDING_FIX_STATIC_REVIEWED_STDLIB_FIXTURES_PASS",
+  "initial_finding": {
+    "preserved": true,
+    "path": "C:/Users/clclc/BusinessProject/rineya-publication-audit-20261009-01/rsd/REVIEW.json",
+    "sha256": "9d96476f6a53829350dfd47411411fbb84b63a374fb35e354e43869820541987",
+    "priority": "P2",
+    "title": "Bind the recorded parent source map to its historical commit",
+    "original_record_modified": false
+  },
+  "changed_files": [
+    {
+      "path": "experiments/rineya_recursive_self_distillation_v1/parent_qualification.py",
+      "sha256": "318bb58e41dc18e64b0988a002834d40bf7b6774e5b4b2c6da3198a9d124ef5c"
+    },
+    {
+      "path": "experiments/rineya_recursive_self_distillation_v1/tests/test_parent_qualification.py",
+      "sha256": "5679cee3b270436da43d9a7dff1f628473adfa0305706387fbf43f83c3afa2c9"
+    },
+    {
+      "path": "experiments/rineya_recursive_self_distillation_v1/README.md",
+      "sha256": "8793331248e6b7215179038dbb619a6fd32a67151c41b5f7de6652995ed540ec"
+    }
+  ],
+  "binding_contract": {
+    "trust_root": "Fixed module REPOSITORY_ROOT; no caller-selectable trust callback or production bypass",
+    "commit": "Recorded 40-hex source_commit must resolve to that exact commit in the fixed local repository",
+    "sources": "Every validated canonical relative .py path must identify a regular 100644/100755 Git blob at the recorded commit; exact historical bytes SHA256 must match identity.sources",
+    "history": "Older recorded commits may differ from current HEAD; missing commit, source path, object, type or hash fails closed",
+    "git": "Local literal pathspecs; sanitized GIT_* environment; replacement objects and lazy fetch disabled; no source execution or network fetch",
+    "read_order": "Check blob type and batched size admission before requesting bounded batched source bytes",
+    "controls": "Reject NUL, newline, carriage return, tab, other ASCII control characters and DEL, backslash, colon, parent traversal and noncanonical paths",
+    "unchanged_gates": [
+      "Completed ordinary-SFT receipt route",
+      "Exact base and zero-LoRA parent stage",
+      "Positive matching optimizer steps and terminal evaluation metadata",
+      "Registered runtime and explicit human review fields",
+      "E0 and catalog qualification requirements",
+      "Explicit model-load/training permission and per-arm native mechanics gates",
+      "Resume/quarantine and detached KL behavior"
+    ]
+  },
+  "bounds": {
+    "source_files_max": 128,
+    "source_path_utf8_bytes_max": 1024,
+    "source_blob_bytes_max": 2097152,
+    "source_total_bytes_max": 16777216,
+    "git_process_timeout_seconds": 10,
+    "git_processes_per_parent_check": 5
+  },
+  "static_review": {
+    "primary_reviewer": "/root/publication_rsd_review",
+    "independent_reviewer": "/root/publication_rsd_review/parent_binding_fix_review",
+    "independent_verdict": "No actionable findings in the three-file diff. Exact commit resolution, regular-blob SHA256 binding, fixed repository root, fail-closed limits, and older-commit eligibility are consistent.",
+    "diff_whitespace_check": "PASS",
+    "method": "Ordinary source and Git metadata inspection only",
+    "tests_executed_by_static_reviewers": false
+  },
+  "fixture_validation": {
+    "executor": "/root",
+    "log_path": "C:/Users/clclc/BusinessProject/rineya-reviewed-publication-20261009-01/STDLIB_FIXTURE_TESTS.log",
+    "log_sha256": "a7aed7bd66138897af8bdf208ae04c81878c496517d4782733df433af7796fbf",
+    "modules": [
+      "experiments.rineya_recursive_self_distillation_v1.tests.test_parent_qualification",
+      "experiments.rineya_recursive_self_distillation_v1.tests.test_readiness",
+      "experiments.rineya_recursive_self_distillation_v1.tests.test_catalog_qualification"
+    ],
+    "tests": 48,
+    "elapsed_seconds": 18.731,
+    "result": "OK",
+    "exit_code_reported_by_root": 0,
+    "log_read_by_this_reviewer": true,
+    "additional_tests_run_by_this_reviewer": false,
+    "evidence_scope": "Software metadata contract checks using independent tiny Git source repositories and opaque non-model adapter fixtures only"
+  },
+  "quality_and_authority": {
+    "source_quality_certified": false,
+    "truthful_training_provenance_established": false,
+    "human_parent_review_established": false,
+    "actual_sft_parent_eligible": false,
+    "actual_sft_parent_qualified": false,
+    "model_behavior_measured": false,
+    "capability_qualified": false,
+    "native_efficacy_claim": false,
+    "native_execution_authorized": false,
+    "model_load_authorized": false,
+    "e0_authorized": false,
+    "e1_authorized": false,
+    "parent_training_authorized": false,
+    "treatment_training_authorized": false,
+    "actual_model_or_tokenizer_loads": 0,
+    "actual_native_optimizer_updates": 0,
+    "actual_native_evaluations": 0,
+    "protected_bank_reads": 0,
+    "real_adapter_or_weight_accesses": 0,
+    "rejected_native_action_retried": false
+  },
+  "limitations": [
+    "The fix checks exact historical source-byte binding; it does not prove the training receipt or human-review attestations truthful.",
+    "Fixture success does not establish actual SFT parent eligibility, model capability, native resource fit, containment or ML runtime parity.",
+    "Initial P2 record is preserved as historical review evidence; this separate create-only record documents its code resolution.",
+    "Commit and push are reserved to Root; this reviewer made no publication action."
+  ],
+  "committed_by_this_reviewer": false,
+  "pushed_by_this_reviewer": false
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "rineya-quality-pattern-interpretation-revision-v1",
+  "status": "ACTIVE_RESEARCH_GAIN_PATTERN_NOT_YET_PROVEN",
+  "previous_goal_turn": "PROGRESS: exact historical response-only signal independently reconstructed after two known family exclusions",
+  "this_goal_turn": "PROGRESS: recovered actual public questions, replayed scorer, independently checked task semantics and discovered an uncounted repeatable source-correct regression",
+  "original_reports_preserved": ["OVERLAP_SENSITIVITY_001.json", "RESEARCH_PROGRESS_001.json"],
+  "revised_interpretation": "Historical exact-match positivity remains numerically true, but it cannot establish a clean no-damage reasoning improvement. Public-task truth and allowed output equivalence change the interpretation.",
+  "verified_hidden_regression": {
+    "case": "rineya_v3_sft__contradiction_detection__reas_contradiction_detection_s01__00536",
+    "public_question": "Two current notes say the same access badge is amber. Do they conflict?",
+    "public_task_answer": "NO: identical assertions are compatible",
+    "M0_answer": "No, they do not conflict.",
+    "historical_M0_exact_correct": false,
+    "response_after_training": "YES in orders17/23/29",
+    "whole_after_training": "NO-compatible responses in orders17/23/29",
+    "meaning": "A correct source behavior is lost in every response-only ordering but excluded from the old reference-retention denominator"
+  },
+  "direct_verifiable_exposed_diagnostic": {
+    "rows": 5,
+    "M0_semantic_correct": 2,
+    "response_semantic_correct": [3,1,2],
+    "whole_semantic_correct": [2,2,2],
+    "response_source_correct_losses": [1,1,1],
+    "whole_source_correct_losses": [0,0,0],
+    "prospective_guard_or_native_semantic_grader_qualified": false,
+    "conclusion": "No consistent response-only objective dominance on this narrow public-verifiable subset; repairs cannot cancel damage"
+  },
+  "deterministic_measurement_and_data_faults": [
+    "Exact strings reject semantically correct B/Option B and unit-bearing answers when the public instruction does not require that spelling",
+    "Every sparrow in this aviary has a band plus this bird is a sparrow does not entail this bird has a band without aviary membership; nonvacuous countermodels verify missing public premise",
+    "Sequence continuation and some plausibility labels depend on unstated conventions; distinguish those from strict public entailment",
+    "Original number scorer accepts18.; builder's contrary trailing-period rationale is wrong",
+    "Historical51-scoreable subset excludes13 generated DEV rows; these remain ungraded and cannot support full-panel quality claims"
+  ],
+  "next_quality_action": "Validate public-condition entailment, accepted semantic alternatives, uncertainty and output-format requirements before treating baseline grades as source-correct guard membership. Retain current SYNTH finite R/S response+EOS recipe; complete native readiness and fresh qualified measurement before testing any further objective/architecture factors.",
+  "evidence": [
+    "OPEN_MQ_QUESTIONS_STATIC_INSPECTION_001.json",
+    "scorer-audit/ORIGINAL_MQ_SCORER_AUDIT_001.json",
+    "scorer-audit/SCORER_CONTRACT_PROBES_001.json",
+    "semantic-review/PUBLIC_SEMANTIC_COMPARISON_001.json",
+    "semantic-review/PUBLIC_FORMAL_WITNESSES_001.json",
+    "mq-output-analysis/MQ_PUBLIC_QUESTION_SEMANTIC_REVIEW_003.json",
+    "mq-output-analysis/MQ_SEMANTIC_BASELINE_DAMAGE_004.json"
+  ],
+  "native_model_loads_this_turn": 0,
+  "native_forward_calls_this_turn": 0,
+  "HF_or_native_tokenizer_instantiated_this_turn": false,
+  "static_public_vocabulary_lookup_performed": true,
+  "recorded_output_string_consistency_checks": 768,
+  "optimizer_updates_this_turn": 0,
+  "protected_or_confirmation_bank_reads_this_turn": 0,
+  "historical_scores_or_registrations_modified": false,
+  "new_native_grade_or_training_data_admitted": false,
+  "current_Titan_gain_verified": false,
+  "goal_complete": false
+}

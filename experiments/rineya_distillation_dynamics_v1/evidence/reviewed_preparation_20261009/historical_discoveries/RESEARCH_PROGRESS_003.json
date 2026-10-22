@@ -1,0 +1,60 @@
+{
+  "schema": "rineya-quality-pattern-goal-progress-v3",
+  "goal_status": "ACTIVE_NOT_ACHIEVED",
+  "previous_turn_classification": "PROGRESS: exposed hidden semantic source-case loss and unsupported public-premise golds in historical MQ",
+  "this_turn_classification": "PROGRESS: audited all640 actual approved SYNTH targets with a fully independent public parser/solver and identified exact answerability and certificate-density limits",
+  "actual_current_data_findings": {
+    "public_gold_targets_checked": 640,
+    "incorrect_targets_found_in_bounded_approved_corpus": 0,
+    "all_valid_certificates_reconstructed": 824,
+    "nonunique_subset_rows": 68,
+    "public_condition_changes_checked": 640,
+    "private_metadata_poison_invariances_checked": 640,
+    "meaning": "Actual current finite R/S supervision has explicit public semantics and valid alternatives, unlike the demonstrated historical MQ faults. This qualifies bounded CPU data truth only, not model gains."
+  },
+  "answerability_scope": {
+    "scheduled_sequences_each_arm": 540,
+    "UNKNOWN_supervised_targets_each_arm": 0,
+    "declared_DEV_UNKNOWN_rows": 48,
+    "declared_DEV_rows": 384,
+    "interpretation": "Intentional solved-only atomic learning and unknown-answer generalization test; cannot infer preserved abstention or silently add a new negative-supervision factor"
+  },
+  "curriculum_residual": {
+    "M1_S_nonunique_rows": "16/160",
+    "M2_S_nonunique_rows": "52/160",
+    "M1_scheduled_uniform_k_subset_chance": "16399/602910",
+    "M2_scheduled_uniform_k_subset_chance": "75629/2411640",
+    "chance_difference_percentage_points": 0.41602395050670915,
+    "interpretation": "M2 has modestly higher certificate density. Equal input/update budgets and n/k marginals do not isolate diversity from joint curriculum differences; this is not neural difficulty, and must not be subtracted from DEV scores."
+  },
+  "independent_review": {
+    "status": "PASS_BOUNDED_CPU_PUBLIC_PROOF",
+    "additional_method": "Independent memoized reference resolution and indexed subset dynamic programming; no SYNTH imports",
+    "receipt": "synth-public-audit/independent-proof-review/SYNTH_PUBLIC640_INDEPENDENT_PROOF_REVIEW_001.json",
+    "receipt_sha256": "e65ff58b83e031e9df3dc2b51f45ce56a06416d3bdbc5af603510528813e0deb",
+    "display_correction": "Density003 corrects sum units to expected-success counts; probabilities unchanged; density002 preserved",
+    "failed_audit_attempt": "Initial membership-order assumption failed before oracle execution; failure retained; corpus and bounds unchanged"
+  },
+  "evidence": [
+    "synth-public-audit/SYNTH_ACTUAL640_PUBLIC_GOLD_AUDIT_001.json",
+    "synth-public-audit/SYNTH_CERTIFICATE_DENSITY_BASELINE_003.json",
+    "synth-public-audit/ANSWERABILITY_EXPOSURE_AUDIT_001.json",
+    "synth-public-audit/contract-review/SYNTH_PUBLIC_CONTRACT_REVIEW_001.json"
+  ],
+  "next_scientific_action": "Existing SYNTH owner completes native readiness and qualified baseline/guards, then separately authorized fixed M0/M1/M2 study. Report solved/UNKNOWN and source-correct semantic behavior separately; interpret treatment as two frozen curricula. No more offline checks can establish actual weight-quality gain without native outcomes.",
+  "completion_audit": {
+    "bounded_current_corpus_public_gold_truth": "VERIFIED",
+    "current_Titan_acquisition_and_RS_transfer_gain": "UNMEASURED",
+    "zero_semantic_damage_qualified_guards": "UNPROVEN",
+    "two_additional_independent_training_draws": "UNMEASURED",
+    "native_runtime_and_export_parity": "UNQUALIFIED",
+    "goal_complete": false
+  },
+  "native_model_loads": 0,
+  "native_forward_calls": 0,
+  "HF_or_native_tokenizer_instantiated": false,
+  "optimizer_updates": 0,
+  "protected_or_DEV_or_confirmation_oracle_reads": 0,
+  "source_corpus_or_frozen_recipe_changed": false,
+  "new_training_data_or_transfer_derivatives_admitted": false
+}

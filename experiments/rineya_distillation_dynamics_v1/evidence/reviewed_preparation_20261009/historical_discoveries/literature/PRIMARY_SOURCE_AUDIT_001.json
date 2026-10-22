@@ -1,0 +1,123 @@
+{
+  "schema": "rineya-primary-source-quality-pattern-audit-v1",
+  "audit_date": "2026-10-05",
+  "status": "LITERATURE_SUPPORTED_HYPOTHESES_ONLY_NO_RINEYA_GAINS_VERIFIED",
+  "scope": "Fixed 596049920-parameter Titan source; existing SYNTH atomic R/S SFT first; retention and disjoint RS transfer measured separately",
+  "skill_used": {
+    "name": "hugging-face:huggingface-papers",
+    "path": "C:/Users/clclc/.codex/plugins/cache/openai-curated-remote/hugging-face/1.0.0/skills/papers/SKILL.md",
+    "access_note": "Hugging Face markdown pages were inaccessible through the web tool; fell back to original arXiv HTML/PDF as instructed. No account or remote compute action."
+  },
+  "authorization": {
+    "native_model_execution": false,
+    "model_or_tokenizer_loads": false,
+    "optimizer_updates": false,
+    "protected_bank_reads": false,
+    "training_or_promotion": false,
+    "teacher_first_intervention": false,
+    "RL_or_architecture_grid": false
+  },
+  "sources": [
+    {
+      "id": "FLAN",
+      "title": "Scaling Instruction-Finetuned Language Models",
+      "url": "https://arxiv.org/html/2210.11416v5",
+      "sections": ["2.1", "2.2", "3", "Appendix E"],
+      "experimental_conditions": "PaLM task-count ablations use 8B, 62B and 540B models with 9, 89, 282 and 1836 instruction tasks. Final mixture has 473 datasets, 146 categories and nine human-authored CoT datasets. T5 experiments span 80M to 11B. Training uses Adafactor, constant LR, packed examples with EOS boundaries and attention masks; T5-Large 780M uses 64000 steps, batch 64, LR 5e-4.",
+      "finding": "Held-out scores improve with broader instruction mixtures; most task-count improvement occurs by 282 tasks. Authors propose both diversity and better expression of pretrained knowledge as possible explanations.",
+      "limitation": "Mixtures add datasets and conditions jointly. This does not isolate condition diversity at SYNTH's matched token budget, establish new algorithmic competence, or predict Titan's 27-update decoder-only LoRA outcome."
+    },
+    {
+      "id": "LIMA",
+      "title": "LIMA: Less Is More for Alignment",
+      "url": "https://arxiv.org/pdf/2305.11206",
+      "sections": ["2", "3", "4.1"],
+      "experimental_conditions": "A 65B LLaMa base receives 1000 curated prompt-response examples, roughly 750000 tokens, with standard supervised loss and no RL. Training uses 15 epochs, AdamW, batch 32, LR 1e-5 decaying to 1e-6; sequences over 2048 tokens are trimmed. A new end-of-turn token halts generation. Checkpoints are manually selected between epochs 5 and 10 on 50 DEV prompts. Main evaluation is human preference over 300 prompts.",
+      "finding": "A small curated collection can induce useful response styles and conversational behavior in a strong pretrained base. Authors hypothesize that alignment exposes capabilities acquired during pretraining.",
+      "limitation": "Preference, formatting and conversational alignment are not independent solver-verified reasoning acquisition. Strong-base 65B results do not establish that a 0.6B model already has the missing R/S competence. The checkpoint selection and token treatment also differ from frozen final-step 27 SYNTH."
+    },
+    {
+      "id": "DISTILL_STEP",
+      "title": "Distilling Step-by-Step! Outperforming Larger Language Models with Less Training Data and Smaller Model Sizes",
+      "url": "https://arxiv.org/html/2305.02301v2",
+      "sections": ["3.2", "4.1", "4.2", "4.4", "5"],
+      "experimental_conditions": "Experiments use e-SNLI, ANLI, CommonsenseQA and SVAMP; T5 students include 220M, 770M and 11B. PaLM 540B produces rationales/labels using few-shot CoT; a 20B GPT-NeoX teacher is also tested. Task prefixes train label prediction and rationale generation as separate tasks. A 220M comparison with 100% data tests concatenated rationale-plus-label targets versus separate-task training.",
+      "finding": "On ANLI, standard fine-tuning scores 43.58, concatenated targets 43.50, multi-task 49.58. On CommonsenseQA the corresponding scores are 62.19, 61.37, 63.29. Separate rationale/label supervision improves these experiments; longer joint targets can harm label performance.",
+      "limitation": "This is teacher-based, task-specific encoder-decoder training. It does not justify teacher-first work here or guarantee concise states help Titan. The paper leaves rationale-quality effects as future work. Correct final labels alone do not independently verify every intermediate state."
+    },
+    {
+      "id": "SPECIALIZATION",
+      "title": "Specializing Smaller Language Models towards Multi-Step Reasoning",
+      "url": "https://arxiv.org/pdf/2301.12726",
+      "sections": ["3", "4.1", "Table1", "4.3", "4.4"],
+      "experimental_conditions": "T5/Flan-T5 models span 250M, 760M, 3B and 11B. For roughly 7000 GSM8K questions, code-davinci-002 generates 40 solutions per question; only correct-final-answer solutions are retained, yielding 130000 training points. The study uses distribution matching with top-five teacher token probabilities and tokenizer alignment, alongside alternative data formats and sample matching.",
+      "finding": "Flan-T5-Large 760M GSM8K test accuracy changes 6.9 to 20.2. BBH answer-only changes 30.3 to 6.5 and BBH CoT 30.9 to 0.3. Training gains, generic losses and checkpoint-dependent transfer differ.",
+      "limitation": "The procedure is substantially different from final-answer-only LoRA on 540 sequences. Correct-final-answer filtering is not process verification. The data demonstrates a possible specialization tradeoff, not unavoidable forgetting in Titan or proof that replay repairs it."
+    },
+    {
+      "id": "INSCL",
+      "title": "InsCL: A Data-efficient Continual Learning Paradigm for Fine-tuning Large Language Models with Instructions",
+      "url": "https://arxiv.org/pdf/2403.11435",
+      "sections": ["4", "5.1", "Table2"],
+      "experimental_conditions": "LLaMA 7B learns 16 categories constructed from 765 English SuperNI tasks, with 20% held out. Training uses 2 epochs per category, batch 64, Adam LR 2e-5. Three task orders are compared. Replay budgets are matched at 200 examples per previous category. InsCL allocates replay using instruction similarity and an instruction complexity/diversity score; random replay and no replay are controls.",
+      "finding": "After all categories, InsCL improves by 3.0 Relative Gain over random replay and 27.96 over no replay. Relative Gain uses ROUGE-L relative to separately trained task experts; it is not percentage-point exact-answer accuracy.",
+      "limitation": "Results support testing preservation replay after observed forgetting. They do not identify a suitable Titan replay fraction, certify source-correct case preservation, or establish long-context/abstention protection. We need one independently registered matched replay successor rather than importing its adaptive method."
+    },
+    {
+      "id": "GSM_IC",
+      "title": "Large Language Models Can Be Easily Distracted by Irrelevant Context",
+      "url": "https://arxiv.org/html/2302.00093v3",
+      "sections": ["3.1", "3.2", "5.1", "5.4"],
+      "experimental_conditions": "GSM-IC starts with 100 GSM8K training-set problems selected because at least one studied prompt solves them. Template distractors are manually checked to leave the solution unchanged; 58052 derivatives are generated and 4000 sampled for main evaluation. code-davinci-002 and text-davinci-003 are tested using greedy and 20-sample self-consistency decoding.",
+      "finding": "An irrelevant sentence causes substantial accuracy and across-variant robustness drops; wrong use of distractor numbers is one observed mechanism. More exemplars improve some base-task scores while increasing susceptibility to irrelevant context.",
+      "limitation": "This is prompting evidence on a selected easy subset, not SFT evidence or a reason to increase Titan sampling. It supports unchanged-answer distractor controls, independent semantic checks and grouping derivatives by parent."
+    },
+    {
+      "id": "GSM_REEVALUATION",
+      "title": "The Importance of Being Statistically Earnest: A Critical Re-evaluation of GSM-Symbolic",
+      "url": "https://arxiv.org/html/2605.28700v1",
+      "sections": ["3.4", "4", "Appendix D.4"],
+      "experimental_conditions": "The 2026 preprint re-evaluates 20 open-weight models using generalized linear mixed models with per-question random effects. It checks integer magnitude distributions and models a question-level number-size covariate.",
+      "finding": "Only 10 of 20 models show a statistically significant original variant effect. The authors report systematically larger integers in GSM-Symbolic variants, K-S statistic 0.12, p<0.001; accounting for number size explains some observed differences. Remaining profiles differ by model, including binding, arithmetic and interference failures.",
+      "limitation": "This is a preprint re-analysis of another benchmark, not a validated Titan mechanism. It cautions that equal token counts alone do not isolate diversity from difficulty, and blanket claims about all models' reasoning are not justified."
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "H1_PUBLIC_SEMANTICS_AND_CONDITION_COVERAGE",
+      "priority": 1,
+      "status": "INFERENCE_FROM_PRIMARY_SOURCES_UNTESTED_ON_RINEYA",
+      "support": ["FLAN", "GSM_IC", "GSM_REEVALUATION", "LIMA"],
+      "claim_to_test": "At the frozen SYNTH dose, independently correct R/S targets across task conditions may improve disjoint RS transfer more than surface variation alone, provided curriculum difficulty/order differences are measured. Fluent formatting or familiar-template gains must not be treated as competence acquisition.",
+      "safe_action_now": "Audit deterministic public query semantics against an independent solver using raw, rendered and causal inputs. Use public fixtures to test referent renaming, reordered independent statements, irrelevant cues, required-fact removal with UNKNOWN transition, exact-size constraints and accepted alternative target-sum solutions. Ensure any gold-only/internal state cannot decide an answer unavailable from the public input. Freeze condition, numeric magnitude, distractor count, dependency depth, length and ordering summaries; preserve every family identity. Exclude these consumed fixture derivatives from transfer.",
+      "future_decisive_test": "Keep initial M0/M1/M2 source, final-answer+EOS targets, 540 sequences, 27 updates, LR schedule and seed fixed. Require complete fresh parent-grouped atomic R/S, disjoint RS transfer and independently enrolled source-correct retention coverage. Interpret M2 superiority only under the prospective 3pp screen, without claiming token matching isolated diversity.",
+      "falsifier": "Only familiar renderings improve; RS fails to improve; R/S declines; independent public semantics disagree with training labels; or enrolled retention suffers a new failure."
+    },
+    {
+      "id": "H2_VERIFIED_CONCISE_STATE_ONLY_AFTER_R_FAILURE",
+      "priority": 2,
+      "status": "CONDITIONAL_INFERENCE_UNTESTED_ON_RINEYA",
+      "support": ["DISTILL_STEP", "SPECIALIZATION"],
+      "claim_to_test": "If qualified final-answer SFT still fails reference resolution, a concise independently verified state target may help; simply adding a correct-final-answer rationale or longer output is not a supported guarantee.",
+      "safe_action_now": "Prepare public-fixture verifier requirements without generating teacher traces: each intermediate referent/state must be reconstructible from causal public evidence, satisfy the query and constraints, and imply the accepted final answer. Audit response-only masks, assistant boundary, final-answer position, EOS preservation and maximum-target budget on already supplied token records only. Record input/target exposure separately; refuse truncation that removes the answer or EOS. No tokenizer load is required for this requirements audit.",
+      "future_decisive_test": "After poor-R diagnosis, register one final-answer versus concise-state supervision comparison separately. Freeze source, data families, optimizer schedule, sequence and update exposure; prospectively declare the unavoidable target-token/length difference or match it explicitly. Keep inference/output-format, semantic correctness, abstention and capping separate. Initial SYNTH stays final-answer-only.",
+      "falsifier": "States do not improve R on disjoint families, gains depend on gold-only information, the longer target shifts the effective loss or truncation budget, or any source-correct retention guard newly fails."
+    },
+    {
+      "id": "H3_MATCHED_PRESERVATION_REPLAY_AFTER_DAMAGE",
+      "priority": 3,
+      "status": "CONDITIONAL_INFERENCE_UNTESTED_ON_RINEYA",
+      "support": ["SPECIALIZATION", "INSCL"],
+      "claim_to_test": "If atomic acquisition is accompanied by newly damaged enrolled skills, one matched preservation-replay successor may reduce damage while retaining acquisition. Acquisition scores and damage counts must remain separate; repaired cases cannot offset newly failed cases.",
+      "safe_action_now": "Specify a replay exposure ledger and disjointness requirements. Replay examples must be independently verified preservation training examples, never evaluation guards or consumed transfer derivatives. Bind raw/rendered/causal inputs, source/filter/consume/unused records, replay occurrences and checkpoint hashes. Do not choose a replay fraction or launch a successor from literature alone.",
+      "future_decisive_test": "Following actual acquisition-plus-damage diagnosis, prospectively register one matched replay control comparison with explicit input/target-token and update budgets, final checkpoint endpoint, and source-specific prior-correct support. Require no new guard failures plus retained atomic and RS gains. Qualify long context separately and replicate an eligible recipe on two independent draws before fresh confirmation.",
+      "falsifier": "Replay fails to reduce newly damaged cases, only repairs other cases, erases the fresh reasoning gain, leaks evaluation families, or has undefined source-correct retention support."
+    }
+  ],
+  "next_scientifically_safe_action": {
+    "action": "Independent deterministic public-semantics and metamorphic fixture audit under the existing SYNTH owner, with condition/difficulty summaries and derivative provenance",
+    "why": "It can expose wrong query resolution, inaccessible gold-only supervision, shortcut labels and condition confounds before model execution. Primary work demonstrates distractor sensitivity and difficulty confounding, while rationale and specialization work demonstrates that more supervision can improve target tasks and still harm other capabilities.",
+    "execution_scope": "Public deterministic fixture/contract work only; native readiness, genuine M0 scoring, retention enrollment and owner integration remain separate evidence gates",
+    "completion_criterion": "The research goal remains incomplete until actual fresh R/S and RS gains and enrolled retention preservation are verified. This audit cannot substitute for genuine outcomes."
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "binding": {
+    "code_sha256": "326d805bde96047ca0553f8c33e5124a6c346fc11caaf3c28b4221277ef82140",
+    "config_sha256": "30b85a8bd3e24043bbbd2983d735eaf64df47e60626dc051792b45f3918d2400",
+    "corpus_sha256": "6f9c858b39c6c45d4fd5cd6bfa29d79b3c2f12773af7f392b44cfa171379105f",
+    "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a"
+  },
+  "completed_test_count": 136,
+  "configuration": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\configs\\titan_transition.v2.memory_efficient.json",
+  "created_utc": "2026-10-04T20:59:00.670205+00:00",
+  "equivalence_checks": "B/C/D selected logits, loss, all trainable gradients, clip norm and one AdamW update; ordinary FP32 tolerances, not bitwise CUDA claims",
+  "invariant_recipe": {
+    "dev_rows": 512,
+    "dtype": "float32",
+    "layer": 14,
+    "learning_rate": 0.0001,
+    "limits": {
+      "max_new_tokens": 32,
+      "max_prompt_tokens": 2048,
+      "max_train_tokens": 512,
+      "prefill_chunk": 64,
+      "steps": 512
+    },
+    "rank": 8,
+    "seed": 17,
+    "train_rows": 256,
+    "window": 128
+  },
+  "native_recovery_change": "Same full-prefix backbone; project vocabulary logits only at predictors of supervised answer/EOS labels; same pinned mean cross-entropy",
+  "native_training_fit_established": false,
+  "new_teacher_and_all_qualifications_required": true,
+  "pool_prior_controls": false,
+  "primary": "D minus C strict exact match on distant_heldout; separate A-correct retention on retention",
+  "prior_failure": "D recovery violated physical-free-VRAM reserve; guarded probe failed after step 23 with allocator inactive-cache pressure",
+  "prior_incomplete_run": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004",
+  "prior_terminal_exit_code": 2,
+  "promotion": false,
+  "runtime_memory_change": "Release only unused PyTorch cache when physical free VRAM is below reserve, then apply unchanged 1GiB reserve guard",
+  "skipped_test_count": 0,
+  "status": "REGISTERED_FRESH_FULL_MATRIX_MEMORY_EQUIVALENT_RERUN"
+}

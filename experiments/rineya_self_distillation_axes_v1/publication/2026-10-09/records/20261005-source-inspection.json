@@ -1,0 +1,157 @@
+{
+  "content": {
+    "checkpoint_manifest_sha256": "495dee5eef1eb5365188ee589961da75909feb4a7446ac4f2d0760e48602d6b4",
+    "checkpoint_path": "<BusinessProject>/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze",
+    "custody_receipt_file_sha256": "a642b4af674788227413f031bc1cfd576c1f471f15a2a2e87d2fb0f25e3bb05c",
+    "custody_receipt_path": "<BusinessProject>/dsd001-preparation-20261005/source-custody.json",
+    "efficacy_established": false,
+    "eligibility": {
+      "explicit_chat_template": true,
+      "no_auto_map_remote_code_requirement": true,
+      "no_scaled_rope": true,
+      "no_sliding_window": true,
+      "nonquantized": true,
+      "qwen3": true,
+      "size_in_binding_range": true,
+      "tokenizer_assets_present": true,
+      "trainable_name_present": true
+    },
+    "experiment": "DSD-001",
+    "inspection_method": "JSON metadata, bounded safetensors header, file existence, symlink checks and SHA256 byte reads only; no native library or model imports",
+    "limitations": [
+      "Static eligibility does not certify exact Transformers loading, tokenizer behavior, dispatch, mixed selected FP32/BF16 parity, no-update mechanics, teacher competence or resource fit.",
+      "Historical dense-versus-PEFT parity is not exact and is not a DSD qualification.",
+      "Current package metadata differs from the recorded CPU fixture runtime and requires its own compatibility qualification.",
+      "No source chmod or readonly mutation was applied to this shared checkpoint."
+    ],
+    "native_model_evaluated": false,
+    "native_model_loaded": false,
+    "native_qualification_executed": false,
+    "observed_at_utc": "2026-10-05T18:55:09.606256+00:00",
+    "process_observation": {
+      "matching_non_shell_processes_observed": [],
+      "method": "Win32_Process command-line match for DSD module and worktree; shell processes excluded",
+      "scope": "Snapshot only; chat ownership was separately handled by parent agent; no process started/stopped"
+    },
+    "resource_observation": {
+      "driver_version": "566.07",
+      "free_memory_mib": 6997,
+      "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "method": "nvidia-smi query only; no model load or benchmark",
+      "scope": "Instantaneous resource snapshot; does not establish native load, gradient or maximum-shape fit",
+      "total_memory_mib": 8188
+    },
+    "runtime_package_metadata_only": {
+      "packages": {
+        "pytest": "9.1.1",
+        "safetensors": "0.8.0",
+        "tokenizers": "0.22.2",
+        "torch": "2.6.0+cu124",
+        "transformers": "5.14.1"
+      },
+      "python": "3.11.15"
+    },
+    "safetensors_header": {
+      "dtypes": [
+        "BF16"
+      ],
+      "header_bytes": 35248,
+      "metadata": {
+        "format": "pt"
+      },
+      "selected_parameter": {
+        "dtype": "BF16",
+        "name": "model.layers.12.self_attn.q_proj.weight",
+        "numel": 2097152,
+        "shape": [
+          2048,
+          1024
+        ]
+      },
+      "serialized_parameter_count": 596049920,
+      "tensor_count": 310
+    },
+    "schema_version": 1,
+    "source_citations": [
+      {
+        "line": 1,
+        "path": "<BusinessProject>/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze/CORE.json",
+        "supports": "published identity and source lineage"
+      },
+      {
+        "line": 15,
+        "path": "<BusinessProject>/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze/RENAME.json",
+        "supports": "registered immutable asset hashes"
+      },
+      {
+        "line": 1,
+        "path": "<BusinessProject>/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze/config.json",
+        "supports": "static Qwen3/BF16/no scaled RoPE/no sliding window configuration"
+      },
+      {
+        "line": 230,
+        "path": "<BusinessProject>/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze/tokenizer_config.json",
+        "supports": "explicit tokenizer chat template"
+      },
+      {
+        "line": 64,
+        "path": "<BusinessProject>/ChatBubble-rineya-self-distillation-axes-v1/experiments/rineya_self_distillation_axes_v1/native.py",
+        "supports": "binding eligibility and exact loading restrictions"
+      },
+      {
+        "line": 125,
+        "path": "<BusinessProject>/ChatBubble-rineya-self-distillation-axes-v1/MODEL_QUALITY_STATUS.md",
+        "supports": "registered ordinary source identity"
+      }
+    ],
+    "source_identity": {
+      "baseline": "ungated standalone Supa; no Baya or UNKNOWN inference gate",
+      "core_id": "rineya.core.supa.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-0p8125",
+      "directory_name": "Rineya-Supa-1.7.0-devfreeze",
+      "kind": "lora_transfer_dense_merge",
+      "version": "1.7.0-devfreeze",
+      "weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b"
+    },
+    "source_modified": false,
+    "static_config": {
+      "architectures": [
+        "Qwen3ForCausalLM"
+      ],
+      "attention_bias": false,
+      "attention_dropout": 0.0,
+      "bos_token_id": 151643,
+      "eos_token_id": 151645,
+      "head_dim": 128,
+      "hidden_act": "silu",
+      "hidden_size": 1024,
+      "initializer_range": 0.02,
+      "intermediate_size": 3072,
+      "max_position_embeddings": 40960,
+      "max_window_layers": 28,
+      "model_type": "qwen3",
+      "num_attention_heads": 16,
+      "num_hidden_layers": 28,
+      "num_key_value_heads": 8,
+      "rms_norm_eps": 1e-06,
+      "rope_scaling": null,
+      "rope_theta": 1000000,
+      "sliding_window": null,
+      "tie_word_embeddings": true,
+      "torch_dtype": "bfloat16",
+      "transformers_version": "4.51.0",
+      "use_cache": true,
+      "use_sliding_window": false,
+      "vocab_size": 151936
+    },
+    "status": "STATICALLY_ELIGIBLE_NOT_NATIVE_QUALIFIED",
+    "teacher_competence_established": false,
+    "training_updates": 0,
+    "worktree_assets": "Tracked worktree source metadata exists but model.safetensors/tokenizer.json/merges.txt/vocab.json are absent there; bind the physically materialized external published directory above"
+  },
+  "execution_authority": false,
+  "original_bytes": 5943,
+  "original_raw_sha256": "ea9d7d3ab87f1b9acaf18846a1bbeb9df203e62a355fd6c8f980bda407e6a1c3",
+  "original_source": "<BusinessProject>/dsd001-preparation-20261005/source-inspection.json",
+  "publication_policy": "Portable historical evidence only, not an executable packet or admission/qualification permit. Local paths, chat UUIDs and XML hostnames are removed; original raw-file hashes are retained separately from hashes of these exports. No banks, predictions, weights, checkpoints, environments or raw process inventories are exported. Originals remain unchanged outside Git.",
+  "record_type": "PORTABLE_EVIDENCE_EXPORT"
+}

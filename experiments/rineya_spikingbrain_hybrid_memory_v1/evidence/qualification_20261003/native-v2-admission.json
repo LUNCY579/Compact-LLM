@@ -1,0 +1,86 @@
+{
+  "behavioral_question_answered": false,
+  "commands": [
+    {
+      "argv": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+        "-m",
+        "sbhm",
+        "preflight",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\configs\\titan_transition.v2.json"
+      ],
+      "exit_code": 2,
+      "reported": {
+        "blockers": [
+          "free RAM below 7.4 GiB guard"
+        ],
+        "code_sha256": "dbf53274d5c2671d761ea47c192a1a6269efa9d93b2907d72fa3bd825d7516df",
+        "config_sha256": "b03447ad1897e63d6b22bcaaaa15db7c1fc003b5d0f7d5b8bb3f8f733cdd78ba",
+        "corpus_sha256": "6f9c858b39c6c45d4fd5cd6bfa29d79b3c2f12773af7f392b44cfa171379105f",
+        "environment": {
+          "cuda": "12.4",
+          "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "python": "3.10.11",
+          "versions": {
+            "accelerate": "1.15.0",
+            "psutil": "7.2.2",
+            "safetensors": "0.7.0",
+            "tokenizers": "0.21.4",
+            "torch": "2.6.0+cu124",
+            "transformers": "4.51.3"
+          }
+        },
+        "model_loaded": false,
+        "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a",
+        "status": "BLOCKED"
+      }
+    },
+    {
+      "argv": [
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+        "-m",
+        "sbhm",
+        "qualify",
+        "--config",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\configs\\titan_transition.v2.json",
+        "--arm",
+        "A",
+        "--output",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261003_admission\\A-qualification",
+        "--allow-model-load"
+      ],
+      "exit_code": 2,
+      "reported": {
+        "efficacy_claim": false,
+        "reason": "free RAM below 7.4 GiB guard",
+        "status": "BLOCKED_OR_FAILED",
+        "type": "Blocked"
+      }
+    }
+  ],
+  "created_utc": "2026-10-03T05:55:57.991501+00:00",
+  "environment": {
+    "cuda": "12.4",
+    "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.10.11",
+    "versions": {
+      "accelerate": "1.15.0",
+      "psutil": "7.2.2",
+      "safetensors": "0.7.0",
+      "tokenizers": "0.21.4",
+      "torch": "2.6.0+cu124",
+      "transformers": "4.51.3"
+    }
+  },
+  "host_available_ram_bytes_after_attempts": 5798948864,
+  "host_available_ram_bytes_before_attempts": 5545992192,
+  "matrix_plan_commands": 22,
+  "matrix_plan_directory_created": false,
+  "native_training_executed": false,
+  "qualification_directory_created_after": false,
+  "qualification_directory_created_before": false,
+  "qualification_receipt_present": false
+}

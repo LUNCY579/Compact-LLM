@@ -1,0 +1,32 @@
+{
+  "status": "DISQUALIFIED_BEFORE_NATIVE_ADMISSION",
+  "reviewer": "Codex independent geometry/semantic-review agent",
+  "review_date": "2026-10-03",
+  "corpus": "corpora/distant_evidence_v1",
+  "reviewed_for_sbhm": false,
+  "native_model_loaded": false,
+  "model_behavior_measured": false,
+  "corpus_file_sha256": {
+    "design.json": "127254b5e07c61aa3598543bd47a96e91ecf675017c7e4ccef5b8c84274a34f9",
+    "train.jsonl": "bf0aa0b4d0ceeaa783416057ec53fe8e028253def37bf481ee661d77971f46f8",
+    "dev.jsonl": "2d9cb37d77e77aca2d08259c8f07d77d991712d69a72adf6df414706c081aca0"
+  },
+  "finding": "Recent distractor values encode the answer-bearing evidence number; distant evidence is unnecessary to reconstruct the registered targets.",
+  "demonstrated_without_evidence": {
+    "input_used": "Only the final distractor line plus final query and example identifier index; no earlier evidence text.",
+    "reconstruction": "number = (last_distractor_value - 13 * last_distractor_log_index) % 997; category and entity index determine the corresponding scalar, pair, decimal, or identifier surface.",
+    "train_answerable_distant_rows": 24,
+    "train_targets_exactly_reconstructed": 24,
+    "dev_answerable_distant_rows": 36,
+    "dev_targets_exactly_reconstructed": 36,
+    "categories": ["lookup", "multiple_facts", "join", "update", "identifier", "number"],
+    "interpretation": "This is an independent symbolic shortcut demonstration, not inference with a pretrained or trained language model."
+  },
+  "required_replacement_properties": [
+    "Use independent randomness for evidence values, entity identities, and distractor content.",
+    "Counterfactual pairs must keep all non-evidence content identical while changing the correct target.",
+    "Match near and distant controls in facts, filler, query, and rendered token length.",
+    "Balance answerable and missing-evidence cases.",
+    "Independently replay all target semantics and measure exact-tokenizer evidence positions before admission."
+  ]
+}
