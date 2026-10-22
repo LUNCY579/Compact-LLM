@@ -1,0 +1,69 @@
+{
+  "experiment": "RDD-001",
+  "status": "IMPLEMENTED_CPU_MECHANICS_TESTED_NATIVE_UNQUALIFIED",
+  "base_commit": "03db218ceebc61a2bc04f2482cf7e094045e01c1",
+  "python": "3.13.5",
+  "packages": {
+    "torch": "2.10.0+cpu",
+    "safetensors": "0.7.0",
+    "pytest": "9.0.2"
+  },
+  "tests": {
+    "command": "python -m pytest experiments/rineya_distillation_dynamics_v1/tests -q --disable-warnings --maxfail=1",
+    "passed": 132,
+    "failed": 0,
+    "skipped": 0,
+    "warnings": 0,
+    "exit_code": 0,
+    "stdout_sha256": "c0215af0e333599b1648aa6926bcabdffc201c02b19b1021e65cd342663cc6e7"
+  },
+  "full_demo": {
+    "command": "python -m experiments.rineya_distillation_dynamics_v1 demo --output /mnt/data/rdd001_demo_final",
+    "arms": 10,
+    "optimizer_steps_per_arm": 2,
+    "actual_tiny_optimizer_steps": 20,
+    "evidence_kind": "mechanical_fixture",
+    "selection_status": "NO_ELIGIBLE_CONFIGURATION",
+    "pretrained_models_loaded": false,
+    "rineya_performance_claim": false
+  },
+  "cli_checks": {
+    "full_plan_cells": 30,
+    "forward_screen_cells": 18,
+    "missing_native_permission_exit_code": 2,
+    "native_permission_rejected_before_registration_or_model_load": true,
+    "compileall_passed": true
+  },
+  "coverage": [
+    "FKL/RKL loss and gradient equivalence, finite-difference gradcheck, distinct head widths",
+    "exact response alignment, EOS/capping, stale rollout and catalog leak rejection",
+    "all ten one-seed training cells, source reset and frozen parameter preservation",
+    "teacher qualification refusal and disposable mechanics restoration",
+    "paired coverage, all-seed checkpoint selection, single-use confirmation state",
+    "native permissions, existing E0 receipt binding and model inventory rejection"
+  ],
+  "not_run": [
+    "pretrained/Rineya model loading",
+    "native CUDA/backward/save-reload qualification",
+    "real teacher quality or prefix-feedback qualification",
+    "real dataset training or confirmation",
+    "HF/PEFT export-to-GD runtime parity",
+    "full repository test suite",
+    "GitHub Actions CI"
+  ],
+  "native_runtime_available": false,
+  "transformers_installed": false,
+  "peft_installed": false,
+  "laptop_accessed": false,
+  "gpu_allocated": false,
+  "paid_api_calls": 0,
+  "schedule_changes": false,
+  "native_efficacy_claim": false,
+  "limitations": [
+    "Tiny random models test mechanics, not Rineya capability.",
+    "Standard-HF Qwen3-only native candidate requires externally reviewed export parity and existing E0.",
+    "Larger independent teachers may be blocked by inherited memory/RSS floors.",
+    "Interrupted training is not resumable; confirmation attempts remain spent.",
+    "Hashes and operator attestations do not prove semantic decontamination or provenance against malicious rewriting."
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-10-05T18:56:20.6270361Z",
+  "evidence_kind": "READ_ONLY_HOST_SNAPSHOT_NOT_ADMISSION",
+  "host_ram_total_gib": 31.218181610107422,
+  "host_ram_free_gib": 12.41518783569336,
+  "disk_free_gib": 60.90652084350586,
+  "gpu_raw": [
+    "index, name, memory.total [MiB], memory.free [MiB], memory.used [MiB], utilization.gpu [%]",
+    "0, NVIDIA GeForce RTX 4070 Laptop GPU, 8188 MiB, 7018 MiB, 931 MiB, 28 %"
+  ],
+  "compute_app_raw": [
+    "pid, process_name, used_gpu_memory [MiB]",
+    "14160, C:\\Windows\\explorer.exe, [N/A]",
+    "8536, C:\\Windows\\System32\\ApplicationFrameHost.exe, [N/A]",
+    "24260, C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe, [N/A]",
+    "16236, C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe, [N/A]",
+    "106796, [Insufficient Permissions], [N/A]",
+    "8576, C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.930.3930.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe, [N/A]",
+    "69288, [Insufficient Permissions], [N/A]",
+    "114168, C:\\Windows\\System32\\ShellHost.exe, [N/A]",
+    "2180, C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe, [N/A]",
+    "217440, [Insufficient Permissions], [N/A]"
+  ],
+  "python_runtime_processes": [
+    {
+      "ProcessId": 212380,
+      "ParentProcessId": 212952,
+      "Name": "python.exe",
+      "ExecutablePath": "C:\\Users\\clclc\\BusinessProject\\SupaExperiment-nonrecurrent-adaptation-v1\\.venv\\Scripts\\python.exe"
+    },
+    {
+      "ProcessId": 213040,
+      "ParentProcessId": 212380,
+      "Name": "python.exe",
+      "ExecutablePath": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11-windows-x86_64-none\\python.exe"
+    }
+  ],
+  "shared_gpu_lock_path": "C:/Users/clclc/BusinessProject/Chat-Bubble/.git/rineya-central-gpu0.lock",
+  "shared_gpu_lock_exists": false,
+  "initial_root_owner_observation": {
+    "source": "parent agent report",
+    "exact_observation_time": "not supplied to inventory subagent",
+    "owner": "COMP-RS other chat",
+    "python_pids": [
+      158788,
+      47240,
+      159052,
+      158976,
+      159284,
+      159120
+    ],
+    "path_prefix": "C:/Users/clclc/BusinessProject/comp-rs-001-records",
+    "attempt": "r-oracle-sft-qualification-20261004 attempt14",
+    "interpretation": "Busy initial snapshot remains evidence; later absence does not authorize RDD native launch"
+  },
+  "native_model_loads": 0,
+  "optimizer_updates": 0,
+  "bank_reads": 0,
+  "host_available_approved": false,
+  "resource_admitted": false
+}
