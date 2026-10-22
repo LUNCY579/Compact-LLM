@@ -1,0 +1,993 @@
+"""Separate durable qualification reservations; no issuer, backend or native grant.
+
+Native construction requires an existing source-issued permit and frozen actual
+worker/ingestion evidence before paths. Pure fixtures are explicitly labeled.
+The protected CE state validates declared qualification Adam batches, never the
+production exposure order. This ledger does not establish numerical efficacy,
+checkpoint qualification or native PASS.
+"""
+from __future__ import annotations
+
+import copy
+import hashlib
+import json
+import os
+from pathlib import Path
+import time
+import uuid
+
+from . import ce_journal as ce, ce_qualification as q, ce_native_authority as authority
+from . import ce_operation_contracts as contracts
+from . import ce_rejected_return as rejected
+from . import ce_journal_limits as journal_limits
+
+SCHEMA = 'CE8-QUALIFICATION-ACCOUNTING-1'
+SPEC = 'CE8-QUALIFICATION-ACCOUNTING-SPEC-1'
+FIXTURE = 'CE8-QUALIFICATION-ACCOUNTING-FIXTURE-1'
+PROOF = 'CE8-QUALIFICATION-WORKER-PROOF-1'
+HEADER, JOURNAL = 'QUALIFICATION_BINDINGS.json', 'QUALIFICATION_RESERVATIONS.jsonl'
+MAX_LINE, CHUNK = 4 * 1024 ** 2, 1024 ** 2
+EXPLICIT_RESERVATION_RULE = 'CE8-QUALIFICATION-EXPLICIT-RESERVATIONS-1'
+EXPLICIT_RESERVATION_RULE_V2 = contracts.EXPLICIT_RESERVATION_RULE_V2
+EXPLICIT_RESERVATION_KINDS = ('input_io', 'qualification_artifact_readback', 'qualification_reducer_overhead')
+KINDS = ce.NATIVE_KINDS | frozenset(('journal_construct', 'qualification_mask',
+    'qualification_likelihood', 'qualification_gradient_reset',
+    'qualification_reference_forward', 'qualification_candidate_forward',
+    'qualification_backward', 'qualification_gradient_validation', 'qualification_rng',
+    'qualification_tensor_write', 'qualification_artifact', 'qualification_checkpoint_configuration',
+    'qualification_artifact_readback', 'qualification_reducer_overhead', 'resource_probe', 'resource_cuda_probe',
+    'qualification_state_fingerprint', 'qualification_lease'))
+COST_FIELDS = q.COST_FIELDS
+canonical, digest, require = q.canonical, q.digest, q.require
+CHILD_PREFIX = 'CE8-CHECKPOINT-CHILD-PREDECESSOR-1'
+_REGISTERED_CHILD_PREFIX_VERIFIERS = frozenset()
+_CHILD_PREFIX_SEAL = object()
+
+
+def checkpoint_child_declaration(payload):
+    """Static launch declaration excludes facts that exist only after launch."""
+    dynamic = {'schema', 'worker_identity_sha256', 'child_request_sha256',
+               'child_request_ref', 'child_proof', 'declaration_sha256'}
+    return dict({key: _clone(value) for key, value in payload.items() if key not in dynamic},
+                schema='CE8-CHECKPOINT-CHILD-LINEAGE-DECLARATION-1')
+
+
+def accounting_specification(context):
+    """Derive runtime setup refs and child owner; raw common scope is unchanged.
+
+    Source adapters independently paid/read these actual capsules before the
+    complete context permit was frozen. Their refs belong at top level to avoid
+    a scopeSHA -> artifactSHA -> scopeSHA dependency; derived owner hashes bind
+    the resulting full accounting spec. This pure accessor grants no authority.
+    """
+    scope = context['bindings']['scope']; common = _clone(scope['qualifier_accounting'])
+    setup = context.get('qualifier_setup_refs')
+    if setup is not None:
+        keys = {'ingestion_bootstrap_ref', 'outer_setup_reservation_ref'}
+        require(type(setup) is dict and set(setup) == keys, 'exact two derived source setup refs')
+        for key, value in setup.items():
+            require(key not in common or common[key] is None, 'runtime setup may replace only unmaterialized interface')
+            require(type(value) is dict and set(value) == {'path', 'sha256', 'bytes'}
+                    and type(value['path']) is str and Path(value['path']).is_absolute()
+                    and q.hex64(value['sha256']) and q.integer(value['bytes'], 1), 'exact actual paid source setup capsule ref')
+            common[key] = _clone(value)
+    child = context.get('checkpoint_child_accounting')
+    if child is None: return _clone(common)
+    require(type(child) is dict and set(child) == {'specification', 'owner'}, 'exact child accounting derivation')
+    declaration = context.get('checkpoint_child_declaration')
+    require(type(declaration) is dict and declaration.get('branch') in ('uninterrupted', 'prefix', 'resumed'),
+            'child accounting owner needs its immutable branch declaration')
+    root = Path(scope['checkpoint_qualification']['owned_directory'])
+    require(root.is_absolute(), 'absolute common checkpoint child owner')
+    expected = dict(common, owned_directory=str(root / 'children' / declaration['branch'] / 'ledger'))
+    owner = {'accounting_spec_sha256': digest(expected), 'prepared_receipt_sha256': common['ingestion_receipt_sha256']}
+    require(child['specification'] == expected and child['owner'] == owner,
+            'child accounting may change only exact branch directory, never caps/prices/census/deadline')
+    return _clone(expected)
+
+
+class CheckpointChildAdmission:
+    """Source-issued immutable parent/child lineage; native issuer stays closed."""
+    __slots__ = ('_seal', '_native', '_payload', '_request', '_worker')
+    def __init__(self, context, permit, proof, payload, *, verifier=None):
+        fixture = type(context) is dict and context.get('schema') == FIXTURE
+        if not fixture:
+            require(any(verifier is item for item in _REGISTERED_CHILD_PREFIX_VERIFIERS),
+                    'checkpoint child prefix verifier is unregistered')
+            authority.require_execution_permit(permit, context, 'checkpoint_resume')
+            require(verifier(context, proof, payload) is True, 'registered child prefix evidence refused')
+        else:
+            require(context.get('mode') == 'synthetic_fixture' and permit is None,
+                    'explicit non-native child-prefix fixture required')
+        _validate_child_prefix(context, proof, payload)
+        for key, value in (('_seal', _CHILD_PREFIX_SEAL), ('_native', not fixture),
+                ('_payload', _clone(payload)), ('_request', context['request_sha256']),
+                ('_worker', proof['worker_identity_sha256'])):
+            object.__setattr__(self, key, value)
+    def __setattr__(self, key, value): raise ValueError('child-prefix admission is immutable')
+
+
+def _validate_child_prefix(context, proof, payload):
+    require(type(payload) is dict and payload.get('schema') == CHILD_PREFIX
+            and payload.get('branch') in ('uninterrupted', 'prefix', 'resumed'), 'declared qualification CP child branch')
+    bindings = context['bindings']; batches = bindings['scope']['qualifier_execution']['adam_batches']
+    require(payload.get('study_request_sha256') == context['request_sha256']
+            and payload.get('scope_sha256') == context['scope_sha256']
+            and payload.get('static_recipe_sha256') == context['static_recipe_sha256']
+            and payload.get('code_sha256') == bindings['source']['code_sha256']
+            and payload.get('qualification_batches') == batches
+            and payload.get('worker_identity_sha256') == proof['worker_identity_sha256']
+            and payload.get('ingestion_receipt_sha256') == bindings['scope']['qualifier_accounting']['ingestion_receipt_sha256']
+            and all(payload.get(key) == bindings['anchors'][key] for key in ('common_anchor_sha256', 'own_start_sha256')),
+            'CP child request/source/recipe/worker/anchor/census/batch drift')
+    parent = payload.get('parent_proof')
+    parent_os = parent.get('os_identity', parent) if type(parent) is dict else None
+    require(type(parent) is dict and parent.get('worker_identity_sha256') == payload.get('parent_worker_identity_sha256')
+            and parent.get('worker_identity_sha256') != proof['worker_identity_sha256']
+            and parent.get('boot_identity_sha256') == proof['boot_identity_sha256']
+            and type(parent_os) is dict and q.integer(parent_os.get('pid'), 1)
+            and q.integer(parent_os.get('creation_filetime_100ns'), 1)
+            and q.hex64(payload.get('parent_request_sha256')),
+            'exact independent same-boot parent OS lineage required')
+    observed_sources = parent.get('sources', {}).get('source_files') if type(parent.get('sources')) is dict else None
+    if observed_sources is not None:
+        require(type(observed_sources) is dict and all(type(value) is dict and q.hex64(value.get('sha256')) for value in observed_sources.values()),
+                'exact observed parent source-file map')
+        parent_code = {key: value['sha256'] for key, value in observed_sources.items()}
+    else:
+        require(context.get('schema') == FIXTURE, 'native parent needs actual observed source map')
+        parent_code = parent.get('code_sha256')
+    require(parent.get('request_sha256') == payload['parent_request_sha256']
+            and parent.get('scope_sha256') == payload['scope_sha256']
+            and parent_code == payload['code_sha256'], 'parent request/source/scope drift')
+    refs = payload.get('parent_ledger_refs')
+    require(type(refs) is dict and set(refs) == {'header', 'journal', 'seal'}, 'all externally retained parent ledger references required')
+    def ref(value):
+        return (type(value) is dict and type(value.get('path')) is str and Path(value['path']).is_absolute()
+                and q.hex64(value.get('sha256')) and q.integer(value.get('bytes'), 1))
+    require(all(ref(value) for value in refs.values()), 'exact parent raw ledger proof refs')
+    child_ref, child_proof = payload.get('child_request_ref'), payload.get('child_proof')
+    require(ref(child_ref) and child_ref['sha256'] == payload.get('child_request_sha256')
+            and type(child_proof) is dict and child_proof.get('worker_identity_sha256') == proof['worker_identity_sha256']
+            and child_proof.get('request_sha256') == context['request_sha256']
+            and child_proof.get('scope_sha256') == context['scope_sha256']
+            and child_proof.get('boot_identity_sha256') == proof['boot_identity_sha256']
+            and child_proof.get('sources', {}).get('request_ref') == child_ref,
+            'derived actual child raw request/worker/logical study proof required')
+    declaration = checkpoint_child_declaration(payload)
+    require(payload.get('declaration_sha256') == digest(declaration), 'static child declaration digest drift')
+    stage_seal = payload.get('parent_stage_seal')
+    require(type(stage_seal) is dict and stage_seal.get('schema') == 'CE8-CHECKPOINT-PARENT-STAGE-SEAL-1'
+            and stage_seal.get('stage') == 'checkpoint_resume' and stage_seal.get('completed') is False
+            and stage_seal.get('worker_open') is True and type(stage_seal.get('C')) is type(stage_seal.get('U')) is int
+            and stage_seal['C'] == stage_seal['U'] == 2
+            and stage_seal.get('worker_identity_sha256') == parent['worker_identity_sha256']
+            and stage_seal.get('request_sha256') == payload['parent_request_sha256']
+            and stage_seal.get('scope_sha256') == payload['scope_sha256']
+            and q.hex64(stage_seal.get('ledger_head')) and q.hex64(stage_seal.get('binding_sha256')),
+            'exact live parent checkpoint-stage seal; no completion claim')
+    U = payload.get('inherited_U')
+    require(type(U) is int and U == (1 if payload['branch'] == 'resumed' else 0), 'strict branch-specific inherited U')
+    history = payload.get('inherited_history')
+    require(type(history) is list and len(history) == U, 'exact inherited logical history')
+    if U:
+        require(ref(payload.get('prefix_manifest_ref')) and q.hex64(payload.get('prefix_checkpoint_bindings_sha256'))
+                and type(payload.get('endpoint_raw_refs')) is dict
+                and set(payload['endpoint_raw_refs']) == {'parameters', 'adam', 'rng'}
+                and all(ref(value) for value in payload['endpoint_raw_refs'].values()), 'raw prefix model/Adam/RNG/manifest evidence required')
+        entry = history[0]
+        require(type(entry) is dict and type(entry.get('boundary')) is int and entry['boundary'] == 0
+                and entry.get('row_ids') == batches[0] and entry.get('updated') is True
+                and entry.get('start_policy_id') == bindings['anchors']['own_start_sha256']
+                and q.hex64(entry.get('final_policy_id')) and q.hex64(entry.get('result_sha256')),
+                'exact first qualification batch/policy/result ancestor required')
+        manifest = payload.get('prefix_manifest')
+        require(type(manifest) is dict and manifest.get('schema') == 'SKILL-ACQUISITION-NATIVE-CHECKPOINT-1'
+                and manifest.get('manifest_sha256') == digest({key: value for key, value in manifest.items() if key != 'manifest_sha256'})
+                and type(manifest.get('bindings')) is dict
+                and manifest.get('bindings_sha256') == digest(manifest['bindings']) == payload['prefix_checkpoint_bindings_sha256'],
+                'exact original prefix manifest/bindings body digests required')
+        original = manifest['bindings']
+        require(original.get('recipe') == bindings['recipe']['recipe']
+                and original.get('qualification_batches') == batches
+                and original.get('own_start_sha256') == payload['own_start_sha256']
+                and original.get('common_anchor_sha256') == payload['common_anchor_sha256']
+                and original.get('code') == payload['code_sha256'], 'prefix original recipe/source/anchor/plan drift')
+        progress = manifest.get('progress')
+        from .checkpoint import validate_progress
+        validate_progress(progress, batches)
+        require(progress['C'] == progress['U'] == 1 and progress['history'] == history,
+                'prefix manifest exact observed U1/history required')
+    declared = context.get('checkpoint_child_declaration')
+    if context.get('schema') != FIXTURE:
+        require(declared == declaration
+                and context.get('checkpoint_child_observed_lineage') == payload,
+                'prelaunch declaration/observed child lineage differs from full source-bound execution context')
+    return payload
+
+
+def _clone(value): return json.loads(canonical(value))
+def _profile(value):
+    require(type(value) is dict and set(value) in (set(ce.PROFILE), set(ce.PROFILE) | {'reducer_work_bytes_upper'}), 'complete qualification profile')
+    ce._profile({k: value[k] for k in ce.PROFILE})
+    require(ce._int(value.get('reducer_work_bytes_upper', 0)), 'finite reducer work profile')
+    return value
+
+def _normalize(fields):
+    fields = dict(fields)
+    for alias, key in (('io_read_bytes_upper', 'read_bytes_upper'), ('io_write_bytes_upper', 'write_bytes_upper')):
+        if alias in fields:
+            require(key not in fields or fields[key] == fields[alias], 'conflicting physical IO aliases')
+            fields[key] = fields.pop(alias)
+    return fields
+def _price(value):
+    return {'operation_attempts_upper': 1, 'io_read_bytes_upper': value['read_bytes_upper'],
+        'io_write_bytes_upper': value['write_bytes_upper'],
+        'identity_hash_attempts_upper': value['identity_hash_attempts_upper'],
+        'identity_hash_bytes_upper': value['identity_hash_bytes_upper'],
+        'metadata_bytes_upper': 0, 'wall_seconds_upper': value['wall_s_upper']}
+def _add(left, right): return {key: left.get(key, 0) + right.get(key, 0) for key in COST_FIELDS}
+
+
+def validate_reservation_rule(spec):
+    """Only this frozen, finite declaration may select known-size ceilings."""
+    rule = spec.get('operation_profile_rule')
+    require(rule in (None, EXPLICIT_RESERVATION_RULE, EXPLICIT_RESERVATION_RULE_V2), 'unknown qualification reservation rule')
+    kinds = spec.get('explicit_reservation_kinds')
+    require((rule is None and kinds is None) or rule in (EXPLICIT_RESERVATION_RULE, EXPLICIT_RESERVATION_RULE_V2)
+            and type(kinds) is list and kinds == list(EXPLICIT_RESERVATION_KINDS),
+            'exact three qualification explicit reservation kinds')
+    if rule == EXPLICIT_RESERVATION_RULE_V2:
+        require(contracts.manifest_from_spec(spec) is not None, 'qualification reservation version 2 needs frozen source contracts')
+    return rule
+
+
+def reservation_profile(spec, kind, fields, *, profiles=None, contract_replay=False):
+    """Select permanent declared bounds; opaque work keeps its full ceiling.
+
+    Source callbacks derive known sizes from pinned rows/artifacts before work.
+    No returned measurement or caller wall value reduces this reservation.
+    """
+    rule = validate_reservation_rule(spec)
+    profiles = spec['operation_profiles'] if profiles is None else profiles
+    require(kind in profiles, 'declared qualification operation')
+    maximum = _profile(profiles[kind]); reserved = _clone(maximum)
+    fields = _normalize(fields)
+    selected_contract = contracts.reservation_profile(spec, kind, fields, owner='qualification',
+        maximum=maximum, replay=contract_replay)
+    cp_extent = (rule == EXPLICIT_RESERVATION_RULE_V2 and fields.get('wall_contract') in contracts.CP_HASH_ROLES)
+    opaque_contract = fields.get('wall_contract') in contracts.OPAQUE_ROLES
+    opaque_model = rule == EXPLICIT_RESERVATION_RULE_V2 and fields.get('wall_contract') == str(contracts.MODEL_FINGERPRINT)
+    for key in ce.PROFILE[:-1]:
+        require(ce._int(fields.get(key, 0)) and fields.get(key, 0) <= maximum[key],
+                'profile below declared physical work')
+    if 'wall_s_upper' in fields:
+        require(ce._finite(fields['wall_s_upper'], True) and fields['wall_s_upper'] <= maximum['wall_s_upper'],
+                'profile below declared wall work')
+    for stem in ('identity_hash_attempts', 'identity_hash_bytes'):
+        lower = stem + '_lower'
+        if lower in fields:
+            require(ce._int(fields[lower]) and fields[lower] <= maximum[stem + '_upper'],
+                    'opaque hash lower exceeds qualification profile')
+    hash_fields = ('identity_hash_attempts_upper', 'identity_hash_bytes_upper')
+    complete_hash = all(key in fields for key in hash_fields)
+    if complete_hash and not cp_extent and not opaque_model:
+        require((fields[hash_fields[0]] == 0) == (fields[hash_fields[1]] == 0),
+                'coherent explicit qualification hash reservation')
+    require(ce._int(fields.get('reducer_work_bytes_upper', 0))
+            and fields.get('reducer_work_bytes_upper', 0) <= maximum.get('reducer_work_bytes_upper', 0),
+            'explicit reducer profile below work')
+    if cp_extent or opaque_contract: return selected_contract
+    if rule is None or kind not in EXPLICIT_RESERVATION_KINDS: return selected_contract
+    reserved['wall_s_upper'] = selected_contract['wall_s_upper']
+    opaque = any(key.startswith('opaque_') or key.startswith('identity_hash_') and key.endswith('_lower')
+                 for key in fields)
+    if kind == 'qualification_reducer_overhead':
+        require(maximum['read_bytes_upper'] == maximum['write_bytes_upper'] == 0
+                and fields.get('read_bytes_upper', 0) == fields.get('write_bytes_upper', 0) == 0,
+                'qualification reducer reserves no physical IO')
+        if not complete_hash or opaque or 'reducer_work_bytes_upper' not in fields: return reserved
+        require(ce._int(fields['reducer_work_bytes_upper'], 1), 'positive explicit reducer work reservation')
+        reserved['reducer_work_bytes_upper'] = fields['reducer_work_bytes_upper']
+    else:
+        for key in ('read_bytes_upper', 'write_bytes_upper'):
+            if key in fields: reserved[key] = fields[key]
+        if kind == 'qualification_artifact_readback' and 'read_bytes_upper' in fields:
+            require(ce._int(fields['read_bytes_upper'], 1), 'positive artifact readback extent')
+            if complete_hash and not opaque:
+                require(fields[hash_fields[0]] >= 1 and fields[hash_fields[1]] >= fields['read_bytes_upper'],
+                        'artifact readback hash covers complete declared extent')
+    if complete_hash and not opaque:
+        for key in hash_fields: reserved[key] = fields[key]
+    return reserved
+
+
+class QualificationAccounting:
+    def __init__(self, context, permit, proof, prepared_receipt=None, *,
+                 bootstrap_handle=None, bootstrap_verifier=None, clock=None):
+        from . import ce_bootstrap_accounting as boot
+        fixture = type(context) is dict and context.get('schema') == FIXTURE
+        if not fixture:
+            # Registry refusal precedes context/header/replay hashes and paths.
+            services = context.get('native_services', {}) if type(context) is dict else {}
+            if type(services) is not dict: services = {}
+            if bootstrap_handle is None: bootstrap_handle = services.get('bootstrap_handle')
+            if bootstrap_verifier is None: bootstrap_verifier = services.get('bootstrap_verifier')
+            boot.require_registered_verifier(bootstrap_verifier)
+            derived = context.get('checkpoint_child_accounting') if type(context) is dict else None
+            owner = derived.get('owner') if type(derived) is dict else context.get('qualifier_accounting_owner', context.get('bindings', {}).get('scope', {}).get('qualifier_accounting_owner'))
+            boot.verify_prepayment(bootstrap_handle, context, proof, owner, verifier=bootstrap_verifier)
+            require(clock is None, 'native qualification monotonic clock cannot be injected')
+        self.clock = time.monotonic if clock is None else clock
+        require(callable(self.clock), 'explicit monotonic clock source')
+        self._wall_origin = self.clock()
+        require(q.finite(self._wall_origin), 'finite qualification monotonic origin')
+        self._wall_ready = False
+        self.actual_wall_seconds, self.last_clock, self.worker_open = 0.0, self._wall_origin, False
+        if fixture and bootstrap_handle is None:
+            outer = boot.BootstrapAccounting(context, None, proof, clock=self.clock)
+            spec = accounting_specification(context)
+            bounds = _price(spec['setup_bounds'])
+            bounds['metadata_bytes_upper'] = MAX_LINE * 2
+            owner = {'accounting_spec_sha256': digest(spec), 'prepared_receipt_sha256': prepared_receipt['receipt_sha256']}
+            bootstrap_handle = outer.reserve_setup(owner, bounds)
+            boot.verify_prepayment(bootstrap_handle, context, proof, owner)
+        require(type(bootstrap_handle) is boot.PrepaymentHandle, 'actual outer prepayment handle required')
+        self.bootstrap_handle = bootstrap_handle
+        self.bootstrap_handle.begin()
+        try:
+            self._initialize(context, permit, proof, prepared_receipt)
+            expected_owner = {'accounting_spec_sha256': digest(self.spec), 'prepared_receipt_sha256': prepared_receipt['receipt_sha256']}
+            require(self.bootstrap_handle.evidence['owner'] == expected_owner, 'prepaid owner differs from actual constructor specification')
+            self._wall_ready = True
+            if not self.unknown_wall: self.tick_wall()
+            self.bootstrap_handle.complete()
+        except BaseException as error:
+            try: self.bootstrap_handle.fail(error)
+            except BaseException as record_error:
+                error.bootstrap_accounting_failure = {'type': type(record_error).__name__, 'message': str(record_error)[:1000]}
+                raise error from record_error
+            raise
+
+    def _initialize(self, context, permit, proof, prepared_receipt=None):
+        # No path/proof traversal or IO before the native capability check.
+        fixture = type(context) is dict and context.get('schema') == FIXTURE
+        if fixture:
+            require(context.get('mode') == 'synthetic_fixture' and context.get('phase') == 'qualification'
+                    and context.get('approved') is False and context.get('training_authorized') is False
+                    and permit is None, 'explicit non-native qualification accounting fixture only')
+        else:
+            authority.require_execution_permit(permit, context, 'journal_construct')
+            require(context['phase'] == 'qualification', 'qualification accounting never authorizes production')
+        require(type(proof) is dict and proof.get('schema', PROOF) == PROOF
+                and proof.get('fresh_process') is True and proof.get('boot_verified') is True
+                and q.hex64(proof.get('worker_identity_sha256'))
+                and q.hex64(proof.get('boot_identity_sha256')), 'verified explicit qualification worker proof required')
+        if not fixture:
+            require(context.get('worker_proof_sha256') == digest(proof), 'worker proof differs from frozen native context')
+        require(context.get('arm') in ('canonical', 'permuted') and q.hex64(context.get('request_sha256'))
+                and q.hex64(context.get('scope_sha256')), 'one qualification request/scope/arm required')
+        scope = context.get('bindings', {}).get('scope', {})
+        spec = accounting_specification(context)
+        require(type(spec) is dict and spec.get('schema') == SPEC, 'explicit qualification accounting specification required')
+        require(type(spec.get('owned_directory')) is str and Path(spec['owned_directory']).is_absolute(), 'absolute accounting owner required')
+        require(type(prepared_receipt) is dict and prepared_receipt.get('receipt_sha256') == spec.get('ingestion_receipt_sha256')
+                and digest({k: v for k, v in prepared_receipt.items() if k != 'receipt_sha256'}) == prepared_receipt['receipt_sha256'],
+                'exact frozen actual prepared row receipt required')
+        if not fixture: q.validate_actual_ingestion(context, prepared_receipt)
+        profiles = spec.get('operation_profiles')
+        require(type(profiles) is dict and set(profiles) == KINDS, 'explicit profile for every qualification operation required')
+        for value in profiles.values(): _profile(value)
+        validate_reservation_rule(spec)
+        rejected.policy_from_spec(spec, 'qualification')
+        if contracts.manifest_from_spec(spec) is not None:
+            contracts.validate_manifest(spec['operation_contracts'], profiles, owner='qualification')
+        require(q.integer(profiles['qualification_reducer_overhead'].get('reducer_work_bytes_upper'), 1), 'explicit reducer work upper required')
+        q._costs(spec.get('global_caps'))
+        require(type(spec.get('stage_caps')) is dict and set(spec['stage_caps']) == set(q.STAGES), 'all exact qualification stage caps required')
+        for value in spec['stage_caps'].values(): q._costs(value, stage=True)
+        _profile(spec.get('setup_bounds'))
+        require(q.finite(spec.get('physical_wall_seconds_upper'), True), 'explicit physical qualification deadline')
+        execution = scope.get('qualifier_execution')
+        require(type(execution) is dict, 'qualification batch plan required')
+        rows = prepared_receipt.get('prepared_row_bindings')
+        require(type(rows) is list and rows and all(type(row) is dict and type(row.get('id')) is str for row in rows)
+                and len({row['id'] for row in rows}) == len(rows), 'distinct compact prepared row census required')
+        census = {row['id']: row for row in rows}
+        witnesses, gradient, batches = (execution.get(k) for k in ('all_witness_ids', 'gradient_batch_ids', 'adam_batches'))
+        valid = lambda ids: type(ids) is list and ids and len(set(ids)) == len(ids) and all(type(rid) is str and rid in census for rid in ids)
+        require(valid(witnesses) and valid(gradient) and len(gradient) == 8 and set(gradient) <= set(witnesses)
+                and type(batches) is list and 2 <= len(batches) <= 8
+                and all(valid(batch) and len(batch) == 8 and set(batch) <= set(witnesses) for batch in batches),
+                'exact bounded witness/gradient/Adam qualification rows required')
+        for row in rows:
+            require(all(q.integer(row.get(k), 1) for k in ('prompt_tokens', 'labeled_tokens', 'full_sequence_tokens', 'prepared_hash_bytes_upper'))
+                    and row['full_sequence_tokens'] == row['prompt_tokens'] + row['labeled_tokens']
+                    and all(q.hex64(row.get(k)) for k in ('prompt_ids_sha256', 'completion_ids_sha256', 'prepared_row_sha256', 'target_sha256')),
+                    'exact compact qualification row hash/token schema')
+        recipe = context.get('bindings', {}).get('recipe', {}).get('recipe')
+        from . import ce_update
+        require(type(recipe) is dict and recipe.get('synthetic_cpu') is fixture
+                and digest(recipe) == context.get('static_recipe_sha256'), 'qualification recipe identity/device binding')
+        ce_update.validate_recipe(dict(recipe, boundary_id=0, generation=0, U_before=0,
+            symbolic_snapshot='0' * 64, start_policy_id='0' * 64), native_permit=permit)
+        self.fixture, self.permit, self.context, self.proof = fixture, permit, context, _clone(proof)
+        self.spec, self.profiles, self.census, self.recipe = _clone(spec), _clone(profiles), _clone(census), _clone(recipe)
+        self.allowed_rows, self.adam_batches = set(witnesses), _clone(batches)
+        self.scope_role = 'qualification_only'
+        self.request_sha256, self.scope_sha256 = context['request_sha256'], context['scope_sha256']
+        self._current_proof = self.proof
+        self._spec_sha256, self._profiles_sha256 = digest(self.spec), digest(self.profiles)
+        self.native_activation_gaps = {
+            'outer_setup_reservation': 'A registered outer bootstrap ledger must permanently reserve constructor/header/replay work before these files exist.',
+            'directory_publication': 'File fsync is implemented; platform-specific parent-directory publication durability still needs verified native service evidence.'}
+        predecessor = spec.get('ingestion_bootstrap_ref')
+        if not fixture:
+            setup_ref = spec.get('outer_setup_reservation_ref')
+            require(type(setup_ref) is dict and q.hex64(setup_ref.get('sha256'))
+                    and type(setup_ref.get('path')) is str and Path(setup_ref['path']).is_absolute()
+                    and q.integer(setup_ref.get('bytes'), 1), 'outer-owned durable setup reservation reference required before paths')
+            require(type(predecessor) is dict and q.hex64(predecessor.get('sha256'))
+                    and type(predecessor.get('path')) is str and Path(predecessor['path']).is_absolute()
+                    and q.integer(predecessor.get('bytes'), 1), 'scope-bound external ingestion/bootstrap evidence required')
+        self.external_predecessors = {'ingestion_tokenizer'} if predecessor is not None else set()
+        self.reducer_reserved_bytes = 0
+        self.reducer_by_stage = dict.fromkeys(q.STAGES, 0)
+        self.fatal = self.unknown_wall = False
+        self.rejection_policy = rejected.policy_from_spec(spec, 'qualification')
+        journal_limits.limits_from_spec(spec, 'qualification')
+        self.rejection_ticket = self.rejection_record = self.rejection_unknown = None
+        self.rejection_used = False
+        self.active = None
+        self.operations, self.attempts, self.events, self.metadata_ids = {}, [], [], set()
+        self.child_prefixes = set()
+        self.cumulative = {k: 0 for k in COST_FIELDS}
+        self.by_stage = {stage: {k: 0 for k in COST_FIELDS} for stage in q.STAGES}
+        self.directory = Path(spec['owned_directory']).resolve()
+        require(not Path(spec['owned_directory']).is_symlink(), 'regular owned qualification directory')
+        owner = scope.get('native_backend', {}).get('output_directory', spec['owned_directory'])
+        self.metadata_root = Path(owner).resolve()
+        require(self.directory.is_relative_to(self.metadata_root) and not Path(owner).is_symlink(), 'accounting directory outside admitted output owner')
+        if not fixture:
+            checkout = Path(scope['native_backend']['source_checkout']).resolve()
+            require(not self.metadata_root.is_relative_to(checkout), 'qualification output must be outside source checkout')
+        self.header_path, self.path = self.directory / HEADER, self.directory / JOURNAL
+        self.header = {'schema': SCHEMA, 'fixture': fixture, 'native_qualified': False,
+            'request_sha256': context['request_sha256'], 'scope_sha256': context['scope_sha256'], 'arm': context['arm'],
+            'static_recipe_sha256': context['static_recipe_sha256'], 'specification': self.spec,
+            'prepared_receipt_sha256': prepared_receipt['receipt_sha256'], 'recipe': self.recipe,
+            'anchors': _clone(context['bindings']['anchors']), 'source': _clone(context['bindings'].get('source', {})),
+            'runtime': _clone(context['bindings'].get('runtime', {})),
+            'bootstrap_owner': self.bootstrap_handle.evidence['owner'],
+            'wall_rule': 'source-owned time.monotonic intervals with same-boot worker/end evidence'}
+        self.binding_sha256 = digest(self.header)
+        self._make_ce_state(context, rows)
+        setup = self.spec['setup_bounds']
+        raw_header = canonical(self.header) + b'\n'
+        require(len(raw_header) <= MAX_LINE, 'qualification header ceiling')
+        self._known_size = 0
+        self._header_cost_prepaid = False
+        header_costs = {'metadata_bytes_upper': len(raw_header), 'io_write_bytes_upper': len(raw_header),
+                       'identity_hash_attempts_upper': 1, 'identity_hash_bytes_upper': len(canonical(self.header))}
+        if self.header_path.exists() or self.path.exists():
+            require(self.header_path.is_file() and self.path.is_file() and not self.header_path.is_symlink()
+                    and not self.path.is_symlink(), 'both regular qualification history files required')
+            size = self.header_path.stat().st_size + self.path.stat().st_size
+            require(size <= setup['read_bytes_upper'] and size <= self.spec['global_caps']['metadata_bytes_upper']
+                    and setup['identity_hash_bytes_upper'] >= size, 'bounded paid replay before reads')
+            require(setup['identity_hash_attempts_upper'] >= size // 200 + 1,
+                    'conservative replay hash-attempt admission before reads')
+            # The explicit outer worker proof admits this complete bounded
+            # bootstrap; its retained setup row charges the full reservation.
+            with self.header_path.open('rb') as stream: observed = stream.read(MAX_LINE + 1)
+            require(observed == raw_header, 'qualification frozen header drift')
+            read_count = len(observed)
+            with self.path.open('rb') as stream:
+                while raw := stream.readline(MAX_LINE + 1):
+                    read_count += len(raw); require(read_count <= size, 'qualification history grew during replay')
+                    require(len(raw) <= MAX_LINE and raw.endswith(b'\n'), 'partial qualification tail; no repair/truncation')
+                    entry = ce._json(raw); body = {k: v for k, v in entry.items() if k != 'sha256'}
+                    require(canonical(entry) + b'\n' == raw and body['seq'] == len(self.events)
+                            and body['previous'] == self._head() and body['binding_sha256'] == self.binding_sha256
+                            and digest(body) == entry['sha256'], 'qualification history hash/order/binding drift')
+                    self._apply(body['kind'], body['payload'], replay=True)
+                    self.events.append(entry); self._known_size += len(raw)
+            require(read_count == size and setup['identity_hash_attempts_upper'] >= len(self.events) + 1, 'replay bytes/hash attempt envelope')
+        else:
+            require(setup['write_bytes_upper'] >= len(raw_header), 'setup header write envelope')
+            self._check_charge(None, _add(_price(setup), header_costs))
+            self._charge(None, header_costs); self._header_cost_prepaid = True
+            self.directory.mkdir(parents=True, exist_ok=True)
+            with self.header_path.open('xb') as stream:
+                for start in range(0, len(raw_header), CHUNK):
+                    block = raw_header[start:start + CHUNK]
+                    require(stream.write(block) == len(block), 'short qualification header')
+                stream.flush(); os.fsync(stream.fileno())
+            with self.path.open('xb') as stream: stream.flush(); os.fsync(stream.fileno())
+            self._known_size = 0
+        self._event('setup', {'profile': setup, 'header_costs': header_costs if self._header_cost_prepaid else {}})
+        self._event('worker', {'proof': self.proof, 'monotonic': self._wall_origin})
+        if self.rejection_policy is not None and self.rejection_ticket is None:
+            self._event('rejection_reservation', rejected.reservation_payload(self.rejection_policy, SCHEMA, self.header))
+
+    def _make_ce_state(self, context, rows):
+        # Protected pure helper composition AFTER the outer admission. No base
+        # journal constructor, path/IO, framework or synthetic native permit.
+        state = object.__new__(ce.CeJournal)
+        state.synthetic_cpu = self.fixture
+        state.native_permit = self.permit
+        state.allowed_kinds, state.profiles = ce.NATIVE_KINDS, self.profiles
+        state.census = {row['id']: {k: row[k] for k in ('id', 'prompt_tokens', 'labeled_tokens', 'full_sequence_tokens',
+            'prompt_ids_sha256', 'completion_ids_sha256', 'prepared_row_sha256')} for row in rows}
+        state.bindings = {'recipe': self.recipe, 'prepared_rows': [self.census[rid] for batch in self.adam_batches for rid in batch],
+            'anchors': {k: context['bindings']['anchors'][k] for k in ('own_start_sha256', 'common_anchor_sha256')}}
+        state.plan_rows = self.adam_batches
+        state.plan = {'plan_sha256': digest({'qualification_adam_batches': self.adam_batches})}
+        state.static_recipe_sha256 = context['static_recipe_sha256']
+        state.progress = {'C': 0, 'U': 0, 'history': [], 'generation': 0}
+        state.progress['snapshot'] = digest(dict(state.progress, plan_sha256=state.plan['plan_sha256']))
+        state.operations, state.events, state.used_restores = {}, self.events, set()
+        state.active_attempt = state.current_invocation = None
+        state.requires_restore = state.restore_pending = state.unknown_wall = state.fatal = False
+        self._ce = state
+
+    @property
+    def generation(self): return self._ce.generation
+    @property
+    def symbolic_snapshot(self): return self._ce.symbolic_snapshot
+    @property
+    def requires_restore(self): return self._ce.requires_restore
+    @property
+    def restore_pending(self): return self._ce.restore_pending
+    def _head(self): return self.events[-1]['sha256'] if self.events else None
+    def _admit(self):
+        require(not self.fatal and not self.unknown_wall, 'qualification fatal or unknown-wall history')
+        if not self.fixture:
+            authority.require_execution_permit(self.permit, self.context, 'journal_operation')
+            require(digest(self.spec) == self._spec_sha256 and digest(self.profiles) == self._profiles_sha256,
+                    'native qualification accounting specification/prices mutated')
+    def _check_charge(self, stage, amounts):
+        for key, value in amounts.items():
+            require(key in COST_FIELDS and ce._finite(value) and (key == 'wall_seconds_upper' or type(value) is int), 'finite qualification reservation')
+            require(self.cumulative[key] + value <= self.spec['global_caps'][key], 'global qualification ceiling: ' + key)
+            if stage is not None: require(self.by_stage[stage][key] + value <= self.spec['stage_caps'][stage][key], 'stage qualification ceiling: ' + key)
+    def _charge(self, stage, amounts):
+        self._check_charge(stage, amounts)
+        self.cumulative = _add(self.cumulative, amounts)
+        if stage is not None: self.by_stage[stage] = _add(self.by_stage[stage], amounts)
+    def _event(self, kind, payload):
+        self._admit()
+        if self._wall_ready and kind not in ('wall', 'worker', 'end'): self.tick_wall()
+        if kind == 'operation' and payload.get('phase') == 'started' and self.spec.get('operation_profile_rule') in (EXPLICIT_RESERVATION_RULE, EXPLICIT_RESERVATION_RULE_V2):
+            payload = _clone(payload)
+            payload['reservation_profile'] = reservation_profile(self.spec, payload['kind'], payload['fields'],
+                                                                 profiles=self.profiles, contract_replay=True)
+        body = {'seq': len(self.events), 'previous': self._head(), 'binding_sha256': self.binding_sha256,
+                'kind': kind, 'payload': _clone(payload)}
+        raw = canonical(dict(body, sha256=digest(body))) + b'\n'
+        try:
+            journal_limits.check_append(journal_limits.limits_from_spec(self.spec, 'qualification'),
+                rows=len(self.events), size=self._known_size, line_bytes=len(raw))
+        except ValueError:
+            self.fatal = True; self._ce.requires_restore = True
+            raise
+        require(len(raw) <= MAX_LINE, 'qualification event ceiling')
+        stage, amounts, action = self._prepare(kind, body['payload'])
+        overhead = {'metadata_bytes_upper': len(raw), 'io_write_bytes_upper': len(raw),
+                    'identity_hash_attempts_upper': 1, 'identity_hash_bytes_upper': len(canonical(body))}
+        self._charge(stage, _add(amounts, overhead))  # permanent admission precedes metadata IO
+        try:
+            require(not self.path.is_symlink() and self.path.stat().st_size == self._known_size, 'qualification single writer history')
+            with self.path.open('ab') as stream:
+                require(stream.write(raw) == len(raw), 'short qualification event'); stream.flush(); os.fsync(stream.fileno())
+        except BaseException:
+            self.fatal = True; self._ce.requires_restore = True
+            raise
+        action()
+        self.events.append(ce._json(raw)); self._known_size += len(raw)
+    def _apply(self, kind, payload, *, replay):
+        stage, amounts, action = self._prepare(kind, payload)
+        body = {'seq': len(self.events), 'previous': self._head(), 'binding_sha256': self.binding_sha256,
+                'kind': kind, 'payload': payload}
+        raw = canonical(dict(body, sha256=digest(body))) + b'\n'
+        journal_limits.check_append(journal_limits.limits_from_spec(self.spec, 'qualification'),
+            rows=len(self.events), size=getattr(self, '_replay_bytes', 0) if replay else self._known_size,
+            line_bytes=len(raw), terminal=kind=='terminal_rejected')
+        overhead = {} if kind == 'terminal_rejected' else {'metadata_bytes_upper': len(raw), 'io_write_bytes_upper': len(raw),
+            'identity_hash_attempts_upper': 1, 'identity_hash_bytes_upper': len(canonical(body))}
+        if kind == 'terminal_rejected':
+            require(len(raw) <= self.rejection_policy['record_bytes_upper'], 'prepaid rejected row extent')
+        self._charge(stage, _add(amounts, overhead)); action()
+        if replay: self._replay_bytes = getattr(self, '_replay_bytes', 0) + len(raw)
+    def _prepare(self, kind, payload):
+        require(not self.fatal, 'fatal rejection history cannot admit later events')
+        if kind == 'rejection_reservation':
+            require(self.rejection_policy is not None and self.rejection_ticket is None and not self.operations
+                    and self.active is None and payload == rejected.reservation_payload(self.rejection_policy, SCHEMA, self.header),
+                    'one exact rejected-return ticket before dependent work')
+            def apply_ticket():
+                self.rejection_ticket = _clone(payload)
+                self.reducer_reserved_bytes += self.rejection_policy['encoding_work_bytes_upper']
+            return None, rejected.reservation_costs(self.rejection_policy), apply_ticket
+        if kind == 'terminal_rejected':
+            require(self.rejection_ticket is not None and not self.rejection_used, 'prepaid unused rejection ticket required')
+            previous = self.operations.get(payload.get('operation_id'))
+            require(previous and previous['phase'] == 'started', 'rejection keeps original pending operation')
+            binding = self._rejection_binding(previous)
+            rejected.validate_terminal_payload(payload, self.rejection_policy, self.rejection_ticket,
+                self.events[previous['started_seq']], previous['profile'], binding)
+            def apply_rejection():
+                self.rejection_used = self.fatal = True
+                self.rejection_record = _clone(payload); self._ce.requires_restore = True
+            return None, {}, apply_rejection
+        if kind == 'checkpoint_child_prefix':
+            _validate_child_prefix(self.context, self._current_proof, payload)
+            require(self.active is None and self._ce.progress['C'] == self._ce.progress['U'] == 0
+                    and self._ce.active_attempt is None and not self.child_prefixes,
+                    'child prefix must be admitted once before any own CE work')
+            inherited = payload['inherited_U']
+            progress = {'C': inherited, 'U': inherited, 'history': _clone(payload['inherited_history']), 'generation': 0}
+            progress['snapshot'] = digest(dict(progress, plan_sha256=self._ce.plan['plan_sha256']))
+            from .checkpoint import validate_progress
+            validate_progress(progress, self._ce.plan_rows)
+            def apply():
+                self.child_prefixes.add(digest(payload))
+                self.external_predecessors.update(q.STAGES[:q.STAGES.index('checkpoint_resume')])
+                self._ce.progress = progress
+                self._ce.requires_restore = bool(inherited)
+            return None, {}, apply
+        if kind == 'setup':
+            amount = _price(payload['profile'])
+            if not self._header_cost_prepaid: amount = _add(amount, payload.get('header_costs', {}))
+            return None, amount, lambda: setattr(self, '_header_cost_prepaid', False)
+        if kind == 'wall':
+            require(payload['boot_identity_sha256'] == self._current_proof['boot_identity_sha256']
+                    and payload['worker_identity_sha256'] == self._current_proof['worker_identity_sha256']
+                    and q.finite(payload['monotonic']) and payload['monotonic'] >= self.last_clock
+                    and payload['elapsed_delta'] == payload['monotonic'] - self.last_clock, 'same-boot exact qualification wall interval')
+            def apply():
+                self.last_clock = payload['monotonic']; self.actual_wall_seconds += payload['elapsed_delta']
+            return payload['stage'], {'wall_seconds_upper': payload['elapsed_delta']}, apply
+        if kind == 'end':
+            require(self.active is None and not any(op['phase'] == 'started' and op['worker_id'] == self._current_proof['worker_identity_sha256']
+                    for op in self.operations.values()), 'all current worker operations must return before wall end')
+            require(payload['worker_identity_sha256'] == self._current_proof['worker_identity_sha256']
+                    and q.finite(payload.get('monotonic')) and payload['monotonic'] == self.last_clock,
+                    'exact wall end worker/monotonic identity')
+            return None, {}, lambda: setattr(self, 'worker_open', False)
+        if kind == 'worker':
+            def apply():
+                if self.worker_open or self.active is not None or any(op['phase'] == 'started' for op in self.operations.values()):
+                    if self.active is not None: self.active['status'] = 'INTERRUPTED'
+                    self.active = None
+                    self._ce.requires_restore = True; self.unknown_wall = True
+                self._current_proof = payload['proof']
+                self.last_clock = payload['monotonic']; self.worker_open = True
+                self._ce.current_invocation = payload['proof']['worker_identity_sha256']
+            return None, {}, apply
+        if kind == 'begin':
+            stage = payload['stage']
+            require(self.worker_open and stage in q.STAGES and self.active is None and type(payload['attempt_id']) is str and payload['attempt_id'], 'one explicit stage/attempt')
+            require(not any(a['attempt_id'] == payload['attempt_id'] for a in self.attempts), 'attempt identity reused')
+            count = sum(a['stage'] == stage for a in self.attempts)
+            require(count < self.spec['stage_caps'][stage]['max_attempts'], 'stage attempt ceiling')
+            completed = self.external_predecessors | {a['stage'] for a in self.attempts if a['status'] == 'RETURNED'}
+            require(set(q.STAGES[:q.STAGES.index(stage)]) <= completed, 'qualification predecessor stages must return')
+            def apply(): self.active = dict(payload, status='STARTED'); self.attempts.append(self.active)
+            return stage, {}, apply
+        if kind == 'operation': return self._operation(payload)
+        if kind == 'commit':
+            require(self.active and self.active['stage'] in ('adam_clipping', 'checkpoint_resume'), 'CE commit is qualification Adam/checkpoint stage only')
+            _, action = self._ce._prepare_commit(payload['result'])
+            return self.active['stage'], {}, action
+        if kind == 'restore':
+            require(self.active and self.active['stage'] == 'checkpoint_resume', 'qualification restore stage only')
+            _, action = self._ce._prepare_restore(payload['record'])
+            return self.active['stage'], {}, action
+        if kind == 'metadata':
+            require(self.active and payload['class'] in ('checkpoint_json', 'checkpoint_journal', 'runner_receipt', 'qualification_json')
+                    and type(payload['write_id']) is str and payload['write_id'] not in self.metadata_ids
+                    and q.integer(payload['bytes_upper'], 1), 'permanent metadata identity/class')
+            path = Path(payload['path']).resolve()
+            require(path.is_relative_to(self.metadata_root) and path != self.metadata_root, 'qualification owned metadata root')
+            return self.active['stage'], {'metadata_bytes_upper': payload['bytes_upper'], 'io_write_bytes_upper': payload['bytes_upper']}, lambda: self.metadata_ids.add(payload['write_id'])
+        if kind in ('finish', 'fail'):
+            require(self.active and payload['stage'] == self.active['stage'] and payload['attempt_id'] == self.active['attempt_id'], 'current stage return identity')
+            if kind == 'finish':
+                require(self._ce.active_attempt is None and not self._ce.requires_restore and not self._ce.restore_pending,
+                        'qualification CE must finish or install proved ancestor restore before stage return')
+                require(payload['raw_refs'] and not any(op['phase'] == 'started' and op['attempt_id'] == self.active['attempt_id']
+                    and not op.get('lifetime_cleanup') for op in self.operations.values()), 'stage raw evidence and completed work required')
+            stage = self.active['stage']
+            def apply():
+                self.active.update(status='RETURNED' if kind == 'finish' else 'FAILED', evidence=payload)
+                self.active = None
+            return stage, {}, apply
+        raise ValueError('unknown qualification accounting event')
+    def _operation(self, payload):
+        kind, phase, oid, fields = payload['kind'], payload['phase'], payload['id'], _normalize(payload['fields'])
+        require(kind in self.profiles and phase in ('started', 'returned', 'failed') and type(oid) is str and oid, 'declared qualification operation')
+        if phase == 'started':
+            require(self.worker_open and self.active is not None and oid not in self.operations, 'active unique physical qualification attempt')
+            stage, aid = self.active['stage'], self.active['attempt_id']
+            if fields.get('wall_contract') in contracts.CP_HASH_ROLES | {str(contracts.CP_SAVE_FRESH), str(contracts.CP_RESTORE),
+                    str(contracts.CP_SAVE_ADAPTER), str(contracts.CP_RESTORE_ADAPTER)}:
+                require(stage == 'checkpoint_resume', 'source CP contract outside qualification checkpoint stage')
+            for key, expected in (('qualification_stage', stage), ('attempt_id', aid), ('worker_id', self._current_proof['worker_identity_sha256'])):
+                require(key not in fields or fields[key] == expected, 'qualification callback identity changed')
+            profile = reservation_profile(self.spec, kind, fields, profiles=self.profiles, contract_replay=True)
+            if self.spec.get('operation_profile_rule') in (EXPLICIT_RESERVATION_RULE, EXPLICIT_RESERVATION_RULE_V2):
+                require(payload.get('reservation_profile') == profile, 'permanent qualification reservation profile drift')
+            rid = fields.get('prompt_id', fields.get('row_id'))
+            if rid is not None:
+                require(rid in self.allowed_rows, 'row outside declared qualification witness scope')
+                row = self.census[rid]
+                for key, expected in (('prepared_row_sha256', row['prepared_row_sha256']), ('selected_tokens', row['labeled_tokens']), ('full_sequence_tokens', row['full_sequence_tokens'])):
+                    require(key not in fields or fields[key] == expected, 'qualification row content/token drift')
+            is_ce = fields.get('objective') == 'SUPERVISED_EQUAL_ROW_TOKEN_MEAN_CE'
+            if stage == 'checkpoint_resume' and kind in ('checkpoint_save', 'checkpoint_restore', 'fingerprint', 'checkpoint_adapter_io'):
+                is_ce = True
+            if is_ce:
+                require(stage in ('adam_clipping', 'checkpoint_resume'), 'actual CE work outside registered qualification Adam stage')
+                _, ce_action = self._ce._prepare_operation({'operation': kind, 'phase': phase, 'id': oid, 'fields': fields})
+            else: ce_action = lambda: None
+            require(ce._int(fields.get('reducer_work_bytes_upper', 0))
+                    and fields.get('reducer_work_bytes_upper', 0) <= profile.get('reducer_work_bytes_upper', 0), 'explicit reducer profile below work')
+            attempts_upper = fields.get('operation_attempts_upper', 1)
+            require(ce._int(attempts_upper, 1), 'explicit callback operation reservation')
+            amounts = _price(profile); amounts['operation_attempts_upper'] = attempts_upper
+            if is_ce and kind == 'fingerprint' and fields.get('reason') == 'ce_pre_boundary_identity':
+                amounts = _add(amounts, _price(self.profiles['gradient_cleanup']))
+            elif is_ce and kind == 'gradient_cleanup': amounts = {k: 0 for k in COST_FIELDS}
+            def apply():
+                ce_action()
+                self.operations[oid] = {'kind': kind, 'phase': phase, 'stage': stage, 'attempt_id': aid,
+                    'worker_id': self._current_proof['worker_identity_sha256'], 'profile': profile, 'fields': fields,
+                    'is_ce': is_ce, 'lifetime_cleanup': kind == 'cleanup' and fields.get('deferred_model_cleanup') is True,
+                    'started_seq': len(self.events)}
+                self.reducer_reserved_bytes += fields.get('reducer_work_bytes_upper', 0)
+                self.reducer_by_stage[stage] += fields.get('reducer_work_bytes_upper', 0)
+            return stage, amounts, apply
+        previous = self.operations.get(oid)
+        require(previous and previous['kind'] == kind and previous['phase'] == 'started'
+                and previous['worker_id'] == self._current_proof['worker_identity_sha256'], 'matching current-worker physical return required')
+        require(previous.get('lifetime_cleanup') or self.active and previous['attempt_id'] == self.active['attempt_id'], 'physical return outside active stage')
+        if contracts.manifest_from_spec(self.spec) is not None:
+            require(fields.get('wall_contract') == previous['fields'].get('wall_contract'),
+                    'terminal source role differs from permanent start')
+        require(previous['profile'] == reservation_profile(self.spec, kind, previous['fields'], profiles=self.profiles, contract_replay=True),
+                'permanent qualification reservation profile mutated')
+        started = self.events[previous['started_seq']]['payload']
+        require(_normalize(started['fields']) == previous['fields'], 'qualification operation declaration mutated')
+        try: contracts.check_wall_return(fields, previous['profile'])
+        except ValueError:
+            self.fatal = True; raise
+        for key, upper in (('bytes_read', 'read_bytes_upper'), ('known_bytes_read', 'read_bytes_upper'), ('bytes_written', 'write_bytes_upper'), ('known_bytes_written', 'write_bytes_upper'),
+                           ('identity_hash_attempts_actual', 'identity_hash_attempts_upper'), ('identity_hash_bytes_actual', 'identity_hash_bytes_upper'), ('wall_s', 'wall_s_upper')):
+            if key in fields:
+                valid = ce._finite(fields[key]) if key == 'wall_s' else ce._int(fields[key])
+                if not valid or fields[key] > previous['profile'][upper]:
+                    self.fatal = True
+                    raise ValueError('actual qualification work exceeds reservation')
+        if previous['is_ce']:
+            _, ce_action = self._ce._prepare_operation({'operation': kind, 'phase': phase, 'id': oid, 'fields': fields})
+        else: ce_action = lambda: None
+        def apply(): ce_action(); previous.update(phase=phase, result=fields, returned_seq=len(self.events))
+        return previous['stage'], {}, apply
+    def tick_wall(self):
+        self._admit()
+        require(self.worker_open, 'qualification worker wall interval already ended')
+        now = self.clock()
+        require(q.finite(now) and now >= self.last_clock, 'qualification monotonic clock regressed')
+        deadline = self.spec.get('physical_wall_seconds_upper')
+        require(q.finite(deadline, True) and now - self._wall_origin <= deadline, 'qualification physical deadline')
+        if now > self.last_clock:
+            stage = self.active['stage'] if self.active is not None else None
+            self._event('wall', {'stage': stage, 'boot_identity_sha256': self._current_proof['boot_identity_sha256'],
+                'worker_identity_sha256': self._current_proof['worker_identity_sha256'], 'monotonic': now,
+                'elapsed_delta': now - self.last_clock})
+        return self.actual_wall_seconds
+    def end(self):
+        self.tick_wall()
+        self._event('end', {'worker_identity_sha256': self._current_proof['worker_identity_sha256'],
+                           'monotonic': self.last_clock})
+        self._wall_ready = False
+        return self.snapshot()
+
+    def begin_stage(self, stage, attempt_id):
+        return self._event('begin', {'stage': stage, 'attempt_id': attempt_id})
+    def operation(self, kind, phase, operation_id, **fields):
+        self._admit()
+        previous = self.operations.get(operation_id)
+        original_fields = dict(fields)
+        try:
+            fields = contracts.validate_live_fields(self.spec, kind, phase, fields, owner='qualification',
+                previous_role=previous['fields'].get('wall_contract') if previous else None)
+            if phase != 'started' and previous:
+                contracts.check_wall_return(fields, previous['profile'])
+                for key, upper in rejected._ACTUAL.items():
+                    if key in fields: require(ce._int(fields[key]) and fields[key] <= previous['profile'][upper],
+                                              'actual qualification work exceeds reservation')
+        except ValueError as error:
+            if self.rejection_policy is not None and phase in ('returned', 'failed') and previous and previous['kind'] == kind and previous['phase'] == 'started':
+                self._retain_rejected_return(kind, phase, operation_id, original_fields, error)
+            elif phase != 'started' and previous:
+                # Preserve legacy rejection behavior: wall/count overruns halt,
+                # while contract mismatch without policy still stays pending.
+                try:
+                    contracts.check_wall_return(fields, previous['profile'])
+                    for key, upper in rejected._ACTUAL.items():
+                        if key in fields: require(ce._int(fields[key]) and fields[key] <= previous['profile'][upper], 'legacy actual overrun')
+                except ValueError: self.fatal = True
+            raise
+        return self._event('operation', {'kind': kind, 'phase': phase, 'id': operation_id, 'fields': fields})
+    def _rejection_binding(self, previous):
+        return {'request_sha256': self.request_sha256, 'scope_sha256': self.scope_sha256,
+            'stage': previous['stage'], 'attempt_id': previous['attempt_id'], 'worker_identity_sha256': previous['worker_id']}
+    def _retain_rejected_return(self, kind, phase, operation_id, fields, error):
+        self.fatal = True; self._ce.requires_restore = True
+        try:
+            started = self.clock()
+            require(q.finite(started), 'finite prepaid rejection pipeline clock')
+            require(self.rejection_ticket is not None and not self.rejection_used, 'unused prepaid rejection ticket')
+            if not self.fixture:
+                require(digest(self.spec) == self._spec_sha256 and digest(self.profiles) == self._profiles_sha256,
+                        'frozen rejection ticket owner/profile drift')
+            self.rejection_used = True; previous = self.operations[operation_id]
+            payload = rejected.make_terminal_payload(self.rejection_policy, self.rejection_ticket,
+                self.events[previous['started_seq']], previous['profile'], self._rejection_binding(previous),
+                kind, operation_id, phase, fields, error)
+            rejected.validate_terminal_payload(payload, self.rejection_policy, self.rejection_ticket,
+                self.events[previous['started_seq']], previous['profile'], self._rejection_binding(previous))
+            body = {'seq': len(self.events), 'previous': self._head(), 'binding_sha256': self.binding_sha256,
+                    'kind': 'terminal_rejected', 'payload': payload}
+            row = dict(body, sha256=digest(body)); raw = canonical(row) + b'\n'
+            journal_limits.check_append(journal_limits.limits_from_spec(self.spec, 'qualification'),
+                rows=len(self.events), size=self._known_size, line_bytes=len(raw), terminal=True)
+            require(len(raw) <= self.rejection_policy['record_bytes_upper'], 'bounded prepaid rejection row')
+            require(not self.path.is_symlink() and self.path.stat().st_size == self._known_size, 'original rejection journal ownership')
+            with self.path.open('ab') as stream:
+                require(stream.write(raw) == len(raw), 'short prepaid rejection write'); stream.flush(); os.fsync(stream.fileno())
+            self.events.append(ce._json(raw)); self._known_size += len(raw); self.rejection_record = _clone(payload)
+            elapsed = self.clock() - started
+            require(q.finite(elapsed) and elapsed <= self.rejection_policy['publication_wall_s_upper'],
+                    'rejection publication wall exceeded')
+        except BaseException as failure:
+            self.rejection_unknown = {'type': type(failure).__name__, 'message': str(failure)[:1000]}
+            error.rejection_evidence_failure = _clone(self.rejection_unknown)
+    __call__ = operation
+    def commit_boundary(self, result): return self._event('commit', {'result': result})
+    def install_restore(self, record): return self._event('restore', {'record': record})
+    def admit_checkpoint_child_prefix(self, payload, *, admission_handle=None, verifier=None):
+        if not self.fixture:
+            require(any(verifier is item for item in _REGISTERED_CHILD_PREFIX_VERIFIERS),
+                    'checkpoint child prefix verifier is unregistered')
+            authority.require_execution_permit(self.permit, self.context, 'checkpoint_resume')
+        require(type(admission_handle) is CheckpointChildAdmission
+                and getattr(admission_handle, '_seal', None) is _CHILD_PREFIX_SEAL
+                and admission_handle._native is (not self.fixture)
+                and admission_handle._request == self.request_sha256
+                and admission_handle._worker == self._current_proof['worker_identity_sha256']
+                and admission_handle._payload == payload, 'opaque exact current-child prefix admission required')
+        _validate_child_prefix(self.context, self._current_proof, payload)
+        return self._event('checkpoint_child_prefix', payload)
+    def progress_record(self): return _clone(self._ce.progress)
+    def operation_evidence(self, operation_id):
+        require(operation_id in self.operations, 'known retained qualification operation required')
+        op = self.operations[operation_id]
+        require(op['phase'] == 'returned', 'fully returned qualification operation required')
+        return _clone({key: op[key] for key in ('started_seq', 'returned_seq', 'kind', 'fields')})
+    def reserve_metadata(self, kind, bytes_upper, *, write_id, path):
+        return self._event('metadata', {'class': kind, 'bytes_upper': bytes_upper, 'write_id': write_id, 'path': str(path)})
+    def finish_stage(self, raw_refs):
+        require(self.active and type(raw_refs) is list and raw_refs, 'retained raw artifacts required')
+        checked = []
+        for ref in raw_refs:
+            require(type(ref) is dict and set(ref) in ({'path', 'sha256', 'bytes'}, {'path', 'sha256', 'bytes', 'role', 'binding_sha256'}) and q.hex64(ref['sha256']) and q.integer(ref['bytes'], 1), 'raw artifact reference')
+            path = Path(ref['path']).resolve()
+            require(path.is_relative_to(self.metadata_root) and path != self.metadata_root and path.is_file()
+                    and not path.is_symlink() and path.stat().st_size == ref['bytes'], 'regular owned raw artifact')
+            if 'binding_sha256' in ref:
+                expected = {'stage': self.active['stage'], 'request_sha256': self.request_sha256,
+                    'scope_sha256': self.scope_sha256, 'static_recipe_sha256': self.context['static_recipe_sha256'],
+                    'code_sha256': self.context['bindings']['source']['code_sha256'],
+                    'worker_identity_sha256': self._current_proof['worker_identity_sha256'], 'attempt_id': self.active['attempt_id']}
+                require(ref['binding_sha256'] == digest(expected) and type(ref['role']) is str and ref['role'], 'exact raw artifact stage/source/worker binding')
+            oid = uuid.uuid4().hex
+            self.operation('qualification_artifact_readback', 'started', oid, read_bytes_upper=ref['bytes'] + 1,
+                write_bytes_upper=0, identity_hash_attempts_upper=1, identity_hash_bytes_upper=ref['bytes'] + 1,
+                reducer_work_bytes_upper=0)
+            observed, size = hashlib.sha256(), 0
+            try:
+                with path.open('rb') as stream:
+                    while block := stream.read(min(CHUNK, ref['bytes'] + 1 - size)):
+                        size += len(block); require(size <= ref['bytes'], 'raw artifact grew'); observed.update(block)
+                require(size == ref['bytes'] and observed.hexdigest() == ref['sha256'], 'raw artifact changed')
+            except BaseException as error:
+                try: self.operation('qualification_artifact_readback', 'failed', oid, error_type=type(error).__name__, error=str(error)[:1000])
+                except BaseException as record_error:
+                    error.accounting_failure = {'type': type(record_error).__name__, 'message': str(record_error)[:1000]}
+                    raise error from record_error
+                raise
+            self.operation('qualification_artifact_readback', 'returned', oid, bytes_read=size,
+                identity_hash_attempts_actual=1, identity_hash_bytes_actual=size)
+            checked.append(_clone(ref))
+        return self._event('finish', {'stage': self.active['stage'], 'attempt_id': self.active['attempt_id'], 'raw_refs': checked})
+    def fail_stage(self, error):
+        require(self.active is not None, 'current failed stage required')
+        return self._event('fail', {'stage': self.active['stage'], 'attempt_id': self.active['attempt_id'],
+            'error': {'type': type(error).__name__, 'message': str(error)[:1000]}})
+    def seal(self):
+        """Fixture consistency seal only; native cost completeness is unproved."""
+        self._admit()
+        completed = self.external_predecessors | {a['stage'] for a in self.attempts if a['status'] == 'RETURNED'}
+        require(self.active is None and completed == set(q.STAGES)
+                and not self._ce.active_attempt and not self.requires_restore and not self.restore_pending
+                and not any(op['phase'] == 'started' and op['worker_id'] == self.proof['worker_identity_sha256']
+                            for op in self.operations.values()), 'all stages and lifetime cleanup must return before seal')
+        require(not self.worker_open, 'qualification wall end must be retained before seal')
+        require(self.fixture, 'UNSUPPORTED_UNMEASURED: native publication/execution verifier evidence is not implemented')
+        return dict(self.snapshot(), status='FIXTURE_SEALED_UNQUALIFIED', native_qualified=False)
+
+    def snapshot(self):
+        return {'schema': SCHEMA, 'fixture': self.fixture, 'native_qualified': False,
+            'training_authorized': False, 'binding_sha256': self.binding_sha256,
+            'ledger_head': self._head(), 'events': len(self.events), 'worker_proof': _clone(self.proof),
+            'cumulative': _clone(self.cumulative), 'stages': _clone(self.by_stage),
+            'reducer_reserved_bytes': self.reducer_reserved_bytes, 'reducer_by_stage': _clone(self.reducer_by_stage), 'attempts': _clone(self.attempts),
+            'pending_operations': [_clone(op) for op in self.operations.values() if op['phase'] == 'started'],
+            'fatal': self.fatal, 'unknown_wall': self.unknown_wall, 'progress': self.progress_record(),
+            **({'rejection_ticket': _clone(self.rejection_ticket), 'rejection_used': self.rejection_used,
+                'rejection_record': _clone(self.rejection_record), 'rejection_unknown': _clone(self.rejection_unknown)}
+               if self.rejection_policy is not None else {}),
+            'reservation_rule': 'permanent full upper charges; failed/unknown/restarted work never refunded',
+            'cost_scope': 'declared callback upper reservations and serialized journal costs; not complete native measured totals',
+            'complete_wall_accounting': not self.worker_open and not self.unknown_wall,
+            'actual_wall_seconds': self.actual_wall_seconds, 'last_monotonic': self.last_clock, 'worker_open': self.worker_open,
+            'bootstrap_prepayment': self.bootstrap_handle.evidence,
+            'native_accounting_status': 'FIXTURE_UNQUALIFIED' if self.fixture else 'UNSUPPORTED_UNMEASURED',
+            'native_activation_gaps': _clone(self.native_activation_gaps)}
+
+
+def create_accounting(context, permit, proof, prepared_receipt, *, bootstrap_handle=None, bootstrap_verifier=None):
+    return QualificationAccounting(context, permit, proof, prepared_receipt,
+        bootstrap_handle=bootstrap_handle, bootstrap_verifier=bootstrap_verifier)
+
+
+def replay_state(context, header, prepared_receipt):
+    """Framework-free, no-IO event shadow for an independently prepaid verifier.
+
+    It issues no permit, performs no native construction and cannot seal native
+    execution. Caller must first bind/read header and prepared bytes under its
+    own source-owned verification prepayment.
+    """
+    state = object.__new__(QualificationAccounting)
+    state.fixture, state.permit, state.context = header['fixture'], None, context
+    state.spec, state.recipe = _clone(header['specification']), _clone(header['recipe'])
+    state.profiles = state.spec['operation_profiles']
+    rows = prepared_receipt['prepared_row_bindings']
+    state.census = {row['id']: _clone(row) for row in rows}
+    execution = context['bindings']['scope']['qualifier_execution']
+    state.allowed_rows, state.adam_batches = set(execution['all_witness_ids']), _clone(execution['adam_batches'])
+    state.request_sha256, state.scope_sha256 = header['request_sha256'], header['scope_sha256']
+    state.scope_role = 'qualification_only'
+    state.header, state.binding_sha256 = _clone(header), digest(header)
+    state.directory = Path(state.spec['owned_directory'])
+    state.metadata_root = Path(context['bindings']['scope']['native_backend']['output_directory'])
+    state.external_predecessors = {'ingestion_tokenizer'} if state.spec.get('ingestion_bootstrap_ref') else set()
+    state.fatal = state.unknown_wall = False
+    state.rejection_policy = rejected.policy_from_spec(state.spec, 'qualification')
+    journal_limits.limits_from_spec(state.spec, 'qualification')
+    state._known_size = 0
+    state.rejection_ticket = state.rejection_record = state.rejection_unknown = None
+    state.rejection_used = False
+    state.active, state.operations, state.attempts, state.events, state.metadata_ids = None, {}, [], [], set()
+    state.child_prefixes = set()
+    state.cumulative = dict.fromkeys(COST_FIELDS, 0)
+    state.by_stage = {stage: dict.fromkeys(COST_FIELDS, 0) for stage in q.STAGES}
+    state.reducer_reserved_bytes, state.reducer_by_stage = 0, dict.fromkeys(q.STAGES, 0)
+    state.worker_open, state.last_clock, state.actual_wall_seconds = False, 0.0, 0.0
+    state._current_proof, state.proof = {}, {}
+    state._header_cost_prepaid, state._wall_ready = False, False
+    state._make_ce_state(context, rows)
+    return state

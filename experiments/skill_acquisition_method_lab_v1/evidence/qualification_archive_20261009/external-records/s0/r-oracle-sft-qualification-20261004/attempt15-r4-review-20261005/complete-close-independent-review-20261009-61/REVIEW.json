@@ -1,0 +1,128 @@
+{
+  "schema": "CE8-INDEPENDENT-COMPLETE-CLOSE-LEDGER-REVIEW-61",
+  "classification": "MECHANICAL_ACTUAL_SOURCE_EXTRACTED_SYNTHETIC_CLOSE_AND_CLOCK_ONLY",
+  "verdict": "FOCUSED_COMPLETE_CLOSE_CORRECTION_SUPPORTED_FULL_SOURCE_ACCOUNTING_NO_ADMIT",
+  "freeze_ref": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\attempt15-r4-review-20261005\\wrapper-complete-close-ledger-source-v1\\OFFLINE_SOURCE_FREEZE.json",
+    "bytes": 11320,
+    "sha256": "78c877d9b6e2c4e21ae643cacc43be9354270983badfb728f22bbeb3df894e44"
+  },
+  "frozen_refs_verified": 21,
+  "builder_controls_independently_rerun": [
+    {
+      "name": "before guard refusal retains both diagnostics with zero actual calls",
+      "pass": true
+    },
+    {
+      "name": "operation admission exhaustion gets same secondary ledger zero calls",
+      "pass": true
+    },
+    {
+      "name": "actual close failure retains both errors and unknown one-attempt state",
+      "pass": true
+    },
+    {
+      "name": "unsafe second close refused without replacing actual close typename",
+      "pass": true
+    },
+    {
+      "name": "afterguard failure preserves observed successful close and secondary error",
+      "pass": true
+    },
+    {
+      "name": "observed closed slot cannot execute another close",
+      "pass": true
+    },
+    {
+      "name": "normal full close operation counts one I/O without secondary error",
+      "pass": true
+    },
+    {
+      "name": "exact1536 block/state5120 replaces actual retained payload storage",
+      "pass": true
+    },
+    {
+      "name": "all registered percase read/write/operation ceilings preserved",
+      "pass": true
+    },
+    {
+      "name": "fixed bounded secondary slots and original primary objects remain distinct",
+      "pass": true
+    }
+  ],
+  "builder_count": 10,
+  "additional_independent_controls": [
+    {
+      "name": "actual-close exception remains dominant because returnguard is not dispatched after action failure",
+      "pass": true
+    },
+    {
+      "name": "actual reader integration retains primary and guard diagnostic 6",
+      "pass": true
+    },
+    {
+      "name": "actual reader integration retains primary and guard diagnostic 8",
+      "pass": true
+    },
+    {
+      "name": "refused retry neither changes original secondary type nor selected/actual IO counts",
+      "pass": true
+    },
+    {
+      "name": "source block/state replacement preserves original IO caps and clears old payload before nextread",
+      "pass": true
+    }
+  ],
+  "independent_count": 5,
+  "all_pass": true,
+  "independent_records": [
+    {
+      "case": "actual close error with next returnguard configured to fail",
+      "actual_fake_close_calls": 1,
+      "clock_checks": 2,
+      "returned_guard_run": false,
+      "primary_preserved": true,
+      "secondary": "OSError",
+      "terminal": "UNKNOWN"
+    },
+    {
+      "case": "original read failure plus close deadline",
+      "guard": 6,
+      "primary": "ValueError",
+      "secondary": "RuntimeError",
+      "actual_fake_close_calls": 0,
+      "close_returned": false
+    },
+    {
+      "case": "original read failure plus close deadline",
+      "guard": 8,
+      "primary": "ValueError",
+      "secondary": "RuntimeError",
+      "actual_fake_close_calls": 1,
+      "close_returned": true
+    }
+  ],
+  "supported_findings": [
+    "The complete original close operation now records bounded secondary type for operation/admission/beforeguard/action/afterguard failures while preserving original primary object. Before refusal haszero actualclose; actualfailure hasone unknownattempt; successfulreturn thenlateguard keeps observedclosedstream anderror.",
+    "Actualaction failure skipsreturnguard byperform controlflow. Configuringa would-fail returnguard alongsideactualOSError confirmsoriginalactualclose typename survives; no fictitious secondfailure/call oroverwrittencounts isrecorded.",
+    "One-shot latch and first boundedsecondarydiagnostic survive attemptedretry without newIO orcountchange. Readerintegration verifies earlieromittedbefore/afterclose deadlineerrors nowremain visible.",
+    "Actual1536bytes\u00d72 plus5120 state preserves8192total, source2048calls/8MiBread/8192persistedcaps andoutputorder. Thisisactualpayload repartition, notfeereduction."
+  ],
+  "remaining_gaps": [
+    "Named logstate5076/5120 margin44 is a conditional source recipe pendinguniversalThread/FileIO/nativeABI/frame composition. Fullgraph22184 conditionalpricercomposition supersedes historical22696; noactualoverflow orwholephasefit isproved bythisfocusedreview.",
+    "Complete PREP/source-loader/compile/resourcecallbacks/exportmetadata, cachedframe/probe/encoder/errorlifetimes, image8192/cleanup16/all7/currentpacket/target/ENTRYbindings remainindependentadmissiongates.",
+    "ActualNativechecks/closedreceipts/process exit/pin/lease/accountingclosure andsix-update modelqualification arestilloutputs, notmechanicalevidence."
+  ],
+  "next_required_action": "Use thisimmutablepoint for finitecomplete source accounting/currentbindings review. No additionalNativeattempt orscopechangeis authorized bythesecontrols.",
+  "source_modified": false,
+  "native_API_calls": 0,
+  "candidate_actor_runs": 0,
+  "models_loaded": 0,
+  "optimizer_updates": 0,
+  "grants_issued": 0,
+  "eligibility_written": false,
+  "metadata_producer_executed": false,
+  "qualification_credit": false,
+  "whole_qualification_pass": false,
+  "complete_all7_fit_proven": false
+}

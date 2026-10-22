@@ -1,0 +1,182 @@
+{
+  "all_pass": true,
+  "candidate_module_imports": 0,
+  "checks": [
+    {
+      "name": "exact direct authorization accepted mechanically",
+      "outcome": true,
+      "pass": true
+    },
+    {
+      "name": "authorization refuses schema",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "authorization refuses owner_thread_id",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "authorization refuses publication_scope",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "authorization refuses normal_automatic_review_required",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "authorization refuses normal_resource_admission_required",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "authorization refuses existing_caps_and_scope_preserved",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "authorization refuses native_grant_created_by_this_record",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "authorization refuses this_record_overrides_tool_policy",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "CPU scope refuses physical_root_seconds",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "CPU scope refuses single_nested_tail_seconds",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "CPU scope refuses models_allowed",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "CPU scope refuses optimizer_updates",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "CPU scope refuses gpu_use_allowed",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "CPU scope refuses attempts_per_fresh_reviewed_grant",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "CPU scope refuses launch_ram_bytes",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "CPU scope refuses cases",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "missing authorization refuses",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "exact synthetic review accepted with native proof as output",
+      "outcome": true,
+      "pass": true
+    },
+    {
+      "name": "review refuses packet_ref",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "review refuses source_freeze_ref",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "review refuses reviewed_source_refs",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "review refuses authorization_ref",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "review refuses scope",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "review refuses native_evidence_status",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "review refuses automatic_tool_policy_overridden",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "review refuses complete_all7_accounting_review",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "missing review refuses",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "exact live original ENTRY owner accepted mechanically",
+      "outcome": true,
+      "pass": true
+    },
+    {
+      "name": "cold imported ENTRY denied",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "ENTRY refuses _closed",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "ENTRY refuses _root_handoff",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "ENTRY refuses fatal",
+      "outcome": "DENIED",
+      "pass": true
+    },
+    {
+      "name": "replacement PREP owner denied",
+      "outcome": "DENIED",
+      "pass": true
+    }
+  ],
+  "classification": "AST_EXTRACTED_SYNTHETIC_GATES_ONLY_NOT_NATIVE_EVIDENCE",
+  "eligibility_written": false,
+  "grants_issued": 0,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "schema": "CE8-AUTHORIZED-RELEASE-MECHANICAL-62"
+}

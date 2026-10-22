@@ -1,0 +1,55 @@
+{
+  "decoding_preimage": {
+    "attn_implementation": "sdpa",
+    "cublas_workspace_config": ":4096:8",
+    "cuda": {
+      "capability": [
+        8,
+        9
+      ],
+      "cuda_build": "12.6",
+      "cudnn_version": 91002,
+      "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "driver_version": "566.07",
+      "nvidia_smi_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "sdp_backends": {
+        "cudnn": true,
+        "flash": true,
+        "math": true,
+        "mem_efficient": true
+      }
+    },
+    "decoding": {
+      "add_generation_prompt": true,
+      "add_special_tokens": false,
+      "batch_size": 1,
+      "do_sample": false,
+      "enable_thinking": false,
+      "eos_token_id": [
+        151645,
+        151643
+      ],
+      "greedy": true,
+      "max_new_tokens": 128,
+      "num_beams": 1,
+      "pad_token_id": 151643
+    },
+    "deterministic_algorithms": true,
+    "deterministic_warn_only": false,
+    "device": "cuda:0",
+    "dtype": "float32",
+    "float32_matmul_precision": "highest",
+    "num_threads": 4,
+    "packages": {
+      "safetensors": "0.7.0",
+      "tokenizers": "0.22.2",
+      "torch": "2.10.0+cu126",
+      "transformers": "4.57.1"
+    },
+    "python": "3.11.15",
+    "schema": "COMP-RS-001-S0-DECODING-1",
+    "tf32_cuda_matmul": false,
+    "tf32_cudnn": false
+  },
+  "decoding_sha256": "87220f47bedea9c4520abfcbd622aa042aaf6437a46cba0b825c3a6bef3f16b8"
+}

@@ -1,0 +1,96 @@
+{
+  "recorded_utc": "2026-10-01T01:46:01.239121+00:00",
+  "status": "WARMSTART_COMPLETE_COMPETENCE_PENDING",
+  "native_train_rows": 600,
+  "native_optimizer_steps_applied": 75,
+  "native_optimizer_steps_returned_cumulative": 75,
+  "supervised_tokens": 11005,
+  "sequence_tokens": 282917,
+  "first_batch_loss": 1.510727807879448,
+  "last_batch_loss": 0.2505553476512432,
+  "mean_batch_loss": 0.35926534806067745,
+  "peak_reserved_gib_training": 5.05859375,
+  "anchor": {
+    "arm_sha256": "ff516ff86259c101a8cf55b4bf548e267f74719dc450ad34538f4383ca55d84b",
+    "base_weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "delta_path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\S0_WARMSTART_DELTA.safetensors",
+    "delta_sha256": "09911292ff466e40c81308d6181c25f6c7cb998500bb6476ed0bf19769050d95"
+  },
+  "round_trip_tensors_bitwise_matched": 310,
+  "envelope_probe": {
+    "by_skill": {
+      "R": {
+        "content_pass": 0,
+        "envelope": 4,
+        "envelope_exact": 4,
+        "prompts": 4,
+        "strict_pass": 0
+      },
+      "S": {
+        "content_pass": 1,
+        "envelope": 4,
+        "envelope_exact": 4,
+        "prompts": 4,
+        "strict_pass": 1
+      }
+    },
+    "content_pass": 1,
+    "envelope": 8,
+    "envelope_exact": 8,
+    "envelope_exact_fraction": 1.0,
+    "envelope_fraction": 1.0,
+    "gated": false,
+    "prompts": 8,
+    "stop_reasons": {
+      "eos": 8,
+      "length": 0
+    },
+    "strict_pass": 1
+  },
+  "warm_receipt_sha256": "5f5992dcd5ba166f3823219876bae3158f87b2802cf4f34e810e62c89a4b8e78",
+  "freeze_sha256": "95d59b1da1178f8f60ebf1536e2eebc28bc93402a233f44ba625620879a27a42",
+  "detached_invocations": [
+    {
+      "parent_pid": 137956,
+      "started_utc": "2026-10-01T01:14:00.141203+00:00",
+      "command": [
+        "C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe",
+        "-u",
+        "-m",
+        "experiments.maxrl_comp002_pretraining_v1.s0_warmstart"
+      ],
+      "repo": "C:\\Users\\clclc\\.codex\\worktrees\\comp-rs-native-q1\\ChatBubble-titan-model-soup-mini-v1",
+      "probe": false,
+      "creation_flags": "CREATE_NO_WINDOW|CREATE_NEW_PROCESS_GROUP",
+      "worker_pid": 141464,
+      "rc": 2,
+      "finished_utc": "2026-10-01T01:39:09.533431+00:00",
+      "elapsed_seconds": 1509.3899999999994
+    },
+    {
+      "parent_pid": 130532,
+      "started_utc": "2026-10-01T01:41:19.389395+00:00",
+      "command": [
+        "C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe",
+        "-u",
+        "-m",
+        "experiments.maxrl_comp002_pretraining_v1.s0_warmstart",
+        "--resume",
+        "--resume-reason",
+        "Host guard aborted before delta write at verified cursor75; memory recovered; unchanged code and HEAD; finish saved anchor"
+      ],
+      "repo": "C:\\Users\\clclc\\.codex\\worktrees\\comp-rs-native-q1\\ChatBubble-titan-model-soup-mini-v1",
+      "probe": false,
+      "creation_flags": "CREATE_NO_WINDOW|CREATE_NEW_PROCESS_GROUP",
+      "worker_pid": 150736,
+      "rc": 0,
+      "finished_utc": "2026-10-01T01:42:24.988110+00:00",
+      "elapsed_seconds": 65.60899999999856
+    }
+  ],
+  "total_external_worker_seconds": 1574.998999999998,
+  "interruption": "Host guard before delta write after all75 updates; restored cursor75 with no repeated training.",
+  "checkpoints_retired": true,
+  "meaningful_R_S_skill_acquisition_claim": false,
+  "next_stage": "Unchanged full warmed S0-C:450CAL prompts,G8, R/S mixed fraction>=.10; no pilot or donor before SIGNAL."
+}

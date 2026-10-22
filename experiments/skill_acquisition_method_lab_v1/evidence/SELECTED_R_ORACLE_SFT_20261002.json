@@ -1,0 +1,97 @@
+{
+  "actor": {
+    "authority": "delegated_original_user_goal",
+    "human_answered_pending_question": false,
+    "human_selected_this_choice": false,
+    "kind": "assistant"
+  },
+  "approval_scope": "experiment_selection_only",
+  "approved": true,
+  "authorization_basis": {
+    "interpretation": "The original user goal delegates adding validation experiments. This records an assistant selection of a separate study, not a new human answer or permission to resume the stopped study.",
+    "line": 107,
+    "original_goal_ref": {
+      "bytes": 14046,
+      "path": "C:\\Users\\clclc\\.codex\\attachments\\1263ec52-32fc-4494-9437-7229b610da53\\goal-objective.md",
+      "sha256": "c3f26808ce443bfc61229bcd4cdba58dfd49fce22041bc7098c9bd73c061b302"
+    },
+    "verbatim_permission": "feel free to add your own experiment to testify and validate anything."
+  },
+  "choice": "canonical_only",
+  "claims": {
+    "R_acquisition": "NOT_MEASURED",
+    "independent_skill_composition": "NOT_MEASURED",
+    "natural_language_preservation": "NOT_MEASURED",
+    "retention": "NOT_MEASURED"
+  },
+  "created_utc": "2026-10-02T01:06:15.692069+00:00",
+  "dispatch_authorized": false,
+  "dispatch_requirements": [
+    "new reviewed source freeze with full source hashes",
+    "registered qualification-only scope and finite stage/attempt/resource/prepayment bounds",
+    "actual discarded native qualification and independent raw/OS/source/cost verification",
+    "separate production and evaluation scopes with qualified settings and measured prices"
+  ],
+  "evaluation_authorized": false,
+  "history_policy": "Original attachment, stopped-study receipt and unapproved proposal are referenced by their actual raw bytes; none is altered or relabeled.",
+  "native_execution_authorized": false,
+  "native_qualified": false,
+  "new_experiment": true,
+  "paired_contrast": {
+    "arms": [
+      "canonical",
+      "permuted"
+    ],
+    "future_status": "planned separate future decision and scope registration; not authorized by this selection",
+    "selected": false,
+    "status": "NOT_RUN"
+  },
+  "preserved_stop": {
+    "common_warm_anchor_changed": false,
+    "original_study_resumed": false,
+    "outcome": "STOP_NO_SIGNAL",
+    "second_warm_start_dose_authorized": false,
+    "section18_rule_source": {
+      "line": 809,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930\\experiments\\maxrl_comp002_pretraining_v1\\COMP_RS_001_AMENDMENT_1.md"
+    }
+  },
+  "preserved_stop_receipt_ref": {
+    "bytes": 432633,
+    "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\S0_COMPETENCE_WARM.json",
+    "sha256": "dceec5aba2cf06645f19ebb9c9afc0f10ebd618c4cd3fd625af88b3de0999784"
+  },
+  "preserved_stop_receipt_sha256": "dceec5aba2cf06645f19ebb9c9afc0f10ebd618c4cd3fd625af88b3de0999784",
+  "production_training_authorized": false,
+  "qualification_authorized": false,
+  "rationale": [
+    "Verified canonical oracle targets define target-likelihood supervision for every TRAIN row without requiring mixed sampled rewards; actual finite/nonzero/constrained gradients still require qualification.",
+    "An ascending-index teacher is the smallest positive-supervision acquisition baseline and avoids adding a teacher-order comparison before establishing R acquisition.",
+    "Equal-row completion-plus-EOS CE and one fixed pass over 3000 R TRAIN rows make the dose explicit; prompt and padding positions contribute zero.",
+    "One arm and one proposed seed limit this study to a feasibility baseline, with no seed-population, teacher-order, whole-skill composition or general no-forgetting claim."
+  ],
+  "recipe_registration_basis": {
+    "common_anchor_sha256": "ff516ff86259c101a8cf55b4bf548e267f74719dc450ad34538f4383ca55d84b",
+    "equal_row_denominator": 8,
+    "logical_optimizer_updates": 375,
+    "logical_passes": 1,
+    "loss_reduction": "mean_labeled_tokens_per_row_then_equal_rows",
+    "microbatch_rows": 1,
+    "proposal_remains_unapproved": true,
+    "proposed_run_seed": 20261001,
+    "status": "candidate settings require an exact new frozen scope before dispatch",
+    "train_rows": 3000,
+    "unapproved_proposal_ref": {
+      "bytes": 569582,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930\\experiments\\skill_acquisition_method_lab_v1\\CE8_REGISTRATION_PROPOSAL_20261001.json",
+      "sha256": "f7ba366640be2e932b08bb41e6a056f88deb6c6295509a7701e269923ebd448e"
+    }
+  },
+  "schema": "CE8-OPERATOR-CHOICE-1",
+  "selected_arms": [
+    "canonical"
+  ],
+  "source_head_at_decision": "1fb751fbf94b7575fd1b2bf3a973735227ae13b8",
+  "study_id": "R_ORACLE_SFT_CANONICAL_20261002",
+  "training_authorized": false
+}

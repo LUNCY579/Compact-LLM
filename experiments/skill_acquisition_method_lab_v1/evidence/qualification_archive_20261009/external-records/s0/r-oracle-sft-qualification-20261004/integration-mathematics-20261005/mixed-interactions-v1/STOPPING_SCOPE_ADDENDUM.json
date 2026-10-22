@@ -1,0 +1,11 @@
+{
+  "schema": "CE8-MIXED-INTERACTION-STOPPING-SCOPE-1",
+  "classification": "CONDITIONAL_MATHEMATICS_SCOPE_CLARIFICATION",
+  "supported_stopping_assumption": "The greedy sequence induction requires that stopping decisions agree at each common prefix. This follows for identical stopping rules depending only on shared token identities, common prefix state and length. A stopping rule depending on model scores requires a separately verified stability bound; using the same score-threshold policy is not enough.",
+  "supported_mask_assumption": "The feasible token mask must also agree at each shared prefix. Identical source code for a score-dependent mask does not by itself prove identical decisions.",
+  "logical_direction": "Argmax agreement does not alone establish stopping, adaptive-mask or output-format agreement. All auxiliary decision conditions remain explicit sufficient assumptions.",
+  "supersedes_broader_policy_only_sequence_interpretation": true,
+  "owned_model_stopping_or_mask_stability_measured": false,
+  "empirical_model_quality_or_native_qualification": false,
+  "prior_sources_and_receipts_preserved": true
+}

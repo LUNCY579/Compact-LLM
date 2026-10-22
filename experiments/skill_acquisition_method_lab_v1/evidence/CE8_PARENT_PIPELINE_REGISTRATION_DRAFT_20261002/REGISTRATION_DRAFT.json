@@ -1,0 +1,187 @@
+{
+  "additional_outer_reservations": {
+    "branch_publication_each": {
+      "identity_hash_attempts_upper": 200000,
+      "identity_hash_bytes_upper": 1099511627776,
+      "io_read_bytes_upper": 274877906944,
+      "io_write_bytes_upper": 67108864,
+      "metadata_bytes_upper": 67108864,
+      "operation_attempts_upper": 20000,
+      "wall_seconds_upper": 19200
+    },
+    "checkpoint_processes": {
+      "identity_hash_attempts_upper": 200000,
+      "identity_hash_bytes_upper": 1099511627776,
+      "io_read_bytes_upper": 274877906944,
+      "io_write_bytes_upper": 68719476736,
+      "metadata_bytes_upper": 2147483648,
+      "operation_attempts_upper": 50000,
+      "wall_seconds_upper": 76800
+    },
+    "rule": "Separate retained owners; these additional ceilings require explicit review and are not part of the old57600 leaf-wall allowance.",
+    "scope_bootstrap": {
+      "identity_hash_attempts_upper": 200000,
+      "identity_hash_bytes_upper": 1099511627776,
+      "io_read_bytes_upper": 274877906944,
+      "io_write_bytes_upper": 68719476736,
+      "metadata_bytes_upper": 2147483648,
+      "operation_attempts_upper": 50000,
+      "wall_seconds_upper": 76800
+    },
+    "service_bootstrap": {
+      "hash_attempts": 2000000,
+      "hash_bytes": 274877906944,
+      "metadata_bytes": 4294967296,
+      "operation_attempts": 100000,
+      "read_bytes": 68719476736,
+      "wall_seconds": 256000,
+      "write_bytes": 4294967296
+    }
+  },
+  "analytical_work": {
+    "checkpoint_write_bytes": 2709907456,
+    "full_fp32_source_bytes": 2384199680,
+    "max_prepared_hash_bytes": 9441,
+    "rule": "Known sizes/counts are analytical; remaining allowances are explicit fail-closed qualification ceilings, not measured prices.",
+    "selected_fp32_bytes": 880932864,
+    "source_file_bytes": 3601293,
+    "source_files": 169
+  },
+  "approved": false,
+  "choice": "canonical_only",
+  "dispatch_authorized": false,
+  "evaluation_authorized": false,
+  "native_qualified": false,
+  "no_grants_or_registry_activation": true,
+  "per_worker_leaf_caps": {
+    "identity_hash_attempts_upper": 1010000,
+    "identity_hash_bytes_upper": 4720169058304,
+    "io_read_bytes_upper": 1275605286912,
+    "io_write_bytes_upper": 163208757248,
+    "metadata_bytes_upper": 2080374784,
+    "operation_attempts_upper": 220000,
+    "wall_seconds_upper": 57600
+  },
+  "profile_call_contracts": {
+    "checkpoint_restore": {
+      "all_charged": true,
+      "corruption_failures_upper": 3,
+      "total_starts_upper": 8
+    },
+    "checkpoint_save": {
+      "single_write_bytes_upper": 2709907456,
+      "total_starts_upper": 6
+    },
+    "cleanup": {
+      "deferred": true,
+      "max_child_starts_each": 1,
+      "max_parent_starts": 1,
+      "wall_s_upper": 19200
+    },
+    "qualification_state_fingerprint": {
+      "hash_bytes_per_start_upper": 8589934592,
+      "total_starts_upper": 12
+    },
+    "supervisor_lease": {
+      "owner": "original service bootstrap",
+      "single_wall_s_upper": 5
+    },
+    "supervisor_lease_acquire": {
+      "max_starts": 1,
+      "single_wall_s_upper": 180
+    },
+    "supervisor_lease_release": {
+      "deferred": true,
+      "max_starts": 1,
+      "single_wall_s_upper": 19200
+    }
+  },
+  "profile_status": "UNMEASURED_FINITE_UPPER_RESERVATIONS_FOR_DISCARDED_QUALIFICATION_ONLY",
+  "qualification_authorized": false,
+  "qualification_weights": "discarded; never production donor or reset anchor",
+  "required_source_interfaces": [
+    {
+      "api": "context -> NativeQualificationExecutor(NativeCEBackend(context, opaque permit), fixed services)",
+      "existing": "ce_native_backend.create_backend / ce_native_qualification.NativeQualificationExecutor",
+      "name": "parent_qualification_factory",
+      "status": "composition factory not source-registered"
+    },
+    {
+      "api": "context,permit,proof,prepared_receipt -> create_accounting(... actual bootstrap_handle, bootstrap_verifier)",
+      "existing": "ce_qualification_accounting.create_accounting",
+      "name": "accounting_factory",
+      "status": "actual parent prepayment bridge required"
+    },
+    {
+      "api": "request,service_spec,ControllerServicePermit -> source-owned object.require_constructor(spec_sha,request_sha)",
+      "existing": "ce_service_prepayment.bootstrap_constructor_prepayment",
+      "name": "bootstrap_constructor_prepayment",
+      "status": "concrete permanent reservation; exact source registration remains closed"
+    },
+    {
+      "api": "actual metadata outer scope and permanent bounded stage reservation",
+      "existing": "ce_controller.OuterAdmission",
+      "name": "outer_issuer/outer_verifier/outer_reservation",
+      "status": "reviewed source adapters/registration required"
+    },
+    {
+      "api": "context,stable operation -> exact paid current OS WorkerObservationPermit/spec",
+      "existing": "ce_worker_evidence / ce_checkpoint_entry_provider.current_observation_spec",
+      "name": "worker_observation",
+      "status": "actual parent pre-model bridge required"
+    },
+    {
+      "api": "common,ServicePermit,operation,gate,proof + exact request/service_spec/worker_handle/observation_permit",
+      "existing": "ce_entry_factories.prepare_checkpoint_entry_rows",
+      "name": "prepared_rows",
+      "status": "source supplied separately; existing outer/service factory registration remains closed"
+    },
+    {
+      "api": "actual retained/duplicated terminated prefix WinWorkerHandle transported to resumed child",
+      "existing": "WinWorkerHandle.retain_terminal",
+      "name": "prefix_terminal_handle",
+      "status": "cross-process transport/adoption required; path/status cannot substitute"
+    },
+    {
+      "api": "same context/permit/dispatcher NativeResourceRecorder shared across launch/runtime/final barriers",
+      "existing": "ce_resource_evidence.NativeResourceRecorder / ce_resource_qualification.resource_adapter",
+      "name": "resource_recorder",
+      "status": "barrier collection/service composition must be source-wired before resource qualification"
+    },
+    {
+      "api": "qualification leaf owner; actual prepayment/raw/OS/source/clock replay before final receipt",
+      "existing": "ce_publication / ce_execution_verifier / ce_bootstrap_verifier",
+      "name": "native_journal/publication/completion_seal",
+      "status": "registered complete parent service composition required"
+    }
+  ],
+  "root_physical_deadline_seconds": 19200,
+  "runtime_artifact_interfaces": {
+    "ingestion_bootstrap_ref": "actual paid service capsule retained in top-level qualifier_setup_refs before permit freeze",
+    "outer_setup_reservation_ref": "actual paid constructor reservation capsule in top-level qualifier_setup_refs before Q files and permit freeze",
+    "parent_child_observed_proofs": "actual paid OS identities after entry/launch, never static fakePID/hash",
+    "source_launch_environment": "explicit minimal credential-free child environment; actual child must equal this frozen environment"
+  },
+  "schema": "CE8-CANONICAL-QUALIFICATION-DRAFT-1",
+  "selected_decision_ref": {
+    "bytes": 4698,
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930\\experiments\\skill_acquisition_method_lab_v1\\evidence\\SELECTED_R_ORACLE_SFT_20261002.json",
+    "sha256": "9e39a9d443f4f4343bb6ad6c21192b97e1a7964d6195dd360ac0a3b5e5377fe5"
+  },
+  "source_freeze": false,
+  "source_head_basis": "eb810fffde1319e10b73c683bdf19bca89f041ea",
+  "status": "DRAFT_UNAUTHORIZED_DISCARDED_QUALIFICATION",
+  "training_authorized": false,
+  "unapproved_proposal_ref": {
+    "bytes": 569582,
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-s1-dev-20260930\\experiments\\skill_acquisition_method_lab_v1\\CE8_REGISTRATION_PROPOSAL_20261001.json",
+    "sha256": "f7ba366640be2e932b08bb41e6a056f88deb6c6295509a7701e269923ebd448e"
+  },
+  "unknowns_abort_policy": "Any profile/cap/deadline/identity/disk/host excess stops. No measured-price claim, smaller floor, fallback inventory, repeated stage or production/evaluation work.",
+  "unmeasured_work": [
+    "external NVIDIA utility OS IO",
+    "whole-unit OS/driver/import IO",
+    "fresh CUDA latency/peak fit",
+    "current full source origin and terminal-handle transport"
+  ]
+}

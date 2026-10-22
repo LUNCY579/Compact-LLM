@@ -1,0 +1,207 @@
+{
+  "exact_execution": {
+    "additional_independent_checks": 11,
+    "command": "bare CPython 3.11.15 -I -S -B independent_exact_review.py",
+    "evidence_label": "MECHANICAL_EXACT_SYNTHETIC_ALGEBRA_ONLY",
+    "exit_code": 0,
+    "limits": "Finite rational examples validate instances, not a universal theorem or any neural result. General optimum is accepted from the written proof below, not inferred from green examples.",
+    "method": "AST extraction preserves original pure function bodies and shared arithmetic/result expressions while excluding create-only writer/CLI entrypoints. Original results exactly equal saved receipts. Additional independently implemented Fraction matrix routines verify non-diagonal rank-one singular support and mixed-rank nonorthogonal block gauges.",
+    "original_fraction_checks": 18,
+    "original_shared_moment_checks": 5
+  },
+  "material_math_defects": [],
+  "next_requirement": "Any empirical use requires a separate prospective registration and successful applicable qualification, exact source/model/adapter/tokenizer/TRAIN provenance, complete resources/accounting and independently defined acquisition/groupwise retention endpoints. This review authorizes no such execution.",
+  "novelty_comparison": {
+    "claim_status": "Useful source-specific conditional extension; whitening, truncated SVD and activation-aware compression are established ideas. No new algorithm or universal retention theorem claimed.",
+    "local_extension": "This note specializes fixed-layer functional geometry to explicit input/output moments, mixed-rank LoRA contractions, almost-sure nullspace equivalence, input-dependent output-metric factorization counterexample, singular support-aware optimal weighted low-rank lift, shared R-dimensional moment accumulation and a rare-group rank obstruction.",
+    "prior_lora_note": "Already proves reconstructed-delta Frobenius Gram, gauge invariance, signed concatenation/rank growth and absence of universal retention from compression error.",
+    "prior_projection_note": "Already distinguishes PSD functional metric from a loss upper bound and treats singular functional geometry, changed anchors, composition cross terms and valid remainder bounds."
+  },
+  "observations_not_material_defects": [
+    "SOURCE_FREEZE.json is the core three-file freeze plus four prior references; later paper/mapping/shared-moment additions are bound by this review and their own saved references, not retroactively asserted as members of that core freeze.",
+    "Shared-moment saved example uses two rank-one blocks; added independent example tests mixed ranks1 and2 plus nonorthogonal within-rank2 gauge. Neither finite example substitutes for the symbolic proof.",
+    "Moment storage cost is conditional on R=sum ranks being small enough, with finite weights and chosen output metric representation; no empirical resource budget follows from asymptotic notation."
+  ],
+  "primary_source_verification": [
+    {
+      "checked": "ASVD section3.3 equations7-9",
+      "supported": "Channel absolute-mean exponent diagonal scaling and Cholesky activation scaling are described. Diagonal magnitudes do not equal full second moment in general.",
+      "url": "https://arxiv.org/html/2312.05821v5"
+    },
+    {
+      "checked": "SVD-LLM section3.1 Theorem3.2/Corollary3.3 and section3.2",
+      "supported": "Cholesky whitening maps discarded singular values to reconstruction error under invertibility; subsequent low-rank factors are recovered sequentially.",
+      "url": "https://arxiv.org/html/2403.07378v5"
+    },
+    {
+      "checked": "IO-SVD section3.1 equations2-8 and appendixB.2",
+      "supported": "Local KL/Jacobian approximation, moment decoupling, damping and inverse double whitening are explicit. The proposed literature connection accurately preserves these as assumptions.",
+      "url": "https://arxiv.org/html/2605.15626v1"
+    }
+  ],
+  "prior_refs": [
+    {
+      "bytes": 8144,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\lora-factor-gauge-v1\\CONDITIONAL_ANALYSIS.json",
+      "sha256": "9619eb2108b8f031b44209265e5a8241d395a4ca3b88c5381341ef58701d4ee1"
+    },
+    {
+      "bytes": 563,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\lora-factor-gauge-v1\\WORDING_CLARIFICATION.json",
+      "sha256": "af1f06bc27d15db0e91932e4c84ea3e5cfa4f49cb557ee3fa0611a16d0d33bfb"
+    },
+    {
+      "bytes": 9829,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\retention-projection-v1\\RETENTION_PROJECTION.md",
+      "sha256": "bc387a47bda0a20a471ef3c30aa6509e1a0886f47e50df4ee7558e074a9db7a3"
+    },
+    {
+      "bytes": 4695,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\joint-retention-v1\\JOINT_RETENTION.md",
+      "sha256": "9653deac12749a75fd2e18f92240cbf68e1a52d1f78758cb8496ccad8ba4a122"
+    }
+  ],
+  "proof_review": [
+    {
+      "reason": "tr(D_i^T Q D_j X)=s_i s_j tr((B_i^T Q B_j)(A_j X A_i^T)); factor dimensions r_i by r_j and r_j by r_i agree. All scale terms remain, including negative/zero scales. Symmetry follows from real symmetric Q,X.",
+      "requirement": "Trace orientation, mixed ranks and signed scales",
+      "verdict": "PASS"
+    },
+    {
+      "reason": "Whitened W_i=Q^(1/2)D_iX^(1/2) supplies a genuine Frobenius Gram. Fixed common PSD X,Q and exact common linear operator/anchor conventions are explicit. PSD means semidefinite; zero diagonal defines no observable cosine. No factor-space cosine is substituted.",
+      "requirement": "Gram PSD and common coordinates",
+      "verdict": "PASS_CONDITIONAL"
+    },
+    {
+      "reason": "E[xx^T]=Cov(x)+mu mu^T. Omission changes the bilinear quantity by (D_i mu)^T Q(D_j mu). Deterministic nonzero-input example correctly refutes covariance substitution.",
+      "requirement": "Uncentered input second moment",
+      "verdict": "PASS"
+    },
+    {
+      "reason": "B_i R_i,R_i^-1 A_i preserves the effective delta for invertible R_i. Shared F transforms by G^T F G; H by G^-1 H G^-T. Scalar coefficient blocks commute with within-adapter block G, and cyclic trace cancels it. Mixing different coefficient blocks with unrestricted global gauges would require transforming coefficients too; the note correctly restricts to block gauges.",
+      "requirement": "Gauge invariance and shared-basis gauge",
+      "verdict": "PASS"
+    },
+    {
+      "reason": "Zero expected nonnegative squared response is equivalent to Q^(1/2)Nx=0 almost surely. It is also equivalent to Q^(1/2)NX^(1/2)=0 via the trace norm. N X^(1/2)=0 implies Nx=0 almost surely; singular Q can hide genuine output changes. No claim for off-support inputs is made.",
+      "requirement": "Metric nullspaces and almost-sure support",
+      "verdict": "PASS_CONDITIONAL"
+    },
+    {
+      "reason": "Paired E[(xx^T) tensor Q(x)] is the correct column-vectorized quadratic operator. Nonnegative integrands make its Gram PSD when finite. Scalar correlated-support example yields8 versus4, refuting replacement by separate moments. Fixed bilateral whitening is expressly restricted to the separable problem.",
+      "requirement": "Input-dependent Q and Kronecker factorization",
+      "verdict": "PASS"
+    },
+    {
+      "reason": "For any feasible D, N=Q^(1/2)DX^(1/2) has rank<=r. Orthogonal projection onto range(N) gives residual lower bound, and the projector eigenbasis diagonal majorization yields the singular-value tail. Finite-dimensional real PSD assumptions and integer nonnegative rank are stated.",
+      "requirement": "Rank-constrained compression lower bound",
+      "verdict": "PASS_CONDITIONAL"
+    },
+    {
+      "reason": "C=P_Q C P_X; nonzero singular vectors lie in the respective supported ranges. Truncated C_r retains that property, including ties and zero components. Multiplication by inverse square roots cannot raise rank; lifting gives P_Q C_r P_X=C_r and achieves the lower bound. Null additions require an independent rank feasibility check, correctly stated.",
+      "requirement": "Singular pseudoinverse lift and attainable support",
+      "verdict": "PASS"
+    },
+    {
+      "reason": "H=E[(A_stack x)(A_stack x)^T] stores R by R, and scalar C yields tr(C F C H). Per dense token projection O(d_in R) and outer-product O(R^2) are correctly retained. Factors, chosen Q representation, inference, obtaining activations and forming F are outside the O(R^2) statistic storage claim. Finite nonnegative weights with finite positive normalization are required; zero total means unmeasured.",
+      "requirement": "R-squared shared-moment storage and cost",
+      "verdict": "PASS_WITH_DECLARED_ASSUMPTIONS"
+    },
+    {
+      "reason": "X=diag(.99,.01), Q=I, T=I has dominant whitened singular directione1; rank-one D=diag(1,0) has optimal average squared error .01 and conditional rare error1. Simultaneously exact responses on both basis vectors force D=I and rank2. Saved determinant check alone is not the general proof; the linear-column argument and compression theorem prove the stated example.",
+      "requirement": "Rare-group obstruction",
+      "verdict": "PASS"
+    },
+    {
+      "reason": "Local fixed-anchor layer response metric is not full-model loss/KL/logits/decoding or groupwise behavior. Input changes, downstream dependence, cross-layer couplings and nonlinear remainders are expressly excluded. No measured covariance, curvature, rank or behavior is claimed.",
+      "requirement": "No empirical retention/acquisition guarantee",
+      "verdict": "PASS_SCOPE_DISCIPLINE"
+    }
+  ],
+  "reviewed_utc": "2026-10-09T16:15:50.762980+00:00",
+  "reviewer": "/root/review_activation_math",
+  "schema": "CE8-ACTIVATION-METRIC-LORA-INDEPENDENT-MATH-REVIEW-1",
+  "scope": {
+    "activation_rows_read": 0,
+    "eligibility_changed": false,
+    "execution_authority": false,
+    "existing_artifacts_modified": false,
+    "frameworks_loaded": 0,
+    "grants_created": 0,
+    "models_loaded": 0,
+    "native_api_calls": 0,
+    "optimizer_updates": 0,
+    "scientific_rows_read": 0
+  },
+  "source_mapping_review": {
+    "future_design": "The bounded TRAIN-only measurement is explicitly unregistered and unexecuted, separate from qualification. Proposed IDs/counts/modules remain prospective; no rows selected or read.",
+    "hashes": "All30 mapped source references, instruction reference, mapping prior reference and frozen core/prior references revalidated byte-for-byte.",
+    "heads": "Mimo19551ddebc87c93161c303865ce6d0f130de0093 and centralized04fe137574cc38c04824b65beea9374f60c9042c reobserved unchanged.",
+    "instrumentation": "Suggested pre-linear inputs match inspected streaming_forward_many: normalized q/k/v input, attended o input, post-attention normalized gate/up input and gated down input. Captured residuals/pooled hidden states are not these exact operator inputs.",
+    "runtime_limits": "No PEFT, Torch, model, adapters, actual scale/config/layout/dtype or token inputs were loaded. Static formulas require plain compatible LoRA and prospective variant validation. Source manifest language and historical interpretations are not treated as verified model findings.",
+    "static_findings": "Read relevant source bodies: FP32 reconstructed delta soup, B-only sequential composition, raw Frobenius diagnostics, global alpha/r versus module rank fallback, centered/pooled activation CKA, supplied feature ridge, residual capture, diagonal squared-gradient Fisher and separate behavioral correlations. These support the scoped missing producer/consumer link; no global repository absence claim inferred."
+  },
+  "source_refs": [
+    {
+      "bytes": 10420,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\activation-metric-lora-v1\\THEORY.md",
+      "sha256": "b2ef997f8ecffcae7c8bb50e9cb5fc237c7755ec806992534da426a197108396"
+    },
+    {
+      "bytes": 3253,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\activation-metric-lora-v1\\SOURCE_FREEZE.json",
+      "sha256": "3f61fe84b78e2562ee7e357b75b0f4018a707b06812ab85d4cbd83578e4bac8b"
+    },
+    {
+      "bytes": 6465,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\activation-metric-lora-v1\\EXACT_FRACTION_RECEIPT.json",
+      "sha256": "e8ae4811327068889ecb0a4bf2080056e0603ce05361d96740a5877ab5dd7c3c"
+    },
+    {
+      "bytes": 11418,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\activation-metric-lora-v1\\smallFractionexamples.py",
+      "sha256": "b94015bdb790af4e8793b082407eb6865d96f3257d3ee0b920a015c38e7375e2"
+    },
+    {
+      "bytes": 3196,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\activation-metric-lora-v1\\EFFICIENCY_AND_GROUP_LIMITS.json",
+      "sha256": "6a163e250b1dba5d70b3a844acdc339d8a9eb382c0bf7d006ee27f38e4667146"
+    },
+    {
+      "bytes": 1790,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\activation-metric-lora-v1\\SHARED_MOMENT_EXACT_RECEIPT.json",
+      "sha256": "d86cb946211bcac9671f42b93cc1b9388dca37ae6ac9b20d97c7d3bb3016765b"
+    },
+    {
+      "bytes": 2566,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\activation-metric-lora-v1\\verify_shared_moment.py",
+      "sha256": "8c27dee57947851d0082914e483cd66f2b125200cbc21bdc4b82c6661a3d9c3a"
+    },
+    {
+      "bytes": 3836,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\activation-metric-lora-v1\\PRIMARY_PAPER_CONNECTIONS.json",
+      "sha256": "d07298260d8a7514189f26557c887988a03b6177db06df14f5cf65935abbacd4"
+    },
+    {
+      "bytes": 31454,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\activation-metric-lora-v1\\SOURCE_MAPPING.json",
+      "sha256": "fdb52a57c4b473492028d5b1a2abf9962d8894a6cb4613cc31fb20752b0d6252"
+    },
+    {
+      "bytes": 6116,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\activation-metric-lora-v1\\independent_exact_review.py",
+      "sha256": "8360218179c28cb0bab255ca0fa4ea7c4f9b5a92d8e3a92fce5d0235d52263b5"
+    },
+    {
+      "bytes": 5581,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\activation-metric-lora-v1\\INDEPENDENT_EXACT_REVIEW_RECEIPT.json",
+      "sha256": "2b40dcbe7d5524ac6a1ca49c2ba44d6bf700d6886f181e9f904c9e2bb75d1e89"
+    },
+    {
+      "bytes": 11281,
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-sft-qualification-20261004\\integration-mathematics-20261005\\activation-metric-lora-v1\\write_independent_math_review.py",
+      "sha256": "f0e4f23a699c3e7ac9bd03282409ee6b63f91906ae8afe6cb770e3a71640182d"
+    }
+  ],
+  "verdict": "PASS_CONDITIONAL_MATHEMATICS_AND_SCOPED_STATIC_MAPPING_ONLY"
+}

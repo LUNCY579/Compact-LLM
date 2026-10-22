@@ -1,0 +1,64 @@
+{
+  "schema": "CE8-CONDITIONAL-MIXED-INTERACTION-ANALYSIS-1",
+  "classification": "CONDITIONAL_MATHEMATICS_AND_PRIMARY_PAPER_REVIEW",
+  "empirical_skill_acquisition_or_retention_established": false,
+  "qualification_or_acquisition_registration": false,
+  "purpose": "Separate individual donor/path competence from control of mixed skill interactions; connect layer interventions and MiMo's donor-first order to a precise composition requirement.",
+  "primary_sources": [
+    {
+      "title": "Distilling Linearized Behavior into Non-Linear Fine-Tuning for Effective Task Arithmetic",
+      "url": "https://arxiv.org/html/2605.18993v1",
+      "version": "v1, 18 May 2026",
+      "paper_method_summary": "DELTA jointly trains a linearized teacher and ordinary nonlinear student, matches hidden representations at sampled scales, and applies reference-data EK-FAC regularization. Its experiments support improved composition on the evaluated benchmarks. These results are not a certificate for Rineya or for unmeasured task combinations.",
+      "source_sections": ["2", "3.1", "3.2", "3.3"],
+      "our_inference": "Exact matching on individual update paths does not alone constrain off-path mixed derivatives. The exact counterexamples below test that logical limitation, not the paper's empirical results."
+    },
+    {
+      "title": "Task Arithmetic in the Tangent Space: Improved Editing of Pre-Trained Models",
+      "url": "https://papers.neurips.cc/paper_files/paper/2023/file/d28077e5ff52034cd35b4aa15320caea-Paper-Conference.pdf",
+      "paper_method_summary": "The paper investigates weight disentanglement and fine-tuning in a model's tangent space. Exact linear parameterization removes nonlinear mixed terms, while task localization still requires controlling off-task effects.",
+      "transfer_status": "UNMEASURED_FOR_OWNED_MODELS"
+    },
+    {
+      "title": "Model soups: averaging weights of multiple fine-tuned models improves accuracy without increasing inference time",
+      "url": "https://arxiv.org/html/2203.05482v3",
+      "paper_method_summary": "Model soups averages compatible fine-tuned checkpoints and relates weight averaging to logit ensembling under favorable geometry. It does not guarantee that separately acquired skills survive an arbitrary sum.",
+      "transfer_status": "UNMEASURED_FOR_OWNED_MODELS"
+    }
+  ],
+  "theorem_two_updates": {
+    "assumptions": "For one fixed input, f maps finite-dimensional parameters to finite-dimensional outputs and is C2 on an open neighborhood of the compact update rectangle. u,v and coefficients a,b are finite. The output norm is fixed. A finite uniform bound kappa on ||D2f(theta)[u,v]|| holds throughout that rectangle.",
+    "interaction": "E(a,b)=f(theta0+a*u+b*v)-f(theta0+a*u)-f(theta0+b*v)+f(theta0)",
+    "identity": "E(a,b)=integral_0^a integral_0^b D2f(theta0+s*u+t*v)[u,v] dt ds; oriented integrals cover negative coefficients.",
+    "bound": "||E(a,b)|| <= |a*b|*kappa",
+    "proof": "Apply the fundamental theorem of calculus first to the difference of the two u-direction increments, then to the v-direction change of their derivatives. The triangle inequality bounds the norm by the rectangle area times the uniform directional Hessian bound.",
+    "critical_limit": "Neither u dot v=0 nor u transpose G(theta0) v=0 implies kappa=0. A curvature matrix at the anchor and empirical path matching do not supply a uniform mixed bound."
+  },
+  "theorem_many_updates": {
+    "assumptions": "f is C2 on a neighborhood of the full compact coefficient box for n finite updates. For every pair i<j, ||D2f(theta)[u_i,u_j]|| <= kappa_ij uniformly on the whole box, including coordinates of all other updates.",
+    "bound": "||f(theta0+sum_i a_i*u_i)-f(theta0)-sum_i(f(theta0+a_i*u_i)-f(theta0))|| <= sum_{i<j}|a_i*a_j|*kappa_ij",
+    "proof": "Add updates in a fixed order and telescope their increments. For update i, subtract its increment from the anchor, then change the earlier coordinates one at a time. Integrating the corresponding mixed directional derivative bounds each pair once. Sum these bounds by the triangle inequality.",
+    "critical_limit": "Zero pair interaction on anchor faces does not imply zero uniform kappa_ij on the full box. A cubic a*b*c term vanishes on every individual axis and every two-update anchor face but changes the three-update mixture. The bound remains valid because the full-box mixed derivatives depend on the third coordinate."
+  },
+  "conditional_retention_link": {
+    "logit_assumptions": "Apply the previous bound to the actual frozen logits for inputs/prefixes in family j using infinity norm. Compare the mixture with that family's individual donor at its selected coefficient.",
+    "eta_j": "sum_{i != j} ||f_j(theta0+a_i*u_i)-f_j(theta0)||_infinity + sum_{i<k}|a_i*a_k|*kappa_jik",
+    "conclusion": "The mixture's logit drift from donor j is at most eta_j. If the donor's strict top-two margin exceeds 2*eta_j, its unique argmax is preserved.",
+    "autoregressive_limit": "For deterministic decoding, identical generated output follows inductively only if the strict margin condition holds at every prefix on the donor trajectory and the complete decoder, masking, stop and formatting policies are unchanged. Feature matching alone needs an additional verified output-map bound. Average loss or a sample estimate does not certify all inputs or prefixes.",
+    "measured_for_owned_models": false
+  },
+  "local_protocol_connections": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-centralized-reasoning-system-v1\\Rineya_Layerwise_Soup_Lab_v1.0\\docs\\RESEARCH_PROTOCOL.md",
+      "source_finding": "The protocol requires endpoints, global interpolation, layer controls, forward/reverse interventions, frozen development selection and sealed confirmation.",
+      "our_inference": "Differences between a layer's marginal effect at two parameter contexts are finite mixed interactions. Disjoint layer coordinates are weight-orthogonal by construction, so orthogonality cannot replace these behavioral controls."
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\experiments\\post_training_mimo_centralized_v1\\RESEARCH_PROTOCOL.md",
+      "source_finding": "The protocol orders qualification and verified SFT before competent per-skill donors and composition, with parent-clustered evaluation and protected confirmation access.",
+      "our_inference": "A donor gate establishes individual learning; it does not establish the uniform mixed bounds needed for compositional retention. Later composition should report individual, pair and joint effects separately under its own prospective scientific registration."
+    }
+  ],
+  "unmeasured_quantities": ["Owned-model directional Hessian bounds", "Held-out off-task axis drift", "Prefix-wise logit margins", "Joint skill interaction effects", "Layer coefficient stability", "Teacher/reference distribution coverage", "Actual method resource cost"],
+  "execution": {"models_loaded": 0, "optimizer_updates": 0, "evaluation_banks_read": false, "scientific_protocol_changed": false, "production_changed": false}
+}

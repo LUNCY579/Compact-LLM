@@ -1,0 +1,12 @@
+{
+  "schema": "CE8-MIXED-INTERACTION-NUMERICAL-SCOPE-1",
+  "classification": "CONDITIONAL_MATHEMATICS_ONLY",
+  "real_arithmetic_scope": "The C2 theorems concern a real-valued smooth model on the full parameter box. Quantized storage, floating-point arithmetic, nondifferentiable routing and stochastic decoding are not automatically covered.",
+  "additional_condition": "Suppose the actual implemented logits at the individual donor and composed model each differ in infinity norm by at most nu from the corresponding ideal logits, including composition/storage rounding and evaluation arithmetic. Then actual donor-to-mixture logit drift is at most eta_j+2*nu.",
+  "implemented_margin_certificate": "If the actual donor's unique top-two logit margin exceeds 2*(eta_j+2*nu), its argmax is preserved in the actual composed model. Deterministic sequence preservation still requires this condition at every donor prefix with identical decoding and stop policies.",
+  "weight_rounding": "A parameter rounding bound does not itself imply a logit bound. It requires a verified model sensitivity bound on the relevant parameter region, or a directly bounded output error. Nonlinear feature-to-logit transfer likewise needs its output-map assumptions.",
+  "nu_measured_for_owned_models": false,
+  "C2_or_uniform_full_box_bounds_established_for_owned_models": false,
+  "empirical_preservation_or_native_model_qualification": false,
+  "old_analysis_and_source_pins_preserved": true
+}
