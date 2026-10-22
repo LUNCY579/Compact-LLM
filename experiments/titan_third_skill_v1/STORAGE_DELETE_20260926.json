@@ -1,0 +1,281 @@
+{
+ "record": "storage-delete-triskill-20260926",
+ "status": "DELETED",
+ "deleted": "2026-09-26 15:21:46",
+ "authorised_by": "operator, 2026-09-26 in-session: 'delete those arms'",
+ "checks": {
+  "bytes_hashed_equal_BUILD_json": "9/9",
+  "script_readers_of_paths": 0,
+  "sources_present_and_hash_verified": [
+   "Supa 962abc5b (Phase 0)",
+   "Titan-Sparse a28629c9 (Phase 0)",
+   "Opallo published e726d6be",
+   "Opallo trained 915af77f",
+   "Titan-Transition a4d73353 (Phase 0; TH25 copy is its duplicate)"
+  ],
+  "module_disjoint_pending_work": "none (Amendment 4 arm built and scored as P6)"
+ },
+ "files": [
+  {
+   "path": "titan_opallo_skill_vector_v1/arms-invalid/BASE-pre-endpoint-fix/model.safetensors",
+   "weight_sha256": "75b0a92cd28eb90d121d72aa7618c497a6ff1b4522b73bdf01cabf515c30ad93",
+   "bytes": 2384235032,
+   "rebuild": "invalid arm (pre-endpoint-fix); rebuild: compose.py from Supa 962abc5b + Titan-Sparse a28629c9 + Opallo trained 915af77f at the defective commit, recorded in BUILD.json",
+   "build_receipt": {
+    "schema": 1,
+    "experiment": "TITAN-OPALLO-SKILL-VECTOR-001",
+    "arm": "BASE",
+    "formula": "W0 + alpha*dSparse + beta*dOpallo",
+    "alpha_sparse": 0.0,
+    "beta_opallo": 0.0,
+    "conflict_tensors": [],
+    "status": "MATERIALIZED_NOT_EVALUATED",
+    "native_model_forwards": 0,
+    "scored_rows": 0,
+    "weight_sha256": "75b0a92cd28eb90d121d72aa7618c497a6ff1b4522b73bdf01cabf515c30ad93",
+    "weight_bytes": 2384235032,
+    "input_hashes": {
+     "base": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+     "sparse": "a28629c9d3454fbf2e884fd7ca442c1b406e7caf4b36d34b2c0614d0add31284",
+     "opallo_published": "e726d6bea1139eddfbcdadeb4c8d7b979e7a55e43490d9787ab99a3ab12ee76b",
+     "titan_trained": "07156fb5aa4a8c510c63e8af2118a08a8b6bf004549532d497c2e89e2deec24d",
+     "opallo_trained": "915af77f4ad2a1813df46a5b5a65b9dddd138b820e2e9e53ad8845bdf8d0db0d"
+    },
+    "quality_claim": false,
+    "release_permitted": false
+   }
+  },
+  {
+   "path": "titan_opallo_skill_vector_v1/arms-invalid/OPALLO/model.safetensors",
+   "weight_sha256": "32d117ea39dbe244c5566d453af37567783ca176baf64293c16f82cee8feba90",
+   "bytes": 2384235032,
+   "rebuild": "invalid arm; rebuild: compose.py from Supa + Opallo published e726d6be / trained 915af77f (both present, hash-verified 2026-09-26)",
+   "build_receipt": {
+    "schema": 1,
+    "experiment": "TITAN-OPALLO-SKILL-VECTOR-001",
+    "arm": "OPALLO",
+    "formula": "W0 + alpha*dSparse + beta*dOpallo",
+    "alpha_sparse": 0.0,
+    "beta_opallo": 1.0,
+    "conflict_tensors": [],
+    "status": "MATERIALIZED_NOT_EVALUATED",
+    "native_model_forwards": 0,
+    "scored_rows": 0,
+    "weight_sha256": "32d117ea39dbe244c5566d453af37567783ca176baf64293c16f82cee8feba90",
+    "weight_bytes": 2384235032,
+    "input_hashes": {
+     "base": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+     "sparse": "a28629c9d3454fbf2e884fd7ca442c1b406e7caf4b36d34b2c0614d0add31284",
+     "opallo_published": "e726d6bea1139eddfbcdadeb4c8d7b979e7a55e43490d9787ab99a3ab12ee76b",
+     "titan_trained": "07156fb5aa4a8c510c63e8af2118a08a8b6bf004549532d497c2e89e2deec24d",
+     "opallo_trained": "915af77f4ad2a1813df46a5b5a65b9dddd138b820e2e9e53ad8845bdf8d0db0d"
+    },
+    "quality_claim": false,
+    "release_permitted": false
+   }
+  },
+  {
+   "path": "titan_opallo_skill_vector_v1/arms-invalid/SPARSE-pre-endpoint-fix/model.safetensors",
+   "weight_sha256": "6ae85f5bdab9437edc06b20716e6e7008d8aa402ec95a0a65ebc7bf8da1e94ed",
+   "bytes": 2384235032,
+   "rebuild": "invalid arm (pre-endpoint-fix); rebuild as BASE-pre-endpoint-fix",
+   "build_receipt": {
+    "schema": 1,
+    "experiment": "TITAN-OPALLO-SKILL-VECTOR-001",
+    "arm": "SPARSE",
+    "formula": "W0 + alpha*dSparse + beta*dOpallo",
+    "alpha_sparse": 1.0,
+    "beta_opallo": 0.0,
+    "conflict_tensors": [],
+    "status": "MATERIALIZED_NOT_EVALUATED",
+    "native_model_forwards": 0,
+    "scored_rows": 0,
+    "weight_sha256": "6ae85f5bdab9437edc06b20716e6e7008d8aa402ec95a0a65ebc7bf8da1e94ed",
+    "weight_bytes": 2384235032,
+    "input_hashes": {
+     "base": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+     "sparse": "a28629c9d3454fbf2e884fd7ca442c1b406e7caf4b36d34b2c0614d0add31284",
+     "opallo_published": "e726d6bea1139eddfbcdadeb4c8d7b979e7a55e43490d9787ab99a3ab12ee76b",
+     "titan_trained": "07156fb5aa4a8c510c63e8af2118a08a8b6bf004549532d497c2e89e2deec24d",
+     "opallo_trained": "915af77f4ad2a1813df46a5b5a65b9dddd138b820e2e9e53ad8845bdf8d0db0d"
+    },
+    "quality_claim": false,
+    "release_permitted": false
+   }
+  },
+  {
+   "path": "module_disjoint_composition_v1/arms/MODULE_DISJOINT/model.safetensors",
+   "weight_sha256": "c0d7b41b5fb4d4660ce917f331b16c587ffc499dd06b030850f00288380951f4",
+   "bytes": 2384235032,
+   "rebuild": "completed MODULE-DISJOINT-001 arm; rebuild: compose_modules.py --arm MODULE_DISJOINT from Supa + Titan-Sparse + B28last20 trainable 915af77f (present, hash-verified 2026-09-26)",
+   "build_receipt": {
+    "experiment": "MODULE-DISJOINT-001",
+    "arm": "MODULE_DISJOINT",
+    "sparse_module_class": "ATTN",
+    "opallo_module_class": "MLP",
+    "construction": "Supa + dSparse|<s_cls> + dOpallo|<o_cls>, coefficient 1.0 each, FP32",
+    "delta_sources": {
+     "sparse": "published Rineya-Titan-Sparse FP32 minus published Supa",
+     "opallo": "B28last20 trainable.safetensors (unrounded FP32) minus published Supa, encoder.* -> model.layers.* remap verified 220/220 by BF16 round-trip"
+    },
+    "tensors_touched_sparse": 160,
+    "tensors_touched_opallo": 60,
+    "norm_from_sparse": 0.4400615543769171,
+    "norm_from_opallo": 1.0577162596972152,
+    "changed_elements_vs_supa": 220210809,
+    "weight_sha256": "c0d7b41b5fb4d4660ce917f331b16c587ffc499dd06b030850f00288380951f4",
+    "weight_bytes": 2384235032,
+    "stored_dtype": "float32",
+    "status": "MATERIALIZED_NOT_EVALUATED",
+    "quality_claim": false,
+    "release_permitted": false
+   }
+  },
+  {
+   "path": "module_disjoint_composition_v1/arms/SCALAR_MATCHED/model.safetensors",
+   "weight_sha256": "d03b78a8acb07e314c933e9baa13fbc1674daa1749d7d37aec7c9a1dc58a7aba",
+   "bytes": 2384235032,
+   "rebuild": "completed arm; rebuild: compose_modules.py --arm SCALAR_MATCHED from Supa + Titan-Sparse",
+   "build_receipt": {
+    "experiment": "MODULE-DISJOINT-001",
+    "arm": "SCALAR_MATCHED",
+    "sparse_module_class": "ALL_SCALED",
+    "opallo_module_class": null,
+    "construction": "Supa + dSparse|<s_cls> + dOpallo|<o_cls>, coefficient 1.0 each, FP32",
+    "delta_sources": {
+     "sparse": "published Rineya-Titan-Sparse FP32 minus published Supa",
+     "opallo": "B28last20 trainable.safetensors (unrounded FP32) minus published Supa, encoder.* -> model.layers.* remap verified 220/220 by BF16 round-trip"
+    },
+    "tensors_touched_sparse": 220,
+    "tensors_touched_opallo": 0,
+    "norm_from_sparse": 0.44006153900588124,
+    "norm_from_opallo": 0.0,
+    "changed_elements_vs_supa": 78654720,
+    "weight_sha256": "d03b78a8acb07e314c933e9baa13fbc1674daa1749d7d37aec7c9a1dc58a7aba",
+    "weight_bytes": 2384235032,
+    "stored_dtype": "float32",
+    "status": "MATERIALIZED_NOT_EVALUATED",
+    "quality_claim": false,
+    "release_permitted": false
+   }
+  },
+  {
+   "path": "module_disjoint_composition_v1/arms/SCALAR_MATCHED_MLP/model.safetensors",
+   "weight_sha256": "b648128aa946f1adc9bfa4610ce2e172225cf8b4a5eda487cefff31f749c17a1",
+   "bytes": 2384235032,
+   "rebuild": "completed arm (P6); rebuild: compose_modules.py --arm SCALAR_MATCHED_MLP (alpha in alpha_mlp.txt)",
+   "build_receipt": {
+    "experiment": "MODULE-DISJOINT-001",
+    "arm": "SCALAR_MATCHED_MLP",
+    "sparse_module_class": "ALL_SCALED",
+    "opallo_module_class": null,
+    "scalar_alpha": 0.7732968624700961,
+    "construction": "Supa + dSparse|<s_cls> + dOpallo|<o_cls>, coefficient 1.0 each, FP32",
+    "delta_sources": {
+     "sparse": "published Rineya-Titan-Sparse FP32 minus published Supa",
+     "opallo": "B28last20 trainable.safetensors (unrounded FP32) minus published Supa, encoder.* -> model.layers.* remap verified 220/220 by BF16 round-trip"
+    },
+    "tensors_touched_sparse": 220,
+    "tensors_touched_opallo": 0,
+    "norm_from_sparse": 0.5367105989496995,
+    "norm_from_opallo": 0.0,
+    "changed_elements_vs_supa": 78654720,
+    "weight_sha256": "b648128aa946f1adc9bfa4610ce2e172225cf8b4a5eda487cefff31f749c17a1",
+    "weight_bytes": 2384235032,
+    "stored_dtype": "float32",
+    "status": "MATERIALIZED_NOT_EVALUATED",
+    "quality_claim": false,
+    "release_permitted": false
+   }
+  },
+  {
+   "path": "module_disjoint_composition_v1/arms/SPARSE_ATTN/model.safetensors",
+   "weight_sha256": "8b5d1c31e1892eb69cda154d49270c38bf91875fc5643c592f0c2626503abb5d",
+   "bytes": 2384235024,
+   "rebuild": "completed arm; rebuild: compose_modules.py --arm SPARSE_ATTN from Supa + Titan-Sparse",
+   "build_receipt": {
+    "experiment": "MODULE-DISJOINT-001",
+    "arm": "SPARSE_ATTN",
+    "sparse_module_class": "ATTN",
+    "opallo_module_class": null,
+    "construction": "Supa + dSparse|<s_cls> + dOpallo|<o_cls>, coefficient 1.0 each, FP32",
+    "delta_sources": {
+     "sparse": "published Rineya-Titan-Sparse FP32 minus published Supa",
+     "opallo": "B28last20 trainable.safetensors (unrounded FP32) minus published Supa, encoder.* -> model.layers.* remap verified 220/220 by BF16 round-trip"
+    },
+    "tensors_touched_sparse": 160,
+    "tensors_touched_opallo": 0,
+    "norm_from_sparse": 0.4400615543769171,
+    "norm_from_opallo": 0.0,
+    "changed_elements_vs_supa": 31468800,
+    "weight_sha256": "8b5d1c31e1892eb69cda154d49270c38bf91875fc5643c592f0c2626503abb5d",
+    "weight_bytes": 2384235024,
+    "stored_dtype": "float32",
+    "status": "MATERIALIZED_NOT_EVALUATED",
+    "quality_claim": false,
+    "release_permitted": false
+   }
+  },
+  {
+   "path": "module_disjoint_composition_v1/arms/SPARSE_MLP/model.safetensors",
+   "weight_sha256": "61359aa47a667d6ea456956c09061dfa860151bbdf88989377d6a413560d475b",
+   "bytes": 2384235024,
+   "rebuild": "completed arm (P6); rebuild: compose_modules.py --arm SPARSE_MLP from Supa + Titan-Sparse",
+   "build_receipt": {
+    "experiment": "MODULE-DISJOINT-001",
+    "arm": "SPARSE_MLP",
+    "sparse_module_class": "MLP",
+    "opallo_module_class": null,
+    "scalar_alpha": null,
+    "construction": "Supa + dSparse|<s_cls> + dOpallo|<o_cls>, coefficient 1.0 each, FP32",
+    "delta_sources": {
+     "sparse": "published Rineya-Titan-Sparse FP32 minus published Supa",
+     "opallo": "B28last20 trainable.safetensors (unrounded FP32) minus published Supa, encoder.* -> model.layers.* remap verified 220/220 by BF16 round-trip"
+    },
+    "tensors_touched_sparse": 60,
+    "tensors_touched_opallo": 0,
+    "norm_from_sparse": 0.5367106193770019,
+    "norm_from_opallo": 0.0,
+    "changed_elements_vs_supa": 47185920,
+    "weight_sha256": "61359aa47a667d6ea456956c09061dfa860151bbdf88989377d6a413560d475b",
+    "weight_bytes": 2384235024,
+    "stored_dtype": "float32",
+    "status": "MATERIALIZED_NOT_EVALUATED",
+    "quality_claim": false,
+    "release_permitted": false
+   }
+  },
+  {
+   "path": "composition_confirmation_v2/rebuild_titan_transition/TH25/model.safetensors",
+   "weight_sha256": "a4d73353db9a91cbba7b4cd7c8fe4fe6822670d10fe523b26a6d651bb9509567",
+   "bytes": 2384235008,
+   "rebuild": "byte duplicate of the published Rineya-Titan-Transition-1.0.0-devfreeze core (same sha256, verified 2026-09-26 by TRISKILL-001 Phase 0 and by this manifest)",
+   "build_receipt": {
+    "experiment": "CONFIRM-002",
+    "arm": "TH25",
+    "base_arm": "SPARSE",
+    "coefficient_H": 0.25,
+    "H_form": "p16",
+    "construction": "SPARSE + 0.25 * P16(delta_H), float64 sum, cast to float32",
+    "rank_r": 16,
+    "trained_H_sha256": "a1103060591a91ee7d9ceb2ad7450621be352b087cd19188f2c383a0dbbc7b90",
+    "norm_P16_delta_H": 0.7098943555451114,
+    "norm_delta_H": 1.038194787918927,
+    "norm_dSparse": 0.6940550846962167,
+    "norm_H_update": 0.17747358888627796,
+    "canary": {
+     "P16_norm_recorded": 0.7098943555451119,
+     "abs_error": 5.551115123125783e-16
+    },
+    "smoke_subset": null,
+    "weight_sha256": "a4d73353db9a91cbba7b4cd7c8fe4fe6822670d10fe523b26a6d651bb9509567",
+    "status": "MATERIALIZED_NOT_EVALUATED",
+    "quality_claim": false
+   }
+  }
+ ],
+ "free_bytes_before": 6985531392,
+ "free_bytes_after": 28443623424,
+ "freed_gib": 19.98,
+ "note": "The arm directories are gitignored; their BUILD.json receipts are embedded here so the deletion is durable in git. Tombstones (WEIGHTS_DELETED.json) sit beside each config on disk."
+}

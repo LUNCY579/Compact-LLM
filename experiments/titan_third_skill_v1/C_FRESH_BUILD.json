@@ -1,0 +1,53 @@
+{
+ "instrument": "C_FRESH",
+ "experiment": "TRISKILL-001",
+ "registered_in": "PREREG.md (0d2b64b4) section 5",
+ "generator": "SIF-001 src/sif (make_world, counterfactual, row_for), seed tuple [\"TRISKILL-001-C-FRESH\", 20260927]",
+ "sif_source_sha256": {
+  "core.py": "d6cb64d6ae67ba227b7f50889be6132d19855fe3edecd20abdf18d47be7aca30",
+  "build.py": "1050457fea4a9f7f8807b5eb717441c38de6c9b2cc5a89c68f2cae355aab4e33",
+  "scoring.py": "0aeb57e48c659e77d228c8c6a911f33b4ff1cb9c39eaad5101373e6ff0134afa"
+ },
+ "python": "3.11.15",
+ "n": 336,
+ "parents": 112,
+ "variants": {
+  "full": 112,
+  "counterfactual": 112,
+  "distractor": 112
+ },
+ "answer_distribution": {
+  "5": 46,
+  "2": 58,
+  "1": 42,
+  "0": 49,
+  "3": 59,
+  "4": 47,
+  "6": 35
+ },
+ "floor": {
+  "majority_answer": "3",
+  "majority_rows": 59,
+  "echo_seed_rows": 17,
+  "floor_rows": 59
+ },
+ "exclusion": {
+  "sif_world_signatures": 23304,
+  "sif_rules_tables": 3030,
+  "sif_prompt_hashes": 43656,
+  "rejected_families": {},
+  "candidate_worlds_drawn": 112
+ },
+ "positive_controls": {
+  "K1": "128/128",
+  "K2": "128/128",
+  "K3": "128/128"
+ },
+ "collisions_after_generation": {
+  "K1": 0,
+  "K3": 0
+ },
+ "sha256": "52f921fc713898e06edf0ebf0241d89e1dd29e331d4c2ad65a094a79497d7ae3",
+ "read_budget": "ONE",
+ "quality_claim": false
+}
