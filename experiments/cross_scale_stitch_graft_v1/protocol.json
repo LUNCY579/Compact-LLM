@@ -1,0 +1,102 @@
+{
+  "branch": "research/cross-scale-stitch-graft-framework-v1",
+  "claims": {
+    "automatic_promotion": false,
+    "native_qualification": false,
+    "pretrained_efficacy": false
+  },
+  "donor_references": [
+    {
+      "name": "Qwen/Qwen3-4B",
+      "native_asset_inventory": null,
+      "revision": "1cfa9a7208912126459214e8b04321603b3df60c"
+    },
+    {
+      "name": "Qwen/Qwen3-8B",
+      "native_asset_inventory": null,
+      "revision": "b968826d9c46dd6066d109eabc6255188de91218"
+    }
+  ],
+  "execution_authority": {
+    "backbone_recovery": false,
+    "deployment": false,
+    "donor_downloads": false,
+    "native_training": false,
+    "pretrained_model_calls": false,
+    "sealed_data": false,
+    "workflow_dispatch": false
+  },
+  "graft_proposal": {
+    "alpha_screen": [
+      0.05,
+      0.1
+    ],
+    "donor_block_index": 17,
+    "host_block_index": 13,
+    "keep_host_ffn": true,
+    "return_map_bias": false,
+    "site": "post_attention_raw",
+    "train_alpha": false
+  },
+  "historical_host": {
+    "class": "Qwen3AbstainForCausalLM",
+    "name": "Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "native_asset_inventory": null,
+    "native_runtime_receipt": null,
+    "storage_precision": "float16"
+  },
+  "native_adapter_candidate": {
+    "attention": "eager",
+    "class": "exact stock Qwen3ForCausalLM only",
+    "device": "cpu",
+    "execution_precision": "float32",
+    "qualified": false,
+    "supports_cache": false,
+    "supports_custom_a11": false,
+    "transformers": "4.51.3"
+  },
+  "native_authorization": null,
+  "offline_cli_limits": {
+    "capture_payload_bytes": 268435456,
+    "fixture_optimizer_updates": 4,
+    "qualification_timeout_seconds": 120,
+    "ridge_workspace_bytes": 536870912,
+    "unpadded_batch_size": 1
+  },
+  "open_data_registration": null,
+  "parent_commit": "fde553c908db39e87a15a52ed239d1ba0a68bfd3",
+  "proposed_budgets": {
+    "check_examples": 128,
+    "initial_fit_token_positions": 8192,
+    "initial_map_check_token_positions": 2048,
+    "native_context_cap_tokens": 512,
+    "optional_future_training_updates": 50,
+    "retention_examples": 64,
+    "select_examples": 64
+  },
+  "roles": [
+    "FIT",
+    "MAP_CHECK",
+    "SELECT",
+    "CHECK",
+    "RETENTION"
+  ],
+  "schema": "xsg-design-v1",
+  "status": "DESIGN_AND_CPU_MECHANICS_ONLY",
+  "stitch_proposals": [
+    {
+      "prefix": "4B",
+      "prefix_count": 18,
+      "suffix": "host",
+      "suffix_start": 14
+    },
+    {
+      "prefix": "host",
+      "prefix_count": 14,
+      "suffix": "4B",
+      "suffix_start": 18
+    }
+  ],
+  "study": "XSG-001",
+  "version": "0.1.0"
+}
