@@ -1,0 +1,128 @@
+{
+  "evidence_kind": "READONLY_OPEN_INSTRUMENT_AUDIT_NOT_MODEL_EVIDENCE",
+  "dependency_depth_row_counts": {
+    "1": 33,
+    "2": 12,
+    "3": 19
+  },
+  "dependency_query_counts": {
+    "unused": 19,
+    "f": 19,
+    "e": 12,
+    "d": 14
+  },
+  "reasoning_parent_depth_pairs": {
+    "1,1": 5,
+    "1,3": 15,
+    "2,3": 4,
+    "1,2": 8
+  },
+  "four_one_step_wins_gain_pp": 6.25,
+  "canonical_pilot_scoring_failures": [],
+  "vacuous_retention_counterexample": {
+    "all_fixture_gates_pass": true,
+    "status": "FIXTURE_GATES_PASS_NOT_MODEL_EVIDENCE",
+    "sparse_correct_by_domain": {
+      "arithmetic": 0,
+      "format": 0,
+      "grounding": 0,
+      "long_context": 0,
+      "reasoning": 32,
+      "transition": 0
+    },
+    "supa_recovery_by_domain": {
+      "arithmetic": 0,
+      "format": 0,
+      "grounding": 0,
+      "long_context": 0,
+      "reasoning": 32,
+      "transition": 0
+    },
+    "release_recovery_flag": true,
+    "model_quality_established": false,
+    "gates": {
+      "complete_matched_pair": true,
+      "reasoning_gain_at_least_5pp": true,
+      "reasoning_above_frozen_floor": true,
+      "control_deficit_at_most_2pp": true,
+      "zero_new_sparse_correct_losses": true,
+      "better_source_parent_than_control": true,
+      "no_new_unsupported_or_false_abstention_or_format_failures": true,
+      "grounding_blind_review_complete": true
+    }
+  },
+  "token_profile": {
+    "status": "PASS_OFFLINE_TOKEN_SHAPES",
+    "max_prompt_tokens": 3568,
+    "max_canonical_plus_EOS_tokens": 27,
+    "count_contract": {
+      "complete_training_inputs_per_arm": 200,
+      "training_processed_positions_pair_cap": 107850,
+      "training_full_row_forward_cap_pair": 400,
+      "training_work_scope": "input exposure only; native backward/checkpoint recomputation, optimizer and hashing costs must also be measured and charged",
+      "evaluation_model_configs": 5,
+      "evaluation_case_generations": 1920,
+      "evaluation_generation_API_cap": 92160,
+      "evaluation_full_prefix_positions_cap": 54629520,
+      "qualification_forward_cap": null,
+      "qualification_backward_cap": null,
+      "limit": "Qualification counts require the owner's exact reviewed native adapter; no complete forecast yet."
+    }
+  },
+  "native_calls": 0,
+  "bank_generated": false,
+  "files_written": false,
+  "schema": "TITAN_V2_TARGETED_CLAIM_ELIGIBILITY_AUDIT_V1",
+  "scope": "Read-only existing open v2 data-001 and reviewed source; synthetic fixture counterexample, no model outputs.",
+  "additional_mechanical_counts": {
+    "pilot_families": 6,
+    "reasoning_parents": 32,
+    "reasoning_families": 1,
+    "deep_rows": 31,
+    "deep_parents": 27,
+    "pilot_format_order_only_parents": 1,
+    "pilot_supported_horn_depth_counts": {
+      "0": 17,
+      "1": 7,
+      "2": 8
+    }
+  },
+  "addon_design_review": {
+    "decision": "JUSTIFIED_ADDITIVE_CLAIM_GUARDS_NO_NEW_DATASET",
+    "source_eligibility": "Separate Sparse-correct, Supa-correct and Supa-correct/Sparse-wrong case+parent counts for transition/arithmetic/grounding/long_context/format. Required source domain empty => unmeasurable/null retention/recovery, no quality gate pass or release flag.",
+    "recovery_boundary": "Nonempty source-correct panels do not imply a nonempty recovery deficit; an empty actual recovery set is not restoration evidence.",
+    "depth_definition": "Recursively derive depth from the actual public queried expression; leaves depth0, operation1+max(child depths).",
+    "deep_unit": "Depth>=2 rows averaged within each eligible reasoning parent, then equal-weight all27 eligible parents. Report net change and gained/lost/unchanged parents versus Sparse and control separately.",
+    "claim_guard": "Positive net deep-parent gain is a NEW prospective claim guard, frozen by owner before model outcomes; preserve original5pp/2pp numeric gates and all original no-loss rules.",
+    "claim_boundary": "Overall reasoning-domain gain is not automatically deep-reasoning gain; one PILOT reasoning mechanism/family cannot establish broad family transfer.",
+    "native_parameterization": "Root reports owner plan LoRA rank8 versus this offline dense-tail contract. This audit did not read owner plan; no drop-in qualification or permit transfer."
+  },
+  "counterexample_recipe": {
+    "predictions": "All NON-R responses are format-correct literal999999999 and therefore semantically wrong. Supa/Transition/Joint are correct on all64Rrows; Control misses oneRrow; Sparse correct on first32Rrows in artifact order.",
+    "freeze": "Use complete384row open references and fixture-only exact Supa/Sparse/Transition source bindings; freeze before synthetic candidate arrays.",
+    "proof": "Matched synthetic fixture proof only; no native proof, checkpoint, inference or authorization.",
+    "observed": "All current fixture gates PASS and full-recovery flagTrue despitezero source-correct/recovery eligibility in everyNON-Rdomain. model_quality_established remainsFalse."
+  },
+  "no_fix_needed": {
+    "pilot_evaluator_contract": "All384 canonical PILOT targets score semantic/strict/format correct; currentPILOT data need no rewrite.",
+    "eval_shapes": "Maxprompt3568 plus48 <=4096; maxcanonical+EOS27 <=48. Qualification counts and complete measured costs remain absent, as declared."
+  },
+  "files_sha256": {
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2\\titan_joint_quality_v1\\data.py": "dd4a39762f805b4d2a99d9c7416cbf454c2d99244ca2f42e4e73faa17d4dba1b",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2\\titan_joint_quality_v1\\analysis.py": "58da8ae3f794b20bffcad4dfa86e9ad7b65bfc179db837bae439a834f02b603e",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2\\titan_joint_quality_v1\\__main__.py": "a24b1d822dcd42c4d0b0d47873c171f20920900e3d57c36efb8282916bdcc046",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2\\tests\\test_analysis.py": "f89ea1e40fa38d92064f27bdd5c40d05d6b9e6b00793257a2a9751226c9218c2",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2\\PROTOCOL.json": "5ac5ed48e116ca2e6c8bd9680f8ffb5fa3357e73a37164ee3f395a9f8f81cab9",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2\\README.md": "612e54581fe0fb3ebc6a4608a610291693bb040f27a1a07c461df12a4f5f3861",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2-runs\\data-001\\DATA_MANIFEST.json": "388d8fdbb18f7a917f4d3678aaf3d14cd34843cebe9cb7999dda53173b8c1ca1",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2-runs\\data-001\\pilot.prompts.jsonl": "1ba852d8b0bb78d42c543a876e24a38987284095ff17f3ec9887bd7882d46bf8",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2-runs\\data-001\\pilot.references.jsonl": "51b3b96d8e557ddcf046efbb7a8afc81d1b49bbadd1289fb41023a7936aced2d",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2-runs\\exposure-001\\TOKEN_COUNT_CONTRACT.json": "4292adb3f3821aca6d1b7d4d680f5b15e20fca3dbcf6ef0c497dd53edc7526fc"
+  },
+  "counterexample_parent_counts": {
+    "sparse_correct_R": 24,
+    "supa_correct_R": 32,
+    "supa_recovery_R": 24,
+    "all_NON_R_source_correct_and_recovery_parents": 0
+  }
+}

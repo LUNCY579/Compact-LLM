@@ -1,0 +1,212 @@
+{
+  "created_utc": "2026-10-05T22:51:26.935206+00:00",
+  "status": "PASS_REPRODUCED_OPEN_INSTRUMENT_AUDITS_ONLY",
+  "checks": [
+    {
+      "report_path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\AUTHOR_SEMANTIC_CROSSCHECK_001.json",
+      "report_sha256": "bc623627e2b03f98bc8b0aeed4634c1a3fe237def730b21cc5d779d307c7b460",
+      "script_path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\semantic-admission-audit-001.py",
+      "script_sha256": "a44bf6f968a6773c63a97d09de682a757704f3ff879102c914f34ea1a4ae28e0",
+      "stdout_matches_report": true,
+      "returncode": 0,
+      "stderr": "",
+      "result": {
+        "scope": "EXISTING_OPEN_ROWS_FRESH_PUBLIC_PARSE_NO_PACKAGE_TEACHERS",
+        "coverage": {
+          "train:authority": 300,
+          "train:program": 1000,
+          "train:field_transform": 200,
+          "train:item_events": 166,
+          "train:baskets": 166,
+          "train:latest_record": 168,
+          "pilot:alias_join": 64,
+          "pilot:filtered_roster": 64,
+          "pilot:fsm": 64,
+          "pilot:horn": 64,
+          "pilot:sharing": 64,
+          "pilot:dependencies": 64
+        },
+        "truth_mismatches": [],
+        "public_wrapper_and_target_mismatches": 0,
+        "unique_system_wordings_per_kind": {
+          "authority": 1,
+          "program": 1,
+          "field_transform": 1,
+          "item_events": 1,
+          "baskets": 1,
+          "latest_record": 1,
+          "alias_join": 1,
+          "filtered_roster": 1,
+          "fsm": 1,
+          "horn": 1,
+          "sharing": 1,
+          "dependencies": 1
+        },
+        "semantic_corner_coverage": {
+          "authority_conflicting_authoritative_queries": 0,
+          "authority_missing_authoritative_queries": 150,
+          "program_initial_source_alternative_differs": 1000,
+          "item_queries_with_multiple_overwrites": 166,
+          "latest_equal_maximum_timestamp_queries": 0,
+          "alias_nonunique_record_queries": 0,
+          "roster_duplicate_selected_label_queries": 0,
+          "roster_empty_selected_queries": 14,
+          "fsm_zero_symbol_queries": 7,
+          "horn_multi_premise_rules": 0
+        },
+        "horn_copy_fact_floor": {
+          "correct": 49,
+          "false_abstention": 15,
+          "unsupported": 0
+        },
+        "horn_one_simultaneous_round_floor": {
+          "correct": 56,
+          "false_abstention": 8,
+          "unsupported": 0
+        },
+        "program_wording_example": {
+          "case_id": "train.reasoning.0159.v1",
+          "train_jsonl_line": 2,
+          "query": "x",
+          "initial": {
+            "x": 10,
+            "y": 2
+          },
+          "gold": "110",
+          "instructions": [
+            {
+              "arg": 4,
+              "dst": "x",
+              "op": "add"
+            },
+            {
+              "arg": 4,
+              "dst": "y",
+              "op": "add"
+            },
+            {
+              "arg": 2,
+              "dst": "y",
+              "op": "multiply"
+            },
+            {
+              "arg": 3,
+              "dst": "x",
+              "op": "multiply"
+            },
+            {
+              "arg": "y",
+              "dst": "x",
+              "op": "add_from"
+            },
+            {
+              "arg": "x",
+              "dst": "y",
+              "op": "add_from"
+            },
+            {
+              "arg": 2,
+              "dst": "x",
+              "op": "multiply"
+            },
+            {
+              "arg": 2,
+              "dst": "y",
+              "op": "multiply"
+            },
+            {
+              "arg": 2,
+              "dst": "x",
+              "op": "add"
+            },
+            {
+              "arg": 1,
+              "dst": "y",
+              "op": "add"
+            }
+          ]
+        },
+        "hashes": {
+          "data.py": "dd4a39762f805b4d2a99d9c7416cbf454c2d99244ca2f42e4e73faa17d4dba1b",
+          "train.jsonl": "6c82a98a4d66c64d15aa813dc1afa3f20898996c00f2d8590158a8eec8e1b11d",
+          "pilot.prompts.jsonl": "1ba852d8b0bb78d42c543a876e24a38987284095ff17f3ec9887bd7882d46bf8",
+          "pilot.references.jsonl": "51b3b96d8e557ddcf046efbb7a8afc81d1b49bbadd1289fb41023a7936aced2d"
+        },
+        "model_calls": 0,
+        "bank_generated": false,
+        "files_written": false
+      }
+    },
+    {
+      "report_path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\SOURCE_PROXY_AUDIT_001.json",
+      "report_sha256": "051bd80fc816b02bb355e81d0cd6df529f4998985a4dc85d8f4a4972f0cec1dd",
+      "script_path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\source-proxy-audit-001.py",
+      "script_sha256": "e769611acdfcbad5818b24e219ea8877a0a0f52f3de5efd82d914e0a4f503202",
+      "stdout_matches_report": true,
+      "returncode": 0,
+      "stderr": "",
+      "result": {
+        "scope": "EXISTING_OPEN_V2_QUERY_AWARE_CONTROLS_AND_IN_MEMORY_AUTHORITY_FALSIFIER",
+        "authority_sourceblind": {
+          "rows": 300,
+          "original_correct": 300,
+          "original_predicted_UNKNOWN": 150,
+          "switched_truth_r_prefix": 300,
+          "switched_sourceblind_correct": 0
+        },
+        "authority_example": {
+          "case_id": "train.grounding.0017.v0",
+          "train_jsonl_line": 1,
+          "query": {
+            "attribute": "status",
+            "entity": "ewzpwfc"
+          },
+          "original_named_authority": "charter",
+          "old_gold": "UNKNOWN",
+          "sourceblind_prediction": "UNKNOWN",
+          "switched_named_authority": "rumor",
+          "proper_switched_truth": "rfrkubh",
+          "queried_facts": [
+            {
+              "attribute": "status",
+              "entity": "ewzpwfc",
+              "source": "rumor",
+              "value": "rfrkubh"
+            }
+          ]
+        },
+        "horn_controls": {
+          "copied_fact_else_UNKNOWN": {
+            "rows": 64,
+            "correct": 49,
+            "false_abstentions": 15,
+            "unsupported_answers": 0
+          },
+          "one_original_fact_round": {
+            "rows": 64,
+            "correct": 56,
+            "false_abstentions": 8,
+            "unsupported_answers": 0
+          }
+        },
+        "input_sha256": {
+          "train.jsonl": "6c82a98a4d66c64d15aa813dc1afa3f20898996c00f2d8590158a8eec8e1b11d",
+          "pilot.prompts.jsonl": "1ba852d8b0bb78d42c543a876e24a38987284095ff17f3ec9887bd7882d46bf8",
+          "pilot.references.jsonl": "51b3b96d8e557ddcf046efbb7a8afc81d1b49bbadd1289fb41023a7936aced2d"
+        },
+        "original_gold_changed": false,
+        "data_or_source_modified": false,
+        "bank_generated": false,
+        "files_written": false,
+        "native_model_calls": 0,
+        "queryblind_bound_scope": "These controls read query; the existing stateless query-blind <=.5 bound does not apply.",
+        "native_admission_frozen": false
+      }
+    }
+  ],
+  "native_model_calls": 0,
+  "new_corpus_generated": false,
+  "protected_bank_reads": 0,
+  "source_modified": false,
+  "limit": "Root reproduction validates recorded computations. It is not independent human/blind admission or model-quality evidence."
+}

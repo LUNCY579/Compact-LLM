@@ -1,0 +1,272 @@
+{
+  "created_utc": "2026-10-05T22:26:07.921386+00:00",
+  "status": "VERIFIED_ADDITIVE_OFFLINE_IMPLEMENTATION_NATIVE_PENDING",
+  "goal_status": "active",
+  "goal_completion": false,
+  "model_quality_gain_established": false,
+  "native_model_calls": 0,
+  "native_training": false,
+  "confirmation_reads": 0,
+  "native_authority": false,
+  "owner_messages": 0,
+  "serving_changes": false,
+  "existing_owner_chat": "01a0dfa3-9cdf-7703-a362-32f559ec15a7",
+  "user_selected_experiment": "TITAN-JOINT-QUALITY-001 dense joint-versus-reasoning-only",
+  "native_owner_integration": "PENDING_NOT_DROP_IN_COMPATIBLE_WITH_DISTINCT_LORA_DRAFT",
+  "targeted_tests_passed": 13,
+  "independent_review_checks_passed": 19,
+  "prior_v2_mechanical_tests_passed": 96,
+  "qualification_operation_counts": null,
+  "complete_measured_native_forecast": null,
+  "executable_native_command": null,
+  "model_selection": "One final checkpoint per arm only; no partial survivor or intermediate selection. Unchanged.",
+  "proposed_extra_claim_guard": "Positive equal-weight deep-parent delta against Sparse; pending prospective owner registration. No new deep-versus-control margin.",
+  "source_preservation": {
+    "v1": {
+      "source_count": 18,
+      "all_match": true,
+      "predecessor_manifest": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v1-runs\\DELIVERY_MANIFEST.json",
+      "predecessor_manifest_sha256": "3f81b87f5ee1ba249ec0385ebb7e1b9b2b0e04984d2167452680735769d4f55d",
+      "sources": {
+        "PROTOCOL.json": {
+          "expected_sha256": "8e9200dc351bb1f0d61a980e7f74795f2db07e7dcb26da3ab584fd8db1357fc0",
+          "actual_sha256": "8e9200dc351bb1f0d61a980e7f74795f2db07e7dcb26da3ab584fd8db1357fc0",
+          "match": true
+        },
+        "README.md": {
+          "expected_sha256": "d63fe85ffcec883b21b14d5e209b672b0aad41973024c01091157eb55b788c42",
+          "actual_sha256": "d63fe85ffcec883b21b14d5e209b672b0aad41973024c01091157eb55b788c42",
+          "match": true
+        },
+        "tests\\test_analysis.py": {
+          "expected_sha256": "f89ea1e40fa38d92064f27bdd5c40d05d6b9e6b00793257a2a9751226c9218c2",
+          "actual_sha256": "f89ea1e40fa38d92064f27bdd5c40d05d6b9e6b00793257a2a9751226c9218c2",
+          "match": true
+        },
+        "tests\\test_data.py": {
+          "expected_sha256": "a95bd03704d328c3f74ffdda95d9853d1380de22f143f7da59126778b56b513a",
+          "actual_sha256": "a95bd03704d328c3f74ffdda95d9853d1380de22f143f7da59126778b56b513a",
+          "match": true
+        },
+        "tests\\test_exposure.py": {
+          "expected_sha256": "2eb5f61d70fc223c9c72d49f69679f383d5f9e360a77e84a7e1adffca2943585",
+          "actual_sha256": "2eb5f61d70fc223c9c72d49f69679f383d5f9e360a77e84a7e1adffca2943585",
+          "match": true
+        },
+        "tests\\test_handoff.py": {
+          "expected_sha256": "2f7881688104f006c5cbdec7dee37bbf93e909067a0e3f73bbb4195f542d84f6",
+          "actual_sha256": "2f7881688104f006c5cbdec7dee37bbf93e909067a0e3f73bbb4195f542d84f6",
+          "match": true
+        },
+        "tests\\test_safety.py": {
+          "expected_sha256": "646c0f23a9294e3ac40af9bd3857ff605d9bda61aaf85d216f9c890bf93ab413",
+          "actual_sha256": "646c0f23a9294e3ac40af9bd3857ff605d9bda61aaf85d216f9c890bf93ab413",
+          "match": true
+        },
+        "tests\\test_training.py": {
+          "expected_sha256": "adaf8dcb3fed74ba20a472a02887cfe0fd4d72c9aaf817a949e79d60af16131b",
+          "actual_sha256": "adaf8dcb3fed74ba20a472a02887cfe0fd4d72c9aaf817a949e79d60af16131b",
+          "match": true
+        },
+        "titan_joint_quality_v1\\analysis.py": {
+          "expected_sha256": "58da8ae3f794b20bffcad4dfa86e9ad7b65bfc179db837bae439a834f02b603e",
+          "actual_sha256": "58da8ae3f794b20bffcad4dfa86e9ad7b65bfc179db837bae439a834f02b603e",
+          "match": true
+        },
+        "titan_joint_quality_v1\\common.py": {
+          "expected_sha256": "f6ae8e17a8d9eff6852a378ffd60fcddf3e32dc2f06a311a8d809f8713e6f08d",
+          "actual_sha256": "f6ae8e17a8d9eff6852a378ffd60fcddf3e32dc2f06a311a8d809f8713e6f08d",
+          "match": true
+        },
+        "titan_joint_quality_v1\\data.py": {
+          "expected_sha256": "d06687e9eabebdd2852513c74345744591b5c290f13f2aef86b9289204f8d54f",
+          "actual_sha256": "d06687e9eabebdd2852513c74345744591b5c290f13f2aef86b9289204f8d54f",
+          "match": true
+        },
+        "titan_joint_quality_v1\\exposure.py": {
+          "expected_sha256": "40c4bd20ad0c5395263ee526ff60033efde67deb27b162f669d172e9762e9259",
+          "actual_sha256": "40c4bd20ad0c5395263ee526ff60033efde67deb27b162f669d172e9762e9259",
+          "match": true
+        },
+        "titan_joint_quality_v1\\fixtures.py": {
+          "expected_sha256": "e17007cd1c34c608e310404777c46bc47c2d9f5c41077190b725e38dea6b77bb",
+          "actual_sha256": "e17007cd1c34c608e310404777c46bc47c2d9f5c41077190b725e38dea6b77bb",
+          "match": true
+        },
+        "titan_joint_quality_v1\\source.py": {
+          "expected_sha256": "8fb196d7dadd6ee9ede554de53d6914f3e5fb047db2a9dfab9f9b7a588a2e876",
+          "actual_sha256": "8fb196d7dadd6ee9ede554de53d6914f3e5fb047db2a9dfab9f9b7a588a2e876",
+          "match": true
+        },
+        "titan_joint_quality_v1\\tokenizer_adapter.py": {
+          "expected_sha256": "91f839fb7419580b37cde78e22c1a85e23bbaf38c9df3b91044c04f556f4dd18",
+          "actual_sha256": "91f839fb7419580b37cde78e22c1a85e23bbaf38c9df3b91044c04f556f4dd18",
+          "match": true
+        },
+        "titan_joint_quality_v1\\training.py": {
+          "expected_sha256": "6277caba6d14d42f59b67b6943a27a2de572ad3641eb168e257b0aa093ce4ba9",
+          "actual_sha256": "6277caba6d14d42f59b67b6943a27a2de572ad3641eb168e257b0aa093ce4ba9",
+          "match": true
+        },
+        "titan_joint_quality_v1\\__init__.py": {
+          "expected_sha256": "91a483aa9c8cb0b4e281600fe91f93ddc2c916b8975db669f0400621a6715357",
+          "actual_sha256": "91a483aa9c8cb0b4e281600fe91f93ddc2c916b8975db669f0400621a6715357",
+          "match": true
+        },
+        "titan_joint_quality_v1\\__main__.py": {
+          "expected_sha256": "a24b1d822dcd42c4d0b0d47873c171f20920900e3d57c36efb8282916bdcc046",
+          "actual_sha256": "a24b1d822dcd42c4d0b0d47873c171f20920900e3d57c36efb8282916bdcc046",
+          "match": true
+        }
+      }
+    },
+    "v2": {
+      "source_count": 20,
+      "all_match": true,
+      "predecessor_manifest": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\RESEARCH_DELIVERY_001.json",
+      "predecessor_manifest_sha256": "75662f13d0f1148e474a03c2f657ac933d204a536fdf87755450c1ce0a282289",
+      "sources": {
+        "PROTOCOL.json": {
+          "expected_sha256": "5ac5ed48e116ca2e6c8bd9680f8ffb5fa3357e73a37164ee3f395a9f8f81cab9",
+          "actual_sha256": "5ac5ed48e116ca2e6c8bd9680f8ffb5fa3357e73a37164ee3f395a9f8f81cab9",
+          "match": true
+        },
+        "README.md": {
+          "expected_sha256": "612e54581fe0fb3ebc6a4608a610291693bb040f27a1a07c461df12a4f5f3861",
+          "actual_sha256": "612e54581fe0fb3ebc6a4608a610291693bb040f27a1a07c461df12a4f5f3861",
+          "match": true
+        },
+        "tests\\test_analysis.py": {
+          "expected_sha256": "f89ea1e40fa38d92064f27bdd5c40d05d6b9e6b00793257a2a9751226c9218c2",
+          "actual_sha256": "f89ea1e40fa38d92064f27bdd5c40d05d6b9e6b00793257a2a9751226c9218c2",
+          "match": true
+        },
+        "tests\\test_data.py": {
+          "expected_sha256": "266cc366cddddc69b48bb052168aafe399a1d81de2fa915e5f43edaee84f52fe",
+          "actual_sha256": "266cc366cddddc69b48bb052168aafe399a1d81de2fa915e5f43edaee84f52fe",
+          "match": true
+        },
+        "tests\\test_directions.py": {
+          "expected_sha256": "57a2dbdb4ea751b79a8e87097e5f516a63f13b59fcc9ad65ae788625b6102bb7",
+          "actual_sha256": "57a2dbdb4ea751b79a8e87097e5f516a63f13b59fcc9ad65ae788625b6102bb7",
+          "match": true
+        },
+        "tests\\test_exposure.py": {
+          "expected_sha256": "2eb5f61d70fc223c9c72d49f69679f383d5f9e360a77e84a7e1adffca2943585",
+          "actual_sha256": "2eb5f61d70fc223c9c72d49f69679f383d5f9e360a77e84a7e1adffca2943585",
+          "match": true
+        },
+        "tests\\test_handoff.py": {
+          "expected_sha256": "2f7881688104f006c5cbdec7dee37bbf93e909067a0e3f73bbb4195f542d84f6",
+          "actual_sha256": "2f7881688104f006c5cbdec7dee37bbf93e909067a0e3f73bbb4195f542d84f6",
+          "match": true
+        },
+        "tests\\test_safety.py": {
+          "expected_sha256": "646c0f23a9294e3ac40af9bd3857ff605d9bda61aaf85d216f9c890bf93ab413",
+          "actual_sha256": "646c0f23a9294e3ac40af9bd3857ff605d9bda61aaf85d216f9c890bf93ab413",
+          "match": true
+        },
+        "tests\\test_training.py": {
+          "expected_sha256": "adaf8dcb3fed74ba20a472a02887cfe0fd4d72c9aaf817a949e79d60af16131b",
+          "actual_sha256": "adaf8dcb3fed74ba20a472a02887cfe0fd4d72c9aaf817a949e79d60af16131b",
+          "match": true
+        },
+        "titan_joint_quality_v1\\analysis.py": {
+          "expected_sha256": "58da8ae3f794b20bffcad4dfa86e9ad7b65bfc179db837bae439a834f02b603e",
+          "actual_sha256": "58da8ae3f794b20bffcad4dfa86e9ad7b65bfc179db837bae439a834f02b603e",
+          "match": true
+        },
+        "titan_joint_quality_v1\\common.py": {
+          "expected_sha256": "686371e14eaebdacac1902bf50d40ca35b87584a990b6d9630d95e909d53fd32",
+          "actual_sha256": "686371e14eaebdacac1902bf50d40ca35b87584a990b6d9630d95e909d53fd32",
+          "match": true
+        },
+        "titan_joint_quality_v1\\data.py": {
+          "expected_sha256": "dd4a39762f805b4d2a99d9c7416cbf454c2d99244ca2f42e4e73faa17d4dba1b",
+          "actual_sha256": "dd4a39762f805b4d2a99d9c7416cbf454c2d99244ca2f42e4e73faa17d4dba1b",
+          "match": true
+        },
+        "titan_joint_quality_v1\\directions.py": {
+          "expected_sha256": "339cbbdeebf45e08d13a77e3f8bbf6e096a8fbbce1e322816f6e968482e20682",
+          "actual_sha256": "339cbbdeebf45e08d13a77e3f8bbf6e096a8fbbce1e322816f6e968482e20682",
+          "match": true
+        },
+        "titan_joint_quality_v1\\exposure.py": {
+          "expected_sha256": "40c4bd20ad0c5395263ee526ff60033efde67deb27b162f669d172e9762e9259",
+          "actual_sha256": "40c4bd20ad0c5395263ee526ff60033efde67deb27b162f669d172e9762e9259",
+          "match": true
+        },
+        "titan_joint_quality_v1\\fixtures.py": {
+          "expected_sha256": "e17007cd1c34c608e310404777c46bc47c2d9f5c41077190b725e38dea6b77bb",
+          "actual_sha256": "e17007cd1c34c608e310404777c46bc47c2d9f5c41077190b725e38dea6b77bb",
+          "match": true
+        },
+        "titan_joint_quality_v1\\source.py": {
+          "expected_sha256": "8fb196d7dadd6ee9ede554de53d6914f3e5fb047db2a9dfab9f9b7a588a2e876",
+          "actual_sha256": "8fb196d7dadd6ee9ede554de53d6914f3e5fb047db2a9dfab9f9b7a588a2e876",
+          "match": true
+        },
+        "titan_joint_quality_v1\\tokenizer_adapter.py": {
+          "expected_sha256": "91f839fb7419580b37cde78e22c1a85e23bbaf38c9df3b91044c04f556f4dd18",
+          "actual_sha256": "91f839fb7419580b37cde78e22c1a85e23bbaf38c9df3b91044c04f556f4dd18",
+          "match": true
+        },
+        "titan_joint_quality_v1\\training.py": {
+          "expected_sha256": "6277caba6d14d42f59b67b6943a27a2de572ad3641eb168e257b0aa093ce4ba9",
+          "actual_sha256": "6277caba6d14d42f59b67b6943a27a2de572ad3641eb168e257b0aa093ce4ba9",
+          "match": true
+        },
+        "titan_joint_quality_v1\\__init__.py": {
+          "expected_sha256": "91a483aa9c8cb0b4e281600fe91f93ddc2c916b8975db669f0400621a6715357",
+          "actual_sha256": "91a483aa9c8cb0b4e281600fe91f93ddc2c916b8975db669f0400621a6715357",
+          "match": true
+        },
+        "titan_joint_quality_v1\\__main__.py": {
+          "expected_sha256": "a24b1d822dcd42c4d0b0d47873c171f20920900e3d57c36efb8282916bdcc046",
+          "actual_sha256": "a24b1d822dcd42c4d0b0d47873c171f20920900e3d57c36efb8282916bdcc046",
+          "match": true
+        }
+      }
+    }
+  },
+  "taps_identity": {
+    "branch": "codex/rineya-taps-adaptation-loop",
+    "head": "7ece5cead285ba65c7d73ab57c0327fae2dc40bb",
+    "status_short": "## codex/rineya-taps-adaptation-loop\n?? experiments/rineya_taps_adaptive_recurrence_campaign_v2/"
+  },
+  "addon_sources_sha256": {
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1\\claim_guards.py": "7e55165f8ac6e173c17b3f0720c48122257b994ea84221977ec71fff9fb515ce",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1\\test_claim_guards.py": "a788a25fc40dd9070ad33823f090f1e7e121baecbc074b8e00fc7780bc3525fa",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1\\README.md": "bd6b8ea00f3bcfc79ca92d12bd3070fe240fd7fb14a3388ade83fd53c114a71c"
+  },
+  "addon_source_archives_sha256": {
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\claim-guards-source-001\\claim_guards.py": "fe8f82d9049bc11f35326eb7e104b422376c9cf206e548b0adf8b313d36137e7",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\claim-guards-source-001\\test_claim_guards.py": "5fd8cd864a1703447062a8919ad4bcda6b2806d79ca0df13b953c27f27c206ed",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\claim-guards-source-002\\claim_guards.py": "7e55165f8ac6e173c17b3f0720c48122257b994ea84221977ec71fff9fb515ce",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\claim-guards-source-002\\README.md": "bd6b8ea00f3bcfc79ca92d12bd3070fe240fd7fb14a3388ade83fd53c114a71c",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\claim-guards-source-002\\test_claim_guards.py": "a788a25fc40dd9070ad33823f090f1e7e121baecbc074b8e00fc7780bc3525fa"
+  },
+  "receipts_sha256": {
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\QUALITY_IMPLEMENTATION_UPDATE_002.md": "242d70fffd3a9aca917712cde6dffd309038e57ca8304840241368a79c73c8e8",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\GOAL_PROGRESS_002.json": "adef5647b60ea5b54ec432d9dbe374761954f1b6e77536a89b4dbefefa6b76b4",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\targeted-claim-eligibility-001.json": "ed82a5d01117a223a82682318f747650915a4e40f0f81b03d2b76fccb5c77a4e",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\LITERATURE_OPPOSITION_001.json": "1d267b7dd131eec52c9eb1826045dfe6590ca55d112500cc6683d44b15d64af3",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\OWNER_INTEGRATION_AND_OPPOSITION_001.json": "66f8a239b31b4acd47841e87bc48627691e19f787527fd749bf5ee5028a254f4",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\OWNER_INTEGRATION_AND_OPPOSITION_001.md": "e3ba610503fac4a4af7a5647d1c6f4c8c175a33b3e1c1642ec0e47fbd6abea15",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\SOURCE_PRESERVATION_002.json": "d2177480a02195f34caee89b71bc8880f165987a01fc8c4ed58a918576c212fb",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\claim-guards-pytest-001.log": "4658481592f095f66f37616d1e4e39fb188c35f160b562cd28cedd9039762474",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\claim-guards-pytest-002.log": "f30f1decd909534690c9f07e148a158802bc2c929a1187865d04312d950baf7c",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\claim-guards-demonstrations-001.json": "f3940b6c4272577c3d28808d7931fb524753e125e6c9717b0fdb307269782767",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\claim-guards-demonstrations-002.json": "aa3ed2f1f69c1191f07b94f911e70b2de425632cb52fc95ed004d7bbbf451c05",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\claim-guards-independent-001.json": "4a10f406f630b5a5128436740b810af6b4a1955c6be019a067ea50082c2b0767",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\claim-guards-independent-001.md": "4c0b5f1915e4f9e693dbd325ee453134ad02e30e189a8a855d3e4d48fe087018",
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\RESEARCH_DELIVERY_001.json": "75662f13d0f1148e474a03c2f657ac933d204a536fdf87755450c1ce0a282289"
+  },
+  "scientific_limits": [
+    "Fixtures and metadata do not establish native quality.",
+    "Minimum nonempty panels prevent vacuity, not statistical adequacy or population noninferiority.",
+    "One reasoning family and a positive directional delta do not prove broad transfer or significance.",
+    "Historical pruning direction is bounded and mixed; no deterministic universal gain established."
+  ],
+  "next_concrete_decision": "Existing Titan owner admits/integrates this exact dense joint successor and prospective claim scope, closes exact native adapter/qualification-count/cost gaps, then prepares one separately authorized bounded request."
+}

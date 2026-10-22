@@ -1,0 +1,488 @@
+{
+  "schema": "TITAN_SELECTED_AUTHORITY_V3_INDEPENDENT_REVIEW_V1",
+  "created_utc": "2026-10-05T23:36:41.458233+00:00",
+  "status": "OFFLINE_SOURCE_AND_ACTUAL_G_MECHANICS_CONFIRMED_UNADMITTED",
+  "review_identity": {
+    "compiler_author": false,
+    "fresh_agent_review": true,
+    "prior_reports_and_builder_source_read": true,
+    "blind_review": false,
+    "independent_human_review": false,
+    "package_or_teacher_calls": 0
+  },
+  "scope": "Static successor source review plus independent public-input derivation over actual300TRAIN G rows; exact non-G/PILOT preservation. Receipt verification remains offline metadata/token/exposure evidence.",
+  "source_bindings": {
+    "v2_root": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2",
+    "v2_relative_sha256": {
+      "PROTOCOL.json": "5ac5ed48e116ca2e6c8bd9680f8ffb5fa3357e73a37164ee3f395a9f8f81cab9",
+      "README.md": "612e54581fe0fb3ebc6a4608a610291693bb040f27a1a07c461df12a4f5f3861",
+      "tests/test_analysis.py": "f89ea1e40fa38d92064f27bdd5c40d05d6b9e6b00793257a2a9751226c9218c2",
+      "tests/test_data.py": "266cc366cddddc69b48bb052168aafe399a1d81de2fa915e5f43edaee84f52fe",
+      "tests/test_directions.py": "57a2dbdb4ea751b79a8e87097e5f516a63f13b59fcc9ad65ae788625b6102bb7",
+      "tests/test_exposure.py": "2eb5f61d70fc223c9c72d49f69679f383d5f9e360a77e84a7e1adffca2943585",
+      "tests/test_handoff.py": "2f7881688104f006c5cbdec7dee37bbf93e909067a0e3f73bbb4195f542d84f6",
+      "tests/test_safety.py": "646c0f23a9294e3ac40af9bd3857ff605d9bda61aaf85d216f9c890bf93ab413",
+      "tests/test_training.py": "adaf8dcb3fed74ba20a472a02887cfe0fd4d72c9aaf817a949e79d60af16131b",
+      "titan_joint_quality_v1/analysis.py": "58da8ae3f794b20bffcad4dfa86e9ad7b65bfc179db837bae439a834f02b603e",
+      "titan_joint_quality_v1/common.py": "686371e14eaebdacac1902bf50d40ca35b87584a990b6d9630d95e909d53fd32",
+      "titan_joint_quality_v1/data.py": "dd4a39762f805b4d2a99d9c7416cbf454c2d99244ca2f42e4e73faa17d4dba1b",
+      "titan_joint_quality_v1/directions.py": "339cbbdeebf45e08d13a77e3f8bbf6e096a8fbbce1e322816f6e968482e20682",
+      "titan_joint_quality_v1/exposure.py": "40c4bd20ad0c5395263ee526ff60033efde67deb27b162f669d172e9762e9259",
+      "titan_joint_quality_v1/fixtures.py": "e17007cd1c34c608e310404777c46bc47c2d9f5c41077190b725e38dea6b77bb",
+      "titan_joint_quality_v1/source.py": "8fb196d7dadd6ee9ede554de53d6914f3e5fb047db2a9dfab9f9b7a588a2e876",
+      "titan_joint_quality_v1/tokenizer_adapter.py": "91f839fb7419580b37cde78e22c1a85e23bbaf38c9df3b91044c04f556f4dd18",
+      "titan_joint_quality_v1/training.py": "6277caba6d14d42f59b67b6943a27a2de572ad3641eb168e257b0aa093ce4ba9",
+      "titan_joint_quality_v1/__init__.py": "91a483aa9c8cb0b4e281600fe91f93ddc2c916b8975db669f0400621a6715357",
+      "titan_joint_quality_v1/__main__.py": "a24b1d822dcd42c4d0b0d47873c171f20920900e3d57c36efb8282916bdcc046"
+    },
+    "v3_root": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3",
+    "v3_relative_sha256": {
+      "PROTOCOL.json": "594b6d22bdda4682a4802eba16cf87df35fe84528a45227d620163d62cc4a474",
+      "README.md": "1b2026d231bf211f627f595b6c37d81f3dd7dcc611445653f1d59b072e3e34fc",
+      "tests/test_analysis.py": "f89ea1e40fa38d92064f27bdd5c40d05d6b9e6b00793257a2a9751226c9218c2",
+      "tests/test_data.py": "5df15ee9e27342bb5fb3c5ab94750dd3afb0d74200ba9c8d677ae5cf1c585597",
+      "tests/test_directions.py": "57a2dbdb4ea751b79a8e87097e5f516a63f13b59fcc9ad65ae788625b6102bb7",
+      "tests/test_exposure.py": "2eb5f61d70fc223c9c72d49f69679f383d5f9e360a77e84a7e1adffca2943585",
+      "tests/test_handoff.py": "2f7881688104f006c5cbdec7dee37bbf93e909067a0e3f73bbb4195f542d84f6",
+      "tests/test_safety.py": "646c0f23a9294e3ac40af9bd3857ff605d9bda61aaf85d216f9c890bf93ab413",
+      "tests/test_selected_authority.py": "25487f82a86e714cd0b0fd1bbaf841fdf8c132511e9615b99a1c77c388f95128",
+      "tests/test_training.py": "adaf8dcb3fed74ba20a472a02887cfe0fd4d72c9aaf817a949e79d60af16131b",
+      "titan_joint_quality_v1/analysis.py": "58da8ae3f794b20bffcad4dfa86e9ad7b65bfc179db837bae439a834f02b603e",
+      "titan_joint_quality_v1/common.py": "af33709b46ae99676ee615c5228bb5211769a398ef5c06a843507b69ed69a408",
+      "titan_joint_quality_v1/data.py": "0f493036927066c4902c2939021dcae75576c615673fc56b3b76bda146fc7b2b",
+      "titan_joint_quality_v1/directions.py": "339cbbdeebf45e08d13a77e3f8bbf6e096a8fbbce1e322816f6e968482e20682",
+      "titan_joint_quality_v1/exposure.py": "40c4bd20ad0c5395263ee526ff60033efde67deb27b162f669d172e9762e9259",
+      "titan_joint_quality_v1/fixtures.py": "e17007cd1c34c608e310404777c46bc47c2d9f5c41077190b725e38dea6b77bb",
+      "titan_joint_quality_v1/source.py": "8fb196d7dadd6ee9ede554de53d6914f3e5fb047db2a9dfab9f9b7a588a2e876",
+      "titan_joint_quality_v1/tokenizer_adapter.py": "91f839fb7419580b37cde78e22c1a85e23bbaf38c9df3b91044c04f556f4dd18",
+      "titan_joint_quality_v1/training.py": "6277caba6d14d42f59b67b6943a27a2de572ad3641eb168e257b0aa093ce4ba9",
+      "titan_joint_quality_v1/__init__.py": "91a483aa9c8cb0b4e281600fe91f93ddc2c916b8975db669f0400621a6715357",
+      "titan_joint_quality_v1/__main__.py": "a24b1d822dcd42c4d0b0d47873c171f20920900e3d57c36efb8282916bdcc046"
+    },
+    "changed_original_files": [
+      "PROTOCOL.json",
+      "README.md",
+      "tests/test_data.py",
+      "titan_joint_quality_v1/common.py",
+      "titan_joint_quality_v1/data.py"
+    ],
+    "unchanged_original_files": [
+      "tests/test_analysis.py",
+      "tests/test_directions.py",
+      "tests/test_exposure.py",
+      "tests/test_handoff.py",
+      "tests/test_safety.py",
+      "tests/test_training.py",
+      "titan_joint_quality_v1/__init__.py",
+      "titan_joint_quality_v1/__main__.py",
+      "titan_joint_quality_v1/analysis.py",
+      "titan_joint_quality_v1/directions.py",
+      "titan_joint_quality_v1/exposure.py",
+      "titan_joint_quality_v1/fixtures.py",
+      "titan_joint_quality_v1/source.py",
+      "titan_joint_quality_v1/tokenizer_adapter.py",
+      "titan_joint_quality_v1/training.py"
+    ],
+    "new_files": [
+      "tests/test_selected_authority.py"
+    ]
+  },
+  "actual_input_bindings": {
+    "train.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\data-002\\train.jsonl",
+      "sha256": "9c61847f15cdb7a5e9a213a39b847e899c8dd6a21cf95ae4224d9bb223811d72"
+    },
+    "pilot.prompts.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\data-002\\pilot.prompts.jsonl",
+      "sha256": "1ba852d8b0bb78d42c543a876e24a38987284095ff17f3ec9887bd7882d46bf8"
+    },
+    "pilot.references.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\data-002\\pilot.references.jsonl",
+      "sha256": "51b3b96d8e557ddcf046efbb7a8afc81d1b49bbadd1289fb41023a7936aced2d"
+    }
+  },
+  "base_input_bindings": {
+    "train.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2-runs\\data-001\\train.jsonl",
+      "sha256": "6c82a98a4d66c64d15aa813dc1afa3f20898996c00f2d8590158a8eec8e1b11d"
+    },
+    "pilot.prompts.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2-runs\\data-001\\pilot.prompts.jsonl",
+      "sha256": "1ba852d8b0bb78d42c543a876e24a38987284095ff17f3ec9887bd7882d46bf8"
+    },
+    "pilot.references.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2-runs\\data-001\\pilot.references.jsonl",
+      "sha256": "51b3b96d8e557ddcf046efbb7a8afc81d1b49bbadd1289fb41023a7936aced2d"
+    }
+  },
+  "context_bindings": {
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\selected-authority-v3-independent-001.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\selected-authority-v3-independent-001.py",
+      "sha256": "fe68d328951ffe3028c8474555bede0f1ca183e96dfa6fb8f32e312aaae684f3"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\data-002\\DATA_MANIFEST.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\data-002\\DATA_MANIFEST.json",
+      "sha256": "2be9c919fd4bedd67db63b52c606a29dd92abd02a052473f7c31433857620e42"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\semantic-admission-independent-001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\semantic-admission-independent-001.json",
+      "sha256": "f948234a38fb0d90aa89f11eeaaf273f42864a4e8525588c51fdfb71b45607d1"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\semantic-admission-independent-001-bindings-addendum.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\semantic-admission-independent-001-bindings-addendum.json",
+      "sha256": "cbb11afed4829cba8dac7566c212a1a17d40167f9d284cca095d26e53ffe3747"
+    }
+  },
+  "receipt_bindings": {
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\FINAL_MECHANICAL_VERIFICATION_002.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\FINAL_MECHANICAL_VERIFICATION_002.json",
+      "sha256": "ec2caed6e59cbf05f0ad09d0b90ea55ae92affdced0a6229894a700b47d0377a"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\source-002.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\source-002.json",
+      "sha256": "b349e6c742df86ad3fd3db0ad23b820ff016c5139a98b4d1b88549df26fd8353"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\exposure-002\\EXPOSURE_PLAN.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\exposure-002\\EXPOSURE_PLAN.json",
+      "sha256": "4bac0c114da6c4699296930b8a826201650aeb097b8b89ac62e26f133da86cc6"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\exposure-002\\TOKEN_COUNT_CONTRACT.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\exposure-002\\TOKEN_COUNT_CONTRACT.json",
+      "sha256": "3de99cec1f164285ad196ce1ec5a5cb929ea0e92a564c5759f76e4ef2eabadfc"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\handoff-002\\OWNER_HANDOFF.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\handoff-002\\OWNER_HANDOFF.json",
+      "sha256": "e92e5c8f27e01ec8603808a3fab2d4afc8c03e7813d34b95fe9d11a7db95821f"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\pytest-affected-002.log": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v3-runs\\pytest-affected-002.log",
+      "sha256": "2f327c6f20587d79b42665338af1686fda970d6be5c5afabbf8b0386ed9b07f5"
+    }
+  },
+  "preservation": {
+    "grounding_replaced": 300,
+    "non_grounding_rows_exact": 1700,
+    "pilot.prompts.jsonl_byte_identical": true,
+    "pilot.references.jsonl_byte_identical": true
+  },
+  "independent_public_checks": {
+    "rows": 300,
+    "independently_derived_truth_matches": 300,
+    "target_wrapper_matches": 300,
+    "old_sourceblind_prefix_control_correct": 150,
+    "parents": 150,
+    "queryblind_identical_distinct_truth_pairs": 150,
+    "sourceblind_identical_distinct_truth_pairs": 150
+  },
+  "qualification_receipt_review": {
+    "source_status": "PASS_METADATA_ONLY",
+    "affected_tests": "67 passed in 12.37s (root log; not rerun)",
+    "final_source_archive_matches_all21files": true,
+    "root_receipt_hashes_match": true,
+    "handoff_source_closure_matches_all19Python_files": true,
+    "final_data_bytes_identical_to_initial_repaired_epoch": true,
+    "selected_rows": 200,
+    "selected_parents": 100,
+    "updates": 28,
+    "processed_tokens_per_arm": 53913,
+    "max_row_tokens": 626,
+    "max_group_tokens": 2048,
+    "joint_common_labels": 1653,
+    "reasoning_only_labels": 785,
+    "processed_role_shares": {
+      "reasoning": 0.49310926863650695,
+      "preservation": 0.2527219780015952,
+      "grounding": 0.15565819004692746,
+      "format": 0.09851056331497042
+    },
+    "every_update_reasoning_labels": true,
+    "whole_parent_selection": true,
+    "row_response_EOS_masks": true,
+    "native_qualification": false,
+    "qualification_counts": null,
+    "complete_native_forecast": null
+  },
+  "known_source_counts": {
+    "rumor": 75,
+    "charter": 75
+  },
+  "UNKNOWN_source_counts": {
+    "rumor": 75,
+    "charter": 75
+  },
+  "UNKNOWN_kind_parent_counts": {
+    "conflict": 75,
+    "missing": 75
+  },
+  "UNKNOWN_kind_known_source_parent_counts": {
+    "conflict:rumor": 38,
+    "missing:rumor": 37,
+    "conflict:charter": 37,
+    "missing:charter": 38
+  },
+  "fact_value_shape_occurrences": {
+    "('charter', 'v', 7)": 3002,
+    "('rumor', 'v', 7)": 2998
+  },
+  "selected_public_examples": [
+    {
+      "case_id": "train.grounding.0017.v0",
+      "train_line": 1,
+      "query": {
+        "attribute": "status",
+        "authoritative_source": "rumor",
+        "entity": "ewzpwfc"
+      },
+      "matching_public_facts": [
+        {
+          "attribute": "status",
+          "entity": "ewzpwfc",
+          "source": "charter",
+          "value": "vpednzh"
+        },
+        {
+          "attribute": "status",
+          "entity": "ewzpwfc",
+          "source": "charter",
+          "value": "vdegaku"
+        },
+        {
+          "attribute": "status",
+          "entity": "ewzpwfc",
+          "source": "rumor",
+          "value": "vhtsxna"
+        }
+      ],
+      "independent_truth": "vhtsxna",
+      "selected_source_distinct_values": 1,
+      "gold_matches": true
+    },
+    {
+      "case_id": "train.grounding.0126.v1",
+      "train_line": 4,
+      "query": {
+        "attribute": "status",
+        "authoritative_source": "rumor",
+        "entity": "eyabmjz"
+      },
+      "matching_public_facts": [
+        {
+          "attribute": "status",
+          "entity": "eyabmjz",
+          "source": "rumor",
+          "value": "vsqenaq"
+        }
+      ],
+      "independent_truth": "vsqenaq",
+      "selected_source_distinct_values": 1,
+      "gold_matches": true
+    },
+    {
+      "case_id": "train.grounding.0075.v1",
+      "train_line": 5,
+      "query": {
+        "attribute": "zone",
+        "authoritative_source": "charter",
+        "entity": "eyrkszz"
+      },
+      "matching_public_facts": [
+        {
+          "attribute": "zone",
+          "entity": "eyrkszz",
+          "source": "charter",
+          "value": "vyqbjmt"
+        },
+        {
+          "attribute": "zone",
+          "entity": "eyrkszz",
+          "source": "rumor",
+          "value": "vwacpdc"
+        },
+        {
+          "attribute": "zone",
+          "entity": "eyrkszz",
+          "source": "rumor",
+          "value": "vkeykud"
+        }
+      ],
+      "independent_truth": "vyqbjmt",
+      "selected_source_distinct_values": 1,
+      "gold_matches": true
+    },
+    {
+      "case_id": "train.grounding.0067.v0",
+      "train_line": 8,
+      "query": {
+        "attribute": "color",
+        "authoritative_source": "rumor",
+        "entity": "enhzthg"
+      },
+      "matching_public_facts": [
+        {
+          "attribute": "color",
+          "entity": "enhzthg",
+          "source": "rumor",
+          "value": "vyhxcuc"
+        },
+        {
+          "attribute": "color",
+          "entity": "enhzthg",
+          "source": "rumor",
+          "value": "vnbupwg"
+        },
+        {
+          "attribute": "color",
+          "entity": "enhzthg",
+          "source": "charter",
+          "value": "vsqezkk"
+        }
+      ],
+      "independent_truth": "UNKNOWN",
+      "selected_source_distinct_values": 2,
+      "gold_matches": true
+    },
+    {
+      "case_id": "train.grounding.0072.v1",
+      "train_line": 36,
+      "query": {
+        "attribute": "status",
+        "authoritative_source": "rumor",
+        "entity": "evrpkut"
+      },
+      "matching_public_facts": [
+        {
+          "attribute": "status",
+          "entity": "evrpkut",
+          "source": "charter",
+          "value": "vkmgewc"
+        }
+      ],
+      "independent_truth": "UNKNOWN",
+      "selected_source_distinct_values": 0,
+      "gold_matches": true
+    },
+    {
+      "case_id": "train.grounding.0086.v0",
+      "train_line": 62,
+      "query": {
+        "attribute": "status",
+        "authoritative_source": "charter",
+        "entity": "ekhnkcg"
+      },
+      "matching_public_facts": [
+        {
+          "attribute": "status",
+          "entity": "ekhnkcg",
+          "source": "rumor",
+          "value": "vensrze"
+        }
+      ],
+      "independent_truth": "UNKNOWN",
+      "selected_source_distinct_values": 0,
+      "gold_matches": true
+    },
+    {
+      "case_id": "train.grounding.0085.v1",
+      "train_line": 95,
+      "query": {
+        "attribute": "color",
+        "authoritative_source": "charter",
+        "entity": "ecwzknb"
+      },
+      "matching_public_facts": [
+        {
+          "attribute": "color",
+          "entity": "ecwzknb",
+          "source": "charter",
+          "value": "vmxswcv"
+        },
+        {
+          "attribute": "color",
+          "entity": "ecwzknb",
+          "source": "rumor",
+          "value": "vajjbxr"
+        },
+        {
+          "attribute": "color",
+          "entity": "ecwzknb",
+          "source": "charter",
+          "value": "vuqaepd"
+        }
+      ],
+      "independent_truth": "UNKNOWN",
+      "selected_source_distinct_values": 2,
+      "gold_matches": true
+    },
+    {
+      "case_id": "train.grounding.0028.v0",
+      "train_line": 147,
+      "query": {
+        "attribute": "color",
+        "authoritative_source": "charter",
+        "entity": "etrmdfp"
+      },
+      "matching_public_facts": [
+        {
+          "attribute": "color",
+          "entity": "etrmdfp",
+          "source": "charter",
+          "value": "vqmucve"
+        }
+      ],
+      "independent_truth": "vqmucve",
+      "selected_source_distinct_values": 1,
+      "gold_matches": true
+    }
+  ],
+  "stateless_pair_bounds": {
+    "queryblind_accuracy_upper_bound": 0.5,
+    "sourceblind_accuracy_upper_bound": 0.5,
+    "reason": "Each actualpair has identical respective projected public inputs and wrapper/system, but distinct verified truths. A deterministic stateless policy produces one answer per identical projection, hence matches at most one member."
+  },
+  "static_review": [
+    {
+      "finding": "Explicit public selected-source rule matches A distinct-value set and B conflict-detecting scan. Repeated equalvalues remain one distinctvalue; missing/conflicting selected-source evidence isUNKNOWN; other sources cannot supply answers.",
+      "location": "data.py:61,174-178,270-279"
+    },
+    {
+      "finding": "Sourceblind projection first requires full exact canonical rendered messages, then removes selected-source and fact-source fields. It is an abstract erasure certificate, not a new legitimate sourceful evaluationprompt. Queryblind projection removes the entire query. Both actualpair equalities verified independently.",
+      "location": "data.py:674-684,721-726"
+    },
+    {
+      "finding": "Review found P2: initial projection discarded extra public messages/text before equalinput certification. Corrected source rejects noncanonical full messages before erasure. Four existingepoch rowmutation regressions cover extraassistant, extrauser, trailing suffix, and customsystem hints. Superseded source/data qualification is kept separate from this finalsource epoch.",
+      "location": "data.py:677-679; tests/test_selected_authority.py:test_source_blind_projection_rejects_different_full_public_hints_on_existing_row"
+    },
+    {
+      "finding": "Generation binds exact existing open v2 seed17 bytes and compiler pin; hashing/parsing uses the same read-once inputbuffer. Other public generationseeds refuse. Isolatedrepair RNG depends on suppliedbaseworld andrepairseed.",
+      "location": "data.py:567-580,583-613,664-671"
+    },
+    {
+      "finding": "The puretransform records inputdigest and suppliedbasepin but does not authenticate futurefreshdrawcreation. fresh_draw_creation_verifiedfalse and independentdrawintegrationPENDING correctly keep that future qualification open.",
+      "location": "data.py:616-624,657-658; PROTOCOL.json data.input_epoch"
+    },
+    {
+      "finding": "Native/confirmation CLI dispatch remains closed before outputcreation; confirmation split refuses before baseinputreads. common.py includes v1/v2/v3 source-root outputrefusal. Runtime/tokenizer/optimizer/analysis files are unchanged.",
+      "location": "__main__.py:144-145; data.py:509-511,664-668; common.py:10,51-59"
+    }
+  ],
+  "limits": [
+    "The G300 actualtruth/projection checks are independent standard-library derivations, not blind/human admission or trainedmodel evidence.",
+    "PILOT G remains Horn, including the49/64copy and56/64one-round floors. Preserving it creates no held-out selected-authority evaluation or source-sensitive generalization result.",
+    "Common value alphabet/prefix removes the discovered prefixproxy; the actualsourceblind paircertificate is stronger than relying on a distribution claim. It assumes deterministicstateless policies without metadata/history leakage.",
+    "Puretransform suppliedprovenance is a future integration seam. Freshdraw creation, rights/ancestry/overlap, usablebaseline denominators, exactnativebridge/qualification/cost and action-specificauthority remain open.",
+    "Existing token/exposure receipts must bind thissource/data epoch; priorv1/v2/native receipts cannotqualify it. No qualitywinner or instrumentfreeze is declared."
+  ],
+  "boundaries": {
+    "native_model_calls": 0,
+    "training_calls": 0,
+    "protected_or_confirmation_reads": 0,
+    "new_bank_generated_by_reviewer": false,
+    "fixture_tests_run_by_reviewer": false,
+    "source_or_existing_data_modified": false,
+    "owner_messages": 0,
+    "permits_changed": false,
+    "serving_changes": false,
+    "native_admission_frozen": false,
+    "scientific_model_quality_proved": false
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "schema": "TITAN_OFFLINE_DATA_V1",
+  "status": "DRAFT_UNREVIEWED_NOT_FROZEN",
+  "seed": 17,
+  "train": {
+    "rows": 2000,
+    "parents": 1000,
+    "domain_counts": {
+      "grounding": 300,
+      "reasoning": 1000,
+      "format": 200,
+      "transition": 166,
+      "arithmetic": 166,
+      "long_context": 168
+    },
+    "role_counts": {
+      "grounding": 300,
+      "reasoning": 1000,
+      "format": 200,
+      "preservation": 500
+    },
+    "format_counts": {
+      "tag": 668,
+      "plain": 666,
+      "json": 666
+    },
+    "content_duplicate_count": 0,
+    "teacher_agreement_count": 2000
+  },
+  "pilot": {
+    "rows": 384,
+    "parents": 192,
+    "domain_counts": {
+      "long_context": 64,
+      "format": 64,
+      "transition": 64,
+      "grounding": 64,
+      "arithmetic": 64,
+      "reasoning": 64
+    },
+    "role_counts": {
+      "preservation": 192,
+      "format": 64,
+      "grounding": 64,
+      "reasoning": 64
+    },
+    "format_counts": {
+      "tag": 128,
+      "plain": 128,
+      "json": 128
+    },
+    "content_duplicate_count": 0,
+    "teacher_agreement_count": 384
+  },
+  "partition": {
+    "case_id_overlap_count": 0,
+    "parent_id_overlap_count": 0,
+    "family_id_overlap_count": 0,
+    "rendered_content_overlap_count": 0,
+    "generator_mechanisms": {
+      "train": {
+        "reasoning": "program",
+        "transition": "item_events",
+        "arithmetic": "baskets",
+        "grounding": "authority",
+        "long_context": "latest_record",
+        "format": "field_transform"
+      },
+      "pilot": {
+        "reasoning": "dependencies",
+        "transition": "fsm",
+        "arithmetic": "sharing",
+        "grounding": "horn",
+        "long_context": "alias_join",
+        "format": "filtered_roster"
+      }
+    },
+    "overlap_review": "UNREVIEWED",
+    "semantic_generalization_established": false
+  },
+  "teacher": {
+    "kind": "two_algorithmically_separate_prompt_only_symbolic_solvers",
+    "source_digest": "334c44378c067435b3380472c1b76a35dfbd614fc6eeaeedf53df257106079f9",
+    "agreement_train": 2000,
+    "agreement_pilot": 384,
+    "model_teacher_calls": 0,
+    "independence_review": "UNREVIEWED"
+  },
+  "artifact_sha256": {
+    "train.jsonl": "bd5d007b12daf10a4651bb7705fa030c91120ce93b8cee7a162eb65a083652ec",
+    "pilot.prompts.jsonl": "12b4c44c42da96f9f24a11c1adb9b1058b19e7a51c826ebbc7987c517419fa02",
+    "pilot.references.jsonl": "239c972803b5ae742a417da43b795d8298e770365095a44016754dadb68fa868"
+  },
+  "corpus_digest": "b117dd03bc86abc2c907106c9184945551b2e996c68d7b3712dd0e29e9aefb38",
+  "floors": {
+    "train": {
+      "evidence_kind": "OFFLINE_SYNTHETIC_SHORTCUT_DIAGNOSTIC_NOT_NATIVE",
+      "status": "UNREVIEWED_NO_ACCEPTANCE_GATE",
+      "scope": "raw answers; best constant is retrospective within domain",
+      "limitation": "These three floors do not rule out other shortcuts; they are diagnostic and have no acceptance gate.",
+      "domains": {
+        "reasoning": {
+          "rows": 1000,
+          "retrospective_best_constant_correct": 15,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 474,
+          "constant_accuracy": 0.015,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.474
+        },
+        "transition": {
+          "rows": 166,
+          "retrospective_best_constant_correct": 62,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 81,
+          "constant_accuracy": 0.37349397590361444,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.4879518072289157
+        },
+        "arithmetic": {
+          "rows": 166,
+          "retrospective_best_constant_correct": 6,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 95,
+          "constant_accuracy": 0.03614457831325301,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.572289156626506
+        },
+        "grounding": {
+          "rows": 300,
+          "retrospective_best_constant_correct": 150,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 86,
+          "constant_accuracy": 0.5,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.2866666666666667
+        },
+        "long_context": {
+          "rows": 168,
+          "retrospective_best_constant_correct": 2,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 50,
+          "constant_accuracy": 0.011904761904761904,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.2976190476190476
+        },
+        "format": {
+          "rows": 200,
+          "retrospective_best_constant_correct": 2,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 0,
+          "constant_accuracy": 0.01,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.0
+        }
+      }
+    },
+    "pilot": {
+      "evidence_kind": "OFFLINE_SYNTHETIC_SHORTCUT_DIAGNOSTIC_NOT_NATIVE",
+      "status": "UNREVIEWED_NO_ACCEPTANCE_GATE",
+      "scope": "raw answers; best constant is retrospective within domain",
+      "limitation": "These three floors do not rule out other shortcuts; they are diagnostic and have no acceptance gate.",
+      "domains": {
+        "reasoning": {
+          "rows": 64,
+          "retrospective_best_constant_correct": 4,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 0,
+          "constant_accuracy": 0.0625,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.0
+        },
+        "transition": {
+          "rows": 64,
+          "retrospective_best_constant_correct": 21,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 19,
+          "constant_accuracy": 0.328125,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.296875
+        },
+        "arithmetic": {
+          "rows": 64,
+          "retrospective_best_constant_correct": 9,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 20,
+          "constant_accuracy": 0.140625,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.3125
+        },
+        "grounding": {
+          "rows": 64,
+          "retrospective_best_constant_correct": 32,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 32,
+          "constant_accuracy": 0.5,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.5
+        },
+        "long_context": {
+          "rows": 64,
+          "retrospective_best_constant_correct": 2,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 1,
+          "constant_accuracy": 0.03125,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.015625
+        },
+        "format": {
+          "rows": 64,
+          "retrospective_best_constant_correct": 2,
+          "copy_query_correct": 0,
+          "query_blind_first_available_correct": 1,
+          "constant_accuracy": 0.03125,
+          "copy_accuracy": 0.0,
+          "query_blind_accuracy": 0.015625
+        }
+      }
+    }
+  },
+  "input_projection": "pilot prompts contain case_id and messages only; IDs are not rendered inputs",
+  "targets": "concise truth targets; EOS must be appended later by the bound tokenizer",
+  "deduplication": "regenerate only exact rendered-content collisions; no teacher outcome selection",
+  "native_model_calls": 0,
+  "native_authorized": false,
+  "training_authorized": false,
+  "confirmation_materialized": false,
+  "confirmation_authorized": false,
+  "native_token_caps_verified": false,
+  "overlap_review": "UNREVIEWED",
+  "frozen": false
+}

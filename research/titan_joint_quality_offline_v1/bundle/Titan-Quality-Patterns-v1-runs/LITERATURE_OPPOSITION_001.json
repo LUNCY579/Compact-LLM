@@ -1,0 +1,41 @@
+{
+  "created_utc": "2026-10-05T21:52:48.829370+00:00",
+  "status": "PRIMARY_SOURCE_RESEARCH_NOT_RINEYA_NATIVE_EVIDENCE",
+  "native_model_calls": 0,
+  "sources": [
+    {
+      "title": "DARE / Language Models are Super Mario",
+      "version": "arXiv2311.03099v3,13June2024",
+      "url": "https://arxiv.org/html/2311.03099v3",
+      "sections": [
+        "3.1",
+        "4.4",
+        "4.5",
+        "4.6"
+      ],
+      "result_scope": "BERT/RoBERTa and larger decoder SFT models; preservation/merging of task abilities",
+      "finding": "Random dropping with inversekeep rescaling preserves fixed-input linear embeddings in expectation. Reported task experiments usually favor DARE over unrescaled magnitude pruning at high drops. Wrong backbone or dropping full weights can fail.",
+      "r_falsifier": "Local Titan retention repair may reflect reducing a damaging update; preserving its expected effect could preserve damage. Neither linear expectation nor high cosine guarantees nonlinear generated correctness.",
+      "scope_transfer": "Not validated for this596M parent or its new jointdelta."
+    },
+    {
+      "title": "WiSE-FT / Robust fine-tuning of zero-shot models",
+      "version": "arXiv2109.01903v3,CVPR2022",
+      "url": "https://arxiv.org/abs/2109.01903",
+      "result_scope": "CLIP/ALIGN vision classification and distribution shifts",
+      "finding": "Global interpolation between original and fine-tuned weights improved reported robustness/target tradeoffs.",
+      "r_falsifier": "A simple global attenuation must be distinguished from per-tensor normmatch and coordinate selection. Vision outcomes do not qualify Titan language behavior."
+    },
+    {
+      "title": "TIES-Merging",
+      "version": "arXiv2306.01708v2,NeurIPS2023",
+      "url": "https://arxiv.org/abs/2306.01708",
+      "result_scope": "Multi-task model merging",
+      "finding": "The method trims small changes, elects signs and merges aligned components.",
+      "r_falsifier": "Local lowcosine/disjoint-coordinate results do not prove independence; a donor must demonstrate actual specific skill and retained source behavior."
+    }
+  ],
+  "decision": "Retain the existing prospective dense/top25/per-tensor normmatch controls without automatic expansion. Document DARE and global interpolation as distinct hypotheses requiring their own registered matched comparisons if justified. No use of paper benchmarks as Titan capability evidence.",
+  "goal_completion": false,
+  "next_evidence": "Owner-qualified real donor, same source/data/decoding, preserved individual correct cases and fresh independent draws."
+}

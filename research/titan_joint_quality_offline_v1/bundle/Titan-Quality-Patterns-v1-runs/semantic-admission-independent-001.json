@@ -1,0 +1,1133 @@
+{
+  "schema": "TITAN_SEMANTIC_ADMISSION_INDEPENDENT_REVIEW_V1",
+  "created_utc": "2026-10-05T23:11:09.579906+00:00",
+  "status": "REPORTED_CONTROLS_CONFIRMED_SELECTED_PUBLIC_TRUTHS_MATCH_NATIVE_ADMISSION_OPEN",
+  "review_identity": {
+    "compiler_author": false,
+    "fresh_independent_agent": true,
+    "compiler_teachers_called": false,
+    "prior_reports_and_compiler_source_read": true,
+    "blind_review": false,
+    "independent_human_review": false
+  },
+  "scope": "Existing open v2 only. Full300authority and64Horn rows for control replication; first existing two-row parent per kind for selected public truth/wording review. Not a full384/2000-row semantic admission.",
+  "input_bindings": {
+    "train.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2-runs\\data-001\\train.jsonl",
+      "sha256": "6c82a98a4d66c64d15aa813dc1afa3f20898996c00f2d8590158a8eec8e1b11d"
+    },
+    "pilot.prompts.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2-runs\\data-001\\pilot.prompts.jsonl",
+      "sha256": "1ba852d8b0bb78d42c543a876e24a38987284095ff17f3ec9887bd7882d46bf8"
+    },
+    "pilot.references.jsonl": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2-runs\\data-001\\pilot.references.jsonl",
+      "sha256": "51b3b96d8e557ddcf046efbb7a8afc81d1b49bbadd1289fb41023a7936aced2d"
+    }
+  },
+  "script_and_context_bindings": {
+    "README.md": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1\\README.md",
+      "sha256": "bd6b8ea00f3bcfc79ca92d12bd3070fe240fd7fb14a3388ade83fd53c114a71c"
+    },
+    "PROTOCOL.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2\\PROTOCOL.json",
+      "sha256": "5ac5ed48e116ca2e6c8bd9680f8ffb5fa3357e73a37164ee3f395a9f8f81cab9"
+    },
+    "data.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Joint-Quality-Pilot-v2\\titan_joint_quality_v1\\data.py",
+      "sha256": "dd4a39762f805b4d2a99d9c7416cbf454c2d99244ca2f42e4e73faa17d4dba1b"
+    },
+    "AUTHOR_SEMANTIC_CROSSCHECK_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\AUTHOR_SEMANTIC_CROSSCHECK_001.json",
+      "sha256": "bc623627e2b03f98bc8b0aeed4634c1a3fe237def730b21cc5d779d307c7b460"
+    },
+    "SOURCE_PROXY_AUDIT_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\SOURCE_PROXY_AUDIT_001.json",
+      "sha256": "051bd80fc816b02bb355e81d0cd6df529f4998985a4dc85d8f4a4972f0cec1dd"
+    },
+    "ROOT_SEMANTIC_REPLAY_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\ROOT_SEMANTIC_REPLAY_001.json",
+      "sha256": "c481af261072d2b35f2b88c500d0af191d09d66444d4b65c0af364b11464d8ba"
+    },
+    "GROUNDING_REPAIR_PROPOSAL_001.json": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\GROUNDING_REPAIR_PROPOSAL_001.json",
+      "sha256": "0bc492490e4be2293ebb03b8dd1515e67abc75773f1ff109e372a5aee8584e47"
+    },
+    "semantic-admission-independent-001.py": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Titan-Quality-Patterns-v1-runs\\semantic-admission-independent-001.py",
+      "sha256": "25d7d0cf009072453536a23d6b865fcb5ddd927967d62a991dc3f20466ea421a"
+    }
+  },
+  "authority_control": {
+    "rows": 300,
+    "source_aware_gold_matches": 300,
+    "source_blind_gold_matches": 300,
+    "source_blind_unknown": 150,
+    "source_blind_switched_truth_matches": 0
+  },
+  "selected_source_counts": {
+    "charter": 300
+  },
+  "fact_source_value_prefix_occurrences": {
+    "rumor:r": 4500,
+    "charter:v": 3000
+  },
+  "authority_examples": [
+    {
+      "case_id": "train.grounding.0017.v0",
+      "train_line": 1,
+      "query": {
+        "attribute": "status",
+        "entity": "ewzpwfc"
+      },
+      "actual_selected_source": "charter",
+      "actual_gold": "UNKNOWN",
+      "blind_prediction": "UNKNOWN",
+      "in_memory_switched_source": "rumor",
+      "proper_switched_truth": "rfrkubh",
+      "matching_public_facts": [
+        {
+          "attribute": "status",
+          "entity": "ewzpwfc",
+          "source": "rumor",
+          "value": "rfrkubh"
+        }
+      ],
+      "switched_gold_persisted": false
+    },
+    {
+      "case_id": "train.grounding.0075.v1",
+      "train_line": 5,
+      "query": {
+        "attribute": "color",
+        "entity": "epctxzd"
+      },
+      "actual_selected_source": "charter",
+      "actual_gold": "vfjfjvm",
+      "blind_prediction": "vfjfjvm",
+      "in_memory_switched_source": "rumor",
+      "proper_switched_truth": "rewjysv",
+      "matching_public_facts": [
+        {
+          "attribute": "color",
+          "entity": "epctxzd",
+          "source": "rumor",
+          "value": "rewjysv"
+        },
+        {
+          "attribute": "color",
+          "entity": "epctxzd",
+          "source": "charter",
+          "value": "vfjfjvm"
+        }
+      ],
+      "switched_gold_persisted": false
+    }
+  ],
+  "horn_control": {
+    "rows": 64,
+    "full_closure_gold_matches": 64,
+    "copy_correct": 49,
+    "copy_false_abstention": 15,
+    "copy_unsupported": 0,
+    "one_round_correct": 56,
+    "one_round_false_abstention": 8,
+    "one_round_unsupported": 0
+  },
+  "horn_examples": {
+    "unsupported": {
+      "case_id": "pilot.grounding.0021.v0",
+      "pilot_line": 7,
+      "query": "ptbktdg",
+      "facts": [
+        "pppjgmy",
+        "pgabpju"
+      ],
+      "rules": [
+        {
+          "conclusion": "pzhtzrf",
+          "premises": [
+            "pynkxut"
+          ]
+        },
+        {
+          "conclusion": "ptbktdg",
+          "premises": [
+            "phbpdjb"
+          ]
+        },
+        {
+          "conclusion": "phbpdjb",
+          "premises": [
+            "pwvwphv"
+          ]
+        },
+        {
+          "conclusion": "pynkxut",
+          "premises": [
+            "pppjgmy"
+          ]
+        }
+      ],
+      "gold": "UNKNOWN",
+      "derived_truth": "UNKNOWN",
+      "new_atoms_by_round": [
+        [
+          "pgabpju",
+          "pppjgmy"
+        ],
+        [
+          "pynkxut"
+        ],
+        [
+          "pzhtzrf"
+        ]
+      ]
+    },
+    "direct_fact": {
+      "case_id": "pilot.grounding.0029.v1",
+      "pilot_line": 17,
+      "query": "pgvhbct",
+      "facts": [
+        "pgvhbct",
+        "pkpjbfe"
+      ],
+      "rules": [
+        {
+          "conclusion": "pruxsmc",
+          "premises": [
+            "pqnwyeg"
+          ]
+        },
+        {
+          "conclusion": "pepceqq",
+          "premises": [
+            "pfsckwc"
+          ]
+        },
+        {
+          "conclusion": "pqnwyeg",
+          "premises": [
+            "pkpjbfe"
+          ]
+        },
+        {
+          "conclusion": "pfsckwc",
+          "premises": [
+            "pfxwdcd"
+          ]
+        }
+      ],
+      "gold": "SUPPORTED",
+      "derived_truth": "SUPPORTED",
+      "new_atoms_by_round": [
+        [
+          "pgvhbct",
+          "pkpjbfe"
+        ],
+        [
+          "pqnwyeg"
+        ],
+        [
+          "pruxsmc"
+        ]
+      ]
+    },
+    "two_or_more_rounds": {
+      "case_id": "pilot.grounding.0017.v1",
+      "pilot_line": 41,
+      "query": "pjhkvxb",
+      "facts": [
+        "ppxjeqh",
+        "pqkdwch"
+      ],
+      "rules": [
+        {
+          "conclusion": "pmchncn",
+          "premises": [
+            "pjrffzs"
+          ]
+        },
+        {
+          "conclusion": "pqepzvc",
+          "premises": [
+            "pmchncn"
+          ]
+        },
+        {
+          "conclusion": "pjhkvxb",
+          "premises": [
+            "ptxpuat"
+          ]
+        },
+        {
+          "conclusion": "ptxpuat",
+          "premises": [
+            "ppxjeqh"
+          ]
+        }
+      ],
+      "gold": "SUPPORTED",
+      "derived_truth": "SUPPORTED",
+      "new_atoms_by_round": [
+        [
+          "ppxjeqh",
+          "pqkdwch"
+        ],
+        [
+          "ptxpuat"
+        ],
+        [
+          "pjhkvxb"
+        ]
+      ]
+    },
+    "one_round": {
+      "case_id": "pilot.grounding.0010.v0",
+      "pilot_line": 110,
+      "query": "pnfhzbz",
+      "facts": [
+        "pybfrmc",
+        "pcqbmzt"
+      ],
+      "rules": [
+        {
+          "conclusion": "phjndaz",
+          "premises": [
+            "prfkwem"
+          ]
+        },
+        {
+          "conclusion": "pnfhzbz",
+          "premises": [
+            "pybfrmc"
+          ]
+        },
+        {
+          "conclusion": "phrznus",
+          "premises": [
+            "pnfhzbz"
+          ]
+        },
+        {
+          "conclusion": "prfkwem",
+          "premises": [
+            "pqvycds"
+          ]
+        }
+      ],
+      "gold": "SUPPORTED",
+      "derived_truth": "SUPPORTED",
+      "new_atoms_by_round": [
+        [
+          "pcqbmzt",
+          "pybfrmc"
+        ],
+        [
+          "pnfhzbz"
+        ],
+        [
+          "phrznus"
+        ]
+      ]
+    }
+  },
+  "selected_examples_count": 24,
+  "selected_truth_or_wrapper_mismatches": [],
+  "selected_public_examples": [
+    {
+      "case_id": "train.grounding.0017.v0",
+      "input_file": "train.jsonl",
+      "line": 1,
+      "kind": "authority",
+      "query": {
+        "attribute": "status",
+        "entity": "ewzpwfc"
+      },
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Only authoritative_source can establish the queried entity/attribute. Conflicting authoritative values are UNKNOWN.",
+      "gold": "UNKNOWN",
+      "derived_truth": "UNKNOWN",
+      "truth_match": true,
+      "visible_wrapper": "Return exactly <answer>VALUE</answer> with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "selected_source": "charter",
+        "matching_facts": [
+          {
+            "attribute": "status",
+            "entity": "ewzpwfc",
+            "source": "rumor",
+            "value": "rfrkubh"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "train.reasoning.0159.v1",
+      "input_file": "train.jsonl",
+      "line": 2,
+      "kind": "program",
+      "query": "x",
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Execute register instructions in list order. Return the queried register's final integer. Annotations are irrelevant.",
+      "gold": "110",
+      "derived_truth": "110",
+      "truth_match": true,
+      "visible_wrapper": "Return the answer alone with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "current_register_trace": [
+          {
+            "x": 10,
+            "y": 2
+          },
+          {
+            "x": 14,
+            "y": 2
+          },
+          {
+            "x": 14,
+            "y": 6
+          },
+          {
+            "x": 14,
+            "y": 12
+          },
+          {
+            "x": 42,
+            "y": 12
+          },
+          {
+            "x": 54,
+            "y": 12
+          },
+          {
+            "x": 54,
+            "y": 66
+          },
+          {
+            "x": 108,
+            "y": 66
+          },
+          {
+            "x": 108,
+            "y": 132
+          },
+          {
+            "x": 110,
+            "y": 132
+          },
+          {
+            "x": 110,
+            "y": 133
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "train.format.0017.v0",
+      "input_file": "train.jsonl",
+      "line": 9,
+      "kind": "field_transform",
+      "query": {
+        "case": "lower",
+        "keys": [
+          "token",
+          "title"
+        ],
+        "separator": "|"
+      },
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Select two distinct fields in query.keys order, apply query.case upper/lower, and join with query.separator (|, ; or :).",
+      "gold": "wxdwfzu|wsafjka",
+      "derived_truth": "wxdwfzu|wsafjka",
+      "truth_match": true,
+      "visible_wrapper": "Return exactly one JSON object with one string field named \"answer\".",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "ordered_field_values": [
+          "wxdwfzu",
+          "wsafjka"
+        ],
+        "case": "lower",
+        "separator": "|"
+      }
+    },
+    {
+      "case_id": "train.transition.0064.v0",
+      "input_file": "train.jsonl",
+      "line": 10,
+      "kind": "item_events",
+      "query": "igbxrnt",
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Apply the item moves in list order. Return the queried item's final bin.",
+      "gold": "north",
+      "derived_truth": "north",
+      "truth_match": true,
+      "visible_wrapper": "Return exactly <answer>VALUE</answer> with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "initial_bin": "west",
+        "moves_in_order": [
+          "west",
+          "east",
+          "east",
+          "north"
+        ]
+      }
+    },
+    {
+      "case_id": "train.arithmetic.0011.v0",
+      "input_file": "train.jsonl",
+      "line": 31,
+      "kind": "baskets",
+      "query": "cedar",
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Sum quantity times unit price for the queried basket. Return the integer total.",
+      "gold": "93",
+      "derived_truth": "93",
+      "truth_match": true,
+      "visible_wrapper": "Return exactly one JSON object with one string field named \"answer\".",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "quantity_price_products": [
+          21,
+          54,
+          8,
+          10
+        ]
+      }
+    },
+    {
+      "case_id": "train.long_context.0050.v1",
+      "input_file": "train.jsonl",
+      "line": 44,
+      "kind": "latest_record",
+      "query": {
+        "entity": "ecexpbv",
+        "field": "value"
+      },
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Choose the queried entity's greatest timestamp record and return the queried field.",
+      "gold": "vuphxqc",
+      "derived_truth": "vuphxqc",
+      "truth_match": true,
+      "visible_wrapper": "Return the answer alone with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "matching_records": [
+          {
+            "entity": "ecexpbv",
+            "timestamp": 12,
+            "value": "vseeuuc"
+          },
+          {
+            "entity": "ecexpbv",
+            "timestamp": 6,
+            "value": "vzkdnda"
+          },
+          {
+            "entity": "ecexpbv",
+            "timestamp": 15,
+            "value": "vuphxqc"
+          },
+          {
+            "entity": "ecexpbv",
+            "timestamp": 14,
+            "value": "vgdgsjp"
+          }
+        ],
+        "selected_timestamp": 15
+      }
+    },
+    {
+      "case_id": "train.reasoning.0159.v0",
+      "input_file": "train.jsonl",
+      "line": 309,
+      "kind": "program",
+      "query": "y",
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Execute register instructions in list order. Return the queried register's final integer. Annotations are irrelevant.",
+      "gold": "133",
+      "derived_truth": "133",
+      "truth_match": true,
+      "visible_wrapper": "Return the answer alone with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "current_register_trace": [
+          {
+            "x": 10,
+            "y": 2
+          },
+          {
+            "x": 14,
+            "y": 2
+          },
+          {
+            "x": 14,
+            "y": 6
+          },
+          {
+            "x": 14,
+            "y": 12
+          },
+          {
+            "x": 42,
+            "y": 12
+          },
+          {
+            "x": 54,
+            "y": 12
+          },
+          {
+            "x": 54,
+            "y": 66
+          },
+          {
+            "x": 108,
+            "y": 66
+          },
+          {
+            "x": 108,
+            "y": 132
+          },
+          {
+            "x": 110,
+            "y": 132
+          },
+          {
+            "x": 110,
+            "y": 133
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "train.grounding.0017.v1",
+      "input_file": "train.jsonl",
+      "line": 385,
+      "kind": "authority",
+      "query": {
+        "attribute": "status",
+        "entity": "ezraees"
+      },
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Only authoritative_source can establish the queried entity/attribute. Conflicting authoritative values are UNKNOWN.",
+      "gold": "vcpraau",
+      "derived_truth": "vcpraau",
+      "truth_match": true,
+      "visible_wrapper": "Return exactly <answer>VALUE</answer> with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "selected_source": "charter",
+        "matching_facts": [
+          {
+            "attribute": "status",
+            "entity": "ezraees",
+            "source": "charter",
+            "value": "vcpraau"
+          },
+          {
+            "attribute": "status",
+            "entity": "ezraees",
+            "source": "rumor",
+            "value": "rwgqfhs"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "train.format.0017.v1",
+      "input_file": "train.jsonl",
+      "line": 538,
+      "kind": "field_transform",
+      "query": {
+        "case": "upper",
+        "keys": [
+          "region",
+          "note"
+        ],
+        "separator": "|"
+      },
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Select two distinct fields in query.keys order, apply query.case upper/lower, and join with query.separator (|, ; or :).",
+      "gold": "WSRSRWT|WVDCXKP",
+      "derived_truth": "WSRSRWT|WVDCXKP",
+      "truth_match": true,
+      "visible_wrapper": "Return exactly one JSON object with one string field named \"answer\".",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "ordered_field_values": [
+          "wsrsrwt",
+          "wvdcxkp"
+        ],
+        "case": "upper",
+        "separator": "|"
+      }
+    },
+    {
+      "case_id": "train.transition.0064.v1",
+      "input_file": "train.jsonl",
+      "line": 727,
+      "kind": "item_events",
+      "query": "igcdrrz",
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Apply the item moves in list order. Return the queried item's final bin.",
+      "gold": "west",
+      "derived_truth": "west",
+      "truth_match": true,
+      "visible_wrapper": "Return exactly <answer>VALUE</answer> with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "initial_bin": "north",
+        "moves_in_order": [
+          "east",
+          "east",
+          "west",
+          "west"
+        ]
+      }
+    },
+    {
+      "case_id": "train.long_context.0050.v0",
+      "input_file": "train.jsonl",
+      "line": 1031,
+      "kind": "latest_record",
+      "query": {
+        "entity": "epzcsyu",
+        "field": "value"
+      },
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Choose the queried entity's greatest timestamp record and return the queried field.",
+      "gold": "vpgscnj",
+      "derived_truth": "vpgscnj",
+      "truth_match": true,
+      "visible_wrapper": "Return the answer alone with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "matching_records": [
+          {
+            "entity": "epzcsyu",
+            "timestamp": 12,
+            "value": "vxzxexm"
+          },
+          {
+            "entity": "epzcsyu",
+            "timestamp": 7,
+            "value": "vffgzfy"
+          },
+          {
+            "entity": "epzcsyu",
+            "timestamp": 16,
+            "value": "vpxcmry"
+          },
+          {
+            "entity": "epzcsyu",
+            "timestamp": 17,
+            "value": "vpgscnj"
+          }
+        ],
+        "selected_timestamp": 17
+      }
+    },
+    {
+      "case_id": "train.arithmetic.0011.v1",
+      "input_file": "train.jsonl",
+      "line": 1467,
+      "kind": "baskets",
+      "query": "maple",
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Sum quantity times unit price for the queried basket. Return the integer total.",
+      "gold": "209",
+      "derived_truth": "209",
+      "truth_match": true,
+      "visible_wrapper": "Return exactly one JSON object with one string field named \"answer\".",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "quantity_price_products": [
+          36,
+          45,
+          33,
+          95
+        ]
+      }
+    },
+    {
+      "case_id": "pilot.long_context.0025.v0",
+      "input_file": "pilot.prompts.jsonl",
+      "line": 1,
+      "kind": "alias_join",
+      "query": {
+        "alias": "arhqdgn",
+        "field": "city"
+      },
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Resolve the query alias to its code, then retrieve its unique record's queried city or color field.",
+      "gold": "chwujew",
+      "derived_truth": "chwujew",
+      "truth_match": true,
+      "visible_wrapper": "Return exactly <answer>VALUE</answer> with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "resolved_code": "knhypqz",
+        "unique_record": {
+          "city": "chwujew",
+          "code": "knhypqz",
+          "color": "vqqbamr"
+        }
+      }
+    },
+    {
+      "case_id": "pilot.format.0022.v0",
+      "input_file": "pilot.prompts.jsonl",
+      "line": 2,
+      "kind": "filtered_roster",
+      "query": {
+        "minimum": 1,
+        "order": "desc",
+        "tier": "B"
+      },
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Select records with query.tier and score >= query.minimum; order labels lexicographically using query.order. Join with commas; empty is NONE.",
+      "gold": "nzxyzpm,nmeqzrh,nbparwe",
+      "derived_truth": "nzxyzpm,nmeqzrh,nbparwe",
+      "truth_match": true,
+      "visible_wrapper": "Return the answer alone with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "selected_records": [
+          {
+            "label": "nmeqzrh",
+            "score": 5,
+            "tier": "B"
+          },
+          {
+            "label": "nbparwe",
+            "score": 9,
+            "tier": "B"
+          },
+          {
+            "label": "nzxyzpm",
+            "score": 10,
+            "tier": "B"
+          }
+        ],
+        "ordered_labels": [
+          "nzxyzpm",
+          "nmeqzrh",
+          "nbparwe"
+        ]
+      }
+    },
+    {
+      "case_id": "pilot.transition.0017.v0",
+      "input_file": "pilot.prompts.jsonl",
+      "line": 6,
+      "kind": "fsm",
+      "query": {
+        "after_symbols": 10
+      },
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Start at initial; apply the first query.after_symbols input symbols using the transition table. Return that state.",
+      "gold": "s1",
+      "derived_truth": "s1",
+      "truth_match": true,
+      "visible_wrapper": "Return the answer alone with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "symbol_count": 10,
+        "state_trace": [
+          "s2",
+          "s0",
+          "s1",
+          "s3",
+          "s1",
+          "s3",
+          "s2",
+          "s0",
+          "s1",
+          "s3",
+          "s1"
+        ]
+      }
+    },
+    {
+      "case_id": "pilot.grounding.0021.v0",
+      "input_file": "pilot.prompts.jsonl",
+      "line": 7,
+      "kind": "horn",
+      "query": "ptbktdg",
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Infer from facts and rules. Return SUPPORTED iff the queried atom follows; otherwise UNKNOWN.",
+      "gold": "UNKNOWN",
+      "derived_truth": "UNKNOWN",
+      "truth_match": true,
+      "visible_wrapper": "Return the answer alone with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "new_atoms_by_round": [
+          [
+            "pgabpju",
+            "pppjgmy"
+          ],
+          [
+            "pynkxut"
+          ],
+          [
+            "pzhtzrf"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "pilot.arithmetic.0021.v1",
+      "input_file": "pilot.prompts.jsonl",
+      "line": 10,
+      "kind": "sharing",
+      "query": {
+        "component": "quotient",
+        "group": "harbor"
+      },
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Divide the queried group's count among its people. Return the requested integer quotient or remainder.",
+      "gold": "11",
+      "derived_truth": "11",
+      "truth_match": true,
+      "visible_wrapper": "Return exactly <answer>VALUE</answer> with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "count": 46,
+        "people": 4,
+        "quotient": 11,
+        "remainder": 2
+      }
+    },
+    {
+      "case_id": "pilot.reasoning.0024.v0",
+      "input_file": "pilot.prompts.jsonl",
+      "line": 13,
+      "kind": "dependencies",
+      "query": "unused",
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Evaluate the queried expression dependency with exact integer arithmetic.",
+      "gold": "13",
+      "derived_truth": "13",
+      "truth_match": true,
+      "visible_wrapper": "Return the answer alone with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "queried_derivation": [
+          {
+            "name": "unused",
+            "operands": [
+              6,
+              7
+            ],
+            "operator": "+",
+            "value": 13
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "pilot.grounding.0021.v1",
+      "input_file": "pilot.prompts.jsonl",
+      "line": 142,
+      "kind": "horn",
+      "query": "pynkxut",
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Infer from facts and rules. Return SUPPORTED iff the queried atom follows; otherwise UNKNOWN.",
+      "gold": "SUPPORTED",
+      "derived_truth": "SUPPORTED",
+      "truth_match": true,
+      "visible_wrapper": "Return the answer alone with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "new_atoms_by_round": [
+          [
+            "pgabpju",
+            "pppjgmy"
+          ],
+          [
+            "pynkxut"
+          ],
+          [
+            "pzhtzrf"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "pilot.transition.0017.v1",
+      "input_file": "pilot.prompts.jsonl",
+      "line": 256,
+      "kind": "fsm",
+      "query": {
+        "after_symbols": 9
+      },
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Start at initial; apply the first query.after_symbols input symbols using the transition table. Return that state.",
+      "gold": "s3",
+      "derived_truth": "s3",
+      "truth_match": true,
+      "visible_wrapper": "Return the answer alone with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "symbol_count": 9,
+        "state_trace": [
+          "s2",
+          "s0",
+          "s1",
+          "s3",
+          "s1",
+          "s3",
+          "s2",
+          "s0",
+          "s1",
+          "s3"
+        ]
+      }
+    },
+    {
+      "case_id": "pilot.reasoning.0024.v1",
+      "input_file": "pilot.prompts.jsonl",
+      "line": 282,
+      "kind": "dependencies",
+      "query": "d",
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Evaluate the queried expression dependency with exact integer arithmetic.",
+      "gold": "23",
+      "derived_truth": "23",
+      "truth_match": true,
+      "visible_wrapper": "Return the answer alone with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "queried_derivation": [
+          {
+            "name": "d",
+            "operands": [
+              17,
+              6
+            ],
+            "operator": "+",
+            "value": 23
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "pilot.long_context.0025.v1",
+      "input_file": "pilot.prompts.jsonl",
+      "line": 292,
+      "kind": "alias_join",
+      "query": {
+        "alias": "amxfahk",
+        "field": "color"
+      },
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Resolve the query alias to its code, then retrieve its unique record's queried city or color field.",
+      "gold": "vhkcche",
+      "derived_truth": "vhkcche",
+      "truth_match": true,
+      "visible_wrapper": "Return exactly <answer>VALUE</answer> with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "resolved_code": "kchybms",
+        "unique_record": {
+          "city": "cqbdfxz",
+          "code": "kchybms",
+          "color": "vhkcche"
+        }
+      }
+    },
+    {
+      "case_id": "pilot.arithmetic.0021.v0",
+      "input_file": "pilot.prompts.jsonl",
+      "line": 300,
+      "kind": "sharing",
+      "query": {
+        "component": "remainder",
+        "group": "orchard"
+      },
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Divide the queried group's count among its people. Return the requested integer quotient or remainder.",
+      "gold": "2",
+      "derived_truth": "2",
+      "truth_match": true,
+      "visible_wrapper": "Return exactly <answer>VALUE</answer> with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "count": 42,
+        "people": 10,
+        "quotient": 4,
+        "remainder": 2
+      }
+    },
+    {
+      "case_id": "pilot.format.0022.v1",
+      "input_file": "pilot.prompts.jsonl",
+      "line": 378,
+      "kind": "filtered_roster",
+      "query": {
+        "minimum": 5,
+        "order": "desc",
+        "tier": "A"
+      },
+      "public_rule": "Use only these closed-world inputs; lists are exhaustive. Missing required facts return UNKNOWN. Select records with query.tier and score >= query.minimum; order labels lexicographically using query.order. Join with commas; empty is NONE.",
+      "gold": "nwbkvuy,ntajvzh,nkdgqrt,ngdajkq",
+      "derived_truth": "nwbkvuy,ntajvzh,nkdgqrt,ngdajkq",
+      "truth_match": true,
+      "visible_wrapper": "Return the answer alone with no surrounding text.",
+      "target_matches_visible_wrapper": true,
+      "derivation": {
+        "selected_records": [
+          {
+            "label": "nkdgqrt",
+            "score": 10,
+            "tier": "A"
+          },
+          {
+            "label": "ngdajkq",
+            "score": 7,
+            "tier": "A"
+          },
+          {
+            "label": "nwbkvuy",
+            "score": 6,
+            "tier": "A"
+          },
+          {
+            "label": "ntajvzh",
+            "score": 5,
+            "tier": "A"
+          }
+        ],
+        "ordered_labels": [
+          "nwbkvuy",
+          "ntajvzh",
+          "nkdgqrt",
+          "ngdajkq"
+        ]
+      }
+    }
+  ],
+  "findings": [
+    {
+      "classification": "SOURCE_SENSITIVITY_IDENTIFICATION_GAP",
+      "finding": "A query-aware policy ignoring source fields solves all300actual TRAIN authority rows by v-prefix matching. Same facts/entity/attribute with authority switched to rumor make it0/300. Correct actual gold does not identify source-sensitive acquisition."
+    },
+    {
+      "classification": "DISCLOSED_QUERY_AWARE_FLOORS",
+      "finding": "Horn copied-fact elseUNKNOWN is49/64; one simultaneous round using only original facts is56/64. Neither control is query-blind; the existing deterministic stateless query-blind50percent pair bound remains a different claim."
+    },
+    {
+      "classification": "SELECTED_PUBLIC_TRUTHS_SUPPORTED",
+      "finding": "No actualgold defect found in300authority,64Horn, or24selected public examples. Remaining train/pilot truth agreement is recorded author/root crosscheck evidence, not independently rederived here."
+    },
+    {
+      "classification": "WORDING_HARDENING_NOT_ESTABLISHED_GOLD_ERROR",
+      "finding": "Sequential register execution supports current-state add_from; explicitly defining this primitive in a future codebook reduces semantic assumptions. Plain wrapper lacks explicit canonical decimal spelling/terminal punctuation. String-only JSON is explicit. These do not establish wrong current gold."
+    },
+    {
+      "classification": "PROSPECTIVE_SUCCESSOR_CONDITION",
+      "finding": "A selected-authority successor should select source in query, preserve same-fact pairs with distinct answers, counterbalance missing/conflict evidence for both sources, and make value morphology source-independent. Actual blinded projections require successor review."
+    }
+  ],
+  "boundaries": {
+    "native_model_calls": 0,
+    "training_calls": 0,
+    "protected_or_confirmation_reads": 0,
+    "new_bank_generated": false,
+    "existing_source_or_data_modified": false,
+    "owner_messages": 0,
+    "permits_changed": false,
+    "serving_changes": false,
+    "native_admission_frozen": false,
+    "scientific_model_quality_proved": false
+  },
+  "limits": [
+    "Author independence is narrower than human/blind admission; this reviewer read previous findings before checking them.",
+    "Selected examples cannot certify every wording or corner case. Actual corpus lacks several prospective conflict/tie/duplicate/multi-premise conditions noted by the author review.",
+    "In-memory authority falsification creates no persisted scientific bank or changed gold.",
+    "No successor is admitted in this report; successor review is a later, separately pinned artifact."
+  ]
+}
