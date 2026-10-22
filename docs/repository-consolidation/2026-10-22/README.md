@@ -2,6 +2,10 @@
 
 **Plan date: 2026-10-22 (America/Chicago).** Inventory captured on October 21; the 149 source heads were rechecked unchanged on October 22 before execution began.
 
+## Execution checkpoint
+
+The seven first-wave sources have been merged on `research/rineya-consolidation-20261022`. Remote verification confirmed all 9,565 original file entries unchanged, all 393 incoming blobs/modes matched, and both parents recorded for every merge. Central promotion is pending. The 38-ref deletion batch passed fresh head/preservation/open-PR checks but has not been executed because the available deletion route requires browser sign-in. The detailed [execution receipt](execution_receipt.json) is authoritative for subsequent outcomes.
+
 ## Decision and scope
 
 Use **`research/post-training-mimo-centralized-v1`** as the enduring research integration branch. Its audited starting head is [`bf2567da46a310aa39f590cc6c73c99961d2ae90`](https://github.com/LUNCY579/ChatBubble/commit/bf2567da46a310aa39f590cc6c73c99961d2ae90). Create the temporary staging branch **`research/rineya-consolidation-20261022`** from that exact commit, integrate the seven validated source branches below, and promote the result through a PR into the enduring central branch after verification.
@@ -175,3 +179,18 @@ For every completed merge, record the source SHA, destination before/after, merg
 Restore a removed branch only to the manifest's recorded commit after confirming that commit remains reachable from its preserved tag/keeper. Undo a faulty central integration through a reviewed revert of its specific merge commit; do not reset or force-push the shared central history. A stalled or failed cohort remains on staging while its discrepancy is resolved.
 
 The first cycle is complete when the seven source heads are verifiably integrated into central, the 38 cleanup candidates have individual successful or explicitly blocked receipts, the remaining preserved tracks/snapshots are intact, and this registry reflects actual remote outcomes. Native model qualification and additional research experiments remain separately scoped work.
+
+## Running the reviewed cleanup
+
+The guarded [`prune_branches.py`](prune_branches.py) accepts only the frozen 38-reference allowlist. It defaults to a read-only dry run and records a new JSONL receipt. It requires Python 3.10+, Git, and an authenticated GitHub CLI (`gh`); native Git HTTPS/SSH authentication must also work. The script does not configure credentials, change your checkout, or modify global Git settings.
+
+From a checkout containing this folder:
+
+```bash
+python docs/repository-consolidation/2026-10-22/prune_branches.py --receipt chatbubble-prune-dry-run.jsonl
+python docs/repository-consolidation/2026-10-22/prune_branches.py --apply --receipt chatbubble-prune-apply.jsonl
+```
+
+Run the second command only after the first succeeds and the displayed scope matches the reviewed batch. A moved head, changed/missing preservation ref, protected/default branch, or open PR stops the entire batch. The deletion push is atomic and uses an expected-SHA lease for each branch. There is no non-atomic fallback. Keep the emitted receipt; if verification fails after an attempted push, the script retains its temporary recovery object repository and reports its path. Existing receipt files are never overwritten.
+
+`--print-recovery` prints the manifest's per-branch restoration commands without contacting GitHub or changing refs. Restoration must not overwrite a new branch created under an old name. The separate [`script_validation.json`](script_validation.json) records tests of these cleanup controls; those tests used fixtures and a temporary local Git remote, not this live repository.

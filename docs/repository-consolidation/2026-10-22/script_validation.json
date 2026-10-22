@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "validated_at_utc": "2026-10-22T15:28:53.973559+00:00",
+  "repository": "LUNCY579/ChatBubble",
+  "scope": "Branch-cleanup CLI only; separate from scientific consolidation validation.",
+  "validation_mode": "OFFLINE_UNIT_AND_ISOLATED_LOCAL_BARE_GIT",
+  "real_repository_dry_run_performed": false,
+  "real_repository_mutation_performed": false,
+  "approved_candidate_count": 38,
+  "command": "python3 consolidation/test_prune_branches.py",
+  "result": {
+    "exit_code": 0,
+    "tests_run": 12,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "reported_elapsed_seconds": 0.11
+  },
+  "coverage": [
+    "Fixed 38-candidate allowlist and preservation digest",
+    "Wrong URL or authenticated repository identity refusal",
+    "Changed, removed, added, renamed, or redirected manifest entries refusal",
+    "Missing or advanced candidate heads refusal",
+    "Missing, changed, or incorrectly peeled preservation refs refusal",
+    "Default, protected, or unknown-protection candidate refusal",
+    "Open PR source or target candidate refusal",
+    "Post-delete verification of candidates and observed retained refs",
+    "Default dry-run makes no push and creates an exclusive append-only receipt",
+    "Inherited repository-scoping Git environment and injected config overrides removed; transport/authentication environment preserved",
+    "Real local bare Git remote: concurrent candidate update causes leased atomic deletion to fail without deleting either candidate",
+    "Real local bare Git remote: successful atomic deletion removes only requested heads and preserves tag"
+  ],
+  "review_fix": "Removed inherited GIT_DIR and related repository scope, GIT_CONFIG file overrides, and injected GIT_CONFIG_PARAMETERS/COUNT/KEY_n/VALUE_n from child command environments.",
+  "usage_requirements": [
+    "Python 3.10+, git, and GitHub CLI are installed.",
+    "gh is authenticated to github.com with repository read access.",
+    "Native git transport is independently authenticated for fetching and, for --apply, pushing; gh login alone may not configure git authentication.",
+    "Dry run is the default. --apply is the sole explicit deletion switch.",
+    "The real execution must pass fresh metadata, branch protection, open PR, full Git ref, tag peel, and commit ancestry checks."
+  ],
+  "limits": [
+    "These tests did not perform a GitHub dry run or any real remote deletion.",
+    "Commit ancestry checks are implemented using fetched Git objects; full ChatBubble object fetching was not performed in this offline validation.",
+    "Atomic deletion leases guard candidate heads. Keeper refs and GitHub policies are rechecked immediately before deletion and retained refs are checked afterward; changes to those refs or policies cannot be atomically leased by this deletion-only push.",
+    "An apply attempt with uncertain result or failed post-check retains the temporary bare object repository and writes its location to the receipt for recovery; it does not claim rollback."
+  ],
+  "artifact_sha256": {
+    "cleanup_manifest.json": "624f2b5ea197d1d98035e856b10aff205876737a19621ab2ddf8b28ee25a53e4",
+    "prune_branches.py": "0e223e20e0e33235345e58a600a213c5e51f4d05436900495ac9d5a4925c48aa",
+    "test_prune_branches.py": "0e996d061a2fa5b9a24ff1690b62c21ade40f5acc64a54536028185d058487e4"
+  }
+}

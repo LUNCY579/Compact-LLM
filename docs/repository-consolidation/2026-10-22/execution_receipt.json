@@ -2,13 +2,105 @@
   "schema_version": 1,
   "repository": "LUNCY579/ChatBubble",
   "operation": "2026-10-22 branch consolidation",
-  "updated_at_utc": "2026-10-22T15:22:43.186Z",
+  "updated_at_utc": "2026-10-22T15:25:23.872Z",
   "original_branch_count": 149,
   "verified_source_heads_unchanged": true,
   "baseline_central_sha": "bf2567da46a310aa39f590cc6c73c99961d2ae90",
   "staging_branch": "research/rineya-consolidation-20261022",
   "staging_created": true,
-  "merges": [],
+  "merges": [
+    {
+      "source_branch": "research/deferred-diffusion-context-hci-notes-v1",
+      "source_sha": "451ef168ce9521a538b4e31c8ab46d0009b6f5f5",
+      "before_sha": "3a34a289cd522f06be7cc256543ac688364265b5",
+      "merge_commit_sha": "70a3e9185b3105ea05bd0a629373ca006c578159",
+      "tree_sha": "1056ec690871d03cd53293ef05aa356ee8655c3e",
+      "additions": 4,
+      "status": "MERGED_ON_STAGING",
+      "parents": [
+        "3a34a289cd522f06be7cc256543ac688364265b5",
+        "451ef168ce9521a538b4e31c8ab46d0009b6f5f5"
+      ]
+    },
+    {
+      "source_branch": "codex/confirm002-paired-correctness-audit-20260930",
+      "source_sha": "224233406c42d90ab30b6599303323a10c54fb0f",
+      "before_sha": "70a3e9185b3105ea05bd0a629373ca006c578159",
+      "merge_commit_sha": "7fada7dc22db5438ecbc742a741f31249e51fba6",
+      "tree_sha": "b8896dbf85ce250e57dbbf4300606a9bc6d8e80c",
+      "additions": 6,
+      "status": "MERGED_ON_STAGING",
+      "parents": [
+        "70a3e9185b3105ea05bd0a629373ca006c578159",
+        "224233406c42d90ab30b6599303323a10c54fb0f"
+      ]
+    },
+    {
+      "source_branch": "research/rineya-evidence-function-equilibrium-v1",
+      "source_sha": "c934589026f7456352d62a83bb102c453e15519a",
+      "before_sha": "7fada7dc22db5438ecbc742a741f31249e51fba6",
+      "merge_commit_sha": "22f62afd99771705b8977ecb8298c87b6da4b9f8",
+      "tree_sha": "716d3649dea755abe1e56035d3c79920b0ab2ce2",
+      "additions": 9,
+      "status": "MERGED_ON_STAGING",
+      "parents": [
+        "7fada7dc22db5438ecbc742a741f31249e51fba6",
+        "c934589026f7456352d62a83bb102c453e15519a"
+      ]
+    },
+    {
+      "source_branch": "research/rineya-verified-resampling-v1",
+      "source_sha": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "before_sha": "22f62afd99771705b8977ecb8298c87b6da4b9f8",
+      "merge_commit_sha": "0658a67ae42f5bffe1a3e0cd0b4b402eea825215",
+      "tree_sha": "b2bd862731fb8f2c440ff1b74243a0923903fe44",
+      "additions": 26,
+      "status": "MERGED_ON_STAGING",
+      "parents": [
+        "22f62afd99771705b8977ecb8298c87b6da4b9f8",
+        "ac9b79ac07ad650d8815c76eb4194a180f23e8d4"
+      ]
+    },
+    {
+      "source_branch": "research/rineya-recursive-self-rewrite-v1",
+      "source_sha": "8d3ee140accb054273580adb4291384e0dd88e0f",
+      "before_sha": "0658a67ae42f5bffe1a3e0cd0b4b402eea825215",
+      "merge_commit_sha": "cd8d6c6de57f592f11fb5f3f7819930b733dc4eb",
+      "tree_sha": "2f65122889d4ac248b8d0efcba0e8356d16abece",
+      "additions": 22,
+      "status": "MERGED_ON_STAGING",
+      "parents": [
+        "0658a67ae42f5bffe1a3e0cd0b4b402eea825215",
+        "8d3ee140accb054273580adb4291384e0dd88e0f"
+      ]
+    },
+    {
+      "source_branch": "research/rineya-generalization-dynamics-v1",
+      "source_sha": "7ae47a21581e15aa83e0859b880a84eb2d7dcb1d",
+      "before_sha": "cd8d6c6de57f592f11fb5f3f7819930b733dc4eb",
+      "merge_commit_sha": "7992da4507724c9d6a549af0d56a436ec18a2671",
+      "tree_sha": "674a3a8b3d2bd7107caec6bc17235f874a44f211",
+      "additions": 301,
+      "status": "MERGED_ON_STAGING",
+      "parents": [
+        "cd8d6c6de57f592f11fb5f3f7819930b733dc4eb",
+        "7ae47a21581e15aa83e0859b880a84eb2d7dcb1d"
+      ]
+    },
+    {
+      "source_branch": "research/rineya-relative-generalization-invariance-v1",
+      "source_sha": "53b2155b2c54137891ea98a24f9e79892e658527",
+      "before_sha": "7992da4507724c9d6a549af0d56a436ec18a2671",
+      "merge_commit_sha": "600b7957e43743dd0374cfc4ec4e66a89b5f5adf",
+      "tree_sha": "5415afbea2a3dd0c42c38e4d871e5499d423d96d",
+      "additions": 25,
+      "status": "MERGED_ON_STAGING",
+      "parents": [
+        "7992da4507724c9d6a549af0d56a436ec18a2671",
+        "53b2155b2c54137891ea98a24f9e79892e658527"
+      ]
+    }
+  ],
   "pruning": {
     "status": "BLOCKED_PENDING_AUTHENTICATED_DELETION_ROUTE",
     "candidates": 38,
@@ -284,7 +376,7 @@
     "blocker": "GitHub connector has no branch-delete operation. Cloud browser is signed out of the private repository."
   },
   "central_promotion": {
-    "status": "NOT_EXECUTED"
+    "status": "READY_FOR_PR"
   },
   "protected_task_branches": [
     "main",
@@ -292,5 +384,17 @@
     "research/post-training-mimo-centralized-v1",
     "research/rineya-centralized-reasoning-system-v1"
   ],
-  "native_execution": "NOT_ATTEMPTED"
+  "native_execution": "NOT_ATTEMPTED",
+  "plan_commit_sha": "3a34a289cd522f06be7cc256543ac688364265b5",
+  "tree_verification": {
+    "staging_head": "600b7957e43743dd0374cfc4ec4e66a89b5f5adf",
+    "original_file_entries": 9565,
+    "source_additions_verified": 393,
+    "original_files_changed_or_missing": 0,
+    "source_mismatches": 0,
+    "unapproved_additions": [],
+    "parent_errors": 0,
+    "central_unchanged": true
+  },
+  "branch_count_observed_after_staging_creation": 150
 }
