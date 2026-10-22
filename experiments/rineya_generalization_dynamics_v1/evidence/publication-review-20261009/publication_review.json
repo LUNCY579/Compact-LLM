@@ -1,0 +1,57 @@
+{
+  "client_date": "2026-10-09",
+  "code_sha256": "376e5cccf600a0fcd0c27ff5bad52115ae00a72b8507dd0daf9a5b640cf04a74",
+  "historical_canonical_digests_verified": 79,
+  "historical_payloads_copied": 224,
+  "native_confirmation_accesses": 0,
+  "native_forward_calls": 0,
+  "native_model_loads": 0,
+  "native_qualification": "NOT_ESTABLISHED",
+  "permits_model_promotion": false,
+  "recorded_utc": "2026-10-10T03:38:46.658525+00:00",
+  "research_questions_answered": false,
+  "research_sources_verified": [
+    "https://arxiv.org/html/2609.33150v1",
+    "https://arxiv.org/html/2507.07817v1"
+  ],
+  "review_fixes": [
+    "protected-path CLI and nested-reference checks",
+    "excluded witness provenance cannot become native/exploratory or data readiness",
+    "hash-captured owner bytes validated without reopen",
+    "completed-sweep replay does not consume another native attempt",
+    "post-scoring registry verification permanently invalidates the split"
+  ],
+  "scope": "all current GD-001 source, tests, documentation and retained public/mechanical research evidence",
+  "sha256": "998202a7391a169cdc86db6ea5d11302fbe0fbca2b7c38c41b6a936d58cca900",
+  "training_runs": 0,
+  "validation": {
+    "client_date": "2026-10-09",
+    "code_sha256": "376e5cccf600a0fcd0c27ff5bad52115ae00a72b8507dd0daf9a5b640cf04a74",
+    "code_unchanged_during_validation": true,
+    "compileall": "PASS",
+    "errors": 0,
+    "evidence_level": "MECHANICS_AND_TENSOR_STUBS_ONLY",
+    "failures": 0,
+    "git_diff_check": {
+      "output": "",
+      "status": "PASS"
+    },
+    "historical_protected_bank_reads": 0,
+    "interpreter": "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe",
+    "native_confirmation_accesses": 0,
+    "native_forward_calls": 0,
+    "native_model_loads": 0,
+    "passed": 321,
+    "permits_model_promotion": false,
+    "python": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+    "recorded_utc": "2026-10-10T03:36:16.289634+00:00",
+    "scoped_unittest_tests": 322,
+    "skipped": [
+      {
+        "reason": "Windows host does not permit file symlink creation",
+        "test": "test_symlinked_asset_rejected (test_gd001.RegistryTests.test_symlinked_asset_rejected)"
+      }
+    ],
+    "training_runs": 0
+  }
+}

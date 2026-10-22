@@ -1,0 +1,34 @@
+{
+  "additional_public_schema_valid_target_mismatches": 239,
+  "counts": {
+    "presented_public_schema_compliant": 598,
+    "presented_public_schema_valid_target_mismatch": 284,
+    "source_public_schema_compliant": 76,
+    "source_public_schema_valid_target_mismatch": 45,
+    "supported_rows": 640,
+    "unsupported_request_rows": 32
+  },
+  "finding": "Original registered json_contract_compliance derives primitive types from TARGET. For explicitly nullable string requests it is target-conditioned, not purely public-schema compliance. Preserve it as original endpoint; report public-schema validity separately.",
+  "missing_evidence": {
+    "absent_public_schema_valid_wrong_after": 32,
+    "absent_rows": 32,
+    "absent_schema_after": 32,
+    "absent_schema_before": 0,
+    "absent_typed_after": 0,
+    "absent_typed_before": 0,
+    "present_public_schema_valid_wrong_after": 1,
+    "present_rows": 32,
+    "present_schema_after": 32,
+    "present_schema_before": 0,
+    "present_typed_after": 31,
+    "present_typed_before": 0
+  },
+  "model_quality_goal_complete": false,
+  "new_rule_used_target_for_action": false,
+  "original_registered_metrics_modified": false,
+  "production_safety_established": false,
+  "schema": "gd001_public_vs_target_conditioned_contract_v1",
+  "semantic_abstention_population_qualified": false,
+  "sha256": "07b981fcc433717b98b19ae18de280059f6e503d4d61fc69cbdbbefe05f1ae12",
+  "status": "PUBLIC_SCHEMA_VALIDITY_IS_NOT_TARGET_VALUE_CORRECTNESS"
+}

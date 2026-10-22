@@ -1,0 +1,653 @@
+{
+  "analysis": {
+    "acquisition_condition": "Positive IID gain and at least2 newly correct IID rows averaged over final3 checkpoints; harder transfer gains reported independently",
+    "harder_transfer": "source/final row transitions on 5-7 operations; no posthoc row exclusions or pooled primary endpoint",
+    "interpretation": "A weaker update or null acquisition is not retention success. If less damage accompanies materially smaller cumulative update and no acquisition match, report attenuation-confounded/inconclusive. No SFT dominance from one LR; later matched-dose/LR controls need new preregistration.",
+    "minimum_source_correct_per_retention_task": 4,
+    "primary_acquisition": "IID gain averaged over steps10,11,12, harder cohort reported separately",
+    "retention": "final macro-task change plus each task source-correct retained/total, damages, repairs; zero denominator undefined",
+    "retention_margin": "No more than one source-success damage per8-row retention task; no repairs hiding damages",
+    "uncertainty": "Row transitions and paired seed contrasts descriptive only; no pooled repeated-row p-values, no promotion."
+  },
+  "branch": "research/rineya-self-distillation-axes-v1",
+  "code_files": {
+    "__init__.py": "c1fabf957548a345c10171ee216c66b5e213349d76d4c23b760e694ef429272a",
+    "__main__.py": "8a6c8ddd98a1b879e509e5a61006f5ce6f25524d2928377392df451b6f5f8b76",
+    "analysis.py": "117ae8bf67569defa60d2a8a9c630fc17d22843c3c6b13ef53481a302a71eb50",
+    "comparison.py": "4813252ef1e76afc601666a7b70ce842a7f03d02a5750af8c4d53394e22bf63a",
+    "controlled.py": "8efcf9ba2bc6d77c0cec7b43d518a13bfe75941c58ba937f8418b1155e2b07e0",
+    "data.py": "26e26a025a351a05ddf076e5d7158c72558bd3bec01f44067b6573306fc1c860",
+    "engine.py": "5232d6fc541561fb498c62709194eec20ff7a6ef18811fee229b762b32f1e329",
+    "mechanical_qualification.py": "dc944c3ca539a266208ff7edb56dd404da0b1d52589368c0dad4100b29505f81",
+    "native.py": "02af62e5fe06c25d09e303db279282f956c3cc17dddfb2e300f0fe9334ce1db8",
+    "objectives.py": "6dc8f75afc258a5209a9139b4b7ff2eb251f128949c96ac5bcb62534b219238e",
+    "plan.py": "bfcc2756822d33d1ba927de4a590ace868ed0e6299fb60a9f4353a23226c8e27",
+    "proposal.py": "74d8781788253b1e3757ee486c30129b9d063c0f59b5a771124f5d3aea4076cd",
+    "proposal_data.py": "277672c44c4437a0e4dbe946a260608ee27e931e8df2abd395c79d2993eff712",
+    "reviewed_qualification.py": "5ff2cc3f8fef12bad8180733bd4760dc48f2277d6f45ad39743b6d49752d39d1",
+    "teacher.py": "8f1cfb1c6f528995aae658ca3db537adebb8d49bad31fcd820f5c45d599579df",
+    "tests\\test_controlled.py": "aca90994015b490b12a6b76f96e9d82f9c7d4a06f1a8c6b66f7be18ab54c7f50",
+    "tests\\test_data_analysis.py": "fb1c7106a460b9e8b3b864c12410a447de2ae22e0ee6b31ae1dd5098eee09e30",
+    "tests\\test_engine.py": "5107a6e4dcc4f7f529c5aa9300d35db193e4d3f8890687014245d6f848734b62",
+    "tests\\test_mechanical_qualification.py": "e2cd5ae4a1a22a7705645af6a7a20c97464fff03dc6e77e5ccc52bad17eed3a0",
+    "tests\\test_objectives.py": "960f9a21bacd9cc3da3a0f16428b7306672533eb16374994dc071ade67984a5d",
+    "tests\\test_proposal.py": "2faa1b96ad50a7878f6a22b303fdbd04bc605b1b125850f3a49f5b5cfbf696c7",
+    "tests\\test_proposal_data.py": "9abf78e7fb0da993cea96d541ede66ec0a9581960107b718e100e69d2584c559",
+    "tests\\test_reviewed_qualification.py": "9d33439b3f3df8688f8952da7e3ae174063a1a88c0ac24c9dc7f42ed00acb17a"
+  },
+  "code_sha256": "d0fa1a46fc4408ab9e6149c7834193284f02b6074e1151d9ff6b5445e2378cdf",
+  "data": {
+    "admission_review": "PENDING",
+    "bindings": {
+      "data-custody.json": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\dsd001-preparation-20261005\\packet\\data-custody.json",
+        "sha256": "95341fcfa0b8420b4a970c226d171385209b111b6176743a5322836ccd1bfa51"
+      },
+      "native-seed17.json": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\dsd001-preparation-20261005\\packet\\native-seed17.json",
+        "sha256": "19958f02b8f42b9430b5834be5f31fd8e52ee10980b686a90546c6a5c9818b3d"
+      },
+      "native-seed29.json": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\dsd001-preparation-20261005\\packet\\native-seed29.json",
+        "sha256": "afc1b87ae5c4e379066626b6f3787734f694fb3c162d34c336318b97c6226b84"
+      },
+      "screen.jsonl": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\dsd001-preparation-20261005\\packet\\screen.jsonl",
+        "sha256": "075bc4d9d7597bd3d0ed18b5e7d02617faec65fdaa5573023b55e616dcf5e129"
+      },
+      "teacher-gate.jsonl": {
+        "path": "C:\\Users\\clclc\\BusinessProject\\dsd001-preparation-20261005\\packet\\teacher-gate.jsonl",
+        "sha256": "b148a6978780ab0a13c335b377755f4a5af03e863f6e75d3f6f74488f70ba186"
+      }
+    },
+    "cohorts": {
+      "harder_transfer": [
+        "harder_transfer-dc34fefc239491e4cb48deebda1524f4923684581927f1ee8d12946cbd9bcf5b",
+        "harder_transfer-a3fddcfb24a2a4145953aa29d8c84a1007c7b58a9769a29d6d518f6c4ddf45f9",
+        "harder_transfer-8ef809d130b4516121965b2353d90d3292013692d9a23da395f98873b78cfbd8",
+        "harder_transfer-f641966c6f0badf30705c3fdd561c71e2ace3edada0cb2c98a1081a25f461157",
+        "harder_transfer-d72d7888af53dfa9b06bde624a1edcaf6035a8fe12d4f728b5e55667c98059f7",
+        "harder_transfer-7e076356daae978c33c40aea523cad210a527335a747d8d0d1b25e83d17a3634",
+        "harder_transfer-150bcb7d73232d1eb1d66e7f2c186aa290a083daa34b765e14065c06a72c4aeb",
+        "harder_transfer-d7fe491a5c81921a93f38bc5daaa8615586fd58127ebb707dfae56d3ff6a6f92",
+        "harder_transfer-8832136969e40c0a457383024c8e21b1b9af8b58ea4ab62412068a710c89164a",
+        "harder_transfer-ad9cae779aeda79dd1392470c6345813334922231f09740ce48e698c954662a6",
+        "harder_transfer-026ab9cc8ac36c36a6697b27b0b19bcedb8ac9749b54d125700c4e33db7c5f3e",
+        "harder_transfer-71955565a57915b322009855e0e7fa69a24c8548c4bfd37e9d7173ecdfff078c"
+      ],
+      "iid_acquisition": [
+        "iid_acquisition-a8dee34339a33936060ec2435f88d569941b79a939cea6cd4229b29a5785a48c",
+        "iid_acquisition-2e2f4374bb745190b658f6a7d774bc46d3900bf9056c9515a97f7fea5702c256",
+        "iid_acquisition-0464815e7f53053fc793b05257ad63ccc9cd9d9230fa25c68732a40cddce7ffd",
+        "iid_acquisition-f65c8698546e54ce2ab5fea1b26f9b9a34434f70840885663e5c7644b0dc0929",
+        "iid_acquisition-ff2566512e5b68cb1adf6f2c42fc0aa99755c26762d5a917f84432a4aa2ffda2",
+        "iid_acquisition-c9934678fef0ac239f9a1c0e662168d918b58604cd8bca0aa634ab2c1a79ee8e",
+        "iid_acquisition-f5a0d61bfff6f173b8053e683d74b08ffeebc8a3ae01ef1c66f9c7736c512b9f",
+        "iid_acquisition-7e28928d891efc90d923f62afc83acee397e634d038054fae13825db351684c6",
+        "iid_acquisition-6b5c9c2b7d9f12dbfdc5f9e4dac093ca53f96d2af0d331191c1481544314e84c",
+        "iid_acquisition-4806364c8595e282095bac1458e6f98f3da94651bc475ab6d7b8ed02eca4af32",
+        "iid_acquisition-ab53e33e517fb46077c9c772f966c4c5922104dc7a7a0280115aed80b546262f",
+        "iid_acquisition-ecbf6dab39192f5a755898d38c01715945c62b00308abe365d073b0650323ed2"
+      ],
+      "retention_arithmetic": [
+        "retention_arithmetic-1e4a259ec5b08a35e67de0bea6fe233ad77afffee8c5a252f304da4b9f134a00",
+        "retention_arithmetic-af9488408d418b15aebf2498e1f5701a9f70420a540d58a0156961925f8d1990",
+        "retention_arithmetic-bf9f7f3238bfcf1c04ecc08cc556c7913606c4009fd5892c650071fe8d7cc50c",
+        "retention_arithmetic-a958af5441d57a8d50f2290a6384d03df804cde9429c41279f47d47951f560fa",
+        "retention_arithmetic-bc3bc8a3a168fd02c9ed5eec772c8264afa029b079e5670e0c88613307af41c9",
+        "retention_arithmetic-3711a5ac1fa84f6231fb82ab3ed4acaf7e2ec04ee4f8b5ba40ea3655c3eb0b23",
+        "retention_arithmetic-45b80347c4ec0390f939ac836b1edee645f3f900f4c55350aa309d6196be3c2e",
+        "retention_arithmetic-7c7d5bc9435c0a78adbd114344b97c9ce2ad267221cb0fbd652a1aadd9d01279"
+      ],
+      "retention_spatial": [
+        "retention_spatial-99b354e2042f2857c1e65e3fa92bb663cc7b1f947086fce7d206db17aab5f577",
+        "retention_spatial-5dd5379cad19685ee643e05ef16f38b4fc1a3437a8103150a744f125a38cd8b8",
+        "retention_spatial-c6a81a1b658b039943cc6ded87feffa31428a4a273b826767440ed41372672c2",
+        "retention_spatial-9e06f0d051057d08759d68e37fe44c54cd49271f33c4ee4d096d01defa55eb84",
+        "retention_spatial-5bf2d54212e0ef664003ce444f45d5bafba879810c4d3c41dcccd6db87f56776",
+        "retention_spatial-d07126118ad7492e35d4ef8f9ba7158e9d74e76d174704fc989d155fab3c429b",
+        "retention_spatial-3ffa5a8d87552ca93e01bfda8981ba62266df45695fc1a2a0467fc5901a2a26b",
+        "retention_spatial-b3c192d7af23eef9dd3e5f6e6acb3cb8365e3ae627790145df593a54f0d5c3c5"
+      ],
+      "teacher_gate": [
+        "teacher_gate-4442fc7fb85a6f1004e61988f93826fc66ea152c4a8abb7544a1639bd0d93ad9",
+        "teacher_gate-d6892f27153888362e031a55c3fe0b4aefe085a6d012c06835a9377be5a52590",
+        "teacher_gate-f4a034c71f50cb75780ba5c079fb4bca78c8c07f18a920bd9c09bb80fe1c6806",
+        "teacher_gate-e5b941a6d5629d2cc0f4743910482d78c5de88eaaa9d4c2754837ea95aa6b7fc",
+        "teacher_gate-8b9d4492ab79c896b3961a1f68e9c61d4f6e1da513aaf98b3b272347c00276de",
+        "teacher_gate-2d7e3eb667b8da68bc76a80231bed9e1ff79cd979c0afe2f2ac00fd839bd42c4",
+        "teacher_gate-25b537dccbd9d37da513b247c1f5657da22134e2920a09bb9fd9a67601ce2152",
+        "teacher_gate-d35c5e160de287d9bdbf95cce8cf5a0356e7468397bce29057dde0c708c2589b"
+      ],
+      "train": [
+        "train-d4c61eca5808af47617b736ee147cc806a5fa9a6a4af7c4858cdccf5280fd4dd",
+        "train-a5f70359a9602f4e113553b629aa896eaeab129fda35d983c55f04389d1ac1bf",
+        "train-80d6cbd6621aba14c05f067dcdfffd4efaac23a19dd4dcfca571cc938eb1b709",
+        "train-ef5362ad6ea1fc86150c6db974f980c5f55291aa79fbd28ced1ae43e1ed24aee",
+        "train-06286dab9695043fc43ccfb8270ab58bad8a11de258ca6f8b7e055d2820fbbfa",
+        "train-b184047f696237d726de806d80bbcec23c53f7971cfba454232c2d42574b2c17",
+        "train-cb0a2e7068169d233371f14c161a74a0d8109e69fb64f2bc7b37da52266b8574",
+        "train-648719475003772520dd5c28669892785111b7c97b45613ad0b7e1608454c983",
+        "train-d0ecd5fa3ef4defc271edaee1df99bd81f6228f666cafc7e7b623f58e2d47a04",
+        "train-353094f236506607382a6788f72f86588dcc645a9ad51007bd374ba09fdc6217",
+        "train-a44f67837f8b9687bce3c899c2f13bf891c97567c2280a3e0af6da55b7f5e1ca",
+        "train-7d6140c3d0ab6487c6fba58bb4d70274e215c2a1b735844698459e861ad879d2",
+        "train-d81ce4ed83a2c41e5700fa740703b7ee5286eea68d25106546d45f2e890a377b",
+        "train-68bd05a8afc5977bd5e4f0c4733a30e1bf2c227fd37a1a5f8147a1fac7cb98bc",
+        "train-2e15781b742da043061ef1f5ca813db0b543fde2277bf8a3c9b5a31d98bce7e3",
+        "train-71cc14d3635319f49a8d3160d63ea9ad7bd8d0b49dbcd1ef0c85edbc3da26dff"
+      ]
+    },
+    "gate_rows": 8,
+    "native_tokenization": "NOT_EXECUTED",
+    "row_identity": {
+      "harder_transfer-026ab9cc8ac36c36a6697b27b0b19bcedb8ac9749b54d125700c4e33db7c5f3e": {
+        "parent_id": "026ab9cc8ac36c36a6697b27b0b19bcedb8ac9749b54d125700c4e33db7c5f3e",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "harder_transfer-150bcb7d73232d1eb1d66e7f2c186aa290a083daa34b765e14065c06a72c4aeb": {
+        "parent_id": "150bcb7d73232d1eb1d66e7f2c186aa290a083daa34b765e14065c06a72c4aeb",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "harder_transfer-71955565a57915b322009855e0e7fa69a24c8548c4bfd37e9d7173ecdfff078c": {
+        "parent_id": "71955565a57915b322009855e0e7fa69a24c8548c4bfd37e9d7173ecdfff078c",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "harder_transfer-7e076356daae978c33c40aea523cad210a527335a747d8d0d1b25e83d17a3634": {
+        "parent_id": "7e076356daae978c33c40aea523cad210a527335a747d8d0d1b25e83d17a3634",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "harder_transfer-8832136969e40c0a457383024c8e21b1b9af8b58ea4ab62412068a710c89164a": {
+        "parent_id": "8832136969e40c0a457383024c8e21b1b9af8b58ea4ab62412068a710c89164a",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "harder_transfer-8ef809d130b4516121965b2353d90d3292013692d9a23da395f98873b78cfbd8": {
+        "parent_id": "8ef809d130b4516121965b2353d90d3292013692d9a23da395f98873b78cfbd8",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "harder_transfer-a3fddcfb24a2a4145953aa29d8c84a1007c7b58a9769a29d6d518f6c4ddf45f9": {
+        "parent_id": "a3fddcfb24a2a4145953aa29d8c84a1007c7b58a9769a29d6d518f6c4ddf45f9",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "harder_transfer-ad9cae779aeda79dd1392470c6345813334922231f09740ce48e698c954662a6": {
+        "parent_id": "ad9cae779aeda79dd1392470c6345813334922231f09740ce48e698c954662a6",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "harder_transfer-d72d7888af53dfa9b06bde624a1edcaf6035a8fe12d4f728b5e55667c98059f7": {
+        "parent_id": "d72d7888af53dfa9b06bde624a1edcaf6035a8fe12d4f728b5e55667c98059f7",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "harder_transfer-d7fe491a5c81921a93f38bc5daaa8615586fd58127ebb707dfae56d3ff6a6f92": {
+        "parent_id": "d7fe491a5c81921a93f38bc5daaa8615586fd58127ebb707dfae56d3ff6a6f92",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "harder_transfer-dc34fefc239491e4cb48deebda1524f4923684581927f1ee8d12946cbd9bcf5b": {
+        "parent_id": "dc34fefc239491e4cb48deebda1524f4923684581927f1ee8d12946cbd9bcf5b",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "harder_transfer-f641966c6f0badf30705c3fdd561c71e2ace3edada0cb2c98a1081a25f461157": {
+        "parent_id": "f641966c6f0badf30705c3fdd561c71e2ace3edada0cb2c98a1081a25f461157",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "iid_acquisition-0464815e7f53053fc793b05257ad63ccc9cd9d9230fa25c68732a40cddce7ffd": {
+        "parent_id": "0464815e7f53053fc793b05257ad63ccc9cd9d9230fa25c68732a40cddce7ffd",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "iid_acquisition-2e2f4374bb745190b658f6a7d774bc46d3900bf9056c9515a97f7fea5702c256": {
+        "parent_id": "2e2f4374bb745190b658f6a7d774bc46d3900bf9056c9515a97f7fea5702c256",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "iid_acquisition-4806364c8595e282095bac1458e6f98f3da94651bc475ab6d7b8ed02eca4af32": {
+        "parent_id": "4806364c8595e282095bac1458e6f98f3da94651bc475ab6d7b8ed02eca4af32",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "iid_acquisition-6b5c9c2b7d9f12dbfdc5f9e4dac093ca53f96d2af0d331191c1481544314e84c": {
+        "parent_id": "6b5c9c2b7d9f12dbfdc5f9e4dac093ca53f96d2af0d331191c1481544314e84c",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "iid_acquisition-7e28928d891efc90d923f62afc83acee397e634d038054fae13825db351684c6": {
+        "parent_id": "7e28928d891efc90d923f62afc83acee397e634d038054fae13825db351684c6",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "iid_acquisition-a8dee34339a33936060ec2435f88d569941b79a939cea6cd4229b29a5785a48c": {
+        "parent_id": "a8dee34339a33936060ec2435f88d569941b79a939cea6cd4229b29a5785a48c",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "iid_acquisition-ab53e33e517fb46077c9c772f966c4c5922104dc7a7a0280115aed80b546262f": {
+        "parent_id": "ab53e33e517fb46077c9c772f966c4c5922104dc7a7a0280115aed80b546262f",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "iid_acquisition-c9934678fef0ac239f9a1c0e662168d918b58604cd8bca0aa634ab2c1a79ee8e": {
+        "parent_id": "c9934678fef0ac239f9a1c0e662168d918b58604cd8bca0aa634ab2c1a79ee8e",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "iid_acquisition-ecbf6dab39192f5a755898d38c01715945c62b00308abe365d073b0650323ed2": {
+        "parent_id": "ecbf6dab39192f5a755898d38c01715945c62b00308abe365d073b0650323ed2",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "iid_acquisition-f5a0d61bfff6f173b8053e683d74b08ffeebc8a3ae01ef1c66f9c7736c512b9f": {
+        "parent_id": "f5a0d61bfff6f173b8053e683d74b08ffeebc8a3ae01ef1c66f9c7736c512b9f",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "iid_acquisition-f65c8698546e54ce2ab5fea1b26f9b9a34434f70840885663e5c7644b0dc0929": {
+        "parent_id": "f65c8698546e54ce2ab5fea1b26f9b9a34434f70840885663e5c7644b0dc0929",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "iid_acquisition-ff2566512e5b68cb1adf6f2c42fc0aa99755c26762d5a917f84432a4aa2ffda2": {
+        "parent_id": "ff2566512e5b68cb1adf6f2c42fc0aa99755c26762d5a917f84432a4aa2ffda2",
+        "purpose": "acquisition",
+        "split": "dev",
+        "task": "modular_state"
+      },
+      "retention_arithmetic-1e4a259ec5b08a35e67de0bea6fe233ad77afffee8c5a252f304da4b9f134a00": {
+        "parent_id": "1e4a259ec5b08a35e67de0bea6fe233ad77afffee8c5a252f304da4b9f134a00",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_arithmetic"
+      },
+      "retention_arithmetic-3711a5ac1fa84f6231fb82ab3ed4acaf7e2ec04ee4f8b5ba40ea3655c3eb0b23": {
+        "parent_id": "3711a5ac1fa84f6231fb82ab3ed4acaf7e2ec04ee4f8b5ba40ea3655c3eb0b23",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_arithmetic"
+      },
+      "retention_arithmetic-45b80347c4ec0390f939ac836b1edee645f3f900f4c55350aa309d6196be3c2e": {
+        "parent_id": "45b80347c4ec0390f939ac836b1edee645f3f900f4c55350aa309d6196be3c2e",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_arithmetic"
+      },
+      "retention_arithmetic-7c7d5bc9435c0a78adbd114344b97c9ce2ad267221cb0fbd652a1aadd9d01279": {
+        "parent_id": "7c7d5bc9435c0a78adbd114344b97c9ce2ad267221cb0fbd652a1aadd9d01279",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_arithmetic"
+      },
+      "retention_arithmetic-a958af5441d57a8d50f2290a6384d03df804cde9429c41279f47d47951f560fa": {
+        "parent_id": "a958af5441d57a8d50f2290a6384d03df804cde9429c41279f47d47951f560fa",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_arithmetic"
+      },
+      "retention_arithmetic-af9488408d418b15aebf2498e1f5701a9f70420a540d58a0156961925f8d1990": {
+        "parent_id": "af9488408d418b15aebf2498e1f5701a9f70420a540d58a0156961925f8d1990",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_arithmetic"
+      },
+      "retention_arithmetic-bc3bc8a3a168fd02c9ed5eec772c8264afa029b079e5670e0c88613307af41c9": {
+        "parent_id": "bc3bc8a3a168fd02c9ed5eec772c8264afa029b079e5670e0c88613307af41c9",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_arithmetic"
+      },
+      "retention_arithmetic-bf9f7f3238bfcf1c04ecc08cc556c7913606c4009fd5892c650071fe8d7cc50c": {
+        "parent_id": "bf9f7f3238bfcf1c04ecc08cc556c7913606c4009fd5892c650071fe8d7cc50c",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_arithmetic"
+      },
+      "retention_spatial-3ffa5a8d87552ca93e01bfda8981ba62266df45695fc1a2a0467fc5901a2a26b": {
+        "parent_id": "3ffa5a8d87552ca93e01bfda8981ba62266df45695fc1a2a0467fc5901a2a26b",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_spatial"
+      },
+      "retention_spatial-5bf2d54212e0ef664003ce444f45d5bafba879810c4d3c41dcccd6db87f56776": {
+        "parent_id": "5bf2d54212e0ef664003ce444f45d5bafba879810c4d3c41dcccd6db87f56776",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_spatial"
+      },
+      "retention_spatial-5dd5379cad19685ee643e05ef16f38b4fc1a3437a8103150a744f125a38cd8b8": {
+        "parent_id": "5dd5379cad19685ee643e05ef16f38b4fc1a3437a8103150a744f125a38cd8b8",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_spatial"
+      },
+      "retention_spatial-99b354e2042f2857c1e65e3fa92bb663cc7b1f947086fce7d206db17aab5f577": {
+        "parent_id": "99b354e2042f2857c1e65e3fa92bb663cc7b1f947086fce7d206db17aab5f577",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_spatial"
+      },
+      "retention_spatial-9e06f0d051057d08759d68e37fe44c54cd49271f33c4ee4d096d01defa55eb84": {
+        "parent_id": "9e06f0d051057d08759d68e37fe44c54cd49271f33c4ee4d096d01defa55eb84",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_spatial"
+      },
+      "retention_spatial-b3c192d7af23eef9dd3e5f6e6acb3cb8365e3ae627790145df593a54f0d5c3c5": {
+        "parent_id": "b3c192d7af23eef9dd3e5f6e6acb3cb8365e3ae627790145df593a54f0d5c3c5",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_spatial"
+      },
+      "retention_spatial-c6a81a1b658b039943cc6ded87feffa31428a4a273b826767440ed41372672c2": {
+        "parent_id": "c6a81a1b658b039943cc6ded87feffa31428a4a273b826767440ed41372672c2",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_spatial"
+      },
+      "retention_spatial-d07126118ad7492e35d4ef8f9ba7158e9d74e76d174704fc989d155fab3c429b": {
+        "parent_id": "d07126118ad7492e35d4ef8f9ba7158e9d74e76d174704fc989d155fab3c429b",
+        "purpose": "retention",
+        "split": "dev",
+        "task": "retention_spatial"
+      },
+      "train-06286dab9695043fc43ccfb8270ab58bad8a11de258ca6f8b7e055d2820fbbfa": {
+        "parent_id": "06286dab9695043fc43ccfb8270ab58bad8a11de258ca6f8b7e055d2820fbbfa",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-2e15781b742da043061ef1f5ca813db0b543fde2277bf8a3c9b5a31d98bce7e3": {
+        "parent_id": "2e15781b742da043061ef1f5ca813db0b543fde2277bf8a3c9b5a31d98bce7e3",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-353094f236506607382a6788f72f86588dcc645a9ad51007bd374ba09fdc6217": {
+        "parent_id": "353094f236506607382a6788f72f86588dcc645a9ad51007bd374ba09fdc6217",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-648719475003772520dd5c28669892785111b7c97b45613ad0b7e1608454c983": {
+        "parent_id": "648719475003772520dd5c28669892785111b7c97b45613ad0b7e1608454c983",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-68bd05a8afc5977bd5e4f0c4733a30e1bf2c227fd37a1a5f8147a1fac7cb98bc": {
+        "parent_id": "68bd05a8afc5977bd5e4f0c4733a30e1bf2c227fd37a1a5f8147a1fac7cb98bc",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-71cc14d3635319f49a8d3160d63ea9ad7bd8d0b49dbcd1ef0c85edbc3da26dff": {
+        "parent_id": "71cc14d3635319f49a8d3160d63ea9ad7bd8d0b49dbcd1ef0c85edbc3da26dff",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-7d6140c3d0ab6487c6fba58bb4d70274e215c2a1b735844698459e861ad879d2": {
+        "parent_id": "7d6140c3d0ab6487c6fba58bb4d70274e215c2a1b735844698459e861ad879d2",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-80d6cbd6621aba14c05f067dcdfffd4efaac23a19dd4dcfca571cc938eb1b709": {
+        "parent_id": "80d6cbd6621aba14c05f067dcdfffd4efaac23a19dd4dcfca571cc938eb1b709",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-a44f67837f8b9687bce3c899c2f13bf891c97567c2280a3e0af6da55b7f5e1ca": {
+        "parent_id": "a44f67837f8b9687bce3c899c2f13bf891c97567c2280a3e0af6da55b7f5e1ca",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-a5f70359a9602f4e113553b629aa896eaeab129fda35d983c55f04389d1ac1bf": {
+        "parent_id": "a5f70359a9602f4e113553b629aa896eaeab129fda35d983c55f04389d1ac1bf",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-b184047f696237d726de806d80bbcec23c53f7971cfba454232c2d42574b2c17": {
+        "parent_id": "b184047f696237d726de806d80bbcec23c53f7971cfba454232c2d42574b2c17",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-cb0a2e7068169d233371f14c161a74a0d8109e69fb64f2bc7b37da52266b8574": {
+        "parent_id": "cb0a2e7068169d233371f14c161a74a0d8109e69fb64f2bc7b37da52266b8574",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-d0ecd5fa3ef4defc271edaee1df99bd81f6228f666cafc7e7b623f58e2d47a04": {
+        "parent_id": "d0ecd5fa3ef4defc271edaee1df99bd81f6228f666cafc7e7b623f58e2d47a04",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-d4c61eca5808af47617b736ee147cc806a5fa9a6a4af7c4858cdccf5280fd4dd": {
+        "parent_id": "d4c61eca5808af47617b736ee147cc806a5fa9a6a4af7c4858cdccf5280fd4dd",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-d81ce4ed83a2c41e5700fa740703b7ee5286eea68d25106546d45f2e890a377b": {
+        "parent_id": "d81ce4ed83a2c41e5700fa740703b7ee5286eea68d25106546d45f2e890a377b",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      },
+      "train-ef5362ad6ea1fc86150c6db974f980c5f55291aa79fbd28ced1ae43e1ed24aee": {
+        "parent_id": "ef5362ad6ea1fc86150c6db974f980c5f55291aa79fbd28ced1ae43e1ed24aee",
+        "purpose": "acquisition",
+        "split": "train",
+        "task": "modular_state"
+      }
+    },
+    "screen_rows": 56,
+    "status": "CANDIDATE_NOT_ADMITTED"
+  },
+  "design": {
+    "acquisition_steps": [
+      10,
+      11,
+      12
+    ],
+    "arms": [
+      {
+        "ema_rate": 0.0,
+        "kl_direction": "forward",
+        "method": "sd",
+        "rollout_source": "student"
+      },
+      {
+        "ema_rate": 0.0,
+        "kl_direction": "forward",
+        "method": "sd",
+        "rollout_source": "teacher"
+      },
+      {
+        "ema_rate": 0.0,
+        "kl_direction": null,
+        "method": "sft",
+        "rollout_source": null
+      }
+    ],
+    "cells": 6,
+    "config_sha256_by_seed": {
+      "17": "58ea423ea6129a8cbdea8d2f828f18bf338ad7b18f73244a6ab491a2e058c4d2",
+      "29": "15a20acd759c4743ca012ca1505c32d09e85d8141a6177fa31659c9c40d20b4d"
+    },
+    "learning_rate": 1e-05,
+    "matching": "Same per-seed ordered rows, source, trainables, optimizer, LR, references and updates. Tokens/FLOPs and actual update sizes measured separately.",
+    "rationale": "Isolate rollout source with forward KL and frozen EMA0; test privileged trajectories versus clean deployment prefixes. No controlled/native outcome selected this contrast.",
+    "seed_unit": "Two paired ordering/sampling seeds on one candidate bank; not two independent training draws or confirmation.",
+    "seeds": [
+      17,
+      29
+    ],
+    "selected_numel": 2097152,
+    "selected_parameter": "model.layers.12.self_attn.q_proj.weight",
+    "steps_per_cell": 12,
+    "train_row_streams": {
+      "17": [
+        "train-cb0a2e7068169d233371f14c161a74a0d8109e69fb64f2bc7b37da52266b8574",
+        "train-a44f67837f8b9687bce3c899c2f13bf891c97567c2280a3e0af6da55b7f5e1ca",
+        "train-2e15781b742da043061ef1f5ca813db0b543fde2277bf8a3c9b5a31d98bce7e3",
+        "train-353094f236506607382a6788f72f86588dcc645a9ad51007bd374ba09fdc6217",
+        "train-ef5362ad6ea1fc86150c6db974f980c5f55291aa79fbd28ced1ae43e1ed24aee",
+        "train-648719475003772520dd5c28669892785111b7c97b45613ad0b7e1608454c983",
+        "train-d4c61eca5808af47617b736ee147cc806a5fa9a6a4af7c4858cdccf5280fd4dd",
+        "train-a5f70359a9602f4e113553b629aa896eaeab129fda35d983c55f04389d1ac1bf",
+        "train-7d6140c3d0ab6487c6fba58bb4d70274e215c2a1b735844698459e861ad879d2",
+        "train-d0ecd5fa3ef4defc271edaee1df99bd81f6228f666cafc7e7b623f58e2d47a04",
+        "train-80d6cbd6621aba14c05f067dcdfffd4efaac23a19dd4dcfca571cc938eb1b709",
+        "train-71cc14d3635319f49a8d3160d63ea9ad7bd8d0b49dbcd1ef0c85edbc3da26dff"
+      ],
+      "29": [
+        "train-71cc14d3635319f49a8d3160d63ea9ad7bd8d0b49dbcd1ef0c85edbc3da26dff",
+        "train-648719475003772520dd5c28669892785111b7c97b45613ad0b7e1608454c983",
+        "train-a44f67837f8b9687bce3c899c2f13bf891c97567c2280a3e0af6da55b7f5e1ca",
+        "train-7d6140c3d0ab6487c6fba58bb4d70274e215c2a1b735844698459e861ad879d2",
+        "train-d81ce4ed83a2c41e5700fa740703b7ee5286eea68d25106546d45f2e890a377b",
+        "train-d4c61eca5808af47617b736ee147cc806a5fa9a6a4af7c4858cdccf5280fd4dd",
+        "train-ef5362ad6ea1fc86150c6db974f980c5f55291aa79fbd28ced1ae43e1ed24aee",
+        "train-cb0a2e7068169d233371f14c161a74a0d8109e69fb64f2bc7b37da52266b8574",
+        "train-2e15781b742da043061ef1f5ca813db0b543fde2277bf8a3c9b5a31d98bce7e3",
+        "train-d0ecd5fa3ef4defc271edaee1df99bd81f6228f666cafc7e7b623f58e2d47a04",
+        "train-a5f70359a9602f4e113553b629aa896eaeab129fda35d983c55f04389d1ac1bf",
+        "train-06286dab9695043fc43ccfb8270ab58bad8a11de258ca6f8b7e055d2820fbbfa"
+      ]
+    }
+  },
+  "execution_authorized": false,
+  "experiment": "DSD-001",
+  "failure_rules": [
+    "Any identity/custody/privilege/budget/resource/nonfinite/missing-gradient/frozen mutation failure stops the stage with create-only receipt.",
+    "Gate or parity failure bars comparison; no source, tolerance, precision, template, task or optimizer substitution.",
+    "Cell failure remains part of attempted6; stop campaign without automatic rerun, shorter rows or dropped cases.",
+    "No source editing, native execution here, sealed/confirmation reads, foreign permit, download, serving change or promotion."
+  ],
+  "limitations": [
+    "Candidate semantic/rights/admission review and native tokenizer budgets pending.",
+    "The reviewed qualification entry point is prospective and fixture-verified only; legacy qualify/train commands do not enforce this packet. Comparison needs later reviewed bounded execution integration and explicit training approval.",
+    "Exact runtime proposed: Python3.11.15, torch2.10.0+cu126, Transformers4.57.1, safetensors0.7.0, tokenizers0.22.2. Compatibility/native fit unexecuted; shared runtime must not be modified.",
+    "Small modular-state and arithmetic/spatial cohorts are DEV implementation probes, not broad reasoning or independent-family confirmation."
+  ],
+  "limits": {
+    "automatic_retries": 0,
+    "comparison_generated_tokens": 32256,
+    "comparison_processed_input_tokens": 16576512,
+    "comparison_sft_reference_tokens": 768,
+    "derivation": "40 DEV rows x baseline+3 checkpoints x32 generation calls=5120 calls/cell; SD12x(32 rollout+2 scoring)=408; SFT12 scoring. Upper bounds, not measured cost or fit.",
+    "max_response_tokens": 32,
+    "max_sequence_tokens": 512,
+    "minimum_free_cuda_gib_before": 4.0,
+    "minimum_free_cuda_gib_during": 0.5,
+    "minimum_free_disk_gib": 5.0,
+    "minimum_free_host_gib_before": 6.0,
+    "minimum_free_host_gib_during": 1.5,
+    "per_cell_generated_tokens": 5504,
+    "per_cell_processed_input_tokens": 3000000,
+    "per_cell_wall_seconds": 1800,
+    "per_sd_cell_forward_calls": 5528,
+    "per_sft_cell_forward_calls": 5132,
+    "qualification_forward_calls": 2048,
+    "qualification_generated_tokens": 2048,
+    "qualification_processed_input_tokens": 1048576,
+    "qualification_updates": 0,
+    "qualification_wall_seconds": 1800,
+    "total_updates": 72
+  },
+  "next_decision": "Review exact candidate data/design/runtime and approve only the byte-bound bounded zero-update qualification; comparison execution integration and training require a later explicit decision after qualification.",
+  "runtime_recipe": {
+    "python": "3.11.15",
+    "safetensors": "0.7.0",
+    "tokenizers": "0.22.2",
+    "torch": "2.10.0+cu126",
+    "transformers": "4.57.1"
+  },
+  "schema_version": 1,
+  "source": {
+    "checkpoint": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-1.7.0-devfreeze",
+    "checkpoint_sha256": "495dee5eef1eb5365188ee589961da75909feb4a7446ac4f2d0760e48602d6b4",
+    "core_id": "rineya.core.supa.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-0p8125",
+    "custody_file_sha256": "a642b4af674788227413f031bc1cfd576c1f471f15a2a2e87d2fb0f25e3bb05c",
+    "custody_path": "C:\\Users\\clclc\\BusinessProject\\dsd001-preparation-20261005\\source-custody.json",
+    "inspection_file_sha256": "ea9d7d3ab87f1b9acaf18846a1bbeb9df203e62a355fd6c8f980bda407e6a1c3",
+    "inspection_path": "C:\\Users\\clclc\\BusinessProject\\dsd001-preparation-20261005\\source-inspection.json",
+    "weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b"
+  },
+  "stages": {
+    "comparison": {
+      "approval": "SEPARATE_EXPLICIT_TRAINING_REVIEW_AFTER_QUALIFICATION",
+      "no_sweeps": true,
+      "reload_exact_source_each_cell": true,
+      "status": "NOT_AUTHORIZED"
+    },
+    "native_qualification": {
+      "approval": "NEW_DSD_BYTE_BOUND_REVIEW_REQUIRED",
+      "checks": [
+        "exact source pre/post custody and full-load keys",
+        "raw BF16 source versus selected FP32-master unprivileged full-logit parity (exact; no relaxed tolerance)",
+        "representative and 512-token maximum shape forward/backward without optimizer initialization or update",
+        "both rollout sources x both KL directions plus SFT; math SDPA profiler dispatch",
+        "source/teacher/frozen parameters and buffers unchanged; exception swap restoration",
+        "gate-only teacher competence with paired clean student generation",
+        "complete native tokenization with no truncation and privilege sentinel invariance",
+        "load/stage host, CUDA allocated+reserved/free, disk, token/call/time ceilings and failure receipts"
+      ],
+      "status": "NOT_EXECUTED"
+    },
+    "offline": {
+      "native_loads": 0,
+      "status": "PREPARED"
+    }
+  },
+  "start_commit": "e1737660cd0feacd6efd4177ea1d1579bf0cd865",
+  "status": "PROSPECTIVE_REVIEW_PACKET",
+  "teacher_gate": {
+    "failure": "Stop comparison if gate fails, source clean ceiling prevents two wins, prompt budget fails or reference verification fails; preserve all outputs, no easier replacement.",
+    "generation": "greedy, thinking disabled, 32 response tokens; source teacher, no update",
+    "max_paired_harms": 0,
+    "min_correct": 7,
+    "min_paired_wins": 2,
+    "privilege_boundary": "References only in TRAIN objective and separate gate-only teacher context; never in student inference, IID/transfer/retention generation or selection.",
+    "rows": 8
+  },
+  "teacher_template_sha256": "dd622786eab88189c1ab923c25ca0b2b297a5cdda4b455ccfb6291c0d2ef5b7d"
+}
