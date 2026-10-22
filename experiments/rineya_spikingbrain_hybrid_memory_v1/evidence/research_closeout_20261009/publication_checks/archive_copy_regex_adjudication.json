@@ -1,0 +1,42 @@
+{
+  "all_other_archive_checks_pass": true,
+  "created_utc": "2026-10-10T03:38:18.990047+00:00",
+  "findings": [
+    {
+      "adjudication": [
+        {
+          "credential_value_present": false,
+          "exact_known_claimledger_phrase_match": true,
+          "match_is_inside_ordinary_narrative_word": true,
+          "matched_value_printed": false
+        }
+      ],
+      "file_sha256": "6257a4fe5553737a36a29338f18d86361b83437a53648b56b7e195e14c4796df",
+      "initial_match_count": 1,
+      "path": "pattern_research/claim-falsification-ledger.json",
+      "pattern_name": "openai_style_credential",
+      "token_bounded_credential_matches": 0
+    },
+    {
+      "adjudication": [
+        {
+          "credential_value_present": false,
+          "exact_known_claimledger_phrase_match": true,
+          "match_is_inside_ordinary_narrative_word": true,
+          "matched_value_printed": false
+        }
+      ],
+      "file_sha256": "19c550ad357aa90241e1dce080ed8c68c003e59309a47ea8e2179521b033c751",
+      "initial_match_count": 1,
+      "path": "pattern_research/claim-falsification-ledger.v2.json",
+      "pattern_name": "openai_style_credential",
+      "token_bounded_credential_matches": 0
+    }
+  ],
+  "initial_review_status_preserved": "ISSUES_REQUIRE_ROOT_REVIEW",
+  "prior_review_sha256": "0eb530cbf009bbe87359c0d7b68c48e8f06af312daae64bea1070bc16c773d81",
+  "reason": "The loose sk-prefix expression begins within an ordinary task-specific narrative word, not at a token boundary. Exact known phrase comparison and boundary-aware credential regex independently classify both flags as false positives. No secret value was printed.",
+  "schema": "RINEYA-RESEARCH/credential-pattern-adjudication-v1",
+  "scope": "Offline read-only adjudication. No archive/source/Git mutation.",
+  "status": "PASS_TWO_WORD_INTERNAL_FALSE_POSITIVES_NO_CREDENTIALS_IDENTIFIED"
+}

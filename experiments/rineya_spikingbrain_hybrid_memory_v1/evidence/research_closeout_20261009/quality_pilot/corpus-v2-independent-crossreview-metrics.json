@@ -1,0 +1,80 @@
+{
+  "audit": {
+    "checks": [
+      "actual-prompt independent oracle",
+      "all six update orders",
+      "counterfactual and position pairs",
+      "joint intervention invariants",
+      "shared512slot schedule",
+      "split and historical disjointness",
+      "tokenizer inventory",
+      "runtime token/label replay"
+    ],
+    "counts": {
+      "candidate": 512,
+      "control": 512,
+      "dev": 672
+    },
+    "full_tokenizer_replay": true,
+    "ledger_steps": 512,
+    "limitations": [
+      "Offline engineering verification only; no model capability evidence.",
+      "Semantic review and separate native authorization remain required."
+    ],
+    "manifest_sha256": "ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3",
+    "reviewed": false,
+    "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1/corpus-audit",
+    "status": "PASS_OFFLINE_AUDIT"
+  },
+  "audit_sha256": "56b19ba522dbedb39d3670a6c7025762d5cb043d9442b1b2850d083d07ed9170",
+  "checked": [
+    "Independent regex/raw-prompt oracle does not call the generator oracle.",
+    "Every TRAIN and DEV target recomputed from actual prompt facts; all three distinct update revisions required.",
+    "Counterfactual latest-value changes retain lower-revision records; near/distant retain same facts and filler.",
+    "All six permutation groups are checked; control bias is 12/2/2 worlds and candidate/DEV positions balance.",
+    "Only filler words without entities or factual values are present; answer, distractor, ordering and filler RNG streams are separate.",
+    "Each world is resampled before freezing for distinct revision values and tokenizer geometry; no model-output selection.",
+    "TRAIN259 and DEV1158 caps, actual token offsets, equal exposure lengths/labels and DEV input/all-ignored-label hashes replay.",
+    "Split world/template identifiers, normalized prompts and historical unprotected TRAIN/DEV prompts are disjoint.",
+    "512 shared slots, 672 common DEV rows, 16 dependent update worlds; 64 retention rows span eight synthetic skills."
+  ],
+  "corpus_sha256": "ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3",
+  "created_utc": "2026-10-05T19:49:38.736694+00:00",
+  "fixture_only": true,
+  "full_tokenizer_replay": true,
+  "issues": [],
+  "latest_position_counts": {
+    "candidate": {
+      "0": 128,
+      "1": 128,
+      "2": 128
+    },
+    "control": {
+      "0": 288,
+      "1": 48,
+      "2": 48
+    },
+    "dev": {
+      "0": 128,
+      "1": 128,
+      "2": 128
+    }
+  },
+  "ledger_sha256": "af19ce6a7a31fd07ae481e291478d89386855543b23191b6d1ffb6f1442c6678",
+  "limitations": [
+    "Tokenizer-only and offline fixture verification do not establish Rineya quality.",
+    "Within each split template IDs index%2 do not create distinct surface forms; TRAIN/DEV record/query syntax differs, but template diversity is narrow.",
+    "Different new template formats can affect the anchor retention gate; no adequacy is assumed before native anchor measurement.",
+    "Balanced ordering versus biased repetition jointly changes ordering diversity and position frequency.",
+    "Counterfactual, role and permutation variants share a world; no independent-row confidence claim."
+  ],
+  "native_models_loaded": false,
+  "protected_banks_read": false,
+  "reviewed_source_files": {
+    "audit.py": "863b21a76cd60f613b378c4e993cb1536524a883f5ea0fb33053485738c05f38",
+    "corpus.py": "00ff1d334eddf0408c3f5e1389d95ba2d429db73531328244b2bcc694a914691"
+  },
+  "reviewer": "independent quality_metrics agent",
+  "schema": "RINEYA-UPDATE-ORDER-QUALITY/v1/independent-crossreview",
+  "status": "PASS_OFFLINE_CROSSREVIEW"
+}

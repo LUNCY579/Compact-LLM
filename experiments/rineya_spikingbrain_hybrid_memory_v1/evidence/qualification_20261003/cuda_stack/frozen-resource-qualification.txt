@@ -1,0 +1,48 @@
+{
+  "created_utc": "2026-10-03T05:53:32.585859+00:00",
+  "status": "FRESH_RESOURCE_GUARD_AND_CPU_TEST_RECEIPT_NO_NATIVE_EXECUTION",
+  "python_executable": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.venv-cuda\\Scripts\\python.exe",
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "transformers": "4.51.3",
+    "tokenizers": "0.21.4",
+    "safetensors": "0.7.0",
+    "psutil": "7.2.2",
+    "pytest": "8.4.2",
+    "accelerate": "1.15.0"
+  },
+  "code_sha256": "dbf53274d5c2671d761ea47c192a1a6269efa9d93b2907d72fa3bd825d7516df",
+  "tests_sha256": {
+    "tests\\test_comparison.py": "c589cafd6faf160278cbae4252aa28ee53cca0c43bf4977a0dd9b85bf49084dd",
+    "tests\\test_experiment.py": "f207c13c637baca062935718a891254ec887728fe27a0fded3b1ef811e498750",
+    "tests\\test_preflight.py": "05585280d24f34bd7b74ff0ebee0f981f256352613afad34c18ca3b6385c4685",
+    "tests\\test_teacher_budget.py": "b86700a33b7b74870d3b996bf514cd1aee1a491eeb5fe2080665f3bd1021e769"
+  },
+  "full_suite_passed": 109,
+  "full_suite_skipped": 0,
+  "cpu_test_cuda_visible_devices": "-1",
+  "compileall_passed": true,
+  "pip_check_passed": true,
+  "compiled_cuda": "12.4",
+  "cuda_available": true,
+  "gpu": {
+    "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "free_vram_bytes": 7398752256,
+    "total_vram_bytes": 8585216000
+  },
+  "available_host_ram_bytes_after_cuda_import": 5566066688,
+  "worker_rss_bytes": 498028544,
+  "guards": {
+    "admission": {
+      "status": "BLOCKED",
+      "reason": "free RAM below 7.4 GiB guard"
+    },
+    "runtime": {
+      "status": "BLOCKED",
+      "reason": "free RAM below 6.0 GiB guard"
+    }
+  },
+  "cuda_tensors_allocated": false,
+  "model_loaded": false,
+  "native_mechanics_or_training_fit_established": false
+}

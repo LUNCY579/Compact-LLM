@@ -1,0 +1,1090 @@
+{
+  "generator_revision": "distant_evidence_v1",
+  "limitations": [
+    "Short retention probes do not measure broad original-model capability",
+    "One model/configuration/seed cannot establish general recurrent learnability",
+    "Shared task templates require human leakage review"
+  ],
+  "randomness": "none",
+  "review_required": [
+    "Verify targets and missing-evidence semantics",
+    "Review semantic/template separation across splits",
+    "Measure evidence distance and token limits with exact source tokenizer",
+    "Register exposure, primary distant subset and separate retention subset"
+  ],
+  "rows": {
+    "dev-distant_evidence-identifier-00": {
+      "category": "identifier",
+      "distractor_entries": 24,
+      "evidence_end_char": 138,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-identifier",
+      "query_start_char": 1051,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-identifier-01": {
+      "category": "identifier",
+      "distractor_entries": 48,
+      "evidence_end_char": 138,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-identifier",
+      "query_start_char": 1961,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-identifier-02": {
+      "category": "identifier",
+      "distractor_entries": 96,
+      "evidence_end_char": 138,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-identifier",
+      "query_start_char": 3783,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-identifier-03": {
+      "category": "identifier",
+      "distractor_entries": 24,
+      "evidence_end_char": 138,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-identifier",
+      "query_start_char": 1051,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-identifier-04": {
+      "category": "identifier",
+      "distractor_entries": 48,
+      "evidence_end_char": 138,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-identifier",
+      "query_start_char": 1959,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-identifier-05": {
+      "category": "identifier",
+      "distractor_entries": 96,
+      "evidence_end_char": 138,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-identifier",
+      "query_start_char": 3782,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-join-00": {
+      "category": "join",
+      "distractor_entries": 24,
+      "evidence_end_char": 154,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-join",
+      "query_start_char": 1067,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-join-01": {
+      "category": "join",
+      "distractor_entries": 48,
+      "evidence_end_char": 154,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-join",
+      "query_start_char": 1977,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-join-02": {
+      "category": "join",
+      "distractor_entries": 96,
+      "evidence_end_char": 154,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-join",
+      "query_start_char": 3799,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-join-03": {
+      "category": "join",
+      "distractor_entries": 24,
+      "evidence_end_char": 154,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-join",
+      "query_start_char": 1067,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-join-04": {
+      "category": "join",
+      "distractor_entries": 48,
+      "evidence_end_char": 154,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-join",
+      "query_start_char": 1975,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-join-05": {
+      "category": "join",
+      "distractor_entries": 96,
+      "evidence_end_char": 154,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-join",
+      "query_start_char": 3798,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-lookup-00": {
+      "category": "lookup",
+      "distractor_entries": 24,
+      "evidence_end_char": 125,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-lookup",
+      "query_start_char": 1038,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-lookup-01": {
+      "category": "lookup",
+      "distractor_entries": 48,
+      "evidence_end_char": 125,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-lookup",
+      "query_start_char": 1948,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-lookup-02": {
+      "category": "lookup",
+      "distractor_entries": 96,
+      "evidence_end_char": 125,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-lookup",
+      "query_start_char": 3770,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-lookup-03": {
+      "category": "lookup",
+      "distractor_entries": 24,
+      "evidence_end_char": 125,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-lookup",
+      "query_start_char": 1038,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-lookup-04": {
+      "category": "lookup",
+      "distractor_entries": 48,
+      "evidence_end_char": 125,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-lookup",
+      "query_start_char": 1946,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-lookup-05": {
+      "category": "lookup",
+      "distractor_entries": 96,
+      "evidence_end_char": 125,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-lookup",
+      "query_start_char": 3769,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-missing-00": {
+      "category": "missing",
+      "distractor_entries": 24,
+      "evidence_end_char": 162,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-missing",
+      "query_start_char": 1075,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-missing-01": {
+      "category": "missing",
+      "distractor_entries": 48,
+      "evidence_end_char": 162,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-missing",
+      "query_start_char": 1985,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-missing-02": {
+      "category": "missing",
+      "distractor_entries": 96,
+      "evidence_end_char": 162,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-missing",
+      "query_start_char": 3807,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-missing-03": {
+      "category": "missing",
+      "distractor_entries": 24,
+      "evidence_end_char": 162,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-missing",
+      "query_start_char": 1075,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-missing-04": {
+      "category": "missing",
+      "distractor_entries": 48,
+      "evidence_end_char": 162,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-missing",
+      "query_start_char": 1983,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-missing-05": {
+      "category": "missing",
+      "distractor_entries": 96,
+      "evidence_end_char": 162,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-missing",
+      "query_start_char": 3806,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-multiple_facts-00": {
+      "category": "multiple_facts",
+      "distractor_entries": 24,
+      "evidence_end_char": 132,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-multiple_facts",
+      "query_start_char": 1045,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-multiple_facts-01": {
+      "category": "multiple_facts",
+      "distractor_entries": 48,
+      "evidence_end_char": 132,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-multiple_facts",
+      "query_start_char": 1955,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-multiple_facts-02": {
+      "category": "multiple_facts",
+      "distractor_entries": 96,
+      "evidence_end_char": 132,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-multiple_facts",
+      "query_start_char": 3777,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-multiple_facts-03": {
+      "category": "multiple_facts",
+      "distractor_entries": 24,
+      "evidence_end_char": 132,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-multiple_facts",
+      "query_start_char": 1045,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-multiple_facts-04": {
+      "category": "multiple_facts",
+      "distractor_entries": 48,
+      "evidence_end_char": 132,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-multiple_facts",
+      "query_start_char": 1953,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-multiple_facts-05": {
+      "category": "multiple_facts",
+      "distractor_entries": 96,
+      "evidence_end_char": 132,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-multiple_facts",
+      "query_start_char": 3776,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-number-00": {
+      "category": "number",
+      "distractor_entries": 24,
+      "evidence_end_char": 123,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-number",
+      "query_start_char": 1036,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-number-01": {
+      "category": "number",
+      "distractor_entries": 48,
+      "evidence_end_char": 123,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-number",
+      "query_start_char": 1946,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-number-02": {
+      "category": "number",
+      "distractor_entries": 96,
+      "evidence_end_char": 123,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-number",
+      "query_start_char": 3768,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-number-03": {
+      "category": "number",
+      "distractor_entries": 24,
+      "evidence_end_char": 123,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-number",
+      "query_start_char": 1036,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-number-04": {
+      "category": "number",
+      "distractor_entries": 48,
+      "evidence_end_char": 123,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-number",
+      "query_start_char": 1944,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-number-05": {
+      "category": "number",
+      "distractor_entries": 96,
+      "evidence_end_char": 123,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-number",
+      "query_start_char": 3767,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-update-00": {
+      "category": "update",
+      "distractor_entries": 24,
+      "evidence_end_char": 159,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-update",
+      "query_start_char": 1072,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-update-01": {
+      "category": "update",
+      "distractor_entries": 48,
+      "evidence_end_char": 159,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-update",
+      "query_start_char": 1982,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-update-02": {
+      "category": "update",
+      "distractor_entries": 96,
+      "evidence_end_char": 159,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-update",
+      "query_start_char": 3804,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-update-03": {
+      "category": "update",
+      "distractor_entries": 24,
+      "evidence_end_char": 159,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-update",
+      "query_start_char": 1072,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-update-04": {
+      "category": "update",
+      "distractor_entries": 48,
+      "evidence_end_char": 159,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-update",
+      "query_start_char": 1980,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-distant_evidence-update-05": {
+      "category": "update",
+      "distractor_entries": 96,
+      "evidence_end_char": 159,
+      "evidence_start_char": 68,
+      "family_id": "dev-distant_evidence-update",
+      "query_start_char": 3803,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-arithmetic-00": {
+      "category": "arithmetic",
+      "family_id": "dev-short_retention_probe-arithmetic",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-arithmetic-01": {
+      "category": "arithmetic",
+      "family_id": "dev-short_retention_probe-arithmetic",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-arithmetic-02": {
+      "category": "arithmetic",
+      "family_id": "dev-short_retention_probe-arithmetic",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-arithmetic-03": {
+      "category": "arithmetic",
+      "family_id": "dev-short_retention_probe-arithmetic",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-arithmetic-04": {
+      "category": "arithmetic",
+      "family_id": "dev-short_retention_probe-arithmetic",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-arithmetic-05": {
+      "category": "arithmetic",
+      "family_id": "dev-short_retention_probe-arithmetic",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-formatting-00": {
+      "category": "formatting",
+      "family_id": "dev-short_retention_probe-formatting",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-formatting-01": {
+      "category": "formatting",
+      "family_id": "dev-short_retention_probe-formatting",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-formatting-02": {
+      "category": "formatting",
+      "family_id": "dev-short_retention_probe-formatting",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-formatting-03": {
+      "category": "formatting",
+      "family_id": "dev-short_retention_probe-formatting",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-formatting-04": {
+      "category": "formatting",
+      "family_id": "dev-short_retention_probe-formatting",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-formatting-05": {
+      "category": "formatting",
+      "family_id": "dev-short_retention_probe-formatting",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-missing-00": {
+      "category": "missing",
+      "family_id": "dev-short_retention_probe-missing",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-missing-01": {
+      "category": "missing",
+      "family_id": "dev-short_retention_probe-missing",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-missing-02": {
+      "category": "missing",
+      "family_id": "dev-short_retention_probe-missing",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-missing-03": {
+      "category": "missing",
+      "family_id": "dev-short_retention_probe-missing",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-missing-04": {
+      "category": "missing",
+      "family_id": "dev-short_retention_probe-missing",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-missing-05": {
+      "category": "missing",
+      "family_id": "dev-short_retention_probe-missing",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-ordering-00": {
+      "category": "ordering",
+      "family_id": "dev-short_retention_probe-ordering",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-ordering-01": {
+      "category": "ordering",
+      "family_id": "dev-short_retention_probe-ordering",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-ordering-02": {
+      "category": "ordering",
+      "family_id": "dev-short_retention_probe-ordering",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-ordering-03": {
+      "category": "ordering",
+      "family_id": "dev-short_retention_probe-ordering",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-ordering-04": {
+      "category": "ordering",
+      "family_id": "dev-short_retention_probe-ordering",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-ordering-05": {
+      "category": "ordering",
+      "family_id": "dev-short_retention_probe-ordering",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-short_lookup-00": {
+      "category": "short_lookup",
+      "family_id": "dev-short_retention_probe-short_lookup",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-short_lookup-01": {
+      "category": "short_lookup",
+      "family_id": "dev-short_retention_probe-short_lookup",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-short_lookup-02": {
+      "category": "short_lookup",
+      "family_id": "dev-short_retention_probe-short_lookup",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-short_lookup-03": {
+      "category": "short_lookup",
+      "family_id": "dev-short_retention_probe-short_lookup",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-short_lookup-04": {
+      "category": "short_lookup",
+      "family_id": "dev-short_retention_probe-short_lookup",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "dev-short_retention_probe-short_lookup-05": {
+      "category": "short_lookup",
+      "family_id": "dev-short_retention_probe-short_lookup",
+      "role": "short_retention_probe",
+      "split": "dev"
+    },
+    "train-distant_evidence-identifier-00": {
+      "category": "identifier",
+      "distractor_entries": 24,
+      "evidence_end_char": 115,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-identifier",
+      "query_start_char": 1033,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-identifier-01": {
+      "category": "identifier",
+      "distractor_entries": 24,
+      "evidence_end_char": 115,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-identifier",
+      "query_start_char": 1033,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-identifier-02": {
+      "category": "identifier",
+      "distractor_entries": 24,
+      "evidence_end_char": 115,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-identifier",
+      "query_start_char": 1033,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-identifier-03": {
+      "category": "identifier",
+      "distractor_entries": 24,
+      "evidence_end_char": 115,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-identifier",
+      "query_start_char": 1033,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-join-00": {
+      "category": "join",
+      "distractor_entries": 24,
+      "evidence_end_char": 130,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-join",
+      "query_start_char": 1048,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-join-01": {
+      "category": "join",
+      "distractor_entries": 24,
+      "evidence_end_char": 130,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-join",
+      "query_start_char": 1048,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-join-02": {
+      "category": "join",
+      "distractor_entries": 24,
+      "evidence_end_char": 130,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-join",
+      "query_start_char": 1048,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-join-03": {
+      "category": "join",
+      "distractor_entries": 24,
+      "evidence_end_char": 130,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-join",
+      "query_start_char": 1048,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-lookup-00": {
+      "category": "lookup",
+      "distractor_entries": 24,
+      "evidence_end_char": 103,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-lookup",
+      "query_start_char": 1021,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-lookup-01": {
+      "category": "lookup",
+      "distractor_entries": 24,
+      "evidence_end_char": 103,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-lookup",
+      "query_start_char": 1021,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-lookup-02": {
+      "category": "lookup",
+      "distractor_entries": 24,
+      "evidence_end_char": 103,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-lookup",
+      "query_start_char": 1021,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-lookup-03": {
+      "category": "lookup",
+      "distractor_entries": 24,
+      "evidence_end_char": 103,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-lookup",
+      "query_start_char": 1021,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-missing-00": {
+      "category": "missing",
+      "distractor_entries": 24,
+      "evidence_end_char": 139,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-missing",
+      "query_start_char": 1057,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-missing-01": {
+      "category": "missing",
+      "distractor_entries": 24,
+      "evidence_end_char": 139,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-missing",
+      "query_start_char": 1057,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-missing-02": {
+      "category": "missing",
+      "distractor_entries": 24,
+      "evidence_end_char": 139,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-missing",
+      "query_start_char": 1057,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-missing-03": {
+      "category": "missing",
+      "distractor_entries": 24,
+      "evidence_end_char": 139,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-missing",
+      "query_start_char": 1057,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-multiple_facts-00": {
+      "category": "multiple_facts",
+      "distractor_entries": 24,
+      "evidence_end_char": 110,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-multiple_facts",
+      "query_start_char": 1028,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-multiple_facts-01": {
+      "category": "multiple_facts",
+      "distractor_entries": 24,
+      "evidence_end_char": 110,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-multiple_facts",
+      "query_start_char": 1028,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-multiple_facts-02": {
+      "category": "multiple_facts",
+      "distractor_entries": 24,
+      "evidence_end_char": 110,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-multiple_facts",
+      "query_start_char": 1028,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-multiple_facts-03": {
+      "category": "multiple_facts",
+      "distractor_entries": 24,
+      "evidence_end_char": 110,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-multiple_facts",
+      "query_start_char": 1028,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-number-00": {
+      "category": "number",
+      "distractor_entries": 24,
+      "evidence_end_char": 101,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-number",
+      "query_start_char": 1019,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-number-01": {
+      "category": "number",
+      "distractor_entries": 24,
+      "evidence_end_char": 101,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-number",
+      "query_start_char": 1019,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-number-02": {
+      "category": "number",
+      "distractor_entries": 24,
+      "evidence_end_char": 101,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-number",
+      "query_start_char": 1019,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-number-03": {
+      "category": "number",
+      "distractor_entries": 24,
+      "evidence_end_char": 101,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-number",
+      "query_start_char": 1019,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-update-00": {
+      "category": "update",
+      "distractor_entries": 24,
+      "evidence_end_char": 136,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-update",
+      "query_start_char": 1054,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-update-01": {
+      "category": "update",
+      "distractor_entries": 24,
+      "evidence_end_char": 136,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-update",
+      "query_start_char": 1054,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-update-02": {
+      "category": "update",
+      "distractor_entries": 24,
+      "evidence_end_char": 136,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-update",
+      "query_start_char": 1054,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-distant_evidence-update-03": {
+      "category": "update",
+      "distractor_entries": 24,
+      "evidence_end_char": 136,
+      "evidence_start_char": 47,
+      "family_id": "train-distant_evidence-update",
+      "query_start_char": 1054,
+      "required_min_evidence_to_query_tokens_exclusive": 128,
+      "role": "distant_evidence",
+      "split": "train"
+    },
+    "train-short_retention_probe-arithmetic-00": {
+      "category": "arithmetic",
+      "family_id": "train-short_retention_probe-arithmetic",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-arithmetic-01": {
+      "category": "arithmetic",
+      "family_id": "train-short_retention_probe-arithmetic",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-arithmetic-02": {
+      "category": "arithmetic",
+      "family_id": "train-short_retention_probe-arithmetic",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-arithmetic-03": {
+      "category": "arithmetic",
+      "family_id": "train-short_retention_probe-arithmetic",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-formatting-00": {
+      "category": "formatting",
+      "family_id": "train-short_retention_probe-formatting",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-formatting-01": {
+      "category": "formatting",
+      "family_id": "train-short_retention_probe-formatting",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-formatting-02": {
+      "category": "formatting",
+      "family_id": "train-short_retention_probe-formatting",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-formatting-03": {
+      "category": "formatting",
+      "family_id": "train-short_retention_probe-formatting",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-missing-00": {
+      "category": "missing",
+      "family_id": "train-short_retention_probe-missing",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-missing-01": {
+      "category": "missing",
+      "family_id": "train-short_retention_probe-missing",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-missing-02": {
+      "category": "missing",
+      "family_id": "train-short_retention_probe-missing",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-missing-03": {
+      "category": "missing",
+      "family_id": "train-short_retention_probe-missing",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-ordering-00": {
+      "category": "ordering",
+      "family_id": "train-short_retention_probe-ordering",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-ordering-01": {
+      "category": "ordering",
+      "family_id": "train-short_retention_probe-ordering",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-ordering-02": {
+      "category": "ordering",
+      "family_id": "train-short_retention_probe-ordering",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-ordering-03": {
+      "category": "ordering",
+      "family_id": "train-short_retention_probe-ordering",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-short_lookup-00": {
+      "category": "short_lookup",
+      "family_id": "train-short_retention_probe-short_lookup",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-short_lookup-01": {
+      "category": "short_lookup",
+      "family_id": "train-short_retention_probe-short_lookup",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-short_lookup-02": {
+      "category": "short_lookup",
+      "family_id": "train-short_retention_probe-short_lookup",
+      "role": "short_retention_probe",
+      "split": "train"
+    },
+    "train-short_retention_probe-short_lookup-03": {
+      "category": "short_lookup",
+      "family_id": "train-short_retention_probe-short_lookup",
+      "role": "short_retention_probe",
+      "split": "train"
+    }
+  },
+  "scope": "48 TRAIN and 72 DEV synthetic controlled probes; no protected/repository data",
+  "seed": null,
+  "status": "UNREVIEWED_PROPOSAL_NOT_NATIVE_ADMISSION"
+}

@@ -1,0 +1,41 @@
+{
+  "cell_counts": {
+    "e1-f1-p0": 24,
+    "e1-f1-p1": 24,
+    "e1-f2-p0": 24,
+    "e1-f2-p1": 24,
+    "e2-f1-p0": 24,
+    "e2-f1-p1": 24,
+    "e2-f2-p0": 24,
+    "e2-f2-p1": 24
+  },
+  "checks": 612,
+  "created_utc": "2026-10-05T21:31:23.704358+00:00",
+  "existing_corpus_modified": false,
+  "fixture_sha256": "d59979e1f64e03b64b7e1f12f4e72b31458865ad6fe8e40b0154c6ac8860696f",
+  "interpretation": "Every tested marginal-count/first/last shortcut falls to 50% on presence labels; the subject-and-field reference relation remains 100%.",
+  "limits": [
+    "Engineering fixture truth and shortcut behavior only.",
+    "Does not establish how Rineya will behave or learn.",
+    "Not a replacement for the frozen order-only pilot or its budget.",
+    "Native use requires separate realistic corpus/shape/admission review and permission."
+  ],
+  "model_quality_gain": false,
+  "native_corpus_admission": false,
+  "native_model_execution": false,
+  "oracle_and_heuristic_label_matches": {
+    "entity_present": 96,
+    "first_record_field_matches": 96,
+    "first_record_subject_matches": 96,
+    "last_record_field_matches": 96,
+    "last_record_subject_matches": 96,
+    "queried_entity_count_ge_2": 96,
+    "requested_field_count_ge_2": 96,
+    "requested_field_present_anywhere": 96,
+    "subject_AND_field_pair_exists": 192
+  },
+  "rows": 192,
+  "schema": "RINEYA-QUALITY/engineering-relation-falsification-v1",
+  "script_sha256": "0010aa3e8a0f2f2fa09c448fbe2a3303241a6cbe0ae62e73df683f82a001ba34",
+  "status": "PASS_CROSSED_RELATION_FIXTURES_ONLY"
+}

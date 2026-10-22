@@ -1,0 +1,209 @@
+{
+  "counterexamples": [
+    {
+      "category": "identifier",
+      "engineering_fixture_only": true,
+      "events": [
+        {
+          "subject": "Q",
+          "value": "AbC-1729-x"
+        },
+        {
+          "subject": "D",
+          "value": "XyZ-4938-Y"
+        }
+      ],
+      "query_subject": "Q",
+      "relation_reference_value": "AbC-1729-x",
+      "shape_only_rule_has_unique_answer": false
+    },
+    {
+      "category": "number",
+      "engineering_fixture_only": true,
+      "events": [
+        {
+          "subject": "Q",
+          "value": "-48.00"
+        },
+        {
+          "subject": "D",
+          "value": "99.90"
+        }
+      ],
+      "query_subject": "Q",
+      "relation_reference_value": "-48.00",
+      "shape_only_rule_has_unique_answer": false
+    }
+  ],
+  "created_utc": "2026-10-05T21:39:48.475856+00:00",
+  "declared_target_blind_rules": {
+    "identifier": "^[A-Za-z]{3}-\\d{4}-[xYz]$",
+    "number": "^-?\\d{2}\\.\\d{2}$"
+  },
+  "input_sha256": {
+    "design.json": "fec0355ad0e6ee3d38fa0c3d38ef7b8ce83f402edae3da6262a0dc755e9769f1",
+    "dev.jsonl": "72d85e135d2d368fd9817f36129d67373a4c7f3a4649491637e245cab1439d68"
+  },
+  "interpretation": "All tested identifier/number targets are uniquely identifiable by value shape without the requested subject. Correct non-first selection refutes universal first copying but does not establish general entity binding.",
+  "limits": [
+    "This is a corpus opportunity, not proof that any native model uses the shape rule.",
+    "Matched native response repairs remain actual benchmark outcome changes, but their mechanism is not identified.",
+    "Counterexamples are fixtures only and were not presented to a native model."
+  ],
+  "model_gain_proved": false,
+  "native_model_execution": false,
+  "raw_native_predictions_or_registered_metrics_changed": false,
+  "results": {
+    "identifier": {
+      "correct_when_target_not_first": 36,
+      "examples": [
+        {
+          "events": [
+            {
+              "field": "shipment",
+              "subject": "ILOWS",
+              "value": "573"
+            },
+            {
+              "field": "shipment",
+              "subject": "XIDHC",
+              "value": "XsR-2103-x"
+            }
+          ],
+          "id": "dev-identifier-world-007-near_control-cf-1",
+          "query": {
+            "field": "shipment",
+            "missing_policy": "closed_world_null",
+            "subject": "XIDHC"
+          },
+          "target": "{\"v\":\"XsR-2103-x\"}",
+          "unique_shape_prediction": "XsR-2103-x"
+        },
+        {
+          "events": [
+            {
+              "field": "shipment",
+              "subject": "AKLXH",
+              "value": "CtU-5469-Y"
+            },
+            {
+              "field": "shipment",
+              "subject": "TJTJZ",
+              "value": "569"
+            }
+          ],
+          "id": "dev-identifier-world-013-distant_heldout-cf-1",
+          "query": {
+            "field": "shipment",
+            "missing_policy": "closed_world_null",
+            "subject": "AKLXH"
+          },
+          "target": "{\"v\":\"CtU-5469-Y\"}",
+          "unique_shape_prediction": "CtU-5469-Y"
+        },
+        {
+          "events": [
+            {
+              "field": "shipment",
+              "subject": "ZFPLR",
+              "value": "112"
+            },
+            {
+              "field": "shipment",
+              "subject": "RWMWA",
+              "value": "ost-8253-z"
+            }
+          ],
+          "id": "dev-identifier-world-008-near_control-cf-0",
+          "query": {
+            "field": "shipment",
+            "missing_policy": "closed_world_null",
+            "subject": "RWMWA"
+          },
+          "target": "{\"v\":\"ost-8253-z\"}",
+          "unique_shape_prediction": "ost-8253-z"
+        }
+      ],
+      "rows": 64,
+      "subject_agnostic_correct_values": 64,
+      "unique_shape_candidates": 64
+    },
+    "number": {
+      "correct_when_target_not_first": 36,
+      "examples": [
+        {
+          "events": [
+            {
+              "field": "measurement",
+              "subject": "UBYES",
+              "value": "-30.98"
+            },
+            {
+              "field": "measurement",
+              "subject": "TLKTH",
+              "value": "894"
+            }
+          ],
+          "id": "dev-number-world-005-distant_heldout-cf-1",
+          "query": {
+            "field": "measurement",
+            "missing_policy": "closed_world_null",
+            "subject": "UBYES"
+          },
+          "target": "{\"v\":\"-30.98\"}",
+          "unique_shape_prediction": "-30.98"
+        },
+        {
+          "events": [
+            {
+              "field": "measurement",
+              "subject": "EZOMO",
+              "value": "59.39"
+            },
+            {
+              "field": "measurement",
+              "subject": "KLXYN",
+              "value": "276"
+            }
+          ],
+          "id": "dev-number-world-012-near_control-cf-0",
+          "query": {
+            "field": "measurement",
+            "missing_policy": "closed_world_null",
+            "subject": "EZOMO"
+          },
+          "target": "{\"v\":\"59.39\"}",
+          "unique_shape_prediction": "59.39"
+        },
+        {
+          "events": [
+            {
+              "field": "measurement",
+              "subject": "EXEWN",
+              "value": "48.00"
+            },
+            {
+              "field": "measurement",
+              "subject": "CKULU",
+              "value": "900"
+            }
+          ],
+          "id": "dev-number-world-009-distant_heldout-cf-1",
+          "query": {
+            "field": "measurement",
+            "missing_policy": "closed_world_null",
+            "subject": "EXEWN"
+          },
+          "target": "{\"v\":\"48.00\"}",
+          "unique_shape_prediction": "48.00"
+        }
+      ],
+      "rows": 64,
+      "subject_agnostic_correct_values": 64,
+      "unique_shape_candidates": 64
+    }
+  },
+  "schema": "RINEYA-QUALITY/old-answer-shape-opportunity-v1",
+  "script_sha256": "c0d953561d2f82965d6af09929ee3066dc9aa700f259ff2f60ecfb1707878034",
+  "status": "PASS_STATIC_ANSWER_SHAPE_FALSIFICATION"
+}

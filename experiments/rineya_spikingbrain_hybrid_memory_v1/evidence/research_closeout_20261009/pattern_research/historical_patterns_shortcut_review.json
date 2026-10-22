@@ -1,0 +1,3730 @@
+{
+  "checks_run": 11045,
+  "created_utc": "2026-10-05T21:05:49.715616+00:00",
+  "engineering_rule_counterexamples": [
+    {
+      "count_rule_prediction": false,
+      "model_executed": false,
+      "name": "present_with_one_entity_mention",
+      "raw_fixture_prompt": "Use these exhaustive records. Output compact JSON only.\n\n---\nE1: code=\"111\".\nE2: code=\"222\".\nE2: weight=\"333\".\n---\nNotes: quiet.\n---\nAsk E1 code, or null if missing. Reply {\"v\":\"...\"}.",
+      "record_entity_count": 1,
+      "truth": true
+    },
+    {
+      "count_rule_prediction": true,
+      "model_executed": false,
+      "name": "absent_with_two_entity_mentions",
+      "raw_fixture_prompt": "Use these exhaustive records. Output compact JSON only.\n\n---\nE1: weight=\"111\".\nE1: status=\"222\".\nE2: code=\"333\".\n---\nNotes: quiet.\n---\nAsk E1 code, or null if missing. Reply {\"v\":\"...\"}.",
+      "record_entity_count": 2,
+      "truth": false
+    }
+  ],
+  "input_and_artifact_sha256": {
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\candidate_train.jsonl": {
+      "bytes": 576641,
+      "sha256": "1618015933cfef46712ee9e7eb707ab0e964ba4122516571eb3ce841014e7200"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\control_train.jsonl": {
+      "bytes": 576641,
+      "sha256": "ba2109411f72777624c705515ac61f9c716d36c9ca0a9f270166bca4e81779ae"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\design.json": {
+      "bytes": 5931234,
+      "sha256": "03e40f39f8a8628557de76d9e5fffabc738efcdb2c1032e4aacf578dae619767"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\dev.jsonl": {
+      "bytes": 2143651,
+      "sha256": "e4c2572c603d6700020091581ff7d8541647e6d48f0c1b22d5ddddfd17deb761"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\exposure_ledger.json": {
+      "bytes": 502590,
+      "sha256": "af19ce6a7a31fd07ae481e291478d89386855543b23191b6d1ffb6f1442c6678"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\manifest.json": {
+      "bytes": 4357,
+      "sha256": "ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_shortcut_reproduced.json": {
+      "bytes": 7868,
+      "sha256": "ee36b5330fce1ea04d8afbb6a4d655c07f8bdc6c76a269d2be6696eec536281e"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_shortcut_reproduction.py": {
+      "bytes": 7801,
+      "sha256": "de36f73ee43ea394fe8aa5c3fde856c138523d3d56f7a5186af137df6e6b6d4e"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_shortcut_review.py": {
+      "bytes": 18952,
+      "sha256": "168eba0c6a60c5bdbe0b5ca13677838f03a81345d0a9ddf8c225802fa4cca444"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\shortcut-opportunities.json": {
+      "bytes": 7868,
+      "sha256": "011d9dc7bd3ae42fa9fa5a0355fca971869faa12995c108f31102ccb8b5a33bc"
+    },
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\shortcut_opportunity_audit.py": {
+      "bytes": 7657,
+      "sha256": "5047f379914c4cdc5c29a5b20092973f431f7792790217be3c43320bf74b00a4"
+    }
+  },
+  "interpretation": [
+    "All existing missing labels are predictable by queried-entity evidence-record count alone:24/24 control TRAIN,24/24 candidate TRAIN,64/64 DEV. Direct raw parsing verifies record/entity counts and requested-field/null targets. This is static label predictability, not evidence a native model uses the shortcut.",
+    "Evidence-record counts are2 for present versus1 for absent. Complete prompts include one extra occurrence in the query, giving3 versus2 literal mentions; do not apply the >=2 record-count threshold to whole-prompt occurrences.",
+    "Payload-rank opportunity is shared by TRAIN control/candidate: least numeric payload180/384, greatest96/384. DEV reverses the dominant numeric shortcut: least48/384, greatest192/384. Payload numeric ranks are invariant across each same-world counterfactual/position group of six record orders.",
+    "Candidate and DEV cover all six permutations, while control repeats one order per six-row group.16 worlds per condition yield32 world-counterfactual combinations and64 world-counterfactual-position groups. These rows are dependent variants.",
+    "The shared numeric-rank nuisance shift does not confound the frozen control/candidate order-only contrast because paired records/targets/query/filler/exposure geometry are identical. Candidate positional balance alone leaves a competitive least-payload shortcut on TRAIN. Future behavioral interpretation must inspect order-versus-payload conflict strata without changing registered primary metrics.",
+    "Engineering counterexamples demonstrate that entity-count threshold is not a valid general answerability rule; they test the rule only, not any native model.",
+    "No source/corpus/policy/metric/model changes, no protected bank access or native retry. Frozen native pilot remains untested and RAM guard is not bypassed."
+  ],
+  "issues": [],
+  "limitations": [
+    "Static corpus opportunities do not measure model behavior or capability.",
+    "Token geometry equivalence is checked against locked saved metadata; this stdlib review does not rerun tokenization.",
+    "No cross-corpus causal or generalization claim; no confirmation bank or new native inference.",
+    "Posthoc conflict strata are diagnostic and do not replace frozen primary metrics or authorize training."
+  ],
+  "model_or_GPU_execution": false,
+  "native_execution": false,
+  "numeric_rank_by_true_record_position": {
+    "candidate": [
+      {
+        "oracle_payload_numeric_rank": 1,
+        "oracle_record_position": 1,
+        "rows": 60
+      },
+      {
+        "oracle_payload_numeric_rank": 1,
+        "oracle_record_position": 2,
+        "rows": 60
+      },
+      {
+        "oracle_payload_numeric_rank": 1,
+        "oracle_record_position": 3,
+        "rows": 60
+      },
+      {
+        "oracle_payload_numeric_rank": 2,
+        "oracle_record_position": 1,
+        "rows": 36
+      },
+      {
+        "oracle_payload_numeric_rank": 2,
+        "oracle_record_position": 2,
+        "rows": 36
+      },
+      {
+        "oracle_payload_numeric_rank": 2,
+        "oracle_record_position": 3,
+        "rows": 36
+      },
+      {
+        "oracle_payload_numeric_rank": 3,
+        "oracle_record_position": 1,
+        "rows": 32
+      },
+      {
+        "oracle_payload_numeric_rank": 3,
+        "oracle_record_position": 2,
+        "rows": 32
+      },
+      {
+        "oracle_payload_numeric_rank": 3,
+        "oracle_record_position": 3,
+        "rows": 32
+      }
+    ],
+    "control": [
+      {
+        "oracle_payload_numeric_rank": 1,
+        "oracle_record_position": 1,
+        "rows": 132
+      },
+      {
+        "oracle_payload_numeric_rank": 1,
+        "oracle_record_position": 2,
+        "rows": 24
+      },
+      {
+        "oracle_payload_numeric_rank": 1,
+        "oracle_record_position": 3,
+        "rows": 24
+      },
+      {
+        "oracle_payload_numeric_rank": 2,
+        "oracle_record_position": 1,
+        "rows": 96
+      },
+      {
+        "oracle_payload_numeric_rank": 2,
+        "oracle_record_position": 2,
+        "rows": 12
+      },
+      {
+        "oracle_payload_numeric_rank": 3,
+        "oracle_record_position": 1,
+        "rows": 60
+      },
+      {
+        "oracle_payload_numeric_rank": 3,
+        "oracle_record_position": 2,
+        "rows": 12
+      },
+      {
+        "oracle_payload_numeric_rank": 3,
+        "oracle_record_position": 3,
+        "rows": 24
+      }
+    ],
+    "dev": [
+      {
+        "oracle_payload_numeric_rank": 1,
+        "oracle_record_position": 1,
+        "rows": 16
+      },
+      {
+        "oracle_payload_numeric_rank": 1,
+        "oracle_record_position": 2,
+        "rows": 16
+      },
+      {
+        "oracle_payload_numeric_rank": 1,
+        "oracle_record_position": 3,
+        "rows": 16
+      },
+      {
+        "oracle_payload_numeric_rank": 2,
+        "oracle_record_position": 1,
+        "rows": 48
+      },
+      {
+        "oracle_payload_numeric_rank": 2,
+        "oracle_record_position": 2,
+        "rows": 48
+      },
+      {
+        "oracle_payload_numeric_rank": 2,
+        "oracle_record_position": 3,
+        "rows": 48
+      },
+      {
+        "oracle_payload_numeric_rank": 3,
+        "oracle_record_position": 1,
+        "rows": 64
+      },
+      {
+        "oracle_payload_numeric_rank": 3,
+        "oracle_record_position": 2,
+        "rows": 64
+      },
+      {
+        "oracle_payload_numeric_rank": 3,
+        "oracle_record_position": 3,
+        "rows": 64
+      }
+    ]
+  },
+  "original_artifact": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\shortcut-opportunities.json",
+  "original_tool": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\shortcut_opportunity_audit.py",
+  "raw_missing_label_shortcut": {
+    "candidate": {
+      "accuracy": 1.0,
+      "count_by_presence": {
+        "1_mentions_absent": 12,
+        "2_mentions_present": 12
+      },
+      "equivalent_whole_prompt_occurrence_threshold_in_this_corpus": 3,
+      "label_predictable_without_requested_field": 24,
+      "rows": 24,
+      "shortcut_record_count_threshold": 2,
+      "whole_prompt_entity_occurrence_table": {
+        "2_literal_mentions_absent": 12,
+        "3_literal_mentions_present": 12
+      }
+    },
+    "control": {
+      "accuracy": 1.0,
+      "count_by_presence": {
+        "1_mentions_absent": 12,
+        "2_mentions_present": 12
+      },
+      "equivalent_whole_prompt_occurrence_threshold_in_this_corpus": 3,
+      "label_predictable_without_requested_field": 24,
+      "rows": 24,
+      "shortcut_record_count_threshold": 2,
+      "whole_prompt_entity_occurrence_table": {
+        "2_literal_mentions_absent": 12,
+        "3_literal_mentions_present": 12
+      }
+    },
+    "dev": {
+      "accuracy": 1.0,
+      "count_by_presence": {
+        "1_mentions_absent": 32,
+        "2_mentions_present": 32
+      },
+      "equivalent_whole_prompt_occurrence_threshold_in_this_corpus": 3,
+      "label_predictable_without_requested_field": 64,
+      "rows": 64,
+      "shortcut_record_count_threshold": 2,
+      "whole_prompt_entity_occurrence_table": {
+        "2_literal_mentions_absent": 32,
+        "3_literal_mentions_present": 32
+      }
+    }
+  },
+  "raw_missing_row_details": [
+    {
+      "answerable": true,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-000-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N628"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N628",
+          "value": "536"
+        },
+        {
+          "field": "code",
+          "subject": "N628",
+          "value": "374"
+        },
+        {
+          "field": "code",
+          "subject": "N382",
+          "value": "619"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"374\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-000-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N628"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N628",
+          "value": "536"
+        },
+        {
+          "field": "code",
+          "subject": "N628",
+          "value": "374"
+        },
+        {
+          "field": "code",
+          "subject": "N382",
+          "value": "619"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"374\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-000-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N628"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N628",
+          "value": "536"
+        },
+        {
+          "field": "code",
+          "subject": "N729",
+          "value": "374"
+        },
+        {
+          "field": "code",
+          "subject": "N382",
+          "value": "619"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-000-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N628"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N628",
+          "value": "536"
+        },
+        {
+          "field": "code",
+          "subject": "N729",
+          "value": "374"
+        },
+        {
+          "field": "code",
+          "subject": "N382",
+          "value": "619"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-001-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N669"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N336",
+          "value": "557"
+        },
+        {
+          "field": "weight",
+          "subject": "N669",
+          "value": "951"
+        },
+        {
+          "field": "code",
+          "subject": "N669",
+          "value": "843"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"843\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-001-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N669"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N336",
+          "value": "557"
+        },
+        {
+          "field": "weight",
+          "subject": "N669",
+          "value": "951"
+        },
+        {
+          "field": "code",
+          "subject": "N669",
+          "value": "843"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"843\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-001-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N669"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N336",
+          "value": "557"
+        },
+        {
+          "field": "weight",
+          "subject": "N669",
+          "value": "951"
+        },
+        {
+          "field": "code",
+          "subject": "N718",
+          "value": "843"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-001-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N669"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N336",
+          "value": "557"
+        },
+        {
+          "field": "weight",
+          "subject": "N669",
+          "value": "951"
+        },
+        {
+          "field": "code",
+          "subject": "N718",
+          "value": "843"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-002-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N272"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N272",
+          "value": "801"
+        },
+        {
+          "field": "weight",
+          "subject": "N272",
+          "value": "444"
+        },
+        {
+          "field": "code",
+          "subject": "N894",
+          "value": "639"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"801\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-002-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N272"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N272",
+          "value": "801"
+        },
+        {
+          "field": "weight",
+          "subject": "N272",
+          "value": "444"
+        },
+        {
+          "field": "code",
+          "subject": "N894",
+          "value": "639"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"801\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-002-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N272"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N250",
+          "value": "801"
+        },
+        {
+          "field": "weight",
+          "subject": "N272",
+          "value": "444"
+        },
+        {
+          "field": "code",
+          "subject": "N894",
+          "value": "639"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-002-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N272"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N250",
+          "value": "801"
+        },
+        {
+          "field": "weight",
+          "subject": "N272",
+          "value": "444"
+        },
+        {
+          "field": "code",
+          "subject": "N894",
+          "value": "639"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-003-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N927"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N927",
+          "value": "150"
+        },
+        {
+          "field": "code",
+          "subject": "N363",
+          "value": "885"
+        },
+        {
+          "field": "weight",
+          "subject": "N927",
+          "value": "329"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"150\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-003-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N927"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N927",
+          "value": "150"
+        },
+        {
+          "field": "code",
+          "subject": "N363",
+          "value": "885"
+        },
+        {
+          "field": "weight",
+          "subject": "N927",
+          "value": "329"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"150\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-003-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N927"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N544",
+          "value": "150"
+        },
+        {
+          "field": "code",
+          "subject": "N363",
+          "value": "885"
+        },
+        {
+          "field": "weight",
+          "subject": "N927",
+          "value": "329"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-003-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N927"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N544",
+          "value": "150"
+        },
+        {
+          "field": "code",
+          "subject": "N363",
+          "value": "885"
+        },
+        {
+          "field": "weight",
+          "subject": "N927",
+          "value": "329"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-004-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N890"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N890",
+          "value": "253"
+        },
+        {
+          "field": "weight",
+          "subject": "N890",
+          "value": "659"
+        },
+        {
+          "field": "code",
+          "subject": "N124",
+          "value": "200"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"253\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-004-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N890"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N890",
+          "value": "253"
+        },
+        {
+          "field": "weight",
+          "subject": "N890",
+          "value": "659"
+        },
+        {
+          "field": "code",
+          "subject": "N124",
+          "value": "200"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"253\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-004-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N890"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N932",
+          "value": "253"
+        },
+        {
+          "field": "weight",
+          "subject": "N890",
+          "value": "659"
+        },
+        {
+          "field": "code",
+          "subject": "N124",
+          "value": "200"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-004-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N890"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N932",
+          "value": "253"
+        },
+        {
+          "field": "weight",
+          "subject": "N890",
+          "value": "659"
+        },
+        {
+          "field": "code",
+          "subject": "N124",
+          "value": "200"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-005-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N692"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N296",
+          "value": "955"
+        },
+        {
+          "field": "code",
+          "subject": "N692",
+          "value": "830"
+        },
+        {
+          "field": "weight",
+          "subject": "N692",
+          "value": "313"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"830\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-005-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N692"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N296",
+          "value": "955"
+        },
+        {
+          "field": "code",
+          "subject": "N692",
+          "value": "830"
+        },
+        {
+          "field": "weight",
+          "subject": "N692",
+          "value": "313"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"830\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-005-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N692"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N296",
+          "value": "955"
+        },
+        {
+          "field": "code",
+          "subject": "N526",
+          "value": "830"
+        },
+        {
+          "field": "weight",
+          "subject": "N692",
+          "value": "313"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "control",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-005-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N692"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N296",
+          "value": "955"
+        },
+        {
+          "field": "code",
+          "subject": "N526",
+          "value": "830"
+        },
+        {
+          "field": "weight",
+          "subject": "N692",
+          "value": "313"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-000-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N628"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N628",
+          "value": "536"
+        },
+        {
+          "field": "code",
+          "subject": "N628",
+          "value": "374"
+        },
+        {
+          "field": "code",
+          "subject": "N382",
+          "value": "619"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"374\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-000-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N628"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N628",
+          "value": "536"
+        },
+        {
+          "field": "code",
+          "subject": "N628",
+          "value": "374"
+        },
+        {
+          "field": "code",
+          "subject": "N382",
+          "value": "619"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"374\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-000-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N628"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N628",
+          "value": "536"
+        },
+        {
+          "field": "code",
+          "subject": "N729",
+          "value": "374"
+        },
+        {
+          "field": "code",
+          "subject": "N382",
+          "value": "619"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-000-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N628"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N628",
+          "value": "536"
+        },
+        {
+          "field": "code",
+          "subject": "N729",
+          "value": "374"
+        },
+        {
+          "field": "code",
+          "subject": "N382",
+          "value": "619"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-001-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N669"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N336",
+          "value": "557"
+        },
+        {
+          "field": "weight",
+          "subject": "N669",
+          "value": "951"
+        },
+        {
+          "field": "code",
+          "subject": "N669",
+          "value": "843"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"843\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-001-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N669"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N336",
+          "value": "557"
+        },
+        {
+          "field": "weight",
+          "subject": "N669",
+          "value": "951"
+        },
+        {
+          "field": "code",
+          "subject": "N669",
+          "value": "843"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"843\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-001-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N669"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N336",
+          "value": "557"
+        },
+        {
+          "field": "weight",
+          "subject": "N669",
+          "value": "951"
+        },
+        {
+          "field": "code",
+          "subject": "N718",
+          "value": "843"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-001-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N669"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N336",
+          "value": "557"
+        },
+        {
+          "field": "weight",
+          "subject": "N669",
+          "value": "951"
+        },
+        {
+          "field": "code",
+          "subject": "N718",
+          "value": "843"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-002-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N272"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N272",
+          "value": "801"
+        },
+        {
+          "field": "weight",
+          "subject": "N272",
+          "value": "444"
+        },
+        {
+          "field": "code",
+          "subject": "N894",
+          "value": "639"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"801\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-002-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N272"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N272",
+          "value": "801"
+        },
+        {
+          "field": "weight",
+          "subject": "N272",
+          "value": "444"
+        },
+        {
+          "field": "code",
+          "subject": "N894",
+          "value": "639"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"801\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-002-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N272"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N250",
+          "value": "801"
+        },
+        {
+          "field": "weight",
+          "subject": "N272",
+          "value": "444"
+        },
+        {
+          "field": "code",
+          "subject": "N894",
+          "value": "639"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-002-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N272"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N250",
+          "value": "801"
+        },
+        {
+          "field": "weight",
+          "subject": "N272",
+          "value": "444"
+        },
+        {
+          "field": "code",
+          "subject": "N894",
+          "value": "639"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-003-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N927"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N927",
+          "value": "150"
+        },
+        {
+          "field": "code",
+          "subject": "N363",
+          "value": "885"
+        },
+        {
+          "field": "weight",
+          "subject": "N927",
+          "value": "329"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"150\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-003-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N927"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N927",
+          "value": "150"
+        },
+        {
+          "field": "code",
+          "subject": "N363",
+          "value": "885"
+        },
+        {
+          "field": "weight",
+          "subject": "N927",
+          "value": "329"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"150\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-003-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N927"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N544",
+          "value": "150"
+        },
+        {
+          "field": "code",
+          "subject": "N363",
+          "value": "885"
+        },
+        {
+          "field": "weight",
+          "subject": "N927",
+          "value": "329"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-003-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N927"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N544",
+          "value": "150"
+        },
+        {
+          "field": "code",
+          "subject": "N363",
+          "value": "885"
+        },
+        {
+          "field": "weight",
+          "subject": "N927",
+          "value": "329"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-004-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N890"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N890",
+          "value": "253"
+        },
+        {
+          "field": "weight",
+          "subject": "N890",
+          "value": "659"
+        },
+        {
+          "field": "code",
+          "subject": "N124",
+          "value": "200"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"253\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-004-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N890"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N890",
+          "value": "253"
+        },
+        {
+          "field": "weight",
+          "subject": "N890",
+          "value": "659"
+        },
+        {
+          "field": "code",
+          "subject": "N124",
+          "value": "200"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"253\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-004-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N890"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N932",
+          "value": "253"
+        },
+        {
+          "field": "weight",
+          "subject": "N890",
+          "value": "659"
+        },
+        {
+          "field": "code",
+          "subject": "N124",
+          "value": "200"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-004-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N890"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N932",
+          "value": "253"
+        },
+        {
+          "field": "weight",
+          "subject": "N890",
+          "value": "659"
+        },
+        {
+          "field": "code",
+          "subject": "N124",
+          "value": "200"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-005-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N692"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N296",
+          "value": "955"
+        },
+        {
+          "field": "code",
+          "subject": "N692",
+          "value": "830"
+        },
+        {
+          "field": "weight",
+          "subject": "N692",
+          "value": "313"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"830\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-train-missing-world-005-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N692"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N296",
+          "value": "955"
+        },
+        {
+          "field": "code",
+          "subject": "N692",
+          "value": "830"
+        },
+        {
+          "field": "weight",
+          "subject": "N692",
+          "value": "313"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"830\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-005-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N692"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N296",
+          "value": "955"
+        },
+        {
+          "field": "code",
+          "subject": "N526",
+          "value": "830"
+        },
+        {
+          "field": "weight",
+          "subject": "N692",
+          "value": "313"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "candidate",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-train-missing-world-005-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N692"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N296",
+          "value": "955"
+        },
+        {
+          "field": "code",
+          "subject": "N526",
+          "value": "830"
+        },
+        {
+          "field": "weight",
+          "subject": "N692",
+          "value": "313"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-008-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N659"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N659",
+          "value": "734"
+        },
+        {
+          "field": "code",
+          "subject": "N542",
+          "value": "732"
+        },
+        {
+          "field": "weight",
+          "subject": "N659",
+          "value": "653"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"734\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-010-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N327"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N327",
+          "value": "523"
+        },
+        {
+          "field": "weight",
+          "subject": "N327",
+          "value": "855"
+        },
+        {
+          "field": "code",
+          "subject": "N641",
+          "value": "851"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"523\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-002-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N296"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N832",
+          "value": "305"
+        },
+        {
+          "field": "weight",
+          "subject": "N296",
+          "value": "852"
+        },
+        {
+          "field": "code",
+          "subject": "N133",
+          "value": "794"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-007-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N955"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N955",
+          "value": "594"
+        },
+        {
+          "field": "code",
+          "subject": "N246",
+          "value": "764"
+        },
+        {
+          "field": "code",
+          "subject": "N137",
+          "value": "329"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-008-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N659"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N664",
+          "value": "734"
+        },
+        {
+          "field": "code",
+          "subject": "N542",
+          "value": "732"
+        },
+        {
+          "field": "weight",
+          "subject": "N659",
+          "value": "653"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-007-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N955"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N955",
+          "value": "594"
+        },
+        {
+          "field": "code",
+          "subject": "N246",
+          "value": "764"
+        },
+        {
+          "field": "code",
+          "subject": "N955",
+          "value": "329"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"329\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-008-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N659"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N664",
+          "value": "734"
+        },
+        {
+          "field": "code",
+          "subject": "N542",
+          "value": "732"
+        },
+        {
+          "field": "weight",
+          "subject": "N659",
+          "value": "653"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-003-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N606"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N606",
+          "value": "196"
+        },
+        {
+          "field": "code",
+          "subject": "N549",
+          "value": "791"
+        },
+        {
+          "field": "code",
+          "subject": "N606",
+          "value": "100"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"100\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-006-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N959"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N586",
+          "value": "590"
+        },
+        {
+          "field": "code",
+          "subject": "N959",
+          "value": "796"
+        },
+        {
+          "field": "weight",
+          "subject": "N959",
+          "value": "765"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"796\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-003-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N606"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N606",
+          "value": "196"
+        },
+        {
+          "field": "code",
+          "subject": "N549",
+          "value": "791"
+        },
+        {
+          "field": "code",
+          "subject": "N554",
+          "value": "100"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-004-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N776"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N347",
+          "value": "452"
+        },
+        {
+          "field": "code",
+          "subject": "N776",
+          "value": "860"
+        },
+        {
+          "field": "weight",
+          "subject": "N776",
+          "value": "627"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"860\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-005-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N708"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N708",
+          "value": "251"
+        },
+        {
+          "field": "weight",
+          "subject": "N708",
+          "value": "667"
+        },
+        {
+          "field": "code",
+          "subject": "N319",
+          "value": "341"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"251\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-015-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N349"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N819",
+          "value": "544"
+        },
+        {
+          "field": "weight",
+          "subject": "N349",
+          "value": "282"
+        },
+        {
+          "field": "code",
+          "subject": "N928",
+          "value": "916"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-005-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N708"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N345",
+          "value": "251"
+        },
+        {
+          "field": "weight",
+          "subject": "N708",
+          "value": "667"
+        },
+        {
+          "field": "code",
+          "subject": "N319",
+          "value": "341"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-009-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N715"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N129",
+          "value": "968"
+        },
+        {
+          "field": "weight",
+          "subject": "N715",
+          "value": "814"
+        },
+        {
+          "field": "code",
+          "subject": "N715",
+          "value": "594"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"594\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-004-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N776"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N347",
+          "value": "452"
+        },
+        {
+          "field": "code",
+          "subject": "N233",
+          "value": "860"
+        },
+        {
+          "field": "weight",
+          "subject": "N776",
+          "value": "627"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-002-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N296"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N296",
+          "value": "305"
+        },
+        {
+          "field": "weight",
+          "subject": "N296",
+          "value": "852"
+        },
+        {
+          "field": "code",
+          "subject": "N133",
+          "value": "794"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"305\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-014-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N104"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N104",
+          "value": "775"
+        },
+        {
+          "field": "code",
+          "subject": "N355",
+          "value": "375"
+        },
+        {
+          "field": "code",
+          "subject": "N528",
+          "value": "908"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-003-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N606"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N606",
+          "value": "196"
+        },
+        {
+          "field": "code",
+          "subject": "N549",
+          "value": "791"
+        },
+        {
+          "field": "code",
+          "subject": "N606",
+          "value": "100"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"100\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-013-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N129"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N129",
+          "value": "818"
+        },
+        {
+          "field": "weight",
+          "subject": "N129",
+          "value": "420"
+        },
+        {
+          "field": "code",
+          "subject": "N801",
+          "value": "103"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"818\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-009-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N715"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N129",
+          "value": "968"
+        },
+        {
+          "field": "weight",
+          "subject": "N715",
+          "value": "814"
+        },
+        {
+          "field": "code",
+          "subject": "N715",
+          "value": "594"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"594\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-015-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N349"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N819",
+          "value": "544"
+        },
+        {
+          "field": "weight",
+          "subject": "N349",
+          "value": "282"
+        },
+        {
+          "field": "code",
+          "subject": "N928",
+          "value": "916"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-009-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N715"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N129",
+          "value": "968"
+        },
+        {
+          "field": "weight",
+          "subject": "N715",
+          "value": "814"
+        },
+        {
+          "field": "code",
+          "subject": "N226",
+          "value": "594"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-006-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N959"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N586",
+          "value": "590"
+        },
+        {
+          "field": "code",
+          "subject": "N959",
+          "value": "796"
+        },
+        {
+          "field": "weight",
+          "subject": "N959",
+          "value": "765"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"796\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-011-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N982"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N982",
+          "value": "602"
+        },
+        {
+          "field": "weight",
+          "subject": "N982",
+          "value": "313"
+        },
+        {
+          "field": "code",
+          "subject": "N471",
+          "value": "568"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"602\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-005-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N708"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N708",
+          "value": "251"
+        },
+        {
+          "field": "weight",
+          "subject": "N708",
+          "value": "667"
+        },
+        {
+          "field": "code",
+          "subject": "N319",
+          "value": "341"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"251\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-011-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N982"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N982",
+          "value": "602"
+        },
+        {
+          "field": "weight",
+          "subject": "N982",
+          "value": "313"
+        },
+        {
+          "field": "code",
+          "subject": "N471",
+          "value": "568"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"602\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-000-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N522"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N371",
+          "value": "551"
+        },
+        {
+          "field": "code",
+          "subject": "N522",
+          "value": "508"
+        },
+        {
+          "field": "weight",
+          "subject": "N522",
+          "value": "911"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"508\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-010-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N327"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N852",
+          "value": "523"
+        },
+        {
+          "field": "weight",
+          "subject": "N327",
+          "value": "855"
+        },
+        {
+          "field": "code",
+          "subject": "N641",
+          "value": "851"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-006-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N959"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N586",
+          "value": "590"
+        },
+        {
+          "field": "code",
+          "subject": "N836",
+          "value": "796"
+        },
+        {
+          "field": "weight",
+          "subject": "N959",
+          "value": "765"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-001-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N210"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N511",
+          "value": "767"
+        },
+        {
+          "field": "code",
+          "subject": "N210",
+          "value": "996"
+        },
+        {
+          "field": "weight",
+          "subject": "N210",
+          "value": "774"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"996\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-011-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N982"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N909",
+          "value": "602"
+        },
+        {
+          "field": "weight",
+          "subject": "N982",
+          "value": "313"
+        },
+        {
+          "field": "code",
+          "subject": "N471",
+          "value": "568"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-005-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N708"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N345",
+          "value": "251"
+        },
+        {
+          "field": "weight",
+          "subject": "N708",
+          "value": "667"
+        },
+        {
+          "field": "code",
+          "subject": "N319",
+          "value": "341"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-009-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N715"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N129",
+          "value": "968"
+        },
+        {
+          "field": "weight",
+          "subject": "N715",
+          "value": "814"
+        },
+        {
+          "field": "code",
+          "subject": "N226",
+          "value": "594"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-001-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N210"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N511",
+          "value": "767"
+        },
+        {
+          "field": "code",
+          "subject": "N924",
+          "value": "996"
+        },
+        {
+          "field": "weight",
+          "subject": "N210",
+          "value": "774"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-012-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N516"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N877",
+          "value": "616"
+        },
+        {
+          "field": "weight",
+          "subject": "N516",
+          "value": "106"
+        },
+        {
+          "field": "code",
+          "subject": "N412",
+          "value": "718"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-002-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N296"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N296",
+          "value": "305"
+        },
+        {
+          "field": "weight",
+          "subject": "N296",
+          "value": "852"
+        },
+        {
+          "field": "code",
+          "subject": "N133",
+          "value": "794"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"305\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-001-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N210"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N511",
+          "value": "767"
+        },
+        {
+          "field": "code",
+          "subject": "N924",
+          "value": "996"
+        },
+        {
+          "field": "weight",
+          "subject": "N210",
+          "value": "774"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-015-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N349"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N819",
+          "value": "544"
+        },
+        {
+          "field": "weight",
+          "subject": "N349",
+          "value": "282"
+        },
+        {
+          "field": "code",
+          "subject": "N349",
+          "value": "916"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"916\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-008-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N659"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N659",
+          "value": "734"
+        },
+        {
+          "field": "code",
+          "subject": "N542",
+          "value": "732"
+        },
+        {
+          "field": "weight",
+          "subject": "N659",
+          "value": "653"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"734\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-000-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N522"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N371",
+          "value": "551"
+        },
+        {
+          "field": "code",
+          "subject": "N417",
+          "value": "508"
+        },
+        {
+          "field": "weight",
+          "subject": "N522",
+          "value": "911"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-000-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N522"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N371",
+          "value": "551"
+        },
+        {
+          "field": "code",
+          "subject": "N417",
+          "value": "508"
+        },
+        {
+          "field": "weight",
+          "subject": "N522",
+          "value": "911"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-012-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N516"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N877",
+          "value": "616"
+        },
+        {
+          "field": "weight",
+          "subject": "N516",
+          "value": "106"
+        },
+        {
+          "field": "code",
+          "subject": "N516",
+          "value": "718"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"718\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-013-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N129"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N129",
+          "value": "818"
+        },
+        {
+          "field": "weight",
+          "subject": "N129",
+          "value": "420"
+        },
+        {
+          "field": "code",
+          "subject": "N801",
+          "value": "103"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"818\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-004-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N776"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N347",
+          "value": "452"
+        },
+        {
+          "field": "code",
+          "subject": "N776",
+          "value": "860"
+        },
+        {
+          "field": "weight",
+          "subject": "N776",
+          "value": "627"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"860\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-010-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N327"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N327",
+          "value": "523"
+        },
+        {
+          "field": "weight",
+          "subject": "N327",
+          "value": "855"
+        },
+        {
+          "field": "code",
+          "subject": "N641",
+          "value": "851"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"523\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-012-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N516"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N877",
+          "value": "616"
+        },
+        {
+          "field": "weight",
+          "subject": "N516",
+          "value": "106"
+        },
+        {
+          "field": "code",
+          "subject": "N516",
+          "value": "718"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"718\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-001-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N210"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N511",
+          "value": "767"
+        },
+        {
+          "field": "code",
+          "subject": "N210",
+          "value": "996"
+        },
+        {
+          "field": "weight",
+          "subject": "N210",
+          "value": "774"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"996\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-007-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N955"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N955",
+          "value": "594"
+        },
+        {
+          "field": "code",
+          "subject": "N246",
+          "value": "764"
+        },
+        {
+          "field": "code",
+          "subject": "N137",
+          "value": "329"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-012-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N516"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N877",
+          "value": "616"
+        },
+        {
+          "field": "weight",
+          "subject": "N516",
+          "value": "106"
+        },
+        {
+          "field": "code",
+          "subject": "N412",
+          "value": "718"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-014-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N104"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N104",
+          "value": "775"
+        },
+        {
+          "field": "code",
+          "subject": "N104",
+          "value": "375"
+        },
+        {
+          "field": "code",
+          "subject": "N528",
+          "value": "908"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"375\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-004-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N776"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N347",
+          "value": "452"
+        },
+        {
+          "field": "code",
+          "subject": "N233",
+          "value": "860"
+        },
+        {
+          "field": "weight",
+          "subject": "N776",
+          "value": "627"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-014-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N104"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N104",
+          "value": "775"
+        },
+        {
+          "field": "code",
+          "subject": "N355",
+          "value": "375"
+        },
+        {
+          "field": "code",
+          "subject": "N528",
+          "value": "908"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-011-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N982"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N909",
+          "value": "602"
+        },
+        {
+          "field": "weight",
+          "subject": "N982",
+          "value": "313"
+        },
+        {
+          "field": "code",
+          "subject": "N471",
+          "value": "568"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-013-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N129"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N314",
+          "value": "818"
+        },
+        {
+          "field": "weight",
+          "subject": "N129",
+          "value": "420"
+        },
+        {
+          "field": "code",
+          "subject": "N801",
+          "value": "103"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-015-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N349"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N819",
+          "value": "544"
+        },
+        {
+          "field": "weight",
+          "subject": "N349",
+          "value": "282"
+        },
+        {
+          "field": "code",
+          "subject": "N349",
+          "value": "916"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"916\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-007-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N955"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N955",
+          "value": "594"
+        },
+        {
+          "field": "code",
+          "subject": "N246",
+          "value": "764"
+        },
+        {
+          "field": "code",
+          "subject": "N955",
+          "value": "329"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"329\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-000-distant_heldout-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N522"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N371",
+          "value": "551"
+        },
+        {
+          "field": "code",
+          "subject": "N522",
+          "value": "508"
+        },
+        {
+          "field": "weight",
+          "subject": "N522",
+          "value": "911"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"508\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": true,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": true,
+      "id": "uo1-dev-missing-world-014-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N104"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N104",
+          "value": "775"
+        },
+        {
+          "field": "code",
+          "subject": "N104",
+          "value": "375"
+        },
+        {
+          "field": "code",
+          "subject": "N528",
+          "value": "908"
+        }
+      ],
+      "record_entity_count": 2,
+      "target": "{\"v\":\"375\"}",
+      "whole_prompt_literal_entity_count": 3
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-013-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N129"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N314",
+          "value": "818"
+        },
+        {
+          "field": "weight",
+          "subject": "N129",
+          "value": "420"
+        },
+        {
+          "field": "code",
+          "subject": "N801",
+          "value": "103"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-006-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N959"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N586",
+          "value": "590"
+        },
+        {
+          "field": "code",
+          "subject": "N836",
+          "value": "796"
+        },
+        {
+          "field": "weight",
+          "subject": "N959",
+          "value": "765"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-002-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N296"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N832",
+          "value": "305"
+        },
+        {
+          "field": "weight",
+          "subject": "N296",
+          "value": "852"
+        },
+        {
+          "field": "code",
+          "subject": "N133",
+          "value": "794"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-010-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N327"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "code",
+          "subject": "N852",
+          "value": "523"
+        },
+        {
+          "field": "weight",
+          "subject": "N327",
+          "value": "855"
+        },
+        {
+          "field": "code",
+          "subject": "N641",
+          "value": "851"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    },
+    {
+      "answerable": false,
+      "condition": "dev",
+      "field_agnostic_record_count_prediction": false,
+      "id": "uo1-dev-missing-world-003-near_control-cf1-slot0",
+      "query": {
+        "field": "code",
+        "subject": "N606"
+      },
+      "raw_parsed_events": [
+        {
+          "field": "weight",
+          "subject": "N606",
+          "value": "196"
+        },
+        {
+          "field": "code",
+          "subject": "N549",
+          "value": "791"
+        },
+        {
+          "field": "code",
+          "subject": "N554",
+          "value": "100"
+        }
+      ],
+      "record_entity_count": 1,
+      "target": "{\"v\":null}",
+      "whole_prompt_literal_entity_count": 2
+    }
+  ],
+  "raw_update_rule_opportunities": {
+    "candidate": {
+      "oracle_agreements": {
+        "first_record": 128,
+        "greatest_payload_number": 96,
+        "greatest_revision": 384,
+        "last_record": 128,
+        "least_payload_number": 180,
+        "least_revision": 0,
+        "middle_record": 128
+      },
+      "payload_rank_of_correct_revision": {
+        "1": 180,
+        "2": 108,
+        "3": 96
+      },
+      "rows": 384,
+      "source": "raw prompt structure and locked targets; no native predictions"
+    },
+    "control": {
+      "oracle_agreements": {
+        "first_record": 288,
+        "greatest_payload_number": 96,
+        "greatest_revision": 384,
+        "last_record": 48,
+        "least_payload_number": 180,
+        "least_revision": 0,
+        "middle_record": 48
+      },
+      "payload_rank_of_correct_revision": {
+        "1": 180,
+        "2": 108,
+        "3": 96
+      },
+      "rows": 384,
+      "source": "raw prompt structure and locked targets; no native predictions"
+    },
+    "dev": {
+      "oracle_agreements": {
+        "first_record": 128,
+        "greatest_payload_number": 192,
+        "greatest_revision": 384,
+        "last_record": 128,
+        "least_payload_number": 48,
+        "least_revision": 0,
+        "middle_record": 128
+      },
+      "payload_rank_of_correct_revision": {
+        "1": 48,
+        "2": 144,
+        "3": 192
+      },
+      "rows": 384,
+      "source": "raw prompt structure and locked targets; no native predictions"
+    }
+  },
+  "reproduction_artifact": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_shortcut_reproduced.json",
+  "reproduction_matches_original_excluding_timestamp_and_script_hash": true,
+  "reviewer": "independent Codex provenance/pattern subagent",
+  "same_world_six_row_permutation_checks": {
+    "candidate": {
+      "numeric_rank_invariant_within_groups": true,
+      "raw_record_permutation_verification": true,
+      "saved_token_geometry_only_not_retokenized": true,
+      "six_row_group_table": {
+        "(6, 6)": 64
+      },
+      "world_counterfactual_position_groups": 64,
+      "worlds": 16
+    },
+    "control": {
+      "numeric_rank_invariant_within_groups": true,
+      "raw_record_permutation_verification": true,
+      "saved_token_geometry_only_not_retokenized": true,
+      "six_row_group_table": {
+        "(6, 1)": 64
+      },
+      "world_counterfactual_position_groups": 64,
+      "worlds": 16
+    },
+    "dev": {
+      "numeric_rank_invariant_within_groups": true,
+      "raw_record_permutation_verification": true,
+      "saved_token_geometry_only_not_retokenized": true,
+      "six_row_group_table": {
+        "(6, 6)": 64
+      },
+      "world_counterfactual_position_groups": 64,
+      "worlds": 16
+    }
+  },
+  "schema": "Rineya-quality/offline-shortcut-independent-review-v1",
+  "script_sha256": "168eba0c6a60c5bdbe0b5ca13677838f03a81345d0a9ddf8c225802fa4cca444",
+  "source_corpus_policy_or_metric_changes": false,
+  "status": "PASS_RAW_PROMPT_SHORTCUT_REVIEW"
+}

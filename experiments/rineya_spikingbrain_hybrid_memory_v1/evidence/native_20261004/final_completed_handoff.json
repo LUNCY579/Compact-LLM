@@ -1,0 +1,43 @@
+{
+  "C_only_repairs": 1,
+  "D_only_repairs": 0,
+  "actual_training_tokens": {
+    "max": 259,
+    "min": 42
+  },
+  "audit_sha256": {
+    "completed_matrix_supplement.json": "6dbcf03ed76ac5237af140c81b92d4fc9c023b7781e861fbd21b4ca458d9a8f9",
+    "completed_native_audit.json": "e07083e6a77ec733d1d598d1f081251cf406ffa50d4408d5e5a1fdc07060baad",
+    "completed_receipt_snapshot_audit.json": "401a835f88e2e06429aa1846fe941e05939a70495e00cdf47b6b62606b9afab4",
+    "independent_completed_matrix_audit.json": "226dee70c800d1187975e53160a210ec09d75d44c4ed8f741fc73c9a48b9b29d"
+  },
+  "cpu_tests_passed": 136,
+  "cpu_tests_skipped": 0,
+  "created_utc": "2026-10-04T22:02:48.485625+00:00",
+  "dev_rows_per_arm": 512,
+  "general_recurrent_memory_claim": false,
+  "hybrid_minus_local_percentage_points": -0.44642857142857145,
+  "interpretation": "Recovered hybrid handles distant cases, but added recurrent state provides no advantage over matched local-only recovery in this source/site/seed synthetic DEV pilot.",
+  "matrix_exit_code": 0,
+  "native_qualification_stages_completed": 10,
+  "native_training_stages_completed": 6,
+  "primary_distant_counts": {
+    "A": 51,
+    "B": 172,
+    "C": 172,
+    "D": 171,
+    "denominator": 224
+  },
+  "promotion": false,
+  "retained_A_correct_retention_counts": {
+    "B": 17,
+    "C": 18,
+    "D": 18,
+    "denominator": 22
+  },
+  "run_root": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\runs\\titan_transition_v2_20261004_memory_efficient",
+  "source_or_protected_banks_modified": false,
+  "status": "COMPLETE_REGISTERED_ONE_SITE_FP32_DEV_EXPERIMENT",
+  "steps_each_stage": 512,
+  "teacher_cache_file_bytes": 502904576
+}

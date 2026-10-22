@@ -1,0 +1,255 @@
+{
+  "assertions": 3575,
+  "capability_claim": false,
+  "created_utc": "2026-10-05T20:49:22.339289+00:00",
+  "engineering_counterexamples": [
+    {
+      "count_shortcut_prediction": false,
+      "events": [
+        {
+          "field": "code",
+          "subject": "E1",
+          "value": "111"
+        },
+        {
+          "field": "code",
+          "subject": "E2",
+          "value": "222"
+        },
+        {
+          "field": "weight",
+          "subject": "E2",
+          "value": "333"
+        }
+      ],
+      "name": "present_with_one_entity_mention",
+      "truth": true
+    },
+    {
+      "count_shortcut_prediction": true,
+      "events": [
+        {
+          "field": "weight",
+          "subject": "E1",
+          "value": "111"
+        },
+        {
+          "field": "status",
+          "subject": "E1",
+          "value": "222"
+        },
+        {
+          "field": "code",
+          "subject": "E2",
+          "value": "333"
+        }
+      ],
+      "name": "absent_with_two_entity_mentions",
+      "truth": false
+    }
+  ],
+  "input_files": {
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\candidate_train.jsonl": "1618015933cfef46712ee9e7eb707ab0e964ba4122516571eb3ce841014e7200",
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\control_train.jsonl": "ba2109411f72777624c705515ac61f9c716d36c9ca0a9f270166bca4e81779ae",
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\design.json": "03e40f39f8a8628557de76d9e5fffabc738efcdb2c1032e4aacf578dae619767",
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\dev.jsonl": "e4c2572c603d6700020091581ff7d8541647e6d48f0c1b22d5ddddfd17deb761",
+    "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\manifest.json": "ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3"
+  },
+  "interpretation": "The current missing category cannot distinguish requested-field binding from a queried-entity mention-count shortcut. This does not demonstrate that the native model uses that shortcut.",
+  "limitations": [
+    "Static label predictability is not observed model behavior.",
+    "Engineering counterexamples test the shortcut rule only.",
+    "Posthoc diagnostics do not replace frozen metrics or authorize a new model run."
+  ],
+  "missing_examples": [
+    {
+      "answerable": true,
+      "entity_mentions": 2,
+      "events": [
+        {
+          "field": "code",
+          "subject": "N659",
+          "value": "734"
+        },
+        {
+          "field": "code",
+          "subject": "N542",
+          "value": "732"
+        },
+        {
+          "field": "weight",
+          "subject": "N659",
+          "value": "653"
+        }
+      ],
+      "field_agnostic_count_prediction": true,
+      "id": "uo1-dev-missing-world-008-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "missing_policy": "closed_world_null",
+        "subject": "N659"
+      }
+    },
+    {
+      "answerable": true,
+      "entity_mentions": 2,
+      "events": [
+        {
+          "field": "code",
+          "subject": "N327",
+          "value": "523"
+        },
+        {
+          "field": "weight",
+          "subject": "N327",
+          "value": "855"
+        },
+        {
+          "field": "code",
+          "subject": "N641",
+          "value": "851"
+        }
+      ],
+      "field_agnostic_count_prediction": true,
+      "id": "uo1-dev-missing-world-010-near_control-cf0-slot0",
+      "query": {
+        "field": "code",
+        "missing_policy": "closed_world_null",
+        "subject": "N327"
+      }
+    },
+    {
+      "answerable": false,
+      "entity_mentions": 1,
+      "events": [
+        {
+          "field": "code",
+          "subject": "N832",
+          "value": "305"
+        },
+        {
+          "field": "weight",
+          "subject": "N296",
+          "value": "852"
+        },
+        {
+          "field": "code",
+          "subject": "N133",
+          "value": "794"
+        }
+      ],
+      "field_agnostic_count_prediction": false,
+      "id": "uo1-dev-missing-world-002-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "missing_policy": "closed_world_null",
+        "subject": "N296"
+      }
+    },
+    {
+      "answerable": false,
+      "entity_mentions": 1,
+      "events": [
+        {
+          "field": "weight",
+          "subject": "N955",
+          "value": "594"
+        },
+        {
+          "field": "code",
+          "subject": "N246",
+          "value": "764"
+        },
+        {
+          "field": "code",
+          "subject": "N137",
+          "value": "329"
+        }
+      ],
+      "field_agnostic_count_prediction": false,
+      "id": "uo1-dev-missing-world-007-distant_heldout-cf1-slot0",
+      "query": {
+        "field": "code",
+        "missing_policy": "closed_world_null",
+        "subject": "N955"
+      }
+    }
+  ],
+  "missing_label_shortcut": {
+    "candidate": {
+      "accuracy": 1.0,
+      "count_by_presence": {
+        "1_mentions_absent": 12,
+        "2_mentions_present": 12
+      },
+      "label_predictable_without_requested_field": 24,
+      "rows": 24
+    },
+    "control": {
+      "accuracy": 1.0,
+      "count_by_presence": {
+        "1_mentions_absent": 12,
+        "2_mentions_present": 12
+      },
+      "label_predictable_without_requested_field": 24,
+      "rows": 24
+    },
+    "dev": {
+      "accuracy": 1.0,
+      "count_by_presence": {
+        "1_mentions_absent": 32,
+        "2_mentions_present": 32
+      },
+      "label_predictable_without_requested_field": 64,
+      "rows": 64
+    }
+  },
+  "native_execution": false,
+  "next_measurement_requirement": "Any later claim of robust answerability needs presence/absence crossed with queried-entity mention count and wrong-field/wrong-subject distractors.",
+  "schema": "RINEYA-QUALITY/offline-shortcut-opportunity-v1",
+  "script_sha256": "5047f379914c4cdc5c29a5b20092973f431f7792790217be3c43320bf74b00a4",
+  "serving_policy_changed": false,
+  "status": "PASS_OFFLINE_CORPUS_FALSIFICATION",
+  "unchanged_primary_question": "The frozen order-only pilot remains untested; its corpus and registered primary metrics are not changed.",
+  "update_rule_opportunities": {
+    "candidate": {
+      "oracle_agreements": {
+        "first_record": 128,
+        "greatest_payload_number": 96,
+        "greatest_revision": 384,
+        "last_record": 128,
+        "least_payload_number": 180,
+        "least_revision": 0,
+        "middle_record": 128
+      },
+      "rows": 384,
+      "source": "ground-truth structure, not native model predictions"
+    },
+    "control": {
+      "oracle_agreements": {
+        "first_record": 288,
+        "greatest_payload_number": 96,
+        "greatest_revision": 384,
+        "last_record": 48,
+        "least_payload_number": 180,
+        "least_revision": 0,
+        "middle_record": 48
+      },
+      "rows": 384,
+      "source": "ground-truth structure, not native model predictions"
+    },
+    "dev": {
+      "oracle_agreements": {
+        "first_record": 128,
+        "greatest_payload_number": 192,
+        "greatest_revision": 384,
+        "last_record": 128,
+        "least_payload_number": 48,
+        "least_revision": 0,
+        "middle_record": 128
+      },
+      "rows": 384,
+      "source": "ground-truth structure, not native model predictions"
+    }
+  }
+}

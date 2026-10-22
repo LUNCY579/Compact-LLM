@@ -1,0 +1,4221 @@
+{
+  "binding": {
+    "arm": "D",
+    "code_sha256": "326d805bde96047ca0553f8c33e5124a6c346fc11caaf3c28b4221277ef82140",
+    "config_sha256": "30b85a8bd3e24043bbbd2983d735eaf64df47e60626dc051792b45f3918d2400",
+    "corpus_sha256": "6f9c858b39c6c45d4fd5cd6bfa29d79b3c2f12773af7f392b44cfa171379105f",
+    "delta_manifest_sha256": null,
+    "delta_sha256": null,
+    "environment": {
+      "cuda": "12.4",
+      "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "python": "3.10.11",
+      "versions": {
+        "accelerate": "1.15.0",
+        "psutil": "7.2.2",
+        "safetensors": "0.7.0",
+        "tokenizers": "0.21.4",
+        "torch": "2.6.0+cu124",
+        "transformers": "4.51.3"
+      }
+    },
+    "schema": "SBHM-001/v1",
+    "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a"
+  },
+  "parameters": {
+    "model.layers.14.self_attn.forget.bias": [
+      1024
+    ],
+    "model.layers.14.self_attn.forget.weight": [
+      1024,
+      1024
+    ],
+    "model.layers.14.self_attn.k_proj.a": [
+      8,
+      1024
+    ],
+    "model.layers.14.self_attn.k_proj.b": [
+      1024,
+      8
+    ],
+    "model.layers.14.self_attn.memory_scale": [
+      128
+    ],
+    "model.layers.14.self_attn.mix": [
+      16
+    ],
+    "model.layers.14.self_attn.o_proj.a": [
+      8,
+      2048
+    ],
+    "model.layers.14.self_attn.o_proj.b": [
+      1024,
+      8
+    ],
+    "model.layers.14.self_attn.q_proj.a": [
+      8,
+      1024
+    ],
+    "model.layers.14.self_attn.q_proj.b": [
+      2048,
+      8
+    ],
+    "model.layers.14.self_attn.v_proj.a": [
+      8,
+      1024
+    ],
+    "model.layers.14.self_attn.v_proj.b": [
+      1024,
+      8
+    ]
+  },
+  "record": {
+    "allocator_cache_release_events": [],
+    "binding": {
+      "arm": "D",
+      "code_sha256": "326d805bde96047ca0553f8c33e5124a6c346fc11caaf3c28b4221277ef82140",
+      "config_sha256": "30b85a8bd3e24043bbbd2983d735eaf64df47e60626dc051792b45f3918d2400",
+      "corpus_sha256": "6f9c858b39c6c45d4fd5cd6bfa29d79b3c2f12773af7f392b44cfa171379105f",
+      "delta_manifest_sha256": null,
+      "delta_sha256": null,
+      "environment": {
+        "cuda": "12.4",
+        "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "python": "3.10.11",
+        "versions": {
+          "accelerate": "1.15.0",
+          "psutil": "7.2.2",
+          "safetensors": "0.7.0",
+          "tokenizers": "0.21.4",
+          "torch": "2.6.0+cu124",
+          "transformers": "4.51.3"
+        }
+      },
+      "schema": "SBHM-001/v1",
+      "source_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a"
+    },
+    "corpus_sha256": "6f9c858b39c6c45d4fd5cd6bfa29d79b3c2f12773af7f392b44cfa171379105f",
+    "created_utc": "2026-10-04T21:32:24.673662+00:00",
+    "optimizer": "AdamW(.9,.95), wd=0, eps=1e-8, clip=1",
+    "parameter_names": [
+      "model.layers.14.self_attn.forget.bias",
+      "model.layers.14.self_attn.forget.weight",
+      "model.layers.14.self_attn.k_proj.a",
+      "model.layers.14.self_attn.k_proj.b",
+      "model.layers.14.self_attn.memory_scale",
+      "model.layers.14.self_attn.mix",
+      "model.layers.14.self_attn.o_proj.a",
+      "model.layers.14.self_attn.o_proj.b",
+      "model.layers.14.self_attn.q_proj.a",
+      "model.layers.14.self_attn.q_proj.b",
+      "model.layers.14.self_attn.v_proj.a",
+      "model.layers.14.self_attn.v_proj.b"
+    ],
+    "parent_record": null,
+    "records": [
+      {
+        "gradient_norm": 0.6605793237686157,
+        "input_tokens": 238,
+        "loss": 0.44887804985046387,
+        "row_id": "train-identifier-world-004-near_control-cf-0",
+        "step": 0,
+        "supervised_positions": 238
+      },
+      {
+        "gradient_norm": 0.6166051626205444,
+        "input_tokens": 227,
+        "loss": 0.4289705157279968,
+        "row_id": "train-identifier-world-005-distant_heldout-cf-1",
+        "step": 1,
+        "supervised_positions": 227
+      },
+      {
+        "gradient_norm": 0.6950675845146179,
+        "input_tokens": 239,
+        "loss": 0.4834347367286682,
+        "row_id": "train-multiple_facts-world-000-distant_heldout-cf-0",
+        "step": 2,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.6651464700698853,
+        "input_tokens": 242,
+        "loss": 0.45051899552345276,
+        "row_id": "train-multiple_facts-world-007-distant_heldout-cf-0",
+        "step": 3,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.7619311213493347,
+        "input_tokens": 239,
+        "loss": 0.4822758138179779,
+        "row_id": "train-multiple_facts-world-000-near_control-cf-0",
+        "step": 4,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.6257879137992859,
+        "input_tokens": 235,
+        "loss": 0.38647764921188354,
+        "row_id": "train-missing-world-004-near_control-cf-0",
+        "step": 5,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.7284335494041443,
+        "input_tokens": 222,
+        "loss": 0.4365905225276947,
+        "row_id": "train-lookup-world-000-near_control-cf-1",
+        "step": 6,
+        "supervised_positions": 222
+      },
+      {
+        "gradient_norm": 0.7979084253311157,
+        "input_tokens": 244,
+        "loss": 0.45991456508636475,
+        "row_id": "train-multiple_facts-world-001-near_control-cf-0",
+        "step": 7,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.7881795763969421,
+        "input_tokens": 243,
+        "loss": 0.4716672897338867,
+        "row_id": "train-missing-world-006-distant_heldout-cf-1",
+        "step": 8,
+        "supervised_positions": 243
+      },
+      {
+        "gradient_norm": 0.7428202033042908,
+        "input_tokens": 242,
+        "loss": 0.40789514780044556,
+        "row_id": "train-multiple_facts-world-007-near_control-cf-1",
+        "step": 9,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.7312716245651245,
+        "input_tokens": 235,
+        "loss": 0.4138525724411011,
+        "row_id": "train-identifier-world-002-distant_heldout-cf-1",
+        "step": 10,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.8073674440383911,
+        "input_tokens": 241,
+        "loss": 0.4306073784828186,
+        "row_id": "train-join-world-002-near_control-cf-0",
+        "step": 11,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.8012624382972717,
+        "input_tokens": 232,
+        "loss": 0.4226750135421753,
+        "row_id": "train-missing-world-007-near_control-cf-0",
+        "step": 12,
+        "supervised_positions": 232
+      },
+      {
+        "gradient_norm": 0.8581113219261169,
+        "input_tokens": 239,
+        "loss": 0.4587412178516388,
+        "row_id": "train-join-world-006-distant_heldout-cf-0",
+        "step": 13,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.6915733814239502,
+        "input_tokens": 220,
+        "loss": 0.36340752243995667,
+        "row_id": "train-lookup-world-001-near_control-cf-1",
+        "step": 14,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.7153002619743347,
+        "input_tokens": 235,
+        "loss": 0.4176860451698303,
+        "row_id": "train-identifier-world-003-distant_heldout-cf-0",
+        "step": 15,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.665009617805481,
+        "input_tokens": 242,
+        "loss": 0.35531818866729736,
+        "row_id": "train-update-world-000-distant_heldout-cf-1",
+        "step": 16,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.8235686421394348,
+        "input_tokens": 230,
+        "loss": 0.4114580452442169,
+        "row_id": "train-missing-world-007-near_control-cf-1",
+        "step": 17,
+        "supervised_positions": 230
+      },
+      {
+        "gradient_norm": 0.6376757621765137,
+        "input_tokens": 229,
+        "loss": 0.3318437933921814,
+        "row_id": "train-identifier-world-001-near_control-cf-0",
+        "step": 18,
+        "supervised_positions": 229
+      },
+      {
+        "gradient_norm": 0.7318204641342163,
+        "input_tokens": 233,
+        "loss": 0.35518351197242737,
+        "row_id": "train-multiple_facts-world-006-near_control-cf-0",
+        "step": 19,
+        "supervised_positions": 233
+      },
+      {
+        "gradient_norm": 0.7072762846946716,
+        "input_tokens": 247,
+        "loss": 0.37666377425193787,
+        "row_id": "train-join-world-000-distant_heldout-cf-1",
+        "step": 20,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.6294539570808411,
+        "input_tokens": 222,
+        "loss": 0.34863927960395813,
+        "row_id": "train-lookup-world-000-distant_heldout-cf-1",
+        "step": 21,
+        "supervised_positions": 222
+      },
+      {
+        "gradient_norm": 0.7252182960510254,
+        "input_tokens": 249,
+        "loss": 0.3630775213241577,
+        "row_id": "train-missing-world-001-near_control-cf-0",
+        "step": 22,
+        "supervised_positions": 249
+      },
+      {
+        "gradient_norm": 0.684546709060669,
+        "input_tokens": 239,
+        "loss": 0.3213675618171692,
+        "row_id": "train-multiple_facts-world-005-near_control-cf-0",
+        "step": 23,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.6049073338508606,
+        "input_tokens": 241,
+        "loss": 0.31462833285331726,
+        "row_id": "train-update-world-004-near_control-cf-1",
+        "step": 24,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.62031090259552,
+        "input_tokens": 239,
+        "loss": 0.3344728350639343,
+        "row_id": "train-multiple_facts-world-005-distant_heldout-cf-1",
+        "step": 25,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.6990270614624023,
+        "input_tokens": 222,
+        "loss": 0.368294358253479,
+        "row_id": "train-number-world-002-distant_heldout-cf-1",
+        "step": 26,
+        "supervised_positions": 222
+      },
+      {
+        "gradient_norm": 0.5917483568191528,
+        "input_tokens": 259,
+        "loss": 0.3132532835006714,
+        "row_id": "train-update-world-003-distant_heldout-cf-1",
+        "step": 27,
+        "supervised_positions": 259
+      },
+      {
+        "gradient_norm": 0.5918512940406799,
+        "input_tokens": 223,
+        "loss": 0.31678444147109985,
+        "row_id": "train-number-world-000-near_control-cf-0",
+        "step": 28,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.5412792563438416,
+        "input_tokens": 244,
+        "loss": 0.31457433104515076,
+        "row_id": "train-multiple_facts-world-001-distant_heldout-cf-1",
+        "step": 29,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.2952001988887787,
+        "input_tokens": 45,
+        "loss": 0.027484899386763573,
+        "row_id": "train-retention-arithmetic-world-003",
+        "step": 30,
+        "supervised_positions": 45
+      },
+      {
+        "gradient_norm": 0.49690231680870056,
+        "input_tokens": 224,
+        "loss": 0.2846687138080597,
+        "row_id": "train-lookup-world-005-distant_heldout-cf-0",
+        "step": 31,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.5099581480026245,
+        "input_tokens": 244,
+        "loss": 0.2900904417037964,
+        "row_id": "train-multiple_facts-world-004-near_control-cf-1",
+        "step": 32,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.5198169350624084,
+        "input_tokens": 219,
+        "loss": 0.27900490164756775,
+        "row_id": "train-lookup-world-006-near_control-cf-0",
+        "step": 33,
+        "supervised_positions": 219
+      },
+      {
+        "gradient_norm": 0.4547485411167145,
+        "input_tokens": 221,
+        "loss": 0.26217010617256165,
+        "row_id": "train-lookup-world-004-distant_heldout-cf-1",
+        "step": 34,
+        "supervised_positions": 221
+      },
+      {
+        "gradient_norm": 0.4517821669578552,
+        "input_tokens": 247,
+        "loss": 0.27028799057006836,
+        "row_id": "train-update-world-002-distant_heldout-cf-1",
+        "step": 35,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.45588576793670654,
+        "input_tokens": 241,
+        "loss": 0.2726006805896759,
+        "row_id": "train-update-world-004-distant_heldout-cf-0",
+        "step": 36,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.35496971011161804,
+        "input_tokens": 62,
+        "loss": 0.02886713109910488,
+        "row_id": "train-retention-temporal-world-002",
+        "step": 37,
+        "supervised_positions": 62
+      },
+      {
+        "gradient_norm": 0.41330236196517944,
+        "input_tokens": 56,
+        "loss": 0.035153016448020935,
+        "row_id": "train-retention-conditional-world-002",
+        "step": 38,
+        "supervised_positions": 56
+      },
+      {
+        "gradient_norm": 0.4650546610355377,
+        "input_tokens": 239,
+        "loss": 0.2607600688934326,
+        "row_id": "train-missing-world-002-near_control-cf-0",
+        "step": 39,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.377198725938797,
+        "input_tokens": 50,
+        "loss": 0.03248504549264908,
+        "row_id": "train-retention-string_rule-world-003",
+        "step": 40,
+        "supervised_positions": 50
+      },
+      {
+        "gradient_norm": 0.42336592078208923,
+        "input_tokens": 254,
+        "loss": 0.23217706382274628,
+        "row_id": "train-update-world-001-near_control-cf-1",
+        "step": 41,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.4097557067871094,
+        "input_tokens": 73,
+        "loss": 0.03360097110271454,
+        "row_id": "train-retention-short_table-world-002",
+        "step": 42,
+        "supervised_positions": 73
+      },
+      {
+        "gradient_norm": 0.43616214394569397,
+        "input_tokens": 224,
+        "loss": 0.24520686268806458,
+        "row_id": "train-identifier-world-006-near_control-cf-1",
+        "step": 43,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.4721914529800415,
+        "input_tokens": 249,
+        "loss": 0.2701760530471802,
+        "row_id": "train-missing-world-003-near_control-cf-0",
+        "step": 44,
+        "supervised_positions": 249
+      },
+      {
+        "gradient_norm": 0.6008086204528809,
+        "input_tokens": 245,
+        "loss": 0.30361685156822205,
+        "row_id": "train-join-world-003-near_control-cf-1",
+        "step": 45,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.40757647156715393,
+        "input_tokens": 224,
+        "loss": 0.23994633555412292,
+        "row_id": "train-identifier-world-006-distant_heldout-cf-1",
+        "step": 46,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.2766910493373871,
+        "input_tokens": 56,
+        "loss": 0.024464430287480354,
+        "row_id": "train-retention-unit_conversion-world-002",
+        "step": 47,
+        "supervised_positions": 56
+      },
+      {
+        "gradient_norm": 0.40030360221862793,
+        "input_tokens": 225,
+        "loss": 0.24515382945537567,
+        "row_id": "train-lookup-world-002-distant_heldout-cf-0",
+        "step": 48,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.3911946415901184,
+        "input_tokens": 238,
+        "loss": 0.25968047976493835,
+        "row_id": "train-missing-world-000-distant_heldout-cf-0",
+        "step": 49,
+        "supervised_positions": 238
+      },
+      {
+        "gradient_norm": 0.34269803762435913,
+        "input_tokens": 225,
+        "loss": 0.20401127636432648,
+        "row_id": "train-identifier-world-007-near_control-cf-0",
+        "step": 50,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.49068984389305115,
+        "input_tokens": 236,
+        "loss": 0.26295047998428345,
+        "row_id": "train-missing-world-000-near_control-cf-1",
+        "step": 51,
+        "supervised_positions": 236
+      },
+      {
+        "gradient_norm": 0.35099881887435913,
+        "input_tokens": 220,
+        "loss": 0.21011245250701904,
+        "row_id": "train-number-world-001-distant_heldout-cf-0",
+        "step": 52,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.3810415267944336,
+        "input_tokens": 247,
+        "loss": 0.21516957879066467,
+        "row_id": "train-join-world-005-near_control-cf-0",
+        "step": 53,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.3166503310203552,
+        "input_tokens": 235,
+        "loss": 0.1742091029882431,
+        "row_id": "train-identifier-world-002-near_control-cf-1",
+        "step": 54,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.4211040139198303,
+        "input_tokens": 239,
+        "loss": 0.22787252068519592,
+        "row_id": "train-join-world-006-near_control-cf-1",
+        "step": 55,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.30170202255249023,
+        "input_tokens": 221,
+        "loss": 0.18156491219997406,
+        "row_id": "train-lookup-world-004-near_control-cf-0",
+        "step": 56,
+        "supervised_positions": 221
+      },
+      {
+        "gradient_norm": 0.349799245595932,
+        "input_tokens": 249,
+        "loss": 0.24394267797470093,
+        "row_id": "train-missing-world-003-distant_heldout-cf-0",
+        "step": 57,
+        "supervised_positions": 249
+      },
+      {
+        "gradient_norm": 0.31631213426589966,
+        "input_tokens": 257,
+        "loss": 0.17912642657756805,
+        "row_id": "train-update-world-005-near_control-cf-1",
+        "step": 58,
+        "supervised_positions": 257
+      },
+      {
+        "gradient_norm": 0.3315196633338928,
+        "input_tokens": 247,
+        "loss": 0.20334108173847198,
+        "row_id": "train-multiple_facts-world-003-near_control-cf-1",
+        "step": 59,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.2842940092086792,
+        "input_tokens": 233,
+        "loss": 0.19280041754245758,
+        "row_id": "train-missing-world-004-distant_heldout-cf-1",
+        "step": 60,
+        "supervised_positions": 233
+      },
+      {
+        "gradient_norm": 0.32243913412094116,
+        "input_tokens": 241,
+        "loss": 0.2214820384979248,
+        "row_id": "train-join-world-002-distant_heldout-cf-1",
+        "step": 61,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.2871200144290924,
+        "input_tokens": 257,
+        "loss": 0.1872062385082245,
+        "row_id": "train-update-world-005-distant_heldout-cf-1",
+        "step": 62,
+        "supervised_positions": 257
+      },
+      {
+        "gradient_norm": 0.3376038074493408,
+        "input_tokens": 244,
+        "loss": 0.2212979644536972,
+        "row_id": "train-multiple_facts-world-001-distant_heldout-cf-0",
+        "step": 63,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.32797011733055115,
+        "input_tokens": 259,
+        "loss": 0.19295375049114227,
+        "row_id": "train-update-world-003-near_control-cf-0",
+        "step": 64,
+        "supervised_positions": 259
+      },
+      {
+        "gradient_norm": 0.30512386560440063,
+        "input_tokens": 244,
+        "loss": 0.2088056206703186,
+        "row_id": "train-join-world-001-distant_heldout-cf-1",
+        "step": 65,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.44516652822494507,
+        "input_tokens": 245,
+        "loss": 0.24971112608909607,
+        "row_id": "train-join-world-003-distant_heldout-cf-1",
+        "step": 66,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.23235692083835602,
+        "input_tokens": 49,
+        "loss": 0.024171380326151848,
+        "row_id": "train-retention-string_rule-world-001",
+        "step": 67,
+        "supervised_positions": 49
+      },
+      {
+        "gradient_norm": 0.2795461118221283,
+        "input_tokens": 247,
+        "loss": 0.17924776673316956,
+        "row_id": "train-join-world-005-near_control-cf-1",
+        "step": 68,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.324957013130188,
+        "input_tokens": 227,
+        "loss": 0.1894933581352234,
+        "row_id": "train-identifier-world-005-distant_heldout-cf-0",
+        "step": 69,
+        "supervised_positions": 227
+      },
+      {
+        "gradient_norm": 0.26301634311676025,
+        "input_tokens": 219,
+        "loss": 0.17281851172447205,
+        "row_id": "train-lookup-world-006-distant_heldout-cf-1",
+        "step": 70,
+        "supervised_positions": 219
+      },
+      {
+        "gradient_norm": 0.25144919753074646,
+        "input_tokens": 58,
+        "loss": 0.02558734081685543,
+        "row_id": "train-retention-unit_conversion-world-001",
+        "step": 71,
+        "supervised_positions": 58
+      },
+      {
+        "gradient_norm": 0.2745331823825836,
+        "input_tokens": 235,
+        "loss": 0.18238438665866852,
+        "row_id": "train-missing-world-004-distant_heldout-cf-0",
+        "step": 72,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.30736804008483887,
+        "input_tokens": 223,
+        "loss": 0.18095283210277557,
+        "row_id": "train-number-world-000-near_control-cf-1",
+        "step": 73,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.29057034850120544,
+        "input_tokens": 254,
+        "loss": 0.1737380027770996,
+        "row_id": "train-update-world-006-near_control-cf-1",
+        "step": 74,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.2915201187133789,
+        "input_tokens": 244,
+        "loss": 0.17124614119529724,
+        "row_id": "train-join-world-001-near_control-cf-0",
+        "step": 75,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.3284366726875305,
+        "input_tokens": 256,
+        "loss": 0.1792774349451065,
+        "row_id": "train-join-world-004-near_control-cf-0",
+        "step": 76,
+        "supervised_positions": 256
+      },
+      {
+        "gradient_norm": 0.2327437847852707,
+        "input_tokens": 224,
+        "loss": 0.14589251577854156,
+        "row_id": "train-lookup-world-005-near_control-cf-0",
+        "step": 77,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.28127676248550415,
+        "input_tokens": 227,
+        "loss": 0.14897412061691284,
+        "row_id": "train-identifier-world-005-near_control-cf-1",
+        "step": 78,
+        "supervised_positions": 227
+      },
+      {
+        "gradient_norm": 0.30042532086372375,
+        "input_tokens": 245,
+        "loss": 0.16819128394126892,
+        "row_id": "train-update-world-007-near_control-cf-0",
+        "step": 79,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.27201926708221436,
+        "input_tokens": 225,
+        "loss": 0.17625615000724792,
+        "row_id": "train-lookup-world-007-distant_heldout-cf-0",
+        "step": 80,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.23340937495231628,
+        "input_tokens": 242,
+        "loss": 0.18027043342590332,
+        "row_id": "train-multiple_facts-world-007-distant_heldout-cf-1",
+        "step": 81,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.22980210185050964,
+        "input_tokens": 224,
+        "loss": 0.14358769357204437,
+        "row_id": "train-identifier-world-006-near_control-cf-0",
+        "step": 82,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.26457056403160095,
+        "input_tokens": 217,
+        "loss": 0.15918727219104767,
+        "row_id": "train-number-world-007-distant_heldout-cf-1",
+        "step": 83,
+        "supervised_positions": 217
+      },
+      {
+        "gradient_norm": 0.41217634081840515,
+        "input_tokens": 245,
+        "loss": 0.20060385763645172,
+        "row_id": "train-join-world-003-near_control-cf-0",
+        "step": 84,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.2817330062389374,
+        "input_tokens": 241,
+        "loss": 0.1766197383403778,
+        "row_id": "train-join-world-002-distant_heldout-cf-0",
+        "step": 85,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.23257826268672943,
+        "input_tokens": 235,
+        "loss": 0.1565827876329422,
+        "row_id": "train-identifier-world-003-near_control-cf-1",
+        "step": 86,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.3342650532722473,
+        "input_tokens": 229,
+        "loss": 0.17502696812152863,
+        "row_id": "train-identifier-world-000-near_control-cf-0",
+        "step": 87,
+        "supervised_positions": 229
+      },
+      {
+        "gradient_norm": 0.33935800194740295,
+        "input_tokens": 243,
+        "loss": 0.18027420341968536,
+        "row_id": "train-missing-world-006-near_control-cf-1",
+        "step": 88,
+        "supervised_positions": 243
+      },
+      {
+        "gradient_norm": 0.2963190972805023,
+        "input_tokens": 224,
+        "loss": 0.150819331407547,
+        "row_id": "train-identifier-world-006-distant_heldout-cf-0",
+        "step": 89,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.2393702268600464,
+        "input_tokens": 56,
+        "loss": 0.02597036398947239,
+        "row_id": "train-retention-unit_conversion-world-003",
+        "step": 90,
+        "supervised_positions": 56
+      },
+      {
+        "gradient_norm": 0.2431410253047943,
+        "input_tokens": 259,
+        "loss": 0.15703117847442627,
+        "row_id": "train-update-world-003-distant_heldout-cf-0",
+        "step": 91,
+        "supervised_positions": 259
+      },
+      {
+        "gradient_norm": 0.2853119969367981,
+        "input_tokens": 256,
+        "loss": 0.16423384845256805,
+        "row_id": "train-join-world-004-near_control-cf-1",
+        "step": 92,
+        "supervised_positions": 256
+      },
+      {
+        "gradient_norm": 0.2607719898223877,
+        "input_tokens": 254,
+        "loss": 0.16160976886749268,
+        "row_id": "train-update-world-001-distant_heldout-cf-0",
+        "step": 93,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.2720949053764343,
+        "input_tokens": 239,
+        "loss": 0.174770787358284,
+        "row_id": "train-missing-world-002-distant_heldout-cf-0",
+        "step": 94,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.24123963713645935,
+        "input_tokens": 257,
+        "loss": 0.14425770938396454,
+        "row_id": "train-update-world-005-distant_heldout-cf-0",
+        "step": 95,
+        "supervised_positions": 257
+      },
+      {
+        "gradient_norm": 0.2398959994316101,
+        "input_tokens": 239,
+        "loss": 0.1475234180688858,
+        "row_id": "train-multiple_facts-world-002-near_control-cf-1",
+        "step": 96,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.24530236423015594,
+        "input_tokens": 219,
+        "loss": 0.14004909992218018,
+        "row_id": "train-lookup-world-006-distant_heldout-cf-0",
+        "step": 97,
+        "supervised_positions": 219
+      },
+      {
+        "gradient_norm": 0.2481161206960678,
+        "input_tokens": 215,
+        "loss": 0.13356426358222961,
+        "row_id": "train-number-world-005-near_control-cf-1",
+        "step": 98,
+        "supervised_positions": 215
+      },
+      {
+        "gradient_norm": 0.2476215809583664,
+        "input_tokens": 236,
+        "loss": 0.14170588552951813,
+        "row_id": "train-identifier-world-004-distant_heldout-cf-1",
+        "step": 99,
+        "supervised_positions": 236
+      },
+      {
+        "gradient_norm": 0.26318055391311646,
+        "input_tokens": 242,
+        "loss": 0.1334955394268036,
+        "row_id": "train-update-world-000-near_control-cf-0",
+        "step": 100,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.3099423348903656,
+        "input_tokens": 57,
+        "loss": 0.032894790172576904,
+        "row_id": "train-retention-conditional-world-000",
+        "step": 101,
+        "supervised_positions": 57
+      },
+      {
+        "gradient_norm": 0.2313314825296402,
+        "input_tokens": 233,
+        "loss": 0.1294645518064499,
+        "row_id": "train-missing-world-004-near_control-cf-1",
+        "step": 102,
+        "supervised_positions": 233
+      },
+      {
+        "gradient_norm": 0.2008078247308731,
+        "input_tokens": 62,
+        "loss": 0.025336360558867455,
+        "row_id": "train-retention-temporal-world-003",
+        "step": 103,
+        "supervised_positions": 62
+      },
+      {
+        "gradient_norm": 0.29126080870628357,
+        "input_tokens": 223,
+        "loss": 0.1593482792377472,
+        "row_id": "train-number-world-002-distant_heldout-cf-0",
+        "step": 104,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.2445678859949112,
+        "input_tokens": 216,
+        "loss": 0.14350491762161255,
+        "row_id": "train-number-world-005-distant_heldout-cf-0",
+        "step": 105,
+        "supervised_positions": 216
+      },
+      {
+        "gradient_norm": 0.30412623286247253,
+        "input_tokens": 245,
+        "loss": 0.13934800028800964,
+        "row_id": "train-update-world-007-near_control-cf-1",
+        "step": 106,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.24238444864749908,
+        "input_tokens": 217,
+        "loss": 0.12885835766792297,
+        "row_id": "train-number-world-007-near_control-cf-1",
+        "step": 107,
+        "supervised_positions": 217
+      },
+      {
+        "gradient_norm": 0.2185746133327484,
+        "input_tokens": 220,
+        "loss": 0.12585324048995972,
+        "row_id": "train-number-world-001-distant_heldout-cf-1",
+        "step": 108,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.190998837351799,
+        "input_tokens": 221,
+        "loss": 0.10881112515926361,
+        "row_id": "train-lookup-world-004-near_control-cf-1",
+        "step": 109,
+        "supervised_positions": 221
+      },
+      {
+        "gradient_norm": 0.23629650473594666,
+        "input_tokens": 227,
+        "loss": 0.1228184625506401,
+        "row_id": "train-identifier-world-005-near_control-cf-0",
+        "step": 110,
+        "supervised_positions": 227
+      },
+      {
+        "gradient_norm": 0.254838764667511,
+        "input_tokens": 243,
+        "loss": 0.1413649618625641,
+        "row_id": "train-join-world-007-distant_heldout-cf-1",
+        "step": 111,
+        "supervised_positions": 243
+      },
+      {
+        "gradient_norm": 0.2359396517276764,
+        "input_tokens": 225,
+        "loss": 0.13019199669361115,
+        "row_id": "train-number-world-004-distant_heldout-cf-1",
+        "step": 112,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.24649986624717712,
+        "input_tokens": 247,
+        "loss": 0.13516758382320404,
+        "row_id": "train-multiple_facts-world-003-near_control-cf-0",
+        "step": 113,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.27654796838760376,
+        "input_tokens": 256,
+        "loss": 0.1564950942993164,
+        "row_id": "train-join-world-004-distant_heldout-cf-0",
+        "step": 114,
+        "supervised_positions": 256
+      },
+      {
+        "gradient_norm": 0.19950659573078156,
+        "input_tokens": 225,
+        "loss": 0.11748966574668884,
+        "row_id": "train-number-world-003-near_control-cf-1",
+        "step": 115,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.26342302560806274,
+        "input_tokens": 236,
+        "loss": 0.1396798938512802,
+        "row_id": "train-missing-world-002-distant_heldout-cf-1",
+        "step": 116,
+        "supervised_positions": 236
+      },
+      {
+        "gradient_norm": 0.20248545706272125,
+        "input_tokens": 220,
+        "loss": 0.12915140390396118,
+        "row_id": "train-number-world-006-distant_heldout-cf-0",
+        "step": 117,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.23004156351089478,
+        "input_tokens": 242,
+        "loss": 0.12173988670110703,
+        "row_id": "train-multiple_facts-world-007-near_control-cf-0",
+        "step": 118,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.2609087824821472,
+        "input_tokens": 256,
+        "loss": 0.14839038252830505,
+        "row_id": "train-join-world-004-distant_heldout-cf-1",
+        "step": 119,
+        "supervised_positions": 256
+      },
+      {
+        "gradient_norm": 0.2557944059371948,
+        "input_tokens": 238,
+        "loss": 0.13937564194202423,
+        "row_id": "train-missing-world-000-near_control-cf-0",
+        "step": 120,
+        "supervised_positions": 238
+      },
+      {
+        "gradient_norm": 0.22442543506622314,
+        "input_tokens": 254,
+        "loss": 0.11323931813240051,
+        "row_id": "train-update-world-001-near_control-cf-0",
+        "step": 121,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.21898391842842102,
+        "input_tokens": 229,
+        "loss": 0.10579761862754822,
+        "row_id": "train-identifier-world-001-near_control-cf-1",
+        "step": 122,
+        "supervised_positions": 229
+      },
+      {
+        "gradient_norm": 0.22600878775119781,
+        "input_tokens": 224,
+        "loss": 0.11322038620710373,
+        "row_id": "train-number-world-003-near_control-cf-0",
+        "step": 123,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.254795104265213,
+        "input_tokens": 238,
+        "loss": 0.12273655831813812,
+        "row_id": "train-identifier-world-004-distant_heldout-cf-0",
+        "step": 124,
+        "supervised_positions": 238
+      },
+      {
+        "gradient_norm": 0.24099765717983246,
+        "input_tokens": 236,
+        "loss": 0.13185805082321167,
+        "row_id": "train-missing-world-000-distant_heldout-cf-1",
+        "step": 125,
+        "supervised_positions": 236
+      },
+      {
+        "gradient_norm": 0.21529479324817657,
+        "input_tokens": 225,
+        "loss": 0.11407427489757538,
+        "row_id": "train-number-world-004-near_control-cf-1",
+        "step": 126,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.20398223400115967,
+        "input_tokens": 223,
+        "loss": 0.12515659630298615,
+        "row_id": "train-number-world-000-distant_heldout-cf-1",
+        "step": 127,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.22550135850906372,
+        "input_tokens": 238,
+        "loss": 0.11628949642181396,
+        "row_id": "train-missing-world-005-near_control-cf-1",
+        "step": 128,
+        "supervised_positions": 238
+      },
+      {
+        "gradient_norm": 0.24585412442684174,
+        "input_tokens": 247,
+        "loss": 0.12798573076725006,
+        "row_id": "train-missing-world-003-near_control-cf-1",
+        "step": 129,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.2159162312746048,
+        "input_tokens": 55,
+        "loss": 0.028274521231651306,
+        "row_id": "train-retention-ordering-world-002",
+        "step": 130,
+        "supervised_positions": 55
+      },
+      {
+        "gradient_norm": 0.21483208239078522,
+        "input_tokens": 239,
+        "loss": 0.12418544292449951,
+        "row_id": "train-multiple_facts-world-002-distant_heldout-cf-0",
+        "step": 131,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.22033391892910004,
+        "input_tokens": 239,
+        "loss": 0.13964898884296417,
+        "row_id": "train-multiple_facts-world-000-distant_heldout-cf-1",
+        "step": 132,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.21825693547725677,
+        "input_tokens": 220,
+        "loss": 0.10973303020000458,
+        "row_id": "train-number-world-001-near_control-cf-1",
+        "step": 133,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.21829530596733093,
+        "input_tokens": 246,
+        "loss": 0.12078268080949783,
+        "row_id": "train-missing-world-001-near_control-cf-1",
+        "step": 134,
+        "supervised_positions": 246
+      },
+      {
+        "gradient_norm": 0.19514739513397217,
+        "input_tokens": 223,
+        "loss": 0.10666590929031372,
+        "row_id": "train-lookup-world-003-distant_heldout-cf-1",
+        "step": 135,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.24586720764636993,
+        "input_tokens": 247,
+        "loss": 0.11968417465686798,
+        "row_id": "train-update-world-002-distant_heldout-cf-0",
+        "step": 136,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.2803480923175812,
+        "input_tokens": 232,
+        "loss": 0.14500822126865387,
+        "row_id": "train-missing-world-007-distant_heldout-cf-0",
+        "step": 137,
+        "supervised_positions": 232
+      },
+      {
+        "gradient_norm": 0.23784708976745605,
+        "input_tokens": 244,
+        "loss": 0.11110557615756989,
+        "row_id": "train-multiple_facts-world-001-near_control-cf-1",
+        "step": 138,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.23341144621372223,
+        "input_tokens": 222,
+        "loss": 0.12214424461126328,
+        "row_id": "train-lookup-world-000-distant_heldout-cf-0",
+        "step": 139,
+        "supervised_positions": 222
+      },
+      {
+        "gradient_norm": 0.22573322057724,
+        "input_tokens": 233,
+        "loss": 0.11256994307041168,
+        "row_id": "train-multiple_facts-world-006-near_control-cf-1",
+        "step": 140,
+        "supervised_positions": 233
+      },
+      {
+        "gradient_norm": 0.2664957344532013,
+        "input_tokens": 225,
+        "loss": 0.1308128535747528,
+        "row_id": "train-identifier-world-007-distant_heldout-cf-0",
+        "step": 141,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.22728273272514343,
+        "input_tokens": 225,
+        "loss": 0.1120084673166275,
+        "row_id": "train-lookup-world-007-near_control-cf-1",
+        "step": 142,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.2200680375099182,
+        "input_tokens": 257,
+        "loss": 0.09467057138681412,
+        "row_id": "train-update-world-005-near_control-cf-0",
+        "step": 143,
+        "supervised_positions": 257
+      },
+      {
+        "gradient_norm": 0.23223407566547394,
+        "input_tokens": 236,
+        "loss": 0.10705988109111786,
+        "row_id": "train-identifier-world-004-near_control-cf-1",
+        "step": 144,
+        "supervised_positions": 236
+      },
+      {
+        "gradient_norm": 0.28571823239326477,
+        "input_tokens": 229,
+        "loss": 0.1250416487455368,
+        "row_id": "train-identifier-world-000-distant_heldout-cf-0",
+        "step": 145,
+        "supervised_positions": 229
+      },
+      {
+        "gradient_norm": 0.17723652720451355,
+        "input_tokens": 220,
+        "loss": 0.09249814599752426,
+        "row_id": "train-lookup-world-001-near_control-cf-0",
+        "step": 146,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.2973904013633728,
+        "input_tokens": 44,
+        "loss": 0.027956893667578697,
+        "row_id": "train-retention-arithmetic-world-002",
+        "step": 147,
+        "supervised_positions": 44
+      },
+      {
+        "gradient_norm": 0.25162556767463684,
+        "input_tokens": 235,
+        "loss": 0.11803293228149414,
+        "row_id": "train-identifier-world-003-distant_heldout-cf-1",
+        "step": 148,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.23895418643951416,
+        "input_tokens": 227,
+        "loss": 0.12276755273342133,
+        "row_id": "train-identifier-world-007-distant_heldout-cf-1",
+        "step": 149,
+        "supervised_positions": 227
+      },
+      {
+        "gradient_norm": 0.24307309091091156,
+        "input_tokens": 215,
+        "loss": 0.10703553259372711,
+        "row_id": "train-number-world-005-distant_heldout-cf-1",
+        "step": 150,
+        "supervised_positions": 215
+      },
+      {
+        "gradient_norm": 0.2305709272623062,
+        "input_tokens": 45,
+        "loss": 0.025119377300143242,
+        "row_id": "train-retention-boolean-world-001",
+        "step": 151,
+        "supervised_positions": 45
+      },
+      {
+        "gradient_norm": 0.23067373037338257,
+        "input_tokens": 56,
+        "loss": 0.02583228051662445,
+        "row_id": "train-retention-unit_conversion-world-000",
+        "step": 152,
+        "supervised_positions": 56
+      },
+      {
+        "gradient_norm": 0.22404712438583374,
+        "input_tokens": 222,
+        "loss": 0.10184338688850403,
+        "row_id": "train-number-world-002-near_control-cf-1",
+        "step": 153,
+        "supervised_positions": 222
+      },
+      {
+        "gradient_norm": 0.25327661633491516,
+        "input_tokens": 247,
+        "loss": 0.11472740024328232,
+        "row_id": "train-join-world-000-distant_heldout-cf-0",
+        "step": 154,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.22756247222423553,
+        "input_tokens": 247,
+        "loss": 0.11145809292793274,
+        "row_id": "train-missing-world-003-distant_heldout-cf-1",
+        "step": 155,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.2092370241880417,
+        "input_tokens": 225,
+        "loss": 0.09058545529842377,
+        "row_id": "train-number-world-004-near_control-cf-0",
+        "step": 156,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.20640169084072113,
+        "input_tokens": 51,
+        "loss": 0.026785587891936302,
+        "row_id": "train-retention-string_rule-world-000",
+        "step": 157,
+        "supervised_positions": 51
+      },
+      {
+        "gradient_norm": 0.22729629278182983,
+        "input_tokens": 220,
+        "loss": 0.09607632458209991,
+        "row_id": "train-number-world-006-near_control-cf-0",
+        "step": 158,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.23143331706523895,
+        "input_tokens": 241,
+        "loss": 0.09706275910139084,
+        "row_id": "train-join-world-002-near_control-cf-1",
+        "step": 159,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.23464304208755493,
+        "input_tokens": 239,
+        "loss": 0.0992962196469307,
+        "row_id": "train-multiple_facts-world-002-near_control-cf-0",
+        "step": 160,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.22978916764259338,
+        "input_tokens": 244,
+        "loss": 0.11873742192983627,
+        "row_id": "train-join-world-001-distant_heldout-cf-0",
+        "step": 161,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.2131204903125763,
+        "input_tokens": 218,
+        "loss": 0.1000291034579277,
+        "row_id": "train-number-world-007-near_control-cf-0",
+        "step": 162,
+        "supervised_positions": 218
+      },
+      {
+        "gradient_norm": 0.1829063445329666,
+        "input_tokens": 49,
+        "loss": 0.024441305547952652,
+        "row_id": "train-retention-string_rule-world-002",
+        "step": 163,
+        "supervised_positions": 49
+      },
+      {
+        "gradient_norm": 0.2258904129266739,
+        "input_tokens": 229,
+        "loss": 0.09971798956394196,
+        "row_id": "train-identifier-world-001-distant_heldout-cf-1",
+        "step": 164,
+        "supervised_positions": 229
+      },
+      {
+        "gradient_norm": 0.19272689521312714,
+        "input_tokens": 235,
+        "loss": 0.09294118732213974,
+        "row_id": "train-identifier-world-003-near_control-cf-0",
+        "step": 165,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.21057327091693878,
+        "input_tokens": 244,
+        "loss": 0.09674201160669327,
+        "row_id": "train-join-world-001-near_control-cf-1",
+        "step": 166,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.22508253157138824,
+        "input_tokens": 254,
+        "loss": 0.10852666944265366,
+        "row_id": "train-update-world-001-distant_heldout-cf-1",
+        "step": 167,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.2779167592525482,
+        "input_tokens": 225,
+        "loss": 0.09614657610654831,
+        "row_id": "train-lookup-world-002-near_control-cf-0",
+        "step": 168,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.2548811435699463,
+        "input_tokens": 235,
+        "loss": 0.0817587822675705,
+        "row_id": "train-identifier-world-002-near_control-cf-0",
+        "step": 169,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.15152610838413239,
+        "input_tokens": 45,
+        "loss": 0.019775671884417534,
+        "row_id": "train-retention-boolean-world-000",
+        "step": 170,
+        "supervised_positions": 45
+      },
+      {
+        "gradient_norm": 0.21198683977127075,
+        "input_tokens": 235,
+        "loss": 0.09920070320367813,
+        "row_id": "train-identifier-world-002-distant_heldout-cf-0",
+        "step": 171,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.20493155717849731,
+        "input_tokens": 246,
+        "loss": 0.10426682233810425,
+        "row_id": "train-missing-world-001-distant_heldout-cf-1",
+        "step": 172,
+        "supervised_positions": 246
+      },
+      {
+        "gradient_norm": 0.224370077252388,
+        "input_tokens": 254,
+        "loss": 0.0940307155251503,
+        "row_id": "train-update-world-006-near_control-cf-0",
+        "step": 173,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.2525796890258789,
+        "input_tokens": 239,
+        "loss": 0.10485756397247314,
+        "row_id": "train-multiple_facts-world-000-near_control-cf-1",
+        "step": 174,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.27581319212913513,
+        "input_tokens": 230,
+        "loss": 0.1133337989449501,
+        "row_id": "train-missing-world-007-distant_heldout-cf-1",
+        "step": 175,
+        "supervised_positions": 230
+      },
+      {
+        "gradient_norm": 0.20107650756835938,
+        "input_tokens": 247,
+        "loss": 0.10984044522047043,
+        "row_id": "train-multiple_facts-world-003-distant_heldout-cf-1",
+        "step": 176,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.2335180938243866,
+        "input_tokens": 223,
+        "loss": 0.09094938635826111,
+        "row_id": "train-lookup-world-003-near_control-cf-1",
+        "step": 177,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.21245063841342926,
+        "input_tokens": 247,
+        "loss": 0.08250238001346588,
+        "row_id": "train-update-world-002-near_control-cf-0",
+        "step": 178,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.20258383452892303,
+        "input_tokens": 254,
+        "loss": 0.11047089099884033,
+        "row_id": "train-update-world-006-distant_heldout-cf-1",
+        "step": 179,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.21749110519886017,
+        "input_tokens": 233,
+        "loss": 0.10089728236198425,
+        "row_id": "train-multiple_facts-world-006-distant_heldout-cf-0",
+        "step": 180,
+        "supervised_positions": 233
+      },
+      {
+        "gradient_norm": 0.22430264949798584,
+        "input_tokens": 57,
+        "loss": 0.024904992431402206,
+        "row_id": "train-retention-conditional-world-001",
+        "step": 181,
+        "supervised_positions": 57
+      },
+      {
+        "gradient_norm": 0.18764720857143402,
+        "input_tokens": 219,
+        "loss": 0.08160711079835892,
+        "row_id": "train-lookup-world-006-near_control-cf-1",
+        "step": 182,
+        "supervised_positions": 219
+      },
+      {
+        "gradient_norm": 0.22953614592552185,
+        "input_tokens": 43,
+        "loss": 0.021025093272328377,
+        "row_id": "train-retention-arithmetic-world-000",
+        "step": 183,
+        "supervised_positions": 43
+      },
+      {
+        "gradient_norm": 0.1653047800064087,
+        "input_tokens": 62,
+        "loss": 0.021494532003998756,
+        "row_id": "train-retention-temporal-world-001",
+        "step": 184,
+        "supervised_positions": 62
+      },
+      {
+        "gradient_norm": 0.20966768264770508,
+        "input_tokens": 242,
+        "loss": 0.08808435499668121,
+        "row_id": "train-update-world-000-near_control-cf-1",
+        "step": 185,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.22238120436668396,
+        "input_tokens": 241,
+        "loss": 0.0820283591747284,
+        "row_id": "train-update-world-004-near_control-cf-0",
+        "step": 186,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.2511582374572754,
+        "input_tokens": 239,
+        "loss": 0.11062532663345337,
+        "row_id": "train-join-world-006-distant_heldout-cf-1",
+        "step": 187,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.15916690230369568,
+        "input_tokens": 57,
+        "loss": 0.02118529938161373,
+        "row_id": "train-retention-ordering-world-003",
+        "step": 188,
+        "supervised_positions": 57
+      },
+      {
+        "gradient_norm": 0.19694733619689941,
+        "input_tokens": 55,
+        "loss": 0.024750404059886932,
+        "row_id": "train-retention-conditional-world-003",
+        "step": 189,
+        "supervised_positions": 55
+      },
+      {
+        "gradient_norm": 0.20595034956932068,
+        "input_tokens": 241,
+        "loss": 0.09437602758407593,
+        "row_id": "train-update-world-004-distant_heldout-cf-1",
+        "step": 190,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.2549669146537781,
+        "input_tokens": 225,
+        "loss": 0.0884326621890068,
+        "row_id": "train-lookup-world-002-near_control-cf-1",
+        "step": 191,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.2163463979959488,
+        "input_tokens": 218,
+        "loss": 0.09667927026748657,
+        "row_id": "train-number-world-007-distant_heldout-cf-0",
+        "step": 192,
+        "supervised_positions": 218
+      },
+      {
+        "gradient_norm": 0.16870267689228058,
+        "input_tokens": 42,
+        "loss": 0.017434438690543175,
+        "row_id": "train-retention-arithmetic-world-001",
+        "step": 193,
+        "supervised_positions": 42
+      },
+      {
+        "gradient_norm": 0.1902812123298645,
+        "input_tokens": 247,
+        "loss": 0.1008305698633194,
+        "row_id": "train-multiple_facts-world-003-distant_heldout-cf-0",
+        "step": 194,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.19864192605018616,
+        "input_tokens": 239,
+        "loss": 0.0831068903207779,
+        "row_id": "train-multiple_facts-world-005-near_control-cf-1",
+        "step": 195,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.25318729877471924,
+        "input_tokens": 246,
+        "loss": 0.11248651891946793,
+        "row_id": "train-missing-world-006-distant_heldout-cf-0",
+        "step": 196,
+        "supervised_positions": 246
+      },
+      {
+        "gradient_norm": 0.22514931857585907,
+        "input_tokens": 224,
+        "loss": 0.07806502282619476,
+        "row_id": "train-lookup-world-005-near_control-cf-1",
+        "step": 197,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.1903759092092514,
+        "input_tokens": 245,
+        "loss": 0.09221111238002777,
+        "row_id": "train-update-world-007-distant_heldout-cf-0",
+        "step": 198,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.12699182331562042,
+        "input_tokens": 57,
+        "loss": 0.02005535177886486,
+        "row_id": "train-retention-ordering-world-000",
+        "step": 199,
+        "supervised_positions": 57
+      },
+      {
+        "gradient_norm": 0.17262478172779083,
+        "input_tokens": 242,
+        "loss": 0.09016275405883789,
+        "row_id": "train-update-world-000-distant_heldout-cf-0",
+        "step": 200,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.20592579245567322,
+        "input_tokens": 239,
+        "loss": 0.08781720697879791,
+        "row_id": "train-join-world-006-near_control-cf-0",
+        "step": 201,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.20756559073925018,
+        "input_tokens": 246,
+        "loss": 0.09512383490800858,
+        "row_id": "train-missing-world-006-near_control-cf-0",
+        "step": 202,
+        "supervised_positions": 246
+      },
+      {
+        "gradient_norm": 0.20556291937828064,
+        "input_tokens": 73,
+        "loss": 0.026737365871667862,
+        "row_id": "train-retention-short_table-world-000",
+        "step": 203,
+        "supervised_positions": 73
+      },
+      {
+        "gradient_norm": 0.23913244903087616,
+        "input_tokens": 244,
+        "loss": 0.09011833369731903,
+        "row_id": "train-multiple_facts-world-004-near_control-cf-0",
+        "step": 204,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.27057746052742004,
+        "input_tokens": 231,
+        "loss": 0.09833519160747528,
+        "row_id": "train-identifier-world-000-near_control-cf-1",
+        "step": 205,
+        "supervised_positions": 231
+      },
+      {
+        "gradient_norm": 0.18044544756412506,
+        "input_tokens": 220,
+        "loss": 0.08298946917057037,
+        "row_id": "train-lookup-world-001-distant_heldout-cf-0",
+        "step": 206,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.22566331923007965,
+        "input_tokens": 241,
+        "loss": 0.10076101124286652,
+        "row_id": "train-missing-world-005-distant_heldout-cf-0",
+        "step": 207,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.19611182808876038,
+        "input_tokens": 75,
+        "loss": 0.024484241381287575,
+        "row_id": "train-retention-short_table-world-003",
+        "step": 208,
+        "supervised_positions": 75
+      },
+      {
+        "gradient_norm": 0.22716763615608215,
+        "input_tokens": 225,
+        "loss": 0.08752106875181198,
+        "row_id": "train-number-world-003-distant_heldout-cf-1",
+        "step": 209,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.12377830594778061,
+        "input_tokens": 55,
+        "loss": 0.018128354102373123,
+        "row_id": "train-retention-ordering-world-001",
+        "step": 210,
+        "supervised_positions": 55
+      },
+      {
+        "gradient_norm": 0.21269643306732178,
+        "input_tokens": 239,
+        "loss": 0.09196177124977112,
+        "row_id": "train-multiple_facts-world-002-distant_heldout-cf-1",
+        "step": 211,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.20771504938602448,
+        "input_tokens": 220,
+        "loss": 0.0800192579627037,
+        "row_id": "train-number-world-006-near_control-cf-1",
+        "step": 212,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.32110828161239624,
+        "input_tokens": 245,
+        "loss": 0.1183554157614708,
+        "row_id": "train-join-world-003-distant_heldout-cf-0",
+        "step": 213,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.16434384882450104,
+        "input_tokens": 223,
+        "loss": 0.07664081454277039,
+        "row_id": "train-lookup-world-003-distant_heldout-cf-0",
+        "step": 214,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.19001562893390656,
+        "input_tokens": 225,
+        "loss": 0.07807706296443939,
+        "row_id": "train-lookup-world-007-near_control-cf-0",
+        "step": 215,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.1773906797170639,
+        "input_tokens": 245,
+        "loss": 0.08949089795351028,
+        "row_id": "train-update-world-007-distant_heldout-cf-1",
+        "step": 216,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.23043136298656464,
+        "input_tokens": 225,
+        "loss": 0.08795114606618881,
+        "row_id": "train-lookup-world-002-distant_heldout-cf-1",
+        "step": 217,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.1752455085515976,
+        "input_tokens": 224,
+        "loss": 0.07544901967048645,
+        "row_id": "train-lookup-world-005-distant_heldout-cf-1",
+        "step": 218,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.17576347291469574,
+        "input_tokens": 223,
+        "loss": 0.08572667837142944,
+        "row_id": "train-number-world-000-distant_heldout-cf-0",
+        "step": 219,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.19607491791248322,
+        "input_tokens": 238,
+        "loss": 0.08520910888910294,
+        "row_id": "train-missing-world-005-distant_heldout-cf-1",
+        "step": 220,
+        "supervised_positions": 238
+      },
+      {
+        "gradient_norm": 0.22574765980243683,
+        "input_tokens": 233,
+        "loss": 0.08929727226495743,
+        "row_id": "train-multiple_facts-world-006-distant_heldout-cf-1",
+        "step": 221,
+        "supervised_positions": 233
+      },
+      {
+        "gradient_norm": 0.17797225713729858,
+        "input_tokens": 236,
+        "loss": 0.07522038370370865,
+        "row_id": "train-missing-world-002-near_control-cf-1",
+        "step": 222,
+        "supervised_positions": 236
+      },
+      {
+        "gradient_norm": 0.22540012001991272,
+        "input_tokens": 222,
+        "loss": 0.08102599531412125,
+        "row_id": "train-lookup-world-000-near_control-cf-0",
+        "step": 223,
+        "supervised_positions": 222
+      },
+      {
+        "gradient_norm": 0.20960237085819244,
+        "input_tokens": 259,
+        "loss": 0.08415830880403519,
+        "row_id": "train-update-world-003-near_control-cf-1",
+        "step": 224,
+        "supervised_positions": 259
+      },
+      {
+        "gradient_norm": 0.2259291410446167,
+        "input_tokens": 247,
+        "loss": 0.09402964264154434,
+        "row_id": "train-join-world-005-distant_heldout-cf-1",
+        "step": 225,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.1790781319141388,
+        "input_tokens": 254,
+        "loss": 0.09579034894704819,
+        "row_id": "train-update-world-006-distant_heldout-cf-0",
+        "step": 226,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.15484561026096344,
+        "input_tokens": 244,
+        "loss": 0.08835046738386154,
+        "row_id": "train-multiple_facts-world-004-distant_heldout-cf-1",
+        "step": 227,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.1858167201280594,
+        "input_tokens": 216,
+        "loss": 0.07241368293762207,
+        "row_id": "train-number-world-005-near_control-cf-0",
+        "step": 228,
+        "supervised_positions": 216
+      },
+      {
+        "gradient_norm": 0.23096738755702972,
+        "input_tokens": 247,
+        "loss": 0.0868137925863266,
+        "row_id": "train-join-world-000-near_control-cf-1",
+        "step": 229,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.22302643954753876,
+        "input_tokens": 231,
+        "loss": 0.08666476607322693,
+        "row_id": "train-identifier-world-000-distant_heldout-cf-1",
+        "step": 230,
+        "supervised_positions": 231
+      },
+      {
+        "gradient_norm": 0.21240150928497314,
+        "input_tokens": 223,
+        "loss": 0.083639957010746,
+        "row_id": "train-number-world-002-near_control-cf-0",
+        "step": 231,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.2155458927154541,
+        "input_tokens": 220,
+        "loss": 0.07305459678173065,
+        "row_id": "train-number-world-001-near_control-cf-0",
+        "step": 232,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.2042759358882904,
+        "input_tokens": 247,
+        "loss": 0.08469923585653305,
+        "row_id": "train-join-world-000-near_control-cf-0",
+        "step": 233,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.20283184945583344,
+        "input_tokens": 221,
+        "loss": 0.07793781161308289,
+        "row_id": "train-lookup-world-004-distant_heldout-cf-0",
+        "step": 234,
+        "supervised_positions": 221
+      },
+      {
+        "gradient_norm": 0.13461193442344666,
+        "input_tokens": 45,
+        "loss": 0.01568470522761345,
+        "row_id": "train-retention-boolean-world-002",
+        "step": 235,
+        "supervised_positions": 45
+      },
+      {
+        "gradient_norm": 0.19040755927562714,
+        "input_tokens": 247,
+        "loss": 0.07013829797506332,
+        "row_id": "train-update-world-002-near_control-cf-1",
+        "step": 236,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.1875922977924347,
+        "input_tokens": 227,
+        "loss": 0.07083466649055481,
+        "row_id": "train-identifier-world-007-near_control-cf-1",
+        "step": 237,
+        "supervised_positions": 227
+      },
+      {
+        "gradient_norm": 0.1357952356338501,
+        "input_tokens": 45,
+        "loss": 0.015422355383634567,
+        "row_id": "train-retention-boolean-world-003",
+        "step": 238,
+        "supervised_positions": 45
+      },
+      {
+        "gradient_norm": 0.16553950309753418,
+        "input_tokens": 243,
+        "loss": 0.07111696153879166,
+        "row_id": "train-join-world-007-near_control-cf-0",
+        "step": 239,
+        "supervised_positions": 243
+      },
+      {
+        "gradient_norm": 0.17995202541351318,
+        "input_tokens": 241,
+        "loss": 0.07100137323141098,
+        "row_id": "train-missing-world-005-near_control-cf-0",
+        "step": 240,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.23079602420330048,
+        "input_tokens": 225,
+        "loss": 0.08755360543727875,
+        "row_id": "train-lookup-world-007-distant_heldout-cf-1",
+        "step": 241,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.17997878789901733,
+        "input_tokens": 220,
+        "loss": 0.08050059527158737,
+        "row_id": "train-number-world-006-distant_heldout-cf-1",
+        "step": 242,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.19029125571250916,
+        "input_tokens": 239,
+        "loss": 0.08590223640203476,
+        "row_id": "train-multiple_facts-world-005-distant_heldout-cf-0",
+        "step": 243,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.1896704137325287,
+        "input_tokens": 224,
+        "loss": 0.07619365304708481,
+        "row_id": "train-number-world-003-distant_heldout-cf-0",
+        "step": 244,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.20953796803951263,
+        "input_tokens": 249,
+        "loss": 0.09168731421232224,
+        "row_id": "train-missing-world-001-distant_heldout-cf-0",
+        "step": 245,
+        "supervised_positions": 249
+      },
+      {
+        "gradient_norm": 0.18299998342990875,
+        "input_tokens": 229,
+        "loss": 0.07977532595396042,
+        "row_id": "train-identifier-world-001-distant_heldout-cf-0",
+        "step": 246,
+        "supervised_positions": 229
+      },
+      {
+        "gradient_norm": 0.2436744123697281,
+        "input_tokens": 247,
+        "loss": 0.08928247541189194,
+        "row_id": "train-join-world-005-distant_heldout-cf-0",
+        "step": 247,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.22346727550029755,
+        "input_tokens": 223,
+        "loss": 0.07285478711128235,
+        "row_id": "train-lookup-world-003-near_control-cf-0",
+        "step": 248,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.18452374637126923,
+        "input_tokens": 75,
+        "loss": 0.022431259974837303,
+        "row_id": "train-retention-short_table-world-001",
+        "step": 249,
+        "supervised_positions": 75
+      },
+      {
+        "gradient_norm": 0.1941784769296646,
+        "input_tokens": 243,
+        "loss": 0.08208461105823517,
+        "row_id": "train-join-world-007-distant_heldout-cf-0",
+        "step": 250,
+        "supervised_positions": 243
+      },
+      {
+        "gradient_norm": 0.2425146996974945,
+        "input_tokens": 220,
+        "loss": 0.07474569976329803,
+        "row_id": "train-lookup-world-001-distant_heldout-cf-1",
+        "step": 251,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.16241908073425293,
+        "input_tokens": 243,
+        "loss": 0.0654582753777504,
+        "row_id": "train-join-world-007-near_control-cf-1",
+        "step": 252,
+        "supervised_positions": 243
+      },
+      {
+        "gradient_norm": 0.1202063336968422,
+        "input_tokens": 62,
+        "loss": 0.017498914152383804,
+        "row_id": "train-retention-temporal-world-000",
+        "step": 253,
+        "supervised_positions": 62
+      },
+      {
+        "gradient_norm": 0.17589503526687622,
+        "input_tokens": 225,
+        "loss": 0.07186509668827057,
+        "row_id": "train-number-world-004-distant_heldout-cf-0",
+        "step": 254,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.16375520825386047,
+        "input_tokens": 244,
+        "loss": 0.09034053236246109,
+        "row_id": "train-multiple_facts-world-004-distant_heldout-cf-0",
+        "step": 255,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.1919194757938385,
+        "input_tokens": 238,
+        "loss": 0.06941666454076767,
+        "row_id": "train-identifier-world-004-near_control-cf-0",
+        "step": 256,
+        "supervised_positions": 238
+      },
+      {
+        "gradient_norm": 0.2085251659154892,
+        "input_tokens": 227,
+        "loss": 0.07514969259500504,
+        "row_id": "train-identifier-world-005-distant_heldout-cf-1",
+        "step": 257,
+        "supervised_positions": 227
+      },
+      {
+        "gradient_norm": 0.22015973925590515,
+        "input_tokens": 239,
+        "loss": 0.09489908814430237,
+        "row_id": "train-multiple_facts-world-000-distant_heldout-cf-0",
+        "step": 258,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.150566965341568,
+        "input_tokens": 242,
+        "loss": 0.07889258116483688,
+        "row_id": "train-multiple_facts-world-007-distant_heldout-cf-0",
+        "step": 259,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.1808996945619583,
+        "input_tokens": 239,
+        "loss": 0.07935671508312225,
+        "row_id": "train-multiple_facts-world-000-near_control-cf-0",
+        "step": 260,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.23664823174476624,
+        "input_tokens": 235,
+        "loss": 0.06489398330450058,
+        "row_id": "train-missing-world-004-near_control-cf-0",
+        "step": 261,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.25215011835098267,
+        "input_tokens": 222,
+        "loss": 0.07449135929346085,
+        "row_id": "train-lookup-world-000-near_control-cf-1",
+        "step": 262,
+        "supervised_positions": 222
+      },
+      {
+        "gradient_norm": 0.20843733847141266,
+        "input_tokens": 244,
+        "loss": 0.07504760473966599,
+        "row_id": "train-multiple_facts-world-001-near_control-cf-0",
+        "step": 263,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.21559929847717285,
+        "input_tokens": 243,
+        "loss": 0.08290944248437881,
+        "row_id": "train-missing-world-006-distant_heldout-cf-1",
+        "step": 264,
+        "supervised_positions": 243
+      },
+      {
+        "gradient_norm": 0.19200502336025238,
+        "input_tokens": 242,
+        "loss": 0.06808585673570633,
+        "row_id": "train-multiple_facts-world-007-near_control-cf-1",
+        "step": 265,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.17651650309562683,
+        "input_tokens": 235,
+        "loss": 0.07827524095773697,
+        "row_id": "train-identifier-world-002-distant_heldout-cf-1",
+        "step": 266,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.2023060917854309,
+        "input_tokens": 241,
+        "loss": 0.07367542386054993,
+        "row_id": "train-join-world-002-near_control-cf-0",
+        "step": 267,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.2065415382385254,
+        "input_tokens": 232,
+        "loss": 0.0732756108045578,
+        "row_id": "train-missing-world-007-near_control-cf-0",
+        "step": 268,
+        "supervised_positions": 232
+      },
+      {
+        "gradient_norm": 0.23824553191661835,
+        "input_tokens": 239,
+        "loss": 0.08889984339475632,
+        "row_id": "train-join-world-006-distant_heldout-cf-0",
+        "step": 269,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.2278566211462021,
+        "input_tokens": 220,
+        "loss": 0.060438141226768494,
+        "row_id": "train-lookup-world-001-near_control-cf-1",
+        "step": 270,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.22887708246707916,
+        "input_tokens": 235,
+        "loss": 0.08370878547430038,
+        "row_id": "train-identifier-world-003-distant_heldout-cf-0",
+        "step": 271,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.16545642912387848,
+        "input_tokens": 242,
+        "loss": 0.07570020854473114,
+        "row_id": "train-update-world-000-distant_heldout-cf-1",
+        "step": 272,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.1857602298259735,
+        "input_tokens": 230,
+        "loss": 0.0716233104467392,
+        "row_id": "train-missing-world-007-near_control-cf-1",
+        "step": 273,
+        "supervised_positions": 230
+      },
+      {
+        "gradient_norm": 0.19262729585170746,
+        "input_tokens": 229,
+        "loss": 0.06420489400625229,
+        "row_id": "train-identifier-world-001-near_control-cf-0",
+        "step": 274,
+        "supervised_positions": 229
+      },
+      {
+        "gradient_norm": 0.197602316737175,
+        "input_tokens": 233,
+        "loss": 0.07116495817899704,
+        "row_id": "train-multiple_facts-world-006-near_control-cf-0",
+        "step": 275,
+        "supervised_positions": 233
+      },
+      {
+        "gradient_norm": 0.1850075125694275,
+        "input_tokens": 247,
+        "loss": 0.07891307026147842,
+        "row_id": "train-join-world-000-distant_heldout-cf-1",
+        "step": 276,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.2256614863872528,
+        "input_tokens": 222,
+        "loss": 0.08009715378284454,
+        "row_id": "train-lookup-world-000-distant_heldout-cf-1",
+        "step": 277,
+        "supervised_positions": 222
+      },
+      {
+        "gradient_norm": 0.25435206294059753,
+        "input_tokens": 249,
+        "loss": 0.07065228372812271,
+        "row_id": "train-missing-world-001-near_control-cf-0",
+        "step": 278,
+        "supervised_positions": 249
+      },
+      {
+        "gradient_norm": 0.18961159884929657,
+        "input_tokens": 239,
+        "loss": 0.06652893871068954,
+        "row_id": "train-multiple_facts-world-005-near_control-cf-0",
+        "step": 279,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.20631109178066254,
+        "input_tokens": 241,
+        "loss": 0.06324312090873718,
+        "row_id": "train-update-world-004-near_control-cf-1",
+        "step": 280,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.17538462579250336,
+        "input_tokens": 239,
+        "loss": 0.07958544045686722,
+        "row_id": "train-multiple_facts-world-005-distant_heldout-cf-1",
+        "step": 281,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.21722294390201569,
+        "input_tokens": 222,
+        "loss": 0.0756344199180603,
+        "row_id": "train-number-world-002-distant_heldout-cf-1",
+        "step": 282,
+        "supervised_positions": 222
+      },
+      {
+        "gradient_norm": 0.26229116320610046,
+        "input_tokens": 259,
+        "loss": 0.08188653737306595,
+        "row_id": "train-update-world-003-distant_heldout-cf-1",
+        "step": 283,
+        "supervised_positions": 259
+      },
+      {
+        "gradient_norm": 0.27919280529022217,
+        "input_tokens": 223,
+        "loss": 0.06669122725725174,
+        "row_id": "train-number-world-000-near_control-cf-0",
+        "step": 284,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.19320213794708252,
+        "input_tokens": 244,
+        "loss": 0.07697033882141113,
+        "row_id": "train-multiple_facts-world-001-distant_heldout-cf-1",
+        "step": 285,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.22680264711380005,
+        "input_tokens": 45,
+        "loss": 0.017808059230446815,
+        "row_id": "train-retention-arithmetic-world-003",
+        "step": 286,
+        "supervised_positions": 45
+      },
+      {
+        "gradient_norm": 0.1711011677980423,
+        "input_tokens": 224,
+        "loss": 0.06706690788269043,
+        "row_id": "train-lookup-world-005-distant_heldout-cf-0",
+        "step": 287,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.2309412807226181,
+        "input_tokens": 244,
+        "loss": 0.07340846210718155,
+        "row_id": "train-multiple_facts-world-004-near_control-cf-1",
+        "step": 288,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.18451732397079468,
+        "input_tokens": 219,
+        "loss": 0.06188773363828659,
+        "row_id": "train-lookup-world-006-near_control-cf-0",
+        "step": 289,
+        "supervised_positions": 219
+      },
+      {
+        "gradient_norm": 0.22019648551940918,
+        "input_tokens": 221,
+        "loss": 0.07177734375,
+        "row_id": "train-lookup-world-004-distant_heldout-cf-1",
+        "step": 290,
+        "supervised_positions": 221
+      },
+      {
+        "gradient_norm": 0.19902698695659637,
+        "input_tokens": 247,
+        "loss": 0.07769034057855606,
+        "row_id": "train-update-world-002-distant_heldout-cf-1",
+        "step": 291,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.18166224658489227,
+        "input_tokens": 241,
+        "loss": 0.07872278243303299,
+        "row_id": "train-update-world-004-distant_heldout-cf-0",
+        "step": 292,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.13447199761867523,
+        "input_tokens": 62,
+        "loss": 0.019024169072508812,
+        "row_id": "train-retention-temporal-world-002",
+        "step": 293,
+        "supervised_positions": 62
+      },
+      {
+        "gradient_norm": 0.18982917070388794,
+        "input_tokens": 56,
+        "loss": 0.01848171092569828,
+        "row_id": "train-retention-conditional-world-002",
+        "step": 294,
+        "supervised_positions": 56
+      },
+      {
+        "gradient_norm": 0.17962594330310822,
+        "input_tokens": 239,
+        "loss": 0.06059335917234421,
+        "row_id": "train-missing-world-002-near_control-cf-0",
+        "step": 295,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.15329109132289886,
+        "input_tokens": 50,
+        "loss": 0.0172047708183527,
+        "row_id": "train-retention-string_rule-world-003",
+        "step": 296,
+        "supervised_positions": 50
+      },
+      {
+        "gradient_norm": 0.19718019664287567,
+        "input_tokens": 254,
+        "loss": 0.06538988649845123,
+        "row_id": "train-update-world-001-near_control-cf-1",
+        "step": 297,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.18777652084827423,
+        "input_tokens": 73,
+        "loss": 0.022188125178217888,
+        "row_id": "train-retention-short_table-world-002",
+        "step": 298,
+        "supervised_positions": 73
+      },
+      {
+        "gradient_norm": 0.21443648636341095,
+        "input_tokens": 224,
+        "loss": 0.06415359675884247,
+        "row_id": "train-identifier-world-006-near_control-cf-1",
+        "step": 299,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.21431367099285126,
+        "input_tokens": 249,
+        "loss": 0.07183142006397247,
+        "row_id": "train-missing-world-003-near_control-cf-0",
+        "step": 300,
+        "supervised_positions": 249
+      },
+      {
+        "gradient_norm": 0.30614906549453735,
+        "input_tokens": 245,
+        "loss": 0.08484572172164917,
+        "row_id": "train-join-world-003-near_control-cf-1",
+        "step": 301,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.18665984272956848,
+        "input_tokens": 224,
+        "loss": 0.07114480435848236,
+        "row_id": "train-identifier-world-006-distant_heldout-cf-1",
+        "step": 302,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.12853193283081055,
+        "input_tokens": 56,
+        "loss": 0.01569328084588051,
+        "row_id": "train-retention-unit_conversion-world-002",
+        "step": 303,
+        "supervised_positions": 56
+      },
+      {
+        "gradient_norm": 0.20739814639091492,
+        "input_tokens": 225,
+        "loss": 0.07288295775651932,
+        "row_id": "train-lookup-world-002-distant_heldout-cf-0",
+        "step": 304,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.20436666905879974,
+        "input_tokens": 238,
+        "loss": 0.08038505911827087,
+        "row_id": "train-missing-world-000-distant_heldout-cf-0",
+        "step": 305,
+        "supervised_positions": 238
+      },
+      {
+        "gradient_norm": 0.20290683209896088,
+        "input_tokens": 225,
+        "loss": 0.061321914196014404,
+        "row_id": "train-identifier-world-007-near_control-cf-0",
+        "step": 306,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.23482435941696167,
+        "input_tokens": 236,
+        "loss": 0.07426652312278748,
+        "row_id": "train-missing-world-000-near_control-cf-1",
+        "step": 307,
+        "supervised_positions": 236
+      },
+      {
+        "gradient_norm": 0.1846797913312912,
+        "input_tokens": 220,
+        "loss": 0.06224200502038002,
+        "row_id": "train-number-world-001-distant_heldout-cf-0",
+        "step": 308,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.181972473859787,
+        "input_tokens": 247,
+        "loss": 0.06600351631641388,
+        "row_id": "train-join-world-005-near_control-cf-0",
+        "step": 309,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.2079460471868515,
+        "input_tokens": 235,
+        "loss": 0.05388225242495537,
+        "row_id": "train-identifier-world-002-near_control-cf-1",
+        "step": 310,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.1867898851633072,
+        "input_tokens": 239,
+        "loss": 0.0673505887389183,
+        "row_id": "train-join-world-006-near_control-cf-1",
+        "step": 311,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.14096474647521973,
+        "input_tokens": 221,
+        "loss": 0.05049962177872658,
+        "row_id": "train-lookup-world-004-near_control-cf-0",
+        "step": 312,
+        "supervised_positions": 221
+      },
+      {
+        "gradient_norm": 0.1868191659450531,
+        "input_tokens": 249,
+        "loss": 0.08487087488174438,
+        "row_id": "train-missing-world-003-distant_heldout-cf-0",
+        "step": 313,
+        "supervised_positions": 249
+      },
+      {
+        "gradient_norm": 0.16668330132961273,
+        "input_tokens": 257,
+        "loss": 0.05728666111826897,
+        "row_id": "train-update-world-005-near_control-cf-1",
+        "step": 314,
+        "supervised_positions": 257
+      },
+      {
+        "gradient_norm": 0.17379234731197357,
+        "input_tokens": 247,
+        "loss": 0.0687386691570282,
+        "row_id": "train-multiple_facts-world-003-near_control-cf-1",
+        "step": 315,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.16245433688163757,
+        "input_tokens": 233,
+        "loss": 0.06147383525967598,
+        "row_id": "train-missing-world-004-distant_heldout-cf-1",
+        "step": 316,
+        "supervised_positions": 233
+      },
+      {
+        "gradient_norm": 0.20906779170036316,
+        "input_tokens": 241,
+        "loss": 0.07681337743997574,
+        "row_id": "train-join-world-002-distant_heldout-cf-1",
+        "step": 317,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.16761182248592377,
+        "input_tokens": 257,
+        "loss": 0.06832099705934525,
+        "row_id": "train-update-world-005-distant_heldout-cf-1",
+        "step": 318,
+        "supervised_positions": 257
+      },
+      {
+        "gradient_norm": 0.22491218149662018,
+        "input_tokens": 244,
+        "loss": 0.07719417661428452,
+        "row_id": "train-multiple_facts-world-001-distant_heldout-cf-0",
+        "step": 319,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.19744952023029327,
+        "input_tokens": 259,
+        "loss": 0.06706344336271286,
+        "row_id": "train-update-world-003-near_control-cf-0",
+        "step": 320,
+        "supervised_positions": 259
+      },
+      {
+        "gradient_norm": 0.19154617190361023,
+        "input_tokens": 244,
+        "loss": 0.07966992259025574,
+        "row_id": "train-join-world-001-distant_heldout-cf-1",
+        "step": 321,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.2767884433269501,
+        "input_tokens": 245,
+        "loss": 0.09321898967027664,
+        "row_id": "train-join-world-003-distant_heldout-cf-1",
+        "step": 322,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.11346476525068283,
+        "input_tokens": 49,
+        "loss": 0.013867925852537155,
+        "row_id": "train-retention-string_rule-world-001",
+        "step": 323,
+        "supervised_positions": 49
+      },
+      {
+        "gradient_norm": 0.18625508248806,
+        "input_tokens": 247,
+        "loss": 0.0625859946012497,
+        "row_id": "train-join-world-005-near_control-cf-1",
+        "step": 324,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.20688559114933014,
+        "input_tokens": 227,
+        "loss": 0.07234936207532883,
+        "row_id": "train-identifier-world-005-distant_heldout-cf-0",
+        "step": 325,
+        "supervised_positions": 227
+      },
+      {
+        "gradient_norm": 0.17030954360961914,
+        "input_tokens": 219,
+        "loss": 0.06391094624996185,
+        "row_id": "train-lookup-world-006-distant_heldout-cf-1",
+        "step": 326,
+        "supervised_positions": 219
+      },
+      {
+        "gradient_norm": 0.14514419436454773,
+        "input_tokens": 58,
+        "loss": 0.016353368759155273,
+        "row_id": "train-retention-unit_conversion-world-001",
+        "step": 327,
+        "supervised_positions": 58
+      },
+      {
+        "gradient_norm": 0.2122352570295334,
+        "input_tokens": 235,
+        "loss": 0.06626027822494507,
+        "row_id": "train-missing-world-004-distant_heldout-cf-0",
+        "step": 328,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.19301486015319824,
+        "input_tokens": 223,
+        "loss": 0.06053635850548744,
+        "row_id": "train-number-world-000-near_control-cf-1",
+        "step": 329,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.2027083784341812,
+        "input_tokens": 254,
+        "loss": 0.0640130266547203,
+        "row_id": "train-update-world-006-near_control-cf-1",
+        "step": 330,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.19402220845222473,
+        "input_tokens": 244,
+        "loss": 0.06269224733114243,
+        "row_id": "train-join-world-001-near_control-cf-0",
+        "step": 331,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.199997216463089,
+        "input_tokens": 256,
+        "loss": 0.06437065452337265,
+        "row_id": "train-join-world-004-near_control-cf-0",
+        "step": 332,
+        "supervised_positions": 256
+      },
+      {
+        "gradient_norm": 0.1753154695034027,
+        "input_tokens": 224,
+        "loss": 0.05353587493300438,
+        "row_id": "train-lookup-world-005-near_control-cf-0",
+        "step": 333,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.16431233286857605,
+        "input_tokens": 227,
+        "loss": 0.054423458874225616,
+        "row_id": "train-identifier-world-005-near_control-cf-1",
+        "step": 334,
+        "supervised_positions": 227
+      },
+      {
+        "gradient_norm": 0.18674112856388092,
+        "input_tokens": 245,
+        "loss": 0.06081279367208481,
+        "row_id": "train-update-world-007-near_control-cf-0",
+        "step": 335,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.21874116361141205,
+        "input_tokens": 225,
+        "loss": 0.07380892336368561,
+        "row_id": "train-lookup-world-007-distant_heldout-cf-0",
+        "step": 336,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.1701897233724594,
+        "input_tokens": 242,
+        "loss": 0.07142520695924759,
+        "row_id": "train-multiple_facts-world-007-distant_heldout-cf-1",
+        "step": 337,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.16263215243816376,
+        "input_tokens": 224,
+        "loss": 0.05342710018157959,
+        "row_id": "train-identifier-world-006-near_control-cf-0",
+        "step": 338,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.16775710880756378,
+        "input_tokens": 217,
+        "loss": 0.064804308116436,
+        "row_id": "train-number-world-007-distant_heldout-cf-1",
+        "step": 339,
+        "supervised_positions": 217
+      },
+      {
+        "gradient_norm": 0.28343725204467773,
+        "input_tokens": 245,
+        "loss": 0.07644122838973999,
+        "row_id": "train-join-world-003-near_control-cf-0",
+        "step": 340,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.20366209745407104,
+        "input_tokens": 241,
+        "loss": 0.07172049582004547,
+        "row_id": "train-join-world-002-distant_heldout-cf-0",
+        "step": 341,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.1544218361377716,
+        "input_tokens": 235,
+        "loss": 0.05766899511218071,
+        "row_id": "train-identifier-world-003-near_control-cf-1",
+        "step": 342,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.23022153973579407,
+        "input_tokens": 229,
+        "loss": 0.06388608366250992,
+        "row_id": "train-identifier-world-000-near_control-cf-0",
+        "step": 343,
+        "supervised_positions": 229
+      },
+      {
+        "gradient_norm": 0.17604422569274902,
+        "input_tokens": 243,
+        "loss": 0.06710795313119888,
+        "row_id": "train-missing-world-006-near_control-cf-1",
+        "step": 344,
+        "supervised_positions": 243
+      },
+      {
+        "gradient_norm": 0.24229919910430908,
+        "input_tokens": 224,
+        "loss": 0.06511574983596802,
+        "row_id": "train-identifier-world-006-distant_heldout-cf-0",
+        "step": 345,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.1541331708431244,
+        "input_tokens": 56,
+        "loss": 0.01561816781759262,
+        "row_id": "train-retention-unit_conversion-world-003",
+        "step": 346,
+        "supervised_positions": 56
+      },
+      {
+        "gradient_norm": 0.17383694648742676,
+        "input_tokens": 259,
+        "loss": 0.07334955781698227,
+        "row_id": "train-update-world-003-distant_heldout-cf-0",
+        "step": 347,
+        "supervised_positions": 259
+      },
+      {
+        "gradient_norm": 0.22248941659927368,
+        "input_tokens": 256,
+        "loss": 0.06576237082481384,
+        "row_id": "train-join-world-004-near_control-cf-1",
+        "step": 348,
+        "supervised_positions": 256
+      },
+      {
+        "gradient_norm": 0.20908169448375702,
+        "input_tokens": 254,
+        "loss": 0.07748062163591385,
+        "row_id": "train-update-world-001-distant_heldout-cf-0",
+        "step": 349,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.18942232429981232,
+        "input_tokens": 239,
+        "loss": 0.07718370854854584,
+        "row_id": "train-missing-world-002-distant_heldout-cf-0",
+        "step": 350,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.1572808176279068,
+        "input_tokens": 257,
+        "loss": 0.06594409793615341,
+        "row_id": "train-update-world-005-distant_heldout-cf-0",
+        "step": 351,
+        "supervised_positions": 257
+      },
+      {
+        "gradient_norm": 0.17174609005451202,
+        "input_tokens": 239,
+        "loss": 0.05865457281470299,
+        "row_id": "train-multiple_facts-world-002-near_control-cf-1",
+        "step": 352,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.17403598129749298,
+        "input_tokens": 219,
+        "loss": 0.06229180470108986,
+        "row_id": "train-lookup-world-006-distant_heldout-cf-0",
+        "step": 353,
+        "supervised_positions": 219
+      },
+      {
+        "gradient_norm": 0.16975489258766174,
+        "input_tokens": 215,
+        "loss": 0.05374196544289589,
+        "row_id": "train-number-world-005-near_control-cf-1",
+        "step": 354,
+        "supervised_positions": 215
+      },
+      {
+        "gradient_norm": 0.2055799663066864,
+        "input_tokens": 236,
+        "loss": 0.06473355740308762,
+        "row_id": "train-identifier-world-004-distant_heldout-cf-1",
+        "step": 355,
+        "supervised_positions": 236
+      },
+      {
+        "gradient_norm": 0.17893505096435547,
+        "input_tokens": 242,
+        "loss": 0.058588672429323196,
+        "row_id": "train-update-world-000-near_control-cf-0",
+        "step": 356,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.1532244235277176,
+        "input_tokens": 57,
+        "loss": 0.016642138361930847,
+        "row_id": "train-retention-conditional-world-000",
+        "step": 357,
+        "supervised_positions": 57
+      },
+      {
+        "gradient_norm": 0.16509442031383514,
+        "input_tokens": 233,
+        "loss": 0.0533670112490654,
+        "row_id": "train-missing-world-004-near_control-cf-1",
+        "step": 358,
+        "supervised_positions": 233
+      },
+      {
+        "gradient_norm": 0.10326454788446426,
+        "input_tokens": 62,
+        "loss": 0.014455295167863369,
+        "row_id": "train-retention-temporal-world-003",
+        "step": 359,
+        "supervised_positions": 62
+      },
+      {
+        "gradient_norm": 0.20180656015872955,
+        "input_tokens": 223,
+        "loss": 0.06890007108449936,
+        "row_id": "train-number-world-002-distant_heldout-cf-0",
+        "step": 360,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.17772231996059418,
+        "input_tokens": 216,
+        "loss": 0.06359212845563889,
+        "row_id": "train-number-world-005-distant_heldout-cf-0",
+        "step": 361,
+        "supervised_positions": 216
+      },
+      {
+        "gradient_norm": 0.1848473995923996,
+        "input_tokens": 245,
+        "loss": 0.06036682054400444,
+        "row_id": "train-update-world-007-near_control-cf-1",
+        "step": 362,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.164764866232872,
+        "input_tokens": 217,
+        "loss": 0.05429228022694588,
+        "row_id": "train-number-world-007-near_control-cf-1",
+        "step": 363,
+        "supervised_positions": 217
+      },
+      {
+        "gradient_norm": 0.15437623858451843,
+        "input_tokens": 220,
+        "loss": 0.055739786475896835,
+        "row_id": "train-number-world-001-distant_heldout-cf-1",
+        "step": 364,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.13831394910812378,
+        "input_tokens": 221,
+        "loss": 0.04638303443789482,
+        "row_id": "train-lookup-world-004-near_control-cf-1",
+        "step": 365,
+        "supervised_positions": 221
+      },
+      {
+        "gradient_norm": 0.17313817143440247,
+        "input_tokens": 227,
+        "loss": 0.05429937690496445,
+        "row_id": "train-identifier-world-005-near_control-cf-0",
+        "step": 366,
+        "supervised_positions": 227
+      },
+      {
+        "gradient_norm": 0.180575892329216,
+        "input_tokens": 243,
+        "loss": 0.0679260641336441,
+        "row_id": "train-join-world-007-distant_heldout-cf-1",
+        "step": 367,
+        "supervised_positions": 243
+      },
+      {
+        "gradient_norm": 0.16263838112354279,
+        "input_tokens": 225,
+        "loss": 0.06078803911805153,
+        "row_id": "train-number-world-004-distant_heldout-cf-1",
+        "step": 368,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.18401354551315308,
+        "input_tokens": 247,
+        "loss": 0.06426791846752167,
+        "row_id": "train-multiple_facts-world-003-near_control-cf-0",
+        "step": 369,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.19037431478500366,
+        "input_tokens": 256,
+        "loss": 0.07561726868152618,
+        "row_id": "train-join-world-004-distant_heldout-cf-0",
+        "step": 370,
+        "supervised_positions": 256
+      },
+      {
+        "gradient_norm": 0.14419732987880707,
+        "input_tokens": 225,
+        "loss": 0.0521739162504673,
+        "row_id": "train-number-world-003-near_control-cf-1",
+        "step": 371,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.20440083742141724,
+        "input_tokens": 236,
+        "loss": 0.06512953341007233,
+        "row_id": "train-missing-world-002-distant_heldout-cf-1",
+        "step": 372,
+        "supervised_positions": 236
+      },
+      {
+        "gradient_norm": 0.16957060992717743,
+        "input_tokens": 220,
+        "loss": 0.064354307949543,
+        "row_id": "train-number-world-006-distant_heldout-cf-0",
+        "step": 373,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.17193962633609772,
+        "input_tokens": 242,
+        "loss": 0.056589122861623764,
+        "row_id": "train-multiple_facts-world-007-near_control-cf-0",
+        "step": 374,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.18792812526226044,
+        "input_tokens": 256,
+        "loss": 0.07298725843429565,
+        "row_id": "train-join-world-004-distant_heldout-cf-1",
+        "step": 375,
+        "supervised_positions": 256
+      },
+      {
+        "gradient_norm": 0.19022054970264435,
+        "input_tokens": 238,
+        "loss": 0.06700960546731949,
+        "row_id": "train-missing-world-000-near_control-cf-0",
+        "step": 376,
+        "supervised_positions": 238
+      },
+      {
+        "gradient_norm": 0.190264493227005,
+        "input_tokens": 254,
+        "loss": 0.05695551261305809,
+        "row_id": "train-update-world-001-near_control-cf-0",
+        "step": 377,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.16837561130523682,
+        "input_tokens": 229,
+        "loss": 0.04933064058423042,
+        "row_id": "train-identifier-world-001-near_control-cf-1",
+        "step": 378,
+        "supervised_positions": 229
+      },
+      {
+        "gradient_norm": 0.18556198477745056,
+        "input_tokens": 224,
+        "loss": 0.05264851450920105,
+        "row_id": "train-number-world-003-near_control-cf-0",
+        "step": 379,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.22050268948078156,
+        "input_tokens": 238,
+        "loss": 0.06353594362735748,
+        "row_id": "train-identifier-world-004-distant_heldout-cf-0",
+        "step": 380,
+        "supervised_positions": 238
+      },
+      {
+        "gradient_norm": 0.16082338988780975,
+        "input_tokens": 236,
+        "loss": 0.0646379217505455,
+        "row_id": "train-missing-world-000-distant_heldout-cf-1",
+        "step": 381,
+        "supervised_positions": 236
+      },
+      {
+        "gradient_norm": 0.16906297206878662,
+        "input_tokens": 225,
+        "loss": 0.0536799281835556,
+        "row_id": "train-number-world-004-near_control-cf-1",
+        "step": 382,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.14814290404319763,
+        "input_tokens": 223,
+        "loss": 0.061829328536987305,
+        "row_id": "train-number-world-000-distant_heldout-cf-1",
+        "step": 383,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.16153478622436523,
+        "input_tokens": 238,
+        "loss": 0.05374123528599739,
+        "row_id": "train-missing-world-005-near_control-cf-1",
+        "step": 384,
+        "supervised_positions": 238
+      },
+      {
+        "gradient_norm": 0.19908694922924042,
+        "input_tokens": 247,
+        "loss": 0.0610005185008049,
+        "row_id": "train-missing-world-003-near_control-cf-1",
+        "step": 385,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.1415003091096878,
+        "input_tokens": 55,
+        "loss": 0.016397476196289062,
+        "row_id": "train-retention-ordering-world-002",
+        "step": 386,
+        "supervised_positions": 55
+      },
+      {
+        "gradient_norm": 0.1772698163986206,
+        "input_tokens": 239,
+        "loss": 0.06712862849235535,
+        "row_id": "train-multiple_facts-world-002-distant_heldout-cf-0",
+        "step": 387,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.2214922159910202,
+        "input_tokens": 239,
+        "loss": 0.07923438400030136,
+        "row_id": "train-multiple_facts-world-000-distant_heldout-cf-1",
+        "step": 388,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.16124828159809113,
+        "input_tokens": 220,
+        "loss": 0.05131928250193596,
+        "row_id": "train-number-world-001-near_control-cf-1",
+        "step": 389,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.21297816932201385,
+        "input_tokens": 246,
+        "loss": 0.058944493532180786,
+        "row_id": "train-missing-world-001-near_control-cf-1",
+        "step": 390,
+        "supervised_positions": 246
+      },
+      {
+        "gradient_norm": 0.15587963163852692,
+        "input_tokens": 223,
+        "loss": 0.05606205388903618,
+        "row_id": "train-lookup-world-003-distant_heldout-cf-1",
+        "step": 391,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.23625825345516205,
+        "input_tokens": 247,
+        "loss": 0.06972620636224747,
+        "row_id": "train-update-world-002-distant_heldout-cf-0",
+        "step": 392,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.20531527698040009,
+        "input_tokens": 232,
+        "loss": 0.0800715908408165,
+        "row_id": "train-missing-world-007-distant_heldout-cf-0",
+        "step": 393,
+        "supervised_positions": 232
+      },
+      {
+        "gradient_norm": 0.17241649329662323,
+        "input_tokens": 244,
+        "loss": 0.05551806092262268,
+        "row_id": "train-multiple_facts-world-001-near_control-cf-1",
+        "step": 394,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.21689960360527039,
+        "input_tokens": 222,
+        "loss": 0.06855438649654388,
+        "row_id": "train-lookup-world-000-distant_heldout-cf-0",
+        "step": 395,
+        "supervised_positions": 222
+      },
+      {
+        "gradient_norm": 0.17229457199573517,
+        "input_tokens": 233,
+        "loss": 0.058295171707868576,
+        "row_id": "train-multiple_facts-world-006-near_control-cf-1",
+        "step": 396,
+        "supervised_positions": 233
+      },
+      {
+        "gradient_norm": 0.2493150383234024,
+        "input_tokens": 225,
+        "loss": 0.07406895607709885,
+        "row_id": "train-identifier-world-007-distant_heldout-cf-0",
+        "step": 397,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.17948365211486816,
+        "input_tokens": 225,
+        "loss": 0.05712422356009483,
+        "row_id": "train-lookup-world-007-near_control-cf-1",
+        "step": 398,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.2294144183397293,
+        "input_tokens": 257,
+        "loss": 0.05145147070288658,
+        "row_id": "train-update-world-005-near_control-cf-0",
+        "step": 399,
+        "supervised_positions": 257
+      },
+      {
+        "gradient_norm": 0.1766228824853897,
+        "input_tokens": 236,
+        "loss": 0.05408826097846031,
+        "row_id": "train-identifier-world-004-near_control-cf-1",
+        "step": 400,
+        "supervised_positions": 236
+      },
+      {
+        "gradient_norm": 0.24535250663757324,
+        "input_tokens": 229,
+        "loss": 0.06993062794208527,
+        "row_id": "train-identifier-world-000-distant_heldout-cf-0",
+        "step": 401,
+        "supervised_positions": 229
+      },
+      {
+        "gradient_norm": 0.15146945416927338,
+        "input_tokens": 220,
+        "loss": 0.04778360202908516,
+        "row_id": "train-lookup-world-001-near_control-cf-0",
+        "step": 402,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.16109997034072876,
+        "input_tokens": 44,
+        "loss": 0.013193783350288868,
+        "row_id": "train-retention-arithmetic-world-002",
+        "step": 403,
+        "supervised_positions": 44
+      },
+      {
+        "gradient_norm": 0.19110991060733795,
+        "input_tokens": 235,
+        "loss": 0.06668657064437866,
+        "row_id": "train-identifier-world-003-distant_heldout-cf-1",
+        "step": 404,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.2455826699733734,
+        "input_tokens": 227,
+        "loss": 0.070665642619133,
+        "row_id": "train-identifier-world-007-distant_heldout-cf-1",
+        "step": 405,
+        "supervised_positions": 227
+      },
+      {
+        "gradient_norm": 0.18467922508716583,
+        "input_tokens": 215,
+        "loss": 0.05995576083660126,
+        "row_id": "train-number-world-005-distant_heldout-cf-1",
+        "step": 406,
+        "supervised_positions": 215
+      },
+      {
+        "gradient_norm": 0.1026734858751297,
+        "input_tokens": 45,
+        "loss": 0.012367993593215942,
+        "row_id": "train-retention-boolean-world-001",
+        "step": 407,
+        "supervised_positions": 45
+      },
+      {
+        "gradient_norm": 0.13422900438308716,
+        "input_tokens": 56,
+        "loss": 0.014009891077876091,
+        "row_id": "train-retention-unit_conversion-world-000",
+        "step": 408,
+        "supervised_positions": 56
+      },
+      {
+        "gradient_norm": 0.17599762976169586,
+        "input_tokens": 222,
+        "loss": 0.053661052137613297,
+        "row_id": "train-number-world-002-near_control-cf-1",
+        "step": 409,
+        "supervised_positions": 222
+      },
+      {
+        "gradient_norm": 0.18780417740345,
+        "input_tokens": 247,
+        "loss": 0.06808900833129883,
+        "row_id": "train-join-world-000-distant_heldout-cf-0",
+        "step": 410,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.21023713052272797,
+        "input_tokens": 247,
+        "loss": 0.06441847234964371,
+        "row_id": "train-missing-world-003-distant_heldout-cf-1",
+        "step": 411,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.1663791537284851,
+        "input_tokens": 225,
+        "loss": 0.048584431409835815,
+        "row_id": "train-number-world-004-near_control-cf-0",
+        "step": 412,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.12074058502912521,
+        "input_tokens": 51,
+        "loss": 0.014946036972105503,
+        "row_id": "train-retention-string_rule-world-000",
+        "step": 413,
+        "supervised_positions": 51
+      },
+      {
+        "gradient_norm": 0.1685900241136551,
+        "input_tokens": 220,
+        "loss": 0.052992600947618484,
+        "row_id": "train-number-world-006-near_control-cf-0",
+        "step": 414,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.20205886662006378,
+        "input_tokens": 241,
+        "loss": 0.05491309612989426,
+        "row_id": "train-join-world-002-near_control-cf-1",
+        "step": 415,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.18747593462467194,
+        "input_tokens": 239,
+        "loss": 0.05454482510685921,
+        "row_id": "train-multiple_facts-world-002-near_control-cf-0",
+        "step": 416,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.19266662001609802,
+        "input_tokens": 244,
+        "loss": 0.07347088307142258,
+        "row_id": "train-join-world-001-distant_heldout-cf-0",
+        "step": 417,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.1609380692243576,
+        "input_tokens": 218,
+        "loss": 0.05350949615240097,
+        "row_id": "train-number-world-007-near_control-cf-0",
+        "step": 418,
+        "supervised_positions": 218
+      },
+      {
+        "gradient_norm": 0.09665549546480179,
+        "input_tokens": 49,
+        "loss": 0.01351492665708065,
+        "row_id": "train-retention-string_rule-world-002",
+        "step": 419,
+        "supervised_positions": 49
+      },
+      {
+        "gradient_norm": 0.15618957579135895,
+        "input_tokens": 229,
+        "loss": 0.057952262461185455,
+        "row_id": "train-identifier-world-001-distant_heldout-cf-1",
+        "step": 420,
+        "supervised_positions": 229
+      },
+      {
+        "gradient_norm": 0.14919674396514893,
+        "input_tokens": 235,
+        "loss": 0.05042080581188202,
+        "row_id": "train-identifier-world-003-near_control-cf-0",
+        "step": 421,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.16656097769737244,
+        "input_tokens": 244,
+        "loss": 0.05521506816148758,
+        "row_id": "train-join-world-001-near_control-cf-1",
+        "step": 422,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.20447194576263428,
+        "input_tokens": 254,
+        "loss": 0.06933044642210007,
+        "row_id": "train-update-world-001-distant_heldout-cf-1",
+        "step": 423,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.24839241802692413,
+        "input_tokens": 225,
+        "loss": 0.055125340819358826,
+        "row_id": "train-lookup-world-002-near_control-cf-0",
+        "step": 424,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.19393424689769745,
+        "input_tokens": 235,
+        "loss": 0.04752391204237938,
+        "row_id": "train-identifier-world-002-near_control-cf-0",
+        "step": 425,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.091426782310009,
+        "input_tokens": 45,
+        "loss": 0.01136196032166481,
+        "row_id": "train-retention-boolean-world-000",
+        "step": 426,
+        "supervised_positions": 45
+      },
+      {
+        "gradient_norm": 0.1564984917640686,
+        "input_tokens": 235,
+        "loss": 0.06161816418170929,
+        "row_id": "train-identifier-world-002-distant_heldout-cf-0",
+        "step": 427,
+        "supervised_positions": 235
+      },
+      {
+        "gradient_norm": 0.1578531712293625,
+        "input_tokens": 246,
+        "loss": 0.062205418944358826,
+        "row_id": "train-missing-world-001-distant_heldout-cf-1",
+        "step": 428,
+        "supervised_positions": 246
+      },
+      {
+        "gradient_norm": 0.17343604564666748,
+        "input_tokens": 254,
+        "loss": 0.05485834926366806,
+        "row_id": "train-update-world-006-near_control-cf-0",
+        "step": 429,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.2366250604391098,
+        "input_tokens": 239,
+        "loss": 0.059843868017196655,
+        "row_id": "train-multiple_facts-world-000-near_control-cf-1",
+        "step": 430,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.24341456592082977,
+        "input_tokens": 230,
+        "loss": 0.06974823027849197,
+        "row_id": "train-missing-world-007-distant_heldout-cf-1",
+        "step": 431,
+        "supervised_positions": 230
+      },
+      {
+        "gradient_norm": 0.1687036156654358,
+        "input_tokens": 247,
+        "loss": 0.07260119169950485,
+        "row_id": "train-multiple_facts-world-003-distant_heldout-cf-1",
+        "step": 432,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.17798370122909546,
+        "input_tokens": 223,
+        "loss": 0.05211333930492401,
+        "row_id": "train-lookup-world-003-near_control-cf-1",
+        "step": 433,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.1669994741678238,
+        "input_tokens": 247,
+        "loss": 0.0503673292696476,
+        "row_id": "train-update-world-002-near_control-cf-0",
+        "step": 434,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.1703673005104065,
+        "input_tokens": 254,
+        "loss": 0.07056543976068497,
+        "row_id": "train-update-world-006-distant_heldout-cf-1",
+        "step": 435,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.19144102931022644,
+        "input_tokens": 233,
+        "loss": 0.06518407166004181,
+        "row_id": "train-multiple_facts-world-006-distant_heldout-cf-0",
+        "step": 436,
+        "supervised_positions": 233
+      },
+      {
+        "gradient_norm": 0.12563063204288483,
+        "input_tokens": 57,
+        "loss": 0.013517524115741253,
+        "row_id": "train-retention-conditional-world-001",
+        "step": 437,
+        "supervised_positions": 57
+      },
+      {
+        "gradient_norm": 0.186478853225708,
+        "input_tokens": 219,
+        "loss": 0.049322597682476044,
+        "row_id": "train-lookup-world-006-near_control-cf-1",
+        "step": 438,
+        "supervised_positions": 219
+      },
+      {
+        "gradient_norm": 0.12337257713079453,
+        "input_tokens": 43,
+        "loss": 0.01089637354016304,
+        "row_id": "train-retention-arithmetic-world-000",
+        "step": 439,
+        "supervised_positions": 43
+      },
+      {
+        "gradient_norm": 0.10970001667737961,
+        "input_tokens": 62,
+        "loss": 0.013145281933248043,
+        "row_id": "train-retention-temporal-world-001",
+        "step": 440,
+        "supervised_positions": 62
+      },
+      {
+        "gradient_norm": 0.17144480347633362,
+        "input_tokens": 242,
+        "loss": 0.054487086832523346,
+        "row_id": "train-update-world-000-near_control-cf-1",
+        "step": 441,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.2019861787557602,
+        "input_tokens": 241,
+        "loss": 0.04951656609773636,
+        "row_id": "train-update-world-004-near_control-cf-0",
+        "step": 442,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.2093387395143509,
+        "input_tokens": 239,
+        "loss": 0.07124722748994827,
+        "row_id": "train-join-world-006-distant_heldout-cf-1",
+        "step": 443,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.12086248397827148,
+        "input_tokens": 57,
+        "loss": 0.012949430383741856,
+        "row_id": "train-retention-ordering-world-003",
+        "step": 444,
+        "supervised_positions": 57
+      },
+      {
+        "gradient_norm": 0.13611558079719543,
+        "input_tokens": 55,
+        "loss": 0.01440110057592392,
+        "row_id": "train-retention-conditional-world-003",
+        "step": 445,
+        "supervised_positions": 55
+      },
+      {
+        "gradient_norm": 0.1728001832962036,
+        "input_tokens": 241,
+        "loss": 0.06419031322002411,
+        "row_id": "train-update-world-004-distant_heldout-cf-1",
+        "step": 446,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.2440725564956665,
+        "input_tokens": 225,
+        "loss": 0.05380222946405411,
+        "row_id": "train-lookup-world-002-near_control-cf-1",
+        "step": 447,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.1762535721063614,
+        "input_tokens": 218,
+        "loss": 0.06353864818811417,
+        "row_id": "train-number-world-007-distant_heldout-cf-0",
+        "step": 448,
+        "supervised_positions": 218
+      },
+      {
+        "gradient_norm": 0.11090975999832153,
+        "input_tokens": 42,
+        "loss": 0.009659329429268837,
+        "row_id": "train-retention-arithmetic-world-001",
+        "step": 449,
+        "supervised_positions": 42
+      },
+      {
+        "gradient_norm": 0.15093128383159637,
+        "input_tokens": 247,
+        "loss": 0.06806860864162445,
+        "row_id": "train-multiple_facts-world-003-distant_heldout-cf-0",
+        "step": 450,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.16685394942760468,
+        "input_tokens": 239,
+        "loss": 0.05051126331090927,
+        "row_id": "train-multiple_facts-world-005-near_control-cf-1",
+        "step": 451,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.18896545469760895,
+        "input_tokens": 246,
+        "loss": 0.07462595403194427,
+        "row_id": "train-missing-world-006-distant_heldout-cf-0",
+        "step": 452,
+        "supervised_positions": 246
+      },
+      {
+        "gradient_norm": 0.16607964038848877,
+        "input_tokens": 224,
+        "loss": 0.04683113843202591,
+        "row_id": "train-lookup-world-005-near_control-cf-1",
+        "step": 453,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.148612841963768,
+        "input_tokens": 245,
+        "loss": 0.061947133392095566,
+        "row_id": "train-update-world-007-distant_heldout-cf-0",
+        "step": 454,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.09187032282352448,
+        "input_tokens": 57,
+        "loss": 0.012324067763984203,
+        "row_id": "train-retention-ordering-world-000",
+        "step": 455,
+        "supervised_positions": 57
+      },
+      {
+        "gradient_norm": 0.14153993129730225,
+        "input_tokens": 242,
+        "loss": 0.0615992471575737,
+        "row_id": "train-update-world-000-distant_heldout-cf-0",
+        "step": 456,
+        "supervised_positions": 242
+      },
+      {
+        "gradient_norm": 0.16230902075767517,
+        "input_tokens": 239,
+        "loss": 0.055001210421323776,
+        "row_id": "train-join-world-006-near_control-cf-0",
+        "step": 457,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.16531985998153687,
+        "input_tokens": 246,
+        "loss": 0.059225644916296005,
+        "row_id": "train-missing-world-006-near_control-cf-0",
+        "step": 458,
+        "supervised_positions": 246
+      },
+      {
+        "gradient_norm": 0.13531142473220825,
+        "input_tokens": 73,
+        "loss": 0.016318943351507187,
+        "row_id": "train-retention-short_table-world-000",
+        "step": 459,
+        "supervised_positions": 73
+      },
+      {
+        "gradient_norm": 0.21147923171520233,
+        "input_tokens": 244,
+        "loss": 0.05792802572250366,
+        "row_id": "train-multiple_facts-world-004-near_control-cf-0",
+        "step": 460,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.21649809181690216,
+        "input_tokens": 231,
+        "loss": 0.05926665663719177,
+        "row_id": "train-identifier-world-000-near_control-cf-1",
+        "step": 461,
+        "supervised_positions": 231
+      },
+      {
+        "gradient_norm": 0.15415574610233307,
+        "input_tokens": 220,
+        "loss": 0.05507977679371834,
+        "row_id": "train-lookup-world-001-distant_heldout-cf-0",
+        "step": 462,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.17791436612606049,
+        "input_tokens": 241,
+        "loss": 0.07044219225645065,
+        "row_id": "train-missing-world-005-distant_heldout-cf-0",
+        "step": 463,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.11804336309432983,
+        "input_tokens": 75,
+        "loss": 0.015097533352673054,
+        "row_id": "train-retention-short_table-world-003",
+        "step": 464,
+        "supervised_positions": 75
+      },
+      {
+        "gradient_norm": 0.18665660917758942,
+        "input_tokens": 225,
+        "loss": 0.05863716080784798,
+        "row_id": "train-number-world-003-distant_heldout-cf-1",
+        "step": 465,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.1001494973897934,
+        "input_tokens": 55,
+        "loss": 0.010964465327560902,
+        "row_id": "train-retention-ordering-world-001",
+        "step": 466,
+        "supervised_positions": 55
+      },
+      {
+        "gradient_norm": 0.16963987052440643,
+        "input_tokens": 239,
+        "loss": 0.062332432717084885,
+        "row_id": "train-multiple_facts-world-002-distant_heldout-cf-1",
+        "step": 467,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.1683356761932373,
+        "input_tokens": 220,
+        "loss": 0.050379540771245956,
+        "row_id": "train-number-world-006-near_control-cf-1",
+        "step": 468,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.2687362730503082,
+        "input_tokens": 245,
+        "loss": 0.07944536209106445,
+        "row_id": "train-join-world-003-distant_heldout-cf-0",
+        "step": 469,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.13444505631923676,
+        "input_tokens": 223,
+        "loss": 0.04931659623980522,
+        "row_id": "train-lookup-world-003-distant_heldout-cf-0",
+        "step": 470,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.1564873605966568,
+        "input_tokens": 225,
+        "loss": 0.048922326415777206,
+        "row_id": "train-lookup-world-007-near_control-cf-0",
+        "step": 471,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.13913334906101227,
+        "input_tokens": 245,
+        "loss": 0.0617067813873291,
+        "row_id": "train-update-world-007-distant_heldout-cf-1",
+        "step": 472,
+        "supervised_positions": 245
+      },
+      {
+        "gradient_norm": 0.21771107614040375,
+        "input_tokens": 225,
+        "loss": 0.05974858999252319,
+        "row_id": "train-lookup-world-002-distant_heldout-cf-1",
+        "step": 473,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.15454766154289246,
+        "input_tokens": 224,
+        "loss": 0.049944404512643814,
+        "row_id": "train-lookup-world-005-distant_heldout-cf-1",
+        "step": 474,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.14928145706653595,
+        "input_tokens": 223,
+        "loss": 0.057738203555345535,
+        "row_id": "train-number-world-000-distant_heldout-cf-0",
+        "step": 475,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.15827417373657227,
+        "input_tokens": 238,
+        "loss": 0.05807507783174515,
+        "row_id": "train-missing-world-005-distant_heldout-cf-1",
+        "step": 476,
+        "supervised_positions": 238
+      },
+      {
+        "gradient_norm": 0.18602734804153442,
+        "input_tokens": 233,
+        "loss": 0.06164645403623581,
+        "row_id": "train-multiple_facts-world-006-distant_heldout-cf-1",
+        "step": 477,
+        "supervised_positions": 233
+      },
+      {
+        "gradient_norm": 0.14077727496623993,
+        "input_tokens": 236,
+        "loss": 0.0472920686006546,
+        "row_id": "train-missing-world-002-near_control-cf-1",
+        "step": 478,
+        "supervised_positions": 236
+      },
+      {
+        "gradient_norm": 0.20176850259304047,
+        "input_tokens": 222,
+        "loss": 0.052851900458335876,
+        "row_id": "train-lookup-world-000-near_control-cf-0",
+        "step": 479,
+        "supervised_positions": 222
+      },
+      {
+        "gradient_norm": 0.1951523721218109,
+        "input_tokens": 259,
+        "loss": 0.05722784996032715,
+        "row_id": "train-update-world-003-near_control-cf-1",
+        "step": 480,
+        "supervised_positions": 259
+      },
+      {
+        "gradient_norm": 0.20261706411838531,
+        "input_tokens": 247,
+        "loss": 0.0643811970949173,
+        "row_id": "train-join-world-005-distant_heldout-cf-1",
+        "step": 481,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.1620682179927826,
+        "input_tokens": 254,
+        "loss": 0.06665682792663574,
+        "row_id": "train-update-world-006-distant_heldout-cf-0",
+        "step": 482,
+        "supervised_positions": 254
+      },
+      {
+        "gradient_norm": 0.1315397471189499,
+        "input_tokens": 244,
+        "loss": 0.06306251138448715,
+        "row_id": "train-multiple_facts-world-004-distant_heldout-cf-1",
+        "step": 483,
+        "supervised_positions": 244
+      },
+      {
+        "gradient_norm": 0.1599034070968628,
+        "input_tokens": 216,
+        "loss": 0.04576884210109711,
+        "row_id": "train-number-world-005-near_control-cf-0",
+        "step": 484,
+        "supervised_positions": 216
+      },
+      {
+        "gradient_norm": 0.19640251994132996,
+        "input_tokens": 247,
+        "loss": 0.05669707432389259,
+        "row_id": "train-join-world-000-near_control-cf-1",
+        "step": 485,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.18492946028709412,
+        "input_tokens": 231,
+        "loss": 0.060256604105234146,
+        "row_id": "train-identifier-world-000-distant_heldout-cf-1",
+        "step": 486,
+        "supervised_positions": 231
+      },
+      {
+        "gradient_norm": 0.1751823127269745,
+        "input_tokens": 223,
+        "loss": 0.05324934050440788,
+        "row_id": "train-number-world-002-near_control-cf-0",
+        "step": 487,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.2027832716703415,
+        "input_tokens": 220,
+        "loss": 0.04693922400474548,
+        "row_id": "train-number-world-001-near_control-cf-0",
+        "step": 488,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.15847565233707428,
+        "input_tokens": 247,
+        "loss": 0.055448729544878006,
+        "row_id": "train-join-world-000-near_control-cf-0",
+        "step": 489,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.18279795348644257,
+        "input_tokens": 221,
+        "loss": 0.05573184788227081,
+        "row_id": "train-lookup-world-004-distant_heldout-cf-0",
+        "step": 490,
+        "supervised_positions": 221
+      },
+      {
+        "gradient_norm": 0.07817511260509491,
+        "input_tokens": 45,
+        "loss": 0.009414711967110634,
+        "row_id": "train-retention-boolean-world-002",
+        "step": 491,
+        "supervised_positions": 45
+      },
+      {
+        "gradient_norm": 0.16384629905223846,
+        "input_tokens": 247,
+        "loss": 0.04857618734240532,
+        "row_id": "train-update-world-002-near_control-cf-1",
+        "step": 492,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.1528719961643219,
+        "input_tokens": 227,
+        "loss": 0.04671410098671913,
+        "row_id": "train-identifier-world-007-near_control-cf-1",
+        "step": 493,
+        "supervised_positions": 227
+      },
+      {
+        "gradient_norm": 0.07789239287376404,
+        "input_tokens": 45,
+        "loss": 0.009092439897358418,
+        "row_id": "train-retention-boolean-world-003",
+        "step": 494,
+        "supervised_positions": 45
+      },
+      {
+        "gradient_norm": 0.133150115609169,
+        "input_tokens": 243,
+        "loss": 0.04584568366408348,
+        "row_id": "train-join-world-007-near_control-cf-0",
+        "step": 495,
+        "supervised_positions": 243
+      },
+      {
+        "gradient_norm": 0.15158800780773163,
+        "input_tokens": 241,
+        "loss": 0.04686041921377182,
+        "row_id": "train-missing-world-005-near_control-cf-0",
+        "step": 496,
+        "supervised_positions": 241
+      },
+      {
+        "gradient_norm": 0.19251161813735962,
+        "input_tokens": 225,
+        "loss": 0.062388915568590164,
+        "row_id": "train-lookup-world-007-distant_heldout-cf-1",
+        "step": 497,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.14712214469909668,
+        "input_tokens": 220,
+        "loss": 0.05736297369003296,
+        "row_id": "train-number-world-006-distant_heldout-cf-1",
+        "step": 498,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.15263578295707703,
+        "input_tokens": 239,
+        "loss": 0.06239994615316391,
+        "row_id": "train-multiple_facts-world-005-distant_heldout-cf-0",
+        "step": 499,
+        "supervised_positions": 239
+      },
+      {
+        "gradient_norm": 0.16267693042755127,
+        "input_tokens": 224,
+        "loss": 0.054215990006923676,
+        "row_id": "train-number-world-003-distant_heldout-cf-0",
+        "step": 500,
+        "supervised_positions": 224
+      },
+      {
+        "gradient_norm": 0.18513980507850647,
+        "input_tokens": 249,
+        "loss": 0.06616878509521484,
+        "row_id": "train-missing-world-001-distant_heldout-cf-0",
+        "step": 501,
+        "supervised_positions": 249
+      },
+      {
+        "gradient_norm": 0.1453036069869995,
+        "input_tokens": 229,
+        "loss": 0.05630005523562431,
+        "row_id": "train-identifier-world-001-distant_heldout-cf-0",
+        "step": 502,
+        "supervised_positions": 229
+      },
+      {
+        "gradient_norm": 0.19492949545383453,
+        "input_tokens": 247,
+        "loss": 0.06308054178953171,
+        "row_id": "train-join-world-005-distant_heldout-cf-0",
+        "step": 503,
+        "supervised_positions": 247
+      },
+      {
+        "gradient_norm": 0.17345952987670898,
+        "input_tokens": 223,
+        "loss": 0.047868963330984116,
+        "row_id": "train-lookup-world-003-near_control-cf-0",
+        "step": 504,
+        "supervised_positions": 223
+      },
+      {
+        "gradient_norm": 0.13309481739997864,
+        "input_tokens": 75,
+        "loss": 0.014394484460353851,
+        "row_id": "train-retention-short_table-world-001",
+        "step": 505,
+        "supervised_positions": 75
+      },
+      {
+        "gradient_norm": 0.16401030123233795,
+        "input_tokens": 243,
+        "loss": 0.058076925575733185,
+        "row_id": "train-join-world-007-distant_heldout-cf-0",
+        "step": 506,
+        "supervised_positions": 243
+      },
+      {
+        "gradient_norm": 0.21150028705596924,
+        "input_tokens": 220,
+        "loss": 0.05364261195063591,
+        "row_id": "train-lookup-world-001-distant_heldout-cf-1",
+        "step": 507,
+        "supervised_positions": 220
+      },
+      {
+        "gradient_norm": 0.1387019008398056,
+        "input_tokens": 243,
+        "loss": 0.04295870661735535,
+        "row_id": "train-join-world-007-near_control-cf-1",
+        "step": 508,
+        "supervised_positions": 243
+      },
+      {
+        "gradient_norm": 0.1067441999912262,
+        "input_tokens": 62,
+        "loss": 0.01125149056315422,
+        "row_id": "train-retention-temporal-world-000",
+        "step": 509,
+        "supervised_positions": 62
+      },
+      {
+        "gradient_norm": 0.16012495756149292,
+        "input_tokens": 225,
+        "loss": 0.05124218761920929,
+        "row_id": "train-number-world-004-distant_heldout-cf-0",
+        "step": 510,
+        "supervised_positions": 225
+      },
+      {
+        "gradient_norm": 0.13879433274269104,
+        "input_tokens": 244,
+        "loss": 0.0671788826584816,
+        "row_id": "train-multiple_facts-world-004-distant_heldout-cf-0",
+        "step": 511,
+        "supervised_positions": 244
+      }
+    ],
+    "resume_supported": false,
+    "stage": "distill",
+    "status": "TRAINING_COMPLETED_NOT_EFFICACY",
+    "trainable_parameters": 1131664
+  },
+  "sha256": "7389bc761f2be54656d6c2ebffc0a741bf661a7ab28939eb8fc90b0ae779a664"
+}

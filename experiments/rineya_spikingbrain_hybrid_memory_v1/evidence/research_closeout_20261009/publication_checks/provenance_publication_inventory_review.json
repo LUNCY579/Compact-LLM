@@ -1,0 +1,2682 @@
+{
+  "created_utc": "2026-10-10T03:37:53.226846+00:00",
+  "current_followup_code_inventory": {
+    "quality_followup/__init__.py": "7331b42618a104a563f7c59c1a1fa51c5338e1fc6802d47f0640f9a5828d4fc0",
+    "quality_followup/__main__.py": "02a92a9b1c615cc211fc96dee5726a4354601a9cf4d55c13f5069c669ab772f5",
+    "quality_followup/audit.py": "863b21a76cd60f613b378c4e993cb1536524a883f5ea0fb33053485738c05f38",
+    "quality_followup/comparison.py": "97993b0fc225356bfba50be1c40920f051c4576cba731dde8c5b23724754a3ef",
+    "quality_followup/corpus.py": "00ff1d334eddf0408c3f5e1389d95ba2d429db73531328244b2bcc694a914691",
+    "quality_followup/metrics.py": "4168477a947815eca1bb778a1767bb43989b3e2940be64fa5eba7c757862c3d9",
+    "quality_followup/prepare.py": "73c0e2f6605b1274c01f6f87e0ca2ae6d7837914781affcf07df624815df23dd",
+    "quality_followup/protocol.py": "c0dd78eb0f9179e568ea998e60bf592cc27f4f2961b922128f851bcbc5a8d19d",
+    "quality_followup/runner.py": "8694901e319505352eb8afe81dff0f7834667eb67b950c1534256d86eea1ed56",
+    "quality_followup/tests/test_corpus.py": "b17bfece21d10f51eb80953cc3f96daf1a05238397ed7b52c95de637b448c4a8",
+    "quality_followup/tests/test_metrics.py": "65aa2a6fdf784f85eebe246359d83a6fd5b75a46474636a31263ab6b6d791164",
+    "quality_followup/tests/test_protocol.py": "b1d7a9366b6319ff59b03e9ceae12c7d8f63a18ea058f8aa65e6d7db8e4e3ab5",
+    "quality_followup/utils.py": "44c342231f96ebab3d23882fdd23b4a683b414a0960507de0038e9195e961274",
+    "sbhm/__init__.py": "f0c04570eeb48a784f52eaaa5c2b6b0bb58d910d00e9204feb8317a86fe8e9aa",
+    "sbhm/__main__.py": "6e5565d5098419f16ac6ba2bb299af0b2bd675aba411695464d37595281dd287",
+    "sbhm/core.py": "e383d8333a8c669ab74cfcd9f4506d1a2930c7cf89164c51f718a7fc2128f78d",
+    "sbhm/data.py": "ded0427b69fcf2c70f9bc250ac522a5a79229301f61d38a4ab8151fc2a815f89",
+    "sbhm/matrix.py": "b681fcdb814661016c973df775c169110b2ab6dbe08ce7e6beae08d426e3e3db",
+    "sbhm/native.py": "ed278b23436c91389a2f1e04556fe0842c65de287226bafbc93ff1852fc8edf6",
+    "sbhm/pipeline.py": "791a9e8176262e5b3f6e773a322640b8ae417956e1584b5de2724d6afa659c60",
+    "sbhm/protocol.py": "d03690b07ffe7324d3d97d3a80ed3fa58d4c0df1550e985e1a618ca23dc2f7ff",
+    "sbhm/quantization.py": "478f643f2c8305be85d7dc717982b8c02dea3e78fbde2c4f2e3b528a193395ba",
+    "scripts/build_robust_corpus.py": "1fcdb5df7f74e6fd5821a27c44fcf4d8878b71ed9669a3a292529db97b925e66"
+  },
+  "current_followup_code_sha256": "26f1c07bbe354a422b1a6d4ea5988a21b063621f055c9a92155fa5e5e2a738ef",
+  "current_top_level_and_needed_file_inventory": {
+    "closeout/AUDITED_CLOSEOUT.txt": {
+      "bytes": 18270,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\AUDITED_CLOSEOUT.txt",
+      "sha256": "3bf1ea27337dafb47f044e4f53a3b555d4270da2a67aca66e0c765104da7726e"
+    },
+    "closeout/closeout_receipt.json": {
+      "bytes": 17550,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\closeout_receipt.json",
+      "sha256": "d8642257e949038a54a26876012de7da3413433a3db7d7ae5815b36ff0d63282"
+    },
+    "closeout/closeout_seal.py": {
+      "bytes": 8806,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\closeout_seal.py",
+      "sha256": "605c8043963d9a601172d4fdcd14ba8762940dfc2a7dcff1fc4a02c373f318b0"
+    },
+    "closeout/deliverables_manifest.json": {
+      "bytes": 6353,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\deliverables_manifest.json",
+      "sha256": "9205e710c43610a47b4164bacd7efc1508a02323d78fb1e92808cbe5f9f2f11a"
+    },
+    "closeout/fixture-verification.json": {
+      "bytes": 1512,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\fixture-verification.json",
+      "sha256": "0bfe5ecc07ecd0b560a99cd414ead3c765f75c83f13578b86d696b9f974998fd"
+    },
+    "closeout/fixture_verification.py": {
+      "bytes": 2220,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\fixture_verification.py",
+      "sha256": "50803347df7af916189433aa694d7f3be5714c942e284ef052843c489e46c908"
+    },
+    "closeout/fixtures-junit.xml": {
+      "bytes": 16807,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\fixtures-junit.xml",
+      "sha256": "252bef87f7cc3fc1e090262691ca58a7a58d45b46db7925f1c3d2994a1469543"
+    },
+    "closeout/fixtures-output.txt": {
+      "bytes": 302,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\fixtures-output.txt",
+      "sha256": "d98b8bc8a3293e738df93cb993bec3317d241fac33c50fd3d9f7e4017f502c51"
+    },
+    "closeout/git-status-after.txt": {
+      "bytes": 21328,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\git-status-after.txt",
+      "sha256": "88f62fa8ab188947ae9a64687a7138756f80690b312ed4d4b10793deeecb2860"
+    },
+    "closeout/git-status-before.txt": {
+      "bytes": 21328,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\git-status-before.txt",
+      "sha256": "88f62fa8ab188947ae9a64687a7138756f80690b312ed4d4b10793deeecb2860"
+    },
+    "closeout/local-changes-after.patch": {
+      "bytes": 51523,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\local-changes-after.patch",
+      "sha256": "830bf48f6e213115747f988591ab31608ea281883cae85c8d25ddcfa9863063e"
+    },
+    "closeout/local-changes-before.patch": {
+      "bytes": 51523,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\local-changes-before.patch",
+      "sha256": "830bf48f6e213115747f988591ab31608ea281883cae85c8d25ddcfa9863063e"
+    },
+    "closeout/ownership-decision.json": {
+      "bytes": 1919,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\ownership-decision.json",
+      "sha256": "527f8c369997998d68211dc1b2eead8a792edea9a619b91caa60cb4331cb4724"
+    },
+    "closeout/ownership-threads.json": {
+      "bytes": 23067,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\ownership-threads.json",
+      "sha256": "a9a96ef770c4bf2c07e7b47006f5e78e19cb65e0e0d0046afbcfb9c224f0d3ca"
+    },
+    "closeout/pairing_audit.json": {
+      "bytes": 46318,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\pairing_audit.json",
+      "sha256": "f8eefbcee5d5ab9fc62b4fb3a0078fb05668de6172d1edb0bdd727b6b8ea64d7"
+    },
+    "closeout/pairing_audit.py": {
+      "bytes": 28323,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\pairing_audit.py",
+      "sha256": "5b99ec3a45ce76fa91ea61c5e7db3e133f3681b5cd2fbba6333af3e0c7e3b1eb"
+    },
+    "closeout/pairing_audit_final.json": {
+      "bytes": 40638,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\pairing_audit_final.json",
+      "sha256": "79b273a6fb5ecf95ad551d94e851cd68d5348bef3e1fd6ed8af2d4d509d3b0a6"
+    },
+    "closeout/pairing_audit_v2.json": {
+      "bytes": 38708,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\pairing_audit_v2.json",
+      "sha256": "4a89cf7b2d023fdb5a3b119ed8b01fce99f042e1b50e6896c86fdc574162417d"
+    },
+    "closeout/pairing_audit_v2.py": {
+      "bytes": 25077,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\pairing_audit_v2.py",
+      "sha256": "e38abaace61a71219ab2c1085ae713a0bc1502fb04663077bd466cd745ee7c26"
+    },
+    "closeout/pairing_report_review.json": {
+      "bytes": 2909,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\pairing_report_review.json",
+      "sha256": "e9fc3b09a0dbd60deb86ad5417566fe1f9dffc05c3f948e996d952ce93549ef5"
+    },
+    "closeout/pairing_report_review_final.json": {
+      "bytes": 2804,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\pairing_report_review_final.json",
+      "sha256": "15bb809ea3c7fcfc7d38a01984dfd426c2364f13ae91ac9294117efe1540f436"
+    },
+    "closeout/preservation-after.json": {
+      "bytes": 209893,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\preservation-after.json",
+      "sha256": "26fb1641537a6e3eb56ac8bb2744c2a2f207c698bbb62707f19fb9e3341a70f9"
+    },
+    "closeout/preservation-before.json": {
+      "bytes": 209778,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\preservation-before.json",
+      "sha256": "405db16b2fc59d37cbcf0fa868dd27c315169b0a2d75987cdc4dd2607314b9ef"
+    },
+    "closeout/preservation-final.json": {
+      "bytes": 209893,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\preservation-final.json",
+      "sha256": "b91bc34eab7e8eec9597e0c6c6b72aae69a6838dda3d08d4cabd9c2b3d2a126b"
+    },
+    "closeout/preservation.py": {
+      "bytes": 2522,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\preservation.py",
+      "sha256": "ae6ca19172297f25b9456a979a6953580c546c71f15790aa8e08970ffb2cf706"
+    },
+    "closeout/processes-before.json": {
+      "bytes": 2400,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\processes-before.json",
+      "sha256": "8e23b7ac9fe78d29a3a99844ef537c9da8e00e3a0d677d0b427fc8822af70cdd"
+    },
+    "closeout/provenance_audit.py": {
+      "bytes": 38424,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\provenance_audit.py",
+      "sha256": "aa55dc12ded3c3bf20014fead0ed39ac56db2a79244662102a8e3ea1f419b47d"
+    },
+    "closeout/provenance_audit_v2.py": {
+      "bytes": 39008,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\provenance_audit_v2.py",
+      "sha256": "98a2b57819c3116228ce35834eea87df5eeb0282552432bba9e875035a3e2dac"
+    },
+    "closeout/provenance_log_audit.py": {
+      "bytes": 3488,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\provenance_log_audit.py",
+      "sha256": "380f1112f9318e83c407ad2736b8e06a11179df5915d4f7cfebc90c6503853cd"
+    },
+    "closeout/provenance_log_receipt.json": {
+      "bytes": 12233,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\provenance_log_receipt.json",
+      "sha256": "f593a5b890fdadbd09df10e072c771a7e5a92ce80ca5ce1156536203dbeb221e"
+    },
+    "closeout/provenance_receipt.json": {
+      "bytes": 253539,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\provenance_receipt.json",
+      "sha256": "05d440824ebce606716a8a5e36a30abe30d93f1f27028051d0f4eceecd4045ee"
+    },
+    "closeout/provenance_receipt_v2.json": {
+      "bytes": 264449,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\provenance_receipt_v2.json",
+      "sha256": "0d22fd87443bdb7e3e61751f507022233767ae3220da9fa574304ce01c6e7909"
+    },
+    "closeout/provenance_report_review.json": {
+      "bytes": 2537,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\provenance_report_review.json",
+      "sha256": "b2cd02fc013e6adeb810921b341392215ef8db44a837f44bd909839c8a077db0"
+    },
+    "closeout/provenance_report_review_final.json": {
+      "bytes": 2929,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\provenance_report_review_final.json",
+      "sha256": "20017ca1c958e2cc4a223225ca67e6732c075af1f0cfa6d9c66fcd367fd87688"
+    },
+    "closeout/resources_audit.json": {
+      "bytes": 1072403,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\resources_audit.json",
+      "sha256": "db8f83a84b03dbe286382b72ff30bfaa28a0cbb1208686f52fdddf298868906a"
+    },
+    "closeout/resources_audit.py": {
+      "bytes": 21214,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\resources_audit.py",
+      "sha256": "bb913ff2481ebfe13dad8c965e66b2149982b721b05379b193f1da8a49a4eb36"
+    },
+    "closeout/resources_audit_v2.json": {
+      "bytes": 1366704,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\resources_audit_v2.json",
+      "sha256": "2811d6d5e2225b0096675aa986110b12716bb85f111bd73c7332cec3a6fa041f"
+    },
+    "closeout/resources_report_review.json": {
+      "bytes": 3920,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\resources_report_review.json",
+      "sha256": "6785eef311dc04a6dcc09b162ebad573c88ae22f032c6e50b308f0d284fa1c6f"
+    },
+    "closeout/resources_report_review_final.json": {
+      "bytes": 3562,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\resources_report_review_final.json",
+      "sha256": "4459302dbc398023de7dd310daa5c09246ea5334eb3dcf24c884ba8024ed83b2"
+    },
+    "closeout/resources_revision_note.txt": {
+      "bytes": 1301,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\resources_revision_note.txt",
+      "sha256": "15222efceb961436dd4de64001b3eb34a009b8185abe0f8e3c6f2d8c6078035c"
+    },
+    "closeout/tokenizer_replay.json": {
+      "bytes": 1010064,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\tokenizer_replay.json",
+      "sha256": "d43ef6b28b931e6313df95428b937f81c1aab1c696fa1d06f6ecc1ba25da1506"
+    },
+    "closeout/tokenizer_replay.py": {
+      "bytes": 14988,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\tokenizer_replay.py",
+      "sha256": "c88e8b5ca9b4aa3392a0c909613a234f9fdd3be98cd62ea3de2203436e644285"
+    },
+    "implementation/IMPLEMENTATION_REPORT.txt": {
+      "bytes": 6183,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\IMPLEMENTATION_REPORT.txt",
+      "sha256": "15173764221677f2a062e9eb90a772c803d8daf0c40247ed45874562f2bf6f4b"
+    },
+    "implementation/NATIVE_CLOSEOUT.txt": {
+      "bytes": 4742,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\NATIVE_CLOSEOUT.txt",
+      "sha256": "4b87066657f93f7af0de0b8129f74a52309a507d4af6dc0b55ebaa39d8302047"
+    },
+    "implementation/cli-smoke.json": {
+      "bytes": 675,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\cli-smoke.json",
+      "sha256": "9e2fb70f11827e853d6539bc5bc3b9d5c925c85e1e64794b663f342b3f747291"
+    },
+    "implementation/corpus-review.json": {
+      "bytes": 4491,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-review.json",
+      "sha256": "afd52bd19e727b44af83cf9a50250b3ec2b56243f7e5bef0a6484be2af99e2d8"
+    },
+    "implementation/corpus-v2-independent-crossreview-metrics.json": {
+      "bytes": 3633,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2-independent-crossreview-metrics.json",
+      "sha256": "88050cc9d3ef2700e6c190b104b44b0b74824fb612b338f2d65991aada4e7f15"
+    },
+    "implementation/corpus-v2/candidate_train.jsonl": {
+      "bytes": 576641,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\candidate_train.jsonl",
+      "sha256": "1618015933cfef46712ee9e7eb707ab0e964ba4122516571eb3ce841014e7200"
+    },
+    "implementation/corpus-v2/control_train.jsonl": {
+      "bytes": 576641,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\control_train.jsonl",
+      "sha256": "ba2109411f72777624c705515ac61f9c716d36c9ca0a9f270166bca4e81779ae"
+    },
+    "implementation/corpus-v2/design.json": {
+      "bytes": 5931234,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\design.json",
+      "sha256": "03e40f39f8a8628557de76d9e5fffabc738efcdb2c1032e4aacf578dae619767"
+    },
+    "implementation/corpus-v2/dev.jsonl": {
+      "bytes": 2143651,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\dev.jsonl",
+      "sha256": "e4c2572c603d6700020091581ff7d8541647e6d48f0c1b22d5ddddfd17deb761"
+    },
+    "implementation/corpus-v2/exposure_ledger.json": {
+      "bytes": 502590,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\exposure_ledger.json",
+      "sha256": "af19ce6a7a31fd07ae481e291478d89386855543b23191b6d1ffb6f1442c6678"
+    },
+    "implementation/corpus-v2/manifest.json": {
+      "bytes": 4357,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\manifest.json",
+      "sha256": "ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3"
+    },
+    "implementation/deliverables-manifest.json": {
+      "bytes": 8096,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\deliverables-manifest.json",
+      "sha256": "c3d605463b684d9d6854f7dc0712f77c1d85389387ae275f3ea62775525b069a"
+    },
+    "implementation/existing-changes-after.patch": {
+      "bytes": 51523,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\existing-changes-after.patch",
+      "sha256": "830bf48f6e213115747f988591ab31608ea281883cae85c8d25ddcfa9863063e"
+    },
+    "implementation/existing-changes-before.patch": {
+      "bytes": 51523,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\existing-changes-before.patch",
+      "sha256": "830bf48f6e213115747f988591ab31608ea281883cae85c8d25ddcfa9863063e"
+    },
+    "implementation/git-status-before.txt": {
+      "bytes": 21328,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\git-status-before.txt",
+      "sha256": "88f62fa8ab188947ae9a64687a7138756f80690b312ed4d4b10793deeecb2860"
+    },
+    "implementation/implementation-receipt.json": {
+      "bytes": 5491,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\implementation-receipt.json",
+      "sha256": "408ed6c8a5047456760ceeec35e261d5d2b55c347b3cc2f62e28237af2e70e83"
+    },
+    "implementation/independent-native-anchor-audit.json": {
+      "bytes": 37708,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\independent-native-anchor-audit.json",
+      "sha256": "23b66c2b7e35775540532c37053d54b67885fe692b72348276615c69a6f0988c"
+    },
+    "implementation/independent-native-stop-audit.json": {
+      "bytes": 44953,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\independent-native-stop-audit.json",
+      "sha256": "3ace5bef278938a52b8ef035175aa848379d8dfed9c94c8eaf66052183ff9151"
+    },
+    "implementation/metrics-independent-review.json": {
+      "bytes": 1913,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\metrics-independent-review.json",
+      "sha256": "6ab5893e32709568f36b53701e04cce7863c0a1f42bffc72a488967aa470cd2e"
+    },
+    "implementation/native-admission.json": {
+      "bytes": 1628,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-admission.json",
+      "sha256": "5443825f033aca90f5e951cda63f10744c41bcc8ed5066e65932bff598323a8e"
+    },
+    "implementation/native-deliverables-manifest.json": {
+      "bytes": 9242,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-deliverables-manifest.json",
+      "sha256": "bbd17a81ab392fd2f6594cf669b522794ede65610d5ac06543776c754ea731b7"
+    },
+    "implementation/native-execution-exit-code.txt": {
+      "bytes": 3,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-execution-exit-code.txt",
+      "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+    },
+    "implementation/native-execution-log.txt": {
+      "bytes": 1036063,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-execution-log.txt",
+      "sha256": "df8b0df336b5f9598f841fe70232397c74963e8de6ca01acdefb0bd745778bfc"
+    },
+    "implementation/native-independent-code-review.json": {
+      "bytes": 2162,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-independent-code-review.json",
+      "sha256": "28c5049667624162ee43dc1e251825826714ae65c51dd374deb7908e44905d4e"
+    },
+    "implementation/native-stop-receipt.json": {
+      "bytes": 39124,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-stop-receipt.json",
+      "sha256": "23aed0fa7a160c0a022efc510093f8853d9b48a07faa32daa55e26a5e1402d29"
+    },
+    "implementation/offline-audit.json": {
+      "bytes": 998,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\offline-audit.json",
+      "sha256": "0a7568849c4c0fd093a9027a878a853243346e4670a0bfecb0d8f26efdf6bc3d"
+    },
+    "implementation/preservation-after-native.json": {
+      "bytes": 369,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\preservation-after-native.json",
+      "sha256": "ba93a17fc55090c5b322edc1c2128569cb324c75448bcadaae648b29e9f8b284"
+    },
+    "implementation/preservation-before.json": {
+      "bytes": 209891,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\preservation-before.json",
+      "sha256": "ba38faa5be85fb140b5a0fdb2daf452569c7d9bef51b843f776fdf716f74d4ec"
+    },
+    "implementation/preservation-final.json": {
+      "bytes": 3404,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\preservation-final.json",
+      "sha256": "da6647b3fa91ddc955092a70a78b658ad772be54a67a4cd333ceb76cdb8292d7"
+    },
+    "implementation/proposal-independent-review.json": {
+      "bytes": 3435,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal-independent-review.json",
+      "sha256": "2ca8f11b74a9fbe9a9a71b4f9163b4ff76d6285dd563b43fd667f6c586daf0a7"
+    },
+    "implementation/proposal/native_run/anchor-evaluation/receipt.json": {
+      "bytes": 999761,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\receipt.json",
+      "sha256": "5e9a1843c2f5f7229d5a073c632078ebfa0174143accac0c72d1b23975e85d37"
+    },
+    "implementation/proposal/native_run/anchor-evaluation/request.json": {
+      "bytes": 4796,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\request.json",
+      "sha256": "7881c61fcc719c91214545e3e2e13000541dd64727683bb6fb2fc767867f763e"
+    },
+    "implementation/proposal/native_run/anchor-evaluation/stage-costs.json": {
+      "bytes": 1472,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\stage-costs.json",
+      "sha256": "304e8d1523e361711be54c6d48e0c185ad0224eb0a825a6a8e4d4a7387a6cc04"
+    },
+    "implementation/proposal/native_run/anchor-qualification/receipt.json": {
+      "bytes": 1723,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-qualification\\receipt.json",
+      "sha256": "af259dc4f1887b7439c2c518306d60582fb293ec3678880abdb1b05f475b5b0a"
+    },
+    "implementation/proposal/native_run/anchor-qualification/request.json": {
+      "bytes": 4437,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-qualification\\request.json",
+      "sha256": "cce612266bef12e9c1046f1cbb014af5a367b365a217ed9c61d43ebfa45edad3"
+    },
+    "implementation/proposal/native_run/anchor-qualification/stage-costs.json": {
+      "bytes": 1473,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-qualification\\stage-costs.json",
+      "sha256": "852577c60581a71760fed4aa79627abb154bbb216c0b963fde8e8766adf677f6"
+    },
+    "implementation/proposal/native_run/candidate-initial-qualification/receipt.json": {
+      "bytes": 1730,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\candidate-initial-qualification\\receipt.json",
+      "sha256": "2d05a4b2359c7cc888d001bf7d4531a3c9f6b3bcb725b26223ede5b5b5482a08"
+    },
+    "implementation/proposal/native_run/candidate-initial-qualification/request.json": {
+      "bytes": 4479,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\candidate-initial-qualification\\request.json",
+      "sha256": "70f7c7f85a122b4abb394c26b64b0fdc48f51b1f988d9f919a6c3de20062ba35"
+    },
+    "implementation/proposal/native_run/candidate-initial-qualification/stage-costs.json": {
+      "bytes": 1475,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\candidate-initial-qualification\\stage-costs.json",
+      "sha256": "069b95d00c102c186d3b6d5b7346fc80b09705907fe61d9d9e862cdb8bc751b1"
+    },
+    "implementation/proposal/native_run/control-initial-qualification/receipt.json": {
+      "bytes": 1728,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\receipt.json",
+      "sha256": "3217beced18d63c197029696a2116e0be9aa1c53e28d45db4d28cffff2d7f70c"
+    },
+    "implementation/proposal/native_run/control-initial-qualification/request.json": {
+      "bytes": 4467,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\request.json",
+      "sha256": "f0ca7936cb332dc0b06cf9e8bc4a6c91a5b36fa22365acfc6b40cfae7df9127e"
+    },
+    "implementation/proposal/native_run/control-initial-qualification/stage-costs.json": {
+      "bytes": 1473,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\stage-costs.json",
+      "sha256": "ff6a5ce58e26763c5bcb5c4460c2f1f9bf35dcc919e89894b4ea1613b3b6716a"
+    },
+    "implementation/proposal/native_run/control-train/request.json": {
+      "bytes": 6259,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-train\\request.json",
+      "sha256": "6716c3108c8dda150ec67ca614e3dd3d3ee718bcd1dba7938c2de159371ac766"
+    },
+    "implementation/proposal/native_run/execution-request.json": {
+      "bytes": 26159,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\execution-request.json",
+      "sha256": "5f54a8c46f75d8526f7efd861adcfe461a81a7889118033551d857e3d13578f5"
+    },
+    "implementation/proposal/preparation.json": {
+      "bytes": 732,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\preparation.json",
+      "sha256": "b6730b1fadd9816279feb8985f02b425a7ea8226774966fd8fd0a878db11f718"
+    },
+    "implementation/proposal/proposal.json": {
+      "bytes": 24794,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\proposal.json",
+      "sha256": "f7bd420c524ca4024b440209f873b6146276a3f0c6ba491edb1f5e9a280f7c90"
+    },
+    "implementation/proposal/source-lock-audit.json": {
+      "bytes": 650,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\source-lock-audit.json",
+      "sha256": "bbcc6899f068100e7d642569a6ee81b283a6d300ee948b01b92dad8d324ae38f"
+    },
+    "implementation/proposal/study.json": {
+      "bytes": 4486,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\study.json",
+      "sha256": "efe2b5b4da0e982be2128bbcef39db697a5a54caa2daeddaf9534eae5dfa2730"
+    },
+    "implementation/verification-final-junit.xml": {
+      "bytes": 28309,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\verification-final-junit.xml",
+      "sha256": "3e380672ed6aefb999135879c0e1dc762e18f01961d9fd149a408a58d8ae0e3a"
+    },
+    "implementation/verification-final-output.txt": {
+      "bytes": 503,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\verification-final-output.txt",
+      "sha256": "4b64ca4478e3191c4d58cee6f819039448c4646cac3cc9af216a7aadc09221c0"
+    },
+    "implementation/verification-final.json": {
+      "bytes": 1289,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\verification-final.json",
+      "sha256": "8e237a63b86d972214811f626c2ab587359d9256f4d34ffba359d0861ca42574"
+    },
+    "implementation/verification-junit.xml": {
+      "bytes": 27579,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\verification-junit.xml",
+      "sha256": "3b7d95104cb5ca96efa99b029c56efed418fbed61f970edc9babb08e9d26acfb"
+    },
+    "implementation/verification-output.txt": {
+      "bytes": 497,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\verification-output.txt",
+      "sha256": "0defa35c4adb042e3345cd427ee8c05648aa6952fa99bbdaa4cfa05f1eee6f00"
+    },
+    "implementation/verification.json": {
+      "bytes": 1277,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\verification.json",
+      "sha256": "39376fecca08faad5130da41b28fbd22496254da52e0d70927a85288b0ea3c6f"
+    },
+    "implementation/verify_implementation.py": {
+      "bytes": 1743,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\verify_implementation.py",
+      "sha256": "e52051292082029a6de4f86dc6b08c45890d51b9fa6b91f3b045a32fdcdda06b"
+    },
+    "implementation/verify_implementation_final.py": {
+      "bytes": 1769,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\verify_implementation_final.py",
+      "sha256": "cf1e9d889c5aa563774fc4b9bc89ecc6a1a16e7f77b194d584b3dc1f9e7abbaf"
+    },
+    "patterns/INTRINSIC_QUALITY_REVIEW.txt": {
+      "bytes": 1681,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\INTRINSIC_QUALITY_REVIEW.txt",
+      "sha256": "f5806bc19be14abcc69f5100d3303f1f18a6aa317641909043cc26f230d9bdb6"
+    },
+    "patterns/INTRINSIC_QUALITY_REVIEW_FINAL.txt": {
+      "bytes": 4648,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\INTRINSIC_QUALITY_REVIEW_FINAL.txt",
+      "sha256": "f0798149c98ee0046026c01488206bde83398b4fba05c26b13ca49bb9ae8183d"
+    },
+    "patterns/NEXT_TEST_READINESS.txt": {
+      "bytes": 1723,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\NEXT_TEST_READINESS.txt",
+      "sha256": "f04af6cb98ea16846d026f4fa478c8ee8f2fa54e811396f23ca893c086d1e35b"
+    },
+    "patterns/PATTERN_FALSIFICATION_CONTINUATION.txt": {
+      "bytes": 2837,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\PATTERN_FALSIFICATION_CONTINUATION.txt",
+      "sha256": "4e462fe2313ad046d4ebaff2e2ea25104a3e26644177ba547de98fa41c76a5ee"
+    },
+    "patterns/PATTERN_RESEARCH_REPORT.txt": {
+      "bytes": 7304,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\PATTERN_RESEARCH_REPORT.txt",
+      "sha256": "c3311f930c228c7f97dcb9f8dc2a951936f44b9320e0672d1a6d4dca0d97e0a1"
+    },
+    "patterns/anchor-pattern-findings-reviewed.json": {
+      "bytes": 14534,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor-pattern-findings-reviewed.json",
+      "sha256": "a4da2e30801274b9eedf1b29f69b0811c402caac5cb3df44df0afa8922f342d5"
+    },
+    "patterns/anchor-pattern-findings.json": {
+      "bytes": 13278,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor-pattern-findings.json",
+      "sha256": "027606e058f9ea3727a81ec338c2e3d7fcc524d3204175d7aec4c10b39d9783a"
+    },
+    "patterns/anchor-pattern-independent-review.json": {
+      "bytes": 4260,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor-pattern-independent-review.json",
+      "sha256": "a4e1f64904ac33fbdae3b56a3a1c1fdc9b7461975e1f420b55f052b2dd1604a9"
+    },
+    "patterns/anchor-patterns-independent.json": {
+      "bytes": 1421363,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor-patterns-independent.json",
+      "sha256": "6df42f521cb89fd961626a497c26fd57b20e67caab6beae9a7cfac4ca373f7fd"
+    },
+    "patterns/anchor-patterns.json": {
+      "bytes": 1421363,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor-patterns.json",
+      "sha256": "395c58b607b816d282b5e33fa4d75ba21f02668f03cc36a7d041957a0636de8d"
+    },
+    "patterns/anchor_pattern_findings.py": {
+      "bytes": 10240,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor_pattern_findings.py",
+      "sha256": "42ba2d3e236a5bea4bb20330b575bbb7cd31e5b0ff81f4e76fdd39f1be1669d6"
+    },
+    "patterns/anchor_pattern_findings_reviewed.py": {
+      "bytes": 2430,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor_pattern_findings_reviewed.py",
+      "sha256": "1bae9553e92a8614553aa33acb9c5a3d5b25432746bdad17ee047473a8ed9661"
+    },
+    "patterns/anchor_patterns.py": {
+      "bytes": 30758,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor_patterns.py",
+      "sha256": "4b14b5d5319467e045f24379279e9a4722e68e62a0b35e59d59dedd3a3a46865"
+    },
+    "patterns/answer-shape-shortcuts.json": {
+      "bytes": 6394,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\answer-shape-shortcuts.json",
+      "sha256": "f86ea88ba15e5fc3dd350eebb2cf8e5b46d566c99fc213a0a18c36d043ad4b09"
+    },
+    "patterns/answer_shape_shortcut_audit.py": {
+      "bytes": 4592,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\answer_shape_shortcut_audit.py",
+      "sha256": "c0d953561d2f82965d6af09929ee3066dc9aa700f259ff2f60ecfb1707878034"
+    },
+    "patterns/auxiliary-readouts.json": {
+      "bytes": 2094,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\auxiliary-readouts.json",
+      "sha256": "2c1781c009ec4cb724e9ced9a4f4e03a84dedd980ea4e110ec6ac237eeab968c"
+    },
+    "patterns/auxiliary-readouts.v2.json": {
+      "bytes": 2644,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\auxiliary-readouts.v2.json",
+      "sha256": "96768731ef54f94b1f78ef936f1a83de67ce40ced2920f6efffe2bc0d6066db0"
+    },
+    "patterns/claim-falsification-ledger.json": {
+      "bytes": 6616,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\claim-falsification-ledger.json",
+      "sha256": "6257a4fe5553737a36a29338f18d86361b83437a53648b56b7e195e14c4796df"
+    },
+    "patterns/claim-falsification-ledger.v2.json": {
+      "bytes": 7749,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\claim-falsification-ledger.v2.json",
+      "sha256": "19c550ad357aa90241e1dce080ed8c68c003e59309a47ea8e2179521b033c751"
+    },
+    "patterns/completion_blocked_independent_review.json": {
+      "bytes": 21036,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\completion_blocked_independent_review.json",
+      "sha256": "e6bbb6c9f493597f3d9975618dd86560f0276ef1b2c44521f6243c24f57f8bad"
+    },
+    "patterns/failure_localization_review.json": {
+      "bytes": 633574,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\failure_localization_review.json",
+      "sha256": "a7d96488f780da52a0de3b7538e18b8441c413e127e242f5062ae1bbf78e8bf1"
+    },
+    "patterns/failure_localization_review_addendum.json": {
+      "bytes": 8912,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\failure_localization_review_addendum.json",
+      "sha256": "9d40eb441eb07cbbe733cb01fa8eae1c5149c0e4d27d7f344ae56facc4b91cc5"
+    },
+    "patterns/failure_localization_shape_addendum.json": {
+      "bytes": 75444,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\failure_localization_shape_addendum.json",
+      "sha256": "3d651cec3fcd305fabf1695c5a6c9cf0840e5e22dcd69a630dafce15531d098c"
+    },
+    "patterns/goal-completion-blocker-audit.json": {
+      "bytes": 4464,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\goal-completion-blocker-audit.json",
+      "sha256": "2718eb97cf8f95daf5b0adafe0df58f1e85526a370d3e9a432c1016c451d0ffb"
+    },
+    "patterns/historical_patterns_audit.py": {
+      "bytes": 30698,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_audit.py",
+      "sha256": "fb923963a25bcc43d4c8a2304c5885e66e69a0f587d57115825d5abe635b4a12"
+    },
+    "patterns/historical_patterns_receipt.json": {
+      "bytes": 494836,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_receipt.json",
+      "sha256": "c703ab3047d9a55cff5939df0b9c12e357e3909b31c29c8cefa126ffcbb3e358"
+    },
+    "patterns/historical_patterns_shortcut_reproduce.py": {
+      "bytes": 707,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_shortcut_reproduce.py",
+      "sha256": "843a81b9bd16907b8d41575dc15a0c07bb04c6ae430824016199ce47c6b0b797"
+    },
+    "patterns/historical_patterns_shortcut_reproduced.json": {
+      "bytes": 7868,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_shortcut_reproduced.json",
+      "sha256": "ee36b5330fce1ea04d8afbb6a4d655c07f8bdc6c76a269d2be6696eec536281e"
+    },
+    "patterns/historical_patterns_shortcut_reproduction.py": {
+      "bytes": 7801,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_shortcut_reproduction.py",
+      "sha256": "de36f73ee43ea394fe8aa5c3fde856c138523d3d56f7a5186af137df6e6b6d4e"
+    },
+    "patterns/historical_patterns_shortcut_review.json": {
+      "bytes": 98789,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_shortcut_review.json",
+      "sha256": "c04e1838f71116d26c5190e0aac2212d78fecd04e2d4c93f8664d6baddf11cac"
+    },
+    "patterns/historical_patterns_shortcut_review.py": {
+      "bytes": 18952,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_shortcut_review.py",
+      "sha256": "168eba0c6a60c5bdbe0b5ca13677838f03a81345d0a9ddf8c225802fa4cca444"
+    },
+    "patterns/intrinsic_quality_review.json": {
+      "bytes": 27168,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\intrinsic_quality_review.json",
+      "sha256": "ac35cc260aab2aeb4d38bca2dcb66978dad066bda1dbc039b581c058b1ec7aec"
+    },
+    "patterns/launch-readiness-policy.json": {
+      "bytes": 1191,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\launch-readiness-policy.json",
+      "sha256": "a0badfa92e40a7c864c6064a60b3ec53c1279ba9415ed61eba413f6e9f8e0e13"
+    },
+    "patterns/loowo.json": {
+      "bytes": 586966,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\loowo.json",
+      "sha256": "254b413f1bf043a82fa7e23ce2d21f1e8658cc723e443687b0350c3cee31bdff"
+    },
+    "patterns/loowo.py": {
+      "bytes": 14397,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\loowo.py",
+      "sha256": "16974422923e44909e71335a56ecbf75606664e0699d5da35fd52b5a6bec00c7"
+    },
+    "patterns/loowo.review.json": {
+      "bytes": 10301,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\loowo.review.json",
+      "sha256": "8c97be5db104bfef38619659fe42c30e990c9b6445145a70283c557bde564a1c"
+    },
+    "patterns/native-worker-snapshot-independent.json": {
+      "bytes": 433,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\native-worker-snapshot-independent.json",
+      "sha256": "2c7ab96cba256620d4dc051d0be16547c9bfb0b7445f56f335d9218b6e609f39"
+    },
+    "patterns/operator-readiness-review.json": {
+      "bytes": 3085,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\operator-readiness-review.json",
+      "sha256": "d7a000cfc13408f3b7acd5e807e297aeeb70cb7fdad8bec37c6e3ed5ad147d7c"
+    },
+    "patterns/pattern-artifact-manifest.continuation.json": {
+      "bytes": 9586,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\pattern-artifact-manifest.continuation.json",
+      "sha256": "f933f13aaf086b6e97fd0dd0509dd7820ca9157d74b41cfb2523f45dda33d27d"
+    },
+    "patterns/pattern-artifact-manifest.json": {
+      "bytes": 4584,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\pattern-artifact-manifest.json",
+      "sha256": "28d5e1684fcfba5e1436fd4d7cae959ac77c5627bf0997570ede6b9c3764d3aa"
+    },
+    "patterns/pattern-artifact-manifest.v2.json": {
+      "bytes": 5200,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\pattern-artifact-manifest.v2.json",
+      "sha256": "e86b6787fcc39a87969bdbea77ea45d58f897b3051f6a221c1afd29a6f96b1a4"
+    },
+    "patterns/proposal-repeat-review.json": {
+      "bytes": 250464,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposal-repeat-review.json",
+      "sha256": "45544a08ad100be9db3028475a14548df6ab60d5f4a2f2a63212b2fc3864d054"
+    },
+    "patterns/proposed-repeat/preparation.json": {
+      "bytes": 732,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\preparation.json",
+      "sha256": "be78d4bd975dd5248589e8e7651c26fe8f67859888df6bc633b8a3ff3c997ff0"
+    },
+    "patterns/proposed-repeat/proposal.json": {
+      "bytes": 25307,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\proposal.json",
+      "sha256": "066068fbbecf14abc7b7fd0f2ef4e89c1f00b39955a541d3e9b862c9db019e1e"
+    },
+    "patterns/proposed-repeat/source-lock-audit.json": {
+      "bytes": 650,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\source-lock-audit.json",
+      "sha256": "0b41f5936f897f2dfd87a3544a96e3d206648f359b71a875cc9df7c9622b3a63"
+    },
+    "patterns/proposed-repeat/study.json": {
+      "bytes": 4513,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\study.json",
+      "sha256": "4e96767bca1286b038fc39f3342e9ebfafaebb8e4a9b07bad7ad262d1b6ffef4"
+    },
+    "patterns/relational-falsification-fixtures.jsonl": {
+      "bytes": 108480,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\relational-falsification-fixtures.jsonl",
+      "sha256": "d59979e1f64e03b64b7e1f12f4e72b31458865ad6fe8e40b0154c6ac8860696f"
+    },
+    "patterns/relational-falsification-receipt.json": {
+      "bytes": 1593,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\relational-falsification-receipt.json",
+      "sha256": "63176d5ce5ab350389b2e073ba2e6a968be177ed1a5dc9c3585da94c245d753a"
+    },
+    "patterns/relational-value-falsification-fixtures.jsonl": {
+      "bytes": 1643520,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\relational-value-falsification-fixtures.jsonl",
+      "sha256": "c90bb19ad7a60964da5a41b54dce2d4c3ae63b15bc65b8dec7846820bc950424"
+    },
+    "patterns/relational-value-falsification-receipt.json": {
+      "bytes": 1833,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\relational-value-falsification-receipt.json",
+      "sha256": "7163a0db9fd6f887dd527125d4dd9d355d14c58c7e12fdbe9456025bc7d2c79e"
+    },
+    "patterns/relational_fixture_falsification.py": {
+      "bytes": 6066,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\relational_fixture_falsification.py",
+      "sha256": "0010aa3e8a0f2f2fa09c448fbe2a3303241a6cbe0ae62e73df683f82a001ba34"
+    },
+    "patterns/relational_value_falsification.py": {
+      "bytes": 5350,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\relational_value_falsification.py",
+      "sha256": "8ca8170fb4876c9f155e5e4116716d1d4319c6218ea3cb0461dfbcb5cf518eba"
+    },
+    "patterns/research-receipt.json": {
+      "bytes": 6208,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\research-receipt.json",
+      "sha256": "35eaf4117332ae1f7108dd1726f8e88679d17d0a02f5816a41d6666d89a2eb9e"
+    },
+    "patterns/selector_controls.json": {
+      "bytes": 1563273,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls.json",
+      "sha256": "60c79d87034b3a96f6757a720f324140480af1cd5fca7de4264018f6f397246f"
+    },
+    "patterns/selector_controls.py": {
+      "bytes": 21379,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls.py",
+      "sha256": "1b2e81174444586ab1d2b793067e1241cf567086a2e42f7cdaa63ebfed44f4dc"
+    },
+    "patterns/selector_controls_cue_addendum.txt": {
+      "bytes": 3632,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_cue_addendum.txt",
+      "sha256": "d3459d32165094444b24f2d80aabceacfb28a55212f8333cf8e762ef39b5a9a6"
+    },
+    "patterns/selector_controls_final.json": {
+      "bytes": 1942308,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_final.json",
+      "sha256": "5b1a316cd1596021aecae3269b2fa0da33fca6056e1e7e9e4fb5b8a72c93bcd9"
+    },
+    "patterns/selector_controls_final.py": {
+      "bytes": 26090,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_final.py",
+      "sha256": "01b3b25db787414c084fe14e579f772d167d1034cffe874a6f8b233db71d0093"
+    },
+    "patterns/selector_controls_lexeme_addendum.txt": {
+      "bytes": 6143,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_lexeme_addendum.txt",
+      "sha256": "1f5596a516dfbc91518173dbe469c75b1103227c0c5c73e8f1fc7d156aa8936b"
+    },
+    "patterns/selector_controls_qualified.json": {
+      "bytes": 1955235,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_qualified.json",
+      "sha256": "a7d1140a4a7b46280e439e48003789bf7ac70fd5c5ca40f8838822b50e494987"
+    },
+    "patterns/selector_controls_qualified.py": {
+      "bytes": 31839,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_qualified.py",
+      "sha256": "d962f0734c028cc04d040165c642ab46f0cf7c71017968cdf3c60a94d27c1d17"
+    },
+    "patterns/selector_controls_v2.json": {
+      "bytes": 1545405,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_v2.json",
+      "sha256": "319d022ddfe228fa97f45673b48e5d4951cbd4accfce25d43b5a80aa5925b8d0"
+    },
+    "patterns/selector_controls_v2.py": {
+      "bytes": 22048,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_v2.py",
+      "sha256": "763515efa82d2ba583716adaf0eb31b9dcdfb3632f6c616af73c3be7882fc07a"
+    },
+    "patterns/selector_controls_verified.json": {
+      "bytes": 1942291,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_verified.json",
+      "sha256": "98c2a5733d2d2c71bdc2ba403320c688490d18f3b2f7c01a19316c5ed7a47e62"
+    },
+    "patterns/selector_controls_verified.py": {
+      "bytes": 26519,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_verified.py",
+      "sha256": "ba37989a6e8ef0a9db8bfd35c3eda9851e393517bb9ecd7035a5f8fcbd79ac26"
+    },
+    "patterns/shortcut-opportunities.json": {
+      "bytes": 7868,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\shortcut-opportunities.json",
+      "sha256": "011d9dc7bd3ae42fa9fa5a0355fca971869faa12995c108f31102ccb8b5a33bc"
+    },
+    "patterns/shortcut_opportunity_audit.py": {
+      "bytes": 7657,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\shortcut_opportunity_audit.py",
+      "sha256": "5047f379914c4cdc5c29a5b20092973f431f7792790217be3c43320bf74b00a4"
+    }
+  },
+  "historical_manifest_checks": [
+    {
+      "entries": 41,
+      "field": "files",
+      "manifest": "closeout/deliverables_manifest.json",
+      "matches": 41,
+      "mismatches": []
+    },
+    {
+      "entries": 32,
+      "field": "external_files",
+      "manifest": "implementation/deliverables-manifest.json",
+      "matches": 32,
+      "mismatches": []
+    },
+    {
+      "entries": 15,
+      "field": "source_files",
+      "manifest": "implementation/deliverables-manifest.json",
+      "matches": 15,
+      "mismatches": []
+    },
+    {
+      "entries": 58,
+      "field": "files",
+      "manifest": "implementation/native-deliverables-manifest.json",
+      "matches": 58,
+      "mismatches": []
+    },
+    {
+      "entries": 29,
+      "field": "files",
+      "manifest": "patterns/pattern-artifact-manifest.json",
+      "matches": 29,
+      "mismatches": []
+    },
+    {
+      "entries": 33,
+      "field": "files",
+      "manifest": "patterns/pattern-artifact-manifest.v2.json",
+      "matches": 33,
+      "mismatches": []
+    },
+    {
+      "entries": 61,
+      "field": "files",
+      "manifest": "patterns/pattern-artifact-manifest.continuation.json",
+      "matches": 61,
+      "mismatches": []
+    }
+  ],
+  "issues": [],
+  "key_authoritative_baselines": {
+    "answer_shape": "Subject-blind regex selects all64 identifier and all64 number targets; non-first success does not prove general binding.",
+    "entity_count": "Evidence-record count>=2 predicts missing label24/24 TRAIN percondition and64/64 DEV; whole-prompt count includes query and needs threshold>=3.",
+    "fresh_anchor": "672 DEV rows;55 strict and55 typed correct; update0/384 strict/typed.198 code-digit matches are type-erasing diagnostics, not typed capability.",
+    "fresh_anchor_retention": "21/64 source-correct in5 skills, no post-adaptation retention measured.",
+    "intrinsic_model_gain": "Unproven: no completed follow-up adaptation/control-candidate contrast or post-adaptation retention; fixture/wrapper/selector scripts are not native gains.",
+    "numeric_spelling_artifacts": 8,
+    "old_native_result": "C172/224 distant; D171/224; zero D-only correct; negative added-recurrence result unchanged.",
+    "old_synthetic_retention": "C/D retained18/22 source-correct, damaged4/22, repaired11 source-incorrect among64 synthetic rows; distinct from old update task.",
+    "old_update_task": {
+      "arms": {
+        "B": {
+          "source_correct_damaged": 14,
+          "source_correct_retained": 0,
+          "strict_correct": 13
+        },
+        "C": {
+          "source_correct_damaged": 14,
+          "source_correct_retained": 0,
+          "strict_correct": 13
+        },
+        "D": {
+          "source_correct_damaged": 14,
+          "source_correct_retained": 0,
+          "strict_correct": 12
+        }
+      },
+      "rows": 64,
+      "source_strict_correct": 14
+    },
+    "partial_stop": "Control-train hit unchanged6GiB runtime RAM guard. Optimizer step/phase/failing sample unknown; do not assert zero actual optimizer updates.",
+    "repeat_proposal": "Plan-only, unexecuted. Publishing original and repeat JSON does not provide permission, headroom or current qualification."
+  },
+  "large_superseded_draft_records": [
+    {
+      "bytes": 1072403,
+      "issues": [],
+      "original": "closeout/resources_audit.json",
+      "original_preserved_locally": true,
+      "recommended_publication": "retain compact status/issues/hash in provenance index; omit duplicated large row payload unless complete draft retention is chosen",
+      "sha256": "db8f83a84b03dbe286382b72ff30bfaa28a0cbb1208686f52fdddf298868906a",
+      "status": "PASS_EXISTING_EVIDENCE_RESOURCE_ACCOUNTING"
+    },
+    {
+      "bytes": 1563273,
+      "issues": [
+        "dev-lookup-world-005-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-005-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-007-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-007-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-012-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-009-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-013-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-005-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-015-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-000-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-014-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-002-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-004-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-008-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-006-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-009-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-number-world-003-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-number-world-014-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-013-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-012-near_control-cf-1: raw template form matches registered template",
+        "dev-identifier-world-001-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-009-near_control-cf-1: raw template form matches registered template",
+        "dev-identifier-world-000-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-010-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-005-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-004-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-number-world-000-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-011-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-001-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-001-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-015-near_control-cf-0: raw template form matches registered template",
+        "dev-identifier-world-014-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-007-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-001-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-012-near_control-cf-1: raw template form matches registered template",
+        "dev-identifier-world-005-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-007-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-009-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-013-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-003-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-012-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-002-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-005-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-006-near_control-cf-0: raw template form matches registered template",
+        "dev-identifier-world-007-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-number-world-013-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-number-world-005-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-014-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-009-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-002-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-014-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-000-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-008-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-012-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-004-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-011-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-011-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-014-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-013-near_control-cf-1: raw template form matches registered template",
+        "dev-identifier-world-003-near_control-cf-0: raw template form matches registered template",
+        "dev-identifier-world-003-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-011-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-011-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-006-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-001-near_control-cf-0: raw template form matches registered template",
+        "dev-identifier-world-013-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-010-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-007-near_control-cf-1: raw template form matches registered template",
+        "dev-identifier-world-007-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-000-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-003-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-013-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-014-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-number-world-008-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-000-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-009-near_control-cf-0: raw template form matches registered template",
+        "dev-identifier-world-002-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-010-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-number-world-010-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-008-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-number-world-013-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-005-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-006-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-014-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-008-near_control-cf-0: raw template form matches registered template",
+        "dev-identifier-world-003-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-011-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-004-near_control-cf-1: raw template form matches registered template",
+        "dev-identifier-world-008-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-008-near_control-cf-1: raw template form matches registered template",
+        "dev-identifier-world-002-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-004-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-006-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-010-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-000-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-013-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-001-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-000-near_control-cf-0: raw template form matches registered template",
+        "dev-identifier-world-001-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-number-world-015-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-006-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-012-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-number-world-003-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-002-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-014-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-011-near_control-cf-1: raw template form matches registered template",
+        "dev-identifier-world-015-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-001-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-008-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-015-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-015-near_control-cf-0: raw template form matches registered template",
+        "dev-identifier-world-015-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-005-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-005-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-000-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-007-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-007-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-004-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-004-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-002-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-003-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-number-world-003-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-009-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-009-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-001-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-002-near_control-cf-0: raw template form matches registered template",
+        "dev-identifier-world-013-near_control-cf-0: raw template form matches registered template",
+        "dev-identifier-world-001-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-006-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-012-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-number-world-008-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-013-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-006-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-011-near_control-cf-0: raw template form matches registered template",
+        "dev-identifier-world-010-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-014-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-012-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-010-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-009-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-014-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-006-near_control-cf-1: raw template form matches registered template",
+        "dev-identifier-world-011-near_control-cf-1: raw template form matches registered template",
+        "dev-identifier-world-006-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-000-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-number-world-012-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-011-near_control-cf-0: raw template form matches registered template",
+        "dev-identifier-world-009-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-004-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-002-near_control-cf-1: raw template form matches registered template",
+        "dev-identifier-world-009-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-010-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-008-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-005-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-003-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-010-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-015-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-002-near_control-cf-1: raw template form matches registered template",
+        "dev-lookup-world-010-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-013-near_control-cf-1: raw template form matches registered template",
+        "dev-identifier-world-008-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-004-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-number-world-003-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-006-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-015-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-002-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-002-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-015-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-008-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-015-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-014-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-012-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-012-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-identifier-world-011-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-003-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-005-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-identifier-world-012-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-004-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-004-near_control-cf-0: raw template form matches registered template",
+        "dev-lookup-world-001-near_control-cf-1: raw template form matches registered template",
+        "dev-identifier-world-015-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-006-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-010-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-001-near_control-cf-1: raw template form matches registered template",
+        "dev-identifier-world-009-near_control-cf-0: raw template form matches registered template",
+        "dev-identifier-world-010-near_control-cf-0: raw template form matches registered template",
+        "dev-identifier-world-004-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-lookup-world-007-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-000-distant_heldout-cf-0: raw template form matches registered template",
+        "dev-number-world-000-distant_heldout-cf-1: raw template form matches registered template",
+        "dev-lookup-world-007-near_control-cf-1: raw template form matches registered template",
+        "dev-number-world-007-near_control-cf-0: raw template form matches registered template",
+        "dev-number-world-011-distant_heldout-cf-0: raw template form matches registered template"
+      ],
+      "original": "patterns/selector_controls.json",
+      "original_preserved_locally": true,
+      "recommended_publication": "retain compact status/issues/hash in provenance index; omit duplicated large row payload unless complete draft retention is chosen",
+      "sha256": "60c79d87034b3a96f6757a720f324140480af1cd5fca7de4264018f6f397246f",
+      "status": "FAIL_OFFLINE_TASK_SPECIFIC_SELECTOR_CONTROLS"
+    },
+    {
+      "bytes": 1942308,
+      "issues": [
+        "lookup: final explicit numeric fields leave all v2 strict/literal selector counts unchanged",
+        "identifier: final explicit numeric fields leave all v2 strict/literal selector counts unchanged",
+        "number: final explicit numeric fields leave all v2 strict/literal selector counts unchanged",
+        "update: final explicit numeric fields leave all v2 strict/literal selector counts unchanged",
+        "join: final explicit numeric fields leave all v2 strict/literal selector counts unchanged"
+      ],
+      "original": "patterns/selector_controls_final.json",
+      "original_preserved_locally": true,
+      "recommended_publication": "retain compact status/issues/hash in provenance index; omit duplicated large row payload unless complete draft retention is chosen",
+      "sha256": "5b1a316cd1596021aecae3269b2fa0da33fca6056e1e7e9e4fb5b8a72c93bcd9",
+      "status": "FAIL_OFFLINE_TASK_SPECIFIC_SELECTOR_CONTROLS"
+    },
+    {
+      "bytes": 1942291,
+      "issues": [],
+      "original": "patterns/selector_controls_verified.json",
+      "original_preserved_locally": true,
+      "recommended_publication": "retain compact status/issues/hash in provenance index; omit duplicated large row payload unless complete draft retention is chosen",
+      "sha256": "98c2a5733d2d2c71bdc2ba403320c688490d18f3b2f7c01a19316c5ed7a47e62",
+      "status": "PASS_OFFLINE_TASK_SPECIFIC_SELECTOR_CONTROLS"
+    },
+    {
+      "bytes": 1421363,
+      "issues": [],
+      "original": "patterns/anchor-patterns-independent.json",
+      "original_preserved_locally": true,
+      "recommended_publication": "retain compact status/issues/hash in provenance index; omit duplicated large row payload unless complete draft retention is chosen",
+      "sha256": "6df42f521cb89fd961626a497c26fd57b20e67caab6beae9a7cfac4ca373f7fd",
+      "status": "DESCRIPTIVE_SAVED_NATIVE_DEV_DIAGNOSTICS_ONLY"
+    }
+  ],
+  "mandatory_archive_files": [
+    {
+      "archive_relative": "closeout/AUDITED_CLOSEOUT.txt",
+      "bytes": 18270,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\AUDITED_CLOSEOUT.txt",
+      "sha256": "3bf1ea27337dafb47f044e4f53a3b555d4270da2a67aca66e0c765104da7726e",
+      "source_alias": "closeout",
+      "source_relative": "AUDITED_CLOSEOUT.txt"
+    },
+    {
+      "archive_relative": "closeout/closeout_receipt.json",
+      "bytes": 17550,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\closeout_receipt.json",
+      "sha256": "d8642257e949038a54a26876012de7da3413433a3db7d7ae5815b36ff0d63282",
+      "source_alias": "closeout",
+      "source_relative": "closeout_receipt.json"
+    },
+    {
+      "archive_relative": "closeout/deliverables_manifest.json",
+      "bytes": 6353,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\deliverables_manifest.json",
+      "sha256": "9205e710c43610a47b4164bacd7efc1508a02323d78fb1e92808cbe5f9f2f11a",
+      "source_alias": "closeout",
+      "source_relative": "deliverables_manifest.json"
+    },
+    {
+      "archive_relative": "closeout/closeout_seal.py",
+      "bytes": 8806,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\closeout_seal.py",
+      "sha256": "605c8043963d9a601172d4fdcd14ba8762940dfc2a7dcff1fc4a02c373f318b0",
+      "source_alias": "closeout",
+      "source_relative": "closeout_seal.py"
+    },
+    {
+      "archive_relative": "closeout/fixture_verification.py",
+      "bytes": 2220,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\fixture_verification.py",
+      "sha256": "50803347df7af916189433aa694d7f3be5714c942e284ef052843c489e46c908",
+      "source_alias": "closeout",
+      "source_relative": "fixture_verification.py"
+    },
+    {
+      "archive_relative": "closeout/fixture-verification.json",
+      "bytes": 1512,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\fixture-verification.json",
+      "sha256": "0bfe5ecc07ecd0b560a99cd414ead3c765f75c83f13578b86d696b9f974998fd",
+      "source_alias": "closeout",
+      "source_relative": "fixture-verification.json"
+    },
+    {
+      "archive_relative": "closeout/fixtures-output.txt",
+      "bytes": 302,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\fixtures-output.txt",
+      "sha256": "d98b8bc8a3293e738df93cb993bec3317d241fac33c50fd3d9f7e4017f502c51",
+      "source_alias": "closeout",
+      "source_relative": "fixtures-output.txt"
+    },
+    {
+      "archive_relative": "closeout/fixtures-junit.xml",
+      "bytes": 16807,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\fixtures-junit.xml",
+      "sha256": "252bef87f7cc3fc1e090262691ca58a7a58d45b46db7925f1c3d2994a1469543",
+      "source_alias": "closeout",
+      "source_relative": "fixtures-junit.xml"
+    },
+    {
+      "archive_relative": "closeout/pairing_audit.py",
+      "bytes": 28323,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\pairing_audit.py",
+      "sha256": "5b99ec3a45ce76fa91ea61c5e7db3e133f3681b5cd2fbba6333af3e0c7e3b1eb",
+      "source_alias": "closeout",
+      "source_relative": "pairing_audit.py"
+    },
+    {
+      "archive_relative": "closeout/pairing_audit_final.json",
+      "bytes": 40638,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\pairing_audit_final.json",
+      "sha256": "79b273a6fb5ecf95ad551d94e851cd68d5348bef3e1fd6ed8af2d4d509d3b0a6",
+      "source_alias": "closeout",
+      "source_relative": "pairing_audit_final.json"
+    },
+    {
+      "archive_relative": "closeout/provenance_audit_v2.py",
+      "bytes": 39008,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\provenance_audit_v2.py",
+      "sha256": "98a2b57819c3116228ce35834eea87df5eeb0282552432bba9e875035a3e2dac",
+      "source_alias": "closeout",
+      "source_relative": "provenance_audit_v2.py"
+    },
+    {
+      "archive_relative": "closeout/provenance_receipt_v2.json",
+      "bytes": 264449,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\provenance_receipt_v2.json",
+      "sha256": "0d22fd87443bdb7e3e61751f507022233767ae3220da9fa574304ce01c6e7909",
+      "source_alias": "closeout",
+      "source_relative": "provenance_receipt_v2.json"
+    },
+    {
+      "archive_relative": "closeout/provenance_log_audit.py",
+      "bytes": 3488,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\provenance_log_audit.py",
+      "sha256": "380f1112f9318e83c407ad2736b8e06a11179df5915d4f7cfebc90c6503853cd",
+      "source_alias": "closeout",
+      "source_relative": "provenance_log_audit.py"
+    },
+    {
+      "archive_relative": "closeout/provenance_log_receipt.json",
+      "bytes": 12233,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\provenance_log_receipt.json",
+      "sha256": "f593a5b890fdadbd09df10e072c771a7e5a92ce80ca5ce1156536203dbeb221e",
+      "source_alias": "closeout",
+      "source_relative": "provenance_log_receipt.json"
+    },
+    {
+      "archive_relative": "closeout/provenance_report_review_final.json",
+      "bytes": 2929,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\provenance_report_review_final.json",
+      "sha256": "20017ca1c958e2cc4a223225ca67e6732c075af1f0cfa6d9c66fcd367fd87688",
+      "source_alias": "closeout",
+      "source_relative": "provenance_report_review_final.json"
+    },
+    {
+      "archive_relative": "closeout/pairing_report_review_final.json",
+      "bytes": 2804,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\pairing_report_review_final.json",
+      "sha256": "15bb809ea3c7fcfc7d38a01984dfd426c2364f13ae91ac9294117efe1540f436",
+      "source_alias": "closeout",
+      "source_relative": "pairing_report_review_final.json"
+    },
+    {
+      "archive_relative": "closeout/resources_audit.py",
+      "bytes": 21214,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\resources_audit.py",
+      "sha256": "bb913ff2481ebfe13dad8c965e66b2149982b721b05379b193f1da8a49a4eb36",
+      "source_alias": "closeout",
+      "source_relative": "resources_audit.py"
+    },
+    {
+      "archive_relative": "closeout/resources_audit_v2.json",
+      "bytes": 1366704,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\resources_audit_v2.json",
+      "sha256": "2811d6d5e2225b0096675aa986110b12716bb85f111bd73c7332cec3a6fa041f",
+      "source_alias": "closeout",
+      "source_relative": "resources_audit_v2.json"
+    },
+    {
+      "archive_relative": "closeout/resources_revision_note.txt",
+      "bytes": 1301,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\resources_revision_note.txt",
+      "sha256": "15222efceb961436dd4de64001b3eb34a009b8185abe0f8e3c6f2d8c6078035c",
+      "source_alias": "closeout",
+      "source_relative": "resources_revision_note.txt"
+    },
+    {
+      "archive_relative": "closeout/resources_report_review_final.json",
+      "bytes": 3562,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\resources_report_review_final.json",
+      "sha256": "4459302dbc398023de7dd310daa5c09246ea5334eb3dcf24c884ba8024ed83b2",
+      "source_alias": "closeout",
+      "source_relative": "resources_report_review_final.json"
+    },
+    {
+      "archive_relative": "closeout/tokenizer_replay.py",
+      "bytes": 14988,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\tokenizer_replay.py",
+      "sha256": "c88e8b5ca9b4aa3392a0c909613a234f9fdd3be98cd62ea3de2203436e644285",
+      "source_alias": "closeout",
+      "source_relative": "tokenizer_replay.py"
+    },
+    {
+      "archive_relative": "closeout/tokenizer_replay.json",
+      "bytes": 1010064,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\tokenizer_replay.json",
+      "sha256": "d43ef6b28b931e6313df95428b937f81c1aab1c696fa1d06f6ecc1ba25da1506",
+      "source_alias": "closeout",
+      "source_relative": "tokenizer_replay.json"
+    },
+    {
+      "archive_relative": "closeout/preservation.py",
+      "bytes": 2522,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\preservation.py",
+      "sha256": "ae6ca19172297f25b9456a979a6953580c546c71f15790aa8e08970ffb2cf706",
+      "source_alias": "closeout",
+      "source_relative": "preservation.py"
+    },
+    {
+      "archive_relative": "closeout/preservation-before.json",
+      "bytes": 209778,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\preservation-before.json",
+      "sha256": "405db16b2fc59d37cbcf0fa868dd27c315169b0a2d75987cdc4dd2607314b9ef",
+      "source_alias": "closeout",
+      "source_relative": "preservation-before.json"
+    },
+    {
+      "archive_relative": "closeout/preservation-final.json",
+      "bytes": 209893,
+      "path": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69\\preservation-final.json",
+      "sha256": "b91bc34eab7e8eec9597e0c6c6b72aae69a6838dda3d08d4cabd9c2b3d2a126b",
+      "source_alias": "closeout",
+      "source_relative": "preservation-final.json"
+    },
+    {
+      "archive_relative": "implementation/IMPLEMENTATION_REPORT.txt",
+      "bytes": 6183,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\IMPLEMENTATION_REPORT.txt",
+      "sha256": "15173764221677f2a062e9eb90a772c803d8daf0c40247ed45874562f2bf6f4b",
+      "source_alias": "implementation",
+      "source_relative": "IMPLEMENTATION_REPORT.txt"
+    },
+    {
+      "archive_relative": "implementation/implementation-receipt.json",
+      "bytes": 5491,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\implementation-receipt.json",
+      "sha256": "408ed6c8a5047456760ceeec35e261d5d2b55c347b3cc2f62e28237af2e70e83",
+      "source_alias": "implementation",
+      "source_relative": "implementation-receipt.json"
+    },
+    {
+      "archive_relative": "implementation/deliverables-manifest.json",
+      "bytes": 8096,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\deliverables-manifest.json",
+      "sha256": "c3d605463b684d9d6854f7dc0712f77c1d85389387ae275f3ea62775525b069a",
+      "source_alias": "implementation",
+      "source_relative": "deliverables-manifest.json"
+    },
+    {
+      "archive_relative": "implementation/corpus-review.json",
+      "bytes": 4491,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-review.json",
+      "sha256": "afd52bd19e727b44af83cf9a50250b3ec2b56243f7e5bef0a6484be2af99e2d8",
+      "source_alias": "implementation",
+      "source_relative": "corpus-review.json"
+    },
+    {
+      "archive_relative": "implementation/corpus-v2-independent-crossreview-metrics.json",
+      "bytes": 3633,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2-independent-crossreview-metrics.json",
+      "sha256": "88050cc9d3ef2700e6c190b104b44b0b74824fb612b338f2d65991aada4e7f15",
+      "source_alias": "implementation",
+      "source_relative": "corpus-v2-independent-crossreview-metrics.json"
+    },
+    {
+      "archive_relative": "implementation/offline-audit.json",
+      "bytes": 998,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\offline-audit.json",
+      "sha256": "0a7568849c4c0fd093a9027a878a853243346e4670a0bfecb0d8f26efdf6bc3d",
+      "source_alias": "implementation",
+      "source_relative": "offline-audit.json"
+    },
+    {
+      "archive_relative": "implementation/metrics-independent-review.json",
+      "bytes": 1913,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\metrics-independent-review.json",
+      "sha256": "6ab5893e32709568f36b53701e04cce7863c0a1f42bffc72a488967aa470cd2e",
+      "source_alias": "implementation",
+      "source_relative": "metrics-independent-review.json"
+    },
+    {
+      "archive_relative": "implementation/proposal-independent-review.json",
+      "bytes": 3435,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal-independent-review.json",
+      "sha256": "2ca8f11b74a9fbe9a9a71b4f9163b4ff76d6285dd563b43fd667f6c586daf0a7",
+      "source_alias": "implementation",
+      "source_relative": "proposal-independent-review.json"
+    },
+    {
+      "archive_relative": "implementation/native-independent-code-review.json",
+      "bytes": 2162,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-independent-code-review.json",
+      "sha256": "28c5049667624162ee43dc1e251825826714ae65c51dd374deb7908e44905d4e",
+      "source_alias": "implementation",
+      "source_relative": "native-independent-code-review.json"
+    },
+    {
+      "archive_relative": "implementation/cli-smoke.json",
+      "bytes": 675,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\cli-smoke.json",
+      "sha256": "9e2fb70f11827e853d6539bc5bc3b9d5c925c85e1e64794b663f342b3f747291",
+      "source_alias": "implementation",
+      "source_relative": "cli-smoke.json"
+    },
+    {
+      "archive_relative": "implementation/verify_implementation_final.py",
+      "bytes": 1769,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\verify_implementation_final.py",
+      "sha256": "cf1e9d889c5aa563774fc4b9bc89ecc6a1a16e7f77b194d584b3dc1f9e7abbaf",
+      "source_alias": "implementation",
+      "source_relative": "verify_implementation_final.py"
+    },
+    {
+      "archive_relative": "implementation/verification-final.json",
+      "bytes": 1289,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\verification-final.json",
+      "sha256": "8e237a63b86d972214811f626c2ab587359d9256f4d34ffba359d0861ca42574",
+      "source_alias": "implementation",
+      "source_relative": "verification-final.json"
+    },
+    {
+      "archive_relative": "implementation/verification-final-junit.xml",
+      "bytes": 28309,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\verification-final-junit.xml",
+      "sha256": "3e380672ed6aefb999135879c0e1dc762e18f01961d9fd149a408a58d8ae0e3a",
+      "source_alias": "implementation",
+      "source_relative": "verification-final-junit.xml"
+    },
+    {
+      "archive_relative": "implementation/verification-final-output.txt",
+      "bytes": 503,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\verification-final-output.txt",
+      "sha256": "4b64ca4478e3191c4d58cee6f819039448c4646cac3cc9af216a7aadc09221c0",
+      "source_alias": "implementation",
+      "source_relative": "verification-final-output.txt"
+    },
+    {
+      "archive_relative": "implementation/NATIVE_CLOSEOUT.txt",
+      "bytes": 4742,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\NATIVE_CLOSEOUT.txt",
+      "sha256": "4b87066657f93f7af0de0b8129f74a52309a507d4af6dc0b55ebaa39d8302047",
+      "source_alias": "implementation",
+      "source_relative": "NATIVE_CLOSEOUT.txt"
+    },
+    {
+      "archive_relative": "implementation/native-stop-receipt.json",
+      "bytes": 39124,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-stop-receipt.json",
+      "sha256": "23aed0fa7a160c0a022efc510093f8853d9b48a07faa32daa55e26a5e1402d29",
+      "source_alias": "implementation",
+      "source_relative": "native-stop-receipt.json"
+    },
+    {
+      "archive_relative": "implementation/independent-native-stop-audit.json",
+      "bytes": 44953,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\independent-native-stop-audit.json",
+      "sha256": "3ace5bef278938a52b8ef035175aa848379d8dfed9c94c8eaf66052183ff9151",
+      "source_alias": "implementation",
+      "source_relative": "independent-native-stop-audit.json"
+    },
+    {
+      "archive_relative": "implementation/independent-native-anchor-audit.json",
+      "bytes": 37708,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\independent-native-anchor-audit.json",
+      "sha256": "23b66c2b7e35775540532c37053d54b67885fe692b72348276615c69a6f0988c",
+      "source_alias": "implementation",
+      "source_relative": "independent-native-anchor-audit.json"
+    },
+    {
+      "archive_relative": "implementation/native-deliverables-manifest.json",
+      "bytes": 9242,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-deliverables-manifest.json",
+      "sha256": "bbd17a81ab392fd2f6594cf669b522794ede65610d5ac06543776c754ea731b7",
+      "source_alias": "implementation",
+      "source_relative": "native-deliverables-manifest.json"
+    },
+    {
+      "archive_relative": "implementation/native-execution-log.txt",
+      "bytes": 1036063,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-execution-log.txt",
+      "sha256": "df8b0df336b5f9598f841fe70232397c74963e8de6ca01acdefb0bd745778bfc",
+      "source_alias": "implementation",
+      "source_relative": "native-execution-log.txt"
+    },
+    {
+      "archive_relative": "implementation/native-execution-exit-code.txt",
+      "bytes": 3,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\native-execution-exit-code.txt",
+      "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "source_alias": "implementation",
+      "source_relative": "native-execution-exit-code.txt"
+    },
+    {
+      "archive_relative": "implementation/preservation-before.json",
+      "bytes": 209891,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\preservation-before.json",
+      "sha256": "ba38faa5be85fb140b5a0fdb2daf452569c7d9bef51b843f776fdf716f74d4ec",
+      "source_alias": "implementation",
+      "source_relative": "preservation-before.json"
+    },
+    {
+      "archive_relative": "implementation/preservation-final.json",
+      "bytes": 3404,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\preservation-final.json",
+      "sha256": "da6647b3fa91ddc955092a70a78b658ad772be54a67a4cd333ceb76cdb8292d7",
+      "source_alias": "implementation",
+      "source_relative": "preservation-final.json"
+    },
+    {
+      "archive_relative": "implementation/preservation-after-native.json",
+      "bytes": 369,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\preservation-after-native.json",
+      "sha256": "ba93a17fc55090c5b322edc1c2128569cb324c75448bcadaae648b29e9f8b284",
+      "source_alias": "implementation",
+      "source_relative": "preservation-after-native.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/study.json",
+      "bytes": 4486,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\study.json",
+      "sha256": "efe2b5b4da0e982be2128bbcef39db697a5a54caa2daeddaf9534eae5dfa2730",
+      "source_alias": "implementation",
+      "source_relative": "proposal/study.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/proposal.json",
+      "bytes": 24794,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\proposal.json",
+      "sha256": "f7bd420c524ca4024b440209f873b6146276a3f0c6ba491edb1f5e9a280f7c90",
+      "source_alias": "implementation",
+      "source_relative": "proposal/proposal.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/preparation.json",
+      "bytes": 732,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\preparation.json",
+      "sha256": "b6730b1fadd9816279feb8985f02b425a7ea8226774966fd8fd0a878db11f718",
+      "source_alias": "implementation",
+      "source_relative": "proposal/preparation.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/source-lock-audit.json",
+      "bytes": 650,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\source-lock-audit.json",
+      "sha256": "bbcc6899f068100e7d642569a6ee81b283a6d300ee948b01b92dad8d324ae38f",
+      "source_alias": "implementation",
+      "source_relative": "proposal/source-lock-audit.json"
+    },
+    {
+      "archive_relative": "implementation/corpus-v2/manifest.json",
+      "bytes": 4357,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\manifest.json",
+      "sha256": "ce2c1e1489ab5dc6806a4b1dc6a2de1e51c6623df9779313d81d28115ef36dc3",
+      "source_alias": "implementation",
+      "source_relative": "corpus-v2/manifest.json"
+    },
+    {
+      "archive_relative": "implementation/corpus-v2/design.json",
+      "bytes": 5931234,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\design.json",
+      "sha256": "03e40f39f8a8628557de76d9e5fffabc738efcdb2c1032e4aacf578dae619767",
+      "source_alias": "implementation",
+      "source_relative": "corpus-v2/design.json"
+    },
+    {
+      "archive_relative": "implementation/corpus-v2/exposure_ledger.json",
+      "bytes": 502590,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\exposure_ledger.json",
+      "sha256": "af19ce6a7a31fd07ae481e291478d89386855543b23191b6d1ffb6f1442c6678",
+      "source_alias": "implementation",
+      "source_relative": "corpus-v2/exposure_ledger.json"
+    },
+    {
+      "archive_relative": "implementation/corpus-v2/control_train.jsonl",
+      "bytes": 576641,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\control_train.jsonl",
+      "sha256": "ba2109411f72777624c705515ac61f9c716d36c9ca0a9f270166bca4e81779ae",
+      "source_alias": "implementation",
+      "source_relative": "corpus-v2/control_train.jsonl"
+    },
+    {
+      "archive_relative": "implementation/corpus-v2/candidate_train.jsonl",
+      "bytes": 576641,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\candidate_train.jsonl",
+      "sha256": "1618015933cfef46712ee9e7eb707ab0e964ba4122516571eb3ce841014e7200",
+      "source_alias": "implementation",
+      "source_relative": "corpus-v2/candidate_train.jsonl"
+    },
+    {
+      "archive_relative": "implementation/corpus-v2/dev.jsonl",
+      "bytes": 2143651,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\corpus-v2\\dev.jsonl",
+      "sha256": "e4c2572c603d6700020091581ff7d8541647e6d48f0c1b22d5ddddfd17deb761",
+      "source_alias": "implementation",
+      "source_relative": "corpus-v2/dev.jsonl"
+    },
+    {
+      "archive_relative": "implementation/proposal/native_run/execution-request.json",
+      "bytes": 26159,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\execution-request.json",
+      "sha256": "5f54a8c46f75d8526f7efd861adcfe461a81a7889118033551d857e3d13578f5",
+      "source_alias": "implementation",
+      "source_relative": "proposal/native_run/execution-request.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/native_run/anchor-evaluation/receipt.json",
+      "bytes": 999761,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\receipt.json",
+      "sha256": "5e9a1843c2f5f7229d5a073c632078ebfa0174143accac0c72d1b23975e85d37",
+      "source_alias": "implementation",
+      "source_relative": "proposal/native_run/anchor-evaluation/receipt.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/native_run/anchor-qualification/receipt.json",
+      "bytes": 1723,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-qualification\\receipt.json",
+      "sha256": "af259dc4f1887b7439c2c518306d60582fb293ec3678880abdb1b05f475b5b0a",
+      "source_alias": "implementation",
+      "source_relative": "proposal/native_run/anchor-qualification/receipt.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/native_run/candidate-initial-qualification/receipt.json",
+      "bytes": 1730,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\candidate-initial-qualification\\receipt.json",
+      "sha256": "2d05a4b2359c7cc888d001bf7d4531a3c9f6b3bcb725b26223ede5b5b5482a08",
+      "source_alias": "implementation",
+      "source_relative": "proposal/native_run/candidate-initial-qualification/receipt.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/native_run/control-initial-qualification/receipt.json",
+      "bytes": 1728,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\receipt.json",
+      "sha256": "3217beced18d63c197029696a2116e0be9aa1c53e28d45db4d28cffff2d7f70c",
+      "source_alias": "implementation",
+      "source_relative": "proposal/native_run/control-initial-qualification/receipt.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/native_run/anchor-evaluation/request.json",
+      "bytes": 4796,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\request.json",
+      "sha256": "7881c61fcc719c91214545e3e2e13000541dd64727683bb6fb2fc767867f763e",
+      "source_alias": "implementation",
+      "source_relative": "proposal/native_run/anchor-evaluation/request.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/native_run/anchor-qualification/request.json",
+      "bytes": 4437,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-qualification\\request.json",
+      "sha256": "cce612266bef12e9c1046f1cbb014af5a367b365a217ed9c61d43ebfa45edad3",
+      "source_alias": "implementation",
+      "source_relative": "proposal/native_run/anchor-qualification/request.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/native_run/candidate-initial-qualification/request.json",
+      "bytes": 4479,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\candidate-initial-qualification\\request.json",
+      "sha256": "70f7c7f85a122b4abb394c26b64b0fdc48f51b1f988d9f919a6c3de20062ba35",
+      "source_alias": "implementation",
+      "source_relative": "proposal/native_run/candidate-initial-qualification/request.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/native_run/control-initial-qualification/request.json",
+      "bytes": 4467,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\request.json",
+      "sha256": "f0ca7936cb332dc0b06cf9e8bc4a6c91a5b36fa22365acfc6b40cfae7df9127e",
+      "source_alias": "implementation",
+      "source_relative": "proposal/native_run/control-initial-qualification/request.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/native_run/control-train/request.json",
+      "bytes": 6259,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-train\\request.json",
+      "sha256": "6716c3108c8dda150ec67ca614e3dd3d3ee718bcd1dba7938c2de159371ac766",
+      "source_alias": "implementation",
+      "source_relative": "proposal/native_run/control-train/request.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/native_run/anchor-evaluation/stage-costs.json",
+      "bytes": 1472,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\stage-costs.json",
+      "sha256": "304e8d1523e361711be54c6d48e0c185ad0224eb0a825a6a8e4d4a7387a6cc04",
+      "source_alias": "implementation",
+      "source_relative": "proposal/native_run/anchor-evaluation/stage-costs.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/native_run/anchor-qualification/stage-costs.json",
+      "bytes": 1473,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-qualification\\stage-costs.json",
+      "sha256": "852577c60581a71760fed4aa79627abb154bbb216c0b963fde8e8766adf677f6",
+      "source_alias": "implementation",
+      "source_relative": "proposal/native_run/anchor-qualification/stage-costs.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/native_run/candidate-initial-qualification/stage-costs.json",
+      "bytes": 1475,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\candidate-initial-qualification\\stage-costs.json",
+      "sha256": "069b95d00c102c186d3b6d5b7346fc80b09705907fe61d9d9e862cdb8bc751b1",
+      "source_alias": "implementation",
+      "source_relative": "proposal/native_run/candidate-initial-qualification/stage-costs.json"
+    },
+    {
+      "archive_relative": "implementation/proposal/native_run/control-initial-qualification/stage-costs.json",
+      "bytes": 1473,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\stage-costs.json",
+      "sha256": "ff6a5ce58e26763c5bcb5c4460c2f1f9bf35dcc919e89894b4ea1613b3b6716a",
+      "source_alias": "implementation",
+      "source_relative": "proposal/native_run/control-initial-qualification/stage-costs.json"
+    },
+    {
+      "archive_relative": "patterns/PATTERN_RESEARCH_REPORT.txt",
+      "bytes": 7304,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\PATTERN_RESEARCH_REPORT.txt",
+      "sha256": "c3311f930c228c7f97dcb9f8dc2a951936f44b9320e0672d1a6d4dca0d97e0a1",
+      "source_alias": "patterns",
+      "source_relative": "PATTERN_RESEARCH_REPORT.txt"
+    },
+    {
+      "archive_relative": "patterns/PATTERN_FALSIFICATION_CONTINUATION.txt",
+      "bytes": 2837,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\PATTERN_FALSIFICATION_CONTINUATION.txt",
+      "sha256": "4e462fe2313ad046d4ebaff2e2ea25104a3e26644177ba547de98fa41c76a5ee",
+      "source_alias": "patterns",
+      "source_relative": "PATTERN_FALSIFICATION_CONTINUATION.txt"
+    },
+    {
+      "archive_relative": "patterns/research-receipt.json",
+      "bytes": 6208,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\research-receipt.json",
+      "sha256": "35eaf4117332ae1f7108dd1726f8e88679d17d0a02f5816a41d6666d89a2eb9e",
+      "source_alias": "patterns",
+      "source_relative": "research-receipt.json"
+    },
+    {
+      "archive_relative": "patterns/pattern-artifact-manifest.continuation.json",
+      "bytes": 9586,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\pattern-artifact-manifest.continuation.json",
+      "sha256": "f933f13aaf086b6e97fd0dd0509dd7820ca9157d74b41cfb2523f45dda33d27d",
+      "source_alias": "patterns",
+      "source_relative": "pattern-artifact-manifest.continuation.json"
+    },
+    {
+      "archive_relative": "patterns/historical_patterns_audit.py",
+      "bytes": 30698,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_audit.py",
+      "sha256": "fb923963a25bcc43d4c8a2304c5885e66e69a0f587d57115825d5abe635b4a12",
+      "source_alias": "patterns",
+      "source_relative": "historical_patterns_audit.py"
+    },
+    {
+      "archive_relative": "patterns/historical_patterns_receipt.json",
+      "bytes": 494836,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_receipt.json",
+      "sha256": "c703ab3047d9a55cff5939df0b9c12e357e3909b31c29c8cefa126ffcbb3e358",
+      "source_alias": "patterns",
+      "source_relative": "historical_patterns_receipt.json"
+    },
+    {
+      "archive_relative": "patterns/anchor_patterns.py",
+      "bytes": 30758,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor_patterns.py",
+      "sha256": "4b14b5d5319467e045f24379279e9a4722e68e62a0b35e59d59dedd3a3a46865",
+      "source_alias": "patterns",
+      "source_relative": "anchor_patterns.py"
+    },
+    {
+      "archive_relative": "patterns/anchor-patterns.json",
+      "bytes": 1421363,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor-patterns.json",
+      "sha256": "395c58b607b816d282b5e33fa4d75ba21f02668f03cc36a7d041957a0636de8d",
+      "source_alias": "patterns",
+      "source_relative": "anchor-patterns.json"
+    },
+    {
+      "archive_relative": "patterns/anchor_pattern_findings.py",
+      "bytes": 10240,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor_pattern_findings.py",
+      "sha256": "42ba2d3e236a5bea4bb20330b575bbb7cd31e5b0ff81f4e76fdd39f1be1669d6",
+      "source_alias": "patterns",
+      "source_relative": "anchor_pattern_findings.py"
+    },
+    {
+      "archive_relative": "patterns/anchor_pattern_findings_reviewed.py",
+      "bytes": 2430,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor_pattern_findings_reviewed.py",
+      "sha256": "1bae9553e92a8614553aa33acb9c5a3d5b25432746bdad17ee047473a8ed9661",
+      "source_alias": "patterns",
+      "source_relative": "anchor_pattern_findings_reviewed.py"
+    },
+    {
+      "archive_relative": "patterns/anchor-pattern-findings.json",
+      "bytes": 13278,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor-pattern-findings.json",
+      "sha256": "027606e058f9ea3727a81ec338c2e3d7fcc524d3204175d7aec4c10b39d9783a",
+      "source_alias": "patterns",
+      "source_relative": "anchor-pattern-findings.json"
+    },
+    {
+      "archive_relative": "patterns/anchor-pattern-findings-reviewed.json",
+      "bytes": 14534,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor-pattern-findings-reviewed.json",
+      "sha256": "a4da2e30801274b9eedf1b29f69b0811c402caac5cb3df44df0afa8922f342d5",
+      "source_alias": "patterns",
+      "source_relative": "anchor-pattern-findings-reviewed.json"
+    },
+    {
+      "archive_relative": "patterns/anchor-pattern-independent-review.json",
+      "bytes": 4260,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\anchor-pattern-independent-review.json",
+      "sha256": "a4e1f64904ac33fbdae3b56a3a1c1fdc9b7461975e1f420b55f052b2dd1604a9",
+      "source_alias": "patterns",
+      "source_relative": "anchor-pattern-independent-review.json"
+    },
+    {
+      "archive_relative": "patterns/intrinsic_quality_review.json",
+      "bytes": 27168,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\intrinsic_quality_review.json",
+      "sha256": "ac35cc260aab2aeb4d38bca2dcb66978dad066bda1dbc039b581c058b1ec7aec",
+      "source_alias": "patterns",
+      "source_relative": "intrinsic_quality_review.json"
+    },
+    {
+      "archive_relative": "patterns/INTRINSIC_QUALITY_REVIEW_FINAL.txt",
+      "bytes": 4648,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\INTRINSIC_QUALITY_REVIEW_FINAL.txt",
+      "sha256": "f0798149c98ee0046026c01488206bde83398b4fba05c26b13ca49bb9ae8183d",
+      "source_alias": "patterns",
+      "source_relative": "INTRINSIC_QUALITY_REVIEW_FINAL.txt"
+    },
+    {
+      "archive_relative": "patterns/shortcut_opportunity_audit.py",
+      "bytes": 7657,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\shortcut_opportunity_audit.py",
+      "sha256": "5047f379914c4cdc5c29a5b20092973f431f7792790217be3c43320bf74b00a4",
+      "source_alias": "patterns",
+      "source_relative": "shortcut_opportunity_audit.py"
+    },
+    {
+      "archive_relative": "patterns/shortcut-opportunities.json",
+      "bytes": 7868,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\shortcut-opportunities.json",
+      "sha256": "011d9dc7bd3ae42fa9fa5a0355fca971869faa12995c108f31102ccb8b5a33bc",
+      "source_alias": "patterns",
+      "source_relative": "shortcut-opportunities.json"
+    },
+    {
+      "archive_relative": "patterns/historical_patterns_shortcut_review.py",
+      "bytes": 18952,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_shortcut_review.py",
+      "sha256": "168eba0c6a60c5bdbe0b5ca13677838f03a81345d0a9ddf8c225802fa4cca444",
+      "source_alias": "patterns",
+      "source_relative": "historical_patterns_shortcut_review.py"
+    },
+    {
+      "archive_relative": "patterns/historical_patterns_shortcut_review.json",
+      "bytes": 98789,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_shortcut_review.json",
+      "sha256": "c04e1838f71116d26c5190e0aac2212d78fecd04e2d4c93f8664d6baddf11cac",
+      "source_alias": "patterns",
+      "source_relative": "historical_patterns_shortcut_review.json"
+    },
+    {
+      "archive_relative": "patterns/historical_patterns_shortcut_reproduce.py",
+      "bytes": 707,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_shortcut_reproduce.py",
+      "sha256": "843a81b9bd16907b8d41575dc15a0c07bb04c6ae430824016199ce47c6b0b797",
+      "source_alias": "patterns",
+      "source_relative": "historical_patterns_shortcut_reproduce.py"
+    },
+    {
+      "archive_relative": "patterns/historical_patterns_shortcut_reproduction.py",
+      "bytes": 7801,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_shortcut_reproduction.py",
+      "sha256": "de36f73ee43ea394fe8aa5c3fde856c138523d3d56f7a5186af137df6e6b6d4e",
+      "source_alias": "patterns",
+      "source_relative": "historical_patterns_shortcut_reproduction.py"
+    },
+    {
+      "archive_relative": "patterns/historical_patterns_shortcut_reproduced.json",
+      "bytes": 7868,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\historical_patterns_shortcut_reproduced.json",
+      "sha256": "ee36b5330fce1ea04d8afbb6a4d655c07f8bdc6c76a269d2be6696eec536281e",
+      "source_alias": "patterns",
+      "source_relative": "historical_patterns_shortcut_reproduced.json"
+    },
+    {
+      "archive_relative": "patterns/selector_controls_qualified.py",
+      "bytes": 31839,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_qualified.py",
+      "sha256": "d962f0734c028cc04d040165c642ab46f0cf7c71017968cdf3c60a94d27c1d17",
+      "source_alias": "patterns",
+      "source_relative": "selector_controls_qualified.py"
+    },
+    {
+      "archive_relative": "patterns/selector_controls_qualified.json",
+      "bytes": 1955235,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_qualified.json",
+      "sha256": "a7d1140a4a7b46280e439e48003789bf7ac70fd5c5ca40f8838822b50e494987",
+      "source_alias": "patterns",
+      "source_relative": "selector_controls_qualified.json"
+    },
+    {
+      "archive_relative": "patterns/selector_controls_v2.json",
+      "bytes": 1545405,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_v2.json",
+      "sha256": "319d022ddfe228fa97f45673b48e5d4951cbd4accfce25d43b5a80aa5925b8d0",
+      "source_alias": "patterns",
+      "source_relative": "selector_controls_v2.json"
+    },
+    {
+      "archive_relative": "patterns/selector_controls_cue_addendum.txt",
+      "bytes": 3632,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_cue_addendum.txt",
+      "sha256": "d3459d32165094444b24f2d80aabceacfb28a55212f8333cf8e762ef39b5a9a6",
+      "source_alias": "patterns",
+      "source_relative": "selector_controls_cue_addendum.txt"
+    },
+    {
+      "archive_relative": "patterns/selector_controls_lexeme_addendum.txt",
+      "bytes": 6143,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\selector_controls_lexeme_addendum.txt",
+      "sha256": "1f5596a516dfbc91518173dbe469c75b1103227c0c5c73e8f1fc7d156aa8936b",
+      "source_alias": "patterns",
+      "source_relative": "selector_controls_lexeme_addendum.txt"
+    },
+    {
+      "archive_relative": "patterns/failure_localization_review.json",
+      "bytes": 633574,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\failure_localization_review.json",
+      "sha256": "a7d96488f780da52a0de3b7538e18b8441c413e127e242f5062ae1bbf78e8bf1",
+      "source_alias": "patterns",
+      "source_relative": "failure_localization_review.json"
+    },
+    {
+      "archive_relative": "patterns/failure_localization_review_addendum.json",
+      "bytes": 8912,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\failure_localization_review_addendum.json",
+      "sha256": "9d40eb441eb07cbbe733cb01fa8eae1c5149c0e4d27d7f344ae56facc4b91cc5",
+      "source_alias": "patterns",
+      "source_relative": "failure_localization_review_addendum.json"
+    },
+    {
+      "archive_relative": "patterns/failure_localization_shape_addendum.json",
+      "bytes": 75444,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\failure_localization_shape_addendum.json",
+      "sha256": "3d651cec3fcd305fabf1695c5a6c9cf0840e5e22dcd69a630dafce15531d098c",
+      "source_alias": "patterns",
+      "source_relative": "failure_localization_shape_addendum.json"
+    },
+    {
+      "archive_relative": "patterns/answer_shape_shortcut_audit.py",
+      "bytes": 4592,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\answer_shape_shortcut_audit.py",
+      "sha256": "c0d953561d2f82965d6af09929ee3066dc9aa700f259ff2f60ecfb1707878034",
+      "source_alias": "patterns",
+      "source_relative": "answer_shape_shortcut_audit.py"
+    },
+    {
+      "archive_relative": "patterns/answer-shape-shortcuts.json",
+      "bytes": 6394,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\answer-shape-shortcuts.json",
+      "sha256": "f86ea88ba15e5fc3dd350eebb2cf8e5b46d566c99fc213a0a18c36d043ad4b09",
+      "source_alias": "patterns",
+      "source_relative": "answer-shape-shortcuts.json"
+    },
+    {
+      "archive_relative": "patterns/loowo.py",
+      "bytes": 14397,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\loowo.py",
+      "sha256": "16974422923e44909e71335a56ecbf75606664e0699d5da35fd52b5a6bec00c7",
+      "source_alias": "patterns",
+      "source_relative": "loowo.py"
+    },
+    {
+      "archive_relative": "patterns/loowo.json",
+      "bytes": 586966,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\loowo.json",
+      "sha256": "254b413f1bf043a82fa7e23ce2d21f1e8658cc723e443687b0350c3cee31bdff",
+      "source_alias": "patterns",
+      "source_relative": "loowo.json"
+    },
+    {
+      "archive_relative": "patterns/loowo.review.json",
+      "bytes": 10301,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\loowo.review.json",
+      "sha256": "8c97be5db104bfef38619659fe42c30e990c9b6445145a70283c557bde564a1c",
+      "source_alias": "patterns",
+      "source_relative": "loowo.review.json"
+    },
+    {
+      "archive_relative": "patterns/relational_fixture_falsification.py",
+      "bytes": 6066,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\relational_fixture_falsification.py",
+      "sha256": "0010aa3e8a0f2f2fa09c448fbe2a3303241a6cbe0ae62e73df683f82a001ba34",
+      "source_alias": "patterns",
+      "source_relative": "relational_fixture_falsification.py"
+    },
+    {
+      "archive_relative": "patterns/relational-falsification-receipt.json",
+      "bytes": 1593,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\relational-falsification-receipt.json",
+      "sha256": "63176d5ce5ab350389b2e073ba2e6a968be177ed1a5dc9c3585da94c245d753a",
+      "source_alias": "patterns",
+      "source_relative": "relational-falsification-receipt.json"
+    },
+    {
+      "archive_relative": "patterns/relational_value_falsification.py",
+      "bytes": 5350,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\relational_value_falsification.py",
+      "sha256": "8ca8170fb4876c9f155e5e4116716d1d4319c6218ea3cb0461dfbcb5cf518eba",
+      "source_alias": "patterns",
+      "source_relative": "relational_value_falsification.py"
+    },
+    {
+      "archive_relative": "patterns/relational-value-falsification-receipt.json",
+      "bytes": 1833,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\relational-value-falsification-receipt.json",
+      "sha256": "7163a0db9fd6f887dd527125d4dd9d355d14c58c7e12fdbe9456025bc7d2c79e",
+      "source_alias": "patterns",
+      "source_relative": "relational-value-falsification-receipt.json"
+    },
+    {
+      "archive_relative": "patterns/claim-falsification-ledger.v2.json",
+      "bytes": 7749,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\claim-falsification-ledger.v2.json",
+      "sha256": "19c550ad357aa90241e1dce080ed8c68c003e59309a47ea8e2179521b033c751",
+      "source_alias": "patterns",
+      "source_relative": "claim-falsification-ledger.v2.json"
+    },
+    {
+      "archive_relative": "patterns/auxiliary-readouts.v2.json",
+      "bytes": 2644,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\auxiliary-readouts.v2.json",
+      "sha256": "96768731ef54f94b1f78ef936f1a83de67ce40ced2920f6efffe2bc0d6066db0",
+      "source_alias": "patterns",
+      "source_relative": "auxiliary-readouts.v2.json"
+    },
+    {
+      "archive_relative": "patterns/proposal-repeat-review.json",
+      "bytes": 250464,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposal-repeat-review.json",
+      "sha256": "45544a08ad100be9db3028475a14548df6ab60d5f4a2f2a63212b2fc3864d054",
+      "source_alias": "patterns",
+      "source_relative": "proposal-repeat-review.json"
+    },
+    {
+      "archive_relative": "patterns/NEXT_TEST_READINESS.txt",
+      "bytes": 1723,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\NEXT_TEST_READINESS.txt",
+      "sha256": "f04af6cb98ea16846d026f4fa478c8ee8f2fa54e811396f23ca893c086d1e35b",
+      "source_alias": "patterns",
+      "source_relative": "NEXT_TEST_READINESS.txt"
+    },
+    {
+      "archive_relative": "patterns/launch-readiness-policy.json",
+      "bytes": 1191,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\launch-readiness-policy.json",
+      "sha256": "a0badfa92e40a7c864c6064a60b3ec53c1279ba9415ed61eba413f6e9f8e0e13",
+      "source_alias": "patterns",
+      "source_relative": "launch-readiness-policy.json"
+    },
+    {
+      "archive_relative": "patterns/proposed-repeat/study.json",
+      "bytes": 4513,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\study.json",
+      "sha256": "4e96767bca1286b038fc39f3342e9ebfafaebb8e4a9b07bad7ad262d1b6ffef4",
+      "source_alias": "patterns",
+      "source_relative": "proposed-repeat/study.json"
+    },
+    {
+      "archive_relative": "patterns/proposed-repeat/proposal.json",
+      "bytes": 25307,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\proposal.json",
+      "sha256": "066068fbbecf14abc7b7fd0f2ef4e89c1f00b39955a541d3e9b862c9db019e1e",
+      "source_alias": "patterns",
+      "source_relative": "proposed-repeat/proposal.json"
+    },
+    {
+      "archive_relative": "patterns/proposed-repeat/preparation.json",
+      "bytes": 732,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\preparation.json",
+      "sha256": "be78d4bd975dd5248589e8e7651c26fe8f67859888df6bc633b8a3ff3c997ff0",
+      "source_alias": "patterns",
+      "source_relative": "proposed-repeat/preparation.json"
+    },
+    {
+      "archive_relative": "patterns/proposed-repeat/source-lock-audit.json",
+      "bytes": 650,
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69\\proposed-repeat\\source-lock-audit.json",
+      "sha256": "0b41f5936f897f2dfd87a3544a96e3d206648f359b71a875cc9df7c9622b3a63",
+      "source_alias": "patterns",
+      "source_relative": "proposed-repeat/source-lock-audit.json"
+    }
+  ],
+  "mandatory_count": 121,
+  "mandatory_exclusions": [
+    "Any model/checkpoint,delta/teacher safetensors,environment,venv,cache or temp tree",
+    "implementation/proposal/native-grant.json",
+    "implementation/proposal/ownership-native.json",
+    "implementation/proposal/native_run/run-owner-lock.json",
+    "closeout ownership/process/thread snapshots and git status/patch dumps",
+    "implementation git-status/existing-change patches and all scratch/tokenizer/native caches",
+    "patterns native-worker snapshot and operational readiness ownership/process data",
+    "Legacy implementation/corpus and emptyfixture-corpus; corpus-v2 is authoritative. Record original hashes if history merits retaining.",
+    "Generated large relational fixture JSONL may be omitted with exact original hashes/receipt and deterministic generating scripts retained. Label fixtures engineering-only.",
+    "Published-source CONFIRM002 file contents or banks: retain only inventory hashes, never source metadata results."
+  ],
+  "mandatory_total_bytes": 23009811,
+  "native_or_GPU_work": false,
+  "old_completed_receipt_snapshot": {
+    "already_in_package": true,
+    "avoid_redundant_second_archive_copy": true,
+    "bytes": 6380789,
+    "copies": [
+      {
+        "bytes": 494103,
+        "original_copy_and_manifest_match": true,
+        "relative": "A-evaluation\\receipt.json",
+        "sha256": "b66809d7ab64043661ea94fc79f00149bde024ec143dc0397ea0d4e057a2b948"
+      },
+      {
+        "bytes": 980,
+        "original_copy_and_manifest_match": true,
+        "relative": "A-evaluation\\request.json",
+        "sha256": "fc4c56f980c3ac47678b86e3b50bece293bb76091fddabe2786d4564e98c2ff4"
+      },
+      {
+        "bytes": 1506,
+        "original_copy_and_manifest_match": true,
+        "relative": "A-qualification\\receipt.json",
+        "sha256": "12cb266dbc745dee46c614ae21d593d09cd9e449f65b8e8669d5ee281fd6c7a3"
+      },
+      {
+        "bytes": 979,
+        "original_copy_and_manifest_match": true,
+        "relative": "A-qualification\\request.json",
+        "sha256": "3b7d2c007ed73898f0f9860fe0971877becea51e26c0e7b8e13e6648b1810b9d"
+      },
+      {
+        "bytes": 118987,
+        "original_copy_and_manifest_match": true,
+        "relative": "B-distill\\delta.json",
+        "sha256": "f146e755ff36b0a1b83aa6f55d3ce917dfc01079f00f8f4cab6f93c0bdea064f"
+      },
+      {
+        "bytes": 109083,
+        "original_copy_and_manifest_match": true,
+        "relative": "B-distill\\receipt.json",
+        "sha256": "a3b233497a66c029e1317da188f960ee6193f139afa3c0167e537e0dadc61aa2"
+      },
+      {
+        "bytes": 979,
+        "original_copy_and_manifest_match": true,
+        "relative": "B-distill\\request.json",
+        "sha256": "2f9f258740761adf4b898a2d66a0a9186f715356880e64daf78ddaa9dd1d88bb"
+      },
+      {
+        "bytes": 1634,
+        "original_copy_and_manifest_match": true,
+        "relative": "B-distilled-qualification\\receipt.json",
+        "sha256": "a3345d412b5816a875b6daca5ba3b3c43d72be38ba1cc5e9de7bce06424283f2"
+      },
+      {
+        "bytes": 1103,
+        "original_copy_and_manifest_match": true,
+        "relative": "B-distilled-qualification\\request.json",
+        "sha256": "39b219021fd8f202310a3b7c4e49926047e53ba3fb0c59d96be3e7afb703ff9a"
+      },
+      {
+        "bytes": 764734,
+        "original_copy_and_manifest_match": true,
+        "relative": "B-evaluation\\receipt.json",
+        "sha256": "0ceda58b5586e58f4db59cae9e9a46ac8e7b285831c059697a14476b383e95f5"
+      },
+      {
+        "bytes": 1104,
+        "original_copy_and_manifest_match": true,
+        "relative": "B-evaluation\\request.json",
+        "sha256": "24ad40c6975cc9049a553f6fb87079fc5daf8c88be1b4b05fdfb00e915f1074b"
+      },
+      {
+        "bytes": 1510,
+        "original_copy_and_manifest_match": true,
+        "relative": "B-initial-qualification\\receipt.json",
+        "sha256": "f6768a5e6bdf895485d4e5ba589ee59ac41488f225283fa426606710a7f3a9b5"
+      },
+      {
+        "bytes": 979,
+        "original_copy_and_manifest_match": true,
+        "relative": "B-initial-qualification\\request.json",
+        "sha256": "a399e24eec8b37903193104c0632d4ea9fc1ce905ab185db848b0a206c701b7f"
+      },
+      {
+        "bytes": 260815,
+        "original_copy_and_manifest_match": true,
+        "relative": "B-recover\\delta.json",
+        "sha256": "c9898a3b82d2a9581573d66985a83aefd8a3f351babade777ba4be9a8d78e86f"
+      },
+      {
+        "bytes": 242503,
+        "original_copy_and_manifest_match": true,
+        "relative": "B-recover\\receipt.json",
+        "sha256": "04dbe5f8249d6893383226546ba240dc72cf99099af82619e7978925361f779a"
+      },
+      {
+        "bytes": 1103,
+        "original_copy_and_manifest_match": true,
+        "relative": "B-recover\\request.json",
+        "sha256": "163ea7177dfbd9ba5ace561ad924852a2cfa904b460dd77cfd8aea98c5a8fddd"
+      },
+      {
+        "bytes": 1634,
+        "original_copy_and_manifest_match": true,
+        "relative": "B-recovered-qualification\\receipt.json",
+        "sha256": "4d942c85ac27d52af364f144248f743e029a505a55ec58751f73ced90188afb0"
+      },
+      {
+        "bytes": 1103,
+        "original_copy_and_manifest_match": true,
+        "relative": "B-recovered-qualification\\request.json",
+        "sha256": "94f8740823491162134d0d60b3a802eeae3cfcc318c924288a48642ca2bfcdf1"
+      },
+      {
+        "bytes": 135250,
+        "original_copy_and_manifest_match": true,
+        "relative": "C-distill\\delta.json",
+        "sha256": "f6ba10521410890b74226ff52d0d6f6e3b08451458d6d17416f713e9f43bfb3a"
+      },
+      {
+        "bytes": 125346,
+        "original_copy_and_manifest_match": true,
+        "relative": "C-distill\\receipt.json",
+        "sha256": "088469bc2a227e71d4f99e42dee8effc45adebaa7524c77ae1f8a8547e8fa069"
+      },
+      {
+        "bytes": 979,
+        "original_copy_and_manifest_match": true,
+        "relative": "C-distill\\request.json",
+        "sha256": "a60708cc6798b6cb3177cea850eaff4699d34b14acd9aefaf05a9874296f5037"
+      },
+      {
+        "bytes": 1631,
+        "original_copy_and_manifest_match": true,
+        "relative": "C-distilled-qualification\\receipt.json",
+        "sha256": "0063e9eb4cd4df81dd7d5392c0ee2bf6ffba3c2dd1de7d64946d143d77a5270b"
+      },
+      {
+        "bytes": 1103,
+        "original_copy_and_manifest_match": true,
+        "relative": "C-distilled-qualification\\request.json",
+        "sha256": "4b0ee7982129a9bf81f1a13f5f641be3ef4bfc36cd6a2302477d9240cf0c3164"
+      },
+      {
+        "bytes": 791436,
+        "original_copy_and_manifest_match": true,
+        "relative": "C-evaluation\\receipt.json",
+        "sha256": "4a1dc38e91f1a653f2b249f433312350252f5d3cd2c50575b404dbafc3bc5e46"
+      },
+      {
+        "bytes": 1104,
+        "original_copy_and_manifest_match": true,
+        "relative": "C-evaluation\\request.json",
+        "sha256": "0ff0b8f337371bdf9e16ed686ee55963980e85f7ed901ddd68c19d14fa2ea502"
+      },
+      {
+        "bytes": 1508,
+        "original_copy_and_manifest_match": true,
+        "relative": "C-initial-qualification\\receipt.json",
+        "sha256": "34c1d9eda50a0fc4491249e2bc2a283c95a3bea12388c55359978bc91fa1cde4"
+      },
+      {
+        "bytes": 979,
+        "original_copy_and_manifest_match": true,
+        "relative": "C-initial-qualification\\request.json",
+        "sha256": "c3d81a072e3d32656ad683110efd79dacf45f501ddb370c39839cf5f2b701bb7"
+      },
+      {
+        "bytes": 277072,
+        "original_copy_and_manifest_match": true,
+        "relative": "C-recover\\delta.json",
+        "sha256": "67fab0d53787548cdfc74760558e7d0a0fc6d4ce424631c8969bf73e30511c1b"
+      },
+      {
+        "bytes": 258760,
+        "original_copy_and_manifest_match": true,
+        "relative": "C-recover\\receipt.json",
+        "sha256": "fa10aee72f986c91c41c175257d67f25a7e418b198e9e09b2990ea8d56ae2888"
+      },
+      {
+        "bytes": 1103,
+        "original_copy_and_manifest_match": true,
+        "relative": "C-recover\\request.json",
+        "sha256": "5cee320e86fecc435bf4eddfa81412412bf350c05e339a5126015a373fed3a1b"
+      },
+      {
+        "bytes": 1632,
+        "original_copy_and_manifest_match": true,
+        "relative": "C-recovered-qualification\\receipt.json",
+        "sha256": "223a2c22c6b42a1020d735a1fd8917f2878dbb6fbe4c05c582c528a047dc3eab"
+      },
+      {
+        "bytes": 1103,
+        "original_copy_and_manifest_match": true,
+        "relative": "C-recovered-qualification\\request.json",
+        "sha256": "de3e48c934d8063f0aa79c120654f26aa9b66c0cc9e385f3468813b0f4fe92e6"
+      },
+      {
+        "bytes": 135603,
+        "original_copy_and_manifest_match": true,
+        "relative": "D-distill\\delta.json",
+        "sha256": "d3839b3ac95035f333087959db291ed53f0919a044088310ba56246fab42560c"
+      },
+      {
+        "bytes": 125414,
+        "original_copy_and_manifest_match": true,
+        "relative": "D-distill\\receipt.json",
+        "sha256": "30aa310abb46a38728844555afeabc309da2ccbf251a1aeb6fb9145ce15a0e17"
+      },
+      {
+        "bytes": 979,
+        "original_copy_and_manifest_match": true,
+        "relative": "D-distill\\request.json",
+        "sha256": "ab8671252b9c5ef22aa6911a12d42eaf3021324ec54a81fb120e4118f75ed650"
+      },
+      {
+        "bytes": 1632,
+        "original_copy_and_manifest_match": true,
+        "relative": "D-distilled-qualification\\receipt.json",
+        "sha256": "d8784c2aaeab12b2572aaf28d5b1ae0243283000ca13fb89581609038debf674"
+      },
+      {
+        "bytes": 1103,
+        "original_copy_and_manifest_match": true,
+        "relative": "D-distilled-qualification\\request.json",
+        "sha256": "83830c60e6d97473f7864e8b90f109443f274693f9b8dbbcedeead8952a369db"
+      },
+      {
+        "bytes": 791662,
+        "original_copy_and_manifest_match": true,
+        "relative": "D-evaluation\\receipt.json",
+        "sha256": "32f51c000b397577cd9461049709345768472be79a57f354cc03e8bacbab6d61"
+      },
+      {
+        "bytes": 1104,
+        "original_copy_and_manifest_match": true,
+        "relative": "D-evaluation\\request.json",
+        "sha256": "212660ca11c60b60fa21b738a8076125afbbaba89c20ce6a53407a5b6969d970"
+      },
+      {
+        "bytes": 1512,
+        "original_copy_and_manifest_match": true,
+        "relative": "D-initial-qualification\\receipt.json",
+        "sha256": "0e46b6f88ea0b670fb864d098e2292b1218042cdd2f84a0385ba7c7226edc106"
+      },
+      {
+        "bytes": 979,
+        "original_copy_and_manifest_match": true,
+        "relative": "D-initial-qualification\\request.json",
+        "sha256": "1b6b604841ef56ff3fcb37616a6f000d7fbbc55c6d46a0d9531845d752f4a56f"
+      },
+      {
+        "bytes": 277682,
+        "original_copy_and_manifest_match": true,
+        "relative": "D-recover\\delta.json",
+        "sha256": "6f860af7d7888f34ee3b5a23a35e53bbdd7e9dde482b5828941e42ecc46176be"
+      },
+      {
+        "bytes": 259077,
+        "original_copy_and_manifest_match": true,
+        "relative": "D-recover\\receipt.json",
+        "sha256": "43542c16a9325d050911ca016fb03f9e9ffa2686697610766405119c3999f6fd"
+      },
+      {
+        "bytes": 1103,
+        "original_copy_and_manifest_match": true,
+        "relative": "D-recover\\request.json",
+        "sha256": "28bd4fc874314735a0375cbaf3159f18469f479548b46bd071822b3d427aa947"
+      },
+      {
+        "bytes": 1635,
+        "original_copy_and_manifest_match": true,
+        "relative": "D-recovered-qualification\\receipt.json",
+        "sha256": "a0a0763ae4e711351dcceabb955013bc889eb1a3312ede9e89841f742619a392"
+      },
+      {
+        "bytes": 1103,
+        "original_copy_and_manifest_match": true,
+        "relative": "D-recovered-qualification\\request.json",
+        "sha256": "be2d39bedba9fcef393a0520253364309c949f2a2c2a400f0faf40be6339e532"
+      },
+      {
+        "bytes": 1023829,
+        "original_copy_and_manifest_match": true,
+        "relative": "comparison.json",
+        "sha256": "983ad4922833fa4fe2be866fd27421ed1e0aef1befe01c7b67f38405b399084e"
+      },
+      {
+        "bytes": 75774,
+        "original_copy_and_manifest_match": true,
+        "relative": "teacher\\receipt.json",
+        "sha256": "409b39965cd7b11e9399b5977d86ce5c8232269db1d585764e23dfd6f682c112"
+      },
+      {
+        "bytes": 979,
+        "original_copy_and_manifest_match": true,
+        "relative": "teacher\\request.json",
+        "sha256": "1d6fe81e89f5b593eb951d196b7407ef2665847eac62952d8092a4184b2bb04d"
+      },
+      {
+        "bytes": 75774,
+        "original_copy_and_manifest_match": true,
+        "relative": "teacher\\teacher.json",
+        "sha256": "409b39965cd7b11e9399b5977d86ce5c8232269db1d585764e23dfd6f682c112"
+      }
+    ],
+    "files": 50
+  },
+  "partial_new_native_run": {
+    "comparison_available": false,
+    "completed_anchor_DEV_measurements": 1,
+    "completed_qualifications": 3,
+    "completed_training_deltas": 0,
+    "completed_training_receipts": 0,
+    "control_optimizer_updates_completed": null,
+    "failure_RAM_sample": null,
+    "failure_phase": null,
+    "files": {
+      "anchor-evaluation/receipt.json": {
+        "bytes": 999761,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\receipt.json",
+        "sha256": "5e9a1843c2f5f7229d5a073c632078ebfa0174143accac0c72d1b23975e85d37"
+      },
+      "anchor-evaluation/request.json": {
+        "bytes": 4796,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\request.json",
+        "sha256": "7881c61fcc719c91214545e3e2e13000541dd64727683bb6fb2fc767867f763e"
+      },
+      "anchor-evaluation/stage-costs.json": {
+        "bytes": 1472,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-evaluation\\stage-costs.json",
+        "sha256": "304e8d1523e361711be54c6d48e0c185ad0224eb0a825a6a8e4d4a7387a6cc04"
+      },
+      "anchor-qualification/receipt.json": {
+        "bytes": 1723,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-qualification\\receipt.json",
+        "sha256": "af259dc4f1887b7439c2c518306d60582fb293ec3678880abdb1b05f475b5b0a"
+      },
+      "anchor-qualification/request.json": {
+        "bytes": 4437,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-qualification\\request.json",
+        "sha256": "cce612266bef12e9c1046f1cbb014af5a367b365a217ed9c61d43ebfa45edad3"
+      },
+      "anchor-qualification/stage-costs.json": {
+        "bytes": 1473,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\anchor-qualification\\stage-costs.json",
+        "sha256": "852577c60581a71760fed4aa79627abb154bbb216c0b963fde8e8766adf677f6"
+      },
+      "candidate-initial-qualification/receipt.json": {
+        "bytes": 1730,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\candidate-initial-qualification\\receipt.json",
+        "sha256": "2d05a4b2359c7cc888d001bf7d4531a3c9f6b3bcb725b26223ede5b5b5482a08"
+      },
+      "candidate-initial-qualification/request.json": {
+        "bytes": 4479,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\candidate-initial-qualification\\request.json",
+        "sha256": "70f7c7f85a122b4abb394c26b64b0fdc48f51b1f988d9f919a6c3de20062ba35"
+      },
+      "candidate-initial-qualification/stage-costs.json": {
+        "bytes": 1475,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\candidate-initial-qualification\\stage-costs.json",
+        "sha256": "069b95d00c102c186d3b6d5b7346fc80b09705907fe61d9d9e862cdb8bc751b1"
+      },
+      "control-initial-qualification/receipt.json": {
+        "bytes": 1728,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\receipt.json",
+        "sha256": "3217beced18d63c197029696a2116e0be9aa1c53e28d45db4d28cffff2d7f70c"
+      },
+      "control-initial-qualification/request.json": {
+        "bytes": 4467,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\request.json",
+        "sha256": "f0ca7936cb332dc0b06cf9e8bc4a6c91a5b36fa22365acfc6b40cfae7df9127e"
+      },
+      "control-initial-qualification/stage-costs.json": {
+        "bytes": 1473,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-initial-qualification\\stage-costs.json",
+        "sha256": "ff6a5ce58e26763c5bcb5c4460c2f1f9bf35dcc919e89894b4ea1613b3b6716a"
+      },
+      "control-train/request.json": {
+        "bytes": 6259,
+        "path": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69\\proposal\\native_run\\control-train\\request.json",
+        "sha256": "6716c3108c8dda150ec67ca614e3dd3d3ee718bcd1dba7938c2de159371ac766"
+      }
+    },
+    "ordering_hypothesis_tested": false,
+    "receipts": 4,
+    "requests": 5,
+    "stage_costs": 4
+  },
+  "portability_requirements": [
+    "Archive source bytes unchanged, record current source SHA256 and byte count plus source-relative alias for every copied file.",
+    "Expose scientific archive aliases closeout/,implementation/,patterns/ and a separate repository_package alias; no ownership/grant aliases should become executable paths.",
+    "Raw requests/proposals retain historical grant/ownership/path references. Their actual operational files must remain omitted and index must label them historical/non-executable.",
+    "Old run JSON aliases map only to already-preserved completed_receipts copies; model/source/delta/teacher binary dependencies remain local/omitted.",
+    "Historical audit scripts contain absolute paths and expected historicalHEAD. Do not advertise direct unmodified execution in a clone; provide a read-only path adapter/portable verification entrypoint and document historical identity gates.",
+    "Latest qualified selector script reads selector_controls_v2.json for count-preservation checks, so that otherwise large predecessor is a necessary dependency.",
+    "Preserve stale manifest values/history but use current per-file hashes as new archive authority. An omitted reproduction/large draft needs an explicit hash/status/supersession entry, not a silent broken link.",
+    "One authoritative large output per analysis plus necessary dependencies; include correction scripts and compact drafts/notes rather than copying every redundant row payload."
+  ],
+  "proposed_history_labels": {
+    "claim-falsification-ledger.v2.json": "LATEST_CLAIM_BOUNDARY_LEDGER",
+    "failure_localization_review.json": "HISTORICAL_BASE_REVIEW_READ_WITH_DECIMAL_AND_SHAPE_ADDENDA",
+    "proposed-repeat": "PLAN_ONLY_UNEXECUTED_NO_GRANT",
+    "provenance_receipt.json": "SUPERSEDED_AUDITOR_B_LORA_NAME_ASSUMPTION",
+    "provenance_receipt_v2.json": "AUTHORITATIVE_COMPLETED_MATRIX_PROVENANCE",
+    "provenance_report_review.json": "SUPERSEDED_AUDITOR_TEXT_SPACING_PREDICATE",
+    "selector_controls.json": "SUPERSEDED_AUDITOR_TEMPLATE_INDEX_FALSE_NEGATIVE",
+    "selector_controls_final.json": "SUPERSEDED_AUDITOR_JSON_KEY_NORMALIZATION_FALSE_NEGATIVE",
+    "selector_controls_qualified.json": "AUTHORITATIVE_CROSS_TASK_VALUES_AND_ANSWER_SHAPE_CAVEAT",
+    "selector_controls_v2.json": "PASS_REQUIRED_DEPENDENCY_RAW_NUMERIC_LEXEME_COUNTS",
+    "selector_controls_verified.json": "SUPERSEDED_INTERPRETATION_BEFORE_ANSWER_SHAPE_QUALIFICATION"
+  },
+  "publication_permission_is_not_native_authorization": true,
+  "recommended_compact_history_files": {
+    "closeout": [
+      "provenance_audit.py",
+      "provenance_receipt.json",
+      "provenance_report_review.json",
+      "pairing_audit_v2.py",
+      "pairing_audit.json",
+      "pairing_audit_v2.json",
+      "pairing_report_review.json",
+      "resources_report_review.json"
+    ],
+    "implementation": [
+      "verify_implementation.py",
+      "verification.json",
+      "verification-junit.xml",
+      "verification-output.txt"
+    ],
+    "patterns": [
+      "INTRINSIC_QUALITY_REVIEW.txt",
+      "selector_controls.py",
+      "selector_controls_v2.py",
+      "selector_controls_final.py",
+      "selector_controls_verified.py",
+      "claim-falsification-ledger.json",
+      "auxiliary-readouts.json",
+      "pattern-artifact-manifest.json",
+      "pattern-artifact-manifest.v2.json"
+    ]
+  },
+  "repo_or_original_external_files_modified": false,
+  "schema": "Rineya-quality/publication-inventory-review-v1",
+  "scope": "Read-only inventory/hash/manifest/snapshot review; new receipt only. No repo edits, staging, commit, push or native/model work by reviewer.",
+  "sealed_confirmation_results_parsed": false,
+  "source_inventory_hash_only": {
+    "native_snapshot": {
+      "confirmation_named_metadata_hash_only": true,
+      "exact_lock_match": true,
+      "file_count": 17,
+      "files": {
+        ".gitattributes": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930",
+        "BUILD.json": "166ec2c792ccb5ea21640c8367fb0a54d67d78b76440dc69e5879b003146fb5b",
+        "CORE.json": "f89622c12b90c21a3b1af9afd0d00192420e21b9def1a2a9fe8b793934bcc260",
+        "LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+        "PROMOTION.json": "e97f9c0a53bebcae586f17b3d971aa3bbe95d474a586238dafa965b34cadecfc",
+        "README.md": "d8f5cfdc0fb906ac5d3ab21a0967c7ee33b5d15fb3b129f9600aa0d31771c76b",
+        "config.json": "a3c57d2869c3a44c0ea88f6c5538c6db47b5092986e098f076dddac5d6524ff4",
+        "evidence\\AUDIT_CONFIRM002.json": "3a74c035f9e30b28df054bbc30ffb5530eae2e2bd3423c498d695c07910f8d88",
+        "evidence\\CONFIRM002_BUILD.json": "166ec2c792ccb5ea21640c8367fb0a54d67d78b76440dc69e5879b003146fb5b",
+        "evidence\\CONFIRM002_RESULT.json": "a5cf0a6dd5714d5de82738d0d9218d71c709cca7736526034237cacdd1f5e401",
+        "evidence\\CONFIRM002_RESULTS.md": "51c7a084b525fa94a349d00d9929eb89bf443268a6c8cde6b73d58e4f180c0e7",
+        "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+        "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "model.safetensors": "a4d73353db9a91cbba7b4cd7c8fe4fe6822670d10fe523b26a6d651bb9509567",
+        "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+        "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      },
+      "inventory_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-rineya-spikingbrain-hybrid-memory-v1\\experiments\\rineya_spikingbrain_hybrid_memory_v1\\.native-source\\titan-transition",
+      "weight_bytes_hashed_but_model_not_loaded": true
+    },
+    "published_source": {
+      "confirmation_named_metadata_hash_only": true,
+      "exact_lock_match": true,
+      "file_count": 17,
+      "files": {
+        ".gitattributes": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930",
+        "BUILD.json": "166ec2c792ccb5ea21640c8367fb0a54d67d78b76440dc69e5879b003146fb5b",
+        "CORE.json": "f89622c12b90c21a3b1af9afd0d00192420e21b9def1a2a9fe8b793934bcc260",
+        "LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+        "PROMOTION.json": "e97f9c0a53bebcae586f17b3d971aa3bbe95d474a586238dafa965b34cadecfc",
+        "README.md": "d8f5cfdc0fb906ac5d3ab21a0967c7ee33b5d15fb3b129f9600aa0d31771c76b",
+        "config.json": "a3c57d2869c3a44c0ea88f6c5538c6db47b5092986e098f076dddac5d6524ff4",
+        "evidence\\AUDIT_CONFIRM002.json": "3a74c035f9e30b28df054bbc30ffb5530eae2e2bd3423c498d695c07910f8d88",
+        "evidence\\CONFIRM002_BUILD.json": "166ec2c792ccb5ea21640c8367fb0a54d67d78b76440dc69e5879b003146fb5b",
+        "evidence\\CONFIRM002_RESULT.json": "a5cf0a6dd5714d5de82738d0d9218d71c709cca7736526034237cacdd1f5e401",
+        "evidence\\CONFIRM002_RESULTS.md": "51c7a084b525fa94a349d00d9929eb89bf443268a6c8cde6b73d58e4f180c0e7",
+        "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+        "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "model.safetensors": "a4d73353db9a91cbba7b4cd7c8fe4fe6822670d10fe523b26a6d651bb9509567",
+        "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+        "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      },
+      "inventory_sha256": "c169fba225bfa58804c966caba97c147d9239b7dbcd2f3b7be87cdd05e44125a",
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze",
+      "weight_bytes_hashed_but_model_not_loaded": true
+    }
+  },
+  "source_roots": {
+    "closeout": "C:\\Users\\clclc\\BusinessProject\\sbhm-001-audits\\20261005-closeout-01a10d69",
+    "implementation": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-implementation-01a10d69",
+    "patterns": "C:\\Users\\clclc\\BusinessProject\\rineya-quality-records\\update-order-v1\\20261005-pattern-research-01a10d69"
+  },
+  "status": "PASS_CURATED_PUBLICATION_INVENTORY",
+  "torch_import": false,
+  "user_facing_date": "2026-10-09"
+}
