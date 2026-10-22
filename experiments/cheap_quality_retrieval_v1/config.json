@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "construction_seed": 2026092906,
+  "random_retriever_seed": 710233,
+  "single_hop_worlds": 32,
+  "two_hop_worlds": 32,
+  "irrelevant_sentences_per_world": 64,
+  "positions": ["early", "middle", "late"],
+  "context_token_budgets": [128, 256, 512],
+  "methods": ["lead_prefix", "seeded_random", "bm25_one_hop", "bm25_two_pass"],
+  "bm25": {"k1": 1.2, "b": 0.75, "token_pattern": "[A-Za-z0-9]+", "casefold": true, "query_term_frequency": "binary", "stopwords": "none", "ties": "source order", "two_pass_seed_docs": 1, "two_pass_seed_retained_first": true},
+  "padding_suffix_candidates": ["\n", " filler", " x", " 0", " "],
+  "sentence_separator": "\n",
+  "tokenizer": {
+    "path": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Titan-Experimental-1.0.0-devfreeze/tokenizer.json",
+    "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizers_version": "0.22.2",
+    "add_special_tokens": false,
+    "scope": "Raw factual context + recorded irrelevant padding only; question/chat overhead excluded."
+  },
+  "resource_budget": {"max_tree_rss_bytes": 536870912, "max_wall_seconds": 900, "max_output_bytes": 52428800, "cpu_worker_count": 1, "gpu_compute": false}
+}

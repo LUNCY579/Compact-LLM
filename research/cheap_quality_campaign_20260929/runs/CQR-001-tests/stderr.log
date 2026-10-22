@@ -1,0 +1,33 @@
+test_all_public_methods_are_deterministic_exact_permutations (test_benchmark.RetrievalTests.test_all_public_methods_are_deterministic_exact_permutations) ... FAIL
+test_duplicate_sentence_identity_fails_closed (test_benchmark.RetrievalTests.test_duplicate_sentence_identity_fails_closed) ... ok
+test_native_tokenizer_exact_consumed_budgets (test_benchmark.RetrievalTests.test_native_tokenizer_exact_consumed_budgets) ... ok
+test_padding_failure_does_not_relax_budget (test_benchmark.RetrievalTests.test_padding_failure_does_not_relax_budget) ... ok
+test_public_schema_rejects_support_answer_and_type_leakage (test_benchmark.RetrievalTests.test_public_schema_rejects_support_answer_and_type_leakage) ... ok
+test_random_identity_ranking_is_paired_across_context_positions (test_benchmark.RetrievalTests.test_random_identity_ranking_is_paired_across_context_positions) ... ok
+test_restore_source_order_and_exact_budget_independently (test_benchmark.RetrievalTests.test_restore_source_order_and_exact_budget_independently) ... ok
+test_two_support_full_recall_requires_both (test_benchmark.RetrievalTests.test_two_support_full_recall_requires_both) ... ok
+test_world_clusters_keep_three_positions_as_one_world (test_benchmark.RetrievalTests.test_world_clusters_keep_three_positions_as_one_world) ... ok
+
+======================================================================
+FAIL: test_all_public_methods_are_deterministic_exact_permutations (test_benchmark.RetrievalTests.test_all_public_methods_are_deterministic_exact_permutations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\clclc\.codex\worktrees\rineya-quality-retrieval\ChatBubble-rvs001\experiments\cheap_quality_retrieval_v1\tests\test_benchmark.py", line 53, in test_all_public_methods_are_deterministic_exact_permutations
+    self.assertEqual(rank_public(question, self.sentences, 'bm25_two_pass', 0)[:2], [0, 1])
+AssertionError: Lists differ: [0, 2] != [0, 1]
+
+First differing element 1:
+2
+1
+
+- [0, 2]
+?     ^
+
++ [0, 1]
+?     ^
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.361s
+
+FAILED (failures=1)
