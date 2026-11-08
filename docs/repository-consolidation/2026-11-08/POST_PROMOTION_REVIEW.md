@@ -17,7 +17,7 @@ The 28 preexisting tracked entries in `experiments/titan_third_skill_v1/` were v
 
 To avoid duplicating >100 MB of historical tokenizer/sidecar assets in the default tree, the directory `experiments/titan_third_skill_v1/arms/` and `experiments/titan_third_skill_v1/poststop_null/arms/` are **not imported**. They remain reachable through the source commit retained as a merge parent. No original main file is overwritten or deleted. The copied evidence is historical; no training, GPU evaluation, or tests were rerun.
 
-**Scientific result:** the C donor passed the acquisition A1 gate, but TT+C failed the preregistered T-retention threshold at each tested beta, so Stage B remained sealed. See [RESULTS_STAGE_A.md](../../experiments/titan_third_skill_v1/RESULTS_STAGE_A.md).
+**Scientific result:** the C donor passed the acquisition A1 gate, but TT+C failed the preregistered T-retention threshold at each tested beta, so Stage B remained sealed. See [RESULTS_STAGE_A.md](../../../experiments/titan_third_skill_v1/RESULTS_STAGE_A.md).
 
 ## Pruning and remaining work
 
@@ -28,3 +28,7 @@ Keep CRS/native qualification, incompatible shared-path experiments, historical 
 ## Second selective merge: geometric / quality-repair archive
 
 Source: `research/triskill-geo001-parentq` at `ae026104a0ba42ec44f9c2aa4db8920d161212f1`. Five previously missing experiment subtrees were imported at their **exact Git tree IDs**: `research_evidence_20261005`, `titan_quality_repair_diagnostics_v1`, `titan_quality_repair_v1`, `triskill_geo001_parentq_v1`, `triskill_geometric_pilot_v1`. These record the geometric-pilot CPU-only mechanics, unfrozen PARENTQ revision, offline Titan-Transition quality-repair source, diagnostics, and reviewed ~4.5 MB evidence archive. Their source reports explicitly deny native quality qualification or autonomous launch approval. Scoped `.gitattributes` was extended without removing the existing main rule, to preserve byte-bound historical receipts. The existing `experiments/titan_third_skill_v1` differs between histories and is **deliberately kept as-is on main** (the reviewed Stage A merge takes precedence). No experiment code already on main is replaced. Source history is retained as a second merge parent. Branch deletion remains unsupported by this connected GitHub interface.
+
+## Post-merge verification
+
+Two direct two-parent commits now exist on `main`: `28e8b397967d5bc6a80d5e6604ab6d5c5bacd304` and `0ba5af9da42af969bbb8ae09cda209ac60f9a40c`. GitHub compare confirms `codex/triskill-stage-a` and `research/triskill-geo001-parentq` are now entirely behind `main`, as are the previously contained `codex/exp-peer-stabilizer-matrix` and `research/ced-dual28-local-p1-preparation-v1`. **At least four** live branches are strict ancestors of the new main; their branch names were not deleted. Read-only tree checks established only intended root changes. No runtime tests or native model evaluation were executed in this consolidation.

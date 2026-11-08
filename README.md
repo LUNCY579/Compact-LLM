@@ -64,7 +64,7 @@ The [bulk import source manifest](docs/repository-consolidation/2026-11-08/BULK_
 | [`announcement.md`](announcement.md) | Historical limits on public claims |
 | [Integrated main research tree](https://github.com/LUNCY579/Compact-LLM/tree/main/experiments) | Consolidated later experiments and evidence |
 | [2026-11-08 branch-tip audit](docs/repository-consolidation/2026-11-08/README.md) | Live-branch ancestry, safe-merge boundaries, and remaining work |
-| [Consolidation record](https://github.com/LUNCY579/Compact-LLM/tree/research/post-training-mimo-centralized-v1/docs/repository-consolidation/2026-10-22) | Preserved source histories, blockers, and manual branch-pruning safeguards |
+| [Consolidation record](https://github.com/LUNCY579/Compact-LLM/tree/main/docs/repository-consolidation/2026-10-22) | Preserved source histories, blockers, and manual branch-pruning safeguards |
 
 This is a collection of **independent experimental packages**, not a single turnkey training command. Read an experiment's protocol, environment pins, data permissions, and test instructions before running it; a passing synthetic or CPU test does not validate native-GPU model quality.
 
