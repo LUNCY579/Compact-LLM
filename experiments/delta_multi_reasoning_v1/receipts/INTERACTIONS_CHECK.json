@@ -1,0 +1,247 @@
+{
+  "schema": 1,
+  "record": "DMRF_INTERACTIONS",
+  "split": "CHECK",
+  "n_items": 128,
+  "systems": [
+    "B",
+    "D"
+  ],
+  "predeclared_family": [
+    "D:MR_vs_O",
+    "D:MR_vs_REP",
+    "B:MR_vs_O",
+    "DeltaxMR",
+    "D:T_vs_O"
+  ],
+  "family_declared_before_results": true,
+  "family_note": "Holm-Bonferroni runs over exactly these five. Adding a contrast after reading results voids the correction.",
+  "contrasts": {
+    "D:MR_vs_O": {
+      "baseline": "D:O",
+      "candidate": "D:MR",
+      "n": 128,
+      "both_correct": 48,
+      "repair": 0,
+      "damage": 0,
+      "both_wrong": 80,
+      "baseline_correct": 48,
+      "candidate_correct": 48,
+      "net_gain": 0,
+      "zero_observed_damage": true,
+      "repair_ids": [],
+      "damage_ids": [],
+      "mcnemar_exact_two_sided_p": 1.0,
+      "noise_verdict": "WITHIN_NOISE",
+      "world_clustered_mean_difference": {
+        "point": 0.0,
+        "lo": 0.0,
+        "hi": 0.0,
+        "n_worlds": 128,
+        "iters": 10000,
+        "alpha": 0.05,
+        "seed": 20260918,
+        "unit": "world (scenario group), resampled with replacement"
+      }
+    },
+    "D:MR_vs_REP": {
+      "baseline": "D:REP",
+      "candidate": "D:MR",
+      "n": 128,
+      "both_correct": 48,
+      "repair": 0,
+      "damage": 1,
+      "both_wrong": 79,
+      "baseline_correct": 49,
+      "candidate_correct": 48,
+      "net_gain": -1,
+      "zero_observed_damage": false,
+      "repair_ids": [],
+      "damage_ids": [
+        "DMRF-CHECK:transition:1564b63c76d75f8d"
+      ],
+      "mcnemar_exact_two_sided_p": 1.0,
+      "noise_verdict": "WITHIN_NOISE",
+      "world_clustered_mean_difference": {
+        "point": -0.0078125,
+        "lo": -0.0234375,
+        "hi": 0.0,
+        "n_worlds": 128,
+        "iters": 10000,
+        "alpha": 0.05,
+        "seed": 20260918,
+        "unit": "world (scenario group), resampled with replacement"
+      }
+    },
+    "B:MR_vs_O": {
+      "baseline": "B:O",
+      "candidate": "B:MR",
+      "n": 128,
+      "both_correct": 32,
+      "repair": 0,
+      "damage": 4,
+      "both_wrong": 92,
+      "baseline_correct": 36,
+      "candidate_correct": 32,
+      "net_gain": -4,
+      "zero_observed_damage": false,
+      "repair_ids": [],
+      "damage_ids": [
+        "DMRF-CHECK:multi_step:562e09113f3d07b9",
+        "DMRF-CHECK:transition:1084c657d387f36d",
+        "DMRF-CHECK:transition:96ffea9ebac397c2",
+        "DMRF-CHECK:transition:b10edffd5c8d27ff"
+      ],
+      "mcnemar_exact_two_sided_p": 0.125,
+      "noise_verdict": "WITHIN_NOISE",
+      "world_clustered_mean_difference": {
+        "point": -0.03125,
+        "lo": -0.0625,
+        "hi": -0.0078125,
+        "n_worlds": 128,
+        "iters": 10000,
+        "alpha": 0.05,
+        "seed": 20260918,
+        "unit": "world (scenario group), resampled with replacement"
+      }
+    },
+    "D:T_vs_O": {
+      "baseline": "D:O",
+      "candidate": "D:T",
+      "n": 128,
+      "both_correct": 48,
+      "repair": 0,
+      "damage": 0,
+      "both_wrong": 80,
+      "baseline_correct": 48,
+      "candidate_correct": 48,
+      "net_gain": 0,
+      "zero_observed_damage": true,
+      "repair_ids": [],
+      "damage_ids": [],
+      "mcnemar_exact_two_sided_p": 1.0,
+      "noise_verdict": "WITHIN_NOISE",
+      "world_clustered_mean_difference": {
+        "point": 0.0,
+        "lo": 0.0,
+        "hi": 0.0,
+        "n_worlds": 128,
+        "iters": 10000,
+        "alpha": 0.05,
+        "seed": 20260918,
+        "unit": "world (scenario group), resampled with replacement"
+      }
+    },
+    "DeltaxMR": {
+      "contrast": "[s(D,MR)-s(D,O)] - [s(B,MR)-s(B,O)]",
+      "simple_effect_on": {
+        "D": 0.0,
+        "B": -4.0
+      },
+      "cells": {
+        "D/MR": 48.0,
+        "D/O": 48.0,
+        "B/MR": 32.0,
+        "B/O": 36.0
+      },
+      "interaction": 4.0,
+      "reading": "A positive interaction means the inference condition helps sys_a more than sys_b. It is a point estimate from one draw and establishes nothing on its own.",
+      "world_clustered_mean": {
+        "point": 0.03125,
+        "lo": 0.0078125,
+        "hi": 0.0625,
+        "n_worlds": 128,
+        "iters": 10000,
+        "alpha": 0.05,
+        "seed": 20260918,
+        "unit": "world (scenario group), resampled with replacement"
+      },
+      "mcnemar_on_improvement_sets": 1.0,
+      "noise_verdict": "WITHIN_NOISE"
+    }
+  },
+  "multiplicity": {
+    "alpha": 0.05,
+    "family_size": 5,
+    "results": {
+      "B:MR_vs_O": {
+        "p": 0.125,
+        "threshold": 0.01,
+        "reject": false
+      },
+      "D:MR_vs_O": {
+        "p": 1.0,
+        "threshold": 0.0125,
+        "reject": false
+      },
+      "D:MR_vs_REP": {
+        "p": 1.0,
+        "threshold": 0.016666666666666666,
+        "reject": false
+      },
+      "D:T_vs_O": {
+        "p": 1.0,
+        "threshold": 0.025,
+        "reject": false
+      },
+      "DeltaxMR": {
+        "p": 1.0,
+        "threshold": 0.05,
+        "reject": false
+      }
+    },
+    "note": "Family must be predeclared. Adding a contrast after seeing results voids this."
+  },
+  "per_stratum": {
+    "arith_competence": {
+      "n": 32,
+      "B_O": 0,
+      "B_REP": 0,
+      "B_MR": 0,
+      "D_O": 1,
+      "D_REP": 1,
+      "D_MR": 1
+    },
+    "longctx_mixed": {
+      "n": 32,
+      "B_O": 32,
+      "B_REP": 32,
+      "B_MR": 32,
+      "D_O": 32,
+      "D_REP": 32,
+      "D_MR": 32
+    },
+    "multi_step": {
+      "n": 32,
+      "B_O": 1,
+      "B_REP": 2,
+      "B_MR": 0,
+      "D_O": 1,
+      "D_REP": 1,
+      "D_MR": 1
+    },
+    "transition": {
+      "n": 32,
+      "B_O": 3,
+      "B_REP": 2,
+      "B_MR": 0,
+      "D_O": 14,
+      "D_REP": 15,
+      "D_MR": 14
+    }
+  },
+  "noise_floor_used": {
+    "acquisition": 7,
+    "long_context": 13,
+    "arithmetic_strict": 13
+  },
+  "resampling_unit": "world",
+  "interpretation_rules": {
+    "mr_vs_rep_is_the_attribution_contrast": "MR beating O is not evidence for differentiated reasoning; MR beating REP is. REP is four tries at the same operation with the same call and token budget.",
+    "t_vs_o_is_the_allowance_control": "If T alone recovers MR's gain, the gain is output tokens rather than roles. T is token-allowance matched, NOT compute matched: MR makes five calls, T one.",
+    "within_noise": "Any net gain at or below the REP-001 single-draw spread is WITHIN_NOISE and may not be reported as a direction.",
+    "zero_damage": "A preservation statement requires the paired damage count to be actually zero, not a large p-value."
+  },
+  "quality_claim": false,
+  "release_permitted": false
+}

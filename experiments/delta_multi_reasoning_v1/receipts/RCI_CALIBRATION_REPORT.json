@@ -1,0 +1,2445 @@
+{
+  "schema": 1,
+  "record": "RCI_CALIBRATION_REPORT",
+  "instrument": "RCI-001",
+  "bank_scored": "CALIBRATION (the twin). The SEALED bank was NOT touched.",
+  "binding_floor_rate": 0.2969,
+  "binding_predictor": "per_task_type_majority",
+  "ceiling_rate": 0.9,
+  "ceiling_rationale": "A confirmation instrument at or near 100% cannot confirm a regression, which is half of what confirmation is for. At 90% a 13-row long-context loss on 512 rows would still be visible.",
+  "verdict": "USABLE",
+  "systems_clearing_floor": [
+    "rci_calib_B",
+    "rci_calib_D"
+  ],
+  "what_the_verdict_means": "USABLE: at least one system's exact 95% lower bound exceeds the shortcut floor AND no system is above the ceiling, so the sealed twin -- same generator, same parameters, disjoint entities -- can be expected to discriminate. This is inherited by the sealed bank; it is NOT a measurement of the sealed bank.",
+  "systems": {
+    "rci_calib_B": {
+      "model": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze",
+      "dtype": "fp32",
+      "transformers": "5.14.1",
+      "rows_skipped_context_overflow": 0,
+      "n": 128,
+      "correct": 63,
+      "rate": 0.4922,
+      "ci_lower_95": 0.4028,
+      "clears_floor": true,
+      "below_ceiling": true,
+      "answerable_correct": 53,
+      "answerable_n": 96,
+      "correct_abstention": 10,
+      "unanswerable_n": 32,
+      "false_abstention_on_answerable": 0,
+      "packs_all_four_correct": 5,
+      "packs": 32,
+      "by_task": {
+        "alias_resolution": {
+          "n": 28,
+          "correct": 18
+        },
+        "count_with_exclusions": {
+          "n": 24,
+          "correct": 5
+        },
+        "object_state_tracking": {
+          "n": 28,
+          "correct": 11
+        },
+        "rule_exception": {
+          "n": 24,
+          "correct": 6
+        },
+        "temporal_correction": {
+          "n": 24,
+          "correct": 23
+        }
+      },
+      "by_variant": {
+        "base": {
+          "n": 32,
+          "correct": 20
+        },
+        "counterfactual": {
+          "n": 32,
+          "correct": 16
+        },
+        "paraphrase": {
+          "n": 32,
+          "correct": 17
+        },
+        "unanswerable": {
+          "n": 32,
+          "correct": 10
+        }
+      },
+      "per_item": [
+        {
+          "id": "RCI-C0000-BASE",
+          "task_type": "alias_resolution",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0000-PARA",
+          "task_type": "alias_resolution",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0000-COUN",
+          "task_type": "alias_resolution",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0000-UNAN",
+          "task_type": "alias_resolution",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0001-BASE",
+          "task_type": "object_state_tracking",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0001-PARA",
+          "task_type": "object_state_tracking",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0001-COUN",
+          "task_type": "object_state_tracking",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0001-UNAN",
+          "task_type": "object_state_tracking",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0002-BASE",
+          "task_type": "temporal_correction",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0002-PARA",
+          "task_type": "temporal_correction",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0002-COUN",
+          "task_type": "temporal_correction",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0002-UNAN",
+          "task_type": "temporal_correction",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": true,
+          "abstained": true,
+          "present": true
+        },
+        {
+          "id": "RCI-C0003-BASE",
+          "task_type": "rule_exception",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0003-PARA",
+          "task_type": "rule_exception",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0003-COUN",
+          "task_type": "rule_exception",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0003-UNAN",
+          "task_type": "rule_exception",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0004-BASE",
+          "task_type": "count_with_exclusions",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0004-PARA",
+          "task_type": "count_with_exclusions",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0004-COUN",
+          "task_type": "count_with_exclusions",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0004-UNAN",
+          "task_type": "count_with_exclusions",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": true,
+          "abstained": true,
+          "present": true
+        },
+        {
+          "id": "RCI-C0005-BASE",
+          "task_type": "alias_resolution",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0005-PARA",
+          "task_type": "alias_resolution",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0005-COUN",
+          "task_type": "alias_resolution",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0005-UNAN",
+          "task_type": "alias_resolution",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0006-BASE",
+          "task_type": "object_state_tracking",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0006-PARA",
+          "task_type": "object_state_tracking",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0006-COUN",
+          "task_type": "object_state_tracking",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0006-UNAN",
+          "task_type": "object_state_tracking",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": true,
+          "abstained": true,
+          "present": true
+        },
+        {
+          "id": "RCI-C0007-BASE",
+          "task_type": "temporal_correction",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0007-PARA",
+          "task_type": "temporal_correction",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0007-COUN",
+          "task_type": "temporal_correction",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0007-UNAN",
+          "task_type": "temporal_correction",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": true,
+          "abstained": true,
+          "present": true
+        },
+        {
+          "id": "RCI-C0008-BASE",
+          "task_type": "rule_exception",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0008-PARA",
+          "task_type": "rule_exception",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0008-COUN",
+          "task_type": "rule_exception",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0008-UNAN",
+          "task_type": "rule_exception",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0009-BASE",
+          "task_type": "count_with_exclusions",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0009-PARA",
+          "task_type": "count_with_exclusions",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0009-COUN",
+          "task_type": "count_with_exclusions",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0009-UNAN",
+          "task_type": "count_with_exclusions",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0010-BASE",
+          "task_type": "alias_resolution",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0010-PARA",
+          "task_type": "alias_resolution",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0010-COUN",
+          "task_type": "alias_resolution",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0010-UNAN",
+          "task_type": "alias_resolution",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0011-BASE",
+          "task_type": "object_state_tracking",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0011-PARA",
+          "task_type": "object_state_tracking",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0011-COUN",
+          "task_type": "object_state_tracking",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0011-UNAN",
+          "task_type": "object_state_tracking",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": true,
+          "abstained": true,
+          "present": true
+        },
+        {
+          "id": "RCI-C0012-BASE",
+          "task_type": "temporal_correction",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0012-PARA",
+          "task_type": "temporal_correction",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0012-COUN",
+          "task_type": "temporal_correction",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0012-UNAN",
+          "task_type": "temporal_correction",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": true,
+          "abstained": true,
+          "present": true
+        },
+        {
+          "id": "RCI-C0013-BASE",
+          "task_type": "rule_exception",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0013-PARA",
+          "task_type": "rule_exception",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0013-COUN",
+          "task_type": "rule_exception",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0013-UNAN",
+          "task_type": "rule_exception",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0014-BASE",
+          "task_type": "count_with_exclusions",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0014-PARA",
+          "task_type": "count_with_exclusions",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0014-COUN",
+          "task_type": "count_with_exclusions",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0014-UNAN",
+          "task_type": "count_with_exclusions",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0015-BASE",
+          "task_type": "alias_resolution",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0015-PARA",
+          "task_type": "alias_resolution",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0015-COUN",
+          "task_type": "alias_resolution",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0015-UNAN",
+          "task_type": "alias_resolution",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0016-BASE",
+          "task_type": "object_state_tracking",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0016-PARA",
+          "task_type": "object_state_tracking",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0016-COUN",
+          "task_type": "object_state_tracking",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0016-UNAN",
+          "task_type": "object_state_tracking",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": true,
+          "abstained": true,
+          "present": true
+        },
+        {
+          "id": "RCI-C0017-BASE",
+          "task_type": "temporal_correction",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0017-PARA",
+          "task_type": "temporal_correction",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0017-COUN",
+          "task_type": "temporal_correction",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0017-UNAN",
+          "task_type": "temporal_correction",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": true,
+          "abstained": true,
+          "present": true
+        },
+        {
+          "id": "RCI-C0018-BASE",
+          "task_type": "rule_exception",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0018-PARA",
+          "task_type": "rule_exception",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0018-COUN",
+          "task_type": "rule_exception",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0018-UNAN",
+          "task_type": "rule_exception",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0019-BASE",
+          "task_type": "count_with_exclusions",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0019-PARA",
+          "task_type": "count_with_exclusions",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0019-COUN",
+          "task_type": "count_with_exclusions",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0019-UNAN",
+          "task_type": "count_with_exclusions",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0020-BASE",
+          "task_type": "alias_resolution",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0020-PARA",
+          "task_type": "alias_resolution",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0020-COUN",
+          "task_type": "alias_resolution",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0020-UNAN",
+          "task_type": "alias_resolution",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0021-BASE",
+          "task_type": "object_state_tracking",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0021-PARA",
+          "task_type": "object_state_tracking",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0021-COUN",
+          "task_type": "object_state_tracking",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0021-UNAN",
+          "task_type": "object_state_tracking",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0022-BASE",
+          "task_type": "temporal_correction",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0022-PARA",
+          "task_type": "temporal_correction",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0022-COUN",
+          "task_type": "temporal_correction",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0022-UNAN",
+          "task_type": "temporal_correction",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0023-BASE",
+          "task_type": "rule_exception",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0023-PARA",
+          "task_type": "rule_exception",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0023-COUN",
+          "task_type": "rule_exception",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0023-UNAN",
+          "task_type": "rule_exception",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0024-BASE",
+          "task_type": "count_with_exclusions",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0024-PARA",
+          "task_type": "count_with_exclusions",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0024-COUN",
+          "task_type": "count_with_exclusions",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0024-UNAN",
+          "task_type": "count_with_exclusions",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0025-BASE",
+          "task_type": "alias_resolution",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0025-PARA",
+          "task_type": "alias_resolution",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0025-COUN",
+          "task_type": "alias_resolution",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0025-UNAN",
+          "task_type": "alias_resolution",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0026-BASE",
+          "task_type": "object_state_tracking",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0026-PARA",
+          "task_type": "object_state_tracking",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0026-COUN",
+          "task_type": "object_state_tracking",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0026-UNAN",
+          "task_type": "object_state_tracking",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": true,
+          "abstained": true,
+          "present": true
+        },
+        {
+          "id": "RCI-C0027-BASE",
+          "task_type": "temporal_correction",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0027-PARA",
+          "task_type": "temporal_correction",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0027-COUN",
+          "task_type": "temporal_correction",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0027-UNAN",
+          "task_type": "temporal_correction",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": true,
+          "abstained": true,
+          "present": true
+        },
+        {
+          "id": "RCI-C0028-BASE",
+          "task_type": "rule_exception",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0028-PARA",
+          "task_type": "rule_exception",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0028-COUN",
+          "task_type": "rule_exception",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0028-UNAN",
+          "task_type": "rule_exception",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0029-BASE",
+          "task_type": "count_with_exclusions",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0029-PARA",
+          "task_type": "count_with_exclusions",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0029-COUN",
+          "task_type": "count_with_exclusions",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0029-UNAN",
+          "task_type": "count_with_exclusions",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0030-BASE",
+          "task_type": "alias_resolution",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0030-PARA",
+          "task_type": "alias_resolution",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0030-COUN",
+          "task_type": "alias_resolution",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0030-UNAN",
+          "task_type": "alias_resolution",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0031-BASE",
+          "task_type": "object_state_tracking",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0031-PARA",
+          "task_type": "object_state_tracking",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0031-COUN",
+          "task_type": "object_state_tracking",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0031-UNAN",
+          "task_type": "object_state_tracking",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        }
+      ]
+    },
+    "rci_calib_D": {
+      "model": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze",
+      "dtype": "fp32",
+      "transformers": "5.14.1",
+      "rows_skipped_context_overflow": 0,
+      "n": 128,
+      "correct": 56,
+      "rate": 0.4375,
+      "ci_lower_95": 0.35,
+      "clears_floor": true,
+      "below_ceiling": true,
+      "answerable_correct": 52,
+      "answerable_n": 96,
+      "correct_abstention": 4,
+      "unanswerable_n": 32,
+      "false_abstention_on_answerable": 0,
+      "packs_all_four_correct": 3,
+      "packs": 32,
+      "by_task": {
+        "alias_resolution": {
+          "n": 28,
+          "correct": 17
+        },
+        "count_with_exclusions": {
+          "n": 24,
+          "correct": 6
+        },
+        "object_state_tracking": {
+          "n": 28,
+          "correct": 8
+        },
+        "rule_exception": {
+          "n": 24,
+          "correct": 4
+        },
+        "temporal_correction": {
+          "n": 24,
+          "correct": 21
+        }
+      },
+      "by_variant": {
+        "base": {
+          "n": 32,
+          "correct": 19
+        },
+        "counterfactual": {
+          "n": 32,
+          "correct": 15
+        },
+        "paraphrase": {
+          "n": 32,
+          "correct": 18
+        },
+        "unanswerable": {
+          "n": 32,
+          "correct": 4
+        }
+      },
+      "per_item": [
+        {
+          "id": "RCI-C0000-BASE",
+          "task_type": "alias_resolution",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0000-PARA",
+          "task_type": "alias_resolution",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0000-COUN",
+          "task_type": "alias_resolution",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0000-UNAN",
+          "task_type": "alias_resolution",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0001-BASE",
+          "task_type": "object_state_tracking",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0001-PARA",
+          "task_type": "object_state_tracking",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0001-COUN",
+          "task_type": "object_state_tracking",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0001-UNAN",
+          "task_type": "object_state_tracking",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0002-BASE",
+          "task_type": "temporal_correction",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0002-PARA",
+          "task_type": "temporal_correction",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0002-COUN",
+          "task_type": "temporal_correction",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0002-UNAN",
+          "task_type": "temporal_correction",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0003-BASE",
+          "task_type": "rule_exception",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0003-PARA",
+          "task_type": "rule_exception",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0003-COUN",
+          "task_type": "rule_exception",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0003-UNAN",
+          "task_type": "rule_exception",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0004-BASE",
+          "task_type": "count_with_exclusions",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0004-PARA",
+          "task_type": "count_with_exclusions",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0004-COUN",
+          "task_type": "count_with_exclusions",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0004-UNAN",
+          "task_type": "count_with_exclusions",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0005-BASE",
+          "task_type": "alias_resolution",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0005-PARA",
+          "task_type": "alias_resolution",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0005-COUN",
+          "task_type": "alias_resolution",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0005-UNAN",
+          "task_type": "alias_resolution",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0006-BASE",
+          "task_type": "object_state_tracking",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0006-PARA",
+          "task_type": "object_state_tracking",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0006-COUN",
+          "task_type": "object_state_tracking",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0006-UNAN",
+          "task_type": "object_state_tracking",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0007-BASE",
+          "task_type": "temporal_correction",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0007-PARA",
+          "task_type": "temporal_correction",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0007-COUN",
+          "task_type": "temporal_correction",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0007-UNAN",
+          "task_type": "temporal_correction",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0008-BASE",
+          "task_type": "rule_exception",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0008-PARA",
+          "task_type": "rule_exception",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0008-COUN",
+          "task_type": "rule_exception",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0008-UNAN",
+          "task_type": "rule_exception",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0009-BASE",
+          "task_type": "count_with_exclusions",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0009-PARA",
+          "task_type": "count_with_exclusions",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0009-COUN",
+          "task_type": "count_with_exclusions",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0009-UNAN",
+          "task_type": "count_with_exclusions",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0010-BASE",
+          "task_type": "alias_resolution",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0010-PARA",
+          "task_type": "alias_resolution",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0010-COUN",
+          "task_type": "alias_resolution",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0010-UNAN",
+          "task_type": "alias_resolution",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0011-BASE",
+          "task_type": "object_state_tracking",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0011-PARA",
+          "task_type": "object_state_tracking",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0011-COUN",
+          "task_type": "object_state_tracking",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0011-UNAN",
+          "task_type": "object_state_tracking",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": true,
+          "abstained": true,
+          "present": true
+        },
+        {
+          "id": "RCI-C0012-BASE",
+          "task_type": "temporal_correction",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0012-PARA",
+          "task_type": "temporal_correction",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0012-COUN",
+          "task_type": "temporal_correction",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0012-UNAN",
+          "task_type": "temporal_correction",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": true,
+          "abstained": true,
+          "present": true
+        },
+        {
+          "id": "RCI-C0013-BASE",
+          "task_type": "rule_exception",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0013-PARA",
+          "task_type": "rule_exception",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0013-COUN",
+          "task_type": "rule_exception",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0013-UNAN",
+          "task_type": "rule_exception",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0014-BASE",
+          "task_type": "count_with_exclusions",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0014-PARA",
+          "task_type": "count_with_exclusions",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0014-COUN",
+          "task_type": "count_with_exclusions",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0014-UNAN",
+          "task_type": "count_with_exclusions",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0015-BASE",
+          "task_type": "alias_resolution",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0015-PARA",
+          "task_type": "alias_resolution",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0015-COUN",
+          "task_type": "alias_resolution",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0015-UNAN",
+          "task_type": "alias_resolution",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0016-BASE",
+          "task_type": "object_state_tracking",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0016-PARA",
+          "task_type": "object_state_tracking",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0016-COUN",
+          "task_type": "object_state_tracking",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0016-UNAN",
+          "task_type": "object_state_tracking",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0017-BASE",
+          "task_type": "temporal_correction",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0017-PARA",
+          "task_type": "temporal_correction",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0017-COUN",
+          "task_type": "temporal_correction",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0017-UNAN",
+          "task_type": "temporal_correction",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": true,
+          "abstained": true,
+          "present": true
+        },
+        {
+          "id": "RCI-C0018-BASE",
+          "task_type": "rule_exception",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0018-PARA",
+          "task_type": "rule_exception",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0018-COUN",
+          "task_type": "rule_exception",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0018-UNAN",
+          "task_type": "rule_exception",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0019-BASE",
+          "task_type": "count_with_exclusions",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0019-PARA",
+          "task_type": "count_with_exclusions",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0019-COUN",
+          "task_type": "count_with_exclusions",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0019-UNAN",
+          "task_type": "count_with_exclusions",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0020-BASE",
+          "task_type": "alias_resolution",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0020-PARA",
+          "task_type": "alias_resolution",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0020-COUN",
+          "task_type": "alias_resolution",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0020-UNAN",
+          "task_type": "alias_resolution",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0021-BASE",
+          "task_type": "object_state_tracking",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0021-PARA",
+          "task_type": "object_state_tracking",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0021-COUN",
+          "task_type": "object_state_tracking",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0021-UNAN",
+          "task_type": "object_state_tracking",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0022-BASE",
+          "task_type": "temporal_correction",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0022-PARA",
+          "task_type": "temporal_correction",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0022-COUN",
+          "task_type": "temporal_correction",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0022-UNAN",
+          "task_type": "temporal_correction",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0023-BASE",
+          "task_type": "rule_exception",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0023-PARA",
+          "task_type": "rule_exception",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0023-COUN",
+          "task_type": "rule_exception",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0023-UNAN",
+          "task_type": "rule_exception",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0024-BASE",
+          "task_type": "count_with_exclusions",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0024-PARA",
+          "task_type": "count_with_exclusions",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0024-COUN",
+          "task_type": "count_with_exclusions",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0024-UNAN",
+          "task_type": "count_with_exclusions",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0025-BASE",
+          "task_type": "alias_resolution",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0025-PARA",
+          "task_type": "alias_resolution",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0025-COUN",
+          "task_type": "alias_resolution",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0025-UNAN",
+          "task_type": "alias_resolution",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0026-BASE",
+          "task_type": "object_state_tracking",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0026-PARA",
+          "task_type": "object_state_tracking",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0026-COUN",
+          "task_type": "object_state_tracking",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0026-UNAN",
+          "task_type": "object_state_tracking",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0027-BASE",
+          "task_type": "temporal_correction",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0027-PARA",
+          "task_type": "temporal_correction",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0027-COUN",
+          "task_type": "temporal_correction",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0027-UNAN",
+          "task_type": "temporal_correction",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": true,
+          "abstained": true,
+          "present": true
+        },
+        {
+          "id": "RCI-C0028-BASE",
+          "task_type": "rule_exception",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0028-PARA",
+          "task_type": "rule_exception",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0028-COUN",
+          "task_type": "rule_exception",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0028-UNAN",
+          "task_type": "rule_exception",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0029-BASE",
+          "task_type": "count_with_exclusions",
+          "variant": "base",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0029-PARA",
+          "task_type": "count_with_exclusions",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0029-COUN",
+          "task_type": "count_with_exclusions",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0029-UNAN",
+          "task_type": "count_with_exclusions",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0030-BASE",
+          "task_type": "alias_resolution",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0030-PARA",
+          "task_type": "alias_resolution",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0030-COUN",
+          "task_type": "alias_resolution",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0030-UNAN",
+          "task_type": "alias_resolution",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0031-BASE",
+          "task_type": "object_state_tracking",
+          "variant": "base",
+          "answerable": true,
+          "correct": true,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0031-PARA",
+          "task_type": "object_state_tracking",
+          "variant": "paraphrase",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0031-COUN",
+          "task_type": "object_state_tracking",
+          "variant": "counterfactual",
+          "answerable": true,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        },
+        {
+          "id": "RCI-C0031-UNAN",
+          "task_type": "object_state_tracking",
+          "variant": "unanswerable",
+          "answerable": false,
+          "correct": false,
+          "abstained": false,
+          "present": true
+        }
+      ]
+    }
+  },
+  "seal_untouched": true
+}

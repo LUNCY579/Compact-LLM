@@ -1,0 +1,220 @@
+{
+  "schema": 1,
+  "record": "DMRF_SCOUT_001_BUILD",
+  "instrument": "DMRF-SCOUT-001",
+  "what_this_is": "A small open-development bank whose answers are computed by the oracles in build_scout.py. Built because no existing instrument here covers acquisition, arithmetic, multi-step reasoning, long context, abstention AND the ambiguous and shortcut cases a router must be scored on.",
+  "admissible_uses": [
+    "SELECTION",
+    "DEV"
+  ],
+  "inadmissible_uses": [
+    "CONFIRMATION"
+  ],
+  "training_admitted": false,
+  "why_not_confirmation": "An instrument is spent for confirmation the moment it is used for selection. This one is built to be selected on.",
+  "seed": 20260918,
+  "worlds": {
+    "CAL": 24,
+    "CHECK": 128
+  },
+  "sizes_frozen_before_any_check_outcome": true,
+  "items": 152,
+  "one_item_per_world": true,
+  "resampling_unit": "world",
+  "strata": [
+    "transition",
+    "multi_step",
+    "arith_competence",
+    "longctx_mixed"
+  ],
+  "small_strata_are_exploratory": true,
+  "held_event_rate": 0.125,
+  "unanswerable_share": 0.25,
+  "abstention_sentinel": "UNKNOWN",
+  "abstention_is_not_a_separate_stratum": "Answerable and unanswerable long-context rows are scored in ONE pool. Scored separately, the unanswerable stratum's answer-agnostic floor is 1.000 -- unconditional abstention is perfect when every reference is UNKNOWN. Pooling is what makes abstention measurable. Correct and false abstention are reported as sub-analyses of the pool, never as a stratum with its own floor.",
+  "router_cases_in_CHECK": {
+    "plain": 116,
+    "shortcut_long": 4,
+    "shortcut_short": 4,
+    "ambiguous": 4
+  },
+  "router_case_meaning": {
+    "plain": "surface form and best component agree",
+    "ambiguous": "prose framing around a structured state; genuinely either-way",
+    "shortcut_long": "long document whose real task is a state transition; a length-first router loses these",
+    "shortcut_short": "short, no JSON, but needs two dependent hops; surface says small, truth says large"
+  },
+  "context_budget": {
+    "harness_max_context_tokens": 4096,
+    "doc_target_chars": 2400,
+    "selector_reserve_chars": 900,
+    "max_prompt_chars_in_bank": 2865,
+    "max_selector_prompt_chars_in_bank": 3765,
+    "note": "Documents are capped so the largest MR selector prompt fits inside max_context. No arm may drop evidence or shorten a long-context problem."
+  },
+  "floors": {
+    "transition/CAL": {
+      "n": 6,
+      "distinct_references": 6,
+      "constant_majority": 1,
+      "constant_majority_rate": 0.1667,
+      "copy_before": 0,
+      "copy_before_rate": 0.0,
+      "always_abstain": 0,
+      "always_abstain_rate": 0.0,
+      "binding_floor_count": 1,
+      "binding_floor_rate": 0.1667,
+      "binding_predictor": "constant_majority"
+    },
+    "transition/CHECK": {
+      "n": 32,
+      "distinct_references": 32,
+      "constant_majority": 1,
+      "constant_majority_rate": 0.0312,
+      "copy_before": 2,
+      "copy_before_rate": 0.0625,
+      "always_abstain": 0,
+      "always_abstain_rate": 0.0,
+      "binding_floor_count": 2,
+      "binding_floor_rate": 0.0625,
+      "binding_predictor": "copy_before"
+    },
+    "transition/POOLED": {
+      "n": 38,
+      "distinct_references": 38,
+      "constant_majority": 1,
+      "constant_majority_rate": 0.0263,
+      "copy_before": 2,
+      "copy_before_rate": 0.0526,
+      "always_abstain": 0,
+      "always_abstain_rate": 0.0,
+      "binding_floor_count": 2,
+      "binding_floor_rate": 0.0526,
+      "binding_predictor": "copy_before"
+    },
+    "multi_step/CAL": {
+      "n": 6,
+      "distinct_references": 6,
+      "constant_majority": 1,
+      "constant_majority_rate": 0.1667,
+      "copy_before": 0,
+      "copy_before_rate": 0.0,
+      "always_abstain": 0,
+      "always_abstain_rate": 0.0,
+      "binding_floor_count": 1,
+      "binding_floor_rate": 0.1667,
+      "binding_predictor": "constant_majority"
+    },
+    "multi_step/CHECK": {
+      "n": 32,
+      "distinct_references": 32,
+      "constant_majority": 1,
+      "constant_majority_rate": 0.0312,
+      "copy_before": 2,
+      "copy_before_rate": 0.0625,
+      "always_abstain": 0,
+      "always_abstain_rate": 0.0,
+      "binding_floor_count": 2,
+      "binding_floor_rate": 0.0625,
+      "binding_predictor": "copy_before"
+    },
+    "multi_step/POOLED": {
+      "n": 38,
+      "distinct_references": 38,
+      "constant_majority": 1,
+      "constant_majority_rate": 0.0263,
+      "copy_before": 2,
+      "copy_before_rate": 0.0526,
+      "always_abstain": 0,
+      "always_abstain_rate": 0.0,
+      "binding_floor_count": 2,
+      "binding_floor_rate": 0.0526,
+      "binding_predictor": "copy_before"
+    },
+    "arith_competence/CAL": {
+      "n": 6,
+      "distinct_references": 6,
+      "constant_majority": 1,
+      "constant_majority_rate": 0.1667,
+      "copy_before": 0,
+      "copy_before_rate": 0.0,
+      "always_abstain": 0,
+      "always_abstain_rate": 0.0,
+      "binding_floor_count": 1,
+      "binding_floor_rate": 0.1667,
+      "binding_predictor": "constant_majority"
+    },
+    "arith_competence/CHECK": {
+      "n": 32,
+      "distinct_references": 32,
+      "constant_majority": 1,
+      "constant_majority_rate": 0.0312,
+      "copy_before": 0,
+      "copy_before_rate": 0.0,
+      "always_abstain": 0,
+      "always_abstain_rate": 0.0,
+      "binding_floor_count": 1,
+      "binding_floor_rate": 0.0312,
+      "binding_predictor": "constant_majority"
+    },
+    "arith_competence/POOLED": {
+      "n": 38,
+      "distinct_references": 37,
+      "constant_majority": 2,
+      "constant_majority_rate": 0.0526,
+      "copy_before": 0,
+      "copy_before_rate": 0.0,
+      "always_abstain": 0,
+      "always_abstain_rate": 0.0,
+      "binding_floor_count": 2,
+      "binding_floor_rate": 0.0526,
+      "binding_predictor": "constant_majority"
+    },
+    "longctx_mixed/CAL": {
+      "n": 6,
+      "distinct_references": 6,
+      "constant_majority": 1,
+      "constant_majority_rate": 0.1667,
+      "copy_before": 0,
+      "copy_before_rate": 0.0,
+      "always_abstain": 1,
+      "always_abstain_rate": 0.1667,
+      "binding_floor_count": 1,
+      "binding_floor_rate": 0.1667,
+      "binding_predictor": "constant_majority"
+    },
+    "longctx_mixed/CHECK": {
+      "n": 32,
+      "distinct_references": 25,
+      "constant_majority": 8,
+      "constant_majority_rate": 0.25,
+      "copy_before": 0,
+      "copy_before_rate": 0.0,
+      "always_abstain": 8,
+      "always_abstain_rate": 0.25,
+      "binding_floor_count": 8,
+      "binding_floor_rate": 0.25,
+      "binding_predictor": "constant_majority"
+    },
+    "longctx_mixed/POOLED": {
+      "n": 38,
+      "distinct_references": 30,
+      "constant_majority": 9,
+      "constant_majority_rate": 0.2368,
+      "copy_before": 0,
+      "copy_before_rate": 0.0,
+      "always_abstain": 9,
+      "always_abstain_rate": 0.2368,
+      "binding_floor_count": 9,
+      "binding_floor_rate": 0.2368,
+      "binding_predictor": "constant_majority"
+    }
+  },
+  "floor_rule": "A system clears a stratum only if the exact two-sided binomial 95% lower bound on its correct count exceeds that stratum's binding floor rate, where the binding floor is the strongest of constant_majority, copy_before and always_abstain.",
+  "floors_published_before_any_model_call": true,
+  "gate_before_use": "NOT USABLE until floor_report.py confirms a real model clears the binding floor on CAL.",
+  "design_error_caught_by_this_floor_computation": "v1 scored unanswerable rows as their own stratum and its floor came out 1.000; v1 also put router cases in separate strata of 16, letting copy_before reach 0.375 by sampling variance. Both were fixed before any model call. Recorded because the floor computation existing at all is the point.",
+  "scout_sha256": "8756c6a90b180ee81783d7a6743eae746d51ca57e2629a885a3c51fe4a8950c1",
+  "model_calls": 0,
+  "optimizer_steps": 0
+}

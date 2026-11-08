@@ -1,0 +1,758 @@
+{
+  "schema": 1,
+  "record": "DMRF_SCOUT_FLOOR_REPORT",
+  "instrument": "DMRF-SCOUT-001",
+  "split": "CAL",
+  "scout_sha256": "8756c6a90b180ee81783d7a6743eae746d51ca57e2629a885a3c51fe4a8950c1",
+  "floor_rule": "A system clears a stratum only if the exact two-sided binomial 95% lower bound on its correct count exceeds that stratum's binding floor rate, where the binding floor is the strongest of constant_majority, copy_before and always_abstain.",
+  "floor_estimated_on": "POOLED -- all 152 items per stratum. The binding floor is a property of the generator, not of a split; a per-split floor on 6 CAL items is mechanically >= 1/6 and cannot be cleared by any honest score.",
+  "scorer_source": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-retention-pilot-20260917\\experiments\\rab001_exploration\\scoring.py",
+  "scorer_self_test": "PASSED",
+  "verdict": "PARTIALLY_USABLE",
+  "strata_clearing_their_floor_by_at_least_one_system": [
+    "transition",
+    "arith_competence",
+    "longctx_mixed"
+  ],
+  "strata_inconclusive_underpowered_at_this_n": [
+    "multi_step"
+  ],
+  "strata_below_floor": [],
+  "per_stratum_verdict": {
+    "transition": "CLEARS",
+    "multi_step": "INCONCLUSIVE_UNDERPOWERED",
+    "arith_competence": "CLEARS",
+    "longctx_mixed": "CLEARS"
+  },
+  "power_note": "At n = 6 per stratum on CAL the exact 95% lower bound cannot exceed a 0.0526 floor below 3/6, so CAL can only certify strata where a system scores >= 50%. A stratum marked INCONCLUSIVE_UNDERPOWERED has a point estimate above its floor and must be decided on its CHECK score, at n = 32, BEFORE any contrast on it is reported. Insufficient sample size means inconclusive, not pass and not fail.",
+  "what_the_verdict_means": "USABLE: every stratum has at least one system whose exact 95% lower bound exceeds the answer-agnostic floor, so arm contrasts on it are interpretable. NOT_USABLE or a stratum in strata_no_system_clears means contrasts on that stratum are NOT interpretable and must not be reported -- that is the MRS failure this gate exists to catch.",
+  "systems": {
+    "scoutcal_B": {
+      "model": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze",
+      "dtype": "fp32",
+      "transformers": "5.14.1",
+      "rows_skipped_context_overflow": 0,
+      "decoding": "greedy",
+      "numerics": {
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": false,
+        "float32_matmul_precision": "highest"
+      },
+      "items_absent_from_predictions": 0,
+      "total_correct": 9,
+      "total_n": 24,
+      "per_stratum": {
+        "transition": {
+          "n": 6,
+          "correct": 2,
+          "rate": 0.3333,
+          "ci_lower_95": 0.0433,
+          "binding_floor_rate": 0.0526,
+          "binding_predictor": "copy_before",
+          "clears_floor": false,
+          "verdict": "INCONCLUSIVE_UNDERPOWERED",
+          "min_correct_to_clear_at_this_n": 3,
+          "parsed": 6
+        },
+        "multi_step": {
+          "n": 6,
+          "correct": 0,
+          "rate": 0.0,
+          "ci_lower_95": 0.0,
+          "binding_floor_rate": 0.0526,
+          "binding_predictor": "copy_before",
+          "clears_floor": false,
+          "verdict": "BELOW_FLOOR",
+          "min_correct_to_clear_at_this_n": 3,
+          "parsed": 6
+        },
+        "arith_competence": {
+          "n": 6,
+          "correct": 1,
+          "rate": 0.1667,
+          "ci_lower_95": 0.0042,
+          "binding_floor_rate": 0.0526,
+          "binding_predictor": "constant_majority",
+          "clears_floor": false,
+          "verdict": "INCONCLUSIVE_UNDERPOWERED",
+          "min_correct_to_clear_at_this_n": 3,
+          "parsed": 6
+        },
+        "longctx_mixed": {
+          "n": 6,
+          "correct": 6,
+          "rate": 1.0,
+          "ci_lower_95": 0.5407,
+          "binding_floor_rate": 0.2368,
+          "binding_predictor": "constant_majority",
+          "clears_floor": true,
+          "verdict": "CLEARS",
+          "min_correct_to_clear_at_this_n": 5,
+          "parsed": 6
+        }
+      },
+      "abstention": {
+        "pool_n": 6,
+        "answerable_n": 5,
+        "unanswerable_n": 1,
+        "correct_abstention": 1,
+        "false_abstention_on_answerable": 0,
+        "answerable_correct": 5,
+        "note": "Reported inside the pooled stratum. Scored alone, unconditional abstention would be perfect and the floor would be 1.000."
+      },
+      "by_router_case": {
+        "plain": {
+          "n": 22,
+          "correct": 8
+        },
+        "shortcut_long": {
+          "n": 1,
+          "correct": 0
+        },
+        "shortcut_short": {
+          "n": 1,
+          "correct": 1
+        }
+      },
+      "per_item": [
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:transition:f06dfedb79c886ab",
+          "stratum": "transition",
+          "world_id": "DMRFW-CAL-0000",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":4,\"B\":12,\"C\":7,\"D\":13}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:multi_step:456542a7e70525b9",
+          "stratum": "multi_step",
+          "world_id": "DMRFW-CAL-0001",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":10, \"B\":10, \"C\":19, \"D\":13}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:arith_competence:308b232325279626",
+          "stratum": "arith_competence",
+          "world_id": "DMRFW-CAL-0002",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "0.39"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:longctx_mixed:88b77c4d83be1f36",
+          "stratum": "longctx_mixed",
+          "world_id": "DMRFW-CAL-0003",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "963692"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:transition:76ffb55f2b4fa74f",
+          "stratum": "transition",
+          "world_id": "DMRFW-CAL-0004",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\": 6, \"B\": -13, \"C\": -12, \"D\": -20}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:multi_step:5df47e2a0f5b8e48",
+          "stratum": "multi_step",
+          "world_id": "DMRFW-CAL-0005",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\": -6, \"B\": 3, \"C\": -10, \"D\": 11}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:arith_competence:004097b55b7d1994",
+          "stratum": "arith_competence",
+          "world_id": "DMRFW-CAL-0006",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "257"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:longctx_mixed:6f44cd8062ded895",
+          "stratum": "longctx_mixed",
+          "world_id": "DMRFW-CAL-0007",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "465600"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:transition:bdb37eee6944e00f",
+          "stratum": "transition",
+          "world_id": "DMRFW-CAL-0008",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\": -13, \"B\": 19, \"C\": -15, \"D\": -9}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:multi_step:f8c7db38ce42fe4b",
+          "stratum": "multi_step",
+          "world_id": "DMRFW-CAL-0009",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":4,\"B\":-7,\"C\":18,\"D\":-1}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:arith_competence:d6fda08418e7b843",
+          "stratum": "arith_competence",
+          "world_id": "DMRFW-CAL-0010",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "21:45"
+        },
+        {
+          "parsed": true,
+          "abstained": true,
+          "correct": true,
+          "id": "DMRF-CAL:longctx_mixed:ad6dedf3f547911e",
+          "stratum": "longctx_mixed",
+          "world_id": "DMRFW-CAL-0011",
+          "router_case": "plain",
+          "unanswerable": true,
+          "prediction": "UNKNOWN"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:transition:65e3f09f31f53210",
+          "stratum": "transition",
+          "world_id": "DMRFW-CAL-0012",
+          "router_case": "shortcut_long",
+          "unanswerable": false,
+          "prediction": "{\"A\":8, \"B\":3, \"C\": -11, \"D\": 12}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:multi_step:57fff5ff6943fd2c",
+          "stratum": "multi_step",
+          "world_id": "DMRFW-CAL-0013",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":13, \"B\":-2, \"C\":10, \"D\":2}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:arith_competence:3840ff273e5481fc",
+          "stratum": "arith_competence",
+          "world_id": "DMRFW-CAL-0014",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "0.0815"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:longctx_mixed:224846e279db7d15",
+          "stratum": "longctx_mixed",
+          "world_id": "DMRFW-CAL-0015",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "192915"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:transition:cc8d7496772d0fa1",
+          "stratum": "transition",
+          "world_id": "DMRFW-CAL-0016",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\": 3, \"B\": 17, \"C\": 1, \"D\": -3}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:multi_step:da30d6a6253bea84",
+          "stratum": "multi_step",
+          "world_id": "DMRFW-CAL-0017",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":17, \"B\":7, \"C\":19, \"D\":-15}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:arith_competence:402fcd9dbed8f131",
+          "stratum": "arith_competence",
+          "world_id": "DMRFW-CAL-0018",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "25"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:longctx_mixed:80bee0e28bf9beeb",
+          "stratum": "longctx_mixed",
+          "world_id": "DMRFW-CAL-0019",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "670200"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:transition:c70de54a99cb5143",
+          "stratum": "transition",
+          "world_id": "DMRFW-CAL-0020",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":16, \"B\":13, \"C\":12, \"D\":14}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:multi_step:853a3f9fe7d2bfcf",
+          "stratum": "multi_step",
+          "world_id": "DMRFW-CAL-0021",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":15, \"B\":-10, \"C\":16, \"D\":12}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:arith_competence:cc050459f41ed913",
+          "stratum": "arith_competence",
+          "world_id": "DMRFW-CAL-0022",
+          "router_case": "shortcut_short",
+          "unanswerable": false,
+          "prediction": "72"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:longctx_mixed:7b94ca1c2289755b",
+          "stratum": "longctx_mixed",
+          "world_id": "DMRFW-CAL-0023",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "867293"
+        }
+      ]
+    },
+    "scoutcal_D": {
+      "model": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze",
+      "dtype": "fp32",
+      "transformers": "5.14.1",
+      "rows_skipped_context_overflow": 0,
+      "decoding": "greedy",
+      "numerics": {
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": false,
+        "float32_matmul_precision": "highest"
+      },
+      "items_absent_from_predictions": 0,
+      "total_correct": 13,
+      "total_n": 24,
+      "per_stratum": {
+        "transition": {
+          "n": 6,
+          "correct": 3,
+          "rate": 0.5,
+          "ci_lower_95": 0.1181,
+          "binding_floor_rate": 0.0526,
+          "binding_predictor": "copy_before",
+          "clears_floor": true,
+          "verdict": "CLEARS",
+          "min_correct_to_clear_at_this_n": 3,
+          "parsed": 6
+        },
+        "multi_step": {
+          "n": 6,
+          "correct": 1,
+          "rate": 0.1667,
+          "ci_lower_95": 0.0042,
+          "binding_floor_rate": 0.0526,
+          "binding_predictor": "copy_before",
+          "clears_floor": false,
+          "verdict": "INCONCLUSIVE_UNDERPOWERED",
+          "min_correct_to_clear_at_this_n": 3,
+          "parsed": 6
+        },
+        "arith_competence": {
+          "n": 6,
+          "correct": 3,
+          "rate": 0.5,
+          "ci_lower_95": 0.1181,
+          "binding_floor_rate": 0.0526,
+          "binding_predictor": "constant_majority",
+          "clears_floor": true,
+          "verdict": "CLEARS",
+          "min_correct_to_clear_at_this_n": 3,
+          "parsed": 6
+        },
+        "longctx_mixed": {
+          "n": 6,
+          "correct": 6,
+          "rate": 1.0,
+          "ci_lower_95": 0.5407,
+          "binding_floor_rate": 0.2368,
+          "binding_predictor": "constant_majority",
+          "clears_floor": true,
+          "verdict": "CLEARS",
+          "min_correct_to_clear_at_this_n": 5,
+          "parsed": 6
+        }
+      },
+      "abstention": {
+        "pool_n": 6,
+        "answerable_n": 5,
+        "unanswerable_n": 1,
+        "correct_abstention": 1,
+        "false_abstention_on_answerable": 0,
+        "answerable_correct": 5,
+        "note": "Reported inside the pooled stratum. Scored alone, unconditional abstention would be perfect and the floor would be 1.000."
+      },
+      "by_router_case": {
+        "plain": {
+          "n": 22,
+          "correct": 11
+        },
+        "shortcut_long": {
+          "n": 1,
+          "correct": 1
+        },
+        "shortcut_short": {
+          "n": 1,
+          "correct": 1
+        }
+      },
+      "per_item": [
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:transition:f06dfedb79c886ab",
+          "stratum": "transition",
+          "world_id": "DMRFW-CAL-0000",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":4,\"B\":-9,\"C\":7,\"D\":13}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:multi_step:456542a7e70525b9",
+          "stratum": "multi_step",
+          "world_id": "DMRFW-CAL-0001",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":10,\"B\":-13,\"C\":19,\"D\":13}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:arith_competence:308b232325279626",
+          "stratum": "arith_competence",
+          "world_id": "DMRFW-CAL-0002",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "0.39"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:longctx_mixed:88b77c4d83be1f36",
+          "stratum": "longctx_mixed",
+          "world_id": "DMRFW-CAL-0003",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "963692"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:transition:76ffb55f2b4fa74f",
+          "stratum": "transition",
+          "world_id": "DMRFW-CAL-0004",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":2,\"B\":-19,\"C\":-12,\"D\":-20}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:multi_step:5df47e2a0f5b8e48",
+          "stratum": "multi_step",
+          "world_id": "DMRFW-CAL-0005",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":-16,\"B\":3,\"C\":-10,\"D\":11}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:arith_competence:004097b55b7d1994",
+          "stratum": "arith_competence",
+          "world_id": "DMRFW-CAL-0006",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "43"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:longctx_mixed:6f44cd8062ded895",
+          "stratum": "longctx_mixed",
+          "world_id": "DMRFW-CAL-0007",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "465600"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:transition:bdb37eee6944e00f",
+          "stratum": "transition",
+          "world_id": "DMRFW-CAL-0008",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":-13,\"B\":19,\"C\":-15,\"D\":-9}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:multi_step:f8c7db38ce42fe4b",
+          "stratum": "multi_step",
+          "world_id": "DMRFW-CAL-0009",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":4,\"B\":-7,\"C\":90,\"D\":-1}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:arith_competence:d6fda08418e7b843",
+          "stratum": "arith_competence",
+          "world_id": "DMRFW-CAL-0010",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "20:05"
+        },
+        {
+          "parsed": true,
+          "abstained": true,
+          "correct": true,
+          "id": "DMRF-CAL:longctx_mixed:ad6dedf3f547911e",
+          "stratum": "longctx_mixed",
+          "world_id": "DMRFW-CAL-0011",
+          "router_case": "plain",
+          "unanswerable": true,
+          "prediction": "UNKNOWN"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:transition:65e3f09f31f53210",
+          "stratum": "transition",
+          "world_id": "DMRFW-CAL-0012",
+          "router_case": "shortcut_long",
+          "unanswerable": false,
+          "prediction": "{\"A\":8,\"B\":3,\"C\":-11,\"D\":8}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:multi_step:57fff5ff6943fd2c",
+          "stratum": "multi_step",
+          "world_id": "DMRFW-CAL-0013",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":13,\"B\":-2,\"C\":3,\"D\":2}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:arith_competence:3840ff273e5481fc",
+          "stratum": "arith_competence",
+          "world_id": "DMRFW-CAL-0014",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "515.8"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:longctx_mixed:224846e279db7d15",
+          "stratum": "longctx_mixed",
+          "world_id": "DMRFW-CAL-0015",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "192915"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:transition:cc8d7496772d0fa1",
+          "stratum": "transition",
+          "world_id": "DMRFW-CAL-0016",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":3,\"B\":17,\"C\":1,\"D\":-3}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:multi_step:da30d6a6253bea84",
+          "stratum": "multi_step",
+          "world_id": "DMRFW-CAL-0017",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":17,\"B\":7,\"C\":16,\"D\":-15}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:arith_competence:402fcd9dbed8f131",
+          "stratum": "arith_competence",
+          "world_id": "DMRFW-CAL-0018",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "19"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:longctx_mixed:80bee0e28bf9beeb",
+          "stratum": "longctx_mixed",
+          "world_id": "DMRFW-CAL-0019",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "670200"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:transition:c70de54a99cb5143",
+          "stratum": "transition",
+          "world_id": "DMRFW-CAL-0020",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":16,\"B\":13,\"C\":12,\"D\":14}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": false,
+          "id": "DMRF-CAL:multi_step:853a3f9fe7d2bfcf",
+          "stratum": "multi_step",
+          "world_id": "DMRFW-CAL-0021",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "{\"A\":15,\"B\":-10,\"C\":16,\"D\":-44}"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:arith_competence:cc050459f41ed913",
+          "stratum": "arith_competence",
+          "world_id": "DMRFW-CAL-0022",
+          "router_case": "shortcut_short",
+          "unanswerable": false,
+          "prediction": "72"
+        },
+        {
+          "parsed": true,
+          "abstained": false,
+          "correct": true,
+          "id": "DMRF-CAL:longctx_mixed:7b94ca1c2289755b",
+          "stratum": "longctx_mixed",
+          "world_id": "DMRFW-CAL-0023",
+          "router_case": "plain",
+          "unanswerable": false,
+          "prediction": "867293"
+        }
+      ]
+    }
+  },
+  "contamination_check": {
+    "scout_items": 24,
+    "scout_distinct_prompts": 24,
+    "select_views_001": {
+      "status": "CHECKED",
+      "rows": 384,
+      "identical_prompt_texts": 0,
+      "shared_reference_values": 2,
+      "shared_reference_note": "reference-value coincidence, not item overlap; both banks emit small JSON states and short numerics"
+    },
+    "rrp015_microfit_train": {
+      "status": "CHECKED",
+      "rows": 384,
+      "identical_prompt_texts": 0,
+      "shared_reference_values": 2,
+      "shared_reference_note": "reference-value coincidence, not item overlap; both banks emit small JSON states and short numerics"
+    },
+    "quarantined_banks": "handled by QUARANTINE.json manifest, not opened here; the three ANY_READ-barred banks were not read"
+  }
+}

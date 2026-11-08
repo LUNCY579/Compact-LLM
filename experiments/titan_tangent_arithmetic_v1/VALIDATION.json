@@ -1,0 +1,61 @@
+{
+  "study_id": "TTA-001",
+  "status": "CPU_MECHANICS_PASS_NATIVE_NOT_RUN",
+  "parent_commit": "21c7602ccad59ec7b69e1ae296d06612fcffa90b",
+  "package_sha256": "30132ff7fe666d2f7064ffb49702628b46a98a56a3af8a025d5c2fb13e6ac478",
+  "python": "3.13.5",
+  "runtime": {
+    "torch": "2.10.0+cpu",
+    "pytest": "9.0.2",
+    "safetensors": "0.7.0",
+    "psutil": "7.2.2"
+  },
+  "pytest": {
+    "command": "python -m pytest -q experiments/titan_tangent_arithmetic_v1/tests",
+    "passed": 71,
+    "failed": 0,
+    "warnings": 18,
+    "warning_kind": "upstream torch.jit.script deprecation",
+    "scope": "new package only; inherited repository tests were not run"
+  },
+  "smoke": {
+    "evidence_class": "SYNTHETIC_CPU_MECHANICS_ONLY",
+    "fixture_optimizer_steps": 48,
+    "qualification": {
+      "status": "QUALIFICATION_PASS",
+      "zero_delta_bitwise_identity": true,
+      "reverse_through_jvp_finite_nonzero": true,
+      "backward_calls": 1,
+      "epsilons": [
+        0.05,
+        0.025
+      ],
+      "finite_difference_relative_errors": [
+        4.107739052350394e-09,
+        1.0269699778262582e-09
+      ],
+      "pre_registered_max_relative_error": 0.01,
+      "scope_parameter_tensors": 3,
+      "optimizer_steps": 0,
+      "meaning": "one-prefix backend mechanics, NOT task efficacy or all-input parity"
+    },
+    "method_statuses": {
+      "ordinary": "COMPLETE",
+      "posthoc": "UNDEFINED_NORMALIZATION",
+      "tangent_trained": "UNDEFINED_NORMALIZATION"
+    }
+  },
+  "pretrained_model_loads": 0,
+  "pretrained_tokenizer_calls": 0,
+  "native_titan_optimizer_steps": 0,
+  "historical_benchmark_reads": 0,
+  "native_qwen3_adapter_qualified": false,
+  "quality_improvement_established": false,
+  "release_permitted": false,
+  "native_blockers": [
+    "official checkpoint assets not present in implementation environment",
+    "transformers not installed",
+    "exact-host runtime/source/probe/data/resource manifest not supplied"
+  ],
+  "remote_publication": "See resulting Git commit and branch ref; this pre-publication file does not assert its own future push."
+}

@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "record": "RCI_001_BUILD",
+  "instrument": "RCI-001",
+  "what_this_is": "A long-context and literal-UNKNOWN abstention instrument built to CONFIRM. Answers are computed from generated structure by oracle, never parsed from prose.",
+  "built_to": "CONFIRMATION_INSTRUMENT_GAP.md requirements 1-5",
+  "requirement_2_clarification": "The gap document says the sentinel must be 'absent from the prompt'. Taken literally that is stricter than its own reference instrument: the Long-Context Demonstration Suite's system prompt reads 'If the context does not determine the answer, reply UNKNOWN.' The distinction it is actually drawing is with Forge v2, whose ANSWER OBJECT appears in the item (floor 0.4391 via copy_prompt_sentinel). An instruction is not copyable; an answer is. This build establishes the sentinel once as a contract, ASSERTS it never appears in any context or question, and publishes always_abstain as a first-class floor.",
+  "seed": 20260918,
+  "banks": {
+    "CALIBRATION": {
+      "packs": 32,
+      "rows": 128,
+      "role": "OPENLY SPENDABLE -- scored to verify difficulty is in band",
+      "sha256": "534ab1fe9a3d94b6a5c5743df0a9f8023262eb2f0ba2927dbc33425c14ad38f3"
+    },
+    "SEALED": {
+      "packs": 128,
+      "rows": 512,
+      "role": "CONFIRMATION ONLY -- never scored in this build",
+      "sha256": "a74a534705b135ff75ee055716e04f900f65068c09527f09d748b224514058ff"
+    }
+  },
+  "partitions_disjoint": {
+    "entity_pools": "asserted disjoint across people/roles/objects/places/sites",
+    "contexts": "asserted zero shared context_sha256",
+    "assigned_before_generation": true
+  },
+  "structure": {
+    "variants_per_pack": [
+      "base",
+      "paraphrase",
+      "counterfactual",
+      "unanswerable"
+    ],
+    "task_types": [
+      "alias_resolution",
+      "object_state_tracking",
+      "temporal_correction",
+      "rule_exception",
+      "count_with_exclusions"
+    ],
+    "anti_luck_control": "each scenario pack carries base, paraphrase, counterfactual and unanswerable on the SAME scenario, mirroring the Demo suite's design, so a per-pack all-four-correct metric is available and memorisation is visible",
+    "unanswerable_construction": "the single sentence the task depends on is OMITTED from the render; the question remains plausible and in-domain but is not determined by the context"
+  },
+  "floors_published_before_any_model_call": true,
+  "floors": {
+    "CALIBRATION": {
+      "n": 128,
+      "predictors": {
+        "always_abstain": 32,
+        "constant_majority": 32,
+        "copy_entity_from_question": 0,
+        "per_task_type_majority": 38
+      },
+      "binding_floor_count": 38,
+      "binding_floor_rate": 0.2969,
+      "binding_predictor": "per_task_type_majority",
+      "distinct_references": 27,
+      "note": "per_task_type_majority is label-aware and deliberately the strongest honest predictor offered, per requirement 3 -- not the first one that comes to mind."
+    },
+    "SEALED": {
+      "n": 512,
+      "predictors": {
+        "always_abstain": 128,
+        "constant_majority": 128,
+        "copy_entity_from_question": 0,
+        "per_task_type_majority": 142
+      },
+      "binding_floor_count": 142,
+      "binding_floor_rate": 0.2773,
+      "binding_predictor": "per_task_type_majority",
+      "distinct_references": 33,
+      "note": "per_task_type_majority is label-aware and deliberately the strongest honest predictor offered, per requirement 3 -- not the first one that comes to mind."
+    }
+  },
+  "floor_rule": "a system clears only if the exact two-sided binomial 95% lower bound on its correct count exceeds the binding floor rate",
+  "read_budget": {
+    "CALIBRATION": "unlimited",
+    "SEALED": {
+      "reads_authorised": 1,
+      "reads_used": 0,
+      "condition": "after a candidate is frozen; never for selection",
+      "spent_if": "used to choose among arms, thresholds, prompts or seeds"
+    }
+  },
+  "model_calls_in_this_build": 0
+}
