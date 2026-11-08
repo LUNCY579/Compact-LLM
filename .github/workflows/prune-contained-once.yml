@@ -1,0 +1,74 @@
+name: Prune seven verified-contained branches (one-time)
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/prune-contained-once.yml"
+jobs:
+  prune:
+    if: ${{ github.event.head_commit.message == 'chore: run one-time verified branch prune' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - name: Verify ancestry and prune exact approved refs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request, urllib.parse, urllib.error
+          token = os.environ["GH_TOKEN"]
+          repo = os.environ["GITHUB_REPOSITORY"]
+          base = f"https://api.github.com/repos/{repo}"
+          candidates = [["codex/exp-peer-stabilizer-matrix","3b2aa5f239188da92f8cfcb402e17e001ad5a86e"],["research/ced-dual28-local-p1-preparation-v1","6a56cb64ec03fb729b006192fd58a7d55975e707"],["codex/triskill-stage-a","ef4b4d208dfa1a603a5f5bde88a98a06c5ca81bf"],["research/triskill-geo001-parentq","ae026104a0ba42ec44f9c2aa4db8920d161212f1"],["research/titan-tangent-task-arithmetic-v1","bd512fadeedf50de15bd65367d49a465387767d0"],["codex/mimo-supervisor-death-review-fix-20261002","8424bfc46398113757157f763fa6e8a9821d11fc"],["single-layer-fine-tuning","954a0c2637e691b493c5ac3d488653a8c1adf675"]]
+          headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
+          def api(method, path, missing_ok=False):
+              req = urllib.request.Request(base + path, headers=headers, method=method)
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as response:
+                      raw = response.read()
+                      return json.loads(raw) if raw else {}
+              except urllib.error.HTTPError as e:
+                  if missing_ok and e.code == 404:
+                      return None
+                  raise RuntimeError(f"{method} {path}: GitHub HTTP {e.code}") from None
+          
+          open_prs = api("GET", "/pulls?state=open&per_page=100")
+          main_ref = api("GET", "/git/ref/heads/main")
+          main_sha = main_ref["object"]["sha"]
+          print(f"Checking {len(candidates)} pinned branches against main {main_sha[:12]}")
+          # All-or-none preflight; no wildcard branch matching.
+          for branch, expected in candidates:
+              assert branch != "main" and len(expected) == 40
+              quoted = urllib.parse.quote(branch, safe="/")
+              ref = api("GET", f"/git/ref/heads/{quoted}")
+              if ref["object"]["sha"] != expected:
+                  raise RuntimeError(f"ABORT: branch {branch} moved from approved SHA")
+              detail = api("GET", f"/branches/{quoted}")
+              if detail.get("protected"):
+                  raise RuntimeError(f"ABORT: branch {branch} is protected")
+              if any(pr.get("head", {}).get("ref") == branch and pr.get("head", {}).get("repo", {}).get("full_name") == repo for pr in open_prs):
+                  raise RuntimeError(f"ABORT: branch {branch} is used by an open PR")
+              comparison = api("GET", f"/compare/main...{expected}?per_page=1")
+              if comparison.get("status") not in ("behind", "identical") or comparison.get("ahead_by") != 0:
+                  raise RuntimeError(f"ABORT: branch {branch} is not fully contained in main")
+              print(f"APPROVED {branch} at {expected[:12]} — no unique commits")
+          # Recheck each SHA immediately before delete. No other ref name is touched.
+          deleted = []
+          for branch, expected in candidates:
+              quoted = urllib.parse.quote(branch, safe="/")
+              latest = api("GET", f"/git/ref/heads/{quoted}")
+              if latest["object"]["sha"] != expected:
+                  raise RuntimeError(f"ABORT: branch {branch} moved during deletion")
+              api("DELETE", f"/git/refs/heads/{quoted}")
+              if api("GET", f"/git/ref/heads/{quoted}", missing_ok=True) is not None:
+                  raise RuntimeError(f"FAILED: deletion not confirmed for {branch}")
+              deleted.append(branch)
+              print(f"DELETED {branch}")
+          print(f"PRUNED {len(deleted)} / {len(candidates)} exact contained branches.")
+          
+          PY
