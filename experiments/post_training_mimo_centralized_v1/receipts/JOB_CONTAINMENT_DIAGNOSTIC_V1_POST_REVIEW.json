@@ -1,0 +1,21 @@
+{
+  "kind": "independent_postattempt_review_transcript",
+  "reviewer": "/root/exact_prefix_review",
+  "scope": "Consumed CPU diagnostic from 3b747dc9b50e3b9a480f57ff49f590084845b623",
+  "findings": [
+    "Blocked before either registered experimental case.",
+    "Actual interpreter existed 15.6217 ms before launcher assignment; successful specific-Job query reported nonmembership.",
+    "Later assignment failed with error 5; the denial cause remains unproven.",
+    "Recorded cleanup remains blocked; subsequent PID absence does not prove held-handle cleanup.",
+    "Nine diagnostic evidence files and all thirteen V1 artifacts matched preserved hashes.",
+    "Model, Torch and GPU work were zero."
+  ],
+  "requirements_for_correction": [
+    "Job membership before resume.",
+    "A uniquely owned thread and previous suspend count exactly one.",
+    "Bounded cleanup confirmed through held process handles.",
+    "Separate prospective registration and independent review before physical qualification."
+  ],
+  "new_correction_source_reviewed": false,
+  "native_capture_authorized": false
+}

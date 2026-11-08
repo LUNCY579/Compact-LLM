@@ -1,0 +1,46 @@
+{
+  "status": "BLOCKED_CPU_PRELAUNCH_SOURCE",
+  "source_sha": "8b069c8318df1b3ad9997b247bd0a31fd2cd547b",
+  "reviewer": "/root/exact_prefix_review",
+  "config_sha256": "55a92ccfd0836775793cf3212d7f08a6a5df879e455f20efb97861047a3217cd",
+  "fixture_receipt_sha256": "389e1a8579390d96523d1862ab92c362537d5b5291f9ae153e4b57072b94b259",
+  "blocking_findings": [
+    {
+      "priority": "P1",
+      "finding": "Active termination was confounded by subsequent Job close."
+    },
+    {
+      "priority": "P2",
+      "finding": "Dummy autonomous 10-second exit could confound final Job-close cleanup."
+    },
+    {
+      "priority": "P2",
+      "finding": "Cumulative process cap used a sampled PID lower bound instead of Job lifetime TotalProcesses."
+    },
+    {
+      "priority": "P2",
+      "finding": "Actual interpreter image needed binding to the frozen path and bytes."
+    },
+    {
+      "priority": "P2",
+      "finding": "Outer PASS permitted manual cleanup fallback."
+    },
+    {
+      "priority": "P2",
+      "finding": "Startup failure persistence and actual root-created accounting needed tightening."
+    }
+  ],
+  "verified": [
+    "Registration precedes implementation.",
+    "Thread API declarations/rights, ownership and specific membership before exactly one resume are sound.",
+    "All thirteen V1 and nine diagnostic originals and tracked hashes match.",
+    "Eighty-nine test fixture receipt/raw log/index bytes match the reviewed source.",
+    "Both executable hashes match.",
+    "Both new attempt directories absent.",
+    "No late enrollment, privilege/ACL change, framework import or GPU work."
+  ],
+  "probes_run_by_reviewer": 0,
+  "files_changed_by_reviewer": 0,
+  "service_tier_verified": false,
+  "native_capture_authorized": false
+}

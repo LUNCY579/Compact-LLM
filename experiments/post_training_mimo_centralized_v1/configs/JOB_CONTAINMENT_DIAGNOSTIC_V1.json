@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "experiment_id": "RINEYA-WINDOWS-JOB-CPU-DIAGNOSTIC-V1",
+  "source_base": "299b25fb219423b87880ca2ceca1a272ba7e780c",
+  "cases": ["IMMEDIATE_ASSIGN", "READY_BEFORE_ASSIGN"],
+  "executable": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+  "executable_sha256": "de13d8017f63cb63b0b5bfd2f25e69245c9196433a224856ca1abde1e24d0cb7",
+  "inherited_supervisor_sha256": "d31370de4f6b09052fac2f3505fc38a40041e76bd2137435a1f3678f4346a54d",
+  "output": "artifacts/mimo_central/job_containment_diagnostic_v1_20261001",
+  "limits": {
+    "suite_seconds": 30,
+    "external_ceiling_seconds": 45,
+    "phase_seconds": 5,
+    "poll_seconds": 0.1,
+    "worker_roots": 2,
+    "expected_os_worker_processes": 4,
+    "tree_rss_gib": 0.5,
+    "host_reserve_gib": 1.25,
+    "preworker_host_gib": 3.3125,
+    "disk_free_gib": 4,
+    "max_file_bytes": 1048576
+  },
+  "model_operations": 0,
+  "gpu_operations": 0,
+  "native_capture_authorized": false,
+  "E1_authorized": false,
+  "retry_authorized": false
+}

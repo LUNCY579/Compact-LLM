@@ -1,0 +1,774 @@
+{
+  "applicable_instructions": {
+    "ancestor_AGENTS_found": [],
+    "central_package_AGENTS_found": [],
+    "relevant_dot_agents_found": []
+  },
+  "at_utc": "2026-10-01T16:26:14.546213+00:00",
+  "decision": "Exact-prefix fixed-trace successor. No newer local registered successor found; D2 prerequisites passed. Backend40 is already passed and will not be repeated. COMP-RS terminal STOP_NO_SIGNAL excludes unchanged restart/S1. Architecture tracks lack exact pretrained qualification and offer a less direct bounded next step.",
+  "latest_mimo_commits": [
+    "07b65f3e3651788a80bcb042d0d369954fc7cd0c fix(mimo): retain current accounting in capture failure receipts",
+    "19551ddebc87c93161c303865ce6d0f130de0093 docs(mimo): record blocked goal audit",
+    "7d4ae3ea99c2f899d17202ed23842291de90cf4a docs(mimo): assess lower RAM routes",
+    "d1f6f8488cdfcce01b88f1be8b0591cb3e318bd5 docs(mimo): retain qualifier admission result",
+    "5cb79fe7dbbc244d3efb109e86dd029b49e312bb feat(mimo): add bounded GPU backend qualifier",
+    "8e6169b5d7535ee88798f58dc3ddf78d07b775ec docs(mimo): record native backend qualification gaps",
+    "c4b67c726544b727940e26eff186e8fdaeb905d9 feat(mimo): implement internal native adapter backend",
+    "d2be4c5bc53209fa136bbb51bd022da9e1d3c62d fix(mimo): bound checkpoint byte reads during growth",
+    "641306d19f0c5712a43f35bdc7001d48c5e6b1ae docs(mimo): deliver admission and backend evidence",
+    "02bfd030b7411efe267794a8d2df71aa65d2abc4 feat(mimo): validate native checkpoint contracts",
+    "fadef8969e1a23ede659504677ac7487c341f53b feat(mimo): wait for post-import admission",
+    "dd48234e0f1000ab227d4a459476826fbc3785a8 docs(mimo): retain actual scheduled TRAIN audit",
+    "25b9860fe99e48e5dc6b8fb6206c3a3776fb860b fix(mimo): bind capture evidence to frozen prompt inputs",
+    "c2fd2619412d9ac6f138ab970aa75795a0cd99a3 feat(mimo): add bounded E1 training components",
+    "4f020df699a91325abc26ac31018b33210baae0f docs(mimo): deliver low-RAM plan and evidence",
+    "39add8a9d9ea7df69ac838860c3dcab15639e43d feat(mimo): check fixed-shape causal capture",
+    "6ad5e7da5791b2709dc487c2e5635dc66dd9fe34 docs(mimo): record geometry and laptop phases",
+    "0b48e3cd322399827b30766caf122d829b93269b test(mimo): bind geometry controls and review",
+    "d81c29e90b088c1b435cc43ce4aa9816d6db1631 feat(mimo): measure held-hidden capture geometry",
+    "3750041b2a2085ec2314cf3c61d2546231000677 docs(mimo): retain capture numerical failure",
+    "3ed5777167817edd7032f8ed3125afd2e6daa3ad test(mimo): bind capture controls and reviews",
+    "8cb65f730d574183f8be4b91cf7839e171651a57 feat(mimo): verify greedy capture evidence",
+    "f3c6d723e094d2fe4dc892c8c07f32df820a7dd9 feat(mimo): add frozen greedy capture qualifier",
+    "e6f5f8905e0a73b40f6787358c1a982fff8ed3c7 feat(mimo): freeze deterministic DEV capture inputs",
+    "e2a67abcd9d6ddbdad7c6340cdcd3a5d5f82545e feat(mimo): freeze short greedy capture pilot",
+    "d269f649744cf16cf16cc5055e8cf36e3e6ab7ac docs(mimo): record CE512 and TRAIN binding results",
+    "e717d87a59263e84db7b555dd902f48a7b928eac feat(mimo): join TRAIN sources to CE512 arrays",
+    "5ab50ffe15319d4973d80eced91a320069786f6e docs(mimo): retain complete native CE512 pass",
+    "15901919825dc1855020212edcaf6830ee7caef1 feat(mimo): freeze source-joined TRAIN contract",
+    "c8d42befaf54bbb321c85ff1ae2ce392c94ceb98 docs(mimo): record low RAM CE results and wait",
+    "9baa49130243e4b1f559448f586faeb76fb9d2a9 docs(mimo): bind laptop 512 CE preparation",
+    "431a9deb22265dc24e08840d65dcb8a1fa3bac08 feat(mimo): validate explicit 512 CE evidence",
+    "d5640306dac3ea33b862e77bb1eb932a980a9e4f feat(mimo): bound CE qualification to 512 tokens",
+    "03e2e64be76ee6d7cfeca040feb0d7bf5c2772e5 docs(mimo): retain partial native CE trial",
+    "a4454e17009c9d3aadd87e2b9b633c2969f5be00 test(mimo): record scoped evidence controls",
+    "4be50f85626c00962b90c0900355904d50c8f4fc feat(mimo): check scoped native evidence",
+    "44cdbc0bcd22bc78948b4e1c9c1ea8257105412b protocol(mimo): freeze scoped evidence contract",
+    "e8865c7afa510e00ee773686469188e1540fd183 docs(mimo): record wait and scoped CE readiness",
+    "5c41008f191eefffcc360331dfb0b89162e22ffe feat(mimo): qualify supported unpadded CE inputs",
+    "cf566feed5303c090a498f6e9aff11ac08e8bd6a protocol(mimo): bind unpadded CE runtime scope",
+    "7a10f8fd1e53679516d2267c655002365a4d0166 fix(mimo): use portable launcher hashing",
+    "4994e8001d5006a1b47d3eec25b889be05978163 docs(mimo): deliver laptop route and standalone trial",
+    "4526d70581273691b5145268c36628a9fc9d903a perf(mimo): stream weights through bounded buffer",
+    "1018dc55550d296576b5a64aac728f1179887249 protocol(mimo): register fixed-buffer loading",
+    "7c56d23563214e3dc58184822b981f310e06c6cc feat(mimo): isolate adapter resource qualification",
+    "f99c2d881391adceba7873f3e5b590047ac5d4d0 protocol(mimo): split adapter resource qualification",
+    "79ad1a61ba1bb16b93ccc9f0cd27c0e22b9bb00c feat(mimo): add bounded laptop resource profile",
+    "1b43c869f9900b897f1f4aa9a88417ba9d49ac3c protocol(mimo): bound laptop probe to inference",
+    "23e007d25a966bbf67708bd2e2c77ba0fd74450f protocol(mimo): register laptop memory pilot"
+  ],
+  "native_context_inputs": {
+    "EXACT_PREFIX_V1_BACKEND_CONTEXT.json": {
+      "bytes": 107311,
+      "copied_byte_identically": true,
+      "original_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\artifacts\\mimo_central\\native_backend_qual_v1_20260930\\QUALIFICATION_RESULT.json",
+      "sha256": "405791654eb74a6ea1c61fb51d7918888cf73903bc3005a433a87e4496e29b23"
+    },
+    "EXACT_PREFIX_V1_D2_PREREQUISITE.json": {
+      "bytes": 19563,
+      "copied_byte_identically": true,
+      "original_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\artifacts\\mimo_central\\capture_causal_wait_v2_20260930_231320_6973a777\\DIAGNOSTIC_RESULT.json",
+      "sha256": "15ce70d69f9f5d8f24cf7ca84869efbe94f27fd7cbc432352a50da917b925ac8"
+    }
+  },
+  "preserved_patches": {
+    "07b65f3e": {
+      "commit": "07b65f3e3651788a80bcb042d0d369954fc7cd0c",
+      "files": [
+        "experiments/post_training_mimo_centralized_v1/scripts/qualify_capture.py",
+        "experiments/post_training_mimo_centralized_v1/tests/test_greedy_capture.py"
+      ],
+      "integrated": false
+    },
+    "22423340": {
+      "commit": "224233406c42d90ab30b6599303323a10c54fb0f",
+      "files": [
+        "experiments/confirm002_paired_audit_v1/CONFIRM002_PAIRED_CORRECTNESS.json",
+        "experiments/confirm002_paired_audit_v1/README.md",
+        "experiments/confirm002_paired_audit_v1/REPORT.md",
+        "experiments/confirm002_paired_audit_v1/SOURCE_PROVENANCE.json",
+        "experiments/confirm002_paired_audit_v1/paired_correctness.py",
+        "experiments/confirm002_paired_audit_v1/test_paired_correctness.py"
+      ],
+      "integrated": false
+    },
+    "25b9860f": {
+      "commit": "25b9860fe99e48e5dc6b8fb6206c3a3776fb860b",
+      "files": [
+        "experiments/post_training_mimo_centralized_v1/scripts/capture_evidence.py",
+        "experiments/post_training_mimo_centralized_v1/tests/test_capture_evidence.py"
+      ],
+      "integrated": false
+    },
+    "669ba121": {
+      "commit": "669ba121f8f9f388c363ded7633b672befed3bc8",
+      "files": [
+        "experiments/clare_sparse_composition_v1/NATIVE_SMOKE_AND_HANDOFF.md",
+        "experiments/clare_sparse_composition_v1/run_phase4.py",
+        "experiments/clare_sparse_composition_v1/tests/test_run_phase4_scope.py"
+      ],
+      "integrated": false
+    },
+    "d2be4c5b": {
+      "commit": "d2be4c5bc53209fa136bbb51bd022da9e1d3c62d",
+      "files": [
+        "experiments/post_training_mimo_centralized_v1/scripts/native_backend_contract.py",
+        "experiments/post_training_mimo_centralized_v1/tests/test_native_backend_contract.py"
+      ],
+      "integrated": false
+    }
+  },
+  "requested_agent_settings": {
+    "fast": false,
+    "mode": "standard",
+    "model": "gpt-6.1-sol",
+    "reasoning": "max"
+  },
+  "settings_note": "Main-thread inference settings cannot be changed by workspace edits. Global config was observed as gpt-6.1-sol/ultra/priority and was not modified. Independent review will explicitly request gpt-6.1-sol/max; its tool exposes no service-tier override.",
+  "source_base": "19551ddebc87c93161c303865ce6d0f130de0093",
+  "worktrees": [
+    {
+      "HEAD": "954a0c2637e691b493c5ac3d488653a8c1adf675",
+      "branch": "refs/heads/single-layer-fine-tuning",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "M Rineya_Published_Cores/CATALOG.json",
+        " M Rineya_Published_Cores/MODEL_REGISTRY.md",
+        "?? Rineya_Published_Cores/Rineya-Titan-Transition-1.0.0-devfreeze/",
+        "?? rineya_single_layer_ft_v1/"
+      ],
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble"
+    },
+    {
+      "HEAD": "ecb6f00f58dfdf5c00df9fb901bd1a23b0bfe287",
+      "branch": "refs/heads/codex/comp-rs-methods-warmstart-20260930",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/.codex/worktrees/comp-rs-native-q1/ChatBubble-titan-model-soup-mini-v1"
+    },
+    {
+      "HEAD": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "branch": "refs/heads/codex/data-admission-001-20260930",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "?? experiments/data_admission_v1/"
+      ],
+      "worktree": "C:/Users/clclc/.codex/worktrees/rineya-dataset-admission/ChatBubble-rvs001"
+    },
+    {
+      "HEAD": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "branch": "refs/heads/codex/cheap-quality-abstention-20260929",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "?? experiments/cheap_quality_abstention_v1/",
+        "?? research/cheap_quality_campaign_20260929/"
+      ],
+      "worktree": "C:/Users/clclc/.codex/worktrees/rineya-quality-abstention/ChatBubble-rvs001"
+    },
+    {
+      "HEAD": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "branch": "refs/heads/codex/cheap-quality-complementarity-20260929",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "?? experiments/cheap_quality_complementarity_v1/",
+        "?? research/cheap_quality_campaign_20260929/"
+      ],
+      "worktree": "C:/Users/clclc/.codex/worktrees/rineya-quality-complementarity/ChatBubble-rvs001"
+    },
+    {
+      "HEAD": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "branch": "refs/heads/codex/cheap-quality-retrieval-20260929",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "?? experiments/cheap_quality_retrieval_v1/",
+        "?? research/cheap_quality_campaign_20260929/"
+      ],
+      "worktree": "C:/Users/clclc/.codex/worktrees/rineya-quality-retrieval/ChatBubble-rvs001"
+    },
+    {
+      "HEAD": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "branch": "refs/heads/codex/cheap-quality-shortcuts-20260929",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "?? experiments/cheap_quality_shortcuts_v1/",
+        "?? research/cheap_quality_campaign_20260929/"
+      ],
+      "worktree": "C:/Users/clclc/.codex/worktrees/rineya-quality-shortcuts/ChatBubble-rvs001"
+    },
+    {
+      "HEAD": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "branch": "refs/heads/codex/cheap-quality-stability-20260929",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "?? experiments/cheap_quality_stability_v1/",
+        "?? research/cheap_quality_campaign_20260929/"
+      ],
+      "worktree": "C:/Users/clclc/.codex/worktrees/rineya-quality-stability/ChatBubble-rvs001"
+    },
+    {
+      "HEAD": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "branch": "refs/heads/codex/cheap-quality-token-fit-20260929",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "?? experiments/cheap_quality_token_fit_v1/",
+        "?? research/cheap_quality_campaign_20260929/"
+      ],
+      "worktree": "C:/Users/clclc/.codex/worktrees/rineya-quality-token-fit/ChatBubble-rvs001"
+    },
+    {
+      "HEAD": "01f47694988a85bdedab7831d1652f0b9bf07e9f",
+      "branch": "refs/heads/codex/triskill-stage-a",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "?? experiments/titan_third_skill_v1/POSTSTOP_RUN.log",
+        "?? experiments/titan_third_skill_v1/STAGE_A_ATTEMPT1.log",
+        "?? experiments/titan_third_skill_v1/STAGE_A_ATTEMPT2.log",
+        "?? experiments/titan_third_skill_v1/STAGE_A_LAUNCH_ATTEMPT1.log",
+        "?? experiments/titan_third_skill_v1/STAGE_A_LAUNCH_ATTEMPT2.log",
+        "?? experiments/titan_third_skill_v1/STAGE_A_RUN.log",
+        "?? experiments/titan_third_skill_v1/arms/C100/config.json",
+        "?? experiments/titan_third_skill_v1/arms/C100/generation_config.json",
+        "?? experiments/titan_third_skill_v1/arms/C100/merges.txt",
+        "?? experiments/titan_third_skill_v1/arms/C100/tokenizer.json",
+        "?? experiments/titan_third_skill_v1/arms/C100/tokenizer_config.json",
+        "?? experiments/titan_third_skill_v1/arms/C100/vocab.json",
+        "?? experiments/titan_third_skill_v1/arms/C25/config.json",
+        "?? experiments/titan_third_skill_v1/arms/C25/generation_config.json",
+        "?? experiments/titan_third_skill_v1/arms/C25/merges.txt",
+        "?? experiments/titan_third_skill_v1/arms/C25/tokenizer.json",
+        "?? experiments/titan_third_skill_v1/arms/C25/tokenizer_config.json",
+        "?? experiments/titan_third_skill_v1/arms/C25/vocab.json",
+        "?? experiments/titan_third_skill_v1/arms/C50/config.json",
+        "?? experiments/titan_third_skill_v1/arms/C50/generation_config.json",
+        "?? experiments/titan_third_skill_v1/arms/C50/merges.txt",
+        "?? experiments/titan_third_skill_v1/arms/C50/tokenizer.json",
+        "?? experiments/titan_third_skill_v1/arms/C50/tokenizer_config.json",
+        "?? experiments/titan_third_skill_v1/arms/C50/vocab.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC100/config.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC100/generation_config.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC100/merges.txt",
+        "?? experiments/titan_third_skill_v1/arms/TTC100/tokenizer.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC100/tokenizer_config.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC100/vocab.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC25/config.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC25/generation_config.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC25/merges.txt",
+        "?? experiments/titan_third_skill_v1/arms/TTC25/tokenizer.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC25/tokenizer_config.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC25/vocab.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC50/config.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC50/generation_config.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC50/merges.txt",
+        "?? experiments/titan_third_skill_v1/arms/TTC50/tokenizer.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC50/tokenizer_config.json",
+        "?? experiments/titan_third_skill_v1/arms/TTC50/vocab.json",
+        "?? experiments/titan_third_skill_v1/launch_probe/",
+        "?? experiments/titan_third_skill_v1/lock_probe.py",
+        "?? experiments/titan_third_skill_v1/poststop_null/arms/TTR/config.json",
+        "?? experiments/titan_third_skill_v1/poststop_null/arms/TTR/generation_config.json",
+        "?? experiments/titan_third_skill_v1/poststop_null/arms/TTR/merges.txt",
+        "?? experiments/titan_third_skill_v1/poststop_null/arms/TTR/tokenizer.json",
+        "?? experiments/titan_third_skill_v1/poststop_null/arms/TTR/tokenizer_config.json",
+        "?? experiments/titan_third_skill_v1/poststop_null/arms/TTR/vocab.json"
+      ],
+      "worktree": "C:/Users/clclc/.codex/worktrees/triskill-stage-a/ChatBubble-titan-model-soup-mini-v1"
+    },
+    {
+      "HEAD": "016da519cc685c0aae31782b9460a24b6328605a",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble/.claude/worktrees/reverent-tharp-a9382e"
+    },
+    {
+      "HEAD": "49aa961265c7b248be5c81244cc5d80d49db13c7",
+      "branch": "refs/heads/research/tgsa-mtp-rineya-complementarity-v1",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-phase2b"
+    },
+    {
+      "HEAD": "927405ab1b35a42cf7a5acb16fd42d2123ded567",
+      "branch": "refs/heads/research/tgsa-rineya-pretrained-retrofit",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-rineya-retrofit"
+    },
+    {
+      "HEAD": "9427c6d57e0c142ca5844b738f4cf8dd17f7d48f",
+      "branch": "refs/heads/research/tgsa-programme-ledger",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-tgsa-ledger"
+    },
+    {
+      "HEAD": "b60d4703fc546581998bd06e64d67c3a0e3067c5",
+      "branch": "refs/heads/research/tgsa-v5-1-unified-programme",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-v51"
+    },
+    {
+      "HEAD": "fefabf086888295690b9ba8eb9d4eb7d0441810e",
+      "branch": "refs/heads/research/supa-abstention-gate-off-v1",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-abstention-gate-off"
+    },
+    {
+      "HEAD": "07e53b0e7d8ed1dd3243493b3a25b97b3988f4fd",
+      "branch": "refs/heads/codex/dataset-retention-audit-v1",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "M CONTINUATION.md",
+        " M MODEL_QUALITY_STATUS.md",
+        " D experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_sv001_supa.json",
+        " M experiments/rab001_exploration/process_probe.py",
+        " M experiments/rab001_exploration/retention_probe.py",
+        " M experiments/reasoning_posttraining_v1/controller.py",
+        " M experiments/reasoning_posttraining_v1/process_arm.py",
+        " M experiments/reasoning_posttraining_v1/process_mix.py",
+        " M experiments/reasoning_posttraining_v1/statistics.py",
+        " M experiments/reasoning_posttraining_v1/tests/test_controller.py",
+        " M experiments/reasoning_posttraining_v1/tests/test_process_arm.py",
+        " M experiments/reasoning_posttraining_v1/tests/test_statistics.py",
+        "?? ERRATUM_FLOOR_RULE.md",
+        "?? Rineya_LCR_Full_v1_6000/",
+        "?? docs/model-quality/audit-2026-09-17/",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_armperp001_perp.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_depthprof001_p025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_depthprof001_p075.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_depthprof001_p150.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_flatdamage001_flat.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_indep001_t100h000.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_indep001_t100h025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_indep002_s17_h050.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_indep002_s23_h000.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_indep002_s23_h025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_indep003_s17_h005.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_indep003_s17_h010.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_indep003_s17_h015.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_indep003_s17_h025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_indep004_t075_h000.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_indep004_t075_h025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_indep005_s17_h020.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_indep005_same_a025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_indep005_same_a0554.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/LONGCTX_normline001_stack2.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_depthprof001_p025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_depthprof001_p075.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_depthprof001_p150.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_dploc001_A_mlp_zero_sel.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_dploc001_B_rand_A_sel.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_dploc001_C_attn_zero_sel.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_dploc001_D_rand_C_sel.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_flatdamage001_flat.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_indep001_t100h000.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_indep001_t100h025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_indep002_s17_h050.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_indep002_s23_h000.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_indep002_s23_h025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_indep003_s17_h005.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_indep003_s17_h010.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_indep003_s17_h015.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_indep003_s17_h025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_indep004_t075_h000.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_indep004_t075_h025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_indep005_s17_h020.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_indep005_same_a025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_indep005_same_a0554.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_modcoef001_g025_sel.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_modcoef001_g050_sel.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_modcoef001_g075_sel.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_normline001_stack2.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_clockfix001_rung4_plus_R.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_depthprof001_p025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_depthprof001_p075.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_depthprof001_p150.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_doseparam001_rung1.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_doseparam001_rung2.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_doseparam001_rung3.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_doseparam001_rung4.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_dploc001_A_mlp_zero_ret.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_dploc001_B_rand_A_ret.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_dploc001_C_attn_zero_ret.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_dploc001_D_rand_C_ret.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_flatdamage001_flat.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_indep001_t100h000.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_indep001_t100h025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_indep002_s17_h050.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_indep002_s23_h000.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_indep002_s23_h025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_indep003_s17_h005.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_indep003_s17_h010.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_indep003_s17_h015.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_indep003_s17_h025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_indep004_t075_h000.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_indep004_t075_h025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_indep005_s17_h020.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_indep005_same_a025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_indep005_same_a0554.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_modcoef001_g025_ret.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_modcoef001_g050_ret.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_modcoef001_g075_ret.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_panel001_d1_s17.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_panel001_d1_s23.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_panel001_d1_s29.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_panel001_dose_a025.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_panel001_dose_a050.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_panel001_dose_a075.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_panel001_dose_a100.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_panel001_gate_a100.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_panel001_lora_r16.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/RETENTION_PROBE_panel001_lora_r16_lr1e4.json",
+        "?? experiments/continual_skill_audit_v1/",
+        "?? experiments/rab001_exploration/hf_checkpoint.py",
+        "?? experiments/rab001_exploration/test_hf_checkpoint.py",
+        "?? experiments/reasoning_posttraining_v1/tests/test_text_contact.py",
+        "?? experiments/reasoning_posttraining_v1/text_contact.py",
+        "?? research/continual_skill_audit_v1/"
+      ],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-ced-native-loader-qualification"
+    },
+    {
+      "HEAD": "48efd7d147ef472fc9efffa6b9f8c873fa0ed51d",
+      "branch": "refs/heads/research/comp-rs-001-amendment-1",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "M experiments/maxrl_comp002_pretraining_v1/s0_churn.py",
+        " M experiments/maxrl_comp002_pretraining_v1/s0_competence.py",
+        " M experiments/maxrl_comp002_pretraining_v1/s0_enroll.py",
+        " M experiments/maxrl_comp002_pretraining_v1/s0_freeze.py",
+        " M experiments/maxrl_comp002_pretraining_v1/s0_pilot.py",
+        " M experiments/maxrl_comp002_pretraining_v1/s0_runtime.py",
+        " M experiments/maxrl_comp002_pretraining_v1/tests/test_s0_competence_enroll.py",
+        " M experiments/maxrl_comp002_pretraining_v1/tests/test_s0_freeze.py",
+        " M experiments/maxrl_comp002_pretraining_v1/tests/test_s0_pilot.py",
+        " M experiments/maxrl_comp002_pretraining_v1/tests/test_s0_runtime.py",
+        "?? experiments/maxrl_comp002_pretraining_v1/s0_warmstart.py",
+        "?? experiments/maxrl_comp002_pretraining_v1/tests/test_s0_warmstart.py"
+      ],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-comp-rs-amendment-1"
+    },
+    {
+      "HEAD": "b04b4541d4ed18c0401c41ccb23472daf66c0b11",
+      "branch": "refs/heads/codex/comp-rs-s1-dev-20260930",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "?? experiments/skill_acquisition_native_v1/ce_update.py",
+        "?? experiments/skill_acquisition_native_v1/tests/test_ce_update.py"
+      ],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-comp-rs-s1-dev-20260930"
+    },
+    {
+      "HEAD": "3a16214b028b8f6fd34828f82f1e233d9da132f4",
+      "branch": "refs/heads/codex/supa-adaptive-compute-v2",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "?? experiments/cross_scale_layer_graft_v1/",
+        "?? experiments/supa_adaptive_compute_v2/cross_scale/diagnostics/",
+        "?? experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/evidence/00_execution_queue/20260914T0451_X0_cpu/events.jsonl",
+        "?? experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/evidence/00_execution_queue/20260914T0451_X0_cpu/started.json",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/00_execution_queue/20260914T044853_9308131Z_6f02ca34/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T174059_311365Z_676ccdd3/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T174142_044222Z_3c9ccd21/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T174219_792913Z_29ff257b/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T174256_618224Z_e7348af3/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T174337_246760Z_fcbaf3e9/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T174432_029190Z_857ef70e/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T174601_227790Z_4714bf21/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T174645_899446Z_b30c91c0/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T174732_700721Z_c51252fe/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T174818_141336Z_4dc46be9/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T174909_006788Z_2a25d8a1/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T175036_861941Z_12ab560e/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T175126_834088Z_c3c5f3a8/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T175210_801451Z_029c5e0d/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T175257_957727Z_821b9040/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T175343_109403Z_51353878/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T175431_545436Z_76430432/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T175520_958434Z_2be0784b/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T175607_912293Z_4a039d42/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T175655_247555Z_1c760f6b/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T175744_736325Z_4374749e/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T175836_608893Z_260fde46/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T175923_341932Z_2b050db8/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T180010_296124Z_cd48fcaa/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T180105_516869Z_8b96e595/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T180202_648170Z_a8b4f3bd/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T180255_914352Z_7ddd675e/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260913T180353_956160Z_03195701/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045000_310811Z_dfe86d94/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045038_642855Z_efb299c7/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045108_910541Z_7c1a3e4e/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045139_403674Z_5e025fae/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045208_964211Z_717f58ef/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045238_639199Z_a1d383c2/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045313_028091Z_e7a064a1/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045342_802905Z_a7ba3b89/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045413_108312Z_c32309c7/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045444_307909Z_0379f7b6/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045520_573364Z_4f29d9cf/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045606_943924Z_c1827fb8/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045720_560506Z_5dd69e80/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045752_329727Z_e112ac29/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045822_678410Z_1c995900/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045854_551031Z_77f8abdc/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045925_987633Z_b3a1d79c/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T045956_028080Z_74068064/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T050030_769322Z_5efef3b1/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T050102_254150Z_c8008d8a/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T050135_999586Z_e3f5ea71/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T050209_988503Z_a80a980a/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T050241_931169Z_0ccc31a9/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T050314_698600Z_f6cfff99/",
+        "?? experiments/supa_adaptive_compute_v2/native_armr/evidence/01_architecture_dev/20260914T050353_602420Z_68b757e3/"
+      ],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-cross-scale"
+    },
+    {
+      "HEAD": "728a8f528ad206a4c2aec91d8da97ef3c15cd3c1",
+      "branch": "refs/heads/research/cross-scale-orthogonal-composable-skills-v1",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-cross-scale-composable-v1"
+    },
+    {
+      "HEAD": "e0d1617e51b0825832a09aeeb13bb832e543c54b",
+      "branch": "refs/heads/research/delta-multi-reasoning-factorial-v1",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-dmrf"
+    },
+    {
+      "HEAD": "9abd010e675d2853fe689404c188baecb21af719",
+      "branch": "refs/heads/research/retention-dose-parameterization-v1",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_armperp001_perp.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_clockfix001_rung4_plus_R_select.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_doseparam001_rung1_select.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_doseparam001_rung2_select.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_doseparam001_rung3_select.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_doseparam001_rung4_select.json",
+        "?? experiments/architecture_benchmark_001/evidence/retention-design-v1/PROCESS_supa_select_mnt128.json",
+        "?? research/binding_integration_v1/cost_report_recovered.py",
+        "?? research/binding_integration_v1/test_cost_report_recovered.py"
+      ],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-dose-param"
+    },
+    {
+      "HEAD": "71cfb145be65e09ea6cbe8014c511e49170078c8",
+      "branch": "refs/heads/codex/efe-func001-fresh-validation",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-efe-func001"
+    },
+    {
+      "HEAD": "a4a250338e85442b3762e9c5f0a620ee803c9969",
+      "branch": "refs/heads/codex/mrs-phase2-dataset-selection-v1",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "?? experiments/mrs_phase2_dataset_selection_v1/",
+        "?? research/mrs_phase2_dataset_selection_v1/"
+      ],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-mrs-phase2-dataset-selection-v1"
+    },
+    {
+      "HEAD": "48b0c58ec637cd7b4396bb7cf22588ca26e4bb46",
+      "branch": "refs/heads/research/multi-reasoning-scout-v2",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-mrs2"
+    },
+    {
+      "HEAD": "19551ddebc87c93161c303865ce6d0f130de0093",
+      "branch": "refs/heads/research/post-training-mimo-centralized-v1",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-post-training-Mimo"
+    },
+    {
+      "HEAD": "11da2c23927764b47148fd7c9300b1a60ac8ae57",
+      "branch": "refs/heads/research/rineya-reasoning-posttraining-v1",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-rineya-reasoning-posttraining-v1"
+    },
+    {
+      "HEAD": "1f91ddcf124beb9b56f43767141d01cf59ccf9e7",
+      "branch": "refs/heads/research/rineya-reasoning-corpus-v1",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-rtg1"
+    },
+    {
+      "HEAD": "ac9b79ac07ad650d8815c76eb4194a180f23e8d4",
+      "branch": "refs/heads/codex/rvs001-inference-pilot-20260929",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-rvs001"
+    },
+    {
+      "HEAD": "954a0c2637e691b493c5ac3d488653a8c1adf675",
+      "branch": "refs/heads/multi-reasoning-slft",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "?? research/",
+        "?? rineya_single_layer_ft_v1/"
+      ],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-slft"
+    },
+    {
+      "HEAD": "52430ac6c5b74f1bad5f06e9227af9959595ff0f",
+      "branch": "refs/heads/research/rineya-small-vocab-depth-distill-v1",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "?? research/rineya_small_vocab_depth_v1/LCACC001_PREREG.md",
+        "?? research/rineya_small_vocab_depth_v1/build_lcacc_panel.py",
+        "?? research/rineya_small_vocab_depth_v1/design/LCACC_CONSTANTS.json",
+        "?? research/rineya_small_vocab_depth_v1/design/LCACC_NULL_SIM.json",
+        "?? research/rineya_small_vocab_depth_v1/design/freeze_lcacc_constants.py",
+        "?? research/rineya_small_vocab_depth_v1/design/lcacc_harness.py",
+        "?? research/rineya_small_vocab_depth_v1/design/lcacc_null_sim.py",
+        "?? research/rineya_small_vocab_depth_v1/launch/finalize_lcacc_gate.py",
+        "?? research/rineya_small_vocab_depth_v1/launch/launch_lcacc.ps1",
+        "?? research/rineya_small_vocab_depth_v1/launch/lcacc_run.sh",
+        "?? research/rineya_small_vocab_depth_v1/launch/prove_lcacc_gate.py",
+        "?? research/rineya_small_vocab_depth_v1/lcacc_describe.py",
+        "?? research/rineya_small_vocab_depth_v1/lcacc_verdict.py",
+        "?? research/rineya_small_vocab_depth_v1/run_lcacc.py",
+        "?? research/rineya_small_vocab_depth_v1/score_lcacc_raw.py",
+        "?? research/rineya_small_vocab_depth_v1/tests/test_lcacc_describe.py",
+        "?? research/rineya_small_vocab_depth_v1/tests/test_lcacc_verdict.py"
+      ],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-small-vocab-depth"
+    },
+    {
+      "HEAD": "d5fd2c2a4b196a87fc43e076c984e19b13fdcb6f",
+      "branch": "refs/heads/research/titan-clare-sparse-composable-skills-v1-claude",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-titan-clare-sparse-v1"
+    },
+    {
+      "HEAD": "016da519cc685c0aae31782b9460a24b6328605a",
+      "branch": "refs/heads/research/titan-opallo-exact-endpoint-v3",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "M experiments/delta_subspace_geometry_v1/RESULTS.md",
+        " M experiments/fresh_dual_skill_instrument_v1/PREREG.md",
+        " M experiments/fresh_dual_skill_instrument_v1/RESULTS.md",
+        " M experiments/fresh_dual_skill_instrument_v1/analyse.py",
+        " M experiments/fresh_dual_skill_instrument_v1/generate.py",
+        " M experiments/functional_additivity_v1/score_tf.py",
+        " M experiments/module_disjoint_composition_v1/RESULTS.md",
+        " M experiments/module_disjoint_composition_v1/compose_modules.py",
+        " M experiments/module_disjoint_composition_v1/run_p6.py",
+        " M experiments/titan_model_soup_mini_v1/RESULTS_PHASE_A.md",
+        " M experiments/titan_opallo_skill_vector_v1/RESULTS_PRE_NATIVE.md",
+        " M experiments/titan_opallo_skill_vector_v1/compose.py",
+        " M experiments/titan_opallo_skill_vector_v1/run_native_probe.py",
+        "?? experiments/composition_confirmation_v1/",
+        "?? experiments/composition_confirmation_v2/",
+        "?? experiments/convention_localization_v1/",
+        "?? experiments/fresh_dual_skill_instrument_v1/CONTENT_CONTAMINATED_ROWS.json",
+        "?? experiments/fresh_dual_skill_instrument_v1/reproduce_results.py",
+        "?? experiments/interference_mechanism_v1/",
+        "?? experiments/module_disjoint_composition_v1/RECEIPT_CORRIGENDUM.json",
+        "?? experiments/o_side_module_vs_magnitude_v1/",
+        "?? experiments/titan_next_skill_screen_v1/",
+        "?? experiments/titan_opallo_composition_audit_v2/",
+        "?? experiments/titan_opallo_exact_dev_v4/",
+        "?? experiments/titan_opallo_exact_endpoint_v3/",
+        "?? experiments/titan_third_skill_v1/"
+      ],
+      "worktree": "C:/Users/clclc/BusinessProject/ChatBubble-titan-model-soup-mini-v1"
+    },
+    {
+      "HEAD": "d0b417632930170a08d471be2629ed44d76f225c",
+      "branch": "refs/heads/research/supa-a1.1-fast-weight-attention-v1",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [
+        "M Rineya_Fast_Weight_Attention_Lab_v1/PREREGISTRATION.md",
+        " M Rineya_Fast_Weight_Attention_Lab_v1/reports/ZERO_TRAINING_SANITY.md",
+        " M Rineya_Fast_Weight_Attention_Lab_v1/research/PAPER_NOTES.md",
+        " M Rineya_Fast_Weight_Attention_Lab_v1/src/rineya_fwa/significance_gate.py",
+        " M Rineya_Fast_Weight_Attention_Lab_v1/tests/test_falcon2_causality.py"
+      ],
+      "worktree": "C:/Users/clclc/BusinessProject/RineyaBeta-supa-fwa-v1"
+    },
+    {
+      "HEAD": "669ba121f8f9f388c363ded7633b672befed3bc8",
+      "branch": "refs/heads/codex/clare-phase4-scope-fail-closed-20260930",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/Documents/Codex/2026-09-30/task/ChatBubble-clare-scope-fail-closed"
+    },
+    {
+      "HEAD": "224233406c42d90ab30b6599303323a10c54fb0f",
+      "branch": "refs/heads/codex/confirm002-paired-correctness-audit-20260930",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/Documents/Codex/2026-09-30/task-2/ChatBubble-confirm002-paired-audit"
+    },
+    {
+      "HEAD": "25b9860fe99e48e5dc6b8fb6206c3a3776fb860b",
+      "branch": "refs/heads/codex/mimo-capture-fixed-input-audit-20260930",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/Documents/Codex/2026-09-30/task-3/ChatBubble-mimo-capture-input-audit"
+    },
+    {
+      "HEAD": "d2be4c5bc53209fa136bbb51bd022da9e1d3c62d",
+      "branch": "refs/heads/codex/mimo-artifact-stream-budget-20260930",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/Documents/Codex/2026-09-30/task-5/ChatBubble-mimo-artifact-stream-budget"
+    },
+    {
+      "HEAD": "07b65f3e3651788a80bcb042d0d369954fc7cd0c",
+      "branch": "refs/heads/codex/mimo-capture-failure-accounting-20261001",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/Documents/Codex/2026-09-30/task-8/ChatBubble-mimo-failure-accounting"
+    },
+    {
+      "HEAD": "19551ddebc87c93161c303865ce6d0f130de0093",
+      "branch": "refs/heads/codex/mimo-exact-prefix-capture-20261001",
+      "remote": "https://github.com/LUNCY579/ChatBubble.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/Documents/Codex/2026-10-01/task/ChatBubble-mimo-exact-prefix"
+    },
+    {
+      "HEAD": "c4a07e37d2ffdbebc7d1b4849f984d5b747012b9",
+      "branch": "refs/heads/main",
+      "remote": "https://github.com/LUNCY579/SupaExperiment.git",
+      "status": [
+        "?? experiments/",
+        "?? research/"
+      ],
+      "worktree": "C:/Users/clclc/BusinessProject/SupaExperiment"
+    },
+    {
+      "HEAD": "b1813444f76f214fed627af4bebe39a9354b721c",
+      "branch": "refs/heads/research/supa-a1.1-hybrid-memory-architecture-v1",
+      "remote": "https://github.com/LUNCY579/SupaExperiment.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/SupaExperiment-hybrid-memory-v1"
+    },
+    {
+      "HEAD": "b27fd2b9d9ce582439564c7b43b22d94f2100845",
+      "branch": "refs/heads/research/supa-a1.1-nonrecurrent-adaptation-v1",
+      "remote": "https://github.com/LUNCY579/SupaExperiment.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/SupaExperiment-nonrecurrent-adaptation-v1"
+    },
+    {
+      "HEAD": "2d50f33cd896ade7a14dfd70741ed0e9432c82ae",
+      "branch": "refs/heads/main",
+      "remote": "https://github.com/LUNCY579/RineyaArchitecture.git",
+      "status": [],
+      "worktree": "C:/Users/clclc/BusinessProject/RineyaArchitecture"
+    }
+  ]
+}

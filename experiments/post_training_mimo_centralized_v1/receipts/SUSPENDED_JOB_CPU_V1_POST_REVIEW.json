@@ -1,0 +1,35 @@
+{
+  "status": "BLOCKED_CPU_QUALIFICATION_V1_CONFIRMED",
+  "execution_source_sha": "98c6e08e0db8f91bf6fde72979d495dbce6de29b",
+  "reviewer": "/root/exact_prefix_review",
+  "cases_qualified": 0,
+  "confirmed": [
+    "Controller and venv launcher specific membership precede exactly one resume, previous count one.",
+    "Actual worker and dummy membership queries succeeded with true outputs.",
+    "Four retained process handles signaled during failure cleanup with no manual termination or logging errors.",
+    "Outer8.188s/inner5.407s,lifetime and active maxima4/4,RSS67145728bytes,minRAM9.721771GiB,disk81.544125GiB.",
+    "Model/GPU zero and forbidden modules empty; prior13+9 artifacts unchanged."
+  ],
+  "blocker": "publish_go int() conversion of duplicated wintypes.HANDLE/c_void_p raised ValueError before DUMMY_GO.",
+  "markers_absent": [
+    "DUMMY_GO",
+    "DUMMY_ARMED",
+    "WORKER_ARMED",
+    "MAIN_RELEASE"
+  ],
+  "remaining_cases_not_attempted": [
+    "TERMINATE_ACTIVE_TREE",
+    "WRONG_JOB_GO"
+  ],
+  "hashes": {
+    "suite_result": "260b760d2d8e4b3cd89f2359abc77aed2fcf835fc7c406679ca7897cd09410b9",
+    "worker_stderr": "52d3096beadd613878d0c50e1dc356296737f97be962e42c2823182dd22181ba",
+    "outer_result": "b55040918978ea4d494c1dde6f1f72804fe83cd7d79d9d90b1ecefa124ddd1f6"
+  },
+  "next_fix": "Normalize integer/HANDLE.value explicitly and cover real wrappers plus null/malformed rejection in CPU fixtures.",
+  "retry_v1_authorized": false,
+  "native_capture_authorized": false,
+  "probes_run_by_reviewer": 0,
+  "files_changed_by_reviewer": 0,
+  "service_tier_verified": false
+}

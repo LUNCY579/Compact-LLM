@@ -49,6 +49,10 @@ These are **Rineya's Titan experimental checkpoints and task vectors**, not clai
 
 The [bulk import source manifest](docs/repository-consolidation/2026-11-08/BULK_IMPORT.md) records 14 exact non-overlapping experiment/research subtrees that were missing from this branch. They include the Fast-Weight Attention lab, TGSA and retrofit programmes, adaptive-compute experiments, Halo/positional experiments, and the MRS-2 reasoning successor. This is a **structural preservation import**, not fresh model qualification, and does **not** resolve outstanding shared-path branch conflicts or blocked scientific gates.
 
+## MiMo capture and Windows containment audit
+
+The [MiMo exact-prefix report](experiments/post_training_mimo_centralized_v1/EXACT_PREFIX_FIXED_TRACE_V1_REPORT.md) and its Windows Job containment diagnostics are now preserved along with additive **CPU-only** scripts, tests, configurations, and receipts. The six-forward native exact-prefix attempt **stopped before model import**, so it did not measure model likelihood. A [CPU diagnostic](experiments/post_training_mimo_centralized_v1/JOB_CONTAINMENT_DIAGNOSTIC_V1_REPORT.md) reproduced a late-Job-assignment gap, while the [suspended-launch attempt](experiments/post_training_mimo_centralized_v1/SUSPENDED_JOB_CPU_V1_REPORT.md) observed pre-resume membership but did **not** qualify the full cleanup suite. The [supervisor-death proposal](experiments/post_training_mimo_centralized_v1/SUPERVISOR_DEATH_CPU_V1_PROPOSAL.md) remains only a proposal. Existing central capture code, threshold gates, and later fixes were **not overwritten** by the historical import; CPU fixture evidence is not native certification.
+
 ## Research directions
 
 1. **Efficient model composition:** kept-layer/weight interpolation, LoRA scaling, task-vector arithmetic, model soups, and separating dense single-pass cores from multi-arm routing.
