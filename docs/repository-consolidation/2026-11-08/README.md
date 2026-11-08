@@ -114,3 +114,9 @@ The GitHub compare view reports a capped file list for some large divergences, s
 6. **Branch retirement:** follow [manual pruning safeguards](../2026-10-22/MANUAL_PRUNING.md) with exact current SHAs, existing tag/snapshot preservation, and owner policy. This audit **deleted no branches** and did **not** change test gates, historical data, or launch permissions.
 
 **Disposition:** no remaining divergent code branch was demonstrated safe for an unconditional merge by branch-tip comparison alone. The README improvements can be merged independently without masking those issues. This note does not claim new model training, native GPU execution, or revalidation of inherited experimental scores.
+
+## Post-audit selective MiMo reconciliation — 2026-11-08
+
+After the structural inventory, the one-commit source `codex/mimo-capture-failure-accounting-20261001` was compared byte-for-byte with the then-current central files. Its **only code change** inserts `result["call_accounting"] = accounting.snapshot()` immediately before writing `FAILURE_RECEIPT.json` in the exception handler; without it, the failure receipt uses the initial snapshot even when calls have occurred. A synthetic regression test verifies returned/failed counts across the failure, final-result, and cost-ledger receipts. The other test-file change is the `SimpleNamespace` import supporting that test.
+
+This is a **narrow selective import**, not a wholesale merge of the older branch. It changes no native model configuration, data, scoring gate, or workflow, and it does not authorize new capture runs. The new regression test has been **reviewed but not executed in the connected GitHub environment**; native-GPU qualification is not claimed. The old branch remains available for exact source provenance.
