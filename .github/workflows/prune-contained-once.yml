@@ -1,4 +1,4 @@
-name: Prune seven merged MiMo source refs (exact-SHA)
+name: Prune three merged DMRF research refs (exact-SHA)
 on:
   push:
     branches:
@@ -24,7 +24,7 @@ jobs:
           token = os.environ["GH_TOKEN"]
           repo = os.environ["GITHUB_REPOSITORY"]
           base = f"https://api.github.com/repos/{repo}"
-          candidates = [["codex/mimo-artifact-stream-budget-20260930","9d882d38d307c5a6a2cecb8075e9ae314ae879b3"],["codex/mimo-capture-fixed-input-audit-20260930","bbe2343a5817e9512a408270f9215df0116625d0"],["codex/mimo-capture-failure-accounting-20261001","07b65f3e3651788a80bcb042d0d369954fc7cd0c"],["codex/mimo-exact-prefix-capture-20261001","b379f727b06e075b7eaeef3e029583f146e7fe81"],["codex/mimo-job-containment-20261001","f4622874de970441e9d255297a72b0b671c8bdb2"],["codex/mimo-suspended-job-launch-20261001","44cbce50dfe85fb79a35eefee4918b2a0bffef9a"],["codex/mimo-supervisor-death-cpu-20261001","c42d494e751543b5fb896bbccecd16436003354d"]]
+          candidates = [["research/delta-multi-reasoning-factorial-v1","e0d1617e51b0825832a09aeeb13bb832e543c54b"],["research/dmrf-pairwise-disjointness-v1","11f42f6bc11b8f9e235cb5951ca96a263259434a"],["research/dmrf-source-observability-v1","3c76199fb28fb55f0022aa25d93cf876a566f5db"]]
           headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
           def api(method, path, missing_ok=False):
               req = urllib.request.Request(base + path, headers=headers, method=method)
