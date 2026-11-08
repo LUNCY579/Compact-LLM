@@ -1,0 +1,55 @@
+{
+  "experiment": "TITAN-QUALITY-REPAIR-V1",
+  "analysis_version": 1,
+  "development_only": true,
+  "registry_sha256": "ed6c6664dfeb61e23d0016d2eedf8a22720d6986027df5d10aaca219e0fcc4c7",
+  "seeds": [
+    17,
+    29
+  ],
+  "factor_levels_in_contrast_order": {
+    "prompt_coverage": [
+      "canonical",
+      "diverse"
+    ],
+    "difficulty": [
+      "regular",
+      "counterfactual"
+    ],
+    "replay_fraction": [
+      0,
+      0.2
+    ]
+  },
+  "metric_benefit_direction": {
+    "repair_macro_semantic_accuracy": 1,
+    "supported_answer_accuracy": 1,
+    "unsupported_answer_rate": -1,
+    "unnecessary_abstention_rate": -1,
+    "retention_population_semantic_damage": -1,
+    "retention_population_strict_damage": -1
+  },
+  "model_gain_verified": false,
+  "native_execution_authorized": false,
+  "changes_selection_rules": false,
+  "changes_final_endpoint_registry": false,
+  "pattern_claim": "DEVELOPMENT_HYPOTHESES_ONLY_NOT_DETERMINISTIC_OR_CAPABILITY_PROOF",
+  "replication_scope": "Frozen final measures the selected recipe at seeds 17 and 29; it cannot confirm all factorial contrasts.",
+  "replay_estimand": "Fixed 2000-example budget: 400 replay occurrences replace 400 fresh repair examples, not an isolated equal-repair-dose replay effect.",
+  "limitations": [
+    "Only two training seeds; sign agreement is descriptive, without a generalization or significance claim.",
+    "Input summaries are not authenticated native receipts by this pure diagnostic function.",
+    "Interactions and directions cannot authorize another final recipe, alter thresholds or expand samples.",
+    "Attached contract variants are repeated observations and do not contribute independent worlds."
+  ],
+  "status": "UNMEASURED",
+  "analyzed_trial_count": 0,
+  "baseline_summary_sha256": null,
+  "trial_metrics": {},
+  "matched_cell_contrasts": [],
+  "main_effects": {},
+  "pairwise_interactions": [],
+  "triple_interaction": null,
+  "sign_reversals": [],
+  "hypothesis_candidates": []
+}

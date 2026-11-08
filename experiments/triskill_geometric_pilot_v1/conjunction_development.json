@@ -1,0 +1,40 @@
+[
+  {
+    "row_id": "development-conjunction-ivory",
+    "split": "development",
+    "family": "skill_composition",
+    "task_kind": "parent_task_conjunction",
+    "system": "Use only the supplied complete notes. Follow the requested JSON output schema. Do not infer unstated facts.",
+    "user": "Complete notes: the initial ivory register is 8. Apply x := (3 * x + (4)) modulo 97. The witness's code is not recorded, and has no effect on this register. Return only a JSON object with keys state (the final integer) and fact (the witness's code, or UNKNOWN if absent).",
+    "expected": "{\"fact\":\"UNKNOWN\",\"state\":28}",
+    "output_kind": "json_object",
+    "world_signature": "fcd04a09c2fe5c4d5d925777fc9ec443e5b08ca5eb0282441f4ce076be71df30",
+    "state_signature": "78ac2871369c3c439987f91b5bff9171543d3f2b48647171d9de2222f7a14c57",
+    "rule_signature": "8be6d66e9099c68d8feb52ce42478d2153cac2763b784174ae6ae96cd636b596",
+    "metadata": {
+      "new_task_structure": false,
+      "transfer_endpoint": false,
+      "training": false,
+      "membership": "generated_local_split_only"
+    }
+  },
+  {
+    "row_id": "development-conjunction-jasper",
+    "split": "development",
+    "family": "skill_composition",
+    "task_kind": "parent_task_conjunction",
+    "system": "Use only the supplied complete notes. Follow the requested JSON output schema. Do not infer unstated facts.",
+    "user": "Complete notes: the initial jasper register is 17. Apply x := (-1 * x + (6)) modulo 97. The witness's code is not recorded, and has no effect on this register. Return only a JSON object with keys state (the final integer) and fact (the witness's code, or UNKNOWN if absent).",
+    "expected": "{\"fact\":\"UNKNOWN\",\"state\":86}",
+    "output_kind": "json_object",
+    "world_signature": "4d4c3336063968646380a780cc86d7039b02d7fe61040ad3725a32f69b42fd5d",
+    "state_signature": "c3e334eb4a7bc0e3c4122c996a259d3f2cd59873a5063e0d5f645da9ce670aaf",
+    "rule_signature": "827875a99ec71c8126738becee1faae2f90dcdb72515c1942e065f0007d32787",
+    "metadata": {
+      "new_task_structure": false,
+      "transfer_endpoint": false,
+      "training": false,
+      "membership": "generated_local_split_only"
+    }
+  }
+]

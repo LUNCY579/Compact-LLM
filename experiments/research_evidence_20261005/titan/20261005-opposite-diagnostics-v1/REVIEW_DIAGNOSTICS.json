@@ -1,0 +1,116 @@
+{
+  "review_version": 1,
+  "reviewer": "quality_data",
+  "status": "PASS_CPU_INPUT_AND_DESCRIPTIVE_DEV_SCOPE_ONLY",
+  "scope": "CPU_INPUT_AND_DESCRIPTIVE_DEV_ONLY",
+  "authorship_disclosure": {
+    "authored_cases_py_and_test_cases_py": true,
+    "authored_cpu_guardian_or_gain_attribution": false,
+    "review_independence_boundary": "Independent review of the root-run guardian receipts and descriptive gain module; not an independent author review of cases.py or its fixture design."
+  },
+  "review_method": "Read-only code, receipt, artifact and small-file SHA256 inspection; no tests, workers, model imports, native execution or checkpoint reads by reviewer.",
+  "current_evidence": {
+    "fixtures_receipt": {
+      "path": "C:/Users/clclc/BusinessProject/ChatBubble-agent-prompts-20261002/run-artifacts/titan-quality-repair-v1/20261005-opposite-diagnostics-v1/fixtures-002/CPU_SUPERVISOR_RECEIPT.json",
+      "sha256": "b999033e1fac38ee645c5faf96bc52af27af781835b9ee055ebde33bd6174b4e",
+      "status": "PASS",
+      "tests": 48,
+      "failures": 0,
+      "errors": 0,
+      "elapsed_seconds": 4.610000000000127,
+      "peak_tree_rss_bytes": 58384384
+    },
+    "cases_receipt": {
+      "path": "C:/Users/clclc/BusinessProject/ChatBubble-agent-prompts-20261002/run-artifacts/titan-quality-repair-v1/20261005-opposite-diagnostics-v1/cases-002/CPU_SUPERVISOR_RECEIPT.json",
+      "sha256": "62d1719072b7eb7686440a955d12b0778290973ccc04e2043a43b45f6b72ba90",
+      "status": "PASS",
+      "elapsed_seconds": 13.782000000000153,
+      "peak_tree_rss_bytes": 79175680
+    },
+    "input_case_report": {
+      "path": "C:/Users/clclc/BusinessProject/ChatBubble-agent-prompts-20261002/run-artifacts/titan-quality-repair-v1/20261005-opposite-diagnostics-v1/cases-002/INPUT_CASE_AUDIT.json",
+      "sha256": "30834da055c6f3594171044c51c98305129af5e650a3d2fa51b58c48d72aad78",
+      "trial_summaries": 16,
+      "factor_and_seed_comparisons": 32,
+      "unadopted_style_maps": 4
+    },
+    "gain_report": {
+      "path": "C:/Users/clclc/BusinessProject/ChatBubble-agent-prompts-20261002/run-artifacts/titan-quality-repair-v1/20261005-opposite-diagnostics-v1/cases-002/GAIN_ATTRIBUTION_UNMEASURED.json",
+      "sha256": "29308bb6342b6a514670b1414eff513278a4c9fcf7c60cf817636fd195e5120d",
+      "status": "UNMEASURED",
+      "analyzed_scored_trials": 0
+    }
+  },
+  "source_binding_verified": {
+    "entries_per_current_receipt": 49,
+    "original_reviewed_package_files": 40,
+    "sibling_files": 8,
+    "reviewed_proposal_sha256": "5052bf797cc89af24b767ce51db6738353e523c2addf5139149e56278798c073",
+    "initial_admission_worker_completion_maps_equal": true,
+    "maps_match_current_file_bytes": true,
+    "child_admission_file_hashes_match_receipts": true,
+    "bootstrap_go_file_hashes_match": true,
+    "actual_worker_pid_create_time_matches_receipts": true,
+    "all_current_summary_and_style_map_artifact_hashes_match": true,
+    "original_40_files_and_pending_native_proposal_unchanged": true
+  },
+  "cpu_guardian_review": {
+    "hardware_lease": "Atomic Win32 CreateFileW with read/write access and share mode zero; child duplicates the owned handle, verifies canonical path and observes sharing violation for a competing open.",
+    "containment": "Suspended launcher assigned to a Job before payload execution; actual CPython PID/create-time/ancestry and Job membership are checked before pinned package imports.",
+    "source_execution": "Isolated -I -B -S startup and compilation of admitted package source bytes; stale package pyc and model/native module imports are blocked.",
+    "limits": "One CPU affinity, 512 MiB Job private commit and process-tree RSS ceilings, measured RAM reserve, bounded output and wall watchdog.",
+    "current_whole_jobs_reached_zero": true,
+    "exact_launchers_reaped": true,
+    "current_job_and_hardware_handles_closed": true,
+    "current_cleanup_errors": [],
+    "actual_containment_fixture": {
+      "path": "C:/Users/clclc/BusinessProject/ChatBubble-agent-prompts-20261002/run-artifacts/titan-quality-repair-v1/20261005-opposite-diagnostics-v1/containment-001/CPU_SUPERVISOR_RECEIPT.json",
+      "forced_owned_job_termination": true,
+      "descendant_observed_in_owned_job": true,
+      "elapsed_seconds": 3.094000000000051,
+      "peak_tree_rss_bytes": 68284416,
+      "whole_job_exit_verified": true,
+      "guardian_bytes_still_match_current_source": true,
+      "qualification_scope": "Tiny model-free CPU containment only."
+    }
+  },
+  "verified_input_patterns": {
+    "regular_supported_numeric_gold": "250 positive and zero negative without replay; 200 positive and zero negative with replay.",
+    "hard_supported_numeric_gold": "125 positive/125 negative without replay; 100 positive/100 negative with replay.",
+    "hard_diverse_ledger": "Canonical/native_b carry positive operands; native_a/natural carry negative operands, exactly 125 rows per style or 100 with replay.",
+    "conditional_style_branch": "Both diverse difficulty arms map canonical/native_b to true and native_a/natural to false.",
+    "conditional_margins": "Only zero and one; 124 rows at each margin without replay and 100 at each margin with replay.",
+    "held_prompt_factor": "Semantic/evidence/world membership matches, while answerability supervised abstention strings change under the natural contract.",
+    "difficulty_factor": "Fresh parent worlds differ and counterfactual rows share paired parents; not an isolated hardness effect.",
+    "seeds": "All eight seed comparisons preserve training membership and change row order; this is not independent data replication.",
+    "unadopted_maps": "All four maps preserve semantic membership, exact family/style totals and observed-case floor/ceil quotas; targets were not re-rendered and no tokenizer/model qualification occurred."
+  },
+  "retained_review_history": [
+    {
+      "finding": "Supported answerable rows could previously be marked both abstained and semantically correct in descriptive scored summaries.",
+      "resolution": "Root changed only gain_attribution.py and its test to reject that contradiction, archived original sibling bytes, and produced current-source fixtures-002/cases-002 receipts.",
+      "historical_fixture_proof": "fixtures-001 passed 47 tests; current fixtures-002 passed 48.",
+      "current_gain_effect": "None: the current gain report remains unmeasured with zero scored trials."
+    }
+  ],
+  "prospective_decision_note": {
+    "cue_status_shortcut": "The complete-notes phrase appears only in unsupported missing/conflict cases, while the may-be-incomplete phrase appears only in supported cases. Counterfactual construction retains this inverse mapping.",
+    "source_evidence": "Reviewed generator.py lines 113-123 and 178-187.",
+    "why_style_assignment_is_insufficient": "Redistributing scenarios among styles leaves literal cue/status dependence intact, and evaluation uses the same constructor mapping.",
+    "alternative": "Prospectively counterbalance complete/incomplete/neutral cue wording over identical facts and semantic golds, across support classes and styles, under a separately reviewed data decision.",
+    "caveat": "Missing rows do not render their latent negative quantity; conflict scalar facts do render negative values. Grounded-QA dock labels use absolute values."
+  },
+  "native_qualification_approved": false,
+  "native_execution_authorized": false,
+  "quality_gain_verified": false,
+  "selection_authority": false,
+  "new_gates_approved": false,
+  "current_recipes_endpoints_or_proposal_changed_by_review": false,
+  "final_or_old_bank_payloads_opened_by_reviewer": false,
+  "limitations": [
+    "Input construction patterns and CPU fixtures are not Rineya capability evidence.",
+    "Descriptive DEV summaries are untrusted inputs and cannot authenticate a native gain or justify promotion.",
+    "Whole-sweep cost feasibility, native memory/optimizer behavior and source-bound native observations remain unqualified.",
+    "The reviewer's authorship of cases.py/test_cases.py limits independence for that subsystem."
+  ]
+}

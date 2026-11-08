@@ -1,0 +1,15 @@
+{
+  "review_kind": "READ_ONLY_STATIC_SOURCE_REVIEW",
+  "execution_performed": false,
+  "tests_performed": false,
+  "native_calls_performed": false,
+  "pass_attestation": false,
+  "findings": [
+    {"file": "cpu_supervise.py", "line": 57, "problem": "Payload accepts gate-file presence without actual Job, hardware ownership, token, process identity or launcher ancestry verification."},
+    {"file": "cpu_supervise.py", "line": 91, "problem": "Setting PYTHONPYCACHEPREFIX after startup does not alter sys.pycache_prefix; inherited Python import paths/sitecustomize may execute before the model-import blocker."},
+    {"file": "offline_supervise.py", "line": 269, "problem": "Launcher descendant monitoring can miss a live Job member after a Hermes shim exits."},
+    {"file": "offline_supervise.py", "line": 320, "problem": "Job/hardware close follows launcher wait without verified whole-Job zero membership; close failures may still appear as hardware_handle_closed true."}
+  ],
+  "required_scope": "Sibling CPU-only own-Job guardian; preserve original forty-file package and pending native proposal.",
+  "ownership_constraint": "No workers or tests until the confirmed other-chat native owner is terminal and its ownership is released."
+}

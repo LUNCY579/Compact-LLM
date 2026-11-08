@@ -1,0 +1,119 @@
+{
+  "experiment": "TRISKILL-GEO-001-GAPFIX",
+  "implementation_commit": "ef1fcbef18d92195375be0fdbb3ff1f05f786e9e",
+  "parent_commit": "09a0514e1cdf8e7b1dc7960fc4a8aa2aea94cbbe",
+  "source_commit": "01f47694988a85bdedab7831d1652f0b9bf07e9f",
+  "branch": "codex/triskill-geometric-gapfix-20261001",
+  "reference_utc": "2026-10-02 00:00:40 UTC",
+  "host_receipt_utc": "2026-10-01T23:51:54.170902+00:00",
+  "clock_note": "Reference-clock date and host wall-clock receipt are both retained; no OS clock changes were made. Monotonic native budget unchanged.",
+  "files": {
+    "geometry.py": "45fb2dc9fbc434411d007f0b3a30be8ad75bec0d5839661b90e357524dd5c132",
+    "worker.py": "8002dadd72be49e34344f06e50a7736d0038d3409d1162b0210812f0fa80ab4e",
+    "benchmark.py": "54c37047fe3c21aad38d53ae1df50d43c270959ac6a7f96537379b121c994127",
+    "dependency_binding.py": "8b1f2d03ef2362557c5fe8e72b224a8660cf18f4615f3061da0c6756fa1fccec",
+    "future_power.py": "2abbfe7f7577bceb262e39796d6128a459893360a85076800ee92b3d24d4810c",
+    "test_geometry.py": "e913230ad7a2e2af1bed73f289fe13a753db2e58fffeaa2d72662227412422df",
+    "test_worker.py": "6531ff88d27ae85d6e0c7df588a5bd33c3fa52b9faa287257c7db113a35655f3",
+    "test_benchmark.py": "ec9897a6e55a34056321dcc7b4642a222c25ffdba37e68b606373d2e058ac63c",
+    "test_dependency_binding.py": "88b4c31c4b5fcfdcfa226148ba1f89777163427b0d4570ccda3c2cd199025fe4",
+    "test_future_power.py": "d3ef3871b8e405cbd92f3268e88dbc797fd2cfac9e2d1c0519b5949e0c385218",
+    "PREREG.md": "7d3821ceba47919395ecc7fd22e4293b6576021766e55b21b7dcff7f5d44567c",
+    "BENCHMARK_MATRIX.md": "c1a22674df5f3d0e2fec02b7db75965963a80ab04d3060ad32efac16869f4d16",
+    "FOLLOWUP_PREREG.md": "6be3a77ffa3f0d0bcf12ee565d0ab252e65e11827a32d50d69019408c45395ad",
+    "FUTURE_PROTOCOL.md": "7ed3d21b12ffa8b18cb5efca2acf159145d5c91ab41c70321bb2921bfe19043e",
+    "SOURCES_VERIFIED.md": "6645e2bdf59e258fda55003f4eec598deac943a0374f60c6d9ef87c01efe79f7",
+    "geometry.npz": "52563d5ba4b230f01053cef0c2330645861e20de6ce66be71336ced235c78f7c",
+    "geometry.json": "c1483105104e6bfe38320d9696a9364aa958b9d8b3a082e4fdd0f04090c8fc4a",
+    "screen.json": "d2fbd00d91e110fd39bc1024ea57f3b8001686f0e7abed54b6263f02221be862",
+    "development.json": "cb5f263f1cdc2e4b774a3a0ed7f0e64b57b61cfcac93d15728c731758762659d",
+    "conjunction_development.json": "5b4571213012ba61f5a3c1e29798aa2ced71d43d63de8a2420ac676c7ae74acc",
+    "format_development.json": "64f4b183f6331c36fb88603463c70308880c0c6a69f6296e3a238572f914d16c",
+    "CPU_TESTS.log": "c05ff5dbcd91ad321ef786080ed0e4312661cf4454f28a688d3b53c951170b1c",
+    "CPU_VALIDATION.json": "e697c71a72a65498a54295b274bc45e22ec0329932eb18b2dd9415f2d7a977f9",
+    "CPU_GAPFIX_TESTS.log": "57aa677887a77419cd4cae1e75c6581cf96e43624503e693b7c1eab9b6f7a79e",
+    "POWER_PROTOCOL.json": "483ea3a53f397638bc22cea4ae08541bd88681a723b98a509f4776021f3409bd",
+    "SCOPE_GAPFIX.json": "956d3534c7fc4a22a5b5442dca5a090cd3306970e6085d0c9ce3bd05d38d1967",
+    "RESOURCE_PREFLIGHT.json": "04cf464fc1a159c01a9301e6891c21f9fa3d39550412744dcbb0ca116957dc4d",
+    "RESOURCE_GAPFIX_PREFLIGHT.json": "013416cf6a0d5967db1efff3e7c21bfd9e0dfb082cffd9015a12bb5ca8a37458",
+    "FREEZE.json": "477dbe84d3909566fca8a99ffc153d8a620519a036e7f1a5f36006eb9591c774",
+    "REPORT.md": "b12f0329816d42b8a4ea391edc6ce70167767c0d310bba113cff35537abfc65e"
+  },
+  "dependency_binding": {
+    "schema": 1,
+    "roles": {
+      "worker": {
+        "kind": "code",
+        "path": "experiments/triskill_geometric_pilot_v1/worker.py",
+        "sha256": "8002dadd72be49e34344f06e50a7736d0038d3409d1162b0210812f0fa80ab4e"
+      },
+      "geometry": {
+        "kind": "code",
+        "path": "experiments/triskill_geometric_pilot_v1/geometry.py",
+        "sha256": "45fb2dc9fbc434411d007f0b3a30be8ad75bec0d5839661b90e357524dd5c132"
+      },
+      "benchmark": {
+        "kind": "code",
+        "path": "experiments/triskill_geometric_pilot_v1/benchmark.py",
+        "sha256": "54c37047fe3c21aad38d53ae1df50d43c270959ac6a7f96537379b121c994127"
+      },
+      "binding": {
+        "kind": "code",
+        "path": "experiments/triskill_geometric_pilot_v1/dependency_binding.py",
+        "sha256": "8b1f2d03ef2362557c5fe8e72b224a8660cf18f4615f3061da0c6756fa1fccec"
+      },
+      "renderer": {
+        "kind": "code",
+        "path": "experiments/fresh_dual_skill_instrument_v1/score_arms.py",
+        "sha256": "30b1791e1c30afb9f1cb40b0e57b3c8c62d6c39c23a8e3f20af2e17cfc1c937b"
+      },
+      "renderer_fixture": {
+        "kind": "fixture",
+        "path": "C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/qwen001-20260918/render-process/prompts.jsonl",
+        "sha256": "46d95c672b7805872ebdc79dd45a688fbd59e4038eeea4ea6216b5ad82c4435f"
+      }
+    }
+  },
+  "CPU_provenance_reference": {
+    "path": "experiments/fresh_dual_skill_instrument_v1/generate.py",
+    "sha256": "e7e0288af3b5b5c3930446295094734abc55ed22761a22521fa49b346d42d77e",
+    "use": "AST read by CPU contract-provenance regression only; not imported or executed by native worker"
+  },
+  "source_sidecars": {
+    "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+  },
+  "runtime_packages": {
+    "numpy": "2.4.6",
+    "tokenizers": "0.22.2",
+    "psutil": "7.2.2",
+    "torch": "2.6.0+cu124",
+    "transformers": "5.14.1"
+  },
+  "native_budget": {
+    "screen_generations_max": 64,
+    "model_forwards_max": 1600,
+    "token_positions_including_padding_max": 20000,
+    "hard_wall_seconds_max": 600
+  },
+  "native_allocation": "nine arms, 64 generations; IDENTITY and REVERSE four chain rows only",
+  "native_execution_status": "BLOCKED_NOT_AUTHORIZED",
+  "native_confirmation_authorized": false,
+  "quality_claim": false,
+  "natural_causal_mechanism_claim": false,
+  "construction_C_training_examples": 0,
+  "model_loads": 0,
+  "model_forwards": 0,
+  "effective_task_model_settings_independently_verified": false,
+  "requested_settings_preserved": "GPT-6.1 Sol Ultra; Standard/no fast; no global settings changed",
+  "evidence_not_self_pinned": [
+    "FREEZE_GAPFIX.json",
+    "CPU_GAPFIX_VALIDATION.json",
+    "REPORT_GAPFIX.md"
+  ],
+  "evidence_line_endings": "LF; payloads and implementation unchanged by normalization"
+}

@@ -1,0 +1,964 @@
+{
+  "experiment": "TITAN-QUALITY-REPAIR-V1",
+  "audit_version": 1,
+  "status": "PROSPECTIVE_DESIGN_MECHANICS_NO_MODEL_EVIDENCE",
+  "classification": "SYNTHETIC_DECLARED_BINOMIAL_MODELS_NOT_OBSERVED_OUTCOMES",
+  "rules": {
+    "final_worlds_per_family": 512,
+    "population_damage_upper_ceiling": 0.05,
+    "conditional_source_correct_damage_upper_ceiling": 0.1,
+    "familywise_alpha": 0.05,
+    "bonferroni_endpoints": 48,
+    "endpoint_alpha": 0.0010416666666666667,
+    "declared_true_loss_probability_grid": [
+      0,
+      0.005,
+      0.01,
+      0.02,
+      0.03,
+      0.04,
+      0.05
+    ],
+    "declared_source_correct_denominator_grid": [
+      0,
+      32,
+      64,
+      66,
+      128,
+      256,
+      512
+    ]
+  },
+  "rules_sha256": "a6ab11b19f546591a935cc71e96d59a090b00445e0eb8b1b95e6ecd992faae5d",
+  "semantic_and_strict_population_margins": {
+    "n": 512,
+    "ceiling": 0.05,
+    "endpoint_alpha": 0.0010416666666666667,
+    "maximum_allowed_failure_count": 11,
+    "zero_loss_upper_bound": 0.013322439229077394,
+    "minimum_n_even_with_zero_losses": 134,
+    "status": "DECLARED_MARGINAL_RULE_AUDITED",
+    "marginal_curve": [
+      {
+        "declared_true_loss_probability_per_this_denominator": 0,
+        "exact_binomial_marginal_acceptance_probability": 1.0,
+        "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+          "matching_margin_endpoints": 14,
+          "all_pass_lower_union_bound": 1.0,
+          "all_pass_upper_minimum_marginal": 1.0,
+          "independence_assumed": false,
+          "joint_power_estimate": null
+        }
+      },
+      {
+        "declared_true_loss_probability_per_this_denominator": 0.005,
+        "exact_binomial_marginal_acceptance_probability": 0.9999853699850022,
+        "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+          "matching_margin_endpoints": 14,
+          "all_pass_lower_union_bound": 0.9997951797900309,
+          "all_pass_upper_minimum_marginal": 0.9999853699850022,
+          "independence_assumed": false,
+          "joint_power_estimate": null
+        }
+      },
+      {
+        "declared_true_loss_probability_per_this_denominator": 0.01,
+        "exact_binomial_marginal_acceptance_probability": 0.9937610160475633,
+        "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+          "matching_margin_endpoints": 14,
+          "all_pass_lower_union_bound": 0.912654224665886,
+          "all_pass_upper_minimum_marginal": 0.9937610160475633,
+          "independence_assumed": false,
+          "joint_power_estimate": null
+        }
+      },
+      {
+        "declared_true_loss_probability_per_this_denominator": 0.02,
+        "exact_binomial_marginal_acceptance_probability": 0.6700783895084467,
+        "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+          "matching_margin_endpoints": 14,
+          "all_pass_lower_union_bound": 0.0,
+          "all_pass_upper_minimum_marginal": 0.6700783895084467,
+          "independence_assumed": false,
+          "joint_power_estimate": null
+        }
+      },
+      {
+        "declared_true_loss_probability_per_this_denominator": 0.03,
+        "exact_binomial_marginal_acceptance_probability": 0.15804861729629305,
+        "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+          "matching_margin_endpoints": 14,
+          "all_pass_lower_union_bound": 0.0,
+          "all_pass_upper_minimum_marginal": 0.15804861729629305,
+          "independence_assumed": false,
+          "joint_power_estimate": null
+        }
+      },
+      {
+        "declared_true_loss_probability_per_this_denominator": 0.04,
+        "exact_binomial_marginal_acceptance_probability": 0.015241757194025053,
+        "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+          "matching_margin_endpoints": 14,
+          "all_pass_lower_union_bound": 0.0,
+          "all_pass_upper_minimum_marginal": 0.015241757194025053,
+          "independence_assumed": false,
+          "joint_power_estimate": null
+        }
+      },
+      {
+        "declared_true_loss_probability_per_this_denominator": 0.05,
+        "exact_binomial_marginal_acceptance_probability": 0.000792676579325486,
+        "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+          "matching_margin_endpoints": 14,
+          "all_pass_lower_union_bound": 0.0,
+          "all_pass_upper_minimum_marginal": 0.000792676579325486,
+          "independence_assumed": false,
+          "joint_power_estimate": null
+        }
+      }
+    ]
+  },
+  "population_margin_note": "Semantic and strict margins use identical count rules but may have different actual losses; this curve does not make them independent.",
+  "conditional_semantic_margins_by_declared_source_correct_n": [
+    {
+      "n": 0,
+      "ceiling": 0.1,
+      "endpoint_alpha": 0.0010416666666666667,
+      "maximum_allowed_failure_count": null,
+      "zero_loss_upper_bound": null,
+      "minimum_n_even_with_zero_losses": 66,
+      "status": "INCONCLUSIVE_ZERO_DENOMINATOR",
+      "marginal_curve": [
+        {
+          "declared_true_loss_probability_per_this_denominator": 0,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.005,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.01,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.02,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.03,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.04,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.05,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        }
+      ]
+    },
+    {
+      "n": 32,
+      "ceiling": 0.1,
+      "endpoint_alpha": 0.0010416666666666667,
+      "maximum_allowed_failure_count": -1,
+      "zero_loss_upper_bound": 0.1931291535867098,
+      "minimum_n_even_with_zero_losses": 66,
+      "status": "NO_FAILURE_COUNT_CAN_PASS",
+      "marginal_curve": [
+        {
+          "declared_true_loss_probability_per_this_denominator": 0,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.005,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.01,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.02,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.03,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.04,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.05,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        }
+      ]
+    },
+    {
+      "n": 64,
+      "ceiling": 0.1,
+      "endpoint_alpha": 0.0010416666666666667,
+      "maximum_allowed_failure_count": -1,
+      "zero_loss_upper_bound": 0.10174010085427378,
+      "minimum_n_even_with_zero_losses": 66,
+      "status": "NO_FAILURE_COUNT_CAN_PASS",
+      "marginal_curve": [
+        {
+          "declared_true_loss_probability_per_this_denominator": 0,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.005,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.01,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.02,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.03,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.04,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.05,
+          "exact_binomial_marginal_acceptance_probability": 0.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        }
+      ]
+    },
+    {
+      "n": 66,
+      "ceiling": 0.1,
+      "endpoint_alpha": 0.0010416666666666667,
+      "maximum_allowed_failure_count": 0,
+      "zero_loss_upper_bound": 0.09881475547906599,
+      "minimum_n_even_with_zero_losses": 66,
+      "status": "DECLARED_MARGINAL_RULE_AUDITED",
+      "marginal_curve": [
+        {
+          "declared_true_loss_probability_per_this_denominator": 0,
+          "exact_binomial_marginal_acceptance_probability": 1.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 1.0,
+            "all_pass_upper_minimum_marginal": 1.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.005,
+          "exact_binomial_marginal_acceptance_probability": 0.7183288830986237,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.7183288830986237,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.01,
+          "exact_binomial_marginal_acceptance_probability": 0.5151371174238036,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.5151371174238036,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.02,
+          "exact_binomial_marginal_acceptance_probability": 0.26358518435595374,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.26358518435595374,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.03,
+          "exact_binomial_marginal_acceptance_probability": 0.133947453500857,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.133947453500857,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.04,
+          "exact_binomial_marginal_acceptance_probability": 0.0675929468214945,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0675929468214945,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.05,
+          "exact_binomial_marginal_acceptance_probability": 0.0338655356380323,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.0338655356380323,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        }
+      ]
+    },
+    {
+      "n": 128,
+      "ceiling": 0.1,
+      "endpoint_alpha": 0.0010416666666666667,
+      "maximum_allowed_failure_count": 3,
+      "zero_loss_upper_bound": 0.05223425935217187,
+      "minimum_n_even_with_zero_losses": 66,
+      "status": "DECLARED_MARGINAL_RULE_AUDITED",
+      "marginal_curve": [
+        {
+          "declared_true_loss_probability_per_this_denominator": 0,
+          "exact_binomial_marginal_acceptance_probability": 1.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 1.0,
+            "all_pass_upper_minimum_marginal": 1.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.005,
+          "exact_binomial_marginal_acceptance_probability": 0.9959222028439938,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.9429108398159132,
+            "all_pass_upper_minimum_marginal": 0.9959222028439938,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.01,
+          "exact_binomial_marginal_acceptance_probability": 0.95971431523229,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.43600041325206007,
+            "all_pass_upper_minimum_marginal": 0.95971431523229,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.02,
+          "exact_binomial_marginal_acceptance_probability": 0.7456509183070954,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.7456509183070954,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.03,
+          "exact_binomial_marginal_acceptance_probability": 0.46273872188414994,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.46273872188414994,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.04,
+          "exact_binomial_marginal_acceptance_probability": 0.24281118787763348,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.24281118787763348,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.05,
+          "exact_binomial_marginal_acceptance_probability": 0.11267670131110849,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.11267670131110849,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        }
+      ]
+    },
+    {
+      "n": 256,
+      "ceiling": 0.1,
+      "endpoint_alpha": 0.0010416666666666667,
+      "maximum_allowed_failure_count": 11,
+      "zero_loss_upper_bound": 0.026467391071142328,
+      "minimum_n_even_with_zero_losses": 66,
+      "status": "DECLARED_MARGINAL_RULE_AUDITED",
+      "marginal_curve": [
+        {
+          "declared_true_loss_probability_per_this_denominator": 0,
+          "exact_binomial_marginal_acceptance_probability": 1.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 1.0,
+            "all_pass_upper_minimum_marginal": 1.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.005,
+          "exact_binomial_marginal_acceptance_probability": 0.9999999899071564,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.9999998587001901,
+            "all_pass_upper_minimum_marginal": 0.9999999899071564,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.01,
+          "exact_binomial_marginal_acceptance_probability": 0.9999865267498101,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.999811374497342,
+            "all_pass_upper_minimum_marginal": 0.9999865267498101,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.02,
+          "exact_binomial_marginal_acceptance_probability": 0.9940332980673402,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.9164661729427628,
+            "all_pass_upper_minimum_marginal": 0.9940332980673402,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.03,
+          "exact_binomial_marginal_acceptance_probability": 0.9129892480229918,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.9129892480229918,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.04,
+          "exact_binomial_marginal_acceptance_probability": 0.6710149889994566,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.6710149889994566,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.05,
+          "exact_binomial_marginal_acceptance_probability": 0.36891928646349303,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.36891928646349303,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        }
+      ]
+    },
+    {
+      "n": 512,
+      "ceiling": 0.1,
+      "endpoint_alpha": 0.0010416666666666667,
+      "maximum_allowed_failure_count": 31,
+      "zero_loss_upper_bound": 0.013322439229077394,
+      "minimum_n_even_with_zero_losses": 66,
+      "status": "DECLARED_MARGINAL_RULE_AUDITED",
+      "marginal_curve": [
+        {
+          "declared_true_loss_probability_per_this_denominator": 0,
+          "exact_binomial_marginal_acceptance_probability": 1.0,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 1.0,
+            "all_pass_upper_minimum_marginal": 1.0,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.005,
+          "exact_binomial_marginal_acceptance_probability": 0.9999999999998538,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.999999999997953,
+            "all_pass_upper_minimum_marginal": 0.9999999999998538,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.01,
+          "exact_binomial_marginal_acceptance_probability": 0.9999999999997666,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.9999999999967328,
+            "all_pass_upper_minimum_marginal": 0.9999999999997666,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.02,
+          "exact_binomial_marginal_acceptance_probability": 0.9999999737591858,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.9999996326286014,
+            "all_pass_upper_minimum_marginal": 0.9999999737591858,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.03,
+          "exact_binomial_marginal_acceptance_probability": 0.9998960941434483,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.9985453180082757,
+            "all_pass_upper_minimum_marginal": 0.9998960941434483,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.04,
+          "exact_binomial_marginal_acceptance_probability": 0.9903897586142709,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.8654566205997929,
+            "all_pass_upper_minimum_marginal": 0.9903897586142709,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        },
+        {
+          "declared_true_loss_probability_per_this_denominator": 0.05,
+          "exact_binomial_marginal_acceptance_probability": 0.8821797151432588,
+          "all_14_matching_margins_bounds_under_equal_declared_marginals": {
+            "matching_margin_endpoints": 14,
+            "all_pass_lower_union_bound": 0.0,
+            "all_pass_upper_minimum_marginal": 0.8821797151432588,
+            "independence_assumed": false,
+            "joint_power_estimate": null
+          }
+        }
+      ]
+    }
+  ],
+  "same_damage_count_examples": [
+    {
+      "source_correct_n": 0,
+      "same_actual_damage_count": 0,
+      "population_n": 512,
+      "population_upper": 0.013322439229077394,
+      "conditional_upper": null,
+      "population_bound_passes": true,
+      "conditional_bound_passes": false,
+      "population_pass_conditional_fail": true,
+      "conditional_status": "INCONCLUSIVE"
+    },
+    {
+      "source_correct_n": 32,
+      "same_actual_damage_count": 0,
+      "population_n": 512,
+      "population_upper": 0.013322439229077394,
+      "conditional_upper": 0.1931291535867098,
+      "population_bound_passes": true,
+      "conditional_bound_passes": false,
+      "population_pass_conditional_fail": true,
+      "conditional_status": "FAIL"
+    },
+    {
+      "source_correct_n": 32,
+      "same_actual_damage_count": 1,
+      "population_n": 512,
+      "population_upper": 0.01780282447116773,
+      "conditional_upper": 0.2531096536851721,
+      "population_bound_passes": true,
+      "conditional_bound_passes": false,
+      "population_pass_conditional_fail": true,
+      "conditional_status": "FAIL"
+    },
+    {
+      "source_correct_n": 32,
+      "same_actual_damage_count": 11,
+      "population_n": 512,
+      "population_upper": 0.04914111357114026,
+      "conditional_upper": 0.6277677542242486,
+      "population_bound_passes": true,
+      "conditional_bound_passes": false,
+      "population_pass_conditional_fail": true,
+      "conditional_status": "FAIL"
+    },
+    {
+      "source_correct_n": 64,
+      "same_actual_damage_count": 0,
+      "population_n": 512,
+      "population_upper": 0.013322439229077394,
+      "conditional_upper": 0.10174010085427378,
+      "population_bound_passes": true,
+      "conditional_bound_passes": false,
+      "population_pass_conditional_fail": true,
+      "conditional_status": "FAIL"
+    },
+    {
+      "source_correct_n": 64,
+      "same_actual_damage_count": 1,
+      "population_n": 512,
+      "population_upper": 0.01780282447116773,
+      "conditional_upper": 0.1347299713622115,
+      "population_bound_passes": true,
+      "conditional_bound_passes": false,
+      "population_pass_conditional_fail": true,
+      "conditional_status": "FAIL"
+    },
+    {
+      "source_correct_n": 64,
+      "same_actual_damage_count": 11,
+      "population_n": 512,
+      "population_upper": 0.04914111357114026,
+      "conditional_upper": 0.35500840726538857,
+      "population_bound_passes": true,
+      "conditional_bound_passes": false,
+      "population_pass_conditional_fail": true,
+      "conditional_status": "FAIL"
+    },
+    {
+      "source_correct_n": 66,
+      "same_actual_damage_count": 0,
+      "population_n": 512,
+      "population_upper": 0.013322439229077394,
+      "conditional_upper": 0.09881475547906599,
+      "population_bound_passes": true,
+      "conditional_bound_passes": true,
+      "population_pass_conditional_fail": false,
+      "conditional_status": "PASS"
+    },
+    {
+      "source_correct_n": 66,
+      "same_actual_damage_count": 1,
+      "population_n": 512,
+      "population_upper": 0.01780282447116773,
+      "conditional_upper": 0.1308971872060036,
+      "population_bound_passes": true,
+      "conditional_bound_passes": false,
+      "population_pass_conditional_fail": true,
+      "conditional_status": "FAIL"
+    },
+    {
+      "source_correct_n": 66,
+      "same_actual_damage_count": 11,
+      "population_n": 512,
+      "population_upper": 0.04914111357114026,
+      "conditional_upper": 0.34549615311177045,
+      "population_bound_passes": true,
+      "conditional_bound_passes": false,
+      "population_pass_conditional_fail": true,
+      "conditional_status": "FAIL"
+    },
+    {
+      "source_correct_n": 128,
+      "same_actual_damage_count": 0,
+      "population_n": 512,
+      "population_upper": 0.013322439229077394,
+      "conditional_upper": 0.05223425935217187,
+      "population_bound_passes": true,
+      "conditional_bound_passes": true,
+      "population_pass_conditional_fail": false,
+      "conditional_status": "PASS"
+    },
+    {
+      "source_correct_n": 128,
+      "same_actual_damage_count": 1,
+      "population_n": 512,
+      "population_upper": 0.01780282447116773,
+      "conditional_upper": 0.06953074732018555,
+      "population_bound_passes": true,
+      "conditional_bound_passes": true,
+      "population_pass_conditional_fail": false,
+      "conditional_status": "PASS"
+    },
+    {
+      "source_correct_n": 128,
+      "same_actual_damage_count": 11,
+      "population_n": 512,
+      "population_upper": 0.04914111357114026,
+      "conditional_upper": 0.1882613381882208,
+      "population_bound_passes": true,
+      "conditional_bound_passes": false,
+      "population_pass_conditional_fail": true,
+      "conditional_status": "FAIL"
+    },
+    {
+      "source_correct_n": 256,
+      "same_actual_damage_count": 0,
+      "population_n": 512,
+      "population_upper": 0.013322439229077394,
+      "conditional_upper": 0.026467391071142328,
+      "population_bound_passes": true,
+      "conditional_bound_passes": true,
+      "population_pass_conditional_fail": false,
+      "conditional_status": "PASS"
+    },
+    {
+      "source_correct_n": 256,
+      "same_actual_damage_count": 1,
+      "population_n": 512,
+      "population_upper": 0.01780282447116773,
+      "conditional_upper": 0.035322822856438486,
+      "population_bound_passes": true,
+      "conditional_bound_passes": true,
+      "population_pass_conditional_fail": false,
+      "conditional_status": "PASS"
+    },
+    {
+      "source_correct_n": 256,
+      "same_actual_damage_count": 11,
+      "population_n": 512,
+      "population_upper": 0.04914111357114026,
+      "conditional_upper": 0.09688668595048501,
+      "population_bound_passes": true,
+      "conditional_bound_passes": true,
+      "population_pass_conditional_fail": false,
+      "conditional_status": "PASS"
+    },
+    {
+      "source_correct_n": 512,
+      "same_actual_damage_count": 0,
+      "population_n": 512,
+      "population_upper": 0.013322439229077394,
+      "conditional_upper": 0.013322439229077394,
+      "population_bound_passes": true,
+      "conditional_bound_passes": true,
+      "population_pass_conditional_fail": false,
+      "conditional_status": "PASS"
+    },
+    {
+      "source_correct_n": 512,
+      "same_actual_damage_count": 1,
+      "population_n": 512,
+      "population_upper": 0.01780282447116773,
+      "conditional_upper": 0.01780282447116773,
+      "population_bound_passes": true,
+      "conditional_bound_passes": true,
+      "population_pass_conditional_fail": false,
+      "conditional_status": "PASS"
+    },
+    {
+      "source_correct_n": 512,
+      "same_actual_damage_count": 11,
+      "population_n": 512,
+      "population_upper": 0.04914111357114026,
+      "conditional_upper": 0.04914111357114026,
+      "population_bound_passes": true,
+      "conditional_bound_passes": true,
+      "population_pass_conditional_fail": false,
+      "conditional_status": "PASS"
+    }
+  ],
+  "probability_interpretation": "For population margins p is P(source-correct AND candidate-wrong) over all worlds. For conditional margins p is P(candidate-wrong GIVEN source-correct), conditional on the declared fixed denominator. The same numerical p in two curves is not one joint model.",
+  "dependence_scope": "Bounds apply separately to 14 corresponding margins (2 seeds x 7 families). They do not multiply probabilities across semantic, strict, conditional, supported-loss, gain, risk or retention endpoints.",
+  "three_percentage_point_floor_note": "At a true gain exactly at the 3-percentage-point point-estimate floor, a nondegenerate approximately unbiased asymptotically symmetric estimator exceeds its center approximately half the time, before other gates. Discreteness, skew and dependence can change finite-sample behavior; this is not a numeric joint-power calculation.",
+  "joint_power_estimate": null,
+  "monte_carlo_draws": 0,
+  "observed_model_outcomes_used": 0,
+  "native_model_loads": 0,
+  "native_model_forwards": 0,
+  "final_payload_accessed": false,
+  "quality_claim": false,
+  "frozen_thresholds_changed": false,
+  "sample_sizes_changed": false,
+  "design_interpretation": "Any restrictive acceptance regions are prospective design limitations, not Rineya failures and not authorization to change frozen rules after outcomes."
+}

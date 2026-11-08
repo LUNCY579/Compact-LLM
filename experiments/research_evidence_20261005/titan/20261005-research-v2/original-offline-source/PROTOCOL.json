@@ -1,0 +1,63 @@
+{
+  "experiment": "TITAN-QUALITY-REPAIR-V1",
+  "version": 1,
+  "scope": "OFFLINE_IMPLEMENTATION_AND_FIRST_QUALITY_PACKET",
+  "native_execution_authorized": false,
+  "source": {
+    "core_id": "rineya.core.titan-transition.v1.0.0-devfreeze.28L.supa17-rrp015-th25",
+    "weight_sha256": "a4d73353db9a91cbba7b4cd7c8fe4fe6822670d10fe523b26a6d651bb9509567",
+    "architecture": "Qwen3ForCausalLM",
+    "precision": "float32",
+    "custom_abstention": false,
+    "source_weights_modified": false
+  },
+  "counts": {
+    "recipes": 8,
+    "seeds": [17, 29],
+    "trials": 16,
+    "examples_per_trial": 2000,
+    "replay_examples_for_replay_trials": 400,
+    "development_worlds": 448,
+    "development_attached_variants": 64,
+    "development_prompts": 512,
+    "final_worlds": 3584,
+    "final_attached_variants": 512,
+    "final_prompts": 4096,
+    "base_evaluation_calls": 20992,
+    "selected_export_development_calls": 1024,
+    "qualification_and_parity_call_allocation": 256,
+    "total_call_allocation": 22272
+  },
+  "evaluation_projection": "All canonical worlds; only one noncanonical attached variant on each selected repair world, cycling native_a/native_b/natural. Retention has no attached variants. Four balanced styles describe diverse training, not an all-styles evaluation expansion.",
+  "replay": {
+    "policy": "GENUINE_PINNED_EXISTING_TRAIN_TARGETS_WITH_INDEPENDENT_ARITHMETIC_VERIFICATION",
+    "families": ["ledger", "register"],
+    "examples_each_family": 200,
+    "repeated_sources": "DECLARED_AND_COUNTED_NOT_NEW_INDEPENDENT_DATA",
+    "tradeoff": "FIXED_TOTAL_2000_EXAMPLES_REPLAY_REPLACES_400_REPAIR_EXAMPLES",
+    "broader_conversation_replay": "UNQUALIFIED_PENDING_GOLD_REVIEW_NOT_SUBSTITUTED"
+  },
+  "decisions": {
+    "development": "BOTH_SEEDS_POINT_RETENTION_GATES_THEN_MEAN_REPAIR_MACRO_GAIN_DAMAGE_UNSUPPORTED_RATE_RECIPE_ID",
+    "final": "BOTH_SEEDS_AT_LEAST_0.03_MACRO_SEMANTIC_GAIN_POSITIVE_SIMULTANEOUS_LOWER_NO_RISK_INCREASE",
+    "point_decline_max": 0.02,
+    "population_damage_upper_max": 0.05,
+    "conditional_source_correct_damage_upper_max": 0.10,
+    "simultaneous_endpoints": 48,
+    "familywise_alpha": 0.05,
+    "bootstrap_draws": 20000,
+    "bootstrap_seed": 20261005,
+    "deliverable_seed": 17,
+    "replication_seed": 29,
+    "fallback_recipe_after_final": false,
+    "automatic_sample_expansion": false
+  },
+  "new_final_policy": "COMPILE_FIXED_PROSPECTIVE_MEMBERSHIP_AND_ORACLE_TOKEN_AUDITS_OFFLINE_BEFORE_ANY_MODEL_OUTCOMES; NO_MODEL_EVALUATION_OR_SELECTION_USE; QUARANTINED_ARCHIVE_IS_CUSTODY_NOT_ENCRYPTION",
+  "old_sealed_bank_access": false,
+  "training_or_evaluation_on_J_style_chains": false,
+  "geometric_composition": "DEFERRED",
+  "serving_policy_changes": false,
+  "promotion_authorized": false,
+  "native_backend": "NOT_INCLUDED_IN_THE_OFFLINE_FIRST_MILESTONE_REQUIRES_NEW_REVIEWED_WORKER_BYTES",
+  "next_boundary": "REVIEW_OFFLINE_PACKET_AND_EXACT_QUALIFICATION_SPEC; IMPLEMENT_AND_REVIEW_QUALIFICATION_WORKER_BEFORE_A_NAMED_SLOT_GRANT"
+}

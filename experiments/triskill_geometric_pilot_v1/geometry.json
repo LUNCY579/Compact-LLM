@@ -1,0 +1,71 @@
+{
+  "experiment": "TRISKILL-GEO-001",
+  "source_commit": "01f47694988a85bdedab7831d1652f0b9bf07e9f",
+  "source_weights": {
+    "BASE": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-1.7.0-devfreeze\\model.safetensors",
+      "sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b"
+    },
+    "T": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze\\model.safetensors",
+      "sha256": "a28629c9d3454fbf2e884fd7ca442c1b406e7caf4b36d34b2c0614d0add31284"
+    },
+    "TH": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Titan-Transition-1.0.0-devfreeze\\model.safetensors",
+      "sha256": "a4d73353db9a91cbba7b4cd7c8fe4fe6822670d10fe523b26a6d651bb9509567"
+    }
+  },
+  "key": "model.layers.14.self_attn.o_proj.weight",
+  "hook": "block14 output residual, all token positions; downstream weights fixed",
+  "rank_per_parent": 4,
+  "eta": 0.1,
+  "seed": 20261001,
+  "metrics": {
+    "union_rank": 8,
+    "intervention_rank": 8,
+    "basis_orthogonality_error": 3.282557901630957e-15,
+    "rotation_orthogonality_error": 4.710511705803354e-16,
+    "commutator_spectral_norm": 0.1287741619899796,
+    "operator_change_frobenius": 0.026129349281270735,
+    "operator_change_spectral": 0.012877149278020281,
+    "noncommuting": true
+  },
+  "parent_write_norms": {
+    "T": 0.05429271387040945,
+    "H_effective": 0.015465974615158648
+  },
+  "top_singular_values": {
+    "T": [
+      0.022752820243937988,
+      0.0157029269099681,
+      0.010591864082693343,
+      0.009223810123314127
+    ],
+    "H_effective": [
+      0.00896330805763342,
+      0.00505901096933876,
+      0.004383572453536001,
+      0.003988320085967044
+    ]
+  },
+  "principal_cosines": [
+    0.12987413244186818,
+    0.10337218626657815,
+    0.08241494816685369,
+    0.015420292664458513
+  ],
+  "resource_snapshot": {
+    "ram_free_gib": 11.21597671508789,
+    "disk_free_gib": 81.5811996459961
+  },
+  "geometry_sha256": "52563d5ba4b230f01053cef0c2330645861e20de6ce66be71336ced235c78f7c",
+  "code_sha256": "45fb2dc9fbc434411d007f0b3a30be8ad75bec0d5839661b90e357524dd5c132",
+  "model_forwards": 0,
+  "training_examples": 0,
+  "delta_C_used": false,
+  "random_match": "same compact R, operator spectrum/norm/rank/compute; displacement can differ",
+  "status": "PREPARED",
+  "quality_claim": false,
+  "confirmation": false,
+  "limitation": "No objective identifies this rotation with a third skill. Geometry is not functional independence."
+}

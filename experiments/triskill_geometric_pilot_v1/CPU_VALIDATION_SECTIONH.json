@@ -1,0 +1,294 @@
+{
+  "experiment": "TRISKILL-GEO-001-SECTIONH",
+  "model_loads": 0,
+  "model_forwards": 0,
+  "protected_banks_opened": [],
+  "membership": {
+    "local_disjoint": true,
+    "checks": {
+      "row_id": true,
+      "world_signature": true,
+      "state_signature": true,
+      "rule_signature": true
+    },
+    "legacy_rows_disjoint": true,
+    "legacy_checks": {
+      "row_id": true,
+      "world_signature": true,
+      "state_signature": true,
+      "rule_signature": true
+    },
+    "legacy_exclusion_verified": false,
+    "protected_confirmation": false,
+    "development_n": 8,
+    "screen_n": 18
+  },
+  "screen_n": 18,
+  "development_n": 8,
+  "t_support_violations": {
+    "h-screen-T1-ledger_replay": [],
+    "h-screen-T2-ledger_replay": [],
+    "h-screen-T3-register_machine": [],
+    "h-screen-T4-register_machine": [],
+    "h-development-T1-ledger_replay": [],
+    "h-development-T2-register_machine": []
+  },
+  "t_collisions": {
+    "scanned_payloads": 1408,
+    "skipped_other_families": {
+      "prerequisite_plan": 704
+    },
+    "hits": {
+      "h-screen-T1-ledger_replay": [],
+      "h-screen-T2-ledger_replay": [],
+      "h-screen-T3-register_machine": [],
+      "h-screen-T4-register_machine": [],
+      "h-development-T1-ledger_replay": [],
+      "h-development-T2-register_machine": []
+    },
+    "collision_free": true
+  },
+  "floors": {
+    "always_abstain": {
+      "J": 4,
+      "K": 0
+    },
+    "copy_marker_23": {
+      "J": 0,
+      "K": 0
+    },
+    "visible_zero_cue": {
+      "J": 5,
+      "K": 0
+    },
+    "literal_0_or_97_cue": {
+      "J": 5,
+      "K": 0
+    },
+    "magnitude_ge_97_cue": {
+      "J": 5,
+      "K": 0
+    },
+    "affine_reset_oracle": {
+      "J": 6,
+      "K": 0
+    },
+    "first_record_only": {
+      "J": 4,
+      "K": 2
+    },
+    "abstain_missing_solve_conflict": {
+      "J": 6,
+      "K": 2
+    },
+    "copy_last_reset_offset": {
+      "J": 4,
+      "K": 0
+    },
+    "oracle": {
+      "J": 8,
+      "K": 2
+    },
+    "best_constant_integer": {
+      "value": 18,
+      "J": 1,
+      "K": 0
+    }
+  },
+  "token_counts": {
+    "h-screen-T1-ledger_replay": {
+      "input": 125,
+      "input_with_prompt_prefix": 125,
+      "reply": 20,
+      "spaced_reply": 27
+    },
+    "h-screen-T2-ledger_replay": {
+      "input": 125,
+      "input_with_prompt_prefix": 125,
+      "reply": 20,
+      "spaced_reply": 27
+    },
+    "h-screen-T3-register_machine": {
+      "input": 144,
+      "input_with_prompt_prefix": 144,
+      "reply": 16,
+      "spaced_reply": 21
+    },
+    "h-screen-T4-register_machine": {
+      "input": 142,
+      "input_with_prompt_prefix": 142,
+      "reply": 15,
+      "spaced_reply": 20
+    },
+    "h-screen-H-larch": {
+      "input": 93,
+      "input_with_prompt_prefix": 93,
+      "reply": 2,
+      "spaced_reply": 2
+    },
+    "h-screen-H-myrtle": {
+      "input": 93,
+      "input_with_prompt_prefix": 93,
+      "reply": 2,
+      "spaced_reply": 2
+    },
+    "h-screen-H-nutmeg": {
+      "input": 93,
+      "input_with_prompt_prefix": 93,
+      "reply": 10,
+      "spaced_reply": 10
+    },
+    "h-screen-H-osier": {
+      "input": 101,
+      "input_with_prompt_prefix": 101,
+      "reply": 10,
+      "spaced_reply": 10
+    },
+    "h-screen-C-onyx": {
+      "input": 247,
+      "input_with_prompt_prefix": 259,
+      "reply": 2,
+      "spaced_reply": 2
+    },
+    "h-screen-C-pyrite": {
+      "input": 246,
+      "input_with_prompt_prefix": 258,
+      "reply": 2,
+      "spaced_reply": 2
+    },
+    "h-screen-C-quartz": {
+      "input": 218,
+      "input_with_prompt_prefix": 230,
+      "reply": 10,
+      "spaced_reply": 10
+    },
+    "h-screen-C-rowan": {
+      "input": 235,
+      "input_with_prompt_prefix": 247,
+      "reply": 10,
+      "spaced_reply": 10
+    },
+    "h-screen-C-sorrel": {
+      "input": 234,
+      "input_with_prompt_prefix": 246,
+      "reply": 2,
+      "spaced_reply": 2
+    },
+    "h-screen-C-tansy": {
+      "input": 269,
+      "input_with_prompt_prefix": 281,
+      "reply": 2,
+      "spaced_reply": 2
+    },
+    "h-screen-C-umber": {
+      "input": 212,
+      "input_with_prompt_prefix": 224,
+      "reply": 10,
+      "spaced_reply": 10
+    },
+    "h-screen-C-vetch": {
+      "input": 232,
+      "input_with_prompt_prefix": 244,
+      "reply": 10,
+      "spaced_reply": 10
+    },
+    "h-screen-C-willow": {
+      "input": 216,
+      "input_with_prompt_prefix": 228,
+      "reply": 1,
+      "spaced_reply": 1
+    },
+    "h-screen-C-yarrow": {
+      "input": 234,
+      "input_with_prompt_prefix": 246,
+      "reply": 2,
+      "spaced_reply": 2
+    },
+    "h-development-T1-ledger_replay": {
+      "input": 125,
+      "input_with_prompt_prefix": 125,
+      "reply": 20,
+      "spaced_reply": 27
+    },
+    "h-development-T2-register_machine": {
+      "input": 142,
+      "input_with_prompt_prefix": 142,
+      "reply": 15,
+      "spaced_reply": 20
+    },
+    "h-development-H-alder": {
+      "input": 93,
+      "input_with_prompt_prefix": 93,
+      "reply": 2,
+      "spaced_reply": 2
+    },
+    "h-development-H-bramble": {
+      "input": 100,
+      "input_with_prompt_prefix": 100,
+      "reply": 10,
+      "spaced_reply": 10
+    },
+    "h-development-C-acorn": {
+      "input": 244,
+      "input_with_prompt_prefix": 256,
+      "reply": 2,
+      "spaced_reply": 2
+    },
+    "h-development-C-bloom": {
+      "input": 231,
+      "input_with_prompt_prefix": 243,
+      "reply": 2,
+      "spaced_reply": 2
+    },
+    "h-development-C-cinder": {
+      "input": 235,
+      "input_with_prompt_prefix": 247,
+      "reply": 10,
+      "spaced_reply": 10
+    },
+    "h-development-C-dune": {
+      "input": 231,
+      "input_with_prompt_prefix": 243,
+      "reply": 10,
+      "spaced_reply": 10
+    }
+  },
+  "max_input_tokens": 281,
+  "max_reply_tokens": 27,
+  "slots": {
+    "input": 288,
+    "output": 32,
+    "readout": 319
+  },
+  "allocation": {
+    "generations": 154,
+    "forwards": 5024,
+    "token_positions": 75562,
+    "parts": {
+      "padding_parity": [
+        16,
+        1164
+      ],
+      "hook_liveness": [
+        8,
+        2304
+      ],
+      "generation": [
+        4928,
+        49126
+      ],
+      "teacher_forced_readout": [
+        72,
+        22968
+      ]
+    },
+    "fits": true
+  },
+  "boundary_rule": {
+    "sha256": "416cfb6aec8aa28240752d3db2fc1b8af85115c4962a873582765c009adc3bf0",
+    "pinned": "416cfb6aec8aa28240752d3db2fc1b8af85115c4962a873582765c009adc3bf0",
+    "patterns_equal": true
+  },
+  "answerability_contract_verbatim_in_views_v2": true,
+  "passed": true
+}

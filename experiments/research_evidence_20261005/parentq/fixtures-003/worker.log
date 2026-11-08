@@ -1,0 +1,99 @@
+test_canary_rows_discriminate_the_three_arms (test_parentq_rows.RowTests.test_canary_rows_discriminate_the_three_arms) ... ok
+test_composition (test_parentq_rows.RowTests.test_composition) ... ok
+test_deterministic_and_equal_to_frozen_membership (test_parentq_rows.RowTests.test_deterministic_and_equal_to_frozen_membership) ... ok
+test_h_rows_use_the_screen_contract_and_off_rows_only_change_the_system_prompt (test_parentq_rows.RowTests.test_h_rows_use_the_screen_contract_and_off_rows_only_change_the_system_prompt) ... ok
+test_screen_composition_matches_the_decision_rule (test_parentq_rows.RowTests.test_screen_composition_matches_the_decision_rule) ... ok
+test_t_rows_are_screen_constructed_in_support_and_correct (test_parentq_rows.RowTests.test_t_rows_are_screen_constructed_in_support_and_correct) ... ok
+test_worlds_are_fresh (test_parentq_rows.RowTests.test_worlds_are_fresh) ... ok
+test_ceiling_and_lenient_on_answers_are_diagnostic_only (test_parentq_decide.ContractDiagnosticTests.test_ceiling_and_lenient_on_answers_are_diagnostic_only) ... ok
+test_each_label_is_reachable (test_parentq_decide.ContractDiagnosticTests.test_each_label_is_reachable) ... ok
+test_over_abstention_under_native_prompts_is_visible (test_parentq_decide.ContractDiagnosticTests.test_over_abstention_under_native_prompts_is_visible) ... ok
+test_every_missing_canary_and_failure_arm (test_parentq_decide.DecisionLadderTests.test_every_missing_canary_and_failure_arm) ... ok
+test_every_q1_coverage_unit (test_parentq_decide.DecisionLadderTests.test_every_q1_coverage_unit) ... ok
+test_exact_illustrative_values (test_parentq_decide.DecisionLadderTests.test_exact_illustrative_values) ... ok
+test_h_that_always_abstains_is_not_qualified (test_parentq_decide.DecisionLadderTests.test_h_that_always_abstains_is_not_qualified) ... ok
+test_h_that_never_abstains_is_not_qualified (test_parentq_decide.DecisionLadderTests.test_h_that_never_abstains_is_not_qualified) ... ok
+test_middling_parents_are_marginal (test_parentq_decide.DecisionLadderTests.test_middling_parents_are_marginal) ... ok
+test_missing_q1_unit_is_incomplete (test_parentq_decide.DecisionLadderTests.test_missing_q1_unit_is_incomplete) ... ok
+test_one_canary_flip_is_tolerated_two_are_not (test_parentq_decide.DecisionLadderTests.test_one_canary_flip_is_tolerated_two_are_not) ... ok
+test_padding_and_canary_rungs (test_parentq_decide.DecisionLadderTests.test_padding_and_canary_rungs) ... ok
+test_strong_parents_qualify (test_parentq_decide.DecisionLadderTests.test_strong_parents_qualify) ... ok
+test_t_no_better_than_base_is_not_qualified (test_parentq_decide.DecisionLadderTests.test_t_no_better_than_base_is_not_qualified) ... ok
+test_both_gate_components_ignore_the_other_parent_cells (test_parentq_decide.GateTableTests.test_both_gate_components_ignore_the_other_parent_cells) ... ok
+test_min_detectable_discordance (test_parentq_decide.GateTableTests.test_min_detectable_discordance) ... ok
+test_predictive_is_the_exact_posterior_mean (test_parentq_decide.GateTableTests.test_predictive_is_the_exact_posterior_mean) ... ok
+test_t_table_ignores_h_cells_and_pins_counts (test_parentq_decide.GateTableTests.test_t_table_ignores_h_cells_and_pins_counts) ... ok
+test_tables_match_direct_simulation_of_the_frozen_gate (test_parentq_decide.GateTableTests.test_tables_match_direct_simulation_of_the_frozen_gate)
+Simulate whole screens from fixed cell probabilities and score them with the ... ok
+test_command_hides_window_and_binds_runtime_attempt (test_parentq_supervise.LauncherTests.test_command_hides_window_and_binds_runtime_attempt) ... ok
+test_argparse_refusal_external_receipts (test_parentq_supervise.SupervisorTests.test_argparse_refusal_external_receipts) ... usage: parentq_offline_supervise.py [-h] [--freeze FREEZE] --freeze-sha256
+                                    FREEZE_SHA256 --grant GRANT
+                                    --attempt-number ATTEMPT_NUMBER
+                                    [--runtime-root RUNTIME_ROOT]
+parentq_offline_supervise.py: error: the following arguments are required: --freeze-sha256, --grant, --attempt-number
+usage: parentq_offline_supervise.py [-h] [--freeze FREEZE] --freeze-sha256
+                                    FREEZE_SHA256 --grant GRANT
+                                    [--python PYTHON] --attempt-number
+                                    ATTEMPT_NUMBER
+                                    [--runtime-root RUNTIME_ROOT] [--launch]
+parentq_offline_supervise.py: error: the following arguments are required: --freeze-sha256, --grant, --attempt-number
+ok
+test_crs_live_stale_unknown_missing_fail_closed (test_parentq_supervise.SupervisorTests.test_crs_live_stale_unknown_missing_fail_closed) ... ok
+test_exists_create_race_disables_reclaim (test_parentq_supervise.SupervisorTests.test_exists_create_race_disables_reclaim) ... ok
+test_failure_after_popen_cleans_child_and_records (test_parentq_supervise.SupervisorTests.test_failure_after_popen_cleans_child_and_records) ... ok
+test_foreign_locks_and_holder_never_reclaimed (test_parentq_supervise.SupervisorTests.test_foreign_locks_and_holder_never_reclaimed) ... ok
+test_freeze_geo_lease_readiness_and_pin (test_parentq_supervise.SupervisorTests.test_freeze_geo_lease_readiness_and_pin) ... ok
+test_grant_freeze_attempt_slot_replay (test_parentq_supervise.SupervisorTests.test_grant_freeze_attempt_slot_replay) ... ok
+test_hard_wall_identity_kill_bounded_wait (test_parentq_supervise.SupervisorTests.test_hard_wall_identity_kill_bounded_wait) ... ok
+test_hardware_exclusive_handle_surviving_file_is_reusable (test_parentq_supervise.SupervisorTests.test_hardware_exclusive_handle_surviving_file_is_reusable) ... ok
+test_launch_confirmation_matches_supervisor_pid (test_parentq_supervise.SupervisorTests.test_launch_confirmation_matches_supervisor_pid) ... ok
+test_markers_count_killed_crashed_legacy_once (test_parentq_supervise.SupervisorTests.test_markers_count_killed_crashed_legacy_once) ... ok
+test_missing_worker_identity_retains_unresolved_lease (test_parentq_supervise.SupervisorTests.test_missing_worker_identity_retains_unresolved_lease) ... ok
+test_normal_exit_dual_token_external_output (test_parentq_supervise.SupervisorTests.test_normal_exit_dual_token_external_output) ... ok
+test_outputs_refuse_source_codex_other_checkout (test_parentq_supervise.SupervisorTests.test_outputs_refuse_source_codex_other_checkout) ... ok
+test_ownership_loss_during_wait_cleans_child (test_parentq_supervise.SupervisorTests.test_ownership_loss_during_wait_cleans_child) ... ok
+test_per_unit_token_and_supervisor_identity_check (test_parentq_supervise.SupervisorTests.test_per_unit_token_and_supervisor_identity_check) ... ok
+test_pid_reuse_and_taskkill_timeout (test_parentq_supervise.SupervisorTests.test_pid_reuse_and_taskkill_timeout) ... ok
+test_runtime_directory_rotation_cannot_reset_accounting (test_parentq_supervise.SupervisorTests.test_runtime_directory_rotation_cannot_reset_accounting) ... ok
+test_taskkill_error_receipt_and_unresolved_leases_retained (test_parentq_supervise.SupervisorTests.test_taskkill_error_receipt_and_unresolved_leases_retained) ... ok
+test_unreadable_lease_is_not_release_evidence (test_parentq_supervise.SupervisorTests.test_unreadable_lease_is_not_release_evidence) ... ok
+test_wmi_error_always_writes_distinct_launch_receipts (test_parentq_supervise.SupervisorTests.test_wmi_error_always_writes_distinct_launch_receipts) ... ok
+test_worker_pid_cleanup_bound (test_parentq_supervise.SupervisorTests.test_worker_pid_cleanup_bound) ... ok
+test_attempt_overlap_detects_text_or_token_difference_without_selection (test_parentq_worker_mechanics.WorkerMechanicsTests.test_attempt_overlap_detects_text_or_token_difference_without_selection) ... ok
+test_bind_geo_hashes_and_parses_one_snapshot (test_parentq_worker_mechanics.WorkerMechanicsTests.test_bind_geo_hashes_and_parses_one_snapshot) ... ok
+test_bootstrap_refusal_persists_before_binding_or_model_import (test_parentq_worker_mechanics.WorkerMechanicsTests.test_bootstrap_refusal_persists_before_binding_or_model_import) ... ok
+test_canary_first_divergence_metadata_is_diagnostic (test_parentq_worker_mechanics.WorkerMechanicsTests.test_canary_first_divergence_metadata_is_diagnostic) ... ok
+test_create_only_json_is_flushed_and_fsynced_before_return (test_parentq_worker_mechanics.WorkerMechanicsTests.test_create_only_json_is_flushed_and_fsynced_before_return) ... ok
+test_decision_error_cannot_escape_finally_helper (test_parentq_worker_mechanics.WorkerMechanicsTests.test_decision_error_cannot_escape_finally_helper) ... ok
+test_entire_preload_refusal_is_recorded (test_parentq_worker_mechanics.WorkerMechanicsTests.test_entire_preload_refusal_is_recorded) ... ok
+test_load_marker_survives_failed_load_and_spends_attempt (test_parentq_worker_mechanics.WorkerMechanicsTests.test_load_marker_survives_failed_load_and_spends_attempt) ... ok
+test_native_runtime_root_cannot_rotate_with_a_new_freeze (test_parentq_worker_mechanics.WorkerMechanicsTests.test_native_runtime_root_cannot_rotate_with_a_new_freeze) ... ok
+test_no_refusal_output_can_be_written_inside_source (test_parentq_worker_mechanics.WorkerMechanicsTests.test_no_refusal_output_can_be_written_inside_source) ... ok
+test_padding_failure_keeps_both_raw_traces_and_margins_without_extra_decode (test_parentq_worker_mechanics.WorkerMechanicsTests.test_padding_failure_keeps_both_raw_traces_and_margins_without_extra_decode) ... ok
+test_pinned_cpu_receipt_truth_counts_and_gpu_lease_are_checked (test_parentq_worker_mechanics.WorkerMechanicsTests.test_pinned_cpu_receipt_truth_counts_and_gpu_lease_are_checked) ... ok
+test_preflight_uses_provisional_floor_without_claiming_native_measurement (test_parentq_worker_mechanics.WorkerMechanicsTests.test_preflight_uses_provisional_floor_without_claiming_native_measurement) ... ok
+test_real_preload_path_marks_before_fake_loader_without_importing_torch (test_parentq_worker_mechanics.WorkerMechanicsTests.test_real_preload_path_marks_before_fake_loader_without_importing_torch) ... ok
+test_supervisor_attempt_binding_is_required (test_parentq_worker_mechanics.WorkerMechanicsTests.test_supervisor_attempt_binding_is_required) ... ok
+test_unreadable_or_missing_prior_trace_is_a_hold_not_determinism (test_parentq_worker_mechanics.WorkerMechanicsTests.test_unreadable_or_missing_prior_trace_is_a_hold_not_determinism) ... ok
+test_unverified_overlap_never_persists_a_usable_qualified_verdict (test_parentq_worker_mechanics.WorkerMechanicsTests.test_unverified_overlap_never_persists_a_usable_qualified_verdict) ... ok
+test_both_exposed_hashes_are_required_before_payload_use (test_parentq_validation.ValidationTests.test_both_exposed_hashes_are_required_before_payload_use) ... ok
+test_detects_reviewed_collision_without_mutating_bank (test_parentq_validation.ValidationTests.test_detects_reviewed_collision_without_mutating_bank) ... ok
+test_freeze_stops_on_pending_design_before_any_output_or_tests (test_parentq_validation.ValidationTests.test_freeze_stops_on_pending_design_before_any_output_or_tests) ... ok
+test_operative_key_ignores_untouched_accounts_tick_and_names (test_parentq_validation.ValidationTests.test_operative_key_ignores_untouched_accounts_tick_and_names) ... ok
+test_readiness_definitions_match_native_safety (test_parentq_validation.ValidationTests.test_readiness_definitions_match_native_safety) ... ok
+test_readiness_pending_refuses_and_empty_decisions_cannot_pass (test_parentq_validation.ValidationTests.test_readiness_pending_refuses_and_empty_decisions_cannot_pass) ... ok
+test_failed_job_assignment_kills_owned_handle_before_releasing_hardware (test_parentq_offline_supervise.OfflineControllerTests.test_failed_job_assignment_kills_owned_handle_before_releasing_hardware) ... ok
+test_model_imports_are_rejected (test_parentq_offline_supervise.OfflineControllerTests.test_model_imports_are_rejected) ... ok
+test_output_locations_and_create_only_admission (test_parentq_offline_supervise.OfflineControllerTests.test_output_locations_and_create_only_admission) ... ok
+
+----------------------------------------------------------------------
+Ran 75 tests in 6.322s
+
+OK
+{
+  "stage": "tests",
+  "status": "SUPERVISOR_FAILURE",
+  "error": "RuntimeError('fixture assignment failed')",
+  "elapsed_seconds": 0.01599999999962165,
+  "peak_tree_rss_bytes": 0
+}

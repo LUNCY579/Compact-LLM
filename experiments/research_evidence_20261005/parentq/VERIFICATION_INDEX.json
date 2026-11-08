@@ -1,0 +1,165 @@
+{
+  "experiment": "TRISKILL-GEO-001-PARENTQ",
+  "utc": "2026-10-05T19:17:59.0988235Z",
+  "status": "REVISED_UNFROZEN_NATIVE_BLOCKED",
+  "branch": "research/triskill-geo001-parentq",
+  "head": "3e07fd8740e8ff4debd94f9c17ca3e06d056a0ed",
+  "review_preserved_untracked": true,
+  "original_bank_unchanged": true,
+  "original_canary_unchanged": true,
+  "tracked_geo_changes": [],
+  "geo_freeze_sha256": "f18d48670e8928afb72b7182756f8f7bb6c8e241fb5988ae1daa91ebc534b687",
+  "full_cpu_torch_suite": "NOT_RUN_NAMED_LARGER_SLOT_REQUIRED",
+  "native_qualification": "NOT_RUN",
+  "native_model_loads": 0,
+  "native_model_forwards": 0,
+  "native_generations": 0,
+  "training_updates": 0,
+  "gpu_leases_acquired": 0,
+  "paid_calls": 0,
+  "sealed_bank_access": "NONE_BY_EXPLICIT_ALLOWLIST",
+  "final_lightweight_tests": 75,
+  "final_sources": {
+    "parentq_canary.json": "c691aa7a4d2910bd06fdc86a1720c2279bda223856d35dfce3db3e1d18659e16",
+    "geo_frozen.py": "bec196d2fb8ce99d60906cb5368a9d6e9b7924c9d499543be38e3f6f131c3360",
+    "parentq_supervise.py": "2901edbab38100023a8e14da4d00d6bb110af803241006bf7355c99ea40cf540",
+    "parentq_offline_supervise.py": "328aaecc3ff4656200cb069fb3ef56eb546af1ed9597ff6ea4d39b454e3e2f51",
+    "README.md": "2d827be586873c9c47321a869ec4e715aa272067ae6522232edf7538d7485ea8",
+    "test_parentq_rows.py": "691638f1edbb08d4c432196a1151028b12ce2d05381a675d28e5a8fc09f4331b",
+    "parentq_rows.py": "77576a41b46ea387d83a3be939c30b3d0ab235b7fc131027bbb211a930d8a237",
+    "PREREG_PARENTQ.md": "0e3543e07d38eb2f8555a9611cc5641782b2f93116dacbcebc57214c7e549987",
+    "test_parentq_worker.py": "b9c1817dc4a51023a8785769612a9e7effe832db16aaac54909960ec5ddc311b",
+    "parentq_safety.py": "9c2f9ec3f5e4f738ea57848c6db7639cb8cc71186007bd3afc9560fff4564a02",
+    "REVIEW_PARENTQ.md": "8e4ce29d56585197d5f5421154ec32330f2046132d510adde97a3ca99f452178",
+    "reproduce_calibration_offline.py": "932c013dc5f2e00348d3ad017c9973c1b6acc282ef5a5e4adad6b4e589cdfd7b",
+    "parentq_worker.py": "04f72bd9c418774126167e75cc51cc0be754452bb599cc8a258948efe54078aa",
+    "test_parentq_validation.py": "f013985988870da86dba709cd2ec3a2d05a95451d4e55462eeb4151ac2bb38d7",
+    "test_parentq_offline_supervise.py": "defa976e1cacd51908548e7af912ee5a452e8e8fb37616a4b63cf9c252e1e0ac",
+    "test_parentq_worker_mechanics.py": "fe5a0ce436485a3d937c1bce980ff84a178ae8d6da53823db2da68afb11ad331",
+    "parentq_launch_wmi.py": "038dfca460ae8d8bc86df359a99c64b2aefe28b329cb33ca2dbe46affeb80eac",
+    "parentq_decide.py": "96dde2a4984415edc4f6b6aa5a55d6ccd2aaa4cd36c3a73d725faecce41e28cf",
+    "test_parentq_supervise.py": "f13ba2c9f45c7076dfdd8a5f0a795ac26d67042d5a975088f72f23afc92f2d85",
+    "NATIVE_RUN_PROPOSAL.md": "ad224d84158693d6583d846b2ffeddc3e52d1f93ae837c2eacc4b71175f01859",
+    "PROSPECTIVE_DESIGN_OPTIONS.md": "4996e6b7df5c7c7a8fd556d37fce89d32954c917d9f24fce8708af20968ecdae",
+    "READINESS_PARENTQ.json": "723137cdd0836ccf36cdd2ddad52ec12d00d8bda0eb4b0b049767ed636fd1d29",
+    "parentq_bank.json": "53f4b0dbc8f456beac4a8d1992329023c4be76861c2564dec023778da3e2a3de",
+    "build_parentq.py": "29596e9504613f3b36ecc8a09137f6c17449ddfce50dfc98ad08e76fa9625cd4",
+    "derive_from_geo.py": "4d86e37ed2539ed8397afee16080316d8b94ae6fd1ca022b153facb8e0f34c26",
+    "parentq_validation.py": "74c9bf446df78050a99edf52309388b9325ab4c3ec134a5b03ab907671150548",
+    "REVISION_PARENTQ.md": "bf64e2432f7f04b3c8200623960cc4c2a47cdedfbea19b7a5cf01aaf284e5909",
+    "test_parentq_decide.py": "935f6dd2275024e38f0e9e0ce74fe4f904423934219ec906e4c6a962e37cbc0d"
+  },
+  "final_source_bound_receipts": {
+    "fixtures-003": {
+      "status": "PASS",
+      "source_bound": true,
+      "mismatches": []
+    },
+    "containment-002": {
+      "status": "PASS",
+      "source_bound": true,
+      "mismatches": []
+    },
+    "validation-003": {
+      "status": "PASS",
+      "source_bound": true,
+      "mismatches": []
+    }
+  },
+  "evidence_receipts": [
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\containment-001\\OFFLINE_SUPERVISOR_RECEIPT.json",
+      "sha256": "45a7ee266c0ef23ffb9341adae71a8858f8d977f22a6c26f34c272e29e4cc1e5"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\containment-002\\OFFLINE_SUPERVISOR_RECEIPT.json",
+      "sha256": "c5388f3c05edb87216efdff24b2f0b1a71ec63a307aed11e8550105a0620a8c9"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\calibration-001\\OFFLINE_SUPERVISOR_RECEIPT.json",
+      "sha256": "7567282ed358084e2de337b7fc3a5482e534ec6e19a6c280f3dc87f639cb7b75"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\calibration-001\\CPU_CALIBRATION_REPRODUCTION.json",
+      "sha256": "8c6cdd8eb0ad1ac669928ff1e6c918cfc6df174816bde92c58090d29badd5323"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\calibration-002\\OFFLINE_SUPERVISOR_RECEIPT.json",
+      "sha256": "fd98a9a0487bd6d3a02f8b63790a3a5223d362b8292e24cd25edc31741d12966"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\calibration-002\\CPU_CALIBRATION_REPRODUCTION.json",
+      "sha256": "1a1402d33c888afa2a2754a9b35d9b8522fe0ddcb581422fff711f491f49fbf6"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\validation-001\\OFFLINE_SUPERVISOR_RECEIPT.json",
+      "sha256": "c4f730db38ce7e55c4a619c144c61691b15643d2219a2c6100a28eeb5a833992"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\validation-001\\CPU_VALIDATION_PARENTQ.json",
+      "sha256": "fe973d65a4f4bdda647cb5fa680684a08937096e5e80e06f31c15cf8564c0363"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\validation-002\\OFFLINE_SUPERVISOR_RECEIPT.json",
+      "sha256": "f7ad039a8ccf1ff592e443194970b213d5c95ce623ef58b0316cbc2534479823"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\validation-002\\CPU_VALIDATION_PARENTQ.json",
+      "sha256": "fe973d65a4f4bdda647cb5fa680684a08937096e5e80e06f31c15cf8564c0363"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\validation-003\\OFFLINE_SUPERVISOR_RECEIPT.json",
+      "sha256": "cecf4c53cd3b5809c008ee2e63837697bbc28f5957d239c848fa1dbd510e1afc"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\validation-003\\CPU_VALIDATION_PARENTQ.json",
+      "sha256": "fe973d65a4f4bdda647cb5fa680684a08937096e5e80e06f31c15cf8564c0363"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\fixtures-001\\OFFLINE_SUPERVISOR_RECEIPT.json",
+      "sha256": "f65c4c15971d8ef19ab501b213d8ed389cdd33318d86cc11ba779f8d8c37d203"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\fixtures-001\\CPU_FIXTURES.json",
+      "sha256": "16565756647a77a870d49eb43345ca46f100dd83617ca79f221fcc10ac013365"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\fixtures-001\\worker.log",
+      "sha256": "5e388995c0566e4c08cd8fab6cc2deacd9db4c64e4c5d96f473a69dba66505f3"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\fixtures-002\\OFFLINE_SUPERVISOR_RECEIPT.json",
+      "sha256": "fb7e338c9588baa034549bb0bc8c56e0cd9d891e4867a05d9b728650d578fc8c"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\fixtures-002\\CPU_FIXTURES.json",
+      "sha256": "15e8ac68825bbb60d01b85f6627a97c124fbb3ddd7d024a80823540332e8a1be"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\fixtures-003\\OFFLINE_SUPERVISOR_RECEIPT.json",
+      "sha256": "357fce9201b9275acf8f1e7a4430da246a9951467c265da42bd7aa8c31def162"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\fixtures-003\\CPU_FIXTURES.json",
+      "sha256": "1967d3c0ee1f76f34c09cdd51eee2d4577ae1fd53ab6effb66cf8a4bb238ffa7"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\fixtures-003\\worker.log",
+      "sha256": "d96a08d82e946a5f06ebc5224869e52695e17e8b08d0959e6ac86890f5498824"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\OFFLINE_PACKET_REVIEW.json",
+      "sha256": "c91c0eee90fae916760f99bdcdfbc8acc7416583f56c4f89719a0d4faf6aca42"
+    },
+    {
+      "path": "C:\\Users\\clclc\\BusinessProject\\triskill-geo001-parentq-offline-20261005\\baseline_identity.json",
+      "sha256": "757f52a46187802d0f7376a0d51fa3d65b93a6ef7ddb9af5faec7295cf3c1703"
+    }
+  ],
+  "retained_failures": [
+    "fixtures-001: SQLite connection leak and missing runner module",
+    "validation-001: controller normal-exit snapshot race"
+  ],
+  "next_decision": "Select exact fixed-parent feasibility versus calibrated new-world readiness together with exposed-parent eligibility",
+  "git_status": "M experiments/triskill_geo001_parentq_v1/PREREG_PARENTQ.md\r\n M experiments/triskill_geo001_parentq_v1/build_parentq.py\r\n M experiments/triskill_geo001_parentq_v1/derive_from_geo.py\r\n M experiments/triskill_geo001_parentq_v1/parentq_decide.py\r\n M experiments/triskill_geo001_parentq_v1/parentq_launch_wmi.py\r\n M experiments/triskill_geo001_parentq_v1/parentq_supervise.py\r\n M experiments/triskill_geo001_parentq_v1/parentq_worker.py\r\n M experiments/triskill_geo001_parentq_v1/test_parentq_decide.py\r\n M experiments/triskill_geo001_parentq_v1/test_parentq_supervise.py\r\n M experiments/triskill_geo001_parentq_v1/test_parentq_worker.py\r\n?? experiments/triskill_geo001_parentq_v1/NATIVE_RUN_PROPOSAL.md\r\n?? experiments/triskill_geo001_parentq_v1/PROSPECTIVE_DESIGN_OPTIONS.md\r\n?? experiments/triskill_geo001_parentq_v1/READINESS_PARENTQ.json\r\n?? experiments/triskill_geo001_parentq_v1/README.md\r\n?? experiments/triskill_geo001_parentq_v1/REVIEW_PARENTQ.md\r\n?? experiments/triskill_geo001_parentq_v1/REVISION_PARENTQ.md\r\n?? experiments/triskill_geo001_parentq_v1/parentq_offline_supervise.py\r\n?? experiments/triskill_geo001_parentq_v1/parentq_safety.py\r\n?? experiments/triskill_geo001_parentq_v1/parentq_validation.py\r\n?? experiments/triskill_geo001_parentq_v1/reproduce_calibration_offline.py\r\n?? experiments/triskill_geo001_parentq_v1/test_parentq_offline_supervise.py\r\n?? experiments/triskill_geo001_parentq_v1/test_parentq_validation.py\r\n?? experiments/triskill_geo001_parentq_v1/test_parentq_worker_mechanics.py"
+}

@@ -1,0 +1,106 @@
+{
+  "utc": "2026-10-01T23:49:52.219995+00:00",
+  "prospective_only": true,
+  "authorization": "CPU calculation only; native confirmation not authorized",
+  "comparators": [
+    "BASE",
+    "T",
+    "H",
+    "TH",
+    "IDENTITY",
+    "RANDOM",
+    "PROMPT",
+    "REVERSE"
+  ],
+  "family_alpha": 0.05,
+  "per_comparison_alpha": 0.00625,
+  "sampling_unit": "independent source world; format variants do not increase N",
+  "assumptions_not_outcome_estimates": true,
+  "rows": [
+    {
+      "scenario": "primary net .10",
+      "n": 256,
+      "gain": 0.15,
+      "loss": 0.05,
+      "net_gain": 0.09999999999999999,
+      "per_comparator_power": 0.7897637680287571,
+      "all_eight_power_lower_bound": 0.0
+    },
+    {
+      "scenario": "primary net .10",
+      "n": 384,
+      "gain": 0.15,
+      "loss": 0.05,
+      "net_gain": 0.09999999999999999,
+      "per_comparator_power": 0.9541809398814602,
+      "all_eight_power_lower_bound": 0.633447519051682
+    },
+    {
+      "scenario": "primary net .10",
+      "n": 512,
+      "gain": 0.15,
+      "loss": 0.05,
+      "net_gain": 0.09999999999999999,
+      "per_comparator_power": 0.992281372965344,
+      "all_eight_power_lower_bound": 0.9382509837227522
+    },
+    {
+      "scenario": "sensitivity net .05",
+      "n": 256,
+      "gain": 0.1,
+      "loss": 0.05,
+      "net_gain": 0.05,
+      "per_comparator_power": 0.20330921072869712,
+      "all_eight_power_lower_bound": 0.0
+    },
+    {
+      "scenario": "sensitivity net .05",
+      "n": 384,
+      "gain": 0.1,
+      "loss": 0.05,
+      "net_gain": 0.05,
+      "per_comparator_power": 0.3763230002662227,
+      "all_eight_power_lower_bound": 0.0
+    },
+    {
+      "scenario": "sensitivity net .05",
+      "n": 512,
+      "gain": 0.1,
+      "loss": 0.05,
+      "net_gain": 0.05,
+      "per_comparator_power": 0.5407082638487452,
+      "all_eight_power_lower_bound": 0.0
+    },
+    {
+      "scenario": "sensitivity net .08",
+      "n": 256,
+      "gain": 0.12,
+      "loss": 0.04,
+      "net_gain": 0.07999999999999999,
+      "per_comparator_power": 0.6516566362325656,
+      "all_eight_power_lower_bound": 0.0
+    },
+    {
+      "scenario": "sensitivity net .08",
+      "n": 384,
+      "gain": 0.12,
+      "loss": 0.04,
+      "net_gain": 0.07999999999999999,
+      "per_comparator_power": 0.8825774564941399,
+      "all_eight_power_lower_bound": 0.060619651953119025
+    },
+    {
+      "scenario": "sensitivity net .08",
+      "n": 512,
+      "gain": 0.12,
+      "loss": 0.04,
+      "net_gain": 0.07999999999999999,
+      "per_comparator_power": 0.967118715474726,
+      "all_eight_power_lower_bound": 0.7369497237978084
+    }
+  ],
+  "three_gains_zero_losses_two_sided_p": 0.25,
+  "power_covers": "beneficial paired rejections only; excludes effect-interval and retention gates",
+  "model_loads": 0,
+  "model_forwards": 0
+}

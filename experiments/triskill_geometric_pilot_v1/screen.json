@@ -1,0 +1,246 @@
+[
+  {
+    "row_id": "screen-T-ledger_replay",
+    "split": "screen",
+    "family": "state_tracking",
+    "task_kind": "transition_parent",
+    "system": "Apply one event to the supplied account balances. If status is not posted, leave all balances unchanged. add: add amount to account. scale: multiply account by amount. transfer: subtract amount from account and add it to other, simultaneously. Return only the complete resulting balances as a JSON object.",
+    "user": "{\"before\":{\"A\":-39,\"B\":17,\"C\":46,\"D\":-11},\"event\":{\"account\":\"B\",\"amount\":-13,\"kind\":\"transfer\",\"other\":\"D\",\"status\":\"posted\",\"tick\":73}}",
+    "expected": "{\"A\":-39,\"B\":30,\"C\":46,\"D\":-24}",
+    "output_kind": "json_object",
+    "world_signature": "46a9d2e7d706fbb0b2d8e6b69a2f6ab9588361428c572d44105a31e0ad748899",
+    "state_signature": "1bfd8e1c7adda46906a03a769d22051fff0018396b1ba0973b8edb1a36084f70",
+    "rule_signature": "779d08fc1d3028ff2806eed16c010f3b7303f843dfc576c066d11da18acae940",
+    "metadata": {
+      "parent": "T",
+      "native_contract": true,
+      "transition_family": "ledger_replay",
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  },
+  {
+    "row_id": "screen-T-register_machine",
+    "split": "screen",
+    "family": "state_tracking",
+    "task_kind": "transition_parent",
+    "system": "Apply one instruction to the supplied registers. Registers are integers modulo 97. swap exchanges register and other simultaneously. add adds value to register. mix adds (2 times other plus value) to register. conditional adds value if other is greater than threshold, otherwise subtracts value. Reduce updated numeric registers modulo 97; preserve other registers. Return only the complete resulting registers as a JSON object.",
+    "user": "{\"before\":{\"X\":71,\"Y\":23,\"Z\":44},\"event\":{\"kind\":\"conditional\",\"other\":\"Z\",\"register\":\"X\",\"threshold\":52,\"value\":16}}",
+    "expected": "{\"X\":55,\"Y\":23,\"Z\":44}",
+    "output_kind": "json_object",
+    "world_signature": "17f442cb7c3ece7ddc030c257a43e303f849583acc593e27d556de8115395668",
+    "state_signature": "25f0629ab8bb5a019332efe1a43d464b5dcd06b537c35f20fcf68864c488e98e",
+    "rule_signature": "cd42b0344f076a3e8682e345956bd6445b7d681c7afe2165f8aa5fd24d71b665",
+    "metadata": {
+      "parent": "T",
+      "native_contract": true,
+      "transition_family": "register_machine",
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  },
+  {
+    "row_id": "screen-H-answerable",
+    "split": "screen",
+    "family": "answerability_abstention",
+    "task_kind": "answerability_parent",
+    "system": "Use only the supplied complete notes. Return exactly one integer if the requested value is established. If it cannot be determined, return exactly UNKNOWN. Do not infer unstated facts.",
+    "user": "Complete notes for Juniper: The Juniper seal has code 9. The seal is stored beside the crate. What is the Juniper seal's code?",
+    "expected": "9",
+    "output_kind": "integer_or_unknown",
+    "world_signature": "3126811238298b6666b1712d11eb6b2b27620e1be4c735a36a9b8af95a229b6b",
+    "state_signature": "68eeefc792067d20bcc272742b1df3a13f9fc3a86f7afa7039fef56983171b60",
+    "rule_signature": "eb980fbb4a5af5eb2d3b4aa121486c2e862c72f418fce3da64f40ce5b9d59991",
+    "metadata": {
+      "parent": "H",
+      "native_contract": false,
+      "format_modified_diagnostic": true,
+      "answerable": true,
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  },
+  {
+    "row_id": "screen-H-missing",
+    "split": "screen",
+    "family": "answerability_abstention",
+    "task_kind": "answerability_parent",
+    "system": "Use only the supplied complete notes. Return exactly one integer if the requested value is established. If it cannot be determined, return exactly UNKNOWN. Do not infer unstated facts.",
+    "user": "Complete notes for Maple: The Maple crate has code 42. The seal is stored beside the crate. What is the Maple seal's code?",
+    "expected": "UNKNOWN",
+    "output_kind": "integer_or_unknown",
+    "world_signature": "b13f716177742ae0bd38cc18aaf35219256e51a0dd92e230db9e5ee09e30420c",
+    "state_signature": "94fd88d7b8af02610a4b7ad90f0e8019e0073494d38296d634407fbd86536f97",
+    "rule_signature": "ce01bef85f8a0bfab846c336cce5e6958b7df5cb0476c59048fde3457e002a0b",
+    "metadata": {
+      "parent": "H",
+      "native_contract": false,
+      "format_modified_diagnostic": true,
+      "answerable": false,
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  },
+  {
+    "row_id": "screen-C-missing_erased",
+    "split": "screen",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Return only the common final integer, or UNKNOWN if final values differ.",
+    "user": "Complete records for ember:\nRecord A: the initial ember register value is not recorded.\nRule definitions:\nEMBER_1(x) = (2 * x + (-1)) modulo 97.\nEMBER_2(x) = (0 * x + (7)) modulo 97.\nEMBER_3(x) = (-1 * x + (3)) modulo 97.\nInstruction log: apply EMBER_1, then EMBER_2, then EMBER_3 to the ember register.\nRecord B: a separate marker has value 23; it supplies no initial ember value.\nWhat is the final ember register value?",
+    "expected": "93",
+    "output_kind": "integer_or_unknown",
+    "world_signature": "e57bd1350c9bd7d65814ef975463630f07eaa949c211277c2d5f501f9861b255",
+    "state_signature": "5eaced4fd5d54b262505b79289defcb86697ddc0245bc7e03ade8f48247d8350",
+    "rule_signature": "ba82d743dc32f774e16502270d5111c52ffa7855bf8cf9529ee3adeb7d812e91",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": true,
+      "initial_conflict": false,
+      "reset_present": true,
+      "outcome_count": 1,
+      "rules": [
+        [
+          2,
+          -1
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          -1,
+          3
+        ]
+      ],
+      "initial": null,
+      "answerable": true,
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  },
+  {
+    "row_id": "screen-C-known_chain",
+    "split": "screen",
+    "family": "state_tracking",
+    "task_kind": "known_state_control",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Return only the common final integer, or UNKNOWN if final values differ.",
+    "user": "Complete records for flint:\nRecord A: the initial flint register value is 95.\nRule definitions:\nFLINT_1(x) = (-1 * x + (4)) modulo 97.\nFLINT_2(x) = (3 * x + (-6)) modulo 97.\nFLINT_3(x) = (2 * x + (1)) modulo 97.\nInstruction log: apply FLINT_1, then FLINT_2, then FLINT_3 to the flint register.\nRecord B: the initial flint register value is 95.\nWhat is the final flint register value?",
+    "expected": "25",
+    "output_kind": "integer_or_unknown",
+    "world_signature": "5589800b680c46091e0764ef6e65ab6f1d3bda7eb5c9ae70e4dbe2e26e742f3b",
+    "state_signature": "34916aa66d991217e2cb389333f449c468b2a8c6cfd5fe215bc297526d3e41e9",
+    "rule_signature": "d12d9e171500c5046a243d55a13e91784d67e35a40597eff0461b15d04189b84",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": false,
+      "transfer_endpoint": false,
+      "initial_missing": false,
+      "initial_conflict": false,
+      "reset_present": false,
+      "outcome_count": 1,
+      "rules": [
+        [
+          -1,
+          4
+        ],
+        [
+          3,
+          -6
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "initial": [
+        95,
+        95
+      ],
+      "answerable": true,
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  },
+  {
+    "row_id": "screen-C-missing_survives",
+    "split": "screen",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Return only the common final integer, or UNKNOWN if final values differ.",
+    "user": "Complete records for garnet:\nRecord A: the initial garnet register value is not recorded.\nRule definitions:\nGARNET_1(x) = (2 * x + (3)) modulo 97.\nGARNET_2(x) = (-1 * x + (5)) modulo 97.\nInstruction log: apply GARNET_1, then GARNET_2 to the garnet register.\nRecord B: a separate marker has value 23; it supplies no initial garnet value.\nWhat is the final garnet register value?",
+    "expected": "UNKNOWN",
+    "output_kind": "integer_or_unknown",
+    "world_signature": "3da698c93c4a9e08079a9497de2e52cb3ed1636e937f7c94716344a82eff26b3",
+    "state_signature": "30c63cd8e11f46b74e46a66f0f4d9de9c576abd14def28ef284a693ee9f44913",
+    "rule_signature": "d66218fb48e695a87215b312803839676faf2109a994b755fa5bd42117de7585",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": true,
+      "initial_conflict": false,
+      "reset_present": false,
+      "outcome_count": 97,
+      "rules": [
+        [
+          2,
+          3
+        ],
+        [
+          -1,
+          5
+        ]
+      ],
+      "initial": null,
+      "answerable": false,
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  },
+  {
+    "row_id": "screen-C-conflict_survives",
+    "split": "screen",
+    "family": "skill_composition",
+    "task_kind": "third_skill_transfer",
+    "system": "Use only the complete records and rules. Registers are integers modulo 97 (0..96). Missing initial state admits all 97 values; conflicting records admit each listed value equally. Apply every instruction in order to each admissible value, reducing modulo 97 after each step. Return only the common final integer, or UNKNOWN if final values differ.",
+    "user": "Complete records for hazel:\nRecord A: the initial hazel register value is 2.\nRule definitions:\nHAZEL_1(x) = (2 * x + (1)) modulo 97.\nHAZEL_2(x) = (-1 * x + (4)) modulo 97.\nHAZEL_3(x) = (1 * x + (-2)) modulo 97.\nInstruction log: apply HAZEL_1, then HAZEL_2, then HAZEL_3 to the hazel register.\nRecord B: the initial hazel register value is 94.\nWhat is the final hazel register value?",
+    "expected": "UNKNOWN",
+    "output_kind": "integer_or_unknown",
+    "world_signature": "51f1d6f8657dcca23be344fc7c7121661b3362a843933a00e8a960b2f269b786",
+    "state_signature": "a06be40af6899b06e44222768390e1914c05a9b2107f6fcf517472e5eb6c4eea",
+    "rule_signature": "6b1d3449477956064fe637dccd170076b8d9c25de10fd1488ec686c8ebbfd26d",
+    "metadata": {
+      "parent": null,
+      "new_task_structure": true,
+      "transfer_endpoint": true,
+      "initial_missing": false,
+      "initial_conflict": true,
+      "reset_present": false,
+      "outcome_count": 2,
+      "rules": [
+        [
+          2,
+          1
+        ],
+        [
+          -1,
+          4
+        ],
+        [
+          1,
+          -2
+        ]
+      ],
+      "initial": [
+        2,
+        94
+      ],
+      "answerable": false,
+      "membership": "generated_local_split_only",
+      "training": false
+    }
+  }
+]

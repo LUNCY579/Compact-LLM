@@ -1,0 +1,159 @@
+{
+  "experiment": "TRISKILL-GEO-001-SECTIONH",
+  "parent_commit": "332b7f9b",
+  "implementation_commit": "14b733c44b7b18f19c2940b14fc2548133417862",
+  "cpu_validation": {
+    "file": "CPU_VALIDATION_SECTIONH.json",
+    "sha256": "4c8a88bc63cebd50810d9ae07a06397ef47149d9e8deafb5612581c62941ca97",
+    "passed": true
+  },
+  "source_commit": "01f47694988a85bdedab7831d1652f0b9bf07e9f",
+  "files": {
+    "worker.py": "2c85e78e8a6595b68ad238505c5d34ed829155ef83653dda23fc62928104150a",
+    "geometry.py": "2ebe76b717d8da21b2c50cecb371ad263ddea1d11951ac6df6c25a30b9cc3902",
+    "benchmark.py": "c3af153d6e48728c153ae6d5d448de210fb675a087b668a7ecc26c1d363950fb",
+    "dependency_binding.py": "8b1f2d03ef2362557c5fe8e72b224a8660cf18f4615f3061da0c6756fa1fccec",
+    "supervise.py": "07586af61286bbd969d2d69c480c32e61d653d268911cf7fc7a88a4cc0dab1de",
+    "launch_wmi.py": "5ff5cd48aacd50821dc7b8a9bb2efafebab1905b7388f7938fd06f93ce7d330b",
+    "freeze_sectionh.py": "d765372e27641969fb281dedc8275af8fccf829719cfcef0c3b184d38115d278",
+    "geometry_sectionh.npz": "b1f2234bac5cef4a94f482b31294959befef1f6c239586621a1bfd0c6a2f9380",
+    "geometry_sectionh.json": "21c1da5669bf66f26282ff8a473372327f5e7ebc8d8e810ead244d8565600ee1",
+    "screen_sectionh.json": "2995d7c5702cbf9b3ced5e86dc5c878a6ab6493b585608a4570403338008c891",
+    "development_sectionh.json": "b0a35d688e318f6f12529c2c49337aa4c400322be0171b9d67fbd8fd7976fe90",
+    "AMENDMENT_SECTIONH.md": "ca3c34c436f401dc828d7bd3a32443c78387c77952c2bb6424f7a72c946c526e",
+    "PREREG.md": "7d3821ceba47919395ecc7fd22e4293b6576021766e55b21b7dcff7f5d44567c",
+    "BENCHMARK_MATRIX.md": "c1a22674df5f3d0e2fec02b7db75965963a80ab04d3060ad32efac16869f4d16",
+    "FOLLOWUP_PREREG.md": "6be3a77ffa3f0d0bcf12ee565d0ab252e65e11827a32d50d69019408c45395ad",
+    "FUTURE_PROTOCOL.md": "7ed3d21b12ffa8b18cb5efca2acf159145d5c91ab41c70321bb2921bfe19043e",
+    "SOURCES_VERIFIED.md": "6645e2bdf59e258fda55003f4eec598deac943a0374f60c6d9ef87c01efe79f7",
+    "geometry.npz": "52563d5ba4b230f01053cef0c2330645861e20de6ce66be71336ced235c78f7c",
+    "geometry.json": "c1483105104e6bfe38320d9696a9364aa958b9d8b3a082e4fdd0f04090c8fc4a",
+    "screen.json": "d2fbd00d91e110fd39bc1024ea57f3b8001686f0e7abed54b6263f02221be862",
+    "development.json": "cb5f263f1cdc2e4b774a3a0ed7f0e64b57b61cfcac93d15728c731758762659d",
+    "format_development.json": "64f4b183f6331c36fb88603463c70308880c0c6a69f6296e3a238572f914d16c",
+    "conjunction_development.json": "5b4571213012ba61f5a3c1e29798aa2ced71d43d63de8a2420ac676c7ae74acc",
+    "test_benchmark.py": "31cf7f2e8b11e69e410228bdde149f3f118867d7641add26d938b4b38fc36943",
+    "test_worker.py": "34445b46bff711ef5a358a9aac8bd7ea375a6d67cb1ae7cf0283c0aae3c7788b",
+    "test_geometry.py": "b94e63bf1750c53390900d2a0d9e07b4972f3dc228f04308ad3b26f304c5e8da",
+    "test_dependency_binding.py": "e1681f4a7a4fbc7606bca21a713aa885408691ebe997ababf5fe333a1a8ad488",
+    "test_future_power.py": "d3ef3871b8e405cbd92f3268e88dbc797fd2cfac9e2d1c0519b5949e0c385218",
+    "test_native_tiny.py": "f9173e3d60ce6ef46591af844bc8daa7f6f9100023129e7821c5a18b801761ed",
+    "test_supervise.py": "3c8235f5d670799c3bd738c0164fd34612d6707faaae986ec1473d88075ec4d2",
+    "test_native_e2e.py": "00d1fad4e86c21b81f6503b2bc515841d410b40691fa040ca63ea59b5ae98f1f",
+    "future_power.py": "2abbfe7f7577bceb262e39796d6128a459893360a85076800ee92b3d24d4810c"
+  },
+  "dependency_binding": {
+    "schema": 1,
+    "roles": {
+      "worker": {
+        "kind": "code",
+        "path": "experiments/triskill_geometric_pilot_v1/worker.py",
+        "sha256": "2c85e78e8a6595b68ad238505c5d34ed829155ef83653dda23fc62928104150a"
+      },
+      "geometry": {
+        "kind": "code",
+        "path": "experiments/triskill_geometric_pilot_v1/geometry.py",
+        "sha256": "2ebe76b717d8da21b2c50cecb371ad263ddea1d11951ac6df6c25a30b9cc3902"
+      },
+      "benchmark": {
+        "kind": "code",
+        "path": "experiments/triskill_geometric_pilot_v1/benchmark.py",
+        "sha256": "c3af153d6e48728c153ae6d5d448de210fb675a087b668a7ecc26c1d363950fb"
+      },
+      "binding": {
+        "kind": "code",
+        "path": "experiments/triskill_geometric_pilot_v1/dependency_binding.py",
+        "sha256": "8b1f2d03ef2362557c5fe8e72b224a8660cf18f4615f3061da0c6756fa1fccec"
+      },
+      "renderer": {
+        "kind": "code",
+        "path": "experiments/fresh_dual_skill_instrument_v1/score_arms.py",
+        "sha256": "30b1791e1c30afb9f1cb40b0e57b3c8c62d6c39c23a8e3f20af2e17cfc1c937b"
+      },
+      "renderer_fixture": {
+        "kind": "fixture",
+        "path": "C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/qwen001-20260918/render-process/prompts.jsonl",
+        "sha256": "46d95c672b7805872ebdc79dd45a688fbd59e4038eeea4ea6216b5ad82c4435f"
+      }
+    }
+  },
+  "supervisor_dependencies": {
+    "gpu_lease": {
+      "path": "experiments/fresh_dual_skill_instrument_v1/gpu_lease.py",
+      "sha256": "594e32212f8fb5321d4b42dc13beb068776cf0c190b535d562f98051194161ca"
+    }
+  },
+  "source_sidecars": {
+    "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+  },
+  "source_weights": {
+    "BASE": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "T": "a28629c9d3454fbf2e884fd7ca442c1b406e7caf4b36d34b2c0614d0add31284",
+    "TH": "a4d73353db9a91cbba7b4cd7c8fe4fe6822670d10fe523b26a6d651bb9509567"
+  },
+  "runtime_packages": {
+    "numpy": "2.4.6",
+    "tokenizers": "0.22.2",
+    "psutil": "7.2.2",
+    "torch": "2.6.0+cu124",
+    "transformers": "5.14.1",
+    "safetensors": "0.8.0"
+  },
+  "native_budget": {
+    "screen_generations_max": 154,
+    "model_forwards_max": 5100,
+    "token_positions_including_padding_max": 76000,
+    "worker_wall_seconds_max": 540,
+    "supervisor_hard_wall_seconds_max": 600,
+    "model_loads_max": 1,
+    "input_slots": 288,
+    "output_slots": 32,
+    "readout_slots": 319,
+    "eos_token_ids": [
+      151645,
+      151643
+    ],
+    "gpu_memory_fraction": 0.78
+  },
+  "native_allocation": {
+    "generations": 154,
+    "forwards": 5024,
+    "token_positions": 75562,
+    "parts": {
+      "padding_parity": [
+        16,
+        1164
+      ],
+      "hook_liveness": [
+        8,
+        2304
+      ],
+      "generation": [
+        4928,
+        49126
+      ],
+      "teacher_forced_readout": [
+        72,
+        22968
+      ]
+    },
+    "fits": true
+  },
+  "native_execution_status": "REQUIRES_EXPLICIT_OPERATOR_GRANT",
+  "native_execution_authorized": false,
+  "confirmation": false,
+  "quality_claim": false,
+  "construction_C_training_examples": 0,
+  "model_loads": 0,
+  "model_forwards": 0,
+  "evidence_not_self_pinned": [
+    "FREEZE_SECTIONH.json",
+    "CPU_TESTS_SECTIONH.log",
+    "REPORT_SECTIONH.md"
+  ]
+}
