@@ -190,6 +190,56 @@ class ContractControls(unittest.TestCase):
         self.path.write_bytes(self.raw + b"X")
         self.rejects("ARTIFACT_SIZE", self.check)
 
+    def test_growing_artifact_stops_after_first_byte_over_declared_size(self):
+        original_open = Path.open; path = self.path; raw = self.raw
+        for limit, mutate_descriptor in ((c.MAX_ARTIFACT_BYTES, False), (len(raw), False), (c.MAX_ARTIFACT_BYTES, True)):
+            with self.subTest(byte_limit=limit, mutate_descriptor=mutate_descriptor):
+                path.write_bytes(raw)
+                reads = []; consumed = []
+                class GrowingStream:
+                    def __init__(self, stream): self.stream = stream
+                    def __enter__(self): return self
+                    def __exit__(self, *args): self.stream.close()
+                    def fileno(self): return self.stream.fileno()
+                    def read(self, size):
+                        reads.append(size)
+                        if len(reads) > 2:
+                            raise AssertionError("read continued beyond declared artifact size")
+                        result = self.stream.read(size); consumed.append(len(result))
+                        if result:
+                            with original_open(path, "ab") as writer: writer.write(b"X")
+                            if mutate_descriptor:
+                                artifact["bytes"] = c.MAX_ARTIFACT_BYTES + 1
+                        return result
+                def opening(value, *args, **kwargs):
+                    stream = original_open(value, *args, **kwargs)
+                    return GrowingStream(stream) if value == path and args and args[0] == "rb" else stream
+                artifact = {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
+                with patch.object(c, "MAX_ARTIFACT_BYTES", limit), patch.object(Path, "open", opening):
+                    self.rejects("ARTIFACT_CHANGED", lambda: c.verify_artifact_bytes(path, artifact))
+                self.assertEqual(reads, [len(raw) + 1, 1])
+                self.assertEqual(sum(consumed), len(raw) + 1)
+
+    def test_stable_artifact_at_byte_limit_hashes_in_bounded_chunks(self):
+        raw = b"X" * (1024 * 1024 + 17)
+        self.path.write_bytes(raw)
+        original_open = Path.open; path = self.path; reads = []
+        class ObservedStream:
+            def __init__(self, stream): self.stream = stream
+            def __enter__(self): return self
+            def __exit__(self, *args): self.stream.close()
+            def fileno(self): return self.stream.fileno()
+            def read(self, size):
+                reads.append(size)
+                return self.stream.read(size)
+        def opening(value, *args, **kwargs):
+            stream = original_open(value, *args, **kwargs)
+            return ObservedStream(stream) if value == path and args and args[0] == "rb" else stream
+        artifact = {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
+        with patch.object(c, "MAX_ARTIFACT_BYTES", len(raw)), patch.object(Path, "open", opening):
+            self.assertEqual(c.verify_artifact_bytes(path, artifact), artifact)
+        self.assertEqual(reads, [1024 * 1024, 18, 1])
+
     def test_mutation_during_streaming_hash_is_detected(self):
         original_open = Path.open; path = self.path; raw = self.raw
         class Mutation:

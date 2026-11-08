@@ -51,6 +51,8 @@ The [bulk import source manifest](docs/repository-consolidation/2026-11-08/BULK_
 
 ## MiMo capture and Windows containment audit
 
+**Additional MiMo hardening:** The [native backend contract](experiments/post_training_mimo_centralized_v1/scripts/native_backend_contract.py) now reads a declared-length artifact in bounded chunks and detects unexpected growth before unbounded data is consumed. The [capture-evidence validator](experiments/post_training_mimo_centralized_v1/scripts/capture_evidence.py) now checks exact, registered token-array identities for the 128- and 384-token mechanical fixtures. Corresponding regression tests were imported. These are *source-level safety corrections*, not new native model evidence.
+
 The [MiMo exact-prefix report](experiments/post_training_mimo_centralized_v1/EXACT_PREFIX_FIXED_TRACE_V1_REPORT.md) and its Windows Job containment diagnostics are now preserved along with additive **CPU-only** scripts, tests, configurations, and receipts. The six-forward native exact-prefix attempt **stopped before model import**, so it did not measure model likelihood. A [CPU diagnostic](experiments/post_training_mimo_centralized_v1/JOB_CONTAINMENT_DIAGNOSTIC_V1_REPORT.md) reproduced a late-Job-assignment gap, while the [suspended-launch attempt](experiments/post_training_mimo_centralized_v1/SUSPENDED_JOB_CPU_V1_REPORT.md) observed pre-resume membership but did **not** qualify the full cleanup suite. The [supervisor-death proposal](experiments/post_training_mimo_centralized_v1/SUPERVISOR_DEATH_CPU_V1_PROPOSAL.md) remains only a proposal. Existing central capture code, threshold gates, and later fixes were **not overwritten** by the historical import; CPU fixture evidence is not native certification.
 
 ## Research directions

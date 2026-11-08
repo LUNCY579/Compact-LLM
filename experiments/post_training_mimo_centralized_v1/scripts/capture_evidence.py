@@ -42,6 +42,15 @@ PACKAGES = {**low.PACKAGES, "psutil": "7.2.2"}
 EOS_IDS = (151645, 151643)
 VOCAB_SIZE = 151936
 PROMPT_LENGTHS = (128, 384)
+# Canonical token-array identities for the original registered mechanical inputs.
+# The failed128 trace (also byte-frozen by D2) has 97 alternating 20628/2266
+# filler IDs and a 31-ID chat suffix. The unchanged producer constructs384 by
+# prepending another 256 filler IDs. This pins intended inputs; it does not claim
+# native384 execution or independently detokenize any generated response.
+FIXTURE_PROMPT_SHA256 = {
+    128: "c969dec02329b4146e66b0d4704279ad05deacb6a9b3044a51bfd5dbf955ec10",
+    384: "914a8d827fb090a047626dc9ceb66240b17ff4d7c0c573d6b71ad54a0865476d",
+}
 PROBE_LENGTHS = (256, 512)
 OPERATIONS = ("model_construct", "checkpoint_load", "tensor_copy", "forward", "backward",
               "optimizer_step", "checkpoint_save", "checkpoint_reload")
@@ -592,6 +601,9 @@ def inspect_capture_scope(experiment_root, *, capture_directory=None):
             report["reasons"].append({"code": "CAPTURE_NOT_PASSED", "detail": str(result.get("status", "MISSING_STATUS"))[:200]})
             return report
         lengths = validate_result(result)
+        for fixture, prompt_length in zip(result["fixtures"], PROMPT_LENGTHS):
+            _require(fixture["prompt_token_ids_sha256"] == FIXTURE_PROMPT_SHA256[prompt_length],
+                     "FIXTURE_PROMPT_IDENTITY", f"fixture_{prompt_length} differs from the frozen mechanical input")
         config_path = root / CONFIG_RELATIVE
         cfg = _read(config_path, bound)
         _require(bound[str(config_path)]["sha256"] == CONFIG_SHA256, "CAPTURE_CONFIG_IDENTITY", "prospective config bytes changed")
