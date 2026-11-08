@@ -1,4 +1,4 @@
-name: Prune seven verified-contained branches (one-time)
+name: Verify MiMo CPU fixes and prune seven contained branches
 on:
   push:
     branches:
@@ -14,6 +14,15 @@ jobs:
       contents: write
       pull-requests: read
     steps:
+      - name: Checkout MiMo CPU verification sources
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: experiments/post_training_mimo_centralized_v1
+      - name: Verify MiMo CPU fixture regressions
+        run: |
+          python3 -m unittest -v experiments.post_training_mimo_centralized_v1.tests.test_native_backend_contract experiments.post_training_mimo_centralized_v1.tests.test_capture_evidence experiments.post_training_mimo_centralized_v1.tests.test_greedy_capture
       - name: Verify ancestry and prune exact approved refs
         env:
           GH_TOKEN: ${{ github.token }}
@@ -24,7 +33,7 @@ jobs:
           token = os.environ["GH_TOKEN"]
           repo = os.environ["GITHUB_REPOSITORY"]
           base = f"https://api.github.com/repos/{repo}"
-          candidates = [["codex/exp-peer-stabilizer-matrix","3b2aa5f239188da92f8cfcb402e17e001ad5a86e"],["research/ced-dual28-local-p1-preparation-v1","6a56cb64ec03fb729b006192fd58a7d55975e707"],["codex/triskill-stage-a","ef4b4d208dfa1a603a5f5bde88a98a06c5ca81bf"],["research/triskill-geo001-parentq","ae026104a0ba42ec44f9c2aa4db8920d161212f1"],["research/titan-tangent-task-arithmetic-v1","bd512fadeedf50de15bd65367d49a465387767d0"],["codex/mimo-supervisor-death-review-fix-20261002","8424bfc46398113757157f763fa6e8a9821d11fc"],["single-layer-fine-tuning","954a0c2637e691b493c5ac3d488653a8c1adf675"]]
+          candidates = [["codex/mimo-artifact-stream-budget-20260930","9d882d38d307c5a6a2cecb8075e9ae314ae879b3"],["codex/mimo-capture-fixed-input-audit-20260930","bbe2343a5817e9512a408270f9215df0116625d0"],["codex/mimo-capture-failure-accounting-20261001","07b65f3e3651788a80bcb042d0d369954fc7cd0c"],["codex/mimo-exact-prefix-capture-20261001","b379f727b06e075b7eaeef3e029583f146e7fe81"],["codex/mimo-job-containment-20261001","f4622874de970441e9d255297a72b0b671c8bdb2"],["codex/mimo-suspended-job-launch-20261001","44cbce50dfe85fb79a35eefee4918b2a0bffef9a"],["codex/mimo-supervisor-death-cpu-20261001","c42d494e751543b5fb896bbccecd16436003354d"]]
           headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
           def api(method, path, missing_ok=False):
               req = urllib.request.Request(base + path, headers=headers, method=method)
