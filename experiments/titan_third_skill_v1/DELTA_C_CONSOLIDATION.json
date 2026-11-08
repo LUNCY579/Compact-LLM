@@ -1,0 +1,57 @@
+{
+ "record": "DELTA_C_CONSOLIDATION",
+ "experiment": "TRISKILL-001",
+ "checkpoint": "C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\triskill001-20260926\\journal\\runs\\train-001\\microfit\\checkpoint-00029",
+ "checkpoint_binding": {
+  "checkout": "11da2c23927764b47148fd7c9300b1a60ac8ae57",
+  "code_sha256": "c4dfffc565077758737f3529f10f61c624f16d6822129e2f6d8d8d0dccdffd90",
+  "data_contract_sha256": "60dd49d2eef4db50f22c1ab4651e2b94f7b0680a17798358b0d1ddfb8fd9178a",
+  "experiment": "TRISKILL-001-RULES-SKILL",
+  "grant_sha256": "037dec35f2b44ecdcf5b66506ace8a7571c054b73a30a0e46da9702c1a5f73d8",
+  "mq_code_sha256": "7c2a848d92a3e1a9e42f54aab3b3c2cd1ce2f0b1a1bdad522c0ed4c5e677e072",
+  "plan_sha256": "229a13f669a45c41c016768ce45da9749c662c5afe033e0f6af433903b1222ac",
+  "runtime": {
+   "arithmetic": "fp32_eager_no_tf32",
+   "cublas_workspace_config": ":4096:8",
+   "cuda_build": "12.6",
+   "cuda_visible_devices": null,
+   "gpu0": {
+    "capability": [
+     8,
+     9
+    ],
+    "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "total_memory": 8585216000
+   },
+   "libraries": {
+    "numpy": "2.4.6",
+    "psutil": "7.2.2",
+    "safetensors": "0.7.0",
+    "tokenizers": "0.22.2",
+    "torch": "2.10.0+cu126",
+    "transformers": "4.57.1"
+   },
+   "optimizer": "cpu_moments_fp32",
+   "platform": "Windows-10-10.0.26200-SP0",
+   "python": "3.11.15 (main, Jun  2 2026, 22:29:49) [MSC v.1944 64 bit (AMD64)]",
+   "threads": 1,
+   "torch_build_sha256": "56c57b53ae1c49c48d99bb291c3a2e92947cc53a5e1bfd69b04b11dae9925b87"
+  },
+  "source": {
+   "assets": {
+    "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "model.safetensors": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+   },
+   "sha256": "e6e6edb7fa9e3b37711ab61a23a5198aff88647d9bdcfbb23159b3ebabf1f55e",
+   "source_id": "rineya.core.supa.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-0p8125"
+  }
+ },
+ "trained_tensors": 220,
+ "trained_C_fp32_sha256": "e42afe6a89231188cf03879647267b2040d2a6fccc1ff1fc3a85448d28c9e447",
+ "tier": "A (trained delta; NOT rebuildable -- back up before any deletion)"
+}

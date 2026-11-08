@@ -1,0 +1,2059 @@
+{
+ "experiment": "TRISKILL-001",
+ "analysis": "delta C FP32 vector geometry, read-only",
+ "source_sha256": {
+  "BASE": "75b0a92cd28eb90d121d72aa7618c497a6ff1b4522b73bdf01cabf515c30ad93",
+  "SPARSE": "6ae85f5bdab9437edc06b20716e6e7008d8aa402ec95a0a65ebc7bf8da1e94ed",
+  "TT": "a4d73353db9a91cbba7b4cd7c8fe4fe6822670d10fe523b26a6d651bb9509567",
+  "C": "e42afe6a89231188cf03879647267b2040d2a6fccc1ff1fc3a85448d28c9e447"
+ },
+ "trained_tensors": 220,
+ "norms": {
+  "C": 0.8575171663087606,
+  "T_dSparse": 0.694055084696215,
+  "H_effective_0p25": 0.17747359219665493,
+  "TT_minus_BASE": 0.7167265598515308
+ },
+ "cosines": {
+  "C_T": 0.03439400512478344,
+  "C_H_effective": -0.002871534518085982,
+  "T_H_effective": 0.001979376254402141
+ },
+ "inner_products": {
+  "cc": 0.7353356905142067,
+  "tt": 0.48171246059267014,
+  "hh": 0.03149687592718457,
+  "tc": 0.02047007880767688,
+  "hc": -0.0004370092240513191,
+  "th": 0.0002438125383776507
+ },
+ "by_module": {
+  "norm_or_other": {
+   "norm_C": 0.009694766019959429,
+   "norm_T": 0.007892832117707922,
+   "norm_H_effective": 0.00294506117420076,
+   "cos_C_T": 0.044712995714351424,
+   "cos_C_H_effective": -0.0033139533294358064
+  },
+  "mlp": {
+   "norm_C": 0.6643703595680737,
+   "norm_T": 0.5367106193769994,
+   "norm_H_effective": 0.1311227640074552,
+   "cos_C_T": 0.03644724605264669,
+   "cos_C_H_effective": -0.0024160888725126483
+  },
+  "attention": {
+   "norm_C": 0.5420827679915804,
+   "norm_T": 0.43999076676879195,
+   "norm_H_effective": 0.11956179699598864,
+   "cos_C_T": 0.03132132818295686,
+   "cos_C_H_effective": -0.003493764871489454
+  }
+ },
+ "doses": {
+  "0.25": {
+   "C_update_norm": 0.21437929157719016,
+   "composite_delta_norm": 0.7547661737555285,
+   "parent_delta_norm": 0.7167265598515308,
+   "premium_pct": 5.307409552658071,
+   "cross_term_with_C": 0.01001653479181278
+  },
+  "0.5": {
+   "C_update_norm": 0.4287585831543803,
+   "composite_delta_norm": 0.8470914672033872,
+   "parent_delta_norm": 0.7167265598515308,
+   "premium_pct": 18.18893210527337,
+   "cross_term_with_C": 0.02003306958362556
+  },
+  "1.0": {
+   "C_update_norm": 0.8575171663087606,
+   "composite_delta_norm": 1.1353848648269307,
+   "parent_delta_norm": 0.7167265598515308,
+   "premium_pct": 58.41255625606014,
+   "cross_term_with_C": 0.04006613916725112
+  }
+ },
+ "per_tensor": [
+  {
+   "tensor": "model.layers.10.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015540762764345167,
+   "cos_C_T": 0.01567067083537548,
+   "cos_C_H_effective": -0.03399254263795843,
+   "norm_T": 0.0013792884544211936,
+   "norm_H_effective": 0.0004603830006282438
+  },
+  {
+   "tensor": "model.layers.10.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08304387382023469,
+   "cos_C_T": 0.01947095352517464,
+   "cos_C_H_effective": -0.005119245917523267,
+   "norm_T": 0.07034565678146655,
+   "norm_H_effective": 0.016237555812404072
+  },
+  {
+   "tensor": "model.layers.10.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08360179634063886,
+   "cos_C_T": 0.001876561781748897,
+   "cos_C_H_effective": -0.0016029809548986547,
+   "norm_T": 0.07188273675719381,
+   "norm_H_effective": 0.015792078576353084
+  },
+  {
+   "tensor": "model.layers.10.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08269922864184084,
+   "cos_C_T": 0.0065771832752874555,
+   "cos_C_H_effective": -0.0017351637562735953,
+   "norm_T": 0.07121349273656344,
+   "norm_H_effective": 0.01631425722891799
+  },
+  {
+   "tensor": "model.layers.10.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015598248690639417,
+   "cos_C_T": 0.034182238802135306,
+   "cos_C_H_effective": -0.021535596503073354,
+   "norm_T": 0.0013399759233418047,
+   "norm_H_effective": 0.0004521810091789276
+  },
+  {
+   "tensor": "model.layers.10.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.000562432624291456,
+   "cos_C_T": 0.04474853736178937,
+   "cos_C_H_effective": 0.0454045415145398,
+   "norm_T": 0.0004854417924529362,
+   "norm_H_effective": 0.00013628236411363195
+  },
+  {
+   "tensor": "model.layers.10.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.051104679996770874,
+   "cos_C_T": 0.02197643033107904,
+   "cos_C_H_effective": -0.031145260137685673,
+   "norm_T": 0.043634304044599025,
+   "norm_H_effective": 0.00999661020607741
+  },
+  {
+   "tensor": "model.layers.10.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.06795075226095923,
+   "cos_C_T": 0.02515686327128372,
+   "cos_C_H_effective": -0.008957947006437855,
+   "norm_T": 0.057601052799233256,
+   "norm_H_effective": 0.015166998346170718
+  },
+  {
+   "tensor": "model.layers.10.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.000563415350918332,
+   "cos_C_T": 0.016960700263182235,
+   "cos_C_H_effective": 0.023696305792214895,
+   "norm_T": 0.0004938325853000175,
+   "norm_H_effective": 0.00013906054019091607
+  },
+  {
+   "tensor": "model.layers.10.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07024141288355047,
+   "cos_C_T": 0.0021663140024514326,
+   "cos_C_H_effective": -0.02816648901354794,
+   "norm_T": 0.06162769041341673,
+   "norm_H_effective": 0.014244534135006275
+  },
+  {
+   "tensor": "model.layers.10.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04749434995685519,
+   "cos_C_T": 0.006751135926995284,
+   "cos_C_H_effective": -0.020930682622134412,
+   "norm_T": 0.042115190202434656,
+   "norm_H_effective": 0.010570526638789017
+  },
+  {
+   "tensor": "model.layers.11.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.001501847753820523,
+   "cos_C_T": -0.00887961800963771,
+   "cos_C_H_effective": -0.05496883521551189,
+   "norm_T": 0.0013104015725171243,
+   "norm_H_effective": 0.00043425564682293943
+  },
+  {
+   "tensor": "model.layers.11.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08274055569315306,
+   "cos_C_T": 0.02322507087575594,
+   "cos_C_H_effective": -0.005258582974905867,
+   "norm_T": 0.06868598400591869,
+   "norm_H_effective": 0.016027108021137666
+  },
+  {
+   "tensor": "model.layers.11.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08238449127031469,
+   "cos_C_T": 0.003498933078080319,
+   "cos_C_H_effective": -0.00013006495877251236,
+   "norm_T": 0.07072617265804405,
+   "norm_H_effective": 0.016196969652699043
+  },
+  {
+   "tensor": "model.layers.11.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08148384024743872,
+   "cos_C_T": 0.013986991161389867,
+   "cos_C_H_effective": 0.0015490213101565233,
+   "norm_T": 0.06954955850586415,
+   "norm_H_effective": 0.016634445370032284
+  },
+  {
+   "tensor": "model.layers.11.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0014760422958363007,
+   "cos_C_T": 0.023368709384748027,
+   "cos_C_H_effective": -0.04256789639978589,
+   "norm_T": 0.0012584516930422608,
+   "norm_H_effective": 0.00045709399724302486
+  },
+  {
+   "tensor": "model.layers.11.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005623076136632841,
+   "cos_C_T": -0.2191721643093096,
+   "cos_C_H_effective": -0.0031176790222765863,
+   "norm_T": 0.0005703254210411829,
+   "norm_H_effective": 0.00014988077774382848
+  },
+  {
+   "tensor": "model.layers.11.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.049263533412592195,
+   "cos_C_T": 0.01139089070857705,
+   "cos_C_H_effective": -0.014163493860762405,
+   "norm_T": 0.04141035844044121,
+   "norm_H_effective": 0.010049460186102541
+  },
+  {
+   "tensor": "model.layers.11.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.0679375587557803,
+   "cos_C_T": 0.019225840964059323,
+   "cos_C_H_effective": -0.005715445316049362,
+   "norm_T": 0.056272015840567305,
+   "norm_H_effective": 0.014988484028589544
+  },
+  {
+   "tensor": "model.layers.11.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005621954712766978,
+   "cos_C_T": -0.3502511198117526,
+   "cos_C_H_effective": -0.004655846820726532,
+   "norm_T": 0.0005591078414765059,
+   "norm_H_effective": 0.00014673210682329064
+  },
+  {
+   "tensor": "model.layers.11.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.06798644172504785,
+   "cos_C_T": 0.004460516543328088,
+   "cos_C_H_effective": -0.006929623485209804,
+   "norm_T": 0.057650943787903815,
+   "norm_H_effective": 0.01548460916899484
+  },
+  {
+   "tensor": "model.layers.11.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04640790554164996,
+   "cos_C_T": 0.003920751462563677,
+   "cos_C_H_effective": -0.010623666612786638,
+   "norm_T": 0.04021704870412721,
+   "norm_H_effective": 0.010516759327755856
+  },
+  {
+   "tensor": "model.layers.12.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0014675592205772687,
+   "cos_C_T": -0.06572488336404886,
+   "cos_C_H_effective": -0.011197339881369103,
+   "norm_T": 0.0012065732148305332,
+   "norm_H_effective": 0.00044047774290766165
+  },
+  {
+   "tensor": "model.layers.12.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.083424356390617,
+   "cos_C_T": 0.0350327577970651,
+   "cos_C_H_effective": -0.002337385679464988,
+   "norm_T": 0.06772889376518354,
+   "norm_H_effective": 0.016111718301021108
+  },
+  {
+   "tensor": "model.layers.12.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.0823823399289951,
+   "cos_C_T": 0.009603827392959325,
+   "cos_C_H_effective": -0.005168175084449645,
+   "norm_T": 0.06914059448048625,
+   "norm_H_effective": 0.016519199091936818
+  },
+  {
+   "tensor": "model.layers.12.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08162986424927965,
+   "cos_C_T": 0.012199203169148621,
+   "cos_C_H_effective": -0.006467101641501419,
+   "norm_T": 0.06807302601148725,
+   "norm_H_effective": 0.016857048026173518
+  },
+  {
+   "tensor": "model.layers.12.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0014494505200281778,
+   "cos_C_T": -0.03474244223471025,
+   "cos_C_H_effective": 0.0077461940413496265,
+   "norm_T": 0.0012197404671959622,
+   "norm_H_effective": 0.0004460620094929312
+  },
+  {
+   "tensor": "model.layers.12.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0004769785582842121,
+   "cos_C_T": -0.04069359837193611,
+   "cos_C_H_effective": -0.020422848751558285,
+   "norm_T": 0.0003608725366967954,
+   "norm_H_effective": 0.0001685117829440484
+  },
+  {
+   "tensor": "model.layers.12.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04805581963639678,
+   "cos_C_T": 0.0028174082753588915,
+   "cos_C_H_effective": -0.006221605125502938,
+   "norm_T": 0.04038384349129296,
+   "norm_H_effective": 0.010042045105303782
+  },
+  {
+   "tensor": "model.layers.12.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.0678363495097727,
+   "cos_C_T": 0.026055800276038748,
+   "cos_C_H_effective": -0.008753665330629495,
+   "norm_T": 0.05528524063427767,
+   "norm_H_effective": 0.015229692652388807
+  },
+  {
+   "tensor": "model.layers.12.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005056285648558782,
+   "cos_C_T": -0.12300234155396343,
+   "cos_C_H_effective": 0.001436020695291789,
+   "norm_T": 0.00039234075985503596,
+   "norm_H_effective": 0.00016933411719927133
+  },
+  {
+   "tensor": "model.layers.12.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.06728008896450358,
+   "cos_C_T": -0.004437305567564506,
+   "cos_C_H_effective": 0.0029213255221465337,
+   "norm_T": 0.0570857887812131,
+   "norm_H_effective": 0.014322697085261574
+  },
+  {
+   "tensor": "model.layers.12.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.046437152259708896,
+   "cos_C_T": 0.016412637536359267,
+   "cos_C_H_effective": -0.0007608949951893991,
+   "norm_T": 0.038940017386543076,
+   "norm_H_effective": 0.010657308581239143
+  },
+  {
+   "tensor": "model.layers.13.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0014770861323418255,
+   "cos_C_T": 0.017487812661757945,
+   "cos_C_H_effective": -0.03328661183384345,
+   "norm_T": 0.001262910803924179,
+   "norm_H_effective": 0.0004655319432390409
+  },
+  {
+   "tensor": "model.layers.13.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08309021753443734,
+   "cos_C_T": 0.04247996731735125,
+   "cos_C_H_effective": -0.004232301809816412,
+   "norm_T": 0.06674551672284862,
+   "norm_H_effective": 0.016272967585250795
+  },
+  {
+   "tensor": "model.layers.13.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08247178043948544,
+   "cos_C_T": 0.018126771470580817,
+   "cos_C_H_effective": 0.0007756857441523292,
+   "norm_T": 0.06885028975612358,
+   "norm_H_effective": 0.01683605183727981
+  },
+  {
+   "tensor": "model.layers.13.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08147967297583393,
+   "cos_C_T": 0.022747447729607708,
+   "cos_C_H_effective": -0.003930281373387995,
+   "norm_T": 0.06781166653226327,
+   "norm_H_effective": 0.01719242188800153
+  },
+  {
+   "tensor": "model.layers.13.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0014772765941649523,
+   "cos_C_T": -0.00821339557614077,
+   "cos_C_H_effective": 0.031935480091068384,
+   "norm_T": 0.0012296713080202594,
+   "norm_H_effective": 0.0004469278129329943
+  },
+  {
+   "tensor": "model.layers.13.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005378437224586452,
+   "cos_C_T": 0.0026843695542686885,
+   "cos_C_H_effective": -0.19577984767694784,
+   "norm_T": 0.00046001775735172773,
+   "norm_H_effective": 0.00017071725547184542
+  },
+  {
+   "tensor": "model.layers.13.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04601817549703152,
+   "cos_C_T": 0.0014123627290163442,
+   "cos_C_H_effective": -0.006998359969629445,
+   "norm_T": 0.03976025749415422,
+   "norm_H_effective": 0.010781969788956977
+  },
+  {
+   "tensor": "model.layers.13.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.06781347720870275,
+   "cos_C_T": 0.051331586321426426,
+   "cos_C_H_effective": -0.0027066491567507805,
+   "norm_T": 0.05373414208582128,
+   "norm_H_effective": 0.015828933947784105
+  },
+  {
+   "tensor": "model.layers.13.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005319738456226517,
+   "cos_C_T": -0.03776083506228786,
+   "cos_C_H_effective": -0.22052540130949977,
+   "norm_T": 0.00046050009226495606,
+   "norm_H_effective": 0.00016932912108297705
+  },
+  {
+   "tensor": "model.layers.13.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.0647007777399774,
+   "cos_C_T": 0.004997692459231407,
+   "cos_C_H_effective": -0.007929947961542401,
+   "norm_T": 0.055705213445731795,
+   "norm_H_effective": 0.015559464062596437
+  },
+  {
+   "tensor": "model.layers.13.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04595222857606377,
+   "cos_C_T": 0.025614953754693782,
+   "cos_C_H_effective": -0.011460662289510579,
+   "norm_T": 0.0379937915456983,
+   "norm_H_effective": 0.010771024990663928
+  },
+  {
+   "tensor": "model.layers.14.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0014240294323014677,
+   "cos_C_T": 0.026381913080647048,
+   "cos_C_H_effective": -0.00011102539526401168,
+   "norm_T": 0.0012159947936628821,
+   "norm_H_effective": 0.00046950109301597105
+  },
+  {
+   "tensor": "model.layers.14.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08495514616948184,
+   "cos_C_T": 0.04675161756040655,
+   "cos_C_H_effective": -0.01120362582542042,
+   "norm_T": 0.0671769887968204,
+   "norm_H_effective": 0.015968209703972024
+  },
+  {
+   "tensor": "model.layers.14.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08412760038926453,
+   "cos_C_T": 0.017536982757649783,
+   "cos_C_H_effective": -0.006553421976771371,
+   "norm_T": 0.06905188150657475,
+   "norm_H_effective": 0.01699368278037551
+  },
+  {
+   "tensor": "model.layers.14.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08378586189536835,
+   "cos_C_T": 0.027093706099910568,
+   "cos_C_H_effective": -0.009059564130492585,
+   "norm_T": 0.06770170860551328,
+   "norm_H_effective": 0.017176794497694083
+  },
+  {
+   "tensor": "model.layers.14.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015247322593294464,
+   "cos_C_T": 0.06947356162702223,
+   "cos_C_H_effective": 0.008782811847427971,
+   "norm_T": 0.0011933620366235951,
+   "norm_H_effective": 0.00044173187667743903
+  },
+  {
+   "tensor": "model.layers.14.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0004783499068900978,
+   "cos_C_T": -0.22291770093351515,
+   "cos_C_H_effective": 0.06269196783693104,
+   "norm_T": 0.00040325408931896805,
+   "norm_H_effective": 0.00014018069954175623
+  },
+  {
+   "tensor": "model.layers.14.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.046086920367506314,
+   "cos_C_T": -0.001710474112866613,
+   "cos_C_H_effective": -0.018678339633404654,
+   "norm_T": 0.039781413267932955,
+   "norm_H_effective": 0.010350296407597909
+  },
+  {
+   "tensor": "model.layers.14.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.06800398163502744,
+   "cos_C_T": 0.045041613684285255,
+   "cos_C_H_effective": -0.007472161667578642,
+   "norm_T": 0.05429271387040945,
+   "norm_H_effective": 0.015465974615158648
+  },
+  {
+   "tensor": "model.layers.14.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.00044312816982746355,
+   "cos_C_T": -0.11270526342604407,
+   "cos_C_H_effective": 0.11172560825823823,
+   "norm_T": 0.00040948643826870163,
+   "norm_H_effective": 0.0001410633418565402
+  },
+  {
+   "tensor": "model.layers.14.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.06598973780504727,
+   "cos_C_T": -0.002664306234793818,
+   "cos_C_H_effective": -0.01958845192218551,
+   "norm_T": 0.05611916211474473,
+   "norm_H_effective": 0.015045174541879983
+  },
+  {
+   "tensor": "model.layers.14.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.0465440318050932,
+   "cos_C_T": 0.03587751671767586,
+   "cos_C_H_effective": -0.013070987984484172,
+   "norm_T": 0.038494470681846964,
+   "norm_H_effective": 0.010415440332668155
+  },
+  {
+   "tensor": "model.layers.15.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015664736484987108,
+   "cos_C_T": 0.048189507466589745,
+   "cos_C_H_effective": -0.013149680493452368,
+   "norm_T": 0.0012294449827613028,
+   "norm_H_effective": 0.0004467235246139652
+  },
+  {
+   "tensor": "model.layers.15.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08524318122409734,
+   "cos_C_T": 0.047139004368564524,
+   "cos_C_H_effective": -0.016247049748093694,
+   "norm_T": 0.06690659589044924,
+   "norm_H_effective": 0.01663968183932347
+  },
+  {
+   "tensor": "model.layers.15.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08506383422253401,
+   "cos_C_T": 0.0238138850450141,
+   "cos_C_H_effective": -0.005247146371486984,
+   "norm_T": 0.06901327570981478,
+   "norm_H_effective": 0.017456498579869504
+  },
+  {
+   "tensor": "model.layers.15.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08474458197508172,
+   "cos_C_T": 0.03276221637288817,
+   "cos_C_H_effective": -0.007570398614649959,
+   "norm_T": 0.06785907674561234,
+   "norm_H_effective": 0.01758584868256236
+  },
+  {
+   "tensor": "model.layers.15.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.001551882230544923,
+   "cos_C_T": 0.04519597689799003,
+   "cos_C_H_effective": 0.0014041720191650883,
+   "norm_T": 0.0012289817871411674,
+   "norm_H_effective": 0.00044840413042806945
+  },
+  {
+   "tensor": "model.layers.15.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005213905675678666,
+   "cos_C_T": -0.0496523306917797,
+   "cos_C_H_effective": -0.08462818831175302,
+   "norm_T": 0.0004353218515207346,
+   "norm_H_effective": 0.00014149409755778402
+  },
+  {
+   "tensor": "model.layers.15.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.050110826320464784,
+   "cos_C_T": 0.04649465996587115,
+   "cos_C_H_effective": -7.669049582876352e-05,
+   "norm_T": 0.04049332982546502,
+   "norm_H_effective": 0.01035886456085678
+  },
+  {
+   "tensor": "model.layers.15.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.06857729094210574,
+   "cos_C_T": 0.043066292606620045,
+   "cos_C_H_effective": -0.010588593016634519,
+   "norm_T": 0.054171553373526124,
+   "norm_H_effective": 0.015619443804267876
+  },
+  {
+   "tensor": "model.layers.15.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.00046037374842382116,
+   "cos_C_T": -0.06288294571267382,
+   "cos_C_H_effective": -0.027249577518741998,
+   "norm_T": 0.0004282678739103648,
+   "norm_H_effective": 0.00013966396060061516
+  },
+  {
+   "tensor": "model.layers.15.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.0717008947388435,
+   "cos_C_T": 0.03116503078534323,
+   "cos_C_H_effective": -0.002121521162326848,
+   "norm_T": 0.056185304805534825,
+   "norm_H_effective": 0.015491260061647269
+  },
+  {
+   "tensor": "model.layers.15.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.047733662680138164,
+   "cos_C_T": 0.0448512295184924,
+   "cos_C_H_effective": -0.011725519839723374,
+   "norm_T": 0.03801139256266027,
+   "norm_H_effective": 0.010704504807185407
+  },
+  {
+   "tensor": "model.layers.16.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.001479631019407489,
+   "cos_C_T": 0.127068995307702,
+   "cos_C_H_effective": 0.018521174052216746,
+   "norm_T": 0.0011961691150575852,
+   "norm_H_effective": 0.00045534933754036265
+  },
+  {
+   "tensor": "model.layers.16.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08605029568612031,
+   "cos_C_T": 0.052165443058256177,
+   "cos_C_H_effective": -0.008626143418260112,
+   "norm_T": 0.06662198832342381,
+   "norm_H_effective": 0.0167184853750069
+  },
+  {
+   "tensor": "model.layers.16.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08782597579297488,
+   "cos_C_T": 0.029778130753351208,
+   "cos_C_H_effective": -0.00531539045629626,
+   "norm_T": 0.0681430600793637,
+   "norm_H_effective": 0.017903608435928326
+  },
+  {
+   "tensor": "model.layers.16.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08706819077457156,
+   "cos_C_T": 0.03456890357245111,
+   "cos_C_H_effective": -0.0005209707989539854,
+   "norm_T": 0.06723056323399762,
+   "norm_H_effective": 0.017769948514885142
+  },
+  {
+   "tensor": "model.layers.16.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015368881655785577,
+   "cos_C_T": 0.0838614964011757,
+   "cos_C_H_effective": -0.0010501669260330822,
+   "norm_T": 0.0011600767458112401,
+   "norm_H_effective": 0.0004625776325805499
+  },
+  {
+   "tensor": "model.layers.16.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005083902852932422,
+   "cos_C_T": 0.07271085216857541,
+   "cos_C_H_effective": -0.11039815120155107,
+   "norm_T": 0.00042659082731579933,
+   "norm_H_effective": 0.00014320105044226113
+  },
+  {
+   "tensor": "model.layers.16.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.046900486302286964,
+   "cos_C_T": 0.01979271995844183,
+   "cos_C_H_effective": -0.0032680657258683053,
+   "norm_T": 0.0399974280442901,
+   "norm_H_effective": 0.010169144457890985
+  },
+  {
+   "tensor": "model.layers.16.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.06870572941550988,
+   "cos_C_T": 0.03733208553593782,
+   "cos_C_H_effective": -0.017973843889707,
+   "norm_T": 0.05400672702522929,
+   "norm_H_effective": 0.015498516255471464
+  },
+  {
+   "tensor": "model.layers.16.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0004935877284995107,
+   "cos_C_T": 0.12578202533662738,
+   "cos_C_H_effective": -0.08483478857553829,
+   "norm_T": 0.00044334247939732235,
+   "norm_H_effective": 0.0001425856095510059
+  },
+  {
+   "tensor": "model.layers.16.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.06730478637076945,
+   "cos_C_T": 0.012910313453017554,
+   "cos_C_H_effective": -0.0006788590110785173,
+   "norm_T": 0.057577443392686736,
+   "norm_H_effective": 0.015178330559564399
+  },
+  {
+   "tensor": "model.layers.16.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04717806381168641,
+   "cos_C_T": 0.020013160171323856,
+   "cos_C_H_effective": -0.00819136193124398,
+   "norm_T": 0.037782097938011655,
+   "norm_H_effective": 0.010514079698625955
+  },
+  {
+   "tensor": "model.layers.17.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.001505062126504206,
+   "cos_C_T": 0.06036851392144591,
+   "cos_C_H_effective": -0.005284204616182254,
+   "norm_T": 0.0012023131355759955,
+   "norm_H_effective": 0.00044857785536290607
+  },
+  {
+   "tensor": "model.layers.17.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08998511846415982,
+   "cos_C_T": 0.06788439590873208,
+   "cos_C_H_effective": -0.004102311547147428,
+   "norm_T": 0.0667423323875389,
+   "norm_H_effective": 0.017205529432509366
+  },
+  {
+   "tensor": "model.layers.17.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08970843714067045,
+   "cos_C_T": 0.02634949319296289,
+   "cos_C_H_effective": 0.0006174592976382746,
+   "norm_T": 0.068523064832536,
+   "norm_H_effective": 0.018362975871155346
+  },
+  {
+   "tensor": "model.layers.17.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08818846305862224,
+   "cos_C_T": 0.03251454411637943,
+   "cos_C_H_effective": -0.006096025357944121,
+   "norm_T": 0.06682232975255738,
+   "norm_H_effective": 0.018258450573488617
+  },
+  {
+   "tensor": "model.layers.17.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0016840665668745136,
+   "cos_C_T": -0.0002851504219047631,
+   "cos_C_H_effective": 0.005862137844267794,
+   "norm_T": 0.001187117544315448,
+   "norm_H_effective": 0.00046192662830848785
+  },
+  {
+   "tensor": "model.layers.17.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0004879814248164497,
+   "cos_C_T": 0.09132462972017487,
+   "cos_C_H_effective": -0.07371483182717155,
+   "norm_T": 0.00040435158097840076,
+   "norm_H_effective": 0.00018000148375344122
+  },
+  {
+   "tensor": "model.layers.17.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04878296422053529,
+   "cos_C_T": 0.02953045761765686,
+   "cos_C_H_effective": -0.0038208175400453906,
+   "norm_T": 0.04004064914593176,
+   "norm_H_effective": 0.010934316055130905
+  },
+  {
+   "tensor": "model.layers.17.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07308326440426742,
+   "cos_C_T": 0.05249200391986776,
+   "cos_C_H_effective": -0.0022021361082532197,
+   "norm_T": 0.054685092012585514,
+   "norm_H_effective": 0.016342157552693196
+  },
+  {
+   "tensor": "model.layers.17.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0004926551906974932,
+   "cos_C_T": 0.1245317550570595,
+   "cos_C_H_effective": -0.016341375410100074,
+   "norm_T": 0.0004182941976609695,
+   "norm_H_effective": 0.0001758471180763965
+  },
+  {
+   "tensor": "model.layers.17.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07091990841868556,
+   "cos_C_T": 0.03016752454501861,
+   "cos_C_H_effective": -0.0010502240383176314,
+   "norm_T": 0.05621741364545244,
+   "norm_H_effective": 0.016368763992168633
+  },
+  {
+   "tensor": "model.layers.17.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04724874918663269,
+   "cos_C_T": 0.028844197786808648,
+   "cos_C_H_effective": -0.006889186716146224,
+   "norm_T": 0.03805809709429547,
+   "norm_H_effective": 0.010847156000337492
+  },
+  {
+   "tensor": "model.layers.18.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015686952678744107,
+   "cos_C_T": 0.10048637142985477,
+   "cos_C_H_effective": 0.04965896590011325,
+   "norm_T": 0.001207308639927415,
+   "norm_H_effective": 0.00047581744312127656
+  },
+  {
+   "tensor": "model.layers.18.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.09218090976904172,
+   "cos_C_T": 0.07670882836176954,
+   "cos_C_H_effective": 1.0627125902544919e-05,
+   "norm_T": 0.06791451582241549,
+   "norm_H_effective": 0.01723715871245567
+  },
+  {
+   "tensor": "model.layers.18.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.09108228596375587,
+   "cos_C_T": 0.03208933574272824,
+   "cos_C_H_effective": -0.0023607106086016767,
+   "norm_T": 0.06990937297796311,
+   "norm_H_effective": 0.018074113708482168
+  },
+  {
+   "tensor": "model.layers.18.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.09092722459520265,
+   "cos_C_T": 0.049638375167782633,
+   "cos_C_H_effective": -0.0008430411091060603,
+   "norm_T": 0.06905116427982534,
+   "norm_H_effective": 0.01805189791927382
+  },
+  {
+   "tensor": "model.layers.18.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.001609211526038744,
+   "cos_C_T": 0.08975080187703982,
+   "cos_C_H_effective": -0.03204130025738966,
+   "norm_T": 0.001131435896661396,
+   "norm_H_effective": 0.00046986103510843246
+  },
+  {
+   "tensor": "model.layers.18.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.000565093968191954,
+   "cos_C_T": -0.048743250379552905,
+   "cos_C_H_effective": 0.1344646870231979,
+   "norm_T": 0.00041968451441565057,
+   "norm_H_effective": 0.00017485233450287806
+  },
+  {
+   "tensor": "model.layers.18.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04986944506628137,
+   "cos_C_T": 0.03933300110047649,
+   "cos_C_H_effective": 0.0116420446876442,
+   "norm_T": 0.03958956934402714,
+   "norm_H_effective": 0.011336121703437167
+  },
+  {
+   "tensor": "model.layers.18.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07226758219811887,
+   "cos_C_T": 0.061937475271919486,
+   "cos_C_H_effective": -0.006061273318142678,
+   "norm_T": 0.05414653332144396,
+   "norm_H_effective": 0.015909189316047023
+  },
+  {
+   "tensor": "model.layers.18.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005546373990116476,
+   "cos_C_T": -0.009233962447012875,
+   "cos_C_H_effective": 0.1508986632742253,
+   "norm_T": 0.00042570240484262364,
+   "norm_H_effective": 0.0001708137099044114
+  },
+  {
+   "tensor": "model.layers.18.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07276114814570754,
+   "cos_C_T": 0.025752906426081242,
+   "cos_C_H_effective": 0.007758374211725276,
+   "norm_T": 0.05580157459103263,
+   "norm_H_effective": 0.01664455604676694
+  },
+  {
+   "tensor": "model.layers.18.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.050636950379471815,
+   "cos_C_T": 0.04331523804272301,
+   "cos_C_H_effective": 0.001654555015152216,
+   "norm_T": 0.03739466017916836,
+   "norm_H_effective": 0.01127666302516299
+  },
+  {
+   "tensor": "model.layers.19.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0017098089038126915,
+   "cos_C_T": 0.0994329016081154,
+   "cos_C_H_effective": -0.014364022960342861,
+   "norm_T": 0.0011909486464607081,
+   "norm_H_effective": 0.00045438715779362246
+  },
+  {
+   "tensor": "model.layers.19.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08589903700990983,
+   "cos_C_T": 0.03934139669724782,
+   "cos_C_H_effective": -0.007905535099968827,
+   "norm_T": 0.06861995650312377,
+   "norm_H_effective": 0.01717958664108691
+  },
+  {
+   "tensor": "model.layers.19.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08768057239817434,
+   "cos_C_T": 0.018945546311429005,
+   "cos_C_H_effective": 0.00216000517566181,
+   "norm_T": 0.07047700523540092,
+   "norm_H_effective": 0.01831373482280945
+  },
+  {
+   "tensor": "model.layers.19.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08601520904289459,
+   "cos_C_T": 0.03347728299185652,
+   "cos_C_H_effective": -6.695438761322759e-05,
+   "norm_T": 0.06976343947859823,
+   "norm_H_effective": 0.018061678450094393
+  },
+  {
+   "tensor": "model.layers.19.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0016113818582601494,
+   "cos_C_T": 0.07469896938682884,
+   "cos_C_H_effective": 0.006202877444358183,
+   "norm_T": 0.001274013482533365,
+   "norm_H_effective": 0.0004765903809116442
+  },
+  {
+   "tensor": "model.layers.19.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0006777400577046352,
+   "cos_C_T": -0.19814124214278953,
+   "cos_C_H_effective": 0.21676813291169106,
+   "norm_T": 0.0004259989987233228,
+   "norm_H_effective": 0.00015516546365079554
+  },
+  {
+   "tensor": "model.layers.19.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.05586186797744369,
+   "cos_C_T": 0.01633347102188818,
+   "cos_C_H_effective": 0.003167003417325405,
+   "norm_T": 0.03951338689288961,
+   "norm_H_effective": 0.01087284255988821
+  },
+  {
+   "tensor": "model.layers.19.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07091955132651771,
+   "cos_C_T": 0.04583353353749131,
+   "cos_C_H_effective": -0.008743463073576227,
+   "norm_T": 0.05536014121564818,
+   "norm_H_effective": 0.015737663923037222
+  },
+  {
+   "tensor": "model.layers.19.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0006468098380451333,
+   "cos_C_T": -0.15122817198743793,
+   "cos_C_H_effective": 0.28342844113034327,
+   "norm_T": 0.0004366230999917149,
+   "norm_H_effective": 0.00015635918912301864
+  },
+  {
+   "tensor": "model.layers.19.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.0757965504607848,
+   "cos_C_T": -0.0064525696353356,
+   "cos_C_H_effective": 0.007663417078201345,
+   "norm_T": 0.056185409409419636,
+   "norm_H_effective": 0.016588974407742645
+  },
+  {
+   "tensor": "model.layers.19.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.05137899821798654,
+   "cos_C_T": 0.06791775756519888,
+   "cos_C_H_effective": -0.008581203772791953,
+   "norm_T": 0.0393242265351295,
+   "norm_H_effective": 0.010857467758104615
+  },
+  {
+   "tensor": "model.layers.20.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015351965034070176,
+   "cos_C_T": 0.01271571279234411,
+   "cos_C_H_effective": -0.014219595098734331,
+   "norm_T": 0.0012543214815368662,
+   "norm_H_effective": 0.00046583232122850236
+  },
+  {
+   "tensor": "model.layers.20.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08555951970855594,
+   "cos_C_T": 0.050409427724141656,
+   "cos_C_H_effective": -0.005676094360675639,
+   "norm_T": 0.0692498496564951,
+   "norm_H_effective": 0.01676089012454588
+  },
+  {
+   "tensor": "model.layers.20.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08655491485158917,
+   "cos_C_T": 0.026709794182816257,
+   "cos_C_H_effective": -0.0007470472446951595,
+   "norm_T": 0.0705886679650531,
+   "norm_H_effective": 0.018261397116176872
+  },
+  {
+   "tensor": "model.layers.20.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.0851051677629082,
+   "cos_C_T": 0.042956693976281074,
+   "cos_C_H_effective": -0.0031536593201539702,
+   "norm_T": 0.06974504327754812,
+   "norm_H_effective": 0.01814528074081866
+  },
+  {
+   "tensor": "model.layers.20.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015925012693061703,
+   "cos_C_T": 0.06473627792961895,
+   "cos_C_H_effective": 0.022489645882520247,
+   "norm_T": 0.0012579359167281244,
+   "norm_H_effective": 0.0004778531333929974
+  },
+  {
+   "tensor": "model.layers.20.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.000559000389077811,
+   "cos_C_T": 0.1077964701204782,
+   "cos_C_H_effective": -0.09501609477265768,
+   "norm_T": 0.00043013470542471564,
+   "norm_H_effective": 0.00015283423870499026
+  },
+  {
+   "tensor": "model.layers.20.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.048244202511168545,
+   "cos_C_T": 0.0170097171480298,
+   "cos_C_H_effective": 0.00389146937093302,
+   "norm_T": 0.041444456330722496,
+   "norm_H_effective": 0.010284779507578057
+  },
+  {
+   "tensor": "model.layers.20.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07122642073727674,
+   "cos_C_T": 0.0456716844498631,
+   "cos_C_H_effective": -0.006166996118433437,
+   "norm_T": 0.05601155152588206,
+   "norm_H_effective": 0.014902914029977699
+  },
+  {
+   "tensor": "model.layers.20.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005901679758272304,
+   "cos_C_T": 0.10343789163655796,
+   "cos_C_H_effective": -0.0639022104892686,
+   "norm_T": 0.0004331521572789454,
+   "norm_H_effective": 0.00015416930186531327
+  },
+  {
+   "tensor": "model.layers.20.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.06833554135297858,
+   "cos_C_T": 0.010994209109319183,
+   "cos_C_H_effective": 0.004249755062046673,
+   "norm_T": 0.0592838745518306,
+   "norm_H_effective": 0.015309906165666123
+  },
+  {
+   "tensor": "model.layers.20.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.051090632657520195,
+   "cos_C_T": 0.047731080059141506,
+   "cos_C_H_effective": -0.00784188134036868,
+   "norm_T": 0.03922047764306547,
+   "norm_H_effective": 0.010931532118729301
+  },
+  {
+   "tensor": "model.layers.21.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015116416866264972,
+   "cos_C_T": 0.017987930115774025,
+   "cos_C_H_effective": 0.010641629994912784,
+   "norm_T": 0.0012776215217643056,
+   "norm_H_effective": 0.00048157956270521103
+  },
+  {
+   "tensor": "model.layers.21.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08595156558056281,
+   "cos_C_T": 0.056900528808481086,
+   "cos_C_H_effective": -0.0022112159380465357,
+   "norm_T": 0.07001529740318602,
+   "norm_H_effective": 0.016151714485773926
+  },
+  {
+   "tensor": "model.layers.21.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08692867685221284,
+   "cos_C_T": 0.029733312299101356,
+   "cos_C_H_effective": -0.0030831553432115162,
+   "norm_T": 0.07066033727700141,
+   "norm_H_effective": 0.017787426715941218
+  },
+  {
+   "tensor": "model.layers.21.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08376558133600726,
+   "cos_C_T": 0.044597031501783374,
+   "cos_C_H_effective": 0.0005321769861642895,
+   "norm_T": 0.07024826540247837,
+   "norm_H_effective": 0.017801540267257145
+  },
+  {
+   "tensor": "model.layers.21.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015482728521646757,
+   "cos_C_T": 0.0055013767402490215,
+   "cos_C_H_effective": -0.036006315493426366,
+   "norm_T": 0.0012328391972302858,
+   "norm_H_effective": 0.0004884715695618693
+  },
+  {
+   "tensor": "model.layers.21.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.000545008940940417,
+   "cos_C_T": 0.11045433482564657,
+   "cos_C_H_effective": -0.0731569010979348,
+   "norm_T": 0.00042254963413494034,
+   "norm_H_effective": 0.0001276765688428521
+  },
+  {
+   "tensor": "model.layers.21.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.05017452775425652,
+   "cos_C_T": 0.04134228299107495,
+   "cos_C_H_effective": -0.00377376930974016,
+   "norm_T": 0.03963717461447959,
+   "norm_H_effective": 0.010545039588274347
+  },
+  {
+   "tensor": "model.layers.21.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.06820162934718915,
+   "cos_C_T": 0.05289003407086134,
+   "cos_C_H_effective": -0.004413308637563922,
+   "norm_T": 0.056585239058679154,
+   "norm_H_effective": 0.01566874654084008
+  },
+  {
+   "tensor": "model.layers.21.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005904400648423683,
+   "cos_C_T": 0.1470065364452603,
+   "cos_C_H_effective": -0.07916301527852417,
+   "norm_T": 0.0004324991158605623,
+   "norm_H_effective": 0.0001450367865797082
+  },
+  {
+   "tensor": "model.layers.21.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07125277934818168,
+   "cos_C_T": 0.013698858524785407,
+   "cos_C_H_effective": -0.0016894162677926164,
+   "norm_T": 0.05837567796837745,
+   "norm_H_effective": 0.016022005115958294
+  },
+  {
+   "tensor": "model.layers.21.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.047121400130522906,
+   "cos_C_T": 0.04061393489020064,
+   "cos_C_H_effective": -0.0066083948366604485,
+   "norm_T": 0.039578454923619756,
+   "norm_H_effective": 0.011174417084304668
+  },
+  {
+   "tensor": "model.layers.22.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0014790225213297625,
+   "cos_C_T": 0.1139811219056876,
+   "cos_C_H_effective": 0.003702517783504705,
+   "norm_T": 0.0012158962318451908,
+   "norm_H_effective": 0.00046459969724720973
+  },
+  {
+   "tensor": "model.layers.22.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.0854885337759072,
+   "cos_C_T": 0.05432243869232836,
+   "cos_C_H_effective": 0.0005961673684288525,
+   "norm_T": 0.06963141036199559,
+   "norm_H_effective": 0.016075748063228073
+  },
+  {
+   "tensor": "model.layers.22.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08713684900525326,
+   "cos_C_T": 0.019675501386954602,
+   "cos_C_H_effective": 0.002820207109598917,
+   "norm_T": 0.0702273144900725,
+   "norm_H_effective": 0.01770093511902157
+  },
+  {
+   "tensor": "model.layers.22.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.084202742654726,
+   "cos_C_T": 0.03959116754006994,
+   "cos_C_H_effective": -0.0004695822739663395,
+   "norm_T": 0.06977170907228997,
+   "norm_H_effective": 0.01774024600418293
+  },
+  {
+   "tensor": "model.layers.22.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.001558568723504048,
+   "cos_C_T": 0.05356398573942619,
+   "cos_C_H_effective": -0.03667662980086587,
+   "norm_T": 0.0012322294789560203,
+   "norm_H_effective": 0.00047305788295073855
+  },
+  {
+   "tensor": "model.layers.22.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005075629385284434,
+   "cos_C_T": 0.16289471942722983,
+   "cos_C_H_effective": -0.19359481207510348,
+   "norm_T": 0.00041451122478862527,
+   "norm_H_effective": 0.0001691583389140493
+  },
+  {
+   "tensor": "model.layers.22.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04922555494832227,
+   "cos_C_T": 0.04781683868955805,
+   "cos_C_H_effective": -0.011017456520114006,
+   "norm_T": 0.039289839311152285,
+   "norm_H_effective": 0.011436169743448105
+  },
+  {
+   "tensor": "model.layers.22.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.06884592094037276,
+   "cos_C_T": 0.060304560415037504,
+   "cos_C_H_effective": -0.00446861575493336,
+   "norm_T": 0.05542453505884957,
+   "norm_H_effective": 0.01488107925891992
+  },
+  {
+   "tensor": "model.layers.22.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005004059452558711,
+   "cos_C_T": 0.330215871925289,
+   "cos_C_H_effective": -0.17117499906669034,
+   "norm_T": 0.000427393829624608,
+   "norm_H_effective": 0.00016384851435573776
+  },
+  {
+   "tensor": "model.layers.22.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.0700634971867735,
+   "cos_C_T": 0.021674240300023302,
+   "cos_C_H_effective": -0.0035143208299139436,
+   "norm_T": 0.05685120297713342,
+   "norm_H_effective": 0.016005753703411695
+  },
+  {
+   "tensor": "model.layers.22.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04824074963958363,
+   "cos_C_T": 0.05715695715584598,
+   "cos_C_H_effective": 0.0007545000914425612,
+   "norm_T": 0.039084496700977855,
+   "norm_H_effective": 0.010696873353680598
+  },
+  {
+   "tensor": "model.layers.23.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015361790839690118,
+   "cos_C_T": 0.0659030555074107,
+   "cos_C_H_effective": 0.02261678733419371,
+   "norm_T": 0.001211626986530356,
+   "norm_H_effective": 0.0004974534377962485
+  },
+  {
+   "tensor": "model.layers.23.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.0846233244149451,
+   "cos_C_T": 0.05261708368193889,
+   "cos_C_H_effective": -0.00027876493563014294,
+   "norm_T": 0.0691009134034575,
+   "norm_H_effective": 0.01578748256069148
+  },
+  {
+   "tensor": "model.layers.23.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.0885363930763937,
+   "cos_C_T": 0.02060238777471278,
+   "cos_C_H_effective": -0.0002877270069743745,
+   "norm_T": 0.06984072104932432,
+   "norm_H_effective": 0.01741414093878708
+  },
+  {
+   "tensor": "model.layers.23.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08422323140747473,
+   "cos_C_T": 0.03603766897511428,
+   "cos_C_H_effective": 0.0018945409626750908,
+   "norm_T": 0.06931315645299142,
+   "norm_H_effective": 0.017539333661468422
+  },
+  {
+   "tensor": "model.layers.23.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015341696142936914,
+   "cos_C_T": 0.0740059131508612,
+   "cos_C_H_effective": -0.036926842960396555,
+   "norm_T": 0.0012613614693781031,
+   "norm_H_effective": 0.00047697637393705026
+  },
+  {
+   "tensor": "model.layers.23.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005120006836672348,
+   "cos_C_T": 0.021275750646945955,
+   "cos_C_H_effective": -0.05743999396566514,
+   "norm_T": 0.00042298286311570697,
+   "norm_H_effective": 0.00016856037292951412
+  },
+  {
+   "tensor": "model.layers.23.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04838073670295446,
+   "cos_C_T": 0.04828308437019716,
+   "cos_C_H_effective": 0.00906122251662444,
+   "norm_T": 0.04012985735101543,
+   "norm_H_effective": 0.010937344448332739
+  },
+  {
+   "tensor": "model.layers.23.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.0662190733865867,
+   "cos_C_T": 0.0515457892152791,
+   "cos_C_H_effective": 0.0015071733766305671,
+   "norm_T": 0.05656497080650326,
+   "norm_H_effective": 0.014829754338106647
+  },
+  {
+   "tensor": "model.layers.23.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005133823544466956,
+   "cos_C_T": 0.021787253642083015,
+   "cos_C_H_effective": -0.10483342709900838,
+   "norm_T": 0.00039409036396792973,
+   "norm_H_effective": 0.00017932900734091224
+  },
+  {
+   "tensor": "model.layers.23.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07372385455556335,
+   "cos_C_T": 0.04983500878358717,
+   "cos_C_H_effective": 0.0019245334208582506,
+   "norm_T": 0.056703764683678444,
+   "norm_H_effective": 0.01590299771845966
+  },
+  {
+   "tensor": "model.layers.23.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04577963229671675,
+   "cos_C_T": 0.04347457034668989,
+   "cos_C_H_effective": 0.005414514916263547,
+   "norm_T": 0.039847703201398146,
+   "norm_H_effective": 0.011063473915629868
+  },
+  {
+   "tensor": "model.layers.24.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0014228756282202459,
+   "cos_C_T": 0.029107691089195174,
+   "cos_C_H_effective": -0.0050931915292729245,
+   "norm_T": 0.0012232899265629815,
+   "norm_H_effective": 0.0004872924065077104
+  },
+  {
+   "tensor": "model.layers.24.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08566293008647874,
+   "cos_C_T": 0.06303056948630124,
+   "cos_C_H_effective": -0.00014160092918131422,
+   "norm_T": 0.0687819390346987,
+   "norm_H_effective": 0.015484080283152808
+  },
+  {
+   "tensor": "model.layers.24.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08792644202694257,
+   "cos_C_T": 0.019975032259947408,
+   "cos_C_H_effective": -0.0004993520641180044,
+   "norm_T": 0.06952962331213092,
+   "norm_H_effective": 0.017255687629869645
+  },
+  {
+   "tensor": "model.layers.24.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08335274095272774,
+   "cos_C_T": 0.03983806846939146,
+   "cos_C_H_effective": -0.00157162225456717,
+   "norm_T": 0.06831381078065903,
+   "norm_H_effective": 0.017310126554572827
+  },
+  {
+   "tensor": "model.layers.24.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015596387226164635,
+   "cos_C_T": 0.0484302328457617,
+   "cos_C_H_effective": 0.03240358683511803,
+   "norm_T": 0.0012042269069662587,
+   "norm_H_effective": 0.00046937717927133746
+  },
+  {
+   "tensor": "model.layers.24.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005022063485103698,
+   "cos_C_T": -0.09273417220553676,
+   "cos_C_H_effective": -0.12155869127925324,
+   "norm_T": 0.0004659960958841016,
+   "norm_H_effective": 0.00014865852313291212
+  },
+  {
+   "tensor": "model.layers.24.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04914850295998651,
+   "cos_C_T": 0.007372811951945309,
+   "cos_C_H_effective": 0.0008589110456200725,
+   "norm_T": 0.04128870761462541,
+   "norm_H_effective": 0.01127599335294005
+  },
+  {
+   "tensor": "model.layers.24.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07026938470293168,
+   "cos_C_T": 0.06578561730065494,
+   "cos_C_H_effective": 0.005187601027647866,
+   "norm_T": 0.05680281091300259,
+   "norm_H_effective": 0.015573603590297322
+  },
+  {
+   "tensor": "model.layers.24.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.00047253146649751037,
+   "cos_C_T": -0.06299626788355661,
+   "cos_C_H_effective": -0.12093682859243425,
+   "norm_T": 0.0004753284839951666,
+   "norm_H_effective": 0.00015260858403763402
+  },
+  {
+   "tensor": "model.layers.24.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07220381200681172,
+   "cos_C_T": -0.009675062454426234,
+   "cos_C_H_effective": -0.002340103772114445,
+   "norm_T": 0.05705722901071691,
+   "norm_H_effective": 0.01624943453856805
+  },
+  {
+   "tensor": "model.layers.24.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.050529256952931575,
+   "cos_C_T": 0.06309992327632005,
+   "cos_C_H_effective": -0.0009607900331965214,
+   "norm_T": 0.0411079781085178,
+   "norm_H_effective": 0.011211675908628291
+  },
+  {
+   "tensor": "model.layers.25.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015154905334370207,
+   "cos_C_T": 0.09863244961285468,
+   "cos_C_H_effective": -0.02741362211539707,
+   "norm_T": 0.0012634529149269005,
+   "norm_H_effective": 0.0004973190395049695
+  },
+  {
+   "tensor": "model.layers.25.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08422049166640205,
+   "cos_C_T": 0.07143504006905953,
+   "cos_C_H_effective": 0.0016891953532982783,
+   "norm_T": 0.06792897877467312,
+   "norm_H_effective": 0.015497796733238168
+  },
+  {
+   "tensor": "model.layers.25.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08884484680955615,
+   "cos_C_T": 0.026498125409758898,
+   "cos_C_H_effective": 0.0013314393198938209,
+   "norm_T": 0.06920374633030474,
+   "norm_H_effective": 0.01709932673493649
+  },
+  {
+   "tensor": "model.layers.25.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08469884985903986,
+   "cos_C_T": 0.0508246070214153,
+   "cos_C_H_effective": 0.0012820786805996325,
+   "norm_T": 0.06743166296426162,
+   "norm_H_effective": 0.017117943009190464
+  },
+  {
+   "tensor": "model.layers.25.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015622960816750527,
+   "cos_C_T": 0.011236805397289632,
+   "cos_C_H_effective": 0.017674691197412343,
+   "norm_T": 0.001273652445745164,
+   "norm_H_effective": 0.0004955698132168748
+  },
+  {
+   "tensor": "model.layers.25.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0006372101590845046,
+   "cos_C_T": 0.18082001671076814,
+   "cos_C_H_effective": -0.2042397087688166,
+   "norm_T": 0.00046947416271703006,
+   "norm_H_effective": 0.00016956185146579556
+  },
+  {
+   "tensor": "model.layers.25.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.05233821669545828,
+   "cos_C_T": 0.0471996569469042,
+   "cos_C_H_effective": -0.009435887944005144,
+   "norm_T": 0.03960108625677148,
+   "norm_H_effective": 0.011111031983201562
+  },
+  {
+   "tensor": "model.layers.25.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.0700067423721755,
+   "cos_C_T": 0.05158772379798894,
+   "cos_C_H_effective": 0.0006421884266998356,
+   "norm_T": 0.05537830269137488,
+   "norm_H_effective": 0.015467716029496004
+  },
+  {
+   "tensor": "model.layers.25.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0006938766768630423,
+   "cos_C_T": 0.17101738910173883,
+   "cos_C_H_effective": -0.22540636393247923,
+   "norm_T": 0.0004604372583896714,
+   "norm_H_effective": 0.00017356633378641273
+  },
+  {
+   "tensor": "model.layers.25.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07280846168333198,
+   "cos_C_T": 0.03222200831390702,
+   "cos_C_H_effective": -0.007052366289119756,
+   "norm_T": 0.05654919762224468,
+   "norm_H_effective": 0.016577620252088063
+  },
+  {
+   "tensor": "model.layers.25.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.050760550857923525,
+   "cos_C_T": 0.03609475053591855,
+   "cos_C_H_effective": -0.004437734115986929,
+   "norm_T": 0.03916018798229706,
+   "norm_H_effective": 0.0111412449252252
+  },
+  {
+   "tensor": "model.layers.26.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.001486410645481898,
+   "cos_C_T": 0.07927756170868178,
+   "cos_C_H_effective": -0.029839079928397794,
+   "norm_T": 0.001187269466150041,
+   "norm_H_effective": 0.00047054574901401797
+  },
+  {
+   "tensor": "model.layers.26.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08585247393761017,
+   "cos_C_T": 0.09302655165050043,
+   "cos_C_H_effective": 6.657979937012622e-05,
+   "norm_T": 0.06644793064540795,
+   "norm_H_effective": 0.01635874476695071
+  },
+  {
+   "tensor": "model.layers.26.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.09111401100054481,
+   "cos_C_T": 0.03731697965314169,
+   "cos_C_H_effective": 0.0012212009067875402,
+   "norm_T": 0.06823242180962916,
+   "norm_H_effective": 0.017268001689376335
+  },
+  {
+   "tensor": "model.layers.26.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08702422501467179,
+   "cos_C_T": 0.07426366653611464,
+   "cos_C_H_effective": 0.003818465050981496,
+   "norm_T": 0.0662437262975402,
+   "norm_H_effective": 0.017366375213277878
+  },
+  {
+   "tensor": "model.layers.26.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0014772122911442633,
+   "cos_C_T": 0.10991581119146891,
+   "cos_C_H_effective": 0.02315848654550387,
+   "norm_T": 0.001220272358870215,
+   "norm_H_effective": 0.000475056039367621
+  },
+  {
+   "tensor": "model.layers.26.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005082415212022367,
+   "cos_C_T": -0.02600002763110305,
+   "cos_C_H_effective": -0.00400165768548071,
+   "norm_T": 0.00046414416059157546,
+   "norm_H_effective": 0.00014032360462534773
+  },
+  {
+   "tensor": "model.layers.26.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.05107447178422828,
+   "cos_C_T": 0.04300687274419279,
+   "cos_C_H_effective": -0.006618196208925871,
+   "norm_T": 0.0383433743076766,
+   "norm_H_effective": 0.01044990487650669
+  },
+  {
+   "tensor": "model.layers.26.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.06748159968299203,
+   "cos_C_T": 0.05278705054215738,
+   "cos_C_H_effective": 0.010328447506662362,
+   "norm_T": 0.05641185708336377,
+   "norm_H_effective": 0.015035327175271576
+  },
+  {
+   "tensor": "model.layers.26.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005056400479057489,
+   "cos_C_T": -0.06992043934542563,
+   "cos_C_H_effective": -0.056936504683611784,
+   "norm_T": 0.00045173454317587756,
+   "norm_H_effective": 0.0001359690213970799
+  },
+  {
+   "tensor": "model.layers.26.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07652926365930039,
+   "cos_C_T": 0.04826674668862287,
+   "cos_C_H_effective": -0.004664730386049883,
+   "norm_T": 0.057243451723805204,
+   "norm_H_effective": 0.015403592283072897
+  },
+  {
+   "tensor": "model.layers.26.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04853000903510918,
+   "cos_C_T": 0.05145157443824611,
+   "cos_C_H_effective": 0.01856328011841288,
+   "norm_T": 0.0405488412599809,
+   "norm_H_effective": 0.010687454413035088
+  },
+  {
+   "tensor": "model.layers.27.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015543778209967062,
+   "cos_C_T": 0.18296573070844754,
+   "cos_C_H_effective": 0.030887396554098043,
+   "norm_T": 0.0012167972422908455,
+   "norm_H_effective": 0.000481846779650298
+  },
+  {
+   "tensor": "model.layers.27.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08382817268217135,
+   "cos_C_T": 0.16128491337127976,
+   "cos_C_H_effective": -0.004083168175758189,
+   "norm_T": 0.0655014919584704,
+   "norm_H_effective": 0.017174630621678504
+  },
+  {
+   "tensor": "model.layers.27.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08941732801003532,
+   "cos_C_T": 0.056266515985676016,
+   "cos_C_H_effective": 0.001535319864371374,
+   "norm_T": 0.06788619132104658,
+   "norm_H_effective": 0.017149557969863262
+  },
+  {
+   "tensor": "model.layers.27.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08831879435039612,
+   "cos_C_T": 0.08642765191740251,
+   "cos_C_H_effective": -0.004193868942707949,
+   "norm_T": 0.0662989628184221,
+   "norm_H_effective": 0.017183926788023007
+  },
+  {
+   "tensor": "model.layers.27.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.001323378123756468,
+   "cos_C_T": 0.07631043294587828,
+   "cos_C_H_effective": 0.0001908488540058398,
+   "norm_T": 0.001210601038287542,
+   "norm_H_effective": 0.0004634073595659769
+  },
+  {
+   "tensor": "model.layers.27.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005398953406522344,
+   "cos_C_T": 0.20188172469659219,
+   "cos_C_H_effective": 0.20406265748323854,
+   "norm_T": 0.0004609713814408151,
+   "norm_H_effective": 0.0001722679064468077
+  },
+  {
+   "tensor": "model.layers.27.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.05689099096508737,
+   "cos_C_T": 0.06737569146237417,
+   "cos_C_H_effective": 0.006959853055522369,
+   "norm_T": 0.039147399726457574,
+   "norm_H_effective": 0.01247876099201924
+  },
+  {
+   "tensor": "model.layers.27.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.0675220309906714,
+   "cos_C_T": 0.09482038882305646,
+   "cos_C_H_effective": -0.0039102342446239195,
+   "norm_T": 0.054458962323629415,
+   "norm_H_effective": 0.015021815942782313
+  },
+  {
+   "tensor": "model.layers.27.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005466573731671164,
+   "cos_C_T": 0.2633977266782082,
+   "cos_C_H_effective": 0.15880531146329302,
+   "norm_T": 0.00047199273861004706,
+   "norm_H_effective": 0.00017181824182579177
+  },
+  {
+   "tensor": "model.layers.27.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07960726851600297,
+   "cos_C_T": 0.07792163505107402,
+   "cos_C_H_effective": 0.012944993684050535,
+   "norm_T": 0.05551425566078254,
+   "norm_H_effective": 0.017558140684591092
+  },
+  {
+   "tensor": "model.layers.27.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.048458019931782045,
+   "cos_C_T": 0.08413238795574732,
+   "cos_C_H_effective": 0.006142314084416559,
+   "norm_T": 0.03798677017939173,
+   "norm_H_effective": 0.011024953071203662
+  },
+  {
+   "tensor": "model.layers.8.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0016393348796630842,
+   "cos_C_T": -0.01925685337715356,
+   "cos_C_H_effective": 0.037388601644937215,
+   "norm_T": 0.0014105200048452264,
+   "norm_H_effective": 0.0004593309871199384
+  },
+  {
+   "tensor": "model.layers.8.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08663974523002245,
+   "cos_C_T": 0.021335563028752537,
+   "cos_C_H_effective": 0.0024190766858162432,
+   "norm_T": 0.07439440430655678,
+   "norm_H_effective": 0.015540862519051964
+  },
+  {
+   "tensor": "model.layers.8.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.0860852301657309,
+   "cos_C_T": 0.002472670674103195,
+   "cos_C_H_effective": 0.00044545461996065646,
+   "norm_T": 0.07571548970826798,
+   "norm_H_effective": 0.014290176804669477
+  },
+  {
+   "tensor": "model.layers.8.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08528652883919792,
+   "cos_C_T": 0.006793906417962334,
+   "cos_C_H_effective": 0.0017052927025910582,
+   "norm_T": 0.075457100467017,
+   "norm_H_effective": 0.015701796139903475
+  },
+  {
+   "tensor": "model.layers.8.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015165920879557327,
+   "cos_C_T": 0.021557999279599862,
+   "cos_C_H_effective": 0.020359729532260805,
+   "norm_T": 0.0013508509395714066,
+   "norm_H_effective": 0.0004528228367228641
+  },
+  {
+   "tensor": "model.layers.8.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005526974127161425,
+   "cos_C_T": 0.11685152600253862,
+   "cos_C_H_effective": 0.049118418008220296,
+   "norm_T": 0.0004662680510821609,
+   "norm_H_effective": 0.00016438529242764985
+  },
+  {
+   "tensor": "model.layers.8.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.05172268134674097,
+   "cos_C_T": 0.0020232424600341616,
+   "cos_C_H_effective": 0.0019775791651173115,
+   "norm_T": 0.04456642408723168,
+   "norm_H_effective": 0.010356395531092742
+  },
+  {
+   "tensor": "model.layers.8.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.07041471093540934,
+   "cos_C_T": 0.025049317896266767,
+   "cos_C_H_effective": 0.0002651070387858017,
+   "norm_T": 0.061205223093633264,
+   "norm_H_effective": 0.015093076460608978
+  },
+  {
+   "tensor": "model.layers.8.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0005513312862604098,
+   "cos_C_T": 0.051636001662862634,
+   "cos_C_H_effective": 0.0926958502275422,
+   "norm_T": 0.0004705533748167168,
+   "norm_H_effective": 0.00015766284940547769
+  },
+  {
+   "tensor": "model.layers.8.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.0728453430238765,
+   "cos_C_T": -8.325345123374797e-05,
+   "cos_C_H_effective": 0.0032162304846694027,
+   "norm_T": 0.06280416588788443,
+   "norm_H_effective": 0.014594294409658674
+  },
+  {
+   "tensor": "model.layers.8.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04981221846638858,
+   "cos_C_T": 0.012001367498268271,
+   "cos_C_H_effective": -0.004321085349429906,
+   "norm_T": 0.04356903621304345,
+   "norm_H_effective": 0.010792246552182298
+  },
+  {
+   "tensor": "model.layers.9.input_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0015455627272367846,
+   "cos_C_T": -0.0203511832197994,
+   "cos_C_H_effective": -0.0028996825303378624,
+   "norm_T": 0.001365558973472869,
+   "norm_H_effective": 0.0004512672212300755
+  },
+  {
+   "tensor": "model.layers.9.mlp.down_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08524678616846665,
+   "cos_C_T": 0.01848134472092139,
+   "cos_C_H_effective": -0.010967456000230753,
+   "norm_T": 0.07317078842916443,
+   "norm_H_effective": 0.016095619610595892
+  },
+  {
+   "tensor": "model.layers.9.mlp.gate_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08588808564407259,
+   "cos_C_T": 0.003640682851469643,
+   "cos_C_H_effective": -0.0010487997427358802,
+   "norm_T": 0.07432545237977183,
+   "norm_H_effective": 0.01500428991229189
+  },
+  {
+   "tensor": "model.layers.9.mlp.up_proj.weight",
+   "module": "mlp",
+   "norm_C": 0.08549248074946995,
+   "cos_C_T": 0.00658027741659578,
+   "cos_C_H_effective": -0.00757331750621624,
+   "norm_T": 0.0736818614848858,
+   "norm_H_effective": 0.01623841334839672
+  },
+  {
+   "tensor": "model.layers.9.post_attention_layernorm.weight",
+   "module": "norm_or_other",
+   "norm_C": 0.0016169138650787896,
+   "cos_C_T": 0.008068410644272038,
+   "cos_C_H_effective": -0.0373513913613518,
+   "norm_T": 0.001363527263634855,
+   "norm_H_effective": 0.0004714532669091393
+  },
+  {
+   "tensor": "model.layers.9.self_attn.k_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0004750791141879719,
+   "cos_C_T": 0.10024946803952836,
+   "cos_C_H_effective": 0.045925141396452235,
+   "norm_T": 0.0004593788441892632,
+   "norm_H_effective": 0.00013074872425230635
+  },
+  {
+   "tensor": "model.layers.9.self_attn.k_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04915395820288002,
+   "cos_C_T": -0.01710827497471987,
+   "cos_C_H_effective": -0.010169879602257865,
+   "norm_T": 0.04372407750080724,
+   "norm_H_effective": 0.010920159499855855
+  },
+  {
+   "tensor": "model.layers.9.self_attn.o_proj.weight",
+   "module": "attention",
+   "norm_C": 0.0699594313102284,
+   "cos_C_T": 0.0273420958009611,
+   "cos_C_H_effective": -0.0002868157693108747,
+   "norm_T": 0.06002543447551339,
+   "norm_H_effective": 0.014868141515580064
+  },
+  {
+   "tensor": "model.layers.9.self_attn.q_norm.weight",
+   "module": "attention",
+   "norm_C": 0.0004840991774318048,
+   "cos_C_T": 0.08062711525411333,
+   "cos_C_H_effective": 0.15603471513616318,
+   "norm_T": 0.0004612180954711889,
+   "norm_H_effective": 0.00013743906752880692
+  },
+  {
+   "tensor": "model.layers.9.self_attn.q_proj.weight",
+   "module": "attention",
+   "norm_C": 0.06995181382257151,
+   "cos_C_T": -0.0007253109585345744,
+   "cos_C_H_effective": -0.02163477386778398,
+   "norm_T": 0.062441640830270886,
+   "norm_H_effective": 0.014798184707105732
+  },
+  {
+   "tensor": "model.layers.9.self_attn.v_proj.weight",
+   "module": "attention",
+   "norm_C": 0.04910489936408055,
+   "cos_C_T": 0.024197734492974875,
+   "cos_C_H_effective": 0.014826066772594055,
+   "norm_T": 0.043351607289105504,
+   "norm_H_effective": 0.01038412940734413
+  }
+ ],
+ "interpretation_limit": "Vector geometry only; no activation covariance, functional skill or retention verdict."
+}

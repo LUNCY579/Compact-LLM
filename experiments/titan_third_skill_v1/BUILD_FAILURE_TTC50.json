@@ -1,0 +1,16 @@
+{
+  "record": "BUILD_FAILURE",
+  "experiment": "TRISKILL-001",
+  "arm": "TTC50",
+  "stage": "A",
+  "time_local": "2026-09-26 17:14:24",
+  "error": "safetensors save_file failed with Windows os error 32 while serializing the temporary weight file",
+  "partial_file": "failed_builds/TTC50_serialization_attempt1.tmp",
+  "partial_file_bytes": 2384234968,
+  "partial_file_status": "unverified and never used for scoring",
+  "partial_file_disposition": "deleted after the fresh TTC50 build, completed scores, Stage A result, and matching BUILD/WEIGHTS_DELETED hashes were verified; 2.38 GB reclaimed",
+  "score_outputs_from_attempt": 0,
+  "holder_identified": "Codex app child: Git for Windows git hash-object --stdin-paths (Restart Manager query)",
+  "recovery": "Ignored local safetensors and .tmp files in Git, waited for the handle to release, moved the unverified temporary file out of arms/TTC50, and left arms/TTC50 absent for a fresh registered build.",
+  "registered_arm_or_rule_changed": false
+}

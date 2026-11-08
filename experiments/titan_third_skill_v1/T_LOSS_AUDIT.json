@@ -1,0 +1,357 @@
+{
+ "experiment": "TRISKILL-001",
+ "kind": "post-STOP descriptive T loss audit",
+ "registered_T_endpoint_unchanged": true,
+ "arms": {
+  "TTC25": {
+   "lost_primary": 25,
+   "gained_primary": 9,
+   "net_T_loss": 16,
+   "loss_categories": {
+    "parseable_wrong_value": 25
+   },
+   "examples_by_family": {
+    "ledger_replay": [
+     {
+      "id": "CF1-ledger_replay-7c6135dff630fab9",
+      "gold": "{\"A\":30,\"B\":3,\"C\":-13,\"D\":-360}",
+      "TT": "{\"A\":30,\"B\":3,\"C\":-13,\"D\":-360}",
+      "composite": "{\"A\":30,\"B\":3,\"C\":-13,\"D\":360}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-ledger_replay-d572431c16c437d5",
+      "gold": "{\"A\":33,\"B\":36,\"C\":-22,\"D\":33}",
+      "TT": "{\"A\":33,\"B\":36,\"C\":-22,\"D\":33}",
+      "composite": "{\"A\":33,\"B\":36,\"C\":-66,\"D\":33}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-ledger_replay-8c97962e13932096",
+      "gold": "{\"A\":-122,\"B\":22,\"C\":29,\"D\":-45}",
+      "TT": "{\"A\":-122,\"B\":22,\"C\":29,\"D\":-45}",
+      "composite": "{\"A\":122,\"B\":22,\"C\":29,\"D\":-45}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-ledger_replay-fe70184f40c20ec0",
+      "gold": "{\"A\":34,\"B\":-57,\"C\":-20,\"D\":-245}",
+      "TT": "{\"A\":34,\"B\":-57,\"C\":-20,\"D\":-245}",
+      "composite": "{\"A\":34,\"B\":-57,\"C\":-20,\"D\":245}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-ledger_replay-7a685559f2673c45",
+      "gold": "{\"A\":13,\"B\":-144,\"C\":22,\"D\":-18}",
+      "TT": "{\"A\":13,\"B\":-144,\"C\":22,\"D\":-18}",
+      "composite": "{\"A\":13,\"B\":-12,\"C\":22,\"D\":-18}",
+      "category": "parseable_wrong_value"
+     }
+    ],
+    "prerequisite_plan": [
+     {
+      "id": "CF1-prerequisite_plan-a157d04c463d77b9",
+      "gold": "220",
+      "TT": "220",
+      "composite": "210",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-prerequisite_plan-584ca1ab09f3975e",
+      "gold": "202",
+      "TT": "202",
+      "composite": "196",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1X-prerequisite_plan-752644eb9d02deb7",
+      "gold": "150",
+      "TT": "150",
+      "composite": "140",
+      "category": "parseable_wrong_value"
+     }
+    ],
+    "register_machine": [
+     {
+      "id": "CF1-register_machine-d146720b2f50b78c",
+      "gold": "{\"X\":25,\"Y\":20,\"Z\":89}",
+      "TT": "{\"X\":25,\"Y\":20,\"Z\":89}",
+      "composite": "{\"X\":25,\"Y\":20,\"Z\":90}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-register_machine-0c6d064c077d47a9",
+      "gold": "{\"X\":64,\"Y\":25,\"Z\":14}",
+      "TT": "{\"X\":64,\"Y\":25,\"Z\":14}",
+      "composite": "{\"X\":64,\"Y\":25,\"Z\":71}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-register_machine-654e2023859e32a9",
+      "gold": "{\"X\":57,\"Y\":91,\"Z\":24}",
+      "TT": "{\"X\":57,\"Y\":91,\"Z\":24}",
+      "composite": "{\"X\":49,\"Y\":91,\"Z\":24}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1X-register_machine-33cbb4dacbf71fc1",
+      "gold": "{\"X\":83,\"Y\":29,\"Z\":37}",
+      "TT": "{\"X\":83,\"Y\":29,\"Z\":37}",
+      "composite": "{\"X\":109,\"Y\":29,\"Z\":37}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1X-register_machine-3ca677b04f7a0d96",
+      "gold": "{\"X\":28,\"Y\":67,\"Z\":45}",
+      "TT": "{\"X\":28,\"Y\":67,\"Z\":45}",
+      "composite": "{\"X\":28,\"Y\":67,\"Z\":33}",
+      "category": "parseable_wrong_value"
+     }
+    ]
+   }
+  },
+  "TTC50": {
+   "lost_primary": 47,
+   "gained_primary": 28,
+   "net_T_loss": 19,
+   "loss_categories": {
+    "parseable_wrong_value": 47
+   },
+   "examples_by_family": {
+    "ledger_replay": [
+     {
+      "id": "CF1-ledger_replay-9e592d5ea5fe3183",
+      "gold": "{\"A\":16,\"B\":3,\"C\":396,\"D\":25}",
+      "TT": "{\"A\":16,\"B\":3,\"C\":396,\"D\":25}",
+      "composite": "{\"A\":16,\"B\":3,\"C\":36,\"D\":25}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-ledger_replay-7c6135dff630fab9",
+      "gold": "{\"A\":30,\"B\":3,\"C\":-13,\"D\":-360}",
+      "TT": "{\"A\":30,\"B\":3,\"C\":-13,\"D\":-360}",
+      "composite": "{\"A\":30,\"B\":3,\"C\":-13,\"D\":40}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-ledger_replay-d572431c16c437d5",
+      "gold": "{\"A\":33,\"B\":36,\"C\":-22,\"D\":33}",
+      "TT": "{\"A\":33,\"B\":36,\"C\":-22,\"D\":33}",
+      "composite": "{\"A\":33,\"B\":36,\"C\":-66,\"D\":33}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-ledger_replay-8c97962e13932096",
+      "gold": "{\"A\":-122,\"B\":22,\"C\":29,\"D\":-45}",
+      "TT": "{\"A\":-122,\"B\":22,\"C\":29,\"D\":-45}",
+      "composite": "{\"A\":122,\"B\":22,\"C\":29,\"D\":-45}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-ledger_replay-fe70184f40c20ec0",
+      "gold": "{\"A\":34,\"B\":-57,\"C\":-20,\"D\":-245}",
+      "TT": "{\"A\":34,\"B\":-57,\"C\":-20,\"D\":-245}",
+      "composite": "{\"A\":34,\"B\":-57,\"C\":-20,\"D\":49}",
+      "category": "parseable_wrong_value"
+     }
+    ],
+    "prerequisite_plan": [
+     {
+      "id": "CF1-prerequisite_plan-a157d04c463d77b9",
+      "gold": "220",
+      "TT": "220",
+      "composite": "204",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-prerequisite_plan-a95244b27e3f2396",
+      "gold": "69",
+      "TT": "69",
+      "composite": "64",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-prerequisite_plan-584ca1ab09f3975e",
+      "gold": "202",
+      "TT": "202",
+      "composite": "194",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1X-prerequisite_plan-bf9916e7a17afb41",
+      "gold": "231",
+      "TT": "231",
+      "composite": "227",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1X-prerequisite_plan-27508eae4136d411",
+      "gold": "146",
+      "TT": "146",
+      "composite": "206",
+      "category": "parseable_wrong_value"
+     }
+    ],
+    "register_machine": [
+     {
+      "id": "CF1-register_machine-0829b357f469de65",
+      "gold": "{\"X\":49,\"Y\":46,\"Z\":71}",
+      "TT": "{\"X\":49,\"Y\":46,\"Z\":71}",
+      "composite": "{\"X\":49,\"Y\":46,\"Z\":65}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-register_machine-d146720b2f50b78c",
+      "gold": "{\"X\":25,\"Y\":20,\"Z\":89}",
+      "TT": "{\"X\":25,\"Y\":20,\"Z\":89}",
+      "composite": "{\"X\":25,\"Y\":20,\"Z\":90}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-register_machine-0c6d064c077d47a9",
+      "gold": "{\"X\":64,\"Y\":25,\"Z\":14}",
+      "TT": "{\"X\":64,\"Y\":25,\"Z\":14}",
+      "composite": "{\"X\":64,\"Y\":25,\"Z\":71}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-register_machine-145121a30b9f0974",
+      "gold": "{\"X\":12,\"Y\":45,\"Z\":17}",
+      "TT": "{\"X\":12,\"Y\":45,\"Z\":17}",
+      "composite": "{\"X\":21,\"Y\":45,\"Z\":17}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-register_machine-e32bde2052921b7a",
+      "gold": "{\"X\":54,\"Y\":7,\"Z\":79}",
+      "TT": "{\"X\":54,\"Y\":7,\"Z\":79}",
+      "composite": "{\"X\":62,\"Y\":7,\"Z\":79}",
+      "category": "parseable_wrong_value"
+     }
+    ]
+   }
+  },
+  "TTC100": {
+   "lost_primary": 120,
+   "gained_primary": 36,
+   "net_T_loss": 84,
+   "loss_categories": {
+    "parseable_wrong_value": 112,
+    "unparseable": 8
+   },
+   "examples_by_family": {
+    "ledger_replay": [
+     {
+      "id": "CF1-ledger_replay-b2a5683c74970bad",
+      "gold": "{\"A\":-6,\"B\":58,\"C\":-6,\"D\":4}",
+      "TT": "{\"A\":-6,\"B\":58,\"C\":-6,\"D\":4}",
+      "composite": "{\"A\":6,\"B\":58,\"C\":-6,\"D\":4}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-ledger_replay-9e592d5ea5fe3183",
+      "gold": "{\"A\":16,\"B\":3,\"C\":396,\"D\":25}",
+      "TT": "{\"A\":16,\"B\":3,\"C\":396,\"D\":25}",
+      "composite": "{\"A\":16,\"B\":3,\"C\":36,\"D\":25}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-ledger_replay-7c6135dff630fab9",
+      "gold": "{\"A\":30,\"B\":3,\"C\":-13,\"D\":-360}",
+      "TT": "{\"A\":30,\"B\":3,\"C\":-13,\"D\":-360}",
+      "composite": "{\"A\":30,\"B\":3,\"C\":-13,\"D\":40}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-ledger_replay-65b3edae38faea96",
+      "gold": "{\"A\":14,\"B\":4,\"C\":18,\"D\":-40}",
+      "TT": "{\"A\":14,\"B\":4,\"C\":18,\"D\":-40}",
+      "composite": "{\"A\":14,\"B\":8,\"C\":18,\"D\":44}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-ledger_replay-1f15ad4759b49a6f",
+      "gold": "{\"A\":24,\"B\":33,\"C\":35,\"D\":6}",
+      "TT": "{\"A\":24,\"B\":33,\"C\":35,\"D\":6}",
+      "composite": "{\"A\":24,\"B\":33,\"C\":35,\"D\":5}",
+      "category": "parseable_wrong_value"
+     }
+    ],
+    "prerequisite_plan": [
+     {
+      "id": "CF1-prerequisite_plan-b33e0ea1e1ffcfa9",
+      "gold": "209",
+      "TT": "209",
+      "composite": "193+16=209",
+      "category": "unparseable"
+     },
+     {
+      "id": "CF1-prerequisite_plan-b8044eca499693f9",
+      "gold": "211",
+      "TT": "211",
+      "composite": "196",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-prerequisite_plan-d7617036688eb2a4",
+      "gold": "92",
+      "TT": "92",
+      "composite": "28+64=92",
+      "category": "unparseable"
+     },
+     {
+      "id": "CF1-prerequisite_plan-165f3fd018db57f3",
+      "gold": "248",
+      "TT": "248",
+      "composite": "140",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-prerequisite_plan-a157d04c463d77b9",
+      "gold": "220",
+      "TT": "220",
+      "composite": "204",
+      "category": "parseable_wrong_value"
+     }
+    ],
+    "register_machine": [
+     {
+      "id": "CF1-register_machine-0829b357f469de65",
+      "gold": "{\"X\":49,\"Y\":46,\"Z\":71}",
+      "TT": "{\"X\":49,\"Y\":46,\"Z\":71}",
+      "composite": "{\"X\":49,\"Y\":46,\"Z\":65}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-register_machine-d56594f9286038d2",
+      "gold": "{\"X\":78,\"Y\":89,\"Z\":96}",
+      "TT": "{\"X\":78,\"Y\":89,\"Z\":96}",
+      "composite": "{\"X\":86,\"Y\":89,\"Z\":96}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-register_machine-d847da9bb93454c1",
+      "gold": "{\"X\":67,\"Y\":15,\"Z\":11}",
+      "TT": "{\"X\":67,\"Y\":15,\"Z\":11}",
+      "composite": "{\"X\":67,\"Y\":11,\"Z\":11}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-register_machine-40ced800997e16b9",
+      "gold": "{\"X\":83,\"Y\":60,\"Z\":43}",
+      "TT": "{\"X\":83,\"Y\":60,\"Z\":43}",
+      "composite": "{\"X\":43,\"Y\":83,\"Z\":60}",
+      "category": "parseable_wrong_value"
+     },
+     {
+      "id": "CF1-register_machine-24be4a0b36d0ce36",
+      "gold": "{\"X\":68,\"Y\":85,\"Z\":91}",
+      "TT": "{\"X\":68,\"Y\":85,\"Z\":91}",
+      "composite": "{\"X\":68,\"Y\":85,\"Z\":93}",
+      "category": "parseable_wrong_value"
+     }
+    ]
+   }
+  }
+ }
+}
