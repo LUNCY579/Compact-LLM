@@ -1,0 +1,386 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rineya.invalid/schemas/v5_1_programme_contract.schema.json",
+  "title": "TGSA v5.1 unified programme contract",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "programme_id",
+    "status",
+    "coordination_branch",
+    "registration_lock",
+    "lineage",
+    "global_evidence_rules",
+    "stage_order",
+    "stages",
+    "promotion_lanes",
+    "claim_ceiling"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "tgsa.v5-1-programme.v1"
+    },
+    "programme_id": {
+      "const": "tgsa-v5-1-unified-programme-2026-09-02"
+    },
+    "status": {
+      "const": "prospectively_frozen_coordination_contract"
+    },
+    "coordination_branch": {
+      "const": "research/tgsa-v5-1-unified-programme"
+    },
+    "registration_lock": {
+      "type": "object",
+      "required": [
+        "status",
+        "frozen_date",
+        "amendment_policy",
+        "operator_attestation",
+        "source_v5_plan"
+      ],
+      "properties": {
+        "status": {
+          "const": "frozen_before_nondevelopment_probe"
+        },
+        "frozen_date": {
+          "const": "2026-09-02"
+        },
+        "amendment_policy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operator_attestation": {
+          "type": "object",
+          "required": [
+            "required_for_nondevelopment_execution",
+            "statement"
+          ],
+          "properties": {
+            "required_for_nondevelopment_execution": {
+              "const": true
+            },
+            "statement": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "source_v5_plan": {
+          "type": "object",
+          "required": [
+            "path",
+            "git_blob_sha1",
+            "declared_registration_status",
+            "v5_1_interpretation"
+          ],
+          "properties": {
+            "path": {
+              "const": "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/phase1_v5_plan.json"
+            },
+            "git_blob_sha1": {
+              "const": "0538faf4d2ad142dbce9c408910f9dcbcf1fd064"
+            },
+            "declared_registration_status": {
+              "const": "implementation_complete_not_registered"
+            },
+            "v5_1_interpretation": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "lineage": {
+      "type": "object",
+      "required": [
+        "v4_result_boundary",
+        "v5_execution_source",
+        "v5_mechanism_source",
+        "phase2a_source",
+        "phase2b_source",
+        "pretrained_retrofit_source"
+      ],
+      "properties": {
+        "v4_result_boundary": {
+          "$ref": "#/$defs/lineage_v4"
+        },
+        "v5_execution_source": {
+          "$ref": "#/$defs/lineage_execution"
+        },
+        "v5_mechanism_source": {
+          "$ref": "#/$defs/lineage_mechanism"
+        },
+        "phase2a_source": {
+          "$ref": "#/$defs/lineage_phase2a"
+        },
+        "phase2b_source": {
+          "$ref": "#/$defs/lineage_phase2b"
+        },
+        "pretrained_retrofit_source": {
+          "$ref": "#/$defs/lineage_retrofit"
+        }
+      },
+      "additionalProperties": false
+    },
+    "global_evidence_rules": {
+      "type": "object",
+      "required": [
+        "cross_stage_pooling_allowed",
+        "semantic_relabeling_allowed",
+        "development_evidence_can_certify_confirmatory",
+        "stage_specific_checkpoints_required",
+        "stage_specific_evidence_roots_required",
+        "scope_hash_match_required",
+        "environment_lock_required",
+        "sealed_evaluation_is_single_use",
+        "wall_clock_is_never_inferred_from_serial_rounds"
+      ],
+      "properties": {
+        "cross_stage_pooling_allowed": {
+          "const": false
+        },
+        "semantic_relabeling_allowed": {
+          "const": false
+        },
+        "development_evidence_can_certify_confirmatory": {
+          "const": false
+        },
+        "stage_specific_checkpoints_required": {
+          "const": true
+        },
+        "stage_specific_evidence_roots_required": {
+          "const": true
+        },
+        "scope_hash_match_required": {
+          "const": true
+        },
+        "environment_lock_required": {
+          "const": true
+        },
+        "sealed_evaluation_is_single_use": {
+          "const": true
+        },
+        "wall_clock_is_never_inferred_from_serial_rounds": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "stage_order": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "v5_apparatus"
+        },
+        {
+          "const": "mtp_free_mechanism"
+        },
+        {
+          "const": "phase2a_trajectory_mtp"
+        },
+        {
+          "const": "phase2b_system_factorial"
+        },
+        {
+          "const": "rineya_checkpoint_qualification"
+        },
+        {
+          "const": "wall_clock_benchmark"
+        }
+      ],
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "stages": {
+      "type": "object",
+      "required": [
+        "v5_apparatus",
+        "mtp_free_mechanism",
+        "phase2a_trajectory_mtp",
+        "phase2b_system_factorial",
+        "rineya_checkpoint_qualification",
+        "wall_clock_benchmark"
+      ],
+      "properties": {
+        "v5_apparatus": {
+          "type": "object"
+        },
+        "mtp_free_mechanism": {
+          "type": "object"
+        },
+        "phase2a_trajectory_mtp": {
+          "type": "object"
+        },
+        "phase2b_system_factorial": {
+          "type": "object"
+        },
+        "rineya_checkpoint_qualification": {
+          "type": "object"
+        },
+        "wall_clock_benchmark": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "promotion_lanes": {
+      "type": "object",
+      "required": [
+        "mechanism_interpretable_lane",
+        "system_utility_lane",
+        "wall_clock_lane"
+      ],
+      "properties": {
+        "mechanism_interpretable_lane": {
+          "type": "object"
+        },
+        "system_utility_lane": {
+          "type": "object"
+        },
+        "wall_clock_lane": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "claim_ceiling": {
+      "type": "object",
+      "minProperties": 6
+    }
+  },
+  "$defs": {
+    "lineage_v4": {
+      "type": "object",
+      "required": [
+        "branch",
+        "archive_tag",
+        "commit",
+        "role"
+      ],
+      "properties": {
+        "branch": {
+          "const": "research/tgsa-phase1-v4-competence-first"
+        },
+        "archive_tag": {
+          "const": "archive/tgsa-phase1-v4-regime-rejected"
+        },
+        "commit": {
+          "const": "8b5737e260b5478427b8bb033cffa394a5f3fc5d"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "lineage_execution": {
+      "type": "object",
+      "required": [
+        "branch",
+        "commit",
+        "role"
+      ],
+      "properties": {
+        "branch": {
+          "const": "research/tgsa-v5-competence-execution"
+        },
+        "commit": {
+          "const": "de3bd632b491df294f9b8736079bdcbbdd64e4d3"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "lineage_mechanism": {
+      "type": "object",
+      "required": [
+        "branch",
+        "commit",
+        "contains_commit",
+        "role"
+      ],
+      "properties": {
+        "branch": {
+          "const": "research/tgsa-v5-competence-and-mechanism"
+        },
+        "commit": {
+          "const": "b09149002a7892a87a461af0b3c852ed14842905"
+        },
+        "contains_commit": {
+          "const": "de3bd632b491df294f9b8736079bdcbbdd64e4d3"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "lineage_phase2a": {
+      "type": "object",
+      "required": [
+        "branch",
+        "commit",
+        "role"
+      ],
+      "properties": {
+        "branch": {
+          "const": "research/tgsa-phase2a-ci-and-competence"
+        },
+        "commit": {
+          "const": "de3bd632b491df294f9b8736079bdcbbdd64e4d3"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "lineage_phase2b": {
+      "type": "object",
+      "required": [
+        "branch",
+        "commit",
+        "role"
+      ],
+      "properties": {
+        "branch": {
+          "const": "research/tgsa-mtp-rineya-complementarity-v1"
+        },
+        "commit": {
+          "const": "49aa961265c7b248be5c81244cc5d80d49db13c7"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "lineage_retrofit": {
+      "type": "object",
+      "required": [
+        "branch",
+        "commit",
+        "role"
+      ],
+      "properties": {
+        "branch": {
+          "const": "research/tgsa-rineya-pretrained-retrofit"
+        },
+        "commit": {
+          "const": "ef5194b36583f31bd59508cfe04aec1f5dcfdaec"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

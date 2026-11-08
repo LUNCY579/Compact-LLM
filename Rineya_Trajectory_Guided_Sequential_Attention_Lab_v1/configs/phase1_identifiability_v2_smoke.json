@@ -1,0 +1,150 @@
+{
+  "schema_version": "tgsa.phase1-model-identifiability-study.v1",
+  "study_id": "tgsa-phase1-identifiability-v2-smoke",
+  "confirmatory": false,
+  "expected_base_branch": "research/trajectory-guided-sequential-attention",
+  "expected_base_commit": "aefb70ebed2e7f57b9cbfe25c24dfdc0aee2fd4e",
+  "claim_scope": "CI smoke only; never evidentiary.",
+  "arms": [
+    "cascade",
+    "history_control",
+    "learned_delta"
+  ],
+  "seeds": [
+    7
+  ],
+  "dataset": {
+    "seed": 731928,
+    "vocabulary": {
+      "domain_size": 16,
+      "max_hops": 6,
+      "max_abs_step": 4
+    },
+    "families": {
+      "direct_lookup": {
+        "min_nodes": 5,
+        "max_nodes": 8,
+        "min_hops": 1,
+        "max_hops": 1
+      },
+      "pointer_chase": {
+        "min_nodes": 6,
+        "max_nodes": 10,
+        "min_hops": 2,
+        "max_hops": 3,
+        "reject_trivial": true
+      },
+      "state_update": {
+        "min_steps": 2,
+        "max_steps": 4,
+        "reject_trivial": true
+      }
+    },
+    "split_overrides": {
+      "dev": {
+        "pointer_chase": {
+          "min_hops": 3,
+          "max_hops": 4
+        },
+        "state_update": {
+          "min_steps": 3,
+          "max_steps": 5
+        }
+      },
+      "test": {
+        "pointer_chase": {
+          "min_hops": 4,
+          "max_hops": 6
+        },
+        "state_update": {
+          "min_steps": 4,
+          "max_steps": 6
+        }
+      }
+    },
+    "splits": {
+      "train": {
+        "direct_lookup": 16,
+        "pointer_chase": 16,
+        "state_update": 16
+      },
+      "dev": {
+        "direct_lookup": 8,
+        "pointer_chase": 8,
+        "state_update": 8
+      },
+      "test": {
+        "direct_lookup": 8,
+        "pointer_chase": 8,
+        "state_update": 8
+      }
+    }
+  },
+  "model": {
+    "max_sequence_length": 64,
+    "embed_dim": 32,
+    "num_heads": 4,
+    "num_layers": 1,
+    "ffn_multiplier": 2.0,
+    "dropout": 0.0,
+    "bias": false,
+    "trajectory_rank": 8,
+    "tie_embeddings": true
+  },
+  "training": {
+    "steps": 3,
+    "batch_size": 4,
+    "learning_rate": 0.001,
+    "beta1": 0.9,
+    "beta2": 0.95,
+    "epsilon": 1e-08,
+    "weight_decay": 0.0,
+    "gradient_clip_norm": 1.0,
+    "log_every": 1,
+    "checkpoint_every": 2,
+    "fixed_final_checkpoint": true,
+    "early_stopping": false
+  },
+  "evaluation": {
+    "batch_size": 8,
+    "telemetry_examples": 4,
+    "interventions": [
+      "zero",
+      "negate",
+      "roll_batch"
+    ],
+    "derangement_indices": [
+      0,
+      1,
+      2
+    ]
+  },
+  "analysis": {
+    "primary_families": [
+      "pointer_chase",
+      "state_update"
+    ],
+    "guardrail_family": "direct_lookup",
+    "bootstrap_samples": 200,
+    "confidence": 0.95,
+    "bootstrap_seed": 91273,
+    "minimum_history_delta": 0.02,
+    "minimum_cascade_delta": 0.02,
+    "minimum_alignment_drop": 0.015,
+    "direct_lookup_noninferiority_margin": -0.01,
+    "bootstrap_scheme": "crossed_paired",
+    "alignment_condition": "replay_derangement",
+    "minimum_derangement_coverage": 0.0
+  },
+  "runtime": {
+    "device": "cpu",
+    "deterministic_algorithms": true,
+    "num_threads": 1,
+    "continue_on_error": false
+  },
+  "registration": {
+    "preregistration": "PHASE1_V2_PREREGISTRATION.md",
+    "supersedes_study_id": "tgsa-phase1-model-identifiability-smoke",
+    "supersedes_reason": "PHASE1_LAUNCH_AUDIT.md returned NO-GO. The control pathway, alignment falsifier, bootstrap estimator, and confirmatory-exposure policy all changed, so a new study ID and output root are required."
+  }
+}

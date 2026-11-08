@@ -1,0 +1,872 @@
+{
+  "claim_scope": "execution manifest only; conclusions require the frozen paired analyzer and registered full arm/seed matrix",
+  "configured_arms": [
+    "cascade",
+    "history_control",
+    "learned_delta"
+  ],
+  "configured_seeds": [
+    101,
+    202,
+    303,
+    404,
+    505,
+    606,
+    707,
+    808,
+    909,
+    1010,
+    1111,
+    1212,
+    1313,
+    1414,
+    1515,
+    1616,
+    1717,
+    1818,
+    1919,
+    2020
+  ],
+  "confirmatory": true,
+  "created_at_utc": "2026-08-29T22:46:34.604010+00:00",
+  "dataset_manifest_sha256": "cad5851eeba887584c9c6aa38cef11f00d752c71fb2c71c6877cdc44a3e52d54",
+  "deferred_test_evaluation": true,
+  "failures": [],
+  "git": {
+    "branch": "research/tgsa-phase1-identifiability-v3-powered-confirmatory",
+    "dirty": false,
+    "expected_base_commit": "aefb70ebed2e7f57b9cbfe25c24dfdc0aee2fd4e",
+    "expected_base_is_ancestor": true,
+    "head": "72395b69beb96dc71dc80bc8c73ef75205ea51a1"
+  },
+  "is_full_registered_matrix": true,
+  "phase": "evaluate",
+  "preflight": "preflight.json",
+  "preflight_sha256": "7b7eb7f0ea53fda61830d6d75aa04167d3383983d1069a2c8211faef8665c2d7",
+  "reuse_audit": {
+    "checked_runs": [
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_101\\run_manifest.json",
+        "seed": 101,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_202\\run_manifest.json",
+        "seed": 202,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_303\\run_manifest.json",
+        "seed": 303,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_404\\run_manifest.json",
+        "seed": 404,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_505\\run_manifest.json",
+        "seed": 505,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_606\\run_manifest.json",
+        "seed": 606,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_707\\run_manifest.json",
+        "seed": 707,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_808\\run_manifest.json",
+        "seed": 808,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_909\\run_manifest.json",
+        "seed": 909,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_1010\\run_manifest.json",
+        "seed": 1010,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_1111\\run_manifest.json",
+        "seed": 1111,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_1212\\run_manifest.json",
+        "seed": 1212,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_1313\\run_manifest.json",
+        "seed": 1313,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_1414\\run_manifest.json",
+        "seed": 1414,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_1515\\run_manifest.json",
+        "seed": 1515,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_1616\\run_manifest.json",
+        "seed": 1616,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_1717\\run_manifest.json",
+        "seed": 1717,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_1818\\run_manifest.json",
+        "seed": 1818,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_1919\\run_manifest.json",
+        "seed": 1919,
+        "status": "trained"
+      },
+      {
+        "arm": "cascade",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\cascade\\seed_2020\\run_manifest.json",
+        "seed": 2020,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_101\\run_manifest.json",
+        "seed": 101,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_202\\run_manifest.json",
+        "seed": 202,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_303\\run_manifest.json",
+        "seed": 303,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_404\\run_manifest.json",
+        "seed": 404,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_505\\run_manifest.json",
+        "seed": 505,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_606\\run_manifest.json",
+        "seed": 606,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_707\\run_manifest.json",
+        "seed": 707,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_808\\run_manifest.json",
+        "seed": 808,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_909\\run_manifest.json",
+        "seed": 909,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_1010\\run_manifest.json",
+        "seed": 1010,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_1111\\run_manifest.json",
+        "seed": 1111,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_1212\\run_manifest.json",
+        "seed": 1212,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_1313\\run_manifest.json",
+        "seed": 1313,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_1414\\run_manifest.json",
+        "seed": 1414,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_1515\\run_manifest.json",
+        "seed": 1515,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_1616\\run_manifest.json",
+        "seed": 1616,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_1717\\run_manifest.json",
+        "seed": 1717,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_1818\\run_manifest.json",
+        "seed": 1818,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_1919\\run_manifest.json",
+        "seed": 1919,
+        "status": "trained"
+      },
+      {
+        "arm": "history_control",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\history_control\\seed_2020\\run_manifest.json",
+        "seed": 2020,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_101\\run_manifest.json",
+        "seed": 101,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_202\\run_manifest.json",
+        "seed": 202,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_303\\run_manifest.json",
+        "seed": 303,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_404\\run_manifest.json",
+        "seed": 404,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_505\\run_manifest.json",
+        "seed": 505,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_606\\run_manifest.json",
+        "seed": 606,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_707\\run_manifest.json",
+        "seed": 707,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_808\\run_manifest.json",
+        "seed": 808,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_909\\run_manifest.json",
+        "seed": 909,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_1010\\run_manifest.json",
+        "seed": 1010,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_1111\\run_manifest.json",
+        "seed": 1111,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_1212\\run_manifest.json",
+        "seed": 1212,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_1313\\run_manifest.json",
+        "seed": 1313,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_1414\\run_manifest.json",
+        "seed": 1414,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_1515\\run_manifest.json",
+        "seed": 1515,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_1616\\run_manifest.json",
+        "seed": 1616,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_1717\\run_manifest.json",
+        "seed": 1717,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_1818\\run_manifest.json",
+        "seed": 1818,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_1919\\run_manifest.json",
+        "seed": 1919,
+        "status": "trained"
+      },
+      {
+        "arm": "learned_delta",
+        "manifest": "C:\\Users\\clclc\\AppData\\Local\\Temp\\claude\\C--Users-clclc-BusinessProject-Chat-Bubble\\8b037530-92dc-40fa-93b0-7d2d5ea2749e\\scratchpad\\v3full\\study_gpu\\runs\\learned_delta\\seed_2020\\run_manifest.json",
+        "seed": 2020,
+        "status": "trained"
+      }
+    ],
+    "dataset_manifest_sha256": "cad5851eeba887584c9c6aa38cef11f00d752c71fb2c71c6877cdc44a3e52d54",
+    "git_head": "72395b69beb96dc71dc80bc8c73ef75205ea51a1",
+    "reusable_run_count": 60,
+    "study_config_sha256": "9dadb157b04fefad6a4d1ed8cfee1d5ed23916e4c12e13f2dce61b097a7b8163"
+  },
+  "runs": [
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_101\\run_manifest.json",
+      "seed": 101,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_101\\run_manifest.json",
+      "seed": 101,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_101\\run_manifest.json",
+      "seed": 101,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_202\\run_manifest.json",
+      "seed": 202,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_202\\run_manifest.json",
+      "seed": 202,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_202\\run_manifest.json",
+      "seed": 202,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_303\\run_manifest.json",
+      "seed": 303,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_303\\run_manifest.json",
+      "seed": 303,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_303\\run_manifest.json",
+      "seed": 303,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_404\\run_manifest.json",
+      "seed": 404,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_404\\run_manifest.json",
+      "seed": 404,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_404\\run_manifest.json",
+      "seed": 404,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_505\\run_manifest.json",
+      "seed": 505,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_505\\run_manifest.json",
+      "seed": 505,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_505\\run_manifest.json",
+      "seed": 505,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_606\\run_manifest.json",
+      "seed": 606,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_606\\run_manifest.json",
+      "seed": 606,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_606\\run_manifest.json",
+      "seed": 606,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_707\\run_manifest.json",
+      "seed": 707,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_707\\run_manifest.json",
+      "seed": 707,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_707\\run_manifest.json",
+      "seed": 707,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_808\\run_manifest.json",
+      "seed": 808,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_808\\run_manifest.json",
+      "seed": 808,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_808\\run_manifest.json",
+      "seed": 808,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_909\\run_manifest.json",
+      "seed": 909,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_909\\run_manifest.json",
+      "seed": 909,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_909\\run_manifest.json",
+      "seed": 909,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_1010\\run_manifest.json",
+      "seed": 1010,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_1010\\run_manifest.json",
+      "seed": 1010,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_1010\\run_manifest.json",
+      "seed": 1010,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_1111\\run_manifest.json",
+      "seed": 1111,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_1111\\run_manifest.json",
+      "seed": 1111,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_1111\\run_manifest.json",
+      "seed": 1111,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_1212\\run_manifest.json",
+      "seed": 1212,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_1212\\run_manifest.json",
+      "seed": 1212,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_1212\\run_manifest.json",
+      "seed": 1212,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_1313\\run_manifest.json",
+      "seed": 1313,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_1313\\run_manifest.json",
+      "seed": 1313,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_1313\\run_manifest.json",
+      "seed": 1313,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_1414\\run_manifest.json",
+      "seed": 1414,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_1414\\run_manifest.json",
+      "seed": 1414,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_1414\\run_manifest.json",
+      "seed": 1414,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_1515\\run_manifest.json",
+      "seed": 1515,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_1515\\run_manifest.json",
+      "seed": 1515,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_1515\\run_manifest.json",
+      "seed": 1515,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_1616\\run_manifest.json",
+      "seed": 1616,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_1616\\run_manifest.json",
+      "seed": 1616,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_1616\\run_manifest.json",
+      "seed": 1616,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_1717\\run_manifest.json",
+      "seed": 1717,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_1717\\run_manifest.json",
+      "seed": 1717,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_1717\\run_manifest.json",
+      "seed": 1717,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_1818\\run_manifest.json",
+      "seed": 1818,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_1818\\run_manifest.json",
+      "seed": 1818,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_1818\\run_manifest.json",
+      "seed": 1818,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_1919\\run_manifest.json",
+      "seed": 1919,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_1919\\run_manifest.json",
+      "seed": 1919,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_1919\\run_manifest.json",
+      "seed": 1919,
+      "status": "complete"
+    },
+    {
+      "arm": "cascade",
+      "manifest": "runs\\cascade\\seed_2020\\run_manifest.json",
+      "seed": 2020,
+      "status": "complete"
+    },
+    {
+      "arm": "history_control",
+      "manifest": "runs\\history_control\\seed_2020\\run_manifest.json",
+      "seed": 2020,
+      "status": "complete"
+    },
+    {
+      "arm": "learned_delta",
+      "manifest": "runs\\learned_delta\\seed_2020\\run_manifest.json",
+      "seed": 2020,
+      "status": "complete"
+    }
+  ],
+  "schema_version": "tgsa.phase1-model-matrix.v1",
+  "selected_arms": [
+    "cascade",
+    "history_control",
+    "learned_delta"
+  ],
+  "selected_seeds": [
+    101,
+    202,
+    303,
+    404,
+    505,
+    606,
+    707,
+    808,
+    909,
+    1010,
+    1111,
+    1212,
+    1313,
+    1414,
+    1515,
+    1616,
+    1717,
+    1818,
+    1919,
+    2020
+  ],
+  "source_head": [
+    "72395b69beb96dc71dc80bc8c73ef75205ea51a1"
+  ],
+  "status": "complete",
+  "study_config_sha256": "9dadb157b04fefad6a4d1ed8cfee1d5ed23916e4c12e13f2dce61b097a7b8163",
+  "study_id": "tgsa-phase1-identifiability-v3-2026-08-29",
+  "trained_before_evaluation": [
+    "cascade:101",
+    "cascade:1010",
+    "cascade:1111",
+    "cascade:1212",
+    "cascade:1313",
+    "cascade:1414",
+    "cascade:1515",
+    "cascade:1616",
+    "cascade:1717",
+    "cascade:1818",
+    "cascade:1919",
+    "cascade:202",
+    "cascade:2020",
+    "cascade:303",
+    "cascade:404",
+    "cascade:505",
+    "cascade:606",
+    "cascade:707",
+    "cascade:808",
+    "cascade:909",
+    "history_control:101",
+    "history_control:1010",
+    "history_control:1111",
+    "history_control:1212",
+    "history_control:1313",
+    "history_control:1414",
+    "history_control:1515",
+    "history_control:1616",
+    "history_control:1717",
+    "history_control:1818",
+    "history_control:1919",
+    "history_control:202",
+    "history_control:2020",
+    "history_control:303",
+    "history_control:404",
+    "history_control:505",
+    "history_control:606",
+    "history_control:707",
+    "history_control:808",
+    "history_control:909",
+    "learned_delta:101",
+    "learned_delta:1010",
+    "learned_delta:1111",
+    "learned_delta:1212",
+    "learned_delta:1313",
+    "learned_delta:1414",
+    "learned_delta:1515",
+    "learned_delta:1616",
+    "learned_delta:1717",
+    "learned_delta:1818",
+    "learned_delta:1919",
+    "learned_delta:202",
+    "learned_delta:2020",
+    "learned_delta:303",
+    "learned_delta:404",
+    "learned_delta:505",
+    "learned_delta:606",
+    "learned_delta:707",
+    "learned_delta:808",
+    "learned_delta:909"
+  ]
+}

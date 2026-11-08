@@ -1,0 +1,118 @@
+{
+  "schema_version": "rineya.historical-dose-transfer-trial.v1",
+  "trial_id": "historical-pulse-vector-a11-v1",
+  "registration_status": "FROZEN_BEFORE_OUTCOME",
+  "registered_at_utc": "2026-08-31T06:20:00Z",
+  "registration_base_commit": "d0b821c",
+  "queue_freeze_commit": "027da580afa35e8e455f5e1ca35257bf14a2ac7c",
+  "purpose": "Run the already-queued final reasonable checkpoint trial: apply the exact historically selected Pulse negative task vector 1.25*delta200 - 0.25*delta250 once to A1.1.",
+  "historical_evidence": {
+    "source_commit": "8324995579f9c1273abedcbbb383a2e6dd024c2b",
+    "artifacts": [
+      "Rineya_Long_Context_Weight_Geometry_Lab_v1/PUBLISHED_FAMILY_SEARCH_REPORT.md",
+      "artifacts/rineya_published_core_search_v1/negative_vectors/neg_200_250_1p25_m0p25/soup_manifest.json"
+    ],
+    "recorded_result": "The selected Pulse negative vector reached 41/64 Showcase and 117/192 Stability versus Pulse 31/64 and 89/192. The stronger 1.5/-0.5 system arm is explicitly not used."
+  },
+  "parent": {
+    "name": "Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "locator_from_retrofit_repo": "../Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "weight_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "config_sha256": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "required_class": "Qwen3AbstainForCausalLM",
+    "abstain_token_id": 51378,
+    "abstain_logit_bias": 5.156249985098839
+  },
+  "base": {
+    "name": "Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "locator_from_retrofit_repo": "../Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "weight_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "weight_bytes": 1192134784,
+    "config_sha256": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+  },
+  "adapter": {
+    "name": "neg_200_250_1p25_m0p25",
+    "locator_from_retrofit_repo": "../Chat-Bubble/artifacts/rineya_published_core_search_v1/negative_vectors/neg_200_250_1p25_m0p25",
+    "weights_sha256": "c2d9fb2a5b71567b72e04f30ef6e30d8c18112d8e84ac03c934ed283e995ad82",
+    "weights_bytes": 80792504,
+    "config_sha256": "70429a100453358398fea3a638285415aa4ca0319f70b20d24825133a2317dd1",
+    "rank": 32,
+    "lora_alpha": 32,
+    "target_modules": [
+      "down_proj",
+      "gate_proj",
+      "k_proj",
+      "o_proj",
+      "q_proj",
+      "up_proj",
+      "v_proj"
+    ],
+    "expected_lora_slots": 196,
+    "source_formula": "1.25*delta200 - 0.25*delta250"
+  },
+  "recipe": {
+    "control_scale": 0.0,
+    "candidate_scale": 1.0,
+    "candidate_count": 1,
+    "merge_formula": "FP16(FP32(A1.1 tensor) + FP32(B @ A) * (lora_alpha/rank) * scale)",
+    "accumulation_dtype": "float32",
+    "output_dtype": "float16",
+    "forbidden_adaptation": [
+      "no stronger vector",
+      "no scale adjustment",
+      "no layer/profile search",
+      "no threshold retuning",
+      "no evaluation changes"
+    ]
+  },
+  "fidelity_gate": {
+    "control": "Reconstruct scale 0.0 through the same streaming formula",
+    "requirement": "All 310 tensors must be bitwise equal to A1.1 before the candidate may be materialized"
+  },
+  "outputs": {
+    "root": "artifacts/historical_pulse_vector_a11_v1",
+    "control": "artifacts/historical_pulse_vector_a11_v1/control_zero",
+    "candidate": "artifacts/historical_pulse_vector_a11_v1/candidate",
+    "evidence": "artifacts/historical_pulse_vector_a11_v1/evidence"
+  },
+  "evaluation": {
+    "runner": {
+      "path": "Rineya_Long_Context_Demo_v1/scripts/run_local_hf.py",
+      "sha256": "cdf156ef08fe719e3d64dd588c11669563e082e656b8c01e8fd32f5ed6562022"
+    },
+    "evaluator": {
+      "path": "Rineya_Long_Context_Demo_v1/scripts/evaluate_predictions.py",
+      "sha256": "92c9e17762ff5979ac6c0657be26ee0a99bfce0620453886a2e2bc81632af1b5"
+    },
+    "reuse_exact_parent_predictions_from_trial": "historical-soup-a11-baya-midpoint-v1",
+    "protocol": {
+      "decoding": "greedy",
+      "seed": 17,
+      "enable_thinking": false,
+      "max_new_tokens": 24,
+      "max_context": 4096,
+      "truncation": "forbidden",
+      "torch_dtype": "float16",
+      "logits_to_keep": 1,
+      "trust_remote_code": false,
+      "portable_logit_bias_token_id": 51378,
+      "portable_logit_bias": 5.156249985098839,
+      "fresh_process_candidate": true
+    }
+  },
+  "transfer_gate": {
+    "logical_operator": "AND",
+    "tie_policy": "FAIL",
+    "requirements": [
+      "candidate all-256 strict exact hits >= exact parent hits + 1",
+      "candidate Stability192 strict exact hits >= exact parent hits",
+      "candidate all-four-variants-correct packs >= exact parent packs",
+      "candidate base/paraphrase both-correct packs >= exact parent packs",
+      "candidate prediction coverage and generation health pass",
+      "candidate fresh-process custom-class reload passes",
+      "artifact and evaluation provenance hashes are complete"
+    ]
+  }
+}

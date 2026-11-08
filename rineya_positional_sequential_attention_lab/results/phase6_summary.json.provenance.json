@@ -1,0 +1,145 @@
+{
+  "generated_at_utc": "2026-08-29T16:31:07Z",
+  "lab_root": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\rineya_positional_sequential_attention_lab",
+  "git": {
+    "repo_root": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble",
+    "commit": "0fe0959210067992912fdb95ef97750ebcc8ee8a",
+    "branch": "research/positional-sequential-attention",
+    "dirty": true,
+    "dirty_paths": [
+      "rineya_halo_long_context_sft_v1/",
+      "rineya_positional_sequential_attention_lab/results/activation_patch_results.parquet.provenance.json",
+      "rineya_positional_sequential_attention_lab/results/activation_probe_results.json",
+      "rineya_positional_sequential_attention_lab/results/activation_probe_results.json.provenance.json",
+      "rineya_positional_sequential_attention_lab/results/head_ablation_results.parquet.provenance.json",
+      "rineya_positional_sequential_attention_lab/results/phase4_significance/nimbus/",
+      "rineya_positional_sequential_attention_lab/results/phase4_significance/phase4_significance_run.json",
+      "rineya_positional_sequential_attention_lab/results/phase4_significance/phase4_significance_run.json.provenance.json",
+      "rineya_positional_sequential_attention_lab/results/phase4_significance/supa_a11_ungated/",
+      "rineya_positional_sequential_attention_lab/results/phase6_summary.json",
+      "rineya_significance_native_architecture_lab/configs/published_family_showcase64_v2.yaml",
+      "rineya_significance_native_architecture_lab/configs/published_family_showcase64_v2_finalize.yaml",
+      "rineya_significance_native_architecture_lab/results/runs/halo_compression_frontier_v1/",
+      "rineya_significance_native_architecture_lab/scripts/finalize_published_family_showcase64.py",
+      "rineya_significance_native_architecture_lab/scripts/run_published_family_core_showcase64.py",
+      "rineya_significance_native_architecture_lab/tests/test_published_family_showcase64_v2.py"
+    ],
+    "dirty_path_count": 16
+  },
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "torch": "2.12.1+cu126",
+    "transformers": "5.14.1",
+    "pandas": "3.0.5",
+    "sklearn": "1.9.0"
+  },
+  "gpu": {
+    "cuda_available": true,
+    "device_count": 1,
+    "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "total_memory_bytes": 8585216000,
+    "gpu_source": "torch"
+  },
+  "platform": {
+    "os": "Windows-10-10.0.26200-SP0",
+    "system": "Windows",
+    "machine": "AMD64",
+    "processor": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+    "cpu_count": 32,
+    "hostname": "TheFakeGod",
+    "user": "clclc",
+    "executable": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe"
+  },
+  "config": {
+    "split": "calibration",
+    "arms": [
+      "qwen3",
+      "supa_a11_ungated"
+    ],
+    "stages": [
+      "probes",
+      "patching",
+      "heads"
+    ],
+    "length_bucket": "4k",
+    "family": null,
+    "local_position": "middle",
+    "n_items": 594,
+    "item_limit": null,
+    "max_scenarios": null,
+    "pair_mode": "best_worst",
+    "min_nll_gap": 0.25,
+    "max_pairs": 64,
+    "alignments": [
+      "final_query",
+      "span_aligned",
+      "random_control"
+    ],
+    "patch_layers": [
+      2,
+      7,
+      12,
+      17,
+      22,
+      27
+    ],
+    "patch_sites": [
+      "resid",
+      "attn_out",
+      "mlp_out"
+    ],
+    "probe_layers": "all",
+    "probe_sites": [
+      "resid",
+      "attn_out",
+      "mlp_out"
+    ],
+    "logistic_layers": [
+      2,
+      7,
+      12,
+      17,
+      22,
+      27
+    ],
+    "logistic_sites": [
+      "resid"
+    ],
+    "answer_labels": [
+      "full",
+      "first_token",
+      "family"
+    ],
+    "probe_max_classes": 16,
+    "n_permutations": 20,
+    "position_policy": {
+      "max_evidence_tokens": 8,
+      "n_final_tokens": 2,
+      "n_control": 8,
+      "include_bos": true,
+      "seed": 20260828,
+      "max_positions": 19
+    },
+    "head_config": {
+      "n_bins": 16,
+      "edge_fraction": 0.1,
+      "middle_halfwidth": 0.1,
+      "recent_fraction": 0.1,
+      "final_rows": 32,
+      "chunk": 256
+    },
+    "head_items": 32,
+    "seed": 20260828,
+    "device": "cuda",
+    "is_partial_run": false
+  },
+  "config_sha256": "ba28e6f677716a7c0cbb1316d7d1cc4222162270e59d832a29af181ba8f56263",
+  "extra": {},
+  "artifact": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\rineya_positional_sequential_attention_lab\\results\\phase6_summary.json",
+    "bytes": 40072,
+    "sha256": "6dad7e33722a9af298ea25893e1ea324fada808ad115efa45beb54882af0e3e2"
+  }
+}

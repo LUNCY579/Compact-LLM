@@ -1,0 +1,72 @@
+{
+  "$defs": {
+    "sha": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://chatbubble.local/tgsa/phase1_v5_verification.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "checks": {
+      "minProperties": 10,
+      "type": "object"
+    },
+    "claim_scope": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "errors": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "passed": {
+      "type": "boolean"
+    },
+    "plan_sha256": {
+      "$ref": "#/$defs/sha"
+    },
+    "report_file_sha256": {
+      "$ref": "#/$defs/sha"
+    },
+    "report_sha256": {
+      "$ref": "#/$defs/sha"
+    },
+    "require_go": {
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "tgsa.phase1-v5-verification.v1"
+    },
+    "scientific_verdict": {
+      "enum": [
+        "GO",
+        "NO_GO"
+      ]
+    },
+    "stage": {
+      "enum": [
+        "probe",
+        "qualification"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "passed",
+    "plan_sha256",
+    "report_sha256",
+    "report_file_sha256",
+    "stage",
+    "scientific_verdict",
+    "require_go",
+    "checks",
+    "errors",
+    "claim_scope"
+  ],
+  "title": "TGSA Phase 1 v5 evidence verification",
+  "type": "object"
+}

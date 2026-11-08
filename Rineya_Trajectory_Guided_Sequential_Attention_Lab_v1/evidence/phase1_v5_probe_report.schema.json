@@ -1,0 +1,134 @@
+{
+  "$defs": {
+    "authorization": {
+      "properties": {
+        "mechanism_test": {
+          "const": false
+        },
+        "qualification_grid": {
+          "type": "boolean"
+        },
+        "rineya_retrofit": {
+          "const": false
+        }
+      },
+      "required": [
+        "qualification_grid",
+        "mechanism_test",
+        "rineya_retrofit"
+      ],
+      "type": "object"
+    },
+    "cell": {
+      "properties": {
+        "execution_fingerprint": {
+          "$ref": "#/$defs/sha"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha"
+        }
+      },
+      "required": [
+        "arm",
+        "seed",
+        "path",
+        "sha256",
+        "execution_fingerprint"
+      ],
+      "type": "object"
+    },
+    "sha": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://chatbubble.local/tgsa/phase1_v5_probe_report.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "authorization": {
+      "$ref": "#/$defs/authorization"
+    },
+    "cells": {
+      "items": {
+        "$ref": "#/$defs/cell"
+      },
+      "minItems": 3,
+      "type": "array"
+    },
+    "checks": {
+      "minProperties": 5,
+      "type": "object"
+    },
+    "claim_scope": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "dataset_manifest_sha256": {
+      "$ref": "#/$defs/sha"
+    },
+    "decision": {
+      "enum": [
+        "SELECT_CAPACITY_RUNG",
+        "ADVANCE_CAPACITY_RUNG",
+        "REJECT_SATURATED_BAND",
+        "REJECT_TASK_FAMILY"
+      ]
+    },
+    "execution_schema_version": {
+      "const": "tgsa.phase1-v5-execution.v1"
+    },
+    "metrics": {
+      "type": "object"
+    },
+    "plan_sha256": {
+      "$ref": "#/$defs/sha"
+    },
+    "schema_version": {
+      "const": "tgsa.phase1-v5-probe-report.v1"
+    },
+    "software_success": {
+      "const": true
+    },
+    "stage": {
+      "const": "prerequisite_probe"
+    },
+    "stage_execution": {
+      "const": "probe"
+    },
+    "status": {
+      "const": "complete"
+    },
+    "verdict": {
+      "enum": [
+        "GO",
+        "NO_GO"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "execution_schema_version",
+    "study_id",
+    "stage",
+    "stage_execution",
+    "status",
+    "software_success",
+    "verdict",
+    "decision",
+    "checks",
+    "metrics",
+    "authorization",
+    "plan_sha256",
+    "dataset_manifest_sha256",
+    "rung_id",
+    "rung",
+    "exposure_id",
+    "exposure",
+    "cells",
+    "initialization_audit",
+    "claim_scope"
+  ],
+  "title": "TGSA Phase 1 v5 prerequisite probe report",
+  "type": "object"
+}

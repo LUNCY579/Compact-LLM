@@ -1,0 +1,21 @@
+# Proposed contract interpretations — not approved amendments
+
+The original commissioning prompt is authoritative. These points must be resolved rather than silently rewritten during generation.
+
+1. **Three length bands versus the earlier 1,100–1,600 target.** Proposed: 2,000 rows each in [300,600), [600,1100), and [1100,1600] context tokens; measure context separately from the fully rendered chat. Require total rendered tokens <=2048 and generation-prefix tokens +128 <=2048. Report actual answer/EOS tokens and unused capacity as separate fields. These boundary conventions resolve overlap at 600 and 1,100 and make the later three-band instruction operative.
+
+2. **30% UNKNOWN versus a 25% shortcut threshold.** The brief explicitly uses answerable rows for the 25% shortcut trigger. Proposed: the trigger uses that denominator, including per-task diagnostics. Report all-row rates too; always-UNKNOWN necessarily obtains 30% overall and 0% on answerable rows. Also report balanced answerability accuracy, class-conditioned errors, and uncertainty for any trained surface classifier. Do not describe 30% as a failure of a threshold defined on a different denominator.
+
+3. **Missing entities have no positive evidence needle.** A question about an entity absent from the record cannot have an answer-bearing evidence span in its first quarter. Proposed: [] for positive evidence in absent-entity rows; separate fields for related distractors/explicit negative or retraction evidence. Needle position remains a construction stratum for those related fragments, not a claim to a nonexistent supporting answer. Global absence requires checking the complete record.
+
+4. **Literal lexical disjointness.** Ordinary alias-resolution questions must often share an entity identifier with an alias link, and natural sentences share function words. Proposed: audit exact overlap without concealment, while defining the hard condition over predicate/content wording excluding declared entity anchors and function words. That is weaker than literal zero overlap and therefore needs explicit agreement; it is not silently equivalent.
+
+5. **Train/dev/holdout versus 'must never be used as an evaluation set'.** Proposed: 4,800/600/600 rows are immutable rehearsal/data-QA partitions. Only train enters an initial training arm. Dev/holdout support corpus auditing and protocol development but not a model-performance or retention benchmark. A separate independently commissioned instrument is required to demonstrate retained capability.
+
+6. **Crossed balance and integers.** The requested marginal totals are feasible. Exact proportional counts in every full six-dimensional cell are not integers. For example, a 400-row task crossed with short (1/3), dev (1/10), paraphrase (1/10), middle (1/5), and medium (2/5) has expectation 0.1067 rows. Proposed: exact global margins; explicitly constrained integer allocations for within-band and pairwise tables; publish all full joint counts, and state whether +/-3% means percentage points or relative error. Do not call absent rare full-joint cells 'balanced' without that definition.
+
+7. **Structural and lexical disjointness.** Fresh names and seeds do not prove structural disjointness. Proposed: preassign entity pools, renderer families, nontrivial program/topology partitions, and task-specific lexicons before sampling; separately report intentionally shared operator primitives, function words, output sentinels, and numerals. Zero answer overlap cannot be required when UNKNOWN and small counts are common legal answers. Every exclusion claim must name the actual accessible banks checked; no global claim from a partial inventory.
+
+8. **Independent checker and shortcut evidence.** A second algorithm written in the same session is separately implemented, not independently authored or human-certified. Proposed: reparse model-visible records with a separately implemented answer checker, cross-check all targets, and expose independent human review as an additional unperformed gate. Question-only/context-only baselines must be named executable predictors, not fabricated model scores. Finite tests cannot certify that no conceivable surface classifier will exceed chance.
+
+These proposals preserve the practical goals but are not a declaration that the original acceptance specification was met.

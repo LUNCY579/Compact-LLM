@@ -1,0 +1,21 @@
+{
+  "status": "STOPPED_FOR_REVIEW",
+  "pid": 56544,
+  "start_utc": "2026-09-05T23:38:41.5270469Z",
+  "script_sha256": "3e114d869eac951f69400792aeeaefdf6405d1483f63f331155468b470e63be3",
+  "policy": "One stage only: prefer pending native v2.3 GPU qualification; otherwise next original CPU bridge pair. No retries of failed science.",
+  "max_queue_seconds": 180,
+  "retry_native_zero_artifact_admission": true,
+  "stage": "native_v2_3_runtime_qualification",
+  "arguments": [
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\supa_adaptive_compute_v2\\scripts\\qualify_native_gpu.py",
+    "--config",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\supa_adaptive_compute_v2\\native_armr\\configs\\protocol_gpu_v2_3.json",
+    "--manifest",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\supa_adaptive_compute_v2\\data\\generated\\v2\\native_armr\\manifest.json"
+  ],
+  "launched_utc": "2026-09-05T23:38:42.0475739Z",
+  "end_utc": "2026-09-05T23:43:56.9567372Z",
+  "exit_code": 1,
+  "wall_seconds": 315.4305274
+}

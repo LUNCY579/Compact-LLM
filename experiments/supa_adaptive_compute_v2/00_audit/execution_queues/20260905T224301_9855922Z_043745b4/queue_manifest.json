@@ -1,0 +1,27 @@
+{
+  "status": "STAGE_COMPLETE",
+  "pid": 207960,
+  "start_utc": "2026-09-05T22:43:01.9992148Z",
+  "script_sha256": "41e15816f4c53b0276cd021a2faca90bad9b44554c53038709b4128e055c1592",
+  "policy": "One stage only: prefer pending native v2.3 GPU qualification; otherwise next original CPU bridge pair. No retries of failed science.",
+  "max_queue_seconds": 3600,
+  "stage": "cross_scale_cpu_S8_D12",
+  "arguments": [
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\supa_adaptive_compute_v2\\cross_scale\\scripts\\run_alignment.py",
+    "--config",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\supa_adaptive_compute_v2\\cross_scale\\configs\\alignment_v2.json",
+    "pair",
+    "--run-id",
+    "alignment-cpu-v2-002",
+    "--supa-layer",
+    "8",
+    "--donor-layer",
+    "12",
+    "--attempt",
+    "0"
+  ],
+  "launched_utc": "2026-09-05T22:50:41.9426719Z",
+  "end_utc": "2026-09-05T22:53:08.2163192Z",
+  "exit_code": 0,
+  "wall_seconds": 606.2178668
+}

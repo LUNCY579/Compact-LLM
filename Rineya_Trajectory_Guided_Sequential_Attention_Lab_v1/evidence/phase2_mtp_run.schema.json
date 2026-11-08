@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rineya.invalid/schemas/tgsa.phase2-mtp-run.v1.json",
+  "title": "TGSA Phase 2 MTP run manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "study_id",
+    "cell_key",
+    "cell",
+    "seed",
+    "initialization",
+    "gradient_audit",
+    "training",
+    "evaluation",
+    "artifacts",
+    "parameters",
+    "source",
+    "claim_scope",
+    "efficiency"
+  ],
+  "properties": {
+    "schema_version": {"const": "tgsa.phase2-mtp-run.v1"},
+    "status": {"const": "complete"},
+    "study_id": {"type": "string", "minLength": 1},
+    "cell_key": {"type": "string", "minLength": 1},
+    "cell": {
+      "type": "object",
+      "required": ["tgsa_arm", "mtp_mode", "key"],
+      "properties": {
+        "tgsa_arm": {"type": "string"},
+        "mtp_mode": {"enum": ["dormant", "backbone", "trajectory"]},
+        "key": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "seed": {"type": "integer"},
+    "initialization": {
+      "type": "object",
+      "required": ["backbone_sha256", "mtp_head_sha256"],
+      "properties": {
+        "backbone_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "mtp_head_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "gradient_audit": {
+      "type": "object",
+      "required": [
+        "mtp_loss",
+        "trajectory_control_requires_grad",
+        "trajectory_control_gradient_norm",
+        "mtp_head_gradient_norm",
+        "backbone_gradient_norm",
+        "control_projection_gradient_norm",
+        "claim_scope"
+      ],
+      "properties": {
+        "mtp_loss": {"type": "number"},
+        "trajectory_control_requires_grad": {"type": "boolean"},
+        "trajectory_control_gradient_norm": {"type": ["number", "null"]},
+        "mtp_head_gradient_norm": {"type": "number", "exclusiveMinimum": 0},
+        "backbone_gradient_norm": {"type": "number", "minimum": 0},
+        "control_projection_gradient_norm": {"type": "number", "minimum": 0},
+        "claim_scope": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "training": {
+      "type": "object",
+      "required": [
+        "steps",
+        "elapsed_seconds",
+        "final_log",
+        "fixed_final_checkpoint",
+        "early_stopping",
+        "checkpoint",
+        "checkpoint_sha256"
+      ],
+      "properties": {
+        "steps": {"type": "integer", "minimum": 1},
+        "fixed_final_checkpoint": {"const": true},
+        "early_stopping": {"const": false},
+        "checkpoint_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": true
+    },
+    "evaluation": {
+      "type": "object",
+      "required": [
+        "examples",
+        "answer_accuracy",
+        "answer_nll",
+        "per_family_accuracy",
+        "mtp_horizons",
+        "answer_horizons",
+        "teacher_forced_future_prefix",
+        "trajectory_control_rms",
+        "efficiency_is_gating"
+      ],
+      "properties": {
+        "examples": {"type": "integer", "minimum": 1},
+        "answer_accuracy": {"type": "number", "minimum": 0, "maximum": 1},
+        "answer_nll": {"type": "number", "minimum": 0},
+        "trajectory_control_rms": {"type": "number", "minimum": 0},
+        "efficiency_is_gating": {"const": false},
+        "teacher_forced_future_prefix": {
+          "type": "object",
+          "required": [
+            "eligible_positions",
+            "mean_consecutive_correct",
+            "full_horizon_fraction",
+            "claim_scope"
+          ],
+          "properties": {
+            "eligible_positions": {"type": "integer", "minimum": 0},
+            "mean_consecutive_correct": {"type": "number", "minimum": 0},
+            "full_horizon_fraction": {"type": "number", "minimum": 0, "maximum": 1},
+            "claim_scope": {"type": "string", "pattern": "not throughput$"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "artifacts": {"type": "object"},
+    "parameters": {"type": "object"},
+    "source": {"type": "object"},
+    "claim_scope": {"type": "string", "minLength": 1},
+    "efficiency": {
+      "type": "object",
+      "required": ["gating"],
+      "properties": {"gating": {"const": false}},
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

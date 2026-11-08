@@ -1,0 +1,23 @@
+# Stage B babysit stub — not run in v1.
+# Raise context to 8K and add the 8k stratum after Stage A adapter exists.
+stage: b
+seed: 11
+replay_fraction: 0.20
+strata:
+  - 2k
+  - 4k
+  - 8k
+paths:
+  model_id: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  corpus_root: rineya_long_context_cc0_v1_main
+  short_replay: short-response-model-phase-0-1-2/data/train/train.jsonl
+  output_dir: artifacts/halo_long_context_sft_v1/stage_b
+training:
+  qlora: true
+  gradient_checkpointing: true
+  lora_rank: 16
+  lora_alpha: 32
+  max_sequence_length: 8192
+  save_steps: 50
+  save_total_limit: 3
+note: Resume-safe QLoRA on Halo; do not overwrite published Halo weights.

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chatbubble.local/tgsa/phase1_dataset_manifest.schema.json",
+  "title": "TGSA Phase 1 dataset manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "generator_version",
+    "dataset_seed",
+    "dataset_config_sha256",
+    "vocabulary",
+    "splits",
+    "cross_split_unique_latent_signatures",
+    "claim_scope"
+  ],
+  "properties": {
+    "schema_version": {"const": "tgsa.phase1-dataset-manifest.v1"},
+    "generator_version": {"type": "string", "minLength": 1},
+    "created_at_utc": {"type": "string"},
+    "dataset_seed": {"type": "integer"},
+    "dataset_config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "cross_split_unique_latent_signatures": {"const": true},
+    "claim_scope": {"type": "string", "minLength": 1},
+    "vocabulary": {
+      "type": "object",
+      "required": ["domain_size", "max_hops", "max_abs_step", "vocab_size", "pad_token_id"],
+      "properties": {
+        "domain_size": {"type": "integer", "minimum": 4},
+        "max_hops": {"type": "integer", "minimum": 1},
+        "max_abs_step": {"type": "integer", "minimum": 1},
+        "vocab_size": {"type": "integer", "minimum": 1},
+        "pad_token_id": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": true
+    },
+    "splits": {
+      "type": "object",
+      "required": ["train", "dev", "test"],
+      "properties": {
+        "train": {"$ref": "#/$defs/split"},
+        "dev": {"$ref": "#/$defs/split"},
+        "test": {"$ref": "#/$defs/split"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "split": {
+      "type": "object",
+      "required": ["path", "sha256", "examples", "family_counts", "max_tokens", "instance_ids_sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "examples": {"type": "integer", "minimum": 1},
+        "family_counts": {
+          "type": "object",
+          "additionalProperties": {"type": "integer", "minimum": 0}
+        },
+        "max_tokens": {"type": "integer", "minimum": 3},
+        "instance_ids_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

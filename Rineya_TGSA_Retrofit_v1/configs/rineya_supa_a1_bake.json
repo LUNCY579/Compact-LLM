@@ -1,0 +1,144 @@
+{
+  "schema_version": "rineya.tgsa-bake-config.v1",
+  "status": "BAKE-READY CONFIGURATION - NOT AUTHORIZED TO RUN",
+  "blocked_on": [
+    "Phase-1 v3 confirmatory result (matrix still training; no outcome inspected)",
+    "Rineya-Supa-A1 weights are not cached locally; only config/metadata are present",
+    "layer-placement and warm-start development studies not yet executed"
+  ],
+  "source_model": {
+    "core_id": "rineya.core.supa-a1.v1.0.0-devfreeze.28L.qwen3-nimbus-lcr-step200-scale-0p8125-abstain-b5p15625",
+    "directory": "Rineya-Supa-A1-1.0.0-devfreeze",
+    "config_sha256": "600ba25e7b7dcc1f50f2aa555286ca3a3a1d643b6fade5aff341017df44dc898",
+    "architecture": "Qwen3AbstainForCausalLM",
+    "hidden_size": 1024,
+    "num_hidden_layers": 28,
+    "num_attention_heads": 16,
+    "num_key_value_heads": 8,
+    "head_dim": 128,
+    "dtype": "bfloat16",
+    "rope_theta": 1000000,
+    "note": "trust_remote_code=True and greedy decoding are required by the published core"
+  },
+  "retrofit": {
+    "conditioning": {
+      "condition_q": true,
+      "condition_k": false,
+      "condition_v": false
+    },
+    "conditioning_rationale": "condition_q is the closest faithful analogue of Phase-1 learned_delta and is the only target that does not interact with the KV cache. The final choice must come from Phase 1B, not from this default.",
+    "trajectory_rank": 32,
+    "converted_layers": null,
+    "converted_layers_rationale": "must be chosen by the layer-placement study, never assumed"
+  },
+  "arms": [
+    {
+      "name": "baseline_exact_parent",
+      "description": "the unchanged source checkpoint, byte-identical"
+    },
+    {
+      "name": "history_control_retrofit",
+      "description": "information-matched history retrofit, same new-parameter count"
+    },
+    {
+      "name": "tgsa_candidate",
+      "description": "best architecture justified by Phase 1/1B, NOT blindly `full`"
+    }
+  ],
+  "matched_across_arms": [
+    "training examples",
+    "example order",
+    "token budget",
+    "optimizer",
+    "batching",
+    "precision",
+    "checkpoint-selection policy",
+    "evaluation protocol"
+  ],
+  "reporting_requirements": [
+    "new-parameter count per arm, using effective_conditioned_heads = num_heads - 1",
+    "any unequal fine-tuning data or hyperparameter-trial budget, reported explicitly",
+    "capability deltas reported separately per axis, never hidden in an aggregate mean"
+  ],
+  "curriculum_mixture": {
+    "rationale": "the bake must produce a globally better model, not a synthetic-task specialist",
+    "components": {
+      "general_language_modeling": 0.2,
+      "instruction_following": 0.15,
+      "short_natural_responses": 0.1,
+      "reasoning": 0.1,
+      "multi_step_reasoning": 0.1,
+      "long_context_reasoning": 0.08,
+      "retrieval": 0.07,
+      "distractor_resistance": 0.05,
+      "paraphrase": 0.04,
+      "counterfactual": 0.04,
+      "unanswerable_insufficient_info": 0.04,
+      "ordinary_conversation": 0.02,
+      "synthetic_pointer_state_mechanism_shaping": 0.01
+    },
+    "constraint": "synthetic mechanism-shaping tasks are capped at 1% and must never dominate"
+  },
+  "release_candidate_evaluation": [
+    "general language modeling / NLL",
+    "normal chat quality",
+    "short-response behavior",
+    "instruction following",
+    "paraphrase robustness",
+    "counterfactual reasoning",
+    "unanswerable handling",
+    "multi-hop reasoning",
+    "long-context retrieval",
+    "long-context reasoning",
+    "evidence-position robustness",
+    "context-length scaling",
+    "generation stability",
+    "abstention behaviour (this core bakes an abstain token)"
+  ],
+  "efficiency_metrics_non_gating": [
+    "training wall clock",
+    "prefill latency",
+    "decode latency",
+    "FLOPs",
+    "peak memory",
+    "KV-cache bytes per token"
+  ],
+  "difficulty_response_secondary": {
+    "gating": false,
+    "slices": [
+      "effective reasoning depth",
+      "context length",
+      "distractor count",
+      "evidence position",
+      "number of transformations",
+      "dependency-chain length"
+    ],
+    "expected_signature": "neutral on simple tasks, positive on moderate, larger on deep",
+    "warning": "do not force monotonicity if the data do not support it"
+  },
+  "development_funnel": [
+    "1. verify conversion (exactness + manifest)",
+    "2. tiny overfit test (can the trajectory path learn anything at all)",
+    "3. short development training run",
+    "4. multi-seed development pilot",
+    "5. freeze the bake configuration",
+    "6. the evidence-bearing bake"
+  ],
+  "safety_checks_before_preserving_any_candidate": [
+    "causal-prefix invariance",
+    "RoPE correctness",
+    "GQA head mapping",
+    "KV-cache correctness",
+    "cached vs uncached generation agreement",
+    "prefill/decode agreement",
+    "checkpoint save/reload identity",
+    "resume equivalence",
+    "finite gradients",
+    "trajectory-gradient connectivity",
+    "mixed-precision stability",
+    "batch-size consistency",
+    "padding invariance",
+    "deterministic evaluation",
+    "no train/test leakage"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rineya.invalid/schemas/v5_1_run_registration.schema.json",
+  "title": "TGSA v5.1 run registration attachment",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "programme_verification_schema",
+    "programme_sha256",
+    "programme_contract",
+    "repo_head",
+    "source_plan_blob_sha1",
+    "source_report",
+    "source_report_sha256",
+    "stage",
+    "rung_id",
+    "exposure_id",
+    "development_only",
+    "operator_attestation",
+    "claim_scope"
+  ],
+  "properties": {
+    "schema_version": {"const": "tgsa.v5-1-run-registration.v1"},
+    "programme_verification_schema": {"const": "tgsa.v5-1-programme-verification.v1"},
+    "programme_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "programme_contract": {"type": "string"},
+    "repo_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "source_plan_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "source_report": {"enum": ["probe_report.json", "qualification_report.json"]},
+    "source_report_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "stage": {"enum": ["probe", "qualification"]},
+    "rung_id": {"type": "string", "minLength": 1},
+    "exposure_id": {"anyOf": [{"type": "string"}, {"type": "null"}]},
+    "development_only": {"type": "boolean"},
+    "operator_attestation": {
+      "type": "object",
+      "required": ["required", "accepted", "statement"],
+      "properties": {
+        "required": {"type": "boolean"},
+        "accepted": {"type": "boolean"},
+        "statement": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "claim_scope": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}

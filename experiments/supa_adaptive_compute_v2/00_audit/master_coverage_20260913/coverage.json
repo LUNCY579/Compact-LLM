@@ -1,0 +1,648 @@
+{
+  "schema": "master_completion_coverage_v1",
+  "utc": "2026-09-13T17:53:00.801445+00:00",
+  "repository_head_at_snapshot": "7c266e12c5324ed85483cd8f63ccce975af242c9",
+  "scope": "Source, protocol, manifest and existing audit inspection; no model/tensor loads, scorer execution, tests, efficacy rows or Git mutations.",
+  "master_attachment_path": "C:/Users/clclc/.codex/attachments/5a82b879-f744-47eb-950f-693096a4d8ba/pasted-text-1.txt",
+  "master_attachment_sha256": "9c02371c87f94cf4405569c04157a2703a790fbf21798c8d53c392c09a40c4b0",
+  "master_text_matches_preserved_copy": true,
+  "full_objective_complete": false,
+  "live_process_status_checked": false,
+  "input_sha256": {
+    "00_audit/cross_control_calibration_review_20260913/attempt_001/receipt.json": "4501602ab7741e58b7a2687ba0fd62942dbe27e82606b9a6491ec72c9d1ccb24",
+    "00_audit/existing_work_inventory.md": "068dc07c02ddf1ec6bfb3714921b0393c4a2793735bb2bc35acd7506ee2d5168",
+    "00_audit/integrity_20260913T0323/receipt.json": "bfed5d7e90d7f41f91e795be6934f185aca9782e7024ef3d7046dee6ac8e84d5",
+    "00_audit/master_goal.md": "9c02371c87f94cf4405569c04157a2703a790fbf21798c8d53c392c09a40c4b0",
+    "00_audit/native_v2_4_baseline_review_20260913/receipt.json": "2a5ed8fd5b37b53de1f677f8422d2d952c46199276816e325dc2540883ae72fe",
+    "00_audit/native_v2_4_complete_control_review_20260913/receipt.json": "35e324c11d184a72f7d8f20451399c77a4a53645bf38d03dae794821aa3d0cbe",
+    "00_audit/native_v2_4_validation_20260906/receipt.json": "bcd34f1e86045bdb58e7cc7a81f6980ea567da66d0dba24cade4ba0c23055e69",
+    "AGENTS.md": "0bb5dea256e2d52d02a08544d3b8f0c166f7c5af4a4f3e38bf408d169600dd25",
+    "CURRENT_REPORT.md": "677ec10e6dca9509b0d497f17a729aa4a3e31886896f621a2e15dd131b462010",
+    "README.md": "66aa271e64d7812b52df1a7e4fab0177f7cb5e9f2d07b339e70d8c93e49af353",
+    "ROADMAP.md": "948e04728db67ee2bbd1726619cd0f0e48b664ed950158dc1ddb27ec780b696c",
+    "STATUS.md": "6f55c93c59bd83947c77beb221597ed31c740eaa6250bd1b325b8464fb0b3cda",
+    "cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/matrix.json": "ad91c4776179ab9a047d8b2acbc888cede0701ec72b7664a08076dec71898d00",
+    "cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/run_manifest.json": "ed037bf0184e77aed5dfc75ce29ad447e9a84fbf8798760ff0ba0078d604bc19",
+    "cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/selection.json": "e05a8a8f4f6807f60b0f00809107f2ab2df753a601119f09b92802a0688f619b",
+    "cross_scale/evidence/01_dataset_validation/20260905T171720_931623Z_4247ee5b/validation.json": "1499054e43a0777abfcb1bdc470e9924ed76bed798441534968c73a211f9b246",
+    "cross_scale/evidence/07_independent_audit/matrix_audit_20260907T004813_5299633Z/audit_receipt.json": "a70fbb52105fa4214e5b09ea594927ab3df6a2485ff8456c533165f11e80746d",
+    "cross_scale/generation_stage/v1/configs/generation_screen_gpu_v1.json": "10580c664a3756861022da7a08b3fc1bd7c6aab22a525f50f741602479256204",
+    "cross_scale/generation_stage/v1/evidence/00_preparation_validation/20260913_screen_retry1/receipt.json": "2c35841684485b8a08786fcbb52063c3b8b5aaaad54d5a6f384db2f5d9bf471a",
+    "cross_scale/generation_stage/v1/evidence/00_preregistration/dcfc67e0828a3b47da41980a88ce47813b4f8b63c184502f6898bbeaf7222fd3/registration.json": "4e3d0d9b11a2bffa76b1211d613d453bea6df22f6688f59981e061a75bb0e6aa",
+    "cross_scale/generation_stage/v1/protocol/generation_screen_v1.md": "e65056d98dd522cb921f623b1fc1cf981f01b79007c37aa9754d2b388c55973b",
+    "cross_scale/generation_stage/v1/src/analysis.py": "e026846007aa5b30c0a487e56ad00f6290254dc9c32910828f750735aabffb91",
+    "cross_scale/generation_stage/v1/src/compute_control.py": "e3427f8e2b000c4bbb4633b8ec0b3807d7a9e5cf0618088f02aa7b41c7ca4c37",
+    "cross_scale/generation_stage/v1/src/execution.py": "f0fb69c464dea1fcc210541204f3e6a1b4e807fba0c9ddf09f57834b3d98546a",
+    "cross_scale/generation_stage/v1/src/qualification.py": "e791904c4d75ed0f227b447058ce56bcb2abdd708527741e6aca71df3c47b169",
+    "cross_scale/protocol/transformation_alignment_v2.md": "88e3252073aad5311d5c29f6b3a9afa4b09a21d2b8928e4909a042a98d8e64d4",
+    "cross_scale/src/bridge_fit.py": "e785cf0258d18ae3c804e82572c36ad599f0c562077f31fbb8e77a9ec9a8e61d",
+    "cross_scale/src/delta_alignment.py": "d96d0617b2ff2ea8a1bd80ee987632c4040c3208380cfa68795c39a61cf48a55",
+    "data/DESIGN.md": "a3f350da1423e8b758cb7c8153a87babd33bde3cee57c55561bcd3ea40218568",
+    "data/generated/v2/cross_scale/manifest.json": "bf025f9b34c74fee4b6b0b16fe6aea6752293e62eda032234b75abdd0b6a7659",
+    "data/generated/v2/native_armr/manifest.json": "a6245d8667715460b2845d5fcbbd1b38e9d54e33a6d4eda12cf7ce2c19c9054b",
+    "data/generated/v2/power_planning.json": "9e3a7df143481c014311addc5aca14d58060b2e47b13089ee1752a856981ea0f",
+    "native_armr/configs/protocol_gpu_v2_4.json": "7986d78495e420075bf73ab70ed55a39533aa24b775aeda3219c6d0bc3a16c33",
+    "native_armr/evidence/00_preregistration/081a8f6bf3c7396c97f13e3d4a7d55bf7311b37dcc0b0bc7bfd32478fa44241e/registration.json": "1a8b79a2b2f9c5316dc23ae759fec5e552929d7363f7b761597c4e1643246410",
+    "native_armr/evidence/00_runtime_qualification/20260906T203929_861509Z_7b0b0fc8/report.json": "1caaae138328d1e05d5308cbee475e723184bd8d798d332bc645a1e38fe2a10d",
+    "native_armr/evidence/01_dataset_validation/20260905T171537_568883Z_e2e20e72/validation.json": "a616a44046148b5ffca0b766854abc3bc73e779618fe2bb751564dd4131b84c7",
+    "native_armr/protocol/gpu_fp32_v2_4_amendment.md": "5afc1b027bbaf32963b0764d900ee67b4b5aaa83dd6ad6e7b20ff0cbf38977bd",
+    "native_armr/protocol/preregistration.md": "56f960b242bdf3f7d18057b526df15240904db587cc199a2c0258fc6cf6e37a4",
+    "native_armr/scripts/run_large_eval.py": "5b7ae4c29ae84d64cbdc17cdf90fc7ebfb473665b18499d22c9c7f6f8ae979b3",
+    "native_armr/src/analysis.py": "95f8eeb364857673d3cb334989a1ac428dc62f4473af3f18102dc91308583b4a",
+    "native_armr/src/audit.py": "7199f55beb46d4ed3d4e9d419985b337015a8ed33b4b6b8df2384c3752bcd080",
+    "native_armr/src/learned_control.py": "c013798cf21d83ec3c5204b736c51c6599ee22da4f7a0475a8d0da13ada1ad67",
+    "native_armr/src/operators.py": "80c24c5da8dd89adc625b4380aa59497c5ae4aa191b542e9cefa89b003fe08a7",
+    "scripts/run_native_campaign.py": "fc4468a1f3990cb68fe5846f9c944e4a31d476847b88b5392adf67afa981055c",
+    "shared/datasets.py": "a36051907e6bd246211eeeddb37acdec22144b74573f744300338749b58f6a01",
+    "shared/evaluation.py": "358ba7d64eefff458672db7bb55e7f65f6fa80f11bbb4999cd108a9a9f29e69b",
+    "shared/guards.py": "9b66fb381fb4c05659c85418af97f05511f1d62a1eee9aae054cd559954b017d",
+    "shared/integrity.py": "5dc7cada032e26b6eea9bbf8cbfc68b9b9a5ea88167b8c93b53be52cc7b6f981",
+    "shared/manifests.py": "ed7c27f2b6c763ef326aa3a5dc0f620d0ac3252eed69decc816fc08919b48e4e",
+    "shared/reporting.py": "2ec507e0f735141c7c73bfa4189af13107df9e591b7dec16d010f0707eec2407",
+    "shared/runtime.py": "749183b9e766b6979aee4e42631abd9f6e0355f361bd9a55b3519897d737d1e2",
+    "shared/scoring.py": "6f7a7381cd5761b404ff1c17bc44b1afcdc2efb5a5a07bbcc6ecea12da34a642",
+    "shared/statistics.py": "86655657ef1e42148bf3226353e9e616ae3c26e0e83ecddc2d7404163331e0f7"
+  },
+  "cited_receipt_summaries": {
+    "history": {
+      "status": "PASS",
+      "historical_files_verified": 198
+    },
+    "A_tests": {
+      "status": "PASS",
+      "tests_passed": 331,
+      "subtests_passed": 148
+    },
+    "B_tests": {
+      "status": "PASS",
+      "tests_passed": 243,
+      "subtests_passed": 6
+    },
+    "A_control_audit": {
+      "status": "PASS",
+      "checks_passed": 3743
+    },
+    "B_matrix_audit": {
+      "status": "PASS",
+      "audit_checks": 4931,
+      "matrix_pairs": 16,
+      "objective_cells": 96
+    },
+    "B_control_audit": {
+      "status": "PASS",
+      "check_count": 3373
+    }
+  },
+  "requirements": [
+    {
+      "section": 1,
+      "requirement": "Preserve historical Native and donor evidence",
+      "status": "proved",
+      "proof_paths": [
+        "00_audit/existing_work_inventory.md",
+        "00_audit/integrity_20260913T0323/receipt.json"
+      ],
+      "remaining_work_or_scope": "198 historical files and canonical checkpoint rehashed in the cited integrity audit; preserve this boundary during remaining runs."
+    },
+    {
+      "section": 2,
+      "requirement": "Audit existing work before implementation",
+      "status": "proved",
+      "proof_paths": [
+        "00_audit/existing_work_inventory.md"
+      ],
+      "remaining_work_or_scope": "Exact component classifications, branches, SHAs and untracked graft provenance recorded; no new repository-wide rediscovery needed."
+    },
+    {
+      "section": 3,
+      "requirement": "Single codebase with two independent pipelines",
+      "status": "implemented",
+      "proof_paths": [
+        "README.md",
+        "AGENTS.md",
+        "native_armr/scripts/run_large_eval.py",
+        "cross_scale/generation_stage/v1/src/execution.py"
+      ],
+      "remaining_work_or_scope": "Shared utilities and independent track/stage lifecycles exist; continue through their separate scientific registrations."
+    },
+    {
+      "section": 4,
+      "requirement": "Share engineering; separate science and data",
+      "status": "implemented",
+      "proof_paths": [
+        "AGENTS.md",
+        "shared/datasets.py",
+        "shared/evaluation.py",
+        "cross_scale/protocol/transformation_alignment_v2.md",
+        "cross_scale/generation_stage/v1/protocol/generation_screen_v1.md"
+      ],
+      "remaining_work_or_scope": "Track/role guards and separate registrations are implemented; every future run must retain these boundaries."
+    },
+    {
+      "section": 5,
+      "requirement": "Fresh stratified approximately 1,024-example bank",
+      "status": "proved",
+      "proof_paths": [
+        "data/DESIGN.md",
+        "data/generated/v2/native_armr/manifest.json",
+        "data/generated/v2/cross_scale/manifest.json",
+        "native_armr/evidence/01_dataset_validation/20260905T171537_568883Z_e2e20e72/validation.json",
+        "cross_scale/evidence/01_dataset_validation/20260905T171720_931623Z_4247ee5b/validation.json"
+      ],
+      "remaining_work_or_scope": "Each bank has 1,024 primary originals in eight families/32 templates. Synthetic bounded English scope must accompany results."
+    },
+    {
+      "section": 6,
+      "requirement": "Immutable scenarios, multiple templates, linked variants",
+      "status": "proved",
+      "proof_paths": [
+        "data/DESIGN.md",
+        "shared/datasets.py",
+        "native_armr/evidence/01_dataset_validation/20260905T171537_568883Z_e2e20e72/validation.json",
+        "cross_scale/evidence/01_dataset_validation/20260905T171720_931623Z_4247ee5b/validation.json"
+      ],
+      "remaining_work_or_scope": "128 linked diagnostics add zero independent primary N; relation reversal/longer-chain/intervention subsets are only 4/4/2 cases."
+    },
+    {
+      "section": 7,
+      "requirement": "Calibration / architecture / confirmation separation",
+      "status": "implemented",
+      "proof_paths": [
+        "data/DESIGN.md",
+        "shared/datasets.py",
+        "native_armr/evidence/00_preregistration/081a8f6bf3c7396c97f13e3d4a7d55bf7311b37dcc0b0bc7bfd32478fa44241e/registration.json",
+        "cross_scale/protocol/transformation_alignment_v2.md",
+        "cross_scale/generation_stage/v1/protocol/generation_screen_v1.md"
+      ],
+      "remaining_work_or_scope": "128 calibration (96 fit/32 holdout), 128 architecture originals, 1,024 confirmation originals; confirmation outputs remain unobserved."
+    },
+    {
+      "section": 8,
+      "requirement": "Answer Native recurrence generalization question",
+      "status": "pending",
+      "proof_paths": [
+        "native_armr/protocol/preregistration.md",
+        "00_audit/native_v2_4_complete_control_review_20260913/receipt.json"
+      ],
+      "remaining_work_or_scope": "Finish the five-arm mechanical screen, then registered confirmation and independent analysis; mechanics alone cannot answer the question."
+    },
+    {
+      "section": 9,
+      "requirement": "Evaluate A0/A1/A3/A16 prospectively",
+      "status": "pending",
+      "proof_paths": [
+        "native_armr/configs/protocol_gpu_v2_4.json",
+        "native_armr/src/operators.py",
+        "00_audit/native_v2_4_complete_control_review_20260913/receipt.json",
+        "00_audit/native_v2_4_baseline_review_20260913/receipt.json"
+      ],
+      "remaining_work_or_scope": "A0 is complete; A1/A3/A16 remaining campaign evidence is root-owned. All four fixed arms must reach required complete roles."
+    },
+    {
+      "section": 10,
+      "requirement": "Native approximate matched-compute control and measured cost",
+      "status": "pending",
+      "proof_paths": [
+        "native_armr/protocol/gpu_fp32_v2_4_amendment.md",
+        "native_armr/src/learned_control.py",
+        "00_audit/native_v2_4_complete_control_review_20260913/receipt.json",
+        "native_armr/src/audit.py"
+      ],
+      "remaining_work_or_scope": "AM architecture 128/128 is audited. Complete paired confirmation and disclose 90% of A3 added matrix FLOPs, copied/active parameters, latency and RAM/VRAM."
+    },
+    {
+      "section": 11,
+      "requirement": "Native paired primary statistics",
+      "status": "implemented",
+      "proof_paths": [
+        "shared/statistics.py",
+        "native_armr/src/analysis.py",
+        "native_armr/protocol/preregistration.md"
+      ],
+      "remaining_work_or_scope": "Real complete confirmation accuracy, wins/losses, McNemar, scenario CI and absolute/relative error reduction remain pending."
+    },
+    {
+      "section": 12,
+      "requirement": "Native family accuracy, paired effects, NLL, identity, CI",
+      "status": "implemented",
+      "proof_paths": [
+        "shared/statistics.py",
+        "native_armr/src/analysis.py"
+      ],
+      "remaining_work_or_scope": "paired_analysis returns all required family metrics. No completed confirmatory family effects exist yet."
+    },
+    {
+      "section": 13,
+      "requirement": "Native unseen-template and linked generalization",
+      "status": "implemented",
+      "proof_paths": [
+        "data/DESIGN.md",
+        "shared/statistics.py",
+        "native_armr/src/analysis.py",
+        "native_armr/src/audit.py"
+      ],
+      "remaining_work_or_scope": "Report pooled seen/unseen strata (256 unseen originals) and original-versus-linked-variant advantage changes. No broad robustness claim from tiny variant strata."
+    },
+    {
+      "section": 14,
+      "requirement": "Prospective meaningful Native GO conjunction",
+      "status": "implemented",
+      "proof_paths": [
+        "native_armr/protocol/preregistration.md",
+        "native_armr/configs/protocol_gpu_v2_4.json",
+        "native_armr/src/analysis.py"
+      ],
+      "remaining_work_or_scope": "Thresholds and hierarchical A3>A0 then A3>AM tests, preservation, validity and cost disclosure are frozen; actual GO/NO-GO unresolved."
+    },
+    {
+      "section": 15,
+      "requirement": "Retain Native positive, generic-compute, specialized or negative outcomes",
+      "status": "pending",
+      "proof_paths": [
+        "native_armr/src/analysis.py",
+        "native_armr/protocol/preregistration.md"
+      ],
+      "remaining_work_or_scope": "Use actual complete outcomes; secondary/family effects cannot replace failed A3 primary or justify an untested router."
+    },
+    {
+      "section": 16,
+      "requirement": "Address donor fidelity before expanding inert historical graft",
+      "status": "proved",
+      "proof_paths": [
+        "cross_scale/protocol/transformation_alignment_v2.md",
+        "cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/matrix.json",
+        "cross_scale/evidence/07_independent_audit/matrix_audit_20260907T004813_5299633Z/audit_receipt.json"
+      ],
+      "remaining_work_or_scope": "The fresh alignment matrix completed; historical inert G was not promoted to a large efficacy run."
+    },
+    {
+      "section": 17,
+      "requirement": "Prioritize transformation over absolute correspondence",
+      "status": "proved",
+      "proof_paths": [
+        "cross_scale/src/delta_alignment.py",
+        "cross_scale/src/bridge_fit.py",
+        "cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/matrix.json",
+        "cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/selection.json"
+      ],
+      "remaining_work_or_scope": "Actual delta losses and separate state/delta measurements exist and were executed; donor usefulness remains separate."
+    },
+    {
+      "section": 18,
+      "requirement": "Use native and projected donor transformation deltas",
+      "status": "proved",
+      "proof_paths": [
+        "cross_scale/src/delta_alignment.py",
+        "cross_scale/src/bridge_fit.py",
+        "cross_scale/evidence/07_independent_audit/matrix_audit_20260907T004813_5299633Z/audit_receipt.json"
+      ],
+      "remaining_work_or_scope": "Full-prompt actual decoder L(z)-z versus L(y)-y, original positions and replay provenance are covered by implementation/recorded audit; this audit does not replay tensors."
+    },
+    {
+      "section": 19,
+      "requirement": "Compare B0/B1/B2/B3/BS/BR, retain controls",
+      "status": "proved",
+      "proof_paths": [
+        "cross_scale/protocol/transformation_alignment_v2.md",
+        "cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/matrix.json",
+        "cross_scale/evidence/07_independent_audit/matrix_audit_20260907T004813_5299633Z/audit_receipt.json"
+      ],
+      "remaining_work_or_scope": "All 96 cells completed; keep all negative controls, including any surprising favorable future efficacy."
+    },
+    {
+      "section": 20,
+      "requirement": "Token balancing and all/ordinary/special/final reporting",
+      "status": "proved",
+      "proof_paths": [
+        "cross_scale/protocol/transformation_alignment_v2.md",
+        "cross_scale/src/delta_alignment.py",
+        "cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/matrix.json"
+      ],
+      "remaining_work_or_scope": "All four strata measured. Selected B3 special-token fidelity is worse than same-pair B0 and must remain explicit."
+    },
+    {
+      "section": 21,
+      "requirement": "Cheap held-out depth-pair matrix and stability metrics",
+      "status": "proved",
+      "proof_paths": [
+        "cross_scale/protocol/transformation_alignment_v2.md",
+        "cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/matrix.json",
+        "cross_scale/evidence/07_independent_audit/matrix_audit_20260907T004813_5299633Z/audit_receipt.json"
+      ],
+      "remaining_work_or_scope": "All 16 depth pairs x six objectives completed without per-pair efficacy generation."
+    },
+    {
+      "section": 22,
+      "requirement": "Select/freeze pair using alignment only",
+      "status": "proved",
+      "proof_paths": [
+        "cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/selection.json",
+        "cross_scale/evidence/07_independent_audit/matrix_audit_20260907T004813_5299633Z/audit_receipt.json",
+        "cross_scale/generation_stage/v1/evidence/00_preregistration/dcfc67e0828a3b47da41980a88ce47813b4f8b63c184502f6898bbeaf7222fd3/registration.json"
+      ],
+      "remaining_work_or_scope": "B3 Supa L19 / donor L24 selected under frozen complete-matrix ranking; exported and bound before generation."
+    },
+    {
+      "section": 23,
+      "requirement": "Preregister fidelity thresholds; relate fidelity to usefulness",
+      "status": "pending",
+      "proof_paths": [
+        "cross_scale/protocol/transformation_alignment_v2.md",
+        "cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/selection.json",
+        "cross_scale/generation_stage/v1/src/analysis.py"
+      ],
+      "remaining_work_or_scope": "Mechanism thresholds passed. No explicit efficacy-to-fidelity joined analysis is implemented or executed; add a separate descriptive evidence report after screen, without changing selection."
+    },
+    {
+      "section": 24,
+      "requirement": "Prospective gate-dose study with behavior/NLL/cost diagnostics",
+      "status": "pending",
+      "proof_paths": [
+        "cross_scale/generation_stage/v1/protocol/generation_screen_v1.md",
+        "cross_scale/generation_stage/v1/configs/generation_screen_gpu_v1.json",
+        "cross_scale/generation_stage/v1/src/analysis.py"
+      ],
+      "remaining_work_or_scope": "17-cell screen is frozen (.03/.10/.20/.40 plus X0). Runtime qualification and actual fixed-cell generation remain pending."
+    },
+    {
+      "section": 25,
+      "requirement": "Mechanism -> small screen -> fresh confirmation funnel",
+      "status": "pending",
+      "proof_paths": [
+        "cross_scale/evidence/07_independent_audit/matrix_audit_20260907T004813_5299633Z/audit_receipt.json",
+        "cross_scale/generation_stage/v1/src/execution.py",
+        "cross_scale/generation_stage/v1/protocol/generation_screen_v1.md"
+      ],
+      "remaining_work_or_scope": "Stage 1 complete; Stage 2 implemented. Stage 3 confirmation lifecycle/protocol/config/audit caller is not implemented or frozen and is gated by SCREEN_GO."
+    },
+    {
+      "section": 26,
+      "requirement": "B X0/XG/XS/XR/XM and frozen Native XN when available",
+      "status": "pending",
+      "proof_paths": [
+        "cross_scale/generation_stage/v1/protocol/generation_screen_v1.md",
+        "cross_scale/generation_stage/v1/src/compute_control.py",
+        "00_audit/cross_control_calibration_review_20260913/attempt_001/receipt.json"
+      ],
+      "remaining_work_or_scope": "17-cell screen includes required non-Native controls; XN unavailable at freeze. Reassess XN solely from independently frozen Native results at B confirmation freeze; no Native efficacy rows imported."
+    },
+    {
+      "section": 27,
+      "requirement": "B paired/family/preservation/cost and efficacy-alignment analysis",
+      "status": "pending",
+      "proof_paths": [
+        "shared/statistics.py",
+        "cross_scale/generation_stage/v1/src/analysis.py",
+        "shared/reporting.py"
+      ],
+      "remaining_work_or_scope": "Screen paired statistics are implemented; confirmatory hierarchy/effect threshold/multiplicity/preservation and fidelity linkage are not yet frozen or measured."
+    },
+    {
+      "section": 28,
+      "requirement": "Freeze backbones; train only registered bridges; verify integrity",
+      "status": "proved",
+      "proof_paths": [
+        "shared/integrity.py",
+        "cross_scale/evidence/07_independent_audit/matrix_audit_20260907T004813_5299633Z/audit_receipt.json",
+        "00_audit/native_v2_4_complete_control_review_20260913/receipt.json",
+        "00_audit/cross_control_calibration_review_20260913/attempt_001/receipt.json"
+      ],
+      "remaining_work_or_scope": "Completed audits support frozen-state/gradient/checkpoint boundaries within their scope. Every remaining real run needs its own before/after evidence."
+    },
+    {
+      "section": 29,
+      "requirement": "Keep 8B gated",
+      "status": "implemented",
+      "proof_paths": [
+        "AGENTS.md",
+        "cross_scale/protocol/transformation_alignment_v2.md",
+        "cross_scale/generation_stage/v1/protocol/generation_screen_v1.md"
+      ],
+      "remaining_work_or_scope": "8B remains closed; mechanism GO alone is not donor efficacy or license for escalation."
+    },
+    {
+      "section": 30,
+      "requirement": "Shared paired statistics with roles and multiplicity",
+      "status": "implemented",
+      "proof_paths": [
+        "shared/statistics.py",
+        "00_audit/native_v2_4_validation_20260906/receipt.json",
+        "cross_scale/generation_stage/v1/evidence/00_preparation_validation/20260913_screen_retry1/receipt.json"
+      ],
+      "remaining_work_or_scope": "Coverage, exact paired tests, scenario bootstrap, NLL/family summaries and Holm annotations are implemented/tested. Real confirmation reports remain pending."
+    },
+    {
+      "section": 31,
+      "requirement": "Power at N256/512/1024/2048 for plausible effects",
+      "status": "proved",
+      "proof_paths": [
+        "data/generated/v2/power_planning.json",
+        "data/DESIGN.md",
+        "shared/statistics.py"
+      ],
+      "remaining_work_or_scope": "All requested N/effect/discordance scenarios recorded prospectively; observed discordance is not yet available and assumed power is not a guarantee."
+    },
+    {
+      "section": 32,
+      "requirement": "Freeze bank/scorer/source/preregistration before execution",
+      "status": "implemented",
+      "proof_paths": [
+        "native_armr/evidence/00_preregistration/081a8f6bf3c7396c97f13e3d4a7d55bf7311b37dcc0b0bc7bfd32478fa44241e/registration.json",
+        "cross_scale/generation_stage/v1/evidence/00_preregistration/dcfc67e0828a3b47da41980a88ce47813b4f8b63c184502f6898bbeaf7222fd3/registration.json",
+        "shared/datasets.py",
+        "shared/evaluation.py"
+      ],
+      "remaining_work_or_scope": "Current stages are frozen. B confirmation must receive its own registration; no post-output item edits or retuning on confirmation."
+    },
+    {
+      "section": 33,
+      "requirement": "Deterministic high-quality scoring and ambiguity handling",
+      "status": "implemented",
+      "proof_paths": [
+        "data/DESIGN.md",
+        "shared/scoring.py",
+        "shared/datasets.py",
+        "native_armr/evidence/01_dataset_validation/20260905T171537_568883Z_e2e20e72/validation.json",
+        "cross_scale/evidence/01_dataset_validation/20260905T171720_931623Z_4247ee5b/validation.json",
+        "00_audit/native_v2_4_validation_20260906/receipt.json"
+      ],
+      "remaining_work_or_scope": "Independent controlled-grammar solver and strict exact/JSON scoring validated; no opaque LLM judge or open-ended quality claim."
+    },
+    {
+      "section": 34,
+      "requirement": "Immutable resumable scheduling; qualify GPU against reference",
+      "status": "pending",
+      "proof_paths": [
+        "shared/evaluation.py",
+        "shared/runtime.py",
+        "scripts/run_native_campaign.py",
+        "native_armr/evidence/00_runtime_qualification/20260906T203929_861509Z_7b0b0fc8/report.json",
+        "cross_scale/generation_stage/v1/src/qualification.py"
+      ],
+      "remaining_work_or_scope": "Native runtime qualification passed. B stage-owned CPU/GPU per-cell qualification remains necessary; queues/process liveness is operational root evidence, not inferred here."
+    },
+    {
+      "section": 35,
+      "requirement": "Parallel research, resource-safe sequential model execution",
+      "status": "implemented",
+      "proof_paths": [
+        "AGENTS.md",
+        "shared/runtime.py",
+        "cross_scale/generation_stage/v1/src/execution.py"
+      ],
+      "remaining_work_or_scope": "Shared lease and available-resource guards exist; continue serial heavy execution, preserving admission failures."
+    },
+    {
+      "section": 36,
+      "requirement": "Separate immutable evidence roots",
+      "status": "implemented",
+      "proof_paths": [
+        "shared/manifests.py",
+        "shared/evaluation.py",
+        "cross_scale/generation_stage/v1/src/execution.py"
+      ],
+      "remaining_work_or_scope": "Independent Native/B/stage output directories implemented; all failed and interrupted attempts remain preserved."
+    },
+    {
+      "section": 37,
+      "requirement": "Complete run manifests and failure receipts",
+      "status": "implemented",
+      "proof_paths": [
+        "shared/manifests.py",
+        "shared/evaluation.py",
+        "cross_scale/generation_stage/v1/src/execution.py",
+        "cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/run_manifest.json",
+        "00_audit/native_v2_4_complete_control_review_20260913/receipt.json"
+      ],
+      "remaining_work_or_scope": "Actual completed stages have audited provenance; future run and abandoned-worker receipts still required. This audit does not synthesize post-run integrity."
+    },
+    {
+      "section": 38,
+      "requirement": "Hard failure on instability, mutation, leakage and incomplete controls",
+      "status": "implemented",
+      "proof_paths": [
+        "shared/guards.py",
+        "shared/integrity.py",
+        "shared/evaluation.py",
+        "native_armr/src/audit.py",
+        "cross_scale/generation_stage/v1/src/execution.py",
+        "00_audit/native_v2_4_validation_20260906/receipt.json",
+        "cross_scale/generation_stage/v1/evidence/00_preparation_validation/20260913_screen_retry1/receipt.json"
+      ],
+      "remaining_work_or_scope": "Guards/tests and preserved failures support fail-closed behavior; failed cells must not become partial denominators or disappear from reports."
+    },
+    {
+      "section": 39,
+      "requirement": "Explicit Native versus donor capability/specialization/cost frontier",
+      "status": "pending",
+      "proof_paths": [
+        "shared/reporting.py",
+        "native_armr/src/audit.py",
+        "cross_scale/generation_stage/v1/src/analysis.py",
+        "data/DESIGN.md"
+      ],
+      "remaining_work_or_scope": "Per-track frontier code exists. Joint audited comparison is absent; different track banks cannot support a same-example paired superiority claim."
+    },
+    {
+      "section": 40,
+      "requirement": "Choose next mechanism from both tracks actual outcomes",
+      "status": "pending",
+      "proof_paths": [
+        "ROADMAP.md",
+        "native_armr/protocol/preregistration.md",
+        "cross_scale/generation_stage/v1/protocol/generation_screen_v1.md"
+      ],
+      "remaining_work_or_scope": "Neither track has a confirmatory efficacy outcome. Preserve unresolved/negative results; do not force a winner."
+    },
+    {
+      "section": 41,
+      "requirement": "Routing only after positive/complementary operator effects",
+      "status": "implemented",
+      "proof_paths": [
+        "AGENTS.md",
+        "ROADMAP.md"
+      ],
+      "remaining_work_or_scope": "Routing remains closed and unimplemented; fixed/heterogeneous choice waits for actual admissible evidence."
+    },
+    {
+      "section": 42,
+      "requirement": "No MLA/MHA/MTP mixing during study",
+      "status": "implemented",
+      "proof_paths": [
+        "AGENTS.md",
+        "ROADMAP.md"
+      ],
+      "remaining_work_or_scope": "All remain closed; no tests or benefits claimed for these future mechanisms."
+    },
+    {
+      "section": 43,
+      "requirement": "Distillation only after demonstrated donor efficacy",
+      "status": "implemented",
+      "proof_paths": [
+        "AGENTS.md",
+        "cross_scale/protocol/transformation_alignment_v2.md",
+        "cross_scale/generation_stage/v1/protocol/generation_screen_v1.md"
+      ],
+      "remaining_work_or_scope": "Distillation remains intentionally unimplemented; fidelity GO and energy calibration do not satisfy its efficacy gate."
+    },
+    {
+      "section": 44,
+      "requirement": "Meaningful shared/Native/B tests",
+      "status": "proved",
+      "proof_paths": [
+        "00_audit/native_v2_4_validation_20260906/receipt.json",
+        "cross_scale/generation_stage/v1/evidence/00_preparation_validation/20260913_screen_retry1/receipt.json"
+      ],
+      "remaining_work_or_scope": "Recorded Native/shared 331 tests +148 subtests and B Stage 2 243 tests +6 subtests passed. They are overlapping tiny-fixture/mechanics suites, not capability evidence; no repeats run here."
+    },
+    {
+      "section": 45,
+      "requirement": "Maintain clear stage/gate status",
+      "status": "implemented",
+      "proof_paths": [
+        "STATUS.md",
+        "CURRENT_REPORT.md"
+      ],
+      "remaining_work_or_scope": "Current docs distinguish mechanics/alignment from efficacy. Root should refresh moving execution counts/HEAD after each meaningful stage."
+    },
+    {
+      "section": 46,
+      "requirement": "Minimum audit/framework/data/protocol/caller/test deliverables",
+      "status": "proved",
+      "proof_paths": [
+        "00_audit/existing_work_inventory.md",
+        "README.md",
+        "data/DESIGN.md",
+        "native_armr/scripts/run_large_eval.py",
+        "cross_scale/protocol/transformation_alignment_v2.md",
+        "00_audit/native_v2_4_validation_20260906/receipt.json",
+        "cross_scale/generation_stage/v1/evidence/00_preparation_validation/20260913_screen_retry1/receipt.json",
+        "CURRENT_REPORT.md"
+      ],
+      "remaining_work_or_scope": "Minimum requested implementation deliverables exist. This does not complete the active full empirical research goal."
+    },
+    {
+      "section": 47,
+      "requirement": "Final full report with exact provenance, evidence and one next experiment per track",
+      "status": "pending",
+      "proof_paths": [
+        "CURRENT_REPORT.md",
+        "STATUS.md"
+      ],
+      "remaining_work_or_scope": "Current report has required structure as a snapshot. Final closure needs fresh repository state, actual results/gates, limitations and exactly one causal next experiment per track."
+    },
+    {
+      "section": 48,
+      "requirement": "Resolve both questions under fresh data, controls, power and audit",
+      "status": "pending",
+      "proof_paths": [
+        "00_audit/master_goal.md",
+        "native_armr/protocol/preregistration.md",
+        "cross_scale/generation_stage/v1/protocol/generation_screen_v1.md",
+        "CURRENT_REPORT.md"
+      ],
+      "remaining_work_or_scope": "Full objective remains incomplete. Await legitimate gated empirical outcomes; do not substitute implementation/test completion for scientific resolution."
+    }
+  ],
+  "auditor_sha256": "7579917848e390322cc734fcc132e838e22462a1aeb4509ce57ab48a25c760c5"
+}

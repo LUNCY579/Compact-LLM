@@ -1,0 +1,127 @@
+{
+  "artifact": "model_manifest.json",
+  "artifact_sha256": "0034ab17b3abbb72791693637f82ab27f4814a00185d16a9d1fa51a2605f28c8",
+  "config": {
+    "audit_schema_version": "1.1",
+    "base_key": "qwen3",
+    "chunk_bytes": 67108864,
+    "compute_distances": true,
+    "panel": [
+      "qwen3",
+      "halo",
+      "nimbus",
+      "supa_a11"
+    ],
+    "per_head": true,
+    "rel_tol": 0.001
+  },
+  "config_hash": "cd074493711030a477e91b28e8216bbc79b218324368e1e0c335a1ee6e833e54",
+  "generated_at": "2026-08-28T21:15:07.362972+00:00",
+  "idempotency_key": "b40ff5f0d77a1e0b20862b929d52e81a240646cfbcf601974cb6c1ff074d6284",
+  "model_sha256": {
+    "halo": {
+      "config_normalized_sha256": "01a99b10199b87080be0785a633305d2e1d95e142c92df4b93891d3413e982ac",
+      "dir_fingerprint": "0b49da845cb3129f2c283ca1f4b4691b39002ece1c11c874e45b4504c901ee13",
+      "files": {
+        "model.safetensors": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+      },
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Halo-1.2.0-devfreeze",
+      "tokenizer_identity_sha256": "4089b6b12895fb48155b62fb48a35240dd47a8bfefb2b23cce14d6326bdb8434"
+    },
+    "nimbus": {
+      "config_normalized_sha256": "a6fa45ceb7072121c52ff56e3c09272e46dd9d86d80b1bb4341cb1e6fd770bf6",
+      "dir_fingerprint": "5456226f9ec6062c8faad3b515e7a02f0551213f467963b8d93d660440aee2ce",
+      "files": {
+        "model.safetensors": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c"
+      },
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Nimbus-1.6.0-devfreeze",
+      "tokenizer_identity_sha256": "2193dc2513bee39c802dcef89b5f38c9693d4cbcf325e2e40793c355ba52a004"
+    },
+    "qwen3": {
+      "config_normalized_sha256": "a6fa45ceb7072121c52ff56e3c09272e46dd9d86d80b1bb4341cb1e6fd770bf6",
+      "dir_fingerprint": "dd36d195c129810e90ad28ea989e3323b55e0f9bf5ef40034d243a7842ea7ce5",
+      "files": {
+        "model.safetensors": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b"
+      },
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Qwen3-0.6B",
+      "tokenizer_identity_sha256": "2193dc2513bee39c802dcef89b5f38c9693d4cbcf325e2e40793c355ba52a004"
+    },
+    "supa_a11": {
+      "config_normalized_sha256": "49706182f712c4e635aa4fd50a87f861ca625761e49c04a367c7e4d52700df7f",
+      "dir_fingerprint": "7d833086796e288f0624346ed13092cde59072d8878aefd88a66d35a0e8a45d2",
+      "files": {
+        "model.safetensors": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026"
+      },
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+      "tokenizer_identity_sha256": "2193dc2513bee39c802dcef89b5f38c9693d4cbcf325e2e40793c355ba52a004"
+    }
+  },
+  "producer": "rineya_psa.model_audit.run_audit",
+  "schema_version": "1.1",
+  "seeds": {},
+  "stamp": {
+    "config": {
+      "audit_schema_version": "1.1",
+      "base_key": "qwen3",
+      "chunk_bytes": 67108864,
+      "compute_distances": true,
+      "panel": [
+        "qwen3",
+        "halo",
+        "nimbus",
+        "supa_a11"
+      ],
+      "per_head": true,
+      "rel_tol": 0.001
+    },
+    "config_sha256": "cd074493711030a477e91b28e8216bbc79b218324368e1e0c335a1ee6e833e54",
+    "extra": {},
+    "generated_at_utc": "2026-08-28T21:15:07Z",
+    "git": {
+      "branch": "research/positional-sequential-attention",
+      "commit": "34de429e391274d095c411273f81cee377d2c136",
+      "dirty": true,
+      "dirty_path_count": 9,
+      "dirty_paths": [
+        ".gitignore",
+        "rineya_halo_long_context_sft_v1/",
+        "rineya_positional_sequential_attention_lab/",
+        "rineya_significance_native_architecture_lab/configs/published_family_showcase64_v2.yaml",
+        "rineya_significance_native_architecture_lab/configs/published_family_showcase64_v2_finalize.yaml",
+        "rineya_significance_native_architecture_lab/results/runs/halo_compression_frontier_v1/",
+        "rineya_significance_native_architecture_lab/scripts/finalize_published_family_showcase64.py",
+        "rineya_significance_native_architecture_lab/scripts/run_published_family_core_showcase64.py",
+        "rineya_significance_native_architecture_lab/tests/test_published_family_showcase64_v2.py"
+      ],
+      "repo_root": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble"
+    },
+    "gpu": {
+      "cuda_available": true,
+      "device_count": 1,
+      "gpu_source": "nvidia-smi",
+      "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "total_memory_bytes": 8585740288
+    },
+    "lab_root": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\rineya_positional_sequential_attention_lab",
+    "platform": {
+      "cpu_count": 32,
+      "executable": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "hostname": "TheFakeGod",
+      "machine": "AMD64",
+      "os": "Windows-10-10.0.26200-SP0",
+      "processor": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+      "system": "Windows",
+      "user": "clclc"
+    },
+    "versions": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.5",
+      "python": "3.11.15",
+      "scipy": "1.17.1",
+      "sklearn": "1.9.0",
+      "torch": "2.12.1+cu126",
+      "transformers": "5.14.1"
+    }
+  },
+  "stamp_source": "rineya_psa.statistics.provenance.stamp"
+}

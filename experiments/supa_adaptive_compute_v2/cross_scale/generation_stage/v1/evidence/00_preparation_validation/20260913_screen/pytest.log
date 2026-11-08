@@ -1,0 +1,110 @@
+........................................................................ [ 30%]
+.....................................F.........F.......F................ [ 61%]
+........................................................................ [ 91%]
+...................                                                [100%]
+================================== FAILURES ===================================
+_____________________ test_baseline_requires_entire_bank ______________________
+
+context = (WindowsPath('C:/Users/clclc/AppData/Local/Temp/pytest-of-clclc/pytest-1523/test_baseline_requires_entire_0/config.jso...', ...}, {'example_id': 'case_5', 'case_id': 'case_5', 'scenario_id': 'scenario_5', 'track': 'cross_scale', ...}, ...])
+
+    def test_baseline_requires_entire_bank(context):
+        _attempt(context)
+        path, config, registration, cases = context
+        state = ex.inventory(path, config, registration, cases)
+        with pytest.raises(ex.EvidenceError, match='complete matched X0'):
+            ex._baseline(state, config, cases)
+        for index in range(1, 8):
+            _attempt(context, index=index)
+        state = ex.inventory(path, config, registration, cases)
+>       assert len(ex._baseline(state, config, cases)) == 8
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+experiments\supa_adaptive_compute_v2\cross_scale\generation_stage\v1\tests\test_execution.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+experiments\supa_adaptive_compute_v2\cross_scale\generation_stage\v1\src\execution.py:298: in _baseline
+    _read_complete(entry, config, cases, 'X0')
+experiments\supa_adaptive_compute_v2\cross_scale\generation_stage\v1\src\execution.py:217: in _read_complete
+    _check(sha256_file(entry['manifest_path']) == entry['manifest_sha256'], 'terminal receipt changed')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+path = 'C:\\Users\\clclc\\AppData\\Local\\Temp\\pytest-of-clclc\\pytest-1523\\test_baseline_requires_entire_0\\evidence\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\X0\\shard_000\\attempt_000\\run_manifest.json'
+chunk_bytes = 8388608
+
+    def sha256_file(path: Path, chunk_bytes: int = 8 * 1024 * 1024) -> str:
+        digest = hashlib.sha256()
+>       with path.open("rb") as handle:
+             ^^^^^^^^^
+E       AttributeError: 'str' object has no attribute 'open'
+
+Rineya_Cross_Scale_Capability_Transfer_Lab_v1\src\rineya_cross_scale\hashing.py:13: AttributeError
+_________ test_raw_rescoring_detects_internally_rehashed_false_score __________
+
+context = (WindowsPath('C:/Users/clclc/AppData/Local/Temp/pytest-of-clclc/pytest-1523/test_raw_rescoring_detects_int0/config.jso...', ...}, {'example_id': 'case_5', 'case_id': 'case_5', 'scenario_id': 'scenario_5', 'track': 'cross_scale', ...}, ...])
+
+    def test_raw_rescoring_detects_internally_rehashed_false_score(context):
+        directory = _attempt(context)
+        path, config, registration, cases = context
+        state = ex.inventory(*context)
+        entry = state['X0']['complete'][0]
+        raw = next((directory / 'cases').glob('*.json'))
+        value = ex._read(raw)
+        value['score'] = 0.
+        raw.write_text(json.dumps(value), encoding='utf-8')
+        final = ex._read(directory / 'run_manifest.json')
+        final['artifacts_sha256'] = ex._artifacts(directory)
+        (directory / 'run_manifest.json').write_text(json.dumps(final), encoding='utf-8')
+        entry['manifest'] = final
+        entry['manifest_sha256'] = sha256_file(directory / 'run_manifest.json')
+        with pytest.raises(ex.EvidenceError, match='rescoring'):
+>           ex._read_complete(entry, config, cases, 'X0')
+
+experiments\supa_adaptive_compute_v2\cross_scale\generation_stage\v1\tests\test_execution.py:202: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+experiments\supa_adaptive_compute_v2\cross_scale\generation_stage\v1\src\execution.py:217: in _read_complete
+    _check(sha256_file(entry['manifest_path']) == entry['manifest_sha256'], 'terminal receipt changed')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+path = 'C:\\Users\\clclc\\AppData\\Local\\Temp\\pytest-of-clclc\\pytest-1523\\test_raw_rescoring_detects_int0\\evidence\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\X0\\shard_000\\attempt_000\\run_manifest.json'
+chunk_bytes = 8388608
+
+    def sha256_file(path: Path, chunk_bytes: int = 8 * 1024 * 1024) -> str:
+        digest = hashlib.sha256()
+>       with path.open("rb") as handle:
+             ^^^^^^^^^
+E       AttributeError: 'str' object has no attribute 'open'
+
+Rineya_Cross_Scale_Capability_Transfer_Lab_v1\src\rineya_cross_scale\hashing.py:13: AttributeError
+_________________ test_saved_logit_metric_tampering_rejected __________________
+
+context = (WindowsPath('C:/Users/clclc/AppData/Local/Temp/pytest-of-clclc/pytest-1523/test_saved_logit_metric_tamper0/config.jso...', ...}, {'example_id': 'case_5', 'case_id': 'case_5', 'scenario_id': 'scenario_5', 'track': 'cross_scale', ...}, ...])
+
+    def test_saved_logit_metric_tampering_rejected(context):
+        _attempt(context)
+        entry = ex.inventory(*context)['X0']['complete'][0]
+>       row = ex._read_complete(entry, context[1], context[3], 'X0')[0]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+experiments\supa_adaptive_compute_v2\cross_scale\generation_stage\v1\tests\test_execution.py:251: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+experiments\supa_adaptive_compute_v2\cross_scale\generation_stage\v1\src\execution.py:217: in _read_complete
+    _check(sha256_file(entry['manifest_path']) == entry['manifest_sha256'], 'terminal receipt changed')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+path = 'C:\\Users\\clclc\\AppData\\Local\\Temp\\pytest-of-clclc\\pytest-1523\\test_saved_logit_metric_tamper0\\evidence\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\X0\\shard_000\\attempt_000\\run_manifest.json'
+chunk_bytes = 8388608
+
+    def sha256_file(path: Path, chunk_bytes: int = 8 * 1024 * 1024) -> str:
+        digest = hashlib.sha256()
+>       with path.open("rb") as handle:
+             ^^^^^^^^^
+E       AttributeError: 'str' object has no attribute 'open'
+
+Rineya_Cross_Scale_Capability_Transfer_Lab_v1\src\rineya_cross_scale\hashing.py:13: AttributeError
+=========================== short test summary info ===========================
+FAILED experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/tests/test_execution.py::test_baseline_requires_entire_bank
+FAILED experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/tests/test_execution.py::test_raw_rescoring_detects_internally_rehashed_false_score
+FAILED experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/tests/test_execution.py::test_saved_logit_metric_tampering_rejected
+3 failed, 232 passed, 6 subtests passed in 45.36s
